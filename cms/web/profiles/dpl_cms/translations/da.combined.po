@@ -1399,7 +1399,7 @@ msgid "@interval ago"
 msgstr ""
 
 msgid "@interval hence"
-msgstr "@interval fra nu"
+msgstr "om @interval"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:access:settings:future_format"
 msgid "@interval hence"
@@ -2420,7 +2420,7 @@ msgid "Absolute URL"
 msgstr "Absolut URL"
 
 msgid "Abstract"
-msgstr "Abstract"
+msgstr "Resume"
 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:0:label"
 msgid "Access"
@@ -2819,7 +2819,7 @@ msgid "Add custom metatag"
 msgstr "Tilføj brugerdefineret meta-tag"
 
 msgid "Add default meta tags"
-msgstr "Tilføj default meta-tags"
+msgstr "Tilføj standard meta-tag"
 
 msgid "Add event"
 msgstr "Tilføj arrangement"
@@ -3349,7 +3349,7 @@ msgstr "Efter opdatering af en @entity_type, der er planlagt til afpublicering"
 
 msgctxt "Search Result"
 msgid "Age"
-msgstr "Alder"
+msgstr "Aldersgruppe"
 
 msgctxt "advanced search 2"
 msgid "Age"
@@ -3420,7 +3420,7 @@ msgstr ""
 
 msgctxt "DPL admin UX"
 msgid "All caches cleared."
-msgstr "Alle cacher ryddet."
+msgstr "Alle cacher tømt."
 
 msgctxt "dpl_event"
 msgid "All dates"
@@ -4071,7 +4071,7 @@ msgid "Applies manually provided crop to the image."
 msgstr "Anvender manuelt beskæring til billedet."
 
 msgid "Apply"
-msgstr "Anvend"
+msgstr "Udfør"
 
 msgctxt "views.view.articles:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
@@ -4476,15 +4476,15 @@ msgid "Attributes: @attributes"
 msgstr "Attributter: @attributes"
 
 msgid "Audience"
-msgstr "Målgruppe"
+msgstr "Publikum"
 
 msgctxt "Work Page"
 msgid "Audience"
-msgstr "Målgruppe"
+msgstr "Publikum"
 
 msgctxt "advanced search 2"
 msgid "Audience"
-msgstr "Målgruppe"
+msgstr "Publikum"
 
 msgctxt "facets.facet.audience:name"
 msgid "Audience"
@@ -4931,7 +4931,7 @@ msgstr "Grundlæggende indstillinger"
 
 msgctxt "Fees list settings form"
 msgid "Basic settings"
-msgstr "Basisindstillinger"
+msgstr "Grundlæggende indstillinger"
 
 msgctxt "Patron page settings form"
 msgid "Basic settings"
@@ -5542,7 +5542,7 @@ msgstr "CQL søgning"
 
 msgctxt "advanced search 2"
 msgid "CQL search"
-msgstr "CQL-søgning"
+msgstr "CQL søgning"
 
 msgctxt "views.view.firstaccessiondate_content_admin:display:default:display_options:filters:field_cql_search_value:expose:label"
 msgid "CQL search"
@@ -5557,7 +5557,7 @@ msgstr "CQL Søgestreng"
 
 msgctxt "advanced search"
 msgid "CQL search string"
-msgstr "CQL søgestreng"
+msgstr "CQL Søgestreng"
 
 msgid "Cache control"
 msgstr "Cache kontrol"
@@ -5758,7 +5758,7 @@ msgstr ""
 
 msgctxt "Patron page"
 msgid "Card number"
-msgstr "Support-ID til eReolen"
+msgstr "Kortnummer"
 
 msgid "Casual name"
 msgstr "Kaldenavn"
@@ -6385,7 +6385,7 @@ msgid "Compact"
 msgstr ""
 
 msgid "Complete"
-msgstr "Complete"
+msgstr "Komplet"
 
 msgctxt "views.view.webform_submissions:display:embed_administer:display_options:fields:completed:label"
 msgid "Completed"
@@ -6645,7 +6645,7 @@ msgid "Consent"
 msgstr "Samtykke"
 
 msgid "Contact"
-msgstr "Kontaktformular"
+msgstr "Kontakt"
 
 msgid "Contact Registrants"
 msgstr "Kontakt deltagere"
@@ -7004,7 +7004,7 @@ msgstr "Kopier link"
 
 msgctxt "Work Page"
 msgid "Copy link"
-msgstr "Kopiér link"
+msgstr "Kopier link"
 
 msgctxt "Work Page"
 msgid "Copy link to edition"
@@ -8285,7 +8285,7 @@ msgid "Delay for textfield autosubmit"
 msgstr "Forsinkelse på autosubmit for tekstfelt"
 
 msgid "Delete"
-msgstr "Delete"
+msgstr "Slet"
 
 msgctxt "views.view.media_library:display:page:display_options:fields:delete_media:text"
 msgid "Delete"
@@ -8642,8 +8642,7 @@ msgid ""
 "Describes the name and version number of the software or publishing tool "
 "used to create the page."
 msgstr ""
-"Beskriver navn og versionsnummer på softwaren eller publiceringsværktøjet, "
-"der blev brugt til at oprette siden."
+"Beskriver navn og versionsnummer på det værktøj, der har genereret siden."
 
 msgid "Description"
 msgstr "Beskrivelse"
@@ -8766,7 +8765,7 @@ msgstr "Digitale reserveringer"
 
 msgctxt "Work Page"
 msgid "Dimensions"
-msgstr "Omfang"
+msgstr "Dimensioner"
 
 msgid "Direct File URL"
 msgstr "Direkte fil URL"
@@ -9446,7 +9445,7 @@ msgstr ""
 "custom provider client plugin."
 
 msgid "Edit"
-msgstr "Rediger"
+msgstr "Redigér"
 
 msgctxt "views.view.media_library:display:page:display_options:fields:edit_media:text"
 msgid "Edit"
@@ -9598,7 +9597,7 @@ msgstr "Udgave"
 
 msgctxt "Work Page - periodical"
 msgid "Edition"
-msgstr "Nr."
+msgstr "Udgave"
 
 msgctxt "Work Page"
 msgid "Edition switch modal"
@@ -9685,7 +9684,7 @@ msgid "Email address"
 msgstr "E-mail-adresse"
 
 msgid "Email notification"
-msgstr "Email notification"
+msgstr "E-mail-notifikation"
 
 msgid ""
 "Email notifications can be added to a queue to be processed on each cron "
@@ -10231,7 +10230,7 @@ msgid "Entities referenced by field <em>@label (@field_id)</em>."
 msgstr "Enheder refereret af feltet <em>@label (@field_id)</em>."
 
 msgid "Entity"
-msgstr "Instans"
+msgstr "Entity"
 
 msgctxt "views.view.files:display:page_2:display_options:fields:entity_label:label"
 msgid "Entity"
@@ -10369,7 +10368,7 @@ msgid "Entity reference revisions"
 msgstr "Entity reference revisions"
 
 msgid "Entity type"
-msgstr "Instans type"
+msgstr "Entity-type"
 
 msgctxt "views.view.files:display:page_2:display_options:fields:type:label"
 msgid "Entity type"
@@ -10721,7 +10720,7 @@ msgstr "Arrangementserie"
 
 msgctxt "DPL admin UX"
 msgid "Event series"
-msgstr "Arrangement(er)"
+msgstr "Arrangementserie"
 
 msgctxt "views.view.event_series_admin:display:page_1:display_options:menu:title"
 msgid "Event series"
@@ -10928,7 +10927,7 @@ msgstr "Udløbet"
 
 msgctxt "Loan list"
 msgid "Expired"
-msgstr "Overskredet"
+msgstr "Udløbet"
 
 msgctxt "field.field.user.user.field_password_expiration:settings:on_label"
 msgid "Expired Password"
@@ -11081,7 +11080,7 @@ msgstr ""
 
 msgctxt "translation handling"
 msgid "Failed to fetch file due to error \"%error\""
-msgstr "Kunne ikke hente fil pga fejl \"%error\""
+msgstr "Kunne ikke hente filen på grund af fejlen \"%error\""
 
 msgid "Failed to fetch picture from @url: @message"
 msgstr ""
@@ -11154,7 +11153,7 @@ msgid "Favorites list size settings"
 msgstr "Listestørrelse på huskelisten"
 
 msgid "Fax number"
-msgstr "Fax nummer"
+msgstr "Faxnummer"
 
 msgid "Features"
 msgstr "Features"
@@ -11178,7 +11177,7 @@ msgstr "Gebyrer"
 
 msgctxt "Dashboard"
 msgid "Fees"
-msgstr "Gebyrer & erstatninger"
+msgstr "Gebyrer"
 
 msgctxt "Patron menu"
 msgid "Fees & Replacement costs"
@@ -11465,7 +11464,7 @@ msgid "Film adaptations"
 msgstr "Filmatisering"
 
 msgid "Filter"
-msgstr "Filtrer"
+msgstr "Filter"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
@@ -11552,7 +11551,7 @@ msgstr "Flere filtre"
 
 msgctxt "Search Result"
 msgid "Filter materials (@hitcount)"
-msgstr "Filtrer materialer (@hitcount)"
+msgstr "Filtrer resultater (@hitcount)"
 
 msgctxt "advanced search 2"
 msgid "Filter materials (@hitcount)"
@@ -12156,7 +12155,7 @@ msgid "Games"
 msgstr "Spil"
 
 msgid "Gender"
-msgstr "Gender"
+msgstr "Køn"
 
 msgid "General"
 msgstr "Generelt"
@@ -12258,7 +12257,7 @@ msgstr "Geolokation understøttes ikke af din browser."
 
 msgctxt "Create patron"
 msgid "Geolocation is not supported by your browser."
-msgstr "Geolokation er ikke understøttet af din browser."
+msgstr "Geolokation understøttes ikke af din browser."
 
 msgid "Get campaign matching search result facets"
 msgstr "Hent kampagne som matcher facetter fra søgeresultatet"
@@ -12730,7 +12729,7 @@ msgstr ""
 
 msgctxt "Work Page"
 msgid "Home"
-msgstr "Hjemme"
+msgstr "Hjem"
 
 msgid "Horizontal"
 msgstr "Horisontal"
@@ -12740,7 +12739,7 @@ msgstr "Horisontale faner"
 
 msgctxt "Work Page"
 msgid "Host Publication"
-msgstr "Findes i"
+msgstr "Værtspublikation"
 
 msgctxt "advanced search 2"
 msgid "Host Publication"
@@ -13700,8 +13699,8 @@ msgstr "Installerede moduler: %modules_list"
 
 msgid "Installed theme"
 msgid_plural "Installed themes"
-msgstr[0] "Installeret tema"
-msgstr[1] "Installeret temaer"
+msgstr[0] ""
+msgstr[1] "Installerede temaer"
 
 msgid "Instance"
 msgstr "Instans"
@@ -13923,7 +13922,7 @@ msgid "Item available, order through the librarys catalogue"
 msgstr ""
 
 msgid "Items per page"
-msgstr "Emner pr. side"
+msgstr "Antal elementer"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
@@ -14211,7 +14210,7 @@ msgid "Last Password Reset"
 msgstr ""
 
 msgid "Last access"
-msgstr "Sidste adgang"
+msgstr "Seneste tilgang"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:access:label"
 msgid "Last access"
@@ -14452,7 +14451,7 @@ msgstr "Link er kopieret"
 
 msgctxt "Work Page"
 msgid "Link copied"
-msgstr "Link kopieret"
+msgstr "Link er kopieret"
 
 msgctxt "advanced search"
 msgid "Link copied to clipboard"
@@ -14460,7 +14459,7 @@ msgstr "Link kopieret til udklipsholder"
 
 msgctxt "advanced search 2"
 msgid "Link copied to clipboard"
-msgstr "Linket er kopieret til udklipsholder"
+msgstr "Link kopieret til udklipsholder"
 
 msgid "Link date to the referenced entity"
 msgstr "Link dato til den refererede enhed"
@@ -14477,7 +14476,7 @@ msgstr "Linktekst til iCalendar linkfeltet for arrangementet."
 
 msgctxt "DPL admin UX"
 msgid "Link title"
-msgstr "Link titel"
+msgstr "Linktitel"
 
 msgctxt "field.field.paragraph.language_selector.field_link_language:label"
 msgid "Link to a different language"
@@ -14732,7 +14731,7 @@ msgstr "Indlæser"
 
 msgctxt "Global"
 msgid "Loading"
-msgstr "Indlæser..."
+msgstr "Indlæser"
 
 msgctxt "advanced search"
 msgid "Loading results..."
@@ -14748,11 +14747,11 @@ msgstr "Gemmer..."
 
 msgctxt "Material search"
 msgid "Loading..."
-msgstr "Indlæser ..."
+msgstr "Indlæser..."
 
 msgctxt "Patron page"
 msgid "Loading..."
-msgstr "Henter..."
+msgstr "Indlæser..."
 
 msgctxt "advanced search 2"
 msgid "Loading..."
@@ -14845,7 +14844,7 @@ msgid "Locations"
 msgstr ""
 
 msgid "Lock Date/Time"
-msgstr "Lås dato/tid"
+msgstr "Lås Dato/Tid"
 
 msgctxt "views.view.locked_content:display:default:display_options:fields:timestamp:label"
 msgid "Lock Date/Time"
@@ -15170,7 +15169,7 @@ msgid "Manage types of registrant"
 msgstr ""
 
 msgid "Manage user accounts, roles, and permissions."
-msgstr "Administrer brugerkonti, roller og tilladelser."
+msgstr "Håndtér brugerkonti, roller og tilladelser."
 
 msgctxt "views.view.administerusersbyrole_people:display:page_1:display_options:tab_options:description"
 msgid "Manage user accounts, roles, and permissions."
@@ -15444,7 +15443,7 @@ msgstr ""
 "rolle. For eksempel er 'admin'-rollen altid <i>forbidden</i>."
 
 msgid "Media"
-msgstr "Medie"
+msgstr "Media"
 
 msgctxt "field.field.node.campaign.field_campaign_media:label"
 msgid "Media"
@@ -15537,7 +15536,7 @@ msgid "Media player width"
 msgstr "Medieafspiller bredde"
 
 msgid "Media type"
-msgstr "Medietype"
+msgstr "Media type"
 
 msgctxt "views.view.media_library:display:default:display_options:filters:bundle:expose:label"
 msgid "Media type"
@@ -15574,7 +15573,7 @@ msgid "Medium (National)"
 msgstr "Medium (national)"
 
 msgid "Member for"
-msgstr "Medlem siden"
+msgstr "Medlem i"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:created:label"
 msgid "Member for"
@@ -15628,7 +15627,7 @@ msgstr ""
 "mønstret for en specifik konfiguration, klik på dens navn nedenfor."
 
 msgid "Meta tags"
-msgstr "Meta tags"
+msgstr "Meta-tags"
 
 msgctxt "core.entity_form_display.node.article.default:third_party_settings:field_group:group_article_meta_tags:label"
 msgid "Meta tags"
@@ -15936,7 +15935,7 @@ msgid "Monthly Type"
 msgstr "Månedlig type"
 
 msgid "Months"
-msgstr "Months"
+msgstr "Måneder"
 
 msgid "More Information"
 msgstr "Mere Information"
@@ -16097,7 +16096,7 @@ msgid "Name of group"
 msgstr "Gruppenavn"
 
 msgid "Name or email contains"
-msgstr "Navn eller email indeholder"
+msgstr "Navn eller e-mail indeholder"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:filters:combine:expose:label"
 msgid "Name or email contains"
@@ -16394,7 +16393,7 @@ msgid "No pager elements have been exposed yet."
 msgstr "Ingen sideelementer er endnu blevet eksponeret."
 
 msgid "No people available."
-msgstr "Ingen redaktionelle brugere tilgængelige."
+msgstr "Ingen personer til rådighed."
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:empty:area_text_custom:content"
 msgid "No people available."
@@ -16504,7 +16503,7 @@ msgid "Node is scheduled for unpublishing"
 msgstr "Node er planlagt til afpublicering"
 
 msgid "Node operations bulk form"
-msgstr "Node operations bulk form"
+msgstr "Formular til bulk-handlinger på indholdselementer"
 
 msgctxt "views.view.locked_content:display:default:display_options:fields:node_bulk_form:label"
 msgid "Node operations bulk form"
@@ -16789,7 +16788,7 @@ msgid "Off"
 msgstr ""
 
 msgid "Offset"
-msgstr "Offset"
+msgstr "Forskydning"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
@@ -16885,7 +16884,7 @@ msgstr "Ok"
 
 msgctxt "Work Page"
 msgid "Ok"
-msgstr "OK"
+msgstr "Ok"
 
 msgid "Okta"
 msgstr "Okta"
@@ -17352,7 +17351,7 @@ msgid "Opens your mail client ready to e-mail @email"
 msgstr "Åbner din mail: Gør klar til at sende e-mail @email"
 
 msgid "Operations"
-msgstr "Funktioner"
+msgstr "Handlinger"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:operations:label"
 msgid "Operations"
@@ -17976,7 +17975,7 @@ msgid "Path prefix"
 msgstr "Stipræfiks"
 
 msgid "Path prefix for URLs in the language."
-msgstr "Path prefix for URLs in the language."
+msgstr "Stipræfiks for URL'er på sproget."
 
 msgid "Path to redirect to on client login"
 msgstr "Path to redirect to on client login"
@@ -18089,7 +18088,7 @@ msgid "Pending name input"
 msgstr "Pending name input"
 
 msgid "People"
-msgstr "Redaktionelle brugere"
+msgstr "Personer"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:title"
 msgid "People"
@@ -18156,7 +18155,7 @@ msgstr "Telefon"
 
 msgctxt "Work Page"
 msgid "Phone"
-msgstr "Mobilnummer"
+msgstr "Telefon"
 
 msgctxt "field.field.node.branch.field_phone:label"
 msgid "Phone"
@@ -18522,7 +18521,7 @@ msgid ""
 msgstr ""
 
 msgid "Preview"
-msgstr "Preview"
+msgstr "Gennemse"
 
 msgctxt "core.entity_view_mode.paragraph.preview:label"
 msgid "Preview"
@@ -18598,11 +18597,11 @@ msgstr ""
 
 msgctxt "Global"
 msgid "Processing..."
-msgstr "Indlæser..."
+msgstr "Behandler..."
 
 msgctxt "Renew loan"
 msgid "Processing..."
-msgstr "Indlæser..."
+msgstr "Behandler..."
 
 msgid "Product availability"
 msgstr "Produkttilgængelighed"
@@ -18823,8 +18822,8 @@ msgid ""
 "Provides search engines with specific directions for what to do when this "
 "page is indexed."
 msgstr ""
-"Leverer søgemaskiner med specifikke instruktioner for hvad der skal gøres, "
-"når denne side er indekseret."
+"Giver søgemaskiner anvisninger til, hvad de skal gøre, når de indekserer "
+"denne side."
 
 msgid "Provides static content for new library sites."
 msgstr "Sørger for faste sider på nye bibliotekshjemmesider."
@@ -19002,7 +19001,7 @@ msgid "Publish media"
 msgstr ""
 
 msgid "Publish on"
-msgstr "Publicer den"
+msgstr "Udgiv den"
 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:publish_on:label"
 msgid "Publish on"
@@ -19022,7 +19021,7 @@ msgid "Publish-on Date"
 msgstr "Udgivelsesdato"
 
 msgid "Published"
-msgstr "Publiceret"
+msgstr "Udgivet"
 
 msgctxt "core.base_field_override.media.image.status:label"
 msgid "Published"
@@ -19483,7 +19482,7 @@ msgstr ""
 "(%bundles)."
 
 msgid "References"
-msgstr "Referencer"
+msgstr "References"
 
 msgid ""
 "References to @target_label entities referenced by @field_name @type on "
@@ -19521,7 +19520,7 @@ msgid "Region"
 msgstr "Region"
 
 msgid "Register"
-msgstr "Registrer"
+msgstr "Opret konto"
 
 msgctxt "core.entity_form_mode.user.register:label"
 msgid "Register"
@@ -19667,7 +19666,7 @@ msgstr "Tilmeldinger til serier: %name"
 
 msgctxt "Url Proxy"
 msgid "Regular expression"
-msgstr "Regular expression / Regulært udtryk"
+msgstr "Regulært udtryk"
 
 msgid "Relate each @entity with a @field_name set to the @label."
 msgstr "Knyt hver @entity hvor @field_name er sat til @label."
@@ -19709,11 +19708,11 @@ msgstr ""
 
 msgctxt "advanced search"
 msgid "Relevance"
-msgstr "Bedste match"
+msgstr "Relevans"
 
 msgctxt "advanced search 2"
 msgid "Relevance"
-msgstr "Bedste match"
+msgstr "Relevans"
 
 msgctxt "field.field.eventseries.default.field_relevant_ticket_manager:label"
 msgid "Relevant for ticket manager"
@@ -19950,7 +19949,7 @@ msgstr "Reserveringer"
 
 msgctxt "Library Agency Configuration"
 msgid "Reservations"
-msgstr "Afhentningsfilialer"
+msgstr "Reserveringer"
 
 msgctxt "Patron menu"
 msgid "Reservations"
@@ -20097,7 +20096,7 @@ msgstr ""
 
 msgctxt "DPL admin"
 msgid "Reset password"
-msgstr "Gendan adgangskode"
+msgstr "Nulstil adgangskode"
 
 msgid "Reset sort label"
 msgstr ""
@@ -20259,7 +20258,7 @@ msgid "Robots"
 msgstr "Robotter"
 
 msgid "Role"
-msgstr "Roller"
+msgstr "Rolle"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:filters:roles_target_id:expose:label"
 msgid "Role"
@@ -20630,7 +20629,7 @@ msgstr "Skema"
 
 msgctxt "Work Page"
 msgid "Scope"
-msgstr "Sidetal"
+msgstr "Dækning"
 
 msgid "Scopes"
 msgstr "Scopes"
@@ -20692,7 +20691,7 @@ msgstr "Søg"
 
 msgctxt "Library Agency Configuration"
 msgid "Search"
-msgstr "Søgning"
+msgstr "Søg"
 
 msgctxt "Paragraphs Editor Enhancements"
 msgid "Search"
@@ -20793,7 +20792,7 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Search results"
-msgstr "Søgning"
+msgstr "Søgeresultater"
 
 msgctxt "Recommender (settings)"
 msgid "Search text"
@@ -20909,7 +20908,7 @@ msgstr "Vælg konto"
 
 msgctxt "Dashboard"
 msgid "Select all"
-msgstr "Vælg alle"
+msgstr "Markér alt"
 
 msgid "Select all categories the paragraph applies to."
 msgstr "Vælg alle kategorier som paragraphen gælder for"
@@ -21554,7 +21553,7 @@ msgid "Show a warning when too many event instances are being created"
 msgstr ""
 
 msgid "Show all"
-msgstr "Show all"
+msgstr "Vis alle"
 
 msgctxt "Material Grid"
 msgid "Show all"
@@ -21623,15 +21622,15 @@ msgstr "Vis mindre"
 
 msgctxt "Search Result"
 msgid "Show less"
-msgstr "Vis færre"
+msgstr "Vis mindre"
 
 msgctxt "Work Page"
 msgid "Show less"
-msgstr "Vis færre"
+msgstr "Vis mindre"
 
 msgctxt "advanced search 2"
 msgid "Show less"
-msgstr "Vis færre"
+msgstr "Vis mindre"
 
 msgid "Show links"
 msgstr "Vis links"
@@ -21644,7 +21643,7 @@ msgstr "Vis flere"
 
 msgctxt "advanced search 2"
 msgid "Show more"
-msgstr "Vis mere"
+msgstr "Vis flere"
 
 msgid "Show only used items"
 msgstr "Vis kun brugte elementer"
@@ -22277,7 +22276,7 @@ msgstr ""
 
 msgctxt "Address label"
 msgid "State"
-msgstr "Stat"
+msgstr "Status"
 
 msgctxt "field.field.eventinstance.default.field_event_state:label"
 msgid "State"
@@ -22512,11 +22511,11 @@ msgid "Sublocation filter."
 msgstr ""
 
 msgid "Submit"
-msgstr "Submit"
+msgstr "Indsend"
 
 msgctxt "Url Proxy"
 msgid "Submit"
-msgstr "Gem"
+msgstr "Indsend"
 
 msgid "Submitted by %author on %date"
 msgstr "Indsendt af %author den %date"
@@ -22813,7 +22812,7 @@ msgid "Taxonomy Terms that are scheduled for publishing or unpublishing"
 msgstr ""
 
 msgid "Taxonomy term"
-msgstr "Taksonomi term"
+msgstr "Ord i ordforråd"
 
 msgctxt "metatag.metatag_defaults.taxonomy_term:label"
 msgid "Taxonomy term"
@@ -23506,7 +23505,7 @@ msgid "The active content language."
 msgstr "Det aktive indholdssprog."
 
 msgid "The active user interface language."
-msgstr "Det aktive user interface-sprog."
+msgstr "Det aktive brugergrænsefladesprog."
 
 msgid "The additional name"
 msgstr "The additional name"
@@ -23944,11 +23943,11 @@ msgid ""
 "The digital copy has been ordered. You will receive an email when the "
 "digital copy is ready."
 msgstr ""
-"Du har bestilt en digital kopi. Du modtager en e-mail når den er klar til "
-"dig."
+"Den digitale kopi er bestilt. Du vil modtage en email, når den digitale kopi "
+"er klar."
 
 msgid "The domain name to use for the language."
-msgstr "Domænenavnet, der skal bruges til sproget."
+msgstr "Det domænenavn, der skal bruges til sproget."
 
 msgctxt "Global"
 msgid ""
@@ -24116,9 +24115,10 @@ msgid ""
 "”MONTHS” can also be used. For example ”NOW - 90 DAYS”. Remember to add a "
 "space on both sides of the plus and minus symbols."
 msgstr ""
-"Datoformatet skal være YYYY-MM-DD, f.eks. 2024-12-24. Termerne \"NOW\", "
-"\"DAYS\" og \"MONTHS\" kan også bruges til at angive interval, f.eks. \"NOW "
-"- 90 DAYS\". HUSK at lave mellemrum på begge sider af plus- og minussymboler."
+"Datoformatet for \"firstAccessionDate\" skal være YYYY-MM-DD, f.eks. "
+"2024-12-24. Termerne \"NOW\", \"DAYS\" og \"MONTHS\" kan også bruges til at "
+"angive interval, f.eks. \"NOW - 90 DAYS\". HUSK at lave mellemrum på begge "
+"sider af plus- og minussymboler."
 
 msgid "The formatted description"
 msgstr ""
@@ -24289,7 +24289,7 @@ msgid "The language code."
 msgstr "Sprogkoden."
 
 msgid "The language name."
-msgstr "Sprogets navn."
+msgstr "Navnet på sproget."
 
 msgid "The language of the @entity."
 msgstr "Sproget for @entity."
@@ -24935,7 +24935,7 @@ msgstr "Anmodningen om din lokation timede ud. Prøv venligst igen."
 
 msgctxt "Create patron"
 msgid "The request for your location timed out. Please try again."
-msgstr "Forsøget på at hente din lokation timede ud. Prøv igen."
+msgstr "Anmodningen om din lokation timede ud. Prøv venligst igen."
 
 msgctxt "Work Page"
 msgid "The review is not accessible"
@@ -25061,7 +25061,7 @@ msgid "The source node for this current node's translation set."
 msgstr "Kildeelementet for det aktuelle indholdselements oversættelsesgruppe."
 
 msgid "The source term for this current term's translation set."
-msgstr "The source term for this current term's translation set."
+msgstr "Kildeterm for den aktuelle terms oversættelsessæt."
 
 msgid ""
 "The spatial or temporal topic of the resource, the spatial applicability of "
@@ -26156,7 +26156,7 @@ msgstr "Denne pop-up gør det muligt at forny materialer"
 
 msgctxt "Global"
 msgid "This modal makes it possible to renew materials"
-msgstr "Denne pop-up gør det muligt at forny dine lån"
+msgstr "Denne pop-up gør det muligt at forny materialer"
 
 msgctxt "Global"
 msgid ""
@@ -26890,7 +26890,7 @@ msgid "Translation source node"
 msgstr "Kildeelement"
 
 msgid "Translation source term"
-msgstr "Oversættelse af kildeterm"
+msgstr "Oversættelsens kildeterm"
 
 msgid "Treat 4XX and 5XX responses as a failed invalidation."
 msgstr "Behandl 4XX- og 5XX-svar som en mislykket ugyldiggørelse."
@@ -27231,7 +27231,7 @@ msgstr "URL uden alias"
 
 msgctxt "Global"
 msgid "Unavailable"
-msgstr "Udlånt"
+msgstr "Ikke tilgængelig"
 
 msgid "Unavailable after date"
 msgstr "Utilgængelig efter dato"
@@ -27323,7 +27323,7 @@ msgstr "Ikke-installerede moduler: %modules_list"
 
 msgid "Uninstalled theme"
 msgid_plural "Uninstalled themes"
-msgstr[0] "Afinstalleret tema"
+msgstr[0] ""
 msgstr[1] "Afinstallerede temaer"
 
 msgid "Unknown"
@@ -27401,7 +27401,7 @@ msgid "Unpublish media"
 msgstr ""
 
 msgid "Unpublish on"
-msgstr "Afpubliceringsdato"
+msgstr "Afpublicér den"
 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:unpublish_on:label"
 msgid "Unpublish on"
@@ -27425,7 +27425,7 @@ msgid "Unpublish-on Date"
 msgstr "Afpublicer på dato"
 
 msgid "Unpublished"
-msgstr "Afpubliceret"
+msgstr "Ikke udgivet"
 
 msgctxt "views.view.content:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Unpublished"
@@ -27916,7 +27916,7 @@ msgid ""
 msgstr ""
 
 msgid "Used in"
-msgstr "Anvendt i"
+msgstr "Brugt i"
 
 msgctxt "views.view.files:display:default:display_options:fields:count:label"
 msgid "Used in"
@@ -28070,7 +28070,7 @@ msgid "Uses GO VIP profile"
 msgstr "Bruger GO VIP profil"
 
 msgid "Using defaults"
-msgstr "Brug af standardindstillinger"
+msgstr "Bruger standardindstillinger"
 
 msgid ""
 "Using the value 'width' tells certain mobile Internet Explorer browsers to "
@@ -28649,8 +28649,8 @@ msgstr "Om begivenhed-instansen er tilgængelig."
 msgid ""
 "Whether the language is written left-to-right (ltr) or right-to-left (rtl)."
 msgstr ""
-"Om sproget er skrevet fra venstre mod højre (vth) eller fra højre mod "
-"venstre (htv)."
+"Om sproget er skrevet fra venstre mod højre (ltr) eller fra højre mod "
+"venstre (rtl)."
 
 msgid "Whether the node is currently locked"
 msgstr "Om noden er låst i øjeblikket"
@@ -28876,7 +28876,7 @@ msgstr "Yandex"
 
 msgctxt "Search Result"
 msgid "Year"
-msgstr "Udgivelsesår"
+msgstr "År"
 
 msgctxt "Work Page"
 msgid "Year"
@@ -28884,7 +28884,7 @@ msgstr "År"
 
 msgctxt "advanced search 2"
 msgid "Year"
-msgstr "Udgivelsesår"
+msgstr "År"
 
 msgid "Year Interval"
 msgstr "Årsinterval"
@@ -29897,7 +29897,7 @@ msgstr "d. M Y"
 
 msgctxt "advanced search"
 msgid "date"
-msgstr "Dato"
+msgstr "dato"
 
 msgctxt "Global"
 msgid "day"
@@ -30295,10 +30295,10 @@ msgstr ""
 
 msgctxt "advanced search"
 msgid "language"
-msgstr "Sprog"
+msgstr "sprog"
 
 msgid "last »"
-msgstr "Sidste »"
+msgstr "sidste »"
 
 msgctxt "views.view.redirect:display:default:display_options:pager:options:tags:last"
 msgid "last »"
@@ -30392,7 +30392,7 @@ msgid "my site"
 msgstr "Min side"
 
 msgid "next ›"
-msgstr "Næste  ›"
+msgstr "næste ›"
 
 msgctxt "views.view.redirect:display:default:display_options:pager:options:tags:next"
 msgid "next ›"
@@ -30576,7 +30576,7 @@ msgstr "Klar til lån"
 
 msgctxt "advanced search"
 msgid "reset"
-msgstr "Nulstil"
+msgstr "gendan"
 
 msgctxt "Search Result"
 msgid "results"
@@ -30633,7 +30633,7 @@ msgstr "Viser materialer"
 
 msgctxt "advanced search"
 msgid "source"
-msgstr "Kilde"
+msgstr "kilde"
 
 msgid "speed of the effect"
 msgstr ""
@@ -30670,7 +30670,7 @@ msgid "uses <em>@data.crop_type</em> crop type"
 msgstr "Bruger <em>@data.crop_type</em> beskæringstype"
 
 msgid "view"
-msgstr "Vis"
+msgstr "vis"
 
 msgctxt "views.view.webform_submissions:display:default:display_options:fields:view_webform_submission:text"
 msgid "view"
@@ -30776,7 +30776,7 @@ msgid "« First"
 msgstr ""
 
 msgid "« first"
-msgstr "« Første"
+msgstr "« første"
 
 msgctxt "views.view.redirect:display:default:display_options:pager:options:tags:first"
 msgid "« first"
@@ -30826,7 +30826,7 @@ msgid "‹ Previous"
 msgstr ""
 
 msgid "‹ previous"
-msgstr "‹ Forrige"
+msgstr "‹ forrige"
 
 msgctxt "views.view.redirect:display:default:display_options:pager:options:tags:previous"
 msgid "‹ previous"
