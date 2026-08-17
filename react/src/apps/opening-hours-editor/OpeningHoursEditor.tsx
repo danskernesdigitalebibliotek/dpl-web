@@ -1,9 +1,9 @@
 import React from "react";
-import FullCalendar from "@fullcalendar/react";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import da from "@fullcalendar/core/locales/da";
+import FullCalendar, { CalendarRef } from "@fullcalendar/react";
+import timeGridPlugin from "@fullcalendar/react/timegrid";
+import dayGridPlugin from "@fullcalendar/react/daygrid";
+import interactionPlugin from "@fullcalendar/react/interaction";
+import da from "@fullcalendar/react/locales/da";
 import OpeningHoursEditorEventContent from "./OpeningHoursEditorEventContent";
 import useOpeningHoursEditor from "./useOpeningHoursEditor";
 import DialogFormEdit from "./DialogFormEdit";
@@ -34,7 +34,7 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
     }
   );
 
-  const fullCalendarRef = React.useRef<FullCalendar>(null);
+  const fullCalendarRef = React.useRef<CalendarRef>(null);
   const fullCalendarApi = fullCalendarRef.current?.getApi();
 
   const {

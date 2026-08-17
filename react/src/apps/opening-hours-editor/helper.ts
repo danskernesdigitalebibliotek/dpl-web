@@ -1,5 +1,5 @@
-import { EventInput } from "@fullcalendar/core";
-import { EventImpl } from "@fullcalendar/core/internal";
+import { EventInput } from "@fullcalendar/react";
+import { EventImpl } from "@fullcalendar/react/protected-api";
 import {
   DplOpeningHoursListGET200Item,
   DplOpeningHoursUpdatePATCH200Item,
