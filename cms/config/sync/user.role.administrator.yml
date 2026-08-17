@@ -270,7 +270,6 @@ permissions:
   - 'link to any page'
   - 'manage opening hours for branches'
   - 'manage password reset'
-  - 'rebuild node access permissions'
   - 'restful delete dpl_opening_hours_delete'
   - 'restful patch dpl_opening_hours_update'
   - 'restful post dpl_opening_hours_create'
