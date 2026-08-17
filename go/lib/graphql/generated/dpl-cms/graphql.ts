@@ -187,9 +187,14 @@ export type AppType =
 
 export type AppVideo = {
   __typename?: 'AppVideo';
+  orientation: AppVideoOrientation;
   thumbnail: Scalars['String']['output'];
   url: Scalars['String']['output'];
 };
+
+export type AppVideoOrientation =
+  | 'HORIZONTAL'
+  | 'VERTICAL';
 
 export type BetweenFloatInput = {
   max?: InputMaybe<Scalars['Float']['input']>;
@@ -233,6 +238,14 @@ export type BrandSettings = {
 
 export type CqlSearch = {
   __typename?: 'CQLSearch';
+  branch?: Maybe<Scalars['String']['output']>;
+  department?: Maybe<Scalars['String']['output']>;
+  firstAccessionDateOperator?: Maybe<Scalars['String']['output']>;
+  firstAccessionDateValue?: Maybe<Scalars['String']['output']>;
+  location?: Maybe<Scalars['String']['output']>;
+  onshelf?: Maybe<Scalars['String']['output']>;
+  sort?: Maybe<Scalars['String']['output']>;
+  sublocation?: Maybe<Scalars['String']['output']>;
   value?: Maybe<Scalars['String']['output']>;
 };
 

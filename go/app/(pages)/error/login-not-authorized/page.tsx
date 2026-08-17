@@ -22,7 +22,7 @@ const descriptionComponent = (
     </p>
     <p>
       Er du i tvivl, om I allerede er tilmeldt GO med Unilogin, eller har du andre generelle
-      spørgsmål vedr. GO og deltagelse med Unilogin, kan vi kontaktes på{" "}
+      spørgsmål vedr. GO og deltagelse med UniLogin, kan vi kontaktes på{" "}
       <a href="mailto:unilogin@ereolengo.dk">unilogin@ereolengo.dk</a>.
     </p>
   </>

@@ -1262,3 +1262,10 @@ function dpl_update_update_10076(): string {
 function dpl_update_update_10077(): string {
   return _dpl_update_uninstall_modules(['address_dawa']);
 }
+
+/**
+ * Enable dpl_biblio module.
+ */
+function dpl_update_update_10078(): string {
+  return _dpl_update_install_modules(['dpl_biblio']);
+}

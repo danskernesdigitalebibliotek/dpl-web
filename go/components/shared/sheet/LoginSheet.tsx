@@ -30,11 +30,11 @@ function LoginSheet({ open, onLogin }: { open: boolean; onLogin?: () => void }) 
     <ResponsiveSheet open={open} onClose={closeSheet} title="Log ind">
       <div className="flex h-full flex-col justify-center space-y-8">
         <LoginPanel
-          heading="Log ind med UNILogin"
-          ariaLabel="Log ind med UNILogin"
+          heading="Log ind med Unilogin"
+          ariaLabel="Log ind med Unilogin"
           onLogin={handleUniLogin}
           dataCy={cyKeys["login-sheet-unilogin-button"]}
-          description="Med UNILogin kan du låne e-bøger, lydbøger og podcasts."
+          description="Med Unilogin kan du låne e-bøger, lydbøger og podcasts."
         />
         <LoginPanel
           icon="adgangsplatformen"

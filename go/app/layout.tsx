@@ -56,7 +56,11 @@ async function RootLayout({
               <Toaster />
               {children}
               <Footer />
-              <MappTracking />
+              {/* Own Suspense boundary: MappTracking reads useSearchParams, which
+                would otherwise opt the whole layout into client rendering. */}
+              <Suspense>
+                <MappTracking />
+              </Suspense>
             </ServiceLayerProvider>
           </ReactQueryProvider>
         </Theme>

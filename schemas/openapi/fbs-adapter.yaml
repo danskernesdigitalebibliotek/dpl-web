@@ -13,6 +13,7 @@ paths:
             type: string
           name: exclude
           type: array
+          collectionFormat: multi
       responses:
         200:
           description: "No response was specified"
@@ -39,6 +40,7 @@ paths:
           name: reservationid
           required: true
           type: array
+          collectionFormat: multi
       responses:
         200:
           description: "No response was specified"
@@ -169,12 +171,14 @@ paths:
           name: recordid
           required: true
           type: array
+          collectionFormat: multi
         - description: "Identifies the branchIds which are excluded from the result"
           in: query
           items:
             type: string
           name: exclude
           type: array
+          collectionFormat: multi
       responses:
         200:
           description: "No response was specified"
@@ -201,12 +205,14 @@ paths:
           name: recordid
           required: true
           type: array
+          collectionFormat: multi
         - description: "Identifies the branchIds which are excluded from the result"
           in: query
           items:
             type: string
           name: exclude
           type: array
+          collectionFormat: multi
       responses:
         200:
           description: "No response was specified"
@@ -427,11 +433,6 @@ paths:
       responses:
         200:
           description: "No response was specified"
-          # Leave this commented out. For whatever reason our toolchain
-          # generates this with a generic response. This causes problems down
-          # the line so comment it out.
-          # schema:
-          #  $ref: '#/definitions/Response'
         204:
           description: "no content"
         400:
@@ -452,7 +453,7 @@ securityDefinitions:
     flow: password
     tokenUrl: "https://login.bib.dk/oauth/token"
 security:
-  - oauth: {}
+  - oauth: []
 tags:
   - description: "External Catalog"
     name: external_agencyid_catalog

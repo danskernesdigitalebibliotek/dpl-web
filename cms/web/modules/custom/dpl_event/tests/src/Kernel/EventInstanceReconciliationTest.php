@@ -152,6 +152,87 @@ class EventInstanceReconciliationTest extends KernelTestBase {
   }
 
   /**
+   * Two occurrences that share a start time survive a change to the series.
+   *
+   * This is the same identity question as the test above, asked of a series
+   * that already exists: recognising an occurrence by its start time alone
+   * makes the two look like one, and deletes one of them on the next change.
+   */
+  public function testOccurrencesSharingTheirStartTimeSurviveLaterChanges(): void {
+    $series = $this->createSeries([
+      ['2030-01-07T10:00:00', '2030-01-07T12:00:00'],
+      ['2030-01-07T10:00:00', '2030-01-07T14:00:00'],
+    ]);
+
+    $original_ids = $this->instanceIds($series);
+    $this->assertCount(2, $original_ids);
+
+    // Add an occurrence on another day, which leaves both of these alone.
+    $this->setCustomDates($series, [
+      ['2030-01-07T10:00:00', '2030-01-07T12:00:00'],
+      ['2030-01-07T10:00:00', '2030-01-07T14:00:00'],
+      ['2030-01-14T10:00:00', '2030-01-14T12:00:00'],
+    ]);
+
+    $remaining_ids = $this->instanceIds($series);
+
+    $this->assertSame(
+      [],
+      array_diff($original_ids, $remaining_ids),
+      'Both of the occurrences that start at the same time are still there.',
+    );
+    $this->assertCount(3, $remaining_ids, 'The added occurrence is the only new instance.');
+  }
+
+  /**
+   * An occurrence whose date cannot be read is left alone, not deleted.
+   *
+   * An occurrence is supposed to always have a date range, but these sites have
+   * seen instances end up in states the module does not allow. Reconciling one
+   * must not delete it: that would throw away whatever an editor put on it over
+   * a date that we are the ones failing to read.
+   *
+   * This drives the reconciliation directly rather than saving the series,
+   * because saving it does not survive such an instance either way - the status
+   * update recurring_events runs over every instance afterwards saves it, and
+   * dpl_event_eventinstance_presave() throws on an instance without a date.
+   * That is separate from reconciliation, and older than it.
+   */
+  public function testOccurrenceWithAnUnreadableDateIsLeftAlone(): void {
+    $series = $this->createSeries([
+      ['2030-01-07T10:00:00', '2030-01-07T12:00:00'],
+      ['2030-01-14T10:00:00', '2030-01-14T12:00:00'],
+    ]);
+
+    // Damage the middle occurrence the way a broken database row would be: the
+    // instance is still there and still belongs to the series, but the date
+    // that says which occurrence it is has been emptied out.
+    $damaged_id = $this->instanceIdByStartDate($series, '2030-01-14T10:00:00');
+    $this->clearInstanceDate($damaged_id);
+
+    $series = $this->reloadSeries($series);
+    $series->set('custom_date', $this->dateRangeValues([
+      ['2030-01-07T10:00:00', '2030-01-07T12:00:00'],
+      ['2030-01-14T10:00:00', '2030-01-14T12:00:00'],
+      ['2030-01-21T10:00:00', '2030-01-21T12:00:00'],
+    ]));
+    $this->reconcile($series);
+
+    $remaining_ids = $this->instanceIds($series);
+
+    $this->assertContains(
+      $damaged_id,
+      $remaining_ids,
+      'The occurrence whose date could not be read is still there.',
+    );
+    $this->assertCount(
+      4,
+      $remaining_ids,
+      'The date that occurrence used to cover is created anew, as it no longer claims it.',
+    );
+  }
+
+  /**
    * Creates a published event series with the given custom date ranges.
    *
    * @param array<array{string, string}> $dates
@@ -197,6 +278,53 @@ class EventInstanceReconciliationTest extends KernelTestBase {
       'value' => $date[0],
       'end_value' => $date[1],
     ], $dates);
+  }
+
+  /**
+   * Strips the date off an event instance, straight in the database.
+   *
+   * This goes around the entity API on purpose. dpl_event_eventinstance_presave
+   * reads the date of every instance it saves and throws when there is none, so
+   * an instance without a date cannot be saved through the API at all - the
+   * only way one exists is that its row was damaged from the outside, which is
+   * what this reproduces.
+   */
+  private function clearInstanceDate(string $id): void {
+    $database = $this->container->get('database');
+
+    foreach (['eventinstance_field_data', 'eventinstance_field_revision'] as $table) {
+      $database->update($table)
+        ->fields(['date__value' => NULL, 'date__end_value' => NULL])
+        ->condition('id', $id)
+        ->execute();
+    }
+
+    // The row was changed behind the storage's back, so drop what it holds.
+    $this->container->get('entity_type.manager')
+      ->getStorage('eventinstance')
+      ->resetCache([$id]);
+  }
+
+  /**
+   * Reloads a series, so that it sees instances changed since it was loaded.
+   */
+  private function reloadSeries(EventSeries $series): EventSeries {
+    $storage = $this->container->get('entity_type.manager')->getStorage('eventseries');
+    $storage->resetCache([$series->id()]);
+    $reloaded = $storage->load($series->id());
+
+    $this->assertInstanceOf(EventSeries::class, $reloaded);
+
+    return $reloaded;
+  }
+
+  /**
+   * Reconciles the instances of a series with our creator plugin.
+   */
+  private function reconcile(EventSeries $series): void {
+    $this->container->get('plugin.manager.event_instance_creator')
+      ->createInstance('dpl_event_eventinstance_creator', [])
+      ->processInstances($series);
   }
 
   /**

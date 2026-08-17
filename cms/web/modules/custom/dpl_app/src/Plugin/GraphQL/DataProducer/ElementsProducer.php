@@ -10,6 +10,7 @@ use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_media\Entity\VideotoolBase;
+use Drupal\dpl_media\Entity\VideotoolVerticalMedia;
 use Drupal\file\Entity\File;
 use Drupal\dpl_paragraphs\Entity\GoLinkboxParagraph;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
@@ -413,6 +414,14 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
 
     $field_context->addCacheableDependency($thumbnail);
 
+    // The streaming URL below is signed and only valid for $this->ttl seconds.
+    // The entity dependencies above contribute cache tags but no max-age, so
+    // without this the query result is cached permanently and keeps handing
+    // out the URL long after it expired, until an editor happens to re-save
+    // the content. Cap the cached result at half the signature's life so a
+    // client always gets a URL with time left on it, as StreamUrlProducer does.
+    $field_context->mergeCacheMaxAge((int) ($this->ttl / 2));
+
     $url = $this->videoTool->getVideoStreamUrl($media->getVideotoolUrl(), $this->ttl);
 
     if (!$url) {
@@ -422,6 +431,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     return [
       'url' => $url,
       'thumbnail' => $this->fileUrlGenerator->generateAbsoluteString($thumbnail->getFileUri()),
+      'orientation' => $media instanceof VideotoolVerticalMedia ? 'VERTICAL' : 'HORIZONTAL',
     ];
   }
 
