@@ -26,11 +26,18 @@
   z-index: $z-10;
   list-style: none;
   margin-top: $s-2xl;
-  margin-bottom: $s-sm;
   padding: $s-md 0;
   background-color: $color__global-primary;
   color: $color__global-black;
   text-transform: capitalize;
+  // A size down from h5 on small screens.
+  font-size: 16px;
+  line-height: 20px;
+
+  @include media-query__medium {
+    font-size: 20px;
+    line-height: 24px;
+  }
 }
 
 // The first heading tops the list, so it drops the spacing that separates one
