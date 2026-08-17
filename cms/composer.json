@@ -298,6 +298,7 @@
             "drupal/core": {
                 "3130197: Faulty toolbar subtree hash breaks asynchronous loading of admin menu content (DPL workaround)": "patches/3130197-core-d11-reroll.patch",
                 "3035578: Add details for AJAX response errors": "patches/vendor/3035578-mr14700.patch",
+                "3207813: Load the .module file before resolving a procedural hook implementation": "patches/3207813-core-load-module-file-for-procedural-hook.patch",
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
                 "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch"
             },
