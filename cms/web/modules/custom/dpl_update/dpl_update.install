@@ -1232,7 +1232,12 @@ function dpl_update_update_10075(): string {
  * Empty and remove field_address_dawa, in preparation for uninstalling DAWA.
  */
 function dpl_update_update_10076(): string {
-  $storage = FieldStorageConfig::loadByName('node', 'field_address_dawa');
+  try {
+    $storage = FieldStorageConfig::loadByName('node', 'field_address_dawa');
+  }
+  catch (\Exception $e) {
+    return "Could not load field_address_dawa. {$e->getMessage()}";
+  }
 
   if (!$storage instanceof FieldStorageConfig) {
     return "field_address_dawa does not exist - nothing to delete.";
