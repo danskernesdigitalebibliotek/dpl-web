@@ -130,8 +130,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3(@babel/core@8.0.1)(@babel/preset-env@8.0.2(@babel/core@8.0.1))(babel-loader@10.1.1(@babel/core@8.0.1)(webpack@5.109.2))(cypress@15.18.0)(webpack@5.109.2)
       '@cypress/webpack-preprocessor':
-        specifier: ^7.1.1
-        version: 7.1.1(@babel/core@8.0.1)(@babel/preset-env@8.0.2(@babel/core@8.0.1))(babel-loader@10.1.1(@babel/core@8.0.1)(webpack@5.109.2))(webpack@5.109.2)
+        specifier: ^7.1.2
+        version: 7.1.2(@babel/core@8.0.1)(@babel/preset-env@8.0.2(@babel/core@8.0.1))(babel-loader@10.1.1(@babel/core@8.0.1)(webpack@5.109.2))(webpack@5.109.2)
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.4
@@ -1329,8 +1329,8 @@ packages:
       babel-loader: ^8.3 || ^9 || ^10
       webpack: ^4 || ^5
 
-  '@cypress/webpack-preprocessor@7.1.1':
-    resolution: {integrity: sha512-vAGIBIWYWILLomTKB2lExi93WyFg8ILSkwplibX9w+40xrUWfmB8K/xdY7qobBvt9tNGB9Nhn93bSUIyfHc9Hg==}
+  '@cypress/webpack-preprocessor@7.1.2':
+    resolution: {integrity: sha512-YrdjJ7CvQ8pcJbSox4drHngSBZFZl7I3w7FKW3dVbhVEcORdtUeSIkpA0iD+Mzu1MeFOlqeikHc0pmTOLetPSg==}
     peerDependencies:
       '@babel/core': ^7.28.0
       '@babel/preset-env': ^7.26.0
@@ -9234,7 +9234,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@cypress/webpack-preprocessor@7.1.1(@babel/core@8.0.1)(@babel/preset-env@8.0.2(@babel/core@8.0.1))(babel-loader@10.1.1(@babel/core@8.0.1)(webpack@5.109.2))(webpack@5.109.2)':
+  '@cypress/webpack-preprocessor@7.1.2(@babel/core@8.0.1)(@babel/preset-env@8.0.2(@babel/core@8.0.1))(babel-loader@10.1.1(@babel/core@8.0.1)(webpack@5.109.2))(webpack@5.109.2)':
     dependencies:
       '@babel/core': 8.0.1
       '@babel/preset-env': 8.0.2(@babel/core@8.0.1)
