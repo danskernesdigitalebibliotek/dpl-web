@@ -1,5 +1,5 @@
 import React from "react";
-import { EventImpl } from "@fullcalendar/core/internal";
+import { EventImpl } from "@fullcalendar/react/protected-api";
 import {
   adjustEndDateBasedOnStartDate,
   formatFullCalendarEventToCmsEventEdit,
