@@ -107,14 +107,14 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
                   />
                 )
         }
-        eventContent={(eventInput) =>
-          OpeningHoursEditorEventContent({
-            eventInput,
-            iconAltText
-          })
-        }
+        eventContent={(eventInput) => (
+          <OpeningHoursEditorEventContent
+            eventInput={eventInput}
+            iconAltText={iconAltText}
+          />
+        )}
         events={events}
-        stickyHeaderDates
+        tableHeaderSticky
         height="auto"
         selectMirror
         allDaySlot={false}
