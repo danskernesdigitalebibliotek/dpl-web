@@ -62,7 +62,8 @@ const DialogFormEdit: React.FC<DialogFormEditProps> = ({
       id: eventInfo.id,
       category,
       title: eventInfo.title,
-      backgroundColor: eventInfo.backgroundColor,
+      // TODO: FullCalendar V7 doesn't support backgroundColor on `eventInfo`. Can we live without it?
+      // backgroundColor: eventInfo.backgroundColor,
       startStr: eventInfo.startStr,
       endStr: eventInfo.endStr,
       repetition: {
