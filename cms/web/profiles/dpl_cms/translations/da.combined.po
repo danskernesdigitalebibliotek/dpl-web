@@ -3002,21 +3002,21 @@ msgstr "Adresselinje 1"
 
 msgctxt "Address label"
 msgid "Address line 1"
-msgstr "Adresse linje 1"
+msgstr "Adresselinje 1"
 
 msgid "Address line 2"
 msgstr "Adresselinje 2"
 
 msgctxt "Address label"
 msgid "Address line 2"
-msgstr "Adresse linje 2"
+msgstr "Adresselinje 2"
 
 msgid "Address line 3"
 msgstr "Adresselinje 3"
 
 msgctxt "Address label"
 msgid "Address line 3"
-msgstr "Adresselinie 3 "
+msgstr "Adresselinje 3"
 
 msgid "Address requires the commerceguys/addressing library."
 msgstr "Adresser kræver commerceguys/adressering biblioteket."
@@ -3368,7 +3368,7 @@ msgid "Agency ID"
 msgstr "Agency ID"
 
 msgid "All"
-msgstr "Alt"
+msgstr "Alle"
 
 msgctxt "advanced search"
 msgid "All"
@@ -4561,11 +4561,11 @@ msgstr "Forfatter"
 
 msgctxt "advanced search"
 msgid "Author"
-msgstr "Forfatter / ophav"
+msgstr "Forfatter"
 
 msgctxt "advanced search 2"
 msgid "Author"
-msgstr "Forfatter / ophav"
+msgstr "Forfatter"
 
 msgctxt "views.view.content:display:default:display_options:fields:name:label"
 msgid "Author"
@@ -4645,7 +4645,7 @@ msgstr "Autorisationsendpoint"
 
 msgctxt "Dpl Login"
 msgid "Authorization endpoint"
-msgstr "Autorisations endpoint"
+msgstr "Autorisationsendpoint"
 
 msgctxt "Work Page"
 msgid "Authors"
@@ -5053,7 +5053,7 @@ msgstr "Blokeret"
 
 msgctxt "Work Page"
 msgid "Blocked"
-msgstr "Din låner er blokeret"
+msgstr "Blokeret"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Blocked"
@@ -5633,19 +5633,19 @@ msgstr "Annullér"
 
 msgctxt "Create patron"
 msgid "Cancel"
-msgstr "Fortryd"
+msgstr "Annullér"
 
 msgctxt "DPL Opening Hours Editor"
 msgid "Cancel"
-msgstr "Fortryd"
+msgstr "Annullér"
 
 msgctxt "Fees list"
 msgid "Cancel"
-msgstr "Fortryd"
+msgstr "Annullér"
 
 msgctxt "Global"
 msgid "Cancel"
-msgstr "OK"
+msgstr "Annullér"
 
 msgid "Cancel Event Registration"
 msgstr "Annuller registrering til arrangementet"
@@ -6918,7 +6918,7 @@ msgstr "Bidragyder"
 
 msgctxt "advanced search 2"
 msgid "Contributor"
-msgstr "Oplæser / oversætter / bidrag"
+msgstr "Bidragyder"
 
 msgctxt "Work Page"
 msgid "Contributors"
@@ -7270,7 +7270,7 @@ msgstr "Oprettet"
 
 msgctxt "BNF"
 msgid "Created"
-msgstr "Skrevet af"
+msgstr "Oprettet"
 
 msgctxt "views.view.redirect:display:default:display_options:fields:created:label"
 msgid "Created"
@@ -7335,11 +7335,11 @@ msgid "Created the %label registrant type."
 msgstr "Oprettet %label deltagertype."
 
 msgid "Creator"
-msgstr "Forfatter"
+msgstr "Skaber"
 
 msgctxt "advanced search 2"
 msgid "Creator"
-msgstr "Forfatter / ophav"
+msgstr "Skaber"
 
 msgid "Creator's Twitter account"
 msgstr "Formidlers Twitter"
@@ -7969,7 +7969,7 @@ msgid "Day of the Month"
 msgstr "Dag i måneden"
 
 msgid "Days"
-msgstr "Days"
+msgstr "Dage"
 
 msgctxt "Fees list"
 msgid "Days"
@@ -9953,7 +9953,7 @@ msgstr "Aktiveret"
 
 msgctxt "dpl_instant_loan"
 msgid "Enabled"
-msgstr "Tilvælg"
+msgstr "Aktiveret"
 
 msgid "Enabled Recur Field Types"
 msgstr "Aktiverede tilbagevendende felttyper"
@@ -10786,7 +10786,7 @@ msgstr "Begivenheder"
 
 msgctxt "DPL Breadcrumbs"
 msgid "Events"
-msgstr "Arrangementer"
+msgstr "Begivenheder"
 
 msgctxt "field.field.paragraph.manual_event_list.field_events:label"
 msgid "Events"
@@ -10939,7 +10939,7 @@ msgstr "Udløber"
 
 msgctxt "Global"
 msgid "Expires"
-msgstr "Udløber automatisk"
+msgstr "Udløber"
 
 msgctxt "Global"
 msgid "Expires @date"
@@ -12159,7 +12159,7 @@ msgid "Gender"
 msgstr "Gender"
 
 msgid "General"
-msgstr "General"
+msgstr "Generelt"
 
 msgctxt "Library Agency Configuration"
 msgid "General"
@@ -12759,7 +12759,7 @@ msgstr "Værtsnavn"
 
 msgctxt "Url Proxy"
 msgid "Hostname"
-msgstr "Hostname / Værtsnavn"
+msgstr "Værtsnavn"
 
 msgctxt "Url Proxy"
 msgid "Hostnames"
@@ -12881,7 +12881,7 @@ msgstr "Id"
 
 msgctxt "Dpl Mapp"
 msgid "Id"
-msgstr "Tag Integration ID"
+msgstr "Id"
 
 msgid "Id: @id"
 msgstr "Id: @id"
@@ -14104,7 +14104,7 @@ msgstr "Etiket"
 
 msgctxt "BNF"
 msgid "Label"
-msgstr "Mærkat"
+msgstr "Etiket"
 
 msgid "Label / Description"
 msgstr "Label / Beskrivelse"
@@ -14152,7 +14152,7 @@ msgid "Langcode"
 msgstr "Langcode"
 
 msgid "Language"
-msgstr "Language"
+msgstr "Sprog"
 
 msgctxt "Work Page"
 msgid "Language"
@@ -14599,11 +14599,11 @@ msgid ""
 msgstr ""
 
 msgid "List"
-msgstr "Liste"
+msgstr "Vis"
 
 msgctxt "Paragraphs Editor Enhancements"
 msgid "List"
-msgstr "Liste"
+msgstr "Vis"
 
 msgctxt "core.entity_view_mode.eventinstance.list:label"
 msgid "List"
@@ -14820,7 +14820,7 @@ msgstr "Lokation"
 
 msgctxt "dpl_fbi"
 msgid "Location"
-msgstr "Opstilling"
+msgstr "Lokation"
 
 msgid "Location filter"
 msgstr ""
@@ -14962,7 +14962,7 @@ msgstr "Login"
 
 msgctxt "Global"
 msgid "Login"
-msgstr "Log ind"
+msgstr "Login"
 
 msgid "Login denied for @email via pre-authorize hook."
 msgstr ""
@@ -18167,7 +18167,7 @@ msgstr "Telefonnummer"
 
 msgctxt "Global"
 msgid "Phone number"
-msgstr "Mobilnummer"
+msgstr "Telefonnummer"
 
 msgid "Phone number verified"
 msgstr "Verificeret telefonnummer"
@@ -18461,7 +18461,7 @@ msgstr "Postnummer"
 
 msgctxt "Address label"
 msgid "Postal code"
-msgstr "Postnr."
+msgstr "Postnummer"
 
 msgid "Postal/ZIP code"
 msgstr "Postnummer"
@@ -19142,11 +19142,11 @@ msgstr "Udgiver"
 
 msgctxt "Work Page"
 msgid "Publisher"
-msgstr "Forlag"
+msgstr "Udgiver"
 
 msgctxt "advanced search 2"
 msgid "Publisher"
-msgstr "Udgiver / forlag"
+msgstr "Udgiver"
 
 msgid "Publishing"
 msgstr "Udgivelse"
@@ -19518,7 +19518,7 @@ msgstr "Region"
 
 msgctxt "Address label"
 msgid "Region"
-msgstr "Region (anvendes ikke i DK)"
+msgstr "Region"
 
 msgid "Register"
 msgstr "Registrer"
@@ -19997,11 +19997,11 @@ msgid "Reserved by another patron"
 msgstr "Reserveret af en anden låner"
 
 msgid "Reset"
-msgstr "Reset"
+msgstr "Gendan"
 
 msgctxt "advanced search 2"
 msgid "Reset"
-msgstr "Nulstil"
+msgstr "Gendan"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:exposed_form:options:reset_button_label"
 msgid "Reset"
@@ -21968,11 +21968,11 @@ msgstr "Sortér efter"
 
 msgctxt "advanced search"
 msgid "Sort by"
-msgstr "Sorter efter"
+msgstr "Sortér efter"
 
 msgctxt "advanced search 2"
 msgid "Sort by"
-msgstr "Sorter efter"
+msgstr "Sortér efter"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:exposed_form:options:exposed_sorts_label"
 msgid "Sort by"
@@ -22093,7 +22093,7 @@ msgstr "Sorting code"
 
 msgctxt "Address label"
 msgid "Sorting code"
-msgstr "Postnummer"
+msgstr "Sorting code"
 
 msgid "Source"
 msgstr "Kilde"
@@ -22438,11 +22438,11 @@ msgid "Stores whether the current Entity a template for cloning or not."
 msgstr "Gemmer, om den aktuelle Entity er en skabelon til kloning eller ej."
 
 msgid "Street address"
-msgstr "Gadenavn"
+msgstr "Adresse"
 
 msgctxt "Address label"
 msgid "Street address"
-msgstr "Gadenavn"
+msgstr "Adresse"
 
 msgctxt "Address label"
 msgid "Street address line 2"
@@ -26369,7 +26369,7 @@ msgstr ""
 "Tilføj/rediger serie."
 
 msgid "Threshold"
-msgstr "Tærskelværdi"
+msgstr "Varsel"
 
 msgctxt "dpl_instant_loan"
 msgid "Threshold"
@@ -27345,7 +27345,7 @@ msgstr "Ukendt fejl."
 
 msgctxt "Work Page"
 msgid "Unknown error."
-msgstr "Der er sket en uventet fejl"
+msgstr "Ukendt fejl."
 
 msgctxt "Global"
 msgid "Unknown user"
@@ -28034,7 +28034,7 @@ msgstr "UserInfo slutpunkt"
 
 msgctxt "Dpl Login"
 msgid "UserInfo endpoint"
-msgstr "UserInfo endpoint"
+msgstr "UserInfo slutpunkt"
 
 msgid "Userinfo endpoint"
 msgstr ""
