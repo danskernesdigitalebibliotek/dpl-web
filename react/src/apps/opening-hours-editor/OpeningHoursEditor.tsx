@@ -4,6 +4,11 @@ import timeGridPlugin from "@fullcalendar/react/timegrid";
 import dayGridPlugin from "@fullcalendar/react/daygrid";
 import interactionPlugin from "@fullcalendar/react/interaction";
 import da from "@fullcalendar/react/locales/da";
+
+import classicThemePlugin from "@fullcalendar/react/themes/classic";
+import "@fullcalendar/react/skeleton.css";
+import "@fullcalendar/react/themes/classic/theme.css";
+import "@fullcalendar/react/themes/classic/palette.css";
 import OpeningHoursEditorEventContent from "./OpeningHoursEditorEventContent";
 import useOpeningHoursEditor from "./useOpeningHoursEditor";
 import DialogFormEdit from "./DialogFormEdit";
@@ -70,7 +75,12 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
       <FullCalendar
         initialDate={initialDate ?? undefined}
         ref={fullCalendarRef}
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        plugins={[
+          classicThemePlugin,
+          dayGridPlugin,
+          timeGridPlugin,
+          interactionPlugin
+        ]}
         headerToolbar={{
           left: "dayGridMonth,timeGridWeek",
           center: "title",
