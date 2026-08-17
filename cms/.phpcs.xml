@@ -58,7 +58,9 @@
     <exclude-pattern>*/web/modules/custom/dpl_cookies/dpl_cookies.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_dashboard/dpl_dashboard.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_event/dpl_event.module</exclude-pattern>
+    <exclude-pattern>*/web/modules/custom/dpl_example_content/dpl_example_content.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_favorites_list/dpl_favorites_list.module</exclude-pattern>
+    <exclude-pattern>*/web/modules/custom/dpl_fbi/dpl_fbi.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_fees/dpl_fees.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_footer/dpl_footer.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_library_agency/dpl_library_agency.module</exclude-pattern>
