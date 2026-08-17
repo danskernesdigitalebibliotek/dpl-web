@@ -135,6 +135,7 @@ describe("Reservation flow", () => {
 
   it("Create reservation: form → Godkend → receipt", () => {
     mockFbsPatron()
+    mockFbsLoans([])
     mockFbsReservations([])
 
     // Client calls the service-layer hook which fetches via the AP-service proxy
@@ -175,6 +176,7 @@ describe("Reservation flow", () => {
 
   it("Create reservation: failure → error toast with reason-specific copy", () => {
     mockFbsPatron()
+    mockFbsLoans([])
     mockFbsReservations([])
 
     cy.mockServerRest({
@@ -200,6 +202,7 @@ describe("Reservation flow", () => {
 
   it("Reservation form shows missing-email copy when patron has no email", () => {
     mockFbsPatron({ emailAddress: null })
+    mockFbsLoans([])
     mockFbsReservations([])
 
     visitPhysicalWork()
@@ -211,6 +214,35 @@ describe("Reservation flow", () => {
       .contains("voksen-hjemmesiden")
       .should("have.attr", "href")
       .and("match", /\/user\/me$/)
+  })
+
+  it("Already loaned: work page shows the loan instead of the reserve button", () => {
+    mockFbsPatron()
+    // The patron already has the material on loan, so reserving is off the
+    // table — the page shows the loan instead.
+    mockFbsLoans([
+      {
+        isRenewable: true,
+        renewalStatusList: [],
+        loanDetails: {
+          loanId: 555333,
+          recordId: RECORD_ID,
+          dueDate: "2026-12-01T12:00:00.000Z",
+          loanDate: "2026-11-01T12:00:00.000Z",
+          materialItemNumber: "5001112223",
+        },
+      },
+    ])
+    mockFbsReservations([])
+    mockManifestationsByFaust()
+
+    visitPhysicalWork()
+
+    cy.contains("Du har lånt denne bog").should("be.visible")
+    cy.dataCy("work-page-button-logged-in").should("not.exist")
+    cy.dataCy("view-loan-button").should("be.visible").and("be.enabled").click()
+    cy.dataCy("loan-details-modal").should("exist")
+    cy.dataCy("loan-details-modal").should("contain", "Afleveres")
   })
 
   it("Delete reservation: details → confirm → receipt", () => {

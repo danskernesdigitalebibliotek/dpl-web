@@ -1,4 +1,4 @@
-import { useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import { useLoans, useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React from "react"
 
 import {
@@ -9,8 +9,10 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
+import usePatronShelf from "@/hooks/usePatronShelf"
 import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { displayCreators } from "@/lib/helpers/helper.creators"
 import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
 import { getPublizonIdentifierFromManifestation, pidToFaust } from "@/lib/helpers/ids"
 import { TModalType } from "@/lib/helpers/modal-url"
@@ -144,9 +146,12 @@ const WorkPageButtonsLoggedIn = ({
   return null
 }
 
-// Reads the patron's reservations and renders either the "Reserver" CTA or,
-// when the manifestation is already reserved, a small status row with a
-// button opening the reservation details (with deletion inside).
+// Reads the patron's loans and reservations and renders the matching state:
+// already loaned → status row with a button opening the loan details;
+// already reserved → status row with a button opening the reservation
+// details (with deletion inside); otherwise the "Reserver" CTA. Both
+// service-layer hooks are patron-gated, so nothing fires for Unilogin or
+// anonymous sessions.
 const PhysicalReservationButton = ({
   dataCy,
   label,
@@ -161,8 +166,25 @@ const PhysicalReservationButton = ({
   onOpen: (modal: TModalType) => void
 }) => {
   const { data: reservations } = useReservations()
+  const { data: loans } = useLoans()
   const recordId = pidToFaust(selectedManifestation.pid)
   const existing = findReservationByRecordId(reservations, recordId)
+  const existingLoan = loans?.find(loan => loan.recordId === recordId)
+
+  if (existingLoan) {
+    return (
+      <>
+        <div className="w-full lg:max-w-80 lg:min-w-72">
+          <div
+            className="text-typo-caption text-foreground-muted flex w-full justify-center
+              lg:ml-auto">
+            Du har lånt denne bog
+          </div>
+        </div>
+        <ViewLoanButton recordId={existingLoan.recordId} />
+      </>
+    )
+  }
 
   if (existing) {
     return (
@@ -192,6 +214,34 @@ const PhysicalReservationButton = ({
       dataCy={dataCy}
       onClick={() => onOpen(reservationModal)}>
       Reserver {label}
+    </WorkPageButton>
+  )
+}
+
+// Opens the existing loan in the loan details modal (with renewal inside).
+// Only mounted when the patron has the material on loan, so the shelf lookup
+// pairing the FBS record with its FBI work never runs for anyone else.
+const ViewLoanButton = ({ recordId }: { recordId: string }) => {
+  const { loanItems } = usePatronShelf()
+  const item = loanItems.find(({ loan }) => loan.recordId === recordId)
+
+  return (
+    <WorkPageButton
+      ariaLabel="Se lån"
+      theme="primary"
+      dataCy={cyKeys["view-loan-button"]}
+      disabled={!item}
+      onClick={() => {
+        if (!item) return
+        openModal("LoanDetailsModal", {
+          loan: item.loan,
+          manifestation: item.manifestation,
+          title: item.work.titles.full[0],
+          workId: item.work.workId,
+          creators: displayCreators(item.work.creators, 1),
+        })
+      }}>
+      Se lån
     </WorkPageButton>
   )
 }
