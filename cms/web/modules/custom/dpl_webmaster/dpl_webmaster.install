@@ -5,6 +5,7 @@
  * Install, update and uninstall functions for the dpl_webmaster module.
  */
 
+use Drupal\Core\Config\StorageInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\drupal_typed\DrupalTyped;
 
@@ -49,4 +50,33 @@ function dpl_webmaster_update_10103(): string {
     ->execute();
 
   return "Asset translations deleted";
+}
+
+/**
+ * Delete any remaining translated assets.
+ *
+ * Asset translations are no longer created, as the configuration is now marked
+ * untranslatable, but translations made before that still override the assets
+ * on the frontend. Update 10103 only cleaned up Danish translations, so sweep
+ * all languages this time.
+ *
+ * @see \Drupal\dpl_webmaster\Hook\AssetInjectorHooks::configSchemaInfoAlter()
+ */
+function dpl_webmaster_update_10104(): string {
+  $feedback = [];
+  $storage = DrupalTyped::service(StorageInterface::class, 'config.storage');
+
+  foreach ($storage->getAllCollectionNames() as $collection) {
+    if (!str_starts_with($collection, 'language.')) {
+      continue;
+    }
+
+    $collectionStorage = $storage->createCollection($collection);
+    foreach ($collectionStorage->listAll('asset_injector.') as $name) {
+      $collectionStorage->delete($name);
+      $feedback[] = "Deleted {$collection} translation of {$name}";
+    }
+  }
+
+  return implode("\n", $feedback);
 }
