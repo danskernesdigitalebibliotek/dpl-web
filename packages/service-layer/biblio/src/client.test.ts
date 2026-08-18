@@ -41,6 +41,11 @@ describe("createBiblioClient.getMetadata", () => {
     expect(result).toEqual({
       isbn: "9788711234567",
       materialType: "ebook",
+      title: undefined,
+      authors: [],
+      description: undefined,
+      publishDate: undefined,
+      languages: [],
     })
   })
 
@@ -99,9 +104,14 @@ const loanBody = {
   start: "2026-08-01T10:00:00Z",
   end: "2026-08-31T10:00:00Z",
   active: true,
-  // Fields the mapper does not consume must be tolerated.
   title: "En bog",
+  author: "Christie, Agatha",
   publisher: "Forlag",
+  publish_date: "2014-11-07T00:00:00Z",
+  // Fields the mapper does not consume must be tolerated.
+  uid: "user-1",
+  org_id: "org-1",
+  lix: 24,
 }
 
 const mappedLoan = {
@@ -111,6 +121,10 @@ const mappedLoan = {
   startDate: "2026-08-01T10:00:00Z",
   endDate: "2026-08-31T10:00:00Z",
   active: true,
+  title: "En bog",
+  author: "Christie, Agatha",
+  publisher: "Forlag",
+  publishDate: "2014-11-07T00:00:00Z",
 }
 
 describe("createBiblioClient.getLoans", () => {

@@ -11,6 +11,11 @@ describe("parseAndMapMetadata", () => {
     expect(parseAndMapMetadata(raw)).toEqual({
       isbn: "9788711234567",
       materialType: "ebook",
+      title: undefined,
+      authors: [],
+      description: undefined,
+      publishDate: undefined,
+      languages: [],
     })
   })
 
@@ -19,9 +24,32 @@ describe("parseAndMapMetadata", () => {
       materials: [{ isbn: "9788711234567", material_type: "audiobook" }],
     }
 
+    expect(parseAndMapMetadata(raw)?.materialType).toBe("audiobook")
+  })
+
+  it("maps the catalogue fields used to present a material", () => {
+    const raw = {
+      materials: [
+        {
+          isbn: "9788727319346",
+          material_type: "ebook",
+          title: "Din for en sommer",
+          author: ["Sherman, L."],
+          description: "En intens romance",
+          publish_date: "2026-06-18T00:00:00.000Z",
+          languages: ["dan"],
+        },
+      ],
+    }
+
     expect(parseAndMapMetadata(raw)).toEqual({
-      isbn: "9788711234567",
-      materialType: "audiobook",
+      isbn: "9788727319346",
+      materialType: "ebook",
+      title: "Din for en sommer",
+      authors: ["Sherman, L."],
+      description: "En intens romance",
+      publishDate: "2026-06-18T00:00:00.000Z",
+      languages: ["dan"],
     })
   })
 
@@ -35,16 +63,23 @@ describe("parseAndMapMetadata", () => {
         {
           isbn: "9788711234567",
           material_type: "ebook",
-          title: "Some title",
           duration_seconds: 3600,
           publisher: "Some publisher",
+          thema_codes: ["FA"],
         },
       ],
     }
 
+    // The point of the test is what is NOT carried over: duration, publisher
+    // and thema codes have no place in the mapped shape.
     expect(parseAndMapMetadata(raw)).toEqual({
       isbn: "9788711234567",
       materialType: "ebook",
+      title: undefined,
+      authors: [],
+      description: undefined,
+      publishDate: undefined,
+      languages: [],
     })
   })
 
@@ -60,6 +95,14 @@ describe("parseAndMapMetadata", () => {
     expect(() =>
       parseAndMapMetadata({
         materials: [{ isbn: 42, material_type: "ebook" }],
+      })
+    ).toThrow()
+  })
+
+  it("throws when a presentation field has the wrong type", () => {
+    expect(() =>
+      parseAndMapMetadata({
+        materials: [{ isbn: "9788711234567", material_type: "ebook", title: 42 }],
       })
     ).toThrow()
   })

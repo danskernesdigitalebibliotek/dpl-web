@@ -147,6 +147,14 @@ export type RenewedLoan = RenewedLoanSuccess | RenewedLoanFailed
 export type BiblioMaterial = {
   isbn: string
   materialType: "ebook" | "audiobook"
+  // Catalogue fields used to present a material to the user. The contract
+  // marks all but the authors as required, but they are optional here so a
+  // sparse record degrades the presentation instead of failing the lookup.
+  title?: string
+  authors: string[]
+  description?: string
+  publishDate?: string
+  languages: string[]
 }
 
 // The broad material type used by the loan and reservation DTOs. The metadata
@@ -160,6 +168,13 @@ export type BiblioLoan = {
   startDate: string
   endDate: string
   active: boolean
+  // A loan carries its own catalogue fields, so presenting it needs no
+  // separate metadata lookup. Note that author is a single string here,
+  // unlike the metadata endpoints where it is a list.
+  title?: string
+  author?: string
+  publisher?: string
+  publishDate?: string
 }
 
 export type BiblioReservation = {
