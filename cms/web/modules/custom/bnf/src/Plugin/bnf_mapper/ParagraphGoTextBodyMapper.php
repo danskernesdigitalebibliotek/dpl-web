@@ -26,7 +26,7 @@ class ParagraphGoTextBodyMapper extends BnfMapperParagraphPluginBase {
     }
 
     /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
-    $paragraph = $this->paragraphStorage->create([
+    $paragraph = $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'go_text_body',
     ]);
 

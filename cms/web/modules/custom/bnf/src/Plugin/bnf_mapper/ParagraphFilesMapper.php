@@ -52,7 +52,7 @@ class ParagraphFilesMapper extends BnfMapperParagraphPluginBase {
       $filesValues[] = $this->getMediaDocumentValue($file);
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'files',
       'field_files' => $filesValues,
     ]);
