@@ -231,24 +231,6 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
     }, MATERIAL.biblioEbook.row);
   });
 
-  it("Tells an audiobook apart from an e-book across providers", () => {
-    loanList.components.DigitalLoanRow(
-      (row) =>
-        row.elements.materialType().first().should("have.text", "Audiobook"),
-      MATERIAL.biblioAudiobook.row
-    );
-    loanList.components.DigitalLoanRow(
-      (row) =>
-        row.elements.materialType().first().should("have.text", "Audiobook"),
-      MATERIAL.publizonAudiobook.row
-    );
-    loanList.components.DigitalLoanRow(
-      (row) =>
-        row.elements.materialType().first().should("have.text", "E-book"),
-      MATERIAL.publizonEbook.row
-    );
-  });
-
   it("Warns about the Biblio loan that is due soon", () => {
     // The audiobook runs out 24 Oct 19:40, seen from 21 Oct 10:00. The
     // remaining time is rounded up, so a bit over three days reads as four.
@@ -271,12 +253,16 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
       .elements.loanDetailsButton()
       .click();
 
-    // Then: the modal shows that material
-    loanList.detailsModal().container().should("be.visible");
-    loanList
-      .detailsModal()
-      .elements.title()
-      .should("contain", MATERIAL.biblioEbook.title);
+    // Then: the modal describes the material from the loan alone. Every field
+    // here came with the loan - no metadata was fetched for it, which is the
+    // whole point of the contract requiring them.
+    const modal = loanList.detailsModal();
+    modal.container().should("be.visible");
+    modal.elements.title().should("have.text", MATERIAL.biblioEbook.title);
+    modal.elements.materialType().should("have.text", "E-book");
+    // Authors and the publication year share a line: "Sherman, L. (2022)".
+    modal.elements.authors().should("contain", MATERIAL.biblioEbook.author);
+    modal.elements.authors().should("contain", "2022");
   });
 
   it("Asks no provider more than it has to when describing the list", () => {

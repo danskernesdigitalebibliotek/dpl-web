@@ -15,7 +15,11 @@ export class LoanDetailsModalComponent extends ComponentObject {
   constructor() {
     super(() => cy.get(loanDetailsModalSelector));
     this.addElements = {
-      title: () => this.container().find(".modal-details__title")
+      title: () => this.container().find(".modal-details__title"),
+      // Authors and publication year share one line: "Sherman, L. (2022)".
+      authors: () => this.container().find("[data-cy='modal-authors']"),
+      materialType: () =>
+        this.container().find(".modal-details__tags .status-label--outline")
     };
   }
 }
