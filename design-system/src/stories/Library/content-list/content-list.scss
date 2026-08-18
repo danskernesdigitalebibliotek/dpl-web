@@ -13,7 +13,57 @@
   margin-top: -$s-md;
 }
 
+.content-list__month-separator {
+  // Serif, a step up from the body text: enough to read as a heading without
+  // the large underlined titles that would pull focus from the events
+  // themselves. Lora ships in regular only, so no weight override here - it
+  // would render as a synthetic bold.
+  @include typography($typo__h5);
+  // Sticks while its month scrolls past. Sticky only pins within one <ul>;
+  // spanning page boundaries is handled by the wrapper rule below.
+  position: sticky;
+  top: 0;
+  z-index: $z-10;
+  list-style: none;
+  margin-top: $s-2xl;
+  padding: $s-md 0;
+  background-color: $color__global-primary;
+  color: $color__global-black;
+  text-transform: capitalize;
+  // A size down from h5 on small screens.
+  font-size: 16px;
+  line-height: 20px;
+
+  @include media-query__medium {
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+
+// The first heading tops the list, so it drops the spacing that separates one
+// month from the previous. Set by content-list-month-separator.js.
+.content-list__month-separator--first {
+  margin-top: 0;
+}
+
 // Modifier to remove top margin (e.g., when used in grid layouts)
 .content-list--no-top-margin {
   margin-top: 0;
+}
+
+// Opt-in wrapper for a month-grouped list split across several
+// `<ul class="content-list">`s (e.g. an infinite-scroll pager rendering each
+// page as its own <ul>). A sticky heading only pins within its own <ul>, so
+// `display: contents` dissolves the per-page <ul>s: every page's items then
+// share one containing block (one continuous sticky context) without any JS
+// restructuring the DOM. With the <ul> box gone, the wrapper takes over its
+// `layout-container` role.
+.content-list-month-wrapper {
+  @include layout-container($block-max-width__large);
+  margin-top: $s-xl;
+  margin-bottom: $s-xl;
+
+  .content-list {
+    display: contents;
+  }
 }
