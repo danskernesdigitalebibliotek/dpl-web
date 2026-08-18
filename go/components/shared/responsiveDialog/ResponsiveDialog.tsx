@@ -40,6 +40,10 @@ const isActionsElement = (child: React.ReactNode): child is React.ReactElement =
 
 type ResponsiveDialogProps = {
   title: React.ReactNode
+  // Names the dialog when the visible title isn't available yet (e.g. while
+  // its data loads) — the accessible name is announced once, at open. Leave
+  // undefined whenever the title is rendered, so the two can't drift apart.
+  ariaLabel?: string
   description?: string
   children: React.ReactNode
   open: boolean
@@ -53,6 +57,7 @@ type ResponsiveDialogProps = {
 
 function ResponsiveDialog({
   title,
+  ariaLabel,
   description,
   children,
   open,
@@ -86,6 +91,7 @@ function ResponsiveDialog({
     return (
       <Dialog open={open} onOpenChange={onClose}>
         <DialogContent
+          aria-label={ariaLabel}
           onClickCapture={closeOnLinkClick}
           className="flex max-h-[95dvh] flex-col gap-0 overflow-hidden p-0 lg:min-h-0">
           <div
@@ -129,6 +135,7 @@ function ResponsiveDialog({
   return (
     <Drawer open={open} onOpenChange={onClose}>
       <DrawerContent
+        aria-label={ariaLabel}
         onClickCapture={closeOnLinkClick}
         className="flex max-h-[95dvh] min-h-0 flex-col overflow-hidden">
         <DrawerHeader className="shrink-0">
