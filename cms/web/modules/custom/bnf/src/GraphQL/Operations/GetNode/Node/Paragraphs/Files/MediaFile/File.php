@@ -23,14 +23,14 @@ class File extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($url !== self::UNDEFINED) {
-            $instance->url = $url;
+            $instance->__set('url', $url);
         }
         $instance->__typename = 'File';
         if ($description !== self::UNDEFINED) {
-            $instance->description = $description;
+            $instance->__set('description', $description);
         }
         if ($name !== self::UNDEFINED) {
-            $instance->name = $name;
+            $instance->__set('name', $name);
         }
 
         return $instance;

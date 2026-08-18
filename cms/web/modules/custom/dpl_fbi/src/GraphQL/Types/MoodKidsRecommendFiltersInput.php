@@ -28,19 +28,19 @@ class MoodKidsRecommendFiltersInput extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($difficulty !== self::UNDEFINED) {
-            $instance->difficulty = $difficulty;
+            $instance->__set('difficulty', $difficulty);
         }
         if ($illustrationsLevel !== self::UNDEFINED) {
-            $instance->illustrationsLevel = $illustrationsLevel;
+            $instance->__set('illustrationsLevel', $illustrationsLevel);
         }
         if ($length !== self::UNDEFINED) {
-            $instance->length = $length;
+            $instance->__set('length', $length);
         }
         if ($realisticVsFictional !== self::UNDEFINED) {
-            $instance->realisticVsFictional = $realisticVsFictional;
+            $instance->__set('realisticVsFictional', $realisticVsFictional);
         }
         if ($fictionNonfiction !== self::UNDEFINED) {
-            $instance->fictionNonfiction = $fictionNonfiction;
+            $instance->__set('fictionNonfiction', $fictionNonfiction);
         }
 
         return $instance;
