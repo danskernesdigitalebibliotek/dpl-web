@@ -62,6 +62,7 @@ module:
   dpl_mail: 0
   dpl_mapp: 0
   dpl_media: 0
+  dpl_metrics: 0
   dpl_opening_hours: 0
   dpl_paragraphs: 0
   dpl_patron_menu: 0
