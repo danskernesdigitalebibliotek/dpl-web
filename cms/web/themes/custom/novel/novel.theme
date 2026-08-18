@@ -5,6 +5,7 @@
  * Novel Theme.
  */
 
+use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Spatie\Color\Hex;
@@ -132,15 +133,17 @@ function novel_preprocess(array &$variables): void {
  *   The variables for the theme hook.
  */
 function novel_preprocess_page(array &$variables): void {
+  $theme_settings = \Drupal::service(ThemeSettingsProvider::class);
+
   $variables['logo'] = [
     '#theme' => 'novel_logo',
-    '#title' => theme_get_setting('logo_title') ?? 'Logo title (bold)',
-    '#place' => theme_get_setting('logo_place') ?? 'Logo place',
-    '#logo_img_enable' => theme_get_setting('logo_img_enable', 'novel') ?? 1,
+    '#title' => $theme_settings->getSetting('logo_title') ?? 'Logo title (bold)',
+    '#place' => $theme_settings->getSetting('logo_place') ?? 'Logo place',
+    '#logo_img_enable' => $theme_settings->getSetting('logo_img_enable', 'novel') ?? 1,
   ];
 
   // Directly assign logo URL if it's set.
-  if ($logo_path = theme_get_setting('logo.path')) {
+  if ($logo_path = $theme_settings->getSetting('logo.path')) {
 
     // SVG images does not support image-styles, and will fail if you attempt
     // to render it with the 'logo' image style.
@@ -198,6 +201,8 @@ function novel_preprocess_field(&$variables): void {
  *   The current state of the form.
  */
 function novel_form_system_theme_settings_alter(array &$form, FormStateInterface $form_state): void {
+  $theme_settings = \Drupal::service(ThemeSettingsProvider::class);
+
   $form['logo']['settings'] = $form['logo']['settings'] ?? [];
 
   $form['logo']['settings']['logo_upload']['#description'] = t('Upload the logo in PNG or SVG. You will get the best results with 11:5 format (e.g. width: 220px height: 100px), but any size will work.', [], ['context' => 'Novel settings']);
@@ -205,20 +210,20 @@ function novel_form_system_theme_settings_alter(array &$form, FormStateInterface
   $form['logo']['settings']['logo_title'] = [
     '#type' => 'textfield',
     '#title' => t('Title', [], ['context' => 'Novel settings']),
-    '#default_value' => theme_get_setting('logo_title') ?? 'Logo title (bold)',
+    '#default_value' => $theme_settings->getSetting('logo_title') ?? 'Logo title (bold)',
     '#description' => t("Enter the text that will be shown as the logo on smaller screens.", [], ['context' => 'Novel settings']),
     '#required' => TRUE,
   ];
   $form['logo']['settings']['logo_place'] = [
     '#type' => 'textfield',
     '#title' => t('Place', [], ['context' => 'Novel settings']),
-    '#default_value' => theme_get_setting('logo_place') ?? 'Logo place',
+    '#default_value' => $theme_settings->getSetting('logo_place') ?? 'Logo place',
     '#description' => t("Text displayed under the logo title.", [], ['context' => 'Novel settings']),
   ];
   $form['logo']['settings']['logo_img_enable'] = [
     '#type' => 'checkbox',
     '#title' => t('Enable image logo', [], ['context' => 'Novel settings']),
-    '#default_value' => theme_get_setting('logo_img_enable', 'novel') ?? 1,
+    '#default_value' => $theme_settings->getSetting('logo_img_enable', 'novel') ?? 1,
     '#description' => t("Use image logo when its possible.", [], ['context' => 'Novel settings']),
   ];
 
@@ -233,7 +238,7 @@ function novel_form_system_theme_settings_alter(array &$form, FormStateInterface
   $form['identity']['settings']['identity_color'] = [
     '#type' => 'color',
     '#title' => t('Identity Color', [], ['context' => 'Novel settings']),
-    '#default_value' => theme_get_setting('identity_color'),
+    '#default_value' => $theme_settings->getSetting('identity_color'),
     '#description' => t('Choose library identity color.', [], ['context' => 'Novel settings']),
   ];
 }
@@ -242,7 +247,7 @@ function novel_form_system_theme_settings_alter(array &$form, FormStateInterface
  * Preprocesses variables for HTML templates.
  */
 function novel_preprocess_html(array &$variables): void {
-  $identityColor = theme_get_setting('identity_color');
+  $identityColor = \Drupal::service(ThemeSettingsProvider::class)->getSetting('identity_color');
 
   if ($identityColor) {
     $hslColor = Hex::fromString($identityColor)->toHsl();

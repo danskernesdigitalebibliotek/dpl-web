@@ -16,6 +16,8 @@ use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dpl_po\Services\CtpConfigManager;
+use Drupal\locale\File\LocaleFile;
+use Drupal\locale\LocaleImportBatch;
 use Drush\Commands\DrushCommands;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
@@ -56,6 +58,7 @@ class DplPoCommands extends DrushCommands {
     protected ClientInterface $httpClient,
     protected EntityFieldManagerInterface $entityFieldManager,
     protected CacheBackendInterface $configCache,
+    protected LocaleImportBatch $localeImportBatch,
   ) {}
 
   /**
@@ -198,7 +201,11 @@ class DplPoCommands extends DrushCommands {
     $this->validateSource($source);
 
     // Options that mirror config_translation_po\Form\ImportConfigForm settings.
-    $options = array_merge(_locale_translation_default_update_options(), [
+    // These used to be built on top of the defaults from
+    // _locale_translation_default_update_options(), which Drupal 11.4
+    // deprecated without a replacement. Everything it contributed apart from
+    // the two entries below was overridden here anyway.
+    $options = [
       'langcode' => $this->languageCode,
       'overwrite_options' => [
         // Form-label: "Overwrite non-customized translations".
@@ -209,12 +216,16 @@ class DplPoCommands extends DrushCommands {
       // Form-label: "Treat imported strings as custom translations".
       // So - we do **NOT** want to treat imported strings as custom.
       'customized' => LOCALE_NOT_CUSTOMIZED,
-    ]);
+      'finish_feedback' => TRUE,
+      'use_remote' => locale_translation_use_remote_source(),
+    ];
 
-    $file = $this->createFile($source);
-    /** @var object{"uri": string} $file */
-    $file = locale_translate_file_attach_properties($file, $options);
-    $batch = locale_translate_batch_build([$file->uri => $file], $options);
+    $file = LocaleFile::createFromPath(basename($source), $source, $this->languageCode);
+    $batch = $this->localeImportBatch->buildBatch([$file->uri => $file], $options);
+
+    if (!is_array($batch)) {
+      throw new \RuntimeException("Could not build a translation import batch for {$source}.");
+    }
 
     batch_set($batch);
 
@@ -231,7 +242,7 @@ class DplPoCommands extends DrushCommands {
     // If we do *not* clear the caches right away, some translations may not
     // apply, even upon a future cache clear.
     // The main place we've experienced this issue has been on field labels.
-    $this->configCache->invalidateAll();
+    $this->configCache->deleteAll();
     $this->entityFieldManager->clearCachedFieldDefinitions();
   }
 
@@ -422,23 +433,6 @@ class DplPoCommands extends DrushCommands {
     if (!is_writable($destination_dir)) {
       throw new \Exception('Destination dir is not writable: ' . $destination_dir);
     }
-  }
-
-  /**
-   * Create a file object.
-   *
-   * The object created by this function
-   * is needed by the locale_translate_* functions.
-   *
-   * @see DplPoCommands::importConfigPoFileBatch()
-   */
-  protected function createFile(string $path): \stdClass {
-    $file = new \stdClass();
-    $file->filename = $this->fileSystem->basename($path);
-    $file->uri = $path;
-    $file->langcode = $this->languageCode;
-
-    return $file;
   }
 
   /**
