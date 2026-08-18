@@ -8,6 +8,9 @@ services:
 
   dpl_update.config_ignore:
     class: Drupal\dpl_update\Services\ConfigIgnore
+    tags:
+      # Runs the collected config_ignore_auto clean-up at end of request.
+      - { name: needs_destruction }
 
   logger.channel.dpl_update:
     parent: logger.channel_base

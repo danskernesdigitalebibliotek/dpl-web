@@ -12,7 +12,7 @@ The collation can be specified in two ways:
 
 1. For all tables in your database connection settings
 2. For specific tables by implementing hook
-   collation_fixer_expected_collations
+   collation_fixer_expected_collations_alter
 
 Example of specifying character set and collation in general through database
 settings in settings.php:
@@ -34,13 +34,17 @@ settings in settings.php:
   ];
 
 Example of specifying character set and collation for a specific table by
-implementing collation_fixer_expected_collations:
+implementing collation_fixer_expected_collations_alter:
 
-  function my_module_collation_fixer_expected_collations(array &$expected_collations): void {
+  function my_module_collation_fixer_expected_collations_alter(array &$expected_collations): void {
     if (isset($expected_collations['my_table'])) {
       $expected_collations['my_table']->collation = 'utf8mb4_danish_ci';
     }
   }
+
+Unset an entry to exclude a table from checking and fixing entirely. Note that
+expectations are table-level: a table with deliberate per-column collations
+cannot be expressed here, only excluded.
 
 If you (as a developer) change the collation of an existing table you
 will probably want to fix the table right away in an update hook:

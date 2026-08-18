@@ -12,25 +12,6 @@
         {
             "type": "package",
             "package": {
-                "name": "drupal/potion",
-                "type": "drupal-module",
-                "version": "dev-2.x",
-                "source": {
-                    "type": "git",
-                    "url": "https://git.drupalcode.org/project/potion.git",
-                    "reference": "e48d6ee336d960b9d2efb5d88e68402db6d229a6"
-                },
-                "require": {
-                    "drupal/core": "^8 || ^9 || ^10",
-                    "symfony/finder": "^3.4 || ^4.4 || ^5 || ^6",
-                    "symfony/process": "^3.4 || ^4.4 || ^5 || ^6",
-                    "symfony/translation": "^3.4 || ^4.4 || ^5 || ^6"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "drupal/address_dawa",
                 "type": "drupal-module",
                 "version": "dev-2.x",
@@ -113,7 +94,7 @@
         "drupal/entity_reference_revisions": "^1.11.0",
         "drupal/enum_field": "^1.0",
         "drupal/evac": "^1.0",
-        "drupal/externalauth": "^2.0",
+        "drupal/externalauth": "^2.0.13",
         "drupal/facets": "^3.0",
         "drupal/facets_date_range": "^1.0@beta",
         "drupal/field_group": "^4.0",
@@ -155,7 +136,7 @@
         "drupal/paragraphs_ee": "^10",
         "drupal/password_policy": "^4.0",
         "drupal/pathauto": "^1.13",
-        "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
+        "drupal/potx": "^2.0@alpha",
         "drupal/purge": "^3.6",
         "drupal/purge_queues": "^2.1",
         "drupal/queue_ui": "^3.2",
@@ -230,6 +211,7 @@
             "oomphinc/composer-installers-extender": true,
             "php-http/discovery": true,
             "phpstan/extension-installer": true,
+            "symfony/runtime": true,
             "tbachert/spi": true,
             "zaporylie/composer-drupal-optimizations": true
         },
@@ -378,14 +360,9 @@
             "drupal/paragraphs_ee": {
                 "3106254: Sorting paragraph list alphabetically in modal": "patches/vendor/paragraphs_ee_sort.patch"
             },
-            "drupal/potion": {
-                "3201365: Allow setting a default write mode when running potion:generate": "patches/vendor/potion-allow_setting_a_default_write_mode-3201365-2.patch",
-                "3348283: Fix wrongly placed parameters in implode functions": "patches/vendor/fix_wrongly_placed_parameters_in_implode_functions-3348283-3.patch",
-                "Update with Rector": "patches/potion-rector.patch",
-                "Mark as Drupal 10 compatible": "patches/potion-d10-info.patch",
-                "Use Drupal StaticReflectionParser with Drupal 10.1": "patches/potion-d10-1-staticreflection.patch",
-                "Use Drupal AnnotationRegistry for doctrine/annotations 2 compatibility": "patches/vendor/potion-doctrine-annotations-2.patch",
-                "3413314: Include .links.menu.yml files in YamlExtractor.php": "patches/vendor/potion-add_links_menu_yml_title_and_description_to_yaml_extractor-3413314-3.patch"
+            "drupal/potx": {
+                "Scan TranslationInterface::translate() calls": "patches/potx-scan-translationinterface-translate.patch",
+                "3615813 and escaping: two fixes to the @Translation annotation extractor": "patches/potx-translation-annotations.patch"
             },
             "drupal/purge": {
                 "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch",

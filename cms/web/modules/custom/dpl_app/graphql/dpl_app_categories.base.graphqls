@@ -18,11 +18,20 @@ enum AppType {
 }
 
 """
+Orientation of the video.
+"""
+enum AppVideoOrientation {
+  HORIZONTAL
+  VERTICAL
+}
+
+"""
 A video, for the app.
 """
 type AppVideo {
   url: String!
   thumbnail: String!
+  orientation: AppVideoOrientation!
 }
 
 """
