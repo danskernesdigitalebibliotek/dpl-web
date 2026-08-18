@@ -125,6 +125,9 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
         )}
         events={events}
         height="auto"
+        // Ensures that the calendar stays compact when
+        // switching to the month view. Larger numbers
+        // for `aspectRatio` makes smaller heights.
         viewDidMount={(view) => {
           if (view.view.type === "dayGridMonth") {
             fullCalendarApi?.setOption("aspectRatio", 3);
