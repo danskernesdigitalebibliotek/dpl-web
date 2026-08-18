@@ -48,7 +48,6 @@
 
   <!-- Ignore existing procedual hooks until they're magrated. -->
   <rule ref="Dpl.Hooks.NoProceduralHooks">
-    <exclude-pattern>*/web/modules/custom/bnf/bnf_example_content/bnf_example_content.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/bnf/bnf_server/bnf_server.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_admin/dpl_admin.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_article/dpl_article.module</exclude-pattern>

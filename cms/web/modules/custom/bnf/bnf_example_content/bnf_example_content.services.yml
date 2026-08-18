@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+
+  logger.channel.bnf_example_content:
+    parent: logger.channel_base
+    arguments:
+      - 'bnf_example_content'
+
+  # These hook services definitions is only needed by Drupal 10, they
+  # can be removed when we upgrade to Drupal 11.
+  Drupal\bnf_example_content\Hook\ModuleHooks:
+    arguments:
+      $logger: '@logger.channel.bnf_example_content'
