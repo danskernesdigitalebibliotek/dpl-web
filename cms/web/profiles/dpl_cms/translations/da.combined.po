@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-18 09:19+0200\n"
-"PO-Revision-Date: 2026-08-18 09:19+0200\n"
+"POT-Creation-Date: 2026-08-18 10:39+0200\n"
+"PO-Revision-Date: 2026-08-18 10:39+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-18 09:19+0200\n"
-"PO-Revision-Date: 2026-08-18 09:19+0200\n"
+"POT-Creation-Date: 2026-08-18 10:39+0200\n"
+"PO-Revision-Date: 2026-08-18 10:39+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2473,6 +2473,9 @@ msgid "Access for administering of the library agency configuration."
 msgstr ""
 
 msgid "Access for administering of the url proxy configuration."
+msgstr ""
+
+msgid "Access the Prometheus metrics endpoint"
 msgstr ""
 
 msgid "Access the eventinstance overview page"
@@ -7628,6 +7631,9 @@ msgstr "DPL Mail"
 msgid "DPL Media"
 msgstr ""
 
+msgid "DPL Metrics"
+msgstr ""
+
 msgid "DPL Opening Hours"
 msgstr "Åbningstider"
 
@@ -11010,6 +11016,9 @@ msgid "Exposed pager BEF settings"
 msgstr ""
 
 msgid "Exposed sort BEF settings"
+msgstr ""
+
+msgid "Exposes application metrics for scraping by Prometheus."
 msgstr ""
 
 msgid "Extension"
@@ -24075,6 +24084,11 @@ msgstr ""
 msgid "The end date of the event instance."
 msgstr "Slutdatoen for arrangementsinstansen."
 
+msgid ""
+"The endpoint reveals traffic patterns and installed code. Grant only to "
+"monitoring."
+msgstr ""
+
 msgid "The entities routes metatags must be added by fields."
 msgstr "The entities routes metatags must be added by fields."
 
@@ -27299,6 +27313,12 @@ msgstr ""
 msgctxt "DPL Config Import"
 msgid "Unable to parse YAML file: %reason"
 msgstr "Ude af stand til at parse YAML fil: %reason"
+
+msgid "Unable to record metric: @message"
+msgstr ""
+
+msgid "Unable to render metrics: @message"
+msgstr ""
 
 msgid "Unable to retrieve agency branches: %message"
 msgstr ""
