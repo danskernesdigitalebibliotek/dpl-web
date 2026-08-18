@@ -11,7 +11,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\drupal_typed\DrupalTyped;
-use Drupal\node\NodeForm;
+use Drupal\node\Form\NodeForm;
 use Drupal\node\NodeInterface;
 
 /**
