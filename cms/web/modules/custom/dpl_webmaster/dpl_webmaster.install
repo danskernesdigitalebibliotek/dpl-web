@@ -6,8 +6,13 @@
  */
 
 use Drupal\Core\Config\StorageInterface;
+use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\Query\SelectInterface;
+use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Utility\UpdateException;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\locale\StringStorageInterface;
 
 /**
  * Activate asset_injector on all webmaster libraries.
@@ -79,4 +84,111 @@ function dpl_webmaster_update_10104(): string {
   }
 
   return implode("\n", $feedback);
+}
+
+/**
+ * Fetches the IDs of the locale strings a query selects.
+ *
+ * Select::execute() is typed as nullable because a hook_query_alter()
+ * implementation can cancel a query, which only happens to tagged queries. The
+ * queries here are untagged, so this cannot happen - and a clean-up that
+ * silently finds nothing to do would be worse than a failed update, so treat it
+ * as an error instead of an empty result.
+ *
+ * @param \Drupal\Core\Database\Query\SelectInterface $query
+ *   The query to run. Its first field must be the string ID.
+ *
+ * @return mixed[]
+ *   The selected string IDs.
+ */
+function _dpl_webmaster_fetch_string_ids(SelectInterface $query): array {
+  $statement = $query->execute();
+  if (!$statement instanceof StatementInterface) {
+    throw new UpdateException('Could not look up asset injector translation strings: ' . $query);
+  }
+
+  return $statement->fetchCol();
+}
+
+/**
+ * Delete leftover asset injector strings from the translation tables.
+ *
+ * When the nightly configuration translation import found no translation for a
+ * translatable element, it registered the value of the element as a source
+ * string, so it could be translated. Thus every asset a webmaster saved added
+ * its CSS/JS to the interface translation tables, and every edit of an asset
+ * added another string.
+ *
+ * The assets are untranslatable now, so nothing registers the strings anymore,
+ * and they can no longer turn into asset translations. But the strings are
+ * still there, showing up as CSS/JS blobs when looking for strings to
+ * translate.
+ *
+ * A string can be registered from several places, and the same text may well be
+ * a genuine interface string elsewhere, so only strings registered exclusively
+ * from asset injector configuration are deleted. For the remaining ones we
+ * unregister the asset injector location and leave the string alone.
+ *
+ * @see \Drupal\locale\LocaleConfigManager::translateString()
+ * @see \Drupal\dpl_webmaster\Hook\AssetInjectorHooks::configSchemaInfoAlter()
+ */
+function dpl_webmaster_update_10105(): string {
+  $moduleHandler = DrupalTyped::service(ModuleHandlerInterface::class);
+  if (!$moduleHandler->moduleExists('locale')) {
+    return "Interface translation is not enabled, no strings to clean up";
+  }
+
+  $database = DrupalTyped::service(Connection::class, 'database');
+  $localeStorage = DrupalTyped::service(StringStorageInterface::class, 'locale.storage');
+  // Underscores are wildcards in LIKE, so the prefix has to be escaped.
+  $assetNames = $database->escapeLike('asset_injector.') . '%';
+  // Deletes are chunked as an actively edited asset can have added a lot of
+  // strings over time.
+  $chunkSize = 500;
+
+  $query = $database->select('locales_location', 'l');
+  $query->addField('l', 'sid');
+  $query->distinct();
+  $query->condition('l.type', 'configuration');
+  $query->condition('l.name', $assetNames, 'LIKE');
+  $assetStrings = _dpl_webmaster_fetch_string_ids($query);
+
+  if (!$assetStrings) {
+    return "No asset injector strings in the translation tables";
+  }
+
+  // The strings that are registered from somewhere else as well.
+  $sharedStrings = [];
+  foreach (array_chunk($assetStrings, $chunkSize) as $chunk) {
+    $query = $database->select('locales_location', 'l');
+    $query->addField('l', 'sid');
+    $query->distinct();
+    $query->condition('l.sid', $chunk, 'IN');
+    $query->condition($database->condition('OR')
+      ->condition('l.type', 'configuration', '<>')
+      ->condition('l.name', $assetNames, 'NOT LIKE'));
+    $sharedStrings = array_merge($sharedStrings, _dpl_webmaster_fetch_string_ids($query));
+  }
+
+  // Delete the strings only asset injector used, translations and all.
+  $assetOnlyStrings = array_diff($assetStrings, $sharedStrings);
+  foreach (array_chunk($assetOnlyStrings, $chunkSize) as $chunk) {
+    $localeStorage->deleteStrings(['lid' => $chunk]);
+  }
+
+  // And unregister the assets as a source of the remaining strings.
+  $locations = 0;
+  foreach (array_chunk($sharedStrings, $chunkSize) as $chunk) {
+    $locations += (int) $database->delete('locales_location')
+      ->condition('sid', $chunk, 'IN')
+      ->condition('type', 'configuration')
+      ->condition('name', $assetNames, 'LIKE')
+      ->execute();
+  }
+
+  return sprintf(
+    'Deleted %d asset injector strings, and unregistered the assets as a source of %d strings used elsewhere too',
+    count($assetOnlyStrings),
+    $locations,
+  );
 }
