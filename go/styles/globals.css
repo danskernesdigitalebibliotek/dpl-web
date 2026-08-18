@@ -538,3 +538,17 @@
     --sidebar-ring: oklch(0.439 0 0);
   }
 }
+
+/* Honor the OS-level "reduce motion" preference for CSS-driven animation
+   (transitions, keyframe animations, smooth scrolling). Framer Motion runs
+   through JS and is covered by MotionConfig in lib/providers/MotionProvider. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
