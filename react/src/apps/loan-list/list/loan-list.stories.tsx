@@ -31,6 +31,9 @@ import playerModalArgs, {
 import onlineMaterialArgs, {
   argTypes as onlineMaterialArgTypes
 } from "../../../core/storybook/onlineMaterialArgs";
+import biblioAdapterArgs, {
+  argTypes as biblioAdapterArgTypes
+} from "../../../core/storybook/biblioAdapterArgs";
 
 const meta: Meta<typeof LoanList> = {
   title: "Apps / Loan list",
@@ -48,6 +51,7 @@ const meta: Meta<typeof LoanList> = {
     ...blockedArgTypes,
     ...playerModalArgTypes,
     ...onlineMaterialArgTypes,
+    ...biblioAdapterArgTypes,
     // Config
     pageSizeDesktop: {
       control: { type: "number" }
@@ -169,6 +173,7 @@ export const Primary: Story = {
     ...blockedArgs,
     ...playerModalArgs,
     ...onlineMaterialArgs,
+    ...biblioAdapterArgs,
     pageSizeDesktop: 10,
     pageSizeMobile: 5,
     // Config
@@ -212,6 +217,16 @@ export const Primary: Story = {
     publizonPodcastText: "Podcast",
     groupModalHeaderText: "Renew several",
     resultPagerStatusText: "Showing @itemsShown out of @hitcount loans"
+  }
+};
+
+// The Biblio adapter feature flag turned on. During the transition period the
+// digital loan list combines existing Publizon loans with loans from the
+// Biblio adapter, so this story exercises both providers at once.
+export const LoanListWithBiblioAdapter: Story = {
+  args: {
+    ...Primary.args,
+    useBiblioAdapterConfig: "1"
   }
 };
 

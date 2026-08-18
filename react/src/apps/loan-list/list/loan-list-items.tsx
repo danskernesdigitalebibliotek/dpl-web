@@ -4,6 +4,7 @@ import StackableMaterial from "../materials/stackable-material/stackable-materia
 import DigitalLoanCard from "../materials/digital-loan-card/digital-loan-card";
 import { ListView } from "../../../core/utils/types/list-view";
 import { LoanType } from "../../../core/utils/types/loan-type";
+import { listId } from "../../../core/utils/types/list-type";
 import { useText } from "../../../core/utils/text";
 import PlayerModal from "../../../components/material/player-modal/PlayerModal";
 import { playerModalId } from "../../../components/material/player-modal/helper";
@@ -18,6 +19,23 @@ interface LoanListItemProps {
   indexOfFocus: number | null;
   dataCy?: string;
 }
+
+/**
+ * A stable React key for a loan row.
+ *
+ * Keying on loanId is not enough: digital loans carry none, so every digital
+ * row would share a key and React would reuse rows across loans. listId()
+ * covers all three providers, but it throws for an item with no usable id at
+ * all - a Publizon loan whose libraryBook has no identifier - and a missing
+ * key is not worth taking the whole list down for.
+ */
+const loanKey = (loan: LoanType, index: number) => {
+  try {
+    return listId(loan);
+  } catch {
+    return `loan-${index}`;
+  }
+};
 
 const LoanListItems: FC<LoanListItemProps> = ({
   loans,
@@ -76,7 +94,7 @@ const LoanListItems: FC<LoanListItemProps> = ({
                 loan={loan}
                 item={loan}
                 loanId={loan.loanId}
-                key={loan.loanId}
+                key={loanKey(loan, i)}
                 // -1 because it is _additional_ to the one displayed
                 additionalMaterials={loansUniqueDueDate.length - 1}
               />
@@ -93,7 +111,7 @@ const LoanListItems: FC<LoanListItemProps> = ({
                 loan={loan}
                 item={loan}
                 loanId={loan.loanId}
-                key={loan.loanId}
+                key={loanKey(loan, i)}
               />
             ) : (
               <StackableMaterial
@@ -101,7 +119,7 @@ const LoanListItems: FC<LoanListItemProps> = ({
                 openLoanDetailsModal={openLoanDetailsModal}
                 item={loan}
                 loanId={loan.loanId}
-                key={loan.loanId}
+                key={loanKey(loan, i)}
                 loan={loan}
                 // Zero, as it is not stacked
                 additionalMaterials={0}

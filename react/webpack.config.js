@@ -81,7 +81,20 @@ module.exports = (_env, argv) => {
         {
           test: /\.(js|jsx|ts|tsx)$/,
           exclude: /node_modules/,
-          use: ["babel-loader"]
+          use: [
+            {
+              loader: "babel-loader",
+              // Workspace packages such as the service layer ship raw
+              // TypeScript and resolve (through symlinks) to paths outside
+              // this project root where file-relative .babelrc discovery
+              // does not reach. Point Babel at the config explicitly so they
+              // are transpiled like our own source.
+              options: {
+                babelrc: false,
+                configFile: path.resolve(__dirname, ".babelrc")
+              }
+            }
+          ]
         },
         // We consume css, svg and raster image files from dpl-design-system package
         {

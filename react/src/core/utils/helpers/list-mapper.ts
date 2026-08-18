@@ -1,4 +1,10 @@
 import { head, keys, values } from "lodash";
+import {
+  BiblioLoan,
+  BiblioMaterial,
+  BiblioMaterialType,
+  BiblioReservation
+} from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { LoanV2, ReservationDetailsV2 } from "../../fbs/model";
 import { FaustId } from "../types/ids";
 import { ManifestationBasicDetailsFragment } from "../../dbc-gateway/generated/graphql";
@@ -13,6 +19,10 @@ import { store } from "../../store";
 import { ReservationType } from "../types/reservation-type";
 import { getContributors } from "./general";
 import { ReservationGroupDetails } from "../useGetReservationGroups";
+import {
+  dashboardReadyForPickupApiValueText,
+  dashboardReservedApiValueText
+} from "../../configuration/api-strings";
 
 function getYearFromDataString(date: string) {
   return new Date(date).getFullYear();
@@ -56,6 +66,69 @@ export const mapPublizonLoanToLoanType = (list: Loan[]): LoanType[] => {
       };
     }
   );
+};
+
+// digital-loan-card picks the reader/player button from Publizon's integer
+// enum, so a Biblio material type has to be expressed in those numbers too.
+// Goes away with the Publizon integration, when the card stops keying on
+// Publizon's enum.
+const biblioDigitalProductType = (materialType: BiblioMaterialType) =>
+  materialType === "audiobook"
+    ? PUBLIZON_PRODUCT_TYPE.AUDIOBOOK
+    : PUBLIZON_PRODUCT_TYPE.EBOOK;
+
+const biblioMaterialTypeText = (materialType: BiblioMaterialType) => {
+  const {
+    text: { data: texts }
+  } = store.getState();
+
+  return materialType === "audiobook"
+    ? texts.publizonAudioBookText
+    : texts.publizonEbookText;
+};
+
+// The catalogue fields a Biblio loan carries, as a BasicDetailsType.
+const mapBiblioLoanToBasicDetailsType = (loan: BiblioLoan) => {
+  // A loan states its author as one string, where the metadata endpoints use
+  // a list.
+  const authors = loan.author ? [loan.author] : [];
+
+  return {
+    title: loan.title,
+    periodical: null,
+    year: loan.publishDate ? getYearFromDataString(loan.publishDate) : "",
+    materialType: biblioMaterialTypeText(loan.materialType),
+    digitalProductType: biblioDigitalProductType(loan.materialType),
+    externalProductId: loan.materialId,
+    authors: getContributors(false, authors),
+    authorsShort: getContributors(true, authors)
+  } as BasicDetailsType;
+};
+
+// BiblioLoan is a digital loan from the Biblio adapter (WeDoBooks), and is
+// the equivalent to the Loan type in Publizon. These are mapped to the same
+// so components can treat loans from all three providers alike.
+export const mapBiblioLoanToLoanType = (list: BiblioLoan[]): LoanType[] => {
+  return list.map((loan) => {
+    const { loanId, materialId, startDate, endDate } = loan;
+    return {
+      dueDate: endDate,
+      loanDate: startDate,
+      isRenewable: false,
+      materialItemNumber: materialId,
+      renewalStatusList: [],
+      loanType: null,
+      identifier: materialId,
+      faust: null,
+      loanId: null,
+      // The Biblio loan id plays the same role as Publizon's order id: the
+      // key used to open the loan in the reader/player.
+      orderId: loanId,
+      // A Biblio loan carries its own catalogue fields, so the list can
+      // render it without a separate metadata lookup.
+      details: mapBiblioLoanToBasicDetailsType(loan)
+    };
+  });
 };
 
 // LoanV2 is a loan from FBS, and is the equivalent
@@ -131,6 +204,27 @@ export const mapProductToBasicDetailsType = (material: Product) => {
     externalProductId: externalProductId?.id,
     authors: contributors ? getContributors(false, authors) : "",
     authorsShort: contributors ? getContributors(true, authors) : ""
+  } as BasicDetailsType;
+};
+
+// BiblioMaterial is a material from the Biblio adapter, and is the equivalent
+// to the Product type in Publizon.
+export const mapBiblioMaterialToBasicDetailsType = (
+  material: BiblioMaterial
+) => {
+  return {
+    title: material.title,
+    lang: head(material.languages),
+    periodical: null,
+    year: material.publishDate
+      ? getYearFromDataString(material.publishDate)
+      : "",
+    description: material.description,
+    materialType: biblioMaterialTypeText(material.materialType),
+    digitalProductType: biblioDigitalProductType(material.materialType),
+    externalProductId: material.isbn,
+    authors: getContributors(false, material.authors),
+    authorsShort: getContributors(true, material.authors)
   } as BasicDetailsType;
 };
 
@@ -219,6 +313,42 @@ export const mapPublizonReservationToReservationType = (
         state,
         title: productTitle,
         pickupDeadline: expectedRedeemDateUtc
+      };
+    }
+  );
+};
+
+// BiblioReservation is a reservation from the Biblio adapter, and is the
+// equivalent to the Reservation type in Publizon.
+export const mapBiblioReservationToReservationType = (
+  list: BiblioReservation[]
+): ReservationType[] => {
+  return list.map(
+    ({
+      reservationId,
+      materialId,
+      createdDate,
+      expectedLoanDate,
+      offerId,
+      offerExpiresAt
+    }) => {
+      return {
+        identifier: materialId,
+        faust: null,
+        dateOfReservation: createdDate,
+        // An offered reservation is waiting to be accepted as a loan, which
+        // is what "ready for pickup" means for a digital material. Without an
+        // offer the user is still queued.
+        state: offerId
+          ? dashboardReadyForPickupApiValueText
+          : dashboardReservedApiValueText,
+        // The offer is what expires - the reservation itself has no end date.
+        expiryDate: offerExpiresAt ?? null,
+        pickupDeadline: expectedLoanDate,
+        // Biblio reservations carry no title. It is resolved from the
+        // material metadata by the same HOC that describes digital loans.
+        title: null,
+        biblioReservationId: reservationId
       };
     }
   );

@@ -10,9 +10,8 @@ export const MaterialTypeSchema = z.enum(["ebook", "audiobook", "paper_book"])
 // fields in the adapter responses do not break parsing.
 //
 // The catalogue fields are marked required in the contract but read as
-// optional here: a loan missing its publisher should render incompletely
-// rather than break the whole list. Note that author is a single string on a
-// loan, unlike the metadata endpoints where it is a list.
+// optional here on purpose: a loan missing its publisher should render
+// incompletely rather than break the whole list.
 export const LoanSchema = z.object({
   id: z.string(),
   material_id: z.string(),

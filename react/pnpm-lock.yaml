@@ -11,6 +11,9 @@ importers:
       '@danskernesdigitalebibliotek/dpl-design-system':
         specifier: workspace:*
         version: link:../design-system
+      '@danskernesdigitalebibliotek/dpl-service-layer':
+        specifier: workspace:*
+        version: link:../packages/service-layer
       '@fullcalendar/react':
         specifier: ^7.0.2
         version: 7.0.2(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(temporal-polyfill@1.0.4)

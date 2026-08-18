@@ -11,10 +11,9 @@ import type { BiblioMaterial } from "../../../src/types"
 // material fails validation here by design — the same "throw on the
 // unexpected" stance as the FBS patron mapper.
 //
-// The catalogue fields are presentation only. The contract marks most of them
-// required, but they are optional here on purpose: a record missing its
-// description should render an incomplete material rather than break the
-// whole list it appears in.
+// The catalogue fields are presentation only, and optional here on purpose: a
+// record missing its description should render incompletely rather than break
+// the whole list it appears in.
 const MaterialInformationSchema = z.object({
   isbn: z.string(),
   material_type: z.enum(["ebook", "audiobook"]),
