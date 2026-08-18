@@ -49,6 +49,9 @@ jobs:
         run: task translations:conf:export
       - name: Combine danish po files
         run: task translations:conf:merge
+        # Neither input file is committed. They are produced by the two steps
+        # above and only exist in the workspace, so this step must stay after
+        # both of them.
         env:
           FILE_A: web/profiles/dpl_cms/translations/da.po
           FILE_B: web/profiles/dpl_cms/translations/da.config.po

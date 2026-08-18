@@ -3,3 +3,4 @@ node_modules
 .task/
 .env
 .envrc
+.pnpm-store

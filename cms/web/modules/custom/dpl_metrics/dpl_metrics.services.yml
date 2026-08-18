@@ -1,0 +1,30 @@
+---
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  logger.channel.dpl_metrics:
+    parent: logger.channel_base
+    arguments: ['dpl_metrics']
+
+  Drupal\dpl_metrics\MetricsRegistry:
+    factory: ['Drupal\dpl_metrics\MetricsRegistry', 'fromSettings']
+    arguments:
+      $logger: '@logger.channel.dpl_metrics'
+      $settings: '@settings'
+      $collectors: !tagged_iterator dpl_metrics_collector
+
+  Drupal\dpl_metrics\Collector\CmsVersionCollector:
+    arguments:
+      # Optional on purpose. Declaring dpl_admin as a module dependency would
+      # pull its whole service graph in behind it, and this module has no
+      # other reason to need it. dpl_admin does not alias the service to its
+      # class name either, so autowiring cannot find it.
+      $versionHelper: '@?dpl_admin.version_helper'
+    tags:
+      - { name: dpl_metrics_collector }
+
+  Drupal\dpl_metrics\Access\MetricsAccessCheck:
+    tags:
+      - { name: access_check, applies_to: _dpl_metrics_access }

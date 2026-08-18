@@ -65,13 +65,13 @@ concurrency:
   group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# Dependabot-triggered runs get a read-only GITHUB_TOKEN by default; grant the
-# write scopes the approve + merge steps need.
+# GITHUB_TOKEN only reads metadata and polls checks.
+# Approve and merge use a separate PAT.
 permissions:
   actions: read
   checks: read
-  contents: write
-  pull-requests: write
+  contents: read
+  pull-requests: read
   statuses: read
 
 jobs:
@@ -158,18 +158,15 @@ jobs:
           exit 1
 
       - name: Approve the PR
-        # Needed if the base branch requires a review before merging. Requires
-        # the repository/org setting "Allow GitHub Actions to create and
-        # approve pull requests".
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_AUTOMERGE_TOKEN }}
 
       - name: Merge
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
         run: gh pr merge --rebase "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_AUTOMERGE_TOKEN }}

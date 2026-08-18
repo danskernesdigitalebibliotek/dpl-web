@@ -142,8 +142,14 @@ enum AppType {
 }
 
 type AppVideo {
+  orientation: AppVideoOrientation!
   thumbnail: String!
   url: String!
+}
+
+enum AppVideoOrientation {
+  HORIZONTAL
+  VERTICAL
 }
 
 input BetweenFloatInput {
@@ -183,6 +189,14 @@ type BrandSettings {
 }
 
 type CQLSearch {
+  branch: String
+  department: String
+  firstAccessionDateOperator: String
+  firstAccessionDateValue: String
+  location: String
+  onshelf: String
+  sort: String
+  sublocation: String
   value: String
 }
 

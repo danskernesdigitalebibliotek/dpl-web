@@ -1,0 +1,47 @@
+# Tear down environments on PR close.
+#
+# Use pull_request_target because pull_request does not fire is a merge commit
+# cannot be created e.g. due to conflicts, deleted head or branch). This leaves
+# environments running on Lagoon.
+# No path filter: closing a nonexistent environment is a no-op.
+#
+# SECURITY: fork PRs get secrets here. Never check out or execute PR code.
+on:
+  pull_request_target:
+    types: [ closed ]
+name: Lagoon / Close application
+
+permissions: {}
+
+env:
+  LAGOON_ENVIRONMENT: "pr-${{ github.event.number }}"
+  GH_TOKEN: ${{ secrets.GH_DEPLOYMENT_TOKEN }}
+  OWNER: ${{ github.repository_owner }}
+  REPO: ${{ github.event.repository.name }}
+
+jobs:
+  CloseEnvironment:
+    name: Lagoon / Delete environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete GitHub environment
+        run: |
+          # 404 is expected for PRs that never deployed, e.g. docs-only ones.
+          if ! output="$(gh api --method DELETE "/repos/${{ env.OWNER }}/${{ env.REPO }}/environments/${{ env.LAGOON_ENVIRONMENT }}" 2>&1)"; then
+            echo "$output"
+            echo "$output" | grep -q "HTTP 404" || exit 1
+          fi
+
+  InformLagoonClose:
+    name: Lagoon / Send close event to Lagoon
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send pull request event
+        uses: distributhor/workflow-webhook@v3
+        env:
+          webhook_url: ${{ secrets.LAGOON_WEBHOOK_URL }}
+          webhook_secret: ${{ secrets.LAGOON_WEBHOOK_SECRET }}
+          webhook_type: 'json-extended'
+          # Lagoon routes webhooks on the X-GitHub-Event header, so override the
+          # event name to look like a plain pull_request event.
+          event_name: 'pull_request'

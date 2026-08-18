@@ -1,6 +1,9 @@
-<ul class="content-list">
+{# The explicit role restores list semantics for screen readers when a month
+   wrapper dissolves the <ul> with `display: contents` (events overview). #}
+<ul class="content-list" role="list">
   {% for row in rows %}
-    <li class="content-list__item {{ row.shouldBeStacked ? ' content-list__item--stacked' }}">
+    <li class="content-list__item {{ row.shouldBeStacked ? ' content-list__item--stacked' }}"
+      {%- if row.month_key %} data-content-list-month="{{ row.month_key }}" data-content-list-month-label="{{ row.month_label }}"{% endif %}>
       {{ row.content }}
     </li>
   {% endfor %}

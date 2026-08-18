@@ -12,6 +12,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * When saving config, clean any pointless items in config_ignore_auto.
  *
  * Pointless meaning that the config in the database matches the codebase.
+ *
+ * The saved config names are only collected here - the actual clean-up runs
+ * once, at the end of the request, in ConfigIgnore::destruct(). Running it
+ * on every save would make bulk operations (config import, module install)
+ * pay for a full clean-up pass per saved config object.
  */
 class ConfigSubscriber implements EventSubscriberInterface {
 
@@ -45,7 +50,7 @@ class ConfigSubscriber implements EventSubscriberInterface {
     $name = $event->getConfig()->getName();
 
     if ($name !== 'config_ignore_auto.settings') {
-      $this->configCleaner->cleanUnusedIgnores();
+      $this->configCleaner->markForCheck($name);
     }
   }
 

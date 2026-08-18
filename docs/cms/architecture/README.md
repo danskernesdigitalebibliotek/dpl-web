@@ -5,8 +5,8 @@ We document decisions regarding the architecture of the project using [ADRs](htt
 We follow [the format suggested by Michael Nygaard](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions)
 containing the sections: *Title*, *Context*, *Decision* and *Consequences*.
 
-We do not use the *Status* section. If an ADR is merged into the main branch
-it is by default accepted.
+By default we do not use the *Status* section. If an ADR is merged into the
+main/develop branch it is accepted unless otherwise noted.
 
 We have added an *Alternatives considered* section to ensure we document
 alternative solutions and the pros and cons for these.

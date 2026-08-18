@@ -38,15 +38,17 @@ const useOnlineAvailabilityData = ({
       // Publizon / useGetV1LoanstatusIdentifier shows loan status per material.
       // This status is only available for products found on Publizon. Other online
       // materials are always supposed to be shown as "available"
-      enabled:
-        enabled &&
-        isAvailable === null &&
-        !!isbn &&
-        // If the material is free (I think it is called blue material btw.)
-        // we should not load the loan status because then we know that it is available.
-        // So If the material is not free and we know it is an "Publizon" material we should load the loan status.
-        dataIdentifier?.product?.costFree === false &&
-        access.some((acc) => acc === "Ereol")
+      query: {
+        enabled:
+          enabled &&
+          isAvailable === null &&
+          !!isbn &&
+          // If the material is free (I think it is called blue material btw.)
+          // we should not load the loan status because then we know that it is available.
+          // So If the material is not free and we know it is an "Publizon" material we should load the loan status.
+          dataIdentifier?.product?.costFree === false &&
+          access.some((acc) => acc === "Ereol")
+      }
     });
 
   useEffect(() => {

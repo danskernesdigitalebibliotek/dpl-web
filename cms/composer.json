@@ -12,25 +12,6 @@
         {
             "type": "package",
             "package": {
-                "name": "drupal/potion",
-                "type": "drupal-module",
-                "version": "dev-2.x",
-                "source": {
-                    "type": "git",
-                    "url": "https://git.drupalcode.org/project/potion.git",
-                    "reference": "e48d6ee336d960b9d2efb5d88e68402db6d229a6"
-                },
-                "require": {
-                    "drupal/core": "^8 || ^9 || ^10",
-                    "symfony/finder": "^3.4 || ^4.4 || ^5 || ^6",
-                    "symfony/process": "^3.4 || ^4.4 || ^5 || ^6",
-                    "symfony/translation": "^3.4 || ^4.4 || ^5 || ^6"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "drupal/address_dawa",
                 "type": "drupal-module",
                 "version": "dev-2.x",
@@ -104,7 +85,7 @@
         "drupal/core": "10.6.9",
         "drupal/core-composer-scaffold": "10.6.9",
         "drupal/core-recommended": "10.6.9",
-        "drupal/date_range_formatter": "^4.0",
+        "drupal/date_range_formatter": "^4",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
         "drupal/dynamic_entity_reference": "^3.1",
@@ -113,11 +94,11 @@
         "drupal/entity_reference_revisions": "^1.11.0",
         "drupal/enum_field": "^1.0",
         "drupal/evac": "^1.0",
-        "drupal/externalauth": "^2.0",
+        "drupal/externalauth": "^2.0.13",
         "drupal/facets": "^3.0",
         "drupal/facets_date_range": "^1.0@beta",
         "drupal/field_group": "^4.0",
-        "drupal/field_inheritance": "^2.0",
+        "drupal/field_inheritance": "^3",
         "drupal/flat_taxonomy": "^2.0",
         "drupal/focal_point": "^2.0",
         "drupal/gin": "^4",
@@ -155,17 +136,16 @@
         "drupal/paragraphs_ee": "^10",
         "drupal/password_policy": "^4.0",
         "drupal/pathauto": "^1.13",
-        "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
+        "drupal/potx": "^2.0@alpha",
         "drupal/purge": "^3.6",
         "drupal/purge_queues": "^2.1",
         "drupal/queue_ui": "^3.2",
-        "drupal/recurring_events": "^2",
+        "drupal/recurring_events": "^3",
         "drupal/redirect": "^1.9",
         "drupal/redis": "^1.7",
         "drupal/restui": "^1.21",
         "drupal/scheduler": "^2.2",
         "drupal/search_api": "^1.31",
-        "drupal/select2_multicheck": "^1.0",
         "drupal/selective_better_exposed_filters": "^3.0",
         "drupal/simple_menu_permissions": "^3.0",
         "drupal/simple_oauth": "^6",
@@ -189,6 +169,7 @@
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.3",
+        "promphp/prometheus_client_php": "^2.15",
         "spatie/color": "^2.0",
         "spawnia/sailor": "^1.1.0",
         "symfony/property-access": "^7.3",
@@ -231,6 +212,7 @@
             "oomphinc/composer-installers-extender": true,
             "php-http/discovery": true,
             "phpstan/extension-installer": true,
+            "symfony/runtime": true,
             "tbachert/spi": true,
             "zaporylie/composer-drupal-optimizations": true
         },
@@ -285,6 +267,16 @@
             ],
             "file-mapping": {
                 "[project-root]/.editorconfig": false,
+                "[project-root]/.gitattributes": {
+                    "append": "assets/.gitattributes"
+                },
+                "[web-root]/.ht.router.php": false,
+                "[web-root]/.htaccess": false,
+                "[web-root]/INSTALL.txt": false,
+                "[web-root]/README.md": false,
+                "[web-root]/core/install.php": false,
+                "[web-root]/core/rebuild.php": false,
+                "[web-root]/example.gitignore": false,
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
                 "[web-root]/sites/default/all.services.yml": "assets/all.services.yml",
                 "[web-root]/sites/bnf/all.settings.php": "assets/all.settings.php",
@@ -296,12 +288,10 @@
                 "[web-root]/sites/bnf/local.settings.php": "assets/local.settings.php",
                 "[project-root]/drush/sites/lagoon.site.yml": "assets/lagoon.site.yml",
                 "[web-root]/.eslintrc.json": false,
-                "[project-root]/.gitattributes": {
-                    "append": "assets/.gitattributes"
-                },
                 "[web-root]/robots.txt": {
                     "append": "assets/robots.txt"
-                }
+                },
+                "[web-root]/web.config": false
             },
             "gitignore": false,
             "locations": {
@@ -335,7 +325,7 @@
                 "3426797: Problem: Untranslated string used as source": "patches/vendor/config_translation_po-5.patch"
             },
             "drupal/date_range_formatter": {
-                "3309324: Fails when start and end date are identical": "patches/vendor/date_range_formatter_3309324_1.patch"
+                "3309324: Fails when start and end date are identical": "patches/vendor/date_range_formatter_daterange_issue.patch"
             },
             "drupal/default_content": {
                 "3200212: Overwrite files on import": "patches/vendor/default_content-52a8827e43ebe1e4cbfd99b3f2c896c20122c220.patch"
@@ -351,9 +341,6 @@
             },
             "drupal/facets": {
                 "DDFSAL-279: Fix infinite scroll with facet filters": "patches/facets-infinite-scroll-fix-custom.patch"
-            },
-            "drupal/field_inheritance": {
-                "3454350: Create seperate permission for adding field inheritance": "patches/vendor/field_inheritance_permission.patch"
             },
             "drupal/job_scheduler": {
                 "3426366: Callables as worker callbacks": "patches/vendor/job_scheduler-da200da280c4c95e6e91f2416581ad3797ab1428.patch"
@@ -374,14 +361,9 @@
             "drupal/paragraphs_ee": {
                 "3106254: Sorting paragraph list alphabetically in modal": "patches/vendor/paragraphs_ee_sort.patch"
             },
-            "drupal/potion": {
-                "3201365: Allow setting a default write mode when running potion:generate": "patches/vendor/potion-allow_setting_a_default_write_mode-3201365-2.patch",
-                "3348283: Fix wrongly placed parameters in implode functions": "patches/vendor/fix_wrongly_placed_parameters_in_implode_functions-3348283-3.patch",
-                "Update with Rector": "patches/potion-rector.patch",
-                "Mark as Drupal 10 compatible": "patches/potion-d10-info.patch",
-                "Use Drupal StaticReflectionParser with Drupal 10.1": "patches/potion-d10-1-staticreflection.patch",
-                "Use Drupal AnnotationRegistry for doctrine/annotations 2 compatibility": "patches/vendor/potion-doctrine-annotations-2.patch",
-                "3413314: Include .links.menu.yml files in YamlExtractor.php": "patches/vendor/potion-add_links_menu_yml_title_and_description_to_yaml_extractor-3413314-3.patch"
+            "drupal/potx": {
+                "Scan TranslationInterface::translate() calls": "patches/potx-scan-translationinterface-translate.patch",
+                "3615813 and escaping: two fixes to the @Translation annotation extractor": "patches/potx-translation-annotations.patch"
             },
             "drupal/purge": {
                 "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch",
@@ -390,14 +372,10 @@
             "drupal/recurring_events": {
                 "3178696: Make compatible with Scheduler": "patches/vendor/recurring_events-35045cb17c7bbd1184553f83771939047175bc24.patch",
                 "3461740: Fatal error / WSOD when using or click-sorting 'Event series start date' in views (MR !211)": "patches/vendor/recurring_events-c852eb00033eb362da54b073b3dd2c36b00fe159.patch",
-                "3468521: (1/4) When changing recurrance, identical date combinations should not be deleted and recreated": "patches/vendor/recurring_events-67261f4ac34546f2c9514199d9febb6dcce6fd10.patch",
-                "3468521: (2/4)": "patches/vendor/recurring_events-603d34936b97535f66e11429dcc9a2c61fc7cb40.patch",
-                "3468521: (3/4)": "patches/vendor/recurring_events-ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1.patch",
-                "3468521: (4/4)": "patches/vendor/recurring_events-ad99ae79f5c55fc2db17427e9936ab141314609d.patch",
                 "3468300: Update EventSeriesSettings to use datetime form element.": "patches/vendor/recurring_events-5d9bc3b1cf7c00972f053f3d14873012b1ad7140.patch",
-                "3487412: Fix WSOD when EventInstance has invalid translation.": "patches/vendor/recurring_events-996052eeb7518ce591df968a0bb12c4819fb4edf.patch",
                 "3504806: Clean up orphaned eventinstances automatically": "patches/vendor/reccuring_events_auto_delete_orphaned.patch",
-                "3515976: EventUserTrait may return NULL if owner has been deleted": "patches/vendor/recurring_events-4bf78bde6378b01367c4f57b0d5c40b51e8dc53f.patch"
+                "3515976: EventUserTrait may return NULL if owner has been deleted": "patches/vendor/recurring_events-4bf78bde6378b01367c4f57b0d5c40b51e8dc53f.patch",
+                "3615281: Same-day occurrences of different lengths collapse into one instance (MR !216)": "patches/vendor/recurring_events-cf51cd61d967fcb5a87613204de4fe875bef8a4b.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "patches/vendor/theme-permission-edit-install-uninstall-3105637-7.patch"

@@ -5,7 +5,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 
 const badgeVariants = cva(
   `inline-flex items-center rounded-full px-2 py-1 text-typo-tag-sm font-semibold transition-colors
-  text-background`,
+  text-background z-10`,
   {
     variants: {
       variant: {

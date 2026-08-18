@@ -3,34 +3,32 @@
 namespace Drupal\dpl_update\Services;
 
 use Drupal\Core\Config\CachedStorage;
-use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\FileStorage;
+use Drupal\Core\DestructableInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use function Safe\preg_match;
 
 /**
  * Maintainer service for keeping ignored config in check.
+ *
+ * Config saves are collected during the request with markForCheck(), and
+ * once the request ends (see DestructableInterface), any collected config
+ * that is auto-ignored but identical to the codebase gets removed from the
+ * ignore list.
+ *
+ * This way the clean-up runs a single time per request, regardless of how
+ * many config objects get saved - a config import can save hundreds.
  */
-class ConfigIgnore {
+class ConfigIgnore implements DestructableInterface {
 
   /**
-   * The settings for config_ignore_auto.
-   */
-  public Config $configAutoIgnoreSettings;
-
-  /**
-   * The settings for config_ignore.
-   */
-  public Config $configIgnoreSettings;
-
-  /**
-   * Items that are ignored as part of config_ignore_auto.
+   * Config names saved during this request, pending an unused-ignore check.
    *
    * @var array<string>
    */
-  public array $autoIgnoredItems;
+  protected array $pendingChecks = [];
 
   /**
    * {@inheritDoc}
@@ -45,14 +43,47 @@ class ConfigIgnore {
     protected CachedStorage $configStorage,
     #[Autowire(service: 'logger.channel.dpl_update')]
     protected LoggerInterface $logger,
-  ) {
-    $this->configAutoIgnoreSettings = $this->configFactory
-      ->getEditable('config_ignore_auto.settings');
+  ) {}
 
-    $this->configIgnoreSettings = $this->configFactory
-      ->getEditable('config_ignore.settings');
+  /**
+   * Register a saved config name, to be checked for unused ignores.
+   *
+   * The actual check and clean-up runs once, at the end of the request,
+   * in destruct().
+   */
+  public function markForCheck(string $name): void {
+    $this->pendingChecks[$name] = $name;
+  }
 
-    $this->autoIgnoredItems = (array) $this->configAutoIgnoreSettings
+  /**
+   * {@inheritDoc}
+   *
+   * Clean up unused ignores for the config that was saved in this request.
+   */
+  public function destruct(): void {
+    if (empty($this->pendingChecks)) {
+      return;
+    }
+
+    $names = array_values($this->pendingChecks);
+    $this->pendingChecks = [];
+
+    $this->cleanUnusedIgnores($names);
+  }
+
+  /**
+   * Items that are ignored as part of config_ignore_auto.
+   *
+   * Read freshly from config on every call: other config-save subscribers
+   * (notably config_ignore_auto itself) can add items during the same
+   * request, and working on a stale snapshot would overwrite their changes.
+   *
+   * @return array<string>
+   *   The ignored items.
+   */
+  public function getAutoIgnoredItems(): array {
+    return (array) $this->configFactory
+      ->get('config_ignore_auto.settings')
       ->get('ignored_config_entities');
   }
 
@@ -71,14 +102,18 @@ class ConfigIgnore {
    */
   public function getWebmasterIgnores(): array {
     // Getting the whitelists from config_ignore and config_ignore_auto.
-    $whitelist = $this->configIgnoreSettings->get('ignored_config_entities');
+    $whitelist = $this->configFactory
+      ->get('config_ignore.settings')
+      ->get('ignored_config_entities');
     // Depending on which mode we're using, config_ignore might store the
     // whitelist in an .import instead.
     $whitelist_import = $whitelist['import'] ?? NULL;
     $whitelist = (is_array($whitelist_import)) ? $whitelist['import'] : $whitelist;
-    $whitelist = $whitelist + $this->configAutoIgnoreSettings->get('whitelist_config_entities');
+    $whitelist = $whitelist + $this->configFactory
+      ->get('config_ignore_auto.settings')
+      ->get('whitelist_config_entities');
 
-    return array_filter($this->autoIgnoredItems, function ($item) use ($whitelist) {
+    return array_filter($this->getAutoIgnoredItems(), function ($item) use ($whitelist) {
       foreach ($whitelist as $pattern) {
         // Convert shell-wildcard to regexp pattern.
         $pattern = '/^' . strtr(preg_quote($pattern, '/'), ['\*' => '.*', '\?' => '.']) . '$/';
@@ -124,13 +159,19 @@ class ConfigIgnore {
   /**
    * Find auto-ignores that do not differ from codebase.
    *
+   * @param array<string>|null $candidates
+   *   If set, only ignored items in this list of config names are checked.
+   *   Used to keep the end-of-request clean-up proportional to what was
+   *   actually saved, instead of scanning the full ignore list.
+   *
    * @return array<string>
    *   The ignored items.
    */
-  public function getUnusedAutoIgnores(): array {
-    $items = $this->autoIgnoredItems;
-    if (empty($items)) {
-      return [];
+  public function getUnusedAutoIgnores(?array $candidates = NULL): array {
+    $items = $this->getAutoIgnoredItems();
+
+    if ($candidates !== NULL) {
+      $items = array_intersect($items, $candidates);
     }
 
     $unused_items = [];
@@ -155,23 +196,33 @@ class ConfigIgnore {
 
   /**
    * Find auto-ignores that do not differ from codebase, and remove them.
+   *
+   * @param array<string>|null $candidates
+   *   If set, only ignored items in this list of config names are checked.
    */
-  public function cleanUnusedIgnores(): string {
-    $items = $this->autoIgnoredItems;
+  public function cleanUnusedIgnores(?array $candidates = NULL): string {
+    $settings = $this->configFactory->getEditable('config_ignore_auto.settings');
+    $items = (array) $settings->get('ignored_config_entities');
 
     if (empty($items)) {
       return 'No auto-ignored config to clean-up.';
     }
 
-    $unused_items = $this->getUnusedAutoIgnores();
+    $unused_items = $this->getUnusedAutoIgnores($candidates);
 
-    $filtered_items = array_diff($items, $unused_items);
-    $this->configAutoIgnoreSettings->set('ignored_config_entities', $filtered_items);
-    $this->configAutoIgnoreSettings->save();
+    if (empty($unused_items)) {
+      // Nothing to remove. Saving anyway would trigger a pointless database
+      // write, cache invalidation and config-save event dispatch, so make
+      // sure to only save (and log) when something actually changed.
+      return 'Removed 0 items from config_ignore_auto.settings.ignored_config_entities';
+    }
 
-    $original_count = count($items);
-    $new_count = count($filtered_items);
-    $change_count = $original_count - $new_count;
+    $filtered_items = array_values(array_diff($items, $unused_items));
+
+    $settings->set('ignored_config_entities', $filtered_items);
+    $settings->save();
+
+    $change_count = count($items) - count($filtered_items);
 
     $message = "Removed $change_count items from config_ignore_auto.settings.ignored_config_entities";
     $this->logger->info($message);

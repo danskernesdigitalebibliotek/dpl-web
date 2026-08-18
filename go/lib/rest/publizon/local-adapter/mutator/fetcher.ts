@@ -1,38 +1,13 @@
 import { getBaseURL } from "@/lib/config/getBaseURL"
 import goConfig from "@/lib/config/goConfig"
-import { getRestServiceUrlWithParams } from "@/lib/fetchers/helper"
 
 // Fetcher for interacting with the local Publizon adapter.
 // Ensure this file remains consistent with the adapter fetcher logic for uniform response handling.
-export const fetcher = async <ResponseType>({
-  url,
-  method,
-  headers,
-  params,
-  data,
-}: {
-  url: string
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD"
-  headers?: object
-  params?: unknown
-  data?: BodyType<unknown>
-  signal?: AbortSignal
-}) => {
-  const body = data ? JSON.stringify(data) : null
-  const serviceUrl = getRestServiceUrlWithParams({
-    baseUrl: `${getBaseURL()}/${goConfig("routes.pubhub")}`,
-    url,
-    params,
-  })
+export const fetcher = async <ResponseType>(url: string, init?: RequestInit) => {
+  const serviceUrl = `${getBaseURL()}/${goConfig("routes.pubhub")}${url}`
 
   try {
-    const response = await fetch(serviceUrl, {
-      method,
-      headers: {
-        ...headers,
-      },
-      body,
-    })
+    const response = await fetch(serviceUrl, init)
 
     if (!response.ok) {
       const data = await response.json()
@@ -59,7 +34,7 @@ export const fetcher = async <ResponseType>({
   // cannot be converted to JSON. Fetch API and TypeScript has no clean
   // way for us to identify empty responses, so instead we swallow
   // syntax errors during decoding.
-  return null
+  return null as ResponseType
 }
 
 export default fetcher

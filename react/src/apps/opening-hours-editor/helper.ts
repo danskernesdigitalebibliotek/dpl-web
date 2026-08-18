@@ -2,9 +2,9 @@ import { EventInput } from "@fullcalendar/core";
 import { EventImpl } from "@fullcalendar/core/internal";
 import {
   DplOpeningHoursListGET200Item,
-  DplOpeningHoursCreatePOSTOpeningHoursInstanceBody,
   DplOpeningHoursUpdatePATCH200Item,
-  DplOpeningHoursListGET200ItemRepetitionType
+  DplOpeningHoursListGET200ItemRepetitionType,
+  DplOpeningHoursCreatePOSTBody
 } from "../../core/dpl-cms/model";
 import {
   convertToDayJs,
@@ -35,9 +35,8 @@ export const formatCmsEventsToFullCalendar = (
 };
 
 export const formatFullCalendarEventToCmsEventAdd = (
-  event: EventInput &
-    Pick<DplOpeningHoursCreatePOSTOpeningHoursInstanceBody, "repetition">
-): DplOpeningHoursCreatePOSTOpeningHoursInstanceBody => {
+  event: EventInput & Pick<DplOpeningHoursCreatePOSTBody, "repetition">
+): DplOpeningHoursCreatePOSTBody => {
   if (!event.title || !event.color) {
     throw new Error("Invalid event format");
   }

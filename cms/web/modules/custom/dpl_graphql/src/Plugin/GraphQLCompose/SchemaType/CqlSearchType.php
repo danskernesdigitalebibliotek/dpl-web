@@ -32,6 +32,38 @@ class CqlSearchType extends GraphQLComposeSchemaTypeBase {
           'type' => Type::string(),
           'description' => (string) $this->t('The CQL search string.'),
         ],
+        'branch' => [
+          'type' => Type::string(),
+          'description' => (string) $this->t('Branch filter.'),
+        ],
+        'department' => [
+          'type' => Type::string(),
+          'description' => (string) $this->t('Department filter.'),
+        ],
+        'location' => [
+          'type' => Type::string(),
+          'description' => (string) $this->t('Location filter.'),
+        ],
+        'sublocation' => [
+          'type' => Type::string(),
+          'description' => (string) $this->t('Sublocation filter.'),
+        ],
+        'sort' => [
+          'type' => Type::string(),
+          'description' => (string) $this->t('Sort order.'),
+        ],
+        'onshelf' => [
+          'type' => Type::string(),
+          'description' => (string) $this->t('On-shelf filter.'),
+        ],
+        'firstAccessionDateValue' => [
+          'type' => Type::string(),
+          'description' => (string) $this->t('First accession date value.'),
+        ],
+        'firstAccessionDateOperator' => [
+          'type' => Type::string(),
+          'description' => (string) $this->t('First accession date operator.'),
+        ],
       ],
     ]);
 

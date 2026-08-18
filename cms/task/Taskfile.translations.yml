@@ -12,18 +12,18 @@ tasks:
   scan:
     desc: Scan and generate translations
     cmds:
-      # Make sure that the potion module is active
-      - task dev:cli -- drush en -y potion
+      # Make sure that the potx module is active
+      - task dev:cli -- drush en -y potx
       # Generate translations for modules and themes
-      - task dev:cli -- ./dev-scripts/translate-source/scan-translations.sh {{ .LANGUAGE }} {{ .PO_DIR }}
-      # Fill translations from db
-      - task dev:cli -- drush potion:fill {{ .LANGUAGE }} $PATH_TO_FILE
+      - task dev:cli -- drush dpl_po:scan-source {{ .LANGUAGE }} {{ .PATH_TO_FILE }}
       - task: chown
         vars:
           PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
     requires:
       vars: [LANGUAGE, PO_DIR]
-    env:
+    # A var rather than an env entry, so that it can be passed on to chown. No
+    # command in this task needs it in the shell environment.
+    vars:
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
 
   conf:export:
@@ -33,7 +33,7 @@ tasks:
       - task dev:cli -- drush dpl_po:export-config-po {{ .LANGUAGE }} $PATH_TO_FILE
       - task: chown
         vars:
-          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
+          PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
     requires:
       vars: [LANGUAGE, PO_DIR]
     env:
@@ -42,7 +42,7 @@ tasks:
   conf:merge:
     desc: Merge configuration translations into the combined translation file
     cmds:
-      - task dev:cli -- msgcat -o web/$PATH_TO_FILE $FILE_A $FILE_B
+      - task dev:cli -- msgcat --sort-output -o web/$PATH_TO_FILE $FILE_A $FILE_B
       - task: chown
         vars:
           PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"

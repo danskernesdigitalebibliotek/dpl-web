@@ -5,8 +5,10 @@ namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequest;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\EventState;
+use Drupal\rest\Attribute\RestResource;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,15 +16,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * REST resource for working with single events.
- *
- * @RestResource (
- *   id = "event",
- *   label = @Translation("Update single events"),
- *   uri_paths = {
- *     "canonical" = "/api/v1/events/{uuid}",
- *   }
- * )
  */
+#[RestResource(
+  id: "event",
+  label: new TranslatableMarkup("Update single events"),
+  uri_paths: [
+    "canonical" => "/api/v1/events/{uuid}",
+  ],
+  )]
 final class EventResource extends EventResourceBase {
 
   /**

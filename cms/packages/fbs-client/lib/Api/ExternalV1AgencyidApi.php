@@ -365,7 +365,7 @@ class ExternalV1AgencyidApi
             'exclude', // param base name
             'array', // openApiType
             'form', // style
-            false, // explode
+            true, // explode
             false // required
         ) ?? []);
 
