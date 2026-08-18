@@ -8,6 +8,12 @@ services:
     tags:
       - { name: cache.context }
 
+  Drupal\bnf_server\Collector\StreamCollector:
+    class: Drupal\bnf_server\Collector\StreamCollector
+    autowire: true
+    tags:
+      - { name: dpl_metrics_collector }
+
   # These hook services definitions is only needed by Drupal 10, they
   # can be removed when we upgrade to Drupal 11.
   Drupal\bnf_server\Hook\ViewsHooks: {}
