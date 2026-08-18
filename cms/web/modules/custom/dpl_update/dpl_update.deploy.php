@@ -136,7 +136,7 @@ function _dpl_update_set_value(string $field_name, mixed $value, string $entity_
       ->accessCheck(FALSE)
       ->execute();
 
-  if (!is_array($ids) || empty($ids)) {
+  if (empty($ids)) {
     return "No $entity_type entities to update.";
   }
 
@@ -180,7 +180,7 @@ function _dpl_update_generate_url_aliases(string $entity_type): string {
       ->accessCheck(FALSE)
       ->execute();
 
-  if (!is_array($ids) || empty($ids)) {
+  if (empty($ids)) {
     return "No $entity_type entities to update.";
   }
 

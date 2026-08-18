@@ -383,7 +383,7 @@ class DplPoCommands extends DrushCommands {
       }
       $writer->close();
 
-      if (!is_string($tmp_filename) || !$this->fileSystem->realpath($tmp_filename)) {
+      if (!$this->fileSystem->realpath($tmp_filename)) {
         $this->io()->error($this->t(
           'Could not locate temp PO file.',
           [],
@@ -453,6 +453,9 @@ class DplPoCommands extends DrushCommands {
     $header = $reader->getHeader();
 
     $uri = $this->fileSystem->tempnam('temporary://', 'po_');
+    if (!is_string($uri)) {
+      throw new \RuntimeException('Unable to create temporary PO file.');
+    }
     $writer = new PoStreamWriter();
     $writer->setURI($uri);
     $writer->setHeader($header);

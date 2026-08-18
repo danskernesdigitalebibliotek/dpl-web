@@ -50,7 +50,7 @@ class VersionHelper {
       // Read current git branch name from .git/HEAD.
       $head = file_get_contents($gitHeadFile);
       if (preg_match('/ref: refs\/heads\/([^\n]+)/', $head, $matches)) {
-        $version = $matches[1] ?? NULL;
+        $version = $matches[1];
       }
     }
 

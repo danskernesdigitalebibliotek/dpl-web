@@ -13,7 +13,6 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleInstallerInterface;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_library_token\LibraryTokenHandler;
@@ -144,12 +143,6 @@ function _dpl_update_add_field_columns(string $field_type, array $fields): strin
 
   // Loop through all configs.
   foreach ($field_storage_configs as $field_storage) {
-
-    // Just to play safe.
-    if (!($field_storage instanceof FieldStorageDefinitionInterface)) {
-      throw new \Exception('Unexpected entity type loaded: ' . get_class($field_storage));
-    }
-
     // Get the most updated schema from field stroage.
     $schema = $field_storage->getSchema();
     $table_name = str_replace('.', '__', (string) $field_storage->id());
