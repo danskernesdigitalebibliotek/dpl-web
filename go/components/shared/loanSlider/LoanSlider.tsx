@@ -1,7 +1,6 @@
 "use client"
 
 import { useWindowSize } from "@uidotdev/usehooks"
-import { differenceInDays } from "date-fns"
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
 import { useRouter } from "next/navigation"
@@ -104,19 +103,12 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
           data-cy={cyKeys["loan-slider"]}>
           {works.map((work, index) => {
             const loanManifestation = work.manifestations.all[0]
-            const manifestationIsbn = loanManifestation.identifiers.find(
-              identifier => identifier.type === "ISBN"
-            )?.value
-            const loan = loanData.loans?.find(l => l.libraryBook?.identifier === manifestationIsbn)
-            const daysUntil = loan?.loanExpireDateUtc
-              ? differenceInDays(new Date(loan.loanExpireDateUtc), new Date())
-              : null
             return (
               <button
                 type="button"
                 data-cy={cyKeys["loan-slider-work"]}
                 key={loanManifestation.pid}
-                aria-label={`Se detaljer om dit lån af ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}${daysUntil !== null ? `. Udløber om ${daysUntil} dage` : ""}`}
+                aria-label={`Se detaljer om dit lån af ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
                 className={cn(
                   `keen-slider__slide focus-visible outline-accent-foreground rounded-base flex
                   cursor-pointer items-center !overflow-visible focus:outline-offset-2`
