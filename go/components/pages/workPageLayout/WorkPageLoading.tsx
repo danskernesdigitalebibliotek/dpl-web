@@ -19,7 +19,9 @@ const WorkPageLoading = () => {
       <span className="sr-only">Materialet indlæses</span>
       <div className="lg:grid-go mt-5">
         <div className="col-span-4 h-auto lg:order-2">
-          <div className="h-auto w-full flex-col items-center justify-center lg:aspect-4/5">
+          <div
+            className="aspect-square h-auto w-full flex-col items-center justify-center px-[15%]
+              lg:aspect-4/5 lg:px-0">
             <CoverPictureSkeleton />
           </div>
           <div className="flex w-full justify-center pt-12">
