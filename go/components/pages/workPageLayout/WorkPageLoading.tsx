@@ -29,8 +29,8 @@ const WorkPageLoading = () => {
         <div className="pt-grid-gap-3 col-span-4 flex flex-col items-start justify-end lg:pt-0">
           <div className="bg-background-skeleton h-11.5 w-full animate-pulse rounded-md lg:mt-0" />
           <div
-            className="mt-grid-gap-2 bg-background-skeleton h-3.25 w-[50%] animate-pulse
-              rounded-md lg:mt-7"
+            className="mt-grid-gap-2 bg-background-skeleton h-3.25 w-[50%] animate-pulse rounded-md
+              lg:mt-7"
           />
         </div>
         <div

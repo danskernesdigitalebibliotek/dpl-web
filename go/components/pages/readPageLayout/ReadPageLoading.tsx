@@ -4,7 +4,7 @@ const ReadPageLoading = () => {
     <div role="status">
       <span className="sr-only">Læseren indlæses</span>
     </div>
-  );
-};
+  )
+}
 
-export default ReadPageLoading;
+export default ReadPageLoading

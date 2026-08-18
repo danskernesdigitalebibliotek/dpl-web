@@ -7,6 +7,6 @@ const PageLoading = () => {
     <div role="status">
       <span className="sr-only">Siden indlæses</span>
     </div>
-  );
-};
-export default PageLoading;
+  )
+}
+export default PageLoading

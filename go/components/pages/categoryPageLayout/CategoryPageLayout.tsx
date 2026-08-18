@@ -10,8 +10,8 @@ function CategoryPageLayout({ pageData }: { pageData: NodeGoCategory }) {
     <div className="gap-y-paragraph-spacing flex flex-col">
       <div className="content-container gap-y-paragraph-spacing grid-go">
         <h1
-          className="text-typo-heading-1 xs:text-typo-huge md:px-grid-column-half col-span-full
-            text-center animate-in fade-in-0">
+          className="text-typo-heading-1 xs:text-typo-huge md:px-grid-column-half animate-in
+            fade-in-0 col-span-full text-center">
           {pageData.title}
         </h1>
       </div>
