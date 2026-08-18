@@ -124,8 +124,12 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
           />
         )}
         events={events}
-        tableHeaderSticky
         height="auto"
+        viewDidMount={(view) => {
+          if (view.view.type === "dayGridMonth") {
+            fullCalendarApi?.setOption("aspectRatio", 3);
+          }
+        }}
         selectMirror
         allDaySlot={false}
         datesSet={handleDatesSet}
