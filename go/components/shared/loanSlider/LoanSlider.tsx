@@ -66,6 +66,12 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
   const onRightClick = () => {
     internalSlider.current?.next()
   }
+  // Slides move by transform, so the browser can't scroll a keyboard-focused
+  // card into view itself — follow focus, but leave fully visible cards alone.
+  const bringIntoView = (index: number) => {
+    const slide = internalSlider.current?.track?.details?.slides[index]
+    if (slide && slide.portion < 1) internalSlider.current?.moveToIdx(index)
+  }
 
   return (
     <div
@@ -108,6 +114,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                 type="button"
                 data-cy={cyKeys["loan-slider-work"]}
                 key={loanManifestation.pid}
+                onFocus={() => bringIntoView(index)}
                 aria-label={`Se detaljer om dit lån af ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
                 className={cn(
                   `keen-slider__slide focus-visible outline-accent-foreground rounded-base flex
