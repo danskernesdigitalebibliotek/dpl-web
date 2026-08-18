@@ -50,12 +50,6 @@ const Template: StoryFn<typeof MaterialUnavailableNotice> = (
 
 export const Default = Template.bind({});
 
-export const WithoutLink = Template.bind({});
-WithoutLink.args = {
-  linkText: undefined,
-  linkUrl: undefined,
-};
-
 // Used where the notice replaces a small button, e.g. in the manifestation
 // list. It drops the title and the link and only keeps a short description.
 export const Compact = Template.bind({});
