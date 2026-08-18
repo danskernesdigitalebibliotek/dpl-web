@@ -87,6 +87,13 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
           right: "prev,next today"
         }}
         initialView="timeGridWeek"
+        views={{
+          timeGridWeek: {
+            // Ensure that the week view shows the correct
+            // date range format (e.g. "17. - 23. aug. 2026").
+            titleFormat: { year: "numeric", month: "short", day: "numeric" }
+          }
+        }}
         locale={da}
         selectable={!isLoading}
         select={
