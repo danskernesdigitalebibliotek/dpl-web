@@ -37,6 +37,7 @@ trait EmbedVideoTrait {
 
     $mediaStorage = $this->entityTypeManager->getStorage('media');
 
+    $media = NULL;
     if (str_ends_with(get_class($video), 'MediaVideo')) {
       $media = $this->getMediaVideoMedia($video, $mediaStorage);
     }

@@ -76,7 +76,7 @@ function bnf_preprocess_html(array &$variables): void {
 /**
  * Implements hook_page_attachments().
  *
- * @param array[] $page
+ * @param mixed[] $page
  *   The page render array.
  */
 #[LegacyHook]
