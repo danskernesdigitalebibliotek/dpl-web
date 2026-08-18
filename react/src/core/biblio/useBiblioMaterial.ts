@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import getBiblioClient from "./biblioClient";
-import { biblioQueryOptions } from "./biblioQueryOptions";
 
 // Ask only about materials the adapter is known to provide. This is not a way
 // to find out who provides one - the item already says that.
 const useBiblioMaterial = (isbn: string | null) => {
   return useQuery({
-    ...biblioQueryOptions,
     queryKey: ["biblio", "material", isbn],
     // null, not undefined: TanStack Query rejects undefined as query data,
     // which would turn "not found" into a failed query.
