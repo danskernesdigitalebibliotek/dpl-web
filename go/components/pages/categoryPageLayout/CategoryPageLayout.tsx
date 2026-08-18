@@ -11,7 +11,7 @@ function CategoryPageLayout({ pageData }: { pageData: NodeGoCategory }) {
       <div className="content-container gap-y-paragraph-spacing grid-go">
         <h1
           className="text-typo-heading-1 xs:text-typo-huge md:px-grid-column-half col-span-full
-            text-center">
+            text-center animate-in fade-in-0">
           {pageData.title}
         </h1>
       </div>
