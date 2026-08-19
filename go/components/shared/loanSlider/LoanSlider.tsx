@@ -18,7 +18,6 @@ import QuotasSection, {
 import { cyKeys } from "@/cypress/support/constants"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { displayCreators } from "@/lib/helpers/helper.creators"
 import { buildSelectedLoan } from "@/lib/helpers/helper.patron"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 import { openModal } from "@/store/modal.store"
@@ -110,12 +109,13 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
           {works.map((work, index) => {
             const loanManifestation = work.manifestations.all[0]
             return (
+              // Named by the card's content — cover title and the visible
+              // expiry label; an aria-label would override both.
               <button
                 type="button"
                 data-cy={cyKeys["loan-slider-work"]}
                 key={loanManifestation.pid}
                 onFocus={() => bringIntoView(index)}
-                aria-label={`Se detaljer om dit lån af ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
                 className={cn(
                   `keen-slider__slide focus-visible outline-accent-foreground rounded-base flex
                   cursor-pointer items-center !overflow-visible focus:outline-offset-2`
@@ -133,6 +133,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                   setEbookLoans={setEbookLoans}
                   setBlueLoans={setBlueLoans}
                 />
+                <span className="sr-only">Vis detaljer</span>
               </button>
             )
           })}
