@@ -58,7 +58,7 @@ export const mutator = async <ResponseType>(
   // cannot be converted to JSON. Fetch API and TypeScript has no clean
   // way for us to identify empty responses, so instead we swallow
   // syntax errors during decoding.
-  return undefined as ResponseType;
+  return null as ResponseType;
 };
 
 export default mutator;
