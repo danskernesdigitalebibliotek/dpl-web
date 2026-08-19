@@ -10,6 +10,7 @@ use Drupal\bnf_client\Form\SettingsForm;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\dpl_metrics\MetricsRegistry;
 use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -47,6 +48,8 @@ class NodeUpdate extends QueueWorkerBase implements ContainerFactoryPluginInterf
    *   BNF importer.
    * @param \Psr\Log\LoggerInterface $logger
    *   Logger.
+   * @param \Drupal\dpl_metrics\MetricsRegistry $metrics
+   *   Records how the synchronisation of each node turned out.
    */
   public function __construct(
     array $configuration,
@@ -56,6 +59,7 @@ class NodeUpdate extends QueueWorkerBase implements ContainerFactoryPluginInterf
     protected BnfImporter $importer,
     #[Autowire(service: 'logger.channel.bnf')]
     protected LoggerInterface $logger,
+    protected MetricsRegistry $metrics,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
 
@@ -71,6 +75,8 @@ class NodeUpdate extends QueueWorkerBase implements ContainerFactoryPluginInterf
       $node = $this->importer->importNode($data['uuid'], $this->baseUrl . 'graphql');
 
       if (!($node instanceof NodeInterface)) {
+        $this->countOutcome('skipped');
+
         return;
       }
 
@@ -108,10 +114,42 @@ class NodeUpdate extends QueueWorkerBase implements ContainerFactoryPluginInterf
       }
 
       $node->save();
+
+      $this->countOutcome('imported');
     }
     catch (\Throwable $e) {
+      $this->countOutcome('failed');
+
       $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
     }
+  }
+
+  /**
+   * Records how synchronising one node turned out.
+   *
+   * Every node we still keep updated is re-queued once an hour, so most
+   * items legitimately end up doing nothing. Hence one counter with an
+   * outcome label rather than three metrics: 'imported' on its own is the
+   * number of nodes actually synchronised, and held against the sum of all
+   * three it is the share of the work that was worth doing.
+   *
+   * @param 'imported'|'skipped'|'failed' $outcome
+   *   What the importer did with the node:
+   *   - 'imported': it was created or updated.
+   *   - 'skipped': the importer returned no node, either because there was
+   *     nothing to do (the source is unchanged since last time, the editor
+   *     has claimed the node locally, or it is unpublished upstream and
+   *     unknown here) or because it links to content we cannot import. The
+   *     importer logs which.
+   *   - 'failed': the import threw, which the log line beside this call
+   *     describes.
+   */
+  private function countOutcome(string $outcome): void {
+    $this->metrics->incrementCounter(
+      'bnf_sync_nodes_total',
+      'Nodes handled by the BNF synchronisation queue, by outcome.',
+      ['result' => $outcome],
+    );
   }
 
 }

@@ -13,6 +13,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Queue\QueueInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\dpl_metrics\MetricsRegistry;
 
 /**
  * Check for new content on subscription and queue fetching.
@@ -54,6 +55,8 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
    *   BNF importer.
    * @param \Drupal\Core\Queue\QueueFactory $queueFactory
    *   Queue factory.
+   * @param \Drupal\dpl_metrics\MetricsRegistry $metrics
+   *   Records whether we managed to reach delingstjenesten.dk.
    */
   public function __construct(
     array $configuration,
@@ -63,6 +66,7 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
     ConfigFactoryInterface $configFactory,
     protected BnfImporter $importer,
     QueueFactory $queueFactory,
+    protected MetricsRegistry $metrics,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
 
@@ -81,6 +85,10 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
 
     if (!$subscription) {
       // Subscription deleted. Carry on.
+      //
+      // Deliberately not counted: nothing was asked of delingstjenesten.dk,
+      // so counting this either way would move a metric that is there to say
+      // whether we can reach them.
       return;
     }
 
@@ -88,6 +96,17 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
       $subscription->getSubscriptionUuid(),
       $subscription->getLast(),
       $this->baseUrl . 'graphql'
+    );
+
+    // A failed check is otherwise invisible from the outside: the importer
+    // answers "nothing new" either way, so a site cut off from
+    // delingstjenesten.dk goes on looking exactly like one whose streams have
+    // been quiet. Only this tells the two apart, and until content is
+    // conspicuously missing it is the only thing that will.
+    $this->metrics->incrementCounter(
+      'bnf_sync_subscription_checks_total',
+      'Checks for new subscription content on delingstjenesten.dk, by outcome.',
+      ['result' => $newContent['success'] ? 'success' : 'failure'],
     );
 
     foreach ($newContent['uuids'] as $uuid) {
