@@ -20,6 +20,7 @@ x-environment:
     #
     MARIADB_HOST: bnfmariadb
     REDIS_HOST: bnfredis
+    METRICS_REDIS_HOST: bnfredis-metrics
     VARNISH_BACKEND_HOST: bnfnginx
     NGINX_FASTCGI_PASS: bnfphp
 
@@ -100,6 +101,8 @@ services:
     depends_on:
       bnfredis:
         condition: service_started
+      bnfredis-metrics:
+        condition: service_started
       bnfmariadb:
         condition: service_healthy
       # loads the defined volumes and user from the top
@@ -127,6 +130,17 @@ services:
   bnfredis: # In-memory key-value database used as the Drupal Core cache backend.
     # https://docs.lagoon.sh/docker-images/redis/
     image: uselagoon/redis-8:latest
+    labels:
+      lagoon.type: redis
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment
+
+  bnfredis-metrics: # Key-value store holding Prometheus metric counters.
+    # See the redis-metrics service in docker-compose.yml for the rationale.
+    build:
+      context: ..
+      dockerfile: cms/lagoon/redis-metrics.dockerfile
     labels:
       lagoon.type: redis
     << : *default-user # uses the defined user from top

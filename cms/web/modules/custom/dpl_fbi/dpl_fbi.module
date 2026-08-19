@@ -4,6 +4,8 @@ use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\dpl_fbi\Hook\ReactAppsApiUrls;
 
 /**
+ * Implements hook_multiple_field_remove_button_field_types_alter().
+ *
  * Add field types for which remove button will be added.
  *
  * @param string[] $fieldTypes

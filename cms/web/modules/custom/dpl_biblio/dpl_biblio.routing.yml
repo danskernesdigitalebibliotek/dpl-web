@@ -1,0 +1,9 @@
+dpl_biblio.settings:
+  path: '/admin/config/services/biblio'
+  defaults:
+    _form: '\Drupal\dpl_biblio\Form\BiblioSettingsForm'
+    _title: 'Biblio adapter settings'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE

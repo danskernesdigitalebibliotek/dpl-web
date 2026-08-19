@@ -1,0 +1,25 @@
+Scan TranslationInterface::translate() calls.
+
+Potx does not look for translate(), so strings passed to an injected
+TranslationInterface service - $this->translation->translate('...') - are never
+extracted. We use that call form in enums and in services that inject the
+translation service rather than using StringTranslationTrait.
+
+This is deliberately not filed upstream. ContentEntityInterface::translate()
+takes a langcode, and potx matches on a flat token stream, so a general version
+of this would make potx extract langcodes such as 'da' as translatable strings
+on any site that translates entities. It is only safe here because we do not
+call translate() on entities. Grep before assuming that still holds.
+
+--- a/potx.inc
++++ b/potx.inc
+@@ -286,6 +286,9 @@
+       // Drupal 8.
+       _potx_find_t_calls_with_context($file_name, $save_callback, 'TranslatableMarkup');
+       _potx_find_t_calls_with_context($file_name, $save_callback, 'TranslationWrapper');
++      // TranslationInterface::translate() on an injected translation service.
++      // Not covered upstream, see the header of this patch.
++      _potx_find_t_calls_with_context($file_name, $save_callback, 'translate');
+     }
+   }
+   else {

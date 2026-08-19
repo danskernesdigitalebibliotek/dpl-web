@@ -154,8 +154,15 @@
         // "date-range-facet__input form-control input"; pin it so the
         // rendered field carries exactly the documented styling class.
         altInputClass: 'date-range-facet__input',
-        // rangeSeparator lives on the locale; override it for the dash.
-        locale: { rangeSeparator: ' – ' },
+        // Spread a full locale so weekday/month names and the first day of
+        // the week follow the site language instead of flatpickr's English
+        // default (Sunday-first, "Mon"/"Tue"/…). Only override the range
+        // separator for the dash.
+        locale: {
+          ...(flatpickr.l10ns[settings.path.currentLanguage] ||
+            flatpickr.l10ns.default),
+          rangeSeparator: ' – ',
+        },
         defaultDate: initial.length ? initial : undefined,
         onChange(selectedDates) {
           setActive(selectedDates.length > 0);

@@ -43,10 +43,11 @@ matching CMS-side entry is part of the work.
 ## Translations
 
 All UI source strings are English. Localisation happens at runtime via PO
-files distributed through GitHub (see ADR-009 — runtime, not admin-UI).
-Every `t()` / `$this->t()` / `formatPlural()` must include a `context`
-argument *inline*; the codebase scanner that extracts strings cannot follow
-variables. The default context is the module machine name.
+files distributed through GitHub — not through the admin UI — with strings
+extracted from the codebase by potx (see ADR-018). Every `t()` /
+`$this->t()` / `formatPlural()` must include a `context` argument *inline*;
+the scanner matches on a flat token stream and cannot follow variables. The
+default context is the module machine name.
 
 ## Patches, not forks
 

@@ -187,9 +187,14 @@ export type AppType =
 
 export type AppVideo = {
   __typename?: 'AppVideo';
+  orientation: AppVideoOrientation;
   thumbnail: Scalars['String']['output'];
   url: Scalars['String']['output'];
 };
+
+export type AppVideoOrientation =
+  | 'HORIZONTAL'
+  | 'VERTICAL';
 
 export type BetweenFloatInput = {
   max?: InputMaybe<Scalars['Float']['input']>;

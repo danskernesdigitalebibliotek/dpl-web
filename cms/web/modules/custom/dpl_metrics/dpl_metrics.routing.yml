@@ -1,0 +1,7 @@
+dpl_metrics.metrics:
+  path: '/metrics'
+  defaults:
+    _controller: 'Drupal\dpl_metrics\Controller\MetricsController::metrics'
+  methods: [GET]
+  requirements:
+    _dpl_metrics_access: 'TRUE'
