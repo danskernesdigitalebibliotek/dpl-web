@@ -86,6 +86,31 @@ Hostname for the Redis service.
 
 Port for the Redis service.
 
+## Metrics
+
+- `METRICS_REDIS_HOST`
+
+Hostname of the key-value store holding Prometheus metric counters,
+read by `dpl_metrics`. This is deliberately a *different* instance from
+`REDIS_HOST`: the cache instance runs an LRU eviction policy and gets
+flushed wholesale, either of which would corrupt counters.
+
+When unset, `dpl_metrics` falls back to per-process storage, so counters
+never accumulate and the endpoint reports close to nothing. That keeps
+the module harmless in environments where the service has not been
+rolled out.
+
+- `METRICS_REDIS_SERVICE_PORT`
+
+Port for that service. Defaults to `6379`.
+
+- `METRICS_SCRAPE_TOKEN`
+
+Bearer token Prometheus presents when scraping `/metrics`. Until it is
+set, the endpoint is closed to everyone without the `access dpl metrics`
+permission — a site that installs the module without finishing setup
+does not end up publishing its metrics.
+
 ## CI / System
 
 - `CI`
