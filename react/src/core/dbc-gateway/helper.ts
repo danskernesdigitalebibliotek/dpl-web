@@ -15,6 +15,25 @@ export const resolveBaseUrl = (query?: string) => {
   ) as Baseurl;
 };
 
+// Every operation is posted to the same /graphql endpoint, which makes the
+// requests impossible to tell apart in the browser's network log. Appending the
+// operation name as a valueless query parameter (eg. /graphql?getMaterial)
+// labels the request without changing it - the gateway ignores the parameter.
+const operationNamePattern = /\b(?:query|mutation|subscription)\s+(\w+)/;
+
+export const getOperationName = (query: string) =>
+  query.match(operationNamePattern)?.[1];
+
+export const addOperationNameToUrl = (url: string, query: string) => {
+  const operationName = getOperationName(query);
+
+  if (!operationName) {
+    return url;
+  }
+
+  return `${url}${url.includes("?") ? "&" : "?"}${operationName}`;
+};
+
 export const getQueryUrlFromContext = (
   context: QueryFunctionContext | undefined
 ) => {
@@ -98,6 +117,38 @@ if (import.meta.vitest) {
 
     it("should resolve default to the fbi base url if no query has been specified", () => {
       expect(resolveBaseUrl()).toEqual("i-am-fbi-url");
+    });
+  });
+
+  describe("Operation name in url", () => {
+    it("should append the operation name of a query", () => {
+      expect(
+        addOperationNameToUrl(
+          "https://fbi.dk/graphql",
+          "query GetCoversByPids($pids: [String!]!) { ... }"
+        )
+      ).toEqual("https://fbi.dk/graphql?GetCoversByPids");
+    });
+
+    it("should append the operation name of a mutation", () => {
+      expect(
+        addOperationNameToUrl(
+          "https://fbi.dk/graphql",
+          "\n    mutation openOrder($input: SubmitOrder!) { ... }"
+        )
+      ).toEqual("https://fbi.dk/graphql?openOrder");
+    });
+
+    it("should append to an url which already has query parameters", () => {
+      expect(
+        addOperationNameToUrl("https://fbi.dk/graphql?foo=bar", "query Baz { }")
+      ).toEqual("https://fbi.dk/graphql?foo=bar&Baz");
+    });
+
+    it("should leave the url untouched for anonymous operations", () => {
+      expect(
+        addOperationNameToUrl("https://fbi.dk/graphql", "{ foo }")
+      ).toEqual("https://fbi.dk/graphql");
     });
   });
 }
