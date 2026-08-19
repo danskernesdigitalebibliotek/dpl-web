@@ -41,9 +41,7 @@ export const mutator = async <ResponseType>(
 
     const text = await response.text();
     // Some of our responses are intentionally empty. Only try to convert non-empty responses to JSON.
-    return text
-      ? (JSON.parse(text) as ResponseType)
-      : (undefined as ResponseType);
+    return text ? (JSON.parse(text) as ResponseType) : (null as ResponseType);
   } catch (error: unknown) {
     if (error instanceof FbsServiceHttpError) {
       throw error;
