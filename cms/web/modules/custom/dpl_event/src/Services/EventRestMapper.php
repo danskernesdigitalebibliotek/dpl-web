@@ -180,13 +180,18 @@ class EventRestMapper {
           'type' => 'object',
           'description' => 'The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library.',
           'properties' => [
+            'id' => [
+              'type' => 'string',
+              'format' => 'uuid',
+              'description' => 'A unique identifier for the organizer. This is always present and is stable across updates, unlike isil_id which is only available for branches registered in the library system.',
+            ],
             'name' => [
               'type' => 'string',
               'description' => 'The name of the branch arranging the event.',
             ],
             'isil_id' => [
               'type' => 'string',
-              'description' => 'The ISIL code identifying the branch. E.g. DK-710100. This is the stable identifier for the organizer.',
+              'description' => 'The ISIL code identifying the branch in the Danish library system. E.g. DK-710100. Only branches registered in the library system have one, so use id for an identifier which is always present.',
             ],
             'url' => [
               'type' => 'string',
@@ -218,7 +223,7 @@ class EventRestMapper {
               'description' => 'Email address of the branch.',
             ],
           ],
-          'required' => ['name'],
+          'required' => ['id', 'name'],
         ],
         'address' => [
           'type' => 'object',
@@ -489,6 +494,9 @@ class EventRestMapper {
     }
 
     $organizer = new EventsGET200ResponseInnerOrganizer();
+    // The UUID is always present, so consumers have an identifier to group
+    // events by even when the branch has no ISIL code.
+    $organizer->setId($branch->uuid());
     $organizer->setName($name);
     $organizer->setUrl($branch->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl());
     $organizer->setIsilId($this->getBranchValue($branch, 'field_agency_branch_id'));
