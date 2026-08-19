@@ -62,8 +62,8 @@ const ModalMaterialListItem = ({
             )}
           </div>
           {status}
-          <span className="sr-only">Vis detaljer</span>
         </div>
+        <span className="sr-only">Vis detaljer</span>
       </button>
     </li>
   )
