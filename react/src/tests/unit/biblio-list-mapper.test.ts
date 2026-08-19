@@ -100,21 +100,6 @@ describe("Biblio list mappers", () => {
 
       expect(loan.details?.materialType).toBe("Audiobook");
     });
-
-    it("Survives a loan without catalogue fields", () => {
-      const [loan] = mapBiblioLoanToLoanType([
-        {
-          ...biblioLoan,
-          title: undefined,
-          author: undefined,
-          publishDate: undefined
-        }
-      ]);
-
-      expect(loan.details?.title).toBeUndefined();
-      expect(loan.details?.year).toBe("");
-      expect(loan.orderId).toBe(biblioLoan.loanId);
-    });
   });
 
   describe("mapBiblioReservationToReservationType", () => {
@@ -192,18 +177,14 @@ describe("Biblio list mappers", () => {
       expect(details.authors).toContain("Rugaard, Ida");
     });
 
-    it("Survives a sparse material", () => {
+    it("Leaves the authors empty when the material has none", () => {
+      // The one catalogue field the contract does not require.
       const details = mapBiblioMaterialToBasicDetailsType({
-        isbn: "9788727319346",
-        materialType: "ebook",
-        authors: [],
-        languages: []
+        ...material,
+        authors: []
       });
 
-      expect(details.title).toBeUndefined();
-      expect(details.year).toBe("");
-      expect(details.lang).toBeUndefined();
-      expect(details.materialType).toBe("E-book");
+      expect(details.authors).toBeUndefined();
     });
   });
 });

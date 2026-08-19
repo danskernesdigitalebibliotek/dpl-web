@@ -13,8 +13,18 @@ const mockJsonResponse = (body: unknown, status = 200) =>
     json: async () => body,
   }) as Response
 
+// Complete, as the contract requires: the mapper rejects a partial record.
 const ebookBody = {
-  materials: [{ isbn: "9788711234567", material_type: "ebook" }],
+  materials: [
+    {
+      isbn: "9788711234567",
+      material_type: "ebook",
+      title: "Din for en sommer",
+      description: "En intens romance",
+      publish_date: "2026-06-18T00:00:00.000Z",
+      languages: ["dan"],
+    },
+  ],
 }
 
 const buildClient = (getAuthHeader: () => Promise<string> | string = () => "Bearer abc") =>
@@ -41,11 +51,11 @@ describe("createBiblioClient.getMetadata", () => {
     expect(result).toEqual({
       isbn: "9788711234567",
       materialType: "ebook",
-      title: undefined,
+      title: "Din for en sommer",
+      description: "En intens romance",
+      publishDate: "2026-06-18T00:00:00.000Z",
+      languages: ["dan"],
       authors: [],
-      description: undefined,
-      publishDate: undefined,
-      languages: [],
     })
   })
 

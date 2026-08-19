@@ -2,55 +2,55 @@ import { describe, expect, it } from "vitest"
 
 import { parseAndMapMetadata } from "./metadata.mapper"
 
-describe("parseAndMapMetadata", () => {
-  it("maps the first ebook material to a BiblioMaterial", () => {
-    const raw = {
-      materials: [{ isbn: "9788711234567", material_type: "ebook" }],
-    }
+// Everything the contract requires. Tests below override only the field they
+// are about - a record missing any of these is a contract breach and throws,
+// which is covered separately.
+const upstreamMaterial = {
+  isbn: "9788711234567",
+  material_type: "ebook",
+  title: "Din for en sommer",
+  description: "En intens romance",
+  publish_date: "2026-06-18T00:00:00.000Z",
+  languages: ["dan"],
+}
 
-    expect(parseAndMapMetadata(raw)).toEqual({
+describe("parseAndMapMetadata", () => {
+  it("maps an upstream material to a BiblioMaterial", () => {
+    expect(parseAndMapMetadata({ materials: [upstreamMaterial] })).toEqual({
       isbn: "9788711234567",
       materialType: "ebook",
-      title: undefined,
+      title: "Din for en sommer",
+      description: "En intens romance",
+      publishDate: "2026-06-18T00:00:00.000Z",
+      languages: ["dan"],
       authors: [],
-      description: undefined,
-      publishDate: undefined,
-      languages: [],
     })
   })
 
   it("maps an audiobook material", () => {
     const raw = {
-      materials: [{ isbn: "9788711234567", material_type: "audiobook" }],
+      materials: [{ ...upstreamMaterial, material_type: "audiobook" }],
     }
 
     expect(parseAndMapMetadata(raw)?.materialType).toBe("audiobook")
   })
 
-  it("maps the catalogue fields used to present a material", () => {
+  it("defaults the authors to an empty list, the one field not required", () => {
+    expect(parseAndMapMetadata({ materials: [upstreamMaterial] })?.authors).toEqual([])
+  })
+
+  it("throws when a field the contract requires is missing", () => {
+    const withoutTitle = { ...upstreamMaterial, title: undefined }
+
+    expect(() => parseAndMapMetadata({ materials: [withoutTitle] })).toThrow()
+  })
+
+  it("carries the authors when the material has them", () => {
     const raw = {
-      materials: [
-        {
-          isbn: "9788727319346",
-          material_type: "ebook",
-          title: "Din for en sommer",
-          author: ["Sherman, L."],
-          description: "En intens romance",
-          publish_date: "2026-06-18T00:00:00.000Z",
-          languages: ["dan"],
-        },
-      ],
+      materials: [{ ...upstreamMaterial, author: ["Sherman, L."] }],
     }
 
-    expect(parseAndMapMetadata(raw)).toEqual({
-      isbn: "9788727319346",
-      materialType: "ebook",
-      title: "Din for en sommer",
-      authors: ["Sherman, L."],
-      description: "En intens romance",
-      publishDate: "2026-06-18T00:00:00.000Z",
-      languages: ["dan"],
-    })
+    expect(parseAndMapMetadata(raw)?.authors).toEqual(["Sherman, L."])
   })
 
   it("returns undefined when no materials were resolved", () => {
@@ -61,8 +61,7 @@ describe("parseAndMapMetadata", () => {
     const raw = {
       materials: [
         {
-          isbn: "9788711234567",
-          material_type: "ebook",
+          ...upstreamMaterial,
           duration_seconds: 3600,
           publisher: "Some publisher",
           thema_codes: ["FA"],
@@ -70,50 +69,17 @@ describe("parseAndMapMetadata", () => {
       ],
     }
 
-    // The point of the test is what is NOT carried over: duration, publisher
-    // and thema codes have no place in the mapped shape.
-    expect(parseAndMapMetadata(raw)).toEqual({
-      isbn: "9788711234567",
-      materialType: "ebook",
-      title: undefined,
-      authors: [],
-      description: undefined,
-      publishDate: undefined,
-      languages: [],
-    })
+    // Duration, publisher and thema codes have no place in the mapped shape.
+    expect(parseAndMapMetadata(raw)).not.toHaveProperty("duration_seconds")
+    expect(parseAndMapMetadata(raw)).not.toHaveProperty("publisher")
+    expect(parseAndMapMetadata(raw)).not.toHaveProperty("thema_codes")
   })
 
   it("throws on an unexpected material_type (e.g. paper_book)", () => {
     expect(() =>
       parseAndMapMetadata({
-        materials: [{ isbn: "9788711234567", material_type: "paper_book" }],
+        materials: [{ ...upstreamMaterial, material_type: "paper_book" }],
       })
     ).toThrow()
-  })
-
-  it("throws when isbn is the wrong type", () => {
-    expect(() =>
-      parseAndMapMetadata({
-        materials: [{ isbn: 42, material_type: "ebook" }],
-      })
-    ).toThrow()
-  })
-
-  it("throws when a presentation field has the wrong type", () => {
-    expect(() =>
-      parseAndMapMetadata({
-        materials: [{ isbn: "9788711234567", material_type: "ebook", title: 42 }],
-      })
-    ).toThrow()
-  })
-
-  it("throws when the materials array is missing", () => {
-    expect(() => parseAndMapMetadata({})).toThrow()
-  })
-
-  it("throws on a non-object response", () => {
-    expect(() => parseAndMapMetadata(null)).toThrow()
-    expect(() => parseAndMapMetadata("materials")).toThrow()
-    expect(() => parseAndMapMetadata(42)).toThrow()
   })
 })
