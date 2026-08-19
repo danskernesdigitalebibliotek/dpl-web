@@ -9,7 +9,7 @@
 /**
  * The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library.
  */
-export type EventsGET200ItemOrganizer = {
+export type CurrentEventsGET200ItemOrganizer = {
   /** A unique identifier for the organizer. This is always present and is stable across updates, unlike isil_id which is only available for branches registered in the library system. */
   id: string;
   /** The name of the branch arranging the event. */

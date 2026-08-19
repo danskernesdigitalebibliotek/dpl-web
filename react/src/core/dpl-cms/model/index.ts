@@ -21,6 +21,7 @@ export * from "./currentEventsGET200ItemAddressLocationType";
 export * from "./currentEventsGET200ItemDateTime";
 export * from "./currentEventsGET200ItemExternalData";
 export * from "./currentEventsGET200ItemImage";
+export * from "./currentEventsGET200ItemOrganizer";
 export * from "./currentEventsGET200ItemOriginalImage";
 export * from "./currentEventsGET200ItemSeries";
 export * from "./currentEventsGET200ItemState";
