@@ -73,6 +73,16 @@ services:
       file: cms/docker-compose.yml
       service: redis
 
+  redis-metrics:
+    build:
+      context: .
+      dockerfile: cms/lagoon/redis-metrics.dockerfile
+    labels:
+      lagoon.type: redis
+    extends:
+      file: cms/docker-compose.yml
+      service: redis-metrics
+
   node:
     build:
       dockerfile: go/lagoon/stage2.dockerfile
