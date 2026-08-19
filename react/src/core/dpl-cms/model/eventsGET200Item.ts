@@ -44,6 +44,8 @@ export type EventsGET200Item = {
   date_time: EventsGET200ItemDateTime;
   /** The associated library branches. */
   branches?: string[];
+  /** External branch ids (ISIL) for the associated library branches. Aligned by index with the branches property, and always the same length. An entry is an empty string when no ISIL has been configured for that branch in the CMS. */
+  branch_isil_ids?: string[];
   /** Where the event occurs. */
   address?: EventsGET200ItemAddress;
   /** The categories associated with the event. */
