@@ -210,10 +210,7 @@ export const biblioDeleteReservationFactory =
     success: true
   }));
 
-/**
- * `POST /v1/reservations/accept-offer`. Answers only with whether it worked
- * and the new loan's id - the loan itself has to be refetched.
- */
+/** `POST /v1/reservations/accept-offer` */
 export const biblioAcceptOfferFactory =
   Factory.define<AcceptReservationOfferApiResponse>(() => ({
     success: true,

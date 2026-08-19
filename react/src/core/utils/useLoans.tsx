@@ -50,10 +50,10 @@ type Loans = {
 type UseLoansType = {
   all: Loans;
   fbs: Loans;
-  // Digital loans from both providers. The key stays "publizon" for backwards
-  // compatibility: with the Biblio flag on, a user's older Publizon loans
-  // remain in this list alongside the ones made through Biblio.
-  publizon: Loans;
+  // Publizon and Biblio loans as one list. Which provider a loan came from
+  // does not change how it is rendered, and during the transition a user has
+  // loans from both.
+  digital: Loans;
 };
 
 type UseLoans = () => UseLoansType;
@@ -154,7 +154,7 @@ const useLoans: UseLoans = () => {
       isLoading: isLoadingFbs,
       isError: isErrorFbs
     },
-    publizon: {
+    digital: {
       loans: mappedLoansDigital,
       overdue: loansOverdueDigital,
       soonOverdue: loansSoonOverdueDigital,
