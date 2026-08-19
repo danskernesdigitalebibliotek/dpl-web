@@ -20,6 +20,11 @@ const useOnlineAvailabilityData = ({
 }) => {
   const [isAvailable, setIsAvailable] = useState<null | boolean>(null);
 
+  // Only materials lent out through Publizon ("Ereol" access) exist in the
+  // Publizon API. Looking up other online materials - e.g. a PressReader
+  // newspaper, whose only identifier is a URI - returns a 404 we cannot act on.
+  const isPublizonMaterial = access.some((acc) => acc === "Ereol");
+
   // Find out if the material is cost free.
   const { isLoading: isLoadingIdentifier, data: dataIdentifier } =
     // We never want to pass an empty string to the API
@@ -28,7 +33,7 @@ const useOnlineAvailabilityData = ({
       query: {
         // Publizon / useGetV1ProductsIdentifier is responsible for online
         // materials. It requires an ISBN to do lookups.
-        enabled: enabled && isAvailable === null && !!isbn
+        enabled: enabled && isPublizonMaterial && isAvailable === null && !!isbn
       }
     });
 
@@ -46,8 +51,8 @@ const useOnlineAvailabilityData = ({
           // If the material is free (I think it is called blue material btw.)
           // we should not load the loan status because then we know that it is available.
           // So If the material is not free and we know it is an "Publizon" material we should load the loan status.
-          dataIdentifier?.product?.costFree === false &&
-          access.some((acc) => acc === "Ereol")
+          isPublizonMaterial &&
+          dataIdentifier?.product?.costFree === false
       }
     });
 

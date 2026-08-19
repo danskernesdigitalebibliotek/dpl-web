@@ -414,6 +414,52 @@ describe("useOnlineAvailabilityData tests", () => {
     });
   });
 
+  it("Test that an online material that is not a Publizon material never asks the Publizon API", () => {
+    // A PressReader newspaper is an online material, but it does not exist in
+    // the Publizon API. Asking for it answers 404 with an empty body, which
+    // gives us nothing to act on.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useGetV1ProductsIdentifier.mockReturnValue({
+      isLoading: false,
+      data: undefined
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useGetV1LoanstatusIdentifier.mockReturnValue({
+      isLoading: false,
+      data: undefined
+    });
+
+    const { result } = renderHook(() =>
+      useOnlineAvailabilityData({
+        enabled: true,
+        access: ["AccessUrl"],
+        faustIds: ["138625958"],
+        isbn: "https://www.pressreader.com/ef2f"
+      })
+    );
+
+    // Both Publizon queries must stay disabled for a non-Publizon material.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    const [, productOptions] = useGetV1ProductsIdentifier.mock.lastCall;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    const [, loanStatusOptions] = useGetV1LoanstatusIdentifier.mock.lastCall;
+
+    expect(productOptions.query.enabled).toBe(false);
+    expect(loanStatusOptions.query.enabled).toBe(false);
+
+    // Online materials we know nothing about are shown as available.
+    act(() => {
+      expect(result.current).toEqual({
+        isLoading: false,
+        isAvailable: true
+      });
+    });
+  });
+
   it("Test that if the hook is not enabled it should return null statuses", () => {
     // If the hook is not enabled no data is being loaded from this service.
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
