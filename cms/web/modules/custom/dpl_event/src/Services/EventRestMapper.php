@@ -164,6 +164,15 @@ class EventRestMapper {
             'description' => 'The name of a branch.',
           ],
         ],
+        'branch_isil_ids' => [
+          'type' => 'array',
+          'description' => 'External branch ids (ISIL) for the associated library branches. Aligned by index with the branches property, and always the same length. An entry is an empty string when no ISIL has been configured for that branch in the CMS.',
+          'items' => [
+            'type' => 'string',
+            'description' => 'External branch id (ISIL)',
+            'example' => 'DK-710100',
+          ],
+        ],
         'address' => [
           'type' => 'object',
           'description' => 'Where the event occurs.',
@@ -325,6 +334,8 @@ class EventRestMapper {
   public function getResponse(EventInstance $event_instance): EventsGET200ResponseInner {
     $this->event = $event_instance;
 
+    $branch_data = $this->getBranchData();
+
     $response = new EventsGET200ResponseInner([
       'title' => $this->getValue('title'),
       'uuid' => $this->event->uuid(),
@@ -336,7 +347,8 @@ class EventRestMapper {
       'image' => $this->getImage(),
       'originalImage' => $this->getOriginalImage(),
       'teaserImage' => $this->getTeaserImage(),
-      'branches' => $this->getBranches(),
+      'branches' => $branch_data['names'],
+      'branchIsilIds' => $branch_data['isil_ids'],
       'address' => $this->getAddress(),
       'audiences' => $this->getAudiences(),
       'tags' => $this->getTags(),
@@ -364,25 +376,42 @@ class EventRestMapper {
   }
 
   /**
-   * Getting associated branches.
+   * Getting associated branches, as labels and as ISIL ids.
    *
-   * @return string[]
-   *   The translated branch labels.
+   * Both lists are built in the same pass and skipped on the same condition, so
+   * they are always the same length and can be read by index against each
+   * other.
+   *
+   * A branch without an ISIL gets an empty string rather than NULL: the REST
+   * responses are serialized by JMS, which omits NULL values, and a NULL would
+   * silently drop out of the array and break the alignment with the labels.
+   *
+   * @return array{names: string[], isil_ids: string[]}
+   *   The translated branch labels, and the ISIL id of each.
    */
-  private function getBranches(): array {
+  private function getBranchData(): array {
     $names = [];
+    $isil_ids = [];
 
     $branches = $this->event->getBranches() ?? [];
 
     foreach ($branches as $branch) {
       $label = $branch->getTitle();
 
-      if (!empty($label)) {
-        $names[] = $label;
+      if (empty($label)) {
+        continue;
       }
+
+      $names[] = $label;
+
+      $isil_id = '';
+      if ($branch->hasField('field_agency_branch_id') && !$branch->get('field_agency_branch_id')->isEmpty()) {
+        $isil_id = (string) $branch->get('field_agency_branch_id')->value;
+      }
+      $isil_ids[] = $isil_id;
     }
 
-    return $names;
+    return ['names' => $names, 'isil_ids' => $isil_ids];
   }
 
   /**
