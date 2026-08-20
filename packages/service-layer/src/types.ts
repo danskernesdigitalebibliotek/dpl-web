@@ -1,6 +1,6 @@
 // Backends this package knows how to talk to. Apps never name these in
 // hook calls — only in the resolvers they implement on ServiceLayerConfig.
-export type ApiId = "fbs"
+export type ApiId = "fbs" | "biblio"
 
 export type ServiceLayerConfig = {
   getBaseUrl: (api: ApiId) => string

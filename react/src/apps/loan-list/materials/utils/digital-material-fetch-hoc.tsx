@@ -8,7 +8,7 @@ import {
 } from "../../../../core/utils/helpers/list-mapper";
 import { ListType } from "../../../../core/utils/types/list-type";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
-import useBiblioMaterial from "../../../../core/biblio/useBiblioMaterial";
+import { useBiblioMaterial } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
   isBiblioReservation,
   isReservationType

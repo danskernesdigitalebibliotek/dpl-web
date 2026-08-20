@@ -1,6 +1,6 @@
 import { useGetLoansV2 } from "../fbs/fbs";
 import { useGetV1UserLoans } from "../publizon/publizon";
-import useBiblioLoans from "../biblio/useBiblioLoans";
+import { useBiblioLoans } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { calculateRoundedUpDaysUntil } from "./helpers/date";
 import { materialIsOverdue } from "./helpers/general";
 import {
