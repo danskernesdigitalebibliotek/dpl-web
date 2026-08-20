@@ -28,10 +28,12 @@ const NotificationCard = ({ notification }: { notification: Notification }) => (
     className="bg-background duration-dark-mode rounded-base flex flex-col items-start gap-4 p-6
       transition-all">
     <StatusLabel variant={notification.status}>{notification.label}</StatusLabel>
-    <p className="text-typo-subtitle-lg">{notification.title}</p>
-    {notification.body && (
-      <p className="text-typo-body-sm text-foreground-muted">{notification.body}</p>
-    )}
+    <div className="space-y-2">
+      <p className="text-typo-subtitle-sm">{notification.title}</p>
+      {notification.body && (
+        <p className="text-typo-body-sm text-foreground-muted">{notification.body}</p>
+      )}
+    </div>
     {notification.action && (
       <Button
         size="sm"
@@ -112,7 +114,7 @@ const ProfileNotifications = () => {
             status: "error" as const,
             label: "Mangler betaling",
             title: `Der mangler at blive betalt ${formatAmount(unpaidTotal)} kr.`,
-            body: "Du har afleveret nogle bøger for sent på biblioteket.",
+            body: "Du har afleveret nogle bøger for sent på biblioteket. Få hjælp fra en voksen.",
             // The modal only explains overdue fees; without any, the card
             // stands on its own.
             ...(lateFeeTotal > 0 ? { action: { label: "Vis gebyrer", onClick: openFees } } : {}),
@@ -126,7 +128,9 @@ const ProfileNotifications = () => {
             status: "error" as const,
             label: "Mangler betaling",
             title: `Der mangler at blive betalt ${formatAmount(compensationTotal)} kr. i erstatning`,
-            body: "Du har afleveret nogle bøger for sent på biblioteket.",
+            // FBS doesn't say why the compensation was charged, so the copy
+            // lists the possible causes like CompensationModal does.
+            body: "Det sker, når en bog bliver væk, går i stykker eller ikke bliver afleveret. Få hjælp fra en voksen.",
             action: { label: "Vis erstatning", onClick: openCompensation },
           },
         ]
