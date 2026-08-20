@@ -9,6 +9,7 @@ import { ModalReservationComponent } from "./components/modal-reservation";
 import { ModalEditionsSwitchComponent } from "./components/modal-editions-switch";
 import { ModalFindOnShelfComponent } from "./components/modal-find-on-shelf";
 import { ModalReservationSuccessComponent } from "./components/modal-reservation-success";
+import { OnlineLoanModalComponent } from "./components/modal-online-loan";
 
 /**
  * The material page stories. `withBiblioAdapter` is the same app with the CMS
@@ -117,5 +118,13 @@ export class MaterialPage extends PageObject {
 
   getHeaderAvailabilityLabel(index: number) {
     return this.elements.headerAvailabilityLabels().eq(index);
+  }
+
+  /**
+   * The confirm-loan modal for a digital material. Exposed directly rather
+   * than as a nested component because it is portaled outside the page.
+   */
+  onlineLoanModal() {
+    return new OnlineLoanModalComponent();
   }
 }
