@@ -148,7 +148,7 @@ const ProfileNotifications = () => {
             key: "overdue",
             status: "error" as const,
             label: "Frist overskredet",
-            title: `${bookCount(overdueCount)} skal afleveres på biblioteket nu`,
+            title: `${bookCount(overdueCount)} mangler at blive afleveret på biblioteket`,
             action: { label: "Vis bøger", onClick: openLoans },
           },
         ]

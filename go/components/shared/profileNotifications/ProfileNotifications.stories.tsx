@@ -58,7 +58,7 @@ const allNotifications: Notification[] = [
     key: "overdue",
     status: "error",
     label: "Frist overskredet",
-    title: "1 bog skal afleveres på biblioteket nu",
+    title: "1 bog mangler at blive afleveret på biblioteket",
     action: { label: "Vis bøger", onClick: () => {} },
   },
   {
