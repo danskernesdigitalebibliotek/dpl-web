@@ -1,6 +1,13 @@
 import { queryOptions } from "@tanstack/react-query"
 
-import { getBiblioCanLoan, getBiblioLoans, getBiblioMaterial } from "../biblio"
+import {
+  getBiblioCanLoan,
+  getBiblioLoanQuotas,
+  getBiblioLoans,
+  getBiblioMaterial,
+  getBiblioReservations,
+  getBiblioSupportId,
+} from "../biblio"
 import type { ServiceLayerConfig } from "../types"
 
 export const biblioLoansQueryKey = () => ["serviceLayer", "biblioLoans"] as const
@@ -41,4 +48,28 @@ export const biblioCanLoanQuery = (config: ServiceLayerConfig, materialId: strin
       }
       return getBiblioCanLoan(config, materialId)
     },
+  })
+
+export const biblioReservationsQueryKey = () => ["serviceLayer", "biblioReservations"] as const
+
+export const biblioReservationsQuery = (config: ServiceLayerConfig) =>
+  queryOptions({
+    queryKey: biblioReservationsQueryKey(),
+    queryFn: () => getBiblioReservations(config),
+  })
+
+export const biblioLoanQuotasQueryKey = () => ["serviceLayer", "biblioLoanQuotas"] as const
+
+export const biblioLoanQuotasQuery = (config: ServiceLayerConfig) =>
+  queryOptions({
+    queryKey: biblioLoanQuotasQueryKey(),
+    queryFn: () => getBiblioLoanQuotas(config),
+  })
+
+export const biblioSupportIdQueryKey = () => ["serviceLayer", "biblioSupportId"] as const
+
+export const biblioSupportIdQuery = (config: ServiceLayerConfig) =>
+  queryOptions({
+    queryKey: biblioSupportIdQueryKey(),
+    queryFn: () => getBiblioSupportId(config),
   })
