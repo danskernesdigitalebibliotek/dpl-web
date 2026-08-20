@@ -6,6 +6,7 @@ import {
   getBiblioLoans,
   getBiblioMaterial,
   getBiblioReservations,
+  getBiblioSignInToken,
   getBiblioSupportId,
 } from "../biblio"
 import type { ServiceLayerConfig } from "../types"
@@ -72,4 +73,16 @@ export const biblioSupportIdQuery = (config: ServiceLayerConfig) =>
   queryOptions({
     queryKey: biblioSupportIdQueryKey(),
     queryFn: () => getBiblioSupportId(config),
+  })
+
+export const biblioSignInTokenQueryKey = () => ["serviceLayer", "biblioSignInToken"] as const
+
+export const biblioSignInTokenQuery = (config: ServiceLayerConfig) =>
+  queryOptions({
+    queryKey: biblioSignInTokenQueryKey(),
+    queryFn: () => getBiblioSignInToken(config),
+    // The token expires, so it must not outlive its own window in the cache.
+    // Refetching a minute early leaves room for the sign-in round trip that
+    // follows, and the adapter is happy to mint another.
+    staleTime: query => Math.max(0, ((query.state.data?.expiresInSeconds ?? 60) - 60) * 1000),
   })

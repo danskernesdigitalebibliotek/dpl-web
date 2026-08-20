@@ -66,6 +66,7 @@ export {
   getBiblioLoans,
   getBiblioMaterial,
   getBiblioReservations,
+  getBiblioSignInToken,
   getBiblioSupportId,
   getBiblioLoanQuota,
   isBiblioMaterialAvailable,
@@ -84,6 +85,8 @@ export {
   biblioMaterialQueryKey,
   biblioReservationsQuery,
   biblioReservationsQueryKey,
+  biblioSignInTokenQuery,
+  biblioSignInTokenQueryKey,
   biblioSupportIdQuery,
   biblioSupportIdQueryKey,
 } from "./queries/biblio"
