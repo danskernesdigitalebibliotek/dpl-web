@@ -110,6 +110,10 @@ services:
         # back to the dockerfile defaults, giving full builds.
         SKIP_COMPOSER_INSTALL: "${SKIP_BAKED_IN_BUILDS:-false}"
         SKIP_JS_ASSETS: "${SKIP_BAKED_IN_BUILDS:-false}"
+        # Read-only token for WeDoBooks' private npm registry, which serves
+        # the SDK behind the reader and the player. Comes from the root .env
+        # (cms/.env symlinks to it). Used only in the discarded asset stage.
+        WEDOBOOKS_NPM_TOKEN: ${WEDOBOOKS_NPM_TOKEN:-}
     << : *default-volumes # loads the defined volumes from the top
     user: root
     environment:

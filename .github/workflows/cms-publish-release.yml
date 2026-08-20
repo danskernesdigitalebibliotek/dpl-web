@@ -35,6 +35,7 @@ jobs:
         uses: ./.github/actions/build-cms-assets
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
 
       # Build + publish the source image. The prebuilt design-system/React
       # assets are picked up by `COPY cms /app/cms` in cli.dockerfile.
@@ -83,6 +84,7 @@ jobs:
         uses: ./.github/actions/build-cms-assets
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
 
       - name: Install site
         env:

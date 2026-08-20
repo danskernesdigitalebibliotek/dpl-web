@@ -15,9 +15,25 @@ COPY design-system/package.json design-system/pnpm-lock.yaml ./design-system/
 COPY react/package.json react/pnpm-lock.yaml ./react/
 COPY go/package.json go/pnpm-lock.yaml ./go/
 COPY packages/service-layer/package.json packages/service-layer/pnpm-lock.yaml ./packages/service-layer/
+COPY packages/wedobooks/package.json packages/wedobooks/pnpm-lock.yaml ./packages/wedobooks/
+# Maps the @wedobooks scope to their private registry, which serves the SDK
+# behind the reader and the player.
+COPY .npmrc ./
 COPY cms/package.json cms/pnpm-lock.yaml ./cms/
 
-RUN if [ "$SKIP_JS_ASSETS" != "true" ]; then pnpm install --frozen-lockfile; fi
+# Read-only token for WeDoBooks' private npm registry, which serves the SDK
+# behind the reader and the player. It stays inside this build stage, which is
+# thrown away once its output has been copied into the runtime image below, so
+# it never reaches a published layer.
+#
+# It is written to the user-level npm config rather than the repository's
+# .npmrc, which carries only the scope mapping - the credential stays out of
+# the committed file.
+ARG WEDOBOOKS_NPM_TOKEN
+RUN if [ "$SKIP_JS_ASSETS" != "true" ]; then \
+    npm config set "//npm.pkg.wedobooks.io/:_authToken" "$WEDOBOOKS_NPM_TOKEN" && \
+    pnpm install --frozen-lockfile; \
+    fi
 
 COPY design-system ./design-system/
 RUN if [ "$SKIP_JS_ASSETS" = "true" ]; then mkdir -p design-system/build; else \
@@ -35,6 +51,10 @@ RUN if [ "$SKIP_JS_ASSETS" = "true" ]; then mkdir -p design-system/build; else \
 # has to be present in the image - the manifest copied above only lets pnpm
 # link them during install.
 COPY packages ./packages/
+
+# The WeDoBooks wrapper pre-bundles the SDK, so unlike the other workspace
+# packages it has to be built before anything can import it.
+RUN if [ "$SKIP_JS_ASSETS" != "true" ]; then pnpm --filter @danskernesdigitalebibliotek/dpl-wedobooks build; fi
 
 COPY react ./react/
 RUN if [ "$SKIP_JS_ASSETS" = "true" ]; then mkdir -p react/dist; else cd react && pnpm build; fi

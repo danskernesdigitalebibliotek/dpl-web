@@ -4,6 +4,13 @@ inputs:
   token:
     description: GitHub token for authenticating with the npm registry.
     required: true
+  wedobooks-token:
+    description: >-
+      Token for WeDoBooks' private npm registry, which serves the SDK that runs
+      the reader and the player. Every job needs it: pnpm installs the whole
+      workspace from the root, so the package is resolved even by jobs that
+      never touch it.
+    required: false
 runs:
   using: composite
   steps:
@@ -15,6 +22,16 @@ runs:
         registry-url: 'https://npm.pkg.github.com'
       env:
         NODE_AUTH_TOKEN: ${{ inputs.token }}
+    # The repository's .npmrc carries only the scope mapping - the credential
+    # stays out of it. Write the token to the runner's user-level config
+    # instead, before anything installs.
+    - name: Authenticate with the WeDoBooks registry
+      if: inputs.wedobooks-token != ''
+      shell: bash
+      env:
+        WEDOBOOKS_NPM_TOKEN: ${{ inputs.wedobooks-token }}
+      run: |
+        npm config set "//npm.pkg.wedobooks.io/:_authToken" "$WEDOBOOKS_NPM_TOKEN"
     - uses: pnpm/action-setup@v6
       with:
         # No version defined here, it is read from packageManager in the root package.json file.
@@ -26,3 +43,10 @@ runs:
         CI: 1
         NODE_AUTH_TOKEN: ${{ inputs.token }}
         PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+    # The WeDoBooks wrapper is the only workspace package that ships a build
+    # instead of sources - the SDK has to be pre-bundled for webpack to accept
+    # it. Nothing that imports it can typecheck or build until its dist exists.
+    - name: Build the WeDoBooks wrapper
+      if: inputs.wedobooks-token != ''
+      shell: bash
+      run: pnpm --filter @danskernesdigitalebibliotek/dpl-wedobooks build

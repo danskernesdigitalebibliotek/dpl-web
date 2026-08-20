@@ -42,6 +42,7 @@ jobs:
       - uses: ./.github/actions/build-design-system
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Upload design-system build
         uses: actions/upload-artifact@v6
         with:
@@ -72,6 +73,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: stylelint
         uses: reviewdog/action-stylelint@v1
         with:
@@ -94,6 +96,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Run typescript compile check
         run: pnpm exec tsc --noEmit
 
@@ -112,6 +115,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Download design-system build
         uses: actions/download-artifact@v6
         with:
@@ -139,6 +143,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Install problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint markdown
@@ -159,6 +164,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Install go-task
         uses: arduino/setup-task@v3
         with:
@@ -204,6 +210,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Download design-system build
         uses: actions/download-artifact@v6
         with:
@@ -266,6 +273,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Download design-system build
         uses: actions/download-artifact@v6
         with:
@@ -291,6 +299,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Download design-system build
         uses: actions/download-artifact@v6
         with:
@@ -319,6 +328,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Download design-system build
         uses: actions/download-artifact@v6
         with:
