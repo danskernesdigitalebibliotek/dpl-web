@@ -46,7 +46,7 @@ use JMS\Serializer\Annotation\SerializedName;
 class EventsGET200ResponseInnerOrganizer 
 {
         /**
-     * A unique identifier for the organizer. This is always present and is stable across updates, unlike isil_id which is only available for branches registered in the library system.
+     * A unique identifier for the organizer. It is stable across updates, and unique across libraries.
      *
      * @var string|null
      * @SerializedName("id")
@@ -66,16 +66,6 @@ class EventsGET200ResponseInnerOrganizer
     #[Assert\NotNull]
     #[Assert\Type("string")]
     protected ?string $name = null;
-
-    /**
-     * The ISIL code identifying the branch in the Danish library system. E.g. DK-710100. Only branches registered in the library system have one, so use id for an identifier which is always present.
-     *
-     * @var string|null
-     * @SerializedName("isil_id")
-     * @Type("string")
-    */
-    #[Assert\Type("string")]
-    protected ?string $isilId = null;
 
     /**
      * An absolute URL for the page describing the branch.
@@ -156,7 +146,6 @@ class EventsGET200ResponseInnerOrganizer
         if (is_array($data)) {
             $this->id = array_key_exists('id', $data) ? $data['id'] : $this->id;
             $this->name = array_key_exists('name', $data) ? $data['name'] : $this->name;
-            $this->isilId = array_key_exists('isilId', $data) ? $data['isilId'] : $this->isilId;
             $this->url = array_key_exists('url', $data) ? $data['url'] : $this->url;
             $this->street = array_key_exists('street', $data) ? $data['street'] : $this->street;
             $this->zipCode = array_key_exists('zipCode', $data) ? $data['zipCode'] : $this->zipCode;
@@ -180,7 +169,7 @@ class EventsGET200ResponseInnerOrganizer
     /**
     * Sets id.
     *
-    * @param string|null $id  A unique identifier for the organizer. This is always present and is stable across updates, unlike isil_id which is only available for branches registered in the library system.
+    * @param string|null $id  A unique identifier for the organizer. It is stable across updates, and unique across libraries.
     *
     * @return $this
     */
@@ -214,33 +203,6 @@ class EventsGET200ResponseInnerOrganizer
     public function setName(?string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-
-
-
-    /**
-     * Gets isilId.
-     *
-     * @return string|null
-     */
-    public function getIsilId(): ?string
-    {
-        return $this->isilId;
-    }
-
-    /**
-    * Sets isilId.
-    *
-    * @param string|null $isilId  The ISIL code identifying the branch in the Danish library system. E.g. DK-710100. Only branches registered in the library system have one, so use id for an identifier which is always present.
-    *
-    * @return $this
-    */
-    public function setIsilId(?string $isilId = null): self
-    {
-        $this->isilId = $isilId;
 
         return $this;
     }

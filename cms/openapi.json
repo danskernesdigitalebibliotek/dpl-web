@@ -309,15 +309,11 @@
                       "id": {
                         "type": "string",
                         "format": "uuid",
-                        "description": "A unique identifier for the organizer. This is always present and is stable across updates, unlike isil_id which is only available for branches registered in the library system."
+                        "description": "A unique identifier for the organizer. It is stable across updates, and unique across libraries."
                       },
                       "name": {
                         "type": "string",
                         "description": "The name of the branch arranging the event."
-                      },
-                      "isil_id": {
-                        "type": "string",
-                        "description": "The ISIL code identifying the branch in the Danish library system. E.g. DK-710100. Only branches registered in the library system have one, so use id for an identifier which is always present."
                       },
                       "url": {
                         "type": "string",
@@ -1401,15 +1397,11 @@
                       "id": {
                         "type": "string",
                         "format": "uuid",
-                        "description": "A unique identifier for the organizer. This is always present and is stable across updates, unlike isil_id which is only available for branches registered in the library system."
+                        "description": "A unique identifier for the organizer. It is stable across updates, and unique across libraries."
                       },
                       "name": {
                         "type": "string",
                         "description": "The name of the branch arranging the event."
-                      },
-                      "isil_id": {
-                        "type": "string",
-                        "description": "The ISIL code identifying the branch in the Danish library system. E.g. DK-710100. Only branches registered in the library system have one, so use id for an identifier which is always present."
                       },
                       "url": {
                         "type": "string",

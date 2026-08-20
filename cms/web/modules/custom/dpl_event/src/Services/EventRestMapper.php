@@ -183,15 +183,11 @@ class EventRestMapper {
             'id' => [
               'type' => 'string',
               'format' => 'uuid',
-              'description' => 'A unique identifier for the organizer. This is always present and is stable across updates, unlike isil_id which is only available for branches registered in the library system.',
+              'description' => 'A unique identifier for the organizer. It is stable across updates, and unique across libraries.',
             ],
             'name' => [
               'type' => 'string',
               'description' => 'The name of the branch arranging the event.',
-            ],
-            'isil_id' => [
-              'type' => 'string',
-              'description' => 'The ISIL code identifying the branch in the Danish library system. E.g. DK-710100. Only branches registered in the library system have one, so use id for an identifier which is always present.',
             ],
             'url' => [
               'type' => 'string',
@@ -494,12 +490,14 @@ class EventRestMapper {
     }
 
     $organizer = new EventsGET200ResponseInnerOrganizer();
-    // The UUID is always present, so consumers have an identifier to group
-    // events by even when the branch has no ISIL code.
+    // The UUID is stable across updates and unique across libraries, so a
+    // consumer can group events by the branch that arranges them. The branch
+    // ISIL is not usable for that: only branches registered in the library
+    // system have one. Consumers that want it read branch_isil_ids, which
+    // carries the same value for this branch.
     $organizer->setId($branch->uuid());
     $organizer->setName($name);
     $organizer->setUrl($branch->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl());
-    $organizer->setIsilId($this->getBranchValue($branch, 'field_agency_branch_id'));
     $organizer->setPhone($this->getBranchValue($branch, 'field_phone'));
     $organizer->setEmail($this->getBranchValue($branch, 'field_email'));
 
