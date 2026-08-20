@@ -6,6 +6,16 @@ const { EnvironmentPlugin } = require("webpack");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const { getWebPackEnvVariables } = require("./webpack.helpers");
 
+// Force singleton instances of packages that hold React context. Workspace
+// packages such as the service layer get their own node_modules, and resolving
+// a second copy there gives it a separate QueryClientContext - the provider in
+// this project then looks unset from inside the package. Mirrors the aliasing
+// GO does for the same reason.
+const singletonModules = ["react", "react-dom", "@tanstack/react-query"];
+const singletonAliases = Object.fromEntries(
+  singletonModules.map((m) => [m, path.resolve(__dirname, "node_modules", m)])
+);
+
 module.exports = (_env, argv) => {
   const production = argv.mode === "production";
 
@@ -74,7 +84,8 @@ module.exports = (_env, argv) => {
       usedExports: true
     },
     resolve: {
-      extensions: [".js", ".jsx", ".tsx", ".ts", ".json"]
+      extensions: [".js", ".jsx", ".tsx", ".ts", ".json"],
+      alias: singletonAliases
     },
     module: {
       rules: [

@@ -1,4 +1,4 @@
-import { TOKEN_LIBRARY_KEY } from "../../../core/token";
+import { TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../../../core/token";
 import {
   LoanListPage,
   loanListStory
@@ -62,6 +62,9 @@ const stubBackends = () => {
     // Only Date: freezing timers stalls TanStack Query's notify scheduler.
     cy.clock(friday20221021, ["Date"]);
     win.sessionStorage.setItem(TOKEN_LIBRARY_KEY, "random-token");
+    // Loans are patron-scoped: the adapter answers 403 without a patron, so
+    // the service layer refuses to ask. A loan list is a signed-in page.
+    win.sessionStorage.setItem(TOKEN_USER_KEY, "random-user-token");
   });
 
   cy.intercept("GET", "**/external/agencyid/patrons/patronid/v4**", {
