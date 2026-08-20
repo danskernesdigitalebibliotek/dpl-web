@@ -10,12 +10,10 @@
  * The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library.
  */
 export type EventsGET200ItemOrganizer = {
-  /** A unique identifier for the organizer. This is always present and is stable across updates, unlike isil_id which is only available for branches registered in the library system. */
+  /** A unique identifier for the organizer. It is stable across updates, and unique across libraries. */
   id: string;
   /** The name of the branch arranging the event. */
   name: string;
-  /** The ISIL code identifying the branch in the Danish library system. E.g. DK-710100. Only branches registered in the library system have one, so use id for an identifier which is always present. */
-  isil_id?: string;
   /** An absolute URL for the page describing the branch. */
   url?: string;
   /** Street name and number of the branch. */
