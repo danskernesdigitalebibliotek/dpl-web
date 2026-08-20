@@ -34,6 +34,10 @@ import {
  * by due date, oldest first. `row` travels with the material it belongs to,
  * so a material and its place on screen cannot drift apart.
  */
+// The ids the WeDoBooks reader and player open the two Biblio loans by.
+const BIBLIO_EBOOK_LOAN_ID = "3f7b1c62-9d4e-4a71-b0c3-1d5a8e2f4b90";
+const BIBLIO_AUDIOBOOK_LOAN_ID = "8c2e5a17-3f4b-4d96-a1e8-7b0c9d2f6e43";
+
 const MATERIAL = {
   biblioAudiobook: {
     ...BIBLIO_MATERIAL.audiobook,
@@ -114,10 +118,11 @@ const stubBackends = () => {
     })
   }).as("publizonLoans");
 
-  // Given: two new loans created through the Biblio adapter
+  // Given: two new loans created through the Biblio adapter. The loan ids
+  // are pinned so the navigation tests can recognise them.
   givenUserHasBiblioLoans([
-    biblioLoanFactory.build(),
-    biblioAudiobookLoanFactory.build()
+    biblioLoanFactory.build({ id: BIBLIO_EBOOK_LOAN_ID }),
+    biblioAudiobookLoanFactory.build({ id: BIBLIO_AUDIOBOOK_LOAN_ID })
   ]);
 
   // Given: Biblio does not know Publizon's materials. Nothing should ever
@@ -220,6 +225,55 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
         row
       );
     });
+  });
+
+  it("Opens a Biblio loan in the reader by its loan id, not an order id", () => {
+    // The two readers do not recognise each other's keys: Publizon's opens
+    // by order id, the WeDoBooks reader by loan id. A swapped parameter is
+    // invisible until a patron clicks and gets an empty reader.
+    //
+    // Stubbed so the click can navigate without unloading the storybook
+    // iframe - same pattern as the orderid test in loan-list-page-object.
+    cy.intercept("GET", "**/reader?loanid=*", {
+      statusCode: 200,
+      body: "<html><body>reader</body></html>",
+      headers: { "content-type": "text/html" }
+    }).as("readerNavigation");
+
+    loanList.components.DigitalLoanRow(
+      (row) => row.elements.readerButton().click(),
+      MATERIAL.biblioEbook.row
+    );
+
+    cy.wait("@readerNavigation")
+      .its("request.url")
+      .should(
+        "include",
+        `/reader?loanid=${encodeURIComponent(BIBLIO_EBOOK_LOAN_ID)}`
+      );
+  });
+
+  it("Plays a Biblio audiobook on the player page, not in Publizon's modal", () => {
+    // The SDK's player bar cannot live in a modal - it pins itself to the
+    // bottom of the viewport - so LYT navigates to the reader page, which
+    // picks the player from the loan's own material type.
+    cy.intercept("GET", "**/reader?loanid=*", {
+      statusCode: 200,
+      body: "<html><body>player</body></html>",
+      headers: { "content-type": "text/html" }
+    }).as("playerNavigation");
+
+    loanList.components.DigitalLoanRow(
+      (row) => row.elements.playerButton().click(),
+      MATERIAL.biblioAudiobook.row
+    );
+
+    cy.wait("@playerNavigation")
+      .its("request.url")
+      .should(
+        "include",
+        `/reader?loanid=${encodeURIComponent(BIBLIO_AUDIOBOOK_LOAN_ID)}`
+      );
   });
 
   it("Reads a Biblio loan from the title, author and dates the contract requires", () => {

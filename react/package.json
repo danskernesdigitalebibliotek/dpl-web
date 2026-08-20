@@ -146,6 +146,7 @@
   "dependencies": {
     "@danskernesdigitalebibliotek/dpl-design-system": "workspace:*",
     "@danskernesdigitalebibliotek/dpl-service-layer": "workspace:*",
+    "@danskernesdigitalebibliotek/dpl-wedobooks": "workspace:*",
     "@fullcalendar/react": "^7.0.2",
     "@hammzj/cypress-page-object": "^2.3.0",
     "@headlessui/react": "^2.2.10",

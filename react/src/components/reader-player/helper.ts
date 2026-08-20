@@ -8,6 +8,7 @@ import {
   PUBLIZON_PRODUCT_TYPE,
   PublizonProductType
 } from "../../core/publizon/productType";
+import { DigitalProvider } from "../../core/utils/types/digital-provider";
 
 type AssetType = {
   src: string;
@@ -88,6 +89,22 @@ export const getOrderIdByIdentifier = ({
 }) => {
   const loanWithIdentifier = loans.find((i) => i.identifier === identifier);
   return loanWithIdentifier ? loanWithIdentifier.orderId : null;
+};
+
+/**
+ * Where a digital loan opens.
+ *
+ * The reader page takes one parameter per provider because the two readers do
+ * not recognise each other's keys: pubhub knows an order id, the WeDoBooks SDK
+ * a loan id. Kept here rather than at the call sites so the contract with the
+ * reader route lives in one place.
+ */
+export const readerUrl = (id: string, provider?: DigitalProvider | null) => {
+  const parameter = provider === "biblio" ? "loanid" : "orderid";
+  return new URL(
+    `/reader?${parameter}=${encodeURIComponent(id)}`,
+    window.location.href
+  );
 };
 
 export const readerTypes = [

@@ -1,10 +1,33 @@
-import { describe, expect, it } from "vitest";
+import React from "react";
+import { describe, expect, it, vi } from "vitest";
+import { render } from "@testing-library/react";
 import type { Loan } from "../../core/publizon/model";
 import type { BiblioLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
   mapBiblioLoanToLoanType,
   mapPublizonLoanToLoanType
 } from "../../core/utils/helpers/list-mapper";
+import { readerUrl } from "../../components/reader-player/helper";
+import BiblioReaderPlayer from "../../components/reader-player/BiblioReaderPlayer";
+import useWedoBooksCheckout from "../../core/biblio/useWedoBooksCheckout";
+
+// The reader and player themselves need the SDK; which of them mounts is the
+// decision under test, so they are reduced to markers.
+vi.mock("../../components/reader-player/BiblioReader", () => ({
+  default: () => <div data-testid="reader" />
+}));
+vi.mock("../../components/reader-player/BiblioPlayer", () => ({
+  default: () => <div data-testid="player" />
+}));
+vi.mock("../../core/biblio/useWedoBooksCheckout", () => ({
+  default: vi.fn()
+}));
+
+const givenCheckout = (materialType: string | null) =>
+  vi.mocked(useWedoBooksCheckout).mockReturnValue({
+    sdk: {},
+    checkout: materialType ? { material_type: materialType } : null
+  } as unknown as ReturnType<typeof useWedoBooksCheckout>);
 import { store } from "../../core/store";
 import { addTextEntries } from "../../core/text.slice";
 
@@ -74,5 +97,65 @@ describe("Which reader a digital loan opens in", () => {
     // Biblio. This is exactly why the provider has to be carried alongside it.
     expect(publizon.orderId).toBe(publizonLoan.orderId);
     expect(biblio.orderId).toBe(biblioLoan.loanId);
+  });
+});
+
+describe("readerUrl", () => {
+  // The /reader route reads one parameter per provider, and the readers do
+  // not recognise each other's keys - pubhub expects an order id, the
+  // WeDoBooks SDK a loan id. This mapping is the whole reason
+  // digitalProvider exists, so it gets pinned on its own.
+  it("opens a Biblio loan by its loan id", () => {
+    expect(readerUrl("VAcPZZkCeqvnNRnOdP17", "biblio").search).toBe(
+      "?loanid=VAcPZZkCeqvnNRnOdP17"
+    );
+  });
+
+  it("opens a Publizon loan by its order id", () => {
+    expect(readerUrl("082bb01a", "publizon").search).toBe("?orderid=082bb01a");
+  });
+
+  it("falls back to Publizon when the loan does not say", () => {
+    // Loans mapped before digitalProvider existed - persisted state, older
+    // callers - must keep opening where they always did.
+    expect(readerUrl("082bb01a").search).toBe("?orderid=082bb01a");
+  });
+});
+
+describe("What the reader page opens a Biblio loan in", () => {
+  // The page is reached with nothing but a loan id, so the loan's own
+  // material type is the only thing that can pick reader vs player - and a
+  // deep link has to open the right one no matter which button made it.
+  it("plays an audiobook in the player", () => {
+    givenCheckout("audiobook");
+
+    const { container } = render(
+      <BiblioReaderPlayer loanId="loan-1" onClose={() => {}} />
+    );
+
+    expect(container.querySelector("[data-testid='player']")).not.toBeNull();
+    expect(container.querySelector("[data-testid='reader']")).toBeNull();
+  });
+
+  it("reads an e-book in the reader", () => {
+    givenCheckout("ebook");
+
+    const { container } = render(
+      <BiblioReaderPlayer loanId="loan-1" onClose={() => {}} />
+    );
+
+    expect(container.querySelector("[data-testid='reader']")).not.toBeNull();
+    expect(container.querySelector("[data-testid='player']")).toBeNull();
+  });
+
+  it("opens nothing until the entitlement has answered", () => {
+    givenCheckout(null);
+
+    const { container } = render(
+      <BiblioReaderPlayer loanId="loan-1" onClose={() => {}} />
+    );
+
+    expect(container.querySelector("[data-testid='reader']")).toBeNull();
+    expect(container.querySelector("[data-testid='player']")).toBeNull();
   });
 });

@@ -12,14 +12,17 @@ import { Cover } from "../../../../components/cover/cover";
 import AuthorYear from "../../../../components/author-year/authorYear";
 import { useText } from "../../../../core/utils/text";
 import { formatDateTimeUtc } from "../../../../core/utils/helpers/date";
-import { getReaderPlayerTypeFromPublizonProductType } from "../../../../components/reader-player/helper";
+import {
+  getReaderPlayerTypeFromPublizonProductType,
+  readerUrl
+} from "../../../../components/reader-player/helper";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 
 export interface DigitalLoanCardProps {
   loan: LoanType;
   openLoanDetailsModal: (loan: LoanType) => void;
-  onPlayDigital: (orderId: string) => void;
+  onPlayDigital: (loan: LoanType) => void;
   loanId?: LoanId | null;
 }
 
@@ -30,7 +33,14 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
   onPlayDigital,
   loanId
 }) => {
-  const { dueDate, loanDate, identifier, periodical, orderId } = loan;
+  const {
+    dueDate,
+    loanDate,
+    identifier,
+    periodical,
+    orderId,
+    digitalProvider
+  } = loan;
   const t = useText();
   const { track } = useEventStatistics();
 
@@ -56,12 +66,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
     if (readerPlayerType === "reader") {
       return (
         <LinkButton
-          url={
-            new URL(
-              `/reader?orderid=${encodeURIComponent(orderId)}`,
-              window.location.href
-            )
-          }
+          url={readerUrl(orderId, digitalProvider)}
           buttonType="none"
           variant="filled"
           size="small"
@@ -75,6 +80,30 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
           }
         >
           {t("onlineMaterialReaderText", {
+            placeholders: { "@materialType": material?.materialType || "" }
+          })}
+        </LinkButton>
+      );
+    }
+    // A Biblio audiobook plays on the reader page - the SDK's player bar
+    // cannot live in a modal. See BiblioReaderPlayer for the full why.
+    if (digitalProvider === "biblio") {
+      return (
+        <LinkButton
+          url={readerUrl(orderId, digitalProvider)}
+          buttonType="none"
+          variant="filled"
+          size="small"
+          dataCy="loan-list-player-button"
+          trackClick={() =>
+            track("click", {
+              id: statistics.publizonReadListen.id,
+              name: statistics.publizonReadListen.name,
+              trackedData: orderId
+            })
+          }
+        >
+          {t("onlineMaterialPlayerText", {
             placeholders: { "@materialType": material?.materialType || "" }
           })}
         </LinkButton>
@@ -96,7 +125,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
             name: statistics.publizonReadListen.name,
             trackedData: orderId
           });
-          onPlayDigital(orderId);
+          onPlayDigital(loan);
         }}
       />
     );

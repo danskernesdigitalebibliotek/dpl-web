@@ -93,7 +93,21 @@ module.exports = (_env, argv) => {
       runtimeChunk: "single",
       splitChunks: {
         name: () => "bundle",
-        chunks: "all"
+        chunks: "all",
+        cacheGroups: {
+          // The WeDoBooks SDK is megabytes of reading framework, Firebase and
+          // component library, and only a patron opening a book needs any of
+          // it. Everything else here is deliberately merged into one shared
+          // bundle, which would drag the SDK onto every page that loads any
+          // DPL app - so this group keeps its async chunk to itself.
+          wedobooks: {
+            test: /[\\/]packages[\\/]wedobooks[\\/]/,
+            name: "wedobooks",
+            chunks: "async",
+            priority: 10,
+            enforce: true
+          }
+        }
       },
       // Enable tree-shaking to remove unused Lodash methods
       usedExports: true
@@ -106,7 +120,12 @@ module.exports = (_env, argv) => {
       rules: [
         {
           test: /\.(js|jsx|ts|tsx)$/,
-          exclude: /node_modules/,
+          // The WeDoBooks wrapper is the one workspace package that ships a
+          // build rather than sources: esbuild has already bundled the SDK and
+          // its polyfills into browser-ready output. Running it through Babel
+          // again makes preset-env inject core-js imports it cannot resolve
+          // from that package's own directory.
+          exclude: [/node_modules/, /packages[\\/]wedobooks[\\/]dist/],
           use: [
             {
               loader: "babel-loader",

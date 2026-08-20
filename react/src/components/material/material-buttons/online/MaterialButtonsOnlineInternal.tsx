@@ -7,6 +7,7 @@ import { useModalButtonHandler } from "../../../../core/utils/modal";
 import { useText } from "../../../../core/utils/text";
 import { ButtonSize } from "../../../../core/utils/types/button";
 import useReaderPlayer from "../../../../core/utils/useReaderPlayer";
+import { readerUrl } from "../../../reader-player/helper";
 import LinkButton from "../../../Buttons/LinkButton";
 import { Button } from "../../../Buttons/Button";
 import { getMaterialType } from "../../../../core/utils/helpers/general";
@@ -59,6 +60,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const {
     type,
     orderId,
+    holdingProvider,
     identifier,
     isAlreadyReserved,
     isAlreadyLoaned,
@@ -123,12 +125,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     if (isAlreadyLoaned && orderId) {
       return (
         <LinkButton
-          url={
-            new URL(
-              `/reader?orderid=${encodeURIComponent(orderId)}`,
-              window.location.href
-            )
-          }
+          url={readerUrl(orderId, holdingProvider)}
           buttonType="none"
           variant="filled"
           size={size || "large"}
@@ -217,6 +214,31 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     }
 
     if (isAlreadyLoaned && orderId) {
+      // A Biblio audiobook plays on the reader page rather than in a modal:
+      // the SDK's player bar pins itself to the bottom of the viewport, which
+      // leaves a wrapping modal empty. See BiblioReaderPlayer.
+      if (holdingProvider === "biblio") {
+        return (
+          <LinkButton
+            url={readerUrl(orderId, holdingProvider)}
+            buttonType="none"
+            variant="filled"
+            size={size || "large"}
+            dataCy={`${dataCy}-player`}
+            trackClick={() =>
+              track("click", {
+                id: statistics.publizonReadListen.id,
+                name: statistics.publizonReadListen.name,
+                trackedData: workId
+              })
+            }
+          >
+            {t("onlineMaterialPlayerText", {
+              placeholders: { "@materialType": manifestationType }
+            })}
+          </LinkButton>
+        );
+      }
       return (
         <>
           <PlayerModal orderId={orderId} />

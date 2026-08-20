@@ -29,6 +29,11 @@ import {
 } from "../../../cypress/intercepts/biblio/biblio";
 import { ContentLoanStatusEnum } from "../../core/publizon/model";
 import { givenAMaterial } from "../../../cypress/intercepts/fbi/material";
+import {
+  buildGetMaterialResponse,
+  materialFactory
+} from "../../../cypress/factories/material/material.factory";
+import { onlineAudioBookManifestation } from "../../../cypress/factories/manifestation/variants/onlineAudioBookManifestation";
 import { interceptFbsCalls } from "../../../cypress/intercepts/fbs/fbs";
 import { interceptPublizonCalls } from "../../../cypress/intercepts/publizon/interceptPublizonCalls";
 
@@ -512,6 +517,77 @@ describe("Material page - flag on, an older Publizon loan", () => {
     cy.getBySel("material-header-buttons-online-internal-reader")
       .first()
       .should("contain", "Read e-bog");
+
+    cy.get("@biblioCreateLoan.all").should("have.length", 0);
+  });
+});
+
+/**
+ * The audiobook twin of the describe above: an older Publizon loan must keep
+ * playing in Publizon's modal player. A Biblio loan gets a player PAGE
+ * instead, so the modal path is exactly what the provider split must not
+ * break for the loans made before the switch.
+ */
+describe("Material page - flag on, an older Publizon audiobook loan", () => {
+  const AUDIOBOOK_ISBN = "9788763850637";
+
+  beforeEach(() => {
+    // Publizon holds an audiobook loan for this material; the adapter none.
+    stubBackends(ContentLoanStatusEnum.NUMBER_1);
+
+    // The default work has no streamed audiobook edition, so one is added.
+    // Registered after stubBackends so this material wins - Cypress matches
+    // the most recently registered route first.
+    const material = materialFactory.build();
+    material.work?.manifestations.all.push(onlineAudioBookManifestation);
+    cy.interceptGraphql({
+      operationName: "getMaterial",
+      body: buildGetMaterialResponse(material)
+    });
+
+    cy.intercept("GET", "**/v1/user/loans**", {
+      statusCode: 200,
+      body: {
+        loans: [
+          {
+            orderId: PUBLIZON_ORDER_ID,
+            orderNumber: "0c5a287f-be96-4a68-a85a-453864b330cd",
+            orderDateUtc: "2022-10-11T06:32:30Z",
+            loanExpireDateUtc: "2026-11-08T06:32:30Z",
+            isSubscriptionLoan: false,
+            fileExtensionType: 1,
+            libraryBook: {
+              identifier: AUDIOBOOK_ISBN,
+              identifierType: 15,
+              title: "De syv søstre (online)",
+              publishersName: "Rosinante"
+            }
+          }
+        ],
+        userData: {},
+        libraryData: {}
+      }
+    }).as("publizonUserLoans");
+  });
+
+  it("Still plays in Publizon's modal, not on the player page", () => {
+    const material = new MaterialPage(
+      materialStory.withBiblioAdapter,
+      "lydbog (online)"
+    );
+
+    material.visit([]);
+    cy.getBySel("availability-label").contains("lydbog (online)").click();
+
+    // When: the user asks to listen
+    cy.getBySel("material-header-buttons-online-internal-player")
+      .first()
+      .click();
+
+    // Then: the loan opens in the modal - the positive proof that the
+    // provider split routed a Publizon holding to Publizon's player. A Biblio
+    // loan would have navigated away to the player page instead.
+    cy.getBySel("player-modal").should("be.visible");
 
     cy.get("@biblioCreateLoan.all").should("have.length", 0);
   });

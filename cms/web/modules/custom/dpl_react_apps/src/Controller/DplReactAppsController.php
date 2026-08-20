@@ -893,15 +893,23 @@ class DplReactAppsController extends ControllerBase {
   public function reader(Request $request): array {
     $identifier = $request->query->get('identifier');
     $orderid = $request->query->get('orderid');
+    // A loan made through the Biblio adapter opens in the WeDoBooks reader
+    // instead, which knows the loan by its own id. Publizon's reader does not
+    // recognise it and vice versa, so they cannot share a parameter.
+    $loanid = $request->query->get('loanid');
 
-    if (!$identifier && !$orderid) {
-      throw new BadRequestHttpException('Either identifier or orderid must be provided.');
+    if (!$identifier && !$orderid && !$loanid) {
+      throw new BadRequestHttpException('Either identifier, orderid or loanid must be provided.');
     }
 
     $data = [
       'identifier' => $identifier ?? NULL,
       'orderid' => $orderid ?? NULL,
-    ];
+      'loanid' => $loanid ?? NULL,
+      // Add external API base urls. Publizon's reader is loaded straight from
+      // their CDN and talks to no API of ours, but the WeDoBooks one needs the
+      // adapter to vouch for the patron before it can open anything.
+    ] + self::externalApiBaseUrls();
 
     $app = [
       '#theme' => 'dpl_react_app',
