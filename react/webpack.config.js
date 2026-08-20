@@ -55,6 +55,19 @@ module.exports = (_env, argv) => {
     );
   }
 
+  if (production) {
+    // Source maps for everything except the WeDoBooks chunk. That chunk is the
+    // pre-bundled SDK, and its map would embed Colibrio's modules in readable
+    // form - which both defeats the minification their licence asks for and
+    // ships ~15 MB of it to every library site.
+    plugins.push(
+      new webpack.SourceMapDevToolPlugin({
+        filename: "[file].map",
+        exclude: /wedobooks/
+      })
+    );
+  }
+
   // Add environment variables to webpack in development mode
   if (!production) {
     const variables = getWebPackEnvVariables();
@@ -73,7 +86,9 @@ module.exports = (_env, argv) => {
       path: path.resolve(__dirname, "dist")
     },
     mode: argv.mode,
-    devtool: production ? "source-map" : "inline-source-map",
+    // Production maps come from SourceMapDevToolPlugin above, which can
+    // exclude the WeDoBooks chunk; the `devtool` shorthand cannot.
+    devtool: production ? false : "inline-source-map",
     optimization: {
       runtimeChunk: "single",
       splitChunks: {
