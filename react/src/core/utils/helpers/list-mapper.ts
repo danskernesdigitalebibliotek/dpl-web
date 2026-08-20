@@ -62,7 +62,8 @@ export const mapPublizonLoanToLoanType = (list: Loan[]): LoanType[] => {
         identifier: libraryBook?.identifier || null,
         faust: null,
         loanId: null,
-        orderId
+        orderId,
+        digitalProvider: "publizon" as const
       };
     }
   );
@@ -124,6 +125,7 @@ export const mapBiblioLoanToLoanType = (list: BiblioLoan[]): LoanType[] => {
       // The Biblio loan id plays the same role as Publizon's order id: the
       // key used to open the loan in the reader/player.
       orderId: loanId,
+      digitalProvider: "biblio" as const,
       // A Biblio loan carries its own catalogue fields, so the list can
       // render it without a separate metadata lookup.
       details: mapBiblioLoanToBasicDetailsType(loan)
