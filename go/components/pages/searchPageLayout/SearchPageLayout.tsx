@@ -43,13 +43,8 @@ const SearchPageLayout = () => {
   // XState data is client-only; defer result UI until after hydration to match SSR.
   const showResultsSkeleton = hasSearchQuery && (!isHydrated || isSearching || !hasSearchData)
   const showNoResults =
-    isHydrated &&
-    hasSearchQuery &&
-    hasSearchData &&
-    !isSearching &&
-    !data.search?.pages[0]?.length
-  const hitCountText =
-    isHydrated && data.search?.hitcount ? `(${data.search.hitcount})` : ""
+    isHydrated && hasSearchQuery && hasSearchData && !isSearching && !data.search?.pages[0]?.length
+  const hitCountText = isHydrated && data.search?.hitcount ? `(${data.search.hitcount})` : ""
   const searchQueryText = `"${qFromUrl}"`
 
   return (
