@@ -68,11 +68,13 @@ function ResponsiveDialog({
   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
   // Navigating away through a link inside the modal should also leave it
-  // closed for when the page is revisited or restored.
+  // closed for when the page is revisited or restored. New-tab links keep
+  // the user on the page, so the modal stays open.
   const closeOnLinkClick = (event: React.MouseEvent) => {
     if (event.metaKey || event.ctrlKey || event.shiftKey) return
     const target = event.target as HTMLElement
-    if (target.closest?.("a[href]")) {
+    const link = target.closest?.("a[href]")
+    if (link && link.getAttribute("target") !== "_blank") {
       onClose()
     }
   }
