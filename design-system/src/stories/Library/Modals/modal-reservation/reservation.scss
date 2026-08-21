@@ -4,13 +4,20 @@
 }
 
 .reservation-modal--confirm {
-  display: grid;
-  place-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .reservation-modal__confirm-button {
   width: 193px;
   margin: 0 auto;
+}
+
+.reservation-modal--text-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .reservation-modal-header {
