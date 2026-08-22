@@ -1,0 +1,19 @@
+query getSeries($seriesId: String!) {
+  series(seriesId: $seriesId) {
+    title
+    description
+    members {
+      # Pre-labelled and localised ("Del 1", "Bind 2"), so rendered verbatim.
+      # helper.ts extracts the digits for sorting.
+      numberInSeries
+      # Drives the "start here" badge only. It is not necessarily part 1, so it
+      # must not influence order.
+      readThisFirst
+      # The same fragment the search result rows use. Hand-picking fields here
+      # drifts from what AvailabilityLabels and the creator helpers expect.
+      work {
+        ...WorkSmall
+      }
+    }
+  }
+}
