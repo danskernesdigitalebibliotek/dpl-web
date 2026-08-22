@@ -1,0 +1,22 @@
+// These selectors combine the block with the Skeleton Screen Css classes, so
+// they deliberately do not follow BEM - as the other *-skeleton.scss files do.
+
+// .ssc asks for a progress cursor, and the page is not otherwise interactive.
+.series-page.ssc {
+  cursor: progress;
+}
+
+// The header covers keep their real footprint so the intro column does not
+// change width when the data arrives. Sizing comes from the cover classes on
+// the element itself; only ssc-square's width: 100%, which fights the aspect
+// ratio those classes set, has to be undone.
+.series-page.ssc .series-page__cover .ssc-square {
+  width: auto;
+}
+
+// The skeleton fill is translucent, so where the fanned covers overlap the two
+// layers would compound into a dark band. An opaque base under each one keeps
+// all three reading as the same flat grey, the way real covers do.
+.series-page.ssc .series-page__cover {
+  background-color: $color__global-primary;
+}
