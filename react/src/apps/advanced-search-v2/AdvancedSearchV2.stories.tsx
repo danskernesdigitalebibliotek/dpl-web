@@ -71,6 +71,10 @@ const meta: Meta<typeof AdvancedSearchV2Entry> = {
       description: "Path to the search result page",
       control: { type: "text" }
     },
+    seriesUrl: {
+      description: "Path to the series landing page",
+      control: { type: "text" }
+    },
     byAuthorText: {
       description: "By (author) Text",
       control: { type: "text" }
@@ -138,6 +142,7 @@ export const Default: Story = {
     materialUrl: "/work/:workid",
     authUrl: "",
     searchUrl: "/search",
+    seriesUrl: "/serie/:seriesid",
     byAuthorText: "By",
     inSeriesText: "in series",
     showMoreText: "show more",

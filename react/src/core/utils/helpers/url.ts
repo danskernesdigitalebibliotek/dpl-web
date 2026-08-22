@@ -114,6 +114,17 @@ export const constructMaterialUrl = (
   return materialUrl;
 };
 
+export const constructSeriesUrl = (url: URL, seriesId: string) => {
+  const seriesUrl = new URL(url);
+
+  // Replace placeholders with values.
+  seriesUrl.pathname = processUrlPlaceholders(seriesUrl.pathname, [
+    [":seriesid", seriesId]
+  ]);
+
+  return seriesUrl;
+};
+
 export const constructSearchUrl = (searchUrl: URL, q: string) =>
   appendQueryParametersToUrl(searchUrl, {
     q
