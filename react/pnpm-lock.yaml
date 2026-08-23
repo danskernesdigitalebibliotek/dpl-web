@@ -224,7 +224,7 @@ importers:
         version: 8.67.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
       '@vitest/coverage-istanbul':
         specifier: ^4.1.11
-        version: 4.1.11(vitest@2.1.9(@types/node@24.13.3)(happy-dom@20.11.2)(sass@1.102.0)(terser@5.49.0))
+        version: 4.1.11(vitest@2.1.9(@types/node@24.13.3)(happy-dom@20.11.6)(sass@1.102.0)(terser@5.49.0))
       autoprefixer:
         specifier: ^10.5.4
         version: 10.5.4(postcss@8.5.26)
@@ -316,8 +316,8 @@ importers:
         specifier: ^17.11.0
         version: 17.11.0
       happy-dom:
-        specifier: ^20.11.2
-        version: 20.11.2
+        specifier: ^20.11.6
+        version: 20.11.6
       istanbul-lib-coverage:
         specifier: ^3.2.2
         version: 3.2.2
@@ -395,7 +395,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@24.13.3)(happy-dom@20.11.2)(sass@1.102.0)(terser@5.49.0)
+        version: 2.1.9(@types/node@24.13.3)(happy-dom@20.11.6)(sass@1.102.0)(terser@5.49.0)
       webpack:
         specifier: ^5.109.2
         version: 5.109.2(cssnano@8.0.6(postcss@8.5.26))(esbuild@0.25.12)(postcss@8.5.26)(webpack-cli@7.2.2)
@@ -5098,8 +5098,8 @@ packages:
     resolution: {integrity: sha512-Chq1s4CY7jmh8gO2qvLIJyfCDIN+EHLFW/9iShnp1z8FjBQMoodWP1kDC36VAMXXIvAjj4ARa7ntfAV2BrjsbA==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
-  happy-dom@20.11.2:
-    resolution: {integrity: sha512-7MB+bJLkxu3SowAfBJbjW+c55kNz5tkR45gu2qzrxznezhLeN5YIlJbwUgSzlGc+qWoZ8Ykg71H5ezz69xixrw==}
+  happy-dom@20.11.6:
+    resolution: {integrity: sha512-Hldbg8AdAa5a5oDcZpjqnGitp7JB0hqWmfv/8qr+kft4vzSD8BHsbdRfzYvL/0QcbKcURC/yyoygbeDQarPvYg==}
     engines: {node: '>=20.0.0'}
 
   has-bigints@1.1.0:
@@ -11435,7 +11435,7 @@ snapshots:
       '@typescript-eslint/types': 8.67.0
       eslint-visitor-keys: 5.0.1
 
-  '@vitest/coverage-istanbul@4.1.11(vitest@2.1.9(@types/node@24.13.3)(happy-dom@20.11.2)(sass@1.102.0)(terser@5.49.0))':
+  '@vitest/coverage-istanbul@4.1.11(vitest@2.1.9(@types/node@24.13.3)(happy-dom@20.11.6)(sass@1.102.0)(terser@5.49.0))':
     dependencies:
       '@babel/core': 7.29.7
       '@istanbuljs/schema': 0.1.6
@@ -11447,7 +11447,7 @@ snapshots:
       magicast: 0.5.4
       obug: 2.1.4
       tinyrainbow: 3.1.1
-      vitest: 2.1.9(@types/node@24.13.3)(happy-dom@20.11.2)(sass@1.102.0)(terser@5.49.0)
+      vitest: 2.1.9(@types/node@24.13.3)(happy-dom@20.11.6)(sass@1.102.0)(terser@5.49.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -13645,7 +13645,7 @@ snapshots:
 
   graphql@16.14.2: {}
 
-  happy-dom@20.11.2:
+  happy-dom@20.11.6:
     dependencies:
       '@types/node': 24.13.3
       '@types/whatwg-mimetype': 3.0.2
@@ -16602,7 +16602,7 @@ snapshots:
       sass: 1.102.0
       terser: 5.49.0
 
-  vitest@2.1.9(@types/node@24.13.3)(happy-dom@20.11.2)(sass@1.102.0)(terser@5.49.0):
+  vitest@2.1.9(@types/node@24.13.3)(happy-dom@20.11.6)(sass@1.102.0)(terser@5.49.0):
     dependencies:
       '@vitest/expect': 2.1.9
       '@vitest/mocker': 2.1.9(vite@5.4.21(@types/node@24.13.3)(sass@1.102.0)(terser@5.49.0))
@@ -16626,7 +16626,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 24.13.3
-      happy-dom: 20.11.2
+      happy-dom: 20.11.6
     transitivePeerDependencies:
       - less
       - lightningcss
