@@ -286,8 +286,8 @@ importers:
         specifier: ^4.6.0
         version: 4.6.0
       next-test-api-route-handler:
-        specifier: ^5.0.6
-        version: 5.0.6(next@16.2.12(@babel/core@7.29.7)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
+        specifier: ^5.0.7
+        version: 5.0.7(next@16.2.12(@babel/core@7.29.7)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
       node-mocks-http:
         specifier: ^1.18.1
         version: 1.18.1(@types/node@24.13.2)
@@ -5364,10 +5364,6 @@ packages:
     resolution: {integrity: sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==}
     engines: {node: '>=18'}
 
-  cookie@2.0.1:
-    resolution: {integrity: sha512-yuToqVvRrj6pfDXREyQAAv8SkAEk/8GS3jQRTiUMm66TVtBYmqQeoEjL2Lmq8Rpo6271vH76InTChTitEAm65w==}
-    engines: {node: '>=22'}
-
   cookies-next@6.1.1:
     resolution: {integrity: sha512-8JZBc4IN2m8xqOXyG7uicth6yH3SvynAUGSeV/FQ5lcEclzNGoR0+YCjySdn8r6keZdRyGQr4YJ8qy8F+Jq5uw==}
     peerDependencies:
@@ -7888,8 +7884,8 @@ packages:
   next-drupal@2.0.1:
     resolution: {integrity: sha512-HbewzlWKHrey8ncHvMlazVupByDxTS9JSOQRqnRpDcdIupO4g1jkvD0eL+042CYjcv/SKOBH3ARKc2EIO7oMRA==}
 
-  next-test-api-route-handler@5.0.6:
-    resolution: {integrity: sha512-KdkIhwmxBijRQxezej15a8ZjmyW7Rb1ZaT9MshvOJeHoDlLa+ToTBXKsrSywQTIqS8HvgkBQKLenJANUWkQmUA==}
+  next-test-api-route-handler@5.0.7:
+    resolution: {integrity: sha512-HVh4UakC5q98U0/j3CWW2JTxHBeqDmvHjg4wqpwwaQP+O6f60preyed5FYJ7Z8oHFKIeRVBCy8E6gUhUb4UHpw==}
     engines: {node: ^20.18.0 || >=22.12.0}
     peerDependencies:
       next: '>=9'
@@ -15707,8 +15703,6 @@ snapshots:
 
   cookie@1.1.1: {}
 
-  cookie@2.0.1: {}
-
   cookies-next@6.1.1(next@16.2.12(@babel/core@7.29.7)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8):
     dependencies:
       cookie: 1.1.1
@@ -18770,10 +18764,10 @@ snapshots:
       - babel-plugin-react-compiler
       - sass
 
-  next-test-api-route-handler@5.0.6(next@16.2.12(@babel/core@7.29.7)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)):
+  next-test-api-route-handler@5.0.7(next@16.2.12(@babel/core@7.29.7)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)):
     dependencies:
       '@whatwg-node/server': 0.11.0
-      cookie: 2.0.1
+      cookie~1: cookie@1.1.1
       core-js: 3.50.0
       next: 16.2.12(@babel/core@7.29.7)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
 
