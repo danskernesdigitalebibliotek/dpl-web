@@ -124,7 +124,7 @@
     "@vitejs/plugin-react": "^5.2.0",
     "axe-playwright": "^2.2.2",
     "cypress": "^14.5.4",
-    "dayjs": "^1.11.20",
+    "dayjs": "^1.11.23",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.12",
     "eslint-config-prettier": "^10.1.8",
