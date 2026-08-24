@@ -12,9 +12,16 @@
   display: grid;
   gap: $s-xl;
   grid-template-columns: 1fr;
+  // Clears the whole intro - description as well as covers - from the member
+  // list below it. 48px is the standard block spacing; the scale has no single
+  // step for it, so it is composed from two that add up.
+  padding-bottom: $s-xl + $s-md;
 
   @include media-query__medium {
-    align-items: center;
+    // Top aligned: the intro is the content, the covers only decorate it, so
+    // the title starts at the top of the block no matter which column is
+    // taller.
+    align-items: start;
     grid-template-columns: 1fr auto;
   }
 }
@@ -83,10 +90,8 @@
 
   display: flex;
   flex-direction: column;
-  gap: $s-lg;
+  // 16px at every width. Anything wider and the rows stop reading as one
+  // listing.
+  gap: $s-md;
   margin-top: $s-xl;
-
-  @include media-query__medium {
-    gap: $s-xl;
-  }
 }

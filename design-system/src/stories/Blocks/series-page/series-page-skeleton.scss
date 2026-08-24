@@ -20,3 +20,23 @@
 .series-page.ssc .series-page__cover {
   background-color: $color__global-primary;
 }
+
+// The header placeholders stand as tall as the text they replace, so the intro
+// does not grow when the data arrives. Both sit inside the real elements, so
+// they inherit their font-size, and an em height tracks it across breakpoints -
+// the h1 alone runs 32px, 52px and 58px, and ssc's own 24px matches none of
+// them.
+.series-page.ssc .series-page__byline .ssc-line {
+  // "Tags - L" is 12px on an 18px line.
+  height: 1.5em;
+}
+
+.series-page.ssc .series-page__title .ssc-head-line {
+  // The mobile h1 is 32px on a 40px line.
+  height: 1.25em;
+
+  @include media-query__small {
+    // From here up the h1 line-height is 120%, whatever the font-size.
+    height: 1.2em;
+  }
+}

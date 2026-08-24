@@ -75,13 +75,13 @@ const SeriesCard: React.FC<SeriesCardProps> = ({
             id={workId}
             addToListRequest={addToListRequest}
           />
+          {numberInSeries && (
+            <span className="series-card__number">{numberInSeries}</span>
+          )}
           {readThisFirstLabel && (
             <span className="tag tag--small series-card__tag">
               {readThisFirstLabel}
             </span>
-          )}
-          {numberInSeries && (
-            <span className="series-card__number">{numberInSeries}</span>
           )}
         </div>
 

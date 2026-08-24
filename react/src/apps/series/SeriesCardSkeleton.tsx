@@ -16,8 +16,8 @@ const SeriesCardSkeleton: React.FC = () => {
           <div className="ssc-line w-30">&nbsp;</div>
         </div>
         <div className="ssc-head-line w-80" />
-        <div className="ssc-line w-30">&nbsp;</div>
-        <div className="ssc-line">&nbsp;</div>
+        <div className="ssc-line w-30 mb">&nbsp;</div>
+        <div className="ssc-line mbs">&nbsp;</div>
         <div className="ssc-line w-90">&nbsp;</div>
       </div>
 

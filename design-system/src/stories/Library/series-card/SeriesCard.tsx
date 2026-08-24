@@ -63,11 +63,11 @@ export const SeriesCard = ({
       <div className="series-card__text">
         <div className="series-card__meta">
           <ButtonFavourite fill={heartFill} />
-          {readThisFirstLabel && (
-            <Tag className="series-card__tag">{readThisFirstLabel}</Tag>
-          )}
           {numberInSeries && (
             <span className="series-card__number">{numberInSeries}</span>
+          )}
+          {readThisFirstLabel && (
+            <Tag className="series-card__tag">{readThisFirstLabel}</Tag>
           )}
         </div>
 

@@ -23,9 +23,11 @@ export const SeriesPageSkeleton = ({
     <div className="series-page ssc">
       <div className="series-page__header">
         <div className="series-page__intro">
-          <div className="ssc-line w-20">&nbsp;</div>
+          <div className="series-page__byline">
+            <div className="ssc-line w-20">&nbsp;</div>
+          </div>
           <div className="series-page__title">
-            <div className="ssc-head-line w-30">&nbsp;</div>
+            <div className="ssc-head-line w-50">&nbsp;</div>
           </div>
           <div className="series-page__description">
             <div className="ssc-line mbs">&nbsp;</div>

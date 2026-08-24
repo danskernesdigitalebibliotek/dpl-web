@@ -23,9 +23,34 @@
   }
 }
 
-// Normally the row is as tall as the favourite button and tag inside it.
+// Normally the row is as tall as the favourite button and tag inside it. 31px
+// is what the favourite button measures, and reserving it is what keeps the
+// title below from sitting higher here than on the loaded card. The loaded
+// card top-aligns this row; the skeleton centres it instead. A
+// placeholder line is a third of the height of the button it stands in for, so
+// pinning it to the top leaves the rest of the row reading as a gap above the
+// title rather than as a row with something in it.
 .series-card.ssc .series-card__meta {
-  min-height: 28px;
+  align-items: center;
+  min-height: 31px;
+}
+
+// Stands in for the title, so it carries the title's own margins - the
+// placeholder has none of its own - and the height of one h4 line. Borrowing
+// h4's font-size is what lets the height track the title across breakpoints,
+// where 18px grows to 24px and then 26px; ssc-head-line's own 24px only
+// happens to be right at one of the three. The 1.2em + 2px repeats the
+// line-height .series-card__title sets.
+.series-card.ssc .ssc-head-line {
+  @include typography($typo__h4);
+
+  height: calc(1.2em + 2px);
+  // The loaded card sets 4px here, where a small grey caption sits under a
+  // large serif title. As two grey bars that reads as a title with a
+  // sub-heading stuck to it, so the placeholder takes the roomier gap
+  // card-list-item's skeleton uses.
+  margin-bottom: $s-md;
+  margin-top: $s-md;
 }
 
 // Stacked rather than side by side. Real labels are wide enough that they each
