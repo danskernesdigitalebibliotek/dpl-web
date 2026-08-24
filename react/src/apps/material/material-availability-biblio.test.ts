@@ -4,7 +4,10 @@ import {
   materialStory
 } from "../../../cypress/page-objects/material/MaterialPage";
 import { CanLoanResponseType } from "@danskernesdigitalebibliotek/dpl-service-layer/biblio/contract";
-import { givenBiblioCanLoan } from "../../../cypress/intercepts/biblio/biblio";
+import {
+  givenBiblioCanLoan,
+  givenBiblioCannotAnswerCanLoan
+} from "../../../cypress/intercepts/biblio/biblio";
 import { givenAMaterial } from "../../../cypress/intercepts/fbi/material";
 import { interceptFbsCalls } from "../../../cypress/intercepts/fbs/fbs";
 import { interceptPublizonCalls } from "../../../cypress/intercepts/publizon/interceptPublizonCalls";
@@ -124,5 +127,32 @@ describe("Material page - online availability through the Biblio adapter", () =>
     ebookLabel(material).should("contain", "Available");
 
     cy.get("@biblioCanLoan.all").should("have.length", 0);
+  });
+});
+
+/**
+ * TEMPORARY, with the toleration flag it covers.
+ *
+ * The catalogue lists digital materials WeDoBooks has not provisioned yet,
+ * and the adapter answers 404 for those. Without the flag that error takes
+ * the whole material page down; with it the material is simply unavailable.
+ * Remove together with useBiblioTolerateUnknownMaterials.
+ */
+describe("Material page - a material the adapter does not know", () => {
+  beforeEach(() => stubBackends());
+
+  it("Shows it as unavailable instead of failing the page", () => {
+    // Given: the adapter has never heard of the e-book
+    givenBiblioCannotAnswerCanLoan("9788702441000");
+
+    // When: the library tolerates that
+    const material = new MaterialPage(materialStory.withTolerantBiblioAdapter);
+    material.visit([]);
+    cy.wait("@biblioCanLoanUnknown");
+
+    // Then: the page is alive and the label answers - unavailable, even
+    // though Publizon calls it loanable. The 404 was processed as an answer,
+    // not thrown as an error, and Publizon was not asked to stand in.
+    ebookLabel(material).should("contain", "Unavailable");
   });
 });

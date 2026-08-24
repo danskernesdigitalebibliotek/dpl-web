@@ -10,6 +10,7 @@ import {
   mapBiblioReservationToReservationType
 } from "./helpers/list-mapper";
 import { isAnonymous } from "./helpers/user";
+import useBiblioTolerateUnknownMaterials from "../biblio/useBiblioTolerateUnknownMaterials";
 import {
   ReaderPlayerState,
   unknownReaderPlayerState
@@ -51,9 +52,13 @@ const useBiblioReaderPlayerState = ({
   // same deal Publizon gets.
   const isActiveForUser = isActive && !isUserAnonymous;
 
+  // TEMPORARY allowNotFound, see useBiblioTolerateUnknownMaterials. A
+  // tolerated unknown material resolves to null, and null offers nothing -
+  // exactly what a material the provider cannot lend should get.
+  const tolerateUnknown = useBiblioTolerateUnknownMaterials();
   const { data: canLoan, isLoading: isLoadingCanLoan } = useBiblioCanLoan(
     identifier,
-    { enabled: isActiveForUser }
+    { enabled: isActiveForUser, allowNotFound: tolerateUnknown }
   );
 
   const { data: loansData, isLoading: isLoadingLoans } = useBiblioLoans({

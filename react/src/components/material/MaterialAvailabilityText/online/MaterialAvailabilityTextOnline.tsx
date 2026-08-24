@@ -18,6 +18,7 @@ import {
   useBiblioLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
+import useBiblioTolerateUnknownMaterials from "../../../../core/biblio/useBiblioTolerateUnknownMaterials";
 
 interface MaterialAvailabilityTextOnlineProps {
   isbns: string[];
@@ -67,8 +68,13 @@ const MaterialAvailabilityTextOnline: React.FC<
   // Which licence Biblio would lend this material under. Needed here because
   // it is what decides whether the loan costs the user anything - see
   // isCostFree below.
+  // TEMPORARY, see useBiblioTolerateUnknownMaterials: an unknown material
+  // has no licence to read a price from, which the falsy checks below
+  // already handle.
+  const tolerateUnknown = useBiblioTolerateUnknownMaterials();
   const { data: biblioCanLoan } = useBiblioCanLoan(isbn, {
-    enabled: Boolean(isbn) && isProvidedByBiblio
+    enabled: Boolean(isbn) && isProvidedByBiblio,
+    allowNotFound: tolerateUnknown
   });
 
   if (!productsData && !isProvidedByBiblio) return null;

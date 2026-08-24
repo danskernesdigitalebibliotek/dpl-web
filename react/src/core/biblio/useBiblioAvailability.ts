@@ -3,6 +3,7 @@ import {
   useBiblioCanLoan
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../utils/useBiblioAdapter";
+import useBiblioTolerateUnknownMaterials from "./useBiblioTolerateUnknownMaterials";
 import { isAnonymous } from "../utils/helpers/user";
 
 type BiblioAvailability = {
@@ -40,15 +41,25 @@ const useBiblioAvailability = ({
   isbn: string | null;
 }): BiblioAvailability => {
   const useBiblio = useBiblioAdapter();
+  // TEMPORARY, see the hook: while it is on, a material the adapter does not
+  // know resolves to null instead of an error.
+  const tolerateUnknown = useBiblioTolerateUnknownMaterials();
   const isAnswering = useBiblio && enabled && Boolean(isbn) && !isAnonymous();
 
   const { data: canLoan, isLoading } = useBiblioCanLoan(isbn, {
-    enabled: isAnswering
+    enabled: isAnswering,
+    allowNotFound: tolerateUnknown
   });
 
   return {
     isAnswering,
-    isAvailable: canLoan ? isBiblioMaterialAvailable(canLoan.status) : null,
+    // null is the tolerated 404: Biblio is THE lending provider, so a
+    // material it does not know cannot be lent - unavailable, no fallback.
+    // undefined is simply not answered yet.
+    isAvailable:
+      canLoan === null
+        ? false
+        : ((canLoan && isBiblioMaterialAvailable(canLoan.status)) ?? null),
     isLoading
   };
 };

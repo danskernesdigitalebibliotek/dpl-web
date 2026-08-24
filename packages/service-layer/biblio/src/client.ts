@@ -104,12 +104,24 @@ export function createBiblioClient(config: BiblioConfig) {
 
     // Whether the user can loan the material right now - the equivalent of
     // Publizon's loan status for an identifier.
-    canLoan: async (materialId: string): Promise<BiblioCanLoan> => {
+    //
+    // TEMPORARY, with the toleration flag it serves: the adapter answers 404
+    // for a material it does not know, and with allowNotFound that becomes
+    // undefined - "Biblio has no answer" - for callers that want to render
+    // the material as unavailable rather than fail on it.
+    canLoan: async (
+      materialId: string,
+      options?: { allowNotFound?: boolean }
+    ): Promise<BiblioCanLoan | undefined> => {
       const raw = await request({
         method: "GET",
         path: "/v1/loans/can-loan",
         query: { material_id: materialId },
+        allowNotFound: options?.allowNotFound,
       })
+      if (raw === undefined) {
+        return undefined
+      }
       return parseAndMapCanLoan(raw)
     },
 

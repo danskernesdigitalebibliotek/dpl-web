@@ -51,6 +51,8 @@ class ReactAppsHooks {
 
     $data['configs'] += [
       'use-biblio-adapter' => $this->biblioSettings->isEnabled() ? '1' : '0',
+      // TEMPORARY, see DplBiblioSettings::shouldTolerateUnknownMaterials().
+      'biblio-tolerate-unknown-materials' => $this->biblioSettings->shouldTolerateUnknownMaterials() ? '1' : '0',
     ];
 
     // The reader and the player run on the WeDoBooks SDK, which is configured
