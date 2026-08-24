@@ -47,6 +47,14 @@ const meta: Meta<typeof SeriesEntry> = {
       description: "Suffix when a material has more than two creators",
       control: { type: "text" }
     },
+    resultPagerStatusText: {
+      description: "Status line above the show more button",
+      control: { type: "text" }
+    },
+    showMoreText: {
+      description: "Button loading the next page of members",
+      control: { type: "text" }
+    },
     blacklistedAvailabilityBranchesConfig: {
       description: "Branches excluded from the availability lookup",
       control: { type: "text" }
@@ -72,7 +80,9 @@ export const Primary: Story = {
     materialUrl: "/work/:workid",
     searchUrl: "/search",
     byAuthorText: "By",
-    etAlText: "et al."
+    etAlText: "et al.",
+    resultPagerStatusText: "Showing @itemsShown out of @hitcount results",
+    showMoreText: "show more"
   }
 };
 
@@ -100,5 +110,16 @@ export const NotFound: Story = {
   args: {
     ...Primary.args,
     seriesId: "does-not-exist"
+  }
+};
+
+// "Walt Disney's jumbobog": at 622 members the longest series we know of -
+// several pages of "show more", and common enough to exist in most library
+// profiles. The same series on bibliotek.dk:
+// https://bibliotek.dk/serie/cd47f213997d2f3b8f29c51057b38fe415177af7b86b054de4065c9525e3627a
+export const WithManyMembers: Story = {
+  args: {
+    ...Primary.args,
+    seriesId: "cd47f213997d2f3b8f29c51057b38fe415177af7b86b054de4065c9525e3627a"
   }
 };

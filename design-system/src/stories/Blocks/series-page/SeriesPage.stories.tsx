@@ -69,6 +69,9 @@ export default {
       "images/book_cover_3.jpg",
     ],
     members,
+    // More members than the four listed, so the pager keeps its "show more"
+    // button - the state a visitor lands on for any series worth paging.
+    totalMembers: 12,
   },
 } as Meta<typeof SeriesPage>;
 
@@ -84,11 +87,6 @@ Default.args = {};
 export const WithoutDescription = Template.bind({});
 WithoutDescription.args = {
   description: undefined,
-};
-
-export const SingleMember = Template.bind({});
-SingleMember.args = {
-  members: [members[0]],
 };
 
 export const SkeletonVersion: StoryFn<typeof SeriesPageSkeleton> = () => (

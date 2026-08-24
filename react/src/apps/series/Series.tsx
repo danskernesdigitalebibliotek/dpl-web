@@ -1,8 +1,9 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ButtonFavouriteId } from "../../components/button-favourite/button-favourite";
 import Link from "../../components/atoms/links/Link";
 import { Cover } from "../../components/cover/cover";
+import usePager from "../../components/result-pager/use-pager";
 import { useGetSeriesQuery } from "../../core/dbc-gateway/generated/graphql";
 import { guardedRequest } from "../../core/guardedRequests.slice";
 import { TypedDispatch } from "../../core/store";
@@ -26,12 +27,25 @@ export type SeriesProps = {
   seriesId: string;
 };
 
+// Members fetched per request. The member list is paged - asking for it
+// without arguments silently returns only the first 50 - and 50 per click of
+// "show more" is also what bibliotek.dk's series pages use.
+const memberPageSize = 50;
+
 // The generated fragment types the ids as plain strings. Casting to the entity
 // types is how the other apps consuming WorkSmall do it - see SearchResult.tsx.
 type SeriesMember = {
   numberInSeries?: string | null;
   readThisFirst?: boolean | null;
   work: WorkSmall;
+};
+
+// The pages loaded so far. Members accumulate across "show more" clicks;
+// title and description are the same on every page.
+type LoadedSeries = {
+  title: string;
+  description?: string | null;
+  members: SeriesMember[];
 };
 
 const Series: React.FC<SeriesProps> = ({ seriesId }) => {
@@ -41,9 +55,49 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
   const searchUrl = u("searchUrl");
   const dispatch = useDispatch<TypedDispatch>();
 
+  const [series, setSeries] = useState<LoadedSeries | null>(null);
+  const [hitcount, setHitcount] = useState(0);
+  const { PagerComponent, page, resetPage } = usePager({
+    hitcount,
+    pageSize: memberPageSize
+  });
+
   // No isError branch: the QueryClient sets throwOnError, so failed requests
   // are thrown to the ErrorBoundary rather than returned as a flag.
-  const { data, isLoading } = useGetSeriesQuery({ seriesId });
+  const { data, isLoading } = useGetSeriesQuery({
+    seriesId,
+    offset: page * memberPageSize,
+    limit: memberPageSize
+  });
+
+  // A new series id (only possible via a Storybook control) starts the
+  // accumulation over.
+  useEffect(() => {
+    setSeries(null);
+    setHitcount(0);
+    resetPage();
+    // resetPage is not stable between renders; only a series id change
+    // matters here.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seriesId]);
+
+  // Append each loaded page to the members shown so far, as the search result
+  // list does.
+  useEffect(() => {
+    if (!data?.series) {
+      return;
+    }
+
+    const { title, description } = data.series;
+    const pageMembers = data.series.members as SeriesMember[];
+
+    setHitcount(data.series.hitcount);
+    setSeries((previous) =>
+      page > 0 && previous
+        ? { ...previous, members: [...previous.members, ...pageMembers] }
+        : { title, description, members: pageMembers }
+    );
+  }, [data, page]);
 
   const addToListRequest = (id: ButtonFavouriteId) => {
     dispatch(
@@ -55,22 +109,25 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
     );
   };
 
-  if (isLoading) {
-    return <SeriesSkeleton />;
+  // The id matched nothing - the schema returns a nullable Series, so a miss
+  // is a success carrying null.
+  if (data && !data.series) {
+    return null;
   }
 
-  // Null while data is undefined, and also when the id matched nothing — the
-  // schema returns a nullable Series, so a miss is a success carrying null.
-  const series = data?.series;
-
+  // Covers the initial fetch, and the render between the first page arriving
+  // and the effect above copying it into state.
   if (!series) {
-    return null;
+    return <SeriesSkeleton />;
   }
 
   // Around a third of series have no description, and a whitespace-only value
   // would otherwise render an empty paragraph.
   const description = series.description?.trim();
-  const members = sortSeriesMembers(series.members as SeriesMember[]);
+  // Only the members loaded so far: each "show more" click slots the next
+  // page into the sorted listing, so rows can appear above ones already
+  // visible - the part order and the API's own order are unrelated.
+  const members = sortSeriesMembers(series.members);
 
   const author = getSeriesAuthor(members);
   // Decoration, so a handful is plenty. The design fans out three.
@@ -154,6 +211,8 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
           );
         })}
       </ul>
+
+      <PagerComponent isLoading={isLoading} />
     </div>
   );
 };

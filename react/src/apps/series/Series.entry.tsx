@@ -19,6 +19,8 @@ interface SeriesEntryTextProps {
   // declared per app - as the other apps using them do.
   byAuthorText: string;
   etAlText: string;
+  resultPagerStatusText: string;
+  showMoreText: string;
 }
 
 // materialUrl is supplied to every app by dpl_react_apps.module as a global

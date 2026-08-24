@@ -6386,6 +6386,8 @@ export type ComplexSearchWithPaginationQuery = {
 
 export type GetSeriesQueryVariables = Exact<{
   seriesId: Scalars["String"]["input"];
+  limit: Scalars["Int"]["input"];
+  offset: Scalars["Int"]["input"];
 }>;
 
 export type GetSeriesQuery = {
@@ -6394,6 +6396,7 @@ export type GetSeriesQuery = {
     __typename?: "Series";
     title: string;
     description?: string | null;
+    hitcount: number;
     members: Array<{
       __typename?: "SerieWork";
       numberInSeries?: string | null;
@@ -10181,11 +10184,12 @@ export const useComplexSearchWithPaginationQuery = <
 };
 
 export const GetSeriesDocument = `
-    query getSeries($seriesId: String!) {
+    query getSeries($seriesId: String!, $limit: Int!, $offset: Int!) {
   series(seriesId: $seriesId) {
     title
     description
-    members {
+    hitcount
+    members(limit: $limit, offset: $offset) {
       numberInSeries
       readThisFirst
       work {

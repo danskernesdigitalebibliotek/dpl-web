@@ -1,4 +1,5 @@
 import Cover from "../../Library/cover/Cover";
+import ResultPager from "../../Library/card-list-page/ResultPager";
 import SeriesCard, {
   SeriesCardProps,
 } from "../../Library/series-card/SeriesCard";
@@ -11,6 +12,10 @@ export type SeriesPageProps = {
   authorHref?: string;
   coverSrcs?: string[];
   members: SeriesCardProps[];
+  // Members in the whole series, of which `members` is the first page. Long
+  // series run to hundreds, so anything above the number listed leaves the
+  // "show more" button in place. Defaults to a series that fits on one page.
+  totalMembers?: number;
 };
 
 // The whole series landing page, so that Chromatic covers the page-level
@@ -23,6 +28,7 @@ export const SeriesPage = ({
   authorHref = "/",
   coverSrcs = [],
   members,
+  totalMembers = members.length,
 }: SeriesPageProps) => {
   return (
     <div className="series-page">
@@ -67,6 +73,15 @@ export const SeriesPage = ({
           </li>
         ))}
       </ul>
+
+      {/*
+        Outside the member list rather than inside it: the pager is not one of
+        the members, and the list's own container width would narrow it.
+      */}
+      <ResultPager
+        currentResults={members.length}
+        totalResults={totalMembers}
+      />
     </div>
   );
 };
