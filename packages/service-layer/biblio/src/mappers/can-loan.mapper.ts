@@ -14,6 +14,9 @@ const CanLoanSchema = z.object({
     "no_valid_credentials",
     "lending_blocked",
   ]),
+  // Optional by contract: "the provider selected for the attempted loan, when
+  // available" - absent when no provider could be picked at all.
+  loan_provider: z.enum(["free", "k-fond", "click", "package", "premium", "selection"]).optional(),
   unavailable_reason: z.string().optional(),
   lending_block_reason: z.string().optional(),
 })
@@ -44,6 +47,7 @@ export function parseAndMapCanLoan(raw: unknown): BiblioCanLoan {
   const parsed = parseOrThrowAdapterMessage(CanLoanSchema, raw)
   return {
     status: parsed.status,
+    loanProvider: parsed.loan_provider,
     unavailableReason: parsed.unavailable_reason,
     lendingBlockReason: parsed.lending_block_reason,
   }
@@ -53,6 +57,7 @@ export function parseAndMapLoanResult(raw: unknown): BiblioLoanResult {
   const parsed = parseOrThrowAdapterMessage(LoanResultSchema, raw)
   return {
     status: parsed.status,
+    loanProvider: parsed.loan_provider,
     unavailableReason: parsed.unavailable_reason,
     lendingBlockReason: parsed.lending_block_reason,
     loan: parsed.loan ? mapLoan(parsed.loan) : undefined,

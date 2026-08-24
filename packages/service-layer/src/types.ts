@@ -198,8 +198,14 @@ export type BiblioCanLoanStatus =
   | "no_valid_credentials"
   | "lending_blocked"
 
+// Which licence the loan would be made under. The organization configures a
+// prioritized list of providers, and the backend reports the one it picked.
+// "free" is the only one that costs the user nothing.
+export type BiblioLoanProvider = "free" | "k-fond" | "click" | "package" | "premium" | "selection"
+
 export type BiblioCanLoan = {
   status: BiblioCanLoanStatus
+  loanProvider?: BiblioLoanProvider
   unavailableReason?: string
   lendingBlockReason?: string
 }
