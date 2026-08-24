@@ -29,20 +29,20 @@ class ParagraphRecommendation extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         $instance->__typename = 'ParagraphRecommendation';
         if ($imagePositionRight !== self::UNDEFINED) {
-            $instance->imagePositionRight = $imagePositionRight;
+            $instance->__set('imagePositionRight', $imagePositionRight);
         }
         if ($recommendationDescription !== self::UNDEFINED) {
-            $instance->recommendationDescription = $recommendationDescription;
+            $instance->__set('recommendationDescription', $recommendationDescription);
         }
         if ($recommendationTitle !== self::UNDEFINED) {
-            $instance->recommendationTitle = $recommendationTitle;
+            $instance->__set('recommendationTitle', $recommendationTitle);
         }
         if ($recommendationWorkId !== self::UNDEFINED) {
-            $instance->recommendationWorkId = $recommendationWorkId;
+            $instance->__set('recommendationWorkId', $recommendationWorkId);
         }
 
         return $instance;

@@ -24,13 +24,13 @@ class CoverDetails extends \Spawnia\Sailor\ObjectLike
 
         $instance->__typename = 'CoverDetails';
         if ($url !== self::UNDEFINED) {
-            $instance->url = $url;
+            $instance->__set('url', $url);
         }
         if ($height !== self::UNDEFINED) {
-            $instance->height = $height;
+            $instance->__set('height', $height);
         }
         if ($width !== self::UNDEFINED) {
-            $instance->width = $width;
+            $instance->__set('width', $width);
         }
 
         return $instance;

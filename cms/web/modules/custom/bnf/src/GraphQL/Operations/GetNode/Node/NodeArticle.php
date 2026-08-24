@@ -56,47 +56,47 @@ class NodeArticle extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($title !== self::UNDEFINED) {
-            $instance->title = $title;
+            $instance->__set('title', $title);
         }
         if ($url !== self::UNDEFINED) {
-            $instance->url = $url;
+            $instance->__set('url', $url);
         }
         if ($status !== self::UNDEFINED) {
-            $instance->status = $status;
+            $instance->__set('status', $status);
         }
         if ($changed !== self::UNDEFINED) {
-            $instance->changed = $changed;
+            $instance->__set('changed', $changed);
         }
         if ($created !== self::UNDEFINED) {
-            $instance->created = $created;
+            $instance->__set('created', $created);
         }
         if ($publicationDate !== self::UNDEFINED) {
-            $instance->publicationDate = $publicationDate;
+            $instance->__set('publicationDate', $publicationDate);
         }
         $instance->__typename = 'NodeArticle';
         if ($canonicalUrl !== self::UNDEFINED) {
-            $instance->canonicalUrl = $canonicalUrl;
+            $instance->__set('canonicalUrl', $canonicalUrl);
         }
         if ($overrideAuthor !== self::UNDEFINED) {
-            $instance->overrideAuthor = $overrideAuthor;
+            $instance->__set('overrideAuthor', $overrideAuthor);
         }
         if ($showOverrideAuthor !== self::UNDEFINED) {
-            $instance->showOverrideAuthor = $showOverrideAuthor;
+            $instance->__set('showOverrideAuthor', $showOverrideAuthor);
         }
         if ($subtitle !== self::UNDEFINED) {
-            $instance->subtitle = $subtitle;
+            $instance->__set('subtitle', $subtitle);
         }
         if ($teaserImage !== self::UNDEFINED) {
-            $instance->teaserImage = $teaserImage;
+            $instance->__set('teaserImage', $teaserImage);
         }
         if ($teaserText !== self::UNDEFINED) {
-            $instance->teaserText = $teaserText;
+            $instance->__set('teaserText', $teaserText);
         }
         if ($paragraphs !== self::UNDEFINED) {
-            $instance->paragraphs = $paragraphs;
+            $instance->__set('paragraphs', $paragraphs);
         }
 
         return $instance;

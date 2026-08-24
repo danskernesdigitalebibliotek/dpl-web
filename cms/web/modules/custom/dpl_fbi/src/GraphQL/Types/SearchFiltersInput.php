@@ -91,82 +91,82 @@ class SearchFiltersInput extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($accessTypes !== self::UNDEFINED) {
-            $instance->accessTypes = $accessTypes;
+            $instance->__set('accessTypes', $accessTypes);
         }
         if ($childrenOrAdults !== self::UNDEFINED) {
-            $instance->childrenOrAdults = $childrenOrAdults;
+            $instance->__set('childrenOrAdults', $childrenOrAdults);
         }
         if ($creators !== self::UNDEFINED) {
-            $instance->creators = $creators;
+            $instance->__set('creators', $creators);
         }
         if ($fictionNonfiction !== self::UNDEFINED) {
-            $instance->fictionNonfiction = $fictionNonfiction;
+            $instance->__set('fictionNonfiction', $fictionNonfiction);
         }
         if ($fictionalCharacters !== self::UNDEFINED) {
-            $instance->fictionalCharacters = $fictionalCharacters;
+            $instance->__set('fictionalCharacters', $fictionalCharacters);
         }
         if ($genreAndForm !== self::UNDEFINED) {
-            $instance->genreAndForm = $genreAndForm;
+            $instance->__set('genreAndForm', $genreAndForm);
         }
         if ($mainLanguages !== self::UNDEFINED) {
-            $instance->mainLanguages = $mainLanguages;
+            $instance->__set('mainLanguages', $mainLanguages);
         }
         if ($materialTypesGeneral !== self::UNDEFINED) {
-            $instance->materialTypesGeneral = $materialTypesGeneral;
+            $instance->__set('materialTypesGeneral', $materialTypesGeneral);
         }
         if ($materialTypesSpecific !== self::UNDEFINED) {
-            $instance->materialTypesSpecific = $materialTypesSpecific;
+            $instance->__set('materialTypesSpecific', $materialTypesSpecific);
         }
         if ($subjects !== self::UNDEFINED) {
-            $instance->subjects = $subjects;
+            $instance->__set('subjects', $subjects);
         }
         if ($workTypes !== self::UNDEFINED) {
-            $instance->workTypes = $workTypes;
+            $instance->__set('workTypes', $workTypes);
         }
         if ($year !== self::UNDEFINED) {
-            $instance->year = $year;
+            $instance->__set('year', $year);
         }
         if ($dk5 !== self::UNDEFINED) {
-            $instance->dk5 = $dk5;
+            $instance->__set('dk5', $dk5);
         }
         if ($gamePlatform !== self::UNDEFINED) {
-            $instance->gamePlatform = $gamePlatform;
+            $instance->__set('gamePlatform', $gamePlatform);
         }
         if ($branchId !== self::UNDEFINED) {
-            $instance->branchId = $branchId;
+            $instance->__set('branchId', $branchId);
         }
         if ($department !== self::UNDEFINED) {
-            $instance->department = $department;
+            $instance->__set('department', $department);
         }
         if ($location !== self::UNDEFINED) {
-            $instance->location = $location;
+            $instance->__set('location', $location);
         }
         if ($sublocation !== self::UNDEFINED) {
-            $instance->sublocation = $sublocation;
+            $instance->__set('sublocation', $sublocation);
         }
         if ($status !== self::UNDEFINED) {
-            $instance->status = $status;
+            $instance->__set('status', $status);
         }
         if ($canAlwaysBeLoaned !== self::UNDEFINED) {
-            $instance->canAlwaysBeLoaned = $canAlwaysBeLoaned;
+            $instance->__set('canAlwaysBeLoaned', $canAlwaysBeLoaned);
         }
         if ($age !== self::UNDEFINED) {
-            $instance->age = $age;
+            $instance->__set('age', $age);
         }
         if ($ageRange !== self::UNDEFINED) {
-            $instance->ageRange = $ageRange;
+            $instance->__set('ageRange', $ageRange);
         }
         if ($lixRange !== self::UNDEFINED) {
-            $instance->lixRange = $lixRange;
+            $instance->__set('lixRange', $lixRange);
         }
         if ($letRange !== self::UNDEFINED) {
-            $instance->letRange = $letRange;
+            $instance->__set('letRange', $letRange);
         }
         if ($generalAudience !== self::UNDEFINED) {
-            $instance->generalAudience = $generalAudience;
+            $instance->__set('generalAudience', $generalAudience);
         }
         if ($libraryRecommendation !== self::UNDEFINED) {
-            $instance->libraryRecommendation = $libraryRecommendation;
+            $instance->__set('libraryRecommendation', $libraryRecommendation);
         }
 
         return $instance;

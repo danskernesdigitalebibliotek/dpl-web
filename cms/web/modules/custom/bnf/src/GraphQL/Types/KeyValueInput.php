@@ -19,10 +19,10 @@ class KeyValueInput extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($key !== self::UNDEFINED) {
-            $instance->key = $key;
+            $instance->__set('key', $key);
         }
         if ($value !== self::UNDEFINED) {
-            $instance->value = $value;
+            $instance->__set('value', $value);
         }
 
         return $instance;
