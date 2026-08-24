@@ -153,7 +153,7 @@ export const biblioMetadataFactory = Factory.define<GetMetadataApiResponse>(
  * card number. */
 export const biblioSupportIdFactory = Factory.define<GetSupportIdApiResponse>(
   () => ({
-    support_id: "BIB-710100-4471"
+    support_id: "BIB-000000-0001"
   })
 );
 
@@ -196,7 +196,9 @@ export const biblioLoanQuotasFactory = Factory.define<GetLoanQuotasApiResponse>(
 /** `GET /v1/loans/can-loan`. The material is available by default. */
 export const biblioCanLoanFactory = Factory.define<CanLoanApiResponse>(() => ({
   status: CanLoanResponseType.loanable,
-  loan_provider: LoanProvider.selection,
+  // An ordinary paid loan: the default material costs quota. Blue titles
+  // override with the quota-free "selection" licence.
+  loan_provider: LoanProvider.click,
   active_loan_provider: true,
   org_id: BIBLIO_ORG_ID
 }));

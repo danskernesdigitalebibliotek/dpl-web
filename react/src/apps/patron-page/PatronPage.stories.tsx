@@ -3,6 +3,9 @@ import PatronPage from "./PatronPage.entry";
 import serviceUrlArgs, {
   argTypes as serviceUrlArgTypes
 } from "../../core/storybook/serviceUrlArgs";
+import biblioAdapterArgs, {
+  argTypes as biblioAdapterArgTypes
+} from "../../core/storybook/biblioAdapterArgs";
 import pincodeArgs, {
   argTypes as pincodeArgTypes
 } from "../../core/storybook/pincodeArgs";
@@ -23,6 +26,7 @@ const meta: Meta<typeof PatronPage> = {
   // @ts-ignore: can't figure out how to type globalConfigArgTypes, serviceUrlArgTypes and globalTextArgTypes
   argTypes: {
     ...serviceUrlArgTypes,
+    ...biblioAdapterArgTypes,
     ...pincodeArgTypes,
     ...blockedArgTypes,
     ...globalTextArgTypes,
@@ -196,6 +200,7 @@ const meta: Meta<typeof PatronPage> = {
   },
   args: {
     ...serviceUrlArgs,
+    ...biblioAdapterArgs,
     ...pincodeArgs,
     ...blockedArgs,
     ...globalTextArgs,
@@ -281,3 +286,11 @@ export default meta;
 type Story = StoryObj<typeof PatronPage>;
 
 export const PatronPageEntry: Story = {};
+
+// The Biblio adapter feature flag turned on. The support identifier and the
+// loan quotas then come from the adapter instead of Publizon.
+export const PatronPageWithBiblioAdapter: Story = {
+  args: {
+    useBiblioAdapterConfig: "1"
+  }
+};

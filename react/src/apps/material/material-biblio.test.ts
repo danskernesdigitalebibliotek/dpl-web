@@ -4,7 +4,10 @@ import {
   materialStory
 } from "../../../cypress/page-objects/material/MaterialPage";
 import { onlineLoanModalSelector } from "../../../cypress/page-objects/material/components/modal-online-loan";
-import { CanLoanResponseType } from "@danskernesdigitalebibliotek/dpl-service-layer/biblio/contract";
+import {
+  CanLoanResponseType,
+  LoanProvider
+} from "@danskernesdigitalebibliotek/dpl-service-layer/biblio/contract";
 import {
   BIBLIO_ORG_ID,
   biblioLoanFactory,
@@ -139,6 +142,22 @@ describe("Material page - borrowing through the Biblio adapter", () => {
       .elements.quotaText()
       .should("contain", "3")
       .and("contain", "10");
+  });
+
+  it("Calls a blue title included instead of counting it", () => {
+    // Given: Biblio would lend this material under the "selection" licence -
+    // the one Danish blue titles answer with. Such a loan draws on no quota.
+    givenBiblioCanLoan(CanLoanResponseType.loanable, LoanProvider.selection);
+
+    const material = new MaterialPage(materialStory.withBiblioAdapter, "e-bog");
+    openLoanModal(material);
+
+    // Then: the ordinary "x of y this month" line gives way to the promise
+    // that the material is included.
+    material
+      .onlineLoanModal()
+      .elements.quotaText()
+      .should("contain", "doesn't count towards your loan quota");
   });
 
   it("Creates the loan in Biblio, not in Publizon", () => {

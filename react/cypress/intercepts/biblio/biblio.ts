@@ -1,6 +1,7 @@
 import {
   type GetLoanQuotasApiResponse,
   type LoanDto,
+  type LoanProvider,
   type ReservationDto,
   CanLoanResponseType
 } from "@danskernesdigitalebibliotek/dpl-service-layer/biblio/contract";
@@ -97,11 +98,14 @@ export const givenUserHasBiblioSupportId = (supportId?: string) => {
 
 /** Given: whether Biblio will let the user borrow this material. */
 export const givenBiblioCanLoan = (
-  status: CanLoanResponseType = CanLoanResponseType.loanable
+  status: CanLoanResponseType = CanLoanResponseType.loanable,
+  loanProvider?: LoanProvider
 ) => {
   cy.intercept("GET", "**/v1/loans/can-loan*", {
     statusCode: 200,
-    body: biblioCanLoanFactory.build({ status })
+    body: loanProvider
+      ? biblioCanLoanFactory.build({ status, loan_provider: loanProvider })
+      : biblioCanLoanFactory.build({ status })
   }).as("biblioCanLoan");
 };
 
