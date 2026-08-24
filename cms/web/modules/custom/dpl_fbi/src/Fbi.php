@@ -74,14 +74,13 @@ class Fbi {
 
     $urls = [];
     // Create an URL for each profile.
-    if ($baseUrl) {
+    if (is_string($baseUrl) && $baseUrl !== '') {
       foreach ($this->getProfiles() as $type => $profile) {
         // The default FBI service has its own key with no suffix.
         $service_key = $type === FbiProfileType::Default->value ? 'fbi' : sprintf('fbi-%s', $type);
 
         // Create a service url with the profile embedded.
-        $base_url = preg_replace('/\[profile\]/', $profile, $baseUrl);
-        $urls[$service_key] = $base_url;
+        $urls[$service_key] = str_replace('[profile]', $profile, $baseUrl);
       }
     }
 

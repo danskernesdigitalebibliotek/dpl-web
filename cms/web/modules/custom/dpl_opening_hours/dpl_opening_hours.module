@@ -10,7 +10,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\drupal_typed\DrupalTyped;
-use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\taxonomy\TermInterface;
 
@@ -172,10 +171,6 @@ function dpl_opening_hours_preprocess_page(array &$variables): void {
 function dpl_opening_hours_build_branches_array(array $branches): array {
   $branchesArray = [];
   foreach ($branches as $branch) {
-    if (!($branch instanceof NodeInterface)) {
-      continue;
-    }
-
     $branchesArray[] = [
       'branch_id' => $branch->id(),
       'name' => $branch->getTitle(),

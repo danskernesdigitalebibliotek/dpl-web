@@ -470,7 +470,10 @@ function dpl_react_apps_preprocess_html(array &$variables): void {
  *   The variables for the theme hook.
  */
 function dpl_react_apps_preprocess_dpl_react_app(array &$variables): void {
-  // Add data from other modules.
+  // Add data from other modules. The hook implementations fill in the
+  // subarrays by reference, which PHPStan cannot see, so type the values
+  // as mixed.
+  /** @var array<string, mixed> $data */
   $data = [
     'urls' => [],
     'texts' => [],
@@ -481,9 +484,6 @@ function dpl_react_apps_preprocess_dpl_react_app(array &$variables): void {
     if (!is_array($values)) {
       continue;
     }
-    // PHPStan thinks values will always be empty - probably because it does
-    // not know what is going on in invokeAll(). Ignore this.
-    // @phpstan-ignore-next-line empty.expr
     foreach ($values as $key => $value) {
       $variables['attributes'] += [
         implode('-', ['data', $key, rtrim($scope, 's')]) => $value,
