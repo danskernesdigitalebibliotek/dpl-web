@@ -12,7 +12,7 @@ use Drupal\bnf\Plugin\bnf_mapper\ParagraphContentSliderMapper;
 /**
  * Testing the content_slider mapper.
  */
-class ParagraphContentSliderMapperTest extends BnfMapperImportReferencePluginBaseTest {
+class ParagraphContentSliderMapperTest extends BnfMapperImportReferenceTestBase {
 
   /**
    * {@inheritDoc}

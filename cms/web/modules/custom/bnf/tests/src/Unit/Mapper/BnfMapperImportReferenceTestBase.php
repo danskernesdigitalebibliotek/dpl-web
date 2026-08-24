@@ -18,9 +18,9 @@ use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 
 /**
- * Test BnfMapperImportReferencePluginBase.
+ * Base class for testing mappers that import referenced content.
  */
-abstract class BnfMapperImportReferencePluginBaseTest extends UnitTestCase {
+abstract class BnfMapperImportReferenceTestBase extends UnitTestCase {
 
   /**
    * The subject under test.
