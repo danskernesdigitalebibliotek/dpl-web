@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-14 14:10+0200\n"
-"PO-Revision-Date: 2026-08-14 14:10+0200\n"
+"POT-Creation-Date: 2026-08-24 13:36+0200\n"
+"PO-Revision-Date: 2026-08-24 13:36+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-14 14:10+0200\n"
-"PO-Revision-Date: 2026-08-14 14:10+0200\n"
+"POT-Creation-Date: 2026-08-24 13:36+0200\n"
+"PO-Revision-Date: 2026-08-24 13:36+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -393,6 +393,10 @@ msgid "- All -"
 msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
+msgid "- All -"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
 msgstr ""
 
@@ -2471,6 +2475,9 @@ msgstr ""
 msgid "Access for administering of the url proxy configuration."
 msgstr ""
 
+msgid "Access the Prometheus metrics endpoint"
+msgstr ""
+
 msgid "Access the eventinstance overview page"
 msgstr ""
 
@@ -4388,6 +4395,10 @@ msgctxt "views.view.user_admin_people:display:default:display_options:exposed_fo
 msgid "Asc"
 msgstr ""
 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
 msgctxt "views.view.webform_submissions:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
 msgstr ""
@@ -5192,7 +5203,7 @@ msgid "Borrow before @date"
 msgstr "Lån før @date"
 
 msgid "Both"
-msgstr ""
+msgstr "Begge"
 
 msgid "Bounce slide"
 msgstr "Springer"
@@ -7620,6 +7631,9 @@ msgstr "DPL Mail"
 msgid "DPL Media"
 msgstr ""
 
+msgid "DPL Metrics"
+msgstr ""
+
 msgid "DPL Opening Hours"
 msgstr "Åbningstider"
 
@@ -7786,6 +7800,10 @@ msgstr "Database kollationsstatus"
 
 msgid "Date"
 msgstr "Dato"
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
+msgid "Date"
+msgstr ""
 
 msgid "Date (often a range) of validity of a resource."
 msgstr "Dato (ofte et interval) for en ressources gyldighed."
@@ -8091,6 +8109,10 @@ msgid "Default"
 msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_title"
 msgid "Default"
 msgstr ""
 
@@ -8631,6 +8653,10 @@ msgid "Desc"
 msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
 msgstr ""
 
@@ -10992,6 +11018,9 @@ msgstr ""
 msgid "Exposed sort BEF settings"
 msgstr ""
 
+msgid "Exposes application metrics for scraping by Prometheus."
+msgstr ""
+
 msgid "Extension"
 msgstr "Udvidelse"
 
@@ -11498,6 +11527,10 @@ msgid "Filter"
 msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:submit_button"
+msgid "Filter"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
 msgstr ""
 
@@ -12871,6 +12904,10 @@ msgctxt "advanced search 2"
 msgid "ISBN"
 msgstr "ISBN"
 
+msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
+msgid "Icon"
+msgstr ""
+
 msgid "Icon: 16px x 16px"
 msgstr "Ikon: 16px x 16px"
 
@@ -14016,6 +14053,10 @@ msgid "Items per page"
 msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:expose:items_per_page_label"
+msgid "Items per page"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
 msgstr ""
 
@@ -15619,6 +15660,10 @@ msgstr "Menu-links"
 msgid "Menus"
 msgstr "Menuer"
 
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
+msgid "Message"
+msgstr ""
+
 msgid "Meta"
 msgstr "Meta"
 
@@ -16367,6 +16412,14 @@ msgctxt "Work Page"
 msgid "No location for find on shelf specified"
 msgstr "Ingen lokation for \"find på hylden\" tilgængelig"
 
+msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
+msgid "No log messages available."
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:empty:area:content"
+msgid "No log messages available."
+msgstr ""
+
 msgid "No matcher selected."
 msgstr "Ingen matcher valgt."
 
@@ -16889,6 +16942,10 @@ msgctxt "views.view.user_admin_people:display:default:display_options:pager:opti
 msgid "Offset"
 msgstr ""
 
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
+msgid "Offset"
+msgstr ""
+
 msgctxt "views.view.webform_submissions:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
 msgstr ""
@@ -17392,6 +17449,10 @@ msgctxt "views.view.user_admin_people:display:default:display_options:fields:ope
 msgid "Operations"
 msgstr ""
 
+msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
+msgid "Operations"
+msgstr ""
+
 msgctxt "views.view.webform_submissions:display:default:display_options:fields:view_webform_submission:label"
 msgid "Operations"
 msgstr ""
@@ -17694,6 +17755,10 @@ msgid "Page"
 msgstr ""
 
 msgctxt "views.view.user_admin_people:display:page_1:display_title"
+msgid "Page"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:page:display_title"
 msgid "Page"
 msgstr ""
 
@@ -19306,6 +19371,14 @@ msgstr "Modtag sms om dine lån, reserveringer osv."
 msgid "Received request to import content with UUID @uuid from @url"
 msgstr ""
 
+msgctxt "views.view.watchdog:description"
+msgid "Recent log messages"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:title"
+msgid "Recent log messages"
+msgstr ""
+
 msgctxt "paragraphs.paragraphs_type.recommendation:label"
 msgid "Recommendation"
 msgstr ""
@@ -20100,6 +20173,10 @@ msgid "Reset"
 msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
 msgid "Reset"
 msgstr ""
 
@@ -21453,6 +21530,14 @@ msgstr ""
 msgid "Settings removed from @bundle"
 msgstr "Indstillinger fjernet fra @bundle"
 
+msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
+msgid "Severity"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
+msgid "Severity"
+msgstr ""
+
 msgctxt "Library Agency Configuration"
 msgid "Share buttons"
 msgstr "Deleknapper"
@@ -22067,6 +22152,10 @@ msgid "Sort by"
 msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:exposed_sorts_label"
 msgid "Sort by"
 msgstr ""
 
@@ -23994,6 +24083,11 @@ msgstr ""
 
 msgid "The end date of the event instance."
 msgstr "Slutdatoen for arrangementsinstansen."
+
+msgid ""
+"The endpoint reveals traffic patterns and installed code. Grant only to "
+"monitoring."
+msgstr ""
 
 msgid "The entities routes metatags must be added by fields."
 msgstr "The entities routes metatags must be added by fields."
@@ -26374,11 +26468,11 @@ msgstr ""
 "Tilføj/rediger serie."
 
 msgid "Threshold"
-msgstr "Varsel"
+msgstr "Tærskelværdi"
 
 msgctxt "dpl_instant_loan"
 msgid "Threshold"
-msgstr "Varsel"
+msgstr "Tærskelværdi"
 
 msgid "Thumbnail"
 msgstr "Thumbnail"
@@ -27114,6 +27208,14 @@ msgctxt "views.view.scheduled_jobs:display:default:display_options:fields:type:l
 msgid "Type"
 msgstr ""
 
+msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
+msgid "Type"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:filters:type:expose:label"
+msgid "Type"
+msgstr ""
+
 msgid "Type custom URL here"
 msgstr "Indtast brugerdefineret URL here"
 
@@ -27211,6 +27313,12 @@ msgstr ""
 msgctxt "DPL Config Import"
 msgid "Unable to parse YAML file: %reason"
 msgstr "Ude af stand til at parse YAML fil: %reason"
+
+msgid "Unable to record metric: @message"
+msgstr ""
+
+msgid "Unable to render metrics: @message"
+msgstr ""
 
 msgid "Unable to retrieve agency branches: %message"
 msgstr ""
@@ -27978,6 +28086,10 @@ msgctxt "views.view.scheduler_scheduled_content:display:user_page:display_title"
 msgid "User"
 msgstr ""
 
+msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
+msgid "User"
+msgstr ""
+
 msgid "User @name (@id) has been updated with the following values: @values"
 msgstr ""
 
@@ -28365,6 +28477,10 @@ msgstr ""
 msgid "Vocabulary"
 msgstr "Ordforråd"
 
+msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
+msgid "WID"
+msgstr ""
+
 msgid "Waitlist"
 msgstr "Venteliste"
 
@@ -28390,6 +28506,10 @@ msgid ""
 msgstr ""
 "Advarsel: Deaktivering af det globale standard-metatag vil forhindre, at "
 "metatags bliver brugt."
+
+msgctxt "views.view.watchdog:label"
+msgid "Watchdog"
+msgstr ""
 
 msgctxt "Reservation list"
 msgid "We have 1 copy of the material in stock"
@@ -29783,6 +29903,10 @@ msgctxt "views.view.files:display:default:display_options:fields:count:alter:pat
 msgid "admin/content/files/usage/{{ fid }}"
 msgstr ""
 
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
+msgid "admin/reports/dblog/event/{{ wid }}"
+msgstr ""
+
 msgid "administer Varnish image purge"
 msgstr "administrer Varnish-billedrensning"
 
@@ -30722,6 +30846,10 @@ msgstr ""
 
 msgctxt "views.view.importable_content:display:default:display_options:fields:field_subtitle:alter:text"
 msgid "{{ field_subtitle__value }}"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
+msgid "{{ message }}"
 msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:status:alter:text"

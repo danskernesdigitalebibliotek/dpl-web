@@ -18,7 +18,7 @@ describe("Advanced Search V2", () => {
 
     // These intercepts are not relevant to the tests but prevent 401 errors
     // from external services that would otherwise break the test environment.
-    cy.intercept("POST", "**/graphql", (req) => {
+    cy.intercept("POST", "**/graphql*", (req) => {
       req.reply({ statusCode: 200, body: { data: {} } });
     });
     cy.intercept(

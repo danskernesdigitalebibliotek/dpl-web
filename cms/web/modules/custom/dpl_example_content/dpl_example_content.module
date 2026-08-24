@@ -10,7 +10,7 @@ use Drupal\taxonomy\TermInterface;
 use Safe\DateTimeImmutable;
 
 /**
- * Implementation of hook_modules_installed.
+ * Implements hook_modules_installed().
  *
  * @param string[] $modules
  *   The names of the modules that were installed.
