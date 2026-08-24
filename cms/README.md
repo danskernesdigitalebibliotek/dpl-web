@@ -1,4 +1,4 @@
-# The library CMS, powered by Drupal (formerly 'dpl-cms')
+# The library CMS, powered by Drupal (formerly 'dpl-cms')!
 
 This is the subproject for the core Drupal CMS which is used by the Danish
 Public Libraries.
