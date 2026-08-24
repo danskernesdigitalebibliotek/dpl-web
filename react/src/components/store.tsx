@@ -45,12 +45,19 @@ interface StoreProps {
 }
 
 function Store({ children }: StoreProps) {
+  // Resolved once: a new object on every render is a new context value, which
+  // re-renders everything below it. The resolvers inside read the base urls
+  // and tokens when a request is made, so nothing is captured too early.
+  const serviceLayerConfig = React.useMemo(() => getServiceLayerConfig(), []);
+
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <ServiceLayerProvider config={getServiceLayerConfig()}>
-          <PersistGate persistor={persistor}>{children}</PersistGate>
-        </ServiceLayerProvider>
+        <PersistGate persistor={persistor}>
+          <ServiceLayerProvider config={serviceLayerConfig}>
+            {children}
+          </ServiceLayerProvider>
+        </PersistGate>
       </QueryClientProvider>
     </Provider>
   );
