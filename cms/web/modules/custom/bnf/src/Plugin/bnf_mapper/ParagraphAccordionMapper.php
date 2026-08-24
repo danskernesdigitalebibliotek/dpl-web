@@ -26,7 +26,7 @@ class ParagraphAccordionMapper extends BnfMapperParagraphPluginBase {
     }
 
     /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
-    $paragraph = $this->paragraphStorage->create([
+    $paragraph = $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'accordion',
     ]);
 
