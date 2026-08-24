@@ -3,6 +3,7 @@ import { renderHook } from "@testing-library/react";
 import useBiblioAvailability from "../../core/biblio/useBiblioAvailability";
 import { useBiblioCanLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import { isAnonymous } from "../../core/utils/helpers/user";
 
 // Only the query is stubbed. isBiblioMaterialAvailable stays real - it is the
 // rule this hook is here to apply, and a copy of it in the test would pass
@@ -19,8 +20,11 @@ vi.mock(
 vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));
+vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
+
 const mockedCanLoan = vi.mocked(useBiblioCanLoan);
 const mockedFlag = vi.mocked(useBiblioAdapter);
+const mockedIsAnonymous = vi.mocked(isAnonymous);
 
 const ISBN = "9788727319346";
 
@@ -42,6 +46,7 @@ describe("useBiblioAvailability", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockedFlag.mockReturnValue(true);
+    mockedIsAnonymous.mockReturnValue(false);
     mockedCanLoan.mockReturnValue({
       data: undefined,
       isLoading: false

@@ -92,6 +92,25 @@ describe("Material page - online availability through the Biblio adapter", () =>
   // "Keeps Publizon from answering at all once Biblio is the provider" covers
   // the availability hook itself, where the two can be told apart.
 
+  // TEMPORARY, with the gate it covers: today a visitor who is not signed in
+  // gets Publizon's answer, because Biblio has no way to give one.
+  it("Leaves Biblio alone when nobody is signed in", () => {
+    // Given: Biblio would say otherwise if it were asked
+    givenBiblioCanLoan(CanLoanResponseType.reservable);
+    cy.window().then((win) => win.sessionStorage.removeItem(TOKEN_USER_KEY));
+
+    // When: the flag is on, but there is no user to ask on behalf of
+    const material = new MaterialPage(materialStory.withBiblioAdapter);
+    material.visit([]);
+
+    // Then: Publizon answers instead, and the page survives - asking Biblio
+    // would be a 403 that takes the whole material page down.
+    cy.wait("@publizonLoanStatus");
+    ebookLabel(material).should("contain", "Available");
+
+    cy.get("@biblioCanLoan.all").should("have.length", 0);
+  });
+
   it("Leaves Biblio alone when the flag is off", () => {
     // Biblio would say otherwise if it were asked
     givenBiblioCanLoan(CanLoanResponseType.reservable);
