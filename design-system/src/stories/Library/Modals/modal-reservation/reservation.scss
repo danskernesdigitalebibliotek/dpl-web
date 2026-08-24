@@ -99,9 +99,14 @@
   }
 }
 
+.reservation-success__text {
+  @include typography($typo__body-small);
+  line-height: 24px;
+}
+
 .reservation-modal__recommendations {
   .reservation-modal__recommendations-title {
-    @include typography($type__h3);
+    @include typography($typo__h4);
     margin-bottom: 12px;
   }
 };
