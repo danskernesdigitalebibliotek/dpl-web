@@ -39,6 +39,9 @@ import playerModalArgs, {
 import openOrderArgs, {
   argTypes as openOrderArgTypes
 } from "../../core/storybook/openOrderArgs";
+import materialUnavailableNoticeArgs, {
+  argTypes as materialUnavailableNoticeArgTypes
+} from "../../components/material/MaterialUnavailableNotice/MaterialUnavailableNoticeArgs";
 
 const meta: Meta<typeof MaterialEntry> = {
   title: "Apps / Material",
@@ -59,6 +62,7 @@ const meta: Meta<typeof MaterialEntry> = {
     ...materialContentsArgTypes,
     ...playerModalArgTypes,
     ...openOrderArgTypes,
+    ...materialUnavailableNoticeArgTypes,
     searchUrl: {
       description: "Path to the search result page",
       control: { type: "text" }
@@ -824,6 +828,7 @@ const meta: Meta<typeof MaterialEntry> = {
     ...materialContentsArgs,
     ...playerModalArgs,
     ...openOrderArgs,
+    ...materialUnavailableNoticeArgs,
     searchUrl: "/search",
     materialUrl: "/work/:workid",
     advancedSearchUrl: "/advancedsearch",

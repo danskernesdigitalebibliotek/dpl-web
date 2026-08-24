@@ -571,6 +571,13 @@ class DplReactAppsController extends ControllerBase {
       'material-is-available-in-another-edition-text' => $this->t('Skip the queue - The material is available in another edition - @title @authorAndYear - reservations: @reservations', [], ['context' => 'Work Page']),
       'material-is-included-text' => $this->t('Material is included', [], ['context' => 'Work Page']),
       'material-is-loaned-out-text' => $this->t('Material is loaned out', [], ['context' => 'Work Page']),
+      // Shown instead of the action buttons when a material cannot be borrowed,
+      // reserved or opened through the website.
+      'material-unavailable-title-text' => $this->t('The material is not available through the website', [], ['context' => 'Work Page']),
+      'material-unavailable-description-text' => $this->t('Visit the library and get help from a librarian or check whether the material is available at', [], ['context' => 'Work Page']),
+      'material-unavailable-compact-description-text' => $this->t('Contact the library for access', [], ['context' => 'Work Page']),
+      'material-unavailable-link-text' => $this->t('Bibliotek.dk', [], ['context' => 'Work Page']),
+      'material-unavailable-url' => 'https://bibliotek.dk',
       'material-reservation-info-text' => [
         'type' => 'plural',
         'text' => [
