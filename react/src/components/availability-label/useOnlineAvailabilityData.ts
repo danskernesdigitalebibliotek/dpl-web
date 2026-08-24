@@ -6,6 +6,7 @@ import {
 import { FaustId } from "../../core/utils/types/ids";
 import { publizonProductStatuses } from "./types";
 import { AccessTypes } from "../../core/utils/types/entities";
+import useBiblioAvailability from "../../core/biblio/useBiblioAvailability";
 
 const useOnlineAvailabilityData = ({
   enabled,
@@ -20,6 +21,20 @@ const useOnlineAvailabilityData = ({
 }) => {
   const [isAvailable, setIsAvailable] = useState<null | boolean>(null);
 
+  // An online material outside the e-book service - a PressReader newspaper,
+  // whose only identifier is a URI - is in neither Publizon nor Biblio, so
+  // asking about it can only produce a 404.
+  const isEreolMaterial = access.some((acc) => acc === "Ereol");
+
+  // Gates on the feature flag itself, so no check is needed here.
+  const { isAnswering: isBiblioAnswering, isAvailable: isAvailableBiblio } =
+    useBiblioAvailability({
+      enabled: enabled && isEreolMaterial && isAvailable === null,
+      isbn
+    });
+
+  // Publizon answers for everything Biblio does not.
+
   // Find out if the material is cost free.
   const { isLoading: isLoadingIdentifier, data: dataIdentifier } =
     // We never want to pass an empty string to the API
@@ -28,7 +43,12 @@ const useOnlineAvailabilityData = ({
       query: {
         // Publizon / useGetV1ProductsIdentifier is responsible for online
         // materials. It requires an ISBN to do lookups.
-        enabled: enabled && isAvailable === null && !!isbn
+        enabled:
+          enabled &&
+          isEreolMaterial &&
+          isAvailable === null &&
+          !!isbn &&
+          !isBiblioAnswering
       }
     });
 
@@ -41,20 +61,31 @@ const useOnlineAvailabilityData = ({
       query: {
         enabled:
           enabled &&
+          isEreolMaterial &&
           isAvailable === null &&
           !!isbn &&
+          !isBiblioAnswering &&
           // If the material is free (I think it is called blue material btw.)
           // we should not load the loan status because then we know that it is available.
           // So If the material is not free and we know it is an "Publizon" material we should load the loan status.
-          dataIdentifier?.product?.costFree === false &&
-          access.some((acc) => acc === "Ereol")
+          dataIdentifier?.product?.costFree === false
       }
     });
 
   useEffect(() => {
+    if (!enabled || isAvailable !== null) {
+      return;
+    }
+
+    // Biblio answers for the materials it provides.
+    if (isAvailableBiblio !== null) {
+      setIsAvailable(isAvailableBiblio);
+      return;
+    }
+
+    // Publizon must not answer at all while Biblio is the provider.
     if (
-      !enabled ||
-      isAvailable !== null ||
+      isBiblioAnswering ||
       isLoadingIdentifier !== false ||
       isLoadingPublizonData !== false
     ) {
@@ -73,7 +104,9 @@ const useOnlineAvailabilityData = ({
     faustIds,
     enabled,
     dataPublizon,
-    isLoadingPublizonData
+    isLoadingPublizonData,
+    isAvailableBiblio,
+    isBiblioAnswering
   ]);
 
   // If hook is not enabled make it clear that the loading and availability status is unknown.

@@ -18,6 +18,7 @@ import {
   useGetV1ProductsIdentifier
 } from "../../core/publizon/publizon";
 import useOnlineAvailabilityData from "../../components/availability-label/useOnlineAvailabilityData";
+import useBiblioAvailability from "../../core/biblio/useBiblioAvailability";
 
 describe("usePhysicalAvailability tests", () => {
   beforeAll(() => {
@@ -249,6 +250,12 @@ describe("useOnlineAvailabilityData tests", () => {
       };
     });
 
+    // The Biblio adapter is covered separately below. Mocking it keeps these
+    // cases about the Publizon path and avoids needing a QueryClient.
+    vi.mock("../../core/biblio/useBiblioAvailability", () => ({
+      default: vi.fn()
+    }));
+
     // Make sure that the config hook returns an array with an empty string.
     // In that way we do not have any blacklisted branches (they are not needed for the test).
     // Typescript does not understand our mocked hook.
@@ -260,6 +267,20 @@ describe("useOnlineAvailabilityData tests", () => {
 
   beforeEach(() => {
     vi.useFakeTimers();
+    // Without this, a "was it called with X" assertion can match a call from
+    // an earlier test in this block.
+    vi.clearAllMocks();
+
+    // Default to Biblio not being the lending provider, so Publizon
+    // answers - a library that has not enabled the feature flag.
+    // Typescript does not understand our mocked hook.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useBiblioAvailability.mockReturnValue({
+      isAnswering: false,
+      isAvailable: null,
+      isLoading: false
+    });
   });
 
   afterEach(() => {
@@ -445,6 +466,123 @@ describe("useOnlineAvailabilityData tests", () => {
         isLoading: null,
         isAvailable: null
       });
+    });
+  });
+
+  it("Lets Biblio dictate the availability once the library has enabled it", () => {
+    // Publizon knows nothing about a material that has moved to Biblio.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useGetV1ProductsIdentifier.mockReturnValue({
+      isLoading: false,
+      data: undefined
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useGetV1LoanstatusIdentifier.mockReturnValue({
+      isLoading: false,
+      data: undefined
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useBiblioAvailability.mockReturnValue({
+      isAnswering: true,
+      isAvailable: false,
+      isLoading: false
+    });
+
+    const { result } = renderHook(() =>
+      useOnlineAvailabilityData({
+        enabled: true,
+        access: ["Ereol"],
+        faustIds: ["138625958"],
+        isbn: "9788794564076"
+      })
+    );
+
+    act(() => {
+      expect(result.current.isAvailable).toBe(false);
+    });
+  });
+
+  it("Asks no provider about an online material outside the e-book service", () => {
+    // A PressReader newspaper is online, but reached through a plain url and
+    // not part of the e-book service - neither Publizon nor Biblio knows it,
+    // so neither should be asked.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useGetV1ProductsIdentifier.mockReturnValue({
+      isLoading: false,
+      data: undefined
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useGetV1LoanstatusIdentifier.mockReturnValue({
+      isLoading: false,
+      data: undefined
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useBiblioAvailability.mockReturnValue({
+      isAnswering: false,
+      isAvailable: null,
+      isLoading: false
+    });
+
+    renderHook(() =>
+      useOnlineAvailabilityData({
+        enabled: true,
+        access: ["AccessUrl"],
+        faustIds: ["138625958"],
+        isbn: "9788794564076"
+      })
+    );
+
+    expect(useBiblioAvailability).toHaveBeenCalledWith(
+      expect.objectContaining({ enabled: false })
+    );
+    expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ query: { enabled: false } })
+    );
+  });
+
+  it("Keeps Publizon from answering at all once Biblio is the provider", () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useGetV1ProductsIdentifier.mockReturnValue({
+      isLoading: false,
+      data: undefined
+    });
+    // Publizon would report the material as unavailable (status 5), but the
+    // library has switched provider, so its answer no longer applies.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useGetV1LoanstatusIdentifier.mockReturnValue({
+      isLoading: false,
+      data: { loanStatus: 5 }
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    useBiblioAvailability.mockReturnValue({
+      isAnswering: true,
+      isAvailable: null,
+      isLoading: true
+    });
+
+    const { result } = renderHook(() =>
+      useOnlineAvailabilityData({
+        enabled: true,
+        access: ["Ereol"],
+        faustIds: ["138625958"],
+        isbn: "9788794564076"
+      })
+    );
+
+    act(() => {
+      // Online materials default to available while the answer is unknown.
+      // The loan attempt then fails visibly rather than going to Publizon.
+      expect(result.current.isAvailable).toBe(true);
     });
   });
 });
