@@ -288,13 +288,16 @@
             "drupal/multivalue_form_element": {
                 "3199172: multivalue_form_element-3199172": "patches/vendor/nested_elements-3199172-14.patch"
             },
+            "drupal/state_log": {
+                "3616051: StateLog is missing StateInterface::getValuesSetDuringRequest(), fatal on Drupal 11.3 and up (MR !6)": "patches/3616051-state_log-getValuesSetDuringRequest.patch"
+            },
             "drupal/views_infinite_scroll": {
                 "Add item count and url page parameter": "patches/add-item-count-views_infinite_scroll.patch",
                 "Show the loading indicator inline at the pager instead of a floating full-screen overlay": "patches/infinite-scroll-inline-loading-indicator.patch"
             },
             "drupal/core": {
-                "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "patches/vendor/core-61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
-                "3035578: Add details for AJAX response errors": "patches/vendor/3035578-26.patch",
+                "3130197: Faulty toolbar subtree hash breaks asynchronous loading of admin menu content (DPL workaround)": "patches/3130197-core-d11-reroll.patch",
+                "3035578: Add details for AJAX response errors": "patches/vendor/3035578-mr14700.patch",
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
                 "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch"
             },
@@ -311,19 +314,25 @@
                 "3396393: Entity with a dynamic entity reference field can't be cloned using entity_clone": "patches/vendor/3396393-2.patch"
             },
             "drupal/entity_clone": {
-                "2708731: Allow redirect to edit form after cloning": "patches/vendor/improve-workflow-of-cloned-entity-2708731-40_patch.patch"
+                "2708731: Allow redirect to edit form after cloning": "patches/2708731-entity_clone-2.2.0-beta1-reroll.patch"
             },
             "drupal/entity_reference_revisions": {
-                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "patches/vendor/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
+                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "patches/3039442-entity_reference_revisions-1.14-reroll.patch"
             },
             "drupal/facets": {
                 "DDFSAL-279: Fix infinite scroll with facet filters": "patches/facets-infinite-scroll-fix-custom.patch"
+            },
+            "drupal/field_inheritance": {
+                "3616050: FieldStorageDefinitionSubscriber fatals for entity types that have no base fields (MR !32)": "patches/3616050-field_inheritance-skip-non-fieldable.patch"
             },
             "drupal/job_scheduler": {
                 "3426366: Callables as worker callbacks": "patches/vendor/job_scheduler-da200da280c4c95e6e91f2416581ad3797ab1428.patch"
             },
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "patches/vendor/jsonlog-change-stdout-to-stderr-3251587-3.patch"
+            },
+            "drupal/next": {
+                "3616052: next_update_9107() installs a base field on a config entity type (MR !9)": "patches/3616052-next-9107-no-base-field-on-config-entity.patch"
             },
             "drupal/openapi": {
                 "3480050: Update oauth2 security definitions to match openapi v2 specification": "patches/vendor/openapi-add-oauth2-accesscode-flow-3480050-3.patch"
