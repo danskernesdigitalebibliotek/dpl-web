@@ -39,8 +39,8 @@ importers:
         specifier: ^15.20.1
         version: 15.20.1
       cypress-if:
-        specifier: ^1.16.1
-        version: 1.16.1
+        specifier: ^1.17.1
+        version: 1.17.1
       cypress-plugin-api:
         specifier: ^2.12.1
         version: 2.12.1(cypress@15.20.1)(typescript@6.0.3)
@@ -967,8 +967,8 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
-  cypress-if@1.16.1:
-    resolution: {integrity: sha512-9XneVlzvAqZ+GpWhBTgmVr1RUCGfNaPUotNZ8ghV7jzY7lEvAeqq4DkghBEdducYbBzN2WTgoFldzw+e3CEabg==}
+  cypress-if@1.17.1:
+    resolution: {integrity: sha512-u3fJK3+ebsTw3c9kftTXA/oPSUHj8gRM67v/lkGR9Ogne7HyBGlRv/qCrO6bQ/p1RyKhgh+Eri6fCcTleSqkNQ==}
 
   cypress-plugin-api@2.12.1:
     resolution: {integrity: sha512-F7XW0QB4HM613bduffy3jzVPgSK/PWVCxWmzl3NDjPVb8CJ5n0PIrKxZcaLfKamP5qgzMf4lLPY/qrhtqtqIwQ==}
@@ -4596,7 +4596,7 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  cypress-if@1.16.1:
+  cypress-if@1.17.1:
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
