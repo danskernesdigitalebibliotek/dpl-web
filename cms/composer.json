@@ -119,7 +119,7 @@
         "drupal/paragraphs_ee": "^10",
         "drupal/password_policy": "^4.0",
         "drupal/pathauto": "^1.13",
-        "drupal/potx": "^2.0@alpha",
+        "drupal/potx": "^2",
         "drupal/purge": "^3.6",
         "drupal/purge_queues": "^2.1",
         "drupal/queue_ui": "^3.2",
