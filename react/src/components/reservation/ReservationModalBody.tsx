@@ -430,4 +430,43 @@ export const ReservationModalBody = ({
   );
 };
 
+const Recommendations = (props: { work: Work }) => {
+  const pid = getWorkPid(props.work);
+
+  const seriesMembers = props.work.series.at(0)?.members ?? [];
+
+  // TODO: Slice this
+  const seriesIndex = seriesMembers.findIndex((member) => {
+    return member.work.workId === props.work.workId;
+  });
+
+  const nextWorkInSeries =
+    seriesIndex === -1 ? undefined : seriesMembers.at(seriesIndex + 1);
+
+  const { data: recommendationData } = useWorkRecommendationsQuery(
+    {
+      pid,
+      limit: 4
+    },
+    { enabled: !!pid }
+  );
+
+  const recommendationWorkIds =
+    recommendationData?.recommend.result.map((result) => {
+      return result.work.workId;
+    }) ?? [];
+
+  const workIds = nextWorkInSeries
+    ? [nextWorkInSeries.work.workId, ...recommendationWorkIds]
+    : recommendationWorkIds;
+
+  const uniqueWorkIds = Array.from(new Set(workIds));
+
+  const materialProps = uniqueWorkIds.map((workId) => ({
+    wid: workId as WorkId
+  }));
+
+  return <MaterialGrid initialMaximumDisplay={4} materials={materialProps} />;
+};
+
 export default ReservationModalBody;
