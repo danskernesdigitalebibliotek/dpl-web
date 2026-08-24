@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Webmaster library support functionality.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\dpl_webmaster\Hook\AssetInjectorHooks;
+use Drupal\drupal_typed\DrupalTyped;
+
+/*
+ * The following LegacyHooks can be removed when upgrading to Drupal 11.2,
+ * together with the hook class service definitions.
+ */
+
+/**
+ * Implements hook_config_schema_info_alter().
+ *
+ * @param array<string, array<mixed, mixed>> $definitions
+ *   Configuration schema definitions, keyed by schema type name.
+ */
+#[LegacyHook]
+function dpl_webmaster_config_schema_info_alter(array &$definitions): void {
+  DrupalTyped::service(AssetInjectorHooks::class)->configSchemaInfoAlter($definitions);
+}
