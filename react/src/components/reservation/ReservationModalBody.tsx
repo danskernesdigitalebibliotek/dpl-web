@@ -430,4 +430,28 @@ export const ReservationModalBody = ({
   );
 };
 
+const Recommendations = (props: { work: Work }) => {
+  const pid = getWorkPid(props.work);
+
+  const { data: recommendationData } = useWorkRecommendationsQuery(
+    {
+      pid,
+      limit: 4
+    },
+    { enabled: !!pid }
+  );
+
+  const recommendations = recommendationData?.recommend.result ?? [];
+
+  const workIds = recommendations.map((recommendation) => {
+    return recommendation.work.workId;
+  });
+
+  const materialProps = workIds.map((workId) => ({
+    wid: workId as WorkId
+  }));
+
+  return <MaterialGrid initialMaximumDisplay={4} materials={materialProps} />;
+};
+
 export default ReservationModalBody;
