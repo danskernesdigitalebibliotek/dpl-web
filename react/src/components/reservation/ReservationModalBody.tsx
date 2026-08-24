@@ -453,9 +453,9 @@ const Recommendations = (props: { work: Work }) => {
 
   return (
     <div className="reservation-modal__recommendations">
-      <h3 className="reservation-modal__recommendations-title">
+      <h4 className="reservation-modal__recommendations-title">
         Du er måske også interesseret i...
-      </h3>
+      </h4>
       <MaterialGrid initialMaximumDisplay={4} materials={materialProps} />
     </div>
   );

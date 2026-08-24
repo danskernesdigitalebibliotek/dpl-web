@@ -31,29 +31,22 @@ const ReservationSucces: React.FC<ReservationSuccesProps> = ({
       }}
     >
       <section className="reservation-modal reservation-modal--confirm">
-        <div
-          className="reservation-modal--text-section"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
+        <div className="reservation-modal--text-section">
           <h2
             data-cy="reservation-success-title-text"
-            className="text-header-h3 pb-48"
+            className="text-header-h3 pb-32"
           >
             {t("reservationSuccesTitleText")}
           </h2>
           <p
             data-cy="reservation-success-is-reserved-for-you-text"
-            className="text-body-medium-regular pb-24"
+            className="reservation-success__text pb-16"
           >
             {title} {t("reservationSuccesIsReservedForYouText")}
           </p>
           <p
             data-cy="number-in-queue-text"
-            className="text-body-medium-regular pb-24"
+            className="reservation-success__text pb-16"
           >
             <StockAndReservationInfo
               stockCount={holdings}
@@ -62,7 +55,7 @@ const ReservationSucces: React.FC<ReservationSuccesProps> = ({
           </p>
           <p
             data-cy="reservation-success-preferred-pickup-branch-text"
-            className="text-body-medium-regular pb-48"
+            className="reservation-success__text pb-48"
           >
             {t("reservationSuccessPreferredPickupBranchText", {
               placeholders: { "@branch": preferredPickupBranch }
