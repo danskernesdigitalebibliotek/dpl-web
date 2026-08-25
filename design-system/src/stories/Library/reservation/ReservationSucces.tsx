@@ -10,8 +10,8 @@ const ReservationSucces = ({
   showRecommendations = true,
 }: ReservationSuccesProps) => {
   return (
-    <section className="reservation-modal reservation-modal--confirm">
-      <div className="reservation-modal--text-section">
+    <section className="reservation-modal reservation-success">
+      <div className="reservation-success__text-section">
         <h2 className="text-header-h3 pb-32">
           Materialet er hjemme og er nu reserveret til dig!
         </h2>
@@ -36,8 +36,8 @@ const ReservationSucces = ({
         />
       </div>
       {showRecommendations && (
-        <div className="reservation-modal__recommendations">
-          <h4 className="reservation-modal__recommendations-title">
+        <div className="reservation-success__recommendations">
+          <h4 className="reservation-success__recommendations-title">
             Du er måske også interesseret i...
           </h4>
           <MaterialGrid

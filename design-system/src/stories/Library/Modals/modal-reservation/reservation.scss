@@ -3,11 +3,18 @@
   width: 100%;
 }
 
-.reservation-modal--confirm {
+.reservation-error {
+  display: grid;
+  place-content: center;
+}
+
+.reservation-success {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 48px;
+  gap: $s-2xl;
+  width: max-content;
+  margin-inline: auto;
 }
 
 .reservation-modal__confirm-button {
@@ -15,7 +22,7 @@
   margin: 0 auto;
 }
 
-.reservation-modal--text-section {
+.reservation-success__text-section {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,11 +108,12 @@
 
 .reservation-success__text {
   @include typography($typo__body-small);
+  text-align: center;
   line-height: 24px;
 }
 
-.reservation-modal__recommendations {
-  .reservation-modal__recommendations-title {
+.reservation-success__recommendations {
+  .reservation-success__recommendations-title {
     @include typography($typo__h4);
     margin-bottom: 12px;
   }
