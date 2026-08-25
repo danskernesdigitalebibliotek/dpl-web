@@ -11,12 +11,15 @@ export const materialAvailabilityQueryKey = (
   workId?: string,
   recordIds?: string[],
   excludeBranchIds: string[] = []
-) =>
-  workId === undefined
-    ? (["serviceLayer", "materialAvailability"] as const)
-    : recordIds === undefined
-      ? (["serviceLayer", "materialAvailability", workId] as const)
-      : (["serviceLayer", "materialAvailability", workId, recordIds, excludeBranchIds] as const)
+) => {
+  if (workId === undefined) {
+    return ["serviceLayer", "materialAvailability"] as const
+  }
+  if (recordIds === undefined) {
+    return ["serviceLayer", "materialAvailability", workId] as const
+  }
+  return ["serviceLayer", "materialAvailability", workId, recordIds, excludeBranchIds] as const
+}
 
 export const materialAvailabilityQuery = (
   config: ServiceLayerConfig,
