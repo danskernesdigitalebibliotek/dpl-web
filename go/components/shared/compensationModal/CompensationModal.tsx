@@ -47,14 +47,10 @@ const CompensationModal = ({
 
       <ModalInfoSection title="Hvorfor koster det penge?">
         <p>
-          Når man låner en bog, lover man at passe godt på den og aflevere den igen, så andre også
-          kan låne den.
-        </p>
-        <p>
           Hvis en bog bliver væk, går i stykker eller ikke bliver afleveret, skal biblioteket købe
           en ny. Derfor skal man betale erstatning.
         </p>
-        <p>Har du stadig bogen? Så aflevér den på biblioteket og spørg personalet om regningen.</p>
+        <p>Har du stadig bogen? Så aflevér den på biblioteket.</p>
       </ModalInfoSection>
     </div>
 

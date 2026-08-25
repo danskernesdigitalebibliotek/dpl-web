@@ -64,10 +64,7 @@ const OverviewCard = ({
   </div>
 )
 
-// Overview under the physical loan slider: loan counts and reservation
-// counts, each with a "Vis alle" opening the matching modal.
 const PhysicalQuotasSection = ({ loanItems, reservationItems }: PhysicalQuotasSectionProps) => {
-  // "Skal afleveres" counts anything with a pressing due date, overdue included.
   const dueSoonCount = loanItems.filter(
     ({ loan }) => dueStatus(loan.dueDate).state !== "neutral"
   ).length
@@ -87,7 +84,7 @@ const PhysicalQuotasSection = ({ loanItems, reservationItems }: PhysicalQuotasSe
           onViewAll={openLoans}
           viewAllDataCy={cyKeys["view-all-physical-loans-button"]}>
           <StatBox count={loanItems.length} label="Lånte bøger" onClick={openLoans} />
-          <StatBox count={dueSoonCount} label="Skal afleveres" onClick={openLoans} />
+          <StatBox count={dueSoonCount} label="Skal snart afleveres" onClick={openLoans} />
         </OverviewCard>
         <OverviewCard
           title="Mine reserveringer"
