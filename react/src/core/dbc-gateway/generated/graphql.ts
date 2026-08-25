@@ -6507,30 +6507,6 @@ export type IntelligentFacetsQuery = {
   };
 };
 
-export type WorkRecommendationsQueryVariables = Exact<{
-  pid: Scalars["String"]["input"];
-  limit: Scalars["Int"]["input"];
-}>;
-
-export type WorkRecommendationsQuery = {
-  __typename?: "Query";
-  recommend: {
-    __typename?: "RecommendationResponse";
-    result: Array<{
-      __typename?: "Recommendation";
-      work: {
-        __typename?: "Work";
-        workId: string;
-        titles: { __typename?: "WorkTitles"; main: Array<string> };
-        creators: Array<
-          | { __typename?: "Corporation"; display: string }
-          | { __typename?: "Person"; display: string }
-        >;
-      };
-    }>;
-  };
-};
-
 export type ManifestationForMaterialGridFragment = {
   __typename?: "Manifestation";
   pid: string;
@@ -10090,50 +10066,6 @@ export const useIntelligentFacetsQuery = <
   });
 };
 
-export const WorkRecommendationsDocument = `
-    query WorkRecommendations($pid: String!, $limit: Int!) {
-  recommend(pid: $pid, limit: $limit) {
-    result {
-      work {
-        workId
-        titles {
-          main
-        }
-        creators {
-          display
-        }
-      }
-    }
-  }
-}
-    `;
-
-export const useWorkRecommendationsQuery = <
-  TData = WorkRecommendationsQuery,
-  TError = unknown
->(
-  variables: WorkRecommendationsQueryVariables,
-  options?: Omit<
-    UseQueryOptions<WorkRecommendationsQuery, TError, TData>,
-    "queryKey"
-  > & {
-    queryKey?: UseQueryOptions<
-      WorkRecommendationsQuery,
-      TError,
-      TData
-    >["queryKey"];
-  }
-) => {
-  return useQuery<WorkRecommendationsQuery, TError, TData>({
-    queryKey: ["WorkRecommendations", variables],
-    queryFn: fetcher<
-      WorkRecommendationsQuery,
-      WorkRecommendationsQueryVariables
-    >(WorkRecommendationsDocument, variables),
-    ...options
-  });
-};
-
 export const MaterialGridRecommendationsDocument = `
     query MaterialGridRecommendations($pid: String!, $limit: Int!) {
   recommend(pid: $pid, limit: $limit) {
@@ -10299,7 +10231,6 @@ export const operationNames = {
     GetCoversByPids: "GetCoversByPids" as const,
     GetBestRepresentationPidByIsbn: "GetBestRepresentationPidByIsbn" as const,
     intelligentFacets: "intelligentFacets" as const,
-    WorkRecommendations: "WorkRecommendations" as const,
     MaterialGridRecommendations: "MaterialGridRecommendations" as const,
     MaterialGridComplexSearch: "MaterialGridComplexSearch" as const,
     MaterialGridWorksByIds: "MaterialGridWorksByIds" as const
