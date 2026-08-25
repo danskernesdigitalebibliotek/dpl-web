@@ -100,7 +100,10 @@ function ResponsiveDialog({
             className="bg-background mx-grid-edge pt-grid-edge border-foreground/10 shrink-0
               border-b lg:mx-10 lg:pt-10 lg:pb-6">
             <DialogHeader>
-              <DialogTitle className="px-10" onBack={onBack}>
+              {/* The title text changes with the modal's internal view; the
+                  live region announces those otherwise silent view changes.
+                  Receipt views announce via their own role="status". */}
+              <DialogTitle aria-live="polite" className="px-10" onBack={onBack}>
                 {title}
               </DialogTitle>
               {description && <DialogDescription>{description}</DialogDescription>}
@@ -161,7 +164,8 @@ function ResponsiveDialog({
                 </motion.div>
               )}
             </AnimatePresence>
-            <DrawerTitle>{title}</DrawerTitle>
+            {/* Mirrors the dialog title: announces internal view changes. */}
+            <DrawerTitle aria-live="polite">{title}</DrawerTitle>
           </div>
           {description && <DrawerDescription>{description}</DrawerDescription>}
         </DrawerHeader>
