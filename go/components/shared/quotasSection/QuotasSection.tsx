@@ -34,27 +34,22 @@ const QuotasSection = ({ audioLoans, ebookLoans, blueLoans, onViewAll }: QuotasS
           </button>
         </div>
         <div className="gap-grid-edge flex w-full flex-col md:gap-6 lg:flex-row">
-          {/* The boxes open the same modal as "Vis alle". */}
-          <button
-            type="button"
-            onClick={onViewAll}
-            className="bg-background-overlay focus-visible flex flex-1 cursor-pointer flex-col
-              items-center justify-center gap-2 rounded-sm p-6 md:min-h-36">
+          <div
+            className="bg-background-overlay flex flex-1 flex-col items-center justify-center gap-2
+              rounded-sm p-6 md:min-h-36">
             <span className="text-typo-heading-3 block">
               {ebookLoans.length} af {data?.maxConcurrentEbookLoansPerBorrower || 0}
             </span>
             <span className="text-typo-subtitle-sm block opacity-70">E-bøger</span>
-          </button>
-          <button
-            type="button"
-            onClick={onViewAll}
-            className="bg-background-overlay focus-visible flex flex-1 cursor-pointer flex-col
-              items-center justify-center gap-2 rounded-sm p-6 md:min-h-36">
+          </div>
+          <div
+            className="bg-background-overlay flex flex-1 flex-col items-center justify-center gap-2
+              rounded-sm p-6 md:min-h-36">
             <span className="text-typo-heading-3 block">
               {audioLoans.length} af {data?.maxConcurrentAudioLoansPerBorrower || 0}
             </span>
             <span className="text-typo-subtitle-sm block opacity-70">Lydbøger</span>
-          </button>
+          </div>
           <div
             className="bg-background-overlay flex flex-col items-center justify-center gap-2
               rounded-sm p-6 md:min-h-36 lg:flex-[2] lg:flex-row lg:gap-12 lg:px-14">
