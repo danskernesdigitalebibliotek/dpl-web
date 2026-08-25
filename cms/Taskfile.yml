@@ -7,6 +7,13 @@ dotenv: [".task.env"]
 
 interval: 500ms
 
+env:
+  # Everything this Taskfile runs is dev or CI, where /app is bind-mounted
+  # over the image content. Make every docker compose command — explicit
+  # builds and implicit ones during up/run alike — skip the baked-in
+  # composer and JS asset builds (see the build args in docker-compose.yml).
+  SKIP_BAKED_IN_BUILDS: "true"
+
 includes:
   translations: ./task/Taskfile.translations.yml
   lagoon: ./task/Taskfile.lagoon.yml
@@ -132,7 +139,7 @@ tasks:
       - "{{ .LAGOON_DIR }}/*"
       - "web/sites/sites.php"
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} build --build-arg SKIP_COMPOSER_INSTALL=true
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} build
 
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
