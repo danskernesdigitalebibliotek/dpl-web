@@ -112,6 +112,15 @@
   line-height: 24px;
 }
 
+// The modal reserves a lot of horizontal padding at medium+ to keep prose at a
+// comfortable reading width. That padding leaves too little room for the
+// recommendations grid, which overflows and gives the modal a horizontal
+// scrollbar.
+.modal--reservation:has(.reservation-success) {
+  padding-left: $s-xl;
+  padding-right: $s-xl;
+}
+
 .reservation-success__recommendations {
   .reservation-success__recommendations-title {
     @include typography($typo__h4);
