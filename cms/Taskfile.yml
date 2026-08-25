@@ -138,6 +138,10 @@ tasks:
       - "{{ .LAGOON_DIR }}/**/*"
       - "{{ .LAGOON_DIR }}/*"
       - "web/sites/sites.php"
+      # The compose files define build args and the ignore file defines the
+      # build context, so both change what a build produces.
+      - "docker-compose*.yml"
+      - "../.dockerignore"
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} build
 
