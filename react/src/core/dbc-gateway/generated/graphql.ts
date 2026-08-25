@@ -6531,6 +6531,307 @@ export type WorkRecommendationsQuery = {
   };
 };
 
+export type ManifestationForMaterialGridFragment = {
+  __typename?: "Manifestation";
+  pid: string;
+  materialTypes: Array<{
+    __typename?: "MaterialType";
+    materialTypeSpecific: {
+      __typename?: "SpecificMaterialType";
+      display: string;
+    };
+  }>;
+  edition?: {
+    __typename?: "Edition";
+    summary: string;
+    publicationYear?: {
+      __typename?: "PublicationYear";
+      display: string;
+    } | null;
+  } | null;
+  cover: {
+    __typename?: "Cover";
+    large?: { __typename?: "CoverDetails"; url?: string | null } | null;
+  };
+};
+
+export type WorkForMaterialGridFragment = {
+  __typename?: "Work";
+  workId: string;
+  titles: { __typename?: "WorkTitles"; full: Array<string> };
+  creators: Array<
+    | { __typename?: "Corporation"; display: string }
+    | { __typename?: "Person"; display: string }
+  >;
+  manifestations: {
+    __typename?: "Manifestations";
+    all: Array<{
+      __typename?: "Manifestation";
+      pid: string;
+      materialTypes: Array<{
+        __typename?: "MaterialType";
+        materialTypeSpecific: {
+          __typename?: "SpecificMaterialType";
+          display: string;
+        };
+      }>;
+      edition?: {
+        __typename?: "Edition";
+        summary: string;
+        publicationYear?: {
+          __typename?: "PublicationYear";
+          display: string;
+        } | null;
+      } | null;
+      cover: {
+        __typename?: "Cover";
+        large?: { __typename?: "CoverDetails"; url?: string | null } | null;
+      };
+    }>;
+    bestRepresentation: {
+      __typename?: "Manifestation";
+      pid: string;
+      materialTypes: Array<{
+        __typename?: "MaterialType";
+        materialTypeSpecific: {
+          __typename?: "SpecificMaterialType";
+          display: string;
+        };
+      }>;
+      edition?: {
+        __typename?: "Edition";
+        summary: string;
+        publicationYear?: {
+          __typename?: "PublicationYear";
+          display: string;
+        } | null;
+      } | null;
+      cover: {
+        __typename?: "Cover";
+        large?: { __typename?: "CoverDetails"; url?: string | null } | null;
+      };
+    };
+  };
+};
+
+export type MaterialGridRecommendationsQueryVariables = Exact<{
+  pid: Scalars["String"]["input"];
+  limit: Scalars["Int"]["input"];
+}>;
+
+export type MaterialGridRecommendationsQuery = {
+  __typename?: "Query";
+  recommend: {
+    __typename?: "RecommendationResponse";
+    result: Array<{
+      __typename?: "Recommendation";
+      work: {
+        __typename?: "Work";
+        workId: string;
+        titles: { __typename?: "WorkTitles"; full: Array<string> };
+        creators: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Person"; display: string }
+        >;
+        manifestations: {
+          __typename?: "Manifestations";
+          all: Array<{
+            __typename?: "Manifestation";
+            pid: string;
+            materialTypes: Array<{
+              __typename?: "MaterialType";
+              materialTypeSpecific: {
+                __typename?: "SpecificMaterialType";
+                display: string;
+              };
+            }>;
+            edition?: {
+              __typename?: "Edition";
+              summary: string;
+              publicationYear?: {
+                __typename?: "PublicationYear";
+                display: string;
+              } | null;
+            } | null;
+            cover: {
+              __typename?: "Cover";
+              large?: {
+                __typename?: "CoverDetails";
+                url?: string | null;
+              } | null;
+            };
+          }>;
+          bestRepresentation: {
+            __typename?: "Manifestation";
+            pid: string;
+            materialTypes: Array<{
+              __typename?: "MaterialType";
+              materialTypeSpecific: {
+                __typename?: "SpecificMaterialType";
+                display: string;
+              };
+            }>;
+            edition?: {
+              __typename?: "Edition";
+              summary: string;
+              publicationYear?: {
+                __typename?: "PublicationYear";
+                display: string;
+              } | null;
+            } | null;
+            cover: {
+              __typename?: "Cover";
+              large?: {
+                __typename?: "CoverDetails";
+                url?: string | null;
+              } | null;
+            };
+          };
+        };
+      };
+    }>;
+  };
+};
+
+export type MaterialGridComplexSearchQueryVariables = Exact<{
+  cql: Scalars["String"]["input"];
+  offset: Scalars["Int"]["input"];
+  limit: Scalars["PaginationLimitScalar"]["input"];
+  filters: ComplexSearchFiltersInput;
+  sort?: InputMaybe<Array<SortInput> | SortInput>;
+}>;
+
+export type MaterialGridComplexSearchQuery = {
+  __typename?: "Query";
+  complexSearch: {
+    __typename?: "ComplexSearchResponse";
+    works: Array<{
+      __typename?: "Work";
+      workId: string;
+      titles: { __typename?: "WorkTitles"; full: Array<string> };
+      creators: Array<
+        | { __typename?: "Corporation"; display: string }
+        | { __typename?: "Person"; display: string }
+      >;
+      manifestations: {
+        __typename?: "Manifestations";
+        all: Array<{
+          __typename?: "Manifestation";
+          pid: string;
+          materialTypes: Array<{
+            __typename?: "MaterialType";
+            materialTypeSpecific: {
+              __typename?: "SpecificMaterialType";
+              display: string;
+            };
+          }>;
+          edition?: {
+            __typename?: "Edition";
+            summary: string;
+            publicationYear?: {
+              __typename?: "PublicationYear";
+              display: string;
+            } | null;
+          } | null;
+          cover: {
+            __typename?: "Cover";
+            large?: { __typename?: "CoverDetails"; url?: string | null } | null;
+          };
+        }>;
+        bestRepresentation: {
+          __typename?: "Manifestation";
+          pid: string;
+          materialTypes: Array<{
+            __typename?: "MaterialType";
+            materialTypeSpecific: {
+              __typename?: "SpecificMaterialType";
+              display: string;
+            };
+          }>;
+          edition?: {
+            __typename?: "Edition";
+            summary: string;
+            publicationYear?: {
+              __typename?: "PublicationYear";
+              display: string;
+            } | null;
+          } | null;
+          cover: {
+            __typename?: "Cover";
+            large?: { __typename?: "CoverDetails"; url?: string | null } | null;
+          };
+        };
+      };
+    }>;
+  };
+};
+
+export type MaterialGridWorksByIdsQueryVariables = Exact<{
+  ids: Array<Scalars["String"]["input"]> | Scalars["String"]["input"];
+}>;
+
+export type MaterialGridWorksByIdsQuery = {
+  __typename?: "Query";
+  works: Array<{
+    __typename?: "Work";
+    workId: string;
+    titles: { __typename?: "WorkTitles"; full: Array<string> };
+    creators: Array<
+      | { __typename?: "Corporation"; display: string }
+      | { __typename?: "Person"; display: string }
+    >;
+    manifestations: {
+      __typename?: "Manifestations";
+      all: Array<{
+        __typename?: "Manifestation";
+        pid: string;
+        materialTypes: Array<{
+          __typename?: "MaterialType";
+          materialTypeSpecific: {
+            __typename?: "SpecificMaterialType";
+            display: string;
+          };
+        }>;
+        edition?: {
+          __typename?: "Edition";
+          summary: string;
+          publicationYear?: {
+            __typename?: "PublicationYear";
+            display: string;
+          } | null;
+        } | null;
+        cover: {
+          __typename?: "Cover";
+          large?: { __typename?: "CoverDetails"; url?: string | null } | null;
+        };
+      }>;
+      bestRepresentation: {
+        __typename?: "Manifestation";
+        pid: string;
+        materialTypes: Array<{
+          __typename?: "MaterialType";
+          materialTypeSpecific: {
+            __typename?: "SpecificMaterialType";
+            display: string;
+          };
+        }>;
+        edition?: {
+          __typename?: "Edition";
+          summary: string;
+          publicationYear?: {
+            __typename?: "PublicationYear";
+            display: string;
+          } | null;
+        } | null;
+        cover: {
+          __typename?: "Cover";
+          large?: { __typename?: "CoverDetails"; url?: string | null } | null;
+        };
+      };
+    };
+  } | null>;
+};
+
 export type PlaceCopyMutationVariables = Exact<{
   input: CopyRequestInput;
 }>;
@@ -8669,6 +8970,46 @@ export const ManifestationBasicDetailsFragmentDoc = `
   }
 }
     ${WithLanguagesFragmentDoc}`;
+export const ManifestationForMaterialGridFragmentDoc = `
+    fragment ManifestationForMaterialGrid on Manifestation {
+  pid
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  edition {
+    publicationYear {
+      display
+    }
+    summary
+  }
+  cover {
+    large {
+      url
+    }
+  }
+}
+    `;
+export const WorkForMaterialGridFragmentDoc = `
+    fragment WorkForMaterialGrid on Work {
+  workId
+  titles {
+    full
+  }
+  creators {
+    display
+  }
+  manifestations {
+    all {
+      ...ManifestationForMaterialGrid
+    }
+    bestRepresentation {
+      ...ManifestationForMaterialGrid
+    }
+  }
+}
+    ${ManifestationForMaterialGridFragmentDoc}`;
 export const ManifestationReviewFieldsFragmentDoc = `
     fragment ManifestationReviewFields on Manifestation {
   pid
@@ -9793,6 +10134,114 @@ export const useWorkRecommendationsQuery = <
   });
 };
 
+export const MaterialGridRecommendationsDocument = `
+    query MaterialGridRecommendations($pid: String!, $limit: Int!) {
+  recommend(pid: $pid, limit: $limit) {
+    result {
+      work {
+        ...WorkForMaterialGrid
+      }
+    }
+  }
+}
+    ${WorkForMaterialGridFragmentDoc}`;
+
+export const useMaterialGridRecommendationsQuery = <
+  TData = MaterialGridRecommendationsQuery,
+  TError = unknown
+>(
+  variables: MaterialGridRecommendationsQueryVariables,
+  options?: Omit<
+    UseQueryOptions<MaterialGridRecommendationsQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      MaterialGridRecommendationsQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
+) => {
+  return useQuery<MaterialGridRecommendationsQuery, TError, TData>({
+    queryKey: ["MaterialGridRecommendations", variables],
+    queryFn: fetcher<
+      MaterialGridRecommendationsQuery,
+      MaterialGridRecommendationsQueryVariables
+    >(MaterialGridRecommendationsDocument, variables),
+    ...options
+  });
+};
+
+export const MaterialGridComplexSearchDocument = `
+    query MaterialGridComplexSearch($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: ComplexSearchFiltersInput!, $sort: [SortInput!]) {
+  complexSearch(cql: $cql, filters: $filters) {
+    works(offset: $offset, limit: $limit, sort: $sort) {
+      ...WorkForMaterialGrid
+    }
+  }
+}
+    ${WorkForMaterialGridFragmentDoc}`;
+
+export const useMaterialGridComplexSearchQuery = <
+  TData = MaterialGridComplexSearchQuery,
+  TError = unknown
+>(
+  variables: MaterialGridComplexSearchQueryVariables,
+  options?: Omit<
+    UseQueryOptions<MaterialGridComplexSearchQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      MaterialGridComplexSearchQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
+) => {
+  return useQuery<MaterialGridComplexSearchQuery, TError, TData>({
+    queryKey: ["MaterialGridComplexSearch", variables],
+    queryFn: fetcher<
+      MaterialGridComplexSearchQuery,
+      MaterialGridComplexSearchQueryVariables
+    >(MaterialGridComplexSearchDocument, variables),
+    ...options
+  });
+};
+
+export const MaterialGridWorksByIdsDocument = `
+    query MaterialGridWorksByIds($ids: [String!]!) {
+  works(id: $ids) {
+    ...WorkForMaterialGrid
+  }
+}
+    ${WorkForMaterialGridFragmentDoc}`;
+
+export const useMaterialGridWorksByIdsQuery = <
+  TData = MaterialGridWorksByIdsQuery,
+  TError = unknown
+>(
+  variables: MaterialGridWorksByIdsQueryVariables,
+  options?: Omit<
+    UseQueryOptions<MaterialGridWorksByIdsQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      MaterialGridWorksByIdsQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
+) => {
+  return useQuery<MaterialGridWorksByIdsQuery, TError, TData>({
+    queryKey: ["MaterialGridWorksByIds", variables],
+    queryFn: fetcher<
+      MaterialGridWorksByIdsQuery,
+      MaterialGridWorksByIdsQueryVariables
+    >(MaterialGridWorksByIdsDocument, variables),
+    ...options
+  });
+};
+
 export const PlaceCopyDocument = `
     mutation placeCopy($input: CopyRequestInput!) {
   elba {
@@ -9850,7 +10299,10 @@ export const operationNames = {
     GetCoversByPids: "GetCoversByPids" as const,
     GetBestRepresentationPidByIsbn: "GetBestRepresentationPidByIsbn" as const,
     intelligentFacets: "intelligentFacets" as const,
-    WorkRecommendations: "WorkRecommendations" as const
+    WorkRecommendations: "WorkRecommendations" as const,
+    MaterialGridRecommendations: "MaterialGridRecommendations" as const,
+    MaterialGridComplexSearch: "MaterialGridComplexSearch" as const,
+    MaterialGridWorksByIds: "MaterialGridWorksByIds" as const
   },
   Mutation: {
     openOrder: "openOrder" as const,
@@ -9858,6 +10310,8 @@ export const operationNames = {
   },
   Fragment: {
     ManifestationBasicDetails: "ManifestationBasicDetails" as const,
+    ManifestationForMaterialGrid: "ManifestationForMaterialGrid" as const,
+    WorkForMaterialGrid: "WorkForMaterialGrid" as const,
     ManifestationsSimple: "ManifestationsSimple" as const,
     ManifestationsAccess: "ManifestationsAccess" as const,
     ManifestationsSimpleFields: "ManifestationsSimpleFields" as const,
