@@ -436,6 +436,7 @@ export const ReservationModalBody = ({
 };
 
 const Recommendations = (props: { work: Work }) => {
+  const t = useText();
   const pid = getWorkPid(props.work);
 
   const { data: recommendationData } = useWorkRecommendationsQuery(
@@ -459,7 +460,7 @@ const Recommendations = (props: { work: Work }) => {
   return (
     <div className="reservation-success__recommendations">
       <h4 className="reservation-success__recommendations-title">
-        Du er måske også interesseret i...
+        {t("reservationRecommendationsTitleText")}
       </h4>
       <MaterialGrid initialMaximumDisplay={4} materials={materialProps} />
     </div>
