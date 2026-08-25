@@ -452,8 +452,8 @@ const Recommendations = (props: { work: Work }) => {
   }));
 
   return (
-    <div className="reservation-modal__recommendations">
-      <h4 className="reservation-modal__recommendations-title">
+    <div className="reservation-success__recommendations">
+      <h4 className="reservation-success__recommendations-title">
         Du er måske også interesseret i...
       </h4>
       <MaterialGrid initialMaximumDisplay={4} materials={materialProps} />

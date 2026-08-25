@@ -30,8 +30,8 @@ const ReservationSucces: React.FC<ReservationSuccesProps> = ({
         allowOutsideClick: true
       }}
     >
-      <section className="reservation-modal reservation-modal--confirm">
-        <div className="reservation-modal--text-section">
+      <section className="reservation-modal reservation-success">
+        <div className="reservation-success__text-section">
           <h2
             data-cy="reservation-success-title-text"
             className="text-header-h3 pb-32"
