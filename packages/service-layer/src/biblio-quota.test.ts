@@ -25,48 +25,54 @@ describe("getBiblioLoanQuota", () => {
   }
 
   it("Reads the monthly counters per format when the organization splits on format", () => {
-    expect(getBiblioLoanQuota([splitQuota], "ebook")).toEqual({
+    expect(getBiblioLoanQuota({ quotas: [splitQuota], format: "ebook" })).toEqual({
       current: 4,
       limit: 7,
     })
-    expect(getBiblioLoanQuota([splitQuota], "audiobook")).toEqual({
+    expect(getBiblioLoanQuota({ quotas: [splitQuota], format: "audiobook" })).toEqual({
       current: 2,
       limit: 5,
     })
   })
 
   it("Uses the same counters for both formats when the organization combines them", () => {
-    expect(getBiblioLoanQuota([combinedQuota], "ebook")).toEqual({
+    expect(getBiblioLoanQuota({ quotas: [combinedQuota], format: "ebook" })).toEqual({
       current: 6,
       limit: 10,
     })
-    expect(getBiblioLoanQuota([combinedQuota], "audiobook")).toEqual({
+    expect(getBiblioLoanQuota({ quotas: [combinedQuota], format: "audiobook" })).toEqual({
       current: 6,
       limit: 10,
     })
   })
 
   it("Reads the concurrent counters when asked for loans held right now", () => {
-    expect(getBiblioLoanQuota([splitQuota], "ebook", "concurrent")).toEqual({
+    expect(
+      getBiblioLoanQuota({ quotas: [splitQuota], format: "ebook", period: "concurrent" })
+    ).toEqual({
       current: 1,
       limit: 3,
     })
-    expect(getBiblioLoanQuota([splitQuota], "audiobook", "concurrent")).toEqual({
+    expect(
+      getBiblioLoanQuota({ quotas: [splitQuota], format: "audiobook", period: "concurrent" })
+    ).toEqual({
       current: 0,
       limit: 2,
     })
-    expect(getBiblioLoanQuota([combinedQuota], "ebook", "concurrent")).toEqual({
+    expect(
+      getBiblioLoanQuota({ quotas: [combinedQuota], format: "ebook", period: "concurrent" })
+    ).toEqual({
       current: 2,
       limit: 4,
     })
   })
 
   it("Falls back to an unknown limit when there is no quota", () => {
-    expect(getBiblioLoanQuota(undefined, "ebook")).toEqual({
+    expect(getBiblioLoanQuota({ quotas: undefined, format: "ebook" })).toEqual({
       current: 0,
       limit: undefined,
     })
-    expect(getBiblioLoanQuota([], "ebook")).toEqual({
+    expect(getBiblioLoanQuota({ quotas: [], format: "ebook" })).toEqual({
       current: 0,
       limit: undefined,
     })

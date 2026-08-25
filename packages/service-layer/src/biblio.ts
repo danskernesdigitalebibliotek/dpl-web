@@ -187,12 +187,23 @@ export type BiblioQuota = {
  * The adapter returns one quota per organization. A patron belongs to a
  * single library in practice, so the first one is used - if a patron can ever
  * belong to several, this needs a rule from DBC.
+ *
+ * Cost-free ("blue") loans draw on no quota, and the adapter's counters
+ * already exclude them at the source - verified against the real adapter by
+ * borrowing a blue (selection-licence) title and watching the counters stand
+ * still, then a click-licence title and watching them move. So unlike the
+ * Publizon path, which subtracts its subscription loans itself, the numbers
+ * are used as they arrive.
  */
-export const getBiblioLoanQuota = (
-  quotas: BiblioLoanQuota[] | undefined,
-  format: "ebook" | "audiobook",
-  period: "monthly" | "concurrent" = "monthly"
-): BiblioQuota => {
+export const getBiblioLoanQuota = ({
+  quotas,
+  format,
+  period = "monthly",
+}: {
+  quotas: BiblioLoanQuota[] | undefined
+  format: "ebook" | "audiobook"
+  period?: "monthly" | "concurrent"
+}): BiblioQuota => {
   const quota = quotas?.[0]
 
   if (!quota) {
@@ -216,5 +227,8 @@ export const getBiblioLoanQuota = (
         current: quota.currentConcurrentLoans,
         limit: quota.maxConcurrentLoans,
       }
-    : { current: quota.currentMonthlyLoans, limit: quota.maxLoans }
+    : {
+        current: quota.currentMonthlyLoans,
+        limit: quota.maxLoans,
+      }
 }

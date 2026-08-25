@@ -28,7 +28,8 @@ const biblioLoan: BiblioLoan = {
   title: "Din for en sommer",
   author: "Sherman, L.",
   publisher: "Lindhardt og Ringhof",
-  publishDate: "2022-06-18T00:00:00.000Z"
+  publishDate: "2022-06-18T00:00:00.000Z",
+  loanProvider: "selection"
 };
 
 const biblioReservation: BiblioReservation = {

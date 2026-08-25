@@ -76,13 +76,21 @@ const MaterialAvailabilityTextOnline: React.FC<
   const { patronEbookLoans, patronAudioLoans } = getPatronLoanQuotas(loansData);
 
   const ebookQuota = isProvidedByBiblio
-    ? getBiblioLoanQuota(biblioQuotas, "ebook")
+    ? getBiblioLoanQuota({
+        quotas: biblioQuotas,
+        format: "ebook",
+        period: "monthly"
+      })
     : {
         current: patronEbookLoans,
         limit: libraryProfileData?.maxConcurrentEbookLoansPerBorrower
       };
   const audioQuota = isProvidedByBiblio
-    ? getBiblioLoanQuota(biblioQuotas, "audiobook")
+    ? getBiblioLoanQuota({
+        quotas: biblioQuotas,
+        format: "audiobook",
+        period: "monthly"
+      })
     : {
         current: patronAudioLoans,
         limit: libraryProfileData?.maxConcurrentAudioLoansPerBorrower

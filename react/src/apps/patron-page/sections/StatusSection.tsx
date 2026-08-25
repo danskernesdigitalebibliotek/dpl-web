@@ -53,12 +53,16 @@ const StatusSection: FC = () => {
 
   // This section counts the loans the user holds right now, so the concurrent
   // counters are the Biblio equivalent of Publizon's maxConcurrent limits.
-  const biblioEbook = getBiblioLoanQuota(biblioQuotas, "ebook", "concurrent");
-  const biblioAudio = getBiblioLoanQuota(
-    biblioQuotas,
-    "audiobook",
-    "concurrent"
-  );
+  const biblioEbook = getBiblioLoanQuota({
+    quotas: biblioQuotas,
+    format: "ebook",
+    period: "concurrent"
+  });
+  const biblioAudio = getBiblioLoanQuota({
+    quotas: biblioQuotas,
+    format: "audiobook",
+    period: "concurrent"
+  });
 
   const patronEbookLoans = useBiblio
     ? biblioEbook.current

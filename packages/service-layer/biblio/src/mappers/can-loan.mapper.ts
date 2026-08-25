@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 import type { BiblioCanLoan, BiblioLoanResult } from "../../../src/types"
-import { LoanSchema, mapLoan } from "./loan.mapper"
+import { LoanProviderSchema, LoanSchema, mapLoan } from "./loan.mapper"
 
 const CanLoanSchema = z.object({
   status: z.enum([
@@ -16,7 +16,7 @@ const CanLoanSchema = z.object({
   ]),
   // Optional by contract: "the provider selected for the attempted loan, when
   // available" - absent when no provider could be picked at all.
-  loan_provider: z.enum(["free", "k-fond", "click", "package", "premium", "selection"]).optional(),
+  loan_provider: LoanProviderSchema.optional(),
   unavailable_reason: z.string().optional(),
   lending_block_reason: z.string().optional(),
 })

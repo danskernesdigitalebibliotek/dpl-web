@@ -172,6 +172,9 @@ export type BiblioLoan = {
   author: string
   publisher: string
   publishDate: string
+  // Which licence the loan was made under. "selection" marks a blue title:
+  // a loan that costs the user nothing and draws on no quota.
+  loanProvider: BiblioLoanProvider
 }
 
 export type BiblioReservation = {
@@ -200,7 +203,9 @@ export type BiblioCanLoanStatus =
 
 // Which licence the loan would be made under. The organization configures a
 // prioritized list of providers, and the backend reports the one it picked.
-// "free" is the only one that costs the user nothing.
+// "selection" - the licence Danish blue titles answer with - is the one
+// verified to cost the user nothing; the rest, including the unobserved
+// "free", count against the quota until DBC confirms otherwise.
 export type BiblioLoanProvider = "free" | "k-fond" | "click" | "package" | "premium" | "selection"
 
 export type BiblioCanLoan = {
