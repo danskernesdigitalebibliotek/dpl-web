@@ -72,6 +72,9 @@
     margin-left: -$s-2xl;
   }
 
+  // Angles for the full fan of three, which is what the design asks for and
+  // what nearly every series can fill. The count modifiers below rebalance
+  // them when there are fewer covers to fan.
   &:nth-child(1) {
     transform: rotate(-7deg);
   }
@@ -82,6 +85,28 @@
 
   &:nth-child(3) {
     transform: rotate(6deg);
+  }
+}
+
+// Not every series has three covers worth showing - a short one may only have
+// one or two materials, and covers no library has supplied an image for are
+// left out. Left as-is the angles above would lean the whole fan to one side,
+// so each smaller count keeps the same step between covers but centres them
+// the way the full fan is centred. There is no --count-3 rule: that is what
+// the angles above already are.
+.series-page__covers--count-2 {
+  .series-page__cover:nth-child(1) {
+    transform: rotate(-4deg);
+  }
+
+  .series-page__cover:nth-child(2) {
+    transform: rotate(3deg);
+  }
+}
+
+.series-page__covers--count-1 {
+  .series-page__cover:nth-child(1) {
+    transform: rotate(-1deg);
   }
 }
 

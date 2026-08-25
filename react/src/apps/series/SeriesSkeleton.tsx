@@ -9,11 +9,12 @@ const placeholderMembers = 5;
 // Covers fanned out beside the title in the header. Decoration only - they
 // are hidden below the medium breakpoint.
 //
-// One shared constant for the skeleton and the loaded page: if the two
-// disagreed, the header would change column layout when the data arrived and
-// the intro text would visibly change width. It lives here rather than in
-// Series.tsx because an import in the other direction would be a module
-// cycle.
+// One shared constant for the skeleton and the loaded page, so that the header
+// keeps its column layout when the data arrives instead of the intro text
+// visibly changing width. A series without three usable covers still narrows
+// the fan on arrival - see getHeaderCoverPids() - but that is the exception.
+// The constant lives here rather than in Series.tsx because an import in the
+// other direction would be a module cycle.
 export const headerCoverCount = 3;
 
 // React twin of design-system/src/stories/Blocks/series-page/SeriesPageSkeleton.
@@ -35,7 +36,10 @@ const SeriesSkeleton: React.FC = () => {
           </div>
         </div>
 
-        <div className="series-page__covers" aria-hidden="true">
+        <div
+          className={`series-page__covers series-page__covers--count-${headerCoverCount}`}
+          aria-hidden="true"
+        >
           {[...Array(headerCoverCount)].map((_value, index) => (
             <div className="series-page__cover" key={index}>
               <div className="ssc-square cover--size-medium cover--aspect-medium">

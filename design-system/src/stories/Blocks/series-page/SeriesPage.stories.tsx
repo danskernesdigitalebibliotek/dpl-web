@@ -105,3 +105,17 @@ export const WithoutCovers = Template.bind({});
 WithoutCovers.args = {
   coverSrcs: [],
 };
+
+// A short series, or one where the rest of the materials have no cover image
+// of their own. The two covers lean symmetrically instead of both tipping to
+// the left the way the first two of a full fan do.
+export const WithTwoCovers = Template.bind({});
+WithTwoCovers.args = {
+  coverSrcs: ["images/book_cover_1.jpg", "images/book_cover_2.jpg"],
+};
+
+// One cover has no fan to balance, so it stands nearly straight.
+export const WithOneCover = Template.bind({});
+WithOneCover.args = {
+  coverSrcs: ["images/book_cover_1.jpg"],
+};

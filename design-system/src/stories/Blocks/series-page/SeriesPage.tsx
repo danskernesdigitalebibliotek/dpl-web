@@ -10,6 +10,8 @@ export type SeriesPageProps = {
   seriesByText?: string;
   author?: string;
   authorHref?: string;
+  // At most three. Fewer is a legitimate state - a short series, or one whose
+  // materials have no cover image - and the fan is angled to suit the count.
   coverSrcs?: string[];
   members: SeriesCardProps[];
   // Members in the whole series, of which `members` is the first page. Long
@@ -56,7 +58,10 @@ export const SeriesPage = ({
           itself.
         */}
         {coverSrcs.length > 0 && (
-          <div className="series-page__covers" aria-hidden="true">
+          <div
+            className={`series-page__covers series-page__covers--count-${coverSrcs.length}`}
+            aria-hidden="true"
+          >
             {coverSrcs.map((src, index) => (
               <div className="series-page__cover" key={index}>
                 <Cover src={src} size="medium" animate={false} />

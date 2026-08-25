@@ -17,6 +17,17 @@ query getSeries($seriesId: String!, $limit: Int!, $offset: Int!) {
       # drifts from what AvailabilityLabels and the creator helpers expect.
       work {
         ...WorkSmall
+        # WorkSmall carries no cover data, and the fanned-out covers in the
+        # header need to skip the members FBI has no real cover for - see
+        # getHeaderCoverPids() in helper.ts. Only the origin is needed: the
+        # Cover component fetches the image urls itself.
+        manifestations {
+          bestRepresentation {
+            cover {
+              origin
+            }
+          }
+        }
       }
     }
   }

@@ -88,6 +88,48 @@ export const sortSeriesMembers = <T extends SortableSeriesMember>(
   members: readonly T[]
 ): T[] => [...members].sort(compareSeriesMembers);
 
+export type MemberWithCoverOrigin = {
+  work: {
+    manifestations: {
+      bestRepresentation: {
+        pid: string;
+        // Where FBI got the cover from. The WorkSmall fragment carries no
+        // cover data at all, so Series.graphql selects this one field on top
+        // of it.
+        cover: { origin?: string | null };
+      };
+    };
+  };
+};
+
+// FBI never reports a material as simply having no cover: for the ones nobody
+// has supplied a cover for it generates a stand-in - a coloured card with the
+// title printed on it - and reports the origin as "default". Real covers name
+// the supplier they came from instead, "fbiinfo" being the common one.
+const GENERATED_COVER_ORIGIN = "default";
+
+const hasRealCover = (member: MemberWithCoverOrigin): boolean =>
+  member.work.manifestations.bestRepresentation.cover.origin !==
+  GENERATED_COVER_ORIGIN;
+
+// Pids for the covers fanned out in the page header, at most `limit` of them.
+//
+// The fan is decoration, and a generated stand-in cover decorates nothing - it
+// would only reprint the title already spelled out beside it. Members carrying
+// one are therefore skipped rather than the fan given up on: a series usually
+// has enough real covers further down the list to fill it out.
+//
+// Returning fewer than `limit` pids - or none at all - is a legitimate result
+// for a short series, so the header has to lay out whatever it gets.
+export const getHeaderCoverPids = (
+  members: readonly MemberWithCoverOrigin[],
+  limit: number
+): string[] =>
+  members
+    .filter(hasRealCover)
+    .slice(0, limit)
+    .map((member) => member.work.manifestations.bestRepresentation.pid);
+
 export type MemberWithCreators = {
   work: {
     creators: { display: string }[];
@@ -138,6 +180,67 @@ if (import.meta.vitest) {
 
   const authored = (...names: string[]): MemberWithCreators => ({
     work: { creators: names.map((display) => ({ display })) }
+  });
+
+  const covered = (pid: string, origin: string): MemberWithCoverOrigin => ({
+    work: { manifestations: { bestRepresentation: { pid, cover: { origin } } } }
+  });
+
+  describe("getHeaderCoverPids", () => {
+    it("returns the members that have a real cover", () => {
+      expect(
+        getHeaderCoverPids(
+          [covered("pid:1", "fbiinfo"), covered("pid:2", "fbiinfo")],
+          3
+        )
+      ).toEqual(["pid:1", "pid:2"]);
+    });
+
+    it("skips members whose cover FBI generated", () => {
+      expect(
+        getHeaderCoverPids(
+          [
+            covered("pid:1", "default"),
+            covered("pid:2", "fbiinfo"),
+            covered("pid:3", "default"),
+            covered("pid:4", "fbiinfo")
+          ],
+          3
+        )
+      ).toEqual(["pid:2", "pid:4"]);
+    });
+
+    it("fills the fan from further down the list", () => {
+      expect(
+        getHeaderCoverPids(
+          [
+            covered("pid:1", "default"),
+            covered("pid:2", "fbiinfo"),
+            covered("pid:3", "fbiinfo"),
+            covered("pid:4", "fbiinfo"),
+            covered("pid:5", "fbiinfo")
+          ],
+          3
+        )
+      ).toEqual(["pid:2", "pid:3", "pid:4"]);
+    });
+
+    it("returns nothing when no member has a real cover", () => {
+      expect(
+        getHeaderCoverPids(
+          [covered("pid:1", "default"), covered("pid:2", "default")],
+          3
+        )
+      ).toEqual([]);
+    });
+
+    // An unknown origin is a cover supplier we have not seen before, not a
+    // generated stand-in, so it counts as a real cover.
+    it("keeps covers from an unrecognised origin", () => {
+      expect(getHeaderCoverPids([covered("pid:1", "moreinfo")], 3)).toEqual([
+        "pid:1"
+      ]);
+    });
   });
 
   describe("getSeriesAuthor", () => {

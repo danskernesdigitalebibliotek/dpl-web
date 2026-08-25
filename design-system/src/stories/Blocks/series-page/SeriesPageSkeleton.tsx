@@ -36,7 +36,10 @@ export const SeriesPageSkeleton = ({
           </div>
         </div>
 
-        <div className="series-page__covers" aria-hidden="true">
+        <div
+          className={`series-page__covers series-page__covers--count-${headerCoverCount}`}
+          aria-hidden="true"
+        >
           {[...Array(headerCoverCount)].map((_value, index) => (
             <div className="series-page__cover" key={index}>
               <div className="ssc-square cover--size-medium cover--aspect-medium">

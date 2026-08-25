@@ -19,7 +19,12 @@ import {
 import { useText } from "../../core/utils/text";
 import { WorkSmall } from "../../core/utils/types/entities";
 import { useUrls } from "../../core/utils/url";
-import { getSeriesAuthor, sortSeriesMembers } from "./helper";
+import {
+  getHeaderCoverPids,
+  getSeriesAuthor,
+  MemberWithCoverOrigin,
+  sortSeriesMembers
+} from "./helper";
 import SeriesCard from "./SeriesCard";
 import SeriesSkeleton, { headerCoverCount } from "./SeriesSkeleton";
 
@@ -37,7 +42,9 @@ const memberPageSize = 50;
 type SeriesMember = {
   numberInSeries?: string | null;
   readThisFirst?: boolean | null;
-  work: WorkSmall;
+  // The fragment plus the cover origin the query selects alongside it, which
+  // WorkSmall itself does not carry.
+  work: WorkSmall & MemberWithCoverOrigin["work"];
 };
 
 // The pages loaded so far. Members accumulate across "show more" clicks;
@@ -130,10 +137,9 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
   const members = sortSeriesMembers(series.members);
 
   const author = getSeriesAuthor(members);
-  // Decoration, so a handful is plenty. The design fans out three.
-  const coverPids = members
-    .slice(0, headerCoverCount)
-    .map((member) => member.work.manifestations.bestRepresentation.pid);
+  // Decoration, so a handful is plenty. The design fans out three, but a
+  // series that cannot supply that many real covers gets a shorter fan.
+  const coverPids = getHeaderCoverPids(members, headerCoverCount);
 
   return (
     <div className="series-page">
@@ -164,7 +170,10 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
           itself.
         */}
         {coverPids.length > 0 && (
-          <div className="series-page__covers" aria-hidden="true">
+          <div
+            className={`series-page__covers series-page__covers--count-${coverPids.length}`}
+            aria-hidden="true"
+          >
             {coverPids.map((pid) => (
               <div className="series-page__cover" key={pid}>
                 <Cover ids={[pid]} size="medium" animate={false} alt="" />
