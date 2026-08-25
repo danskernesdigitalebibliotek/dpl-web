@@ -1,83 +1,37 @@
 import clsx from "clsx";
 import * as React from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
-import { getManifestationBasedOnType } from "../../apps/material/helper";
-import RecommendedMaterialSkeleton from "./RecommendedMaterialSkeleton";
 import Link from "../../components/atoms/links/Link";
 import ButtonFavourite, {
   ButtonFavouriteId
 } from "../../components/button-favourite/button-favourite";
-import { Cover } from "../../components/cover/cover";
-import { useGetMaterialQuery } from "../../core/dbc-gateway/generated/graphql";
-import { guardedRequest } from "../../core/guardedRequests.slice";
-import { TypedDispatch } from "../../core/store";
-import {
-  creatorsToString,
-  flattenCreators
-} from "../../core/utils/helpers/general";
-import { constructMaterialUrl } from "../../core/utils/helpers/url";
-import { useText } from "../../core/utils/text";
-import { Work } from "../../core/utils/types/entities";
+import { StaticCover } from "../../components/cover/StaticCover";
 import { WorkId } from "../../core/utils/types/ids";
-import { ManifestationMaterialType } from "../../core/utils/types/material-type";
-import { useUrls } from "../../core/utils/url";
 import { useEventStatistics } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 
 export type RecommendedMaterialProps = {
   wid: WorkId;
-  materialType?: ManifestationMaterialType;
+  title: string;
+  author: string;
+  coverUrl?: string | null;
+  url: URL;
   partOfGrid?: boolean;
+  onAddToFavourites: (id: ButtonFavouriteId) => void;
 };
 
-const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
+// Presentational: receives render-ready material data. Fetching and mapping
+// happens in the surrounding component (e.g. RecommendedMaterialAdapter or
+// the material grid wrappers).
+const RecommendedMaterial: React.FC<RecommendedMaterialProps> = ({
   wid,
-  materialType,
-  partOfGrid = false
+  title,
+  author,
+  coverUrl,
+  url,
+  partOfGrid = false,
+  onAddToFavourites
 }) => {
-  const t = useText();
-  const u = useUrls();
   const { track } = useEventStatistics();
-  const materialUrl = u("materialUrl");
-  const dispatch = useDispatch<TypedDispatch>();
-  const queryClient = useQueryClient();
-
-  const { data, isLoading } = useGetMaterialQuery({
-    wid
-  });
-
-  if (isLoading || !data?.work) {
-    return <RecommendedMaterialSkeleton partOfGrid={partOfGrid} />;
-  }
-
-  const {
-    work: {
-      titles: { full: fullTitle },
-      manifestations: { bestRepresentation },
-      creators
-    }
-  } = data;
-
-  const work = data.work as Work;
-  const materialManifestationForDisplay = materialType
-    ? getManifestationBasedOnType(work, materialType)
-    : bestRepresentation;
-
-  const { pid } = materialManifestationForDisplay;
-
-  const author = creatorsToString(flattenCreators(creators), t);
-
-  const materialFullUrl = constructMaterialUrl(materialUrl, wid, materialType);
-  const addToListRequest = (id: ButtonFavouriteId) => {
-    dispatch(
-      guardedRequest({
-        type: "addFavorite",
-        args: { id, queryClient },
-        app: "material"
-      })
-    );
-  };
 
   // Materials shown in a grid are tracked as their own Mapp event so DDF can
   // compare grid-formidling against other ways of presenting materials.
@@ -101,14 +55,14 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
     >
       <div className="recommended-material__icon">
         <ButtonFavourite
-          title={String(fullTitle)}
+          title={title}
           id={wid}
-          addToListRequest={addToListRequest}
+          addToListRequest={onAddToFavourites}
         />
       </div>
-      <Cover
-        ids={[pid]}
-        url={materialFullUrl}
+      <StaticCover
+        src={coverUrl}
+        url={url}
         size="large"
         animate
         alt=""
@@ -116,20 +70,20 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
         trackClick={trackData}
       />
       <div className="recommended-material__texts">
-        {fullTitle && (
+        {title && (
           <Link
-            href={materialFullUrl}
+            href={url}
             className="recommended-material__description"
             dataCy="recommended-description"
             trackClick={trackData}
           >
-            {fullTitle}
+            {title}
           </Link>
         )}
 
         {author && (
           <Link
-            href={materialFullUrl}
+            href={url}
             className="recommended-material__author"
             dataCy="recommended-author"
             trackClick={trackData}
@@ -141,4 +95,4 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
     </div>
   );
 };
-export default RecommendedMaterialComp;
+export default RecommendedMaterial;
