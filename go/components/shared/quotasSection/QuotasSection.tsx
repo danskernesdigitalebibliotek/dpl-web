@@ -24,10 +24,12 @@ const QuotasSection = ({ audioLoans, ebookLoans, blueLoans, onViewAll }: QuotasS
         className="bg-background duration-dark-mode p-grid-edge rounded-base md:rounded-base w-full
           space-y-4 transition-all md:p-8">
         <div className="flex items-center justify-between">
-          <h3 className="text-typo-subtitle-sm opacity-70">Mine lån</h3>
+          <h3 className="text-typo-subtitle-sm opacity-70">Mine digitale lån</h3>
           <button
             type="button"
             onClick={onViewAll}
+            // Starts with the visible label, so voice control still matches.
+            aria-label="Vis alle digitale lån"
             data-cy={cyKeys["view-all-digital-loans-button"]}
             className="text-typo-link focus-visible cursor-pointer underline">
             Vis alle
