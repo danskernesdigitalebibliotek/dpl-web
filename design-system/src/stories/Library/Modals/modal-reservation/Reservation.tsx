@@ -13,6 +13,7 @@ interface ReservationProps {
   state: "initial" | "success" | "error";
   showPromoBar?: boolean;
   showInstantLoan?: boolean;
+  showRecommendations?: boolean;
 }
 
 const Reservation = ({
@@ -24,11 +25,12 @@ const Reservation = ({
   state,
   showPromoBar,
   showInstantLoan,
+  showRecommendations,
 }: ReservationProps) => {
   if (state === "success")
     return (
       <Modal shownModal>
-        <ReservationSucces />
+        <ReservationSucces showRecommendations={showRecommendations} />
       </Modal>
     );
   if (state === "error")
