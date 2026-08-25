@@ -107,6 +107,22 @@ export const readerUrl = (id: string, provider?: DigitalProvider | null) => {
   );
 };
 
+/**
+ * Where a sample of a material opens.
+ *
+ * A sample has no loan to read the material type from, so the link carries
+ * it - the reader page hands it to whichever sample component the type calls
+ * for. Publizon's reader ignores the extra parameter.
+ */
+export const sampleUrl = (
+  identifier: string,
+  materialType: "ebook" | "audiobook"
+) =>
+  new URL(
+    `/reader?identifier=${encodeURIComponent(identifier)}&sampletype=${materialType}`,
+    window.location.href
+  );
+
 export const readerTypes = [
   ManifestationMaterialType.ebook,
   ManifestationMaterialType.pictureBookOnline,

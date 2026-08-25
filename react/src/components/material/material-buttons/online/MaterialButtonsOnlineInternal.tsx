@@ -7,7 +7,9 @@ import { useModalButtonHandler } from "../../../../core/utils/modal";
 import { useText } from "../../../../core/utils/text";
 import { ButtonSize } from "../../../../core/utils/types/button";
 import useReaderPlayer from "../../../../core/utils/useReaderPlayer";
-import { readerUrl } from "../../../reader-player/helper";
+import { readerUrl, sampleUrl } from "../../../reader-player/helper";
+import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
+import { isAnonymous } from "../../../../core/utils/helpers/user";
 import LinkButton from "../../../Buttons/LinkButton";
 import { Button } from "../../../Buttons/Button";
 import { getMaterialType } from "../../../../core/utils/helpers/general";
@@ -53,6 +55,14 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
 }) => {
   const { track } = useEventStatistics();
   const t = useText();
+  const useBiblio = useBiblioAdapter();
+  // With the flag on, Biblio is the lending provider, so a signed-in patron
+  // samples through WeDoBooks on the reader page - and Publizon must not
+  // stand in for anyone. WeDoBooks only answers samples for a signed-in
+  // session, so an anonymous visitor gets a disabled button until an
+  // anonymous sample exists.
+  const samplesThroughBiblio = useBiblio && !isAnonymous();
+  const samplingUnavailable = useBiblio && isAnonymous();
   const { open } = useModalButtonHandler();
   const modalsToClose = useModalIdsToCloseForReservation();
   const modalCloseOptions = isEditionPicker ? { modalsToClose } : undefined;
@@ -168,13 +178,26 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     if (isAlreadyLoaned || !openModal) return null;
 
     if (identifier) {
+      if (samplingUnavailable) {
+        return (
+          <Button
+            dataCy={`${dataCy}-reader-teaser`}
+            label={tryLabel}
+            buttonType="none"
+            variant="outline"
+            size={size || "large"}
+            onClick={() => {}}
+            disabled
+            collapsible={false}
+          />
+        );
+      }
+
       return (
         <MaterialSecondaryLink
           label={tryLabel}
           size={size || "large"}
-          url={
-            new URL(`/reader?identifier=${identifier}`, window.location.href)
-          }
+          url={sampleUrl(identifier, "ebook")}
           dataCy={`${dataCy}-reader-teaser`}
           trackClick={() =>
             track("click", {
@@ -288,6 +311,42 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     if (isAlreadyLoaned || !openModal) return null;
 
     if (identifier) {
+      if (samplingUnavailable) {
+        return (
+          <Button
+            dataCy={`${dataCy}-player-teaser`}
+            label={tryLabel}
+            buttonType="none"
+            variant="outline"
+            size={size || "large"}
+            onClick={() => {}}
+            disabled
+            collapsible={false}
+          />
+        );
+      }
+
+      // The WeDoBooks player pins itself to the bottom of the viewport, which
+      // leaves a wrapping modal empty - so a Biblio sample gets the reader
+      // page, exactly like a Biblio loan does.
+      if (samplesThroughBiblio) {
+        return (
+          <MaterialSecondaryLink
+            label={tryLabel}
+            size={size || "large"}
+            url={sampleUrl(identifier, "audiobook")}
+            dataCy={`${dataCy}-player-teaser`}
+            trackClick={() =>
+              track("click", {
+                id: statistics.publizonTry.id,
+                name: statistics.publizonTry.name,
+                trackedData: workId
+              })
+            }
+          />
+        );
+      }
+
       return (
         <>
           <PlayerModal identifier={identifier} />

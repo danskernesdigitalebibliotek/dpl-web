@@ -897,6 +897,9 @@ class DplReactAppsController extends ControllerBase {
     // instead, which knows the loan by its own id. Publizon's reader does not
     // recognise it and vice versa, so they cannot share a parameter.
     $loanid = $request->query->get('loanid');
+    // Which kind of sample an identifier link asks for. A sample has no loan
+    // to read the material type from, so the link carries it.
+    $sampletype = $request->query->get('sampletype');
 
     if (!$identifier && !$orderid && !$loanid) {
       throw new BadRequestHttpException('Either identifier, orderid or loanid must be provided.');
@@ -906,6 +909,7 @@ class DplReactAppsController extends ControllerBase {
       'identifier' => $identifier ?? NULL,
       'orderid' => $orderid ?? NULL,
       'loanid' => $loanid ?? NULL,
+      'sampletype' => $sampletype ?? NULL,
       // Add external API base urls. Publizon's reader is loaded straight from
       // their CDN and talks to no API of ours, but the WeDoBooks one needs the
       // adapter to vouch for the patron before it can open anything.
