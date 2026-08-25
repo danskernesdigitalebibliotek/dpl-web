@@ -6,104 +6,488 @@
           "work": {
             "workId": "work-of:870970-basis:51753887",
             "titles": {
-              "main": ["Midnatsrosen"]
+              "full": [
+                "Midnatsrosen"
+              ]
             },
             "creators": [
               {
                 "display": "Lucinda Riley"
               }
-            ]
+            ],
+            "manifestations": {
+              "all": [
+                {
+                  "pid": "870970-basis:51753887",
+                  "materialTypes": [
+                    {
+                      "materialTypeSpecific": {
+                        "display": "bog"
+                      }
+                    }
+                  ],
+                  "edition": {
+                    "summary": "1. udgave",
+                    "publicationYear": {
+                      "display": "2020"
+                    }
+                  },
+                  "cover": {
+                    "large": {
+                      "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                    }
+                  }
+                }
+              ],
+              "bestRepresentation": {
+                "pid": "870970-basis:51753887",
+                "materialTypes": [
+                  {
+                    "materialTypeSpecific": {
+                      "display": "bog"
+                    }
+                  }
+                ],
+                "edition": {
+                  "summary": "1. udgave",
+                  "publicationYear": {
+                    "display": "2020"
+                  }
+                },
+                "cover": {
+                  "large": {
+                    "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                  }
+                }
+              }
+            }
           }
         },
         {
           "work": {
             "workId": "work-of:870970-basis:138613445",
             "titles": {
-              "main": ["Ildfuglen"]
+              "full": [
+                "Ildfuglen"
+              ]
             },
             "creators": [
               {
                 "display": "Susanna Kearsley"
               }
-            ]
+            ],
+            "manifestations": {
+              "all": [
+                {
+                  "pid": "870970-basis:138613445",
+                  "materialTypes": [
+                    {
+                      "materialTypeSpecific": {
+                        "display": "bog"
+                      }
+                    }
+                  ],
+                  "edition": {
+                    "summary": "1. udgave",
+                    "publicationYear": {
+                      "display": "2020"
+                    }
+                  },
+                  "cover": {
+                    "large": {
+                      "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                    }
+                  }
+                }
+              ],
+              "bestRepresentation": {
+                "pid": "870970-basis:138613445",
+                "materialTypes": [
+                  {
+                    "materialTypeSpecific": {
+                      "display": "bog"
+                    }
+                  }
+                ],
+                "edition": {
+                  "summary": "1. udgave",
+                  "publicationYear": {
+                    "display": "2020"
+                  }
+                },
+                "cover": {
+                  "large": {
+                    "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                  }
+                }
+              }
+            }
           }
         },
         {
           "work": {
             "workId": "work-of:870970-basis:53247806",
             "titles": {
-              "main": ["Stormsøsteren"]
+              "full": [
+                "Stormsøsteren"
+              ]
             },
             "creators": [
               {
                 "display": "Lucinda Riley"
               }
-            ]
+            ],
+            "manifestations": {
+              "all": [
+                {
+                  "pid": "870970-basis:53247806",
+                  "materialTypes": [
+                    {
+                      "materialTypeSpecific": {
+                        "display": "bog"
+                      }
+                    }
+                  ],
+                  "edition": {
+                    "summary": "1. udgave",
+                    "publicationYear": {
+                      "display": "2020"
+                    }
+                  },
+                  "cover": {
+                    "large": {
+                      "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                    }
+                  }
+                }
+              ],
+              "bestRepresentation": {
+                "pid": "870970-basis:53247806",
+                "materialTypes": [
+                  {
+                    "materialTypeSpecific": {
+                      "display": "bog"
+                    }
+                  }
+                ],
+                "edition": {
+                  "summary": "1. udgave",
+                  "publicationYear": {
+                    "display": "2020"
+                  }
+                },
+                "cover": {
+                  "large": {
+                    "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                  }
+                }
+              }
+            }
           }
         },
         {
           "work": {
             "workId": "work-of:870970-basis:06874908",
             "titles": {
-              "main": ["Kærlighed i koleraens tid"]
+              "full": [
+                "Kærlighed i koleraens tid"
+              ]
             },
             "creators": [
               {
                 "display": "Gabriel García Márquez"
               }
-            ]
+            ],
+            "manifestations": {
+              "all": [
+                {
+                  "pid": "870970-basis:06874908",
+                  "materialTypes": [
+                    {
+                      "materialTypeSpecific": {
+                        "display": "bog"
+                      }
+                    }
+                  ],
+                  "edition": {
+                    "summary": "1. udgave",
+                    "publicationYear": {
+                      "display": "2020"
+                    }
+                  },
+                  "cover": {
+                    "large": {
+                      "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                    }
+                  }
+                }
+              ],
+              "bestRepresentation": {
+                "pid": "870970-basis:06874908",
+                "materialTypes": [
+                  {
+                    "materialTypeSpecific": {
+                      "display": "bog"
+                    }
+                  }
+                ],
+                "edition": {
+                  "summary": "1. udgave",
+                  "publicationYear": {
+                    "display": "2020"
+                  }
+                },
+                "cover": {
+                  "large": {
+                    "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                  }
+                }
+              }
+            }
           }
         },
         {
           "work": {
             "workId": "work-of:870970-basis:52408725",
             "titles": {
-              "main": ["Bedemandens datter"]
+              "full": [
+                "Bedemandens datter"
+              ]
             },
             "creators": [
               {
                 "display": "Sara Blædel"
               }
-            ]
+            ],
+            "manifestations": {
+              "all": [
+                {
+                  "pid": "870970-basis:52408725",
+                  "materialTypes": [
+                    {
+                      "materialTypeSpecific": {
+                        "display": "bog"
+                      }
+                    }
+                  ],
+                  "edition": {
+                    "summary": "1. udgave",
+                    "publicationYear": {
+                      "display": "2020"
+                    }
+                  },
+                  "cover": {
+                    "large": {
+                      "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                    }
+                  }
+                }
+              ],
+              "bestRepresentation": {
+                "pid": "870970-basis:52408725",
+                "materialTypes": [
+                  {
+                    "materialTypeSpecific": {
+                      "display": "bog"
+                    }
+                  }
+                ],
+                "edition": {
+                  "summary": "1. udgave",
+                  "publicationYear": {
+                    "display": "2020"
+                  }
+                },
+                "cover": {
+                  "large": {
+                    "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                  }
+                }
+              }
+            }
           }
         },
         {
           "work": {
             "workId": "work-of:870970-basis:61510141",
             "titles": {
-              "main": ["Vand til blomster"]
+              "full": [
+                "Vand til blomster"
+              ]
             },
             "creators": [
               {
                 "display": "Valérie Perrin"
               }
-            ]
+            ],
+            "manifestations": {
+              "all": [
+                {
+                  "pid": "870970-basis:61510141",
+                  "materialTypes": [
+                    {
+                      "materialTypeSpecific": {
+                        "display": "bog"
+                      }
+                    }
+                  ],
+                  "edition": {
+                    "summary": "1. udgave",
+                    "publicationYear": {
+                      "display": "2020"
+                    }
+                  },
+                  "cover": {
+                    "large": {
+                      "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                    }
+                  }
+                }
+              ],
+              "bestRepresentation": {
+                "pid": "870970-basis:61510141",
+                "materialTypes": [
+                  {
+                    "materialTypeSpecific": {
+                      "display": "bog"
+                    }
+                  }
+                ],
+                "edition": {
+                  "summary": "1. udgave",
+                  "publicationYear": {
+                    "display": "2020"
+                  }
+                },
+                "cover": {
+                  "large": {
+                    "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                  }
+                }
+              }
+            }
           }
         },
         {
           "work": {
             "workId": "work-of:870970-basis:136067265",
             "titles": {
-              "main": ["Kærlighed i teorien"]
+              "full": [
+                "Kærlighed i teorien"
+              ]
             },
             "creators": [
               {
                 "display": "Ali Hazelwood"
               }
-            ]
+            ],
+            "manifestations": {
+              "all": [
+                {
+                  "pid": "870970-basis:136067265",
+                  "materialTypes": [
+                    {
+                      "materialTypeSpecific": {
+                        "display": "bog"
+                      }
+                    }
+                  ],
+                  "edition": {
+                    "summary": "1. udgave",
+                    "publicationYear": {
+                      "display": "2020"
+                    }
+                  },
+                  "cover": {
+                    "large": {
+                      "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                    }
+                  }
+                }
+              ],
+              "bestRepresentation": {
+                "pid": "870970-basis:136067265",
+                "materialTypes": [
+                  {
+                    "materialTypeSpecific": {
+                      "display": "bog"
+                    }
+                  }
+                ],
+                "edition": {
+                  "summary": "1. udgave",
+                  "publicationYear": {
+                    "display": "2020"
+                  }
+                },
+                "cover": {
+                  "large": {
+                    "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                  }
+                }
+              }
+            }
           }
         },
         {
           "work": {
             "workId": "work-of:870970-basis:137171112",
             "titles": {
-              "main": ["Ærens veje"]
+              "full": [
+                "Ærens veje"
+              ]
             },
             "creators": [
               {
                 "display": "Jeffrey Archer"
               }
-            ]
+            ],
+            "manifestations": {
+              "all": [
+                {
+                  "pid": "870970-basis:137171112",
+                  "materialTypes": [
+                    {
+                      "materialTypeSpecific": {
+                        "display": "bog"
+                      }
+                    }
+                  ],
+                  "edition": {
+                    "summary": "1. udgave",
+                    "publicationYear": {
+                      "display": "2020"
+                    }
+                  },
+                  "cover": {
+                    "large": {
+                      "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                    }
+                  }
+                }
+              ],
+              "bestRepresentation": {
+                "pid": "870970-basis:137171112",
+                "materialTypes": [
+                  {
+                    "materialTypeSpecific": {
+                      "display": "bog"
+                    }
+                  }
+                ],
+                "edition": {
+                  "summary": "1. udgave",
+                  "publicationYear": {
+                    "display": "2020"
+                  }
+                },
+                "cover": {
+                  "large": {
+                    "url": "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
+                  }
+                }
+              }
+            }
           }
         }
       ]

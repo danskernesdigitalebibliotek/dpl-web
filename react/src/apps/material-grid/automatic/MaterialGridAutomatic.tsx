@@ -3,15 +3,17 @@ import MaterialGrid from "../../../components/material-grid/MaterialGrid";
 import MaterialGridSkeleton from "../../../components/material-grid/MaterialGridSkeleton";
 import {
   CsHoldingsStatusEnum,
-  useComplexSearchWithPaginationQuery
+  useMaterialGridComplexSearchQuery
 } from "../../../core/dbc-gateway/generated/graphql";
+import { mapWorkToMaterialGridItem } from "../../../components/material-grid/helper";
 import useGetSearchBranches from "../../../core/utils/branches";
 import {
   useGetPhysicalHoldingsFilters,
   hasActivePhysicalHoldingsFilter
 } from "../../../core/utils/useGetPhysicalHoldingsFilters";
 import { useText } from "../../../core/utils/text";
-import { WorkId } from "../../../core/utils/types/ids";
+import { useUrls } from "../../../core/utils/url";
+import useAddToFavourites from "../../../core/utils/useAddToFavourites";
 import { commaSeparatedStringToArray } from "../../advanced-search/helpers";
 import {
   advancedSortMap,
@@ -45,6 +47,9 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
   firstaccessiondateitem
 }) => {
   const t = useText();
+  const u = useUrls();
+  const materialUrl = u("materialUrl");
+  const addToFavourites = useAddToFavourites();
   const buttonText = t("buttonText");
   const cleanBranches = useGetSearchBranches();
   const physicalHoldingsFilters = useGetPhysicalHoldingsFilters();
@@ -60,7 +65,7 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
     sublocation
   });
 
-  const { data, isLoading } = useComplexSearchWithPaginationQuery({
+  const { data, isLoading } = useMaterialGridComplexSearchQuery({
     cql,
     offset: 0,
     limit: requestedAmount,
@@ -88,11 +93,9 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
   }
 
   const resultWorks = data.complexSearch.works;
-  const materials = resultWorks.map((work) => {
-    return {
-      wid: work.workId as WorkId
-    };
-  });
+  const materials = resultWorks.map((work) =>
+    mapWorkToMaterialGridItem(work, { t, materialUrl })
+  );
 
   return (
     <MaterialGrid
@@ -100,6 +103,7 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
       materials={materials}
       description={description}
       buttonText={buttonText}
+      onAddToFavourites={addToFavourites}
     />
   );
 };

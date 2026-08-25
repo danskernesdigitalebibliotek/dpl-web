@@ -298,13 +298,13 @@ describe("Material buttons", () => {
     });
 
     cy.interceptGraphql({
-      operationName: "WorkRecommendations",
+      operationName: "MaterialGridRecommendations",
       fixtureFilePath: "material/material-grid-related-recommendations.json",
       middleware: true
     });
 
     cy.interceptGraphql({
-      operationName: "complexSearchWithPagination",
+      operationName: "MaterialGridComplexSearch",
       fixtureFilePath:
         "material/material-grid-related-author-recommendations.json",
       middleware: true

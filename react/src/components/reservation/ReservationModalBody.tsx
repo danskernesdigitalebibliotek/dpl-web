@@ -65,8 +65,10 @@ import { InstantLoanConfigType } from "../../core/utils/types/instant-loan";
 import {
   OpenOrderMutation,
   useOpenOrderMutation,
-  useWorkRecommendationsQuery
+  useMaterialGridRecommendationsQuery
 } from "../../core/dbc-gateway/generated/graphql";
+import { mapWorkToMaterialGridItem } from "../material-grid/helper";
+import useAddToFavourites from "../../core/utils/useAddToFavourites";
 import ModalMessage from "../message/modal-message/ModalMessage";
 import configuration, { getConf } from "../../core/configuration";
 import useReservableFromAnotherLibrary from "../../core/utils/useReservableFromAnotherLibrary";
@@ -78,7 +80,7 @@ import {
   getFutureDateStringISO
 } from "../../core/utils/helpers/date";
 import MaterialGrid from "../material-grid/MaterialGrid";
-import { WorkId } from "../../core/utils/types/ids";
+import { useUrls } from "../../core/utils/url";
 
 type ReservationModalProps = {
   selectedManifestations: Manifestation[];
@@ -437,9 +439,12 @@ export const ReservationModalBody = ({
 
 const Recommendations = (props: { work: Work }) => {
   const t = useText();
+  const u = useUrls();
+  const materialUrl = u("materialUrl");
+  const addToFavourites = useAddToFavourites();
   const pid = getWorkPid(props.work);
 
-  const { data: recommendationData } = useWorkRecommendationsQuery(
+  const { data: recommendationData } = useMaterialGridRecommendationsQuery(
     {
       pid,
       limit: 4
@@ -449,20 +454,20 @@ const Recommendations = (props: { work: Work }) => {
 
   const recommendations = recommendationData?.recommend.result ?? [];
 
-  const workIds = recommendations.map((recommendation) => {
-    return recommendation.work.workId;
-  });
-
-  const materialProps = workIds.map((workId) => ({
-    wid: workId as WorkId
-  }));
+  const materials = recommendations.map(({ work }) =>
+    mapWorkToMaterialGridItem(work, { t, materialUrl })
+  );
 
   return (
     <div className="reservation-success__recommendations">
       <h4 className="reservation-success__recommendations-title">
         {t("reservationRecommendationsTitleText")}
       </h4>
-      <MaterialGrid initialMaximumDisplay={4} materials={materialProps} />
+      <MaterialGrid
+        initialMaximumDisplay={4}
+        materials={materials}
+        onAddToFavourites={addToFavourites}
+      />
     </div>
   );
 };

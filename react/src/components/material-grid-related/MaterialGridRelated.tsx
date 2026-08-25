@@ -1,22 +1,26 @@
 import * as React from "react";
 
 import {
-  useComplexSearchWithPaginationQuery,
-  useWorkRecommendationsQuery
+  useMaterialGridComplexSearchQuery,
+  useMaterialGridRecommendationsQuery
 } from "../../core/dbc-gateway/generated/graphql";
 import { useText } from "../../core/utils/text";
+import { useUrls } from "../../core/utils/url";
+import useAddToFavourites from "../../core/utils/useAddToFavourites";
 import { Work } from "../../core/utils/types/entities";
-import MaterialGrid, {
-  MaterialGridItemProps
-} from "../material-grid/MaterialGrid";
+import MaterialGrid from "../material-grid/MaterialGrid";
+import {
+  MaterialGridItem,
+  mapWorkToMaterialGridItem
+} from "../material-grid/helper";
 import MaterialGridSkeleton from "../material-grid/MaterialGridSkeleton";
 
 import { first } from "lodash";
 import { FC, useEffect, useMemo, useState } from "react";
 import { flattenCreators, getWorkPid } from "../../core/utils/helpers/general";
 import {
-  extractMaterialsFromComplexSearch,
-  extractMaterialsFromRecommendations,
+  extractWorksFromComplexSearch,
+  extractWorksFromRecommendations,
   getPreferredFallback,
   prepareCreatorCql
 } from "./helper";
@@ -27,7 +31,7 @@ import { MaterialGridRelatedSelect } from "./MaterialGridRelatedSelect";
 type MaterialGridRelatedOption = {
   label: string;
   value: MaterialGridFilterType;
-  materials: MaterialGridItemProps[];
+  materials: MaterialGridItem[];
 };
 
 export type MaterialGridRelatedProps = {
@@ -36,6 +40,9 @@ export type MaterialGridRelatedProps = {
 
 const MaterialGridRelated: FC<MaterialGridRelatedProps> = ({ work }) => {
   const t = useText();
+  const u = useUrls();
+  const materialUrl = u("materialUrl");
+  const addToFavourites = useAddToFavourites();
   const title = t("materialGridRelatedTitleText");
 
   const pid = getWorkPid(work);
@@ -47,7 +54,7 @@ const MaterialGridRelated: FC<MaterialGridRelatedProps> = ({ work }) => {
   const creatorCqlString = prepareCreatorCql(flattenedCreators);
 
   const { data: recommendationData, isLoading: recommendationLoading } =
-    useWorkRecommendationsQuery(
+    useMaterialGridRecommendationsQuery(
       {
         pid,
         limit: 8
@@ -56,7 +63,7 @@ const MaterialGridRelated: FC<MaterialGridRelatedProps> = ({ work }) => {
     );
 
   const { data: creatorData, isLoading: creatorLoading } =
-    useComplexSearchWithPaginationQuery(
+    useMaterialGridComplexSearchQuery(
       {
         cql: creatorCqlString,
         limit: 8,
@@ -69,7 +76,7 @@ const MaterialGridRelated: FC<MaterialGridRelatedProps> = ({ work }) => {
     );
 
   const { data: seriesData, isLoading: seriesLoading } =
-    useComplexSearchWithPaginationQuery(
+    useMaterialGridComplexSearchQuery(
       {
         cql: `term.series='${seriesObject?.title}'`,
         limit: 8,
@@ -85,10 +92,17 @@ const MaterialGridRelated: FC<MaterialGridRelatedProps> = ({ work }) => {
   const allQueriesLoaded =
     !recommendationLoading && !creatorLoading && !seriesLoading;
 
-  const recommendationMaterials =
-    extractMaterialsFromRecommendations(recommendationData);
-  const seriesMaterials = extractMaterialsFromComplexSearch(seriesData);
-  const authorMaterials = extractMaterialsFromComplexSearch(creatorData);
+  const recommendationMaterials = extractWorksFromRecommendations(
+    recommendationData
+  ).map((recommendedWork) =>
+    mapWorkToMaterialGridItem(recommendedWork, { t, materialUrl })
+  );
+  const seriesMaterials = extractWorksFromComplexSearch(seriesData).map(
+    (seriesWork) => mapWorkToMaterialGridItem(seriesWork, { t, materialUrl })
+  );
+  const authorMaterials = extractWorksFromComplexSearch(creatorData).map(
+    (authorWork) => mapWorkToMaterialGridItem(authorWork, { t, materialUrl })
+  );
 
   const options = useMemo<MaterialGridRelatedOption[]>(() => {
     if (!allQueriesLoaded) return [];
@@ -165,7 +179,11 @@ const MaterialGridRelated: FC<MaterialGridRelatedProps> = ({ work }) => {
           }))}
         />
       </div>
-      <MaterialGrid materials={displayedMaterials} initialMaximumDisplay={8} />
+      <MaterialGrid
+        materials={displayedMaterials}
+        initialMaximumDisplay={8}
+        onAddToFavourites={addToFavourites}
+      />
     </div>
   );
 };

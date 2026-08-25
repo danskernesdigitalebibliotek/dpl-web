@@ -4,8 +4,9 @@ import { GlobalEntryTextProps } from "../../../core/storybook/globalTextArgs";
 import { withConfig } from "../../../core/utils/config";
 import { withText } from "../../../core/utils/text";
 import { withUrls } from "../../../core/utils/url";
-import { MaterialGridItemProps } from "../../../components/material-grid/MaterialGrid";
-import MaterialGridManual from "./MaterialGridManual";
+import MaterialGridManual, {
+  MaterialGridManualMaterial
+} from "./MaterialGridManual";
 
 interface MaterialGridManualEntryConfigProps {
   blacklistedAvailabilityBranchesConfig: string;
@@ -27,7 +28,8 @@ const MaterialGridManualEntry: React.FC<MaterialGridManualEntryProps> = ({
   title,
   description
 }) => {
-  const parsedMaterialsString: MaterialGridItemProps[] = JSON.parse(materials);
+  const parsedMaterialsString: MaterialGridManualMaterial[] =
+    JSON.parse(materials);
   const parsedMaterials = parsedMaterialsString.map((work) => ({
     wid: work.wid,
     materialType: work.materialType
