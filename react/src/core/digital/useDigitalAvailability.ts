@@ -1,6 +1,6 @@
 import {
   isMaterialAvailable,
-  useLoanDecision
+  useDigitalLoanDecision
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useServiceLayerLending from "../utils/useServiceLayerLending";
 import useTolerateUnknownMaterials from "./useTolerateUnknownMaterials";
@@ -52,7 +52,7 @@ const useDigitalAvailability = ({
   const isAnswering =
     viaServiceLayer && enabled && Boolean(isbn) && !isAnonymous();
 
-  const { data: loanDecision, isLoading } = useLoanDecision(isbn, {
+  const { data: loanDecision, isLoading } = useDigitalLoanDecision(isbn, {
     enabled: isAnswering,
     allowNotFound: tolerateUnknown
   });

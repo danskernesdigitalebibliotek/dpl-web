@@ -20,7 +20,7 @@ type UseBiblioAcceptOfferOptions = Omit<
  * so a material the user already holds an offer for is accepted here rather
  * than borrowed through createLoan.
  */
-export const useAcceptDigitalOffer = (
+export const useDigitalAcceptOffer = (
   options?: UseBiblioAcceptOfferOptions
 ): UseMutationResult<AcceptOfferResult, Error, string> => {
   const config = useServiceLayerConfig()

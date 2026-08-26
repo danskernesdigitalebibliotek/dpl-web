@@ -21,7 +21,7 @@ type UseBiblioCreateLoanOptions = Omit<
  * Callers gate on the feature flag: new loans belong to Biblio only once the
  * library has switched to it.
  */
-export const useCreateDigitalLoan = (
+export const useDigitalCreateLoan = (
   options?: UseBiblioCreateLoanOptions
 ): UseMutationResult<LoanRequestResult, Error, string> => {
   const config = useServiceLayerConfig()

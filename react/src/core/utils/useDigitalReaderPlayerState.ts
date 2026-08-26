@@ -1,7 +1,7 @@
 import {
   isMaterialLoanable,
   isMaterialReservable,
-  useLoanDecision,
+  useDigitalLoanDecision,
   useDigitalLoans,
   useDigitalReservations
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
@@ -58,7 +58,7 @@ const useDigitalReaderPlayerState = ({
   // exactly what a material the provider cannot lend should get.
   const tolerateUnknown = useTolerateUnknownMaterials();
   const { data: loanDecision, isLoading: isLoadingLoanDecision } =
-    useLoanDecision(identifier, {
+    useDigitalLoanDecision(identifier, {
       enabled: isActiveForUser,
       allowNotFound: tolerateUnknown
     });

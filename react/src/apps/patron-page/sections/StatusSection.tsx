@@ -7,7 +7,7 @@ import { LibraryProfile, UserData } from "../../../core/publizon/model";
 import { useText } from "../../../core/utils/text";
 import { getPatronLoanQuotas } from "../../../core/utils/helpers/publizon";
 import {
-  getLoanQuota,
+  getDigitalLoanQuota,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useServiceLayerLending from "../../../core/utils/useServiceLayerLending";
@@ -56,12 +56,12 @@ const StatusSection: FC = () => {
   // This section counts the loans the user holds right now, so the concurrent
   // counters are the service layer equivalent of Publizon's maxConcurrent
   // limits.
-  const digitalEbookQuota = getLoanQuota({
+  const digitalEbookQuota = getDigitalLoanQuota({
     quotas: digitalQuotas,
     format: "ebook",
     period: "concurrent"
   });
-  const digitalAudioQuota = getLoanQuota({
+  const digitalAudioQuota = getDigitalLoanQuota({
     quotas: digitalQuotas,
     format: "audiobook",
     period: "concurrent"

@@ -9,7 +9,7 @@ import {
 } from "../../core/publizon/publizon";
 import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 import {
-  useLoanDecision,
+  useDigitalLoanDecision,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
@@ -21,7 +21,7 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useLoanDecision: vi.fn(),
+    useDigitalLoanDecision: vi.fn(),
     useDigitalLoanQuotas: vi.fn()
   })
 );
@@ -102,9 +102,9 @@ describe("MaterialAvailabilityTextOnline", () => {
     vi.mocked(useDigitalLoanQuotas).mockReturnValue({
       data: undefined
     } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
-    vi.mocked(useLoanDecision).mockReturnValue({
+    vi.mocked(useDigitalLoanDecision).mockReturnValue({
       data: undefined
-    } as unknown as ReturnType<typeof useLoanDecision>);
+    } as unknown as ReturnType<typeof useDigitalLoanDecision>);
   });
 
   describe("with the feature flag off", () => {
@@ -135,9 +135,9 @@ describe("MaterialAvailabilityTextOnline", () => {
     });
 
     const biblioLends = (loanProvider?: string) =>
-      vi.mocked(useLoanDecision).mockReturnValue({
+      vi.mocked(useDigitalLoanDecision).mockReturnValue({
         data: { status: "loanable", loanProvider }
-      } as unknown as ReturnType<typeof useLoanDecision>);
+      } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
     it("Says the material is included when it is lent as a blue title", () => {
       // "selection" is the licence Danish blue titles answer with - WeDoBooks

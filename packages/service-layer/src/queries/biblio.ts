@@ -1,12 +1,12 @@
 import { queryOptions } from "@tanstack/react-query"
 
 import {
+  getDigitalLoanDecision,
   getDigitalLoanQuotas,
   getDigitalLoans,
   getDigitalMaterial,
   getDigitalReservations,
   getDigitalSupportId,
-  getLoanDecision,
   getReaderSignInToken,
 } from "../biblio"
 import type { ServiceLayerConfig } from "../types"
@@ -35,10 +35,10 @@ export const digitalMaterialQuery = (config: ServiceLayerConfig, isbn: string | 
     },
   })
 
-export const loanDecisionQueryKey = (materialId: string | null) =>
+export const digitalLoanDecisionQueryKey = (materialId: string | null) =>
   ["serviceLayer", "digitalLoanDecision", materialId] as const
 
-export const loanDecisionQuery = (
+export const digitalLoanDecisionQuery = (
   config: ServiceLayerConfig,
   materialId: string | null,
   // TEMPORARY, with the toleration flag it serves. Deliberately not part of
@@ -48,14 +48,14 @@ export const loanDecisionQuery = (
   options?: { allowNotFound?: boolean }
 ) =>
   queryOptions({
-    queryKey: loanDecisionQueryKey(materialId),
+    queryKey: digitalLoanDecisionQueryKey(materialId),
     queryFn: () => {
       if (materialId === null) {
         // The hook disables itself without a material id; a direct caller of
         // the query options must not end up asking about "null".
-        throw new Error("loanDecisionQuery cannot fetch without a material id")
+        throw new Error("digitalLoanDecisionQuery cannot fetch without a material id")
       }
-      return getLoanDecision(config, materialId, options)
+      return getDigitalLoanDecision(config, materialId, options)
     },
   })
 

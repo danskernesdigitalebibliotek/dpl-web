@@ -9,7 +9,7 @@ import {
   isDigitalReservation,
   isPhysicalReservation
 } from "../../../../core/utils/types/reservation-type";
-import { useDeleteDigitalReservation } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalDeleteReservation } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 export type OperationPhysical = ReturnType<
   typeof useDeleteReservations
@@ -18,7 +18,7 @@ export type OperationPublizon = ReturnType<
   typeof useDeleteV1UserReservationsIdentifier
 >["mutate"];
 export type OperationDigital = ReturnType<
-  typeof useDeleteDigitalReservation
+  typeof useDigitalDeleteReservation
 >["mutate"];
 
 export type ParamsPhysical = { params: DeleteReservationsParams };

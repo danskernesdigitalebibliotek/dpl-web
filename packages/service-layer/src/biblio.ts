@@ -43,7 +43,7 @@ export async function getDigitalMaterial(
 // undefined, because TanStack Query rejects undefined as query data. Without
 // it the 404 stays an error, which is the honest default: asking about an
 // unknown material is normally a routing mistake.
-export async function getLoanDecision(
+export async function getDigitalLoanDecision(
   config: ServiceLayerConfig,
   materialId: string,
   options?: { allowNotFound?: boolean }
@@ -82,7 +82,7 @@ export async function getDigitalReservations(
 }
 
 // One quota per organization. A patron belongs to a single library in
-// practice - see getLoanQuota for how a format's numbers are read out.
+// practice - see getDigitalLoanQuota for how a format's numbers are read out.
 export async function getDigitalLoanQuotas(
   config: ServiceLayerConfig
 ): Promise<DigitalLoanQuota[]> {
@@ -227,7 +227,7 @@ export type QuotaUsage = {
  * unlike the Publizon path, which subtracts its subscription loans itself,
  * the numbers are used as they arrive.
  */
-export const getLoanQuota = ({
+export const getDigitalLoanQuota = ({
   quotas,
   format,
   period = "monthly",

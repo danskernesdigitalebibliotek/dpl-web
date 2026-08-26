@@ -7,7 +7,7 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useDigitalReaderPlayerState from "../../core/utils/useDigitalReaderPlayerState";
 import {
-  useLoanDecision,
+  useDigitalLoanDecision,
   useDigitalLoans,
   useDigitalReservations
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
@@ -21,7 +21,7 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useLoanDecision: vi.fn(),
+    useDigitalLoanDecision: vi.fn(),
     useDigitalLoans: vi.fn(),
     useDigitalReservations: vi.fn()
   })
@@ -83,10 +83,10 @@ const givenAdapterSays = ({
   anonymous?: boolean;
 }) => {
   vi.mocked(isAnonymous).mockReturnValue(anonymous);
-  vi.mocked(useLoanDecision).mockReturnValue({
+  vi.mocked(useDigitalLoanDecision).mockReturnValue({
     data: status ? { status } : undefined,
     isLoading: false
-  } as unknown as ReturnType<typeof useLoanDecision>);
+  } as unknown as ReturnType<typeof useDigitalLoanDecision>);
   vi.mocked(useDigitalLoans).mockReturnValue({
     data: { loans },
     isLoading: false

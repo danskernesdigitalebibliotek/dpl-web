@@ -61,23 +61,23 @@ export {
   createDigitalLoan,
   createDigitalReservation,
   deleteDigitalReservation,
-  getLoanDecision,
+  getDigitalLoanDecision,
+  getDigitalLoanQuota,
   getDigitalLoanQuotas,
   getDigitalLoans,
   getDigitalMaterial,
   getDigitalReservations,
-  getReaderSignInToken,
   getDigitalSupportId,
-  getLoanQuota,
+  getReaderSignInToken,
+  isCostFreeLoan,
   isMaterialAvailable,
   isMaterialLoanable,
   isMaterialReservable,
-  isCostFreeLoan,
   isRequestGranted,
 } from "./biblio"
 export {
-  loanDecisionQuery,
-  loanDecisionQueryKey,
+  digitalLoanDecisionQuery,
+  digitalLoanDecisionQueryKey,
   digitalLoanQuotasQuery,
   digitalLoanQuotasQueryKey,
   digitalLoansQuery,
@@ -91,11 +91,11 @@ export {
   digitalSupportIdQuery,
   digitalSupportIdQueryKey,
 } from "./queries/biblio"
-export { useAcceptDigitalOffer } from "./hooks/useAcceptDigitalOffer"
-export { useCreateDigitalLoan } from "./hooks/useCreateDigitalLoan"
-export { useCreateDigitalReservation } from "./hooks/useCreateDigitalReservation"
-export { useDeleteDigitalReservation } from "./hooks/useDeleteDigitalReservation"
-export { useLoanDecision } from "./hooks/useLoanDecision"
+export { useDigitalAcceptOffer } from "./hooks/useDigitalAcceptOffer"
+export { useDigitalCreateLoan } from "./hooks/useDigitalCreateLoan"
+export { useDigitalCreateReservation } from "./hooks/useDigitalCreateReservation"
+export { useDigitalDeleteReservation } from "./hooks/useDigitalDeleteReservation"
+export { useDigitalLoanDecision } from "./hooks/useDigitalLoanDecision"
 export { useDigitalLoanQuotas } from "./hooks/useDigitalLoanQuotas"
 export { useDigitalLoans } from "./hooks/useDigitalLoans"
 export { useDigitalMaterial } from "./hooks/useDigitalMaterial"

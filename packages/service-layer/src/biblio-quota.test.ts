@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest"
 
-import { getLoanQuota } from "./biblio"
+import { getDigitalLoanQuota } from "./biblio"
 import { type DigitalLoanQuota } from "./types"
 
-describe("getLoanQuota", () => {
+describe("getDigitalLoanQuota", () => {
   const splitQuota: DigitalLoanQuota = {
     splitOnFormat: true,
     orgId: "org-1",
@@ -25,40 +25,42 @@ describe("getLoanQuota", () => {
   }
 
   it("Reads the monthly counters per format when the organization splits on format", () => {
-    expect(getLoanQuota({ quotas: [splitQuota], format: "ebook" })).toEqual({
+    expect(getDigitalLoanQuota({ quotas: [splitQuota], format: "ebook" })).toEqual({
       current: 4,
       limit: 7,
     })
-    expect(getLoanQuota({ quotas: [splitQuota], format: "audiobook" })).toEqual({
+    expect(getDigitalLoanQuota({ quotas: [splitQuota], format: "audiobook" })).toEqual({
       current: 2,
       limit: 5,
     })
   })
 
   it("Uses the same counters for both formats when the organization combines them", () => {
-    expect(getLoanQuota({ quotas: [combinedQuota], format: "ebook" })).toEqual({
+    expect(getDigitalLoanQuota({ quotas: [combinedQuota], format: "ebook" })).toEqual({
       current: 6,
       limit: 10,
     })
-    expect(getLoanQuota({ quotas: [combinedQuota], format: "audiobook" })).toEqual({
+    expect(getDigitalLoanQuota({ quotas: [combinedQuota], format: "audiobook" })).toEqual({
       current: 6,
       limit: 10,
     })
   })
 
   it("Reads the concurrent counters when asked for loans held right now", () => {
-    expect(getLoanQuota({ quotas: [splitQuota], format: "ebook", period: "concurrent" })).toEqual({
+    expect(
+      getDigitalLoanQuota({ quotas: [splitQuota], format: "ebook", period: "concurrent" })
+    ).toEqual({
       current: 1,
       limit: 3,
     })
     expect(
-      getLoanQuota({ quotas: [splitQuota], format: "audiobook", period: "concurrent" })
+      getDigitalLoanQuota({ quotas: [splitQuota], format: "audiobook", period: "concurrent" })
     ).toEqual({
       current: 0,
       limit: 2,
     })
     expect(
-      getLoanQuota({ quotas: [combinedQuota], format: "ebook", period: "concurrent" })
+      getDigitalLoanQuota({ quotas: [combinedQuota], format: "ebook", period: "concurrent" })
     ).toEqual({
       current: 2,
       limit: 4,
@@ -66,11 +68,11 @@ describe("getLoanQuota", () => {
   })
 
   it("Falls back to an unknown limit when there is no quota", () => {
-    expect(getLoanQuota({ quotas: undefined, format: "ebook" })).toEqual({
+    expect(getDigitalLoanQuota({ quotas: undefined, format: "ebook" })).toEqual({
       current: 0,
       limit: undefined,
     })
-    expect(getLoanQuota({ quotas: [], format: "ebook" })).toEqual({
+    expect(getDigitalLoanQuota({ quotas: [], format: "ebook" })).toEqual({
       current: 0,
       limit: undefined,
     })

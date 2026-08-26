@@ -3,9 +3,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import useOnlineInternalHandleLoanReservation from "../../core/utils/useOnlineInternalHandleLoanReservation";
 import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 import {
-  useCreateDigitalLoan,
-  useCreateDigitalReservation,
-  useAcceptDigitalOffer
+  useDigitalCreateLoan,
+  useDigitalCreateReservation,
+  useDigitalAcceptOffer
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import {
@@ -21,9 +21,9 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useCreateDigitalLoan: vi.fn(),
-    useCreateDigitalReservation: vi.fn(),
-    useAcceptDigitalOffer: vi.fn()
+    useDigitalCreateLoan: vi.fn(),
+    useDigitalCreateReservation: vi.fn(),
+    useDigitalAcceptOffer: vi.fn()
   })
 );
 
@@ -115,7 +115,7 @@ const givenScenario = ({
   } as unknown as ReturnType<typeof useReaderPlayer>);
 
   const asMutation = (mutate: unknown) =>
-    ({ mutate }) as unknown as ReturnType<typeof useCreateDigitalLoan>;
+    ({ mutate }) as unknown as ReturnType<typeof useDigitalCreateLoan>;
 
   vi.mocked(usePostV1UserLoansIdentifier).mockReturnValue(
     asMutation(mutations.publizonLoan) as never
@@ -123,13 +123,13 @@ const givenScenario = ({
   vi.mocked(usePostV1UserReservationsIdentifier).mockReturnValue(
     asMutation(mutations.publizonReservation) as never
   );
-  vi.mocked(useCreateDigitalLoan).mockReturnValue(
+  vi.mocked(useDigitalCreateLoan).mockReturnValue(
     asMutation(mutations.digitalLoan)
   );
-  vi.mocked(useCreateDigitalReservation).mockReturnValue(
+  vi.mocked(useDigitalCreateReservation).mockReturnValue(
     asMutation(mutations.digitalReservation) as never
   );
-  vi.mocked(useAcceptDigitalOffer).mockReturnValue(
+  vi.mocked(useDigitalAcceptOffer).mockReturnValue(
     asMutation(mutations.biblioAcceptOffer) as never
   );
 };

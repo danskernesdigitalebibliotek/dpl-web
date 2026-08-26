@@ -23,7 +23,7 @@ import {
   requestsAndReservations
 } from "./helper";
 import {
-  useDeleteDigitalReservation,
+  useDigitalDeleteReservation,
   digitalReservationsQueryKey
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import ModalMessage from "../../../../components/message/modal-message/ModalMessage";
@@ -55,7 +55,7 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
   const { mutate: deletePhysicalReservation } = useDeleteReservations();
   const { mutate: deletePublizonReservation } =
     useDeleteV1UserReservationsIdentifier();
-  const { mutate: deleteDigitalReservation } = useDeleteDigitalReservation();
+  const { mutate: deleteDigitalReservation } = useDigitalDeleteReservation();
   const [deletedReservations, setDeletedReservations] = useState<number | null>(
     null
   );

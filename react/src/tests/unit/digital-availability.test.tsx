@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
 import useDigitalAvailability from "../../core/digital/useDigitalAvailability";
-import { useLoanDecision } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalLoanDecision } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 import { isAnonymous } from "../../core/utils/helpers/user";
 import useTolerateUnknownMaterials from "../../core/digital/useTolerateUnknownMaterials";
@@ -15,7 +15,7 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useLoanDecision: vi.fn()
+    useDigitalLoanDecision: vi.fn()
   })
 );
 vi.mock("../../core/utils/useServiceLayerLending", () => ({
@@ -26,7 +26,7 @@ vi.mock("../../core/digital/useTolerateUnknownMaterials", () => ({
   default: vi.fn()
 }));
 
-const mockedLoanDecision = vi.mocked(useLoanDecision);
+const mockedLoanDecision = vi.mocked(useDigitalLoanDecision);
 const mockedFlag = vi.mocked(useServiceLayerLending);
 const mockedIsAnonymous = vi.mocked(isAnonymous);
 
@@ -36,7 +36,7 @@ const givenAdapterAnswers = (status: string) =>
   mockedLoanDecision.mockReturnValue({
     data: { status },
     isLoading: false
-  } as unknown as ReturnType<typeof useLoanDecision>);
+  } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
 const render = (isbn: string | null = ISBN, enabled = true) =>
   renderHook(() => useDigitalAvailability({ enabled, isbn }));
@@ -55,7 +55,7 @@ describe("useDigitalAvailability", () => {
     mockedLoanDecision.mockReturnValue({
       data: undefined,
       isLoading: false
-    } as unknown as ReturnType<typeof useLoanDecision>);
+    } as unknown as ReturnType<typeof useDigitalLoanDecision>);
   });
 
   it("Answers for the material when the library has enabled the flag", () => {
@@ -135,7 +135,7 @@ describe("useDigitalAvailability", () => {
       mockedLoanDecision.mockReturnValue({
         data: null,
         isLoading: false
-      } as unknown as ReturnType<typeof useLoanDecision>);
+      } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
       const { result } = render();
 

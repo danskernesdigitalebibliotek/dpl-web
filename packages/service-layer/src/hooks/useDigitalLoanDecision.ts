@@ -3,14 +3,14 @@
 import { type UseQueryOptions, type UseQueryResult, useQuery } from "@tanstack/react-query"
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
-import type { loanDecisionQueryKey } from "../queries/biblio"
-import { loanDecisionQuery } from "../queries/biblio"
+import type { digitalLoanDecisionQueryKey } from "../queries/biblio"
+import { digitalLoanDecisionQuery } from "../queries/biblio"
 import type { LoanDecision } from "../types"
 
-type LoanDecisionQueryKey = ReturnType<typeof loanDecisionQueryKey>
+type DigitalLoanDecisionQueryKey = ReturnType<typeof digitalLoanDecisionQueryKey>
 
-type UseLoanDecisionOptions = Omit<
-  UseQueryOptions<LoanDecision | null, Error, LoanDecision | null, LoanDecisionQueryKey>,
+type UseDigitalLoanDecisionOptions = Omit<
+  UseQueryOptions<LoanDecision | null, Error, LoanDecision | null, DigitalLoanDecisionQueryKey>,
   "queryKey" | "queryFn" | "enabled"
 > & {
   enabled?: boolean
@@ -31,14 +31,14 @@ type UseLoanDecisionOptions = Omit<
  * whole page down. The hook therefore refuses to ask without a patron, so a
  * call site cannot forget to guard.
  */
-export const useLoanDecision = (
+export const useDigitalLoanDecision = (
   materialId: string | null,
-  options?: UseLoanDecisionOptions
+  options?: UseDigitalLoanDecisionOptions
 ): UseQueryResult<LoanDecision | null, Error> => {
   const config = useServiceLayerConfig()
   const { enabled = true, allowNotFound, ...restOptions } = options ?? {}
   return useQuery({
-    ...loanDecisionQuery(config, materialId, { allowNotFound }),
+    ...digitalLoanDecisionQuery(config, materialId, { allowNotFound }),
     ...restOptions,
     enabled: config.isPatronAuthenticated && enabled && Boolean(materialId),
   })

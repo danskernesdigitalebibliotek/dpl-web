@@ -23,10 +23,10 @@ import { RequestStatus } from "../../core/utils/types/request";
 import { ApiResult, CreateLoanResult } from "../publizon/model";
 import PublizonServiceError from "../publizon/mutator/PublizonServiceError";
 import {
-  useCreateDigitalLoan,
-  useCreateDigitalReservation,
-  useAcceptDigitalOffer,
-  loanDecisionQueryKey,
+  useDigitalCreateLoan,
+  useDigitalCreateReservation,
+  useDigitalAcceptOffer,
+  digitalLoanDecisionQueryKey,
   digitalLoanQuotasQueryKey,
   digitalLoansQueryKey,
   digitalReservationsQueryKey,
@@ -65,10 +65,10 @@ const useOnlineInternalHandleLoanReservation = ({
   const { track } = useEventStatistics();
   const viaServiceLayer = useServiceLayerLending();
   const { mutate: mutateLoan } = usePostV1UserLoansIdentifier();
-  const { mutate: mutateDigitalLoan } = useCreateDigitalLoan();
+  const { mutate: mutateDigitalLoan } = useDigitalCreateLoan();
   const { mutate: mutateReservation } = usePostV1UserReservationsIdentifier();
-  const { mutate: mutateDigitalReservation } = useCreateDigitalReservation();
-  const { mutate: mutateAcceptOffer } = useAcceptDigitalOffer();
+  const { mutate: mutateDigitalReservation } = useDigitalCreateReservation();
+  const { mutate: mutateAcceptOffer } = useDigitalAcceptOffer();
   const { data: userData } = usePatronData();
 
   // With the adapter enabled every new loan and reservation goes there, with
@@ -105,7 +105,7 @@ const useOnlineInternalHandleLoanReservation = ({
       [
         digitalLoansQueryKey(),
         digitalReservationsQueryKey(),
-        loanDecisionQueryKey(identifier),
+        digitalLoanDecisionQueryKey(identifier),
         digitalLoanQuotasQueryKey()
       ].forEach((queryKey) => queryClient.invalidateQueries({ queryKey }));
     };

@@ -17,7 +17,7 @@ type UseBiblioDeleteReservationOptions = Omit<
  * A request the adapter accepted without removing anything rejects rather than
  * resolves; see deleteDigitalReservation for why.
  */
-export const useDeleteDigitalReservation = (
+export const useDigitalDeleteReservation = (
   options?: UseBiblioDeleteReservationOptions
 ): UseMutationResult<boolean, Error, string> => {
   const config = useServiceLayerConfig()

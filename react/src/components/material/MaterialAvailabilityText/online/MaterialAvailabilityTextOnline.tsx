@@ -13,9 +13,9 @@ import { playerTypes, readerTypes } from "../../../reader-player/helper";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
 import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
 import {
-  getLoanQuota,
+  getDigitalLoanQuota,
   isCostFreeLoan,
-  useLoanDecision,
+  useDigitalLoanDecision,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useServiceLayerLending from "../../../../core/utils/useServiceLayerLending";
@@ -73,7 +73,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   // has no licence to read a price from, which the falsy checks below
   // already handle.
   const tolerateUnknown = useTolerateUnknownMaterials();
-  const { data: loanDecision } = useLoanDecision(isbn, {
+  const { data: loanDecision } = useDigitalLoanDecision(isbn, {
     enabled: Boolean(isbn) && isProvidedByServiceLayer,
     allowNotFound: tolerateUnknown
   });
@@ -83,7 +83,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   const { patronEbookLoans, patronAudioLoans } = getPatronLoanQuotas(loansData);
 
   const ebookQuota = isProvidedByServiceLayer
-    ? getLoanQuota({
+    ? getDigitalLoanQuota({
         quotas: digitalQuotas,
         format: "ebook",
         period: "monthly"
@@ -93,7 +93,7 @@ const MaterialAvailabilityTextOnline: React.FC<
         limit: libraryProfileData?.maxConcurrentEbookLoansPerBorrower
       };
   const audioQuota = isProvidedByServiceLayer
-    ? getLoanQuota({
+    ? getDigitalLoanQuota({
         quotas: digitalQuotas,
         format: "audiobook",
         period: "monthly"

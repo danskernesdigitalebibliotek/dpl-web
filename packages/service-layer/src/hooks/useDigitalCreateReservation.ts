@@ -17,7 +17,7 @@ type UseBiblioCreateReservationOptions = Omit<
  * Answers with the same envelope as a loan request: a decision status, and a
  * loan when the material turned out to be available right away.
  */
-export const useCreateDigitalReservation = (
+export const useDigitalCreateReservation = (
   options?: UseBiblioCreateReservationOptions
 ): UseMutationResult<LoanRequestResult, Error, string> => {
   const config = useServiceLayerConfig()
