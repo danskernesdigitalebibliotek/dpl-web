@@ -7,7 +7,7 @@ import { LoanId } from "../../../../core/utils/types/ids";
 import StatusCircle from "../utils/status-circle";
 import StatusBadge from "../utils/status-badge";
 import LinkButton from "../../../../components/Buttons/LinkButton";
-import { Button } from "../../../../components/Buttons/Button";
+import Player from "../../../../components/reader-player/Player";
 import { Cover } from "../../../../components/cover/cover";
 import AuthorYear from "../../../../components/author-year/authorYear";
 import { useText } from "../../../../core/utils/text";
@@ -85,48 +85,24 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
         </LinkButton>
       );
     }
-    // A Biblio audiobook plays on the reader page - the SDK's player bar
-    // cannot live in a modal. See DigitalReaderPlayer for the full why.
-    if (digitalProvider === "serviceLayer") {
-      return (
-        <LinkButton
-          url={readerUrl(orderId, digitalProvider)}
-          buttonType="none"
-          variant="filled"
-          size="small"
-          dataCy="loan-list-player-button"
-          trackClick={() =>
-            track("click", {
-              id: statistics.publizonReadListen.id,
-              name: statistics.publizonReadListen.name,
-              trackedData: orderId
-            })
-          }
-        >
-          {t("onlineMaterialPlayerText", {
-            placeholders: { "@materialType": material?.materialType || "" }
-          })}
-        </LinkButton>
-      );
-    }
     return (
-      <Button
-        dataCy="loan-list-player-button"
+      <Player
+        orderId={orderId}
+        provider={digitalProvider}
         label={t("onlineMaterialPlayerText", {
           placeholders: { "@materialType": material?.materialType || "" }
         })}
-        buttonType="none"
-        variant="filled"
         size="small"
-        collapsible={false}
-        onClick={() => {
+        dataCy="loan-list-player-button"
+        trackClick={() =>
           track("click", {
             id: statistics.publizonReadListen.id,
             name: statistics.publizonReadListen.name,
             trackedData: orderId
-          });
-          onPlayDigital(loan);
-        }}
+          })
+        }
+        // The list mounts the Publizon modal itself, one per open player.
+        onPlayInModal={() => onPlayDigital(loan)}
       />
     );
   };

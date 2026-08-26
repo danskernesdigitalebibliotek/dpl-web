@@ -25,6 +25,7 @@ import { WorkId } from "../../../../core/utils/types/ids";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 import PlayerModal from "../../player-modal/PlayerModal";
+import Player from "../../../reader-player/Player";
 import MaterialButtonLoading from "../generic/MaterialButtonLoading";
 import { useModalIdsToCloseForReservation } from "../../../../core/utils/useModalIdsToCloseForReservation";
 
@@ -56,9 +57,9 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const { track } = useEventStatistics();
   const t = useText();
   const viaServiceLayer = useServiceLayerLending();
-  // With the flag on, Biblio is the lending provider, so a signed-in patron
-  // samples through WeDoBooks on the reader page - and Publizon must not
-  // stand in for anyone. WeDoBooks only answers samples for a signed-in
+  // With the flag on, the service layer is the lending provider, so a
+  // signed-in patron samples through it on the reader page - and Publizon
+  // must not stand in for anyone. Samples are only answered for a signed-in
   // session, so an anonymous visitor gets a disabled button until an
   // anonymous sample exists.
   const samplesThroughServiceLayer = viaServiceLayer && !isAnonymous();
@@ -237,15 +238,17 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     }
 
     if (isAlreadyLoaned && orderId) {
-      // A Biblio audiobook plays on the reader page rather than in a modal:
-      // the SDK's player bar pins itself to the bottom of the viewport, which
-      // leaves a wrapping modal empty. See DigitalReaderPlayer.
-      if (holdingProvider === "serviceLayer") {
-        return (
-          <LinkButton
-            url={readerUrl(orderId, holdingProvider)}
-            buttonType="none"
-            variant="filled"
+      // The modal renders nothing until it is opened, and a digital loan
+      // never opens it - Player sends that one to the reader page instead.
+      return (
+        <>
+          <PlayerModal orderId={orderId} />
+          <Player
+            orderId={orderId}
+            provider={holdingProvider}
+            label={t("onlineMaterialPlayerText", {
+              placeholders: { "@materialType": manifestationType }
+            })}
             size={size || "large"}
             dataCy={`${dataCy}-player`}
             trackClick={() =>
@@ -255,34 +258,9 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
                 trackedData: workId
               })
             }
-          >
-            {t("onlineMaterialPlayerText", {
-              placeholders: { "@materialType": manifestationType }
-            })}
-          </LinkButton>
-        );
-      }
-      return (
-        <>
-          <PlayerModal orderId={orderId} />
-          <Button
-            dataCy={`${dataCy}-player`}
-            label={t("onlineMaterialPlayerText", {
-              placeholders: { "@materialType": manifestationType }
-            })}
-            buttonType="none"
-            variant="filled"
-            size={size || "large"}
-            onClick={() => {
-              track("click", {
-                id: statistics.publizonReadListen.id,
-                name: statistics.publizonReadListen.name,
-                trackedData: workId
-              });
-              open(playerModalId(orderId), modalCloseOptions);
-            }}
-            disabled={false}
-            collapsible={false}
+            onPlayInModal={() =>
+              open(playerModalId(orderId), modalCloseOptions)
+            }
           />
         </>
       );
@@ -326,9 +304,9 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
         );
       }
 
-      // The WeDoBooks player pins itself to the bottom of the viewport, which
-      // leaves a wrapping modal empty - so a Biblio sample gets the reader
-      // page, exactly like a Biblio loan does.
+      // The SDK's player pins itself to the bottom of the viewport, which
+      // leaves a wrapping modal empty - so a digital sample gets the reader
+      // page, exactly like a digital loan does.
       if (samplesThroughServiceLayer) {
         return (
           <MaterialSecondaryLink
