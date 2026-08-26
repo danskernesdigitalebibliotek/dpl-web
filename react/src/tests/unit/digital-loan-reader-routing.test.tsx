@@ -4,12 +4,12 @@ import { render } from "@testing-library/react";
 import type { Loan } from "../../core/publizon/model";
 import type { DigitalLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
-  mapBiblioLoanToLoanType,
+  mapDigitalLoanToLoanType,
   mapPublizonLoanToLoanType
 } from "../../core/utils/helpers/list-mapper";
 import { readerUrl } from "../../components/reader-player/helper";
 import BiblioReaderPlayer from "../../components/reader-player/BiblioReaderPlayer";
-import useWedoBooksCheckout from "../../core/biblio/useWedoBooksCheckout";
+import useReaderCheckout from "../../core/digital/useReaderCheckout";
 
 // The reader and player themselves need the SDK; which of them mounts is the
 // decision under test, so they are reduced to markers.
@@ -19,15 +19,15 @@ vi.mock("../../components/reader-player/BiblioReader", () => ({
 vi.mock("../../components/reader-player/BiblioPlayer", () => ({
   default: () => <div data-testid="player" />
 }));
-vi.mock("../../core/biblio/useWedoBooksCheckout", () => ({
+vi.mock("../../core/digital/useReaderCheckout", () => ({
   default: vi.fn()
 }));
 
 const givenCheckout = (materialType: string | null) =>
-  vi.mocked(useWedoBooksCheckout).mockReturnValue({
+  vi.mocked(useReaderCheckout).mockReturnValue({
     sdk: {},
     checkout: materialType ? { material_type: materialType } : null
-  } as unknown as ReturnType<typeof useWedoBooksCheckout>);
+  } as unknown as ReturnType<typeof useReaderCheckout>);
 import { store } from "../../core/store";
 import { addTextEntries } from "../../core/text.slice";
 
@@ -77,7 +77,7 @@ describe("Which reader a digital loan opens in", () => {
       })
     );
 
-    const [loan] = mapBiblioLoanToLoanType([biblioLoan]);
+    const [loan] = mapDigitalLoanToLoanType([biblioLoan]);
 
     expect(loan.digitalProvider).toBe("biblio");
   });
@@ -91,7 +91,7 @@ describe("Which reader a digital loan opens in", () => {
     );
 
     const [publizon] = mapPublizonLoanToLoanType([publizonLoan]);
-    const [biblio] = mapBiblioLoanToLoanType([biblioLoan]);
+    const [biblio] = mapDigitalLoanToLoanType([biblioLoan]);
 
     // Same field, different id: the order id for Publizon, the loan id for
     // Biblio. This is exactly why the provider has to be carried alongside it.

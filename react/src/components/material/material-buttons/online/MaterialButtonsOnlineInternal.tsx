@@ -8,7 +8,7 @@ import { useText } from "../../../../core/utils/text";
 import { ButtonSize } from "../../../../core/utils/types/button";
 import useReaderPlayer from "../../../../core/utils/useReaderPlayer";
 import { readerUrl, sampleUrl } from "../../../reader-player/helper";
-import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
+import useServiceLayerLending from "../../../../core/utils/useServiceLayerLending";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
 import LinkButton from "../../../Buttons/LinkButton";
 import { Button } from "../../../Buttons/Button";
@@ -55,14 +55,14 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
 }) => {
   const { track } = useEventStatistics();
   const t = useText();
-  const useBiblio = useBiblioAdapter();
+  const viaServiceLayer = useServiceLayerLending();
   // With the flag on, Biblio is the lending provider, so a signed-in patron
   // samples through WeDoBooks on the reader page - and Publizon must not
   // stand in for anyone. WeDoBooks only answers samples for a signed-in
   // session, so an anonymous visitor gets a disabled button until an
   // anonymous sample exists.
-  const samplesThroughBiblio = useBiblio && !isAnonymous();
-  const samplingUnavailable = useBiblio && isAnonymous();
+  const samplesThroughServiceLayer = viaServiceLayer && !isAnonymous();
+  const samplingUnavailable = viaServiceLayer && isAnonymous();
   const { open } = useModalButtonHandler();
   const modalsToClose = useModalIdsToCloseForReservation();
   const modalCloseOptions = isEditionPicker ? { modalsToClose } : undefined;
@@ -329,7 +329,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       // The WeDoBooks player pins itself to the bottom of the viewport, which
       // leaves a wrapping modal empty - so a Biblio sample gets the reader
       // page, exactly like a Biblio loan does.
-      if (samplesThroughBiblio) {
+      if (samplesThroughServiceLayer) {
         return (
           <MaterialSecondaryLink
             label={tryLabel}

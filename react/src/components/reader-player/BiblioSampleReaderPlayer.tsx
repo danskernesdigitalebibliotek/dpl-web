@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import useWedoBooksSdk from "../../core/biblio/useWedoBooksSdk";
+import useReaderSdk from "../../core/digital/useReaderSdk";
 
 // Loaded on demand for the same reason as the loan reader: the SDK carries a
 // reading framework, Firebase and a component library, and only someone
@@ -38,7 +38,7 @@ const BiblioSampleReaderPlayer: React.FC<BiblioSampleReaderPlayerProps> = ({
   materialType,
   onClose
 }) => {
-  const { data: sdk } = useWedoBooksSdk();
+  const { data: sdk } = useReaderSdk();
 
   // Nothing to render until the session is in hand. The SDK draws its own
   // loading state once mounted, so showing one here as well would only make

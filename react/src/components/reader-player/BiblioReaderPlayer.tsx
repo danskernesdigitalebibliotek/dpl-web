@@ -1,5 +1,5 @@
 import React from "react";
-import useWedoBooksCheckout from "../../core/biblio/useWedoBooksCheckout";
+import useReaderCheckout from "../../core/digital/useReaderCheckout";
 import BiblioReader from "./BiblioReader";
 import BiblioPlayer from "./BiblioPlayer";
 
@@ -28,7 +28,7 @@ const BiblioReaderPlayer: React.FC<BiblioReaderPlayerProps> = ({
   loanId,
   onClose
 }) => {
-  const { checkout } = useWedoBooksCheckout(loanId);
+  const { checkout } = useReaderCheckout(loanId);
 
   // Nothing to decide from until the entitlement is here. The reader and
   // player render nothing during their own load anyway, so this adds no wait.

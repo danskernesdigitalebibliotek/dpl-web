@@ -1,8 +1,8 @@
 import { useGetV1UserReservations } from "../publizon/publizon";
 import { useDigitalReservations } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import useBiblioAdapter from "./useBiblioAdapter";
+import useServiceLayerLending from "./useServiceLayerLending";
 import {
-  mapBiblioReservationToReservationType,
+  mapDigitalReservationToReservationType,
   mapFBSReservationGroupToReservationType,
   mapPublizonReservationToReservationType
 } from "./helpers/list-mapper";
@@ -42,7 +42,7 @@ type UseReservationsType = {
 type UseReservations = () => UseReservationsType;
 
 const useReservations: UseReservations = () => {
-  const useBiblio = useBiblioAdapter();
+  const viaServiceLayer = useServiceLayerLending();
   const {
     data: reservationsFbs,
     isLoading: isLoadingFbs,
@@ -54,15 +54,15 @@ const useReservations: UseReservations = () => {
     isError: isErrorPublizonData
   } = useGetV1UserReservations();
   const {
-    data: reservationsBiblio,
-    isLoading: isLoadingBiblio,
-    isError: isErrorBiblio
-  } = useDigitalReservations({ enabled: useBiblio });
+    data: reservationsServiceLayer,
+    isLoading: isLoadingServiceLayer,
+    isError: isErrorServiceLayer
+  } = useDigitalReservations({ enabled: viaServiceLayer });
 
   // A disabled query is never loading or in error so the Biblio states only
   // count when the feature flag has enabled the query.
-  const isLoadingDigital = isLoadingPublizonData || isLoadingBiblio;
-  const isErrorDigital = isErrorPublizonData || isErrorBiblio;
+  const isLoadingDigital = isLoadingPublizonData || isLoadingServiceLayer;
+  const isErrorDigital = isErrorPublizonData || isErrorServiceLayer;
 
   const reservationsIsLoading = isLoadingFbs || isLoadingDigital;
   const reservationsIsError = isErrorFbs || isErrorDigital;
@@ -71,8 +71,10 @@ const useReservations: UseReservations = () => {
   const mappedReservationsFbs = reservationsFbs
     ? mapFBSReservationGroupToReservationType(reservationsFbs)
     : [];
-  const mappedReservationsBiblio = reservationsBiblio?.reservations
-    ? mapBiblioReservationToReservationType(reservationsBiblio.reservations)
+  const mappedReservationsServiceLayer = reservationsServiceLayer?.reservations
+    ? mapDigitalReservationToReservationType(
+        reservationsServiceLayer.reservations
+      )
     : [];
   const mappedReservationsDigital = [
     ...(reservationsPublizon?.reservations
@@ -80,7 +82,7 @@ const useReservations: UseReservations = () => {
           reservationsPublizon.reservations
         )
       : []),
-    ...mappedReservationsBiblio
+    ...mappedReservationsServiceLayer
   ];
 
   // Combine all reservations, physical and digital

@@ -5,7 +5,7 @@ import {
   type DigitalLoan,
   type DigitalReservation
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import useBiblioReaderPlayerState from "../../core/utils/useBiblioReaderPlayerState";
+import useDigitalReaderPlayerState from "../../core/utils/useDigitalReaderPlayerState";
 import {
   useLoanDecision,
   useDigitalLoans,
@@ -40,7 +40,7 @@ vi.mock(
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
 // TEMPORARY toleration flag; reads config from Redux, which these bare hook
 // renders have no provider for. Off keeps the strict default under test.
-vi.mock("../../core/biblio/useBiblioTolerateUnknownMaterials", () => ({
+vi.mock("../../core/digital/useTolerateUnknownMaterials", () => ({
   default: () => false
 }));
 
@@ -98,10 +98,10 @@ const givenAdapterSays = ({
 };
 
 const render = (identifier: string | null = IDENTIFIER, enabled = true) =>
-  renderHook(() => useBiblioReaderPlayerState({ identifier, enabled })).result
+  renderHook(() => useDigitalReaderPlayerState({ identifier, enabled })).result
     .current;
 
-describe("useBiblioReaderPlayerState", () => {
+describe("useDigitalReaderPlayerState", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });

@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import useWedoBooksCheckout from "../../core/biblio/useWedoBooksCheckout";
+import useReaderCheckout from "../../core/digital/useReaderCheckout";
 
 const WedoBooksPlayer = React.lazy(() =>
   import("@danskernesdigitalebibliotek/dpl-wedobooks").then((module) => ({
@@ -20,7 +20,7 @@ export type BiblioPlayerProps = {
  * See `BiblioReader` for why the loan, not the library, decides which one runs.
  */
 const BiblioPlayer: React.FC<BiblioPlayerProps> = ({ loanId, onClose }) => {
-  const { sdk, checkout } = useWedoBooksCheckout(loanId);
+  const { sdk, checkout } = useReaderCheckout(loanId);
 
   if (!sdk || !checkout) return null;
 

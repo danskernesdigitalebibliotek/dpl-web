@@ -5,7 +5,7 @@ import { ReservationType } from "./reservation-type";
  * material page to offer it.
  *
  * This is the seam of the Publizon → Biblio transition. Two hooks produce it -
- * `usePublizonReaderPlayerState` and `useBiblioReaderPlayerState` - and
+ * `usePublizonReaderPlayerState` and `useDigitalReaderPlayerState` - and
  * `useReaderPlayer` composes the result. Keeping the shape provider-neutral is
  * what lets the Publizon side be deleted without touching a single component:
  * when it goes, one producer is removed and the composition collapses into the

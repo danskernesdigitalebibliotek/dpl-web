@@ -6,28 +6,29 @@ import {
   useDigitalReservations
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
-  mapBiblioLoanToLoanType,
-  mapBiblioReservationToReservationType
+  mapDigitalLoanToLoanType,
+  mapDigitalReservationToReservationType
 } from "./helpers/list-mapper";
 import { isAnonymous } from "./helpers/user";
-import useBiblioTolerateUnknownMaterials from "../biblio/useBiblioTolerateUnknownMaterials";
+import useTolerateUnknownMaterials from "../digital/useTolerateUnknownMaterials";
 import {
   ReaderPlayerState,
   unknownReaderPlayerState
 } from "./types/reader-player-state";
 
 /**
- * What the Biblio adapter says about a digital material.
+ * What the service layer says about a digital material.
  *
- * The Biblio half of the transition - see `ReaderPlayerState` for how it is
+ * The service layer half of the transition - see `ReaderPlayerState` for how
+ * it is
  * kept interchangeable with the Publizon half. Callers gate on the provider
  * probe through `enabled`; this hook only asks the adapter about materials it
  * actually provides.
  *
- * ## Where Biblio differs from Publizon
+ * ## Where the service layer differs from Publizon
  *
  * Publizon answers everything from one loan status per material, including
- * whether the user already holds it. Biblio splits that across three
+ * whether the user already holds it. The service layer splits that across three
  * endpoints, which is an improvement: the loan the user holds is the same
  * record that gives us the key to open it in the reader, rather than a status
  * code that happens to say "loaned".
@@ -38,7 +39,7 @@ import {
  * useOnlineInternalHandleLoanReservation, which accepts the offer instead of
  * creating a second loan.
  */
-const useBiblioReaderPlayerState = ({
+const useDigitalReaderPlayerState = ({
   identifier,
   enabled
 }: {
@@ -52,14 +53,15 @@ const useBiblioReaderPlayerState = ({
   // same deal Publizon gets.
   const isActiveForUser = isActive && !isUserAnonymous;
 
-  // TEMPORARY allowNotFound, see useBiblioTolerateUnknownMaterials. A
+  // TEMPORARY allowNotFound, see useTolerateUnknownMaterials. A
   // tolerated unknown material resolves to null, and null offers nothing -
   // exactly what a material the provider cannot lend should get.
-  const tolerateUnknown = useBiblioTolerateUnknownMaterials();
-  const { data: canLoan, isLoading: isLoadingCanLoan } = useLoanDecision(
-    identifier,
-    { enabled: isActiveForUser, allowNotFound: tolerateUnknown }
-  );
+  const tolerateUnknown = useTolerateUnknownMaterials();
+  const { data: loanDecision, isLoading: isLoadingLoanDecision } =
+    useLoanDecision(identifier, {
+      enabled: isActiveForUser,
+      allowNotFound: tolerateUnknown
+    });
 
   const { data: loansData, isLoading: isLoadingLoans } = useDigitalLoans({
     enabled: isActiveForUser
@@ -84,17 +86,17 @@ const useBiblioReaderPlayerState = ({
     ({ materialId }) => materialId === identifier
   );
 
-  const biblioReservation = reservationsData?.reservations.find(
+  const digitalReservation = reservationsData?.reservations.find(
     ({ materialId }) => materialId === identifier
   );
 
   // An offer is waiting to be accepted as a loan; without one the user is
   // still queued and can only cancel.
-  const offerId = biblioReservation?.offerId ?? null;
+  const offerId = digitalReservation?.offerId ?? null;
   const queuedReservation =
-    biblioReservation && !offerId ? biblioReservation : undefined;
+    digitalReservation && !offerId ? digitalReservation : undefined;
 
-  const status = canLoan?.status;
+  const status = loanDecision?.status;
 
   return {
     isAlreadyLoaned: Boolean(loan),
@@ -103,16 +105,18 @@ const useBiblioReaderPlayerState = ({
     canBeLoaned:
       Boolean(offerId) || (status ? isMaterialLoanable(status) : false),
     canBeReserved: status ? isMaterialReservable(status) : false,
-    // The Biblio loan id plays the same role as Publizon's order id.
-    orderId: loan ? (mapBiblioLoanToLoanType([loan])[0].orderId ?? null) : null,
-    // Mapped rather than passed through so cancelling routes to Biblio: the
+    // The service layer's loan id plays the same role as Publizon's order id.
+    orderId: loan
+      ? (mapDigitalLoanToLoanType([loan])[0].orderId ?? null)
+      : null,
+    // Mapped rather than passed through so cancelling routes correctly: the
     // mapping is what carries the adapter's own reservation id.
     reservation: queuedReservation
-      ? mapBiblioReservationToReservationType([queuedReservation])[0]
+      ? mapDigitalReservationToReservationType([queuedReservation])[0]
       : null,
     offerId,
-    isLoading: isLoadingCanLoan || isLoadingLoans || isLoadingReservations
+    isLoading: isLoadingLoanDecision || isLoadingLoans || isLoadingReservations
   };
 };
 
-export default useBiblioReaderPlayerState;
+export default useDigitalReaderPlayerState;

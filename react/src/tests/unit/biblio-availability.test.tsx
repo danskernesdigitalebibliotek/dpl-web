@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
-import useBiblioAvailability from "../../core/biblio/useBiblioAvailability";
+import useDigitalAvailability from "../../core/digital/useDigitalAvailability";
 import { useLoanDecision } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 import { isAnonymous } from "../../core/utils/helpers/user";
-import useBiblioTolerateUnknownMaterials from "../../core/biblio/useBiblioTolerateUnknownMaterials";
+import useTolerateUnknownMaterials from "../../core/digital/useTolerateUnknownMaterials";
 
 // Only the query is stubbed. isMaterialAvailable stays real - it is the
 // rule this hook is here to apply, and a copy of it in the test would pass
@@ -18,16 +18,16 @@ vi.mock(
     useLoanDecision: vi.fn()
   })
 );
-vi.mock("../../core/utils/useBiblioAdapter", () => ({
+vi.mock("../../core/utils/useServiceLayerLending", () => ({
   default: vi.fn()
 }));
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
-vi.mock("../../core/biblio/useBiblioTolerateUnknownMaterials", () => ({
+vi.mock("../../core/digital/useTolerateUnknownMaterials", () => ({
   default: vi.fn()
 }));
 
 const mockedCanLoan = vi.mocked(useLoanDecision);
-const mockedFlag = vi.mocked(useBiblioAdapter);
+const mockedFlag = vi.mocked(useServiceLayerLending);
 const mockedIsAnonymous = vi.mocked(isAnonymous);
 
 const ISBN = "9788727319346";
@@ -39,19 +39,19 @@ const givenAdapterAnswers = (status: string) =>
   } as unknown as ReturnType<typeof useLoanDecision>);
 
 const render = (isbn: string | null = ISBN, enabled = true) =>
-  renderHook(() => useBiblioAvailability({ enabled, isbn }));
+  renderHook(() => useDigitalAvailability({ enabled, isbn }));
 
 /**
  * The hook that decides availability for the materials Biblio provides. The
  * `useOnlineAvailabilityData` tests mock this away, so without these its own
  * gate and its reading of Biblio's status would be untested.
  */
-describe("useBiblioAvailability", () => {
+describe("useDigitalAvailability", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockedFlag.mockReturnValue(true);
     mockedIsAnonymous.mockReturnValue(false);
-    vi.mocked(useBiblioTolerateUnknownMaterials).mockReturnValue(false);
+    vi.mocked(useTolerateUnknownMaterials).mockReturnValue(false);
     mockedCanLoan.mockReturnValue({
       data: undefined,
       isLoading: false
@@ -118,7 +118,7 @@ describe("useBiblioAvailability", () => {
   });
 
   describe("TEMPORARY: materials the adapter does not know", () => {
-    // Goes with useBiblioTolerateUnknownMaterials when the catalogue and the
+    // Goes with useTolerateUnknownMaterials when the catalogue and the
     // adapter agree on which materials exist.
     it("Asks strictly by default, so a 404 stays the error it is", () => {
       render();
@@ -130,7 +130,7 @@ describe("useBiblioAvailability", () => {
     });
 
     it("Counts a tolerated unknown material as unavailable", () => {
-      vi.mocked(useBiblioTolerateUnknownMaterials).mockReturnValue(true);
+      vi.mocked(useTolerateUnknownMaterials).mockReturnValue(true);
       // The tolerated 404: the query resolved, and Biblio has no answer.
       mockedCanLoan.mockReturnValue({
         data: null,

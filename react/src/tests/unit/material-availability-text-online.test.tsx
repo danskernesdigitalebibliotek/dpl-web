@@ -7,7 +7,7 @@ import {
   useGetV1ProductsIdentifier,
   useGetV1UserLoans
 } from "../../core/publizon/publizon";
-import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 import {
   useLoanDecision,
   useDigitalLoanQuotas
@@ -63,10 +63,12 @@ vi.mock("../../core/publizon/publizon", () => ({
 }));
 
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: () => false }));
-vi.mock("../../core/utils/useBiblioAdapter", () => ({ default: vi.fn() }));
+vi.mock("../../core/utils/useServiceLayerLending", () => ({
+  default: vi.fn()
+}));
 // TEMPORARY toleration flag; reads config from Redux, which these renders
 // have no provider for. Off keeps the strict default under test.
-vi.mock("../../core/biblio/useBiblioTolerateUnknownMaterials", () => ({
+vi.mock("../../core/digital/useTolerateUnknownMaterials", () => ({
   default: () => false
 }));
 
@@ -107,7 +109,7 @@ describe("MaterialAvailabilityTextOnline", () => {
 
   describe("with the feature flag off", () => {
     beforeEach(() => {
-      vi.mocked(useBiblioAdapter).mockReturnValue(false);
+      vi.mocked(useServiceLayerLending).mockReturnValue(false);
     });
 
     it("Shows Publizon's quota", () => {
@@ -129,7 +131,7 @@ describe("MaterialAvailabilityTextOnline", () => {
 
   describe("with the feature flag on", () => {
     beforeEach(() => {
-      vi.mocked(useBiblioAdapter).mockReturnValue(true);
+      vi.mocked(useServiceLayerLending).mockReturnValue(true);
     });
 
     const biblioLends = (loanProvider?: string) =>

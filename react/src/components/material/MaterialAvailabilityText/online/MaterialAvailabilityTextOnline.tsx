@@ -17,8 +17,8 @@ import {
   useLoanDecision,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
-import useBiblioTolerateUnknownMaterials from "../../../../core/biblio/useBiblioTolerateUnknownMaterials";
+import useServiceLayerLending from "../../../../core/utils/useServiceLayerLending";
+import useTolerateUnknownMaterials from "../../../../core/digital/useTolerateUnknownMaterials";
 
 interface MaterialAvailabilityTextOnlineProps {
   isbns: string[];
@@ -30,14 +30,14 @@ const MaterialAvailabilityTextOnline: React.FC<
 > = ({ isbns, materialType }) => {
   const isUserAnonymous = isAnonymous();
   const t = useText();
-  const useBiblio = useBiblioAdapter();
+  const viaServiceLayer = useServiceLayerLending();
   const isbn = first(isbns) || "";
 
   // With the adapter enabled it is the lending provider, so its quotas are the
   // ones that apply - Publizon's would describe limits the user is no longer
   // borrowing against.
-  const isProvidedByBiblio = useBiblio;
-  const isProvidedByPublizon = !useBiblio;
+  const isProvidedByServiceLayer = viaServiceLayer;
+  const isProvidedByPublizon = !viaServiceLayer;
 
   const { data: productsData } = useGetV1ProductsIdentifier(isbn, {
     query: {
@@ -61,29 +61,29 @@ const MaterialAvailabilityTextOnline: React.FC<
     }
   );
 
-  const { data: biblioQuotas } = useDigitalLoanQuotas({
-    enabled: !isUserAnonymous && isProvidedByBiblio
+  const { data: digitalQuotas } = useDigitalLoanQuotas({
+    enabled: !isUserAnonymous && isProvidedByServiceLayer
   });
 
   // Which licence Biblio would lend this material under. Needed here because
   // it is what decides whether the loan costs the user anything - see
   // isCostFree below.
-  // TEMPORARY, see useBiblioTolerateUnknownMaterials: an unknown material
+  // TEMPORARY, see useTolerateUnknownMaterials: an unknown material
   // has no licence to read a price from, which the falsy checks below
   // already handle.
-  const tolerateUnknown = useBiblioTolerateUnknownMaterials();
+  const tolerateUnknown = useTolerateUnknownMaterials();
   const { data: biblioCanLoan } = useLoanDecision(isbn, {
-    enabled: Boolean(isbn) && isProvidedByBiblio,
+    enabled: Boolean(isbn) && isProvidedByServiceLayer,
     allowNotFound: tolerateUnknown
   });
 
-  if (!productsData && !isProvidedByBiblio) return null;
+  if (!productsData && !isProvidedByServiceLayer) return null;
 
   const { patronEbookLoans, patronAudioLoans } = getPatronLoanQuotas(loansData);
 
-  const ebookQuota = isProvidedByBiblio
+  const ebookQuota = isProvidedByServiceLayer
     ? getLoanQuota({
-        quotas: biblioQuotas,
+        quotas: digitalQuotas,
         format: "ebook",
         period: "monthly"
       })
@@ -91,9 +91,9 @@ const MaterialAvailabilityTextOnline: React.FC<
         current: patronEbookLoans,
         limit: libraryProfileData?.maxConcurrentEbookLoansPerBorrower
       };
-  const audioQuota = isProvidedByBiblio
+  const audioQuota = isProvidedByServiceLayer
     ? getLoanQuota({
-        quotas: biblioQuotas,
+        quotas: digitalQuotas,
         format: "audiobook",
         period: "monthly"
       })
@@ -147,7 +147,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   //
   // The field is optional by contract, and absent means no provider could be
   // picked at all - so nothing to promise the user either.
-  const isCostFree = isProvidedByBiblio
+  const isCostFree = isProvidedByServiceLayer
     ? biblioCanLoan?.loanProvider === "selection"
     : Boolean(productsData?.product?.costFree);
 

@@ -53,7 +53,7 @@ const MATERIAL = {
     title: "Tættere end man tror",
     row: 2 // due 8 Nov
   },
-  biblioEbook: {
+  digitalEbookQuota: {
     ...BIBLIO_MATERIAL.ebook,
     row: 3 // due 16 Nov
   }
@@ -133,8 +133,8 @@ const stubBackends = () => {
 
   // Biblio knows its own materials, and is not asked about those either.
   givenMaterialIsInBiblio({
-    isbn: MATERIAL.biblioEbook.isbn,
-    title: MATERIAL.biblioEbook.title
+    isbn: MATERIAL.digitalEbookQuota.isbn,
+    title: MATERIAL.digitalEbookQuota.title
   });
   givenMaterialIsInBiblio({
     isbn: MATERIAL.biblioAudiobook.isbn,
@@ -242,7 +242,7 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
 
     loanList.components.DigitalLoanRow(
       (row) => row.elements.readerButton().click(),
-      MATERIAL.biblioEbook.row
+      MATERIAL.digitalEbookQuota.row
     );
 
     cy.wait("@readerNavigation")
@@ -280,12 +280,14 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
     loanList.components.DigitalLoanRow((row) => {
       // Then: the author comes from the loan itself, formatted like any
       // other material
-      row.elements.author().should("contain", MATERIAL.biblioEbook.author);
+      row.elements
+        .author()
+        .should("contain", MATERIAL.digitalEbookQuota.author);
       // And: 19 Oct 2022 → 16 Nov 2022, seen from 21 Oct
       row.elements.dueDate().should("have.text", "Due date 16-11-2022 08:15");
       row.elements.daysLeft().should("have.text", "26 days");
       row.elements.materialType().first().should("have.text", "E-book");
-    }, MATERIAL.biblioEbook.row);
+    }, MATERIAL.digitalEbookQuota.row);
   });
 
   it("Warns about the Biblio loan that is due soon", () => {
@@ -306,7 +308,7 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
     // loan opens its details from a button, unlike a physical loan whose
     // title is the clickable element.
     loanList
-      .digitalLoanRow(MATERIAL.biblioEbook.row)
+      .digitalLoanRow(MATERIAL.digitalEbookQuota.row)
       .elements.loanDetailsButton()
       .click();
 
@@ -315,10 +317,14 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
     // whole point of the contract requiring them.
     const modal = loanList.detailsModal();
     modal.container().should("be.visible");
-    modal.elements.title().should("have.text", MATERIAL.biblioEbook.title);
+    modal.elements
+      .title()
+      .should("have.text", MATERIAL.digitalEbookQuota.title);
     modal.elements.materialType().should("have.text", "E-book");
     // Authors and the publication year share a line: "Sherman, L. (2022)".
-    modal.elements.authors().should("contain", MATERIAL.biblioEbook.author);
+    modal.elements
+      .authors()
+      .should("contain", MATERIAL.digitalEbookQuota.author);
     modal.elements.authors().should("contain", "2022");
   });
 
@@ -338,7 +344,7 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
     );
 
     // A Biblio loan is never looked up - it carries what the row renders.
-    cy.get(`@biblioMetadata_${MATERIAL.biblioEbook.isbn}.all`).should(
+    cy.get(`@biblioMetadata_${MATERIAL.digitalEbookQuota.isbn}.all`).should(
       "have.length",
       0
     );

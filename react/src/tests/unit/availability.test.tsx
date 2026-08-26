@@ -18,7 +18,7 @@ import {
   useGetV1ProductsIdentifier
 } from "../../core/publizon/publizon";
 import useOnlineAvailabilityData from "../../components/availability-label/useOnlineAvailabilityData";
-import useBiblioAvailability from "../../core/biblio/useBiblioAvailability";
+import useDigitalAvailability from "../../core/digital/useDigitalAvailability";
 
 describe("usePhysicalAvailability tests", () => {
   beforeAll(() => {
@@ -252,7 +252,7 @@ describe("useOnlineAvailabilityData tests", () => {
 
     // The Biblio adapter is covered separately below. Mocking it keeps these
     // cases about the Publizon path and avoids needing a QueryClient.
-    vi.mock("../../core/biblio/useBiblioAvailability", () => ({
+    vi.mock("../../core/digital/useDigitalAvailability", () => ({
       default: vi.fn()
     }));
 
@@ -276,7 +276,7 @@ describe("useOnlineAvailabilityData tests", () => {
     // Typescript does not understand our mocked hook.
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useBiblioAvailability.mockReturnValue({
+    useDigitalAvailability.mockReturnValue({
       isAnswering: false,
       isAvailable: null,
       isLoading: false
@@ -485,7 +485,7 @@ describe("useOnlineAvailabilityData tests", () => {
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useBiblioAvailability.mockReturnValue({
+    useDigitalAvailability.mockReturnValue({
       isAnswering: true,
       isAvailable: false,
       isLoading: false
@@ -523,7 +523,7 @@ describe("useOnlineAvailabilityData tests", () => {
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useBiblioAvailability.mockReturnValue({
+    useDigitalAvailability.mockReturnValue({
       isAnswering: false,
       isAvailable: null,
       isLoading: false
@@ -538,7 +538,7 @@ describe("useOnlineAvailabilityData tests", () => {
       })
     );
 
-    expect(useBiblioAvailability).toHaveBeenCalledWith(
+    expect(useDigitalAvailability).toHaveBeenCalledWith(
       expect.objectContaining({ enabled: false })
     );
     expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(
@@ -564,7 +564,7 @@ describe("useOnlineAvailabilityData tests", () => {
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    useBiblioAvailability.mockReturnValue({
+    useDigitalAvailability.mockReturnValue({
       isAnswering: true,
       isAvailable: null,
       isLoading: true

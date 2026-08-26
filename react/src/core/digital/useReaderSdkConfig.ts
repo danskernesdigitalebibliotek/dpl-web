@@ -7,7 +7,7 @@ import { useConfig } from "../utils/config";
  * application to WeDoBooks; they say nothing about which patron is reading -
  * that comes from the sign-in token the adapter mints.
  */
-export type WedoBooksConfig = {
+export type ReaderSdkConfig = {
   applicationId: string;
   firebaseApiKey: string;
   firebaseProjectId: string;
@@ -31,7 +31,7 @@ const configKeys = {
  * misconfiguration to report. Callers fall back to not offering the material,
  * which is what a library that has not finished the switch should see.
  */
-const useWedoBooksConfig = (): WedoBooksConfig | null => {
+const useReaderSdkConfig = (): ReaderSdkConfig | null => {
   const config = useConfig();
 
   try {
@@ -56,4 +56,4 @@ const useWedoBooksConfig = (): WedoBooksConfig | null => {
   }
 };
 
-export default useWedoBooksConfig;
+export default useReaderSdkConfig;

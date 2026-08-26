@@ -15,7 +15,7 @@ import useSavePatron from "../../core/utils/useSavePatron";
 import { Patron } from "../../core/utils/types/entities";
 import { useGetV1UserCardnumberFriendly } from "../../core/publizon/publizon";
 import { FriendlyCardResult } from "../../core/publizon/model";
-import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 import { useSupportId } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 const PatronPage: FC = () => {
@@ -23,19 +23,19 @@ const PatronPage: FC = () => {
   const u = useUrls();
   const deletePatronUrl = u("deletePatronUrl");
   const { data: patronData, isLoading } = usePatronData();
-  const useBiblio = useBiblioAdapter();
+  const viaServiceLayer = useServiceLayerLending();
   const { data: patronCardNumber } = useGetV1UserCardnumberFriendly({
     query: {
-      enabled: !!patronData && !useBiblio
+      enabled: !!patronData && !viaServiceLayer
     }
   });
-  const { data: biblioSupportId } = useSupportId({
-    enabled: !!patronData && useBiblio
+  const { data: digitalSupportId } = useSupportId({
+    enabled: !!patronData && viaServiceLayer
   });
   // Publizon's friendly card number and Biblio's support id serve the same
   // purpose: an identifier the user can hand to support.
-  const supportIdentifier = useBiblio
-    ? biblioSupportId
+  const supportIdentifier = viaServiceLayer
+    ? digitalSupportId
     : (patronCardNumber as FriendlyCardResult)?.friendlyCardNumber;
   const [patron, setPatron] = useState<Patron | null>(null);
   const [pin, setPin] = useState<string | null>(null);

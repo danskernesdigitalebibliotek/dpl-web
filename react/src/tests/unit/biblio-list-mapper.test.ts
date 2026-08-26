@@ -5,9 +5,9 @@ import {
   type DigitalReservation
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
-  mapBiblioLoanToLoanType,
-  mapBiblioMaterialToBasicDetailsType,
-  mapBiblioReservationToReservationType
+  mapDigitalLoanToLoanType,
+  mapDigitalMaterialToBasicDetailsType,
+  mapDigitalReservationToReservationType
 } from "../../core/utils/helpers/list-mapper";
 import { store } from "../../core/store";
 import { addTextEntries } from "../../core/text.slice";
@@ -18,7 +18,7 @@ import { addTextEntries } from "../../core/text.slice";
  * translation, including the places where Biblio and Publizon disagree.
  */
 
-const biblioLoan: DigitalLoan = {
+const digitalLoanFixture: DigitalLoan = {
   loanId: "3f7b1c62-9d4e-4a71-b0c3-1d5a8e2f4b90",
   materialId: "9788727319346",
   materialType: "ebook",
@@ -32,7 +32,7 @@ const biblioLoan: DigitalLoan = {
   loanProvider: "selection"
 };
 
-const biblioReservation: DigitalReservation = {
+const digitalReservationFixture: DigitalReservation = {
   reservationId: "e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11",
   materialId: "9788727319346",
   materialType: "ebook",
@@ -55,58 +55,60 @@ describe("Biblio list mappers", () => {
     );
   });
 
-  describe("mapBiblioLoanToLoanType", () => {
+  describe("mapDigitalLoanToLoanType", () => {
     it("Uses the Biblio loan id as the order id, which opens the reader", () => {
-      const [loan] = mapBiblioLoanToLoanType([biblioLoan]);
+      const [loan] = mapDigitalLoanToLoanType([digitalLoanFixture]);
 
       // Publizon's orderId is the key the reader/player is opened with, so
       // the Biblio loan id has to take that role.
-      expect(loan.orderId).toBe(biblioLoan.loanId);
+      expect(loan.orderId).toBe(digitalLoanFixture.loanId);
       // A digital loan has no FBS loan id or faust number.
       expect(loan.loanId).toBeNull();
       expect(loan.faust).toBeNull();
     });
 
     it("Maps the loan period and identifier", () => {
-      const [loan] = mapBiblioLoanToLoanType([biblioLoan]);
+      const [loan] = mapDigitalLoanToLoanType([digitalLoanFixture]);
 
-      expect(loan.loanDate).toBe(biblioLoan.startDate);
-      expect(loan.dueDate).toBe(biblioLoan.endDate);
-      expect(loan.identifier).toBe(biblioLoan.materialId);
-      expect(loan.materialItemNumber).toBe(biblioLoan.materialId);
+      expect(loan.loanDate).toBe(digitalLoanFixture.startDate);
+      expect(loan.dueDate).toBe(digitalLoanFixture.endDate);
+      expect(loan.identifier).toBe(digitalLoanFixture.materialId);
+      expect(loan.materialItemNumber).toBe(digitalLoanFixture.materialId);
     });
 
     it("Cannot be renewed", () => {
-      const [loan] = mapBiblioLoanToLoanType([biblioLoan]);
+      const [loan] = mapDigitalLoanToLoanType([digitalLoanFixture]);
 
       expect(loan.isRenewable).toBe(false);
       expect(loan.renewalStatusList).toEqual([]);
     });
 
     it("Carries its own details, so the list needs no metadata lookup", () => {
-      const [loan] = mapBiblioLoanToLoanType([biblioLoan]);
+      const [loan] = mapDigitalLoanToLoanType([digitalLoanFixture]);
 
       expect(loan.details?.title).toBe("Din for en sommer");
       expect(loan.details?.year).toBe(2022);
       expect(loan.details?.materialType).toBe("E-book");
-      expect(loan.details?.externalProductId).toBe(biblioLoan.materialId);
+      expect(loan.details?.externalProductId).toBe(
+        digitalLoanFixture.materialId
+      );
       // A loan states its author as one string; the formatter still applies.
       expect(loan.details?.authors).toContain("Sherman, L.");
     });
 
     it("Labels an audiobook as such", () => {
-      const [loan] = mapBiblioLoanToLoanType([
-        { ...biblioLoan, materialType: "audiobook" }
+      const [loan] = mapDigitalLoanToLoanType([
+        { ...digitalLoanFixture, materialType: "audiobook" }
       ]);
 
       expect(loan.details?.materialType).toBe("Audiobook");
     });
   });
 
-  describe("mapBiblioReservationToReservationType", () => {
+  describe("mapDigitalReservationToReservationType", () => {
     it("Counts a reservation without an offer as still queued", () => {
-      const [reservation] = mapBiblioReservationToReservationType([
-        biblioReservation
+      const [reservation] = mapDigitalReservationToReservationType([
+        digitalReservationFixture
       ]);
 
       expect(reservation.state).toBe("reserved");
@@ -115,9 +117,9 @@ describe("Biblio list mappers", () => {
     });
 
     it("Counts an offered reservation as ready for pickup", () => {
-      const [reservation] = mapBiblioReservationToReservationType([
+      const [reservation] = mapDigitalReservationToReservationType([
         {
-          ...biblioReservation,
+          ...digitalReservationFixture,
           offerId: "9a1c7f30-4d62-4e18-b5a7-2c8e6f0b3d94",
           offerExpiresAt: "2022-10-24T06:32:30.000Z"
         }
@@ -129,33 +131,35 @@ describe("Biblio list mappers", () => {
     });
 
     it("Keeps the adapter's own reservation id, which is what cancels it", () => {
-      const [reservation] = mapBiblioReservationToReservationType([
-        biblioReservation
+      const [reservation] = mapDigitalReservationToReservationType([
+        digitalReservationFixture
       ]);
 
       // Publizon cancels by material identifier, Biblio by reservation id -
       // both are carried so the delete flow can tell them apart.
       expect(reservation.biblioReservationId).toBe(
-        biblioReservation.reservationId
+        digitalReservationFixture.reservationId
       );
-      expect(reservation.identifier).toBe(biblioReservation.materialId);
+      expect(reservation.identifier).toBe(digitalReservationFixture.materialId);
     });
 
     it("Maps the dates and leaves the title to the metadata lookup", () => {
-      const [reservation] = mapBiblioReservationToReservationType([
-        biblioReservation
+      const [reservation] = mapDigitalReservationToReservationType([
+        digitalReservationFixture
       ]);
 
-      expect(reservation.dateOfReservation).toBe(biblioReservation.createdDate);
+      expect(reservation.dateOfReservation).toBe(
+        digitalReservationFixture.createdDate
+      );
       expect(reservation.pickupDeadline).toBe(
-        biblioReservation.expectedLoanDate
+        digitalReservationFixture.expectedLoanDate
       );
       // A reservation carries no title, unlike a loan.
       expect(reservation.title).toBeNull();
     });
   });
 
-  describe("mapBiblioMaterialToBasicDetailsType", () => {
+  describe("mapDigitalMaterialToBasicDetailsType", () => {
     const material: DigitalMaterial = {
       isbn: "9788727319346",
       materialType: "audiobook",
@@ -167,7 +171,7 @@ describe("Biblio list mappers", () => {
     };
 
     it("Maps the catalogue fields used to present a material", () => {
-      const details = mapBiblioMaterialToBasicDetailsType(material);
+      const details = mapDigitalMaterialToBasicDetailsType(material);
 
       expect(details.title).toBe("Terræn");
       expect(details.year).toBe(2021);
@@ -180,7 +184,7 @@ describe("Biblio list mappers", () => {
 
     it("Leaves the authors empty when the material has none", () => {
       // The one catalogue field the contract does not require.
-      const details = mapBiblioMaterialToBasicDetailsType({
+      const details = mapDigitalMaterialToBasicDetailsType({
         ...material,
         authors: []
       });

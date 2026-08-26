@@ -6,7 +6,7 @@ import {
 import { FaustId } from "../../core/utils/types/ids";
 import { publizonProductStatuses } from "./types";
 import { AccessTypes } from "../../core/utils/types/entities";
-import useBiblioAvailability from "../../core/biblio/useBiblioAvailability";
+import useDigitalAvailability from "../../core/digital/useDigitalAvailability";
 
 const useOnlineAvailabilityData = ({
   enabled,
@@ -27,11 +27,13 @@ const useOnlineAvailabilityData = ({
   const isEreolMaterial = access.some((acc) => acc === "Ereol");
 
   // Gates on the feature flag itself, so no check is needed here.
-  const { isAnswering: isBiblioAnswering, isAvailable: isAvailableBiblio } =
-    useBiblioAvailability({
-      enabled: enabled && isEreolMaterial && isAvailable === null,
-      isbn
-    });
+  const {
+    isAnswering: isServiceLayerAnswering,
+    isAvailable: isAvailableViaServiceLayer
+  } = useDigitalAvailability({
+    enabled: enabled && isEreolMaterial && isAvailable === null,
+    isbn
+  });
 
   // Publizon answers for everything Biblio does not.
 
@@ -48,7 +50,7 @@ const useOnlineAvailabilityData = ({
           isEreolMaterial &&
           isAvailable === null &&
           !!isbn &&
-          !isBiblioAnswering
+          !isServiceLayerAnswering
       }
     });
 
@@ -64,7 +66,7 @@ const useOnlineAvailabilityData = ({
           isEreolMaterial &&
           isAvailable === null &&
           !!isbn &&
-          !isBiblioAnswering &&
+          !isServiceLayerAnswering &&
           // If the material is free (I think it is called blue material btw.)
           // we should not load the loan status because then we know that it is available.
           // So If the material is not free and we know it is an "Publizon" material we should load the loan status.
@@ -78,14 +80,14 @@ const useOnlineAvailabilityData = ({
     }
 
     // Biblio answers for the materials it provides.
-    if (isAvailableBiblio !== null) {
-      setIsAvailable(isAvailableBiblio);
+    if (isAvailableViaServiceLayer !== null) {
+      setIsAvailable(isAvailableViaServiceLayer);
       return;
     }
 
     // Publizon must not answer at all while Biblio is the provider.
     if (
-      isBiblioAnswering ||
+      isServiceLayerAnswering ||
       isLoadingIdentifier !== false ||
       isLoadingPublizonData !== false
     ) {
@@ -105,8 +107,8 @@ const useOnlineAvailabilityData = ({
     enabled,
     dataPublizon,
     isLoadingPublizonData,
-    isAvailableBiblio,
-    isBiblioAnswering
+    isAvailableViaServiceLayer,
+    isServiceLayerAnswering
   ]);
 
   // If hook is not enabled make it clear that the loading and availability status is unknown.

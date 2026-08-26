@@ -7,7 +7,7 @@ import {
   useGetV1UserLoans
 } from "../../core/publizon/publizon";
 import { FileExtensionType } from "../../core/publizon/model";
-import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 import { useDigitalLoanQuotas } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 // Only the hooks under test are stubbed; the rest of the package stays
@@ -67,14 +67,14 @@ vi.mock("../../core/publizon/publizon", () => ({
 // Mock the Biblio adapter hooks. The feature flag reads app config through
 // Redux, and the quota hook is a TanStack query, so neither can run without
 // their providers here.
-vi.mock("../../core/utils/useBiblioAdapter", () => ({
+vi.mock("../../core/utils/useServiceLayerLending", () => ({
   default: vi.fn()
 }));
 
 describe("StatusSection component tests", () => {
   beforeEach(() => {
     // Default to the flag being off: Publizon answers, as before.
-    vi.mocked(useBiblioAdapter).mockReturnValue(false);
+    vi.mocked(useServiceLayerLending).mockReturnValue(false);
     vi.mocked(useDigitalLoanQuotas).mockReturnValue({
       data: undefined
     } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
@@ -236,7 +236,7 @@ describe("StatusSection component tests", () => {
 
   describe("with the Biblio adapter feature flag on", () => {
     beforeEach(() => {
-      vi.mocked(useBiblioAdapter).mockReturnValue(true);
+      vi.mocked(useServiceLayerLending).mockReturnValue(true);
       // Publizon is not asked at all when the flag is on.
       vi.mocked(useGetV1LibraryProfile).mockReturnValue({
         data: null

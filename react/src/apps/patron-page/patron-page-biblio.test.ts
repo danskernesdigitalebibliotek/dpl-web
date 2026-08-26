@@ -110,7 +110,7 @@ describe("Patron page - Biblio adapter feature flag", () => {
     cy.contains("6 out of 8").should("exist");
 
     // And: the adapter is never contacted
-    cy.get("@biblioSupportId.all").should("have.length", 0);
+    cy.get("@digitalSupportId.all").should("have.length", 0);
     cy.get("@biblioLoanQuotas.all").should("have.length", 0);
   });
 
@@ -119,7 +119,7 @@ describe("Patron page - Biblio adapter feature flag", () => {
 
     // When: the user opens their profile
     patronPage.visit([]);
-    cy.wait(["@biblioSupportId", "@biblioLoanQuotas"]);
+    cy.wait(["@digitalSupportId", "@biblioLoanQuotas"]);
 
     // Then: the support identifier comes from the adapter
     cy.contains(BIBLIO_SUPPORT_ID).should("exist");

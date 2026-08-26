@@ -5,7 +5,7 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { isAnonymous } from "../utils/helpers/user";
 import type { WedoBooksSdk } from "@danskernesdigitalebibliotek/dpl-wedobooks";
-import useWedoBooksConfig from "./useWedoBooksConfig";
+import useReaderSdkConfig from "./useReaderSdkConfig";
 
 /**
  * A WeDoBooks SDK client with the patron signed in, ready to open a book.
@@ -23,8 +23,8 @@ import useWedoBooksConfig from "./useWedoBooksConfig";
  * keeps it out of every other app's bundle, so the cost lands on the reader
  * page rather than on the front page.
  */
-const useWedoBooksSdk = () => {
-  const config = useWedoBooksConfig();
+const useReaderSdk = () => {
+  const config = useReaderSdkConfig();
   const serviceLayerConfig = useServiceLayerConfig();
   const queryClient = useQueryClient();
   // The reader page is public, so an anonymous visitor can reach it with a
@@ -38,7 +38,7 @@ const useWedoBooksSdk = () => {
     // Keyed on the application rather than on the token: signing in again
     // whenever the token rotates would throw away a working session for
     // nothing, since the SDK maintains its own once established.
-    queryKey: ["wedobooks", "session", config?.applicationId],
+    queryKey: ["reader", "session", config?.applicationId],
     enabled: Boolean(config) && !isUserAnonymous,
     // The client is a page-lifetime singleton behind this query, so letting
     // the cache entry expire would only buy a second sign-in for the same
@@ -78,4 +78,4 @@ const useWedoBooksSdk = () => {
   });
 };
 
-export default useWedoBooksSdk;
+export default useReaderSdk;

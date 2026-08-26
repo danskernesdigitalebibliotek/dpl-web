@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import useWedoBooksCheckout from "../../core/biblio/useWedoBooksCheckout";
+import useReaderCheckout from "../../core/digital/useReaderCheckout";
 
 // Loaded on demand: the SDK carries a reading framework, Firebase and a
 // component library, and only someone opening a book needs any of it.
@@ -24,7 +24,7 @@ export type BiblioReaderProps = {
  * library's current provider.
  */
 const BiblioReader: React.FC<BiblioReaderProps> = ({ loanId, onClose }) => {
-  const { sdk, checkout } = useWedoBooksCheckout(loanId);
+  const { sdk, checkout } = useReaderCheckout(loanId);
 
   // Nothing to render until both the session and the entitlement are in hand.
   // The SDK draws its own loading state once mounted, so showing one here as

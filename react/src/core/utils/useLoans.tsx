@@ -4,12 +4,12 @@ import { useDigitalLoans } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { calculateRoundedUpDaysUntil } from "./helpers/date";
 import { materialIsOverdue } from "./helpers/general";
 import {
-  mapBiblioLoanToLoanType,
+  mapDigitalLoanToLoanType,
   mapFBSLoanToLoanType,
   mapPublizonLoanToLoanType
 } from "./helpers/list-mapper";
 import { LoanType } from "./types/loan-type";
-import useBiblioAdapter from "./useBiblioAdapter";
+import useServiceLayerLending from "./useServiceLayerLending";
 import useLoanThresholds from "./useLoanThresholds";
 
 // Loans with more than warning-threshold days until due
@@ -63,7 +63,7 @@ type UseLoans = () => UseLoansType;
 // divided into three categories: overdue, soon overdue, and far from overdue.
 // The hook is NOT responsible for any sorting of the loans.
 const useLoans: UseLoans = () => {
-  const useBiblio = useBiblioAdapter();
+  const viaServiceLayer = useServiceLayerLending();
   const {
     data: loansFbs,
     isLoading: isLoadingFbs,
@@ -75,16 +75,16 @@ const useLoans: UseLoans = () => {
     isError: isErrorPublizon
   } = useGetV1UserLoans();
   const {
-    data: loansBiblio,
-    isLoading: isLoadingBiblio,
-    isError: isErrorBiblio
-  } = useDigitalLoans({ enabled: useBiblio });
+    data: loansServiceLayer,
+    isLoading: isLoadingServiceLayer,
+    isError: isErrorServiceLayer
+  } = useDigitalLoans({ enabled: viaServiceLayer });
 
   const threshold = useLoanThresholds();
   // A disabled query is never loading or in error so the Biblio states only
   // count when the feature flag has enabled the query.
-  const isLoadingDigital = isLoadingPublizon || isLoadingBiblio;
-  const isErrorDigital = isErrorPublizon || isErrorBiblio;
+  const isLoadingDigital = isLoadingPublizon || isLoadingServiceLayer;
+  const isErrorDigital = isErrorPublizon || isErrorServiceLayer;
   const loansIsLoading = isLoadingFbs || isLoadingDigital;
   const loansIsError = isErrorFbs || isErrorDigital;
 
@@ -97,10 +97,13 @@ const useLoans: UseLoans = () => {
         // there are loans without dueDate in the publizon MOCK data
         .filter((item) => item.dueDate)
     : [];
-  const mappedLoansBiblio = loansBiblio?.loans
-    ? mapBiblioLoanToLoanType(loansBiblio.loans)
+  const mappedLoansServiceLayer = loansServiceLayer?.loans
+    ? mapDigitalLoanToLoanType(loansServiceLayer.loans)
     : [];
-  const mappedLoansDigital = [...mappedLoansPublizon, ...mappedLoansBiblio];
+  const mappedLoansDigital = [
+    ...mappedLoansPublizon,
+    ...mappedLoansServiceLayer
+  ];
 
   // Combine all loans from both FBS and the digital materials provider
   const loans = [...mappedLoansFbs, ...mappedLoansDigital];

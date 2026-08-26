@@ -3,11 +3,11 @@ import { useGetV1ProductsIdentifier } from "../../../../core/publizon/publizon";
 import { BasicDetailsType } from "../../../../core/utils/types/basic-details-type";
 import { MaterialProps } from "./material-fetch-hoc";
 import {
-  mapBiblioMaterialToBasicDetailsType,
+  mapDigitalMaterialToBasicDetailsType,
   mapProductToBasicDetailsType
 } from "../../../../core/utils/helpers/list-mapper";
 import { ListType } from "../../../../core/utils/types/list-type";
-import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
+import useServiceLayerLending from "../../../../core/utils/useServiceLayerLending";
 import { useDigitalMaterial } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
   isBiblioReservation,
@@ -34,7 +34,7 @@ const fetchDigitalMaterial =
     if (item.identifier) {
       const [digitalMaterial, setDigitalMaterial] =
         useState<BasicDetailsType>();
-      const useBiblio = useBiblioAdapter();
+      const viaServiceLayer = useServiceLayerLending();
 
       // A Biblio loan carries its own catalogue fields; nothing to look up.
       const hasOwnDetails = Boolean(item.details);
@@ -42,11 +42,13 @@ const fetchDigitalMaterial =
       // Who describes a material is read off the item, never discovered by
       // asking. A loan from before the switch is Publizon's - the only reason
       // Publizon is still asked during the transition.
-      const isBiblioItem = isReservationType(item) && isBiblioReservation(item);
-      const isProvidedByBiblio = useBiblio && !hasOwnDetails && isBiblioItem;
+      const isDigitalItem =
+        isReservationType(item) && isBiblioReservation(item);
+      const isProvidedByServiceLayer =
+        viaServiceLayer && !hasOwnDetails && isDigitalItem;
 
-      const { data: biblioMaterial, isLoading: isLoadingBiblio } =
-        useDigitalMaterial(isProvidedByBiblio ? item.identifier : null);
+      const { data: serviceLayerMaterial, isLoading: isLoadingServiceLayer } =
+        useDigitalMaterial(isProvidedByServiceLayer ? item.identifier : null);
 
       const {
         data: productsData,
@@ -54,7 +56,8 @@ const fetchDigitalMaterial =
         isLoading: isLoadingPublizon
       } = useGetV1ProductsIdentifier(item.identifier, {
         query: {
-          enabled: !!item.identifier && !hasOwnDetails && !isProvidedByBiblio
+          enabled:
+            !!item.identifier && !hasOwnDetails && !isProvidedByServiceLayer
         }
       });
 
@@ -63,9 +66,9 @@ const fetchDigitalMaterial =
           setDigitalMaterial(item.details);
           return;
         }
-        if (biblioMaterial) {
+        if (serviceLayerMaterial) {
           setDigitalMaterial(
-            mapBiblioMaterialToBasicDetailsType(biblioMaterial)
+            mapDigitalMaterialToBasicDetailsType(serviceLayerMaterial)
           );
           return;
         }
@@ -76,10 +79,10 @@ const fetchDigitalMaterial =
         } else {
           // todo error handling, missing in figma
         }
-      }, [productsData, isSuccessDigital, biblioMaterial, item.details]);
+      }, [productsData, isSuccessDigital, serviceLayerMaterial, item.details]);
 
       // if the fallback component is provided we can show it while the data is loading
-      if (isLoadingBiblio || isLoadingPublizon)
+      if (isLoadingServiceLayer || isLoadingPublizon)
         return LoadingComponent ? <LoadingComponent /> : null;
 
       if (!digitalMaterial) return null;

@@ -136,7 +136,7 @@ describe("Material page - online availability through the Biblio adapter", () =>
  * The catalogue lists digital materials WeDoBooks has not provisioned yet,
  * and the adapter answers 404 for those. Without the flag that error takes
  * the whole material page down; with it the material is simply unavailable.
- * Remove together with useBiblioTolerateUnknownMaterials.
+ * Remove together with useTolerateUnknownMaterials.
  */
 describe("Material page - a material the adapter does not know", () => {
   beforeEach(() => stubBackends());

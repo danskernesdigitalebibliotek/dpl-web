@@ -5,7 +5,7 @@ import { withText } from "../../core/utils/text";
 import Reader, { ReaderType } from "../../components/reader-player/Reader";
 import BiblioReaderPlayer from "../../components/reader-player/BiblioReaderPlayer";
 import BiblioSampleReaderPlayer from "../../components/reader-player/BiblioSampleReaderPlayer";
-import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 
 export type ReaderEntryType = ReaderType & {
   // Lowercase because it comes from the url via Drupal, like orderid.
@@ -21,7 +21,7 @@ const ReaderEntry: React.FC<ReaderEntryType> = ({
   loanid,
   sampletype
 }) => {
-  const useBiblio = useBiblioAdapter();
+  const viaServiceLayer = useServiceLayerLending();
   // Which reader opens the book is decided by the loan, not by the library's
   // current provider: a patron whose library has switched to Biblio still has
   // Publizon loans, and those only open in Publizon's reader.
@@ -42,7 +42,7 @@ const ReaderEntry: React.FC<ReaderEntryType> = ({
   // for a signed-in session, so the teaser buttons are disabled for anonymous
   // visitors - a hand-made link lands on an empty page rather than in the
   // service being left.
-  if (identifier && !orderid && useBiblio) {
+  if (identifier && !orderid && viaServiceLayer) {
     return (
       <BiblioSampleReaderPlayer
         identifier={identifier}

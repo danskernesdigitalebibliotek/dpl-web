@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import useOnlineInternalHandleLoanReservation from "../../core/utils/useOnlineInternalHandleLoanReservation";
-import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 import {
   useCreateDigitalLoan,
   useCreateDigitalReservation,
@@ -44,7 +44,9 @@ vi.mock(
 const IDENTIFIER = "9788727319346";
 const OFFER_ID = "9a1c7f30-4d62-4e18-b5a7-2c8e6f0b3d94";
 
-vi.mock("../../core/utils/useBiblioAdapter", () => ({ default: vi.fn() }));
+vi.mock("../../core/utils/useServiceLayerLending", () => ({
+  default: vi.fn()
+}));
 
 vi.mock("@tanstack/react-query", () => ({
   useQueryClient: () => ({ invalidateQueries: vi.fn() })
@@ -58,10 +60,10 @@ vi.mock("../../core/publizon/publizon", () => ({
   getGetV1UserReservationsQueryKey: () => ["reservations"]
 }));
 
-vi.mock("../../core/biblio/useDigitalReservations", () => ({
+vi.mock("../../core/digital/useDigitalReservations", () => ({
   digitalReservationsQueryKey: ["biblio", "reservations"]
 }));
-vi.mock("../../core/biblio/useDigitalLoans", () => ({
+vi.mock("../../core/digital/useDigitalLoans", () => ({
   default: vi.fn(),
   digitalLoansQueryKey: ["biblio", "loans"]
 }));
@@ -110,7 +112,7 @@ const givenScenario = ({
   canBeReserved = false,
   offerId = null
 }: Scenario) => {
-  vi.mocked(useBiblioAdapter).mockReturnValue(flagOn);
+  vi.mocked(useServiceLayerLending).mockReturnValue(flagOn);
   // useReaderPlayer only reports a material as obtainable when the lending
   // provider said so, which is why these two travel together.
   vi.mocked(useReaderPlayer).mockReturnValue({
