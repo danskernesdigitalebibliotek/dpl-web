@@ -1,9 +1,14 @@
 import React from "react";
-import FullCalendar from "@fullcalendar/react";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import da from "@fullcalendar/core/locales/da";
+import FullCalendar, { CalendarRef } from "@fullcalendar/react";
+import timeGridPlugin from "@fullcalendar/react/timegrid";
+import dayGridPlugin from "@fullcalendar/react/daygrid";
+import interactionPlugin from "@fullcalendar/react/interaction";
+import da from "@fullcalendar/react/locales/da";
+
+import classicThemePlugin from "@fullcalendar/react/themes/classic";
+import "@fullcalendar/react/skeleton.css";
+import "@fullcalendar/react/themes/classic/theme.css";
+import "@fullcalendar/react/themes/classic/palette.css";
 import OpeningHoursEditorEventContent from "./OpeningHoursEditorEventContent";
 import useOpeningHoursEditor from "./useOpeningHoursEditor";
 import DialogFormEdit from "./DialogFormEdit";
@@ -34,7 +39,7 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
     }
   );
 
-  const fullCalendarRef = React.useRef<FullCalendar>(null);
+  const fullCalendarRef = React.useRef<CalendarRef>(null);
   const fullCalendarApi = fullCalendarRef.current?.getApi();
 
   const {
@@ -70,13 +75,25 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
       <FullCalendar
         initialDate={initialDate ?? undefined}
         ref={fullCalendarRef}
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        plugins={[
+          classicThemePlugin,
+          dayGridPlugin,
+          timeGridPlugin,
+          interactionPlugin
+        ]}
         headerToolbar={{
           left: "dayGridMonth,timeGridWeek",
           center: "title",
           right: "prev,next today"
         }}
         initialView="timeGridWeek"
+        views={{
+          timeGridWeek: {
+            // Ensure that the week view shows the correct
+            // date range format (e.g. "17. - 23. aug. 2026").
+            titleFormat: { year: "numeric", month: "short", day: "numeric" }
+          }
+        }}
         locale={da}
         selectable={!isLoading}
         select={
@@ -107,15 +124,22 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
                   />
                 )
         }
-        eventContent={(eventInput) =>
-          OpeningHoursEditorEventContent({
-            eventInput,
-            iconAltText
-          })
-        }
+        eventContent={(eventInput) => (
+          <OpeningHoursEditorEventContent
+            eventInput={eventInput}
+            iconAltText={iconAltText}
+          />
+        )}
         events={events}
-        stickyHeaderDates
         height="auto"
+        // Ensures that the calendar stays compact when
+        // switching to the month view. Larger numbers
+        // for `aspectRatio` makes smaller heights.
+        viewDidMount={(view) => {
+          if (view.view.type === "dayGridMonth") {
+            fullCalendarApi?.setOption("aspectRatio", 3);
+          }
+        }}
         selectMirror
         allDaySlot={false}
         datesSet={handleDatesSet}

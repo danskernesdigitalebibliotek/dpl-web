@@ -1,5 +1,5 @@
 import React from "react";
-import { EventImpl } from "@fullcalendar/core/internal";
+import { EventImpl } from "@fullcalendar/react/protected-api";
 import {
   adjustEndDateBasedOnStartDate,
   formatFullCalendarEventToCmsEventEdit,
@@ -62,7 +62,6 @@ const DialogFormEdit: React.FC<DialogFormEditProps> = ({
       id: eventInfo.id,
       category,
       title: eventInfo.title,
-      backgroundColor: eventInfo.backgroundColor,
       startStr: eventInfo.startStr,
       endStr: eventInfo.endStr,
       repetition: {
