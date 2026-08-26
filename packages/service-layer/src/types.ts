@@ -190,8 +190,8 @@ export type DigitalLoan = {
   author: string
   publisher: string
   publishDate: string
-  // Which licence the loan was made under. "selection" marks a blue title:
-  // a loan that costs the user nothing and draws on no quota.
+  // Which licence the loan was made under - see LoanProvider, and
+  // isCostFreeLoan for which of them cost the patron nothing.
   loanProvider: LoanProvider
 }
 
@@ -221,9 +221,16 @@ export type LoanDecisionStatus =
 
 // Which licence the loan would be made under. The organization configures a
 // prioritized list of providers, and the backend reports the one it picked.
-// "selection" - the licence Danish blue titles answer with - is the one
-// verified to cost the user nothing; the rest, including the unobserved
-// "free", count against the quota until DBC confirms otherwise.
+//
+// "selection" is the licence Danish blue titles answer with: WeDoBooks states
+// those are bought out and exempt from the quotas, so it is the one the UI
+// may call included - see isCostFreeLoan. The rest ("click" is pay-per-loan,
+// "package" a subscription) are ways the LIBRARY pays for a loan that still
+// counts against the patron's quota.
+//
+// "free" sits between the two: not in use yet, and confirmed only to be
+// exempt from every quota when it arrives - which is not the same as being
+// free to the patron.
 export type LoanProvider = "free" | "k-fond" | "click" | "package" | "premium" | "selection"
 
 // Whether a loan can be made right now, and if not, why. The answer covers

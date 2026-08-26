@@ -139,9 +139,9 @@ describe("MaterialAvailabilityTextOnline", () => {
         data: { status: "loanable", loanProvider }
       } as unknown as ReturnType<typeof useLoanDecision>);
 
-    it("Says the material is included when Biblio lends it as a blue title", () => {
-      // "selection" is the licence Danish blue titles answer with - such a
-      // loan draws on no quota.
+    it("Says the material is included when it is lent as a blue title", () => {
+      // "selection" is the licence Danish blue titles answer with - WeDoBooks
+      // states those are bought out and draw on no quota.
       biblioLends("selection");
 
       expect(renderText().container.textContent).toContain(
@@ -153,8 +153,10 @@ describe("MaterialAvailabilityTextOnline", () => {
       "Counts a %s loan against the quota rather than calling it included",
       (loanProvider) => {
         // These are ways the library pays, and the loan still uses one of
-        // the user's own. "free" is deliberately among them: it is unobserved
-        // in DK and its semantics unconfirmed, so nothing is promised on it.
+        // the patron's own. "free" stays among them on purpose: it is not in
+        // use, and all WeDoBooks has confirmed is that it will be exempt from
+        // the quotas - not that it is free to the patron, which is what this
+        // text promises.
         biblioLends(loanProvider);
         vi.mocked(useDigitalLoanQuotas).mockReturnValue({
           data: [

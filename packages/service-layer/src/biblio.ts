@@ -7,6 +7,7 @@ import type {
   DigitalReservation,
   LoanDecision,
   LoanDecisionStatus,
+  LoanProvider,
   LoanRequestResult,
   ReaderSignInToken,
   ServiceLayerConfig,
@@ -179,6 +180,29 @@ export const isMaterialReservable = (status: LoanDecisionStatus): boolean => sta
 export const isRequestGranted = (status: LoanDecisionStatus): boolean =>
   status === "loanable" || status === "reservable"
 
+/**
+ * Whether a loan under this licence costs the patron nothing - which is what
+ * lets the UI promise that the material is included.
+ *
+ * Only "selection", the licence Danish blue titles answer with: WeDoBooks
+ * states those are bought out AND exempt from the quotas.
+ *
+ * "free" is deliberately not included. It is not in use yet, and what
+ * WeDoBooks has confirmed about it is only that titles arriving on it will be
+ * exempt from every quota - drawing on no quota is not the same as being free
+ * to the patron, and only the latter is worth promising. Revisit when the
+ * first title shows up on it.
+ *
+ * The field is optional by contract: absent means no provider could be picked
+ * at all, which promises the patron nothing.
+ *
+ * Note that cost-free is not the same as unlimited. There is a separate cap
+ * on how many cost-free loans a patron may hold at once, and reaching it
+ * answers "concurrent_limit_exceeded" like any other ceiling.
+ */
+export const isCostFreeLoan = (loanProvider: LoanProvider | undefined): boolean =>
+  loanProvider === "selection"
+
 export type QuotaUsage = {
   current: number
   limit: number | undefined
@@ -196,12 +220,12 @@ export type QuotaUsage = {
  * single library in practice, so the first one is used - if a patron can ever
  * belong to several, this needs a rule from DBC.
  *
- * Cost-free ("blue") loans draw on no quota, and the adapter's counters
- * already exclude them at the source - verified against the real adapter by
- * borrowing a blue (selection-licence) title and watching the counters stand
- * still, then a click-licence title and watching them move. So unlike the
- * Publizon path, which subtracts its subscription loans itself, the numbers
- * are used as they arrive.
+ * Cost-free loans draw on no quota, and the adapter's counters exclude them
+ * at the source - confirmed by WeDoBooks, and verified against the real
+ * adapter by borrowing a blue (selection-licence) title and watching the
+ * counters stand still, then a click-licence title and watching them move. So
+ * unlike the Publizon path, which subtracts its subscription loans itself,
+ * the numbers are used as they arrive.
  */
 export const getLoanQuota = ({
   quotas,

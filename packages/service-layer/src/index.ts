@@ -72,6 +72,7 @@ export {
   isMaterialAvailable,
   isMaterialLoanable,
   isMaterialReservable,
+  isCostFreeLoan,
   isRequestGranted,
 } from "./biblio"
 export {

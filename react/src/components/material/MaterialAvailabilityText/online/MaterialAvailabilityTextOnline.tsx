@@ -14,6 +14,7 @@ import { isAnonymous } from "../../../../core/utils/helpers/user";
 import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
 import {
   getLoanQuota,
+  isCostFreeLoan,
   useLoanDecision,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
@@ -132,23 +133,15 @@ const MaterialAvailabilityTextOnline: React.FC<
     }
   };
 
-  // Whether the loan costs the user nothing, which is what decides between
+  // Whether the loan costs the patron nothing, which is what decides between
   // "this material is included" and the ordinary loan text.
   //
-  // Publizon states it outright on the product. The service layer does not: the
-  // organization configures a prioritized list of licences, and can-loan
-  // reports the one it picked for this material. "selection" is the licence
-  // Danish blue titles answer with, verified against the real adapter by
-  // borrowing one and watching the quota counters stand still. The rest
-  // ("click" is pay-per-loan, "package" is a subscription, and so on) are
-  // ways the LIBRARY pays, and the loan still counts against the user's
-  // quota - including, for now, the unobserved "free", whose semantics DBC
-  // has yet to confirm.
-  //
-  // The field is optional by contract, and absent means no provider could be
-  // picked at all - so nothing to promise the user either.
+  // Publizon states it outright on the product. The service layer does not:
+  // the organization configures a prioritized list of licences and can-loan
+  // reports the one it picked, so which licences are cost-free is the service
+  // layer's rule to know - see isCostFreeLoan.
   const isCostFree = isProvidedByServiceLayer
-    ? loanDecision?.loanProvider === "selection"
+    ? isCostFreeLoan(loanDecision?.loanProvider)
     : Boolean(productsData?.product?.costFree);
 
   const availabilityTextType = isCostFree ? "materialIsIncluded" : materialType;
