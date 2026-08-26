@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-26 08:42+0200\n"
-"PO-Revision-Date: 2026-08-26 08:42+0200\n"
+"POT-Creation-Date: 2026-08-26 13:43+0200\n"
+"PO-Revision-Date: 2026-08-26 13:43+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-26 08:42+0200\n"
-"PO-Revision-Date: 2026-08-26 08:42+0200\n"
+"POT-Creation-Date: 2026-08-26 13:43+0200\n"
+"PO-Revision-Date: 2026-08-26 13:43+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -5046,6 +5046,14 @@ msgctxt "Work Page"
 msgid "Bibliotek.dk"
 msgstr ""
 
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:3:label"
+msgid "Billedbog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:4:label"
+msgid "Billedbog (online)"
+msgstr ""
+
 msgid "Bing"
 msgstr "Bing"
 
@@ -5155,6 +5163,10 @@ msgstr ""
 
 msgctxt "field.field.paragraph.user_registration_item.field_body:label"
 msgid "Body"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:0:label"
+msgid "Bog"
 msgstr ""
 
 msgid "Book"
@@ -9419,6 +9431,10 @@ msgstr ""
 msgid "Dynamic entity reference selection plugin settings"
 msgstr ""
 
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:1:label"
+msgid "E-bog"
+msgstr ""
+
 msgctxt "Global"
 msgid "E-book"
 msgstr "E-bog"
@@ -11502,6 +11518,22 @@ msgstr ""
 msgctxt "dpl_fbi"
 msgid "Fill out fields using link (optional)"
 msgstr "Udfyld felter i Materialekomponent med link til CQL-søgning (valgfrit)"
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:10:label"
+msgid "Film (blu-ray 4K)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:9:label"
+msgid "Film (blu-ray)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:11:label"
+msgid "Film (dvd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:12:label"
+msgid "Film (online)"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Film adaptations"
@@ -15068,6 +15100,10 @@ msgctxt "dpl_campaign"
 msgid "Low (National)"
 msgstr "Lav (national)"
 
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:2:label"
+msgid "Lydbog (online)"
+msgstr ""
+
 msgid "MIME type"
 msgstr "MIME type"
 
@@ -16065,6 +16101,14 @@ msgstr "Vælg alle"
 msgctxt "Global"
 msgid "Music"
 msgstr "Musik"
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:7:label"
+msgid "Musik (cd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:8:label"
+msgid "Musik (grammofonplade)"
+msgstr ""
 
 msgid ""
 "Must be the same as the profile selected on the form display for this field."
@@ -18665,6 +18709,10 @@ msgctxt "block.block.gin_primary_local_tasks:settings:label"
 msgid "Primary tabs"
 msgstr ""
 
+msgctxt "field.field.paragraph.material_grid_automatic.field_priority_material_type:label"
+msgid "Prioritised material type"
+msgstr ""
+
 msgid "Priority"
 msgstr "Prioritet"
 
@@ -21223,6 +21271,13 @@ msgid ""
 "below."
 msgstr "Vælg hvilken af udgaverne, som du vil reservere."
 
+msgctxt "field.field.paragraph.material_grid_automatic.field_priority_material_type:description"
+msgid ""
+"Select which material type should be prioritised when borrowers click a "
+"material. If the material has a manifestation with that material type, it "
+"will be opened. Otherwise the website's normal logic applies."
+msgstr ""
+
 msgid "Select which roles should be able to see unpublished nodes."
 msgstr "Vælg hvilke roller, der skal kunne se upublicerede noder."
 
@@ -22990,6 +23045,14 @@ msgstr ""
 
 msgid "Technical details"
 msgstr "Tekniske detaljer"
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:5:label"
+msgid "Tegneserie"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:6:label"
+msgid "Tegneserie (online)"
+msgstr ""
 
 msgid "Telephone Formatter"
 msgstr "Telefonformater"
@@ -27080,6 +27143,22 @@ msgstr "Tirsdag"
 msgctxt "Fees list"
 msgid "Turned in @date"
 msgstr "Mellemværende oprettet @date"
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:14:label"
+msgid "Tv-serie (blu-ray 4K)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:13:label"
+msgid "Tv-serie (blu-ray)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:15:label"
+msgid "Tv-serie (dvd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:16:label"
+msgid "Tv-serie (online)"
+msgstr ""
 
 msgid "Tweaks to various DPL paragraphs"
 msgstr "Ændringer til forskellige Paragraphs"
