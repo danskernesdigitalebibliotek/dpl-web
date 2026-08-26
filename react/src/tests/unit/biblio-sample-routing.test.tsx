@@ -15,13 +15,13 @@ import { isAnonymous } from "../../core/utils/helpers/user";
 
 // What the page routes to is the decision under test, so every destination is
 // reduced to a marker.
-vi.mock("../../components/reader-player/Reader", () => ({
+vi.mock("../../components/reader-player/PublizonReader", () => ({
   default: () => <div data-testid="publizon-reader" />
 }));
-vi.mock("../../components/reader-player/BiblioReaderPlayer", () => ({
+vi.mock("../../components/reader-player/DigitalReaderPlayer", () => ({
   default: () => <div data-testid="biblio-loan" />
 }));
-vi.mock("../../components/reader-player/BiblioSampleReaderPlayer", () => ({
+vi.mock("../../components/reader-player/DigitalSampleReaderPlayer", () => ({
   default: ({ materialType }: { materialType: string }) => (
     <div data-testid={`biblio-sample-${materialType}`} />
   )

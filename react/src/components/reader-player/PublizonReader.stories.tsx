@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Reader from "./Reader";
+import Reader from "./PublizonReader";
 
 const meta: Meta<typeof Reader> = {
   title: "ReaderPlayer / Reader",

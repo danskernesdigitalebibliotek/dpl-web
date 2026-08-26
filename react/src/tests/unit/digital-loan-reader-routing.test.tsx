@@ -8,15 +8,15 @@ import {
   mapPublizonLoanToLoanType
 } from "../../core/utils/helpers/list-mapper";
 import { readerUrl } from "../../components/reader-player/helper";
-import BiblioReaderPlayer from "../../components/reader-player/BiblioReaderPlayer";
+import DigitalReaderPlayer from "../../components/reader-player/DigitalReaderPlayer";
 import useReaderCheckout from "../../core/digital/useReaderCheckout";
 
 // The reader and player themselves need the SDK; which of them mounts is the
 // decision under test, so they are reduced to markers.
-vi.mock("../../components/reader-player/BiblioReader", () => ({
+vi.mock("../../components/reader-player/DigitalReader", () => ({
   default: () => <div data-testid="reader" />
 }));
-vi.mock("../../components/reader-player/BiblioPlayer", () => ({
+vi.mock("../../components/reader-player/DigitalPlayer", () => ({
   default: () => <div data-testid="player" />
 }));
 vi.mock("../../core/digital/useReaderCheckout", () => ({
@@ -130,7 +130,7 @@ describe("What the reader page opens a Biblio loan in", () => {
     givenCheckout("audiobook");
 
     const { container } = render(
-      <BiblioReaderPlayer loanId="loan-1" onClose={() => {}} />
+      <DigitalReaderPlayer loanId="loan-1" onClose={() => {}} />
     );
 
     expect(container.querySelector("[data-testid='player']")).not.toBeNull();
@@ -141,7 +141,7 @@ describe("What the reader page opens a Biblio loan in", () => {
     givenCheckout("ebook");
 
     const { container } = render(
-      <BiblioReaderPlayer loanId="loan-1" onClose={() => {}} />
+      <DigitalReaderPlayer loanId="loan-1" onClose={() => {}} />
     );
 
     expect(container.querySelector("[data-testid='reader']")).not.toBeNull();
@@ -152,7 +152,7 @@ describe("What the reader page opens a Biblio loan in", () => {
     givenCheckout(null);
 
     const { container } = render(
-      <BiblioReaderPlayer loanId="loan-1" onClose={() => {}} />
+      <DigitalReaderPlayer loanId="loan-1" onClose={() => {}} />
     );
 
     expect(container.querySelector("[data-testid='reader']")).toBeNull();

@@ -3,27 +3,27 @@ import useReaderCheckout from "../../core/digital/useReaderCheckout";
 
 // Loaded on demand: the SDK carries a reading framework, Firebase and a
 // component library, and only someone opening a book needs any of it.
-const WedoBooksReader = React.lazy(() =>
+const SdkReader = React.lazy(() =>
   import("@danskernesdigitalebibliotek/dpl-wedobooks").then((module) => ({
     default: module.WedoBooksReader
   }))
 );
 
-export type BiblioReaderProps = {
-  /** The Biblio loan to open, which is also the SDK's checkout id. */
+export type DigitalReaderProps = {
+  /** The loan to open, which is also the SDK's checkout id. */
   loanId: string;
   onClose: () => void;
 };
 
 /**
- * The reader for a loan made through the Biblio adapter.
+ * The reader for a loan the service layer issued.
  *
  * The counterpart to `Reader`, which opens Publizon loans in pubhub's reader.
  * The two are not interchangeable - neither service recognises the other's
  * loans - so which one to render is decided from the loan, not from the
  * library's current provider.
  */
-const BiblioReader: React.FC<BiblioReaderProps> = ({ loanId, onClose }) => {
+const DigitalReader: React.FC<DigitalReaderProps> = ({ loanId, onClose }) => {
   const { sdk, checkout } = useReaderCheckout(loanId);
 
   // Nothing to render until both the session and the entitlement are in hand.
@@ -33,7 +33,7 @@ const BiblioReader: React.FC<BiblioReaderProps> = ({ loanId, onClose }) => {
 
   return (
     <Suspense fallback={null}>
-      <WedoBooksReader
+      <SdkReader
         sdk={sdk}
         checkout={checkout}
         onClose={onClose}
@@ -46,4 +46,4 @@ const BiblioReader: React.FC<BiblioReaderProps> = ({ loanId, onClose }) => {
   );
 };
 
-export default BiblioReader;
+export default DigitalReader;

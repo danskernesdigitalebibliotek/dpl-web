@@ -2,12 +2,14 @@ import React from "react";
 import { withConfig } from "../../core/utils/config";
 import { withUrls } from "../../core/utils/url";
 import { withText } from "../../core/utils/text";
-import Reader, { ReaderType } from "../../components/reader-player/Reader";
-import BiblioReaderPlayer from "../../components/reader-player/BiblioReaderPlayer";
-import BiblioSampleReaderPlayer from "../../components/reader-player/BiblioSampleReaderPlayer";
+import Reader, {
+  PublizonReaderType
+} from "../../components/reader-player/PublizonReader";
+import DigitalReaderPlayer from "../../components/reader-player/DigitalReaderPlayer";
+import DigitalSampleReaderPlayer from "../../components/reader-player/DigitalSampleReaderPlayer";
 import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 
-export type ReaderEntryType = ReaderType & {
+export type ReaderEntryType = PublizonReaderType & {
   // Lowercase because it comes from the url via Drupal, like orderid.
   loanid?: string;
   // Which kind of sample an identifier link asks for. A sample has no loan
@@ -27,7 +29,7 @@ const ReaderEntry: React.FC<ReaderEntryType> = ({
   // Publizon loans, and those only open in Publizon's reader.
   if (loanid) {
     return (
-      <BiblioReaderPlayer
+      <DigitalReaderPlayer
         loanId={loanid}
         // The reader or player is the whole page here, so closing it means
         // leaving it.
@@ -44,7 +46,7 @@ const ReaderEntry: React.FC<ReaderEntryType> = ({
   // service being left.
   if (identifier && !orderid && viaServiceLayer) {
     return (
-      <BiblioSampleReaderPlayer
+      <DigitalSampleReaderPlayer
         identifier={identifier}
         materialType={sampletype === "audiobook" ? "audiobook" : "ebook"}
         onClose={() => window.history.back()}

@@ -1,34 +1,35 @@
 import React, { Suspense } from "react";
 import useReaderCheckout from "../../core/digital/useReaderCheckout";
 
-const WedoBooksPlayer = React.lazy(() =>
+const SdkPlayer = React.lazy(() =>
   import("@danskernesdigitalebibliotek/dpl-wedobooks").then((module) => ({
     default: module.WedoBooksPlayer
   }))
 );
 
-export type BiblioPlayerProps = {
-  /** The Biblio loan to play, which is also the SDK's checkout id. */
+export type DigitalPlayerProps = {
+  /** The loan to play, which is also the SDK's checkout id. */
   loanId: string;
   onClose: () => void;
 };
 
 /**
- * The audiobook player for a loan made through the Biblio adapter.
+ * The audiobook player for a loan the service layer issued.
  *
  * The counterpart to `Player`, which plays Publizon loans in pubhub's iframe.
- * See `BiblioReader` for why the loan, not the library, decides which one runs.
+ * See `DigitalReader` for why the loan, not the library, decides which one
+ * runs.
  */
-const BiblioPlayer: React.FC<BiblioPlayerProps> = ({ loanId, onClose }) => {
+const DigitalPlayer: React.FC<DigitalPlayerProps> = ({ loanId, onClose }) => {
   const { sdk, checkout } = useReaderCheckout(loanId);
 
   if (!sdk || !checkout) return null;
 
   return (
     <Suspense fallback={null}>
-      <WedoBooksPlayer sdk={sdk} checkout={checkout} onClose={onClose} />
+      <SdkPlayer sdk={sdk} checkout={checkout} onClose={onClose} />
     </Suspense>
   );
 };
 
-export default BiblioPlayer;
+export default DigitalPlayer;

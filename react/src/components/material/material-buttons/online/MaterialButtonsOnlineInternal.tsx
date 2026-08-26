@@ -239,7 +239,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     if (isAlreadyLoaned && orderId) {
       // A Biblio audiobook plays on the reader page rather than in a modal:
       // the SDK's player bar pins itself to the bottom of the viewport, which
-      // leaves a wrapping modal empty. See BiblioReaderPlayer.
+      // leaves a wrapping modal empty. See DigitalReaderPlayer.
       if (holdingProvider === "biblio") {
         return (
           <LinkButton

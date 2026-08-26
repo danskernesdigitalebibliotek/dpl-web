@@ -1,13 +1,16 @@
 import React, { CSSProperties, useEffect } from "react";
 import { appendAsset, readerAssets, removeAppendedAssets } from "./helper";
 
-export type ReaderType = {
+export type PublizonReaderType = {
   identifier?: string;
   // orderid must be in lowercase bacause its comes from the url / Drupal
   orderid?: string;
 };
 
-const Reader: React.FC<ReaderType> = ({ identifier, orderid }: ReaderType) => {
+const PublizonReader: React.FC<PublizonReaderType> = ({
+  identifier,
+  orderid
+}: PublizonReaderType) => {
   useEffect(() => {
     readerAssets.forEach(appendAsset);
 
@@ -55,4 +58,4 @@ const Reader: React.FC<ReaderType> = ({ identifier, orderid }: ReaderType) => {
   return null;
 };
 
-export default Reader;
+export default PublizonReader;
