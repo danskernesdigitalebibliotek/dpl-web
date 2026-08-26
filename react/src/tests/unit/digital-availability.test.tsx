@@ -26,14 +26,14 @@ vi.mock("../../core/digital/useTolerateUnknownMaterials", () => ({
   default: vi.fn()
 }));
 
-const mockedCanLoan = vi.mocked(useLoanDecision);
+const mockedLoanDecision = vi.mocked(useLoanDecision);
 const mockedFlag = vi.mocked(useServiceLayerLending);
 const mockedIsAnonymous = vi.mocked(isAnonymous);
 
 const ISBN = "9788727319346";
 
 const givenAdapterAnswers = (status: string) =>
-  mockedCanLoan.mockReturnValue({
+  mockedLoanDecision.mockReturnValue({
     data: { status },
     isLoading: false
   } as unknown as ReturnType<typeof useLoanDecision>);
@@ -52,7 +52,7 @@ describe("useDigitalAvailability", () => {
     mockedFlag.mockReturnValue(true);
     mockedIsAnonymous.mockReturnValue(false);
     vi.mocked(useTolerateUnknownMaterials).mockReturnValue(false);
-    mockedCanLoan.mockReturnValue({
+    mockedLoanDecision.mockReturnValue({
       data: undefined,
       isLoading: false
     } as unknown as ReturnType<typeof useLoanDecision>);
@@ -62,7 +62,7 @@ describe("useDigitalAvailability", () => {
     const { result } = render();
 
     expect(result.current.isAnswering).toBe(true);
-    expect(mockedCanLoan).toHaveBeenCalledWith(ISBN, {
+    expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
       enabled: true,
       allowNotFound: false
     });
@@ -76,7 +76,7 @@ describe("useDigitalAvailability", () => {
     expect(result.current.isAnswering).toBe(false);
     // The query is still declared - hooks cannot be conditional - but it is
     // disabled, so no request is made.
-    expect(mockedCanLoan).toHaveBeenCalledWith(ISBN, {
+    expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
       enabled: false,
       allowNotFound: false
     });
@@ -86,7 +86,7 @@ describe("useDigitalAvailability", () => {
     const { result } = render(null);
 
     expect(result.current.isAnswering).toBe(false);
-    expect(mockedCanLoan).toHaveBeenCalledWith(null, {
+    expect(mockedLoanDecision).toHaveBeenCalledWith(null, {
       enabled: false,
       allowNotFound: false
     });
@@ -123,7 +123,7 @@ describe("useDigitalAvailability", () => {
     it("Asks strictly by default, so a 404 stays the error it is", () => {
       render();
 
-      expect(mockedCanLoan).toHaveBeenCalledWith(ISBN, {
+      expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
         enabled: true,
         allowNotFound: false
       });
@@ -132,7 +132,7 @@ describe("useDigitalAvailability", () => {
     it("Counts a tolerated unknown material as unavailable", () => {
       vi.mocked(useTolerateUnknownMaterials).mockReturnValue(true);
       // The tolerated 404: the query resolved, and Biblio has no answer.
-      mockedCanLoan.mockReturnValue({
+      mockedLoanDecision.mockReturnValue({
         data: null,
         isLoading: false
       } as unknown as ReturnType<typeof useLoanDecision>);
@@ -142,7 +142,7 @@ describe("useDigitalAvailability", () => {
       // Unavailable rather than an error - and never a fallback to Publizon:
       // with the flag on, a material Biblio cannot lend is not on offer.
       expect(result.current.isAvailable).toBe(false);
-      expect(mockedCanLoan).toHaveBeenCalledWith(ISBN, {
+      expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
         enabled: true,
         allowNotFound: true
       });

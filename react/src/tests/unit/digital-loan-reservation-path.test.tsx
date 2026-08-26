@@ -37,8 +37,8 @@ vi.mock(
  * loans into the service being migrated away from.
  *
  * The other half is the offer flow. Publizon has no separate redeem step, so
- * a redeemable reservation just shows the loan button; Biblio makes accepting
- * explicit.
+ * a redeemable reservation just shows the loan button; the service layer makes
+ * accepting explicit.
  */
 
 const IDENTIFIER = "9788727319346";
@@ -58,14 +58,6 @@ vi.mock("../../core/publizon/publizon", () => ({
   getGetV1LoanstatusIdentifierQueryKey: () => ["loanstatus"],
   getGetV1UserLoansQueryKey: () => ["loans"],
   getGetV1UserReservationsQueryKey: () => ["reservations"]
-}));
-
-vi.mock("../../core/digital/useDigitalReservations", () => ({
-  digitalReservationsQueryKey: ["serviceLayer", "reservations"]
-}));
-vi.mock("../../core/digital/useDigitalLoans", () => ({
-  default: vi.fn(),
-  digitalLoansQueryKey: ["serviceLayer", "loans"]
 }));
 
 vi.mock("../../core/utils/useReaderPlayer", () => ({ default: vi.fn() }));
@@ -89,8 +81,8 @@ vi.mock("../../apps/material/helper", () => ({
 const mutations = {
   publizonLoan: vi.fn(),
   publizonReservation: vi.fn(),
-  biblioLoan: vi.fn(),
-  biblioReservation: vi.fn(),
+  digitalLoan: vi.fn(),
+  digitalReservation: vi.fn(),
   biblioAcceptOffer: vi.fn()
 };
 
@@ -132,10 +124,10 @@ const givenScenario = ({
     asMutation(mutations.publizonReservation) as never
   );
   vi.mocked(useCreateDigitalLoan).mockReturnValue(
-    asMutation(mutations.biblioLoan)
+    asMutation(mutations.digitalLoan)
   );
   vi.mocked(useCreateDigitalReservation).mockReturnValue(
-    asMutation(mutations.biblioReservation) as never
+    asMutation(mutations.digitalReservation) as never
   );
   vi.mocked(useAcceptReservationOffer).mockReturnValue(
     asMutation(mutations.biblioAcceptOffer) as never
@@ -165,7 +157,7 @@ describe("Digital loans and reservations - which service is used", () => {
       runHandler();
 
       expect(mutations.publizonLoan).toHaveBeenCalledTimes(1);
-      expect(mutations.biblioLoan).not.toHaveBeenCalled();
+      expect(mutations.digitalLoan).not.toHaveBeenCalled();
       expect(mutations.biblioAcceptOffer).not.toHaveBeenCalled();
     });
 
@@ -175,7 +167,7 @@ describe("Digital loans and reservations - which service is used", () => {
       runHandler();
 
       expect(mutations.publizonReservation).toHaveBeenCalledTimes(1);
-      expect(mutations.biblioReservation).not.toHaveBeenCalled();
+      expect(mutations.digitalReservation).not.toHaveBeenCalled();
     });
   });
 
@@ -185,7 +177,7 @@ describe("Digital loans and reservations - which service is used", () => {
 
       runHandler();
 
-      expect(mutations.biblioLoan).toHaveBeenCalledWith(
+      expect(mutations.digitalLoan).toHaveBeenCalledWith(
         IDENTIFIER,
         expect.anything()
       );
@@ -199,7 +191,7 @@ describe("Digital loans and reservations - which service is used", () => {
 
       // The adapter derives the user from the token, so unlike Publizon it
       // needs no contact details.
-      expect(mutations.biblioReservation).toHaveBeenCalledWith(
+      expect(mutations.digitalReservation).toHaveBeenCalledWith(
         IDENTIFIER,
         expect.anything()
       );
@@ -221,7 +213,7 @@ describe("Digital loans and reservations - which service is used", () => {
         OFFER_ID,
         expect.anything()
       );
-      expect(mutations.biblioLoan).not.toHaveBeenCalled();
+      expect(mutations.digitalLoan).not.toHaveBeenCalled();
     });
 
     it("Creates a loan when there is no offer to accept", () => {
@@ -232,7 +224,7 @@ describe("Digital loans and reservations - which service is used", () => {
       runHandler();
 
       expect(mutations.biblioAcceptOffer).not.toHaveBeenCalled();
-      expect(mutations.biblioLoan).toHaveBeenCalledTimes(1);
+      expect(mutations.digitalLoan).toHaveBeenCalledTimes(1);
     });
   });
   describe("when the adapter refuses a reservation", () => {
@@ -241,7 +233,7 @@ describe("Digital loans and reservations - which service is used", () => {
       // the status is the only thing separating a queue place from a spent
       // quota.
       givenScenario({ flagOn: true, canBeReserved: true });
-      mutations.biblioReservation.mockImplementation(
+      mutations.digitalReservation.mockImplementation(
         (_id: string, { onSuccess }: { onSuccess: (r: unknown) => void }) =>
           onSuccess({ status: "monthly_limit_exceeded", loan: undefined })
       );
@@ -262,7 +254,7 @@ describe("Digital loans and reservations - which service is used", () => {
 
     it("Reports success when the reservation was actually made", () => {
       givenScenario({ flagOn: true, canBeReserved: true });
-      mutations.biblioReservation.mockImplementation(
+      mutations.digitalReservation.mockImplementation(
         (_id: string, { onSuccess }: { onSuccess: (r: unknown) => void }) =>
           onSuccess({ status: "reservable", loan: undefined })
       );
@@ -289,8 +281,8 @@ describe("Digital loans and reservations - which service is used", () => {
 
       runHandler();
 
-      expect(mutations.biblioLoan).not.toHaveBeenCalled();
-      expect(mutations.biblioReservation).not.toHaveBeenCalled();
+      expect(mutations.digitalLoan).not.toHaveBeenCalled();
+      expect(mutations.digitalReservation).not.toHaveBeenCalled();
       expect(mutations.publizonLoan).not.toHaveBeenCalled();
       expect(mutations.publizonReservation).not.toHaveBeenCalled();
     });

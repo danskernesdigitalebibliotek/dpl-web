@@ -93,7 +93,7 @@ export const givenUserHasBiblioSupportId = (supportId?: string) => {
     body: supportId
       ? biblioSupportIdFactory.build({ support_id: supportId })
       : biblioSupportIdFactory.build()
-  }).as("digitalSupportId");
+  }).as("biblioSupportId");
 };
 
 /** Given: whether Biblio will let the user borrow this material. */

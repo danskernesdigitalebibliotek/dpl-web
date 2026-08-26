@@ -48,7 +48,7 @@ const publizonLoan = {
   libraryBook: { identifier: "9788727319346" }
 } as Loan;
 
-const biblioLoan: DigitalLoan = {
+const digitalLoan: DigitalLoan = {
   loanId: "VAcPZZkCeqvnNRnOdP17",
   materialId: "9788758855769",
   materialType: "audiobook",
@@ -77,7 +77,7 @@ describe("Which reader a digital loan opens in", () => {
       })
     );
 
-    const [loan] = mapDigitalLoanToLoanType([biblioLoan]);
+    const [loan] = mapDigitalLoanToLoanType([digitalLoan]);
 
     expect(loan.digitalProvider).toBe("serviceLayer");
   });
@@ -91,12 +91,12 @@ describe("Which reader a digital loan opens in", () => {
     );
 
     const [publizon] = mapPublizonLoanToLoanType([publizonLoan]);
-    const [biblio] = mapDigitalLoanToLoanType([biblioLoan]);
+    const [biblio] = mapDigitalLoanToLoanType([digitalLoan]);
 
     // Same field, different id: the order id for Publizon, the loan id for
     // Biblio. This is exactly why the provider has to be carried alongside it.
     expect(publizon.orderId).toBe(publizonLoan.orderId);
-    expect(biblio.orderId).toBe(biblioLoan.loanId);
+    expect(biblio.orderId).toBe(digitalLoan.loanId);
   });
 });
 
