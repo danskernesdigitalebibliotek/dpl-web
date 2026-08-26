@@ -56,11 +56,15 @@ $_recommended-material-max-width: 378px;
   border: 1px solid $color__global-tertiary-1;
   aspect-ratio: unset;
 
-  grid-template-rows: min-content $cover_height_small 1fr;
+  grid-template-rows: min-content auto 1fr;
   > .cover {
     height: 100%;
+    max-height: $cover_height_small;
   }
   @include media-query__small {
-    grid-template-rows: min-content $cover_height_large 1fr;
+    grid-template-rows: min-content auto 1fr;
+    > .cover {
+      max-height: $cover_height_large;
+    }
   }
 }
