@@ -498,8 +498,8 @@ class EventRestMapper {
     $organizer->setId($branch->uuid());
     $organizer->setName($name);
     $organizer->setUrl($branch->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl());
-    $organizer->setPhone($this->getBranchValue($branch, 'field_phone'));
-    $organizer->setEmail($this->getBranchValue($branch, 'field_email'));
+    $organizer->setPhone($this->getFieldStringValue($branch, 'field_phone'));
+    $organizer->setEmail($this->getFieldStringValue($branch, 'field_email'));
 
     $address = $branch->hasField('field_address_gsearch') ?
       $branch->get('field_address_gsearch')->first() : NULL;
@@ -523,14 +523,14 @@ class EventRestMapper {
   }
 
   /**
-   * Helper, getting a single string value from a branch node field.
+   * Get string value from entity field.
    */
-  private function getBranchValue(NodeInterface $branch, string $field_name): ?string {
-    if (!$branch->hasField($field_name)) {
+  private function getFieldStringValue(NodeInterface $entity, string $field_name): ?string {
+    if (!$entity->hasField($field_name)) {
       return NULL;
     }
 
-    return $branch->get($field_name)->getString() ?: NULL;
+    return $entity->get($field_name)->getString() ?: NULL;
   }
 
   /**
