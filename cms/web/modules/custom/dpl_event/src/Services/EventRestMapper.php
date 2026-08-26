@@ -18,12 +18,11 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\dpl_event\Entity\EventInstance;
+use Drupal\dpl_library_agency\Entity\BranchNode;
 use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\file\FileInterface;
-use Drupal\gsearch\AddressGsearchItemInterface;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\media\MediaInterface;
-use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\recurring_events\Entity\EventSeries;
 use Safe\DateTime;
@@ -453,11 +452,7 @@ class EventRestMapper {
 
       $names[] = $label;
 
-      $isil_id = '';
-      if ($branch->hasField('field_agency_branch_id') && !$branch->get('field_agency_branch_id')->isEmpty()) {
-        $isil_id = (string) $branch->get('field_agency_branch_id')->value;
-      }
-      $isil_ids[] = $isil_id;
+      $isil_ids[] = ($branch instanceof BranchNode) ? ($branch->getIsilId() ?? '') : '';
     }
 
     return ['names' => $names, 'isil_ids' => $isil_ids];
@@ -476,7 +471,7 @@ class EventRestMapper {
     $branches = $this->event->getBranches() ?? [];
     $branch = reset($branches);
 
-    if (!($branch instanceof NodeInterface)) {
+    if (!($branch instanceof BranchNode)) {
       return NULL;
     }
 
@@ -498,13 +493,12 @@ class EventRestMapper {
     $organizer->setId($branch->uuid());
     $organizer->setName($name);
     $organizer->setUrl($branch->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl());
-    $organizer->setPhone($this->getFieldStringValue($branch, 'field_phone'));
-    $organizer->setEmail($this->getFieldStringValue($branch, 'field_email'));
+    $organizer->setPhone($branch->getPhone());
+    $organizer->setEmail($branch->getEmail());
 
-    $address = $branch->hasField('field_address_gsearch') ?
-      $branch->get('field_address_gsearch')->first() : NULL;
+    $address = $branch->getAddressData();
 
-    if ($address instanceof AddressGsearchItemInterface) {
+    if ($address) {
       $zip = $address->getPostalCode();
       $country = $address->getCountryCode();
       // The normalized street can be missing even though the address holds a
@@ -520,17 +514,6 @@ class EventRestMapper {
     }
 
     return $organizer;
-  }
-
-  /**
-   * Get string value from entity field.
-   */
-  private function getFieldStringValue(NodeInterface $entity, string $field_name): ?string {
-    if (!$entity->hasField($field_name)) {
-      return NULL;
-    }
-
-    return $entity->get($field_name)->getString() ?: NULL;
   }
 
   /**

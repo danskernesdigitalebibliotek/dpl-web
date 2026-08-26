@@ -7,11 +7,24 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_library_agency\Branch\FbsBranchRepository;
+use Drupal\dpl_library_agency\Entity\BranchNode;
 use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ *
+ * @param mixed[] $bundles
+ *   Bundle info for altering.
+ */
+function dpl_library_agency_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['node']['branch'])) {
+    $bundles['node']['branch']['class'] = BranchNode::class;
+  }
+}
 
 /**
  * Implements hook_dpl_protected_nodes_get_protected_nodes().
