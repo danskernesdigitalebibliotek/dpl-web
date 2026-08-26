@@ -16,6 +16,12 @@ services:
     arguments:
       - 'bnf_client'
 
+  Drupal\bnf_client\Collector\SubscriptionCollector:
+    class: Drupal\bnf_client\Collector\SubscriptionCollector
+    autowire: true
+    tags:
+      - { name: dpl_metrics_collector }
+
   # These hook services definitions is only needed by Drupal 10, they
   # can be removed when we upgrade to Drupal 11.
   Drupal\bnf_client\Hook\SubscriptionHooks:
