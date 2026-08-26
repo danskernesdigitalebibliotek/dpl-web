@@ -65,7 +65,7 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
   // composition, and asking both to state their own identity duplicated the
   // predicate above.
   const holdingProvider: DigitalProvider | null = heldByServiceLayer
-    ? "biblio"
+    ? "serviceLayer"
     : (heldByPublizon && "publizon") || null;
 
   return {

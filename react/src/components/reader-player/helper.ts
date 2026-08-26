@@ -95,12 +95,12 @@ export const getOrderIdByIdentifier = ({
  * Where a digital loan opens.
  *
  * The reader page takes one parameter per provider because the two readers do
- * not recognise each other's keys: pubhub knows an order id, the WeDoBooks SDK
- * a loan id. Kept here rather than at the call sites so the contract with the
- * reader route lives in one place.
+ * not recognise each other's keys: Publizon knows an order id, the service
+ * layer a loan id. Kept here rather than at the call sites so the contract
+ * with the reader route lives in one place.
  */
 export const readerUrl = (id: string, provider?: DigitalProvider | null) => {
-  const parameter = provider === "biblio" ? "loanid" : "orderid";
+  const parameter = provider === "serviceLayer" ? "loanid" : "orderid";
   return new URL(
     `/reader?${parameter}=${encodeURIComponent(id)}`,
     window.location.href

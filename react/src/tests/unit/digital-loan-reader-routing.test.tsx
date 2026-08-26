@@ -79,7 +79,7 @@ describe("Which reader a digital loan opens in", () => {
 
     const [loan] = mapDigitalLoanToLoanType([biblioLoan]);
 
-    expect(loan.digitalProvider).toBe("biblio");
+    expect(loan.digitalProvider).toBe("serviceLayer");
   });
 
   it("gives both providers the key their own reader opens the loan with", () => {
@@ -106,7 +106,7 @@ describe("readerUrl", () => {
   // WeDoBooks SDK a loan id. This mapping is the whole reason
   // digitalProvider exists, so it gets pinned on its own.
   it("opens a Biblio loan by its loan id", () => {
-    expect(readerUrl("VAcPZZkCeqvnNRnOdP17", "biblio").search).toBe(
+    expect(readerUrl("VAcPZZkCeqvnNRnOdP17", "serviceLayer").search).toBe(
       "?loanid=VAcPZZkCeqvnNRnOdP17"
     );
   });

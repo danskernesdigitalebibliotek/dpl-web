@@ -87,7 +87,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
     }
     // A Biblio audiobook plays on the reader page - the SDK's player bar
     // cannot live in a modal. See DigitalReaderPlayer for the full why.
-    if (digitalProvider === "biblio") {
+    if (digitalProvider === "serviceLayer") {
       return (
         <LinkButton
           url={readerUrl(orderId, digitalProvider)}

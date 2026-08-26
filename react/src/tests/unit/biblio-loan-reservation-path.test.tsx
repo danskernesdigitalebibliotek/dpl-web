@@ -61,11 +61,11 @@ vi.mock("../../core/publizon/publizon", () => ({
 }));
 
 vi.mock("../../core/digital/useDigitalReservations", () => ({
-  digitalReservationsQueryKey: ["biblio", "reservations"]
+  digitalReservationsQueryKey: ["serviceLayer", "reservations"]
 }));
 vi.mock("../../core/digital/useDigitalLoans", () => ({
   default: vi.fn(),
-  digitalLoansQueryKey: ["biblio", "loans"]
+  digitalLoansQueryKey: ["serviceLayer", "loans"]
 }));
 
 vi.mock("../../core/utils/useReaderPlayer", () => ({ default: vi.fn() }));

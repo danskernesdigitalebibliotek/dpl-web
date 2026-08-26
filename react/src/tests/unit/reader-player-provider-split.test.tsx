@@ -148,7 +148,7 @@ describe("useReaderPlayer - which provider answers what", () => {
 
       expect(render()).toMatchObject({
         orderId: BIBLIO_LOAN_ID,
-        holdingProvider: "biblio"
+        holdingProvider: "serviceLayer"
       });
     });
 
