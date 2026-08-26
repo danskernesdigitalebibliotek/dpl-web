@@ -16,7 +16,7 @@ import { Patron } from "../../core/utils/types/entities";
 import { useGetV1UserCardnumberFriendly } from "../../core/publizon/publizon";
 import { FriendlyCardResult } from "../../core/publizon/model";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
-import { useBiblioSupportId } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useSupportId } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 const PatronPage: FC = () => {
   const t = useText();
@@ -29,7 +29,7 @@ const PatronPage: FC = () => {
       enabled: !!patronData && !useBiblio
     }
   });
-  const { data: biblioSupportId } = useBiblioSupportId({
+  const { data: biblioSupportId } = useSupportId({
     enabled: !!patronData && useBiblio
   });
   // Publizon's friendly card number and Biblio's support id serve the same

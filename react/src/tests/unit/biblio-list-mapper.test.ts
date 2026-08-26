@@ -1,8 +1,8 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import {
-  type BiblioLoan,
-  type BiblioMaterial,
-  type BiblioReservation
+  type DigitalLoan,
+  type DigitalMaterial,
+  type DigitalReservation
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
   mapBiblioLoanToLoanType,
@@ -18,7 +18,7 @@ import { addTextEntries } from "../../core/text.slice";
  * translation, including the places where Biblio and Publizon disagree.
  */
 
-const biblioLoan: BiblioLoan = {
+const biblioLoan: DigitalLoan = {
   loanId: "3f7b1c62-9d4e-4a71-b0c3-1d5a8e2f4b90",
   materialId: "9788727319346",
   materialType: "ebook",
@@ -32,7 +32,7 @@ const biblioLoan: BiblioLoan = {
   loanProvider: "selection"
 };
 
-const biblioReservation: BiblioReservation = {
+const biblioReservation: DigitalReservation = {
   reservationId: "e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11",
   materialId: "9788727319346",
   materialType: "ebook",
@@ -156,7 +156,7 @@ describe("Biblio list mappers", () => {
   });
 
   describe("mapBiblioMaterialToBasicDetailsType", () => {
-    const material: BiblioMaterial = {
+    const material: DigitalMaterial = {
       isbn: "9788727319346",
       materialType: "audiobook",
       title: "Terræn",

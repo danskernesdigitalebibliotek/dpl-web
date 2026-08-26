@@ -8,7 +8,7 @@ import {
 } from "../../core/publizon/publizon";
 import { FileExtensionType } from "../../core/publizon/model";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
-import { useBiblioLoanQuotas } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalLoanQuotas } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 // Only the hooks under test are stubbed; the rest of the package stays
 // real, so pure helpers keep behaving as they do in production.
@@ -18,7 +18,7 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useBiblioLoanQuotas: vi.fn()
+    useDigitalLoanQuotas: vi.fn()
   })
 );
 
@@ -75,9 +75,9 @@ describe("StatusSection component tests", () => {
   beforeEach(() => {
     // Default to the flag being off: Publizon answers, as before.
     vi.mocked(useBiblioAdapter).mockReturnValue(false);
-    vi.mocked(useBiblioLoanQuotas).mockReturnValue({
+    vi.mocked(useDigitalLoanQuotas).mockReturnValue({
       data: undefined
-    } as unknown as ReturnType<typeof useBiblioLoanQuotas>);
+    } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
   });
   it("should render nothing if library profile is not loaded", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
@@ -248,7 +248,7 @@ describe("StatusSection component tests", () => {
     });
 
     it("Renders the quotas from Biblio, counting the loans held right now", () => {
-      vi.mocked(useBiblioLoanQuotas).mockReturnValue({
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
         data: [
           {
             splitOnFormat: true,
@@ -261,7 +261,7 @@ describe("StatusSection component tests", () => {
             currentMonthlyLoans: { ebook: 7, audiobook: 6 }
           }
         ]
-      } as unknown as ReturnType<typeof useBiblioLoanQuotas>);
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
 
       const { container } = render(<StatusSection />);
 
@@ -277,7 +277,7 @@ describe("StatusSection component tests", () => {
     });
 
     it("Leaves out the reservation limits, which Biblio does not provide", () => {
-      vi.mocked(useBiblioLoanQuotas).mockReturnValue({
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
         data: [
           {
             splitOnFormat: false,
@@ -289,7 +289,7 @@ describe("StatusSection component tests", () => {
             currentMonthlyLoans: 6
           }
         ]
-      } as unknown as ReturnType<typeof useBiblioLoanQuotas>);
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
 
       const { container } = render(<StatusSection />);
 
@@ -300,9 +300,9 @@ describe("StatusSection component tests", () => {
     });
 
     it("Renders nothing until the quotas have loaded", () => {
-      vi.mocked(useBiblioLoanQuotas).mockReturnValue({
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
         data: undefined
-      } as unknown as ReturnType<typeof useBiblioLoanQuotas>);
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
 
       const { container } = render(<StatusSection />);
 

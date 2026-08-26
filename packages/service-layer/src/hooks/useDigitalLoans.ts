@@ -3,26 +3,26 @@
 import { type UseQueryOptions, type UseQueryResult, useQuery } from "@tanstack/react-query"
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
-import type { biblioLoansQueryKey } from "../queries/biblio"
-import { biblioLoansQuery } from "../queries/biblio"
-import type { BiblioLoan } from "../types"
+import type { digitalLoansQueryKey } from "../queries/biblio"
+import { digitalLoansQuery } from "../queries/biblio"
+import type { DigitalLoan } from "../types"
 
-type BiblioLoansPage = { loans: BiblioLoan[]; nextCursor?: string }
+type DigitalLoansPage = { loans: DigitalLoan[]; nextCursor?: string }
 
-type BiblioLoansQueryKey = ReturnType<typeof biblioLoansQueryKey>
+type DigitalLoansQueryKey = ReturnType<typeof digitalLoansQueryKey>
 
 type UseBiblioLoansOptions = Omit<
-  UseQueryOptions<BiblioLoansPage, Error, BiblioLoansPage, BiblioLoansQueryKey>,
+  UseQueryOptions<DigitalLoansPage, Error, DigitalLoansPage, DigitalLoansQueryKey>,
   "queryKey" | "queryFn" | "enabled"
 > & { enabled?: boolean }
 
-export const useBiblioLoans = (
+export const useDigitalLoans = (
   options?: UseBiblioLoansOptions
-): UseQueryResult<BiblioLoansPage, Error> => {
+): UseQueryResult<DigitalLoansPage, Error> => {
   const config = useServiceLayerConfig()
   const { enabled = true, ...restOptions } = options ?? {}
   return useQuery({
-    ...biblioLoansQuery(config),
+    ...digitalLoansQuery(config),
     ...restOptions,
     // Patron-scoped: never fires without a patron session, regardless of the
     // consumer's own `enabled` condition.

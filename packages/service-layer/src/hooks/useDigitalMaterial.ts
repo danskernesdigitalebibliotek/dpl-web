@@ -3,14 +3,14 @@
 import { type UseQueryOptions, type UseQueryResult, useQuery } from "@tanstack/react-query"
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
-import type { biblioMaterialQueryKey } from "../queries/biblio"
-import { biblioMaterialQuery } from "../queries/biblio"
-import type { BiblioMaterial } from "../types"
+import type { digitalMaterialQueryKey } from "../queries/biblio"
+import { digitalMaterialQuery } from "../queries/biblio"
+import type { DigitalMaterial } from "../types"
 
-type BiblioMaterialQueryKey = ReturnType<typeof biblioMaterialQueryKey>
+type DigitalMaterialQueryKey = ReturnType<typeof digitalMaterialQueryKey>
 
 type UseBiblioMaterialOptions = Omit<
-  UseQueryOptions<BiblioMaterial | null, Error, BiblioMaterial | null, BiblioMaterialQueryKey>,
+  UseQueryOptions<DigitalMaterial | null, Error, DigitalMaterial | null, DigitalMaterialQueryKey>,
   "queryKey" | "queryFn" | "enabled"
 > & { enabled?: boolean }
 
@@ -21,14 +21,14 @@ type UseBiblioMaterialOptions = Omit<
  * Metadata is not patron-scoped: the adapter accepts a library token, so this
  * answers for visitors too.
  */
-export const useBiblioMaterial = (
+export const useDigitalMaterial = (
   isbn: string | null,
   options?: UseBiblioMaterialOptions
-): UseQueryResult<BiblioMaterial | null, Error> => {
+): UseQueryResult<DigitalMaterial | null, Error> => {
   const config = useServiceLayerConfig()
   const { enabled = true, ...restOptions } = options ?? {}
   return useQuery({
-    ...biblioMaterialQuery(config, isbn),
+    ...digitalMaterialQuery(config, isbn),
     ...restOptions,
     enabled: enabled && Boolean(isbn),
   })

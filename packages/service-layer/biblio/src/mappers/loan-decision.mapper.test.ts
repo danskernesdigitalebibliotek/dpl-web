@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest"
 
-import { parseAndMapCanLoan, parseAndMapLoanResult } from "./can-loan.mapper"
+import { parseAndMapLoanDecision, parseAndMapLoanRequestResult } from "./loan-decision.mapper"
 
-describe("parseAndMapCanLoan", () => {
+describe("parseAndMapLoanDecision", () => {
   it("maps the can-loan answer", () => {
-    expect(parseAndMapCanLoan({ status: "loanable" })).toEqual({
+    expect(parseAndMapLoanDecision({ status: "loanable" })).toEqual({
       status: "loanable",
       unavailableReason: undefined,
       lendingBlockReason: undefined,
@@ -12,19 +12,19 @@ describe("parseAndMapCanLoan", () => {
   })
 
   it("surfaces the adapter's own message when a 2xx body is its error envelope", () => {
-    expect(() => parseAndMapCanLoan({ message: "Rate limit exceeded" })).toThrow(
+    expect(() => parseAndMapLoanDecision({ message: "Rate limit exceeded" })).toThrow(
       "Biblio adapter error: Rate limit exceeded"
     )
   })
 
   it("throws the validation error when the body is neither answer nor error envelope", () => {
-    expect(() => parseAndMapCanLoan({ status: "not-a-status" })).toThrow(/status/)
+    expect(() => parseAndMapLoanDecision({ status: "not-a-status" })).toThrow(/status/)
   })
 })
 
-describe("parseAndMapLoanResult", () => {
+describe("parseAndMapLoanRequestResult", () => {
   it("surfaces the adapter's own message when a 2xx body is its error envelope", () => {
-    expect(() => parseAndMapLoanResult({ message: "Loan failed" })).toThrow(
+    expect(() => parseAndMapLoanRequestResult({ message: "Loan failed" })).toThrow(
       "Biblio adapter error: Loan failed"
     )
   })

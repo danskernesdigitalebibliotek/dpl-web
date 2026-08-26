@@ -2,7 +2,7 @@
 
 import { type UseMutationOptions, type UseMutationResult, useMutation } from "@tanstack/react-query"
 
-import { deleteBiblioReservation } from "../biblio"
+import { deleteDigitalReservation } from "../biblio"
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 
 type UseBiblioDeleteReservationOptions = Omit<
@@ -15,14 +15,14 @@ type UseBiblioDeleteReservationOptions = Omit<
  * Publizon cancels by material identifier.
  *
  * A request the adapter accepted without removing anything rejects rather than
- * resolves; see deleteBiblioReservation for why.
+ * resolves; see deleteDigitalReservation for why.
  */
-export const useBiblioDeleteReservation = (
+export const useDeleteDigitalReservation = (
   options?: UseBiblioDeleteReservationOptions
 ): UseMutationResult<boolean, Error, string> => {
   const config = useServiceLayerConfig()
   return useMutation({
-    mutationFn: reservationId => deleteBiblioReservation(config, reservationId),
+    mutationFn: reservationId => deleteDigitalReservation(config, reservationId),
     ...options,
   })
 }

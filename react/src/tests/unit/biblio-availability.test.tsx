@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
 import useBiblioAvailability from "../../core/biblio/useBiblioAvailability";
-import { useBiblioCanLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useLoanDecision } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../core/utils/helpers/user";
 import useBiblioTolerateUnknownMaterials from "../../core/biblio/useBiblioTolerateUnknownMaterials";
 
-// Only the query is stubbed. isBiblioMaterialAvailable stays real - it is the
+// Only the query is stubbed. isMaterialAvailable stays real - it is the
 // rule this hook is here to apply, and a copy of it in the test would pass
 // whatever the package does.
 vi.mock(
@@ -15,7 +15,7 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useBiblioCanLoan: vi.fn()
+    useLoanDecision: vi.fn()
   })
 );
 vi.mock("../../core/utils/useBiblioAdapter", () => ({
@@ -26,7 +26,7 @@ vi.mock("../../core/biblio/useBiblioTolerateUnknownMaterials", () => ({
   default: vi.fn()
 }));
 
-const mockedCanLoan = vi.mocked(useBiblioCanLoan);
+const mockedCanLoan = vi.mocked(useLoanDecision);
 const mockedFlag = vi.mocked(useBiblioAdapter);
 const mockedIsAnonymous = vi.mocked(isAnonymous);
 
@@ -36,7 +36,7 @@ const givenAdapterAnswers = (status: string) =>
   mockedCanLoan.mockReturnValue({
     data: { status },
     isLoading: false
-  } as unknown as ReturnType<typeof useBiblioCanLoan>);
+  } as unknown as ReturnType<typeof useLoanDecision>);
 
 const render = (isbn: string | null = ISBN, enabled = true) =>
   renderHook(() => useBiblioAvailability({ enabled, isbn }));
@@ -55,7 +55,7 @@ describe("useBiblioAvailability", () => {
     mockedCanLoan.mockReturnValue({
       data: undefined,
       isLoading: false
-    } as unknown as ReturnType<typeof useBiblioCanLoan>);
+    } as unknown as ReturnType<typeof useLoanDecision>);
   });
 
   it("Answers for the material when the library has enabled the flag", () => {
@@ -135,7 +135,7 @@ describe("useBiblioAvailability", () => {
       mockedCanLoan.mockReturnValue({
         data: null,
         isLoading: false
-      } as unknown as ReturnType<typeof useBiblioCanLoan>);
+      } as unknown as ReturnType<typeof useLoanDecision>);
 
       const { result } = render();
 

@@ -13,9 +13,9 @@ import { playerTypes, readerTypes } from "../../../reader-player/helper";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
 import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
 import {
-  getBiblioLoanQuota,
-  useBiblioCanLoan,
-  useBiblioLoanQuotas
+  getLoanQuota,
+  useLoanDecision,
+  useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
 import useBiblioTolerateUnknownMaterials from "../../../../core/biblio/useBiblioTolerateUnknownMaterials";
@@ -61,7 +61,7 @@ const MaterialAvailabilityTextOnline: React.FC<
     }
   );
 
-  const { data: biblioQuotas } = useBiblioLoanQuotas({
+  const { data: biblioQuotas } = useDigitalLoanQuotas({
     enabled: !isUserAnonymous && isProvidedByBiblio
   });
 
@@ -72,7 +72,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   // has no licence to read a price from, which the falsy checks below
   // already handle.
   const tolerateUnknown = useBiblioTolerateUnknownMaterials();
-  const { data: biblioCanLoan } = useBiblioCanLoan(isbn, {
+  const { data: biblioCanLoan } = useLoanDecision(isbn, {
     enabled: Boolean(isbn) && isProvidedByBiblio,
     allowNotFound: tolerateUnknown
   });
@@ -82,7 +82,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   const { patronEbookLoans, patronAudioLoans } = getPatronLoanQuotas(loansData);
 
   const ebookQuota = isProvidedByBiblio
-    ? getBiblioLoanQuota({
+    ? getLoanQuota({
         quotas: biblioQuotas,
         format: "ebook",
         period: "monthly"
@@ -92,7 +92,7 @@ const MaterialAvailabilityTextOnline: React.FC<
         limit: libraryProfileData?.maxConcurrentEbookLoansPerBorrower
       };
   const audioQuota = isProvidedByBiblio
-    ? getBiblioLoanQuota({
+    ? getLoanQuota({
         quotas: biblioQuotas,
         format: "audiobook",
         period: "monthly"

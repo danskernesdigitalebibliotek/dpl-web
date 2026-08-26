@@ -2,7 +2,7 @@ import React from "react";
 import { describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
 import type { Loan } from "../../core/publizon/model";
-import type { BiblioLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import type { DigitalLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
   mapBiblioLoanToLoanType,
   mapPublizonLoanToLoanType
@@ -48,7 +48,7 @@ const publizonLoan = {
   libraryBook: { identifier: "9788727319346" }
 } as Loan;
 
-const biblioLoan: BiblioLoan = {
+const biblioLoan: DigitalLoan = {
   loanId: "VAcPZZkCeqvnNRnOdP17",
   materialId: "9788758855769",
   materialType: "audiobook",

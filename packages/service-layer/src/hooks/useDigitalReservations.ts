@@ -3,31 +3,31 @@
 import { type UseQueryOptions, type UseQueryResult, useQuery } from "@tanstack/react-query"
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
-import type { biblioReservationsQueryKey } from "../queries/biblio"
-import { biblioReservationsQuery } from "../queries/biblio"
-import type { BiblioReservation } from "../types"
+import type { digitalReservationsQueryKey } from "../queries/biblio"
+import { digitalReservationsQuery } from "../queries/biblio"
+import type { DigitalReservation } from "../types"
 
-type BiblioReservationsPage = { reservations: BiblioReservation[]; nextCursor?: string }
+type DigitalReservationsPage = { reservations: DigitalReservation[]; nextCursor?: string }
 
-type BiblioReservationsQueryKey = ReturnType<typeof biblioReservationsQueryKey>
+type DigitalReservationsQueryKey = ReturnType<typeof digitalReservationsQueryKey>
 
 type UseBiblioReservationsOptions = Omit<
   UseQueryOptions<
-    BiblioReservationsPage,
+    DigitalReservationsPage,
     Error,
-    BiblioReservationsPage,
-    BiblioReservationsQueryKey
+    DigitalReservationsPage,
+    DigitalReservationsQueryKey
   >,
   "queryKey" | "queryFn" | "enabled"
 > & { enabled?: boolean }
 
-export const useBiblioReservations = (
+export const useDigitalReservations = (
   options?: UseBiblioReservationsOptions
-): UseQueryResult<BiblioReservationsPage, Error> => {
+): UseQueryResult<DigitalReservationsPage, Error> => {
   const config = useServiceLayerConfig()
   const { enabled = true, ...restOptions } = options ?? {}
   return useQuery({
-    ...biblioReservationsQuery(config),
+    ...digitalReservationsQuery(config),
     ...restOptions,
     // Patron-scoped: never fires without a patron session, regardless of the
     // consumer's own `enabled` condition.

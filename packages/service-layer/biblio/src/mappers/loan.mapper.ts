@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import type { BiblioLoan } from "../../../src/types"
+import type { DigitalLoan } from "../../../src/types"
 
 // Loans and reservations use the broad material type where metadata is
 // restricted to ebook | audiobook.
@@ -47,7 +47,7 @@ const GetLoansResponseSchema = z.object({
   }),
 })
 
-export function mapLoan(loan: z.infer<typeof LoanSchema>): BiblioLoan {
+export function mapLoan(loan: z.infer<typeof LoanSchema>): DigitalLoan {
   return {
     loanId: loan.id,
     materialId: loan.material_id,
@@ -64,7 +64,7 @@ export function mapLoan(loan: z.infer<typeof LoanSchema>): BiblioLoan {
 }
 
 export function parseAndMapLoans(raw: unknown): {
-  loans: BiblioLoan[]
+  loans: DigitalLoan[]
   nextCursor?: string
 } {
   const parsed = GetLoansResponseSchema.parse(raw)

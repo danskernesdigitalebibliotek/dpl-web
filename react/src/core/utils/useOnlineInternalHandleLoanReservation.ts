@@ -23,14 +23,14 @@ import { RequestStatus } from "../../core/utils/types/request";
 import { ApiResult, CreateLoanResult } from "../publizon/model";
 import PublizonServiceError from "../publizon/mutator/PublizonServiceError";
 import {
-  useBiblioCreateLoan,
-  useBiblioCreateReservation,
-  useBiblioAcceptOffer,
-  biblioCanLoanQueryKey,
-  biblioLoanQuotasQueryKey,
-  biblioLoansQueryKey,
-  biblioReservationsQueryKey,
-  isBiblioRequestGranted
+  useCreateDigitalLoan,
+  useCreateDigitalReservation,
+  useAcceptReservationOffer,
+  loanDecisionQueryKey,
+  digitalLoanQuotasQueryKey,
+  digitalLoansQueryKey,
+  digitalReservationsQueryKey,
+  isRequestGranted
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { useEventStatistics } from "../statistics/useStatistics";
 import { statistics } from "../statistics/statistics";
@@ -65,10 +65,10 @@ const useOnlineInternalHandleLoanReservation = ({
   const { track } = useEventStatistics();
   const useBiblio = useBiblioAdapter();
   const { mutate: mutateLoan } = usePostV1UserLoansIdentifier();
-  const { mutate: mutateBiblioLoan } = useBiblioCreateLoan();
+  const { mutate: mutateBiblioLoan } = useCreateDigitalLoan();
   const { mutate: mutateReservation } = usePostV1UserReservationsIdentifier();
-  const { mutate: mutateBiblioReservation } = useBiblioCreateReservation();
-  const { mutate: mutateBiblioAcceptOffer } = useBiblioAcceptOffer();
+  const { mutate: mutateBiblioReservation } = useCreateDigitalReservation();
+  const { mutate: mutateBiblioAcceptOffer } = useAcceptReservationOffer();
   const { data: userData } = usePatronData();
 
   // With the adapter enabled every new loan and reservation goes there, with
@@ -102,10 +102,10 @@ const useOnlineInternalHandleLoanReservation = ({
     // quota counts the availability text reads.
     const invalidateBiblio = () => {
       [
-        biblioLoansQueryKey(),
-        biblioReservationsQueryKey(),
-        biblioCanLoanQueryKey(identifier),
-        biblioLoanQuotasQueryKey()
+        digitalLoansQueryKey(),
+        digitalReservationsQueryKey(),
+        loanDecisionQueryKey(identifier),
+        digitalLoanQuotasQueryKey()
       ].forEach((queryKey) => queryClient.invalidateQueries({ queryKey }));
     };
 
@@ -230,7 +230,7 @@ const useOnlineInternalHandleLoanReservation = ({
           // The adapter answers 200 with a decision rather than an error when
           // it refuses, so a request it accepted but did not act on must not
           // tell the user they are queued.
-          if (!isBiblioRequestGranted(result.status)) {
+          if (!isRequestGranted(result.status)) {
             if (setReservationStatus) {
               setReservationStatus("error");
             }

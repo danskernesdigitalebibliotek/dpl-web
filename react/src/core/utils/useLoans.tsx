@@ -1,6 +1,6 @@
 import { useGetLoansV2 } from "../fbs/fbs";
 import { useGetV1UserLoans } from "../publizon/publizon";
-import { useBiblioLoans } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalLoans } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { calculateRoundedUpDaysUntil } from "./helpers/date";
 import { materialIsOverdue } from "./helpers/general";
 import {
@@ -78,7 +78,7 @@ const useLoans: UseLoans = () => {
     data: loansBiblio,
     isLoading: isLoadingBiblio,
     isError: isErrorBiblio
-  } = useBiblioLoans({ enabled: useBiblio });
+  } = useDigitalLoans({ enabled: useBiblio });
 
   const threshold = useLoanThresholds();
   // A disabled query is never loading or in error so the Biblio states only

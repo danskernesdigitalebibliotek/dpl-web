@@ -1,44 +1,44 @@
 import { queryOptions } from "@tanstack/react-query"
 
 import {
-  getBiblioCanLoan,
-  getBiblioLoanQuotas,
-  getBiblioLoans,
-  getBiblioMaterial,
-  getBiblioReservations,
-  getBiblioSignInToken,
-  getBiblioSupportId,
+  getDigitalLoanQuotas,
+  getDigitalLoans,
+  getDigitalMaterial,
+  getDigitalReservations,
+  getLoanDecision,
+  getReaderSignInToken,
+  getSupportId,
 } from "../biblio"
 import type { ServiceLayerConfig } from "../types"
 
-export const biblioLoansQueryKey = () => ["serviceLayer", "biblioLoans"] as const
+export const digitalLoansQueryKey = () => ["serviceLayer", "digitalLoans"] as const
 
-export const biblioLoansQuery = (config: ServiceLayerConfig) =>
+export const digitalLoansQuery = (config: ServiceLayerConfig) =>
   queryOptions({
-    queryKey: biblioLoansQueryKey(),
-    queryFn: () => getBiblioLoans(config),
+    queryKey: digitalLoansQueryKey(),
+    queryFn: () => getDigitalLoans(config),
   })
 
-export const biblioMaterialQueryKey = (isbn: string | null) =>
-  ["serviceLayer", "biblioMaterial", isbn] as const
+export const digitalMaterialQueryKey = (isbn: string | null) =>
+  ["serviceLayer", "digitalMaterial", isbn] as const
 
-export const biblioMaterialQuery = (config: ServiceLayerConfig, isbn: string | null) =>
+export const digitalMaterialQuery = (config: ServiceLayerConfig, isbn: string | null) =>
   queryOptions({
-    queryKey: biblioMaterialQueryKey(isbn),
+    queryKey: digitalMaterialQueryKey(isbn),
     queryFn: () => {
       if (isbn === null) {
         // The hook disables itself without an isbn; a direct caller of the
         // query options must not end up fetching /v1/metadata/null.
-        throw new Error("biblioMaterialQuery cannot fetch without an isbn")
+        throw new Error("digitalMaterialQuery cannot fetch without an isbn")
       }
-      return getBiblioMaterial(config, isbn)
+      return getDigitalMaterial(config, isbn)
     },
   })
 
-export const biblioCanLoanQueryKey = (materialId: string | null) =>
-  ["serviceLayer", "biblioCanLoan", materialId] as const
+export const loanDecisionQueryKey = (materialId: string | null) =>
+  ["serviceLayer", "digitalLoanDecision", materialId] as const
 
-export const biblioCanLoanQuery = (
+export const loanDecisionQuery = (
   config: ServiceLayerConfig,
   materialId: string | null,
   // TEMPORARY, with the toleration flag it serves. Deliberately not part of
@@ -48,47 +48,47 @@ export const biblioCanLoanQuery = (
   options?: { allowNotFound?: boolean }
 ) =>
   queryOptions({
-    queryKey: biblioCanLoanQueryKey(materialId),
+    queryKey: loanDecisionQueryKey(materialId),
     queryFn: () => {
       if (materialId === null) {
         // The hook disables itself without a material id; a direct caller of
         // the query options must not end up asking about "null".
-        throw new Error("biblioCanLoanQuery cannot fetch without a material id")
+        throw new Error("loanDecisionQuery cannot fetch without a material id")
       }
-      return getBiblioCanLoan(config, materialId, options)
+      return getLoanDecision(config, materialId, options)
     },
   })
 
-export const biblioReservationsQueryKey = () => ["serviceLayer", "biblioReservations"] as const
+export const digitalReservationsQueryKey = () => ["serviceLayer", "digitalReservations"] as const
 
-export const biblioReservationsQuery = (config: ServiceLayerConfig) =>
+export const digitalReservationsQuery = (config: ServiceLayerConfig) =>
   queryOptions({
-    queryKey: biblioReservationsQueryKey(),
-    queryFn: () => getBiblioReservations(config),
+    queryKey: digitalReservationsQueryKey(),
+    queryFn: () => getDigitalReservations(config),
   })
 
-export const biblioLoanQuotasQueryKey = () => ["serviceLayer", "biblioLoanQuotas"] as const
+export const digitalLoanQuotasQueryKey = () => ["serviceLayer", "digitalLoanQuotas"] as const
 
-export const biblioLoanQuotasQuery = (config: ServiceLayerConfig) =>
+export const digitalLoanQuotasQuery = (config: ServiceLayerConfig) =>
   queryOptions({
-    queryKey: biblioLoanQuotasQueryKey(),
-    queryFn: () => getBiblioLoanQuotas(config),
+    queryKey: digitalLoanQuotasQueryKey(),
+    queryFn: () => getDigitalLoanQuotas(config),
   })
 
-export const biblioSupportIdQueryKey = () => ["serviceLayer", "biblioSupportId"] as const
+export const supportIdQueryKey = () => ["serviceLayer", "digitalSupportId"] as const
 
-export const biblioSupportIdQuery = (config: ServiceLayerConfig) =>
+export const supportIdQuery = (config: ServiceLayerConfig) =>
   queryOptions({
-    queryKey: biblioSupportIdQueryKey(),
-    queryFn: () => getBiblioSupportId(config),
+    queryKey: supportIdQueryKey(),
+    queryFn: () => getSupportId(config),
   })
 
-export const biblioSignInTokenQueryKey = () => ["serviceLayer", "biblioSignInToken"] as const
+export const readerSignInTokenQueryKey = () => ["serviceLayer", "readerSignInToken"] as const
 
-export const biblioSignInTokenQuery = (config: ServiceLayerConfig) =>
+export const readerSignInTokenQuery = (config: ServiceLayerConfig) =>
   queryOptions({
-    queryKey: biblioSignInTokenQueryKey(),
-    queryFn: () => getBiblioSignInToken(config),
+    queryKey: readerSignInTokenQueryKey(),
+    queryFn: () => getReaderSignInToken(config),
     // The token expires, so it must not outlive its own window in the cache.
     // Refetching a minute early leaves room for the sign-in round trip that
     // follows, and the adapter is happy to mint another.

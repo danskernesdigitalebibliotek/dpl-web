@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import type { BiblioReservation } from "../../../src/types"
+import type { DigitalReservation } from "../../../src/types"
 import { MaterialTypeSchema } from "./loan.mapper"
 
 const ReservationSchema = z.object({
@@ -42,7 +42,7 @@ export function parseAndMapAcceptReservationOffer(raw: unknown): {
 }
 
 export function parseAndMapReservations(raw: unknown): {
-  reservations: BiblioReservation[]
+  reservations: DigitalReservation[]
   nextCursor?: string
 } {
   const parsed = GetReservationsResponseSchema.parse(raw)

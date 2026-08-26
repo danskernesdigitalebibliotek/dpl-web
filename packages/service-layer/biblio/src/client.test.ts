@@ -174,7 +174,7 @@ describe("createBiblioClient.getLoans", () => {
   })
 })
 
-describe("createBiblioClient.canLoan", () => {
+describe("createBiblioClient.getLoanDecision", () => {
   beforeEach(() => {
     vi.stubGlobal("fetch", vi.fn())
   })
@@ -186,7 +186,7 @@ describe("createBiblioClient.canLoan", () => {
   it("fetches can-loan for the material and maps the status", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ status: "loanable" }))
 
-    const result = await buildClient().canLoan("9788711234567")
+    const result = await buildClient().getLoanDecision("9788711234567")
 
     expect(fetch).toHaveBeenCalledWith(
       `${baseUrl}/v1/loans/can-loan?material_id=9788711234567`,
@@ -206,7 +206,7 @@ describe("createBiblioClient.canLoan", () => {
       mockJsonResponse({ message: "Material not found: 9788758855752" }, 404)
     )
 
-    await expect(buildClient().canLoan("9788758855752")).rejects.toThrow("404")
+    await expect(buildClient().getLoanDecision("9788758855752")).rejects.toThrow("404")
   })
 
   // TEMPORARY, with the toleration flag the option serves.
@@ -216,7 +216,7 @@ describe("createBiblioClient.canLoan", () => {
     )
 
     await expect(
-      buildClient().canLoan("9788758855752", { allowNotFound: true })
+      buildClient().getLoanDecision("9788758855752", { allowNotFound: true })
     ).resolves.toBeUndefined()
   })
 
@@ -225,7 +225,7 @@ describe("createBiblioClient.canLoan", () => {
       mockJsonResponse({ status: "lending_blocked", lending_block_reason: "quarantined" })
     )
 
-    await expect(buildClient().canLoan("9788711234567")).resolves.toMatchObject({
+    await expect(buildClient().getLoanDecision("9788711234567")).resolves.toMatchObject({
       status: "lending_blocked",
       lendingBlockReason: "quarantined",
     })
@@ -234,7 +234,7 @@ describe("createBiblioClient.canLoan", () => {
   it("throws on an unknown status", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ status: "new_status" }))
 
-    await expect(buildClient().canLoan("9788711234567")).rejects.toThrow()
+    await expect(buildClient().getLoanDecision("9788711234567")).rejects.toThrow()
   })
 })
 

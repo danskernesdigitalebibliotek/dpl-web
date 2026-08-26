@@ -8,7 +8,7 @@ import {
 } from "../../../../core/utils/helpers/list-mapper";
 import { ListType } from "../../../../core/utils/types/list-type";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
-import { useBiblioMaterial } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalMaterial } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
   isBiblioReservation,
   isReservationType
@@ -46,7 +46,7 @@ const fetchDigitalMaterial =
       const isProvidedByBiblio = useBiblio && !hasOwnDetails && isBiblioItem;
 
       const { data: biblioMaterial, isLoading: isLoadingBiblio } =
-        useBiblioMaterial(isProvidedByBiblio ? item.identifier : null);
+        useDigitalMaterial(isProvidedByBiblio ? item.identifier : null);
 
       const {
         data: productsData,

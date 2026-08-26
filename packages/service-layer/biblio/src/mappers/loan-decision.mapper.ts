@@ -1,9 +1,9 @@
 import { z } from "zod"
 
-import type { BiblioCanLoan, BiblioLoanResult } from "../../../src/types"
+import type { LoanDecision, LoanRequestResult } from "../../../src/types"
 import { LoanProviderSchema, LoanSchema, mapLoan } from "./loan.mapper"
 
-const CanLoanSchema = z.object({
+const LoanDecisionSchema = z.object({
   status: z.enum([
     "loanable",
     "reservable",
@@ -21,9 +21,10 @@ const CanLoanSchema = z.object({
   lending_block_reason: z.string().optional(),
 })
 
-// Creating a loan or a reservation returns the can-loan envelope plus the
-// created loan when the operation resulted in one.
-const LoanResultSchema = CanLoanSchema.extend({
+// Asking for a loan or a reservation is answered with the same decision as
+// asking whether one is possible, plus the created loan when the request
+// produced one.
+const LoanRequestResultSchema = LoanDecisionSchema.extend({
   loan: LoanSchema.optional(),
 })
 
@@ -43,8 +44,8 @@ function parseOrThrowAdapterMessage<T extends z.ZodTypeAny>(schema: T, raw: unkn
   throw parsed.error
 }
 
-export function parseAndMapCanLoan(raw: unknown): BiblioCanLoan {
-  const parsed = parseOrThrowAdapterMessage(CanLoanSchema, raw)
+export function parseAndMapLoanDecision(raw: unknown): LoanDecision {
+  const parsed = parseOrThrowAdapterMessage(LoanDecisionSchema, raw)
   return {
     status: parsed.status,
     loanProvider: parsed.loan_provider,
@@ -53,8 +54,8 @@ export function parseAndMapCanLoan(raw: unknown): BiblioCanLoan {
   }
 }
 
-export function parseAndMapLoanResult(raw: unknown): BiblioLoanResult {
-  const parsed = parseOrThrowAdapterMessage(LoanResultSchema, raw)
+export function parseAndMapLoanRequestResult(raw: unknown): LoanRequestResult {
+  const parsed = parseOrThrowAdapterMessage(LoanRequestResultSchema, raw)
   return {
     status: parsed.status,
     loanProvider: parsed.loan_provider,

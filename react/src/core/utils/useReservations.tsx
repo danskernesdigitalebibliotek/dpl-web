@@ -1,5 +1,5 @@
 import { useGetV1UserReservations } from "../publizon/publizon";
-import { useBiblioReservations } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalReservations } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "./useBiblioAdapter";
 import {
   mapBiblioReservationToReservationType,
@@ -57,7 +57,7 @@ const useReservations: UseReservations = () => {
     data: reservationsBiblio,
     isLoading: isLoadingBiblio,
     isError: isErrorBiblio
-  } = useBiblioReservations({ enabled: useBiblio });
+  } = useDigitalReservations({ enabled: useBiblio });
 
   // A disabled query is never loading or in error so the Biblio states only
   // count when the feature flag has enabled the query.

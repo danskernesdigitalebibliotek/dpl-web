@@ -1,16 +1,16 @@
 import { describe, expect, it } from "vitest"
 
-import { isBiblioMaterialAvailable } from "./biblio"
+import { isMaterialAvailable } from "./biblio"
 
-describe("isBiblioMaterialAvailable", () => {
+describe("isMaterialAvailable", () => {
   it("Treats a loanable material as available", () => {
-    expect(isBiblioMaterialAvailable("loanable")).toBe(true)
+    expect(isMaterialAvailable("loanable")).toBe(true)
   })
 
   it.each(["reservable", "wishable", "unavailable"] as const)(
     "Treats a material that can only be %s as unavailable",
     status => {
-      expect(isBiblioMaterialAvailable(status)).toBe(false)
+      expect(isMaterialAvailable(status)).toBe(false)
     }
   )
 
@@ -22,7 +22,7 @@ describe("isBiblioMaterialAvailable", () => {
   ] as const)(
     "Keeps the material available when %s describes the user, not the material",
     status => {
-      expect(isBiblioMaterialAvailable(status)).toBe(true)
+      expect(isMaterialAvailable(status)).toBe(true)
     }
   )
 })

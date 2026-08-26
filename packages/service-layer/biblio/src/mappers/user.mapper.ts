@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import type { BiblioSignInToken } from "../../../src/types"
+import type { ReaderSignInToken } from "../../../src/types"
 
 const GetSupportIdResponseSchema = z.object({
   support_id: z.string(),
@@ -15,7 +15,7 @@ export function parseAndMapSupportId(raw: unknown): string {
   return GetSupportIdResponseSchema.parse(raw).support_id
 }
 
-export function parseAndMapSignInToken(raw: unknown): BiblioSignInToken {
+export function parseAndMapSignInToken(raw: unknown): ReaderSignInToken {
   const parsed = CreateSignInTokenResponseSchema.parse(raw)
   return {
     token: parsed.token,

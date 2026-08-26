@@ -3,9 +3,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import useOnlineInternalHandleLoanReservation from "../../core/utils/useOnlineInternalHandleLoanReservation";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import {
-  useBiblioCreateLoan,
-  useBiblioCreateReservation,
-  useBiblioAcceptOffer
+  useCreateDigitalLoan,
+  useCreateDigitalReservation,
+  useAcceptReservationOffer
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import {
@@ -21,9 +21,9 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useBiblioCreateLoan: vi.fn(),
-    useBiblioCreateReservation: vi.fn(),
-    useBiblioAcceptOffer: vi.fn()
+    useCreateDigitalLoan: vi.fn(),
+    useCreateDigitalReservation: vi.fn(),
+    useAcceptReservationOffer: vi.fn()
   })
 );
 
@@ -58,12 +58,12 @@ vi.mock("../../core/publizon/publizon", () => ({
   getGetV1UserReservationsQueryKey: () => ["reservations"]
 }));
 
-vi.mock("../../core/biblio/useBiblioReservations", () => ({
-  biblioReservationsQueryKey: ["biblio", "reservations"]
+vi.mock("../../core/biblio/useDigitalReservations", () => ({
+  digitalReservationsQueryKey: ["biblio", "reservations"]
 }));
-vi.mock("../../core/biblio/useBiblioLoans", () => ({
+vi.mock("../../core/biblio/useDigitalLoans", () => ({
   default: vi.fn(),
-  biblioLoansQueryKey: ["biblio", "loans"]
+  digitalLoansQueryKey: ["biblio", "loans"]
 }));
 
 vi.mock("../../core/utils/useReaderPlayer", () => ({ default: vi.fn() }));
@@ -121,7 +121,7 @@ const givenScenario = ({
   } as unknown as ReturnType<typeof useReaderPlayer>);
 
   const asMutation = (mutate: unknown) =>
-    ({ mutate }) as unknown as ReturnType<typeof useBiblioCreateLoan>;
+    ({ mutate }) as unknown as ReturnType<typeof useCreateDigitalLoan>;
 
   vi.mocked(usePostV1UserLoansIdentifier).mockReturnValue(
     asMutation(mutations.publizonLoan) as never
@@ -129,13 +129,13 @@ const givenScenario = ({
   vi.mocked(usePostV1UserReservationsIdentifier).mockReturnValue(
     asMutation(mutations.publizonReservation) as never
   );
-  vi.mocked(useBiblioCreateLoan).mockReturnValue(
+  vi.mocked(useCreateDigitalLoan).mockReturnValue(
     asMutation(mutations.biblioLoan)
   );
-  vi.mocked(useBiblioCreateReservation).mockReturnValue(
+  vi.mocked(useCreateDigitalReservation).mockReturnValue(
     asMutation(mutations.biblioReservation) as never
   );
-  vi.mocked(useBiblioAcceptOffer).mockReturnValue(
+  vi.mocked(useAcceptReservationOffer).mockReturnValue(
     asMutation(mutations.biblioAcceptOffer) as never
   );
 };

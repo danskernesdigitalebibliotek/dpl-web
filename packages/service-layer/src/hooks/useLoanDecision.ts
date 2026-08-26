@@ -3,14 +3,14 @@
 import { type UseQueryOptions, type UseQueryResult, useQuery } from "@tanstack/react-query"
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
-import type { biblioCanLoanQueryKey } from "../queries/biblio"
-import { biblioCanLoanQuery } from "../queries/biblio"
-import type { BiblioCanLoan } from "../types"
+import type { loanDecisionQueryKey } from "../queries/biblio"
+import { loanDecisionQuery } from "../queries/biblio"
+import type { LoanDecision } from "../types"
 
-type BiblioCanLoanQueryKey = ReturnType<typeof biblioCanLoanQueryKey>
+type LoanDecisionQueryKey = ReturnType<typeof loanDecisionQueryKey>
 
-type UseBiblioCanLoanOptions = Omit<
-  UseQueryOptions<BiblioCanLoan | null, Error, BiblioCanLoan | null, BiblioCanLoanQueryKey>,
+type UseLoanDecisionOptions = Omit<
+  UseQueryOptions<LoanDecision | null, Error, LoanDecision | null, LoanDecisionQueryKey>,
   "queryKey" | "queryFn" | "enabled"
 > & {
   enabled?: boolean
@@ -31,14 +31,14 @@ type UseBiblioCanLoanOptions = Omit<
  * whole page down. The hook therefore refuses to ask without a patron, so a
  * call site cannot forget to guard.
  */
-export const useBiblioCanLoan = (
+export const useLoanDecision = (
   materialId: string | null,
-  options?: UseBiblioCanLoanOptions
-): UseQueryResult<BiblioCanLoan | null, Error> => {
+  options?: UseLoanDecisionOptions
+): UseQueryResult<LoanDecision | null, Error> => {
   const config = useServiceLayerConfig()
   const { enabled = true, allowNotFound, ...restOptions } = options ?? {}
   return useQuery({
-    ...biblioCanLoanQuery(config, materialId, { allowNotFound }),
+    ...loanDecisionQuery(config, materialId, { allowNotFound }),
     ...restOptions,
     enabled: config.isPatronAuthenticated && enabled && Boolean(materialId),
   })

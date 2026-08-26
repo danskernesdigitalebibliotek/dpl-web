@@ -7,8 +7,8 @@ import { LibraryProfile, UserData } from "../../../core/publizon/model";
 import { useText } from "../../../core/utils/text";
 import { getPatronLoanQuotas } from "../../../core/utils/helpers/publizon";
 import {
-  getBiblioLoanQuota,
-  useBiblioLoanQuotas
+  getLoanQuota,
+  useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
 
@@ -23,7 +23,7 @@ const StatusSection: FC = () => {
     {},
     { query: { enabled: !useBiblio } }
   );
-  const { data: biblioQuotas } = useBiblioLoanQuotas({ enabled: useBiblio });
+  const { data: biblioQuotas } = useDigitalLoanQuotas({ enabled: useBiblio });
   const [libraryProfile, setLibraryProfile] = useState<LibraryProfile | null>(
     null
   );
@@ -53,12 +53,12 @@ const StatusSection: FC = () => {
 
   // This section counts the loans the user holds right now, so the concurrent
   // counters are the Biblio equivalent of Publizon's maxConcurrent limits.
-  const biblioEbook = getBiblioLoanQuota({
+  const biblioEbook = getLoanQuota({
     quotas: biblioQuotas,
     format: "ebook",
     period: "concurrent"
   });
-  const biblioAudio = getBiblioLoanQuota({
+  const biblioAudio = getLoanQuota({
     quotas: biblioQuotas,
     format: "audiobook",
     period: "concurrent"

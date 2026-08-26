@@ -2,7 +2,7 @@
 
 import { type UseMutationOptions, type UseMutationResult, useMutation } from "@tanstack/react-query"
 
-import { acceptBiblioReservationOffer } from "../biblio"
+import { acceptReservationOffer } from "../biblio"
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 
 type AcceptOfferResult = { success: boolean; loanId?: string }
@@ -20,12 +20,12 @@ type UseBiblioAcceptOfferOptions = Omit<
  * so a material the user already holds an offer for is accepted here rather
  * than borrowed through createLoan.
  */
-export const useBiblioAcceptOffer = (
+export const useAcceptReservationOffer = (
   options?: UseBiblioAcceptOfferOptions
 ): UseMutationResult<AcceptOfferResult, Error, string> => {
   const config = useServiceLayerConfig()
   return useMutation({
-    mutationFn: offerId => acceptBiblioReservationOffer(config, offerId),
+    mutationFn: offerId => acceptReservationOffer(config, offerId),
     ...options,
   })
 }

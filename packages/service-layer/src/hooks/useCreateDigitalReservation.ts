@@ -2,12 +2,12 @@
 
 import { type UseMutationOptions, type UseMutationResult, useMutation } from "@tanstack/react-query"
 
-import { createBiblioReservation } from "../biblio"
+import { createDigitalReservation } from "../biblio"
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
-import type { BiblioLoanResult } from "../types"
+import type { LoanRequestResult } from "../types"
 
 type UseBiblioCreateReservationOptions = Omit<
-  UseMutationOptions<BiblioLoanResult, Error, string>,
+  UseMutationOptions<LoanRequestResult, Error, string>,
   "mutationFn"
 >
 
@@ -17,12 +17,12 @@ type UseBiblioCreateReservationOptions = Omit<
  * Answers with the same envelope as a loan request: a decision status, and a
  * loan when the material turned out to be available right away.
  */
-export const useBiblioCreateReservation = (
+export const useCreateDigitalReservation = (
   options?: UseBiblioCreateReservationOptions
-): UseMutationResult<BiblioLoanResult, Error, string> => {
+): UseMutationResult<LoanRequestResult, Error, string> => {
   const config = useServiceLayerConfig()
   return useMutation({
-    mutationFn: materialId => createBiblioReservation(config, materialId),
+    mutationFn: materialId => createDigitalReservation(config, materialId),
     ...options,
   })
 }

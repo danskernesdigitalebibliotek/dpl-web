@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  biblioSignInTokenQuery,
+  readerSignInTokenQuery,
   useServiceLayerConfig
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { isAnonymous } from "../utils/helpers/user";
@@ -64,7 +64,7 @@ const useWedoBooksSdk = () => {
           // fetchQuery honours the staleness the query derives from the
           // token's own expiry: an expired token is refetched and awaited,
           // never served from the cache the way ensureQueryData would.
-          queryClient.fetchQuery(biblioSignInTokenQuery(serviceLayerConfig))
+          queryClient.fetchQuery(readerSignInTokenQuery(serviceLayerConfig))
         ]);
 
       // Guaranteed by `enabled`, which gates this query on it.

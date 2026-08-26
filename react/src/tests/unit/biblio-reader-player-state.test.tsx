@@ -1,15 +1,15 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
-  type BiblioCanLoan,
-  type BiblioLoan,
-  type BiblioReservation
+  type LoanDecision,
+  type DigitalLoan,
+  type DigitalReservation
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioReaderPlayerState from "../../core/utils/useBiblioReaderPlayerState";
 import {
-  useBiblioCanLoan,
-  useBiblioLoans,
-  useBiblioReservations
+  useLoanDecision,
+  useDigitalLoans,
+  useDigitalReservations
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { isAnonymous } from "../../core/utils/helpers/user";
 
@@ -21,9 +21,9 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useBiblioCanLoan: vi.fn(),
-    useBiblioLoans: vi.fn(),
-    useBiblioReservations: vi.fn()
+    useLoanDecision: vi.fn(),
+    useDigitalLoans: vi.fn(),
+    useDigitalReservations: vi.fn()
   })
 );
 
@@ -49,7 +49,7 @@ const LOAN_ID = "3f7b1c62-9d4e-4a71-b0c3-1d5a8e2f4b90";
 const RESERVATION_ID = "e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11";
 const OFFER_ID = "9a1c7f30-4d62-4e18-b5a7-2c8e6f0b3d94";
 
-const loan: BiblioLoan = {
+const loan: DigitalLoan = {
   loanId: LOAN_ID,
   materialId: IDENTIFIER,
   materialType: "ebook",
@@ -63,7 +63,7 @@ const loan: BiblioLoan = {
   loanProvider: "selection"
 };
 
-const reservation: BiblioReservation = {
+const reservation: DigitalReservation = {
   reservationId: RESERVATION_ID,
   materialId: IDENTIFIER,
   materialType: "ebook",
@@ -77,24 +77,24 @@ const givenAdapterSays = ({
   reservations = [],
   anonymous = false
 }: {
-  status?: BiblioCanLoan["status"];
-  loans?: BiblioLoan[];
-  reservations?: BiblioReservation[];
+  status?: LoanDecision["status"];
+  loans?: DigitalLoan[];
+  reservations?: DigitalReservation[];
   anonymous?: boolean;
 }) => {
   vi.mocked(isAnonymous).mockReturnValue(anonymous);
-  vi.mocked(useBiblioCanLoan).mockReturnValue({
+  vi.mocked(useLoanDecision).mockReturnValue({
     data: status ? { status } : undefined,
     isLoading: false
-  } as unknown as ReturnType<typeof useBiblioCanLoan>);
-  vi.mocked(useBiblioLoans).mockReturnValue({
+  } as unknown as ReturnType<typeof useLoanDecision>);
+  vi.mocked(useDigitalLoans).mockReturnValue({
     data: { loans },
     isLoading: false
-  } as unknown as ReturnType<typeof useBiblioLoans>);
-  vi.mocked(useBiblioReservations).mockReturnValue({
+  } as unknown as ReturnType<typeof useDigitalLoans>);
+  vi.mocked(useDigitalReservations).mockReturnValue({
     data: { reservations },
     isLoading: false
-  } as unknown as ReturnType<typeof useBiblioReservations>);
+  } as unknown as ReturnType<typeof useDigitalReservations>);
 };
 
 const render = (identifier: string | null = IDENTIFIER, enabled = true) =>

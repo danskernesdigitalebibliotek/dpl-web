@@ -2,12 +2,12 @@
 
 import { type UseMutationOptions, type UseMutationResult, useMutation } from "@tanstack/react-query"
 
-import { createBiblioLoan } from "../biblio"
+import { createDigitalLoan } from "../biblio"
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
-import type { BiblioLoanResult } from "../types"
+import type { LoanRequestResult } from "../types"
 
 type UseBiblioCreateLoanOptions = Omit<
-  UseMutationOptions<BiblioLoanResult, Error, string>,
+  UseMutationOptions<LoanRequestResult, Error, string>,
   "mutationFn"
 >
 
@@ -21,12 +21,12 @@ type UseBiblioCreateLoanOptions = Omit<
  * Callers gate on the feature flag: new loans belong to Biblio only once the
  * library has switched to it.
  */
-export const useBiblioCreateLoan = (
+export const useCreateDigitalLoan = (
   options?: UseBiblioCreateLoanOptions
-): UseMutationResult<BiblioLoanResult, Error, string> => {
+): UseMutationResult<LoanRequestResult, Error, string> => {
   const config = useServiceLayerConfig()
   return useMutation({
-    mutationFn: materialId => createBiblioLoan(config, materialId),
+    mutationFn: materialId => createDigitalLoan(config, materialId),
     ...options,
   })
 }

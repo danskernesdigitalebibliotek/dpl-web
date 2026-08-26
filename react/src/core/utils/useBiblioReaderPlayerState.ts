@@ -1,9 +1,9 @@
 import {
-  isBiblioMaterialLoanable,
-  isBiblioMaterialReservable,
-  useBiblioCanLoan,
-  useBiblioLoans,
-  useBiblioReservations
+  isMaterialLoanable,
+  isMaterialReservable,
+  useLoanDecision,
+  useDigitalLoans,
+  useDigitalReservations
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
   mapBiblioLoanToLoanType,
@@ -56,17 +56,17 @@ const useBiblioReaderPlayerState = ({
   // tolerated unknown material resolves to null, and null offers nothing -
   // exactly what a material the provider cannot lend should get.
   const tolerateUnknown = useBiblioTolerateUnknownMaterials();
-  const { data: canLoan, isLoading: isLoadingCanLoan } = useBiblioCanLoan(
+  const { data: canLoan, isLoading: isLoadingCanLoan } = useLoanDecision(
     identifier,
     { enabled: isActiveForUser, allowNotFound: tolerateUnknown }
   );
 
-  const { data: loansData, isLoading: isLoadingLoans } = useBiblioLoans({
+  const { data: loansData, isLoading: isLoadingLoans } = useDigitalLoans({
     enabled: isActiveForUser
   });
 
   const { data: reservationsData, isLoading: isLoadingReservations } =
-    useBiblioReservations({ enabled: isActiveForUser });
+    useDigitalReservations({ enabled: isActiveForUser });
 
   if (!isActive) {
     return unknownReaderPlayerState;
@@ -101,8 +101,8 @@ const useBiblioReaderPlayerState = ({
     isAlreadyReserved: Boolean(queuedReservation),
     // An offer the user already holds is claimed through the same button.
     canBeLoaned:
-      Boolean(offerId) || (status ? isBiblioMaterialLoanable(status) : false),
-    canBeReserved: status ? isBiblioMaterialReservable(status) : false,
+      Boolean(offerId) || (status ? isMaterialLoanable(status) : false),
+    canBeReserved: status ? isMaterialReservable(status) : false,
     // The Biblio loan id plays the same role as Publizon's order id.
     orderId: loan ? (mapBiblioLoanToLoanType([loan])[0].orderId ?? null) : null,
     // Mapped rather than passed through so cancelling routes to Biblio: the

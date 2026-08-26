@@ -1,6 +1,6 @@
 import {
-  isBiblioMaterialAvailable,
-  useBiblioCanLoan
+  isMaterialAvailable,
+  useLoanDecision
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../utils/useBiblioAdapter";
 import useBiblioTolerateUnknownMaterials from "./useBiblioTolerateUnknownMaterials";
@@ -46,7 +46,7 @@ const useBiblioAvailability = ({
   const tolerateUnknown = useBiblioTolerateUnknownMaterials();
   const isAnswering = useBiblio && enabled && Boolean(isbn) && !isAnonymous();
 
-  const { data: canLoan, isLoading } = useBiblioCanLoan(isbn, {
+  const { data: canLoan, isLoading } = useLoanDecision(isbn, {
     enabled: isAnswering,
     allowNotFound: tolerateUnknown
   });
@@ -59,7 +59,7 @@ const useBiblioAvailability = ({
     isAvailable:
       canLoan === null
         ? false
-        : ((canLoan && isBiblioMaterialAvailable(canLoan.status)) ?? null),
+        : ((canLoan && isMaterialAvailable(canLoan.status)) ?? null),
     isLoading
   };
 };

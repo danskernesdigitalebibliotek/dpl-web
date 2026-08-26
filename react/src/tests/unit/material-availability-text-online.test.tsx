@@ -9,8 +9,8 @@ import {
 } from "../../core/publizon/publizon";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import {
-  useBiblioCanLoan,
-  useBiblioLoanQuotas
+  useLoanDecision,
+  useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 // Only the hooks under test are stubbed; the rest of the package stays
@@ -21,8 +21,8 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useBiblioCanLoan: vi.fn(),
-    useBiblioLoanQuotas: vi.fn()
+    useLoanDecision: vi.fn(),
+    useDigitalLoanQuotas: vi.fn()
   })
 );
 
@@ -97,12 +97,12 @@ const renderText = () =>
 describe("MaterialAvailabilityTextOnline", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(useBiblioLoanQuotas).mockReturnValue({
+    vi.mocked(useDigitalLoanQuotas).mockReturnValue({
       data: undefined
-    } as unknown as ReturnType<typeof useBiblioLoanQuotas>);
-    vi.mocked(useBiblioCanLoan).mockReturnValue({
+    } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+    vi.mocked(useLoanDecision).mockReturnValue({
       data: undefined
-    } as unknown as ReturnType<typeof useBiblioCanLoan>);
+    } as unknown as ReturnType<typeof useLoanDecision>);
   });
 
   describe("with the feature flag off", () => {
@@ -133,9 +133,9 @@ describe("MaterialAvailabilityTextOnline", () => {
     });
 
     const biblioLends = (loanProvider?: string) =>
-      vi.mocked(useBiblioCanLoan).mockReturnValue({
+      vi.mocked(useLoanDecision).mockReturnValue({
         data: { status: "loanable", loanProvider }
-      } as unknown as ReturnType<typeof useBiblioCanLoan>);
+      } as unknown as ReturnType<typeof useLoanDecision>);
 
     it("Says the material is included when Biblio lends it as a blue title", () => {
       // "selection" is the licence Danish blue titles answer with - such a
@@ -154,7 +154,7 @@ describe("MaterialAvailabilityTextOnline", () => {
         // the user's own. "free" is deliberately among them: it is unobserved
         // in DK and its semantics unconfirmed, so nothing is promised on it.
         biblioLends(loanProvider);
-        vi.mocked(useBiblioLoanQuotas).mockReturnValue({
+        vi.mocked(useDigitalLoanQuotas).mockReturnValue({
           data: [
             {
               splitOnFormat: true,
@@ -166,7 +166,7 @@ describe("MaterialAvailabilityTextOnline", () => {
               currentMonthlyLoans: { ebook: 3, audiobook: 2 }
             }
           ]
-        } as unknown as ReturnType<typeof useBiblioLoanQuotas>);
+        } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
 
         const text = renderText().container.textContent;
 
@@ -186,7 +186,7 @@ describe("MaterialAvailabilityTextOnline", () => {
     });
 
     it("Shows Biblio's monthly quota", () => {
-      vi.mocked(useBiblioLoanQuotas).mockReturnValue({
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
         data: [
           {
             splitOnFormat: true,
@@ -200,7 +200,7 @@ describe("MaterialAvailabilityTextOnline", () => {
             currentMonthlyLoans: { ebook: 3, audiobook: 2 }
           }
         ]
-      } as unknown as ReturnType<typeof useBiblioLoanQuotas>);
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
       // Publizon knows nothing about a material that lives in Biblio.
       publizonSays({ limit: undefined, borrowed: 0 });
       vi.mocked(useGetV1ProductsIdentifier).mockReturnValue({
@@ -215,9 +215,9 @@ describe("MaterialAvailabilityTextOnline", () => {
     it("Never shows Publizon's limits, even when Publizon knows the material", () => {
       // The user is no longer borrowing against these, so showing them would
       // state a limit that does not apply.
-      vi.mocked(useBiblioLoanQuotas).mockReturnValue({
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
         data: undefined
-      } as unknown as ReturnType<typeof useBiblioLoanQuotas>);
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
       publizonSays({ limit: 7, borrowed: 2 });
 
       expect(renderText().container.textContent).not.toContain(

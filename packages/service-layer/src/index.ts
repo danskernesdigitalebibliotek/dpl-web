@@ -57,60 +57,62 @@ export { getFees } from "./fees"
 
 // Biblio adapter — the digital-materials provider behind the CMS feature flag.
 export {
-  acceptBiblioReservationOffer,
-  createBiblioLoan,
-  createBiblioReservation,
-  deleteBiblioReservation,
-  getBiblioCanLoan,
-  getBiblioLoanQuotas,
-  getBiblioLoans,
-  getBiblioMaterial,
-  getBiblioReservations,
-  getBiblioSignInToken,
-  getBiblioSupportId,
-  getBiblioLoanQuota,
-  isBiblioMaterialAvailable,
-  isBiblioMaterialLoanable,
-  isBiblioMaterialReservable,
-  isBiblioRequestGranted,
+  acceptReservationOffer,
+  createDigitalLoan,
+  createDigitalReservation,
+  deleteDigitalReservation,
+  getLoanDecision,
+  getDigitalLoanQuotas,
+  getDigitalLoans,
+  getDigitalMaterial,
+  getDigitalReservations,
+  getReaderSignInToken,
+  getSupportId,
+  getLoanQuota,
+  isMaterialAvailable,
+  isMaterialLoanable,
+  isMaterialReservable,
+  isRequestGranted,
 } from "./biblio"
 export {
-  biblioCanLoanQuery,
-  biblioCanLoanQueryKey,
-  biblioLoanQuotasQuery,
-  biblioLoanQuotasQueryKey,
-  biblioLoansQuery,
-  biblioLoansQueryKey,
-  biblioMaterialQuery,
-  biblioMaterialQueryKey,
-  biblioReservationsQuery,
-  biblioReservationsQueryKey,
-  biblioSignInTokenQuery,
-  biblioSignInTokenQueryKey,
-  biblioSupportIdQuery,
-  biblioSupportIdQueryKey,
+  loanDecisionQuery,
+  loanDecisionQueryKey,
+  digitalLoanQuotasQuery,
+  digitalLoanQuotasQueryKey,
+  digitalLoansQuery,
+  digitalLoansQueryKey,
+  digitalMaterialQuery,
+  digitalMaterialQueryKey,
+  digitalReservationsQuery,
+  digitalReservationsQueryKey,
+  readerSignInTokenQuery,
+  readerSignInTokenQueryKey,
+  supportIdQuery,
+  supportIdQueryKey,
 } from "./queries/biblio"
-export { useBiblioAcceptOffer } from "./hooks/useBiblioAcceptOffer"
-export { useBiblioCanLoan } from "./hooks/useBiblioCanLoan"
-export { useBiblioCreateLoan } from "./hooks/useBiblioCreateLoan"
-export { useBiblioCreateReservation } from "./hooks/useBiblioCreateReservation"
-export { useBiblioDeleteReservation } from "./hooks/useBiblioDeleteReservation"
-export { useBiblioLoanQuotas } from "./hooks/useBiblioLoanQuotas"
-export { useBiblioLoans } from "./hooks/useBiblioLoans"
-export { useBiblioMaterial } from "./hooks/useBiblioMaterial"
-export { useBiblioReservations } from "./hooks/useBiblioReservations"
-export { useBiblioSupportId } from "./hooks/useBiblioSupportId"
+export { useAcceptReservationOffer } from "./hooks/useAcceptReservationOffer"
+export { useCreateDigitalLoan } from "./hooks/useCreateDigitalLoan"
+export { useCreateDigitalReservation } from "./hooks/useCreateDigitalReservation"
+export { useDeleteDigitalReservation } from "./hooks/useDeleteDigitalReservation"
+export { useLoanDecision } from "./hooks/useLoanDecision"
+export { useDigitalLoanQuotas } from "./hooks/useDigitalLoanQuotas"
+export { useDigitalLoans } from "./hooks/useDigitalLoans"
+export { useDigitalMaterial } from "./hooks/useDigitalMaterial"
+export { useDigitalReservations } from "./hooks/useDigitalReservations"
+export { useSupportId } from "./hooks/useSupportId"
 export { createBiblioClient } from "../biblio/src"
 export type { BiblioConfig } from "../biblio/src"
-export type { BiblioQuota } from "./biblio"
+export type { QuotaUsage } from "./biblio"
 export type {
-  BiblioMaterial,
-  BiblioMaterialType,
-  BiblioLoan,
-  BiblioReservation,
-  BiblioCanLoan,
-  BiblioCanLoanStatus,
-  BiblioLoanResult,
-  BiblioLoanQuota,
-  BiblioSignInToken,
+  DigitalMaterial,
+  DigitalMaterialType,
+  MaterialType,
+  LoanProvider,
+  DigitalLoan,
+  DigitalReservation,
+  LoanDecision,
+  LoanDecisionStatus,
+  LoanRequestResult,
+  DigitalLoanQuota,
+  ReaderSignInToken,
 } from "./types"

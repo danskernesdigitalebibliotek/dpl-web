@@ -1,22 +1,22 @@
 import { createBiblioClient } from "../biblio/src"
 import { resolveBiblioConfig } from "./internal/resolveBiblioConfig"
 import type {
-  BiblioCanLoan,
-  BiblioCanLoanStatus,
-  BiblioLoan,
-  BiblioLoanQuota,
-  BiblioLoanResult,
-  BiblioMaterial,
-  BiblioReservation,
-  BiblioSignInToken,
+  DigitalLoan,
+  DigitalLoanQuota,
+  DigitalMaterial,
+  DigitalReservation,
+  LoanDecision,
+  LoanDecisionStatus,
+  LoanRequestResult,
+  ReaderSignInToken,
   ServiceLayerConfig,
 } from "./types"
 
 // The endpoint returns active loans only. The cursor is carried through
 // untouched: nothing pages through loans yet, but the shape is the adapter's.
-export async function getBiblioLoans(
+export async function getDigitalLoans(
   config: ServiceLayerConfig
-): Promise<{ loans: BiblioLoan[]; nextCursor?: string }> {
+): Promise<{ loans: DigitalLoan[]; nextCursor?: string }> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return biblio.getLoans()
 }
@@ -25,30 +25,30 @@ export async function getBiblioLoans(
 // material is unknown to Biblio - null rather than undefined, because
 // TanStack Query rejects undefined as query data, which would turn "not
 // found" into a failed query.
-export async function getBiblioMaterial(
+export async function getDigitalMaterial(
   config: ServiceLayerConfig,
   isbn: string
-): Promise<BiblioMaterial | null> {
+): Promise<DigitalMaterial | null> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return (await biblio.getMetadata(isbn)) ?? null
 }
 
 // Whether the user can borrow a material right now. The answer covers both the
 // material (is it available?) and the user (quota, lending blocks), so callers
-// must pick the part they care about - see isBiblioMaterialAvailable.
+// must pick the part they care about - see isMaterialAvailable.
 //
 // TEMPORARY, with the toleration flag it serves: with allowNotFound a
 // material the adapter does not know resolves to null - null rather than
 // undefined, because TanStack Query rejects undefined as query data. Without
 // it the 404 stays an error, which is the honest default: asking about an
 // unknown material is normally a routing mistake.
-export async function getBiblioCanLoan(
+export async function getLoanDecision(
   config: ServiceLayerConfig,
   materialId: string,
   options?: { allowNotFound?: boolean }
-): Promise<BiblioCanLoan | null> {
+): Promise<LoanDecision | null> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  return (await biblio.canLoan(materialId, options)) ?? null
+  return (await biblio.getLoanDecision(materialId, options)) ?? null
 }
 
 /**
@@ -59,7 +59,7 @@ export async function getBiblioCanLoan(
  * available. This mirrors Publizon, where status 0 ("not loanable, max loans
  * reached") is also counted as available.
  */
-export const isBiblioMaterialAvailable = (status: BiblioCanLoanStatus): boolean => {
+export const isMaterialAvailable = (status: LoanDecisionStatus): boolean => {
   switch (status) {
     // The material cannot be borrowed now: it can at most be reserved or
     // wished for. Equivalent to Publizon's status 5 (reservation queue).
@@ -73,22 +73,24 @@ export const isBiblioMaterialAvailable = (status: BiblioCanLoanStatus): boolean 
 }
 
 // The endpoint returns active reservations only.
-export async function getBiblioReservations(
+export async function getDigitalReservations(
   config: ServiceLayerConfig
-): Promise<{ reservations: BiblioReservation[]; nextCursor?: string }> {
+): Promise<{ reservations: DigitalReservation[]; nextCursor?: string }> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return biblio.getReservations()
 }
 
 // One quota per organization. A patron belongs to a single library in
-// practice - see getBiblioLoanQuota for how a format's numbers are read out.
-export async function getBiblioLoanQuotas(config: ServiceLayerConfig): Promise<BiblioLoanQuota[]> {
+// practice - see getLoanQuota for how a format's numbers are read out.
+export async function getDigitalLoanQuotas(
+  config: ServiceLayerConfig
+): Promise<DigitalLoanQuota[]> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return biblio.getLoanQuotas()
 }
 
 // The id a patron gives the library when asking for help with a digital loan.
-export async function getBiblioSupportId(config: ServiceLayerConfig): Promise<string> {
+export async function getSupportId(config: ServiceLayerConfig): Promise<string> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return biblio.getSupportId()
 }
@@ -96,20 +98,20 @@ export async function getBiblioSupportId(config: ServiceLayerConfig): Promise<st
 // Create a digital loan. The adapter can accept the request without creating a
 // loan - an exceeded quota, say - so the result only carries a loan when the
 // operation actually succeeded, and callers must check `loan`.
-export async function createBiblioLoan(
+export async function createDigitalLoan(
   config: ServiceLayerConfig,
   materialId: string
-): Promise<BiblioLoanResult> {
+): Promise<LoanRequestResult> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return biblio.createLoan(materialId)
 }
 
 // Reserve a material. Answers with the same envelope as a loan request: a
 // decision status, and a loan when the material turned out to be available.
-export async function createBiblioReservation(
+export async function createDigitalReservation(
   config: ServiceLayerConfig,
   materialId: string
-): Promise<BiblioLoanResult> {
+): Promise<LoanRequestResult> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return biblio.createReservation(materialId)
 }
@@ -117,7 +119,7 @@ export async function createBiblioReservation(
 // Accept a reservation offer as a loan - the Biblio equivalent of redeeming a
 // Publizon reservation. Publizon has no explicit redeem step, so a material
 // the user holds an offer for must be accepted here rather than borrowed.
-export async function acceptBiblioReservationOffer(
+export async function acceptReservationOffer(
   config: ServiceLayerConfig,
   offerId: string
 ): Promise<{ success: boolean; loanId?: string }> {
@@ -135,7 +137,7 @@ export async function acceptBiblioReservationOffer(
  * here - callers report their outcome from the promise, and a resolved one
  * would read as "reservation deleted" while it is still in the list.
  */
-export async function deleteBiblioReservation(
+export async function deleteDigitalReservation(
   config: ServiceLayerConfig,
   reservationId: string
 ): Promise<boolean> {
@@ -150,14 +152,13 @@ export async function deleteBiblioReservation(
 /**
  * Whether the user can borrow the material right now.
  *
- * Unlike `isBiblioMaterialAvailable`, which asks about the material alone,
+ * Unlike `isMaterialAvailable`, which asks about the material alone,
  * this is the answer the loan button needs - so a status describing the user
  * counts as "no". A spent quota therefore leaves neither this nor
- * `isBiblioMaterialReservable` true, which matches Publizon's status 0 ("not
+ * `isMaterialReservable` true, which matches Publizon's status 0 ("not
  * loanable, max loans reached"): inherited behaviour, not a Biblio decision.
  */
-export const isBiblioMaterialLoanable = (status: BiblioCanLoanStatus): boolean =>
-  status === "loanable"
+export const isMaterialLoanable = (status: LoanDecisionStatus): boolean => status === "loanable"
 
 /**
  * Whether the user can join the queue for the material.
@@ -165,8 +166,7 @@ export const isBiblioMaterialLoanable = (status: BiblioCanLoanStatus): boolean =
  * A wishable material is deliberately excluded: wishing is not reserving, and
  * there is no Publizon equivalent to render it with.
  */
-export const isBiblioMaterialReservable = (status: BiblioCanLoanStatus): boolean =>
-  status === "reservable"
+export const isMaterialReservable = (status: LoanDecisionStatus): boolean => status === "reservable"
 
 /**
  * Whether the adapter acted on a loan or reservation request.
@@ -176,10 +176,10 @@ export const isBiblioMaterialReservable = (status: BiblioCanLoanStatus): boolean
  * separating "you are queued" from "your quota is spent". Only the two
  * statuses that mean the request could be fulfilled count as granted.
  */
-export const isBiblioRequestGranted = (status: BiblioCanLoanStatus): boolean =>
+export const isRequestGranted = (status: LoanDecisionStatus): boolean =>
   status === "loanable" || status === "reservable"
 
-export type BiblioQuota = {
+export type QuotaUsage = {
   current: number
   limit: number | undefined
 }
@@ -203,15 +203,15 @@ export type BiblioQuota = {
  * Publizon path, which subtracts its subscription loans itself, the numbers
  * are used as they arrive.
  */
-export const getBiblioLoanQuota = ({
+export const getLoanQuota = ({
   quotas,
   format,
   period = "monthly",
 }: {
-  quotas: BiblioLoanQuota[] | undefined
+  quotas: DigitalLoanQuota[] | undefined
   format: "ebook" | "audiobook"
   period?: "monthly" | "concurrent"
-}): BiblioQuota => {
+}): QuotaUsage => {
   const quota = quotas?.[0]
 
   if (!quota) {
@@ -252,7 +252,7 @@ export const getBiblioLoanQuota = ({
  * Short-lived by design - `expiresInSeconds` says how long - so callers must
  * mint a new one rather than hold on to it.
  */
-export async function getBiblioSignInToken(config: ServiceLayerConfig): Promise<BiblioSignInToken> {
+export async function getReaderSignInToken(config: ServiceLayerConfig): Promise<ReaderSignInToken> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return biblio.createSignInToken()
 }
