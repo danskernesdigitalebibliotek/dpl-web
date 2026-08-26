@@ -1,0 +1,4 @@
+access dpl metrics:
+  title: 'Access the Prometheus metrics endpoint'
+  description: 'The endpoint reveals traffic patterns and installed code. Grant only to monitoring.'
+  restrict access: true

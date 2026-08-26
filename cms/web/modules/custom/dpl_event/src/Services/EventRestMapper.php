@@ -7,6 +7,7 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerDateTime;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOrganizer;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOriginalImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTeaserImage;
@@ -17,6 +18,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\dpl_event\Entity\EventInstance;
+use Drupal\dpl_library_agency\Entity\BranchNode;
 use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\file\FileInterface;
 use Drupal\image\Entity\ImageStyle;
@@ -163,6 +165,60 @@ class EventRestMapper {
             'type' => 'string',
             'description' => 'The name of a branch.',
           ],
+        ],
+        'branch_isil_ids' => [
+          'type' => 'array',
+          'description' => 'External branch ids (ISIL) for the associated library branches. Aligned by index with the branches property, and always the same length. An entry is an empty string when no ISIL has been configured for that branch in the CMS.',
+          'items' => [
+            'type' => 'string',
+            'description' => 'External branch id (ISIL)',
+            'example' => 'DK-710100',
+          ],
+        ],
+        'organizer' => [
+          'type' => 'object',
+          'description' => 'The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library.',
+          'properties' => [
+            'id' => [
+              'type' => 'string',
+              'format' => 'uuid',
+              'description' => 'A unique identifier for the organizer. It is stable across updates, and unique across libraries.',
+            ],
+            'name' => [
+              'type' => 'string',
+              'description' => 'The name of the branch arranging the event.',
+            ],
+            'url' => [
+              'type' => 'string',
+              'format' => 'uri',
+              'description' => 'An absolute URL for the page describing the branch.',
+            ],
+            'street' => [
+              'type' => 'string',
+              'description' => 'Street name and number of the branch.',
+            ],
+            'zip_code' => [
+              'type' => 'integer',
+              'description' => 'Zip code of the branch.',
+            ],
+            'city' => [
+              'type' => 'string',
+              'description' => 'City of the branch.',
+            ],
+            'country' => [
+              'type' => 'string',
+              'description' => 'Country code in ISO 3166-1 alpha-2 format. E.g. DK for Denmark.',
+            ],
+            'phone' => [
+              'type' => 'string',
+              'description' => 'Phone number of the branch.',
+            ],
+            'email' => [
+              'type' => 'string',
+              'description' => 'Email address of the branch.',
+            ],
+          ],
+          'required' => ['id', 'name'],
         ],
         'address' => [
           'type' => 'object',
@@ -325,6 +381,8 @@ class EventRestMapper {
   public function getResponse(EventInstance $event_instance): EventsGET200ResponseInner {
     $this->event = $event_instance;
 
+    $branch_data = $this->getBranchData();
+
     $response = new EventsGET200ResponseInner([
       'title' => $this->getValue('title'),
       'uuid' => $this->event->uuid(),
@@ -336,7 +394,9 @@ class EventRestMapper {
       'image' => $this->getImage(),
       'originalImage' => $this->getOriginalImage(),
       'teaserImage' => $this->getTeaserImage(),
-      'branches' => $this->getBranches(),
+      'branches' => $branch_data['names'],
+      'branchIsilIds' => $branch_data['isil_ids'],
+      'organizer' => $this->getOrganizer(),
       'address' => $this->getAddress(),
       'audiences' => $this->getAudiences(),
       'tags' => $this->getTags(),
@@ -364,25 +424,96 @@ class EventRestMapper {
   }
 
   /**
-   * Getting associated branches.
+   * Getting associated branches, as labels and as ISIL ids.
    *
-   * @return string[]
-   *   The translated branch labels.
+   * Both lists are built in the same pass and skipped on the same condition, so
+   * they are always the same length and can be read by index against each
+   * other.
+   *
+   * A branch without an ISIL gets an empty string rather than NULL: the REST
+   * responses are serialized by JMS, which omits NULL values, and a NULL would
+   * silently drop out of the array and break the alignment with the labels.
+   *
+   * @return array{names: string[], isil_ids: string[]}
+   *   The translated branch labels, and the ISIL id of each.
    */
-  private function getBranches(): array {
+  private function getBranchData(): array {
     $names = [];
+    $isil_ids = [];
 
     $branches = $this->event->getBranches() ?? [];
 
     foreach ($branches as $branch) {
       $label = $branch->getTitle();
 
-      if (!empty($label)) {
-        $names[] = $label;
+      if (empty($label)) {
+        continue;
       }
+
+      $names[] = $label;
+
+      $isil_ids[] = ($branch instanceof BranchNode) ? ($branch->getIsilId() ?? '') : '';
     }
 
-    return $names;
+    return ['names' => $names, 'isil_ids' => $isil_ids];
+  }
+
+  /**
+   * Getting the organizer of the event.
+   *
+   * The organizer is the branch responsible for the event. Notice that this is
+   * not necessarily where the event takes place - when an event is held
+   * outside the library, the organizer and the address differ.
+   *
+   * @see self::getAddress()
+   */
+  private function getOrganizer(): ?EventsGET200ResponseInnerOrganizer {
+    $branches = $this->event->getBranches() ?? [];
+    $branch = reset($branches);
+
+    if (!($branch instanceof BranchNode)) {
+      return NULL;
+    }
+
+    // The name is the only required part of an organizer, so a branch without
+    // a title cannot be described. This mirrors getBranchData(), which leaves
+    // such a branch out of the response entirely.
+    $name = $branch->getTitle();
+
+    if (empty($name)) {
+      return NULL;
+    }
+
+    $organizer = new EventsGET200ResponseInnerOrganizer();
+    // The UUID is stable across updates and unique across libraries, so a
+    // consumer can group events by the branch that arranges them. The branch
+    // ISIL is not usable for that: only branches registered in the library
+    // system have one. Consumers that want it read branch_isil_ids, which
+    // carries the same value for this branch.
+    $organizer->setId($branch->uuid());
+    $organizer->setName($name);
+    $organizer->setUrl($branch->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl());
+    $organizer->setPhone($branch->getPhone());
+    $organizer->setEmail($branch->getEmail());
+
+    $address = $branch->getAddressData();
+
+    if ($address) {
+      $zip = $address->getPostalCode();
+      $country = $address->getCountryCode();
+      // The normalized street can be missing even though the address holds a
+      // value, so fall back to the human-readable address as a whole.
+      $street = $address->getAddress() ?: $address->getString();
+
+      $organizer->setStreet(!empty($street) ? $street : NULL);
+      $organizer->setZipCode(!empty($zip) ? intval($zip) : NULL);
+      $organizer->setCity($address->getPostalName());
+      // Addresses entered as freetext can leave the country empty. Since all
+      // branches are Danish libraries, default to Denmark in that case.
+      $organizer->setCountry(!empty($country) ? $country : 'DK');
+    }
+
+    return $organizer;
   }
 
   /**

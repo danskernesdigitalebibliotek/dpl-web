@@ -10,6 +10,7 @@ use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_media\Entity\VideotoolBase;
+use Drupal\dpl_media\Entity\VideotoolVerticalMedia;
 use Drupal\file\Entity\File;
 use Drupal\dpl_paragraphs\Entity\GoLinkboxParagraph;
 use Drupal\dpl_paragraphs\Entity\GoMaterialSliderAutomaticParagraph;
@@ -430,6 +431,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     return [
       'url' => $url,
       'thumbnail' => $this->fileUrlGenerator->generateAbsoluteString($thumbnail->getFileUri()),
+      'orientation' => $media instanceof VideotoolVerticalMedia ? 'VERTICAL' : 'HORIZONTAL',
     ];
   }
 

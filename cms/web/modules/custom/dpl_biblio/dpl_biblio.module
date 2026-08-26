@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * DPL Biblio module.
+ *
+ * Handles configuration for the Biblio adapter which is set to replace
+ * Publizon as the service for digital materials. The adapter is rolled out
+ * behind a feature flag so Publizon remains the default until a library
+ * explicitly enables the Biblio adapter.
+ */
+
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\dpl_biblio\Hook\ReactAppsHooks;
+
+/* Legacy hooks can be removed in D11. */
+
+/**
+ * Implements hook_dpl_react_apps_api_urls().
+ *
+ * @return array<string, string>
+ *   Service to URL mapping.
+ */
+#[LegacyHook]
+function dpl_biblio_dpl_react_apps_api_urls(): array {
+  return \Drupal::service(ReactAppsHooks::class)->reactApiUrls();
+}
+
+/**
+ * Implements hook_dpl_react_apps_data().
+ *
+ * @param mixed[] $data
+ *   The data to provide to the React apps.
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+#[LegacyHook]
+function dpl_biblio_dpl_react_apps_data(array &$data, array &$variables): void {
+  \Drupal::service(ReactAppsHooks::class)->reactAppsData($data, $variables);
+}

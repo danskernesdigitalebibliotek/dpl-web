@@ -44,7 +44,6 @@ updates:
       # Never attempt automated updates to major Drupal releases.
       - dependency-name: "drupal/core*"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "drupal/potion"
       - dependency-name: "spawnia/sailor"
         versions: [">1.1.0"]
       # drupal/next 2.1.0 adds draft_enabled to exported Next entity config.
@@ -63,9 +62,9 @@ updates:
       # Drupal 10.6.x breaks the CMS opening-hours Cypress flow.
       - dependency-name: "drupal/core*"
         versions: [">=10.6.0"]
-      # `potion` isn't compatible with newer versions of `annotations`.
-      - dependency-name: "doctrine/annotations"
-        versions: [">=2.0.0"]
+      # Our patch is not compatible with the latest version.
+      - dependency-name: "drupal/facets"
+        versions: [">3.0.3"]
     schedule:
       interval: weekly
       day: sunday
@@ -247,6 +246,15 @@ updates:
       # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
       - dependency-name: "orval"
         update-types: ["version-update:semver-major"]
+      # Next 16.3.0 update fails tests. DDF-480.
+      - dependency-name: "next"
+        versions: [">=16.3.0"]
+      - dependency-name: "@next/env"
+        versions: [">=16.3.0"]
+      - dependency-name: "eslint-config-next"
+        versions: [">=16.3.0"]
+      - dependency-name: "@next/eslint-plugin-next"
+        versions: [">=16.3.0"]
 
   # React - npm dependencies
   - package-ecosystem: npm
