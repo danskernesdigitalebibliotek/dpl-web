@@ -10,7 +10,7 @@ import { ListType } from "../../../../core/utils/types/list-type";
 import useServiceLayerLending from "../../../../core/utils/useServiceLayerLending";
 import { useDigitalMaterial } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
-  isBiblioReservation,
+  hasDigitalReservationId,
   isReservationType
 } from "../../../../core/utils/types/reservation-type";
 
@@ -36,14 +36,15 @@ const fetchDigitalMaterial =
         useState<BasicDetailsType>();
       const viaServiceLayer = useServiceLayerLending();
 
-      // A Biblio loan carries its own catalogue fields; nothing to look up.
+      // A service layer loan carries its own catalogue fields; nothing to
+      // look up.
       const hasOwnDetails = Boolean(item.details);
 
       // Who describes a material is read off the item, never discovered by
       // asking. A loan from before the switch is Publizon's - the only reason
       // Publizon is still asked during the transition.
       const isDigitalItem =
-        isReservationType(item) && isBiblioReservation(item);
+        isReservationType(item) && hasDigitalReservationId(item);
       const isProvidedByServiceLayer =
         viaServiceLayer && !hasOwnDetails && isDigitalItem;
 

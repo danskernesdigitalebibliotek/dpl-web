@@ -137,7 +137,7 @@ describe("Biblio list mappers", () => {
 
       // Publizon cancels by material identifier, Biblio by reservation id -
       // both are carried so the delete flow can tell them apart.
-      expect(reservation.biblioReservationId).toBe(
+      expect(reservation.digitalReservationId).toBe(
         digitalReservationFixture.reservationId
       );
       expect(reservation.identifier).toBe(digitalReservationFixture.materialId);

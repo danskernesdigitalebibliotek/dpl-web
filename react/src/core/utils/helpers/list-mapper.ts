@@ -350,7 +350,7 @@ export const mapDigitalReservationToReservationType = (
         // Biblio reservations carry no title. It is resolved from the
         // material metadata by the same HOC that describes digital loans.
         title: null,
-        biblioReservationId: reservationId
+        digitalReservationId: reservationId
       };
     }
   );

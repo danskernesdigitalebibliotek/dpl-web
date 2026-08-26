@@ -14,12 +14,12 @@ import {
 } from "../../../../core/publizon/publizon";
 import { useMultipleRequestsWithStatus } from "../../../../core/utils/useRequestsWithStatus";
 import {
-  OperationBiblio,
   OperationDigital,
   OperationPhysical,
-  ParamsBiblio,
+  OperationPublizon,
   ParamsDigital,
   ParamsPhysical,
+  ParamsPublizon,
   requestsAndReservations
 } from "./helper";
 import {
@@ -63,15 +63,15 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
   const {
     requests,
     reservationsPhysical,
-    reservationsDigital,
-    reservationsBiblio
+    reservationsPublizon,
+    reservationsDigital
   } = useMemo(
     () =>
       requestsAndReservations({
         operations: {
-          digital: deletePublizonReservation,
+          publizon: deletePublizonReservation,
           physical: deletePhysicalReservation,
-          biblio: deleteDigitalReservation
+          digital: deleteDigitalReservation
         },
         reservations
       }),
@@ -88,8 +88,8 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
     requestStatus,
     setRequestStatus
   } = useMultipleRequestsWithStatus<
-    OperationPhysical | OperationDigital | OperationBiblio,
-    ParamsPhysical | ParamsDigital | ParamsBiblio,
+    OperationPhysical | OperationPublizon | OperationDigital,
+    ParamsPhysical | ParamsPublizon | ParamsDigital,
     ApiResult | boolean | void | null
   >({
     requests,
@@ -122,8 +122,8 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
   const removeSelectedReservationsHandler = () => {
     if (
       reservationsPhysical.length ||
-      reservationsDigital.length ||
-      reservationsBiblio.length
+      reservationsPublizon.length ||
+      reservationsDigital.length
     ) {
       removeReservationsHandler();
     }

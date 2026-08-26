@@ -188,7 +188,7 @@ describe("useDigitalReaderPlayerState", () => {
       expect(state.offerId).toBeNull();
       // Cancelling has to target the adapter, which the mapped reservation id
       // is what makes possible.
-      expect(state.reservation?.biblioReservationId).toBe(RESERVATION_ID);
+      expect(state.reservation?.digitalReservationId).toBe(RESERVATION_ID);
     });
 
     it("Turns an offered reservation into something the user can borrow", () => {
