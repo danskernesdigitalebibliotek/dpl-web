@@ -14,7 +14,7 @@ import { MappArgs } from "../../core/storybook/mappArgs";
 import { EditionSwitchModalArgs } from "../../core/storybook/editionSwitchModalArgs";
 import { PlayerModalProps } from "../../core/storybook/playerModalArgs";
 import { OpenOrderProps } from "../../core/storybook/openOrderArgs";
-import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
+import { ServiceLayerLendingArgs } from "../../core/storybook/serviceLayerLendingArgs";
 import withPageStatistics from "../../core/statistics/withPageStatistics";
 import useSetSmoothScroll from "../../core/utils/useSetSmoothScroll";
 import { MaterialUnavailableNoticeArgs } from "../../components/material/MaterialUnavailableNotice/MaterialUnavailableNoticeArgs";
@@ -220,7 +220,7 @@ export interface MaterialEntryProps
     MappArgs,
     EditionSwitchModalArgs,
     PlayerModalProps,
-    BiblioAdapterArgs,
+    ServiceLayerLendingArgs,
     OpenOrderProps,
     MaterialUnavailableNoticeArgs {
   wid: WorkId;

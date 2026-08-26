@@ -35,7 +35,7 @@ type UseReservationsType = {
   fbs: Reservations;
   // Digital reservations from both providers. During the transition a
   // reservation made before the switch stays visible while new ones are
-  // created through the Biblio adapter.
+  // created through the service layer.
   digital: Reservations;
 };
 
@@ -59,8 +59,8 @@ const useReservations: UseReservations = () => {
     isError: isErrorServiceLayer
   } = useDigitalReservations({ enabled: viaServiceLayer });
 
-  // A disabled query is never loading or in error so the Biblio states only
-  // count when the feature flag has enabled the query.
+  // A disabled query is never loading or in error so the service layer states
+  // only count when the feature flag has enabled the query.
   const isLoadingDigital = isLoadingPublizonData || isLoadingServiceLayer;
   const isErrorDigital = isErrorPublizonData || isErrorServiceLayer;
 

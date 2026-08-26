@@ -70,7 +70,8 @@ export const mapPublizonLoanToLoanType = (list: Loan[]): LoanType[] => {
 };
 
 // digital-loan-card picks the reader/player button from Publizon's integer
-// enum, so a Biblio material type has to be expressed in those numbers too.
+// enum, so a service layer material type has to be expressed in those
+// numbers too.
 // Goes away with the Publizon integration, when the card stops keying on
 // Publizon's enum.
 const digitalProductTypeFor = (materialType: MaterialType) =>
@@ -88,7 +89,7 @@ const digitalMaterialTypeText = (materialType: MaterialType) => {
     : texts.publizonEbookText;
 };
 
-// The catalogue fields a Biblio loan carries, as a BasicDetailsType.
+// The catalogue fields a digital loan carries, as a BasicDetailsType.
 const mapDigitalLoanToBasicDetailsType = (loan: DigitalLoan) => {
   // A loan states its author as one string, where the metadata endpoints use
   // a list.
@@ -106,9 +107,9 @@ const mapDigitalLoanToBasicDetailsType = (loan: DigitalLoan) => {
   } as BasicDetailsType;
 };
 
-// DigitalLoan is a digital loan from the Biblio adapter (WeDoBooks), and is
-// the equivalent to the Loan type in Publizon. These are mapped to the same
-// so components can treat loans from all three providers alike.
+// The service layer hands back a DigitalLoan whichever service lent the
+// material; Publizon still answers with its own Loan. Both are mapped to
+// LoanType so components can treat loans from all providers alike.
 export const mapDigitalLoanToLoanType = (list: DigitalLoan[]): LoanType[] => {
   return list.map((loan) => {
     const { loanId, materialId, startDate, endDate } = loan;
@@ -122,11 +123,11 @@ export const mapDigitalLoanToLoanType = (list: DigitalLoan[]): LoanType[] => {
       identifier: materialId,
       faust: null,
       loanId: null,
-      // The Biblio loan id plays the same role as Publizon's order id: the
-      // key used to open the loan in the reader/player.
+      // The service layer's loan id plays the same role as Publizon's order
+      // id: the key used to open the loan in the reader/player.
       orderId: loanId,
       digitalProvider: "serviceLayer" as const,
-      // A Biblio loan carries its own catalogue fields, so the list can
+      // A digital loan carries its own catalogue fields, so the list can
       // render it without a separate metadata lookup.
       details: mapDigitalLoanToBasicDetailsType(loan)
     };
@@ -209,8 +210,8 @@ export const mapProductToBasicDetailsType = (material: Product) => {
   } as BasicDetailsType;
 };
 
-// DigitalMaterial is a material from the Biblio adapter, and is the equivalent
-// to the Product type in Publizon.
+// A DigitalMaterial carries the catalogue fields Publizon states on its
+// Product type.
 export const mapDigitalMaterialToBasicDetailsType = (
   material: DigitalMaterial
 ) => {
@@ -320,8 +321,8 @@ export const mapPublizonReservationToReservationType = (
   );
 };
 
-// DigitalReservation is a reservation from the Biblio adapter, and is the
-// equivalent to the Reservation type in Publizon.
+// A DigitalReservation is the service layer's equivalent of Publizon's own
+// Reservation type.
 export const mapDigitalReservationToReservationType = (
   list: DigitalReservation[]
 ): ReservationType[] => {
@@ -347,7 +348,7 @@ export const mapDigitalReservationToReservationType = (
         // The offer is what expires - the reservation itself has no end date.
         expiryDate: offerExpiresAt ?? null,
         pickupDeadline: expectedLoanDate,
-        // Biblio reservations carry no title. It is resolved from the
+        // Service layer reservations carry no title. It is resolved from the
         // material metadata by the same HOC that describes digital loans.
         title: null,
         digitalReservationId: reservationId

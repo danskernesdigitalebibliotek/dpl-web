@@ -22,7 +22,8 @@ const useOnlineAvailabilityData = ({
   const [isAvailable, setIsAvailable] = useState<null | boolean>(null);
 
   // An online material outside the e-book service - a PressReader newspaper,
-  // whose only identifier is a URI - is in neither Publizon nor Biblio, so
+  // whose only identifier is a URI - is in neither Publizon nor the service
+  // layer, so
   // asking about it can only produce a 404.
   const isEreolMaterial = access.some((acc) => acc === "Ereol");
 
@@ -35,7 +36,7 @@ const useOnlineAvailabilityData = ({
     isbn
   });
 
-  // Publizon answers for everything Biblio does not.
+  // Publizon answers for everything the service layer does not.
 
   // Find out if the material is cost free.
   const { isLoading: isLoadingIdentifier, data: dataIdentifier } =
@@ -79,13 +80,13 @@ const useOnlineAvailabilityData = ({
       return;
     }
 
-    // Biblio answers for the materials it provides.
+    // The service layer answers for the materials it provides.
     if (isAvailableViaServiceLayer !== null) {
       setIsAvailable(isAvailableViaServiceLayer);
       return;
     }
 
-    // Publizon must not answer at all while Biblio is the provider.
+    // Publizon must not answer at all while the service layer is the provider.
     if (
       isServiceLayerAnswering ||
       isLoadingIdentifier !== false ||

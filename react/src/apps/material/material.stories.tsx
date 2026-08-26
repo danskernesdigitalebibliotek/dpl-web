@@ -42,9 +42,9 @@ import openOrderArgs, {
 import materialUnavailableNoticeArgs, {
   argTypes as materialUnavailableNoticeArgTypes
 } from "../../components/material/MaterialUnavailableNotice/MaterialUnavailableNoticeArgs";
-import biblioAdapterArgs, {
+import serviceLayerLendingArgs, {
   argTypes as biblioAdapterArgTypes
-} from "../../core/storybook/biblioAdapterArgs";
+} from "../../core/storybook/serviceLayerLendingArgs";
 
 const meta: Meta<typeof MaterialEntry> = {
   title: "Apps / Material",
@@ -824,7 +824,7 @@ const meta: Meta<typeof MaterialEntry> = {
   },
   args: {
     ...serviceUrlArgs,
-    ...biblioAdapterArgs,
+    ...serviceLayerLendingArgs,
     ...globalTextArgs,
     ...globalConfigArgs,
     ...deleteReservationModalArgs,

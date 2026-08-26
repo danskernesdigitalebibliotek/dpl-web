@@ -54,7 +54,8 @@ const StatusSection: FC = () => {
   });
 
   // This section counts the loans the user holds right now, so the concurrent
-  // counters are the Biblio equivalent of Publizon's maxConcurrent limits.
+  // counters are the service layer equivalent of Publizon's maxConcurrent
+  // limits.
   const digitalEbookQuota = getLoanQuota({
     quotas: digitalQuotas,
     format: "ebook",
@@ -79,7 +80,8 @@ const StatusSection: FC = () => {
     ? digitalAudioQuota.limit
     : libraryProfile?.maxConcurrentAudioLoansPerBorrower;
 
-  // Publizon gates the whole section on its library profile. Biblio has no
+  // Publizon gates the whole section on its library profile. The service
+  // layer has no
   // equivalent document, so its quotas take that role.
   // An empty array is an answer, not a quota: rendering the section from it
   // would show a heading with two blank counters.
@@ -113,7 +115,7 @@ const StatusSection: FC = () => {
           <div className="text-body-small-regular mb-8">
             {t("patronPageStatusSectionBodyText")}
           </div>
-          {/* Biblio's quotas cover loans only - it has no reservation limits
+          {/* The service layer's quotas cover loans only - there are no reservation limits
               to show, so the line is left out rather than rendered as zero. */}
           {!viaServiceLayer && (
             <div className="text-body-small-regular mt-8 mb-8">

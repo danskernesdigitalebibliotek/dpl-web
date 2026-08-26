@@ -14,7 +14,7 @@ import { MaterialDetailsModalProps } from "../../../core/storybook/materialDetai
 import { GlobalEntryTextProps } from "../../../core/storybook/globalTextArgs";
 import { PlayerModalProps } from "../../../core/storybook/playerModalArgs";
 import { OnlineMaterialProps } from "../../../core/storybook/onlineMaterialArgs";
-import { BiblioAdapterArgs } from "../../../core/storybook/biblioAdapterArgs";
+import { ServiceLayerLendingArgs } from "../../../core/storybook/serviceLayerLendingArgs";
 
 export interface LoanListEntryConfigProps {
   expirationWarningDaysBeforeConfig: string;
@@ -72,7 +72,7 @@ export interface LoanListEntryWithPageSizeProps
     MaterialDetailsModalProps,
     PlayerModalProps,
     OnlineMaterialProps,
-    BiblioAdapterArgs,
+    ServiceLayerLendingArgs,
     GlobalUrlEntryPropsInterface {}
 
 const LoanListEntry: FC<LoanListEntryWithPageSizeProps> = ({

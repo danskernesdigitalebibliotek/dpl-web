@@ -3,9 +3,9 @@ import PatronPage from "./PatronPage.entry";
 import serviceUrlArgs, {
   argTypes as serviceUrlArgTypes
 } from "../../core/storybook/serviceUrlArgs";
-import biblioAdapterArgs, {
+import serviceLayerLendingArgs, {
   argTypes as biblioAdapterArgTypes
-} from "../../core/storybook/biblioAdapterArgs";
+} from "../../core/storybook/serviceLayerLendingArgs";
 import pincodeArgs, {
   argTypes as pincodeArgTypes
 } from "../../core/storybook/pincodeArgs";
@@ -200,7 +200,7 @@ const meta: Meta<typeof PatronPage> = {
   },
   args: {
     ...serviceUrlArgs,
-    ...biblioAdapterArgs,
+    ...serviceLayerLendingArgs,
     ...pincodeArgs,
     ...blockedArgs,
     ...globalTextArgs,

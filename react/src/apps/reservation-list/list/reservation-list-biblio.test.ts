@@ -70,7 +70,7 @@ const stubBackends = () => {
     }
   }).as("publizonReservations");
 
-  // Given: one reservation created through the Biblio adapter
+  // Given: one reservation created through the service layer
   givenUserHasBiblioReservations([
     biblioReservationFactory.build({ material_id: BIBLIO_ISBN })
   ]);

@@ -36,9 +36,9 @@ import globalConfigArgs, {
 import blockedArgs, {
   argTypes as blockedArgTypes
 } from "../../core/storybook/blockedArgs";
-import biblioAdapterArgs, {
+import serviceLayerLendingArgs, {
   argTypes as biblioAdapterArgTypes
-} from "../../core/storybook/biblioAdapterArgs";
+} from "../../core/storybook/serviceLayerLendingArgs";
 
 const meta: Meta<typeof DashBoard> = {
   title: "Apps / Dashboard",
@@ -177,7 +177,7 @@ export const Primary: Story = {
     ...reservationListArgs,
     ...globalTextArgs,
     ...globalConfigArgs,
-    ...biblioAdapterArgs,
+    ...serviceLayerLendingArgs,
     blacklistedAvailabilityBranchesConfig:
       "FBS-751032,FBS-751031,FBS-751009,FBS-751027,FBS-751024,DK-775164",
     physicalLoansUrl: "/user/me/loans",

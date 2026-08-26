@@ -1,6 +1,7 @@
 export const argTypes = {
   useBiblioAdapterConfig: {
-    description: "Use the Biblio adapter instead of Publizon (feature flag)",
+    description:
+      "Lend through the service layer instead of Publizon (feature flag)",
     control: { type: "text" }
   },
   biblioTolerateUnknownMaterialsConfig: {
@@ -16,7 +17,7 @@ export default {
   biblioTolerateUnknownMaterialsConfig: "0"
 };
 
-export interface BiblioAdapterArgs {
+export interface ServiceLayerLendingArgs {
   useBiblioAdapterConfig: string;
   biblioTolerateUnknownMaterialsConfig: string;
 }

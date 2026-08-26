@@ -50,9 +50,9 @@ type Loans = {
 type UseLoansType = {
   all: Loans;
   fbs: Loans;
-  // Publizon and Biblio loans as one list. Which provider a loan came from
-  // does not change how it is rendered, and during the transition a user has
-  // loans from both.
+  // Digital loans as one list, whichever service issued them. Which provider
+  // a loan came from does not change how it is rendered, and during the
+  // transition a user has loans from both.
   digital: Loans;
 };
 
@@ -81,8 +81,8 @@ const useLoans: UseLoans = () => {
   } = useDigitalLoans({ enabled: viaServiceLayer });
 
   const threshold = useLoanThresholds();
-  // A disabled query is never loading or in error so the Biblio states only
-  // count when the feature flag has enabled the query.
+  // A disabled query is never loading or in error so the service layer states
+  // only count when the feature flag has enabled the query.
   const isLoadingDigital = isLoadingPublizon || isLoadingServiceLayer;
   const isErrorDigital = isErrorPublizon || isErrorServiceLayer;
   const loansIsLoading = isLoadingFbs || isLoadingDigital;

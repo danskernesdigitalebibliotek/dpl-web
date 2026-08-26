@@ -118,7 +118,7 @@ const stubBackends = () => {
     })
   }).as("publizonLoans");
 
-  // Given: two new loans created through the Biblio adapter. The loan ids
+  // Given: two new loans created through the service layer. The loan ids
   // are pinned so the navigation tests can recognise them.
   givenUserHasBiblioLoans([
     biblioLoanFactory.build({ id: BIBLIO_EBOOK_LOAN_ID }),

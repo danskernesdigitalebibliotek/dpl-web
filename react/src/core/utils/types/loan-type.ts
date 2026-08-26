@@ -22,7 +22,8 @@ export interface LoanType extends ListType {
    * The loan list mixes providers: after a library switches to the adapter its
    * patrons still hold Publizon loans until those expire, and each has to open
    * where it was made. `orderId` alone cannot say which - Publizon's is an
-   * order id and Biblio's a loan id, and they are indistinguishable by shape.
+   * order id and the service layer's a loan id, and they are
+   * indistinguishable by shape.
    */
   digitalProvider?: DigitalProvider | null;
 }

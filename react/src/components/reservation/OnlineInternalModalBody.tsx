@@ -60,7 +60,7 @@ const OnlineInternalModalBody = ({
           placeholders: { "@title": manifestation.titles.main[0] }
         })}
       >
-        {/* Accepting a Biblio offer answers with the loan id only, so the
+        {/* Accepting an offer answers with the loan id only, so the
             expiration date is not always known - the loan succeeded either
             way, and the sentence about the date is simply left out. */}
         {loanResponse?.expirationDateUtc && (

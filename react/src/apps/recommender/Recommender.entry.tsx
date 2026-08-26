@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import Recommender from "./Recommender";
 import { withText } from "../../core/utils/text";
 import { withConfig } from "../../core/utils/config";
-import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
+import { ServiceLayerLendingArgs } from "../../core/storybook/serviceLayerLendingArgs";
 import { withUrls } from "../../core/utils/url";
 import GuardedApp from "../../components/guarded-app";
 import GlobalUrlEntryPropsInterface from "../../core/utils/types/global-url-props";
@@ -20,7 +20,7 @@ export interface RecommenderProps {
 
 export interface ReccommenderPropsInterface
   extends
-    BiblioAdapterArgs,
+    ServiceLayerLendingArgs,
     GlobalUrlEntryPropsInterface,
     GlobalEntryTextProps,
     RecommenderProps {

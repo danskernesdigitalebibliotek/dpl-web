@@ -14,7 +14,7 @@ import { GroupModalReservationsProps } from "../../core/storybook/reservationGro
 import { DeleteReservationModalArgs } from "../../core/storybook/deleteReservationModalArgs";
 import { RenewalArgs } from "../../core/storybook/renewalArgs";
 import { GlobalEntryTextProps } from "../../core/storybook/globalTextArgs";
-import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
+import { ServiceLayerLendingArgs } from "../../core/storybook/serviceLayerLendingArgs";
 
 export interface DashBoardProps {
   // Url
@@ -75,7 +75,7 @@ const DashboardEntry: FC<
     ReservationMaterialDetailsProps &
     MaterialDetailsModalProps &
     GlobalEntryTextProps &
-    BiblioAdapterArgs
+    ServiceLayerLendingArgs
 > = ({ pageSizeDesktop, pageSizeMobile }) => {
   const pageSize = pageSizeGlobal(
     {

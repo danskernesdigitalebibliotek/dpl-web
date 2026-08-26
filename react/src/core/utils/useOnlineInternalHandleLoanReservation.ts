@@ -78,7 +78,8 @@ const useOnlineInternalHandleLoanReservation = ({
   // pulling new loans into the service we are migrating away from.
   //
   // offerId is set when the provider hands out a grant that has to be claimed
-  // before it becomes a loan. Only Biblio does; Publizon reports null.
+  // before it becomes a loan. Only the service layer does; Publizon reports
+  // null.
   const {
     canBeLoaned,
     canBeReserved,
@@ -110,7 +111,8 @@ const useOnlineInternalHandleLoanReservation = ({
     };
 
     // Publizon has no explicit redeem step - a redeemable reservation just
-    // shows the loan button - but Biblio requires the offer to be accepted
+    // shows the loan button - but the service layer requires the offer to be
+    // accepted
     // instead of borrowing the material anew.
     if (canBeLoaned && identifier && viaServiceLayer && digitalOfferId) {
       mutateAcceptOffer(digitalOfferId, {
@@ -146,7 +148,7 @@ const useOnlineInternalHandleLoanReservation = ({
     }
 
     // During the transition period new digital loans must be created through
-    // the Biblio adapter when the library has enabled the feature flag.
+    // the service layer when the library has enabled the feature flag.
     if (canBeLoaned && identifier && viaServiceLayer) {
       mutateDigitalLoan(identifier, {
         onSuccess: (result) => {

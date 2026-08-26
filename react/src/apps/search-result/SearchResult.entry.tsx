@@ -1,7 +1,7 @@
 import React from "react";
 import GuardedApp from "../../components/guarded-app";
 import { withConfig } from "../../core/utils/config";
-import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
+import { ServiceLayerLendingArgs } from "../../core/storybook/serviceLayerLendingArgs";
 import { pageSizeGlobal, getParams } from "../../core/utils/helpers/general";
 import { withText } from "../../core/utils/text";
 import { withUrls } from "../../core/utils/url";
@@ -72,7 +72,7 @@ interface SearchResultEntryConfigProps {
 
 export interface SearchResultEntryProps
   extends
-    BiblioAdapterArgs,
+    ServiceLayerLendingArgs,
     GlobalUrlEntryPropsInterface,
     SearchResultEntryConfigProps,
     GlobalEntryTextProps,

@@ -65,14 +65,14 @@ const MaterialAvailabilityTextOnline: React.FC<
     enabled: !isUserAnonymous && isProvidedByServiceLayer
   });
 
-  // Which licence Biblio would lend this material under. Needed here because
+  // Which licence this material would be lent under. Needed here because
   // it is what decides whether the loan costs the user anything - see
   // isCostFree below.
   // TEMPORARY, see useTolerateUnknownMaterials: an unknown material
   // has no licence to read a price from, which the falsy checks below
   // already handle.
   const tolerateUnknown = useTolerateUnknownMaterials();
-  const { data: biblioCanLoan } = useLoanDecision(isbn, {
+  const { data: loanDecision } = useLoanDecision(isbn, {
     enabled: Boolean(isbn) && isProvidedByServiceLayer,
     allowNotFound: tolerateUnknown
   });
@@ -135,7 +135,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   // Whether the loan costs the user nothing, which is what decides between
   // "this material is included" and the ordinary loan text.
   //
-  // Publizon states it outright on the product. Biblio does not: the
+  // Publizon states it outright on the product. The service layer does not: the
   // organization configures a prioritized list of licences, and can-loan
   // reports the one it picked for this material. "selection" is the licence
   // Danish blue titles answer with, verified against the real adapter by
@@ -148,7 +148,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   // The field is optional by contract, and absent means no provider could be
   // picked at all - so nothing to promise the user either.
   const isCostFree = isProvidedByServiceLayer
-    ? biblioCanLoan?.loanProvider === "selection"
+    ? loanDecision?.loanProvider === "selection"
     : Boolean(productsData?.product?.costFree);
 
   const availabilityTextType = isCostFree ? "materialIsIncluded" : materialType;

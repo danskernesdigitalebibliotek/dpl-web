@@ -4,7 +4,8 @@ import { ReservationType } from "./reservation-type";
  * What a provider has to be able to say about one digital material for the
  * material page to offer it.
  *
- * This is the seam of the Publizon → Biblio transition. Two hooks produce it -
+ * This is the seam of the Publizon → service layer transition. Two hooks
+ * produce it -
  * `usePublizonReaderPlayerState` and `useDigitalReaderPlayerState` - and
  * `useReaderPlayer` composes the result. Keeping the shape provider-neutral is
  * what lets the Publizon side be deleted without touching a single component:
@@ -37,7 +38,7 @@ export type ReaderPlayerState = {
   canBeReserved: boolean;
   /**
    * Holding: the key that opens the loan in the reader/player. Publizon calls
-   * it an order id, Biblio a loan id; both serve the same purpose.
+   * it an order id, the service layer a loan id; both serve the same purpose.
    */
   orderId: string | null;
   /** Holding: the reservation the user can cancel, when there is one. */
@@ -47,7 +48,8 @@ export type ReaderPlayerState = {
    * material becomes a loan, or null when the provider has no such step.
    *
    * Publizon has none - a redeemable reservation simply shows the loan button
-   * - so it always reports null. Biblio makes the acceptance explicit, and
+   * - so it always reports null. The service layer makes the acceptance
+   * explicit, and
    * this is what identifies the offer to accept.
    */
   offerId: string | null;

@@ -104,7 +104,7 @@ const stubBackends = () => {
     }
   }).as("publizonReservations");
 
-  // Given: two reservations created through the Biblio adapter - one still
+  // Given: two reservations created through the service layer - one still
   // queued, one already offered to the user.
   givenUserHasBiblioReservations([
     biblioReservationFactory.build({

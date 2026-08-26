@@ -6,7 +6,7 @@ import PatronPage from "./PatronPage";
 import { BlockedPatronEntryTextProps } from "../../core/storybook/blockedArgs";
 import withIsPatronBlockedHoc from "../../core/utils/withIsPatronBlockedHoc";
 import GlobalUrlEntryPropsInterface from "../../core/utils/types/global-url-props";
-import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
+import { ServiceLayerLendingArgs } from "../../core/storybook/serviceLayerLendingArgs";
 import { GlobalEntryTextProps } from "../../core/storybook/globalTextArgs";
 
 interface PatronPageConfigProps {
@@ -83,7 +83,7 @@ export interface PatronPageProps
     PatronPageTextProps,
     PatronPageUrlProps,
     GlobalEntryTextProps,
-    BiblioAdapterArgs,
+    ServiceLayerLendingArgs,
     GlobalUrlEntryPropsInterface {}
 
 const PatronPageEntry: FC<PatronPageProps> = () => <PatronPage />;

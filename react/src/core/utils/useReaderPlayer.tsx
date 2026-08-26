@@ -25,7 +25,8 @@ import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
  *
  * ## When Publizon goes away
  *
- * Delete `usePublizonReaderPlayerState` and return the Biblio state directly.
+ * Delete `usePublizonReaderPlayerState` and return the service layer state
+ * directly.
  * No component changes, because they all consume `ReaderPlayerState` and never
  * learn which provider produced it.
  */
@@ -37,7 +38,7 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
     ? getManifestationDigitalIdentifier(manifestation)
     : null;
 
-  const biblio = useDigitalReaderPlayerState({
+  const serviceLayer = useDigitalReaderPlayerState({
     identifier,
     enabled: viaServiceLayer
   });
@@ -49,13 +50,14 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
     canAcquire: !viaServiceLayer
   });
 
-  const acquisition = viaServiceLayer ? biblio : publizon;
+  const acquisition = viaServiceLayer ? serviceLayer : publizon;
 
   // A material is held by one provider or the other, never both: whoever has
   // the loan or the reservation answers for it.
-  const heldByServiceLayer = biblio.isAlreadyLoaned || biblio.isAlreadyReserved;
+  const heldByServiceLayer =
+    serviceLayer.isAlreadyLoaned || serviceLayer.isAlreadyReserved;
   const heldByPublizon = publizon.isAlreadyLoaned || publizon.isAlreadyReserved;
-  const holding = heldByServiceLayer ? biblio : publizon;
+  const holding = heldByServiceLayer ? serviceLayer : publizon;
   // Which reader or player opens what the user holds - the same fact a loan
   // carries as LoanType.digitalProvider. Called "holding" here because this
   // hook also answers who may LEND the material, and on a switched library

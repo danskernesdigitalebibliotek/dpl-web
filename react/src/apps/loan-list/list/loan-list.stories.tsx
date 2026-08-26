@@ -31,9 +31,9 @@ import playerModalArgs, {
 import onlineMaterialArgs, {
   argTypes as onlineMaterialArgTypes
 } from "../../../core/storybook/onlineMaterialArgs";
-import biblioAdapterArgs, {
+import serviceLayerLendingArgs, {
   argTypes as biblioAdapterArgTypes
-} from "../../../core/storybook/biblioAdapterArgs";
+} from "../../../core/storybook/serviceLayerLendingArgs";
 
 const meta: Meta<typeof LoanList> = {
   title: "Apps / Loan list",
@@ -173,7 +173,7 @@ export const Primary: Story = {
     ...blockedArgs,
     ...playerModalArgs,
     ...onlineMaterialArgs,
-    ...biblioAdapterArgs,
+    ...serviceLayerLendingArgs,
     pageSizeDesktop: 10,
     pageSizeMobile: 5,
     // Config

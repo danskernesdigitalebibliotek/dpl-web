@@ -18,7 +18,7 @@ const getServiceLayerConfig = (): ServiceLayerConfig => ({
   getAuthHeader: () => {
     const token = getToken(TOKEN_USER_KEY) ?? getToken(TOKEN_LIBRARY_KEY);
     if (!token) {
-      throw new Error("Biblio requests require a token.");
+      throw new Error("Service layer requests require a token.");
     }
     return `Bearer ${token}`;
   },

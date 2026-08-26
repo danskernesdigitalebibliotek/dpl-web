@@ -19,9 +19,9 @@ import { getModalIds } from "../../../core/utils/helpers/modal-helpers";
 import globalTextArgs, {
   argTypes as globalTextArgTypes
 } from "../../../core/storybook/globalTextArgs";
-import biblioAdapterArgs, {
+import serviceLayerLendingArgs, {
   argTypes as biblioAdapterArgTypes
-} from "../../../core/storybook/biblioAdapterArgs";
+} from "../../../core/storybook/serviceLayerLendingArgs";
 
 const meta: Meta<typeof ReservationList> = {
   title: "Apps / Reservation list",
@@ -215,7 +215,7 @@ export const Default: Story = {
     ...blockedArgs,
     ...reservationListArgs,
     ...globalTextArgs,
-    ...biblioAdapterArgs,
+    ...serviceLayerLendingArgs,
     blacklistedSearchBranchesConfig:
       "FBS-751032,FBS-751031,FBS-751009,FBS-751027,FBS-751024",
     blacklistedAvailabilityBranchesConfig:
