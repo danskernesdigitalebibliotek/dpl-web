@@ -5,6 +5,7 @@ namespace Drupal\dpl_opening_hours\Mapping;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner as OpeningHoursResponse;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory as OpeningHoursCategory;
+use Drupal\dpl_library_agency\Entity\BranchNode;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Drupal\dpl_opening_hours\Model\Repetition\WeeklyRepetition;
 use Drupal\node\NodeStorageInterface;
@@ -89,10 +90,8 @@ class OpeningHoursMapper {
 
     $repetitionResponse = $this->repetitionMapper->toResponse($instance->repetition);
 
-    $branchIsilId = NULL;
-    if ($instance->branch->hasField('field_agency_branch_id') && !$instance->branch->get('field_agency_branch_id')->isEmpty()) {
-      $branchIsilId = (string) $instance->branch->get('field_agency_branch_id')->value;
-    }
+    $branch = $instance->branch;
+    $branchIsilId = ($branch instanceof BranchNode) ? $branch->getIsilId() : NULL;
 
     return (new OpeningHoursResponse())
       ->setId($instance->id)
