@@ -5,9 +5,9 @@ import {
   getDigitalLoans,
   getDigitalMaterial,
   getDigitalReservations,
+  getDigitalSupportId,
   getLoanDecision,
   getReaderSignInToken,
-  getSupportId,
 } from "../biblio"
 import type { ServiceLayerConfig } from "../types"
 
@@ -75,12 +75,12 @@ export const digitalLoanQuotasQuery = (config: ServiceLayerConfig) =>
     queryFn: () => getDigitalLoanQuotas(config),
   })
 
-export const supportIdQueryKey = () => ["serviceLayer", "digitalSupportId"] as const
+export const digitalSupportIdQueryKey = () => ["serviceLayer", "digitalSupportId"] as const
 
-export const supportIdQuery = (config: ServiceLayerConfig) =>
+export const digitalSupportIdQuery = (config: ServiceLayerConfig) =>
   queryOptions({
-    queryKey: supportIdQueryKey(),
-    queryFn: () => getSupportId(config),
+    queryKey: digitalSupportIdQueryKey(),
+    queryFn: () => getDigitalSupportId(config),
   })
 
 export const readerSignInTokenQueryKey = () => ["serviceLayer", "readerSignInToken"] as const

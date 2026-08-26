@@ -16,7 +16,7 @@ import { Patron } from "../../core/utils/types/entities";
 import { useGetV1UserCardnumberFriendly } from "../../core/publizon/publizon";
 import { FriendlyCardResult } from "../../core/publizon/model";
 import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
-import { useSupportId } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalSupportId } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 const PatronPage: FC = () => {
   const t = useText();
@@ -29,7 +29,7 @@ const PatronPage: FC = () => {
       enabled: !!patronData && !viaServiceLayer
     }
   });
-  const { data: digitalSupportId } = useSupportId({
+  const { data: digitalSupportId } = useDigitalSupportId({
     enabled: !!patronData && viaServiceLayer
   });
   // Publizon's friendly card number and the service layer's support id

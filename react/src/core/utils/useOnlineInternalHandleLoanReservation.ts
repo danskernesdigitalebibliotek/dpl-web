@@ -25,7 +25,7 @@ import PublizonServiceError from "../publizon/mutator/PublizonServiceError";
 import {
   useCreateDigitalLoan,
   useCreateDigitalReservation,
-  useAcceptReservationOffer,
+  useAcceptDigitalOffer,
   loanDecisionQueryKey,
   digitalLoanQuotasQueryKey,
   digitalLoansQueryKey,
@@ -68,7 +68,7 @@ const useOnlineInternalHandleLoanReservation = ({
   const { mutate: mutateDigitalLoan } = useCreateDigitalLoan();
   const { mutate: mutateReservation } = usePostV1UserReservationsIdentifier();
   const { mutate: mutateDigitalReservation } = useCreateDigitalReservation();
-  const { mutate: mutateAcceptOffer } = useAcceptReservationOffer();
+  const { mutate: mutateAcceptOffer } = useAcceptDigitalOffer();
   const { data: userData } = usePatronData();
 
   // With the adapter enabled every new loan and reservation goes there, with

@@ -91,7 +91,7 @@ export async function getDigitalLoanQuotas(
 }
 
 // The id a patron gives the library when asking for help with a digital loan.
-export async function getSupportId(config: ServiceLayerConfig): Promise<string> {
+export async function getDigitalSupportId(config: ServiceLayerConfig): Promise<string> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return biblio.getSupportId()
 }
@@ -120,7 +120,7 @@ export async function createDigitalReservation(
 // Accept a reservation offer as a loan - the Biblio equivalent of redeeming a
 // Publizon reservation. Publizon has no explicit redeem step, so a material
 // the user holds an offer for must be accepted here rather than borrowed.
-export async function acceptReservationOffer(
+export async function acceptDigitalOffer(
   config: ServiceLayerConfig,
   offerId: string
 ): Promise<{ success: boolean; loanId?: string }> {

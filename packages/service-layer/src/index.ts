@@ -57,7 +57,7 @@ export { getFees } from "./fees"
 
 // Biblio adapter — the digital-materials provider behind the CMS feature flag.
 export {
-  acceptReservationOffer,
+  acceptDigitalOffer,
   createDigitalLoan,
   createDigitalReservation,
   deleteDigitalReservation,
@@ -67,7 +67,7 @@ export {
   getDigitalMaterial,
   getDigitalReservations,
   getReaderSignInToken,
-  getSupportId,
+  getDigitalSupportId,
   getLoanQuota,
   isMaterialAvailable,
   isMaterialLoanable,
@@ -88,10 +88,10 @@ export {
   digitalReservationsQueryKey,
   readerSignInTokenQuery,
   readerSignInTokenQueryKey,
-  supportIdQuery,
-  supportIdQueryKey,
+  digitalSupportIdQuery,
+  digitalSupportIdQueryKey,
 } from "./queries/biblio"
-export { useAcceptReservationOffer } from "./hooks/useAcceptReservationOffer"
+export { useAcceptDigitalOffer } from "./hooks/useAcceptDigitalOffer"
 export { useCreateDigitalLoan } from "./hooks/useCreateDigitalLoan"
 export { useCreateDigitalReservation } from "./hooks/useCreateDigitalReservation"
 export { useDeleteDigitalReservation } from "./hooks/useDeleteDigitalReservation"
@@ -100,7 +100,7 @@ export { useDigitalLoanQuotas } from "./hooks/useDigitalLoanQuotas"
 export { useDigitalLoans } from "./hooks/useDigitalLoans"
 export { useDigitalMaterial } from "./hooks/useDigitalMaterial"
 export { useDigitalReservations } from "./hooks/useDigitalReservations"
-export { useSupportId } from "./hooks/useSupportId"
+export { useDigitalSupportId } from "./hooks/useDigitalSupportId"
 export { createBiblioClient } from "../biblio/src"
 export type { BiblioConfig } from "../biblio/src"
 export type { QuotaUsage } from "./biblio"

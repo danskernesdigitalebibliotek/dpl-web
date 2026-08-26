@@ -5,7 +5,7 @@ import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 import {
   useCreateDigitalLoan,
   useCreateDigitalReservation,
-  useAcceptReservationOffer
+  useAcceptDigitalOffer
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import {
@@ -23,7 +23,7 @@ vi.mock(
     >()),
     useCreateDigitalLoan: vi.fn(),
     useCreateDigitalReservation: vi.fn(),
-    useAcceptReservationOffer: vi.fn()
+    useAcceptDigitalOffer: vi.fn()
   })
 );
 
@@ -129,7 +129,7 @@ const givenScenario = ({
   vi.mocked(useCreateDigitalReservation).mockReturnValue(
     asMutation(mutations.digitalReservation) as never
   );
-  vi.mocked(useAcceptReservationOffer).mockReturnValue(
+  vi.mocked(useAcceptDigitalOffer).mockReturnValue(
     asMutation(mutations.biblioAcceptOffer) as never
   );
 };
