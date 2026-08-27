@@ -1,0 +1,12 @@
+name: DPL service message
+description: Short, time-limited notices about outages, closures and degraded services.
+package: DPL
+type: module
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:link
+  - drupal:node
+  - drupal:path_alias
+  - drupal_typed:drupal_typed
+  - handy_cache_tags:handy_cache_tags
+  - scheduler:scheduler

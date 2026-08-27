@@ -1,0 +1,302 @@
+/*
+Service messages - short, time-limited operational notices.
+
+Two components: the global bar above the header, and the in-page container
+shown on the front page and on branch pages. The placement decides the tone,
+so neither has variants: global is always critical, in-page always
+informational.
+
+Sizes are transcribed from Casper's frontend design, which draws a 375 and a
+1440 artboard; the switch between them is the design system's "small"
+breakpoint. The type is spelled out rather than inherited because the design
+system sets no font on body - every component declares its own.
+*/
+
+/* --- Global bar ------------------------------------------------------- */
+
+.service-message-bar {
+  background-color: var(--c-signal-alert);
+  color: var(--c-text-primary-white);
+}
+
+.service-message-bar__inner {
+  align-items: flex-start;
+  box-sizing: border-box;
+  color: inherit;
+  display: flex;
+  gap: 12px;
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 12px 16px;
+  text-decoration: none;
+}
+
+/*
+The icons are drawn in black - the bell filled, the arrow stroked. Inlined
+into the page they can follow the text colour instead.
+*/
+
+.service-message-bar__icon {
+  display: flex;
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.service-message-bar__icon svg {
+  height: 18px;
+  width: 18px;
+}
+
+.service-message-bar__icon path {
+  fill: currentcolor;
+}
+
+.service-message-bar__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.service-message-bar__heading {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 19px;
+}
+
+.service-message-bar__body {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19px;
+}
+
+/*
+The bar is clickable in full, so on mobile - where the design uses a "Læs
+mere" text link the CMS has no field for - the arrow is left out rather than
+squeezed in beside the text.
+*/
+
+.service-message-bar__arrow {
+  display: none;
+  flex: 0 0 auto;
+}
+
+.service-message-bar__arrow .arrow__body {
+  stroke: currentcolor;
+}
+
+.service-message-bar__arrow .arrow__head {
+  fill: currentcolor;
+}
+
+@media (min-width: 768px) {
+  .service-message-bar__inner {
+    align-items: center;
+    gap: 16px;
+    padding: 14px 44px;
+  }
+
+  .service-message-bar__icon {
+    margin-top: 0;
+  }
+
+  .service-message-bar__icon svg {
+    height: 24px;
+    width: 24px;
+  }
+
+  /* Wide enough for the heading and the body to share a line. */
+  .service-message-bar__content {
+    align-items: baseline;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .service-message-bar__heading {
+    flex: 0 0 auto;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .service-message-bar__body {
+    flex: 1 1 auto;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .service-message-bar__arrow {
+    display: flex;
+  }
+}
+
+/* --- In-page container ------------------------------------------------ */
+
+.service-messages {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 16px;
+}
+
+/*
+The pagefold: the top-left corner is clipped away so the page shows through,
+and the triangle left underneath is the fold. Drawn here rather than with the
+design system's `pagefold-*` classes, which are a fixed size - the design
+folds 16px on mobile and 24px from the small breakpoint up.
+*/
+
+.service-messages__container {
+  align-items: flex-start;
+  background-color: var(--c-global-secondary);
+  clip-path: polygon(16px 0, 0 16px, 0 100%, 100% 100%, 100% 0);
+  display: flex;
+  gap: 12px;
+  padding: 20px 16px;
+  position: relative;
+}
+
+.service-messages__container::before {
+  border-bottom: 16px solid var(--c-global-tertiary-1);
+  border-left: 16px solid transparent;
+  content: '';
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+/* One icon for the whole group, not one per message. */
+
+.service-messages__icon {
+  color: var(--c-text-primary-black);
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.service-messages__icon path {
+  fill: currentcolor;
+}
+
+.service-messages__icon svg {
+  height: 24px;
+  width: 24px;
+}
+
+.service-messages__list {
+  flex: 1 1 auto;
+  list-style: none;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+/* A hairline between stacked messages, none above the first. */
+
+.service-messages__item + .service-messages__item {
+  border-top: 1px solid var(--c-global-tertiary-1);
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.service-messages__message {
+  color: var(--c-text-primary-black);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.service-messages__text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/*
+Lora, the design system's title face. It has no custom property of its own -
+components reach it through the SCSS typography mixin - so the stack is
+written out here.
+*/
+
+.service-messages__heading {
+  color: var(--c-text-primary-black);
+  font-family: Lora, serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0;
+}
+
+.service-messages__body {
+  color: var(--c-text-secondary-gray);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.service-messages__arrow {
+  align-self: flex-end;
+  display: flex;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 768px) {
+  .service-messages {
+    padding: 24px 44px;
+  }
+
+  .service-messages__container {
+    align-items: center;
+    clip-path: polygon(24px 0, 0 24px, 0 100%, 100% 100%, 100% 0);
+    gap: 32px;
+    min-height: 128px;
+    padding: 24px 32px;
+  }
+
+  .service-messages__container::before {
+    border-bottom-width: 24px;
+    border-left-width: 24px;
+  }
+
+  .service-messages__icon {
+    margin-top: 0;
+  }
+
+  .service-messages__icon svg {
+    height: 40px;
+    width: 40px;
+  }
+
+  .service-messages__message {
+    align-items: center;
+    flex-direction: row;
+    gap: 32px;
+  }
+
+  .service-messages__text {
+    gap: 8px;
+  }
+
+  .service-messages__heading {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .service-messages__body {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .service-messages__arrow {
+    align-self: auto;
+  }
+}

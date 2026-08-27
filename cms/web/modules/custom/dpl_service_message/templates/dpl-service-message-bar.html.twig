@@ -1,0 +1,19 @@
+{#
+/**
+ * @file
+ * The global service message: a bar above the header, on every page.
+ *
+ * Available variables:
+ * - message: heading, body and url. Any of them may be empty.
+ *
+ * The theme overrides the content block with the real component markup.
+ */
+#}
+{% block content %}
+  <div class="service-message-bar" role="alert">
+    {% if message.url %}<a href="{{ message.url }}">{% endif %}
+      {{ message.heading }}
+      {{ message.body }}
+    {% if message.url %}</a>{% endif %}
+  </div>
+{% endblock content %}
