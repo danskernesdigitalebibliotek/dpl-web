@@ -324,7 +324,8 @@
                 "DDFSAL-279: Fix infinite scroll with facet filters": "patches/facets-infinite-scroll-fix-custom.patch"
             },
             "drupal/field_inheritance": {
-                "3616050: FieldStorageDefinitionSubscriber fatals for entity types that have no base fields (MR !32)": "patches/3616050-field_inheritance-skip-non-fieldable.patch"
+                "3616050: FieldStorageDefinitionSubscriber fatals for entity types that have no base fields (MR !32)": "patches/3616050-field_inheritance-skip-non-fieldable.patch",
+                "3619567: Excessive memory usage for field_inheritance_update_10300()": "patches/vendor/field_inheritance-59d6cbb050d2aaa2df10ba405f03e0e836cc7642.patch"
             },
             "drupal/job_scheduler": {
                 "3426366: Callables as worker callbacks": "patches/vendor/job_scheduler-da200da280c4c95e6e91f2416581ad3797ab1428.patch"

@@ -1,0 +1,41 @@
+diff --git a/field_inheritance.install b/field_inheritance.install
+index 1cbae35..a1c9d04 100644
+--- a/field_inheritance.install
++++ b/field_inheritance.install
+@@ -88,15 +88,23 @@ function field_inheritance_update_10300(&$sandbox): void {
+       $form_display->save();
+     }
+ 
++    // Only keep the keys in the sandbox. The sandbox is serialized into the
++    // batch table and unserialized again on every pass, and Drush spawns a
++    // fresh process whenever memory use passes 60%. Carrying the full
++    // inheritance data (and a chunked copy of it) along made the sandbox tens
++    // of megabytes on sites with many event instances, which exhausted the
++    // memory limit as soon as a new batch process picked it up.
+     $keyvalue = \Drupal::keyValue('field_inheritance');
+-    $sandbox['field_inheritances'] = $keyvalue->getAll();
++    $sandbox['ids'] = array_keys($keyvalue->getAll());
+     $sandbox['entity_types'] = $entity_types;
+     $sandbox['current'] = 0;
+-    $sandbox['chunks'] = array_chunk($sandbox['field_inheritances'], 50, TRUE);
+-    $sandbox['total'] = count($sandbox['chunks']);
++    $sandbox['chunk_size'] = 50;
++    $sandbox['total'] = (int) ceil(count($sandbox['ids']) / $sandbox['chunk_size']);
+   }
+ 
+-  $field_inheritances = $sandbox['chunks'][$sandbox['current']];
++  $keyvalue = \Drupal::keyValue('field_inheritance');
++  $ids = array_slice($sandbox['ids'], $sandbox['current'] * $sandbox['chunk_size'], $sandbox['chunk_size']);
++  $field_inheritances = $keyvalue->getMultiple($ids);
+   $entity_repository = \Drupal::service('entity.repository');
+   $config = \Drupal::configFactory()->getEditable('field_inheritance.config');
+   $entity_type_manager = \Drupal::entityTypeManager();
+@@ -149,7 +157,7 @@ function field_inheritance_update_10300(&$sandbox): void {
+   if ($sandbox['current'] >= $sandbox['total']) {
+     $sandbox['#finished'] = 1;
+     // Once finished, delete the old values.
+-    \Drupal::keyValue('field_inheritance')->deleteAll();
++    $keyvalue->deleteAll();
+   }
+   else {
+     $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
