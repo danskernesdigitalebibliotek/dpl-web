@@ -72,78 +72,88 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
         </div>
       )}
 
-      <FullCalendar
-        initialDate={initialDate ?? undefined}
-        ref={fullCalendarRef}
-        plugins={[
-          classicThemePlugin,
-          dayGridPlugin,
-          timeGridPlugin,
-          interactionPlugin
-        ]}
-        headerToolbar={{
-          left: "dayGridMonth,timeGridWeek",
-          center: "title",
-          right: "prev,next today"
-        }}
-        initialView="timeGridWeek"
-        views={{
-          timeGridWeek: {
-            // Ensure that the week view shows the correct
-            // date range format (e.g. "17. - 23. aug. 2026").
-            titleFormat: { year: "numeric", month: "short", day: "numeric" }
+      {/* The wrapper is used by our Cypress tests to scope calendar assertions. */}
+      <div data-cy="opening-hours-editor">
+        <FullCalendar
+          initialDate={initialDate ?? undefined}
+          ref={fullCalendarRef}
+          plugins={[
+            classicThemePlugin,
+            dayGridPlugin,
+            timeGridPlugin,
+            interactionPlugin
+          ]}
+          // FullCalendar generates hashed CSS class names, so we attach our own
+          // stable js- classes to the elements our Cypress tests interact with.
+          buttonClass={({ name }) => `js-opening-hours-editor-button-${name}`}
+          dayCellClass={({ isToday }) =>
+            isToday && "js-opening-hours-editor-day-cell-today"
           }
-        }}
-        locale={da}
-        selectable={!isLoading}
-        select={
-          isLoading
-            ? undefined
-            : (selectedEventInfo) =>
-                openDialogWithContent(
-                  <DialogFormAdd
-                    selectedEventInfo={selectedEventInfo}
-                    handleEventAdd={handleEventAdd}
-                    openingHoursCategories={openingHoursCategories}
-                    closeDialog={closeDialog}
-                  />
-                )
-        }
-        unselectAuto={false}
-        eventClick={
-          isLoading
-            ? undefined
-            : (clickInfo) =>
-                openDialogWithContent(
-                  <DialogFormEdit
-                    eventInfo={clickInfo.event}
-                    handleEventEditing={handleEventEditing}
-                    handleEventRemove={handleEventRemove}
-                    openingHoursCategories={openingHoursCategories}
-                    closeDialog={closeDialog}
-                  />
-                )
-        }
-        eventContent={(eventInput) => (
-          <OpeningHoursEditorEventContent
-            eventInput={eventInput}
-            iconAltText={iconAltText}
-          />
-        )}
-        events={events}
-        height="auto"
-        // Ensures that the calendar stays compact when
-        // switching to the month view. Larger numbers
-        // for `aspectRatio` makes smaller heights.
-        viewDidMount={(view) => {
-          if (view.view.type === "dayGridMonth") {
-            fullCalendarApi?.setOption("aspectRatio", 3);
+          dayLaneClass="js-opening-hours-editor-day-lane"
+          headerToolbar={{
+            left: "dayGridMonth,timeGridWeek",
+            center: "title",
+            right: "prev,next today"
+          }}
+          initialView="timeGridWeek"
+          views={{
+            timeGridWeek: {
+              // Ensure that the week view shows the correct
+              // date range format (e.g. "17. - 23. aug. 2026").
+              titleFormat: { year: "numeric", month: "short", day: "numeric" }
+            }
+          }}
+          locale={da}
+          selectable={!isLoading}
+          select={
+            isLoading
+              ? undefined
+              : (selectedEventInfo) =>
+                  openDialogWithContent(
+                    <DialogFormAdd
+                      selectedEventInfo={selectedEventInfo}
+                      handleEventAdd={handleEventAdd}
+                      openingHoursCategories={openingHoursCategories}
+                      closeDialog={closeDialog}
+                    />
+                  )
           }
-        }}
-        selectMirror
-        allDaySlot={false}
-        datesSet={handleDatesSet}
-      />
+          unselectAuto={false}
+          eventClick={
+            isLoading
+              ? undefined
+              : (clickInfo) =>
+                  openDialogWithContent(
+                    <DialogFormEdit
+                      eventInfo={clickInfo.event}
+                      handleEventEditing={handleEventEditing}
+                      handleEventRemove={handleEventRemove}
+                      openingHoursCategories={openingHoursCategories}
+                      closeDialog={closeDialog}
+                    />
+                  )
+          }
+          eventContent={(eventInput) => (
+            <OpeningHoursEditorEventContent
+              eventInput={eventInput}
+              iconAltText={iconAltText}
+            />
+          )}
+          events={events}
+          height="auto"
+          // Ensures that the calendar stays compact when
+          // switching to the month view. Larger numbers
+          // for `aspectRatio` makes smaller heights.
+          viewDidMount={(view) => {
+            if (view.view.type === "dayGridMonth") {
+              fullCalendarApi?.setOption("aspectRatio", 3);
+            }
+          }}
+          selectMirror
+          allDaySlot={false}
+          datesSet={handleDatesSet}
+        />
+      </div>
     </>
   );
 };

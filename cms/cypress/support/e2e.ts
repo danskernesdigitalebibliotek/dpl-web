@@ -25,6 +25,16 @@ import 'cypress-plugin-api';
 import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector';
 installLogsCollector();
 
+Cypress.on('uncaught:exception', (error) => {
+  // Browsers emit this error when resize handling is deferred to the next
+  // frame, which happens regularly when FullCalendar re-renders. The error is
+  // benign, so we do not want it to fail our tests.
+  if (error.message.includes('ResizeObserver loop')) {
+    return false;
+  }
+  return true;
+});
+
 beforeEach(() => {
   cy.log('Setting cookie consent to Accept All');
   cy.setCookie(

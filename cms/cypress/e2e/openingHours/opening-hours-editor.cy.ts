@@ -36,12 +36,17 @@ const reverseDateString = (date: string) => date.split('-').reverse().join('-');
 const createTestBranchAndVisitOpeningHoursAdmin = () => {
   cy.drupalLogin('/node/add/branch');
   cy.get('#edit-title-0-value').type(branchTitle);
-  cy.openParagraphsModal();
-  // Forcing and multiple was the only way I could get this to work
-  cy.get('button[value="Opening Hours"]').click({
-    multiple: true,
+  // The "Opening Hours" add button is present (but hidden) in the base form,
+  // so we can add the paragraph directly without going through the paragraphs
+  // modal. This avoids racing the modal's AJAX request against the add
+  // request, which could end with the node being saved without the paragraph.
+  cy.get('button[name="field_paragraphs_opening_hours_add_more"]').click({
     force: true,
   });
+  // The button click adds the paragraph through AJAX. Make sure the paragraph
+  // subform has been added to the form before saving, so the node is not
+  // saved without the paragraph.
+  cy.get('.paragraphs-subform').should('exist');
   cy.clickSaveButton();
   cy.get('a[href^="/node/"][href$="/edit"]').click({ force: true });
   cy.get('a[href*="/edit/opening-hours"]').click();
@@ -72,15 +77,15 @@ const visitOpeningHoursAdmin = (initialDate?: string) => {
 };
 
 const navigateToNextWeekOrMonthAdmin = () => {
-  cy.get('button[title="Næste"]').click();
+  cy.get('.js-opening-hours-editor-button-next').click();
 };
 
 const navigateToMonthViewAdmin = () => {
-  cy.get('.fc-dayGridMonth-button').click();
+  cy.get('.js-opening-hours-editor-button-dayGridMonth').click();
 };
 
 const selectTodayFromMonthViewAdmin = () => {
-  cy.get('.fc-day-today').click();
+  cy.get('.js-opening-hours-editor-day-cell-today').click();
 };
 
 const firstDateOfFebruary2024 = '2024-02-01';
@@ -89,11 +94,26 @@ const clickFirstDayInMonthViewAdmin = () => {
   cy.get('[data-date$="-01"]').first().click();
 };
 
-const selectTimeOnThursdayFromWeekView = (start: string): void => {
-  // In FullCalendar, the date and time elements are siblings in the same overlaying div, which prevents selection by both date and time simultaneously.
-  // To work around this, we target a specific time slot. This example selects a time slot, which spans all days.
-  // Since Cypress clicks at the center of the target element by default, and our time slots extend across all weekdays, it will interact with the slot for Thursday.
-  cy.get(`td.fc-timegrid-slot-lane[data-time="${start}:00"]`).click();
+const selectTimeOnThursdayFromWeekView = (start: TimeString): void => {
+  // FullCalendar renders each weekday in the week view as a single lane
+  // spanning the full 24 hours, without any time slot elements we can target
+  // directly. Instead we click the Thursday lane (the week starts on Monday)
+  // at the vertical offset matching the desired start time. Clicking 15
+  // minutes past the start time keeps the click inside the half-hour slot
+  // that begins at the start time.
+  const [hours, minutes] = start.split(':').map(Number);
+  cy.get('.js-opening-hours-editor-day-lane')
+    .eq(3)
+    .then(($lane) => {
+      const laneWidth = $lane.width() ?? 0;
+      const laneHeight = $lane.height() ?? 0;
+      const clickPositionY = (laneHeight * (hours + (minutes + 15) / 60)) / 24;
+      // The day lane is overlaid by the horizontal time slot elements, so
+      // Cypress considers the click position covered. FullCalendar determines
+      // the clicked time slot from the pointer coordinates, so it is safe to
+      // force the click.
+      cy.wrap($lane).click(laneWidth / 2, clickPositionY, { force: true });
+    });
 };
 
 const fillOpeningHourForm = ({
@@ -159,7 +179,7 @@ const validateNumberOfOpeningHoursExistAdmin = ({
   timeDuration: { start, end },
 }: OpeningHourFormType & { expectedOpeningHours: number }) => {
   return cy
-    .get('tbody[role="presentation"]')
+    .getBySel('opening-hours-editor')
     .should('be.visible')
     .find('div[data-cy="opening-hours-editor-event-content"]')
     .filter((index, element) => {
@@ -178,7 +198,7 @@ const validateOpeningHoursRemovedAdmin = ({
   editSeriesFromIndex,
 }) => {
   return cy
-    .get('tbody[role="presentation"]')
+    .getBySel('opening-hours-editor')
     .should('be.visible')
     .find('div[data-cy="opening-hours-editor-event-content"]')
     .should('have.length', editSeriesFromIndex)
@@ -204,7 +224,7 @@ const validateOpeningHoursNotPresentAdmin = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
-  cy.get('tbody[role="presentation"]')
+  cy.getBySel('opening-hours-editor')
     .should('be.visible')
     .should('not.contain', openingHourCategory)
     .should('not.contain', `${start} - ${end}`);
