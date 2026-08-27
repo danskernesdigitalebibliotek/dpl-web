@@ -1,5 +1,4 @@
 import { createBiblioClient } from "../biblio/src"
-import { resolveBiblioConfig } from "./internal/resolveBiblioConfig"
 import type {
   DigitalLoan,
   DigitalLoanQuota,
@@ -13,12 +12,20 @@ import type {
   ServiceLayerConfig,
 } from "./types"
 
+// Every call below talks to the adapter through a client resolved from the
+// same two config answers - one place to spell that out.
+const biblioClient = (config: ServiceLayerConfig) =>
+  createBiblioClient({
+    baseUrl: config.getBaseUrl("biblio"),
+    getAuthHeader: () => config.getAuthHeader("biblio"),
+  })
+
 // The endpoint returns active loans only. The cursor is carried through
 // untouched: nothing pages through loans yet, but the shape is the adapter's.
 export async function getDigitalLoans(
   config: ServiceLayerConfig
 ): Promise<{ loans: DigitalLoan[]; nextCursor?: string }> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   return biblio.getLoans()
 }
 
@@ -30,7 +37,7 @@ export async function getDigitalMaterial(
   config: ServiceLayerConfig,
   isbn: string
 ): Promise<DigitalMaterial | null> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   return (await biblio.getMetadata(isbn)) ?? null
 }
 
@@ -47,7 +54,7 @@ export async function getDigitalLoanDecision(
   config: ServiceLayerConfig,
   materialId: string
 ): Promise<LoanDecision | null> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   const decision = await biblio.getLoanDecision(materialId, {
     allowNotFound: config.tolerateUnknownMaterials?.() ?? false,
   })
@@ -79,7 +86,7 @@ export const isMaterialAvailable = (status: LoanDecisionStatus): boolean => {
 export async function getDigitalReservations(
   config: ServiceLayerConfig
 ): Promise<{ reservations: DigitalReservation[]; nextCursor?: string }> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   return biblio.getReservations()
 }
 
@@ -88,13 +95,13 @@ export async function getDigitalReservations(
 export async function getDigitalLoanQuotas(
   config: ServiceLayerConfig
 ): Promise<DigitalLoanQuota[]> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   return biblio.getLoanQuotas()
 }
 
 // The id a patron gives the library when asking for help with a digital loan.
 export async function getDigitalSupportId(config: ServiceLayerConfig): Promise<string> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   return biblio.getSupportId()
 }
 
@@ -105,7 +112,7 @@ export async function createDigitalLoan(
   config: ServiceLayerConfig,
   materialId: string
 ): Promise<LoanRequestResult> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   return biblio.createLoan(materialId)
 }
 
@@ -115,7 +122,7 @@ export async function createDigitalReservation(
   config: ServiceLayerConfig,
   materialId: string
 ): Promise<LoanRequestResult> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   return biblio.createReservation(materialId)
 }
 
@@ -126,7 +133,7 @@ export async function acceptDigitalOffer(
   config: ServiceLayerConfig,
   offerId: string
 ): Promise<{ success: boolean; loanId?: string }> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   return biblio.acceptReservationOffer(offerId)
 }
 
@@ -144,7 +151,7 @@ export async function deleteDigitalReservation(
   config: ServiceLayerConfig,
   reservationId: string
 ): Promise<void> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   const success = await biblio.deleteReservation(reservationId)
   if (!success) {
     throw new Error(`Biblio declined to cancel reservation ${reservationId}`)
@@ -278,6 +285,6 @@ export const getDigitalLoanQuota = ({
  * mint a new one rather than hold on to it.
  */
 export async function getReaderSignInToken(config: ServiceLayerConfig): Promise<ReaderSignInToken> {
-  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const biblio = biblioClient(config)
   return biblio.createSignInToken()
 }
