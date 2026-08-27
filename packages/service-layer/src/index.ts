@@ -56,19 +56,13 @@ export { getLoans, renewLoans } from "./loans"
 export { getFees } from "./fees"
 
 // Biblio adapter — the digital-materials provider behind the CMS feature flag.
+// The public surface is what the apps actually consume: the hooks, the
+// predicates that read their answers, the query keys they invalidate, and
+// the one query the reader consumes directly. The raw functions and query
+// builders behind them stay internal until something server-side needs them
+// - a smaller surface is less to keep stable.
 export {
-  acceptDigitalOffer,
-  createDigitalLoan,
-  createDigitalReservation,
-  deleteDigitalReservation,
-  getDigitalLoanDecision,
   getDigitalLoanQuota,
-  getDigitalLoanQuotas,
-  getDigitalLoans,
-  getDigitalMaterial,
-  getDigitalReservations,
-  getDigitalSupportId,
-  getReaderSignInToken,
   isCostFreeLoan,
   isMaterialAvailable,
   isMaterialLoanable,
@@ -76,20 +70,11 @@ export {
   isRequestGranted,
 } from "./biblio"
 export {
-  digitalLoanDecisionQuery,
   digitalLoanDecisionQueryKey,
-  digitalLoanQuotasQuery,
   digitalLoanQuotasQueryKey,
-  digitalLoansQuery,
   digitalLoansQueryKey,
-  digitalMaterialQuery,
-  digitalMaterialQueryKey,
-  digitalReservationsQuery,
   digitalReservationsQueryKey,
   readerSignInTokenQuery,
-  readerSignInTokenQueryKey,
-  digitalSupportIdQuery,
-  digitalSupportIdQueryKey,
 } from "./queries/biblio"
 export {
   useDigitalAcceptOffer,
@@ -103,8 +88,6 @@ export {
   useDigitalReservations,
   useDigitalSupportId,
 } from "./hooks/biblio"
-export { createBiblioClient } from "../biblio/src"
-export type { BiblioConfig } from "../biblio/src"
 export type { QuotaUsage } from "./biblio"
 export type {
   DigitalMaterial,
