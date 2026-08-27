@@ -1,17 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
+import { mockJsonResponse } from "../../src/test-utils"
 import { createBiblioClient } from "./client"
 
 const baseUrl = "https://biblio.example"
 const metadataUrl = (isbn: string) => `${baseUrl}/v1/metadata/${isbn}`
-
-const mockJsonResponse = (body: unknown, status = 200) =>
-  ({
-    ok: status >= 200 && status < 300,
-    status,
-    statusText: status === 200 ? "OK" : "Error",
-    json: async () => body,
-  }) as Response
 
 // Complete, as the contract requires: the mapper rejects a partial record.
 const ebookBody = {

@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
+import { mockJsonResponse } from "../../src/test-utils"
 import { createFbsClient } from "./client"
 
 const baseUrl = "https://fbs.example"
@@ -9,14 +10,6 @@ const reservationsUrl = `${baseUrl}/external/v1/agencyid/patrons/patronid/reserv
 const loansUrl = `${baseUrl}/external/agencyid/patrons/patronid/loans/v2`
 const feesUrl = `${baseUrl}/external/agencyid/patron/patronid/fees/v2?includepaid=false&includenonpayable=true`
 const renewLoansUrl = `${baseUrl}/external/agencyid/patrons/patronid/loans/renew/v2`
-
-const mockJsonResponse = (body: unknown, status = 200) =>
-  ({
-    ok: status >= 200 && status < 300,
-    status,
-    statusText: status === 200 ? "OK" : "Error",
-    json: async () => body,
-  }) as Response
 
 const validPatronBody = {
   authenticateStatus: "VALID",
