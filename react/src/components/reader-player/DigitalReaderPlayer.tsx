@@ -12,10 +12,11 @@ export type DigitalReaderPlayerProps = {
 /**
  * Opens a digital loan in whichever component its material type calls for.
  *
- * The reader page is reached with nothing but a loan id, so the loan itself
- * answers whether it reads or plays: the SDK's checkout carries the material
- * type. Deciding here rather than in the link keeps deep links working - a
- * pasted reader url opens the right thing no matter which button made it.
+ * The reader and player pages are reached with nothing but a loan id, so the
+ * loan itself answers whether it reads or plays: the SDK's checkout carries
+ * the material type. Deciding here rather than trusting the address keeps
+ * deep links working - a pasted url opens the right thing no matter which
+ * page it names.
  *
  * Audiobooks get a page rather than a modal on purpose. The SDK's player bar
  * pins itself to the bottom of the viewport regardless of where it is

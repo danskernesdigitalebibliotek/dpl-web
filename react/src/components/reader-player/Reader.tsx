@@ -1,7 +1,7 @@
 import React from "react";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import DigitalReaderPlayer from "./DigitalReaderPlayer";
-import DigitalSampleReaderPlayer from "./DigitalSampleReaderPlayer";
+import DigitalSampleReader from "./DigitalSampleReader";
 import PublizonReader from "./PublizonReader";
 
 export type ReaderProps = {
@@ -12,8 +12,6 @@ export type ReaderProps = {
   orderid?: string;
   /** The service layer's key for a loan. */
   loanid?: string;
-  /** Which kind of sample an identifier link asks for. */
-  sampletype?: string;
   onClose: () => void;
 };
 
@@ -30,7 +28,6 @@ const Reader: React.FC<ReaderProps> = ({
   identifier,
   orderid,
   loanid,
-  sampletype,
   onClose
 }) => {
   const viaBiblioAdapter = useBiblioAdapter();
@@ -40,19 +37,14 @@ const Reader: React.FC<ReaderProps> = ({
     return <DigitalReaderPlayer loanId={loanid} onClose={onClose} />;
   }
 
-  // An identifier with no order behind it is a sample. With the flag on the
-  // service layer is the lending provider, so the sample goes through it and
-  // Publizon is never asked to stand in. Samples need a signed-in session, so
-  // the teaser buttons are disabled for anonymous visitors - a hand-made link
-  // lands on an empty page rather than in the service being left.
+  // An identifier with no order behind it is an e-book sample - audiobook
+  // samples live on the player page. With the flag on the service layer is
+  // the lending provider, so the sample goes through it and Publizon is never
+  // asked to stand in. Samples need a signed-in session, so the teaser
+  // buttons are disabled for anonymous visitors - a hand-made link lands on
+  // an empty page rather than in the service being left.
   if (identifier && !orderid && viaBiblioAdapter) {
-    return (
-      <DigitalSampleReaderPlayer
-        identifier={identifier}
-        materialType={sampletype === "audiobook" ? "audiobook" : "ebook"}
-        onClose={onClose}
-      />
-    );
+    return <DigitalSampleReader identifier={identifier} onClose={onClose} />;
   }
 
   return <PublizonReader identifier={identifier} orderid={orderid} />;

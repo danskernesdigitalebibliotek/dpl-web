@@ -255,9 +255,9 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
 
   it("Plays a Biblio audiobook on the player page, not in Publizon's modal", () => {
     // The SDK's player bar cannot live in a modal - it pins itself to the
-    // bottom of the viewport - so LYT navigates to the reader page, which
-    // picks the player from the loan's own material type.
-    cy.intercept("GET", "**/reader?loanid=*", {
+    // bottom of the viewport - so LYT navigates to the player page, which
+    // opens the loan by its own id.
+    cy.intercept("GET", "**/player?loanid=*", {
       statusCode: 200,
       body: "<html><body>player</body></html>",
       headers: { "content-type": "text/html" }
@@ -272,7 +272,7 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
       .its("request.url")
       .should(
         "include",
-        `/reader?loanid=${encodeURIComponent(BIBLIO_AUDIOBOOK_LOAN_ID)}`
+        `/player?loanid=${encodeURIComponent(BIBLIO_AUDIOBOOK_LOAN_ID)}`
       );
   });
 

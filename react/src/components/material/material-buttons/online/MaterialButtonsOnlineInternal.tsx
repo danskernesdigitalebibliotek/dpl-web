@@ -58,7 +58,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const t = useText();
   const viaBiblioAdapter = useBiblioAdapter();
   // With the flag on, the service layer is the lending provider, so a
-  // signed-in patron samples through it on the reader page - and Publizon
+  // signed-in patron samples through it on the reader or player page - and Publizon
   // must not stand in for anyone. Samples are only answered for a signed-in
   // session, so an anonymous visitor gets a disabled button until an
   // anonymous sample exists.
@@ -243,7 +243,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
 
     if (isAlreadyLoaned && orderId) {
       // The modal renders nothing until it is opened, and a digital loan
-      // never opens it - Player sends that one to the reader page instead.
+      // never opens it - Player sends that one to the player page instead.
       return (
         <>
           <PlayerModal orderId={orderId} />
@@ -298,7 +298,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       }
 
       // The SDK's player pins itself to the bottom of the viewport, which
-      // leaves a wrapping modal empty - so a digital sample gets the reader
+      // leaves a wrapping modal empty - so a digital sample gets the player
       // page, exactly like a digital loan does.
       if (samplesThroughServiceLayer) {
         return (

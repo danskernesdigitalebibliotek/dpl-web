@@ -7,7 +7,11 @@ import {
   mapDigitalLoanToLoanType,
   mapPublizonLoanToLoanType
 } from "../../core/utils/helpers/list-mapper";
-import { readerUrl } from "../../components/reader-player/helper";
+import {
+  playerUrl,
+  readerUrl,
+  sampleUrl
+} from "../../components/reader-player/helper";
 import DigitalReaderPlayer from "../../components/reader-player/DigitalReaderPlayer";
 import useReaderCheckout from "../../core/digital/useReaderCheckout";
 
@@ -100,7 +104,7 @@ describe("Which reader a digital loan opens in", () => {
   });
 });
 
-describe("readerUrl", () => {
+describe("Where a digital material's url points", () => {
   // The /reader route reads one parameter per provider, and the readers do
   // not recognise each other's keys - pubhub expects an order id, the
   // WeDoBooks SDK a loan id. This mapping is the whole reason
@@ -120,12 +124,29 @@ describe("readerUrl", () => {
     // callers - must keep opening where they always did.
     expect(readerUrl("082bb01a").search).toBe("?orderid=082bb01a");
   });
+
+  it("plays a Biblio audiobook loan on the player page", () => {
+    const url = playerUrl("VAcPZZkCeqvnNRnOdP17");
+
+    expect(url.pathname).toBe("/player");
+    expect(url.search).toBe("?loanid=VAcPZZkCeqvnNRnOdP17");
+  });
+
+  it("sends each sample to the page its material type plays on", () => {
+    // The route carries the type: a sample has no loan to read it from.
+    expect(sampleUrl("9788711623497", "ebook").pathname).toBe("/reader");
+    expect(sampleUrl("9788711823453", "audiobook").pathname).toBe("/player");
+    expect(sampleUrl("9788711823453", "audiobook").search).toBe(
+      "?identifier=9788711823453"
+    );
+  });
 });
 
-describe("What the reader page opens a Biblio loan in", () => {
-  // The page is reached with nothing but a loan id, so the loan's own
-  // material type is the only thing that can pick reader vs player - and a
-  // deep link has to open the right one no matter which button made it.
+describe("What a page opens a Biblio loan in", () => {
+  // Both pages mount this component and are reached with nothing but a loan
+  // id, so the loan's own material type is the only thing that can pick
+  // reader vs player - a deep link opens the right thing no matter which
+  // page it names.
   it("plays an audiobook in the player", () => {
     givenCheckout("audiobook");
 

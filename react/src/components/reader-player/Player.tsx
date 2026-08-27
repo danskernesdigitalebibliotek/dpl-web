@@ -3,7 +3,7 @@ import { Button } from "../Buttons/Button";
 import LinkButton from "../Buttons/LinkButton";
 import { ButtonSize } from "../../core/utils/types/button";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
-import { readerUrl } from "./helper";
+import { playerUrl } from "./helper";
 
 export type PlayerProps = {
   /** The loan to play, by the key its provider knows it under. */
@@ -31,9 +31,9 @@ export type PlayerProps = {
  * The two providers do not play in the same place, and that is not a styling
  * detail: Publizon's player lives in a modal, while the SDK's player bar pins
  * itself to the bottom of the viewport and would leave a wrapping modal empty
- * - so a digital audiobook plays on the reader page instead (see
- * `DigitalReaderPlayer`). Callers ask for "play this loan" and get whichever
- * of the two the loan calls for.
+ * - so a digital audiobook plays on the player page instead (see
+ * `PlayerPage`). Callers ask for "play this loan" and get whichever of the
+ * two the loan calls for.
  */
 const Player: React.FC<PlayerProps> = ({
   orderId,
@@ -47,7 +47,7 @@ const Player: React.FC<PlayerProps> = ({
   if (provider === "serviceLayer") {
     return (
       <LinkButton
-        url={readerUrl(orderId, provider)}
+        url={playerUrl(orderId)}
         buttonType="none"
         variant="filled"
         size={size}

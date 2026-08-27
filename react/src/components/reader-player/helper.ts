@@ -108,18 +108,26 @@ export const readerUrl = (id: string, provider?: DigitalProvider | null) => {
 };
 
 /**
+ * Where a service layer audiobook loan plays.
+ *
+ * Only service layer loans have a page to play on - Publizon audiobooks play
+ * in a modal, so no Publizon key ever links here.
+ */
+export const playerUrl = (loanId: string) =>
+  new URL(`/player?loanid=${encodeURIComponent(loanId)}`, window.location.href);
+
+/**
  * Where a sample of a material opens.
  *
- * A sample has no loan to read the material type from, so the link carries
- * it - the reader page hands it to whichever sample component the type calls
- * for. Publizon's reader ignores the extra parameter.
+ * A sample has no loan to read the material type from, so the route carries
+ * it: e-books sample on the reader page, audiobooks on the player page.
  */
 export const sampleUrl = (
   identifier: string,
   materialType: "ebook" | "audiobook"
 ) =>
   new URL(
-    `/reader?identifier=${encodeURIComponent(identifier)}&sampletype=${materialType}`,
+    `/${materialType === "audiobook" ? "player" : "reader"}?identifier=${encodeURIComponent(identifier)}`,
     window.location.href
   );
 
