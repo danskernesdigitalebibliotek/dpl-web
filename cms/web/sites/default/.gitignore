@@ -3,6 +3,7 @@
 /development.settings.php
 /default.development.services.yml
 /default.services.yml
+/default.settings.php
 /local.settings.php
 /local.services.yml
 /settings.lagoon.php
