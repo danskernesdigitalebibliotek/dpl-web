@@ -44,8 +44,7 @@ function parseOrThrowAdapterMessage<T extends z.ZodTypeAny>(schema: T, raw: unkn
   throw parsed.error
 }
 
-export function parseAndMapLoanDecision(raw: unknown): LoanDecision {
-  const parsed = parseOrThrowAdapterMessage(LoanDecisionSchema, raw)
+function mapDecision(parsed: z.infer<typeof LoanDecisionSchema>): LoanDecision {
   return {
     status: parsed.status,
     loanProvider: parsed.loan_provider,
@@ -54,13 +53,14 @@ export function parseAndMapLoanDecision(raw: unknown): LoanDecision {
   }
 }
 
+export function parseAndMapLoanDecision(raw: unknown): LoanDecision {
+  return mapDecision(parseOrThrowAdapterMessage(LoanDecisionSchema, raw))
+}
+
 export function parseAndMapLoanRequestResult(raw: unknown): LoanRequestResult {
   const parsed = parseOrThrowAdapterMessage(LoanRequestResultSchema, raw)
   return {
-    status: parsed.status,
-    loanProvider: parsed.loan_provider,
-    unavailableReason: parsed.unavailable_reason,
-    lendingBlockReason: parsed.lending_block_reason,
+    ...mapDecision(parsed),
     loan: parsed.loan ? mapLoan(parsed.loan) : undefined,
   }
 }
