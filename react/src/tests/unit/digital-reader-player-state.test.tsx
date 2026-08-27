@@ -206,6 +206,27 @@ describe("useDigitalReaderPlayerState", () => {
     });
   });
 
+  describe("whether a sample can be offered", () => {
+    it("Offers a sample for a material the adapter knows", () => {
+      givenAdapterSays({ status: "reservable" });
+
+      // Not an availability question: a reserved-out material still has its
+      // sample.
+      expect(render().canBeSampled).toBe(true);
+    });
+
+    it("Offers no sample for a material the adapter does not know", () => {
+      // The tolerated 404: the query resolved, and the adapter has no answer.
+      vi.mocked(useDigitalLoanDecision).mockReturnValue({
+        data: null,
+        isLoading: false
+      } as unknown as ReturnType<typeof useDigitalLoanDecision>);
+
+      // No material, no sample - offering one would open an empty player.
+      expect(render().canBeSampled).toBe(false);
+    });
+  });
+
   describe("when the adapter must not be asked", () => {
     it("Offers the loan to an anonymous user so the login guard takes over", () => {
       givenAdapterSays({ status: "unavailable", anonymous: true });

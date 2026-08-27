@@ -54,6 +54,13 @@ export type ReaderPlayerState = {
    */
   offerId: string | null;
   /**
+   * Acquiring: whether the provider can offer a sample of the material at
+   * all. Not an availability question - a reserved-out material still has its
+   * sample - but a material the lending provider does not know has no sample
+   * to play, and offering one would open an empty reader or player.
+   */
+  canBeSampled: boolean;
+  /**
    * True while an enabled provider is still fetching the answers above. A
    * provider that is not asked reports false: not knowing is not the same as
    * loading, and a disabled provider will never answer.
@@ -76,6 +83,7 @@ export const unknownReaderPlayerState: ReaderPlayerState = {
   orderId: null,
   reservation: null,
   offerId: null,
+  canBeSampled: false,
   isLoading: false
 };
 

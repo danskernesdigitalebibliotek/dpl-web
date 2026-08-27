@@ -80,6 +80,9 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
     // The offer belongs with acquiring: claiming it is how the user gets the
     // material, and only the lending provider hands one out.
     offerId: acquisition.offerId,
+    // Samples follow the lending provider too: they play through its reader
+    // and player, so only its own answer can promise one.
+    canBeSampled: acquisition.canBeSampled,
     isAlreadyLoaned: holding.isAlreadyLoaned,
     isAlreadyReserved: holding.isAlreadyReserved,
     orderId: holding.orderId,

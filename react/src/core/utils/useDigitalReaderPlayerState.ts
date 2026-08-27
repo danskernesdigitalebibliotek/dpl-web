@@ -106,6 +106,10 @@ const useDigitalReaderPlayerState = ({
       ? mapDigitalReservationToReservationType([queuedReservation])[0]
       : null,
     offerId,
+    // A tolerated 404 (null) means the adapter does not know the material at
+    // all - then it has no sample either, and offering one would open an
+    // empty reader or player.
+    canBeSampled: loanDecision !== null,
     // Disabled queries never report loading, so this only counts the
     // questions actually asked.
     isLoading: isLoadingLoanDecision || isLoadingLoans || isLoadingReservations

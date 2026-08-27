@@ -167,6 +167,20 @@ describe("useReaderPlayer - which provider answers what", () => {
       });
     });
   });
+  describe("sampling", () => {
+    it("Follows the lending provider's sample answer", () => {
+      given({
+        flagOn: true,
+        biblio: { canBeSampled: false },
+        publizon: { canBeSampled: true }
+      });
+
+      // The sample plays through the lending provider's reader and player, so
+      // only its own answer can promise one.
+      expect(render().canBeSampled).toBe(false);
+    });
+  });
+
   describe("loading", () => {
     it("Loads while any provider that was asked has not answered", () => {
       given({ flagOn: true, biblio: { isLoading: true } });

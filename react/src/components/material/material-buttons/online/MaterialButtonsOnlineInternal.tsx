@@ -81,6 +81,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     isAlreadyLoaned,
     canBeLoaned,
     canBeReserved,
+    canBeSampled,
     reservation,
     isLoading
   } = useReaderPlayer(getLoanableManifestation(manifestations));
@@ -217,6 +218,9 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     // loan is still being looked up would flash and vanish.
     if (!identifier || isLoading) return <MaterialButtonLoading />;
     if (isAlreadyLoaned) return null;
+    // A material the lending provider does not know has no sample to offer -
+    // hiding the teaser beats opening an empty reader or player.
+    if (!canBeSampled) return null;
 
     if (samplingUnavailable) {
       return renderDisabledTeaserButton(`${dataCy}-reader-teaser`);
@@ -313,6 +317,9 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     // loan is still being looked up would flash and vanish.
     if (!identifier || isLoading) return <MaterialButtonLoading />;
     if (isAlreadyLoaned) return null;
+    // A material the lending provider does not know has no sample to offer -
+    // hiding the teaser beats opening an empty reader or player.
+    if (!canBeSampled) return null;
 
     if (samplingUnavailable) {
       return renderDisabledTeaserButton(`${dataCy}-player-teaser`);
