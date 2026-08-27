@@ -93,6 +93,14 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/cli.dockerfile
+      args: &skip-baked-in-builds
+        # /app is bind-mounted over the image content in dev/CI, so baked-in
+        # vendor and JS assets are never used there. The Taskfile sets
+        # SKIP_BAKED_IN_BUILDS=true for every compose command; Lagoon builds
+        # never see these args (shyaml does not resolve extends) and fall
+        # back to the dockerfile defaults, giving full builds.
+        SKIP_COMPOSER_INSTALL: "${SKIP_BAKED_IN_BUILDS:-false}"
+        SKIP_JS_ASSETS: "${SKIP_BAKED_IN_BUILDS:-false}"
     << : *default-volumes # loads the defined volumes from the top
     user: root
     environment:
@@ -110,6 +118,7 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/nginx.dockerfile
+      args: *skip-baked-in-builds
     depends_on:
       - php
     # loads the defined volumes and user from the top
@@ -128,6 +137,7 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/php.dockerfile
+      args: *skip-baked-in-builds
     depends_on:
       redis:
         condition: service_started
