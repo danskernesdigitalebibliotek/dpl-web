@@ -74,7 +74,7 @@ export const mapPublizonLoanToLoanType = (list: Loan[]): LoanType[] => {
 // numbers too.
 // Goes away with the Publizon integration, when the card stops keying on
 // Publizon's enum.
-const digitalProductTypeFor = (materialType: MaterialType) =>
+const publizonProductTypeFor = (materialType: MaterialType) =>
   materialType === "audiobook"
     ? PUBLIZON_PRODUCT_TYPE.AUDIOBOOK
     : PUBLIZON_PRODUCT_TYPE.EBOOK;
@@ -100,7 +100,7 @@ const mapDigitalLoanToBasicDetailsType = (loan: DigitalLoan) => {
     periodical: null,
     year: loan.publishDate ? getYearFromDataString(loan.publishDate) : "",
     materialType: digitalMaterialTypeText(loan.materialType),
-    digitalProductType: digitalProductTypeFor(loan.materialType),
+    publizonProductType: publizonProductTypeFor(loan.materialType),
     externalProductId: loan.materialId,
     authors: getContributors(false, authors),
     authorsShort: getContributors(true, authors)
@@ -185,7 +185,7 @@ export const mapProductToBasicDetailsType = (material: Product) => {
     text: { data: texts }
   } = store.getState();
 
-  const digitalProductType: { [key: number]: string } = {
+  const publizonProductTypeTexts: { [key: number]: string } = {
     [PUBLIZON_PRODUCT_TYPE.EBOOK]: texts.publizonEbookText,
     [PUBLIZON_PRODUCT_TYPE.AUDIOBOOK]: texts.publizonAudioBookText,
     [PUBLIZON_PRODUCT_TYPE.PODCAST]: texts.publizonPodcastText
@@ -202,8 +202,10 @@ export const mapProductToBasicDetailsType = (material: Product) => {
     periodical: null,
     year: publicationDate ? getYearFromDataString(publicationDate) : "",
     description,
-    materialType: productType ? digitalProductType[productType] : "",
-    digitalProductType: isPublizonProductType(productType) ? productType : null,
+    materialType: productType ? publizonProductTypeTexts[productType] : "",
+    publizonProductType: isPublizonProductType(productType)
+      ? productType
+      : null,
     externalProductId: externalProductId?.id,
     authors: contributors ? getContributors(false, authors) : "",
     authorsShort: contributors ? getContributors(true, authors) : ""
@@ -224,7 +226,7 @@ export const mapDigitalMaterialToBasicDetailsType = (
       : "",
     description: material.description,
     materialType: digitalMaterialTypeText(material.materialType),
-    digitalProductType: digitalProductTypeFor(material.materialType),
+    publizonProductType: publizonProductTypeFor(material.materialType),
     externalProductId: material.isbn,
     authors: getContributors(false, material.authors),
     authorsShort: getContributors(true, material.authors)

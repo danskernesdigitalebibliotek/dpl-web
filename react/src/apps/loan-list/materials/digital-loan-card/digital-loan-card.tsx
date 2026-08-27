@@ -45,7 +45,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
   const { track } = useEventStatistics();
 
   const readerPlayerType = getReaderPlayerTypeFromPublizonProductType(
-    material?.digitalProductType
+    material?.publizonProductType
   );
   const titleId = `${loanId || identifier}-title`;
   const openDetails = () => openLoanDetailsModal(loan);
