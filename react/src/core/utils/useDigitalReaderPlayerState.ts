@@ -5,10 +5,7 @@ import {
   useDigitalLoans,
   useDigitalReservations
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import {
-  mapDigitalLoanToLoanType,
-  mapDigitalReservationToReservationType
-} from "./helpers/list-mapper";
+import { mapDigitalReservationToReservationType } from "./helpers/list-mapper";
 import { isAnonymous } from "./helpers/user";
 import useTolerateUnknownMaterials from "../digital/useTolerateUnknownMaterials";
 import {
@@ -106,9 +103,7 @@ const useDigitalReaderPlayerState = ({
       Boolean(offerId) || (status ? isMaterialLoanable(status) : false),
     canBeReserved: status ? isMaterialReservable(status) : false,
     // The service layer's loan id plays the same role as Publizon's order id.
-    orderId: loan
-      ? (mapDigitalLoanToLoanType([loan])[0].orderId ?? null)
-      : null,
+    orderId: loan?.loanId ?? null,
     // Mapped rather than passed through so cancelling routes correctly: the
     // mapping is what carries the adapter's own reservation id.
     reservation: queuedReservation
