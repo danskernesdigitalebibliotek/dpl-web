@@ -1,5 +1,8 @@
 import React, { Suspense } from "react";
-import useReaderCheckout from "../../core/digital/useReaderCheckout";
+import type {
+  WedoBooksCheckout,
+  WedoBooksSdk
+} from "@danskernesdigitalebibliotek/dpl-wedobooks";
 
 // Loaded on demand: the SDK carries a reading framework, Firebase and a
 // component library, and only someone opening a book needs any of it.
@@ -10,8 +13,10 @@ const SdkReader = React.lazy(() =>
 );
 
 export type DigitalReaderProps = {
-  /** The loan to open, which is also the SDK's checkout id. */
-  loanId: string;
+  /** The signed-in SDK session the loan lives in. */
+  sdk: WedoBooksSdk;
+  /** The entitlement to open - fetched once by DigitalReaderPlayer. */
+  checkout: WedoBooksCheckout;
   onClose: () => void;
 };
 
@@ -23,14 +28,11 @@ export type DigitalReaderProps = {
  * loans - so which one to render is decided from the loan, not from the
  * library's current provider.
  */
-const DigitalReader: React.FC<DigitalReaderProps> = ({ loanId, onClose }) => {
-  const { sdk, checkout } = useReaderCheckout(loanId);
-
-  // Nothing to render until both the session and the entitlement are in hand.
-  // The SDK draws its own loading state once mounted, so showing one here as
-  // well would only make the wait look like two waits.
-  if (!sdk || !checkout) return null;
-
+const DigitalReader: React.FC<DigitalReaderProps> = ({
+  sdk,
+  checkout,
+  onClose
+}) => {
   return (
     <Suspense fallback={null}>
       <SdkReader

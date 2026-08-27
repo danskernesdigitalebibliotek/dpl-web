@@ -28,20 +28,21 @@ const DigitalReaderPlayer: React.FC<DigitalReaderPlayerProps> = ({
   loanId,
   onClose
 }) => {
-  const { checkout } = useReaderCheckout(loanId);
+  const { sdk, checkout } = useReaderCheckout(loanId);
 
-  // Nothing to decide from until the entitlement is here. The reader and
-  // player render nothing during their own load anyway, so this adds no wait.
-  if (!checkout) return null;
+  // Nothing to decide from until the session and the entitlement are here.
+  // The reader and player render nothing during their own load anyway, so
+  // this adds no wait.
+  if (!sdk || !checkout) return null;
 
   // String() rather than importing the SDK's MaterialType enum: a value
   // import would statically link the multi-megabyte SDK chunk into the page
   // bundle that this component exists to keep it out of.
   if (String(checkout.material_type) === "audiobook") {
-    return <DigitalPlayer loanId={loanId} onClose={onClose} />;
+    return <DigitalPlayer sdk={sdk} checkout={checkout} onClose={onClose} />;
   }
 
-  return <DigitalReader loanId={loanId} onClose={onClose} />;
+  return <DigitalReader sdk={sdk} checkout={checkout} onClose={onClose} />;
 };
 
 export default DigitalReaderPlayer;

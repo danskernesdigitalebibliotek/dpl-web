@@ -1,5 +1,8 @@
 import React, { Suspense } from "react";
-import useReaderCheckout from "../../core/digital/useReaderCheckout";
+import type {
+  WedoBooksCheckout,
+  WedoBooksSdk
+} from "@danskernesdigitalebibliotek/dpl-wedobooks";
 
 const SdkPlayer = React.lazy(() =>
   import("@danskernesdigitalebibliotek/dpl-wedobooks").then((module) => ({
@@ -8,8 +11,10 @@ const SdkPlayer = React.lazy(() =>
 );
 
 export type DigitalPlayerProps = {
-  /** The loan to play, which is also the SDK's checkout id. */
-  loanId: string;
+  /** The signed-in SDK session the loan lives in. */
+  sdk: WedoBooksSdk;
+  /** The entitlement to play - fetched once by DigitalReaderPlayer. */
+  checkout: WedoBooksCheckout;
   onClose: () => void;
 };
 
@@ -20,11 +25,11 @@ export type DigitalPlayerProps = {
  * See `DigitalReader` for why the loan, not the library, decides which one
  * runs.
  */
-const DigitalPlayer: React.FC<DigitalPlayerProps> = ({ loanId, onClose }) => {
-  const { sdk, checkout } = useReaderCheckout(loanId);
-
-  if (!sdk || !checkout) return null;
-
+const DigitalPlayer: React.FC<DigitalPlayerProps> = ({
+  sdk,
+  checkout,
+  onClose
+}) => {
   return (
     <Suspense fallback={null}>
       <SdkPlayer sdk={sdk} checkout={checkout} onClose={onClose} />
