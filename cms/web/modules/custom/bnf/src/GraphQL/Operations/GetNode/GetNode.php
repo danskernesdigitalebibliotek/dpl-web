@@ -20,11 +20,11 @@ class GetNode extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($info !== self::UNDEFINED) {
-            $instance->info = $info;
+            $instance->__set('info', $info);
         }
         $instance->__typename = 'Query';
         if ($node !== self::UNDEFINED) {
-            $instance->node = $node;
+            $instance->__set('node', $node);
         }
 
         return $instance;

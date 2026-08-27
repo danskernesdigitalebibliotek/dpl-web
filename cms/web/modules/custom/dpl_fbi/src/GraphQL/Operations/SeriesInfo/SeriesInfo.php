@@ -18,7 +18,7 @@ class SeriesInfo extends \Spawnia\Sailor\ObjectLike
 
         $instance->__typename = 'Query';
         if ($series !== self::UNDEFINED) {
-            $instance->series = $series;
+            $instance->__set('series', $series);
         }
 
         return $instance;

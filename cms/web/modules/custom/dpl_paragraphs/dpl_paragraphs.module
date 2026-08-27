@@ -25,7 +25,7 @@ use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
 use Drupal\dpl_paragraphs\Entity\VideoParagraph;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\field\Entity\FieldConfig;
-use Drupal\node\NodeForm;
+use Drupal\node\Form\NodeForm;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
 use function Safe\parse_url;

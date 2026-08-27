@@ -267,7 +267,8 @@ describe('Paragraphs module', () => {
     cy.get('@loadFiltersField').click();
 
     // Testing that the link field has been emptied and hidden.
-    cy.get('@linkField').should('have.value', '').should('not.be.visible');
+    cy.get('@linkField').should('have.value', '');
+    cy.get('@linkDetails').should('not.have.attr', 'open');
 
     cy.get('@sortField').should('have.value', 'sort.latestpublicationdate.asc');
     cy.get('@cqlField').should(

@@ -43,34 +43,34 @@ class ComplexSearchFiltersInput extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($branchId !== self::UNDEFINED) {
-            $instance->branchId = $branchId;
+            $instance->__set('branchId', $branchId);
         }
         if ($department !== self::UNDEFINED) {
-            $instance->department = $department;
+            $instance->__set('department', $department);
         }
         if ($location !== self::UNDEFINED) {
-            $instance->location = $location;
+            $instance->__set('location', $location);
         }
         if ($sublocation !== self::UNDEFINED) {
-            $instance->sublocation = $sublocation;
+            $instance->__set('sublocation', $sublocation);
         }
         if ($status !== self::UNDEFINED) {
-            $instance->status = $status;
+            $instance->__set('status', $status);
         }
         if ($agencyId !== self::UNDEFINED) {
-            $instance->agencyId = $agencyId;
+            $instance->__set('agencyId', $agencyId);
         }
         if ($branch !== self::UNDEFINED) {
-            $instance->branch = $branch;
+            $instance->__set('branch', $branch);
         }
         if ($itemId !== self::UNDEFINED) {
-            $instance->itemId = $itemId;
+            $instance->__set('itemId', $itemId);
         }
         if ($issueId !== self::UNDEFINED) {
-            $instance->issueId = $issueId;
+            $instance->__set('issueId', $issueId);
         }
         if ($firstAccessionDate !== self::UNDEFINED) {
-            $instance->firstAccessionDate = $firstAccessionDate;
+            $instance->__set('firstAccessionDate', $firstAccessionDate);
         }
 
         return $instance;

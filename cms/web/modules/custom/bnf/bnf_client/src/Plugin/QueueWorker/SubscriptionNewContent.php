@@ -8,7 +8,6 @@ use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_client\Form\SettingsForm;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueFactory;
@@ -32,11 +31,6 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
    * The BNF site base URL.
    */
   protected string $baseUrl;
-
-  /**
-   * Subscription storage.
-   */
-  protected EntityStorageInterface $storage;
 
   /**
    * Node update queue.
@@ -65,14 +59,13 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
     array $configuration,
     $pluginId,
     $pluginDefinition,
-    EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
     ConfigFactoryInterface $configFactory,
     protected BnfImporter $importer,
     QueueFactory $queueFactory,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
 
-    $this->storage = $entityTypeManager->getStorage('bnf_subscription');
     $this->baseUrl = $configFactory->get(SettingsForm::CONFIG_NAME)->get('base_url');
 
     $this->nodeQueue = $queueFactory->get('bnf_client_node_update');
@@ -84,7 +77,7 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
   #[\Override]
   public function processItem($data): void {
     /** @var ?\Drupal\bnf_client\Entity\Subscription $subscription */
-    $subscription = $this->storage->load($data['id']);
+    $subscription = $this->entityTypeManager->getStorage('bnf_subscription')->load($data['id']);
 
     if (!$subscription) {
       // Subscription deleted. Carry on.

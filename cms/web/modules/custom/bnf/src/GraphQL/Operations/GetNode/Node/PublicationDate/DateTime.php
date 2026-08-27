@@ -18,10 +18,10 @@ class DateTime extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($timestamp !== self::UNDEFINED) {
-            $instance->timestamp = $timestamp;
+            $instance->__set('timestamp', $timestamp);
         }
         if ($timezone !== self::UNDEFINED) {
-            $instance->timezone = $timezone;
+            $instance->__set('timezone', $timezone);
         }
         $instance->__typename = 'DateTime';
 

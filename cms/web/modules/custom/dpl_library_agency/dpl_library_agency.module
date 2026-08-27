@@ -11,7 +11,7 @@ use Drupal\dpl_library_agency\Entity\BranchNode;
 use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\drupal_typed\DrupalTyped;
-use Drupal\node\NodeForm;
+use Drupal\node\Form\NodeForm;
 use Drupal\node\NodeInterface;
 
 /**

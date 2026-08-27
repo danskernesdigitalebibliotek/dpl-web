@@ -6,7 +6,6 @@ use Drupal\bnf\Services\BnfImporter;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -32,11 +31,6 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
   protected string $baseUrl;
 
   /**
-   * The node storage.
-   */
-  protected EntityStorageInterface $nodeStorage;
-
-  /**
    * {@inheritDoc}
    */
   public function __construct(
@@ -46,11 +40,10 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     #[Autowire(service: 'logger.channel.bnf')]
     protected LoggerInterface $logger,
     ConfigFactoryInterface $configFactory,
-    EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
     TranslationInterface $stringTranslation,
   ) {
     $this->baseUrl = $configFactory->get(SettingsForm::CONFIG_NAME)->get('base_url');
-    $this->nodeStorage = $entityTypeManager->getStorage('node');
     $this->setStringTranslation($stringTranslation);
   }
 
@@ -66,7 +59,7 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $uuid = $this->routeMatch->getParameter('uuid');
-    $existingNodes = $this->nodeStorage->loadByProperties(['uuid' => $uuid]);
+    $existingNodes = $this->entityTypeManager->getStorage('node')->loadByProperties(['uuid' => $uuid]);
 
     if (!empty($existingNodes)) {
       $this->messenger->addError($this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']));

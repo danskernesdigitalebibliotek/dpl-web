@@ -5,12 +5,11 @@ namespace Drupal\dpl_opening_hours\Mapping;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner as OpeningHoursResponse;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory as OpeningHoursCategory;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\dpl_library_agency\Entity\BranchNode;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Drupal\dpl_opening_hours\Model\Repetition\WeeklyRepetition;
-use Drupal\node\NodeStorageInterface;
 use Drupal\taxonomy\TermInterface;
-use Drupal\taxonomy\TermStorageInterface;
 use Safe\DateTime;
 use Safe\DateTimeImmutable;
 
@@ -23,8 +22,7 @@ class OpeningHoursMapper {
    * Constructor.
    */
   public function __construct(
-    private NodeStorageInterface $branchStorage,
-    private TermStorageInterface $categoryStorage,
+    private EntityTypeManagerInterface $entityTypeManager,
     private RepetitionMapper $repetitionMapper,
   ) {}
 
@@ -32,9 +30,15 @@ class OpeningHoursMapper {
    * Map an OpenAPI request to a value object.
    */
   public function fromRequest(OpeningHoursRequest $request) : OpeningHoursInstance {
-    $branch = $this->branchStorage->load($request->getBranchId());
+    $branchId = $request->getBranchId();
+    if ($branchId === NULL) {
+      throw new \InvalidArgumentException('No branch id provided');
+    }
+
+    /** @var \Drupal\node\NodeInterface|NULL $branch */
+    $branch = $this->entityTypeManager->getStorage('node')->load($branchId);
     if (!$branch || $branch->bundle() !== "branch") {
-      throw new \InvalidArgumentException("Invalid branch id '{$request->getBranchId()}'");
+      throw new \InvalidArgumentException("Invalid branch id '{$branchId}'");
     }
 
     $categoryTitle = $request->getCategory()?->getTitle();
@@ -43,7 +47,7 @@ class OpeningHoursMapper {
     }
     // This could in theory return multiple categories if they have the same
     // name. The taxonomy_unique module ensures that this is not the case.
-    $categoryTerms = $this->categoryStorage->loadByProperties([
+    $categoryTerms = $this->entityTypeManager->getStorage('taxonomy_term')->loadByProperties([
       'name' => $categoryTitle,
       'vid' => 'opening_hours_categories',
     ]);
@@ -58,7 +62,7 @@ class OpeningHoursMapper {
     }
     $repetition = $this->repetitionMapper->fromRequest($repetitionData);
     if ($repetition::class == WeeklyRepetition::class && $request->getDate() > $repetition->endDate) {
-      throw new \InvalidArgumentException("Weekly repetition end date '{$repetition->endDate->format('Y-m-d')}' must not be before instance date '{$request->getDate()?->format('Y-m-d')}'");
+      throw new \InvalidArgumentException("Weekly repetition end date '{$repetition->endDate->format('Y-m-d')}' must not be before instance date '{$request->getDate()->format('Y-m-d')}'");
     }
 
     try {

@@ -768,13 +768,7 @@ class EventRestMapper {
       return NULL;
     }
 
-    $field = $series->get($field_name);
-
-    if (!($field instanceof FieldItemListInterface)) {
-      return NULL;
-    }
-
-    return $field->getString();
+    return $series->get($field_name)->getString();
   }
 
   /**
