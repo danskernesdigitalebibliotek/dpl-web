@@ -38,15 +38,7 @@ export const digitalMaterialQuery = (config: ServiceLayerConfig, isbn: string | 
 export const digitalLoanDecisionQueryKey = (materialId: string | null) =>
   ["serviceLayer", "digitalLoanDecision", materialId] as const
 
-export const digitalLoanDecisionQuery = (
-  config: ServiceLayerConfig,
-  materialId: string | null,
-  // TEMPORARY, with the toleration flag it serves. Deliberately not part of
-  // the key: every caller derives it from the same site-wide setting, so two
-  // values cannot meet within one page - and react invalidates by the plain
-  // key, which a longer one would escape.
-  options?: { allowNotFound?: boolean }
-) =>
+export const digitalLoanDecisionQuery = (config: ServiceLayerConfig, materialId: string | null) =>
   queryOptions({
     queryKey: digitalLoanDecisionQueryKey(materialId),
     queryFn: () => {
@@ -55,7 +47,7 @@ export const digitalLoanDecisionQuery = (
         // the query options must not end up asking about "null".
         throw new Error("digitalLoanDecisionQuery cannot fetch without a material id")
       }
-      return getDigitalLoanDecision(config, materialId, options)
+      return getDigitalLoanDecision(config, materialId)
     },
   })
 

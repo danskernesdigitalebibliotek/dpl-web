@@ -38,11 +38,6 @@ vi.mock(
  */
 
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
-// TEMPORARY toleration flag; reads config from Redux, which these bare hook
-// renders have no provider for. Off keeps the strict default under test.
-vi.mock("../../core/digital/useTolerateUnknownMaterials", () => ({
-  default: () => false
-}));
 
 const IDENTIFIER = "9788727319346";
 const LOAN_ID = "3f7b1c62-9d4e-4a71-b0c3-1d5a8e2f4b90";

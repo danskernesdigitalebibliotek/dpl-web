@@ -38,18 +38,20 @@ export async function getDigitalMaterial(
 // material (is it available?) and the user (quota, lending blocks), so callers
 // must pick the part they care about - see isMaterialAvailable.
 //
-// TEMPORARY, with the toleration flag it serves: with allowNotFound a
-// material the adapter does not know resolves to null - null rather than
-// undefined, because TanStack Query rejects undefined as query data. Without
-// it the 404 stays an error, which is the honest default: asking about an
-// unknown material is normally a routing mistake.
+// TEMPORARY, with the toleration setting it serves: when the config tolerates
+// unknown materials, one the adapter does not know resolves to null - null
+// rather than undefined, because TanStack Query rejects undefined as query
+// data. Otherwise the 404 stays an error, which is the honest default:
+// asking about an unknown material is normally a routing mistake.
 export async function getDigitalLoanDecision(
   config: ServiceLayerConfig,
-  materialId: string,
-  options?: { allowNotFound?: boolean }
+  materialId: string
 ): Promise<LoanDecision | null> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  return (await biblio.getLoanDecision(materialId, options)) ?? null
+  const decision = await biblio.getLoanDecision(materialId, {
+    allowNotFound: config.tolerateUnknownMaterials?.() ?? false,
+  })
+  return decision ?? null
 }
 
 /**

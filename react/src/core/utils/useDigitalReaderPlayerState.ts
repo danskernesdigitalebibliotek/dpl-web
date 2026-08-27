@@ -7,7 +7,6 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { mapDigitalReservationToReservationType } from "./helpers/list-mapper";
 import { isAnonymous } from "./helpers/user";
-import useTolerateUnknownMaterials from "../digital/useTolerateUnknownMaterials";
 import {
   ReaderPlayerState,
   unknownReaderPlayerState
@@ -50,14 +49,12 @@ const useDigitalReaderPlayerState = ({
   // same deal Publizon gets.
   const isActiveForUser = isActive && !isUserAnonymous;
 
-  // TEMPORARY allowNotFound, see useTolerateUnknownMaterials. A
-  // tolerated unknown material resolves to null, and null offers nothing -
-  // exactly what a material the provider cannot lend should get.
-  const tolerateUnknown = useTolerateUnknownMaterials();
+  // A tolerated unknown material resolves to null - see ServiceLayerConfig's
+  // TEMPORARY toleration setting - and null offers nothing: exactly what a
+  // material the provider cannot lend should get.
   const { data: loanDecision, isLoading: isLoadingLoanDecision } =
     useDigitalLoanDecision(identifier, {
-      enabled: isActiveForUser,
-      allowNotFound: tolerateUnknown
+      enabled: isActiveForUser
     });
 
   const { data: loansData, isLoading: isLoadingLoans } = useDigitalLoans({

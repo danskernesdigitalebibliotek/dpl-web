@@ -4,7 +4,6 @@ import useDigitalAvailability from "../../core/digital/useDigitalAvailability";
 import { useDigitalLoanDecision } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
 import { isAnonymous } from "../../core/utils/helpers/user";
-import useTolerateUnknownMaterials from "../../core/digital/useTolerateUnknownMaterials";
 
 // Only the query is stubbed. isMaterialAvailable stays real - it is the
 // rule this hook is here to apply, and a copy of it in the test would pass
@@ -22,9 +21,6 @@ vi.mock("../../core/utils/useServiceLayerLending", () => ({
   default: vi.fn()
 }));
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
-vi.mock("../../core/digital/useTolerateUnknownMaterials", () => ({
-  default: vi.fn()
-}));
 
 const mockedLoanDecision = vi.mocked(useDigitalLoanDecision);
 const mockedFlag = vi.mocked(useServiceLayerLending);
@@ -51,7 +47,6 @@ describe("useDigitalAvailability", () => {
     vi.clearAllMocks();
     mockedFlag.mockReturnValue(true);
     mockedIsAnonymous.mockReturnValue(false);
-    vi.mocked(useTolerateUnknownMaterials).mockReturnValue(false);
     mockedLoanDecision.mockReturnValue({
       data: undefined,
       isLoading: false
@@ -63,8 +58,7 @@ describe("useDigitalAvailability", () => {
 
     expect(result.current.isAnswering).toBe(true);
     expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
-      enabled: true,
-      allowNotFound: false
+      enabled: true
     });
   });
 
@@ -77,8 +71,7 @@ describe("useDigitalAvailability", () => {
     // The query is still declared - hooks cannot be conditional - but it is
     // disabled, so no request is made.
     expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
-      enabled: false,
-      allowNotFound: false
+      enabled: false
     });
   });
 
@@ -87,8 +80,7 @@ describe("useDigitalAvailability", () => {
 
     expect(result.current.isAnswering).toBe(false);
     expect(mockedLoanDecision).toHaveBeenCalledWith(null, {
-      enabled: false,
-      allowNotFound: false
+      enabled: false
     });
   });
 
@@ -118,19 +110,11 @@ describe("useDigitalAvailability", () => {
   });
 
   describe("TEMPORARY: materials the adapter does not know", () => {
-    // Goes with useTolerateUnknownMaterials when the catalogue and the
-    // adapter agree on which materials exist.
-    it("Asks strictly by default, so a 404 stays the error it is", () => {
-      render();
-
-      expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
-        enabled: true,
-        allowNotFound: false
-      });
-    });
-
+    // Goes with ServiceLayerConfig's toleration setting when the catalogue
+    // and the adapter agree on which materials exist. Whether a 404 is
+    // tolerated is the service layer's own business now; this hook only has
+    // to read the tolerated answer correctly.
     it("Counts a tolerated unknown material as unavailable", () => {
-      vi.mocked(useTolerateUnknownMaterials).mockReturnValue(true);
       // The tolerated 404: the query resolved, and Biblio has no answer.
       mockedLoanDecision.mockReturnValue({
         data: null,
@@ -142,10 +126,6 @@ describe("useDigitalAvailability", () => {
       // Unavailable rather than an error - and never a fallback to Publizon:
       // with the flag on, a material Biblio cannot lend is not on offer.
       expect(result.current.isAvailable).toBe(false);
-      expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
-        enabled: true,
-        allowNotFound: true
-      });
     });
   });
 });

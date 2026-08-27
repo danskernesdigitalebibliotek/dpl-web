@@ -14,13 +14,6 @@ type UseDigitalLoanDecisionOptions = Omit<
   "queryKey" | "queryFn" | "enabled"
 > & {
   enabled?: boolean
-  /**
-   * TEMPORARY, with the toleration flag that feeds it: resolve a material
-   * the adapter does not know to null instead of an error. Off by default:
-   * asking about an unknown material is normally a routing mistake worth
-   * hearing about.
-   */
-  allowNotFound?: boolean
 }
 
 /**
@@ -30,15 +23,19 @@ type UseDigitalLoanDecisionOptions = Omit<
  * answers 403 for a library token - which, with errors surfaced, takes the
  * whole page down. The hook therefore refuses to ask without a patron, so a
  * call site cannot forget to guard.
+ *
+ * A material the adapter does not know resolves to null when the config
+ * tolerates unknown materials - see ServiceLayerConfig - so call sites need
+ * no per-call opt-in either.
  */
 export const useDigitalLoanDecision = (
   materialId: string | null,
   options?: UseDigitalLoanDecisionOptions
 ): UseQueryResult<LoanDecision | null, Error> => {
   const config = useServiceLayerConfig()
-  const { enabled = true, allowNotFound, ...restOptions } = options ?? {}
+  const { enabled = true, ...restOptions } = options ?? {}
   return useQuery({
-    ...digitalLoanDecisionQuery(config, materialId, { allowNotFound }),
+    ...digitalLoanDecisionQuery(config, materialId),
     ...restOptions,
     enabled: config.isPatronAuthenticated && enabled && Boolean(materialId),
   })

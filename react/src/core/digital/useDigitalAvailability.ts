@@ -3,7 +3,6 @@ import {
   useDigitalLoanDecision
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useServiceLayerLending from "../utils/useServiceLayerLending";
-import useTolerateUnknownMaterials from "./useTolerateUnknownMaterials";
 import { isAnonymous } from "../utils/helpers/user";
 
 type DigitalAvailability = {
@@ -46,15 +45,11 @@ const useDigitalAvailability = ({
   isbn: string | null;
 }): DigitalAvailability => {
   const viaServiceLayer = useServiceLayerLending();
-  // TEMPORARY, see the hook: while it is on, a material the adapter does not
-  // know resolves to null instead of an error.
-  const tolerateUnknown = useTolerateUnknownMaterials();
   const isAnswering =
     viaServiceLayer && enabled && Boolean(isbn) && !isAnonymous();
 
   const { data: loanDecision, isLoading } = useDigitalLoanDecision(isbn, {
-    enabled: isAnswering,
-    allowNotFound: tolerateUnknown
+    enabled: isAnswering
   });
 
   return {
