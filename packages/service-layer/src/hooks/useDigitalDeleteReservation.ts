@@ -5,8 +5,8 @@ import { type UseMutationOptions, type UseMutationResult, useMutation } from "@t
 import { deleteDigitalReservation } from "../biblio"
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 
-type UseBiblioDeleteReservationOptions = Omit<
-  UseMutationOptions<boolean, Error, string>,
+type UseDigitalDeleteReservationOptions = Omit<
+  UseMutationOptions<void, Error, string>,
   "mutationFn"
 >
 
@@ -18,8 +18,8 @@ type UseBiblioDeleteReservationOptions = Omit<
  * resolves; see deleteDigitalReservation for why.
  */
 export const useDigitalDeleteReservation = (
-  options?: UseBiblioDeleteReservationOptions
-): UseMutationResult<boolean, Error, string> => {
+  options?: UseDigitalDeleteReservationOptions
+): UseMutationResult<void, Error, string> => {
   const config = useServiceLayerConfig()
   return useMutation({
     mutationFn: reservationId => deleteDigitalReservation(config, reservationId),

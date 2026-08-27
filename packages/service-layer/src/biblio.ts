@@ -141,13 +141,12 @@ export async function acceptDigitalOffer(
 export async function deleteDigitalReservation(
   config: ServiceLayerConfig,
   reservationId: string
-): Promise<boolean> {
+): Promise<void> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   const success = await biblio.deleteReservation(reservationId)
   if (!success) {
     throw new Error(`Biblio declined to cancel reservation ${reservationId}`)
   }
-  return success
 }
 
 /**
