@@ -3,7 +3,7 @@ import { Button } from "../Buttons/Button";
 import LinkButton from "../Buttons/LinkButton";
 import { ButtonSize } from "../../core/utils/types/button";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
-import { playerUrl } from "./helper";
+import { playerUrl, playsInModal } from "./helper";
 
 export type PlayerProps = {
   /** The loan to play, by the key its provider knows it under. */
@@ -44,7 +44,7 @@ const Player: React.FC<PlayerProps> = ({
   trackClick,
   onPlayInModal
 }) => {
-  if (provider === "serviceLayer") {
+  if (!playsInModal(provider)) {
     return (
       <LinkButton
         url={playerUrl(orderId)}

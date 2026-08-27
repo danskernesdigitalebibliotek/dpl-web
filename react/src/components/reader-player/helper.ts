@@ -117,6 +117,15 @@ export const playerUrl = (loanId: string) =>
   new URL(`/player?loanid=${encodeURIComponent(loanId)}`, window.location.href);
 
 /**
+ * Whether a loan from this provider plays in the Publizon modal.
+ *
+ * Service layer loans play on the player page instead (see `playerUrl`), so a
+ * caller that owns a `PlayerModal` only needs to mount it when this is true.
+ */
+export const playsInModal = (provider?: DigitalProvider | null) =>
+  provider !== "serviceLayer";
+
+/**
  * Where a sample of a material opens.
  *
  * A sample has no loan to read the material type from, so the route carries

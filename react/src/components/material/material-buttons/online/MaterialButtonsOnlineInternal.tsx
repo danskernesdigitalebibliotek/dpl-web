@@ -7,7 +7,11 @@ import { useModalButtonHandler } from "../../../../core/utils/modal";
 import { useText } from "../../../../core/utils/text";
 import { ButtonSize } from "../../../../core/utils/types/button";
 import useReaderPlayer from "../../../../core/utils/useReaderPlayer";
-import { readerUrl, sampleUrl } from "../../../reader-player/helper";
+import {
+  playsInModal,
+  readerUrl,
+  sampleUrl
+} from "../../../reader-player/helper";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
 import LinkButton from "../../../Buttons/LinkButton";
@@ -242,11 +246,9 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     }
 
     if (isAlreadyLoaned && orderId) {
-      // The modal renders nothing until it is opened, and a digital loan
-      // never opens it - Player sends that one to the player page instead.
       return (
         <>
-          <PlayerModal orderId={orderId} />
+          {playsInModal(holdingProvider) && <PlayerModal orderId={orderId} />}
           <Player
             orderId={orderId}
             provider={holdingProvider}
