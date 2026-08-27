@@ -1,5 +1,5 @@
 import React from "react";
-import useReaderCheckout from "../../core/digital/useReaderCheckout";
+import useReaderCheckout from "./useReaderCheckout";
 import DigitalReader from "./DigitalReader";
 import DigitalPlayer from "./DigitalPlayer";
 

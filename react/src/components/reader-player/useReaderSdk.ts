@@ -3,7 +3,7 @@ import {
   readerSignInTokenQuery,
   useServiceLayerConfig
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import { isAnonymous } from "../utils/helpers/user";
+import { isAnonymous } from "../../core/utils/helpers/user";
 import type { WedoBooksSdk } from "@danskernesdigitalebibliotek/dpl-wedobooks";
 import useReaderSdkConfig from "./useReaderSdkConfig";
 

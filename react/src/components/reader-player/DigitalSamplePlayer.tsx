@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import useReaderSdk from "../../core/digital/useReaderSdk";
+import useReaderSdk from "./useReaderSdk";
 
 const SdkSamplePlayer = React.lazy(() =>
   import("@danskernesdigitalebibliotek/dpl-wedobooks").then((module) => ({

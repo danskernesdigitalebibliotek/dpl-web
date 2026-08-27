@@ -1,4 +1,4 @@
-import { useConfig } from "../utils/config";
+import { useConfig } from "../../core/utils/config";
 
 /**
  * What the WeDoBooks SDK needs to start in the browser.

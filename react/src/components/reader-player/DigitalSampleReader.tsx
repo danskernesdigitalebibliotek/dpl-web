@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import useReaderSdk from "../../core/digital/useReaderSdk";
+import useReaderSdk from "./useReaderSdk";
 
 // Loaded on demand for the same reason as the loan reader: the SDK carries a
 // reading framework, Firebase and a component library, and only someone
