@@ -1,9 +1,7 @@
-import path from "path";
-
 // Same singleton aliasing as webpack.config.js: without it the service layer
 // resolves its own copy of react-query and its hooks cannot see the
 // QueryClientProvider this project mounts.
-const singletonModules = ["react", "react-dom", "@tanstack/react-query"];
+const { singletonAliases } = require("../webpack.helpers");
 
 const config = {
   stories: ["../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -39,12 +37,7 @@ const config = {
     config.resolve = config.resolve ?? {};
     config.resolve.alias = {
       ...config.resolve.alias,
-      ...Object.fromEntries(
-        singletonModules.map((m) => [
-          m,
-          path.resolve(__dirname, "..", "node_modules", m)
-        ])
-      )
+      ...singletonAliases
     };
     return config;
   }
