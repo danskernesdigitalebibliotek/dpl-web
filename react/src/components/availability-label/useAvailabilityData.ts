@@ -23,7 +23,6 @@ const useAvailabilityData = ({
   const availabilityOnline = useOnlineAvailabilityData({
     enabled: isOnline(accessTypes) && enabled,
     access,
-    faustIds,
     isbn
   });
 

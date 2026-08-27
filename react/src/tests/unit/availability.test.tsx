@@ -320,7 +320,6 @@ describe("useOnlineAvailabilityData tests", () => {
       useOnlineAvailabilityData({
         enabled: true,
         access: ["Ereol"],
-        faustIds: ["138625958"],
         isbn: "9788794564076"
       })
     );
@@ -351,7 +350,6 @@ describe("useOnlineAvailabilityData tests", () => {
       useOnlineAvailabilityData({
         enabled: true,
         access: ["Ereol"],
-        faustIds: ["138625958"],
         isbn: "9788794564076"
       })
     );
@@ -382,7 +380,6 @@ describe("useOnlineAvailabilityData tests", () => {
       useOnlineAvailabilityData({
         enabled: true,
         access: ["Ereol"],
-        faustIds: ["138625958"],
         isbn: "9788794564076"
       })
     );
@@ -422,7 +419,6 @@ describe("useOnlineAvailabilityData tests", () => {
       useOnlineAvailabilityData({
         enabled: true,
         access: ["Ereol"],
-        faustIds: ["138625958"],
         isbn: "9788794564076"
       })
     );
@@ -456,7 +452,6 @@ describe("useOnlineAvailabilityData tests", () => {
       useOnlineAvailabilityData({
         enabled: false,
         access: ["Ereol"],
-        faustIds: ["138625958"],
         isbn: "9788794564076"
       })
     );
@@ -495,7 +490,6 @@ describe("useOnlineAvailabilityData tests", () => {
       useOnlineAvailabilityData({
         enabled: true,
         access: ["Ereol"],
-        faustIds: ["138625958"],
         isbn: "9788794564076"
       })
     );
@@ -533,7 +527,6 @@ describe("useOnlineAvailabilityData tests", () => {
       useOnlineAvailabilityData({
         enabled: true,
         access: ["AccessUrl"],
-        faustIds: ["138625958"],
         isbn: "9788794564076"
       })
     );
@@ -574,7 +567,6 @@ describe("useOnlineAvailabilityData tests", () => {
       useOnlineAvailabilityData({
         enabled: true,
         access: ["Ereol"],
-        faustIds: ["138625958"],
         isbn: "9788794564076"
       })
     );
