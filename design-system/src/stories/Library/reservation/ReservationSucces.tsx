@@ -12,7 +12,7 @@ const ReservationSucces = ({
   return (
     <section className="reservation-modal reservation-success">
       <div className="reservation-success__text-section">
-        <h2 className="text-header-h3 pb-32">
+        <h2 className="text-header-h3 pb-32 text-section__title">
           Materialet er hjemme og er nu reserveret til dig!
         </h2>
         <p className="reservation-success__text pb-16">

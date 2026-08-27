@@ -34,16 +34,10 @@ const ReservationSucces: React.FC<ReservationSuccesProps> = ({
         <div className="reservation-success__text-section">
           <h2
             data-cy="reservation-success-title-text"
-            className="text-header-h3 pb-32"
+            className="text-header-h3 pb-32 text-section__title"
           >
-            {t("reservationSuccesTitleText")}
+            &quot;{title}&quot; {t("reservationSuccesIsReservedForYouText")}
           </h2>
-          <p
-            data-cy="reservation-success-is-reserved-for-you-text"
-            className="reservation-success__text pb-16"
-          >
-            {title} {t("reservationSuccesIsReservedForYouText")}
-          </p>
           <p
             data-cy="number-in-queue-text"
             className="reservation-success__text pb-16"
