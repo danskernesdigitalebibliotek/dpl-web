@@ -1,9 +1,8 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { FC } from "react";
 import {
   useGetV1LibraryProfile,
   useGetV1UserLoans
 } from "../../../core/publizon/publizon";
-import { LibraryProfile, UserData } from "../../../core/publizon/model";
 import { useText } from "../../../core/utils/text";
 import { getPatronLoanQuotas } from "../../../core/utils/helpers/publizon";
 import {
@@ -16,32 +15,16 @@ const StatusSection: FC = () => {
   const t = useText();
   const viaBiblioAdapter = useBiblioAdapter();
 
-  const { data: libraryProfileFetched } = useGetV1LibraryProfile({
+  const { data: libraryProfile } = useGetV1LibraryProfile({
     query: { enabled: !viaBiblioAdapter }
   });
-  const { isSuccess, data } = useGetV1UserLoans(
+  const { data } = useGetV1UserLoans(
     {},
     { query: { enabled: !viaBiblioAdapter } }
   );
   const { data: digitalQuotas } = useDigitalLoanQuotas({
     enabled: viaBiblioAdapter
   });
-  const [libraryProfile, setLibraryProfile] = useState<LibraryProfile | null>(
-    null
-  );
-  const [patronData, setPatronData] = useState<UserData | null>(null);
-
-  useEffect(() => {
-    if (isSuccess && data && data.userData) {
-      setPatronData(data.userData);
-    }
-  }, [isSuccess, data]);
-
-  useEffect(() => {
-    if (libraryProfileFetched) {
-      setLibraryProfile(libraryProfileFetched);
-    }
-  }, [libraryProfileFetched]);
 
   const {
     maxConcurrentAudioReservationsPerBorrower = 0,
@@ -49,7 +32,7 @@ const StatusSection: FC = () => {
   } = libraryProfile || {};
 
   const publizonQuotas = getPatronLoanQuotas({
-    userData: patronData ?? undefined,
+    userData: data?.userData,
     loans: data?.loans
   });
 
@@ -67,27 +50,34 @@ const StatusSection: FC = () => {
     period: "concurrent"
   });
 
-  const patronEbookLoans = viaBiblioAdapter
-    ? digitalEbookQuota.current
-    : publizonQuotas.patronEbookLoans;
-  const patronAudioBookLoans = viaBiblioAdapter
-    ? digitalAudioQuota.current
-    : publizonQuotas.patronAudioLoans;
-  const maxConcurrentEbookLoansPerBorrower = viaBiblioAdapter
-    ? digitalEbookQuota.limit
-    : libraryProfile?.maxConcurrentEbookLoansPerBorrower;
-  const maxConcurrentAudioLoansPerBorrower = viaBiblioAdapter
-    ? digitalAudioQuota.limit
-    : libraryProfile?.maxConcurrentAudioLoansPerBorrower;
-
-  // Publizon gates the whole section on its library profile. The service
-  // layer has no
-  // equivalent document, so its quotas take that role.
-  // An empty array is an answer, not a quota: rendering the section from it
-  // would show a heading with two blank counters.
-  const hasQuotas = viaBiblioAdapter
-    ? Boolean(digitalQuotas?.length)
-    : Boolean(libraryProfile);
+  // One provider answers the whole section, so the choice is made once.
+  // Publizon gates the section on its library profile. The service layer has
+  // no equivalent document, so its quotas take that role - and an empty array
+  // is an answer, not a quota: rendering the section from it would show a
+  // heading with two blank counters.
+  const {
+    patronEbookLoans,
+    patronAudioBookLoans,
+    maxConcurrentEbookLoansPerBorrower,
+    maxConcurrentAudioLoansPerBorrower,
+    hasQuotas
+  } = viaBiblioAdapter
+    ? {
+        patronEbookLoans: digitalEbookQuota.current,
+        patronAudioBookLoans: digitalAudioQuota.current,
+        maxConcurrentEbookLoansPerBorrower: digitalEbookQuota.limit,
+        maxConcurrentAudioLoansPerBorrower: digitalAudioQuota.limit,
+        hasQuotas: Boolean(digitalQuotas?.length)
+      }
+    : {
+        patronEbookLoans: publizonQuotas.patronEbookLoans,
+        patronAudioBookLoans: publizonQuotas.patronAudioLoans,
+        maxConcurrentEbookLoansPerBorrower:
+          libraryProfile?.maxConcurrentEbookLoansPerBorrower,
+        maxConcurrentAudioLoansPerBorrower:
+          libraryProfile?.maxConcurrentAudioLoansPerBorrower,
+        hasQuotas: Boolean(libraryProfile)
+      };
 
   // Publizon doesn't account for "subscription" (aka, "blue", aka
   // "non-quota") loans, so we have to figure out how many of the
