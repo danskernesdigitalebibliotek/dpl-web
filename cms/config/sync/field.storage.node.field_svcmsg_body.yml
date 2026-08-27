@@ -1,0 +1,19 @@
+uuid: dc9d96a6-603d-4a78-9f12-72e0beb6ff62
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_svcmsg_body
+field_name: field_svcmsg_body
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
