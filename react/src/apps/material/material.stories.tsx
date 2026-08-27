@@ -67,6 +67,10 @@ const meta: Meta<typeof MaterialEntry> = {
       description: "Path to the search result page",
       control: { type: "text" }
     },
+    seriesUrl: {
+      description: "Path to the series landing page",
+      control: { type: "text" }
+    },
     materialUrl: {
       description: "Path to the material page",
       control: { type: "text" }
@@ -830,6 +834,7 @@ const meta: Meta<typeof MaterialEntry> = {
     ...openOrderArgs,
     ...materialUnavailableNoticeArgs,
     searchUrl: "/search",
+    seriesUrl: "/serie/:seriesid",
     materialUrl: "/work/:workid",
     advancedSearchUrl: "/advancedsearch",
     wid: "work-of:870970-basis:52557240",

@@ -6,6 +6,8 @@ namespace Drupal\dpl_fbi;
 
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\dpl_fbi\GraphQL\Operations\SeriesInfo;
+use Drupal\dpl_fbi\GraphQL\Operations\SeriesInfo\Series\Series;
 use Drupal\dpl_fbi\GraphQL\Operations\WorkInfo;
 use Drupal\dpl_fbi\GraphQL\Operations\WorkInfo\Work\Work;
 use function Safe\preg_replace;
@@ -35,6 +37,13 @@ class Fbi {
    * @var array<\Drupal\dpl_fbi\GraphQL\Operations\WorkInfo\Work\Work|null>
    */
   protected array $works;
+
+  /**
+   * Static cache of series info.
+   *
+   * @var array<\Drupal\dpl_fbi\GraphQL\Operations\SeriesInfo\Series\Series|null>
+   */
+  protected array $series = [];
 
   /**
    * Constructor.
@@ -130,6 +139,58 @@ class Fbi {
   }
 
   /**
+   * Get title of series.
+   *
+   * Unlike getWorkTitle() this returns NULL rather than an empty string when
+   * FBI knows no series with that id, so that callers can tell a bad id apart
+   * from a series that simply has no title.
+   */
+  public function getSeriesTitle(string $seriesId): ?string {
+    return $this->getSeriesInfo($seriesId)?->title;
+  }
+
+  /**
+   * Get description of series.
+   *
+   * Only around two thirds of series have one.
+   */
+  public function getSeriesDescription(string $seriesId): ?string {
+    return $this->getSeriesInfo($seriesId)?->description;
+  }
+
+  /**
+   * Get a cover representing a series.
+   *
+   * A series has no cover of its own, so the cover of one of its members
+   * stands in for it. The member flagged readThisFirst is preferred as the
+   * face of the series, falling back to the first member that has a cover.
+   * Only a handful of members are queried, which is enough to find a cover in
+   * practice - this is one representative image, not the series listing.
+   */
+  public function getSeriesCoverInfo(string $seriesId): ?CoverInfo {
+    $members = $this->getSeriesInfo($seriesId)->members ?? [];
+
+    $fallback = NULL;
+    foreach ($members as $member) {
+      $cover = $member->work->manifestations->bestRepresentation->cover->large;
+
+      if (!$cover || !$cover->url || !$cover->height || !$cover->width) {
+        continue;
+      }
+
+      $info = new CoverInfo($cover->url, $cover->height, $cover->width);
+
+      if ($member->readThisFirst) {
+        return $info;
+      }
+
+      $fallback = $fallback ?? $info;
+    }
+
+    return $fallback;
+  }
+
+  /**
    * Caching work info getter.
    */
   protected function getWorkInfo(string $wid): ?Work {
@@ -140,6 +201,23 @@ class Fbi {
     }
 
     return $this->works[$wid];
+  }
+
+  /**
+   * Caching series info getter.
+   */
+  protected function getSeriesInfo(string $seriesId): ?Series {
+    // Checked with array_key_exists() rather than isset(): a series FBI
+    // knows nothing about is cached as NULL, and that negative answer is
+    // worth remembering too - isset() would treat it as a miss and ask FBI
+    // again on every call.
+    if (!array_key_exists($seriesId, $this->series)) {
+      $info = SeriesInfo::execute($seriesId);
+
+      $this->series[$seriesId] = $info->errorFree()->data->series;
+    }
+
+    return $this->series[$seriesId];
   }
 
 }
