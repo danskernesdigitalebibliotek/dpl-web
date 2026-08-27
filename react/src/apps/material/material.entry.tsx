@@ -177,7 +177,6 @@ interface MaterialEntryTextProps {
   reservationRecommendationsTitleText: string;
   reservationSuccesIsReservedForYouText: string;
   reservationSuccessPreferredPickupBranchText: string;
-  reservationSuccesTitleText: string;
   reserveBookText: string;
   reserveText: string;
   reserveWithMaterialTypeText: string;

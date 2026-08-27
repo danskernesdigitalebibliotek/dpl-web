@@ -685,7 +685,6 @@ class DplReactAppsController extends ControllerBase {
       'reservation-modal-screen-reader-modal-description-text' => $this->t('modal for reservation', [], ['context' => 'Work Page']),
       'reservation-recommendations-title-text' => $this->t('You might also be interested in...', [], ['context' => 'Work Page']),
       'reservation-succes-is-reserved-for-you-text' => $this->t('is reserved for you', [], ['context' => 'Work Page']),
-      'reservation-succes-title-text' => $this->t('The material is available and is now reserved for you!', [], ['context' => 'Work Page']),
       'reservation-success-preferred-pickup-branch-text' => $this->t('Material is available and you will get a message when it is ready for pickup - pickup at @branch', [], ['context' => 'Work Page']),
       'reservations-for-this-material-text' => $this->t('reservations for this material', [], ['context' => 'Work Page']),
       'reserve-book-text' => $this->t('Reserve book', [], ['context' => 'Work Page']),
