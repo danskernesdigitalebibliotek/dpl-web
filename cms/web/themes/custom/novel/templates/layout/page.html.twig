@@ -47,6 +47,8 @@
    make the page scroll horizontally on mobile. Keep `.overflow-x-clip`:
    `.overflow-hidden` here silently stops the header from sticking. #}
 <div class="overflow-x-clip">
+  {{ service_message_global }}
+
   {{ include('@novel/layout/header.html.twig'
     , {
     header: page.header,
@@ -57,6 +59,8 @@
     opening_hours_sidebar_large: opening_hours_sidebar_large,
     opening_hours_sidebar_small: opening_hours_sidebar_small,
   }, false) }}
+
+  {{ service_messages }}
 
   {{ drupal_block('system_messages_block') }}
 

@@ -6,6 +6,11 @@ base:
   dependencies:
     - core/drupal
 
+service-message:
+  css:
+    theme:
+      css/service-message.css: {}
+
 nav-grid:
   js:
     assets/dpl-design-system/js/init-nav-grid.js: {}

@@ -199,8 +199,16 @@ the front page.
 A global message appears on every page in the most urgent rendering the
 site has, so `dpl_service_message.permissions.yml` adds `administer
 global service messages` — `editor` and `local_administrator`, not
-`mediator`. It gates the `global` option through a form alter, backed by
-a validation constraint so it also holds for programmatic saves.
+`mediator`. The form alter is the whole of that gate: it takes the
+`global` option off the widget for anyone without the permission.
+
+A validation constraint used to back it up for saves that skip the form.
+Nothing makes such a save: the bundle is off GraphQL, has no REST
+resource of its own and no generic one to ride on, is not part of the BNF
+import, and no migration writes it. The constraint guarded a door in a
+wall that isn't there, so it is gone. The day this content type gains a
+write path, the gate has to move with it - the form alter will not follow
+it there.
 
 What this does not give: no role is branch-scoped, so any editor who can
 create a service message can target any branch. Restricting local editors
