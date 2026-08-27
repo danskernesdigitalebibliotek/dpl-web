@@ -62,6 +62,7 @@ const DialogFormEdit: React.FC<DialogFormEditProps> = ({
       id: eventInfo.id,
       category,
       title: eventInfo.title,
+      color: eventInfo.color,
       startStr: eventInfo.startStr,
       endStr: eventInfo.endStr,
       repetition: {

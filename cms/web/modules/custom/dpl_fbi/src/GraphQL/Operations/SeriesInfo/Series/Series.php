@@ -23,14 +23,14 @@ class Series extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($title !== self::UNDEFINED) {
-            $instance->title = $title;
+            $instance->__set('title', $title);
         }
         if ($members !== self::UNDEFINED) {
-            $instance->members = $members;
+            $instance->__set('members', $members);
         }
         $instance->__typename = 'Series';
         if ($description !== self::UNDEFINED) {
-            $instance->description = $description;
+            $instance->__set('description', $description);
         }
 
         return $instance;

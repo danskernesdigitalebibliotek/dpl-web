@@ -16,7 +16,7 @@ class Work extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($manifestations !== self::UNDEFINED) {
-            $instance->manifestations = $manifestations;
+            $instance->__set('manifestations', $manifestations);
         }
         $instance->__typename = 'Work';
 

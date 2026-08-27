@@ -29,20 +29,20 @@ class ParagraphBanner extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($bannerLink !== self::UNDEFINED) {
-            $instance->bannerLink = $bannerLink;
+            $instance->__set('bannerLink', $bannerLink);
         }
         $instance->__typename = 'ParagraphBanner';
         if ($bannerDescription !== self::UNDEFINED) {
-            $instance->bannerDescription = $bannerDescription;
+            $instance->__set('bannerDescription', $bannerDescription);
         }
         if ($bannerImage !== self::UNDEFINED) {
-            $instance->bannerImage = $bannerImage;
+            $instance->__set('bannerImage', $bannerImage);
         }
         if ($underlinedTitle !== self::UNDEFINED) {
-            $instance->underlinedTitle = $underlinedTitle;
+            $instance->__set('underlinedTitle', $underlinedTitle);
         }
 
         return $instance;

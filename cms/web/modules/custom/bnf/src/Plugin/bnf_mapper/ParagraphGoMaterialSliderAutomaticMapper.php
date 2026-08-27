@@ -25,7 +25,7 @@ class ParagraphGoMaterialSliderAutomaticMapper extends BnfMapperParagraphPluginB
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'go_material_slider_automatic',
       'field_title' => $object->title,
       'field_slider_amount_of_materials' => $object->sliderAmountOfMaterials ?? 8,

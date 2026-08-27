@@ -15,7 +15,7 @@ class SubscriptionListBuilder extends EntityListBuilder {
   /**
    * Building the row header.
    *
-   * @return string[]
+   * @return mixed[]
    *   The row header, containing labels for each value.
    */
   public function buildHeader(): array {

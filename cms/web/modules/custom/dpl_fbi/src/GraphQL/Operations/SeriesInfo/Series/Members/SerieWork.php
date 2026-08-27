@@ -20,11 +20,11 @@ class SerieWork extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($work !== self::UNDEFINED) {
-            $instance->work = $work;
+            $instance->__set('work', $work);
         }
         $instance->__typename = 'SerieWork';
         if ($readThisFirst !== self::UNDEFINED) {
-            $instance->readThisFirst = $readThisFirst;
+            $instance->__set('readThisFirst', $readThisFirst);
         }
 
         return $instance;
