@@ -5,7 +5,7 @@ import { ButtonSize } from "../../core/utils/types/button";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
 import { playerUrl, playsInModal } from "./helper";
 
-export type PlayerProps = {
+export type PlayerButtonProps = {
   /** The loan to play, by the key its provider knows it under. */
   orderId: string;
   /** Which provider issued the loan. Decides where it plays. */
@@ -35,7 +35,7 @@ export type PlayerProps = {
  * `PlayerPage`). Callers ask for "play this loan" and get whichever of the
  * two the loan calls for.
  */
-const Player: React.FC<PlayerProps> = ({
+const PlayerButton: React.FC<PlayerButtonProps> = ({
   orderId,
   provider,
   label,
@@ -76,4 +76,4 @@ const Player: React.FC<PlayerProps> = ({
   );
 };
 
-export default Player;
+export default PlayerButton;

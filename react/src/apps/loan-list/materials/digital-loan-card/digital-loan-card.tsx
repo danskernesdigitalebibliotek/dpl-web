@@ -7,7 +7,7 @@ import { LoanId } from "../../../../core/utils/types/ids";
 import StatusCircle from "../utils/status-circle";
 import StatusBadge from "../utils/status-badge";
 import LinkButton from "../../../../components/Buttons/LinkButton";
-import Player from "../../../../components/reader-player/Player";
+import PlayerButton from "../../../../components/reader-player/PlayerButton";
 import { Cover } from "../../../../components/cover/cover";
 import AuthorYear from "../../../../components/author-year/authorYear";
 import { useText } from "../../../../core/utils/text";
@@ -86,7 +86,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
       );
     }
     return (
-      <Player
+      <PlayerButton
         orderId={orderId}
         provider={digitalProvider}
         label={t("onlineMaterialPlayerText", {

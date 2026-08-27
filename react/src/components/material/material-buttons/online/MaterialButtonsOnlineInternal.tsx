@@ -29,7 +29,7 @@ import { WorkId } from "../../../../core/utils/types/ids";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 import PlayerModal from "../../player-modal/PlayerModal";
-import Player from "../../../reader-player/Player";
+import PlayerButton from "../../../reader-player/PlayerButton";
 import MaterialButtonLoading from "../generic/MaterialButtonLoading";
 import { useModalIdsToCloseForReservation } from "../../../../core/utils/useModalIdsToCloseForReservation";
 
@@ -249,7 +249,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       return (
         <>
           {playsInModal(holdingProvider) && <PlayerModal orderId={orderId} />}
-          <Player
+          <PlayerButton
             orderId={orderId}
             provider={holdingProvider}
             label={t("onlineMaterialPlayerText", {
