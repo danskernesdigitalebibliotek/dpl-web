@@ -71,8 +71,7 @@ const useDigitalReaderPlayerState = ({
   if (isUserAnonymous) {
     return {
       ...unknownReaderPlayerState,
-      canBeLoaned: true,
-      isLoading: false
+      canBeLoaned: true
     };
   }
 
@@ -107,6 +106,8 @@ const useDigitalReaderPlayerState = ({
       ? mapDigitalReservationToReservationType([queuedReservation])[0]
       : null,
     offerId,
+    // Disabled queries never report loading, so this only counts the
+    // questions actually asked.
     isLoading: isLoadingLoanDecision || isLoadingLoans || isLoadingReservations
   };
 };

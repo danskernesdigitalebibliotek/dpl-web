@@ -81,7 +81,8 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     isAlreadyLoaned,
     canBeLoaned,
     canBeReserved,
-    reservation
+    reservation,
+    isLoading
   } = useReaderPlayer(getLoanableManifestation(manifestations));
 
   const handleModalLoanReservation = useOnlineInternalHandleLoanReservation({
@@ -115,7 +116,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   });
 
   const renderReaderButton = () => {
-    if (!identifier) return <MaterialButtonLoading />;
+    if (!identifier || isLoading) return <MaterialButtonLoading />;
 
     if (isAlreadyReserved && reservation) {
       return (
@@ -175,8 +176,25 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
-    return <MaterialButtonLoading />;
+    return renderUnavailableButton(`${dataCy}-reader`);
   };
+
+  // The providers have answered and nothing applies: the material can
+  // neither be opened nor acquired right now. A disabled button says so -
+  // the spinner this used to fall back to promised an answer that had
+  // already arrived.
+  const renderUnavailableButton = (buttonDataCy: string) => (
+    <Button
+      dataCy={buttonDataCy}
+      label={loanLabel}
+      buttonType="none"
+      variant="filled"
+      size={size || "large"}
+      onClick={() => {}}
+      disabled
+      collapsible={false}
+    />
+  );
 
   // The disabled stand-in both teasers show while sampling is unavailable -
   // identical apart from which teaser it stands in for.
@@ -194,36 +212,35 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   );
 
   const renderReaderTeaserButton = () => {
-    // Don't show teaser if already loaned or not in modal view
-    if (isAlreadyLoaned || !openModal) return null;
+    if (!openModal) return null;
+    // Wait for the providers before deciding: a teaser that shows while the
+    // loan is still being looked up would flash and vanish.
+    if (!identifier || isLoading) return <MaterialButtonLoading />;
+    if (isAlreadyLoaned) return null;
 
-    if (identifier) {
-      if (samplingUnavailable) {
-        return renderDisabledTeaserButton(`${dataCy}-reader-teaser`);
-      }
-
-      return (
-        <MaterialSecondaryLink
-          label={tryLabel}
-          size={size || "large"}
-          url={sampleUrl(identifier, "ebook")}
-          dataCy={`${dataCy}-reader-teaser`}
-          trackClick={() =>
-            track("click", {
-              id: statistics.publizonTry.id,
-              name: statistics.publizonTry.name,
-              trackedData: workId
-            })
-          }
-        />
-      );
+    if (samplingUnavailable) {
+      return renderDisabledTeaserButton(`${dataCy}-reader-teaser`);
     }
-    // Show loading only if we don't have identifier yet
-    return <MaterialButtonLoading />;
+
+    return (
+      <MaterialSecondaryLink
+        label={tryLabel}
+        size={size || "large"}
+        url={sampleUrl(identifier, "ebook")}
+        dataCy={`${dataCy}-reader-teaser`}
+        trackClick={() =>
+          track("click", {
+            id: statistics.publizonTry.id,
+            name: statistics.publizonTry.name,
+            trackedData: workId
+          })
+        }
+      />
+    );
   };
 
   const renderPlayerButton = () => {
-    if (!identifier) return <MaterialButtonLoading />;
+    if (!identifier || isLoading) return <MaterialButtonLoading />;
 
     if (isAlreadyReserved && reservation) {
       return (
@@ -287,61 +304,60 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
-    return <MaterialButtonLoading />;
+    return renderUnavailableButton(`${dataCy}-player`);
   };
 
   const renderPlayerTeaserButton = () => {
-    // Don't show teaser if already loaned or not in modal view
-    if (isAlreadyLoaned || !openModal) return null;
+    if (!openModal) return null;
+    // Wait for the providers before deciding: a teaser that shows while the
+    // loan is still being looked up would flash and vanish.
+    if (!identifier || isLoading) return <MaterialButtonLoading />;
+    if (isAlreadyLoaned) return null;
 
-    if (identifier) {
-      if (samplingUnavailable) {
-        return renderDisabledTeaserButton(`${dataCy}-player-teaser`);
-      }
+    if (samplingUnavailable) {
+      return renderDisabledTeaserButton(`${dataCy}-player-teaser`);
+    }
 
-      // The SDK's player pins itself to the bottom of the viewport, which
-      // leaves a wrapping modal empty - so a digital sample gets the player
-      // page, exactly like a digital loan does.
-      if (samplesThroughServiceLayer) {
-        return (
-          <MaterialSecondaryLink
-            label={tryLabel}
-            size={size || "large"}
-            url={sampleUrl(identifier, "audiobook")}
-            dataCy={`${dataCy}-player-teaser`}
-            trackClick={() =>
-              track("click", {
-                id: statistics.publizonTry.id,
-                name: statistics.publizonTry.name,
-                trackedData: workId
-              })
-            }
-          />
-        );
-      }
-
+    // The SDK's player pins itself to the bottom of the viewport, which
+    // leaves a wrapping modal empty - so a digital sample gets the player
+    // page, exactly like a digital loan does.
+    if (samplesThroughServiceLayer) {
       return (
-        <>
-          <PlayerModal identifier={identifier} />
-          <MaterialSecondaryButton
-            label={tryLabel}
-            size={size || "large"}
-            onClick={() => {
-              track("click", {
-                id: statistics.publizonTry.id,
-                name: statistics.publizonTry.name,
-                trackedData: workId
-              });
-              open(playerModalId(identifier), modalCloseOptions);
-            }}
-            dataCy={`${dataCy}-player-teaser`}
-            ariaDescribedBy={t("onlineMaterialTeaserText")}
-          />
-        </>
+        <MaterialSecondaryLink
+          label={tryLabel}
+          size={size || "large"}
+          url={sampleUrl(identifier, "audiobook")}
+          dataCy={`${dataCy}-player-teaser`}
+          trackClick={() =>
+            track("click", {
+              id: statistics.publizonTry.id,
+              name: statistics.publizonTry.name,
+              trackedData: workId
+            })
+          }
+        />
       );
     }
-    // Show loading only if we don't have identifier yet
-    return <MaterialButtonLoading />;
+
+    return (
+      <>
+        <PlayerModal identifier={identifier} />
+        <MaterialSecondaryButton
+          label={tryLabel}
+          size={size || "large"}
+          onClick={() => {
+            track("click", {
+              id: statistics.publizonTry.id,
+              name: statistics.publizonTry.name,
+              trackedData: workId
+            });
+            open(playerModalId(identifier), modalCloseOptions);
+          }}
+          dataCy={`${dataCy}-player-teaser`}
+          ariaDescribedBy={t("onlineMaterialTeaserText")}
+        />
+      </>
+    );
   };
 
   const renderDeleteReservationModal = () => {

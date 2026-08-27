@@ -70,17 +70,19 @@ const givenAdapterSays = ({
   status,
   loans = [],
   reservations = [],
-  anonymous = false
+  anonymous = false,
+  stillAnswering = false
 }: {
   status?: LoanDecision["status"];
   loans?: DigitalLoan[];
   reservations?: DigitalReservation[];
   anonymous?: boolean;
+  stillAnswering?: boolean;
 }) => {
   vi.mocked(isAnonymous).mockReturnValue(anonymous);
   vi.mocked(useDigitalLoanDecision).mockReturnValue({
     data: status ? { status } : undefined,
-    isLoading: false
+    isLoading: stillAnswering
   } as unknown as ReturnType<typeof useDigitalLoanDecision>);
   vi.mocked(useDigitalLoans).mockReturnValue({
     data: { loans },
@@ -224,7 +226,9 @@ describe("useDigitalReaderPlayerState", () => {
         canBeLoaned: false,
         canBeReserved: false,
         isAlreadyLoaned: false,
-        orderId: null
+        orderId: null,
+        // Not loading either: a provider that is not asked will never answer.
+        isLoading: false
       });
     });
 
@@ -232,6 +236,15 @@ describe("useDigitalReaderPlayerState", () => {
       givenAdapterSays({ status: "loanable" });
 
       expect(render(null)).toMatchObject({ canBeLoaned: false });
+    });
+  });
+
+  describe("while the adapter is still answering", () => {
+    it("Reports loading - but only while actually asked", () => {
+      givenAdapterSays({ stillAnswering: true });
+
+      expect(render().isLoading).toBe(true);
+      expect(render(IDENTIFIER, false).isLoading).toBe(false);
     });
   });
 });

@@ -53,7 +53,11 @@ export type ReaderPlayerState = {
    * this is what identifies the offer to accept.
    */
   offerId: string | null;
-  /** True while the provider has not answered yet. */
+  /**
+   * True while an enabled provider is still fetching the answers above. A
+   * provider that is not asked reports false: not knowing is not the same as
+   * loading, and a disabled provider will never answer.
+   */
   isLoading: boolean;
 };
 
@@ -72,7 +76,7 @@ export const unknownReaderPlayerState: ReaderPlayerState = {
   orderId: null,
   reservation: null,
   offerId: null,
-  isLoading: true
+  isLoading: false
 };
 
 export default {};

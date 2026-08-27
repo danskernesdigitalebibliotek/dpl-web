@@ -84,7 +84,11 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
     isAlreadyReserved: holding.isAlreadyReserved,
     orderId: holding.orderId,
     holdingProvider,
-    reservation: holding.reservation
+    reservation: holding.reservation,
+    // Loading while any provider that was actually asked has not answered -
+    // a disabled provider reports false, so this settles as soon as the
+    // relevant answers are in.
+    isLoading: serviceLayer.isLoading || publizon.isLoading
   };
 };
 

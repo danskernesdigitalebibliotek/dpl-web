@@ -44,7 +44,6 @@ const BIBLIO_LOAN_ID = "3f7b1c62-9d4e-4a71-b0c3-1d5a8e2f4b90";
 
 const state = (overrides: Partial<ReaderPlayerState>): ReaderPlayerState => ({
   ...unknownReaderPlayerState,
-  isLoading: false,
   ...overrides
 });
 
@@ -166,6 +165,19 @@ describe("useReaderPlayer - which provider answers what", () => {
         isAlreadyReserved: true,
         reservation: { identifier: "9788727319346" }
       });
+    });
+  });
+  describe("loading", () => {
+    it("Loads while any provider that was asked has not answered", () => {
+      given({ flagOn: true, biblio: { isLoading: true } });
+
+      expect(render().isLoading).toBe(true);
+    });
+
+    it("Settles once every asked provider has answered", () => {
+      given({ flagOn: true });
+
+      expect(render().isLoading).toBe(false);
     });
   });
 });

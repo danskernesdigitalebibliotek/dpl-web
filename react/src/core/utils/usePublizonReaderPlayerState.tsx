@@ -96,10 +96,9 @@ const usePublizonReaderPlayerState = ({
     reservation,
     // Publizon has no offer to accept - redeeming is folded into canBeLoaned.
     offerId: null,
-    isLoading:
-      (canAcquire && isLoadingLoanStatus) ||
-      isLoadingLoans ||
-      isLoadingReservations
+    // Disabled queries never report loading, so this only counts the
+    // questions actually asked.
+    isLoading: isLoadingLoanStatus || isLoadingLoans || isLoadingReservations
   };
 };
 
