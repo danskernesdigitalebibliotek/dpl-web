@@ -9,13 +9,13 @@ import type { DigitalLoanQuota } from "../types"
 
 type DigitalLoanQuotasQueryKey = ReturnType<typeof digitalLoanQuotasQueryKey>
 
-type UseBiblioLoanQuotasOptions = Omit<
+type UseDigitalLoanQuotasOptions = Omit<
   UseQueryOptions<DigitalLoanQuota[], Error, DigitalLoanQuota[], DigitalLoanQuotasQueryKey>,
   "queryKey" | "queryFn" | "enabled"
 > & { enabled?: boolean }
 
 export const useDigitalLoanQuotas = (
-  options?: UseBiblioLoanQuotasOptions
+  options?: UseDigitalLoanQuotasOptions
 ): UseQueryResult<DigitalLoanQuota[], Error> => {
   const config = useServiceLayerConfig()
   const { enabled = true, ...restOptions } = options ?? {}

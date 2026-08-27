@@ -6,7 +6,7 @@ import { createDigitalReservation } from "../biblio"
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 import type { LoanRequestResult } from "../types"
 
-type UseBiblioCreateReservationOptions = Omit<
+type UseDigitalCreateReservationOptions = Omit<
   UseMutationOptions<LoanRequestResult, Error, string>,
   "mutationFn"
 >
@@ -18,7 +18,7 @@ type UseBiblioCreateReservationOptions = Omit<
  * loan when the material turned out to be available right away.
  */
 export const useDigitalCreateReservation = (
-  options?: UseBiblioCreateReservationOptions
+  options?: UseDigitalCreateReservationOptions
 ): UseMutationResult<LoanRequestResult, Error, string> => {
   const config = useServiceLayerConfig()
   return useMutation({

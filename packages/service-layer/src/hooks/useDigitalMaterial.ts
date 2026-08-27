@@ -9,7 +9,7 @@ import type { DigitalMaterial } from "../types"
 
 type DigitalMaterialQueryKey = ReturnType<typeof digitalMaterialQueryKey>
 
-type UseBiblioMaterialOptions = Omit<
+type UseDigitalMaterialOptions = Omit<
   UseQueryOptions<DigitalMaterial | null, Error, DigitalMaterial | null, DigitalMaterialQueryKey>,
   "queryKey" | "queryFn" | "enabled"
 > & { enabled?: boolean }
@@ -23,7 +23,7 @@ type UseBiblioMaterialOptions = Omit<
  */
 export const useDigitalMaterial = (
   isbn: string | null,
-  options?: UseBiblioMaterialOptions
+  options?: UseDigitalMaterialOptions
 ): UseQueryResult<DigitalMaterial | null, Error> => {
   const config = useServiceLayerConfig()
   const { enabled = true, ...restOptions } = options ?? {}

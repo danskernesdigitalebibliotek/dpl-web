@@ -6,15 +6,15 @@ import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 import type { digitalSupportIdQueryKey } from "../queries/biblio"
 import { digitalSupportIdQuery } from "../queries/biblio"
 
-type BiblioSupportIdQueryKey = ReturnType<typeof digitalSupportIdQueryKey>
+type DigitalSupportIdQueryKey = ReturnType<typeof digitalSupportIdQueryKey>
 
-type UseBiblioSupportIdOptions = Omit<
-  UseQueryOptions<string, Error, string, BiblioSupportIdQueryKey>,
+type UseDigitalSupportIdOptions = Omit<
+  UseQueryOptions<string, Error, string, DigitalSupportIdQueryKey>,
   "queryKey" | "queryFn" | "enabled"
 > & { enabled?: boolean }
 
 export const useDigitalSupportId = (
-  options?: UseBiblioSupportIdOptions
+  options?: UseDigitalSupportIdOptions
 ): UseQueryResult<string, Error> => {
   const config = useServiceLayerConfig()
   const { enabled = true, ...restOptions } = options ?? {}

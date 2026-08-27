@@ -11,13 +11,13 @@ type DigitalLoansPage = { loans: DigitalLoan[]; nextCursor?: string }
 
 type DigitalLoansQueryKey = ReturnType<typeof digitalLoansQueryKey>
 
-type UseBiblioLoansOptions = Omit<
+type UseDigitalLoansOptions = Omit<
   UseQueryOptions<DigitalLoansPage, Error, DigitalLoansPage, DigitalLoansQueryKey>,
   "queryKey" | "queryFn" | "enabled"
 > & { enabled?: boolean }
 
 export const useDigitalLoans = (
-  options?: UseBiblioLoansOptions
+  options?: UseDigitalLoansOptions
 ): UseQueryResult<DigitalLoansPage, Error> => {
   const config = useServiceLayerConfig()
   const { enabled = true, ...restOptions } = options ?? {}

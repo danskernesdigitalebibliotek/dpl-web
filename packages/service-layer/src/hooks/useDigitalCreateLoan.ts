@@ -6,7 +6,7 @@ import { createDigitalLoan } from "../biblio"
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 import type { LoanRequestResult } from "../types"
 
-type UseBiblioCreateLoanOptions = Omit<
+type UseDigitalCreateLoanOptions = Omit<
   UseMutationOptions<LoanRequestResult, Error, string>,
   "mutationFn"
 >
@@ -22,7 +22,7 @@ type UseBiblioCreateLoanOptions = Omit<
  * library has switched to it.
  */
 export const useDigitalCreateLoan = (
-  options?: UseBiblioCreateLoanOptions
+  options?: UseDigitalCreateLoanOptions
 ): UseMutationResult<LoanRequestResult, Error, string> => {
   const config = useServiceLayerConfig()
   return useMutation({

@@ -11,7 +11,7 @@ type DigitalReservationsPage = { reservations: DigitalReservation[]; nextCursor?
 
 type DigitalReservationsQueryKey = ReturnType<typeof digitalReservationsQueryKey>
 
-type UseBiblioReservationsOptions = Omit<
+type UseDigitalReservationsOptions = Omit<
   UseQueryOptions<
     DigitalReservationsPage,
     Error,
@@ -22,7 +22,7 @@ type UseBiblioReservationsOptions = Omit<
 > & { enabled?: boolean }
 
 export const useDigitalReservations = (
-  options?: UseBiblioReservationsOptions
+  options?: UseDigitalReservationsOptions
 ): UseQueryResult<DigitalReservationsPage, Error> => {
   const config = useServiceLayerConfig()
   const { enabled = true, ...restOptions } = options ?? {}

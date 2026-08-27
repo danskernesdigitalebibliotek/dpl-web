@@ -7,7 +7,7 @@ import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 
 type AcceptOfferResult = { success: boolean; loanId?: string }
 
-type UseBiblioAcceptOfferOptions = Omit<
+type UseDigitalAcceptOfferOptions = Omit<
   UseMutationOptions<AcceptOfferResult, Error, string>,
   "mutationFn"
 >
@@ -21,7 +21,7 @@ type UseBiblioAcceptOfferOptions = Omit<
  * than borrowed through createLoan.
  */
 export const useDigitalAcceptOffer = (
-  options?: UseBiblioAcceptOfferOptions
+  options?: UseDigitalAcceptOfferOptions
 ): UseMutationResult<AcceptOfferResult, Error, string> => {
   const config = useServiceLayerConfig()
   return useMutation({
