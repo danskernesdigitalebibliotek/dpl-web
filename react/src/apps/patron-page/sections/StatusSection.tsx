@@ -10,21 +10,21 @@ import {
   getDigitalLoanQuota,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import useServiceLayerLending from "../../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
 
 const StatusSection: FC = () => {
   const t = useText();
-  const viaServiceLayer = useServiceLayerLending();
+  const viaBiblioAdapter = useBiblioAdapter();
 
   const { data: libraryProfileFetched } = useGetV1LibraryProfile({
-    query: { enabled: !viaServiceLayer }
+    query: { enabled: !viaBiblioAdapter }
   });
   const { isSuccess, data } = useGetV1UserLoans(
     {},
-    { query: { enabled: !viaServiceLayer } }
+    { query: { enabled: !viaBiblioAdapter } }
   );
   const { data: digitalQuotas } = useDigitalLoanQuotas({
-    enabled: viaServiceLayer
+    enabled: viaBiblioAdapter
   });
   const [libraryProfile, setLibraryProfile] = useState<LibraryProfile | null>(
     null
@@ -67,16 +67,16 @@ const StatusSection: FC = () => {
     period: "concurrent"
   });
 
-  const patronEbookLoans = viaServiceLayer
+  const patronEbookLoans = viaBiblioAdapter
     ? digitalEbookQuota.current
     : publizonQuotas.patronEbookLoans;
-  const patronAudioBookLoans = viaServiceLayer
+  const patronAudioBookLoans = viaBiblioAdapter
     ? digitalAudioQuota.current
     : publizonQuotas.patronAudioLoans;
-  const maxConcurrentEbookLoansPerBorrower = viaServiceLayer
+  const maxConcurrentEbookLoansPerBorrower = viaBiblioAdapter
     ? digitalEbookQuota.limit
     : libraryProfile?.maxConcurrentEbookLoansPerBorrower;
-  const maxConcurrentAudioLoansPerBorrower = viaServiceLayer
+  const maxConcurrentAudioLoansPerBorrower = viaBiblioAdapter
     ? digitalAudioQuota.limit
     : libraryProfile?.maxConcurrentAudioLoansPerBorrower;
 
@@ -85,7 +85,7 @@ const StatusSection: FC = () => {
   // equivalent document, so its quotas take that role.
   // An empty array is an answer, not a quota: rendering the section from it
   // would show a heading with two blank counters.
-  const hasQuotas = viaServiceLayer
+  const hasQuotas = viaBiblioAdapter
     ? Boolean(digitalQuotas?.length)
     : Boolean(libraryProfile);
 
@@ -117,7 +117,7 @@ const StatusSection: FC = () => {
           </div>
           {/* The service layer's quotas cover loans only - there are no reservation limits
               to show, so the line is left out rather than rendered as zero. */}
-          {!viaServiceLayer && (
+          {!viaBiblioAdapter && (
             <div className="text-body-small-regular mt-8 mb-8">
               {t("patronPageStatusSectionReservationsText", {
                 placeholders: {

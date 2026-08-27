@@ -1,6 +1,6 @@
 import { useGetV1UserReservations } from "../publizon/publizon";
 import { useDigitalReservations } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import useServiceLayerLending from "./useServiceLayerLending";
+import useBiblioAdapter from "./useBiblioAdapter";
 import {
   mapDigitalReservationToReservationType,
   mapFBSReservationGroupToReservationType,
@@ -42,7 +42,7 @@ type UseReservationsType = {
 type UseReservations = () => UseReservationsType;
 
 const useReservations: UseReservations = () => {
-  const viaServiceLayer = useServiceLayerLending();
+  const viaBiblioAdapter = useBiblioAdapter();
   const {
     data: reservationsFbs,
     isLoading: isLoadingFbs,
@@ -57,7 +57,7 @@ const useReservations: UseReservations = () => {
     data: reservationsServiceLayer,
     isLoading: isLoadingServiceLayer,
     isError: isErrorServiceLayer
-  } = useDigitalReservations({ enabled: viaServiceLayer });
+  } = useDigitalReservations({ enabled: viaBiblioAdapter });
 
   // A disabled query is never loading or in error so the service layer states
   // only count when the feature flag has enabled the query.

@@ -10,7 +10,7 @@ import GlobalUrlEntryPropsInterface from "../../../core/utils/types/global-url-p
 import { ReservationMaterialDetailsProps } from "../../../core/storybook/reservationMaterialDetailsArgs";
 import { DeleteReservationModalArgs } from "../../../core/storybook/deleteReservationModalArgs";
 import { GlobalEntryTextProps } from "../../../core/storybook/globalTextArgs";
-import { ServiceLayerLendingArgs } from "../../../core/storybook/serviceLayerLendingArgs";
+import { BiblioAdapterArgs } from "../../../core/storybook/biblioAdapterArgs";
 
 export interface ReservationListUrlProps {
   expirationWarningDaysBeforeConfig: string;
@@ -86,7 +86,7 @@ export interface ReservationListEntryWithPageSizeProps
     DeleteReservationModalArgs,
     ReservationMaterialDetailsProps,
     GlobalEntryTextProps,
-    ServiceLayerLendingArgs,
+    BiblioAdapterArgs,
     GlobalUrlEntryPropsInterface {
   pageSizeDesktop?: number;
   pageSizeMobile?: number;

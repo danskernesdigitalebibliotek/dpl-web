@@ -7,7 +7,7 @@ import {
   useGetV1ProductsIdentifier,
   useGetV1UserLoans
 } from "../../core/publizon/publizon";
-import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import {
   useDigitalLoanDecision,
   useDigitalLoanQuotas
@@ -63,7 +63,7 @@ vi.mock("../../core/publizon/publizon", () => ({
 }));
 
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: () => false }));
-vi.mock("../../core/utils/useServiceLayerLending", () => ({
+vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));
 
@@ -104,7 +104,7 @@ describe("MaterialAvailabilityTextOnline", () => {
 
   describe("with the feature flag off", () => {
     beforeEach(() => {
-      vi.mocked(useServiceLayerLending).mockReturnValue(false);
+      vi.mocked(useBiblioAdapter).mockReturnValue(false);
     });
 
     it("Shows Publizon's quota", () => {
@@ -126,7 +126,7 @@ describe("MaterialAvailabilityTextOnline", () => {
 
   describe("with the feature flag on", () => {
     beforeEach(() => {
-      vi.mocked(useServiceLayerLending).mockReturnValue(true);
+      vi.mocked(useBiblioAdapter).mockReturnValue(true);
     });
 
     const biblioLends = (loanProvider?: string) =>

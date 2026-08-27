@@ -9,7 +9,7 @@ import {
   mapPublizonLoanToLoanType
 } from "./helpers/list-mapper";
 import { LoanType } from "./types/loan-type";
-import useServiceLayerLending from "./useServiceLayerLending";
+import useBiblioAdapter from "./useBiblioAdapter";
 import useLoanThresholds from "./useLoanThresholds";
 
 // Loans with more than warning-threshold days until due
@@ -63,7 +63,7 @@ type UseLoans = () => UseLoansType;
 // divided into three categories: overdue, soon overdue, and far from overdue.
 // The hook is NOT responsible for any sorting of the loans.
 const useLoans: UseLoans = () => {
-  const viaServiceLayer = useServiceLayerLending();
+  const viaBiblioAdapter = useBiblioAdapter();
   const {
     data: loansFbs,
     isLoading: isLoadingFbs,
@@ -78,7 +78,7 @@ const useLoans: UseLoans = () => {
     data: loansServiceLayer,
     isLoading: isLoadingServiceLayer,
     isError: isErrorServiceLayer
-  } = useDigitalLoans({ enabled: viaServiceLayer });
+  } = useDigitalLoans({ enabled: viaBiblioAdapter });
 
   const threshold = useLoanThresholds();
   // A disabled query is never loading or in error so the service layer states

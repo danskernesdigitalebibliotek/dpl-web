@@ -7,7 +7,7 @@ import {
   mapProductToBasicDetailsType
 } from "../../../../core/utils/helpers/list-mapper";
 import { ListType } from "../../../../core/utils/types/list-type";
-import useServiceLayerLending from "../../../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
 import { useDigitalMaterial } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
   hasDigitalReservationId,
@@ -34,7 +34,7 @@ const fetchDigitalMaterial =
     if (item.identifier) {
       const [digitalMaterial, setDigitalMaterial] =
         useState<BasicDetailsType>();
-      const viaServiceLayer = useServiceLayerLending();
+      const viaBiblioAdapter = useBiblioAdapter();
 
       // A service layer loan carries its own catalogue fields; nothing to
       // look up.
@@ -46,7 +46,7 @@ const fetchDigitalMaterial =
       const isDigitalItem =
         isReservationType(item) && hasDigitalReservationId(item);
       const isProvidedByServiceLayer =
-        viaServiceLayer && !hasOwnDetails && isDigitalItem;
+        viaBiblioAdapter && !hasOwnDetails && isDigitalItem;
 
       const { data: serviceLayerMaterial, isLoading: isLoadingServiceLayer } =
         useDigitalMaterial(isProvidedByServiceLayer ? item.identifier : null);

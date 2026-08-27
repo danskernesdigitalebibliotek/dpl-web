@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { useConfig } from "../../core/utils/config";
 
 /**
@@ -20,7 +20,7 @@ const givenConfig = (value: string | undefined) => {
   }) as unknown as ReturnType<typeof useConfig>);
 };
 
-describe("useServiceLayerLending", () => {
+describe("useBiblioAdapter", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -28,33 +28,25 @@ describe("useServiceLayerLending", () => {
   it("Is on when the CMS says so", () => {
     givenConfig("1");
 
-    expect(renderHook(() => useServiceLayerLending()).result.current).toBe(
-      true
-    );
+    expect(renderHook(() => useBiblioAdapter()).result.current).toBe(true);
   });
 
   it("Is off when the CMS says so", () => {
     givenConfig("0");
 
-    expect(renderHook(() => useServiceLayerLending()).result.current).toBe(
-      false
-    );
+    expect(renderHook(() => useBiblioAdapter()).result.current).toBe(false);
   });
 
   it("Falls back to Publizon on a host that does not provide the config", () => {
     givenConfig(undefined);
 
-    expect(renderHook(() => useServiceLayerLending()).result.current).toBe(
-      false
-    );
+    expect(renderHook(() => useBiblioAdapter()).result.current).toBe(false);
   });
 
   it("Treats any other value as off", () => {
     givenConfig("true");
 
     // Only the CMS's own "1" counts, so a typo cannot switch a library over.
-    expect(renderHook(() => useServiceLayerLending()).result.current).toBe(
-      false
-    );
+    expect(renderHook(() => useBiblioAdapter()).result.current).toBe(false);
   });
 });

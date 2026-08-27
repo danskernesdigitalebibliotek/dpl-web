@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import useOnlineInternalHandleLoanReservation from "../../core/utils/useOnlineInternalHandleLoanReservation";
-import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import {
   useDigitalCreateLoan,
   useDigitalCreateReservation,
@@ -44,7 +44,7 @@ vi.mock(
 const IDENTIFIER = "9788727319346";
 const OFFER_ID = "9a1c7f30-4d62-4e18-b5a7-2c8e6f0b3d94";
 
-vi.mock("../../core/utils/useServiceLayerLending", () => ({
+vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));
 
@@ -104,7 +104,7 @@ const givenScenario = ({
   canBeReserved = false,
   offerId = null
 }: Scenario) => {
-  vi.mocked(useServiceLayerLending).mockReturnValue(flagOn);
+  vi.mocked(useBiblioAdapter).mockReturnValue(flagOn);
   // useReaderPlayer only reports a material as obtainable when the lending
   // provider said so, which is why these two travel together.
   vi.mocked(useReaderPlayer).mockReturnValue({

@@ -1,7 +1,7 @@
 import { Manifestation } from "./types/entities";
 import { getManifestationDigitalIdentifier } from "../../apps/material/helper";
 import { getReaderPlayerType } from "../../components/reader-player/helper";
-import useServiceLayerLending from "./useServiceLayerLending";
+import useBiblioAdapter from "./useBiblioAdapter";
 import { DigitalProvider } from "./types/digital-provider";
 import useDigitalReaderPlayerState from "./useDigitalReaderPlayerState";
 import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
@@ -31,7 +31,7 @@ import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
  * learn which provider produced it.
  */
 const useReaderPlayer = (manifestation: Manifestation | null) => {
-  const viaServiceLayer = useServiceLayerLending();
+  const viaBiblioAdapter = useBiblioAdapter();
 
   const type = getReaderPlayerType(manifestation);
   const identifier = manifestation
@@ -40,17 +40,17 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
 
   const serviceLayer = useDigitalReaderPlayerState({
     identifier,
-    enabled: viaServiceLayer
+    enabled: viaBiblioAdapter
   });
 
   const publizon = usePublizonReaderPlayerState({
     identifier,
     // Publizon is always asked what the user already holds, but it may only
     // decide on a new loan while it is still the lending provider.
-    canAcquire: !viaServiceLayer
+    canAcquire: !viaBiblioAdapter
   });
 
-  const acquisition = viaServiceLayer ? serviceLayer : publizon;
+  const acquisition = viaBiblioAdapter ? serviceLayer : publizon;
 
   // A material is held by one provider or the other, never both: whoever has
   // the loan or the reservation answers for it.

@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import useReaderPlayer from "../../core/utils/useReaderPlayer";
-import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import useDigitalReaderPlayerState from "../../core/utils/useDigitalReaderPlayerState";
 import usePublizonReaderPlayerState from "../../core/utils/usePublizonReaderPlayerState";
 import {
@@ -23,7 +23,7 @@ import {
  * existing loans stop opening.
  */
 
-vi.mock("../../core/utils/useServiceLayerLending", () => ({
+vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));
 vi.mock("../../core/utils/useDigitalReaderPlayerState", () => ({
@@ -57,7 +57,7 @@ const given = ({
   biblio?: Partial<ReaderPlayerState>;
   publizon?: Partial<ReaderPlayerState>;
 }) => {
-  vi.mocked(useServiceLayerLending).mockReturnValue(flagOn);
+  vi.mocked(useBiblioAdapter).mockReturnValue(flagOn);
   vi.mocked(useDigitalReaderPlayerState).mockReturnValue(state(biblio));
   vi.mocked(usePublizonReaderPlayerState).mockReturnValue(state(publizon));
 };

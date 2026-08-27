@@ -2,7 +2,7 @@ import React from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render } from "@testing-library/react";
 import ReaderEntry from "../../apps/reader/Reader.entry";
-import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../core/utils/helpers/user";
 
 /**
@@ -39,7 +39,7 @@ vi.mock("../../core/utils/text", () => ({
   withText: (component: unknown) => component
 }));
 
-vi.mock("../../core/utils/useServiceLayerLending", () => ({
+vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
@@ -47,7 +47,7 @@ vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
 describe("Reader page sample routing", () => {
   beforeEach(() => {
     cleanup();
-    vi.mocked(useServiceLayerLending).mockReturnValue(true);
+    vi.mocked(useBiblioAdapter).mockReturnValue(true);
     vi.mocked(isAnonymous).mockReturnValue(false);
   });
 
@@ -81,7 +81,7 @@ describe("Reader page sample routing", () => {
   });
 
   it("Keeps Publizon's sample while the flag is off", () => {
-    vi.mocked(useServiceLayerLending).mockReturnValue(false);
+    vi.mocked(useBiblioAdapter).mockReturnValue(false);
 
     const { queryByTestId } = render(
       <ReaderEntry identifier="9788711623497" />

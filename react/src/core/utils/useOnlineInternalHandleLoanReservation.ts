@@ -35,7 +35,7 @@ import {
 import { useEventStatistics } from "../statistics/useStatistics";
 import { statistics } from "../statistics/statistics";
 import { WorkId } from "./types/ids";
-import useServiceLayerLending from "./useServiceLayerLending";
+import useBiblioAdapter from "./useBiblioAdapter";
 
 type useOnlineInternalHandleLoanReservationType = {
   manifestations: Manifestation[];
@@ -63,7 +63,7 @@ const useOnlineInternalHandleLoanReservation = ({
   const authUrl = u("authUrl");
   const { openGuarded } = useModalButtonHandler();
   const { track } = useEventStatistics();
-  const viaServiceLayer = useServiceLayerLending();
+  const viaBiblioAdapter = useBiblioAdapter();
   const { mutate: mutateLoan } = usePostV1UserLoansIdentifier();
   const { mutate: mutateDigitalLoan } = useDigitalCreateLoan();
   const { mutate: mutateReservation } = usePostV1UserReservationsIdentifier();
@@ -114,7 +114,7 @@ const useOnlineInternalHandleLoanReservation = ({
     // shows the loan button - but the service layer requires the offer to be
     // accepted
     // instead of borrowing the material anew.
-    if (canBeLoaned && identifier && viaServiceLayer && digitalOfferId) {
+    if (canBeLoaned && identifier && viaBiblioAdapter && digitalOfferId) {
       mutateAcceptOffer(digitalOfferId, {
         onSuccess: (result) => {
           if (!result.success) {
@@ -149,7 +149,7 @@ const useOnlineInternalHandleLoanReservation = ({
 
     // During the transition period new digital loans must be created through
     // the service layer when the library has enabled the feature flag.
-    if (canBeLoaned && identifier && viaServiceLayer) {
+    if (canBeLoaned && identifier && viaBiblioAdapter) {
       mutateDigitalLoan(identifier, {
         onSuccess: (result) => {
           // The adapter can accept the request without creating a loan,
@@ -226,7 +226,7 @@ const useOnlineInternalHandleLoanReservation = ({
     // New digital reservations go through the adapter for the materials it
     // holds. The adapter derives the user from the token, so it needs no
     // contact details - Publizon takes email and phone number to notify with.
-    if (canBeReserved && identifier && viaServiceLayer) {
+    if (canBeReserved && identifier && viaBiblioAdapter) {
       mutateDigitalReservation(identifier, {
         onSuccess: (result) => {
           // The adapter answers 200 with a decision rather than an error when

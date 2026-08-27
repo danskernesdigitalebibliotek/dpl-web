@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
 import useDigitalAvailability from "../../core/digital/useDigitalAvailability";
 import { useDigitalLoanDecision } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../core/utils/helpers/user";
 
 // Only the query is stubbed. isMaterialAvailable stays real - it is the
@@ -17,13 +17,13 @@ vi.mock(
     useDigitalLoanDecision: vi.fn()
   })
 );
-vi.mock("../../core/utils/useServiceLayerLending", () => ({
+vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
 
 const mockedLoanDecision = vi.mocked(useDigitalLoanDecision);
-const mockedFlag = vi.mocked(useServiceLayerLending);
+const mockedFlag = vi.mocked(useBiblioAdapter);
 const mockedIsAnonymous = vi.mocked(isAnonymous);
 
 const ISBN = "9788727319346";

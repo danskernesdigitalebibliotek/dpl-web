@@ -17,7 +17,7 @@ import {
   useDigitalLoanDecision,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import useServiceLayerLending from "../../../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
 
 interface MaterialAvailabilityTextOnlineProps {
   /** The digital identifier the material is lent by - see
@@ -35,32 +35,32 @@ const MaterialAvailabilityTextOnline: React.FC<
   // With the adapter enabled it is the lending provider, so its quotas are the
   // ones that apply - Publizon's would describe limits the user is no longer
   // borrowing against.
-  const viaServiceLayer = useServiceLayerLending();
+  const viaBiblioAdapter = useBiblioAdapter();
 
   const { data: productsData } = useGetV1ProductsIdentifier(identifier, {
     query: {
       // We never want to pass an empty string to the API
       // So we only enable the query if we have an identifier
-      enabled: !!identifier && !viaServiceLayer
+      enabled: !!identifier && !viaBiblioAdapter
     }
   });
 
   const { data: libraryProfileData } = useGetV1LibraryProfile({
     query: {
-      enabled: !isUserAnonymous && !viaServiceLayer
+      enabled: !isUserAnonymous && !viaBiblioAdapter
     }
   });
   const { data: loansData } = useGetV1UserLoans(
     {},
     {
       query: {
-        enabled: !isUserAnonymous && !viaServiceLayer
+        enabled: !isUserAnonymous && !viaBiblioAdapter
       }
     }
   );
 
   const { data: digitalQuotas } = useDigitalLoanQuotas({
-    enabled: !isUserAnonymous && viaServiceLayer
+    enabled: !isUserAnonymous && viaBiblioAdapter
   });
 
   // Which licence this material would be lent under. Needed here because
@@ -68,14 +68,14 @@ const MaterialAvailabilityTextOnline: React.FC<
   // isCostFree below. A tolerated unknown material resolves to null and has
   // no licence to read a price from, which the falsy checks below handle.
   const { data: loanDecision } = useDigitalLoanDecision(identifier, {
-    enabled: Boolean(identifier) && viaServiceLayer
+    enabled: Boolean(identifier) && viaBiblioAdapter
   });
 
-  if (!productsData && !viaServiceLayer) return null;
+  if (!productsData && !viaBiblioAdapter) return null;
 
   const { patronEbookLoans, patronAudioLoans } = getPatronLoanQuotas(loansData);
 
-  const ebookQuota = viaServiceLayer
+  const ebookQuota = viaBiblioAdapter
     ? getDigitalLoanQuota({
         quotas: digitalQuotas,
         format: "ebook",
@@ -85,7 +85,7 @@ const MaterialAvailabilityTextOnline: React.FC<
         current: patronEbookLoans,
         limit: libraryProfileData?.maxConcurrentEbookLoansPerBorrower
       };
-  const audioQuota = viaServiceLayer
+  const audioQuota = viaBiblioAdapter
     ? getDigitalLoanQuota({
         quotas: digitalQuotas,
         format: "audiobook",
@@ -133,7 +133,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   // the organization configures a prioritized list of licences and can-loan
   // reports the one it picked, so which licences are cost-free is the service
   // layer's rule to know - see isCostFreeLoan.
-  const isCostFree = viaServiceLayer
+  const isCostFree = viaBiblioAdapter
     ? isCostFreeLoan(loanDecision?.loanProvider)
     : Boolean(productsData?.product?.costFree);
 

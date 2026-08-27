@@ -8,7 +8,7 @@ import { useText } from "../../../../core/utils/text";
 import { ButtonSize } from "../../../../core/utils/types/button";
 import useReaderPlayer from "../../../../core/utils/useReaderPlayer";
 import { readerUrl, sampleUrl } from "../../../reader-player/helper";
-import useServiceLayerLending from "../../../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
 import LinkButton from "../../../Buttons/LinkButton";
 import { Button } from "../../../Buttons/Button";
@@ -56,14 +56,14 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
 }) => {
   const { track } = useEventStatistics();
   const t = useText();
-  const viaServiceLayer = useServiceLayerLending();
+  const viaBiblioAdapter = useBiblioAdapter();
   // With the flag on, the service layer is the lending provider, so a
   // signed-in patron samples through it on the reader page - and Publizon
   // must not stand in for anyone. Samples are only answered for a signed-in
   // session, so an anonymous visitor gets a disabled button until an
   // anonymous sample exists.
-  const samplesThroughServiceLayer = viaServiceLayer && !isAnonymous();
-  const samplingUnavailable = viaServiceLayer && isAnonymous();
+  const samplesThroughServiceLayer = viaBiblioAdapter && !isAnonymous();
+  const samplingUnavailable = viaBiblioAdapter && isAnonymous();
   const { open } = useModalButtonHandler();
   const modalsToClose = useModalIdsToCloseForReservation();
   const modalCloseOptions = isEditionPicker ? { modalsToClose } : undefined;

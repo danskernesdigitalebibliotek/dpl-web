@@ -1,5 +1,5 @@
 import React from "react";
-import useServiceLayerLending from "../../core/utils/useServiceLayerLending";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import DigitalReaderPlayer from "./DigitalReaderPlayer";
 import DigitalSampleReaderPlayer from "./DigitalSampleReaderPlayer";
 import PublizonReader from "./PublizonReader";
@@ -33,7 +33,7 @@ const Reader: React.FC<ReaderProps> = ({
   sampletype,
   onClose
 }) => {
-  const viaServiceLayer = useServiceLayerLending();
+  const viaBiblioAdapter = useBiblioAdapter();
 
   // A loan id is the service layer's key, and no Publizon loan has one.
   if (loanid) {
@@ -45,7 +45,7 @@ const Reader: React.FC<ReaderProps> = ({
   // Publizon is never asked to stand in. Samples need a signed-in session, so
   // the teaser buttons are disabled for anonymous visitors - a hand-made link
   // lands on an empty page rather than in the service being left.
-  if (identifier && !orderid && viaServiceLayer) {
+  if (identifier && !orderid && viaBiblioAdapter) {
     return (
       <DigitalSampleReaderPlayer
         identifier={identifier}

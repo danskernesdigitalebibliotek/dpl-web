@@ -17,7 +17,7 @@ export default {
   biblioTolerateUnknownMaterialsConfig: "0"
 };
 
-export interface ServiceLayerLendingArgs {
+export interface BiblioAdapterArgs {
   useBiblioAdapterConfig: string;
   biblioTolerateUnknownMaterialsConfig: string;
 }

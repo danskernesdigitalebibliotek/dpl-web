@@ -2,7 +2,7 @@ import {
   isMaterialAvailable,
   useDigitalLoanDecision
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import useServiceLayerLending from "../utils/useServiceLayerLending";
+import useBiblioAdapter from "../utils/useBiblioAdapter";
 import { isAnonymous } from "../utils/helpers/user";
 
 type DigitalAvailability = {
@@ -44,9 +44,9 @@ const useDigitalAvailability = ({
   enabled: boolean;
   isbn: string | null;
 }): DigitalAvailability => {
-  const viaServiceLayer = useServiceLayerLending();
+  const viaBiblioAdapter = useBiblioAdapter();
   const isAnswering =
-    viaServiceLayer && enabled && Boolean(isbn) && !isAnonymous();
+    viaBiblioAdapter && enabled && Boolean(isbn) && !isAnonymous();
 
   const { data: loanDecision, isLoading } = useDigitalLoanDecision(isbn, {
     enabled: isAnswering
