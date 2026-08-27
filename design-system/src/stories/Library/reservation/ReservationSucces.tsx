@@ -13,11 +13,8 @@ const ReservationSucces = ({
     <section className="reservation-modal reservation-success">
       <div className="reservation-success__text-section">
         <h2 className="text-header-h3 pb-32 text-section__title">
-          Materialet er hjemme og er nu reserveret til dig!
+          &quot;Audrey Hepburn&quot; er reserveret til dig
         </h2>
-        <p className="reservation-success__text pb-16">
-          “Audrey Hepburn” er reserveret til dig
-        </p>
         <p className="reservation-success__text pb-16">
           Du står nummer 1 i køen. Der er 3 eksemplarer hjemme.
         </p>
