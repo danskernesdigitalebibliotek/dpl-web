@@ -34,9 +34,9 @@ const ReservationSucces = ({
       </div>
       {showRecommendations && (
         <div className="reservation-success__recommendations">
-          <h4 className="reservation-success__recommendations-title">
+          <h3 className="reservation-success__recommendations-title">
             Du er måske også interesseret i...
-          </h4>
+          </h3>
           <MaterialGrid
             selectedAmountOfMaterialsForDisplay={4}
             initialMaximumDisplay={4}
