@@ -162,7 +162,7 @@ const OnlineInternalModalBody = ({
           <div className="reservation-modal-submit">
             {identifier && (
               <MaterialAvailabilityTextOnline
-                isbns={[identifier]}
+                identifier={identifier}
                 materialType={manifestationType}
               />
             )}

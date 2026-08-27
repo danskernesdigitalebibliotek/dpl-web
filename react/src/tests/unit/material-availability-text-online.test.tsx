@@ -66,11 +66,6 @@ vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: () => false }));
 vi.mock("../../core/utils/useServiceLayerLending", () => ({
   default: vi.fn()
 }));
-// TEMPORARY toleration flag; reads config from Redux, which these renders
-// have no provider for. Off keeps the strict default under test.
-vi.mock("../../core/digital/useTolerateUnknownMaterials", () => ({
-  default: () => false
-}));
 
 const publizonSays = (quotas: {
   limit: number | undefined;
@@ -91,7 +86,7 @@ const publizonSays = (quotas: {
 const renderText = () =>
   render(
     <MaterialAvailabilityTextOnline
-      isbns={[ISBN]}
+      identifier={ISBN}
       materialType={"e-bog" as never}
     />
   );
