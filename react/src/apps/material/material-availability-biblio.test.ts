@@ -1,4 +1,4 @@
-import { TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../../core/token";
+import { TOKEN_USER_KEY } from "../../core/token";
 import {
   MaterialPage,
   materialStory
@@ -8,10 +8,7 @@ import {
   givenBiblioCanLoan,
   givenBiblioCannotAnswerCanLoan
 } from "../../../cypress/intercepts/biblio/biblio";
-import { givenAMaterial } from "../../../cypress/intercepts/fbi/material";
-import { interceptFbsCalls } from "../../../cypress/intercepts/fbs/fbs";
-import { interceptPublizonCalls } from "../../../cypress/intercepts/publizon/interceptPublizonCalls";
-import { ContentLoanStatusEnum } from "../../core/publizon/model";
+import { stubMaterialPageBackends } from "../../../cypress/intercepts/material-page";
 
 /**
  * The availability label on the material page during the transition.
@@ -22,43 +19,10 @@ import { ContentLoanStatusEnum } from "../../core/publizon/model";
  * user actually sees.
  */
 
-const stubBackends = () => {
-  cy.viewport(1280, 720);
-  cy.window().then((win) => {
-    win.sessionStorage.setItem(TOKEN_LIBRARY_KEY, "random-token");
-    // can-loan is patron-scoped, so the availability tests need a signed-in
-    // user for Biblio to answer on behalf of.
-    win.sessionStorage.setItem(TOKEN_USER_KEY, "random-user-token");
-  });
-
-  interceptFbsCalls();
-  // Publizon calls the e-book available (status 4). Both tests below expect
-  // the opposite, so a label that says otherwise can only have come from
-  // Biblio - and one that agrees with Publizon proves nothing.
-  interceptPublizonCalls({
-    loanStatus: { loanStatus: ContentLoanStatusEnum.NUMBER_4 }
-  });
-
-  cy.intercept("POST", "**/next/graphql*", {
-    statusCode: 200,
-    body: { data: null }
-  });
-  cy.intercept("POST", "**/next-present/graphql*", {
-    statusCode: 200,
-    body: { data: null }
-  });
-
-  // Registered after the catch-all so the work query wins.
-  givenAMaterial();
-
-  cy.intercept("HEAD", "**/materiallist.dandigbib.org/list/**", {
-    statusCode: 200
-  });
-  cy.intercept("GET", "**/materiallist.dandigbib.org/list/**", {
-    statusCode: 200,
-    body: []
-  });
-};
+// Publizon calls the e-book available (status 4, the shared default). The
+// tests below expect the opposite, so a label that says otherwise can only
+// have come from Biblio - and one that agrees with Publizon proves nothing.
+const stubBackends = () => stubMaterialPageBackends();
 
 const ebookLabel = (material: MaterialPage) =>
   material.elements
@@ -136,7 +100,7 @@ describe("Material page - online availability through the Biblio adapter", () =>
  * The catalogue lists digital materials WeDoBooks has not provisioned yet,
  * and the adapter answers 404 for those. Without the flag that error takes
  * the whole material page down; with it the material is simply unavailable.
- * Remove together with useTolerateUnknownMaterials.
+ * Remove together with ServiceLayerConfig.tolerateUnknownMaterials.
  */
 describe("Material page - a material the adapter does not know", () => {
   beforeEach(() => stubBackends());
