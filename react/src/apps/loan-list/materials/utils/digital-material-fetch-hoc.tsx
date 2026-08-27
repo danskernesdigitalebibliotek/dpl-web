@@ -1,6 +1,5 @@
-import React, { useEffect, useState, ComponentType, FC } from "react";
+import React, { ComponentType, FC } from "react";
 import { useGetV1ProductsIdentifier } from "../../../../core/publizon/publizon";
-import { BasicDetailsType } from "../../../../core/utils/types/basic-details-type";
 import { MaterialProps } from "./material-fetch-hoc";
 import {
   mapDigitalMaterialToBasicDetailsType,
@@ -32,8 +31,6 @@ const fetchDigitalMaterial =
     }
 
     if (item.identifier) {
-      const [digitalMaterial, setDigitalMaterial] =
-        useState<BasicDetailsType>();
       const viaBiblioAdapter = useBiblioAdapter();
 
       // A service layer loan carries its own catalogue fields; nothing to
@@ -51,36 +48,21 @@ const fetchDigitalMaterial =
       const { data: serviceLayerMaterial, isLoading: isLoadingServiceLayer } =
         useDigitalMaterial(isProvidedByServiceLayer ? item.identifier : null);
 
-      const {
-        data: productsData,
-        isSuccess: isSuccessDigital,
-        isLoading: isLoadingPublizon
-      } = useGetV1ProductsIdentifier(item.identifier, {
-        query: {
-          enabled:
-            !!item.identifier && !hasOwnDetails && !isProvidedByServiceLayer
-        }
-      });
+      const { data: productsData, isLoading: isLoadingPublizon } =
+        useGetV1ProductsIdentifier(item.identifier, {
+          query: { enabled: !hasOwnDetails && !isProvidedByServiceLayer }
+        });
 
-      useEffect(() => {
-        if (item.details) {
-          setDigitalMaterial(item.details);
-          return;
-        }
-        if (serviceLayerMaterial) {
-          setDigitalMaterial(
-            mapDigitalMaterialToBasicDetailsType(serviceLayerMaterial)
-          );
-          return;
-        }
-        if (productsData && isSuccessDigital && productsData.product) {
-          setDigitalMaterial(
-            mapProductToBasicDetailsType(productsData.product)
-          );
-        } else {
-          // todo error handling, missing in figma
-        }
-      }, [productsData, isSuccessDigital, serviceLayerMaterial, item.details]);
+      // The description is whatever the most authoritative source has: the
+      // fields the item itself carries, otherwise the provider that was asked.
+      const digitalMaterial =
+        item.details ??
+        (serviceLayerMaterial
+          ? mapDigitalMaterialToBasicDetailsType(serviceLayerMaterial)
+          : null) ??
+        (productsData?.product
+          ? mapProductToBasicDetailsType(productsData.product)
+          : null);
 
       // if the fallback component is provided we can show it while the data is loading
       if (isLoadingServiceLayer || isLoadingPublizon)
