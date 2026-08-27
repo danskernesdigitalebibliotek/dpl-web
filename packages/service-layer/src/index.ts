@@ -76,18 +76,16 @@ export {
   digitalReservationsQueryKey,
   readerSignInTokenQuery,
 } from "./queries/biblio"
-export {
-  useDigitalAcceptOffer,
-  useDigitalCreateLoan,
-  useDigitalCreateReservation,
-  useDigitalDeleteReservation,
-  useDigitalLoanDecision,
-  useDigitalLoanQuotas,
-  useDigitalLoans,
-  useDigitalMaterial,
-  useDigitalReservations,
-  useDigitalSupportId,
-} from "./hooks/biblio"
+export { useDigitalAcceptOffer } from "./hooks/useDigitalAcceptOffer"
+export { useDigitalCreateLoan } from "./hooks/useDigitalCreateLoan"
+export { useDigitalCreateReservation } from "./hooks/useDigitalCreateReservation"
+export { useDigitalDeleteReservation } from "./hooks/useDigitalDeleteReservation"
+export { useDigitalLoanDecision } from "./hooks/useDigitalLoanDecision"
+export { useDigitalLoanQuotas } from "./hooks/useDigitalLoanQuotas"
+export { useDigitalLoans } from "./hooks/useDigitalLoans"
+export { useDigitalMaterial } from "./hooks/useDigitalMaterial"
+export { useDigitalReservations } from "./hooks/useDigitalReservations"
+export { useDigitalSupportId } from "./hooks/useDigitalSupportId"
 export type { QuotaUsage } from "./biblio"
 export type {
   DigitalMaterial,
