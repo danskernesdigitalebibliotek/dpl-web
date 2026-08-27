@@ -1,11 +1,30 @@
 import {
+  isMaterialAvailable,
+  useDigitalLoanDecision
+} from "@danskernesdigitalebibliotek/dpl-service-layer";
+import {
   useGetV1LoanstatusIdentifier,
   useGetV1ProductsIdentifier
 } from "../../core/publizon/publizon";
 import { publizonProductStatuses } from "./types";
 import { AccessTypes } from "../../core/utils/types/entities";
-import useDigitalAvailability from "../../core/digital/useDigitalAvailability";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import { isAnonymous } from "../../core/utils/helpers/user";
 
+/**
+ * Availability of an online material: the service layer answers for the
+ * materials it provides, Publizon for the rest.
+ *
+ * With the flag on the service layer is THE lending provider: a material it
+ * cannot lend is not available, and Publizon must not stand in. Falling back
+ * would mean offering a loan the library has decided not to make, and the
+ * user would end up borrowing from the service we are migrating away from.
+ *
+ * TEMPORARY, and only this part: can-loan is patron-scoped, so the service
+ * layer is silent for visitors and Publizon answers for them - the two
+ * providers disagree until the service layer can be asked without a user.
+ * Remove that fallback then; the gate itself stays.
+ */
 const useOnlineAvailabilityData = ({
   enabled,
   access,
@@ -15,31 +34,26 @@ const useOnlineAvailabilityData = ({
   access: AccessTypes[];
   isbn: string | null;
 }) => {
+  const viaBiblioAdapter = useBiblioAdapter();
+
   // An online material outside the e-book service - a PressReader newspaper,
   // whose only identifier is a URI - is in neither Publizon nor the service
   // layer, so asking about it can only produce a 404.
   const isEreolMaterial = access.some((acc) => acc === "Ereol");
 
-  // Gates on the feature flag itself, so no check is needed here.
-  const {
-    isAnswering: isServiceLayerAnswering,
-    isAvailable: isAvailableViaServiceLayer,
-    isLoading: isLoadingServiceLayer
-  } = useDigitalAvailability({
-    enabled: enabled && isEreolMaterial,
-    isbn
-  });
+  // Who answers is decided here, once: the service layer when the library
+  // has switched and there is a patron to ask on behalf of - can-loan is
+  // patron-scoped - and Publizon for everything the service layer does not
+  // answer. Both need an ISBN to do lookups.
+  const askServiceLayer =
+    viaBiblioAdapter && enabled && isEreolMaterial && !!isbn && !isAnonymous();
+  const askPublizon = enabled && isEreolMaterial && !!isbn && !askServiceLayer;
 
-  // Publizon answers for everything the service layer does not - and must not
-  // answer at all while the service layer is the provider. It requires an
-  // ISBN to do lookups.
-  const askPublizon =
-    enabled && isEreolMaterial && !!isbn && !isServiceLayerAnswering;
+  const { data: loanDecision, isLoading: isLoadingServiceLayer } =
+    useDigitalLoanDecision(isbn, { enabled: askServiceLayer });
 
   // Find out if the material is cost free.
   const { isLoading: isLoadingIdentifier, data: dataIdentifier } =
-    // We never want to pass an empty string to the API
-    // So we only enable the query if we have an isbn
     useGetV1ProductsIdentifier(isbn ?? "", {
       query: { enabled: askPublizon }
     });
@@ -67,17 +81,24 @@ const useOnlineAvailabilityData = ({
     };
   }
 
-  // The service layer answers for the materials it provides; Publizon for the
-  // rest. Null when neither has answered - because the queries are still
-  // loading, or because neither service knows the material.
-  // Gated on askPublizon and not just on the query: while the service layer
-  // is the provider, a Publizon answer must be ignored even if one is already
-  // sitting in the cache.
+  // Both derivations are gated on who was asked, not just on the query: an
+  // answer sitting in the cache from a provider that may no longer answer
+  // must be ignored. Within a gate, null means "not answered yet".
+  const isAvailableViaServiceLayer = askServiceLayer
+    ? // null is the tolerated 404: the service layer is THE lending provider,
+      // so a material it does not know cannot be lent - unavailable, no
+      // fallback. undefined is simply not answered yet.
+      loanDecision === null
+      ? false
+      : ((loanDecision && isMaterialAvailable(loanDecision.status)) ?? null)
+    : null;
+
   const isAvailableViaPublizon =
     askPublizon && dataPublizon?.loanStatus
       ? publizonProductStatuses[dataPublizon.loanStatus].isAvailable
       : null;
 
+  // The first provider that was asked and has answered wins.
   const isAvailable = isAvailableViaServiceLayer ?? isAvailableViaPublizon;
 
   return {
