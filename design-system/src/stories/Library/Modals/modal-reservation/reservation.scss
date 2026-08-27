@@ -123,9 +123,19 @@
 // recommendations grid, which overflows and gives the modal a horizontal
 // scrollbar.
 .modal--reservation:has(.reservation-success) {
-  padding-top: $s-4xl;
+  padding-top: $s-2xl;
   padding-left: $s-xl;
   padding-right: $s-xl;
+
+  @include media-query__small {
+    padding-top: $s-4xl;
+  }
+
+  .modal-btn-close {
+    // Makes the background semi-transparent so text elements behind
+    // the button are still visible.
+    background-color: #{$color__global-primary}50;
+  }
 }
 
 .reservation-success__recommendations {
