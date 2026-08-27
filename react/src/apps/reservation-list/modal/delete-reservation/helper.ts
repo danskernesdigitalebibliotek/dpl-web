@@ -114,22 +114,18 @@ export const requestsAndReservations = ({
       operation: operations.physical
     });
   }
-  if (reservationsPublizon.length) {
-    reservationsPublizon.forEach((id) => {
-      requests.push({
-        params: { identifier: String(id) },
-        operation: operations.publizon
-      });
+  reservationsPublizon.forEach((id) => {
+    requests.push({
+      params: { identifier: String(id) },
+      operation: operations.publizon
     });
-  }
-  if (reservationsDigital.length) {
-    reservationsDigital.forEach((id) => {
-      requests.push({
-        params: String(id),
-        operation: operations.digital
-      });
+  });
+  reservationsDigital.forEach((id) => {
+    requests.push({
+      params: id,
+      operation: operations.digital
     });
-  }
+  });
 
   return {
     requests,
