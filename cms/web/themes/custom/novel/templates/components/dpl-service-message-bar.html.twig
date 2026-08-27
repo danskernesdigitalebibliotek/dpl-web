@@ -1,0 +1,31 @@
+{% extends '@dpl_service_message/dpl-service-message-bar.html.twig' %}
+
+{% block content %}
+  {% set tag = message.url ? 'a' : 'div' %}
+
+  <div class="service-message-bar" role="alert">
+    <{{ tag }}
+      {% if message.url %}href="{{ message.url }}"{% endif %}
+      class="service-message-bar__inner{{ message.url ? ' arrow arrow__hover--right-small' : '' }}">
+
+      <span class="service-message-bar__icon">
+        {{ source(themeIconPath ~ '/icon-bell.svg') }}
+      </span>
+
+      <span class="service-message-bar__content">
+        {% if message.heading %}
+          <span class="service-message-bar__heading">{{ message.heading }}</span>
+        {% endif %}
+        {% if message.body %}
+          <span class="service-message-bar__body">{{ message.body }}</span>
+        {% endif %}
+      </span>
+
+      {% if message.url %}
+        <span class="service-message-bar__arrow">
+          {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
+        </span>
+      {% endif %}
+    </{{ tag }}>
+  </div>
+{% endblock %}

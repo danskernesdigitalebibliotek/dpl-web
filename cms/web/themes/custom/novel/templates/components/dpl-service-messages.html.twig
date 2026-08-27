@@ -1,0 +1,40 @@
+{% extends '@dpl_service_message/dpl-service-messages.html.twig' %}
+
+{% block content %}
+  <div class="service-messages" role="status">
+    <div class="service-messages__container">
+      {# One icon for the whole group, not one per message. #}
+      <span class="service-messages__icon">
+        {{ source(themeIconPath ~ '/icon-bell.svg') }}
+      </span>
+
+      <ul class="service-messages__list">
+        {% for message in messages %}
+          {% set tag = message.url ? 'a' : 'div' %}
+
+          <li class="service-messages__item">
+            <{{ tag }}
+              {% if message.url %}href="{{ message.url }}"{% endif %}
+              class="service-messages__message{{ message.url ? ' arrow arrow__hover--right-small' : '' }}">
+
+              <span class="service-messages__text">
+                {% if message.heading %}
+                  <h3 class="service-messages__heading">{{ message.heading }}</h3>
+                {% endif %}
+                {% if message.body %}
+                  <div class="service-messages__body">{{ message.body }}</div>
+                {% endif %}
+              </span>
+
+              {% if message.url %}
+                <span class="service-messages__arrow">
+                  {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
+                </span>
+              {% endif %}
+            </{{ tag }}>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}

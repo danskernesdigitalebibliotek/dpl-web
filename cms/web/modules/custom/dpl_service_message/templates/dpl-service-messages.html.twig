@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * In-page service messages, stacked in one container.
+ *
+ * Available variables:
+ * - messages: a list of heading, body and url. Any of them may be empty.
+ *
+ * The theme overrides the content block with the real component markup.
+ */
+#}
+{% block content %}
+  <div class="service-messages" role="status">
+    {% for message in messages %}
+      <div class="service-messages__item">
+        {% if message.url %}<a href="{{ message.url }}">{% endif %}
+          {{ message.heading }}
+          {{ message.body }}
+        {% if message.url %}</a>{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock content %}
