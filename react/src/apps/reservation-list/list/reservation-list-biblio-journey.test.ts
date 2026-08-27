@@ -5,6 +5,7 @@ import {
 } from "../../../../cypress/page-objects/reservation-list/ReservationListPage";
 import { deleteReservationModalSelector } from "../../../../cypress/page-objects/reservation-list/components/delete-reservation-modal";
 import {
+  BIBLIO_MATERIAL,
   biblioOfferedReservationFactory,
   biblioReservationFactory
 } from "../../../../cypress/factories/biblio/biblio.factory";
@@ -40,11 +41,11 @@ import { publizonProductFactory } from "../../../../cypress/factories/publizon/p
 const PUBLIZON_ISBN = "9788771076940";
 const PUBLIZON_TITLE = "Tættere end man tror";
 
-// Biblio, from the factory defaults.
-const BIBLIO_QUEUED_ISBN = "9788727319346";
-const BIBLIO_QUEUED_TITLE = "Din for en sommer";
-const BIBLIO_OFFERED_ISBN = "9788740082265";
-const BIBLIO_OFFERED_TITLE = "Terræn";
+// Biblio, described through the shared factory fixture.
+const BIBLIO_QUEUED_ISBN = BIBLIO_MATERIAL.ebook.isbn;
+const BIBLIO_QUEUED_TITLE = BIBLIO_MATERIAL.ebook.title;
+const BIBLIO_OFFERED_ISBN = BIBLIO_MATERIAL.audiobook.isbn;
+const BIBLIO_OFFERED_TITLE = BIBLIO_MATERIAL.audiobook.title;
 
 // The reservation Biblio cancels by - deliberately not the ISBN, which is
 // what Publizon would have used.
