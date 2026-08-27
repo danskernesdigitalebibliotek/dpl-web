@@ -174,24 +174,28 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     return <MaterialButtonLoading />;
   };
 
+  // The disabled stand-in both teasers show while sampling is unavailable -
+  // identical apart from which teaser it stands in for.
+  const renderDisabledTeaserButton = (teaserDataCy: string) => (
+    <Button
+      dataCy={teaserDataCy}
+      label={tryLabel}
+      buttonType="none"
+      variant="outline"
+      size={size || "large"}
+      onClick={() => {}}
+      disabled
+      collapsible={false}
+    />
+  );
+
   const renderReaderTeaserButton = () => {
     // Don't show teaser if already loaned or not in modal view
     if (isAlreadyLoaned || !openModal) return null;
 
     if (identifier) {
       if (samplingUnavailable) {
-        return (
-          <Button
-            dataCy={`${dataCy}-reader-teaser`}
-            label={tryLabel}
-            buttonType="none"
-            variant="outline"
-            size={size || "large"}
-            onClick={() => {}}
-            disabled
-            collapsible={false}
-          />
-        );
+        return renderDisabledTeaserButton(`${dataCy}-reader-teaser`);
       }
 
       return (
@@ -290,18 +294,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
 
     if (identifier) {
       if (samplingUnavailable) {
-        return (
-          <Button
-            dataCy={`${dataCy}-player-teaser`}
-            label={tryLabel}
-            buttonType="none"
-            variant="outline"
-            size={size || "large"}
-            onClick={() => {}}
-            disabled
-            collapsible={false}
-          />
-        );
+        return renderDisabledTeaserButton(`${dataCy}-player-teaser`);
       }
 
       // The SDK's player pins itself to the bottom of the viewport, which
