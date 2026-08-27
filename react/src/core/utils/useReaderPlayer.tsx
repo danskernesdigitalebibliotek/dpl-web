@@ -68,7 +68,9 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
   // predicate above.
   const holdingProvider: DigitalProvider | null = heldByServiceLayer
     ? "serviceLayer"
-    : (heldByPublizon && "publizon") || null;
+    : heldByPublizon
+      ? "publizon"
+      : null;
 
   return {
     type,
