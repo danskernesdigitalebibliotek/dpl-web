@@ -6,7 +6,7 @@ describe("Material - Periodical", () => {
     });
 
     cy.interceptGraphql({
-      operationName: "WorkRecommendations",
+      operationName: "MaterialGridRecommendations",
       fixtureFilePath: "material/material-grid-related-recommendations.json"
     });
 

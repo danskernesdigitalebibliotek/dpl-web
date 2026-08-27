@@ -1,24 +1,20 @@
 import clsx from "clsx";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { WorkId } from "../../core/utils/types/ids";
-import { ManifestationMaterialType } from "../../core/utils/types/material-type";
+import { ButtonFavouriteId } from "../button-favourite/button-favourite";
 import MaterialListItem from "../card-item-list/MaterialListItem";
-import RecommendedMaterial from "../../apps/recommended-material/RecommendedMaterial";
+import RecommendedMaterial from "../recommended-material/recommended-material";
 import { useEventStatistics } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
-
-export type MaterialGridItemProps = {
-  wid: WorkId;
-  materialType?: ManifestationMaterialType;
-};
+import { MaterialGridItem } from "./helper";
 
 export type MaterialGridProps = {
-  materials: MaterialGridItemProps[];
+  materials: MaterialGridItem[];
   title?: string;
   description?: string;
   buttonText?: string;
   initialMaximumDisplay?: number;
+  onAddToFavourites: (id: ButtonFavouriteId) => void;
 };
 
 const defaultIncrement: number = 4;
@@ -33,7 +29,8 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
   title,
   description,
   buttonText,
-  initialMaximumDisplay = defaultIncrement
+  initialMaximumDisplay = defaultIncrement,
+  onAddToFavourites
 }) => {
   const firstNewItemRef = React.useRef<HTMLLIElement>(null);
   const { track } = useEventStatistics();
@@ -93,16 +90,19 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
         {materials
           .slice(0, currentAmountOfDisplayedMaterials)
           .map((material, index) => {
-            const { wid, materialType } = material;
             return (
               <MaterialListItem
-                key={wid}
+                key={material.wid}
                 ref={index === initialMaximumDisplay ? firstNewItemRef : null}
               >
                 <RecommendedMaterial
                   partOfGrid
-                  wid={wid}
-                  materialType={materialType}
+                  wid={material.wid}
+                  title={material.title}
+                  author={material.author}
+                  coverUrl={material.coverUrl}
+                  url={material.url}
+                  onAddToFavourites={onAddToFavourites}
                 />
               </MaterialListItem>
             );

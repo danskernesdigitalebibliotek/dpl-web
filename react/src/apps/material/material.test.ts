@@ -580,12 +580,12 @@ describe("Material", () => {
     });
 
     cy.interceptGraphql({
-      operationName: "WorkRecommendations",
+      operationName: "MaterialGridRecommendations",
       fixtureFilePath: "material/material-grid-related-recommendations.json"
     });
 
     cy.interceptGraphql({
-      operationName: "complexSearchWithPagination",
+      operationName: "MaterialGridComplexSearch",
       fixtureFilePath:
         "material/material-grid-related-author-recommendations.json"
     });
@@ -636,12 +636,12 @@ describe("Material", () => {
     });
 
     cy.interceptGraphql({
-      operationName: "WorkRecommendations",
+      operationName: "MaterialGridRecommendations",
       fixtureFilePath: "material/material-grid-related-recommendations.json"
     });
 
     cy.interceptGraphql({
-      operationName: "complexSearchWithPagination",
+      operationName: "MaterialGridComplexSearch",
       fixtureFilePath:
         "material/material-grid-related-author-recommendations.json"
     });

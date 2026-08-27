@@ -1,9 +1,8 @@
 import {
-  WorkRecommendationsQuery,
-  ComplexSearchWithPaginationQuery
+  MaterialGridComplexSearchQuery,
+  MaterialGridRecommendationsQuery,
+  WorkForMaterialGridFragment
 } from "../../core/dbc-gateway/generated/graphql";
-import { WorkId } from "../../core/utils/types/ids";
-import { MaterialGridItemProps } from "../material-grid/MaterialGrid";
 import {
   MaterialGridFilterOption,
   MaterialGridFilterType
@@ -14,21 +13,17 @@ export function prepareCreatorCql(creators: string[]): string {
   return creators.map((name) => `term.creator='${name}'`).join(" OR ");
 }
 
-export function extractMaterialsFromRecommendations(
-  data?: WorkRecommendationsQuery
-): MaterialGridItemProps[] {
+export function extractWorksFromRecommendations(
+  data?: MaterialGridRecommendationsQuery
+): WorkForMaterialGridFragment[] {
   if (!data?.recommend?.result) return [];
-  return data.recommend.result.map(({ work }) => ({
-    wid: work.workId as WorkId
-  }));
+  return data.recommend.result.map(({ work }) => work);
 }
-export function extractMaterialsFromComplexSearch(
-  data?: ComplexSearchWithPaginationQuery
-): MaterialGridItemProps[] {
+export function extractWorksFromComplexSearch(
+  data?: MaterialGridComplexSearchQuery
+): WorkForMaterialGridFragment[] {
   if (!data?.complexSearch?.works) return [];
-  return data.complexSearch.works.map((work) => ({
-    wid: work.workId as WorkId
-  }));
+  return data.complexSearch.works;
 }
 export function getPreferredFallback(
   options: MaterialGridFilterOption[]

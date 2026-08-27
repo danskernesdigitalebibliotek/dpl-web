@@ -1,5 +1,5 @@
 import * as React from "react";
-import RecommendedMaterialComponent from "../../components/recommended-material/recommended-material";
+import RecommendedMaterialAdapter from "../../components/recommended-material/RecommendedMaterialAdapter";
 import { WorkId } from "../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 
@@ -15,7 +15,7 @@ const RecommendedMaterial: React.FC<RecommendedMaterialProps> = ({
   partOfGrid = false
 }) => {
   return (
-    <RecommendedMaterialComponent
+    <RecommendedMaterialAdapter
       wid={wid}
       materialType={materialType}
       partOfGrid={partOfGrid}

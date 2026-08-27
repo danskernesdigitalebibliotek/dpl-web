@@ -13,13 +13,13 @@ describe("Material - Order digital copy", () => {
     // Intercept MaterialGridRelated queries so they don't hit the real server
     // and trigger a GuardedApp error boundary that would replace the page UI.
     cy.interceptGraphql({
-      operationName: "WorkRecommendations",
+      operationName: "MaterialGridRecommendations",
       fixtureFilePath: "material/material-grid-related-recommendations.json",
       middleware: true
     });
 
     cy.interceptGraphql({
-      operationName: "complexSearchWithPagination",
+      operationName: "MaterialGridComplexSearch",
       fixtureFilePath:
         "material/material-grid-related-author-recommendations.json",
       middleware: true

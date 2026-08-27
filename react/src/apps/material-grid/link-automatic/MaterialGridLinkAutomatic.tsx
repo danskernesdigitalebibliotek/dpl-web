@@ -3,12 +3,14 @@ import MaterialGrid from "../../../components/material-grid/MaterialGrid";
 import MaterialGridSkeleton from "../../../components/material-grid/MaterialGridSkeleton";
 import {
   CsHoldingsStatusEnum,
-  useComplexSearchWithPaginationQuery
+  useMaterialGridComplexSearchQuery
 } from "../../../core/dbc-gateway/generated/graphql";
+import { mapWorkToMaterialGridItem } from "../../../components/material-grid/helper";
 import useGetSearchBranches from "../../../core/utils/branches";
 import { getQueryParams } from "../../../core/utils/helpers/url";
 import { useText } from "../../../core/utils/text";
-import { WorkId } from "../../../core/utils/types/ids";
+import { useUrls } from "../../../core/utils/url";
+import useAddToFavourites from "../../../core/utils/useAddToFavourites";
 import { commaSeparatedStringToArray } from "../../advanced-search/helpers";
 import {
   advancedSortMap,
@@ -29,12 +31,15 @@ const MaterialGridLinkAutomatic: React.FC<MaterialGridLinkAutomaticProps> = ({
   requestedAmount
 }) => {
   const t = useText();
+  const u = useUrls();
+  const materialUrl = u("materialUrl");
+  const addToFavourites = useAddToFavourites();
   const buttonText = t("buttonText");
   const cleanBranches = useGetSearchBranches();
   const { advancedSearchCql, location, sublocation, onshelf, sort } =
     getQueryParams(link);
 
-  const { data, isLoading } = useComplexSearchWithPaginationQuery(
+  const { data, isLoading } = useMaterialGridComplexSearchQuery(
     {
       cql: advancedSearchCql,
       offset: 0,
@@ -63,11 +68,9 @@ const MaterialGridLinkAutomatic: React.FC<MaterialGridLinkAutomaticProps> = ({
   }
 
   const resultWorks = data.complexSearch.works;
-  const materials = resultWorks.map((work) => {
-    return {
-      wid: work.workId as WorkId
-    };
-  });
+  const materials = resultWorks.map((work) =>
+    mapWorkToMaterialGridItem(work, { t, materialUrl })
+  );
 
   return (
     <>
@@ -76,6 +79,7 @@ const MaterialGridLinkAutomatic: React.FC<MaterialGridLinkAutomaticProps> = ({
         materials={materials}
         description={description}
         buttonText={buttonText}
+        onAddToFavourites={addToFavourites}
       />
     </>
   );

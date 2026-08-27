@@ -1,0 +1,70 @@
+# Lean selection for material grids: exactly the fields needed to render a
+# grid item (title, creators, cover) and to resolve a pinned material type to
+# the right manifestation (material types + publication year/edition sorting).
+fragment ManifestationForMaterialGrid on Manifestation {
+  pid
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  edition {
+    publicationYear {
+      display
+    }
+    summary
+  }
+  cover {
+    large {
+      url
+    }
+  }
+}
+
+fragment WorkForMaterialGrid on Work {
+  workId
+  titles {
+    full
+  }
+  creators {
+    display
+  }
+  manifestations {
+    all {
+      ...ManifestationForMaterialGrid
+    }
+    bestRepresentation {
+      ...ManifestationForMaterialGrid
+    }
+  }
+}
+
+query MaterialGridRecommendations($pid: String!, $limit: Int!) {
+  recommend(pid: $pid, limit: $limit) {
+    result {
+      work {
+        ...WorkForMaterialGrid
+      }
+    }
+  }
+}
+
+query MaterialGridComplexSearch(
+  $cql: String!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: ComplexSearchFiltersInput!
+  $sort: [SortInput!]
+) {
+  complexSearch(cql: $cql, filters: $filters) {
+    works(offset: $offset, limit: $limit, sort: $sort) {
+      ...WorkForMaterialGrid
+    }
+  }
+}
+
+query MaterialGridWorksByIds($ids: [String!]!) {
+  works(id: $ids) {
+    ...WorkForMaterialGrid
+  }
+}

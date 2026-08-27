@@ -11,7 +11,7 @@ import { ManifestationMaterialType } from "../../core/utils/types/material-type"
 import { useUrls } from "../../core/utils/url";
 
 import RecommendationMaterialSkeleton from "./RecommendationSkeleton";
-import RecommendedMaterial from "../../components/recommended-material/recommended-material";
+import RecommendedMaterialAdapter from "../../components/recommended-material/RecommendedMaterialAdapter";
 
 export type RecommendationProps = {
   wid: WorkId;
@@ -71,7 +71,7 @@ const Recommendation: React.FC<RecommendationProps> = ({
       )}
       data-cy="recommendation"
     >
-      <RecommendedMaterial wid={wid} materialType={materialType} />
+      <RecommendedMaterialAdapter wid={wid} materialType={materialType} />
       <Link
         href={materialFullUrl}
         className="recommendation__texts arrow__hover--right-small"
