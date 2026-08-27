@@ -389,6 +389,11 @@ function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): vo
         ->setRouteParameter('wid', ':workid')
         ->toString()
     )),
+    'series' => urldecode(dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_react_apps.series')
+        ->setRouteParameter('series_id', ':seriesid')
+        ->toString()
+    )),
     'logout' => dpl_react_apps_ensure_url_is_string(
       Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString()
     ),
@@ -437,6 +442,39 @@ function dpl_react_apps_preprocess_html(array &$variables): void {
       $tags['og:title'] = $fbi->getWorkTitle($wid);
       $tags['og:description'] = $fbi->getWorkAbstract($wid);
       $coverInfo = $fbi->getWorkCoverInfo($wid);
+
+      if ($coverInfo) {
+        $tags['og:image'] = $coverInfo->url;
+        $tags['og:image:url'] = $coverInfo->url;
+        $tags['og:image:height'] = $coverInfo->height;
+        $tags['og:image:width'] = $coverInfo->width;
+      }
+    }
+    catch (\Throwable $e) {
+      // Keep calm and carry on.
+    }
+  }
+  elseif ($route->getRouteName() === 'dpl_react_apps.series') {
+    $series_id = $route->getParameter('series_id');
+    $fbi = DrupalTyped::service(Fbi::class, Fbi::class);
+    try {
+      // An empty og tag tells a sharing site less than no tag at all - it
+      // suppresses the fallbacks the site would otherwise use - so title and
+      // description are only emitted when FBI has something to say. Around a
+      // third of series have no description.
+      $title = $fbi->getSeriesTitle($series_id);
+
+      if ($title) {
+        $tags['og:title'] = $title;
+      }
+
+      $description = $fbi->getSeriesDescription($series_id);
+
+      if ($description) {
+        $tags['og:description'] = $description;
+      }
+
+      $coverInfo = $fbi->getSeriesCoverInfo($series_id);
 
       if ($coverInfo) {
         $tags['og:image'] = $coverInfo->url;

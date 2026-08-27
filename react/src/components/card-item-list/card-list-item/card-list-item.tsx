@@ -64,6 +64,7 @@ const CardListItem: React.FC<CardListItemProps> = ({
   const t = useText();
   const u = useUrls();
   const searchUrl = u("searchUrl");
+  const seriesUrl = u("seriesUrl");
   const materialUrl = u("materialUrl");
 
   const { filters } = useFilterHandler();
@@ -155,6 +156,7 @@ const CardListItem: React.FC<CardListItemProps> = ({
           <SeriesList
             series={series}
             searchUrl={searchUrl}
+            seriesUrl={seriesUrl}
             t={t}
             workId={workId}
           />

@@ -251,6 +251,7 @@ fragment ManifestationReviewFields on Manifestation {
 
 fragment SeriesSimple on Series {
   title
+  seriesId
   isPopular
   members {
     numberInSeries

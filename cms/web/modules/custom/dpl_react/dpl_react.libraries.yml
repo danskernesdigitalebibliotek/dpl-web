@@ -368,6 +368,18 @@ share-buttons:
     - dpl_react/base
     - dpl_react/handler
 
+series:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-web/blob/main/react/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/Series.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
 handler:
   js:
     js/handler.js: {}
