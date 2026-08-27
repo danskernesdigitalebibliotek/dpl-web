@@ -63,7 +63,7 @@ export const formatFullCalendarEventToCmsEventAdd = (
 export const formatFullCalendarEventToCmsEventEdit = (
   event: EventInput & Pick<DplOpeningHoursUpdatePATCH200Item, "repetition">
 ): DplOpeningHoursUpdatePATCH200Item => {
-  if (!event.title || !event.backgroundColor) {
+  if (!event.title || !event.color) {
     throw new Error("Invalid event format");
   }
 
@@ -74,7 +74,7 @@ export const formatFullCalendarEventToCmsEventEdit = (
     id: Number(event.id),
     category: {
       title: event.title,
-      color: event.backgroundColor
+      color: event.color
     },
     date: formatDateForAPI(startDate),
     start_time: extractTime(startDate),

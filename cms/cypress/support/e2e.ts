@@ -25,6 +25,14 @@ import 'cypress-plugin-api';
 import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector';
 installLogsCollector();
 
+Cypress.on('uncaught:exception', (error) => {
+  // Benign browser error, emitted regularly when FullCalendar re-renders.
+  if (error.message.includes('ResizeObserver loop')) {
+    return false;
+  }
+  return true;
+});
+
 beforeEach(() => {
   cy.log('Setting cookie consent to Accept All');
   cy.setCookie(
