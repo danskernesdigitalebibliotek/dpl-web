@@ -87,6 +87,158 @@ const useOnlineInternalHandleLoanReservation = ({
     offerId: digitalOfferId
   } = useReaderPlayer(getLoanableManifestation(manifestations));
 
+  const reportLoan = (status: RequestStatus) => setLoanStatus?.(status);
+  const reportReservation = (status: RequestStatus) =>
+    setReservationStatus?.(status);
+  const reportPublizonError = (err: unknown) => {
+    if (err instanceof PublizonServiceError) {
+      setReservationOrLoanErrorResponse?.(err.responseBody);
+    }
+  };
+  const trackLoan = () =>
+    track("click", {
+      id: statistics.publizonLoan.id,
+      name: statistics.publizonLoan.name,
+      trackedData: workId
+    });
+  const trackReservation = () =>
+    track("click", {
+      id: statistics.publizonReserve.id,
+      name: statistics.publizonReserve.name,
+      trackedData: workId
+    });
+
+  // Everything the adapter's answer for this material was derived from is
+  // stale once the user has borrowed or reserved it: the loan and
+  // reservation lists, the can-loan decision behind the button, and the
+  // quota counts the availability text reads.
+  const invalidateDigital = () => {
+    [
+      digitalLoansQueryKey(),
+      digitalReservationsQueryKey(),
+      digitalLoanDecisionQueryKey(identifier),
+      digitalLoanQuotasQueryKey()
+    ].forEach((queryKey) => queryClient.invalidateQueries({ queryKey }));
+  };
+
+  const acceptOffer = (offerId: string) => {
+    mutateAcceptOffer(offerId, {
+      onSuccess: (result) => {
+        if (!result.success) {
+          reportLoan("error");
+          return;
+        }
+        trackLoan();
+        invalidateDigital();
+        reportLoan("success");
+        // Accepting an offer answers with the loan id only, so the
+        // expiration date is not known until the loan list is refetched.
+        setLoanResponse?.(null);
+      },
+      onError: () => reportLoan("error")
+    });
+  };
+
+  const loanViaAdapter = (materialId: string) => {
+    mutateDigitalLoan(materialId, {
+      onSuccess: (result) => {
+        // The adapter can accept the request without creating a loan,
+        // eg. when a quota is exceeded.
+        if (!result.loan) {
+          reportLoan("error");
+          return;
+        }
+        trackLoan();
+        invalidateDigital();
+        reportLoan("success");
+        // Map to the shape the success modal expects.
+        setLoanResponse?.({ expirationDateUtc: result.loan.endDate });
+      },
+      onError: () => reportLoan("error")
+    });
+  };
+
+  const loanViaPublizon = (materialId: string) => {
+    mutateLoan(
+      { identifier: materialId },
+      {
+        onSuccess: (res) => {
+          trackLoan();
+          // Ensure that the button is updated after a successful loan
+          queryClient.invalidateQueries({
+            queryKey: getGetV1UserLoansQueryKey()
+          });
+          queryClient.invalidateQueries({
+            queryKey: getGetV1LoanstatusIdentifierQueryKey(materialId)
+          });
+          reportLoan("success");
+          setLoanResponse?.(res);
+        },
+        onError: (err) => {
+          reportPublizonError(err);
+          reportLoan("error");
+        }
+      }
+    );
+  };
+
+  const reserveViaAdapter = (materialId: string) => {
+    mutateDigitalReservation(materialId, {
+      onSuccess: (result) => {
+        // The adapter answers 200 with a decision rather than an error when
+        // it refuses, so a request it accepted but did not act on must not
+        // tell the user they are queued.
+        if (!isRequestGranted(result.status)) {
+          reportReservation("error");
+          return;
+        }
+        trackReservation();
+        // A reservation can be granted right away, in which case the
+        // adapter answers with a loan instead.
+        invalidateDigital();
+        reportReservation("success");
+      },
+      onError: () => reportReservation("error")
+    });
+  };
+
+  // Publizon takes email and phone number to notify with - the adapter, by
+  // contrast, derives the user from the token and needs no contact details.
+  const reserveViaPublizon = (materialId: string) => {
+    if (!userData?.patron) {
+      return;
+    }
+    const { emailAddress, phoneNumber } = userData.patron;
+    mutateReservation(
+      {
+        identifier: materialId,
+        data: {
+          ...(emailAddress && { email: emailAddress }),
+          ...(phoneNumber && {
+            phoneNumber: formatDanishPhoneNumber(phoneNumber)
+          })
+        }
+      },
+      {
+        onSuccess: () => {
+          trackReservation();
+          // Ensure that the button is updated after a successful reservation
+          queryClient.invalidateQueries({
+            queryKey: getGetV1UserReservationsQueryKey()
+          });
+          queryClient.invalidateQueries({
+            queryKey: getGetV1LoanstatusIdentifierQueryKey(materialId)
+          });
+          reportReservation("success");
+        },
+        onError: (err) => {
+          reportPublizonError(err);
+          reportReservation("error");
+        }
+      }
+    );
+  };
+
   const handleModalLoanReservation = () => {
     if (openModal) {
       openGuarded({
@@ -97,211 +249,26 @@ const useOnlineInternalHandleLoanReservation = ({
       return;
     }
 
-    // Everything the adapter's answer for this material was derived from is
-    // stale once the user has borrowed or reserved it: the loan and
-    // reservation lists, the can-loan decision behind the button, and the
-    // quota counts the availability text reads.
-    const invalidateDigital = () => {
-      [
-        digitalLoansQueryKey(),
-        digitalReservationsQueryKey(),
-        digitalLoanDecisionQueryKey(identifier),
-        digitalLoanQuotasQueryKey()
-      ].forEach((queryKey) => queryClient.invalidateQueries({ queryKey }));
-    };
-
-    // Publizon has no explicit redeem step - a redeemable reservation just
-    // shows the loan button - but the service layer requires the offer to be
-    // accepted
-    // instead of borrowing the material anew.
-    if (canBeLoaned && identifier && viaBiblioAdapter && digitalOfferId) {
-      mutateAcceptOffer(digitalOfferId, {
-        onSuccess: (result) => {
-          if (!result.success) {
-            if (setLoanStatus) {
-              setLoanStatus("error");
-            }
-            return;
-          }
-          track("click", {
-            id: statistics.publizonLoan.id,
-            name: statistics.publizonLoan.name,
-            trackedData: workId
-          });
-          invalidateDigital();
-          if (setLoanStatus) {
-            setLoanStatus("success");
-          }
-          // Accepting an offer answers with the loan id only, so the
-          // expiration date is not known until the loan list is refetched.
-          if (setLoanResponse) {
-            setLoanResponse(null);
-          }
-        },
-        onError: () => {
-          if (setLoanStatus) {
-            setLoanStatus("error");
-          }
-        }
-      });
-      return;
-    }
-
-    // During the transition period new digital loans must be created through
-    // the service layer when the library has enabled the feature flag.
-    if (canBeLoaned && identifier && viaBiblioAdapter) {
-      mutateDigitalLoan(identifier, {
-        onSuccess: (result) => {
-          // The adapter can accept the request without creating a loan,
-          // eg. when a quota is exceeded.
-          if (!result.loan) {
-            if (setLoanStatus) {
-              setLoanStatus("error");
-            }
-            return;
-          }
-          track("click", {
-            id: statistics.publizonLoan.id,
-            name: statistics.publizonLoan.name,
-            trackedData: workId
-          });
-          invalidateDigital();
-          if (setLoanStatus) {
-            setLoanStatus("success");
-          }
-          if (setLoanResponse) {
-            // Map to the shape the success modal expects.
-            setLoanResponse({ expirationDateUtc: result.loan.endDate });
-          }
-        },
-        onError: () => {
-          if (setLoanStatus) {
-            setLoanStatus("error");
-          }
-        }
-      });
-      return;
-    }
-
     if (canBeLoaned && identifier) {
-      mutateLoan(
-        { identifier },
-        {
-          onSuccess: (res) => {
-            track("click", {
-              id: statistics.publizonLoan.id,
-              name: statistics.publizonLoan.name,
-              trackedData: workId
-            });
-            // Ensure that the button is updated after a successful loan
-            queryClient.invalidateQueries({
-              queryKey: getGetV1UserLoansQueryKey()
-            });
-            queryClient.invalidateQueries({
-              queryKey: getGetV1LoanstatusIdentifierQueryKey(identifier)
-            });
-            if (setLoanStatus) {
-              setLoanStatus("success");
-            }
-            if (setLoanResponse) {
-              setLoanResponse(res);
-            }
-          },
-          onError: (err) => {
-            if (err instanceof PublizonServiceError) {
-              if (setReservationOrLoanErrorResponse) {
-                setReservationOrLoanErrorResponse(err.responseBody);
-              }
-            }
-
-            if (setLoanStatus) {
-              setLoanStatus("error");
-            }
-          }
-        }
-      );
+      if (!viaBiblioAdapter) {
+        loanViaPublizon(identifier);
+      } else if (digitalOfferId) {
+        // Publizon has no explicit redeem step - a redeemable reservation
+        // just shows the loan button - but the service layer requires the
+        // offer to be accepted instead of borrowing the material anew.
+        acceptOffer(digitalOfferId);
+      } else {
+        loanViaAdapter(identifier);
+      }
       return;
     }
 
-    // New digital reservations go through the adapter for the materials it
-    // holds. The adapter derives the user from the token, so it needs no
-    // contact details - Publizon takes email and phone number to notify with.
-    if (canBeReserved && identifier && viaBiblioAdapter) {
-      mutateDigitalReservation(identifier, {
-        onSuccess: (result) => {
-          // The adapter answers 200 with a decision rather than an error when
-          // it refuses, so a request it accepted but did not act on must not
-          // tell the user they are queued.
-          if (!isRequestGranted(result.status)) {
-            if (setReservationStatus) {
-              setReservationStatus("error");
-            }
-            return;
-          }
-          track("click", {
-            id: statistics.publizonReserve.id,
-            name: statistics.publizonReserve.name,
-            trackedData: workId
-          });
-          // A reservation can be granted right away, in which case the
-          // adapter answers with a loan instead.
-          invalidateDigital();
-          if (setReservationStatus) {
-            setReservationStatus("success");
-          }
-        },
-        onError: () => {
-          if (setReservationStatus) {
-            setReservationStatus("error");
-          }
-        }
-      });
-      return;
-    }
-
-    if (canBeReserved && identifier && userData?.patron) {
-      mutateReservation(
-        {
-          identifier,
-          data: {
-            ...(userData.patron.emailAddress && {
-              email: userData.patron.emailAddress
-            }),
-            ...(userData.patron.phoneNumber && {
-              phoneNumber: formatDanishPhoneNumber(userData.patron.phoneNumber)
-            })
-          }
-        },
-        {
-          onSuccess: () => {
-            track("click", {
-              id: statistics.publizonReserve.id,
-              name: statistics.publizonReserve.name,
-              trackedData: workId
-            });
-            // Ensure that the button is updated after a successful reservation
-            queryClient.invalidateQueries({
-              queryKey: getGetV1UserReservationsQueryKey()
-            });
-            queryClient.invalidateQueries({
-              queryKey: getGetV1LoanstatusIdentifierQueryKey(identifier)
-            });
-            if (setReservationStatus) {
-              setReservationStatus("success");
-            }
-          },
-          onError: (err) => {
-            if (err instanceof PublizonServiceError) {
-              if (setReservationOrLoanErrorResponse) {
-                setReservationOrLoanErrorResponse(err.responseBody);
-              }
-            }
-            if (setReservationStatus) {
-              setReservationStatus("error");
-            }
-          }
-        }
-      );
+    if (canBeReserved && identifier) {
+      if (viaBiblioAdapter) {
+        reserveViaAdapter(identifier);
+      } else {
+        reserveViaPublizon(identifier);
+      }
     }
   };
 
