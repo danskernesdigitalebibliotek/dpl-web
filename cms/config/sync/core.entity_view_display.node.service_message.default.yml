@@ -1,0 +1,55 @@
+uuid: ce767b44-1334-4382-ac79-44311cdacae9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.service_message.field_svcmsg_body
+    - field.field.node.service_message.field_svcmsg_branches
+    - field.field.node.service_message.field_svcmsg_frontpage
+    - field.field.node.service_message.field_svcmsg_heading
+    - field.field.node.service_message.field_svcmsg_link
+    - field.field.node.service_message.field_svcmsg_placement
+    - node.type.service_message
+  module:
+    - link
+    - text
+id: node.service_message.default
+targetEntityType: node
+bundle: service_message
+mode: default
+content:
+  field_svcmsg_body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_svcmsg_heading:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_svcmsg_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: null
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  field_svcmsg_branches: true
+  field_svcmsg_frontpage: true
+  field_svcmsg_placement: true
+  langcode: true
+  links: true
+  preview_token: true
+  search_api_excerpt: true

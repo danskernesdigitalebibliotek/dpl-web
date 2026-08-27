@@ -1,0 +1,24 @@
+uuid: 17bcc215-3d0b-4628-9f5e-501b9d2a9cf6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_svcmsg_body
+    - filter.format.limited
+    - node.type.service_message
+  module:
+    - text
+id: node.service_message.field_svcmsg_body
+field_name: field_svcmsg_body
+entity_type: node
+bundle: service_message
+label: 'Body text'
+description: 'Optional if the title is filled in.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - limited
+field_type: text_long
