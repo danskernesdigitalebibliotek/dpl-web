@@ -324,7 +324,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
   $view_mode = $variables['view_mode'] ?? 'default';
   $paragraph = $variables['paragraph'] ?? NULL;
 
-  if ($view_mode === 'preview' || !($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_cql_search')) {
+  if ($view_mode === 'preview' || !($paragraph instanceof MaterialGridAutomaticParagraph)) {
     return;
   }
 
@@ -353,6 +353,13 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
     }
 
     $render['#data'][$filter] = $cql_search[0][$filter];
+  }
+
+  // A prioritised material type makes clicking a material open that material
+  // type, falling back to the normal logic if the material does not have it.
+  $priority_type = $paragraph->getPriorityMaterialType();
+  if ($priority_type) {
+    $render['#data']['material-type'] = $priority_type;
   }
 
   $variables['content'] = [
