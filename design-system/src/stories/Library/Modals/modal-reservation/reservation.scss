@@ -117,6 +117,7 @@
 // recommendations grid, which overflows and gives the modal a horizontal
 // scrollbar.
 .modal--reservation:has(.reservation-success) {
+  padding-top: $s-4xl;
   padding-left: $s-xl;
   padding-right: $s-xl;
 }
