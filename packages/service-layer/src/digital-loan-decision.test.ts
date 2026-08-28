@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { isMaterialAvailable } from "./biblio"
+import { isMaterialAvailable } from "./digital-loan-decision"
 
 describe("isMaterialAvailable", () => {
   it("Treats a loanable material as available", () => {

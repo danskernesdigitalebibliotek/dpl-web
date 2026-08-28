@@ -2,7 +2,7 @@
 
 import type { UseQueryResult } from "@tanstack/react-query"
 
-import { digitalSupportIdQuery, type digitalSupportIdQueryKey } from "../queries/biblio"
+import { digitalSupportIdQuery, type digitalSupportIdQueryKey } from "../queries/digital-support-id"
 import { type DigitalQueryOptions, useDigitalQuery } from "./internal"
 
 export const useDigitalSupportId = (

@@ -2,7 +2,7 @@
 
 import type { UseMutationResult } from "@tanstack/react-query"
 
-import { acceptDigitalOffer } from "../biblio"
+import { acceptDigitalOffer } from "../digital-reservations"
 import { type DigitalMutationOptions, useDigitalMutation } from "./internal"
 
 type AcceptOfferResult = { success: boolean; loanId?: string }

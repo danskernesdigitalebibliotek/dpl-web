@@ -2,7 +2,10 @@
 
 import type { UseQueryResult } from "@tanstack/react-query"
 
-import { digitalLoanDecisionQuery, type digitalLoanDecisionQueryKey } from "../queries/biblio"
+import {
+  digitalLoanDecisionQuery,
+  type digitalLoanDecisionQueryKey,
+} from "../queries/digital-loan-decision"
 import type { LoanDecision } from "../types"
 import { type DigitalQueryOptions, useDigitalQuery } from "./internal"
 

@@ -2,7 +2,7 @@
 
 import type { UseMutationResult } from "@tanstack/react-query"
 
-import { createDigitalReservation } from "../biblio"
+import { createDigitalReservation } from "../digital-reservations"
 import type { LoanRequestResult } from "../types"
 import { type DigitalMutationOptions, useDigitalMutation } from "./internal"
 

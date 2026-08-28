@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { getDigitalLoanQuota } from "./biblio"
+import { getDigitalLoanQuota } from "./digital-quotas"
 import { type DigitalLoanQuota } from "./types"
 
 describe("getDigitalLoanQuota", () => {

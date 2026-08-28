@@ -2,7 +2,7 @@
 
 import type { UseQueryResult } from "@tanstack/react-query"
 
-import { digitalMaterialQuery, type digitalMaterialQueryKey } from "../queries/biblio"
+import { digitalMaterialQuery, type digitalMaterialQueryKey } from "../queries/digital-material"
 import type { DigitalMaterial } from "../types"
 import { type DigitalQueryOptions, useDigitalQuery } from "./internal"
 

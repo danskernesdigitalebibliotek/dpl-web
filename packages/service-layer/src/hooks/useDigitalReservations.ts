@@ -2,7 +2,10 @@
 
 import type { UseQueryResult } from "@tanstack/react-query"
 
-import { digitalReservationsQuery, type digitalReservationsQueryKey } from "../queries/biblio"
+import {
+  digitalReservationsQuery,
+  type digitalReservationsQueryKey,
+} from "../queries/digital-reservations"
 import type { DigitalReservation } from "../types"
 import { type DigitalQueryOptions, useDigitalQuery } from "./internal"
 

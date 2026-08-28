@@ -62,20 +62,18 @@ export { getFees } from "./fees"
 // builders behind them stay internal until something server-side needs them
 // - a smaller surface is less to keep stable.
 export {
-  getDigitalLoanQuota,
-  isCostFreeLoan,
   isMaterialAvailable,
   isMaterialLoanable,
   isMaterialReservable,
   isRequestGranted,
-} from "./biblio"
-export {
-  digitalLoanDecisionQueryKey,
-  digitalLoanQuotasQueryKey,
-  digitalLoansQueryKey,
-  digitalReservationsQueryKey,
-  readerSignInTokenQuery,
-} from "./queries/biblio"
+} from "./digital-loan-decision"
+export { isCostFreeLoan } from "./digital-loans"
+export { getDigitalLoanQuota } from "./digital-quotas"
+export { digitalLoanDecisionQueryKey } from "./queries/digital-loan-decision"
+export { digitalLoansQueryKey } from "./queries/digital-loans"
+export { digitalLoanQuotasQueryKey } from "./queries/digital-quotas"
+export { digitalReservationsQueryKey } from "./queries/digital-reservations"
+export { readerSignInTokenQuery } from "./queries/reader"
 export { useDigitalAcceptOffer } from "./hooks/useDigitalAcceptOffer"
 export { useDigitalCreateLoan } from "./hooks/useDigitalCreateLoan"
 export { useDigitalCreateReservation } from "./hooks/useDigitalCreateReservation"
@@ -86,7 +84,7 @@ export { useDigitalLoans } from "./hooks/useDigitalLoans"
 export { useDigitalMaterial } from "./hooks/useDigitalMaterial"
 export { useDigitalReservations } from "./hooks/useDigitalReservations"
 export { useDigitalSupportId } from "./hooks/useDigitalSupportId"
-export type { QuotaUsage } from "./biblio"
+export type { QuotaUsage } from "./digital-quotas"
 export type {
   DigitalMaterial,
   DigitalMaterialType,

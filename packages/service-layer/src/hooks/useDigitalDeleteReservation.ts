@@ -2,7 +2,7 @@
 
 import type { UseMutationResult } from "@tanstack/react-query"
 
-import { deleteDigitalReservation } from "../biblio"
+import { deleteDigitalReservation } from "../digital-reservations"
 import { type DigitalMutationOptions, useDigitalMutation } from "./internal"
 
 /**

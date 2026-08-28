@@ -2,7 +2,7 @@
 
 import type { UseMutationResult } from "@tanstack/react-query"
 
-import { createDigitalLoan } from "../biblio"
+import { createDigitalLoan } from "../digital-loans"
 import type { LoanRequestResult } from "../types"
 import { type DigitalMutationOptions, useDigitalMutation } from "./internal"
 
