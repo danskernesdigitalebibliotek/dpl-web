@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DatesSetArg, EventInput } from "@fullcalendar/core";
+import { DatesSetInfo, EventInput } from "@fullcalendar/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { formatCmsEventsToFullCalendar } from "./helper";
 import {
@@ -10,7 +10,7 @@ import {
   useDplOpeningHoursUpdatePATCH
 } from "../../core/dpl-cms/dpl-cms";
 import {
-  DplOpeningHoursCreatePOSTOpeningHoursInstanceBody,
+  DplOpeningHoursCreatePOSTBody,
   DplOpeningHoursUpdatePATCH200Item
 } from "../../core/dpl-cms/model";
 import { useConfig } from "../../core/utils/config";
@@ -22,7 +22,7 @@ const useOpeningHoursEditor = () => {
   const openingHoursBranchId = config("openingHoursBranchIdConfig", {
     transformer: "stringToNumber"
   });
-  const [datesSet, setDatseSet] = useState<null | DatesSetArg>(null);
+  const [datesSet, setDatseSet] = useState<null | DatesSetInfo>(null);
   const queryClient = useQueryClient();
   const { data: openingHoursData } = useDplOpeningHoursListGET(
     {
@@ -32,7 +32,7 @@ const useOpeningHoursEditor = () => {
         to_date: formatDateForAPI(datesSet.end)
       })
     },
-    { enabled: !!datesSet }
+    { query: { enabled: !!datesSet } }
   );
   const { mutate: removeOpeningHours, isPending: removeOpeningHoursLoading } =
     useDplOpeningHoursDeleteDELETE();
@@ -49,7 +49,7 @@ const useOpeningHoursEditor = () => {
     }
   }, [openingHoursData]);
 
-  const handleDatesSet = (datesInView: DatesSetArg) => {
+  const handleDatesSet = (datesInView: DatesSetInfo) => {
     setDatseSet(datesInView);
   };
 
@@ -68,9 +68,7 @@ const useOpeningHoursEditor = () => {
     window.location.reload();
   };
 
-  const handleEventAdd = (
-    event: DplOpeningHoursCreatePOSTOpeningHoursInstanceBody
-  ) => {
+  const handleEventAdd = (event: DplOpeningHoursCreatePOSTBody) => {
     createOpeningHours(
       {
         data: {

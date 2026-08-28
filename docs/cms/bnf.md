@@ -98,3 +98,41 @@ paragraphs mapped.
 
 This process maps the responses back to node object that's then saved
 locally.
+
+### Metrics
+
+Both sides report subscriptions to Prometheus through the
+`dpl_metrics` module, so that the BNF team can see how the network
+uses a given content stream without asking 100+ libraries.
+
+Client sites emit one series per stream they subscribe to, plus the
+number of subscriptions so that a site subscribing to nothing is
+distinguishable from one that has stopped reporting:
+
+```text
+dpl_cms_bnf_subscriptions{project="...",environment="..."} 2
+dpl_cms_bnf_subscription_info{project="...",environment="...",stream="<term uuid>",name="Sommerlæsning"} 1
+```
+
+The BNF site emits the names of the terms libraries can subscribe to:
+
+```text
+dpl_cms_bnf_stream_info{stream="<term uuid>",name="Sommerlæsning",vocabulary="categories"} 1
+```
+
+Streams are identified by the UUID of the term on delingstjenesten.dk,
+because that is the only identifier that means the same thing on every
+site. The `name` a client reports is what *that library* calls the
+subscription — the term name as it stood when they subscribed, unless
+they have renamed it since — so count by the UUID and join the
+authoritative name on:
+
+```promql
+count by (stream) (dpl_cms_bnf_subscription_info)
+  * on (stream) group_left(name) dpl_cms_bnf_stream_info
+```
+
+Publishing the name from the BNF site rather than looking it up from
+each client is deliberate: a lookup at scrape time would have every
+library site call delingstjenesten.dk every scrape interval. Prometheus
+already collects from both ends, so the join costs nothing.

@@ -43,8 +43,10 @@
  */
 #}
 
-{# Overflow hidden is necessary, to avoid the header breaking out on mobile. #}
-<div class="overflow-hidden">
+{# Clips the header's absolutely positioned desktop nav, which would otherwise
+   make the page scroll horizontally on mobile. Keep `.overflow-x-clip`:
+   `.overflow-hidden` here silently stops the header from sticking. #}
+<div class="overflow-x-clip">
   {{ include('@novel/layout/header.html.twig'
     , {
     header: page.header,

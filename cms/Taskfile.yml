@@ -7,6 +7,13 @@ dotenv: [".task.env"]
 
 interval: 500ms
 
+env:
+  # Everything this Taskfile runs is dev or CI, where /app is bind-mounted
+  # over the image content. Make every docker compose command — explicit
+  # builds and implicit ones during up/run alike — skip the baked-in
+  # composer and JS asset builds (see the build args in docker-compose.yml).
+  SKIP_BAKED_IN_BUILDS: "true"
+
 includes:
   translations: ./task/Taskfile.translations.yml
   lagoon: ./task/Taskfile.lagoon.yml
@@ -131,8 +138,12 @@ tasks:
       - "{{ .LAGOON_DIR }}/**/*"
       - "{{ .LAGOON_DIR }}/*"
       - "web/sites/sites.php"
+      # The compose files define build args and the ignore file defines the
+      # build context, so both change what a build produces.
+      - "docker-compose*.yml"
+      - "../.dockerignore"
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} build --build-arg SKIP_COMPOSER_INSTALL=true
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} build
 
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
@@ -154,7 +165,6 @@ tasks:
       - dev:build
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
-      - ./dev-scripts/add-to-etc-hosts.sh https dpl-cms.docker
     vars:
       CI:
         sh: '[[ -z "${CI}" ]] && echo "false" || echo "true"'
@@ -195,8 +205,8 @@ tasks:
       # Stop potential running environment.
       - dev:down
     cmds:
-      # Create a .env file with recommended defaults.
-      - cp -n .env.example .env || true
+      # cms/.env is a symlink to the central root .env., then ensure the symlink.
+      - '[ -e .env ] || ln -s ../.env .env'
       # Pull the images (necessary for the first reset)
       - '{{ if .MARIADB_IMAGE }}MARIADB_IMAGE={{ .MARIADB_IMAGE }} {{ end }}task dev:pull'
       # Start local environment.
@@ -264,9 +274,14 @@ tasks:
       - task dev:cli -- drush user:role:add 'patron' patron
 
   dev:import-profile-translations:
-    desc: Import our custom profile translations. This is done automatically on deploy.
+    desc: Import the latest translations from the translation server.
+    # Mirrors what install-site.sh and the post-deploy hooks in .lagoon.yml do.
+    # Both the UI and the configuration translations are served from GitHub
+    # Pages, not from the repository - see docs/cms/translation.md.
     cmds:
-      - task dev:cli -- drush locale-import da profiles/dpl_cms/translations/da.po
+      - task dev:cli -- drush locale-check
+      - task dev:cli -- drush locale-update
+      - task dev:cli -- drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
 
   dev:restore:database:
     desc: 'Restore database from db dump file. Only one sql should be present the "{{ .DIR_RESTORE_DATABASE }}" directory.'
@@ -391,6 +406,10 @@ tasks:
   ci:reset:
     desc: Create CI setup
     cmds:
+      # CI has no 1Password access, so the central .env cannot be generated the
+      # usual way. dev:reset only symlinks cms/.env to it and would leave a
+      # dangling link.
+      - task -d {{.TASKFILE_DIR}}/.. dev:dotenv:template
       - task dev:reset
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
@@ -399,6 +418,7 @@ tasks:
   ci:reset:clean:
     desc: Create CI setup with a clean database
     cmds:
+      - task -d {{.TASKFILE_DIR}}/.. dev:dotenv:template
       - task dev:reset:clean
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
@@ -549,7 +569,9 @@ tasks:
   ci:openapi:download:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | corepack pnpm dlx jsome -r > openapi.json
+      - task dev:cli -- curl "http://varnish:8080/openapi/rest?_format=json&language=en" -o openapi.tmp
+      - task -d .. dev:cli -- sh -c "cd cms && corepack pnpm dlx jsome -r < openapi.tmp > openapi.json"
+      - rm -f openapi.tmp
 
   ci:shellcheck:
     desc: Run ShellCheck on CMS helper scripts

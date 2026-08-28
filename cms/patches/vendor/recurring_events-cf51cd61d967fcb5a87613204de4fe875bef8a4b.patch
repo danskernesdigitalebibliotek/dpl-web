@@ -1,0 +1,215 @@
+diff --git a/src/EventCreationService.php b/src/EventCreationService.php
+index 83d610b9972728e51008f8b400c30dea344663e4..d6c741be60fee11b9b491bb42179aa7f8205ce3e 100644
+--- a/src/EventCreationService.php
++++ b/src/EventCreationService.php
+@@ -371,9 +371,9 @@ class EventCreationService {
+    *   The event series.
+    *
+    * @return array<string, array{start_date: \Drupal\Core\Datetime\DrupalDateTime, end_date: \Drupal\Core\Datetime\DrupalDateTime}>
+-   *   An array where each key is a start date formatted as RFC 2822 / RFC 5322
+-   *   and each value is an array having 'start_date' and 'end_date', which are
+-   *   DrupalDateTime values.
++   *   An array where each key is the start and end date of the occurrence, both
++   *   formatted as RFC 2822 / RFC 5322, and each value is an array having
++   *   'start_date' and 'end_date', which are DrupalDateTime values.
+    *
+    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+    */
+@@ -392,9 +392,9 @@ class EventCreationService {
+    *   The event series.
+    *
+    * @return array<string, array{start_date: \Drupal\Core\Datetime\DrupalDateTime, end_date: \Drupal\Core\Datetime\DrupalDateTime}>
+-   *   An array where each key is a start date formatted as RFC 2822 / RFC 5322
+-   *   and each value is an array having 'start_date' and 'end_date', which are
+-   *   DrupalDateTime values.
++   *   An array where each key is the start and end date of the occurrence, both
++   *   formatted as RFC 2822 / RFC 5322, and each value is an array having
++   *   'start_date' and 'end_date', which are DrupalDateTime values.
+    *
+    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+    */
+@@ -406,7 +406,7 @@ class EventCreationService {
+         if (!empty($config['custom_dates'])) {
+           foreach ($config['custom_dates'] as $date_range) {
+             if (isset($date_range['start_date'], $date_range['end_date'])) {
+-              $dates[$date_range['start_date']->format('r')] = [
++              $dates[$date_range['start_date']->format('r') . '/' . $date_range['end_date']->format('r')] = [
+                 'start_date' => $date_range['start_date'],
+                 'end_date' => $date_range['end_date'],
+               ];
+diff --git a/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php b/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
+index ab3a802f2e898dc135a7f8a875daecb1105afdb5..3001708d9dae52b8fed0c2d7101c3d3e074ad924 100644
+--- a/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
++++ b/src/Plugin/Field/FieldType/ConsecutiveRecurringDate.php
+@@ -257,7 +257,7 @@ class ConsecutiveRecurringDate extends DateRangeItem implements RecurringEventsF
+               // Add the number of seconds specified in the duration field.
+               $daily_date_end->modify('+' . $form_data['duration'] . ' ' . $form_data['duration_units']);
+               // Set this event to be created.
+-              $events_to_create[$day_time->format('r')] = [
++              $events_to_create[$day_time->format('r') . '/' . $daily_date_end->format('r')] = [
+                 'start_date' => $day_time,
+                 'end_date' => $daily_date_end,
+               ];
+diff --git a/src/Plugin/Field/FieldType/DailyRecurringDate.php b/src/Plugin/Field/FieldType/DailyRecurringDate.php
+index 4fcc1296ac840b304fe7aa037e8d715009e43fb2..688ad192f4a1c67c0d5c30fb590ca905a2f79f38 100644
+--- a/src/Plugin/Field/FieldType/DailyRecurringDate.php
++++ b/src/Plugin/Field/FieldType/DailyRecurringDate.php
+@@ -201,9 +201,10 @@ class DailyRecurringDate extends DateRangeItem implements RecurringEventsFieldTy
+    *   'duration', and 'end_time' keys.
+    *
+    * @return array<string, array{'start_date': \Drupal\Core\Datetime\DrupalDateTime, 'end_date': \Drupal\Core\Datetime\DrupalDateTime}>
+-   *   An array where the keys are datetime strings in RFC 2822/RFC 5322 format,
+-   *   and the values are arrays containing 'start_date' and 'end_date' keys,
+-   *   each of contains a DrupalDateTime object.
++   *   An array where the keys are the start and end datetime of the occurrence,
++   *   both in RFC 2822/RFC 5322 format, and the values are arrays containing
++   *   'start_date' and 'end_date' keys, each of contains a DrupalDateTime
++   *   object.
+    */
+   protected static function calculateInstancesStartEndDateTimes(array $dates, array $form_data): array {
+     $events_to_create = [];
+@@ -238,7 +239,7 @@ class DailyRecurringDate extends DateRangeItem implements RecurringEventsFieldTy
+       $end_date->setTimezone($utc_timezone);
+ 
+       // Set this event to be created.
+-      $events_to_create[$start_date->format('r')] = [
++      $events_to_create[$start_date->format('r') . '/' . $end_date->format('r')] = [
+         'start_date' => $start_date,
+         'end_date' => $end_date,
+       ];
+diff --git a/src/RecurringEventsFieldTypeInterface.php b/src/RecurringEventsFieldTypeInterface.php
+index ff7840a397b3ecb5136a56869aadf35e5c65b6dd..c46599ab1598628c2f08389e17b008a19d98ad77 100644
+--- a/src/RecurringEventsFieldTypeInterface.php
++++ b/src/RecurringEventsFieldTypeInterface.php
+@@ -41,9 +41,10 @@ interface RecurringEventsFieldTypeInterface {
+    *   The updated event series form data.
+    *
+    * @return array<string, array{'start_date': \Drupal\Core\Datetime\DrupalDateTime, 'end_date': \Drupal\Core\Datetime\DrupalDateTime}>
+-   *   An array where the keys are datetime strings in RFC 2822/RFC 5322 format,
+-   *   and the values are arrays containing 'start_date' and 'end_date' keys,
+-   *   each of contains a DrupalDateTime object.
++   *   An array where the keys are the start and end datetime of the occurrence,
++   *   both in RFC 2822/RFC 5322 format, and the values are arrays containing
++   *   'start_date' and 'end_date' keys, each of contains a DrupalDateTime
++   *   object.
+    */
+   public static function calculateInstances(array $form_data): array;
+ 
+diff --git a/tests/src/Kernel/EventCreationServiceTest.php b/tests/src/Kernel/EventCreationServiceTest.php
+new file mode 100644
+index 0000000000000000000000000000000000000000..ceb999b58fb6be89b2a89aaf78de2aaae76a4f3f
+--- /dev/null
++++ b/tests/src/Kernel/EventCreationServiceTest.php
+@@ -0,0 +1,112 @@
++<?php
++
++declare(strict_types=1);
++
++namespace Drupal\Tests\recurring_events\Kernel;
++
++use Drupal\KernelTests\KernelTestBase;
++use Drupal\Tests\recurring_events\Traits\EventSeriesCreationTrait;
++
++/**
++ * @coversDefaultClass \Drupal\recurring_events\EventCreationService
++ * @group recurring_events
++ * @requires module field_inheritance
++ */
++class EventCreationServiceTest extends KernelTestBase {
++
++  use EventSeriesCreationTrait;
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = [
++    'datetime',
++    'datetime_range',
++    'field_inheritance',
++    'options',
++    'recurring_events',
++    'system',
++    'text',
++    'user',
++  ];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function setUp(): void {
++    parent::setUp();
++    $this->installEntitySchema('user');
++    $this->installEntitySchema('eventseries');
++    $this->installEntitySchema('eventinstance');
++    $this->installConfig([
++      'field_inheritance',
++      'recurring_events',
++      'datetime',
++      'system',
++    ]);
++  }
++
++  /**
++   * Occurrences sharing a start date but not an end date are both kept.
++   *
++   * @covers ::calculateEventSeriesDates
++   * @covers ::calculateDatesFromConfigArray
++   * @covers ::createInstances
++   */
++  public function testSameStartDateWithDifferentEndDates(): void {
++    $series = $this->createUnsavedEventSeries([
++      'recur_type' => 'custom',
++      'custom_date' => [
++        ['value' => '2030-01-07T10:00:00', 'end_value' => '2030-01-07T12:00:00'],
++        ['value' => '2030-01-07T10:00:00', 'end_value' => '2030-01-07T14:00:00'],
++      ],
++    ]);
++
++    $dates = $this->container->get('recurring_events.event_creation_service')
++      ->calculateEventSeriesDates($series);
++    $this->assertCount(2, $dates, 'Occurrences with the same start date but different end dates should each be calculated.');
++
++    $series->save();
++    $instances = $series->getInstances();
++    $this->assertCount(2, $instances, 'Occurrences with the same start date but different end dates should each be created.');
++
++    $actual = [];
++    foreach ($instances as $instance) {
++      $actual[] = [
++        'start' => $instance->date->start_date->format('Y-m-d\TH:i:s'),
++        'end' => $instance->date->end_date->format('Y-m-d\TH:i:s'),
++      ];
++    }
++    usort($actual, fn (array $a, array $b) => $a['end'] <=> $b['end']);
++
++    $this->assertSame([
++      ['start' => '2030-01-07T10:00:00', 'end' => '2030-01-07T12:00:00'],
++      ['start' => '2030-01-07T10:00:00', 'end' => '2030-01-07T14:00:00'],
++    ], $actual, 'Both occurrences should keep the dates they were configured with.');
++  }
++
++  /**
++   * Occurrences sharing both a start and an end date collapse into one.
++   *
++   * @covers ::calculateEventSeriesDates
++   * @covers ::calculateDatesFromConfigArray
++   * @covers ::createInstances
++   */
++  public function testIdenticalDatesCreateOneInstance(): void {
++    $series = $this->createUnsavedEventSeries([
++      'recur_type' => 'custom',
++      'custom_date' => [
++        ['value' => '2030-01-07T10:00:00', 'end_value' => '2030-01-07T12:00:00'],
++        ['value' => '2030-01-07T10:00:00', 'end_value' => '2030-01-07T12:00:00'],
++      ],
++    ]);
++
++    $dates = $this->container->get('recurring_events.event_creation_service')
++      ->calculateEventSeriesDates($series);
++    $this->assertCount(1, $dates, 'Occurrences with identical start and end dates should be calculated only once.');
++
++    $series->save();
++    $this->assertCount(1, $series->getInstances(), 'Occurrences with identical start and end dates should be created only once.');
++  }
++
++}

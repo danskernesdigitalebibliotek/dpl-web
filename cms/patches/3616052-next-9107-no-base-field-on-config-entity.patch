@@ -1,0 +1,22 @@
+diff --git a/next.install b/next.install
+index 25f2bc0..8969b24 100644
+--- a/next.install
++++ b/next.install
+@@ -109,11 +109,12 @@ function next_update_9106() {
+  * Add the draft_enabled property to the next_entity_type_config.
+  */
+ function next_update_9107() {
+-  $entity_definition_update = \Drupal::entityDefinitionUpdateManager();
+-
+-  $storage_definition = BaseFieldDefinition::create('string')
+-    ->setLabel(t('Draft mode enabled'));
+-  $entity_definition_update->installFieldStorageDefinition('draft_enabled', 'next_entity_type_config', 'next_entity_type_config', $storage_definition);
++  // Nothing to do. next_entity_type_config is a config entity type, so
++  // draft_enabled is a config property, declared in next.schema.yml and listed
++  // in config_export, rather than a base field. Installing a field storage
++  // definition for it never added anything, and it makes the entity field
++  // system treat a non-fieldable entity type as fieldable, which throws.
++  // next_update_9108() gives existing entity type configs their value.
+ }
+ 
+ /**

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\dpl_go;
 
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -18,11 +17,6 @@ use function Safe\parse_url;
 class GoSite implements GoSiteInterface {
 
   /**
-   * Node storage.
-   */
-  protected EntityStorageInterface $nodeStorage;
-
-  /**
    * Static node type cache.
    *
    * @var array<int, array<string, bool>>
@@ -32,11 +26,9 @@ class GoSite implements GoSiteInterface {
   public function __construct(
     protected LagoonRouteResolver $lagoonRouteResolver,
     protected AccountInterface $currentUser,
-    EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
     protected KeyValueStoreInterface $keyValueStore,
-  ) {
-    $this->nodeStorage = $entityTypeManager->getStorage('node');
-  }
+  ) {}
 
   /**
    * Is the current request considered "the Go site".
@@ -88,9 +80,9 @@ class GoSite implements GoSiteInterface {
       return str_replace('varnish.', 'node.', $this->getCmsBaseUrl());
     }
 
-    // If the GO_DOMAIN environment variable is set,
+    // If the DPL_GO_BASE_URL environment variable is set,
     // it will override anything else.
-    $goDomain = getenv('GO_DOMAIN') ?: NULL;
+    $goDomain = getenv('DPL_GO_BASE_URL') ?: NULL;
 
     if ($goDomain) {
       return $goDomain;
@@ -134,7 +126,7 @@ class GoSite implements GoSiteInterface {
     // key-value items and queries. And we use key-value instead of cache as a
     // nodes type cannot be changed after creation anyway, and even
     // CACHE_PERMANENT entries are cleared on cache rebuild.
-    $cache_num = floor(intval($nid) / 100);
+    $cache_num = intdiv(intval($nid), 100);
     $state_id = "dpl_go.node_type_cache_{$cache_num}";
 
     // Use a static cache. This will drastically limit the amount of queries we
@@ -149,7 +141,7 @@ class GoSite implements GoSiteInterface {
 
     $this->typeCoche[$cache_num][$nid] = NULL;
 
-    $node = $this->nodeStorage->load($nid);
+    $node = $this->entityTypeManager->getStorage('node')->load($nid);
 
     if ($node) {
       $this->typeCoche[$cache_num][$nid] = $this->isGoNode($node);

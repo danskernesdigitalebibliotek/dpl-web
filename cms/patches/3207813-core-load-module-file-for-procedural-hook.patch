@@ -1,0 +1,24 @@
+diff --git a/core/lib/Drupal/Core/Extension/ModuleHandler.php b/core/lib/Drupal/Core/Extension/ModuleHandler.php
+--- a/core/lib/Drupal/Core/Extension/ModuleHandler.php
++++ b/core/lib/Drupal/Core/Extension/ModuleHandler.php
+@@ -748,6 +748,20 @@
+           // 'core' is a special protected module name. This is used by the test
+           // system to allow kernel tests to implement hooks.
+           if (isset($this->moduleList[$module]) || $module === 'core') {
++            // A procedural implementation lives in the module's .module file,
++            // which is normally loaded during bootstrap. That has not happened
++            // yet when a hook fires from a container rebuild in the middle of
++            // installing a module: the new module is already part of the hook
++            // registry, but ModuleInstaller loads its files only after the
++            // kernel has been updated. Load the file here, otherwise the
++            // callable resolver mistakes the function name for a class name
++            // and throws "Class ... does not exist".
++            //
++            // @see \Drupal\Core\Extension\ModuleInstaller::doInstall()
++            // @see https://www.drupal.org/project/drupal/issues/3207813
++            if (!str_contains($identifier, ':') && !function_exists($identifier)) {
++              $this->load($module);
++            }
+             $listeners[] = $this->callableResolver->getCallableFromDefinition($identifier);
+             $modules[] = $module;
+           }

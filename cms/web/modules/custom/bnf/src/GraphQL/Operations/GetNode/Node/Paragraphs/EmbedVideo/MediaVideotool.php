@@ -20,13 +20,13 @@ class MediaVideotool extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($name !== self::UNDEFINED) {
-            $instance->name = $name;
+            $instance->__set('name', $name);
         }
         if ($mediaVideotool !== self::UNDEFINED) {
-            $instance->mediaVideotool = $mediaVideotool;
+            $instance->__set('mediaVideotool', $mediaVideotool);
         }
         $instance->__typename = 'MediaVideotool';
 

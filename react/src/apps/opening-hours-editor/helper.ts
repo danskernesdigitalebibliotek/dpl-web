@@ -1,10 +1,10 @@
-import { EventInput } from "@fullcalendar/core";
-import { EventImpl } from "@fullcalendar/core/internal";
+import { EventInput } from "@fullcalendar/react";
+import { EventImpl } from "@fullcalendar/react/protected-api";
 import {
   DplOpeningHoursListGET200Item,
-  DplOpeningHoursCreatePOSTOpeningHoursInstanceBody,
   DplOpeningHoursUpdatePATCH200Item,
-  DplOpeningHoursListGET200ItemRepetitionType
+  DplOpeningHoursListGET200ItemRepetitionType,
+  DplOpeningHoursCreatePOSTBody
 } from "../../core/dpl-cms/model";
 import {
   convertToDayJs,
@@ -35,9 +35,8 @@ export const formatCmsEventsToFullCalendar = (
 };
 
 export const formatFullCalendarEventToCmsEventAdd = (
-  event: EventInput &
-    Pick<DplOpeningHoursCreatePOSTOpeningHoursInstanceBody, "repetition">
-): DplOpeningHoursCreatePOSTOpeningHoursInstanceBody => {
+  event: EventInput & Pick<DplOpeningHoursCreatePOSTBody, "repetition">
+): DplOpeningHoursCreatePOSTBody => {
   if (!event.title || !event.color) {
     throw new Error("Invalid event format");
   }
@@ -64,7 +63,7 @@ export const formatFullCalendarEventToCmsEventAdd = (
 export const formatFullCalendarEventToCmsEventEdit = (
   event: EventInput & Pick<DplOpeningHoursUpdatePATCH200Item, "repetition">
 ): DplOpeningHoursUpdatePATCH200Item => {
-  if (!event.title || !event.backgroundColor) {
+  if (!event.title || !event.color) {
     throw new Error("Invalid event format");
   }
 
@@ -75,7 +74,7 @@ export const formatFullCalendarEventToCmsEventEdit = (
     id: Number(event.id),
     category: {
       title: event.title,
-      color: event.backgroundColor
+      color: event.color
     },
     date: formatDateForAPI(startDate),
     start_time: extractTime(startDate),

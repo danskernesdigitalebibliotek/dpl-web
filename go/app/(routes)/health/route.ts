@@ -28,7 +28,7 @@ async function getHealthStatus() {
 
   try {
     // /app/VERSION is baked into the base image at build time
-    // (see go/lagoon/base.dockerfile).
+    // (see go/lagoon/stage1.dockerfile).
     requestBody.version = (await readFile("/app/VERSION", "utf8")).trim()
   } catch {}
 

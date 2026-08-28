@@ -19,10 +19,10 @@ class ComplexSearchFacetsInput extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($facetLimit !== self::UNDEFINED) {
-            $instance->facetLimit = $facetLimit;
+            $instance->__set('facetLimit', $facetLimit);
         }
         if ($facets !== self::UNDEFINED) {
-            $instance->facets = $facets;
+            $instance->__set('facets', $facets);
         }
 
         return $instance;

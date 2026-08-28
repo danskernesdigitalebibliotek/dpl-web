@@ -42,3 +42,11 @@ dpl_react_apps.branches:
     _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::branches'
   requirements:
     _permission: 'access content'
+
+dpl_react_apps.series:
+  path: '/serie/{series_id}'
+  defaults:
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::series'
+    _title_callback: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::seriesTitle'
+  requirements:
+    _permission: 'access content'

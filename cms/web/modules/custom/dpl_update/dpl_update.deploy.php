@@ -7,6 +7,8 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\dpl_update\Services\ConfigIgnore;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\file\Entity\File;
+use Drupal\file\FileInterface;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
@@ -134,7 +136,7 @@ function _dpl_update_set_value(string $field_name, mixed $value, string $entity_
       ->accessCheck(FALSE)
       ->execute();
 
-  if (!is_array($ids) || empty($ids)) {
+  if (empty($ids)) {
     return "No $entity_type entities to update.";
   }
 
@@ -178,7 +180,7 @@ function _dpl_update_generate_url_aliases(string $entity_type): string {
       ->accessCheck(FALSE)
       ->execute();
 
-  if (!is_array($ids) || empty($ids)) {
+  if (empty($ids)) {
     return "No $entity_type entities to update.";
   }
 
@@ -599,4 +601,91 @@ function dpl_update_deploy_remove_unilogin_permissions(): string {
  */
 function dpl_update_deploy_event_audiences_field_inheritance(): string {
   return _dpl_update_field_inheritance('event_audiences');
+}
+
+/**
+ * Remove invalid field_inheritance permission, after patch removal.
+ */
+function dpl_update_deploy_remove_field_inheritance_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['administrator', 'local_administrator', 'editor', 'mediator'],
+    ['administer entity field inheritance'],
+    FALSE,
+  );
+
+  return 'Removed outdated field_inheritance permission.';
+}
+
+/**
+ * Mark permanent files without any recorded usage as temporary.
+ *
+ * Core only marks a file as temporary at the moment its last usage is
+ * removed, so files that already had no usage when
+ * make_unused_managed_files_temporary was enabled stay permanent and are
+ * never deleted. Marking them temporary hands them over to the regular
+ * cron cleanup, matching what happens to files orphaned today.
+ *
+ * @param array<mixed> $sandbox
+ *   The sandbox, used for batch processing.
+ */
+function dpl_update_deploy_mark_orphaned_files_temporary(array &$sandbox): string {
+  $batch_size = 100;
+
+  if (!isset($sandbox['ids'])) {
+    $query = \Drupal::database()->select('file_managed', 'fm')
+      ->fields('fm', ['fid'])
+      ->condition('fm.status', FileInterface::STATUS_PERMANENT)
+      // Leave recently changed files alone. A fresh upload can briefly be
+      // permanent without recorded usage while it is being attached to
+      // content, and anything orphaned from now on is handled by
+      // make_unused_managed_files_temporary.
+      ->condition('fm.changed', \Drupal::time()->getRequestTime() - 3600, '<');
+    $query->leftJoin('file_usage', 'fu', 'fm.fid = fu.fid');
+    $query->isNull('fu.fid');
+    $result = $query->execute();
+
+    if (!$result) {
+      throw new \RuntimeException('Could not query file_managed for unused files.');
+    }
+
+    $sandbox['ids'] = $result->fetchCol();
+    $sandbox['total'] = count($sandbox['ids']);
+    $sandbox['current'] = 0;
+  }
+
+  if (empty($sandbox['total'])) {
+    $sandbox['#finished'] = 1;
+    return 'No unused permanent files found.';
+  }
+
+  $batch_ids = array_slice($sandbox['ids'], $sandbox['current'], $batch_size);
+
+  foreach (File::loadMultiple($batch_ids) as $file) {
+    $file->setTemporary();
+    $file->save();
+  }
+
+  $sandbox['current'] += count($batch_ids);
+
+  $sandbox['#finished'] = $sandbox['current'] >= $sandbox['total']
+    ? 1 : ($sandbox['current'] / $sandbox['total']);
+
+  if ($sandbox['#finished'] === 1) {
+    return "Marked {$sandbox['total']} unused permanent files as temporary.";
+  }
+
+  return "Marked {$sandbox['current']}/{$sandbox['total']} unused permanent files as temporary.";
+}
+
+/**
+ * Remove maintenance permission, defunct after Drupal 11.
+ */
+function dpl_update_deploy_remove_maintenance_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['administrator'],
+    ['Administer maintenance mode'],
+    FALSE,
+  );
+
+  return 'Remove unused maintenance mode permission';
 }

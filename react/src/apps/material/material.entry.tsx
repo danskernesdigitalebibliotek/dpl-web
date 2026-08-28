@@ -16,6 +16,7 @@ import { PlayerModalProps } from "../../core/storybook/playerModalArgs";
 import { OpenOrderProps } from "../../core/storybook/openOrderArgs";
 import withPageStatistics from "../../core/statistics/withPageStatistics";
 import useSetSmoothScroll from "../../core/utils/useSetSmoothScroll";
+import { MaterialUnavailableNoticeArgs } from "../../components/material/MaterialUnavailableNotice/MaterialUnavailableNoticeArgs";
 
 interface MaterialEntryTextProps {
   alreadyReservedText: string;
@@ -218,7 +219,8 @@ export interface MaterialEntryProps
     MappArgs,
     EditionSwitchModalArgs,
     PlayerModalProps,
-    OpenOrderProps {
+    OpenOrderProps,
+    MaterialUnavailableNoticeArgs {
   wid: WorkId;
 }
 

@@ -15,10 +15,9 @@ use Drupal\media\MediaSourceBase;
 use Drupal\media\MediaTypeInterface;
 use Drupal\media_videotool\Traits\HasVideoToolFeaturesTrait;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\TransferException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Safe\file_get_contents;
 use function Safe\preg_match;
 
 /**
@@ -73,6 +72,39 @@ class VideoTool extends MediaSourceBase {
    * @var string
    */
   private const METADATA_ATTRIBUTE_TYPE = 'og:type';
+
+  /**
+   * Seconds to wait for a connection to VideoTool.
+   *
+   * @var int
+   */
+  private const REQUEST_CONNECT_TIMEOUT = 5;
+
+  /**
+   * Seconds to wait for a whole VideoTool request to finish.
+   *
+   * Media entities are saved synchronously - by an editor, or by a content
+   * import - and every save asks the source plugin for metadata. Guzzle does
+   * not time out by default, and the plain stream read this replaced waited
+   * for PHP's default_socket_timeout of 60 seconds, so a slow VideoTool could
+   * stall a save indefinitely. Nothing here is worth blocking a save on for
+   * longer than a few seconds.
+   *
+   * @var int
+   */
+  private const REQUEST_TIMEOUT = 10;
+
+  /**
+   * Metadata parsed from VideoTool, keyed by media URL.
+   *
+   * Drupal calls getMetadata() once per attribute, so a single media save
+   * asks for the name, the thumbnail and more. Without this, each of those
+   * would be a separate request for the same document - and a separate
+   * timeout to wait through when VideoTool is unreachable.
+   *
+   * @var array<string, array<string, string>>
+   */
+  protected array $metaDataCache = [];
 
   public function __construct(
     array $configuration,
@@ -149,8 +181,65 @@ class VideoTool extends MediaSourceBase {
       return NULL;
     }
 
+    $metaData = $this->fetchMetaData($media_url);
+
+    if (!$metaData) {
+      return NULL;
+    }
+
+    $remote_thumbnail_url = $metaData[self::METADATA_ATTRIBUTE_IMAGE] ?? NULL;
+
+    // Every attribute below is optional: VideoTool may answer with a document
+    // that carries only some of the og: tags, and a missing tag must not be
+    // worse than an unreachable host.
+    return match ($attribute_name) {
+      self::METADATA_ATTRIBUTE_NAME, 'default_name' => $metaData[self::METADATA_ATTRIBUTE_NAME] ?? NULL,
+      self::METADATA_ATTRIBUTE_DESCRIPTION => $metaData[self::METADATA_ATTRIBUTE_DESCRIPTION] ?? NULL,
+      self::METADATA_ATTRIBUTE_URL => $metaData[self::METADATA_ATTRIBUTE_URL] ?? NULL,
+      self::METADATA_ATTRIBUTE_IMAGE, 'thumbnail_uri' => $remote_thumbnail_url ? $this->getLocalThumbnailUri($media_url, $remote_thumbnail_url) : NULL,
+      self::METADATA_ATTRIBUTE_TYPE => $metaData[self::METADATA_ATTRIBUTE_TYPE] ?? NULL,
+      default => parent::getMetadata($media, $attribute_name),
+    };
+  }
+
+  /**
+   * Fetches the og: meta tags VideoTool exposes for a video.
+   *
+   * @param string $media_url
+   *   VideoTool media URL.
+   *
+   * @return array<string, string>
+   *   The og: properties keyed by property name, or an empty array if
+   *   VideoTool could not be reached or returned nothing we could parse.
+   */
+  protected function fetchMetaData(string $media_url): array {
+    if (array_key_exists($media_url, $this->metaDataCache)) {
+      return $this->metaDataCache[$media_url];
+    }
+
+    try {
+      $response = $this->httpClient->request('GET', $media_url, [
+        'connect_timeout' => self::REQUEST_CONNECT_TIMEOUT,
+        'timeout' => self::REQUEST_TIMEOUT,
+      ]);
+    }
+    catch (TransferException $e) {
+      // A video host that is down, slow or answering with an error must not
+      // fail the save of the media entity referencing it. Without metadata the
+      // media keeps its stored name and falls back to the default thumbnail,
+      // and a later save picks the metadata up once VideoTool answers again.
+      $this->logger->warning('Could not fetch VideoTool metadata from {url}: {message}', [
+        'url' => $media_url,
+        'message' => $e->getMessage(),
+      ]);
+
+      $this->metaDataCache[$media_url] = [];
+
+      return $this->metaDataCache[$media_url];
+    }
+
     $doc = new \DOMDocument();
-    @$doc->loadHTML(file_get_contents($media_url));
+    @$doc->loadHTML((string) $response->getBody());
     $metaTags = $doc->getElementsByTagName('meta');
 
     $metaData = [];
@@ -160,18 +249,9 @@ class VideoTool extends MediaSourceBase {
       }
     }
 
-    if (!$metaData) {
-      return NULL;
-    }
+    $this->metaDataCache[$media_url] = $metaData;
 
-    return match ($attribute_name) {
-      self::METADATA_ATTRIBUTE_NAME, 'default_name' => $metaData['og:title'],
-      self::METADATA_ATTRIBUTE_DESCRIPTION => $metaData['og:description'],
-      self::METADATA_ATTRIBUTE_URL => $metaData['og:url'],
-      self::METADATA_ATTRIBUTE_IMAGE, 'thumbnail_uri' => $this->getLocalThumbnailUri($media_url, $metaData['og:image']),
-      self::METADATA_ATTRIBUTE_TYPE => $metaData['og:type'],
-      default => parent::getMetadata($media, $attribute_name),
-    };
+    return $this->metaDataCache[$media_url];
   }
 
   /**
@@ -204,6 +284,9 @@ class VideoTool extends MediaSourceBase {
     // Compute the local thumbnail URI, regardless of whether it exists.
     $directory = $this->configuration['thumbnails_directory'];
     preg_match('/\?vn=(.*)/', $media_url, $matches);
+    if (!isset($matches[1])) {
+      return NULL;
+    }
     $local_thumbnail_uri = "$directory/" . $matches[1] . '.jpg';
 
     // If the local thumbnail already exists, return its URI.
@@ -222,14 +305,21 @@ class VideoTool extends MediaSourceBase {
     }
 
     try {
-      $response = $this->httpClient->request('GET', $remote_thumbnail_url);
+      // Same timeouts as the metadata request, and the same reasoning: the
+      // thumbnail is not worth stalling a save for. Catching TransferException
+      // rather than RequestException also covers the connect failures that a
+      // down host produces, which are not RequestExceptions in Guzzle 7.
+      $response = $this->httpClient->request('GET', $remote_thumbnail_url, [
+        'connect_timeout' => self::REQUEST_CONNECT_TIMEOUT,
+        'timeout' => self::REQUEST_TIMEOUT,
+      ]);
       if ($response->getStatusCode() === 200) {
         $this->fileSystem->saveData((string) $response->getBody(), $local_thumbnail_uri, FileExists::Replace);
 
         return $local_thumbnail_uri;
       }
     }
-    catch (RequestException $e) {
+    catch (TransferException $e) {
       $this->logger->warning($e->getMessage());
     }
     catch (FileException $e) {

@@ -66,7 +66,7 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
 function _dpl_search_web_search_teaser_config(array &$cache_tags = []): ?array {
   $input = \Drupal::request()->query->get(DplSearchSettings::MATERIAL_QUERY_KEY);
 
-  if (empty($input) || !is_string($input)) {
+  if (empty($input)) {
     return NULL;
   }
 

@@ -3,6 +3,11 @@
 # other CMS code can find them at the expected paths.
 FROM node:24-slim AS js-assets
 
+# In CI/dev, /app is volume-mounted from the host so baked-in assets are
+# hidden. Skip the expensive builds there; keep the output dirs so the
+# COPY --from below still works.
+ARG SKIP_JS_ASSETS=false
+
 RUN corepack enable
 WORKDIR /app
 
@@ -19,23 +24,25 @@ COPY go/package.json go/pnpm-lock.yaml ./go/
 COPY packages/service-layer/package.json packages/service-layer/pnpm-lock.yaml ./packages/service-layer/
 COPY cms/package.json cms/pnpm-lock.yaml ./cms/
 
-RUN pnpm install --frozen-lockfile
+RUN if [ "$SKIP_JS_ASSETS" != "true" ]; then pnpm install --frozen-lockfile; fi
 
 # Build design-system: compile SCSS, then assemble the build/ directory that
 # CMS expects (mirrors the steps in the root Taskfile dev:design-system:build).
 COPY design-system ./design-system/
-RUN cd design-system && \
+RUN if [ "$SKIP_JS_ASSETS" = "true" ]; then mkdir -p design-system/build; else \
+    cd design-system && \
     pnpm run build && \
     rm -rf build && \
     mkdir -p build/js && \
     cp -r public/icons build/icons && \
     cp -r src/styles/css build/css && \
     cp -r src/styles/fonts build/fonts && \
-    find src -name "*.js" | while read -r f; do cp "$f" build/js/"$(basename "$f")"; done
+    find src -name "*.js" | while read -r f; do cp "$f" build/js/"$(basename "$f")"; done; \
+    fi
 
 # Build React.
 COPY react ./react/
-RUN cd react && pnpm build
+RUN if [ "$SKIP_JS_ASSETS" = "true" ]; then mkdir -p react/dist; else cd react && pnpm build; fi
 
 # Stage 2: PHP CLI image — the image that actually runs Drupal.
 FROM uselagoon/php-8.4-cli-drupal:latest

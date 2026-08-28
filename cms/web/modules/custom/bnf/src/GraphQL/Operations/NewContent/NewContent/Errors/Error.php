@@ -16,7 +16,7 @@ class Error extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($message !== self::UNDEFINED) {
-            $instance->message = $message;
+            $instance->__set('message', $message);
         }
         $instance->__typename = 'Error';
 

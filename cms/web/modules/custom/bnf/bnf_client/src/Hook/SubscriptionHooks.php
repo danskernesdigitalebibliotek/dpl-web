@@ -31,7 +31,6 @@ class SubscriptionHooks {
   #[Hook('bnf_subscription_insert')]
   #[Hook('bnf_subscription_update')]
   public function queueUpdate(EntityInterface $entity): void {
-    /** @var \Drupal\bnf_client\Entity\Subscription $entity */
     Assert::isInstanceOf($entity, Subscription::class);
 
     if (!$entity->noCheck) {
@@ -48,7 +47,6 @@ class SubscriptionHooks {
    */
   #[Hook('bnf_subscription_delete')]
   public function subscriptionDelete(EntityInterface $entity): void {
-    /** @var \Drupal\bnf_client\Entity\Subscription $entity */
     Assert::isInstanceOf($entity, Subscription::class);
 
     $field_key = 'bnf_source_subscriptions';

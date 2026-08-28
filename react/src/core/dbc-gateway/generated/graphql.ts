@@ -2380,6 +2380,7 @@ export type GetSmallWorkQuery = {
     series: Array<{
       __typename?: "Series";
       title: string;
+      seriesId?: string | null;
       isPopular?: boolean | null;
       readThisFirst?: boolean | null;
       readThisWhenever?: boolean | null;
@@ -3183,6 +3184,7 @@ export type GetMaterialQuery = {
     series: Array<{
       __typename?: "Series";
       title: string;
+      seriesId?: string | null;
       isPopular?: boolean | null;
       readThisFirst?: boolean | null;
       readThisWhenever?: boolean | null;
@@ -3834,6 +3836,7 @@ export type GetMaterialGloballyQuery = {
     series: Array<{
       __typename?: "Series";
       title: string;
+      seriesId?: string | null;
       isPopular?: boolean | null;
       readThisFirst?: boolean | null;
       readThisWhenever?: boolean | null;
@@ -4524,6 +4527,7 @@ export type RecommendFromFaustQuery = {
         series: Array<{
           __typename?: "Series";
           title: string;
+          seriesId?: string | null;
           isPopular?: boolean | null;
           readThisFirst?: boolean | null;
           readThisWhenever?: boolean | null;
@@ -5159,6 +5163,7 @@ export type SearchWithPaginationQuery = {
       series: Array<{
         __typename?: "Series";
         title: string;
+        seriesId?: string | null;
         isPopular?: boolean | null;
         readThisFirst?: boolean | null;
         readThisWhenever?: boolean | null;
@@ -5808,6 +5813,7 @@ export type ComplexSearchWithPaginationQuery = {
       series: Array<{
         __typename?: "Series";
         title: string;
+        seriesId?: string | null;
         isPopular?: boolean | null;
         readThisFirst?: boolean | null;
         readThisWhenever?: boolean | null;
@@ -6376,6 +6382,622 @@ export type ComplexSearchWithPaginationQuery = {
       };
     }>;
   };
+};
+
+export type GetSeriesQueryVariables = Exact<{
+  seriesId: Scalars["String"]["input"];
+  limit: Scalars["Int"]["input"];
+  offset: Scalars["Int"]["input"];
+}>;
+
+export type GetSeriesQuery = {
+  __typename?: "Query";
+  series?: {
+    __typename?: "Series";
+    title: string;
+    description?: string | null;
+    hitcount: number;
+    members: Array<{
+      __typename?: "SerieWork";
+      numberInSeries?: string | null;
+      readThisFirst?: boolean | null;
+      work: {
+        __typename?: "Work";
+        workId: string;
+        abstract?: Array<string> | null;
+        genreAndForm: Array<string>;
+        manifestations: {
+          __typename?: "Manifestations";
+          bestRepresentation: {
+            __typename?: "Manifestation";
+            pid: string;
+            genreAndForm: Array<string>;
+            source: Array<string>;
+            publisher: Array<string>;
+            cover: { __typename?: "Cover"; origin?: string | null };
+            subjects: {
+              __typename?: "SubjectContainer";
+              all: Array<
+                | { __typename?: "Corporation"; display: string }
+                | { __typename?: "Mood"; display: string }
+                | { __typename?: "NarrativeTechnique"; display: string }
+                | { __typename?: "Person"; display: string }
+                | { __typename?: "Setting"; display: string }
+                | { __typename?: "SubjectText"; display: string }
+                | { __typename?: "SubjectWithRating"; display: string }
+                | { __typename?: "TimePeriod"; display: string }
+              >;
+            };
+            titles: {
+              __typename?: "ManifestationTitles";
+              main: Array<string>;
+              original?: Array<string> | null;
+            };
+            fictionNonfiction?: {
+              __typename?: "FictionNonfiction";
+              display: string;
+              code: FictionNonfictionCodeEnum;
+            } | null;
+            materialTypes: Array<{
+              __typename?: "MaterialType";
+              materialTypeSpecific: {
+                __typename?: "SpecificMaterialType";
+                display: string;
+              };
+            }>;
+            creators: Array<
+              | { __typename: "Corporation"; display: string }
+              | { __typename: "Person"; display: string }
+            >;
+            identifiers: Array<{
+              __typename?: "Identifier";
+              type: IdentifierTypeEnum;
+              value: string;
+            }>;
+            contributors: Array<
+              | {
+                  __typename?: "Corporation";
+                  display: string;
+                  roles: Array<{
+                    __typename?: "Role";
+                    function: { __typename?: "Translation"; singular: string };
+                  }>;
+                }
+              | {
+                  __typename?: "Person";
+                  display: string;
+                  roles: Array<{
+                    __typename?: "Role";
+                    function: { __typename?: "Translation"; singular: string };
+                  }>;
+                }
+            >;
+            contents?: Array<{
+              __typename?: "ContentsEntity";
+              heading: string;
+              type: ContentsEntityEnum;
+              raw?: string | null;
+              entries?: Array<{
+                __typename?: "ContentEntry";
+                contributors?: Array<string> | null;
+                playingTime?: string | null;
+                title: { __typename?: "ContentEntryTitle"; display: string };
+                creators?: {
+                  __typename?: "ContentEntryCreators";
+                  persons?: Array<{
+                    __typename?: "Person";
+                    display: string;
+                    firstName?: string | null;
+                    lastName?: string | null;
+                    attributeToName?: string | null;
+                  }> | null;
+                  corporations?: Array<{
+                    __typename?: "Corporation";
+                    display: string;
+                    main?: string | null;
+                  }> | null;
+                } | null;
+                sublevel?: Array<{
+                  __typename?: "ContentSublevel";
+                  contributors?: Array<string> | null;
+                  playingTime?: string | null;
+                  title: { __typename?: "ContentEntryTitle"; display: string };
+                  sublevel?: Array<{
+                    __typename?: "ContentSublevelLast";
+                    contributors?: Array<string> | null;
+                    playingTime?: string | null;
+                    title: {
+                      __typename?: "ContentEntryTitle";
+                      display: string;
+                    };
+                  }> | null;
+                }> | null;
+              }> | null;
+            }> | null;
+            edition?: {
+              __typename?: "Edition";
+              summary: string;
+              publicationYear?: {
+                __typename?: "PublicationYear";
+                display: string;
+              } | null;
+            } | null;
+            dateFirstEdition?: {
+              __typename?: "PublicationYear";
+              display: string;
+              year?: number | null;
+            } | null;
+            audience?: {
+              __typename?: "Audience";
+              generalAudience: Array<string>;
+              ages: Array<{ __typename?: "Range"; display: string }>;
+              childrenOrAdults: Array<{
+                __typename?: "ChildOrAdult";
+                display: string;
+                code: ChildOrAdultCodeEnum;
+              }>;
+            } | null;
+            notes: Array<{ __typename?: "Note"; display: Array<string> }>;
+            languages?: {
+              __typename?: "Languages";
+              notes?: Array<string> | null;
+              main?: Array<{
+                __typename?: "Language";
+                display: string;
+                iso639Set1: string;
+              }> | null;
+            } | null;
+            physicalDescription?: {
+              __typename?: "PhysicalUnitDescription";
+              summaryFull?: string | null;
+              numberOfPages?: number | null;
+            } | null;
+            hostPublication?: {
+              __typename?: "HostPublication";
+              summary: string;
+            } | null;
+            accessTypes: Array<{
+              __typename?: "AccessType";
+              code: AccessTypeCodeEnum;
+            }>;
+            access: Array<
+              | {
+                  __typename: "AccessUrl";
+                  origin: string;
+                  url: string;
+                  loginRequired: boolean;
+                  status: LinkStatusEnum;
+                }
+              | { __typename: "DigitalArticleService"; issn: string }
+              | {
+                  __typename: "Ereol";
+                  origin: string;
+                  url: string;
+                  canAlwaysBeLoaned: boolean;
+                }
+              | { __typename: "InfomediaService"; id: string }
+              | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
+              | { __typename: "Publizon" }
+            >;
+            shelfmark?: {
+              __typename?: "Shelfmark";
+              postfix?: string | null;
+              shelfmark: string;
+            } | null;
+            workYear?: {
+              __typename?: "PublicationYear";
+              year?: number | null;
+            } | null;
+            catalogueCodes: {
+              __typename?: "CatalogueCodes";
+              nationalBibliography: Array<string>;
+              otherCatalogues: Array<string>;
+            };
+          };
+          all: Array<{
+            __typename?: "Manifestation";
+            pid: string;
+            genreAndForm: Array<string>;
+            source: Array<string>;
+            publisher: Array<string>;
+            subjects: {
+              __typename?: "SubjectContainer";
+              all: Array<
+                | { __typename?: "Corporation"; display: string }
+                | { __typename?: "Mood"; display: string }
+                | { __typename?: "NarrativeTechnique"; display: string }
+                | { __typename?: "Person"; display: string }
+                | { __typename?: "Setting"; display: string }
+                | { __typename?: "SubjectText"; display: string }
+                | { __typename?: "SubjectWithRating"; display: string }
+                | { __typename?: "TimePeriod"; display: string }
+              >;
+            };
+            titles: {
+              __typename?: "ManifestationTitles";
+              main: Array<string>;
+              original?: Array<string> | null;
+            };
+            fictionNonfiction?: {
+              __typename?: "FictionNonfiction";
+              display: string;
+              code: FictionNonfictionCodeEnum;
+            } | null;
+            materialTypes: Array<{
+              __typename?: "MaterialType";
+              materialTypeSpecific: {
+                __typename?: "SpecificMaterialType";
+                display: string;
+              };
+            }>;
+            creators: Array<
+              | { __typename: "Corporation"; display: string }
+              | { __typename: "Person"; display: string }
+            >;
+            identifiers: Array<{
+              __typename?: "Identifier";
+              type: IdentifierTypeEnum;
+              value: string;
+            }>;
+            contributors: Array<
+              | {
+                  __typename?: "Corporation";
+                  display: string;
+                  roles: Array<{
+                    __typename?: "Role";
+                    function: { __typename?: "Translation"; singular: string };
+                  }>;
+                }
+              | {
+                  __typename?: "Person";
+                  display: string;
+                  roles: Array<{
+                    __typename?: "Role";
+                    function: { __typename?: "Translation"; singular: string };
+                  }>;
+                }
+            >;
+            contents?: Array<{
+              __typename?: "ContentsEntity";
+              heading: string;
+              type: ContentsEntityEnum;
+              raw?: string | null;
+              entries?: Array<{
+                __typename?: "ContentEntry";
+                contributors?: Array<string> | null;
+                playingTime?: string | null;
+                title: { __typename?: "ContentEntryTitle"; display: string };
+                creators?: {
+                  __typename?: "ContentEntryCreators";
+                  persons?: Array<{
+                    __typename?: "Person";
+                    display: string;
+                    firstName?: string | null;
+                    lastName?: string | null;
+                    attributeToName?: string | null;
+                  }> | null;
+                  corporations?: Array<{
+                    __typename?: "Corporation";
+                    display: string;
+                    main?: string | null;
+                  }> | null;
+                } | null;
+                sublevel?: Array<{
+                  __typename?: "ContentSublevel";
+                  contributors?: Array<string> | null;
+                  playingTime?: string | null;
+                  title: { __typename?: "ContentEntryTitle"; display: string };
+                  sublevel?: Array<{
+                    __typename?: "ContentSublevelLast";
+                    contributors?: Array<string> | null;
+                    playingTime?: string | null;
+                    title: {
+                      __typename?: "ContentEntryTitle";
+                      display: string;
+                    };
+                  }> | null;
+                }> | null;
+              }> | null;
+            }> | null;
+            edition?: {
+              __typename?: "Edition";
+              summary: string;
+              publicationYear?: {
+                __typename?: "PublicationYear";
+                display: string;
+              } | null;
+            } | null;
+            dateFirstEdition?: {
+              __typename?: "PublicationYear";
+              display: string;
+              year?: number | null;
+            } | null;
+            audience?: {
+              __typename?: "Audience";
+              generalAudience: Array<string>;
+              ages: Array<{ __typename?: "Range"; display: string }>;
+              childrenOrAdults: Array<{
+                __typename?: "ChildOrAdult";
+                display: string;
+                code: ChildOrAdultCodeEnum;
+              }>;
+            } | null;
+            notes: Array<{ __typename?: "Note"; display: Array<string> }>;
+            languages?: {
+              __typename?: "Languages";
+              notes?: Array<string> | null;
+              main?: Array<{
+                __typename?: "Language";
+                display: string;
+                iso639Set1: string;
+              }> | null;
+            } | null;
+            physicalDescription?: {
+              __typename?: "PhysicalUnitDescription";
+              summaryFull?: string | null;
+              numberOfPages?: number | null;
+            } | null;
+            hostPublication?: {
+              __typename?: "HostPublication";
+              summary: string;
+            } | null;
+            accessTypes: Array<{
+              __typename?: "AccessType";
+              code: AccessTypeCodeEnum;
+            }>;
+            access: Array<
+              | {
+                  __typename: "AccessUrl";
+                  origin: string;
+                  url: string;
+                  loginRequired: boolean;
+                  status: LinkStatusEnum;
+                }
+              | { __typename: "DigitalArticleService"; issn: string }
+              | {
+                  __typename: "Ereol";
+                  origin: string;
+                  url: string;
+                  canAlwaysBeLoaned: boolean;
+                }
+              | { __typename: "InfomediaService"; id: string }
+              | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
+              | { __typename: "Publizon" }
+            >;
+            shelfmark?: {
+              __typename?: "Shelfmark";
+              postfix?: string | null;
+              shelfmark: string;
+            } | null;
+            workYear?: {
+              __typename?: "PublicationYear";
+              year?: number | null;
+            } | null;
+            catalogueCodes: {
+              __typename?: "CatalogueCodes";
+              nationalBibliography: Array<string>;
+              otherCatalogues: Array<string>;
+            };
+          }>;
+          latest: {
+            __typename?: "Manifestation";
+            pid: string;
+            genreAndForm: Array<string>;
+            source: Array<string>;
+            publisher: Array<string>;
+            subjects: {
+              __typename?: "SubjectContainer";
+              all: Array<
+                | { __typename?: "Corporation"; display: string }
+                | { __typename?: "Mood"; display: string }
+                | { __typename?: "NarrativeTechnique"; display: string }
+                | { __typename?: "Person"; display: string }
+                | { __typename?: "Setting"; display: string }
+                | { __typename?: "SubjectText"; display: string }
+                | { __typename?: "SubjectWithRating"; display: string }
+                | { __typename?: "TimePeriod"; display: string }
+              >;
+            };
+            titles: {
+              __typename?: "ManifestationTitles";
+              main: Array<string>;
+              original?: Array<string> | null;
+            };
+            fictionNonfiction?: {
+              __typename?: "FictionNonfiction";
+              display: string;
+              code: FictionNonfictionCodeEnum;
+            } | null;
+            materialTypes: Array<{
+              __typename?: "MaterialType";
+              materialTypeSpecific: {
+                __typename?: "SpecificMaterialType";
+                display: string;
+              };
+            }>;
+            creators: Array<
+              | { __typename: "Corporation"; display: string }
+              | { __typename: "Person"; display: string }
+            >;
+            identifiers: Array<{
+              __typename?: "Identifier";
+              type: IdentifierTypeEnum;
+              value: string;
+            }>;
+            contributors: Array<
+              | {
+                  __typename?: "Corporation";
+                  display: string;
+                  roles: Array<{
+                    __typename?: "Role";
+                    function: { __typename?: "Translation"; singular: string };
+                  }>;
+                }
+              | {
+                  __typename?: "Person";
+                  display: string;
+                  roles: Array<{
+                    __typename?: "Role";
+                    function: { __typename?: "Translation"; singular: string };
+                  }>;
+                }
+            >;
+            contents?: Array<{
+              __typename?: "ContentsEntity";
+              heading: string;
+              type: ContentsEntityEnum;
+              raw?: string | null;
+              entries?: Array<{
+                __typename?: "ContentEntry";
+                contributors?: Array<string> | null;
+                playingTime?: string | null;
+                title: { __typename?: "ContentEntryTitle"; display: string };
+                creators?: {
+                  __typename?: "ContentEntryCreators";
+                  persons?: Array<{
+                    __typename?: "Person";
+                    display: string;
+                    firstName?: string | null;
+                    lastName?: string | null;
+                    attributeToName?: string | null;
+                  }> | null;
+                  corporations?: Array<{
+                    __typename?: "Corporation";
+                    display: string;
+                    main?: string | null;
+                  }> | null;
+                } | null;
+                sublevel?: Array<{
+                  __typename?: "ContentSublevel";
+                  contributors?: Array<string> | null;
+                  playingTime?: string | null;
+                  title: { __typename?: "ContentEntryTitle"; display: string };
+                  sublevel?: Array<{
+                    __typename?: "ContentSublevelLast";
+                    contributors?: Array<string> | null;
+                    playingTime?: string | null;
+                    title: {
+                      __typename?: "ContentEntryTitle";
+                      display: string;
+                    };
+                  }> | null;
+                }> | null;
+              }> | null;
+            }> | null;
+            edition?: {
+              __typename?: "Edition";
+              summary: string;
+              publicationYear?: {
+                __typename?: "PublicationYear";
+                display: string;
+              } | null;
+            } | null;
+            dateFirstEdition?: {
+              __typename?: "PublicationYear";
+              display: string;
+              year?: number | null;
+            } | null;
+            audience?: {
+              __typename?: "Audience";
+              generalAudience: Array<string>;
+              ages: Array<{ __typename?: "Range"; display: string }>;
+              childrenOrAdults: Array<{
+                __typename?: "ChildOrAdult";
+                display: string;
+                code: ChildOrAdultCodeEnum;
+              }>;
+            } | null;
+            notes: Array<{ __typename?: "Note"; display: Array<string> }>;
+            languages?: {
+              __typename?: "Languages";
+              notes?: Array<string> | null;
+              main?: Array<{
+                __typename?: "Language";
+                display: string;
+                iso639Set1: string;
+              }> | null;
+            } | null;
+            physicalDescription?: {
+              __typename?: "PhysicalUnitDescription";
+              summaryFull?: string | null;
+              numberOfPages?: number | null;
+            } | null;
+            hostPublication?: {
+              __typename?: "HostPublication";
+              summary: string;
+            } | null;
+            accessTypes: Array<{
+              __typename?: "AccessType";
+              code: AccessTypeCodeEnum;
+            }>;
+            access: Array<
+              | {
+                  __typename: "AccessUrl";
+                  origin: string;
+                  url: string;
+                  loginRequired: boolean;
+                  status: LinkStatusEnum;
+                }
+              | { __typename: "DigitalArticleService"; issn: string }
+              | {
+                  __typename: "Ereol";
+                  origin: string;
+                  url: string;
+                  canAlwaysBeLoaned: boolean;
+                }
+              | { __typename: "InfomediaService"; id: string }
+              | { __typename: "InterLibraryLoan"; loanIsPossible: boolean }
+              | { __typename: "Publizon" }
+            >;
+            shelfmark?: {
+              __typename?: "Shelfmark";
+              postfix?: string | null;
+              shelfmark: string;
+            } | null;
+            workYear?: {
+              __typename?: "PublicationYear";
+              year?: number | null;
+            } | null;
+            catalogueCodes: {
+              __typename?: "CatalogueCodes";
+              nationalBibliography: Array<string>;
+              otherCatalogues: Array<string>;
+            };
+          };
+        };
+        titles: {
+          __typename?: "WorkTitles";
+          full: Array<string>;
+          original?: Array<string> | null;
+        };
+        creators: Array<
+          | { __typename: "Corporation"; display: string }
+          | { __typename: "Person"; display: string }
+        >;
+        series: Array<{
+          __typename?: "Series";
+          title: string;
+          seriesId?: string | null;
+          isPopular?: boolean | null;
+          readThisFirst?: boolean | null;
+          readThisWhenever?: boolean | null;
+          members: Array<{
+            __typename?: "SerieWork";
+            numberInSeries?: string | null;
+            work: {
+              __typename?: "Work";
+              workId: string;
+              titles: { __typename?: "WorkTitles"; main: Array<string> };
+            };
+          }>;
+        }>;
+        workYear?: {
+          __typename?: "PublicationYear";
+          year?: number | null;
+        } | null;
+      };
+    }>;
+  } | null;
 };
 
 export type SuggestionsFromQueryStringQueryVariables = Exact<{
@@ -7337,6 +7959,7 @@ export type ManifestationReviewFieldsFragment = {
 export type SeriesSimpleFragment = {
   __typename?: "Series";
   title: string;
+  seriesId?: string | null;
   isPopular?: boolean | null;
   readThisFirst?: boolean | null;
   readThisWhenever?: boolean | null;
@@ -7403,6 +8026,7 @@ export type WorkSmallFragment = {
   series: Array<{
     __typename?: "Series";
     title: string;
+    seriesId?: string | null;
     isPopular?: boolean | null;
     readThisFirst?: boolean | null;
     readThisWhenever?: boolean | null;
@@ -8047,6 +8671,7 @@ export type WorkMediumFragment = {
   series: Array<{
     __typename?: "Series";
     title: string;
+    seriesId?: string | null;
     isPopular?: boolean | null;
     readThisFirst?: boolean | null;
     readThisWhenever?: boolean | null;
@@ -8770,6 +9395,7 @@ export const WorkAccessFragmentDoc = `
 export const SeriesSimpleFragmentDoc = `
     fragment SeriesSimple on Series {
   title
+  seriesId
   isPopular
   members {
     numberInSeries
@@ -9558,6 +10184,46 @@ export const useComplexSearchWithPaginationQuery = <
   });
 };
 
+export const GetSeriesDocument = `
+    query getSeries($seriesId: String!, $limit: Int!, $offset: Int!) {
+  series(seriesId: $seriesId) {
+    title
+    description
+    hitcount
+    members(limit: $limit, offset: $offset) {
+      numberInSeries
+      readThisFirst
+      work {
+        ...WorkSmall
+        manifestations {
+          bestRepresentation {
+            cover {
+              origin
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${WorkSmallFragmentDoc}`;
+
+export const useGetSeriesQuery = <TData = GetSeriesQuery, TError = unknown>(
+  variables: GetSeriesQueryVariables,
+  options?: Omit<UseQueryOptions<GetSeriesQuery, TError, TData>, "queryKey"> & {
+    queryKey?: UseQueryOptions<GetSeriesQuery, TError, TData>["queryKey"];
+  }
+) => {
+  return useQuery<GetSeriesQuery, TError, TData>({
+    queryKey: ["getSeries", variables],
+    queryFn: fetcher<GetSeriesQuery, GetSeriesQueryVariables>(
+      GetSeriesDocument,
+      variables
+    ),
+    ...options
+  });
+};
+
 export const SuggestionsFromQueryStringDocument = `
     query suggestionsFromQueryString($q: String!, $branchId: String) {
   localSuggest(q: $q, branchId: $branchId) {
@@ -9846,6 +10512,7 @@ export const operationNames = {
     complexSearchWithPaginationWorkAccess:
       "complexSearchWithPaginationWorkAccess" as const,
     complexSearchWithPagination: "complexSearchWithPagination" as const,
+    getSeries: "getSeries" as const,
     suggestionsFromQueryString: "suggestionsFromQueryString" as const,
     GetCoversByPids: "GetCoversByPids" as const,
     GetBestRepresentationPidByIsbn: "GetBestRepresentationPidByIsbn" as const,

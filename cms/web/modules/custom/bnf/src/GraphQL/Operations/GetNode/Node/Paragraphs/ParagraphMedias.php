@@ -18,10 +18,10 @@ class ParagraphMedias extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($medias !== self::UNDEFINED) {
-            $instance->medias = $medias;
+            $instance->__set('medias', $medias);
         }
         $instance->__typename = 'ParagraphMedias';
 

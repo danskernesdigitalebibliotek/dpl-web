@@ -13,3 +13,22 @@
 # cms/.dockerignore, which no longer applies now the context is the repo root.
 /cms/vendor
 /cms/web/sites/default/files
+
+# Host dependency installs. In CI/dev these add ~1GB to every context
+# transfer; the js-assets stage runs its own pnpm install.
+**/node_modules
+
+# Task fingerprint state and env files. Both appear or change between
+# builds in the same job, which invalidates the COPY cms layer and forces
+# a full image rebuild during `docker compose up`. Ignoring .env also
+# keeps secrets out of the build context.
+**/.task
+**/.env
+
+# Host-built frontend assets (from local builds or the CI artifact).
+# Images bake these via the js-assets stage instead; leaving them in the
+# context makes layers differ between otherwise identical builds.
+/design-system/build
+/react/dist
+/cms/web/themes/custom/novel/assets/dpl-design-system
+/cms/web/libraries/dpl-react

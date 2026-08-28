@@ -127,6 +127,7 @@ All URIs are relative to *http://varnish:8080*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApiInterface* | [**campaignMatchPOST**](docs/Api/DefaultApiInterface.md#campaignmatchpost) | **POST** /dpl_campaign/match | Get campaign matching search result facets
+*DefaultApiInterface* | [**currentEventsGET**](docs/Api/DefaultApiInterface.md#currenteventsget) | **GET** /api/v1/events/current | Retrieve current events
 *DefaultApiInterface* | [**dplOpeningHoursCreatePOST**](docs/Api/DefaultApiInterface.md#dplopeninghourscreatepost) | **POST** /api/v1/opening_hours | Create individual opening hours
 *DefaultApiInterface* | [**dplOpeningHoursDeleteDELETE**](docs/Api/DefaultApiInterface.md#dplopeninghoursdeletedelete) | **DELETE** /api/v1/opening_hours/{id} | Delete individual opening hours
 *DefaultApiInterface* | [**dplOpeningHoursLegacyListGET**](docs/Api/DefaultApiInterface.md#dplopeninghourslegacylistget) | **GET** /opening_hours/instances | List all opening hours for legacy API
@@ -160,6 +161,7 @@ Class | Method | HTTP request | Description
  - [EventsGET200ResponseInnerAddress](docs/Model/EventsGET200ResponseInnerAddress.md)
  - [EventsGET200ResponseInnerDateTime](docs/Model/EventsGET200ResponseInnerDateTime.md)
  - [EventsGET200ResponseInnerImage](docs/Model/EventsGET200ResponseInnerImage.md)
+ - [EventsGET200ResponseInnerOrganizer](docs/Model/EventsGET200ResponseInnerOrganizer.md)
  - [EventsGET200ResponseInnerOriginalImage](docs/Model/EventsGET200ResponseInnerOriginalImage.md)
  - [EventsGET200ResponseInnerSeries](docs/Model/EventsGET200ResponseInnerSeries.md)
  - [EventsGET200ResponseInnerTeaserImage](docs/Model/EventsGET200ResponseInnerTeaserImage.md)

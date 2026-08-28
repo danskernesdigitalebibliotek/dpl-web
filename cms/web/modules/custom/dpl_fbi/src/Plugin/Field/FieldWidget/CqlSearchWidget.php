@@ -372,7 +372,7 @@ class CqlSearchWidget extends WidgetBase {
     // We expect formats like <2025-01-01 or >NOW - 90 DAYS.
     preg_match("/^\s*(?<operator>\W+)\s*(?<value>.*)\s*$/", $firstAccessionDateValue, $matches);
 
-    $operatorValue = FirstAccessionDateOperator::tryFrom($matches['operator']) ?? FirstAccessionDateOperator::LaterThan;
+    $operatorValue = FirstAccessionDateOperator::tryFrom($matches['operator'] ?? '') ?? FirstAccessionDateOperator::LaterThan;
     $operatorName = $firstAccessionDateFormElement['operator']['#name'];
     $response->addCommand(new InvokeCommand("$parentSelector [name=\"$operatorName\"]", 'val', [$operatorValue]));
 

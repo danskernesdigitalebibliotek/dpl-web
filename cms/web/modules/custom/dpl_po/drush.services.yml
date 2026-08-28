@@ -10,5 +10,15 @@ services:
       - '@http_client'
       - '@entity_field.manager'
       - '@cache.config'
+      - '@Drupal\locale\LocaleImportBatch'
+    tags:
+      - { name: drush.command }
+  dpl_po.scan_source_commands:
+    class: \Drupal\dpl_po\Commands\ScanSourceCommands
+    arguments:
+      - '%app.root%'
+      - '@language_manager'
+      - '@module_handler'
+      - '@dpl_po.po_file_builder'
     tags:
       - { name: drush.command }

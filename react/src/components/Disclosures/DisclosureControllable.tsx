@@ -5,7 +5,7 @@ export interface DisclosureControllableProps {
   id: string;
   children?: ReactNode;
   showContent?: boolean;
-  onClick?: () => void;
+  onOpen?: () => void;
   cyData?: string;
   detailsClassName?: string;
   summaryClassName?: string;
@@ -18,6 +18,7 @@ const DisclosureControllable: FC<DisclosureControllableProps> = ({
   id,
   children,
   showContent = false,
+  onOpen,
   cyData,
   detailsClassName,
   summaryClassName,
@@ -26,8 +27,11 @@ const DisclosureControllable: FC<DisclosureControllableProps> = ({
   const [isOpen, setIsOpen] = useState<boolean>(showContent);
 
   const toggleOpen = useCallback(() => {
+    if (!isOpen) {
+      onOpen?.();
+    }
     setIsOpen((prevIsOpen) => !prevIsOpen);
-  }, []);
+  }, [isOpen, onOpen]);
 
   const handleClick = useCallback(() => {
     toggleOpen();

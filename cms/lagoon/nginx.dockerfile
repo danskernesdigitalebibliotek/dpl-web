@@ -1,6 +1,8 @@
 # Stage 1: Build design-system and React assets (kept in sync with cli.dockerfile).
 FROM node:24-slim AS js-assets
 
+ARG SKIP_JS_ASSETS=false
+
 RUN corepack enable
 WORKDIR /app
 
@@ -15,20 +17,22 @@ COPY go/package.json go/pnpm-lock.yaml ./go/
 COPY packages/service-layer/package.json packages/service-layer/pnpm-lock.yaml ./packages/service-layer/
 COPY cms/package.json cms/pnpm-lock.yaml ./cms/
 
-RUN pnpm install --frozen-lockfile
+RUN if [ "$SKIP_JS_ASSETS" != "true" ]; then pnpm install --frozen-lockfile; fi
 
 COPY design-system ./design-system/
-RUN cd design-system && \
+RUN if [ "$SKIP_JS_ASSETS" = "true" ]; then mkdir -p design-system/build; else \
+    cd design-system && \
     pnpm run build && \
     rm -rf build && \
     mkdir -p build/js && \
     cp -r public/icons build/icons && \
     cp -r src/styles/css build/css && \
     cp -r src/styles/fonts build/fonts && \
-    find src -name "*.js" | while read -r f; do cp "$f" build/js/"$(basename "$f")"; done
+    find src -name "*.js" | while read -r f; do cp "$f" build/js/"$(basename "$f")"; done; \
+    fi
 
 COPY react ./react/
-RUN cd react && pnpm build
+RUN if [ "$SKIP_JS_ASSETS" = "true" ]; then mkdir -p react/dist; else cd react && pnpm build; fi
 
 # NOTE This stage is a copy of cli.dockerfile. Anything from here and
 # to the next FROM statement should be in sync with that file.

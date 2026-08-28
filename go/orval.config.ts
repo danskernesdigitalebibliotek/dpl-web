@@ -13,27 +13,14 @@ const publizonConfig = (type: string): Options => ({
         path: `lib/rest/publizon/${type}/mutator/fetcher.ts`,
         name: "fetcher",
       },
-      query: {
-        useQuery: true,
-      },
-      operations: {
-        // The reason why we add this here is to be able to use "enabled" option in the
-        // query. This lets us call it conditionally.
-        getV1ProductsIdentifierLocalAdapter: {
-          requestOptions: false,
-        },
-        getV1ProductsIdentifierAdapter: {
-          requestOptions: false,
-        },
+      fetch: {
+        includeHttpResponseReturnType: false,
       },
     },
-    prettier: true,
+    formatter: "prettier",
   },
   input: {
     target: "../schemas/openapi/publizon-adapter.yaml",
-    converterOptions: {
-      indent: 2,
-    },
     override: {
       transformer: transformer(type),
     },

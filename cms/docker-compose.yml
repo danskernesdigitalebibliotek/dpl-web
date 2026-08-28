@@ -34,6 +34,11 @@ x-environment:
     LAGOON_ENVIRONMENT: 'local'
     LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
     WEBROOT: cms/web
+    # Host of the key-value store holding Prometheus metric counters. Settings
+    # fall back to non-persistent in-process storage when this is unset, so
+    # environments without the service keep working (metrics are just useless
+    # there).
+    METRICS_REDIS_HOST: redis-metrics
     # Uncomment if you like to have the system behave like in production
     #LAGOON_ENVIRONMENT_TYPE: production
 
@@ -47,6 +52,9 @@ services:
       - varnish
     labels:
       lagoon.type: none
+      # OrbStack resolves the site's HTTPS URL straight to this proxy (which
+      # terminates TLS and forwards to varnish). No /etc/hosts entry needed.
+      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
     volumes:
       - '../:/app'
       - '${HOME}/.local/share/mkcert:/rootCA:ro'
@@ -55,9 +63,7 @@ services:
       NGINX_DOCUMENT_ROOT: /app/cms/web
       NGINX_PROXY_PASS: http://varnish:8080
       VIRTUAL_PROTO: https
-      VIRTUAL_HOST: >-
-        ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
-        dpl-cms.docker
+      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
     working_dir: /app
 
   varnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
@@ -69,7 +75,6 @@ services:
       - nginx
     labels:
       lagoon.type: varnish
-      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.local
     links:
       - nginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
     << : *default-user # uses the defined user from top
@@ -88,6 +93,14 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/cli.dockerfile
+      args: &skip-baked-in-builds
+        # /app is bind-mounted over the image content in dev/CI, so baked-in
+        # vendor and JS assets are never used there. The Taskfile sets
+        # SKIP_BAKED_IN_BUILDS=true for every compose command; Lagoon builds
+        # never see these args (shyaml does not resolve extends) and fall
+        # back to the dockerfile defaults, giving full builds.
+        SKIP_COMPOSER_INSTALL: "${SKIP_BAKED_IN_BUILDS:-false}"
+        SKIP_JS_ASSETS: "${SKIP_BAKED_IN_BUILDS:-false}"
     << : *default-volumes # loads the defined volumes from the top
     user: root
     environment:
@@ -105,6 +118,7 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/nginx.dockerfile
+      args: *skip-baked-in-builds
     depends_on:
       - php
     # loads the defined volumes and user from the top
@@ -123,8 +137,11 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/php.dockerfile
+      args: *skip-baked-in-builds
     depends_on:
       redis:
+        condition: service_started
+      redis-metrics:
         condition: service_started
       mariadb:
         condition: service_healthy
@@ -159,6 +176,20 @@ services:
   redis: # In-memory key-value database used as the Drupal Core cache backend.
     # https://docs.lagoon.sh/docker-images/redis/
     image: uselagoon/redis-8:latest
+    labels:
+      lagoon.type: redis
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment
+
+  redis-metrics: # Key-value store holding Prometheus metric counters.
+    # Deliberately separate from the cache instance above: that one runs an LRU
+    # eviction policy and gets flushed wholesale (see dev-scripts/flush-redis-
+    # cache.php), either of which would corrupt counters. See the dockerfile for
+    # why the memory settings live there rather than here.
+    build:
+      context: ..
+      dockerfile: cms/lagoon/redis-metrics.dockerfile
     labels:
       lagoon.type: redis
     << : *default-user # uses the defined user from top

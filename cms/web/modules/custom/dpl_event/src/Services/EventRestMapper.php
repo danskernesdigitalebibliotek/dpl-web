@@ -7,6 +7,7 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerDateTime;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOrganizer;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerOriginalImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTeaserImage;
@@ -17,6 +18,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\dpl_event\Entity\EventInstance;
+use Drupal\dpl_library_agency\Entity\BranchNode;
 use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\file\FileInterface;
 use Drupal\image\Entity\ImageStyle;
@@ -45,10 +47,341 @@ class EventRestMapper {
   ) {}
 
   /**
+   * Get the RestResource definition of response.
+   */
+  public function getRestDataDefinition(): mixed {
+    return [
+      'type' => 'object',
+      // Explicitly name the type to match the previously auto-generated name,
+      // so the classes generated with `task dev:codegen:dpl-cms` are still
+      // named the same. As we're the only consumer of the classes, one might
+      // consider refactoring to more natural naming.
+      'title' => 'EventsGET200ResponseInner',
+      'properties' => [
+        'uuid' => [
+          'type' => 'string',
+          'format' => 'uuid',
+          'description' => 'A unique identifier for the event.',
+        ],
+        'title' => [
+          'type' => 'string',
+          'description' => 'The event title.',
+        ],
+        'description' => [
+          'type' => 'string',
+          'description' => 'The short event description.',
+        ],
+        'url' => [
+          'type' => 'string',
+          'format' => 'uri',
+          'description' => 'An absolute URL end users should use to view the event at the website.',
+        ],
+        'created_at' => [
+          'type' => 'string',
+          'format' => 'date-time',
+          'description' => 'When the event was created. In ISO 8601 format.',
+        ],
+        'updated_at' => [
+          'type' => 'string',
+          'format' => 'date-time',
+          'description' => 'When the event was last updated. In ISO 8601 format.',
+        ],
+        'ticket_manager_relevance' => [
+          'type' => 'boolean',
+          'description' => 'Whether the event is marked as relevant for ticket management systems',
+        ],
+        'image' => [
+          'type' => 'object',
+          'description' => 'The main image for the event. (Scaled)',
+          'properties' => [
+            'url' => [
+              'type' => 'string',
+              'format' => 'uri',
+              'description' => 'An absolute URL for the image. This is a link to a scaled version of the original image - the width will always be 1920px, but height/aspect ratio will vary.',
+            ],
+          ],
+          'required' => ['url'],
+        ],
+        'originalImage' => [
+          'type' => 'object',
+          'description' => 'The main image for the event. (Original source)',
+          'properties' => [
+            'url' => [
+              'type' => 'string',
+              'format' => 'uri',
+              'description' => 'An absolute URL for the image. This is a link to the original, unaltered file, so the size, aspect ratio, and file format will be different from event to event.',
+            ],
+          ],
+          'required' => ['url'],
+        ],
+        'teaserImage' => [
+          'type' => 'object',
+          'description' => 'The uniform teaser image for the event.',
+          'properties' => [
+            'url' => [
+              'type' => 'string',
+              'format' => 'uri',
+              'description' => 'An absolute URL for the image. Unlike the main image, this is scaled and cropped to be identical in all instances - matching the teaser images of the website lists.',
+            ],
+          ],
+          'required' => ['url'],
+        ],
+        'state' => [
+          'type' => 'string',
+          'description' => 'The state of the event.',
+          'enum' => [
+            'TicketSaleNotOpen',
+            'Active',
+            'SoldOut',
+            'Cancelled',
+            'Occurred',
+          ],
+        ],
+        'all_day' => [
+          'type' => 'boolean',
+          'description' => 'Whether the event is marked as an all-day event, without time relevance.',
+        ],
+        'date_time' => [
+          'type' => 'object',
+          'description' => 'When the event occurs.',
+          'properties' => [
+            'start' => [
+              'type' => 'string',
+              'format' => 'date-time',
+              'description' => 'Start time in ISO 8601 format.',
+            ],
+            'end' => [
+              'type' => 'string',
+              'format' => 'date-time',
+              'description' => 'End time in ISO 8601 format.',
+            ],
+          ],
+          'required' => ['start', 'end'],
+        ],
+        'branches' => [
+          'type' => 'array',
+          'description' => 'The associated library branches.',
+          'items' => [
+            'type' => 'string',
+            'description' => 'The name of a branch.',
+          ],
+        ],
+        'branch_isil_ids' => [
+          'type' => 'array',
+          'description' => 'External branch ids (ISIL) for the associated library branches. Aligned by index with the branches property, and always the same length. An entry is an empty string when no ISIL has been configured for that branch in the CMS.',
+          'items' => [
+            'type' => 'string',
+            'description' => 'External branch id (ISIL)',
+            'example' => 'DK-710100',
+          ],
+        ],
+        'organizer' => [
+          'type' => 'object',
+          'description' => 'The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library.',
+          'properties' => [
+            'id' => [
+              'type' => 'string',
+              'format' => 'uuid',
+              'description' => 'A unique identifier for the organizer. It is stable across updates, and unique across libraries.',
+            ],
+            'name' => [
+              'type' => 'string',
+              'description' => 'The name of the branch arranging the event.',
+            ],
+            'url' => [
+              'type' => 'string',
+              'format' => 'uri',
+              'description' => 'An absolute URL for the page describing the branch.',
+            ],
+            'street' => [
+              'type' => 'string',
+              'description' => 'Street name and number of the branch.',
+            ],
+            'zip_code' => [
+              'type' => 'integer',
+              'description' => 'Zip code of the branch.',
+            ],
+            'city' => [
+              'type' => 'string',
+              'description' => 'City of the branch.',
+            ],
+            'country' => [
+              'type' => 'string',
+              'description' => 'Country code in ISO 3166-1 alpha-2 format. E.g. DK for Denmark.',
+            ],
+            'phone' => [
+              'type' => 'string',
+              'description' => 'Phone number of the branch.',
+            ],
+            'email' => [
+              'type' => 'string',
+              'description' => 'Email address of the branch.',
+            ],
+          ],
+          'required' => ['id', 'name'],
+        ],
+        'address' => [
+          'type' => 'object',
+          'description' => 'Where the event occurs.',
+          'properties' => [
+            'locationType' => [
+              'type' => 'string',
+              'description' => 'If an event is physical or not.',
+              'enum' => [
+                'physical',
+                'online',
+              ],
+            ],
+            'location' => [
+              'type' => 'string',
+              'description' => 'Name of the location where the event occurs. This could be the name of a library branch.',
+            ],
+            'locationAdditional' => [
+              'type' => 'string',
+              'description' => 'Expanded description of location.',
+            ],
+            'street' => [
+              'type' => 'string',
+              'description' => 'Street name and number.',
+            ],
+            'zip_code' => [
+              'type' => 'integer',
+              'description' => 'Zip code.',
+            ],
+            'city' => [
+              'type' => 'string',
+              'description' => 'City.',
+            ],
+            'country' => [
+              'type' => 'string',
+              'description' => 'Country code in ISO 3166-1 alpha-2 format. E.g. DK for Denmark.',
+            ],
+          ],
+          'required' => ['street', 'zip_code', 'city', 'country'],
+        ],
+        'categories' => [
+          'type' => 'array',
+          'description' => 'The categories associated with the event.',
+          'items' => [
+            'type' => 'string',
+            'description' => 'The name of a category.',
+          ],
+        ],
+        'audiences' => [
+          'type' => 'array',
+          'description' => 'The audiences associated with the event.',
+          'items' => [
+            'type' => 'string',
+            'description' => 'The name of an audience.',
+          ],
+        ],
+        'tags' => [
+          'type' => 'array',
+          'description' => 'The tags associated with the event.',
+          'items' => [
+            'type' => 'string',
+            'description' => 'The name of a tag.',
+          ],
+        ],
+        'partners' => [
+          'type' => 'array',
+          'description' => 'The partners associated with the event.',
+          'items' => [
+            'type' => 'string',
+            'description' => 'The name of a partner.',
+          ],
+        ],
+        'ticket_categories' => [
+          'type' => 'array',
+          'description' => 'Ticket categories used for the event. Not present for events without ticketing.',
+          'items' => [
+            'type' => 'object',
+            'properties' => [
+              'uuid' => [
+                'type' => 'string',
+                'format' => 'uuid',
+                'description' => 'A unique identifier for the ticket category.',
+              ],
+              'title' => [
+                'type' => 'string',
+                'description' => 'The name of the ticket category.',
+              ],
+              'price' => [
+                'type' => 'object',
+                'description' => 'The price of a ticket in the category',
+                'properties' => [
+                  'currency' => [
+                    'type' => 'string',
+                    'description' => 'The currency of the price in ISO 4217 format. E.g. DKK for Danish krone.',
+                  ],
+                  'value' => [
+                    'type' => 'number',
+                    'description' => 'The price of a ticket in the minor unit of the currency. E.g. 750 for 7,50 EUR. Use 0 for free tickets.',
+                  ],
+                ],
+                'required' => ['currency', 'value'],
+              ],
+            ],
+            'required' => ['title', 'price'],
+          ],
+        ],
+        'ticket_capacity' => [
+          'type' => 'integer',
+          'description' => 'Total number of tickets which can be sold for the event.',
+        ],
+        'series' => [
+          'type' => 'object',
+          'description' => 'An event may be part of a series. One example of this is recurring events.',
+          'properties' => [
+            'uuid' => [
+              'type' => 'string',
+              'format' => 'uuid',
+              'description' => 'The unique identifier for the series. All events belonging to the same series will have the same value.',
+            ],
+          ],
+          'required' => ['uuid'],
+        ],
+        'body' => [
+          'type' => 'string',
+          'description' => 'An editorial WYSIWYG/HTML description of the event.',
+        ],
+        'external_data' => [
+          'type' => 'object',
+          'title' => 'EventPATCHRequestExternalData',
+          'description' => 'Data for the event provided by a third party.',
+          'properties' => [
+            'url' => [
+              'type' => 'string',
+              'format' => 'uri',
+              'description' => 'An absolute URL provided by the third party where end users can access the event.',
+            ],
+            'admin_url' => [
+              'type' => 'string',
+              'format' => 'uri',
+              'description' => 'An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication.',
+            ],
+          ],
+        ],
+        'screen_names' => [
+          'type' => 'array',
+          'description' => 'The screens this event should be shown on.',
+          'items' => [
+            'type' => 'string',
+            'description' => 'A screen name.',
+          ],
+        ],
+      ],
+      'required' => ['uuid', 'title', 'created_at', 'updated_at', 'url', 'state', 'date_time'],
+    ];
+  }
+
+  /**
    * {@inheritDoc}
    */
   public function getResponse(EventInstance $event_instance): EventsGET200ResponseInner {
     $this->event = $event_instance;
+
+    $branch_data = $this->getBranchData();
 
     $response = new EventsGET200ResponseInner([
       'title' => $this->getValue('title'),
@@ -61,7 +394,9 @@ class EventRestMapper {
       'image' => $this->getImage(),
       'originalImage' => $this->getOriginalImage(),
       'teaserImage' => $this->getTeaserImage(),
-      'branches' => $this->getBranches(),
+      'branches' => $branch_data['names'],
+      'branchIsilIds' => $branch_data['isil_ids'],
+      'organizer' => $this->getOrganizer(),
       'address' => $this->getAddress(),
       'audiences' => $this->getAudiences(),
       'tags' => $this->getTags(),
@@ -89,25 +424,96 @@ class EventRestMapper {
   }
 
   /**
-   * Getting associated branches.
+   * Getting associated branches, as labels and as ISIL ids.
    *
-   * @return string[]
-   *   The translated branch labels.
+   * Both lists are built in the same pass and skipped on the same condition, so
+   * they are always the same length and can be read by index against each
+   * other.
+   *
+   * A branch without an ISIL gets an empty string rather than NULL: the REST
+   * responses are serialized by JMS, which omits NULL values, and a NULL would
+   * silently drop out of the array and break the alignment with the labels.
+   *
+   * @return array{names: string[], isil_ids: string[]}
+   *   The translated branch labels, and the ISIL id of each.
    */
-  private function getBranches(): array {
+  private function getBranchData(): array {
     $names = [];
+    $isil_ids = [];
 
     $branches = $this->event->getBranches() ?? [];
 
     foreach ($branches as $branch) {
       $label = $branch->getTitle();
 
-      if (!empty($label)) {
-        $names[] = $label;
+      if (empty($label)) {
+        continue;
       }
+
+      $names[] = $label;
+
+      $isil_ids[] = ($branch instanceof BranchNode) ? ($branch->getIsilId() ?? '') : '';
     }
 
-    return $names;
+    return ['names' => $names, 'isil_ids' => $isil_ids];
+  }
+
+  /**
+   * Getting the organizer of the event.
+   *
+   * The organizer is the branch responsible for the event. Notice that this is
+   * not necessarily where the event takes place - when an event is held
+   * outside the library, the organizer and the address differ.
+   *
+   * @see self::getAddress()
+   */
+  private function getOrganizer(): ?EventsGET200ResponseInnerOrganizer {
+    $branches = $this->event->getBranches() ?? [];
+    $branch = reset($branches);
+
+    if (!($branch instanceof BranchNode)) {
+      return NULL;
+    }
+
+    // The name is the only required part of an organizer, so a branch without
+    // a title cannot be described. This mirrors getBranchData(), which leaves
+    // such a branch out of the response entirely.
+    $name = $branch->getTitle();
+
+    if (empty($name)) {
+      return NULL;
+    }
+
+    $organizer = new EventsGET200ResponseInnerOrganizer();
+    // The UUID is stable across updates and unique across libraries, so a
+    // consumer can group events by the branch that arranges them. The branch
+    // ISIL is not usable for that: only branches registered in the library
+    // system have one. Consumers that want it read branch_isil_ids, which
+    // carries the same value for this branch.
+    $organizer->setId($branch->uuid());
+    $organizer->setName($name);
+    $organizer->setUrl($branch->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl());
+    $organizer->setPhone($branch->getPhone());
+    $organizer->setEmail($branch->getEmail());
+
+    $address = $branch->getAddressData();
+
+    if ($address) {
+      $zip = $address->getPostalCode();
+      $country = $address->getCountryCode();
+      // The normalized street can be missing even though the address holds a
+      // value, so fall back to the human-readable address as a whole.
+      $street = $address->getAddress() ?: $address->getString();
+
+      $organizer->setStreet(!empty($street) ? $street : NULL);
+      $organizer->setZipCode(!empty($zip) ? intval($zip) : NULL);
+      $organizer->setCity($address->getPostalName());
+      // Addresses entered as freetext can leave the country empty. Since all
+      // branches are Danish libraries, default to Denmark in that case.
+      $organizer->setCountry(!empty($country) ? $country : 'DK');
+    }
+
+    return $organizer;
   }
 
   /**
@@ -362,13 +768,7 @@ class EventRestMapper {
       return NULL;
     }
 
-    $field = $series->get($field_name);
-
-    if (!($field instanceof FieldItemListInterface)) {
-      return NULL;
-    }
-
-    return $field->getString();
+    return $series->get($field_name)->getString();
   }
 
   /**
