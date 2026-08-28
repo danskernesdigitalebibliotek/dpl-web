@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-07-30 13:45+0200\n"
-"PO-Revision-Date: 2026-07-30 13:45+0200\n"
+"POT-Creation-Date: 2026-08-28 09:45+0200\n"
+"PO-Revision-Date: 2026-08-28 09:45+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3396,31 +3396,8 @@ msgstr "Automatisk afpublicering"
 msgid "Get tickets"
 msgstr "Hent billetter"
 
-msgid "Updated @count description fields on @entity_type"
-msgstr "Opdaterede @count beskrivelsesfelter på @entity_type"
-
-msgid "(Locked by @username)"
-msgstr "(Låst af @username)"
-
 msgid "The material type"
 msgstr "Materialetype"
-
-msgid ""
-"This is the work ID used to retrieve the material information. "
-"Example: work-of:870970-basis:136336282.\n"
-"      Currently this is "
-"retrieved by performing a search for a material manually, and copying "
-"this value from the URL.\n"
-"      If you need to link to a specific "
-"type, select it from the dropdown and the system will display that, if "
-"it is available."
-msgstr ""
-"Dette er det VærkID som anvendes til at hente informationer om "
-"værket. Eksempel: work-of:870970-basis:136336282.\n"
-"P.t. hentes dette "
-"ved manuelt at fremsøge et værk og kopiere værdien fra URL'en. Hvis "
-"du vil fremhæve en specifik materialetype, vælges typen i dropdown "
-"og systemet vil vise denne type, hvis den er tilgængelig."
 
 msgid "Material Type"
 msgstr "Materialetype"
@@ -3914,28 +3891,6 @@ msgstr "Adresser kræver commerceguys/adressering biblioteket."
 msgid "Save"
 msgstr "Gem"
 
-msgid ""
-"Submitted: @country_code / @administrative_area / "
-"@included_postal_codes / @excluded_postal_codes."
-msgstr ""
-"Indsendt: @country_code / @administrative_area / "
-"@included_postal_codes / @excluded_postal_codes."
-
-msgid "Payment method"
-msgstr "Betalingsmetode"
-
-msgid "Credit card"
-msgstr "Kreditkort"
-
-msgid "Cash on delivery"
-msgstr "Betaling ved levering"
-
-msgid "Billing information"
-msgstr "Faktureringsinformation"
-
-msgid "The street is \"@street\" and the country code is @country_code."
-msgstr "Gaden er @street og landekoden er @country_code."
-
 msgid "Address Field Diff"
 msgstr "Adressefelt Diff"
 
@@ -3968,18 +3923,6 @@ msgstr "Standard"
 msgid "Provides functionality for handling postal addresses."
 msgstr "Udøver funktionalitet til håndtering af postadresser."
 
-msgid "Address test"
-msgstr "Adresse test"
-
-msgid "Provides functionality for testing the address module."
-msgstr "Udøver funktionalitet til test af adressemodulet."
-
-msgid "Default value test form"
-msgstr "Standardværdi testform"
-
-msgid "Zone territory test form"
-msgstr "Testskema til zoneområde"
-
 msgid "Roles"
 msgstr "Roller"
 
@@ -4003,15 +3946,6 @@ msgstr "Vis brugere med tilladte roller"
 
 msgid "Assign allowed roles"
 msgstr "Tildel tilladte roller"
-
-msgid "Edit users\\u{00A0}includes role %role"
-msgstr "Rediger brugere\\u{00A0}inkluderer rolle %role"
-
-msgid "Cancel users\\u{00A0}includes role %role"
-msgstr "Afbryd brugere\\u{00A0}inkluderer rolle %role"
-
-msgid "View users\\u{00A0}includes role %role"
-msgstr "Vis users\\u{00A0}includes role %role"
 
 msgid "Assign roles includes role %role"
 msgstr "Tildel roller inkluderer rolle %role"
@@ -4527,9 +4461,6 @@ msgstr "Vis afkrydsnings/radio muligheder inline."
 msgid "Advanced filter options"
 msgstr "Avancerede filter muligheder"
 
-msgid "The options will be sorted alphabetically."
-msgstr "Mulighederne vil blive sorteret alfabetisk."
-
 msgid "Placeholder text"
 msgstr "Fyldtekst"
 
@@ -4539,29 +4470,6 @@ msgid ""
 msgstr ""
 "Tekst som vises i feltet indtil det overskrives. Efterlad feltet tomt "
 "hvis der ikke skal vises en tekst."
-
-msgid ""
-"Use this field to rewrite the filter options displayed. Use the format "
-"of current_text|replacement_text, one replacement per line. For "
-"example: <pre>\n"
-"  Current|Replacement\n"
-"  On|Yes\n"
-"  Off|No\n"
-"  "
-"</pre> Leave the replacement text blank to remove an option "
-"altogether. If using hierarchical taxonomy filters, do not including "
-"leading hyphens in the current text."
-msgstr ""
-"Brug dette felt til at omskrive de viste filteringsmuligheder. Brug "
-"formatet current_text|replacement_text, en udskiftning per linje. For "
-"eksempel: <pre>\n"
-"  Current|Replacement\n"
-"  On|Yes\n"
-"  Off|No\n"
-"  "
-"</pre> Lad udskiftningsteksten være tom for helt at fjerne "
-"muligheden. Hvis du bruger hierarkiske taksonomifiltre, skal du ikke "
-"inkludere førende bindestreger i den aktuelle tekst."
 
 msgid "Make filter options collapsible"
 msgstr "Gør filterindstillinger sammenklappelige"
@@ -4710,9 +4618,6 @@ msgstr "Globale erstatningsmønstre (kun for beskrivelsesfeltet)"
 msgid "Links"
 msgstr "Links"
 
-msgid "Test module for Better Exposed Filters"
-msgstr "Testmodul for Better Exposed Filters"
-
 msgid "Better Exposed Filters"
 msgstr "Better Exposed Filters"
 
@@ -4736,9 +4641,6 @@ msgid ""
 msgstr ""
 "Leverer avancerede muligheder (f.eks. links, afkrydsningsfelter eller "
 "andre widgets) til eksponerede Views-elementer."
-
-msgid "BEF Test"
-msgstr "BEF Test"
 
 msgid "Content lock"
 msgstr "Indholdslås"
@@ -4924,12 +4826,6 @@ msgstr ""
 "Tilbyder mekanismer til automatisk at låse op for noder, der har "
 "været låst i en bestemt periode."
 
-msgid "Content lock timeout test"
-msgstr "Test af indholdslås timeout"
-
-msgid "Provides test classes."
-msgstr "Leverer testklasser."
-
 msgid ""
 "Prevents multiple users from trying to edit a content entity "
 "simultaneously to prevent edit conflicts."
@@ -4945,12 +4841,6 @@ msgstr "Indstillinger for indholdslås"
 
 msgid "Settings"
 msgstr "Indstillinger"
-
-msgid "Content lock test"
-msgstr "Test af indholdslås"
-
-msgid "compact"
-msgstr "kompakt"
 
 msgid "uses <em>@data.crop_type</em> crop type"
 msgstr "Bruger <em>@data.crop_type</em> beskæringstype"
@@ -5114,9 +5004,6 @@ msgstr "Beskæringstype %name er blevet tilføjet."
 msgid "View"
 msgstr "Vis"
 
-msgid "Entity provider @id not found."
-msgstr "Enhedsudbyder @id ikke fundet."
-
 msgid "Crop ID"
 msgstr "Beskærings ID"
 
@@ -5231,60 +5118,8 @@ msgstr ""
 "Ingen beskæringstyper tilgængelige. <a href=\"@link\">Tilføj "
 "beskæringstype</a>."
 
-msgid "Super fancy provider for media entity!"
-msgstr "Super fancy udbyder for medieenhed!"
-
-msgid ""
-"CropEffect::transformDimensions() transform image dimensions "
-"correctly."
-msgstr ""
-"CropEffect::transformDimensions() transformerer billeddimensioner "
-"korrekt."
-
-msgid "Position correctly returned."
-msgstr "Position korrekt returneret."
-
-msgid "Size correctly returned."
-msgstr "Størrelse korrekt returneret."
-
-msgid "Anchor correctly returned."
-msgstr "Anker korrekt returneret."
-
-msgid "Crop::cropExists() correctly found saved crop."
-msgstr "Crop::cropExists() fandt korrekt gemt beskæring."
-
-msgid "Crop::cropExists() correctly handled wrong type."
-msgstr "Crop::cropExists() håndterede korrekt den forkerte type."
-
-msgid "Crop::cropExists() correctly handled wrong uri."
-msgstr "Crop::cropExists() håndterede korrekt den forkerte URI."
-
-msgid "Crop::findCrop() correctly loaded crop entity."
-msgstr "Crop::findCrop() korrekt indlæst beskæringsenhed."
-
-msgid "Crop::findCrop() correctly handled nonexistent crop."
-msgstr "Crop::findCrop() håndterede korrekt den ikke-eksisterende beskæring."
-
-msgid "No crop types available."
-msgstr "Ingen beskæringstyper tilgængelige."
-
 msgid "Edit"
 msgstr "Redigér"
-
-msgid "Edit @name crop type"
-msgstr "Rediger @name beskæringstype"
-
-msgid "The image effect was successfully applied."
-msgstr "Billedeffekten blev taget i anvendelse."
-
-msgid "Manual crop uses @name crop type"
-msgstr "Manuel beskæring bruger @name beskæringstype"
-
-msgid "The machine-readable name is already in use. It must be unique."
-msgstr "Dette maskinlæsbare navn er allerede i brug. Det skal være unikt."
-
-msgid "Are you sure you want to delete the crop type @name?"
-msgstr "Er du sikker på, at du vil slette beskæringstypen @name?"
 
 msgid "Crop API"
 msgstr "Beskærings API"
@@ -5401,18 +5236,6 @@ msgstr "Standardindhold"
 msgid "Imports default content when a module is enabled"
 msgstr "Importerer standardindhold, når et modul er aktiveret"
 
-msgid "Default content YAML tests"
-msgstr "Standard YAML-tests af indhold"
-
-msgid "Default content export test"
-msgstr "Standardtest af eksport af indhold"
-
-msgid "Used in testing to ensure modules can declare content."
-msgstr "Bruges i test for at sikre, at moduler kan deklarere indhold."
-
-msgid "Default content tests"
-msgstr "Standard indholdstests"
-
 msgid "Overview"
 msgstr "Overblik"
 
@@ -5525,9 +5348,6 @@ msgstr "Den refererede entity (%type: %id) eksisterer ikke."
 msgid "The referenced entity type (%type) is not allowed for this field."
 msgstr "Den refererede enhedstype (%type) er ikke tilladt i dette felt."
 
-msgid "No bundle is allowed for (%type)"
-msgstr "Ingen bundt er tilladt for (%type)"
-
 msgid ""
 "Referenced entity %label does not belong to one of the supported "
 "bundles (%bundles)."
@@ -5543,9 +5363,6 @@ msgstr "Gennemse"
 
 msgid "References"
 msgstr "Referencer"
-
-msgid "Reference another entity."
-msgstr "Referér en anden enhed."
 
 msgid "@label referenced from @field_name"
 msgstr "@label refereret fra @field_name"
@@ -5622,33 +5439,6 @@ msgstr "Afkrydsningfelter/radioknapper"
 msgid "Select list"
 msgstr "Valgliste"
 
-msgid "Entity Test Provider"
-msgstr "Entity Test Provider"
-
-msgid "Dynamic entity reference test views"
-msgstr "Dynamisk enhedsreference testvisninger"
-
-msgid "Provides default views for views dynamic entity reference tests."
-msgstr ""
-"Leverer standardvisninger for dynamisk enhedsreference af "
-"testvisninger."
-
-msgid "Dynamic Entity Reference Entity Test"
-msgstr "Dynamic Entity Reference Entity Test"
-
-msgid ""
-"Provides base fields for dynamic_entity_reference tests of entity_test "
-"entity type."
-msgstr ""
-"Leverer basisfelter for dynamic_entity_reference tests af entity_test "
-"enhedstypen."
-
-msgid "Dynamic Entity Reference Entity Provider"
-msgstr "Dynamic Entity Reference Entity Provider"
-
-msgid "A provider of an entity type."
-msgstr "En udbyder af en enhedstype."
-
 msgid ""
 "Provides an entity reference field that can reference multiple entity "
 "types."
@@ -5706,21 +5496,6 @@ msgstr ""
 msgid "Cloneable entities"
 msgstr "Klonbare enheder"
 
-msgid ""
-"Enable the cloning functionalities for each entity type. For "
-"non-enabled\n"
-"        entity types, the cloning will be restricted, "
-"even when the given entity\n"
-"        type is a referenced item in a "
-"field by another entity."
-msgstr ""
-"Enable the cloning functionalities for each entity type. For "
-"non-enabled\n"
-"        entity types, the cloning will be restricted, "
-"even when the given entity\n"
-"        type is a referenced item in a "
-"field by another entity."
-
 msgid "Enabled"
 msgstr "Aktiveret"
 
@@ -5776,68 +5551,6 @@ msgstr ""
 "Klon enhed <strong>ID:</strong> <em>@entity_id</em>, "
 "<strong>Type:</strong> <em>@entity_type - @bundle</em>, "
 "<strong>Mærkat:</strong> <em>@entity_label</em>"
-
-msgid ""
-"<p>Specify the child entities (the entities referenced by this entity) "
-"that should also be cloned as part of\n"
-"            the cloning "
-"process. If they're not included, these fields' referenced entities "
-"will be the same as in the\n"
-"            original.  In other words, "
-"fields in both the original entity and the cloned entity will refer to "
-"the same\n"
-"            referenced entity. Examples:</p>\n"
-"\n"
-"          "
-"  <p>If you have a Paragraph field in your entity, and you choose not "
-"to clone it here, deleting the original\n"
-"            or cloned entity "
-"will also delete the Paragraph field from the other one. So you "
-"probably want to clone\n"
-"            Paragraph fields.</p>\n"
-"\n"
-"       "
-"     <p>However, if you have a User reference field, you probably "
-"don't want to clone it here because a new User\n"
-"            will be "
-"created for referencing by the clone.</p>\n"
-"\n"
-"            <p>Some "
-"options may be disabled here, preventing you from changing them, as "
-"set by your administrator. Some\n"
-"            options may also be "
-"missing, hidden by your administrator, forcing you to clone with the "
-"default settings.\n"
-"            It's possible that there are no "
-"options here for you at all, or none need to be set, in which case you "
-"may\n"
-"            simply hit the <em>Clone</em> button.</p>"
-msgstr ""
-"<p>Angiv de børneenheder (de enheder, der refereres til af denne "
-"enhed), som også skal kloner som en del af kloningsprocessen. Hvis de "
-"ikke inkluderes, vil disse felts refererede enheder være de samme som "
-"i den originale. Med andre ord vil felter i både den originale enhed "
-"og den klonede enhed henvise til den samme refererede enhed. "
-"Eksempler:</p>\n"
-"\n"
-"<p>Hvis du har et Paragraph felt i din enhed, og "
-"du vælger ikke at klone det her, vil sletning af den originale eller "
-"klonede enhed også slette Paragraph feltet fra den anden. Så du vil "
-"sandsynligvis ønske at klone Paragraph felter.</p>\n"
-"\n"
-"<p>Hvis du "
-"derimod har et brugerreferencefelt, ønsker du sandsynligvis ikke at "
-"klone det her, fordi en ny bruger vil blive oprettet til referencer af "
-"klonen.</p>\n"
-"\n"
-"<p>Nogle indstillinger kan være deaktiverede her, "
-"som forhindrer dig i at ændre dem, som sat af din administrator. "
-"Nogle indstillinger kan også mangle, skjult af din administrator, "
-"hvilket tvinger dig til at klone med standardindstillingerne.\n"
-"Det er "
-"muligt, at der ikke er nogen indstillinger her for dig overhovedet, "
-"eller at ingen behøver at blive sat, i så fald kan du simpelthen "
-"trykke på <em>Klone</em> knappen.</p>"
 
 msgid ""
 "<p>Do you want to clone the <em>@type</em> entity named "
@@ -6123,30 +5836,6 @@ msgstr ""
 "som en teaser (eller en anden tilgængelig visningstilstand) i den "
 "refererende enhed."
 
-msgid "Reference revisions"
-msgstr "Referencerevisioner"
-
-msgid "Parent ID"
-msgstr "Overordnet ID"
-
-msgid "The ID of the parent entity of which this entity is referenced."
-msgstr "ID'et for den overordnede enhed, som denne enhed refererer til."
-
-msgid "Parent type"
-msgstr "Forældretype"
-
-msgid "The entity parent type to which this entity is referenced."
-msgstr "Den overordnede type for enheden, som denne enhed refererer til."
-
-msgid "Parent field name"
-msgstr "Navn på forældrefelt"
-
-msgid "The entity parent field name to which this entity is referenced."
-msgstr "Det overordnede feltnavn for enheden, som denne enhed refererer til."
-
-msgid "Entity test composite"
-msgstr "Entity test composite"
-
 msgid "Field Diff for Paragraphs"
 msgstr "Field Diff for Paragraphs"
 
@@ -6193,12 +5882,6 @@ msgstr ""
 "En enhedsfelt, der indeholder en enhedsreference til en specifik "
 "revision."
 
-msgid "Test entity - composite relationship"
-msgstr "Testenhed - sammensat relation"
-
-msgid "Test entity host"
-msgstr "Test enhedsvært"
-
 msgid "Delete orphaned composite entities"
 msgstr "Delete orphaned composite entities"
 
@@ -6211,22 +5894,6 @@ msgstr ""
 
 msgid "Adds a Entity Reference field type with revision support."
 msgstr "Tilføjer en Entity Reference felttype med versionsstøtte."
-
-msgid "ERR Composite relationship test"
-msgstr "ERR Composite relationship test"
-
-msgid "Entity with parent type and ID."
-msgstr "Enhed med overordnet type og ID."
-
-msgid "Entity Host Base Field ERR"
-msgstr "Entity Host Base Field ERR"
-
-msgid ""
-"Entity host with base field definition using "
-"entity_reference_revisions."
-msgstr ""
-"Entity host with base field definition using "
-"entity_reference_revisions."
 
 msgid "Enum class"
 msgstr "Enum class"
@@ -6519,15 +6186,6 @@ msgstr "Data"
 msgid "@label of @entity_type (bundle: @bundle)"
 msgstr "@label af @entity_type (bundt: @bundle)"
 
-msgid "The group %label has been deleted from the %type content type."
-msgstr "Gruppen %label er blevet slettet fra %type indholdstypen."
-
-msgid "Body is a child of %group"
-msgstr "Body is a child of %group"
-
-msgid "Div that contains fields with no access is not shown."
-msgstr "Div that contains fields with no access is not shown."
-
 msgid "Tabs"
 msgstr "Faner"
 
@@ -6592,14 +6250,6 @@ msgstr "Field Group Migrate"
 
 msgid "Provides the ability to migrate field groups from D6/D7 to D8."
 msgstr "Leverer muligheden for at migrere feltgrupper fra D6/D7 til D8."
-
-msgid "Field Group Test"
-msgstr ""
-"\n"
-"Field Group Test"
-
-msgid "Test module for Field Group"
-msgstr "Testmodul for feltgruppe"
 
 msgid "Label for the Field inheritance."
 msgstr "Mærkat for feltarven."
@@ -6753,12 +6403,6 @@ msgstr "Inkluderede enhedstyper"
 msgid "Select the entity types that should be able to inherit data"
 msgstr "Vælg feltet på kildenheden, hvorfra data skal arves"
 
-msgid "Included Entity Bundles"
-msgstr "Inkluderede enhedsbundter"
-
-msgid "Select the entity bundles that should be able to inherit data"
-msgstr "Vælg de enhedsbundter, der bør kunne arve data"
-
 msgid "Field inheritance"
 msgstr "Feltarv"
 
@@ -6818,12 +6462,6 @@ msgstr "Kildeenhed"
 msgid "Enter the name of the %bundle from which to inherit data."
 msgstr "Indtast navnet på %bundle, hvorfra data skal arves."
 
-msgid "Add a new field inheritance field to this entity type and bundle."
-msgstr "Tilføj et nyt felt for arv til denne enhedstype og bundt."
-
-msgid "Add Field Inheritance"
-msgstr "Tilføj feltarv"
-
 msgid "Default Field Inheritance"
 msgstr "Standard feltarv"
 
@@ -6841,9 +6479,6 @@ msgstr "Leverer muligheden for at arve data fra en enhed til en anden"
 
 msgid "Add Field inheritance"
 msgstr "Tilføj feltarv"
-
-msgid "Create Field Inheritance"
-msgstr "Opret feltarv"
 
 msgid "Original image"
 msgstr "Originalt billede"
@@ -6923,9 +6558,6 @@ msgstr ""
 "vigtigst.</br>Denne information kan bruges, når billedet beskæres "
 "eller beskæres og skaleres, så du for eksempel ikke ender med et "
 "billede, der skærer emnets hoved af."
-
-msgid "Test Node"
-msgstr "Test Node"
 
 msgid "Image (Focal Point)"
 msgstr "Billede (Fokuspunkt)"
@@ -7453,9 +7085,6 @@ msgstr ""
 msgid "Start typing to find content."
 msgstr "Begynd at skrive for at finde indhold."
 
-msgid "Dummy setting"
-msgstr "Dummy indstilling"
-
 msgid "Direct File URL"
 msgstr "Direkte fil URL"
 
@@ -7486,9 +7115,6 @@ msgstr "Opdaterer links indsat af Linkit til at pege på enhedens URL-aliaser."
 msgid "Linkit"
 msgstr "Linkit"
 
-msgid "Dummy Matcher"
-msgstr "Dummy Matcher"
-
 msgid "Linkit profiles"
 msgstr "Linkit-profiler"
 
@@ -7507,12 +7133,6 @@ msgstr ""
 
 msgid "Manage Linkit profiles."
 msgstr "Administrer Linkit-profiler."
-
-msgid "Linkit test module"
-msgstr "Linkit testmodul"
-
-msgid "Support module for Linkit testing."
-msgstr "Supportmodul for Linkit-testning."
 
 msgid ""
 "Add an edit button to the Media Library widget when an item is "
@@ -8355,9 +7975,6 @@ msgstr "Adgang %tag i %group"
 msgid "Metatag defaults"
 msgstr "Metatag standardindstillinger"
 
-msgid "Support module for testing handling of a custom route."
-msgstr "Supportmodul til test af håndtering af en brugerdefineret rute."
-
 msgid "Route / Path"
 msgstr "Rute / Sti"
 
@@ -8834,9 +8451,6 @@ msgstr ""
 msgid "Document status"
 msgstr "Dokumentstatus"
 
-msgid "The document status, e.g. \"draft\"."
-msgstr "Status for dokumentet, f.eks. \"kladde\"."
-
 msgid "Department"
 msgstr "Afdeling"
 
@@ -8845,9 +8459,6 @@ msgstr "Afdelingstag."
 
 msgid "Content audience"
 msgstr "Målgruppe"
-
-msgid "The content audience, e.g. \"all\"."
-msgstr "Målgruppen for indholdet, f.eks. \"alle\"."
 
 msgid "Thumbnail"
 msgstr "Thumbnail"
@@ -9453,15 +9064,6 @@ msgstr ""
 msgid "Favicons & touch icons"
 msgstr "Favicons & touch ikoner"
 
-msgid ""
-"Meta tags for displaying favicons of various sizes and types. All "
-"values should be either absolute or relative URLs. No effects are "
-"added to the \"precomposed\" icons."
-msgstr ""
-"Metatags for visning af favicons i forskellige størrelser og typer. "
-"Alle værdier skal være enten absolutte eller relative URL'er. Der "
-"tilføjes ingen effekter til \"precomposed\" ikoner."
-
 msgid "Apple touch icon: 144px x 144px"
 msgstr "Apple touch ikon: 144px x 144px"
 
@@ -9675,13 +9277,6 @@ msgstr ""
 msgid "iPad app's custom URL scheme"
 msgstr "iPad apps brugerdefinerede URL-skema"
 
-msgid ""
-"The iPad app's custom URL scheme (must include \"://\" after the "
-"scheme name)."
-msgstr ""
-"iPad-appens brugerdefinerede URL-oversigt (skal indeholde \"://\" "
-"efter oversigtens navn)."
-
 msgid "iPhone app name"
 msgstr "iPhone app navn"
 
@@ -9710,13 +9305,6 @@ msgstr ""
 
 msgid "Google Play app's custom URL scheme"
 msgstr "Google Play apps brugerdefinerede URL-skema"
-
-msgid ""
-"The Google Play app's custom URL scheme (must include \"://\" after "
-"the scheme name)."
-msgstr ""
-"Google Play appens brugerdefinerede URL-skema (skal inkludere \"://\" "
-"efter skemanavnet)."
 
 msgid "App store country"
 msgstr "App store land"
@@ -9828,13 +9416,6 @@ msgstr ""
 msgid "iPhone app's custom URL scheme"
 msgstr "iPhone apps brugerdefinerede URL-skema"
 
-msgid ""
-"The iPhone app's custom URL scheme (must include \"://\" after the "
-"scheme name)."
-msgstr ""
-"iPhone-appens brugerdefinerede URL-oversigt (skal indeholde \"://\" "
-"efter oversigtens navn)."
-
 msgid "MP4 media stream URL"
 msgstr "MP4 Medie Stream URL"
 
@@ -9896,9 +9477,6 @@ msgstr "Navnet på iPad appen."
 
 msgid "Google Play app ID"
 msgstr "Google Play app ID"
-
-msgid "Your app ID in the Google Play Store (i.e. \"com.android.app\")."
-msgstr "Dit app-ID i Google Play Store (f.eks. \"com.android.app\")."
 
 msgid "Site's Twitter account ID"
 msgstr "Hjemmesidens Twitterkonto ID"
@@ -10451,13 +10029,6 @@ msgstr ""
 msgid "App Links"
 msgstr "App Links"
 
-msgid ""
-"Meta tags used to expose App Links for app deep linking. See <a "
-"href=\":url\">applinks.org</a> for details and documentation."
-msgstr ""
-"Metatags brugt til at eksponere App Links for app dyb linking. Se <a "
-"href=\":url\">applinks.org</a> for detaljer og dokumentation."
-
 msgid "Windows Universal app ID"
 msgstr ""
 "\n"
@@ -10555,13 +10126,6 @@ msgstr "iPhone app URL-skema"
 
 msgid "Should fallback"
 msgstr "Skal falde tilbage"
-
-msgid ""
-"Indicates if the web URL should be used as a fallback; defaults to "
-"\"true\"."
-msgstr ""
-"Angiver om web-URL'en skal bruges som fallback; standardindstillingen "
-"er \"true\"."
 
 msgid "Windows Phone app name"
 msgstr "Windows Phone appens navn"
@@ -11017,12 +10581,6 @@ msgstr "Et pseudonym / alias af denne person."
 msgid "Email address"
 msgstr "E-mail-adresse"
 
-msgid "Metatag Test"
-msgstr "Metatag test"
-
-msgid "A metatag tag for testing."
-msgstr "Et meta-tag for testning."
-
 msgid "Metatag: Pinterest"
 msgstr "Metatag: Pinterest"
 
@@ -11152,28 +10710,6 @@ msgstr "Metatag: Open Graph"
 msgid "Provides support for Open Graph Protocol meta tags."
 msgstr "Leverer support for Open Graph Protocol metatags."
 
-msgid "Metatag: Test Custom Route"
-msgstr "Meta tag: Test brugerdefineret rute"
-
-msgid ""
-"Support module for testing handling of a custom route that only "
-"inherits the global configuration."
-msgstr ""
-"Supportmodul for testning af håndtering af en brugerdefineret rute, "
-"der kun arver den globale konfiguration."
-
-msgid "Metatag: Test Integration"
-msgstr "Metatag: Test integration"
-
-msgid "Support module for integration with metatag module."
-msgstr "Supportmoduls integrering med metatag-modul."
-
-msgid "Metatag Tests: Tag"
-msgstr "Metatag tests: Tag"
-
-msgid "Support module for testing handling of a custom meta tag."
-msgstr "Supportmodul til test af håndtering af et brugerdefineret metatag."
-
 msgid "Add custom metatag"
 msgstr "Tilføj brugerdefineret meta-tag"
 
@@ -11202,51 +10738,6 @@ msgstr "Tilføj endnu et element"
 msgid "Weight for row @number"
 msgstr "Vægt af række @number"
 
-msgid "Foo"
-msgstr "Foo – metasyntaktisk variabel"
-
-msgid "Bar"
-msgstr "Bar"
-
-msgid "Complex"
-msgstr "Kompleks"
-
-msgid "Add more complexity"
-msgstr "Tilføj mere kompleksitet"
-
-msgid "Inner foo"
-msgstr "Inner foo"
-
-msgid "Values"
-msgstr "Værdier"
-
-msgid "Value A"
-msgstr "Værdi A"
-
-msgid "Value B"
-msgstr "Værdi B"
-
-msgid "Multiple one"
-msgstr "Multiple one"
-
-msgid "Textfield one"
-msgstr "Tekstfelt et"
-
-msgid "Multiple two"
-msgstr "Multiple two"
-
-msgid "Partial required"
-msgstr "Delvis krævet"
-
-msgid "Baz"
-msgstr "Baz"
-
-msgid "Qux"
-msgstr "Qux"
-
-msgid "Not required"
-msgstr "Ikke nødvendigt"
-
 msgid "Multi-value form element"
 msgstr "Flerværdi form-element"
 
@@ -11256,21 +10747,6 @@ msgid ""
 msgstr ""
 "Provides a multi-value form element that wraps any number of form "
 "elements."
-
-msgid "Multi-value form element AJAX test form"
-msgstr "Flerværdi form-element AJAX testformular"
-
-msgid "Multi-value form element test form"
-msgstr "Flerværdi form-element testformular"
-
-msgid "Multi-value form required elements test form"
-msgstr "Flerværdi form-element testformular for nødvendige elementer"
-
-msgid "Multi-value form element test"
-msgstr "Flerværdi form-element test"
-
-msgid "Test module for Multi-value form element."
-msgstr "Testmodul for flerværdi formelement."
 
 msgid "Log in with @client_title"
 msgstr "Log ind med @client_title"
@@ -11783,12 +11259,6 @@ msgstr ""
 msgid "Show drag & drop button"
 msgstr "Vis træk og slip-knap"
 
-msgid "Extended Test Paragraphs EXPERIMENTAL"
-msgstr "Udvidet testafsnit EKSPERIMENTELT"
-
-msgid "An extended experimental paragraphs test widget."
-msgstr "En udvidet eksperimentel paragraphs test widget."
-
 msgid "Paragraphs features"
 msgstr "Paragraphs funktioner"
 
@@ -11804,12 +11274,6 @@ msgstr "Paragraphs Funktioner"
 msgid "Provides additional paragraphs widgets."
 msgstr "Leverer yderligere afsnits widgets."
 
-msgid "Paragraphs Features Test"
-msgstr "Paragraphs funktiontests"
-
-msgid "Provides Test scaffolds for Paragraphs Features module."
-msgstr "Leverer teststel for Paragraphs Features modul."
-
 msgid ""
 "You have not created any event types yet. Go to the <a "
 "href=\"@create_content\">eventseries type creation page</a> to add a "
@@ -11821,9 +11285,6 @@ msgstr ""
 
 msgid "Register"
 msgstr "Opret konto"
-
-msgid "Are you sure you want to revert to the revision from %revision-date?"
-msgstr "Ønsker du at vende tilbage til versionen fra %revision-date?"
 
 msgid "Copy of the revision from %date."
 msgstr "Kopi af versionen fra %date."
@@ -11955,38 +11416,6 @@ msgstr "Aktiverede tilbagevendende felttyper"
 msgid "Select the recur field types to enable."
 msgstr "Vælg de tilbagevendende felttyper der skal aktiveres."
 
-msgid "Show Event Instance Threshold Warning?"
-msgstr "Vis advarsel om grænseværdi for antal arrangementsinstanser?"
-
-msgid "Display a warning when too many event instances may be created?"
-msgstr ""
-"Vis en advarsel, når der kan blive oprettet for mange "
-"arrangement-instanser?"
-
-msgid "Event Instance Threshold Count"
-msgstr "Grænseværdi for arrangementsinstanser"
-
-msgid "The number of event instances to trigger the warning"
-msgstr ""
-"Antal instanser i en serie der skal udløse advarsel om overskredet "
-"grænseværdi"
-
-msgid "Event Instance Threshold Message"
-msgstr "Event Instance Threshold Message"
-
-msgid ""
-"Enter the message to be displayed. Use @total as a placeholder for the "
-"amount of instances being created."
-msgstr ""
-"Indtast beskeden, der skal vises. Brug @total som pladsholder for "
-"antallet af instanser, der oprettes."
-
-msgid "Event Instance Threshold Prevent Save"
-msgstr "Event Instance Threshold Prevent Save"
-
-msgid "Prevent saving a series if the threshold is exceeded?"
-msgstr "Forhindre at gemme en serie, hvis tærsklen overskrides?"
-
 msgid "Event Instance Creator Plugin"
 msgstr "Arrangementsinstans Creator-plugin"
 
@@ -12069,14 +11498,6 @@ msgstr "@language-oversættelsen af @type %label slettet."
 msgid "The %title event instance starting on %date has been deleted."
 msgstr "Instansen %title som fandt sted %date er blevet slettet."
 
-msgid "Are you sure you want to delete the revision from %revision-date?"
-msgstr "Ønsker du at slette versionen fra %revision-date?"
-
-msgid "Revision from %revision-date of eventseries %title has been deleted."
-msgstr ""
-"Revision fra %revision-date af arrangementsrækken %title er blevet "
-"slettet."
-
 msgid ""
 "Are you sure you want to revert @language translation to the revision "
 "from %revision-date?"
@@ -12152,11 +11573,6 @@ msgstr "Arrangementsserien %name blev gemt."
 
 msgid "@language translation of the @type %label has been saved."
 msgstr "@language oversættelse af @type %label er gemt."
-
-msgid "Revision from %revision-date of eventinstance %title has been deleted."
-msgstr ""
-"Revidering af %revision-date af arrangemenstinstansen %title er blevet "
-"slettet."
 
 msgid "Label for the Event series type."
 msgstr "Label for typen af arrangementsserie."
@@ -12781,21 +12197,6 @@ msgstr "Slet %type arrangement %title"
 msgid "Clone %type Event %title"
 msgstr "Klon %type Arrangement %title"
 
-msgid "Revision of %title from %date"
-msgstr "Version af %title fra %date"
-
-msgid "@langname revisions for %title"
-msgstr "@langname versioner af %title"
-
-msgid "Revisions for %title"
-msgstr "Versioner af %title"
-
-msgid "Revision"
-msgstr "Version"
-
-msgid "Current revision"
-msgstr "Nuværende version"
-
 msgid "Event instance type"
 msgstr "Arrangementinstans type"
 
@@ -12854,28 +12255,6 @@ msgstr "Ingen gentagne arrangementsvisninger til opdatering."
 
 msgid "Add @type"
 msgstr "Tilføj @type"
-
-msgid ""
-"This field has been disabled by the plugin to guarantee the "
-"functionality that's expected of it."
-msgstr ""
-"Dette felt er blevet deaktiveret af plugin for at garantere den "
-"funktionalitet, der forventes af det."
-
-msgid "Group event series (@type)"
-msgstr "Gruppe arrangementsserie (@type)"
-
-msgid "Adds %type content to groups both publicly and privately."
-msgstr "Tilføjer %type indhold til både offentlige og private grupper."
-
-msgid "Add new content of type %eventseries_type to the group."
-msgstr "Tilføj nyt indhold af typen %eventseries_type til gruppen."
-
-msgid "Add existing content of type %eventseries_type to the group."
-msgstr "Tilføj eksisterende indhold af typen %eventseries_type til gruppen."
-
-msgid "Events series"
-msgstr "Arrangementsserie"
 
 msgid "Default revision"
 msgstr "Standard revidering"
@@ -13061,153 +12440,6 @@ msgstr "Send emailnotifikationer under registrering eller eventopdateringer?"
 
 msgid "Send Email Notifications using a queue?"
 msgstr "Send emailnotifikationer ved hjælp af en kø?"
-
-msgid ""
-"Email notifications can be added to a queue to be processed on each "
-"cron run. This could be beneficial if you have a large number of "
-"registrants to your series and/or instances, to prevent the system "
-"from crashing when sending notifications to all of those recipients at "
-"once. Depending on your PHP configuration, your system may hit time "
-"and memory limits when sending notifications to a massive list of "
-"registered people. In particular, the notification types below are "
-"designed to send an email to all registrants of a specific series or "
-"instance, so those might be the problematic ones:<br>\n"
-"        "
-"<ul>\n"
-"          <li>Instance Deletion Notification</li>\n"
-"          "
-"<li>Series Deletion Notification</li>\n"
-"          <li>Instance "
-"Modification Notification</li>\n"
-"          <li>Series Modification "
-"Notification</li>\n"
-"          <li>Registration Reminder</li>\n"
-"        "
-"</ul>\n"
-"        <br>If you check this option, emails corresponding to "
-"those notification types will be queued and a queue worker will "
-"process as many items as it can in 30 seconds on each cron "
-"run.<br><br>\n"
-"        How long it takes for the queued notification "
-"list to be fully processed depends on three factors:\n"
-"        <ol>\n"
-" "
-"         <li>The number of notifications in the queue</li>\n"
-"          "
-"<li>How often Drupal cron runs</li>\n"
-"          <li>The number of "
-"seconds used by the queue worker on each cron run to process the items "
-"(it was set to 30)</li>\n"
-"        </ol>\n"
-"        <br>Notification "
-"types that are sent to only one recipient continue to be sent "
-"immediately as soon as the trigger action occurs, regardless of this "
-"setting, namely:<br>\n"
-"        <ul>\n"
-"          <li>Registration "
-"Notification</li>\n"
-"          <li>Waitlist Notification</li>\n"
-"        "
-"  <li>Promotion Notification</li>\n"
-"        </ul>\n"
-"        "
-"<br><b>Important note for developers:</b><br>\n"
-"          When the "
-"notification types that are not queued (this is always the case for "
-"the above-mentioned notification types, which are sent to a single "
-"recipient. It will also be the case for all notification types if you "
-"uncheck this option) the registrant entity will be passed in the "
-"params to <b><em>hook_mail()</em></b> and "
-"<b><em>hook_mail_alter()</em></b>. It will be accessible through "
-"<b><em>$params['registrant']</em></b> in the first case and "
-"<b><em>$message['params']['registrant']</em></b> in the second.<br>\n"
-" "
-"         However, when notifications are queued it is not possible to "
-"pass the registrant entity to mail hooks, since it is likely that the "
-"entity no longer exists by the moment the queue worker takes action "
-"and sends the email.<br>\n"
-"          <b>That is why we highly "
-"discourage the use of the registrant entity in mail hooks</b>. To "
-"maintain consistency between the two models (queued and non-queued "
-"messages), we encourage developers to make use of the "
-"<b><em>hook_recurring_events_registration_message_params_alter()</em></b> "
-"to define any value in the params that might be needed to perform any "
-"logic on the mail hooks.<br>\n"
-"          See more detail about that "
-"hook in <em>recurring_events_registration.api.php</em>."
-msgstr ""
-"Email-notifikationer kan tilføjes til en kø for at blive behandlet "
-"ved hver cronjobs. Dette er gavnligt, hvis du har et stort antal "
-"registranter til din serie og/eller instanser, for at forhindre "
-"systemet i at gå ned, når notifikationer sendes til alle modtagere "
-"på én gang. Afhængig af din PHP-konfiguration kan dit system nemlig "
-"rammes af tids- og hukommelsesgrænser, når notifikationer sendes til "
-"en massiv liste af registrerede personer. Især er "
-"notifikationstyperne nedenfor designet til at sende en email til alle "
-"deltagere af en specifik serie eller instans, så de kunne potentielt "
-"være problematiske:<br>\n"
-"<ul>\n"
-"<li>Instans "
-"sletningsnotifikation</li>\n"
-"<li>Serie "
-"sletningsnotifikation</li>\n"
-"<li>Instans "
-"ændringsnotifikation</li>\n"
-"<li>Serie "
-"ændringsnotifikation</li>\n"
-"<li>Registreringspåmindelse</li>\n"
-"</ul>\n"
-"<br>Hvis "
-"du markerer denne mulighed, vil emails svarende til disse "
-"notifikationstyper komme i kø, og en køarbejder vil behandle så "
-"mange elementer som muligt på 30 sekunder ved hver "
-"cronjob.<br><br>\n"
-"Hvor lang tid det tager for den køede "
-"notifikationsliste at blive fuldt behandlet afhænger af tre "
-"faktorer:\n"
-"<ol>\n"
-"<li>Antallet af notifikationer i "
-"køen</li>\n"
-"<li>Hvor ofte Drupal-cron kører</li>\n"
-"<li>Antallet af "
-"sekunder brugt af køarbejderen ved hver cronjob for at behandle "
-"elementerne (det var sat til "
-"30)</li>\n"
-"</ol>\n"
-"<br>Notifikationstyper, der sendes til kun én "
-"modtager, fortsætter med at blive sendt straks, så snart "
-"udløserhandlingen forekommer, uanset denne "
-"indstilling:<br>\n"
-"<ul>\n"
-"<li>Registreringsnotifikation</li>\n"
-"<li>Ventelistenotifikation</li>\n"
-"<li>Promotionsnotifikation</li>\n"
-"</ul>\n"
-"<br><b>Vigtig "
-"note for udviklere:</b><br>\n"
-"Når notifikationstyperne, der ikke er i "
-"kø (dette er altid tilfældet for ovenstående nævnte "
-"notifikationstyper, som sendes til en enkelt modtager. Det vil også "
-"være tilfældet for alle notifikationstyper, hvis du fravælger denne "
-"mulighed) vil registrantenheden blive videregivet i parametrene til "
-"<b><em>hook_mail()</em></b> og <b><em>hook_mail_alter()</em></b>. Det "
-"vil være tilgængeligt gennem <b><em>$params['registrant']</em></b> i "
-"det første tilfælde og "
-"<b><em>$message['params']['registrant']</em></b> i det "
-"andet.<br>\n"
-"Men når notifikationer er i kø, er det ikke muligt at "
-"videregive registrantenheden til mailhooks, da det sandsynligvis er, "
-"at enheden ikke længere eksisterer i det øjeblik køarbejderen tager "
-"handling og sender emailen.<br>\n"
-"<b>Derfor fraråder vi kraftigt "
-"brugen af registrantenheden i mailhooks</b>. For at opretholde "
-"konsistens mellem de to modeller (køede og ikke-køede beskeder) "
-"opfordrer vi udviklere til at gøre brug af "
-"<b><em>hook_recurring_events_registration_message_params_alter()</em></b> "
-"for at definere enhver værdi i parametrene, der måtte være "
-"nødvendige for at udføre logik på mailhooks.<br>\n"
-"Se flere "
-"detaljer om hooks i <em>recurring_events_registration.api.php</em>."
 
 msgid "Emails"
 msgstr "E-mails"
@@ -13836,12 +13068,6 @@ msgstr "Påmindelsesbesked for arrangementsserie"
 msgid "The reminder message to send to registrants."
 msgstr "Påmindelsesbeskeden sendt til registrerede."
 
-msgid "Event Rename Notification"
-msgstr "Omdøbningsnotifikation for arrangement"
-
-msgid "Send an email to registrants when the event name changes?"
-msgstr "Send en e-mail til tilmeldte, når arrangementets navn ændres?"
-
 msgid "Event Instance"
 msgstr "Arrangementinstans"
 
@@ -14093,12 +13319,6 @@ msgstr "Springe udelukket dato over: @start_date - @end_date"
 msgid "Skipping non-included date: @start_date - @end_date"
 msgstr "Springer ikke-inkluderet dato over: @start_date - @end_date"
 
-msgid "2 days"
-msgstr "2 dage"
-
-msgid "Millisecond(s)"
-msgstr "Millisekund(er)"
-
 msgid "Tokens for the eventinstance entity type."
 msgstr "Tokens for the eventinstance entity type."
 
@@ -14144,12 +13364,6 @@ msgstr "Krop for arrangementsserie"
 msgid "The description of the event series."
 msgstr "Beskrivelse af arrangementsserien."
 
-msgid "Event Instance entity"
-msgstr "Arrangementinstans enhed"
-
-msgid "Event series entity"
-msgstr "Arrangementserie enhed"
-
 msgid "Recreate Event Instances"
 msgstr "Genopret arrangementsinstanser"
 
@@ -14182,35 +13396,8 @@ msgstr ""
 msgid "Display the date of the referenced eventinstance using Date Compact."
 msgstr "Vis datoen for den refererede arrangement-instans med Date Compact."
 
-msgid "Yearly recurring date widget"
-msgstr "Årlig tilbagevendende dato-widget"
-
-msgid "Daily recurring date widget"
-msgstr "Dagligt tilbagevendende dato widget"
-
-msgid "Monthly recurring date widget"
-msgstr "Månedlig tilbagevendende dato widget"
-
-msgid "Consecutive recurring date widget"
-msgstr "Sammenhængende tilbagevendende dato-widget"
-
-msgid "Weekly recurring date widget"
-msgstr "Ugentlig tilbagevendende dato-widget"
-
 msgid "Recurring Events Full Calendar View Processor"
 msgstr "Processor for fuld kalendervisning af tilbagevendende arrangementer"
-
-msgid "Group event series"
-msgstr "Gruppér arrangementsserier"
-
-msgid "Adds event series to groups both publicly and privately."
-msgstr "Tilføjer arrangementserier til både offentlige og private grupper."
-
-msgid "The title of the event series to add to the group"
-msgstr "Titel på den arrangementsserie du vil tilføje til gruppen"
-
-msgid "registrant type"
-msgstr "deltagertype"
 
 msgid "View Event Registration List"
 msgstr "Vis registreringslisten for arrangementet"
@@ -14228,9 +13415,6 @@ msgstr "Gemmer en konfiguration til registrering af et arrangement"
 msgid "Event registration widget"
 msgstr "Widget for arrangementsregistrering"
 
-msgid "Adds Registrant entities to groups."
-msgstr "Tilføjer deltager-enheder til grupper."
-
 msgid "Stores an event registration reminders configuration"
 msgstr "Gemmer en konfiguration af påmindelser om begivenhedsregistrering"
 
@@ -14242,18 +13426,6 @@ msgstr "Event iCal egenskabstilknytning"
 
 msgid "A link to an event's iCalendar download."
 msgstr "Et link til et arrangement iCalendar."
-
-msgid "Group recurring events"
-msgstr "Gruppér tilbagevendende arrangementer"
-
-msgid "Enables Group functionality for the Recurring events module"
-msgstr "Enables Group functionality for the Recurring events module"
-
-msgid "Add existing events"
-msgstr "Tilføj eksisterende arrangementer"
-
-msgid "Add new events"
-msgstr "Tilføj nye arrangementer"
 
 msgid "Registrations"
 msgstr "Tilmeldinger"
@@ -14434,30 +13606,8 @@ msgstr "Tilføj inkluderede datoer"
 msgid "'[node:title]' has been published on [site:name]"
 msgstr "'[node:title]' er blevet publiceret på [site:name]"
 
-msgid ""
-"Dear [node:author:name],\n"
-"Your [node:type] '[node:title]' has been "
-"published on [site:name].\n"
-"The link is [node:url]"
-msgstr ""
-"\"Kære [node:author:name],\n"
-"Din [node:type] '[node:title]' er blevet "
-"publiceret på [site:name].\n"
-"Linket er [node:url]\""
-
 msgid "'[node:title]' has been unpublished on [site:name]"
 msgstr "'[node:title]' er blevet afpubliceret på [site:name]"
-
-msgid ""
-"Dear [node:author:name],\n"
-"Your [node:type] '[node:title]' has been "
-"unpublished on [site:name].\n"
-"The link is [node:url]"
-msgstr ""
-"\"Kære [node:author:name],\n"
-"Din [node:type] '[node:title]' er blevet "
-"afpubliceret på [site:name].\n"
-"Linket er [node:url]\""
 
 msgid "Node"
 msgstr "Indholdselement"
@@ -15239,128 +14389,6 @@ msgstr "Planlægning: Fjern den"
 msgid "The date when the Scheduler module will unpublish the content."
 msgstr "Datoen når Scheduler modulet vil afpublicere indholdet."
 
-msgid "1 %bundle has been deleted."
-msgid_plural "@count %bundle have been deleted."
-msgstr[0] "1 %bundle er blevet slettet."
-msgstr[1] "@count %bundle er blevet slettet."
-
-msgid ""
-"%title is scheduled for publishing, but will not be published until "
-"approved."
-msgstr ""
-"%title er planlagt til publicering, men vil ikke blive publiceret før "
-"godkendelse."
-
-msgid "View node"
-msgstr "Vis node"
-
-msgid ""
-"%title is scheduled for unpublishing, but will not be unpublished "
-"until approved."
-msgstr ""
-"%title er planlagt til afpublicering, men vil ikke blive afpubliceret "
-"før godkendelse."
-
-msgid ""
-"Scheduler_Api_Test: The publish_on field is hidden for orange or green "
-"node titles."
-msgstr ""
-"Scheduler_Api_Test: Udgivelsesfeltet er skjult for orange eller "
-"grønne nodetitler."
-
-msgid ""
-"Scheduler_Api_Test: The unpublish_on field is hidden for yellow or "
-"green node titles."
-msgstr ""
-"Scheduler_Api_Test: Afpubliceringsfeltet er skjult for gule eller "
-"grønne nodetitler."
-
-msgid ""
-"Scheduler_Api_Test: Red nodes should cause Scheduler to abandon "
-"publishing."
-msgstr ""
-"Scheduler_Api_Test: Røde noder bør få Scheduler til at opgive "
-"udgivelse."
-
-msgid ""
-"Scheduler_Api_Test: Yellow nodes should not have publishing processed "
-"by Scheduler."
-msgstr ""
-"Scheduler_Api_Test: Gule noder bør ikke have udgivelse behandlet af "
-"Scheduler."
-
-msgid ""
-"Scheduler_Api_Test: Blue nodes should cause Scheduler to abandon "
-"unpublishing."
-msgstr ""
-"Scheduler_Api_Test: Blå noder bør få Scheduler til at opgive "
-"afpublicering."
-
-msgid ""
-"Scheduler_Api_Test: Orange nodes should not have unpublishing "
-"processed by Scheduler."
-msgstr ""
-"Scheduler_Api_Test: Orange noder bør ikke have afpublicering "
-"behandlet af Scheduler."
-
-msgid ""
-"%title is scheduled for publishing @publish_time, but will not be "
-"published until approved."
-msgstr ""
-"%title er planlagt til publicering @publishing_time, men vil ikke "
-"blive publiceret før godkendelse."
-
-msgid ""
-"%title is scheduled for unpublishing @unpublish_time, but will not be "
-"unpublished until approved."
-msgstr ""
-"%title er planlagt til afpublicering @unpublish_time, men vil ikke "
-"blive afpubliceret før godkendelse."
-
-msgid "Scheduler_Api_Test: The publish_on field is hidden for orange."
-msgstr "Scheduler_Api_Test: Udgivelsesfeltet er skjult for orange."
-
-msgid "Scheduler_Api_Test: The publish_on field is hidden for green."
-msgstr "Scheduler_Api_Test: Udgivelsesfeltet er skjult for grøn."
-
-msgid "Scheduler_Api_Test: The unpublish_on field is hidden for yellow."
-msgstr "Scheduler_Api_Test: Afpubliceringsfeltet er skjult for gult."
-
-msgid "Scheduler_Api_Test: The unpublish_on field is hidden for green."
-msgstr "Scheduler_Api_Test: Afpubliceringsfeltet er skjult for grøn."
-
-msgid "Scheduler_Api_Test: Red should cause Scheduler to abandon publishing."
-msgstr "Scheduler_Api_Test: Rødt bør få Scheduler til at opgive udgivelse."
-
-msgid ""
-"Scheduler_Api_Test: Yellow should not have publishing processed by "
-"Scheduler."
-msgstr ""
-"Scheduler_Api_Test: Gult bør ikke have udgivelse behandlet af "
-"Scheduler."
-
-msgid ""
-"Scheduler_Api_Test: Blue should cause Scheduler to abandon "
-"unpublishing."
-msgstr ""
-"Scheduler_Api_Test: Blå bør få Scheduler til at opgive "
-"afpublicering."
-
-msgid ""
-"Scheduler_Api_Test: Orange should not have unpublishing processed by "
-"Scheduler."
-msgstr ""
-"Scheduler_Api_Test: Orange skal ikke have afpublicering behandlet af "
-"Scheduler."
-
-msgid "The content will only be published after approval."
-msgstr "Indholdet bliver kun publiceret efter godkendelse."
-
-msgid ""
-"The competition will only be unpublished after all prizes have been "
-"claimed."
-msgstr "Konkurrencen bliver først afpubliceret, når alle præmier er vundet."
-
 msgid "Node is scheduled for publishing"
 msgstr "Node er planlagt til offentliggørelse"
 
@@ -15459,27 +14487,6 @@ msgid "Configure settings for scheduled publishing and unpublishing."
 msgstr ""
 "Konfigurer indstillinger for planlagt offentliggørelse og "
 "afpublicering."
-
-msgid "Scheduler API Legacy Test"
-msgstr "Scheduler API Legacy Test"
-
-msgid "Scheduler API Test"
-msgstr "Scheduler API-test"
-
-msgid "Support module for Scheduler API-related testing."
-msgstr "Supportmodul for Scheduler API-relateret testning."
-
-msgid "Scheduler Entity Access Test"
-msgstr "Enhed adgangstest for Scheduler"
-
-msgid "Support module for Scheduler testing with restricted entity access."
-msgstr "Supportmodul for Scheduler-testning med begrænset enhedsadgang."
-
-msgid "Scheduler Extras"
-msgstr "Scheduler ekstra"
-
-msgid "Support module for general Scheduler testing."
-msgstr "Supportmodul for generel Scheduler-testning."
 
 msgid ""
 "Publish and unpublish content and entities automatically on specified "
@@ -16188,25 +15195,6 @@ msgstr "format"
 msgid "Browse available tokens."
 msgstr "Gennemse tilgængelige tokens."
 
-msgid "Token value for @token was not generated."
-msgstr "Token værdi for @token blev ikke produceret."
-
-msgid ""
-"Token value for @token was '@actual', matching regular expression "
-"pattern '@expected'."
-msgstr ""
-"Token value for @token was '@actual', matching regular expression "
-"pattern '@expected'."
-
-msgid "Token value for @token was '@actual', expected value '@expected'."
-msgstr "Token værdi for @token var '@actual', forventet værdi '@expected'."
-
-msgid "Failed to generate token @token."
-msgstr "Mislykkedes med at generere token @token."
-
-msgid "A test token with colons in the name"
-msgstr "En testtoken med kolonner i navnet"
-
 msgid ""
 "The <a href=\":project\">Token</a> module provides a user interface "
 "for the site token system. It also adds some additional tokens that "
@@ -16286,18 +15274,6 @@ msgid ""
 msgstr ""
 "Tilføjer en brugergrænseflade til Token APIet og nogle manglende "
 "core tokens."
-
-msgid "Token User picture"
-msgstr "Token Bruger billede"
-
-msgid "Testing module that provides user pictures field."
-msgstr "Testing module that provides user pictures field."
-
-msgid "Token Module Test"
-msgstr "Token Module Test"
-
-msgid "Testing module for token functionality."
-msgstr "Testmodul for tokenfunktionalitet"
 
 msgid "A label that describes this purger."
 msgstr "Et mærkat, der beskriver denne purger."
@@ -17679,15 +16655,6 @@ msgctxt "advanced search"
 msgid "holding"
 msgstr "På hylden"
 
-msgid "One"
-msgstr "En"
-
-msgid "Three"
-msgstr "Tre"
-
-msgid "Two"
-msgstr "To"
-
 msgid "Rewrite the text displayed based on key"
 msgstr "Rewrite the text displayed based on key"
 
@@ -17786,10 +16753,6 @@ msgstr "Danske kroner"
 msgctxt "DPL event"
 msgid "Euros"
 msgstr "Euro"
-
-msgctxt "DPL event"
-msgid "DKK"
-msgstr "DKK"
 
 msgctxt "password_policy.password_policy.admins:label"
 msgid "Admins"
@@ -18019,15 +16982,6 @@ msgstr "Which occurrence of the day(s) of the week should event take place"
 
 msgid "Successfully deleted @type: @label."
 msgstr "@type: @label blev slettet."
-
-msgid ""
-"Recurrence configuration has been changed. New instances may be "
-"created, and now-unrelevant instances will be deleted, along with any "
-"custom changes made to these instances. This action cannot be undone."
-msgstr ""
-"Recurrence configuration has been changed. New instances may be "
-"created, and now-unrelevant instances will be deleted, along with any "
-"custom changes made to these instances. This action cannot be undone."
 
 msgid "The type of registration allowed for the series."
 msgstr ""
@@ -18562,11 +17516,6 @@ msgstr "Brugerdefineret tag"
 msgid "Custom tags"
 msgstr "Brugerdefineret tag"
 
-msgid "@count Custom tag"
-msgid_plural "@count Custom tags"
-msgstr[0] "@count brugerdefineret tag"
-msgstr[1] "@count brugerdefineret tags"
-
 msgid "Custom Tag"
 msgstr "Brugerdefineret tag"
 
@@ -19053,9 +18002,6 @@ msgstr ""
 "anførselstegn (f.eks. \"content editor\"). En bruger i en af "
 "grupperne får tildelt den konfigurerede Drupal-rolle."
 
-msgid "Textfield two"
-msgstr "Tekstfelt to"
-
 msgid "Find content for @name"
 msgstr "Find indhold til @name"
 
@@ -19371,12 +18317,6 @@ msgstr ""
 "Tjekker om bruger har adgang til en specifik tilladelse, og om "
 "view’ets enhedstype kan låses."
 
-msgid "Content lock hooks tests"
-msgstr "Tests af hooks for indholdslås"
-
-msgid "Provides test support for content_lock hooks."
-msgstr "Leverer testunderstøttelse for content_lock hooks."
-
 msgid "Values stored are numbers without decimals"
 msgstr "Værdier gemmes som tal uden decimaler"
 
@@ -19403,11 +18343,6 @@ msgstr "Send e-mail når indhold publiceres af Scheduler"
 
 msgid "Send email when content is unpublished by Scheduler"
 msgstr "Send e-mail når indhold afpubliceres af Scheduler"
-
-msgid ""
-"Sub-module containing the legacy hook implementations and event "
-"namespaces."
-msgstr "Under-modul med ældre hook-implementeringer og hændelsesnavnerum."
 
 msgid ""
 "You do not have the correct permissions to change the menu items in "
@@ -19741,21 +18676,6 @@ msgstr "Medieenheds-URL-erstatning"
 msgid "Use metadata from when the link was created"
 msgstr "Brug metadata fra det tidspunkt, hvor linket blev oprettet"
 
-msgid "BEF: library noUiSlider"
-msgstr "BEF: bibliotek noUiSlider"
-
-msgid "Better exposed filters library noUiSlider is installed locally."
-msgstr "Better exposed filters-biblioteket noUiSlider er installeret lokalt."
-
-msgid ""
-"Better exposed filters library noUiSlider is not installed locally and "
-"will be loaded from CDN. Loading external files from a CDN may be a "
-"data protection violation."
-msgstr ""
-"Better exposed filters-biblioteket noUiSlider er ikke installeret "
-"lokalt og vil blive hentet fra CDN. Indlæsning af eksterne filer fra "
-"et CDN kan være en overtrædelse af databeskyttelsesregler."
-
 msgid "Textfield autosubmit minimum length"
 msgstr "Tekstfelt autosubmit minimumslængde"
 
@@ -19798,35 +18718,6 @@ msgid ""
 msgstr ""
 "Hvis den oprindelige enhed har kommentarer, skal det også være "
 "muligt at klone dem."
-
-msgid ""
-"For each type of child entity (the entity that's referenced by the "
-"entity being\n"
-"        cloned), please set your cloning preferences. "
-"This will affect the clone form presented to users when they\n"
-"        "
-"clone entities. Default behavior for whether or not the child entities "
-"should be cloned is specified in\n"
-"        the left-most column.  To "
-"prevent users from altering behavior for each type when they're "
-"actually cloning\n"
-"        (but still allowing them to see what will "
-"happen), use the middle column. The right-most column can be used\n"
-"   "
-"     to hide the form options from users completely. This will run the "
-"clone operation with the defaults set here\n"
-"        (in the left-most "
-"column). See the clone form (by cloning an entity) for more "
-"information."
-msgstr ""
-"For hver type af underenhed (den enhed, som refereres af den enhed, "
-"der klones), angiv dine kloningspræferencer. Dette påvirker "
-"kloneformularen, som brugere ser, når de kloner enheder. "
-"Standardadfærden (om underenheder skal klones eller ej) er angivet i "
-"venstre kolonne. For at forhindre brugere i at ændre det (men stadig "
-"se, hvad der sker), brug midterste kolonne. Højre kolonne skjuler "
-"valgmulighederne helt. Så kører kloningen med standarderne. Se "
-"kloneformularen for mere info."
 
 msgctxt "simple_oauth.oauth2_scope.bnf_graphql_client:description"
 msgid "BNF GraphQL Client"
@@ -19908,52 +18799,6 @@ msgstr "Tilføj endnu et attribut"
 
 msgid "Examples"
 msgstr "Eksempler"
-
-msgid ""
-"<h4>Common Examples:</h4>\n"
-"        <ul>\n"
-"          <li><strong>Basic "
-"meta tag:</strong><br>\n"
-"            Primary attribute: name = "
-"\"description\"<br>\n"
-"            Result: &lt;meta "
-"name=\"description\" content=\"[user-input]\" /&gt;</li>\n"
-"          "
-"<li><strong>Open Graph tag:</strong><br>\n"
-"            Primary "
-"attribute: property = \"og:title\"<br>\n"
-"            Result: &lt;meta "
-"property=\"og:title\" content=\"[user-input]\" /&gt;</li>\n"
-"          "
-"<li><strong>Twitter Card:</strong><br>\n"
-"            Primary "
-"attribute: name = \"twitter:card\"<br>\n"
-"            Result: &lt;meta "
-"name=\"twitter:card\" content=\"[user-input]\" /&gt;</li>\n"
-"          "
-"<li><strong>Link with type:</strong><br>\n"
-"            Primary "
-"attribute: rel = \"icon\"<br>\n"
-"            Additional attribute: type "
-"= \"image/svg+xml\"<br>\n"
-"            Result: &lt;link rel=\"icon\" "
-"type=\"image/svg+xml\" href=\"[user-input]\" /&gt;</li>\n"
-"        "
-"</ul>"
-msgstr ""
-"<h4>Almindelige eksempler:</h4><ul><li><strong>Basis "
-"metatag:</strong><br>Primært attribut: name = "
-"\"description\"<br>Resultat: <meta name=\"description\" "
-"content=\"[user-input]\" /></li><li><strong>Open "
-"Graph-tag:</strong><br>Primært attribut: property = "
-"\"og:title\"<br>Resultat: <meta property=\"og:title\" "
-"content=\"[user-input]\" "
-"/></li><li><strong>Twitter-kort:</strong><br>Primært attribut: name = "
-"\"twitter:card\"<br>Resultat: <meta name=\"twitter:card\" "
-"content=\"[user-input]\" /></li><li><strong>Link med "
-"type:</strong><br>Primært attribut: rel = \"icon\"<br>Yderligere "
-"attribut: type = \"image/svg+xml\"<br>Resultat: <link rel=\"icon\" "
-"type=\"image/svg+xml\" href=\"[user-input]\" /></li></ul>"
 
 msgid "At least one attribute with both name and value must be provided."
 msgstr "Mindst ét attribut med både navn og værdi skal angives."
@@ -21172,33 +20017,7 @@ msgstr ""
 msgid "Show a confirmation message when a scheduled @item is saved"
 msgstr ""
 
-msgid "%entity_type @id has been created."
-msgstr ""
-
-msgid "%entity_type @id has been updated."
-msgstr ""
-
-msgid "Scheduler test entity - no bundle"
-msgstr ""
-
-msgid "Scheduler test no bundle entity scheduler plugin"
-msgstr ""
-
-msgid "Provides scheduler support for a no-bundle entity type"
-msgstr ""
-
-msgid "Scheduler No-bundle Test"
-msgstr ""
-
-msgid ""
-"Support module providing a no-bundle entity type and Scheduler plugin "
-"for tests."
-msgstr ""
-
 msgid "Linkit Profile"
-msgstr ""
-
-msgid "Configurable dummy matcher"
 msgstr ""
 
 msgid "DPL static content: Audiences"
@@ -21386,4 +20205,4104 @@ msgid "Show 100 events, then load the rest automatically while scrolling"
 msgstr ""
 "Vis 100 arrangementer ad gangen og indlæs flere arrangementer, mens "
 "brugeren scroller nedad"
+
+msgid "A serialized array of order options."
+msgstr ""
+
+msgid ""
+"Attempting to create more than this number of event instances at once "
+"will trigger the warning."
+msgstr ""
+
+msgid "Automatically create new revisions"
+msgstr ""
+
+msgid "Both"
+msgstr "Begge"
+
+msgid ""
+"Choose which fields to display in the widget. Fields Mappings will "
+"override specific Entities Mappings."
+msgstr ""
+
+msgid "Confirm Dates"
+msgstr ""
+
+msgid "Confirm entity removal"
+msgstr ""
+
+msgid "Consecutive Recurring Date Widget"
+msgstr ""
+
+msgid "Create new revision"
+msgstr "Opret ny version"
+
+msgid "Daily Recurring Date Widget"
+msgstr ""
+
+msgid "Default options"
+msgstr "Standardindstillinger"
+
+msgid "Delete event instance"
+msgstr ""
+
+msgid "Delete event series"
+msgstr ""
+
+msgid "Display a warning when too many event instances will be created"
+msgstr ""
+
+msgid "Edit event instance"
+msgstr ""
+
+msgid "Edit event series"
+msgstr ""
+
+msgid "Elements included: @elements"
+msgstr ""
+
+msgid "Elements to show"
+msgstr ""
+
+msgid "Email Notifications Queue Worker"
+msgstr ""
+
+msgid ""
+"Enter the message to be displayed. Use @total as a placeholder for the "
+"amount of instances being created, and @threshold as a placeholder for "
+"the configured threshold."
+msgstr ""
+
+msgid "Entity Mapping for [@entity: @bundle] (@label)"
+msgstr ""
+
+msgid "Entity Mappings"
+msgstr ""
+
+msgid ""
+"Entity Mappings allow to define a common entity for each the "
+"entity/bundle Field Inheritance combinations."
+msgstr ""
+
+msgid "Event Instance Threshold Warning"
+msgstr ""
+
+msgid "Event instance"
+msgstr ""
+
+msgid "Event instances"
+msgstr ""
+
+msgid "Event series end date"
+msgstr ""
+
+msgid "Field Inheritance migration: Processed @current batches of @total"
+msgstr ""
+
+msgid "Field Mappings define a specific entity for each Field Inheritance."
+msgstr ""
+
+msgid ""
+"Field Mappings define a specific entity for each Field Inheritance. "
+"Field Mappings override Entity Mappings."
+msgstr ""
+
+msgid ""
+"Field inheritance will be disabled for the following entity types and "
+"<em>all the Field Inheritance data from these field types will be "
+"lost</em>!"
+msgstr ""
+
+msgid ""
+"Filters out unpublished event instances if the current user cannot "
+"view them."
+msgstr ""
+
+msgid ""
+"Filters out unpublished event series if the current user cannot view "
+"them."
+msgstr ""
+
+msgid ""
+"For more information, see the <a href=\":docs\">online documentation "
+"for the Field Inheritance module</a>."
+msgstr ""
+
+msgid ""
+"If checked, the user will not be able to save a series that exceeds "
+"the threshold. If left unchecked, the warning message will be "
+"displayed and the user will be asked to confirm whether they want to "
+"proceed with saving anyway."
+msgstr ""
+
+msgid "Language settings"
+msgstr "Sprogindstillinger"
+
+msgid "Monthly Recurring Date Widget"
+msgstr ""
+
+msgid "Prevent saving a series if the threshold is exceeded"
+msgstr ""
+
+msgid ""
+"Prevent saving if the recurrence schedule does not yield at least one "
+"date"
+msgstr ""
+
+msgid ""
+"Prevents saving an event series if the recurrence schedule does not "
+"yield at least one date."
+msgstr ""
+
+msgid "Published status or admin user"
+msgstr "Publiceringsstatus eller administrator"
+
+msgid "Publishing options"
+msgstr "Udgivelse"
+
+msgid ""
+"Recurrence configuration has been changed, as a result all instances "
+"will be removed and recreated. This action cannot be undone."
+msgstr ""
+
+msgid "Recurring Date"
+msgstr ""
+
+msgid "Recurring Events migration: Processed @current instances of @total"
+msgstr ""
+
+msgid "The @title end time cannot be before the start time"
+msgstr ""
+
+msgid "The configuration options have been saved."
+msgstr "Indstillingerne er blevet gemt."
+
+msgid "The date on which an event last occurs."
+msgstr ""
+
+msgid ""
+"The field inheritance module can be considered to be a field-level "
+"entity reference alternative. It allows site administrators to inherit "
+"any field from any entity into any other entity."
+msgstr ""
+
+msgctxt "dpl_event"
+msgid ""
+"The recurrence has been changed. Occurrences that are no longer part "
+"of it will be deleted, and any new ones will be created. The remaining "
+"occurrences, and anything filled in on them, are left as they are. "
+"Deleting an occurrence cannot be undone."
+msgstr ""
+
+msgid "Threshold"
+msgstr "Varsel"
+
+msgctxt "dpl_event"
+msgid ""
+"Updated the occurrences of this event series: @created created, "
+"@deleted removed and @preserved left untouched."
+msgstr ""
+
+msgid ""
+"Users with sufficient access rights will be able to override these "
+"options."
+msgstr ""
+
+msgid "Validate recurrence schedule before saving"
+msgstr ""
+
+msgid "Warning message"
+msgstr "Advarsel"
+
+msgid "Weekly Recurring Date Widget"
+msgstr ""
+
+msgid "Would you like to continue with removing the above?"
+msgstr ""
+
+msgid "Yearly Recurring Date Widget"
+msgstr ""
+
+msgid "event instance"
+msgstr ""
+
+msgid "event instances"
+msgstr ""
+
+msgid "event series"
+msgstr ""
+
+msgid "Branch filter."
+msgstr ""
+
+msgid "Department filter."
+msgstr ""
+
+msgid "First accession date operator."
+msgstr ""
+
+msgid "First accession date value."
+msgstr ""
+
+msgid "Location filter."
+msgstr ""
+
+msgid "On-shelf filter."
+msgstr ""
+
+msgid "Sort order."
+msgstr ""
+
+msgid "Sublocation filter."
+msgstr ""
+
+msgid "Retrieve current events"
+msgstr ""
+
+msgctxt "Dpl Biblio"
+msgid "Basic settings"
+msgstr "Grundlæggende indstillinger"
+
+msgid "Biblio adapter settings"
+msgstr ""
+
+msgid "Change basic Biblio adapter settings"
+msgstr ""
+
+msgid "DPL Biblio"
+msgstr ""
+
+msgid "Handle Biblio adapter configuration"
+msgstr ""
+
+msgctxt "Dpl Biblio"
+msgid "Use the Biblio adapter for digital materials"
+msgstr ""
+
+msgctxt "Dpl Biblio"
+msgid ""
+"When enabled the web apps will use the Biblio adapter instead of "
+"Publizon. Leave disabled to keep using Publizon."
+msgstr ""
+
+msgid ""
+"\n"
+"            <p>Specify the child entities (the entities referenced "
+"by this entity) that should also be cloned as part of\n"
+"            "
+"the cloning process. If they're not included, these fields' referenced "
+"entities will be the same as in the\n"
+"            original.  In other "
+"words, fields in both the original entity and the cloned entity will "
+"refer to the same\n"
+"            referenced entity. Examples:</p>\n"
+"\n"
+" "
+"           <p>If you have a Paragraph field in your entity, and you "
+"choose not to clone it here, deleting the original\n"
+"            or "
+"cloned entity will also delete the Paragraph field from the other one. "
+"So you probably want to clone\n"
+"            Paragraph "
+"fields.</p>\n"
+"\n"
+"            <p>However, if you have a User reference "
+"field, you probably don't want to clone it here because a new User\n"
+"  "
+"          will be created for referencing by the clone.</p>\n"
+"\n"
+"      "
+"      <p>Some options may be disabled here, preventing you from "
+"changing them, as set by your administrator. Some\n"
+"            "
+"options may also be missing, hidden by your administrator, forcing you "
+"to clone with the default settings.\n"
+"            It's possible that "
+"there are no options here for you at all, or none need to be set, in "
+"which case you may\n"
+"            simply hit the <em>Clone</em> "
+"button.</p>\n"
+"          "
+msgstr ""
+
+msgid ""
+"\n"
+"        <h4>Common Examples:</h4>\n"
+"        <ul>\n"
+"          "
+"<li><strong>Basic meta tag:</strong><br>\n"
+"            Primary "
+"attribute: name = \"description\"<br>\n"
+"            Result: &lt;meta "
+"name=\"description\" content=\"[user-input]\" /&gt;</li>\n"
+"          "
+"<li><strong>Open Graph tag:</strong><br>\n"
+"            Primary "
+"attribute: property = \"og:title\"<br>\n"
+"            Result: &lt;meta "
+"property=\"og:title\" content=\"[user-input]\" /&gt;</li>\n"
+"          "
+"<li><strong>Twitter Card:</strong><br>\n"
+"            Primary "
+"attribute: name = \"twitter:card\"<br>\n"
+"            Result: &lt;meta "
+"name=\"twitter:card\" content=\"[user-input]\" /&gt;</li>\n"
+"          "
+"<li><strong>Link with type:</strong><br>\n"
+"            Primary "
+"attribute: rel = \"icon\"<br>\n"
+"            Additional attribute: type "
+"= \"image/svg+xml\"<br>\n"
+"            Result: &lt;link rel=\"icon\" "
+"type=\"image/svg+xml\" href=\"[user-input]\" /&gt;</li>\n"
+"        "
+"</ul>\n"
+"      "
+msgstr ""
+
+msgid ""
+"\n"
+"        Enable the cloning functionalities for each entity type. "
+"For non-enabled\n"
+"        entity types, the cloning will be "
+"restricted, even when the given entity\n"
+"        type is a referenced "
+"item in a field by another entity.\n"
+"      "
+msgstr ""
+
+msgid ""
+"\n"
+"        For each type of child entity (the entity that's referenced "
+"by the entity being\n"
+"        cloned), please set your cloning "
+"preferences. This will affect the clone form presented to users when "
+"they\n"
+"        clone entities. Default behavior for whether or not the "
+"child entities should be cloned is specified in\n"
+"        the "
+"left-most column.  To prevent users from altering behavior for each "
+"type when they're actually cloning\n"
+"        (but still allowing them "
+"to see what will happen), use the middle column. The right-most column "
+"can be used\n"
+"        to hide the form options from users completely. "
+"This will run the clone operation with the defaults set here\n"
+"        "
+"(in the left-most column). See the clone form (by cloning an entity) "
+"for more information.\n"
+"      "
+msgstr ""
+
+msgctxt "DPL event"
+msgid " DKK"
+msgstr " kr."
+
+msgid "%entity entity type updated with %publish_on and %unpublish_on fields."
+msgstr ""
+
+msgid "%field field removed from %entityType entity type"
+msgstr ""
+
+msgid "%property should not be null."
+msgstr ""
+
+msgid "%view view loaded from source."
+msgstr ""
+
+msgid "%view view updated."
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid "(Locked by @username)"
+msgstr "(Låst af @username)"
+
+msgctxt "Paragraphs Editor Enhancements"
+msgid "+ @title"
+msgstr ""
+
+msgctxt "Paragraphs Features"
+msgid "+ @title"
+msgstr ""
+
+msgctxt "Paragraphs Features"
+msgid "+ Add"
+msgstr ""
+
+msgid ", "
+msgstr ", "
+
+msgctxt "Date range separator"
+msgid "-"
+msgstr "-"
+
+msgctxt "Paragraphs Features"
+msgid "..."
+msgstr ""
+
+msgid "403 access denied"
+msgstr ""
+
+msgid "404 page not found"
+msgstr ""
+
+msgid "<a class=\"button\" href=\"/entity_clone/node/{{ nid }}\">Clone</a>"
+msgstr ""
+
+msgid "<h2>No registrations found</h2>"
+msgstr ""
+
+msgid "@interval"
+msgstr "@interval"
+
+msgid "@interval ago"
+msgstr "@interval siden"
+
+msgid "@interval hence"
+msgstr "om @interval"
+
+msgid "@message. Details: @error_message"
+msgstr ""
+
+msgid "@name field is not in the right format."
+msgstr ""
+
+msgid "@name field is required."
+msgstr "Feltet @name er påkrævet."
+
+msgid "@name field must be blank."
+msgstr ""
+
+msgctxt "Paragraphs Features"
+msgid "@title"
+msgstr ""
+
+msgid "@type: deleted %title."
+msgstr "@type: %title slettet."
+
+msgid "@type: deleted event instance of %title scheduled to begin on %date."
+msgstr ""
+
+msgid ""
+"@type: scheduled \"publish\" processing of %title completed by "
+"@successful_hooks."
+msgstr ""
+
+msgid ""
+"@type: scheduled \"unpublish\" processing of %title completed by "
+"@successful_hooks."
+msgstr ""
+
+msgid "@type: scheduled publishing of %title."
+msgstr "@type: Planlagt udgivelse af %title"
+
+msgid "@type: scheduled unpublishing of %title."
+msgstr "@type: Planlagt fjernelse af %title."
+
+msgid "A custom permission, to replace the generic basic settings."
+msgstr ""
+
+msgid "A field group"
+msgstr ""
+
+msgid "A view showing all the event instances on the site"
+msgstr ""
+
+msgid "A view showing all the event series on the site."
+msgstr ""
+
+msgid "A view showing all the registrants on the site"
+msgstr ""
+
+msgid "Access DPL admin pages"
+msgstr ""
+
+msgid "Access DPL cache settings"
+msgstr ""
+
+msgid "Access Drupal performance settings"
+msgstr ""
+
+msgid "Access control"
+msgstr "Adgangsbegrænsning"
+
+msgid "Access for administering of the instant loan configuration."
+msgstr ""
+
+msgid "Access for administering of the library agency configuration."
+msgstr ""
+
+msgid "Access for administering of the url proxy configuration."
+msgstr ""
+
+msgid "Access the eventinstance overview page"
+msgstr ""
+
+msgid "Access the eventseries overview page"
+msgstr ""
+
+msgid "Access the registrant overview page"
+msgstr ""
+
+msgid ""
+"Access to the user view is controlled via "
+"SchedulerRouteSubscriber::alterRoutes(). The high-level permission "
+"\"access content\" is added to satisfy the security_review module"
+msgstr ""
+
+msgid ""
+"Access to the user view is controlled via "
+"SchedulerRouteSubscriber::alterRoutes(). The high-level permission "
+"\"view media\" is added to satisfy the security_review module"
+msgstr ""
+
+msgid "Action"
+msgstr "Handling"
+
+msgid ""
+"Action %action is not valid because @activity is not enabled for %type "
+"@group. Add the condition %condition to your Reaction Rule, or enable "
+"@activity via the %type settings."
+msgstr ""
+
+msgid ""
+"Action to be taken for publication dates in the past (\"error\", "
+"\"publish\" or \"schedule\")"
+msgstr ""
+
+msgctxt "Paragraphs Editor Enhancements"
+msgid "Add !title"
+msgstr ""
+
+msgid "Add In Between"
+msgstr ""
+
+msgid "Add eventseries entity"
+msgstr ""
+
+msgid "Add max height value"
+msgstr ""
+
+msgid "Add select all/none links to hierarchical lists"
+msgstr ""
+
+msgid "Added %label matcher to the @profile profile."
+msgstr ""
+
+msgid "Added crop type %name."
+msgstr ""
+
+msgid "Additional attributes"
+msgstr ""
+
+msgid "Address field display format settings"
+msgstr ""
+
+msgid "Address field settings"
+msgstr ""
+
+msgid "Admin lang for user 1 was set to: @lang"
+msgstr ""
+
+msgid "Administer Content Lock settings"
+msgstr ""
+
+msgid "Administer Custom tags"
+msgstr ""
+
+msgid "Administer DPL footer settings"
+msgstr ""
+
+msgid "Administer Entity Clone Template"
+msgstr ""
+
+msgid "Administer Field Inheritance configuration"
+msgstr ""
+
+msgid "Administer OpenID Connect clients"
+msgstr ""
+
+msgid "Administer Paragraphs categories"
+msgstr ""
+
+msgid "Administer Users by Role settings"
+msgstr ""
+
+msgid "Administer advanced webform access settings"
+msgstr ""
+
+msgid "Administer advanced webform access settings for webforms."
+msgstr ""
+
+msgid "Administer advanced webform confirmation settings"
+msgstr ""
+
+msgid "Administer advanced webform confirmation settings for webforms."
+msgstr ""
+
+msgid "Administer advanced webform element settings"
+msgstr ""
+
+msgid "Administer advanced webform element settings for webforms."
+msgstr ""
+
+msgid "Administer advanced webform form settings"
+msgstr ""
+
+msgid "Administer advanced webform form settings for webforms."
+msgstr ""
+
+msgid "Administer advanced webform general settings"
+msgstr ""
+
+msgid "Administer advanced webform general settings for webforms."
+msgstr ""
+
+msgid "Administer advanced webform handler settings"
+msgstr ""
+
+msgid "Administer advanced webform handler settings for webforms."
+msgstr ""
+
+msgid "Administer advanced webform submission settings"
+msgstr ""
+
+msgid "Administer advanced webform submission settings for webforms."
+msgstr ""
+
+msgid "Administer any registrant"
+msgstr ""
+
+msgid "Administer crop settings"
+msgstr ""
+
+msgid "Administer crop types"
+msgstr ""
+
+msgid "Administer crop types."
+msgstr ""
+
+msgid "Administer dpl_mapp configuration"
+msgstr ""
+
+msgid "Administer entity clone"
+msgstr ""
+
+msgid "Administer eventinstance entity"
+msgstr ""
+
+msgid "Administer eventinstance types"
+msgstr ""
+
+msgid "Administer eventseries"
+msgstr ""
+
+msgid "Administer eventseries entity"
+msgstr ""
+
+msgid "Administer eventseries types"
+msgstr ""
+
+msgid "Administer instant loan configuration"
+msgstr ""
+
+msgid "Administer library agency configuration"
+msgstr ""
+
+msgid "Administer linkit profiles"
+msgstr ""
+
+msgid "Administer meta tags"
+msgstr ""
+
+msgid "Administer registrant entities"
+msgstr ""
+
+msgid "Administer registrant types"
+msgstr ""
+
+msgid "Administer scheduler"
+msgstr "Indstil Scheduler"
+
+msgid "Administer the basic settings for Crop API."
+msgstr ""
+
+msgid "Administer url proxy configuration"
+msgstr ""
+
+msgid "Administration"
+msgstr "Administration"
+
+msgctxt "dpl_event"
+msgid "All dates"
+msgstr "Alle datoer"
+
+msgid "Allow a role to resent the registration confirmation emails"
+msgstr ""
+
+msgid "Allow a role to set and override the author value of a registrant"
+msgstr ""
+
+msgid "Allow a role to set and override the waitlist value of a registrant"
+msgstr ""
+
+msgid "Allow a role to set contact registrants"
+msgstr ""
+
+msgid "Allow date-only input with time taken from default time setting"
+msgstr ""
+
+msgid ""
+"Allow to access the administration form to configure Field "
+"Inheritance."
+msgstr ""
+
+msgid ""
+"Allow to access the administration form to configure registrant "
+"entities"
+msgstr ""
+
+msgid ""
+"Allow to access to the Entity Reference Revisions orphan deletion "
+"form."
+msgstr ""
+
+msgid "Allow to define the Paragraphs categories"
+msgstr ""
+
+msgid "Allowed / denied form operations per entity type"
+msgstr ""
+
+msgid "An Event Has Been Deleted"
+msgstr ""
+
+msgid "An Event Has Been Modified"
+msgstr ""
+
+msgid "An Event Series Has Been Deleted"
+msgstr ""
+
+msgid "An Event Series Has Been Modified"
+msgstr ""
+
+msgid "Android Mobile: Android App Link Alternative"
+msgstr ""
+
+msgid "Android Mobile: Manifest"
+msgstr ""
+
+msgid "App Fees and Payment Info"
+msgstr ""
+
+msgid "Apple Mobile: Format Detection"
+msgstr ""
+
+msgid "Apple Mobile: Web App Capable"
+msgstr ""
+
+msgid "Apple Mobile: Web App Status bar color"
+msgstr ""
+
+msgid "Apple Mobile: Web App Title"
+msgstr ""
+
+msgid "Apple Mobile: iOS App Link Alternative"
+msgstr ""
+
+msgid "Apple Mobile: iTunes App"
+msgstr ""
+
+msgid "Apply"
+msgstr "Udfør"
+
+msgid "Are you sure you want to remove this paragraph?"
+msgstr ""
+
+msgid "Article expiration time"
+msgstr ""
+
+msgid "Article modified time"
+msgstr ""
+
+msgid "Article published time"
+msgstr ""
+
+msgid "Asc"
+msgstr "Stigende"
+
+msgid "Aspect ratio"
+msgstr ""
+
+msgid "Attempted to get a focal point value for an invalid or temporary file."
+msgstr ""
+
+msgid "Authenticated user hit /login, referrer: %referer"
+msgstr ""
+
+msgid "Authorization blocked. Unable to create access token: @message"
+msgstr ""
+
+msgid "Authorization blocked. Unable to get patron information: @message"
+msgstr ""
+
+msgid "Auto-submit"
+msgstr ""
+
+msgid "Automatically delete orphaned event instances"
+msgstr ""
+
+msgid "Automatically set the \"title\" attribute"
+msgstr ""
+
+msgid "BEF options"
+msgstr ""
+
+msgid "BNF client configuration"
+msgstr ""
+
+msgid "Biblio adapter service url"
+msgstr ""
+
+msgid "Block"
+msgstr "Blok"
+
+msgid "Blocked"
+msgstr "Blokeret"
+
+msgid "Book Author"
+msgstr ""
+
+msgid "Book ISBN"
+msgstr ""
+
+msgid "Book Release Date"
+msgstr ""
+
+msgid "Book Tags"
+msgstr ""
+
+msgid "Break a lock on content so that it may be edited."
+msgstr ""
+
+msgid "Break content lock"
+msgstr ""
+
+msgid "Break lock on edit"
+msgstr ""
+
+msgid "Break lock stale"
+msgstr ""
+
+msgid "Bulk update"
+msgstr "Masseopdatering"
+
+msgid "Bundle type"
+msgstr ""
+
+msgid "Bypassing login with %client client: %parentEntityId"
+msgstr ""
+
+msgid "CMS URLs on the Go site should be absolute"
+msgstr ""
+
+msgid "CONTACT"
+msgstr ""
+
+msgid "CQL Search field"
+msgstr ""
+
+msgid "CQL Search field widget settings"
+msgstr ""
+
+msgid "CQL query"
+msgstr ""
+
+msgid "Can export nodes to BNF"
+msgstr ""
+
+msgid "Can import nodes from BNF"
+msgstr ""
+
+msgid "Can manage automatic subscriptions to BNF"
+msgstr ""
+
+msgid "Can see tags on GO content"
+msgstr ""
+
+msgid "Cancel usersu{00A0}includes role %role"
+msgstr ""
+
+msgid ""
+"Change entity creation date for past dates to avoid \"changed\" being "
+"earlier than \"created\""
+msgstr ""
+
+msgid "Change entity creation time to match the scheduled publish time"
+msgstr ""
+
+msgid "Check for new subscription content."
+msgstr ""
+
+msgctxt "Novel settings"
+msgid "Choose library identity color."
+msgstr ""
+
+msgid "Classes of the fieldgroup"
+msgstr ""
+
+msgid "Cleanup orphaned events entities"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Clear date range"
+msgstr ""
+
+msgid "Clone eventinstance entity"
+msgstr ""
+
+msgid "Clone eventseries entity"
+msgstr ""
+
+msgid "Clone existing event instance entities"
+msgstr ""
+
+msgid "Clone existing event series entities"
+msgstr ""
+
+msgid "Cloneable entities setting"
+msgstr ""
+
+msgid "Color"
+msgstr "Farve"
+
+msgid "Commerce products that are scheduled for publishing or unpublishing"
+msgstr ""
+
+msgid ""
+"Conditions under which to expand the date input fieldset or vertical "
+"tab (\"when_required\" or \"always\")"
+msgstr ""
+
+msgid "Configure scheduler - set default times, lightweight cron."
+msgstr ""
+
+msgid "Consecutive"
+msgstr ""
+
+msgid "Contact registrants"
+msgstr ""
+
+msgid "Content Overview"
+msgstr ""
+
+msgid "Content Type"
+msgstr "Indholdstype"
+
+msgid "Content lock sort"
+msgstr ""
+
+msgid "Content that is scheduled for publishing or unpublishing"
+msgstr ""
+
+msgid ""
+"Control the Metatag settings pages. Does not control access to the "
+"Metatag field on content forms, etc, use the Field Permissions module "
+"or hook_form_alter()."
+msgstr ""
+
+msgid "Control the main settings pages and modify custom tags."
+msgstr ""
+
+msgid ""
+"Could not determine paragraph parent for pid @pid as part of migrating "
+"material grids."
+msgstr ""
+
+msgid "Could not download remote thumbnail from {url}."
+msgstr ""
+
+msgid "Could not export node to BNF. @message"
+msgstr ""
+
+msgid "Could not fetch VideoTool metadata from {url}: {message}"
+msgstr ""
+
+msgid "Could not fetch work title from FBI: @message"
+msgstr ""
+
+msgid "Could not find submit button - cannot show BNF export flow."
+msgstr ""
+
+msgid "Could not get node title for @uuid from BNF. @message"
+msgstr ""
+
+msgid "Could not import node from BNF. @message"
+msgstr ""
+
+msgid "Could not migrate data for address search. @message"
+msgstr ""
+
+msgid ""
+"Could not prepare thumbnail destination directory @dir for VideoTool "
+"media."
+msgstr ""
+
+msgid "Could not publish node as part of BNF export. @message"
+msgstr ""
+
+msgid "Could not render related content list. Exception: @exception"
+msgstr ""
+
+msgid "Could not retrieve tokens. Details: @error_message"
+msgstr ""
+
+msgid "Could not retrieve user profile information. Details: @error_message"
+msgstr ""
+
+msgid ""
+"Could not save user info, property type not implemented: "
+"%property_type"
+msgstr ""
+
+msgid ""
+"Could not save user info. Email address %email is already used in "
+"another account."
+msgstr ""
+
+msgid ""
+"Could not set default value on @field_name on @entity_type @id - "
+"Error: @message"
+msgstr ""
+
+msgid ""
+"Could not update field_inheritance on eventinstance @id - Error: "
+"@message"
+msgstr ""
+
+msgid "Country contextual filter ID"
+msgstr ""
+
+msgid "Country field settings"
+msgstr ""
+
+msgid "Create Content from a defined template"
+msgstr ""
+
+msgid "Create from template"
+msgstr ""
+
+msgid "Create new event series entities"
+msgstr ""
+
+msgid "Create new registrant entities"
+msgstr ""
+
+msgid "Create referenced entities if they don't already exist"
+msgstr "Opretter refererede entities hvis de ikke allerede eksisterer"
+
+msgid "Create, update and delete opening hours instances for all branches."
+msgstr ""
+
+msgid "Create, update, or delete any registrant"
+msgstr ""
+
+msgid "Created After"
+msgstr ""
+
+msgid "Created Before"
+msgstr ""
+
+msgid "Created consumer: @consumer, user: @user, role: @role"
+msgstr ""
+
+msgid "Created or updated @type node with BNF ID @uuid"
+msgstr ""
+
+msgid "Crop API settings"
+msgstr ""
+
+msgid "Crop effect configuration"
+msgstr ""
+
+msgid "Crop settings"
+msgstr ""
+
+msgid "Crop type to be used with Focal point"
+msgstr ""
+
+msgid "Crop type used by Focal point module."
+msgstr ""
+
+msgid "Custom animation speed in milliseconds"
+msgstr ""
+
+msgid "DDB"
+msgstr ""
+
+msgid "DESCRIPTION"
+msgstr ""
+
+msgid "DPL"
+msgstr ""
+
+msgid "DPL - BNF"
+msgstr ""
+
+msgid "DPL - Webmaster"
+msgstr ""
+
+msgid "DPL Biblio settings"
+msgstr ""
+
+msgid "DPL CMS"
+msgstr ""
+
+msgid "DPL Event settings"
+msgstr ""
+
+msgid "Daily"
+msgstr "Dagligt"
+
+msgid "Date After"
+msgstr ""
+
+msgid "Date Before"
+msgstr ""
+
+msgid "Date part of the full format"
+msgstr ""
+
+msgid "Date range (without time)"
+msgstr ""
+
+msgid "Date/Time"
+msgstr "Dato/tid"
+
+msgid ""
+"Dear [node:author:name],\n"
+"Your [node:type] '[node:title]' has been "
+"published on [site:name].\n"
+"The link is [node:url]\n"
+""
+msgstr ""
+
+msgid ""
+"Dear [node:author:name],\n"
+"Your [node:type] '[node:title]' has been "
+"unpublished on [site:name].\n"
+"The link is [node:url]\n"
+""
+msgstr ""
+
+msgid ""
+"Default Scheduling Time. This is used with the option to allow date "
+"only"
+msgstr ""
+
+msgid "Default address widget settings"
+msgstr ""
+
+msgid "Default formatter country"
+msgstr ""
+
+msgid "Default shortcut icon"
+msgstr ""
+
+msgid "Default value"
+msgstr "Standardværdi"
+
+msgid "Default value for entity type setting expand_fieldset"
+msgstr ""
+
+msgid "Default value for entity type setting fields_display_mode"
+msgstr ""
+
+msgid "Default value for entity type setting publish_enable"
+msgstr ""
+
+msgid "Default value for entity type setting publish_past_date"
+msgstr ""
+
+msgid "Default value for entity type setting publish_past_date_created"
+msgstr ""
+
+msgid "Default value for entity type setting publish_required"
+msgstr ""
+
+msgid "Default value for entity type setting publish_revision"
+msgstr ""
+
+msgid "Default value for entity type setting publish_touch"
+msgstr ""
+
+msgid "Default value for entity type setting show_message_after_update"
+msgstr ""
+
+msgid "Default value for entity type setting unpublish_enable"
+msgstr ""
+
+msgid "Default value for entity type setting unpublish_required"
+msgstr ""
+
+msgid "Default value for entity type setting unpublish_revision"
+msgstr ""
+
+msgid "Default zone widget settings"
+msgstr ""
+
+msgid "Delete a registrant using the UUID path"
+msgstr ""
+
+msgid "Delete eventinstance entity"
+msgstr ""
+
+msgid "Delete eventseries entity"
+msgstr ""
+
+msgid "Delete existing event instance entities"
+msgstr ""
+
+msgid "Delete existing event series entities"
+msgstr ""
+
+msgid "Delete orphan revisions"
+msgstr ""
+
+msgid "Delete orphaned instances or registrants"
+msgstr ""
+
+msgid "Delete own eventinstance entity"
+msgstr ""
+
+msgid "Delete own eventseries entity"
+msgstr ""
+
+msgid "Delete own existing event instance entities"
+msgstr ""
+
+msgid "Delete own existing event series entities"
+msgstr ""
+
+msgid "Delete own registrant entities"
+msgstr ""
+
+msgid "Delete registrant entities"
+msgstr ""
+
+msgid "Delete registrant entities anonymously"
+msgstr ""
+
+msgid "Deleted consumer: @consumer and user: @user"
+msgstr ""
+
+msgid "Deleted crop type %name."
+msgstr ""
+
+msgid "Desc"
+msgstr "Faldende"
+
+msgid "Description of the element"
+msgstr ""
+
+msgid "Description of the item"
+msgstr "Beskrivelse af elementet"
+
+msgid "Description of the tab"
+msgstr ""
+
+msgid "Development"
+msgstr "Udvikling"
+
+msgid "Direction of the tabs"
+msgstr ""
+
+msgid "Disable Tabs widget if the window width is equal or smaller"
+msgstr ""
+
+msgid "Disabled / denylist / allowlist mode per entity type"
+msgstr ""
+
+msgid "Disconnect OpenID connected accounts"
+msgstr ""
+
+msgid "Display checkbox/radio options inline"
+msgstr ""
+
+msgid "Display content lock messages"
+msgstr ""
+
+msgid "Domains that are allowed to initiate SSO using ISS"
+msgstr ""
+
+msgid "Drupal link"
+msgstr "Drupal-link"
+
+msgid "Dublin Core: Abstract"
+msgstr ""
+
+msgid "Dublin Core: Access Rights"
+msgstr ""
+
+msgid "Dublin Core: Accrual Method"
+msgstr ""
+
+msgid "Dublin Core: Accrual Periodicity"
+msgstr ""
+
+msgid "Dublin Core: Accrual Policy"
+msgstr ""
+
+msgid "Dublin Core: Alternative Title"
+msgstr ""
+
+msgid "Dublin Core: Audience"
+msgstr ""
+
+msgid "Dublin Core: Audience Education Level"
+msgstr ""
+
+msgid "Dublin Core: Bibliographic Citation"
+msgstr ""
+
+msgid "Dublin Core: Conforms To"
+msgstr ""
+
+msgid "Dublin Core: Contributor"
+msgstr ""
+
+msgid "Dublin Core: Coverage"
+msgstr ""
+
+msgid "Dublin Core: Creator"
+msgstr ""
+
+msgid "Dublin Core: Date"
+msgstr ""
+
+msgid "Dublin Core: Date Accepted"
+msgstr ""
+
+msgid "Dublin Core: Date Available"
+msgstr ""
+
+msgid "Dublin Core: Date Copyrighted"
+msgstr ""
+
+msgid "Dublin Core: Date Created"
+msgstr ""
+
+msgid "Dublin Core: Date Issued"
+msgstr ""
+
+msgid "Dublin Core: Date Modified"
+msgstr ""
+
+msgid "Dublin Core: Date Submitted"
+msgstr ""
+
+msgid "Dublin Core: Date Valid"
+msgstr ""
+
+msgid "Dublin Core: Description"
+msgstr ""
+
+msgid "Dublin Core: Extent"
+msgstr ""
+
+msgid "Dublin Core: Format"
+msgstr ""
+
+msgid "Dublin Core: Has Format"
+msgstr ""
+
+msgid "Dublin Core: Has Part"
+msgstr ""
+
+msgid "Dublin Core: Has Version"
+msgstr ""
+
+msgid "Dublin Core: Identifier"
+msgstr ""
+
+msgid "Dublin Core: Instructional Method"
+msgstr ""
+
+msgid "Dublin Core: Is Format Of"
+msgstr ""
+
+msgid "Dublin Core: Is Part Of"
+msgstr ""
+
+msgid "Dublin Core: Is Referenced By"
+msgstr ""
+
+msgid "Dublin Core: Is Replaced By"
+msgstr ""
+
+msgid "Dublin Core: Is Required By"
+msgstr ""
+
+msgid "Dublin Core: Is Version Of"
+msgstr ""
+
+msgid "Dublin Core: Language"
+msgstr ""
+
+msgid "Dublin Core: License"
+msgstr ""
+
+msgid "Dublin Core: Mediator"
+msgstr ""
+
+msgid "Dublin Core: Medium"
+msgstr ""
+
+msgid "Dublin Core: Provenance"
+msgstr ""
+
+msgid "Dublin Core: Publisher"
+msgstr ""
+
+msgid "Dublin Core: References"
+msgstr ""
+
+msgid "Dublin Core: Relation"
+msgstr ""
+
+msgid "Dublin Core: Replaces"
+msgstr ""
+
+msgid "Dublin Core: Requires"
+msgstr ""
+
+msgid "Dublin Core: Rights"
+msgstr ""
+
+msgid "Dublin Core: Rights Holder"
+msgstr ""
+
+msgid "Dublin Core: Source"
+msgstr ""
+
+msgid "Dublin Core: Spatial Coverage"
+msgstr ""
+
+msgid "Dublin Core: Subject"
+msgstr ""
+
+msgid "Dublin Core: Table Of Contents"
+msgstr ""
+
+msgid "Dublin Core: Temporal Coverage"
+msgstr ""
+
+msgid "Dublin Core: Title"
+msgstr ""
+
+msgid "Dublin Core: Type"
+msgstr ""
+
+msgid "Dynamic entity reference autocomplete display format settings"
+msgstr ""
+
+msgid "Dynamic entity reference entity ID display format settings"
+msgstr ""
+
+msgid "Dynamic entity reference field settings"
+msgstr ""
+
+msgid "Dynamic entity reference field storage settings"
+msgstr ""
+
+msgid "Dynamic entity reference label display format settings"
+msgstr ""
+
+msgid "Dynamic entity reference rendered entity display format settings"
+msgstr ""
+
+msgid "Dynamic entity reference selection plugin settings"
+msgstr ""
+
+msgid "Edit any registrant entities"
+msgstr ""
+
+msgid "Edit eventinstance entity"
+msgstr ""
+
+msgid "Edit eventseries entity"
+msgstr ""
+
+msgid "Edit form mode"
+msgstr "Redigér form mode"
+
+msgid "Edit own eventinstance entity"
+msgstr ""
+
+msgid "Edit own eventseries entity"
+msgstr ""
+
+msgid "Edit own registrant entities"
+msgstr ""
+
+msgid "Edit registrant entities anonymously"
+msgstr ""
+
+msgid "Edit usersu{00A0}includes role %role"
+msgstr ""
+
+msgid "Effect on the accordion"
+msgstr ""
+
+msgid "Element of the HTML tag. e.g. meta, link, etc."
+msgstr ""
+
+msgid "Elements to show in the form element"
+msgstr ""
+
+msgid "Email notification"
+msgstr "E-mail-notifikation"
+
+msgid ""
+"Email notifications can be added to a queue to be processed on each "
+"cron run. This could be beneficial if you have a large number of "
+"registrants to your series and/or instances, to prevent the system "
+"from crashing when sending notifications to all of those recipients at "
+"once. Depending on your PHP configuration, your system may hit time "
+"and memory limits when sending notifications to a massive list of "
+"registered people. In particular, the notification types below are "
+"designed to send an email to all registrants of a specific series or "
+"instance, so those might be the problematic ones:<br>\n"
+"        "
+"<ul>\n"
+"          <li>Instance Deletion Notification</li>\n"
+"          "
+"<li>Series Deletion Notification</li>\n"
+"          <li>Instance "
+"Modification Notification</li>\n"
+"          <li>Series Modification "
+"Notification</li>\n"
+"          <li>Registration Reminder</li>\n"
+"        "
+"</ul>\n"
+"        <br>If you check this option, emails corresponding to "
+"those notification types will be queued and a queue worker will "
+"process as many items as it can in 30 seconds on each cron "
+"run.<br><br>\n"
+"        How long it takes for the queued notification "
+"list to be fully processed depends on three factors:\n"
+"        <ol>\n"
+" "
+"         <li>The number of notifications in the queue</li>\n"
+"          "
+"<li>How often Drupal cron runs</li>\n"
+"          <li>The number of "
+"seconds used by the queue worker on each cron run to process the items "
+"(it was set to 30)</li>\n"
+"        </ol>\n"
+"        <br>Notification "
+"types that are sent to only one recipient continue to be sent "
+"immediately as soon as the trigger action occurs, regardless of this "
+"setting, namely:<br>\n"
+"        <ul>\n"
+"          <li>Registration "
+"Notification</li>\n"
+"          <li>Waitlist Notification</li>\n"
+"        "
+"  <li>Promotion Notification</li>\n"
+"        </ul>\n"
+"        "
+"<br><b>Important note for developers:</b><br>\n"
+"          When the "
+"notification types that are not queued (this is always the case for "
+"the above-mentioned notification types, which are sent to a single "
+"recipient. It will also be the case for all notification types if you "
+"uncheck this option) the registrant entity will be passed in the "
+"params to <b><em>hook_mail()</em></b> and "
+"<b><em>hook_mail_alter()</em></b>. It will be accessible through "
+"<b><em>$params['registrant']</em></b> in the first case and "
+"<b><em>$message['params']['registrant']</em></b> in the second.<br>\n"
+" "
+"         However, when notifications are queued it is not possible to "
+"pass the registrant entity to mail hooks, since it is likely that the "
+"entity no longer exists by the moment the queue worker takes action "
+"and sends the email.<br>\n"
+"          <b>That is why we highly "
+"discourage the use of the registrant entity in mail hooks</b>. To "
+"maintain consistency between the two models (queued and non-queued "
+"messages), we encourage developers to make use of the "
+"<b><em>hook_recurring_events_registration_message_params_alter()</em></b> "
+"to define any value in the params that might be needed to perform any "
+"logic on the mail hooks.<br>\n"
+"          See more detail about that "
+"hook in <em>recurring_events_registration.api.php</em>.\n"
+"      "
+msgstr ""
+
+msgid "Enable Entity Clone Template for content type"
+msgstr ""
+
+msgid "Enable advanced fields"
+msgstr ""
+
+msgid "Enable eventseries level excluded dates"
+msgstr ""
+
+msgid "Enable eventseries level included dates"
+msgstr ""
+
+msgctxt "Novel settings"
+msgid "Enable image logo"
+msgstr ""
+
+msgid "Enable or disable Entity Clone Template per content type."
+msgstr ""
+
+msgid "Enable scheduled publishing"
+msgstr "Slå planlagt udgivelse til"
+
+msgid "Enable scheduled unpublishing"
+msgstr "Slå planlagt afpublicering til"
+
+msgid "End of the word trimming"
+msgstr ""
+
+msgctxt "Novel settings"
+msgid "Enter the text that will be shown as the logo on smaller screens."
+msgstr ""
+
+msgid "Entity Clone Template Preview"
+msgstr ""
+
+msgid "Entity Reference Revisions Orphan Purger"
+msgstr ""
+
+msgid "Entity Reference Revisions inline fields"
+msgstr ""
+
+msgid "Entity Type"
+msgstr ""
+
+msgid "Entity Type ID"
+msgstr "Entity Type ID"
+
+msgid "Entity Type IDs"
+msgstr ""
+
+msgid "Entity id @id is not a @type entity. Processing skipped."
+msgstr ""
+
+msgid "Entity type with translation lock on"
+msgstr ""
+
+msgid "Entity types"
+msgstr "Enheds typer"
+
+msgid "Entity types with translation lock on"
+msgstr ""
+
+msgid "Error loading nodes for UUID cache tags: @message"
+msgstr ""
+
+msgid "Error querying new content: @message"
+msgstr ""
+
+msgid "Event Instance entity"
+msgstr "Arrangementinstans enhed"
+
+msgid "Event instance type config"
+msgstr ""
+
+msgid "Event list paging mode"
+msgstr ""
+
+msgid "Event series entity"
+msgstr "Arrangementserie enhed"
+
+msgid "Event series listing"
+msgstr ""
+
+msgid "Event series type config"
+msgstr ""
+
+msgid "Events listing page"
+msgstr ""
+
+msgid "Excluded dates config"
+msgstr ""
+
+msgid "Expected an array but got null or other type for group: @group_name"
+msgstr ""
+
+msgid "Exposed country filter ID"
+msgstr ""
+
+msgid "Exposed filter BEF settings"
+msgstr ""
+
+msgid "Exposed pager BEF settings"
+msgstr ""
+
+msgid "Exposed sort BEF settings"
+msgstr ""
+
+msgid "Facebook App ID"
+msgstr ""
+
+msgid "Failed at exporting node to BNF server. @message"
+msgstr ""
+
+msgid "Failed checking breadcrumb solo logic. Message: %message"
+msgstr ""
+
+msgid "Failed in setting the admin lang for user 1"
+msgstr ""
+
+msgid "Failed to create user account for @email: @violations"
+msgstr ""
+
+msgid "Failed to fetch picture from @url: @message"
+msgstr ""
+
+msgid "Fediverse Creator"
+msgstr ""
+
+msgid "Field Inheritance Settings Config"
+msgstr ""
+
+msgid "Field Inheritance format settings"
+msgstr ""
+
+msgid "Field group settings on entity form"
+msgstr ""
+
+msgid "Field group settings on entity view"
+msgstr ""
+
+msgid "Field storing image to be cropped"
+msgstr ""
+
+msgid "Field to store postal address values."
+msgstr ""
+
+msgid "Field types"
+msgstr "Felttyper"
+
+msgid "File entity deleted: @filename (@id)"
+msgstr ""
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filter by"
+msgstr "Filtrér efter"
+
+msgid "Filter settings"
+msgstr "Filterindstillinger"
+
+msgid "Filters"
+msgstr "Filtre"
+
+msgid "Find and manage people - for admin or sub-admin"
+msgstr ""
+
+msgid "Find and manage scheduled commerce products."
+msgstr ""
+
+msgid "Find and manage scheduled content"
+msgstr ""
+
+msgid "Find and manage scheduled content."
+msgstr ""
+
+msgid "Find and manage scheduled media."
+msgstr ""
+
+msgid "Find and manage scheduled taxonomy terms."
+msgstr ""
+
+msgid "Finished archiving duplicated, orphaned medias."
+msgstr ""
+
+msgid "First accession date filter: Operator"
+msgstr ""
+
+msgid "First accession date filter: Value"
+msgstr ""
+
+msgid "First click a text field to insert your tokens into."
+msgstr "Klik på et tekstfelt som tokens skal sættes ind i."
+
+msgid "First line of the address block"
+msgstr ""
+
+msgid "Fix database collation"
+msgstr ""
+
+msgid "Flag for add in between feature"
+msgstr ""
+
+msgid "Flag for delete confirmation feature"
+msgstr ""
+
+msgid "Flag for showing drag & drop button"
+msgstr ""
+
+msgid "Flag to disable collapse all button"
+msgstr ""
+
+msgid ""
+"Flag to reduce actions dropdown to a button when there is only one "
+"option"
+msgstr ""
+
+msgid ""
+"Focal Point Crop by Width failed while scaling and cropping using the "
+"%toolkit toolkit on %path (%mimetype, %dimensions, anchor: %anchor)"
+msgstr ""
+
+msgid "Focal Point widget settings"
+msgstr ""
+
+msgid "Focal point offsets"
+msgstr ""
+
+msgid ""
+"Focal point scale and crop failed while resizing using the %toolkit "
+"toolkit on %path (%mimetype, %dimensions)"
+msgstr ""
+
+msgid ""
+"Focal point scale and crop failed while scaling and cropping using the "
+"%toolkit toolkit on %path (%mimetype, %dimensions, anchor: %anchor)"
+msgstr ""
+
+msgid "Focal point settings"
+msgstr ""
+
+msgid "Formatting of the item"
+msgstr ""
+
+msgid ""
+"Found @count orphaned instances. Will delete @max and delete remaining "
+"in upcoming crons."
+msgstr ""
+
+msgid "Full date and time format"
+msgstr ""
+
+msgid ""
+"Function %function has not been executed. Implementations of "
+"hook_scheduler_api() should be replaced by Scheduler event listeners."
+msgstr ""
+
+msgid "Future"
+msgstr ""
+
+msgid "GEO"
+msgstr ""
+
+msgid "General BEF settings"
+msgstr ""
+
+msgid "Get the dpl graphql cache tags header"
+msgstr ""
+
+msgid "Global"
+msgstr "Global"
+
+msgid "GraphQL error querying new content: @message"
+msgstr ""
+
+msgid "Group"
+msgstr "Gruppe"
+
+msgid "HTTP Header"
+msgstr ""
+
+msgid "Hard limit height"
+msgstr ""
+
+msgid "Hard limit width"
+msgstr ""
+
+msgid "Hide the seconds on the input control when entering a time"
+msgstr ""
+
+msgid "Href per language"
+msgstr ""
+
+msgid "Html id of the fieldgroup"
+msgstr ""
+
+msgid "Icon: SVG"
+msgstr ""
+
+msgctxt "Novel settings"
+msgid "Identity Color"
+msgstr ""
+
+msgid ""
+"If the account is connected with an external provider, the user needs "
+"this permission in order to set their own password."
+msgstr ""
+
+msgid "Image SRC"
+msgstr ""
+
+msgid ""
+"Importing entities from files serialized with hal_json is deprecated "
+"in default_content:2.0.0-alpha2 and is removed from "
+"default_content:3.0.0. The following files were serialized using "
+"hal_json serialization: @files. Import all entities and re-export them "
+"as YAML files. See https://www.drupal.org/node/3296226"
+msgstr ""
+
+msgid "Include reset sort option"
+msgstr ""
+
+msgid "Included dates config"
+msgstr ""
+
+msgid ""
+"Indicates whether to flush image derivatives when a crop entity is "
+"change"
+msgstr ""
+
+msgid "Infinite Scroll Pager"
+msgstr ""
+
+msgid "Input required before showing results"
+msgstr ""
+
+msgid "Insert this token into your form"
+msgstr "Indsæt dette token i din formular"
+
+msgid "Invalid aspect ratio format. Should be defined in H:W form."
+msgstr ""
+
+msgid "Invalid machine-readable name."
+msgstr ""
+
+msgid "Invalid or unsafe picture URL provided: @url"
+msgstr ""
+
+msgid "Items per page"
+msgstr "Antal elementer"
+
+msgid "Job Scheduler Queue"
+msgstr ""
+
+msgid "LOCATION"
+msgstr ""
+
+msgid "Label of the fieldgroup"
+msgstr ""
+
+msgid "Last access"
+msgstr "Seneste tilgang"
+
+msgid "Last »"
+msgstr "Sidste »"
+
+msgid ""
+"Left event instance @instance of event series @series untouched: it "
+"has no date range that could be read."
+msgstr ""
+
+msgid "Lightweight cron run activated by @trigger."
+msgstr ""
+
+msgid "Link to search"
+msgstr "Link til søgning"
+
+msgid "Linkit format settings"
+msgstr ""
+
+msgid "Linkit result thumbnail"
+msgstr ""
+
+msgid "Linkit widget settings"
+msgstr ""
+
+msgid "List"
+msgstr "Vis"
+
+msgid "List all the template entities eligible to be cloned"
+msgstr ""
+
+msgid "List of entity types to purge image on."
+msgstr ""
+
+msgid "Location filter"
+msgstr ""
+
+msgid "Locked content"
+msgstr ""
+
+msgid "Log every Scheduler lightweight cron activation and completion message"
+msgstr ""
+
+msgid "Login denied for @email via pre-authorize hook."
+msgstr ""
+
+msgid "Make changes to the event instance entity type."
+msgstr ""
+
+msgid "Make changes to the event series entity type."
+msgstr ""
+
+msgid "Manage opening hours for branches."
+msgstr ""
+
+msgid "Manage own connected accounts"
+msgstr ""
+
+msgid "Manage types of eventinstance."
+msgstr ""
+
+msgid "Manage types of eventseries."
+msgstr ""
+
+msgid "Manage types of registrant"
+msgstr ""
+
+msgid "Manage user accounts, roles, and permissions."
+msgstr "Håndtér brugerkonti, roller og tilladelser."
+
+msgid "Manual image crop failed due to misconfigured crop type on %path."
+msgstr ""
+
+msgid ""
+"Manual image crop failed using the %toolkit toolkit on %path "
+"(%mimetype, %width x %height)"
+msgstr ""
+
+msgid "Mapping for the accordion formatter settings"
+msgstr ""
+
+msgid "Mapping for the accordion item formatter settings"
+msgstr ""
+
+msgid "Mapping for the base formatter settings"
+msgstr ""
+
+msgid "Mapping for the details formatter settings"
+msgstr ""
+
+msgid "Mapping for the details sidebar formatter settings"
+msgstr ""
+
+msgid "Mapping for the fieldset formatter settings"
+msgstr ""
+
+msgid "Mapping for the html element formatter settings"
+msgstr ""
+
+msgid "Mapping for the tab formatter settings"
+msgstr ""
+
+msgid "Mark for required fields"
+msgstr ""
+
+msgid "Master"
+msgstr "Master"
+
+msgid "Matcher settings"
+msgstr ""
+
+msgid "Max"
+msgstr "Maks"
+
+msgid "Media Name"
+msgstr ""
+
+msgid "Media Overview"
+msgstr ""
+
+msgid "Media items that are scheduled for publishing or unpublishing"
+msgstr ""
+
+msgid "Media library edit settings"
+msgstr ""
+
+msgid "Media name"
+msgstr ""
+
+msgid "Member for"
+msgstr "Medlem i"
+
+msgid "Metatag groups that apply to each entity type"
+msgstr ""
+
+msgid "Metatag settings"
+msgstr ""
+
+msgid "Migration"
+msgstr "Migrering"
+
+msgid "Min"
+msgstr "Min"
+
+msgid ""
+"Missing event instance in default language. Translation could not be "
+"created"
+msgstr ""
+
+msgid "Mobile: Cleartype"
+msgstr ""
+
+msgid "Mobile: Handheld-Friendly"
+msgstr ""
+
+msgid "Mobile: Mobile Optimized"
+msgstr ""
+
+msgid "Mobile: Theme Color"
+msgstr ""
+
+msgid "Mobile: Viewport"
+msgstr ""
+
+msgid "Mobile: Web Manifest"
+msgstr ""
+
+msgid "Modify a registrant using the UUID path"
+msgstr ""
+
+msgid "Modify existing event instance entities"
+msgstr ""
+
+msgid "Modify existing event series entities"
+msgstr ""
+
+msgid "Modify own existing event instance entities"
+msgstr ""
+
+msgid "Modify own existing event series entities"
+msgstr ""
+
+msgid "Modify registrant author value"
+msgstr ""
+
+msgid "Modify registrant waitlist value"
+msgstr ""
+
+msgid "Module entity_clone settings"
+msgstr ""
+
+msgid "Monthly"
+msgstr "Månedligt"
+
+msgid "Move this @paragraph_title down"
+msgstr ""
+
+msgid "Move this @paragraph_title up"
+msgstr ""
+
+msgid "Multiple records found for openid_connect Client with Error @message"
+msgstr ""
+
+msgid "Name or email contains"
+msgstr "Navn eller e-mail indeholder"
+
+msgid "New token was fetched."
+msgstr ""
+
+msgid "New translations were imported and translation cache was cleared."
+msgstr ""
+
+msgid "Next ›"
+msgstr "Næste ›"
+
+msgid "No \"sub\" found from @provider"
+msgstr ""
+
+msgid ""
+"No %bundle_id entity types returned by %module module for use in "
+"%plugin_label"
+msgstr ""
+
+msgid "No collation fixes needs to be done"
+msgstr ""
+
+msgid ""
+"No config name defined for @module notifications. Call @function "
+"before proceeding."
+msgstr ""
+
+msgid "No email address provided by @provider"
+msgstr ""
+
+msgid ""
+"No key defined @module notifications. Call @function before "
+"proceeding."
+msgstr ""
+
+msgid "No new translations were imported."
+msgstr ""
+
+msgid "No people available."
+msgstr "Ingen personer til rådighed."
+
+msgid "No scheduled content for user {{ arguments.uid }}"
+msgstr ""
+
+msgid "No scheduled content."
+msgstr ""
+
+msgid "No scheduled media for user {{ arguments.uid }}"
+msgstr ""
+
+msgid "No scheduled media."
+msgstr ""
+
+msgid "No scheduled products."
+msgstr ""
+
+msgid "No scheduled taxonomy terms"
+msgstr ""
+
+msgid ""
+"No source file for %full_name in either %install_folder or "
+"%optional_folder folders"
+msgstr ""
+
+msgid "No user information provided by @provider"
+msgstr ""
+
+msgid "Node for scheduling"
+msgstr ""
+
+msgid "Node operations bulk form"
+msgstr "Formular til bulk-handlinger på indholdselementer"
+
+msgid "Not scheduled"
+msgstr "Ikke planlagt"
+
+msgctxt "Novel settings"
+msgid "Novel settings"
+msgstr ""
+
+msgid "Number as link?"
+msgstr ""
+
+msgid "Number of add in between links"
+msgstr "Antal tilføjelser mellem links"
+
+msgid "Number of seconds after which content lock expire"
+msgstr ""
+
+msgid "Offset"
+msgstr "Forskydning"
+
+msgid "On-shelf filter"
+msgstr ""
+
+msgid "Only display results after the user has selected a filter option"
+msgstr ""
+
+msgid "Open Graph Product: Price amount"
+msgstr ""
+
+msgid "Open Graph Product: Price availability"
+msgstr ""
+
+msgid "Open Graph Product: Price currency"
+msgstr ""
+
+msgid "Open Graph Product: Product condition"
+msgstr ""
+
+msgid "Open Graph Product: Retailer Item ID"
+msgstr ""
+
+msgid "Open Graph: Alternative locale"
+msgstr ""
+
+msgid "Open Graph: Country name"
+msgstr ""
+
+msgid "Open Graph: Description"
+msgstr ""
+
+msgid "Open Graph: Determiner"
+msgstr ""
+
+msgid "Open Graph: Email"
+msgstr ""
+
+msgid "Open Graph: Fax number"
+msgstr ""
+
+msgid "Open Graph: Image"
+msgstr ""
+
+msgid "Open Graph: Image URL"
+msgstr ""
+
+msgid "Open Graph: Image alt"
+msgstr ""
+
+msgid "Open Graph: Image height"
+msgstr ""
+
+msgid "Open Graph: Image secure URL"
+msgstr ""
+
+msgid "Open Graph: Image type"
+msgstr ""
+
+msgid "Open Graph: Image width"
+msgstr ""
+
+msgid "Open Graph: Latitude"
+msgstr ""
+
+msgid "Open Graph: Locale"
+msgstr ""
+
+msgid "Open Graph: Locality"
+msgstr ""
+
+msgid "Open Graph: Longitude"
+msgstr ""
+
+msgid "Open Graph: Phone number"
+msgstr ""
+
+msgid "Open Graph: Postal code"
+msgstr ""
+
+msgid "Open Graph: Region"
+msgstr ""
+
+msgid "Open Graph: See also"
+msgstr ""
+
+msgid "Open Graph: Site name"
+msgstr ""
+
+msgid "Open Graph: Street address"
+msgstr ""
+
+msgid "Open Graph: Title"
+msgstr ""
+
+msgid "Open Graph: Type"
+msgstr ""
+
+msgid "Open Graph: URL"
+msgstr ""
+
+msgid "Open Graph: Updated time"
+msgstr ""
+
+msgid "Open Graph: Video Secure URL"
+msgstr ""
+
+msgid "Open Graph: Video URL"
+msgstr ""
+
+msgid "Open Graph: Video duration"
+msgstr ""
+
+msgid "Open Graph: Video height"
+msgstr ""
+
+msgid "Open Graph: Video type"
+msgstr ""
+
+msgid "Open Graph: Video width"
+msgstr ""
+
+msgid "OpenID Connect Facebook settings"
+msgstr ""
+
+msgid "OpenID Connect Generic settings"
+msgstr ""
+
+msgid "OpenID Connect Okta settings"
+msgstr ""
+
+msgid "OpenID Connect client entity ID"
+msgstr ""
+
+msgid "OpenID Connect client name"
+msgstr ""
+
+msgid "OpenID Connect client plugin ID"
+msgstr ""
+
+msgid "OpenID Connect entity definitions"
+msgstr ""
+
+msgid "OpenID Connect plugin base settings"
+msgstr ""
+
+msgid "OpenID Connect settings"
+msgstr ""
+
+msgid "Other"
+msgstr "Anden"
+
+msgid "Output the label as html"
+msgstr ""
+
+msgid ""
+"Overview of all scheduled content, as a tab on main 'content admin' "
+"page"
+msgstr ""
+
+msgid "Overview of all scheduled media, via main admin content page"
+msgstr ""
+
+msgid "Overview of all scheduled products, via main commerce product page"
+msgstr ""
+
+msgid "Overview of all scheduled terms, via main admin taxonomy page"
+msgstr ""
+
+msgid "PRIORITY"
+msgstr ""
+
+msgid "Page"
+msgstr "Side"
+
+msgid "Pager is a secondary option"
+msgstr ""
+
+msgid ""
+"Paragraph @pid of type @type could not be migrated: CQL could not be "
+"determined from link \"@link\""
+msgstr ""
+
+msgid "Paragraphs"
+msgstr ""
+
+msgid "Paragraphs category config"
+msgstr ""
+
+msgid "Paragraphs ee widget settings"
+msgstr ""
+
+msgid "Past"
+msgstr ""
+
+msgid "People"
+msgstr "Personer"
+
+msgid "People (administerusersbyrole)"
+msgstr ""
+
+msgid "Per-content type entity_clone_template node settings"
+msgstr ""
+
+msgid "Performs corrections of database collations."
+msgstr ""
+
+msgid "Permission"
+msgstr "Tilladelse"
+
+msgid "Permissions"
+msgstr "Tilladelser"
+
+msgid "Picture URL content is not a valid image"
+msgstr ""
+
+msgid "Picture URL did not return an image content type: @type"
+msgstr ""
+
+msgid "Pinterest: Description"
+msgstr ""
+
+msgid "Pinterest: ID"
+msgstr ""
+
+msgid "Pinterest: Media"
+msgstr ""
+
+msgid "Pinterest: No hover"
+msgstr ""
+
+msgid "Pinterest: No pin"
+msgstr ""
+
+msgid "Pinterest: No search"
+msgstr ""
+
+msgid "Pinterest: URL"
+msgstr ""
+
+msgctxt "Novel settings"
+msgid "Place"
+msgstr "Sted"
+
+msgid "Place field in collapsed details container"
+msgstr ""
+
+msgid "Placeholder text for the filter"
+msgstr ""
+
+msgid "Plugin id"
+msgstr ""
+
+msgid "Post authorize hook - Unable to delete previous user tokens."
+msgstr ""
+
+msgid "Prevent saving a series if too many instances are being created"
+msgstr ""
+
+msgid "Preview image style"
+msgstr "Vis eksempel på format"
+
+msgid "Preview link"
+msgstr ""
+
+msgid "Price currency"
+msgstr ""
+
+msgid "Products Overview"
+msgstr ""
+
+msgid "Progress indicator"
+msgstr "Fremdriftsindikator"
+
+msgid ""
+"Promote, change ownership, edit revisions, and perform other tasks for "
+"eventseries."
+msgstr ""
+
+msgid "Prompt option"
+msgstr ""
+
+msgid "Properties"
+msgstr "Egenskaber"
+
+msgid "Published status"
+msgstr "Publiceringsstatus"
+
+msgid "Publishing enabled"
+msgstr "Udgivelse slået til"
+
+msgid "Publishing failed for %title. @failed_hooks returned a failure code."
+msgstr ""
+
+msgid "Purge - reverse proxies & CDNs"
+msgstr ""
+
+msgid "Readable name of the group"
+msgstr ""
+
+msgid "Received request to import content with UUID @uuid from @url"
+msgstr ""
+
+msgid "Recurring Events Event Instance Date Formatter"
+msgstr ""
+
+msgid "Recurring Events Instance Config"
+msgstr ""
+
+msgid "Recurring Events Registration Config"
+msgstr ""
+
+msgid "Recurring Events Series Config"
+msgstr ""
+
+msgid "Recurring Events Show Enable Waitlist"
+msgstr ""
+
+msgid ""
+"Recursive rendering detected when rendering entity %entity_type: "
+"%entity_id, using the %field_name field on the %bundle_name bundle. "
+"Aborting rendering."
+msgstr ""
+
+msgid ""
+"Recursive rendering detected when rendering entity @entity_type "
+"@entity_id. Aborting rendering."
+msgstr ""
+"Rekursiv rendering opdaget under rendering af entity @entity_type "
+"@entity_id. Afbryder rendering."
+
+msgid "Redirect on login"
+msgstr ""
+
+msgid "Redirect on logout"
+msgstr ""
+
+msgid "Registrant successfully created."
+msgstr ""
+
+msgid "Registrant successfully updated."
+msgstr ""
+
+msgid "Registrant type config"
+msgstr ""
+
+msgid "Released @count stale content lock(s) which lasted at least @period."
+msgstr ""
+
+msgid "Requires bnf_client module to be enabled to function"
+msgstr ""
+
+msgid "Resend registrant emails"
+msgstr ""
+
+msgid "Reset"
+msgstr "Gendan"
+
+msgid "Reset sort label"
+msgstr ""
+
+msgid "Revert all eventinstance revisions"
+msgstr ""
+
+msgid "Revert all eventseries revisions"
+msgstr ""
+
+msgid ""
+"Revision nid relationship is required because the content type is only "
+"stored at 'content' level, not 'content revision' level."
+msgstr ""
+
+msgid "Rewrite combined sort options"
+msgstr ""
+
+msgid "Rewrite filter option"
+msgstr ""
+
+msgid "Rewrite filter options"
+msgstr ""
+
+msgid "Role"
+msgstr "Rolle"
+
+msgid ""
+"Role requires permission <em>view eventinstance revisions</em> and "
+"<em>edit rights</em> for eventinstance entities in question or "
+"<em>administer eventinstance entities</em>."
+msgstr ""
+
+msgid ""
+"Role requires permission <em>view eventseries revisions</em> and "
+"<em>edit rights</em> for eventseries entities in question or "
+"<em>administer eventseries entities</em>."
+msgstr ""
+
+msgid "SEO"
+msgstr ""
+
+msgid "SUMMARY"
+msgstr ""
+
+msgid ""
+"Saving this series will create @total event instances. Creating more "
+"than @threshold instances at once could result in memory exhaustion or "
+"site instability."
+msgstr ""
+
+msgid "Scheduled \"occurred\" update for event %event_id at %end_time"
+msgstr ""
+
+msgid "Scheduled Content"
+msgstr ""
+
+msgid "Scheduled Media"
+msgstr ""
+
+msgid "Scheduled Media by this user"
+msgstr ""
+
+msgid "Scheduled Products"
+msgstr ""
+
+msgid "Scheduled Taxonomy Terms"
+msgstr ""
+
+msgid ""
+"Scheduled content tab on user profile, showing just that user's "
+"scheduled content"
+msgstr ""
+
+msgid "Scheduled for publishing"
+msgstr "Planlagt til publicering"
+
+msgid "Scheduled for unpublishing"
+msgstr "Planlagt til afpublicering"
+
+msgid ""
+"Scheduled media on user profile, showing just that user's scheduled "
+"media"
+msgstr ""
+
+msgid "Scheduled unpublication for event %event_id at %end_time"
+msgstr ""
+
+msgid "Scheduler entity type settings"
+msgstr ""
+
+msgid ""
+"Scheduler settings cannot be migrated due to RequirementsException: "
+"%message, %requirements, line %line in %file"
+msgstr ""
+
+msgid "Scheduler settings removed from %entity %bundle"
+msgstr ""
+
+msgid "Schema for Paragraphs Features options of Paragraphs Widget"
+msgstr ""
+
+msgid "Search field"
+msgstr "Søgefelt"
+
+msgid "Second line of the address block"
+msgstr ""
+
+msgid "Secondary options is open"
+msgstr ""
+
+msgid "Select All"
+msgstr "Markér alle"
+
+msgid "Select None"
+msgstr "Vælg ingen"
+
+msgid "Send authorize request to @url"
+msgstr ""
+
+msgid "Set Cookie"
+msgstr ""
+
+msgid "Set a password for local authentication"
+msgstr ""
+
+msgid "Set on which entity type content lock is enabled"
+msgstr ""
+
+msgid "Setting address @address for branch @branch on @field"
+msgstr ""
+
+msgid "Settings for Varnish Image Purge"
+msgstr ""
+
+msgid "Shortlink"
+msgstr ""
+
+msgid "Should replacement tokens be used from the first row"
+msgstr "Anvend erstatnings-tokens fra den første række"
+
+msgid "Show a message after updating an entity which is scheduled"
+msgstr ""
+
+msgid "Show a warning when too many event instances are being created"
+msgstr ""
+
+msgctxt "Paragraphs Editor Enhancements"
+msgid "Show all @title_plural"
+msgstr "Vis alle @title_plural"
+
+msgid "Show external providers in user login form"
+msgstr ""
+
+msgid "Show links"
+msgstr "Vis links"
+
+msgid "Site validation: Alexa"
+msgstr ""
+
+msgid "Site validation: Baidu"
+msgstr ""
+
+msgid "Site validation: Bing"
+msgstr ""
+
+msgid "Site validation: Facebook"
+msgstr ""
+
+msgid "Site validation: Google"
+msgstr ""
+
+msgid "Site validation: Norton Safe Web"
+msgstr ""
+
+msgid "Site validation: Pinterest"
+msgstr ""
+
+msgid "Site validation: Pocket"
+msgstr ""
+
+msgid "Site validation: SIWECOS"
+msgstr ""
+
+msgid "Site validation: Yahoo"
+msgstr ""
+
+msgid "Site validation: Yandex"
+msgstr ""
+
+msgid "Site validation: Zoom"
+msgstr ""
+
+msgid "Sitename"
+msgstr ""
+
+msgid "Soft limit height"
+msgstr ""
+
+msgid "Soft limit width"
+msgstr ""
+
+msgid "Sort direction"
+msgstr "Sorteringsretning"
+
+msgid "Sort filter options alphabetically"
+msgstr ""
+
+msgid "Sort is a secondary option"
+msgstr ""
+
+msgid "Sort settings"
+msgstr "Sortering"
+
+msgid "State Change configuration"
+msgstr ""
+
+msgid "Store"
+msgstr "Butik"
+
+msgid "Stores"
+msgstr ""
+
+msgid "Sub-location filter"
+msgstr ""
+
+msgid "Subdivision"
+msgstr ""
+
+msgid "Successfully registered to the waitlist."
+msgstr ""
+
+msgid "Successfully updated waitlist registrant."
+msgstr ""
+
+msgid "Tag '%tag' contains a space, this is forbidden."
+msgstr ""
+
+msgid "Tag maximum length in characters"
+msgstr ""
+
+msgid "Tag-specific maximum length"
+msgstr ""
+
+msgid "Target UUID"
+msgstr "Mål-UUID"
+
+msgid "Taxonomy Terms"
+msgstr ""
+
+msgid "Taxonomy Terms that are scheduled for publishing or unpublishing"
+msgstr ""
+
+msgid "Telephone format"
+msgstr ""
+
+msgid "Telephone link format settings"
+msgstr "Telefon-link-format"
+
+msgid "Term"
+msgstr "Term"
+
+msgid "Term name"
+msgstr ""
+
+msgid "Territories"
+msgstr ""
+
+msgctxt "Novel settings"
+msgid "Text displayed under the logo title."
+msgstr ""
+
+msgid "Text format for the text_input_required field"
+msgstr ""
+
+msgid "Text shown if a filter option has not been selected"
+msgstr ""
+
+msgid ""
+"The %target_bundle bundle (entity type: %target_entity_type) was "
+"deleted. As a result, the %field_name dynamic entity reference field "
+"(entity_type: %entity_type, bundle: %bundle) no longer has any valid "
+"bundle it can reference. The field is not working correctly anymore "
+"and has to be adjusted."
+msgstr ""
+
+msgid ""
+"The [eventinstance:title] [eventinstance:reg_type] has been modified, "
+"and all instances have been removed, and your registration has been "
+"deleted."
+msgstr ""
+
+msgid ""
+"The [eventinstance:title] [eventinstance:reg_type] has been modified, "
+"please check back for details.\n"
+"\n"
+"Modify your registration: "
+"[registrant:edit_url]\n"
+"Delete your registration: "
+"[registrant:delete_url]"
+msgstr ""
+
+msgid ""
+"The auto discover URL %url seems to be broken because of error "
+"\"%error\"."
+msgstr ""
+
+msgid "The country %value is not available."
+msgstr ""
+
+msgid "The country %value is not valid."
+msgstr ""
+
+msgid "The creator plugin used when creating event instances"
+msgstr ""
+
+msgid "The date for publishing"
+msgstr "Datoen for udgivelse"
+
+msgid "The date for unpublishing"
+msgstr "Datoen for afpublicering"
+
+msgid "The date format to use to display the date"
+msgstr ""
+
+msgid "The date when Scheduler will publish the node"
+msgstr "Datoen hvor Scheduler udgiver noden"
+
+msgid "The date when Scheduler will unpublish the node"
+msgstr "Datoen hvor Scheduler afpublicerer noden"
+
+msgid "The days of the week available when creating event series"
+msgstr ""
+
+msgid "The default value to use for focal point when none is specified"
+msgstr ""
+
+msgid "The earliest an event can start"
+msgstr ""
+
+msgid "The email body for these notifications"
+msgstr ""
+
+msgid "The email subject for these notifications"
+msgstr ""
+
+msgid "The field name"
+msgstr ""
+
+msgid "The fields belonging to the group"
+msgstr ""
+
+msgid "The formatted description"
+msgstr ""
+
+msgid "The formatter of the group"
+msgstr ""
+
+msgid "The formatting of dates when displaying event instances"
+msgstr ""
+
+msgid "The formatting of dates when displaying event series"
+msgstr ""
+
+msgid "The formatting of dates when displaying registrants"
+msgstr ""
+
+msgid "The formatting of times when creating event series"
+msgstr ""
+
+msgid "The id of the inheritance"
+msgstr ""
+
+msgid "The inheritance destination entity bundle"
+msgstr ""
+
+msgid "The inheritance destination entity type"
+msgstr ""
+
+msgid "The inheritance destination field"
+msgstr ""
+
+msgid "The inheritance label"
+msgstr ""
+
+msgid "The inheritance plugin"
+msgstr ""
+
+msgid "The inheritance source entity bundle"
+msgstr ""
+
+msgid "The inheritance source entity type"
+msgstr ""
+
+msgid "The inheritance source field"
+msgstr ""
+
+msgid "The inheritance type"
+msgstr ""
+
+msgid "The interval between times when creating event series"
+msgstr ""
+
+msgid "The items per page to show on event instance listing"
+msgstr ""
+
+msgid "The items per page to show on event series listing"
+msgstr ""
+
+msgid "The items per page to show on registrant listing"
+msgstr ""
+
+msgid "The latest an event can start"
+msgstr ""
+
+msgid "The matcher %label has been deleted in the @profile profile."
+msgstr ""
+
+msgid "The matcher %label has been updated in the @profile profile."
+msgstr ""
+
+msgid ""
+"The message to display when a registrant is successfully added to the "
+"waitlist"
+msgstr ""
+
+msgid "The message to display when a registrant is successfully created"
+msgstr ""
+
+msgid "The message to display when a registrant is successfully updated"
+msgstr ""
+
+msgid ""
+"The message to display when a registrant on the waitlist is "
+"successfully updated"
+msgstr ""
+
+msgid "The message to display when a user is already registered for an event"
+msgstr ""
+
+msgid "The message to display when registration is closed for an event"
+msgstr ""
+
+msgid ""
+"The name of the html value attribute. e.g. content, href, charset, "
+"etc."
+msgstr ""
+
+msgid "The node from which to remove the scheduled publishing date"
+msgstr ""
+
+msgid "The node from which to remove the scheduled unpublishing date"
+msgstr ""
+
+msgid "The node to be published now"
+msgstr ""
+
+msgid "The node to be unpublished now"
+msgstr ""
+
+msgid "The node to check for having a scheduled publishing date."
+msgstr ""
+
+msgid "The node to check for having a scheduled unpublishing date."
+msgstr ""
+
+msgid "The node to check for the type being enabled for scheduled publishing."
+msgstr ""
+
+msgid ""
+"The node to check for the type being enabled for scheduled "
+"unpublishing."
+msgstr ""
+
+msgid "The node which is to have a scheduled publishing date set"
+msgstr ""
+
+msgid "The node which is to have a scheduled unpublishing date set"
+msgstr ""
+
+msgid "The number of event instances to trigger the warning"
+msgstr ""
+"Antal instanser i en serie der skal udløse advarsel om overskredet "
+"grænseværdi"
+
+msgid "The parent group of this group"
+msgstr ""
+
+msgid "The region of this group"
+msgstr ""
+
+msgid "The row has been moved down. Do not forget to save your changes."
+msgstr ""
+
+msgid "The row has been moved up. Do not forget to save your changes."
+msgstr ""
+
+msgid "The separator to use between start and end dates"
+msgstr ""
+
+msgid "The set of PHP date letters allowed in the Scheduler date format"
+msgstr ""
+
+msgid "The set of PHP time letters allowed in the Scheduler time format"
+msgstr ""
+
+msgid "The submitted date configuration yielded no valid dates."
+msgstr ""
+
+msgid "The title of the registrants"
+msgstr ""
+
+msgid "The warning to show when too many instances are being created"
+msgstr ""
+
+msgid ""
+"The way the scheduling fields are displayed in the edit form "
+"(\"vertical_tab\" or \"fieldset\")"
+msgstr ""
+
+msgid "The weight of the group"
+msgstr ""
+
+msgid "There is no content currently locked."
+msgstr ""
+
+msgid ""
+"There is no content to be cloned yet. Make sure the option to clone a "
+"content is enabled on each content type you want to have template for. "
+"Next, check the Entity Clone Template checkbox is active for contents "
+"you want to defined as templates."
+msgstr ""
+
+msgid "Third line of the address block"
+msgstr ""
+
+msgid "Third party settings"
+msgstr "Tredjepartsindstillinger"
+
+msgid ""
+"This could not be unserialized: \n"
+"%value"
+msgstr ""
+
+msgid "This entity (%type: %id) cannot be referenced."
+msgstr "Der kan ikke henvises til denne entity (%type: %id)."
+
+msgid "This entity (%type: %label) cannot be referenced."
+msgstr "Der kan ikke henvises til denne entity (%type: %label)."
+
+msgid "This filter is a secondary option"
+msgstr ""
+
+msgid "This includes permission for clearing caches."
+msgstr ""
+
+msgid ""
+"This is the work ID used to retrieve the material information. "
+"Example: work-of:870970-basis:136336282.\n"
+"      Currently this is "
+"retrieved by performing a search for a material manually, and copying "
+"this value from the URL.\n"
+"      If you need to link to a specific "
+"type, select it from the dropdown and the system will display that, if "
+"it is available.\n"
+""
+msgstr ""
+
+msgid ""
+"This was expected to be an array but it is not: \n"
+"%value"
+msgstr ""
+
+msgid "Time part of the full format"
+msgstr ""
+
+msgid "Time to pass before an occurred event instance is unpublished"
+msgstr ""
+
+msgctxt "Novel settings"
+msgid "Title"
+msgstr "Titel"
+
+msgid "Trim method for trimmable tags."
+msgstr ""
+
+msgid "Twitter Cards: 1st gallery image"
+msgstr ""
+
+msgid "Twitter Cards: 2nd gallery image"
+msgstr ""
+
+msgid "Twitter Cards: 3rd gallery image"
+msgstr ""
+
+msgid "Twitter Cards: 4th gallery image"
+msgstr ""
+
+msgid "Twitter Cards: App store country"
+msgstr ""
+
+msgid "Twitter Cards: Creator's Twitter account"
+msgstr ""
+
+msgid "Twitter Cards: Creator's Twitter account ID"
+msgstr ""
+
+msgid "Twitter Cards: Data 1"
+msgstr ""
+
+msgid "Twitter Cards: Data 2"
+msgstr ""
+
+msgid "Twitter Cards: Description"
+msgstr ""
+
+msgid "Twitter Cards: Do Not Track"
+msgstr ""
+
+msgid "Twitter Cards: Google Play app ID"
+msgstr ""
+
+msgid "Twitter Cards: Google Play app URL schema"
+msgstr ""
+
+msgid "Twitter Cards: Google Play app name"
+msgstr ""
+
+msgid "Twitter Cards: Image URL"
+msgstr ""
+
+msgid "Twitter Cards: Image alternative text"
+msgstr ""
+
+msgid "Twitter Cards: Image height"
+msgstr ""
+
+msgid "Twitter Cards: Image width"
+msgstr ""
+
+msgid "Twitter Cards: Label 1"
+msgstr ""
+
+msgid "Twitter Cards: Label 2"
+msgstr ""
+
+msgid "Twitter Cards: MP4 media straem MIME-type"
+msgstr ""
+
+msgid "Twitter Cards: MP4 media stream URL"
+msgstr ""
+
+msgid "Twitter Cards: Media player URL"
+msgstr ""
+
+msgid "Twitter Cards: Media player height"
+msgstr ""
+
+msgid "Twitter Cards: Media player width"
+msgstr ""
+
+msgid "Twitter Cards: Page URL"
+msgstr ""
+
+msgid "Twitter Cards: Site's Twitter account"
+msgstr ""
+
+msgid "Twitter Cards: Site's Twitter account ID"
+msgstr ""
+
+msgid "Twitter Cards: Title"
+msgstr ""
+
+msgid "Twitter Cards: Type"
+msgstr ""
+
+msgid "Twitter Cards: iPad app ID"
+msgstr ""
+
+msgid "Twitter Cards: iPad app URL schema"
+msgstr ""
+
+msgid "Twitter Cards: iPad app name"
+msgstr ""
+
+msgid "Twitter Cards: iPhone app ID"
+msgstr ""
+
+msgid "Twitter Cards: iPhone app URL schema"
+msgstr ""
+
+msgid "Twitter Cards: iPhone app name"
+msgstr ""
+
+msgid "Types"
+msgstr "Typer"
+
+msgid ""
+"Unable to disable entity_clone_template as part of bnf_update_10102: "
+"@error"
+msgstr ""
+
+msgid "Unable to load branch from UUID"
+msgstr ""
+
+msgid "Unable to load category from UUID"
+msgstr ""
+
+msgid "Unable to load opening hours instance: %message"
+msgstr ""
+
+msgid "Unable to locate oEmbed video media source"
+msgstr ""
+
+msgid "Unable to map blocked reason @reason: @message"
+msgstr ""
+
+msgid "Unable to retrieve agency branches: %message"
+msgstr ""
+
+msgid ""
+"Unable to retrieve branches from %primary: %message. Falling back to "
+"%secondary"
+msgstr ""
+
+msgid "Undefined group '%group' on tag '%tag'"
+msgstr ""
+
+msgid "Unfortunately, registration is not available at this time."
+msgstr ""
+
+msgid ""
+"Unfortunately, the [eventinstance:title] [eventinstance:reg_type] has "
+"been deleted. Your registration has been deleted."
+msgstr ""
+
+msgid "Unpublish event instances when they have occurred"
+msgstr ""
+
+msgid "Unpublish the series when all instances have occurred"
+msgstr "Afpublicér serien når alle instanser er overstået"
+
+msgid "Unpublishing enabled"
+msgstr "Afpublicering slået til"
+
+msgid "Unpublishing failed for %title. @failed_hooks returned a failure code."
+msgstr ""
+
+msgid ""
+"Unsaved changes to the form will be lost. Are you sure you want to "
+"leave?"
+msgstr ""
+
+msgid "Update node content."
+msgstr ""
+
+msgid ""
+"Updated @count description fields on @entity_type \n"
+""
+msgstr ""
+
+msgid "Updated default value for entity_clone_template_active to FALSE."
+msgstr ""
+
+msgid "Updated default value for entity_clone_template_image to non-value."
+msgstr ""
+
+msgctxt "Novel settings"
+msgid ""
+"Upload the logo in PNG or SVG. You will get the best results with 11:5 "
+"format (e.g. width: 220px height: 100px), but any size will work."
+msgstr ""
+
+msgid "Use Linkit"
+msgstr ""
+
+msgid "Use absolute CMS URLs."
+msgstr ""
+
+msgid "Use absolute URLs for both CMS and Go."
+msgstr ""
+
+msgid "Use absolute URLs for both Go and CMS content (for external services)"
+msgstr ""
+
+msgctxt "Novel settings"
+msgid "Use image logo when its possible."
+msgstr ""
+
+msgid "Use the Biblio adapter for digital materials"
+msgstr ""
+
+msgid ""
+"Use this field to rewrite the filter options displayed. Use the format "
+"of current_text|replacement_text, one replacement per line. For "
+"example: <pre>\n"
+"  Current|Replacement\n"
+"  On|Yes\n"
+"  Off|No\n"
+"  "
+"</pre> Leave the replacement text blank to remove an option "
+"altogether. If using hierarchical taxonomy filters, do not including "
+"leading hyphens in the current text.\n"
+"          "
+msgstr ""
+
+msgid "Used fields"
+msgstr ""
+
+msgid "User @name (@id) has been updated with the following values: @values"
+msgstr ""
+
+msgid "User already registered for this event."
+msgstr ""
+
+msgid "User authentication"
+msgstr ""
+
+msgid "User interface"
+msgstr "Brugergrænseflade"
+
+msgid "Userinfo endpoint"
+msgstr ""
+
+msgid "Version file in libraries/dpl-react is missing!"
+msgstr ""
+
+msgid "VideoTool API credentials are not configured."
+msgstr ""
+
+msgid "VideoTool API request failed: @message"
+msgstr ""
+
+msgid "Videotool media"
+msgstr ""
+
+msgid "View all eventinstance revisions"
+msgstr ""
+
+msgid "View all eventseries revisions"
+msgstr ""
+
+msgid "View any unpublished content"
+msgstr "Se upubliceret indhold"
+
+msgid "View eventinstance entity"
+msgstr ""
+
+msgid "View eventseries entity"
+msgstr ""
+
+msgid "View existing event instance entities"
+msgstr ""
+
+msgid "View existing event series entities"
+msgstr ""
+
+msgid "View existing unpublished event instance entities"
+msgstr ""
+
+msgid "View existing unpublished event series entities"
+msgstr ""
+
+msgid "View handler settings"
+msgstr "View handler"
+
+msgid "View modes"
+msgstr "View modes"
+
+msgid "View registrant entities"
+msgstr ""
+
+msgid "View the admin table view of eventseries"
+msgstr ""
+
+msgid "View the table view of eventinstance"
+msgstr ""
+
+msgid "View the table view of registrants"
+msgstr ""
+
+msgid "View unpublished eventinstance entity"
+msgstr ""
+
+msgid "View unpublished eventseries entity"
+msgstr ""
+
+msgid "View usersu{00A0}includes role %role"
+msgstr ""
+
+msgid "Views"
+msgstr "Views"
+
+msgid "Vocabulary"
+msgstr "Ordforråd"
+
+msgid "Web platform for the Danish Public Libraries"
+msgstr ""
+
+msgid "Web services"
+msgstr "Web-services"
+
+msgid "Weekly"
+msgstr "Ugentligt"
+
+msgid "Whether a new revision should be created by default"
+msgstr "Hvorvidt der som standard skal oprettes en ny version"
+
+msgid ""
+"Whether to display the remaining capacity for an event during "
+"registration"
+msgstr ""
+
+msgid "Whether to enable email notifications"
+msgstr ""
+
+msgid "Whether to enable these notifications"
+msgstr ""
+
+msgid "Whether to format the date as a link"
+msgstr ""
+
+msgid "Whether to use the email notifications queue"
+msgstr ""
+
+msgid ""
+"Whether to validate that the recurrence schedule yields at least one "
+"date before saving a series"
+msgstr ""
+
+msgid "Which recur type fields are available in the creation form"
+msgstr ""
+
+msgid "Windows Phone app GUID"
+msgstr ""
+
+msgid "Windows Universal app GUID"
+msgstr ""
+
+msgid "Windows app GUID"
+msgstr ""
+
+msgid ""
+"With this permission the cache tags are returned in the response "
+"header"
+msgstr ""
+
+msgid "Yearly"
+msgstr ""
+
+msgid "You cannot move this row down because it is already the last."
+msgstr ""
+
+msgid "You cannot move this row up because it is already the first."
+msgstr ""
+
+msgid ""
+"You have been added to the waitlist for the [eventinstance:title] "
+"[eventinstance:reg_type].\n"
+"\n"
+"Modify your registration: "
+"[registrant:edit_url]\n"
+"Delete your registration: "
+"[registrant:delete_url]"
+msgstr ""
+
+msgid ""
+"You have been promoted from the waitlist to the registration list for "
+"the [eventinstance:title] [eventinstance:reg_type].\n"
+"\n"
+"Modify your "
+"registration: [registrant:edit_url]\n"
+"Delete your registration: "
+"[registrant:delete_url]"
+msgstr ""
+
+msgid "You've Been Added To The Registration List"
+msgstr ""
+
+msgid "You've Been Added To The Waitlist"
+msgstr ""
+
+msgid "You've Successfully Registered"
+msgstr ""
+
+msgid ""
+"Your registration for the [eventinstance:title] "
+"[eventinstance:reg_type] was successful.\n"
+"\n"
+"Modify your "
+"registration: [registrant:edit_url]\n"
+"Delete your registration: "
+"[registrant:delete_url]"
+msgstr ""
+
+msgid "Zone field settings"
+msgstr ""
+
+msgid "Zone territory"
+msgstr ""
+
+msgid "[Splitting in progress... ⌛]"
+msgstr ""
+
+msgid "[current-page:title] | [site:name]"
+msgstr ""
+
+msgid "[current-page:url]"
+msgstr ""
+
+msgid "[node:summary]"
+msgstr ""
+
+msgid "[node:title] | [site:name]"
+msgstr ""
+
+msgid "[node:url]"
+msgstr ""
+
+msgid "[site:name]"
+msgstr ""
+
+msgid "[site:url]"
+msgstr ""
+
+msgid "[term:description]"
+msgstr ""
+
+msgid "[term:name] | [site:name]"
+msgstr ""
+
+msgid "[term:url]"
+msgstr ""
+
+msgid "[user:display-name] | [site:name]"
+msgstr ""
+
+msgid "[user:url]"
+msgstr ""
+
+msgid "default state for the tab"
+msgstr ""
+
+msgid "default state for the tabs"
+msgstr ""
+
+msgid "description of the tabs"
+msgstr ""
+
+msgid "effect on the element"
+msgstr ""
+
+msgid "eventinstance: reverted %title revision %revision."
+msgstr ""
+
+msgid "eventseries: reverted %title revision %revision."
+msgstr ""
+
+msgid "form operation"
+msgstr ""
+
+msgid "google_rating"
+msgstr ""
+
+msgid "href"
+msgstr ""
+
+msgid "html attributes for the element"
+msgstr ""
+
+msgid "html classes to be used for the label"
+msgstr ""
+
+msgid "html element tag to be used"
+msgstr ""
+
+msgid "html element tag to be used for the label"
+msgstr ""
+
+msgid "item failed due @e, details (JSON): @debug"
+msgstr ""
+
+msgid "jQuery UI Date Picker"
+msgstr ""
+
+msgid "last »"
+msgstr "sidste »"
+
+msgid "more"
+msgstr "mere"
+
+msgid "next ›"
+msgstr "næste ›"
+
+msgid "node id"
+msgstr ""
+
+msgid "noindex"
+msgstr ""
+
+msgid "revision user id"
+msgstr ""
+
+msgid "show the label"
+msgstr ""
+
+msgid "speed of the effect"
+msgstr ""
+
+msgid "types"
+msgstr "typer"
+
+msgid "view"
+msgstr "vis"
+
+msgid "{{ \"View Series\"|t }}"
+msgstr ""
+
+msgid "{{ date__value }}"
+msgstr ""
+
+msgid "{{ title }}"
+msgstr ""
+
+msgid "{{ view_eventinstance }}"
+msgstr ""
+
+msgid "{{ view_eventseries }}"
+msgstr ""
+
+msgid "« First"
+msgstr "« Første"
+
+msgid "« first"
+msgstr "« første"
+
+msgid "‹ Previous"
+msgstr "‹ Forrige"
+
+msgid "‹ previous"
+msgstr "‹ forrige"
+
+msgid "‹‹"
+msgstr "‹‹"
+
+msgid "››"
+msgstr "››"
+
+msgid "Access the Prometheus metrics endpoint"
+msgstr ""
+
+msgid "DPL Metrics"
+msgstr ""
+
+msgid "Exposes application metrics for scraping by Prometheus."
+msgstr ""
+
+msgid ""
+"The endpoint reveals traffic patterns and installed code. Grant only "
+"to monitoring."
+msgstr ""
+
+msgid "Unable to record metric: @message"
+msgstr ""
+
+msgid "Unable to render metrics: @message"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Bibliotek.dk"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Contact the library for access"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The material is not available through the website"
+msgstr ""
+
+msgctxt "Work Page"
+msgid ""
+"Visit the library and get help from a librarian or check whether the "
+"material is available at"
+msgstr ""
+
+msgid "Could not fetch series title from FBI: @message"
+msgstr ""
+
+msgid "Could not look up series @id in FBI: @message"
+msgstr ""
+
+msgctxt "Series Page"
+msgid "Series by"
+msgstr ""
+
+msgctxt "Series Page"
+msgid "Start with this one"
+msgstr ""
+
+msgid "- Any -"
+msgstr "- Enhver -"
+
+msgid "-Any-"
+msgstr ""
+
+msgid "@type - @bundle"
+msgstr ""
+
+msgid ""
+"A boolean field can be three values (TRUE, FALSE, ANY). So when "
+"unchecked default will be act like \"ANY\" but this setting will treat "
+"the filter as FALSE."
+msgstr ""
+
+msgid "All %type crops have been deleted."
+msgstr ""
+
+msgid "All %type crops were deleted."
+msgstr ""
+
+msgid ""
+"Allows you to configure separate clone settings for each entity "
+"bundle."
+msgstr ""
+
+msgid "Apply soft limit to children"
+msgstr ""
+
+msgid "Are you sure you want to flush all %type crops?"
+msgstr ""
+
+msgid "Ascending"
+msgstr "Stigende"
+
+msgid "Auto-submit sort only"
+msgstr ""
+
+msgid ""
+"Automatically submits the form when sorts has changed. Note submits "
+"the full form."
+msgstr ""
+
+msgid "Autosubmit breakpoint"
+msgstr ""
+
+msgid "Breakpoint autosubmit"
+msgstr ""
+
+msgid ""
+"Breakpoint to determinate whether auto-submit should be enabled for "
+"the current screen dimensions."
+msgstr ""
+
+msgid "Bundle-specific clone settings"
+msgstr ""
+
+msgid "By result count (if available)"
+msgstr ""
+
+msgid "By value key (ascending)"
+msgstr ""
+
+msgid "By value key (descending)"
+msgstr ""
+
+msgid "Check to treat field as FALSE"
+msgstr ""
+
+msgid "Choose how the filter options should be sorted."
+msgstr ""
+
+msgid ""
+"Collapsible filter will be opened by default. It can be collapsed by "
+"the user if they wish, but after the page reload (or AJAX view "
+"refresh) it will be opened again."
+msgstr ""
+
+msgid "Custom classes added to the field element"
+msgstr ""
+
+msgid ""
+"Custom sorting is not available for this filter type. Entity reference "
+"fields (taxonomy terms, users, content) cannot be easily reordered due "
+"to deep integration with Drupal core. Consider using JavaScript-based "
+"client-side sorting if needed."
+msgstr ""
+
+msgid "Date & Time Picker"
+msgstr ""
+
+msgid "Descending"
+msgstr "Faldende"
+
+msgid "Display the referenced entities with a given view mode."
+msgstr ""
+
+msgid "Enable auto-submit for sorts only."
+msgstr ""
+
+msgid ""
+"Enable custom sorting of filter options. Note: This feature is not "
+"available for entity reference fields (taxonomy, users, content) due "
+"to technical limitations."
+msgstr ""
+
+msgid ""
+"Enable the Breakpoint Module if you want to limit auto-submit feature "
+"only for specific device dimensions."
+msgstr ""
+
+msgid "Enable tooltips"
+msgstr ""
+
+msgid "Enter a query parameter to use for combined sorts"
+msgstr ""
+
+msgid "Error saving @view_id"
+msgstr ""
+
+msgid "Flush"
+msgstr "Ryd"
+
+msgid "Limit the number of displayed items via JavaScript."
+msgstr ""
+
+msgid "Middle"
+msgstr "Midt"
+
+msgid "No limit"
+msgstr "Ingen grænse"
+
+msgid "Open by default"
+msgstr ""
+
+msgid "Placement Location"
+msgstr ""
+
+msgid "Placement location of slider"
+msgstr ""
+
+msgid "Query parameter to use for combined sorts"
+msgstr ""
+
+msgid "Scrollable container height (px)"
+msgstr ""
+
+msgid "Scrollable container height in pixels"
+msgstr ""
+
+msgid "Show less label"
+msgstr ""
+
+msgid "Show more label"
+msgstr ""
+
+msgid "Soft limit count"
+msgstr ""
+
+msgid "Soft limit label show less"
+msgstr ""
+
+msgid "Soft limit label show more"
+msgstr ""
+
+msgid "Sort filter options"
+msgstr ""
+
+msgid "Sort method"
+msgstr ""
+
+msgid "Sort method for filter options"
+msgstr ""
+
+msgid "Sorting options"
+msgstr ""
+
+msgid ""
+"The entity associated with crop @uuid (@id) cannot be loaded. This "
+"will probably cause unexpected behavior when the crop is imported "
+"later."
+msgstr ""
+
+msgid ""
+"The entity associated with crop @uuid (@target_type @target_uuid) "
+"could not be loaded."
+msgstr ""
+
+msgid "The placement of the slider."
+msgstr ""
+
+msgid "There are no %type crops, so you can safely delete this crop type."
+msgstr ""
+
+msgid "This text will be used for \"Show less\" link."
+msgstr ""
+
+msgid "This text will be used for \"Show more\" link."
+msgstr ""
+
+msgid ""
+"This will be the $_GET parameter used in query strings. Useful for "
+"preventing collisions between exposed filters when there are multiple "
+"instances of BEF on the page."
+msgstr ""
+
+msgid "To add multiple classes separate them with a space"
+msgstr ""
+
+msgid "Tooltip value prefix"
+msgstr ""
+
+msgid "Tooltip value suffix"
+msgstr ""
+
+msgid "Tooltips value prefix"
+msgstr ""
+
+msgid "Tooltips value suffix"
+msgstr ""
+
+msgid "UI Slider"
+msgstr ""
+
+msgid "Uncheck to treat field as FALSE"
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid "Unknown"
+msgstr "Ukendt"
+
+msgid "Use natural sorting"
+msgstr ""
+
+msgid "Use natural sorting algorithm"
+msgstr ""
+
+msgid ""
+"Use natural sorting algorithm (e.g., \"Item 2\" comes before \"Item "
+"10\"). This works better with numbers and mixed content."
+msgstr ""
+
+msgid "Use scrollable container"
+msgstr ""
+
+msgid ""
+"When enabled, the soft limit counts all items including nested "
+"children. When disabled, only top-level items are counted."
+msgstr ""
+
+msgid "Wrap the filter options in a scrollable container with a fixed height."
+msgstr ""
+
+msgid "bef_number"
+msgstr ""
 

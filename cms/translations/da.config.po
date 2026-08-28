@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-07-30 13:45+0200\n"
-"PO-Revision-Date: 2026-07-30 13:45+0200\n"
+"POT-Creation-Date: 2026-08-28 09:45+0200\n"
+"PO-Revision-Date: 2026-08-28 09:45+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -5658,12 +5658,6 @@ msgctxt "views.view.user_admin_people:display:default:display_options:fields:fie
 msgid "{{ field_author_name__value }} <br><small>{{ mail }}</small>"
 msgstr "{{ field_author_name__value }} <br><small>{{ mail }}</small>"
 
-msgctxt "views.view.user_admin_people:display:default:display_options:fields:status:alter:text"
-msgid "{{ status__value }} "
-msgstr ""
-"\n"
-"{{ status__value }}"
-
 msgctxt "field.field.user.user.field_last_password_reset:label"
 msgid "Last Password Reset"
 msgstr "Sidste mulighed for at ændre adgangskoden"
@@ -5711,7 +5705,7 @@ msgid ""
 "others may be overridden."
 msgstr ""
 "Hvis du slår denne til som relevant, så oprettes en billet i jeres "
-"billetsystem og data som billetlink, status og andet blive "
+"billetsystem og data som billetlink, status og andet bliver "
 "overskrevet."
 
 msgctxt "field.field.eventseries.default.field_relevant_ticket_manager:settings:on_label"
@@ -7337,10 +7331,6 @@ msgctxt "field.field.node.branch.field_address:label"
 msgid "Address (Deprecated - will be removed)"
 msgstr "Adresse (Forældet – feltet fjernes)"
 
-msgctxt "field.field.node.branch.field_address_dawa:description"
-msgid "Start typing to look up addresses in Denmark."
-msgstr "Søg på adresser i Danmark."
-
 msgctxt "field.field.node.branch.field_agency_branch_id:label"
 msgid "Agency Branch ID"
 msgstr "Agency Branch ID"
@@ -7518,10 +7508,6 @@ msgstr "Online"
 msgctxt "views.view.entity_reference_content:display:branch_addresses:display_title"
 msgid "Branches and addresses"
 msgstr "Biblioteker og adresser"
-
-msgctxt "field.field.node.branch.field_address_dawa:label"
-msgid "Address (Deprecated - will be removed)"
-msgstr "Adresse (Forældet – feltet fjernes)"
 
 msgctxt "field.field.node.branch.field_address_gsearch:label"
 msgid "Address"
@@ -7932,4 +7918,205 @@ msgstr "Dato fra"
 msgctxt "facets.facet.event_date:widget:config:max_label"
 msgid "Date to"
 msgstr "Dato til"
+
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
+msgid "- All -"
+msgstr "- Alle -"
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
+msgid "Date"
+msgstr "Dato"
+
+msgctxt "views.view.watchdog:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
+msgid "Filter"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
+msgid "Icon"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
+msgid "Items per page"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
+msgid "Message"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
+msgid "No log messages available."
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:empty:area:content"
+msgid "No log messages available."
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
+msgid "Offset"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
+msgid "Operations"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:page:display_title"
+msgid "Page"
+msgstr ""
+
+msgctxt "views.view.watchdog:description"
+msgid "Recent log messages"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:title"
+msgid "Recent log messages"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
+msgid "Severity"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
+msgid "Severity"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
+msgid "Type"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:filters:type:expose:label"
+msgid "Type"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
+msgid "User"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
+msgid "WID"
+msgstr ""
+
+msgctxt "views.view.watchdog:label"
+msgid "Watchdog"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
+msgid "admin/reports/dblog/event/{{ wid }}"
+msgstr ""
+
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
+msgid "{{ message }}"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:3:label"
+msgid "Billedbog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:4:label"
+msgid "Billedbog (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:0:label"
+msgid "Bog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:1:label"
+msgid "E-bog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:10:label"
+msgid "Film (blu-ray 4K)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:9:label"
+msgid "Film (blu-ray)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:11:label"
+msgid "Film (dvd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:12:label"
+msgid "Film (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:2:label"
+msgid "Lydbog (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:7:label"
+msgid "Musik (cd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:8:label"
+msgid "Musik (grammofonplade)"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_priority_material_type:label"
+msgid "Prioritised material type"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_priority_material_type:description"
+msgid ""
+"Select which material type should be prioritised when borrowers click "
+"a material. If the material has a manifestation with that material "
+"type, it will be opened. Otherwise the website's normal logic applies."
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:5:label"
+msgid "Tegneserie"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:6:label"
+msgid "Tegneserie (online)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:14:label"
+msgid "Tv-serie (blu-ray 4K)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:13:label"
+msgid "Tv-serie (blu-ray)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:15:label"
+msgid "Tv-serie (dvd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:16:label"
+msgid "Tv-serie (online)"
+msgstr ""
+
+msgctxt "views.view.user_admin_people:display:default:display_options:fields:status:alter:text"
+msgid ""
+"\n"
+"{{ status__value }}"
+msgstr ""
+
+msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:bef:filter:roles_target_id:soft_limit_label_more"
+msgid "Vis flere"
+msgstr ""
+
+msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:bef:filter:roles_target_id:soft_limit_label_less"
+msgid "Vis mindre"
+msgstr ""
 
