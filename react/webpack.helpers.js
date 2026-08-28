@@ -37,6 +37,17 @@ exports.getWebPackEnvVariables = () => {
 // .storybook/main.ts so the two builds cannot drift apart.
 const singletonModules = ["react", "react-dom", "@tanstack/react-query"];
 
-exports.singletonAliases = Object.fromEntries(
-  singletonModules.map((m) => [m, path.resolve(__dirname, "node_modules", m)])
+// Babel's polyfill-corejs3 plugin injects `core-js/modules/…` imports into
+// every file it transpiles, and webpack resolves those from the importing
+// file's own directory. The workspace packages we transpile from source - the
+// service layer - live outside this project and carry no core-js of their
+// own, so a `new Set()` in there fails the build looking for polyfills. This
+// project picks the polyfill strategy, so it also supplies the polyfills.
+const polyfillModules = ["core-js"];
+
+exports.moduleAliases = Object.fromEntries(
+  [...singletonModules, ...polyfillModules].map((m) => [
+    m,
+    path.resolve(__dirname, "node_modules", m)
+  ])
 );

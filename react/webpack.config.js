@@ -6,7 +6,7 @@ const { EnvironmentPlugin } = require("webpack");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const {
   getWebPackEnvVariables,
-  singletonAliases
+  moduleAliases
 } = require("./webpack.helpers");
 
 module.exports = (_env, argv) => {
@@ -107,7 +107,7 @@ module.exports = (_env, argv) => {
     },
     resolve: {
       extensions: [".js", ".jsx", ".tsx", ".ts", ".json"],
-      alias: singletonAliases
+      alias: moduleAliases
     },
     module: {
       rules: [
