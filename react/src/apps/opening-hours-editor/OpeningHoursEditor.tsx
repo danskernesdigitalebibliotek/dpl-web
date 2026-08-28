@@ -83,13 +83,12 @@ const OpeningHoursEditor: React.FC<OpeningHoursEditorType> = ({
             timeGridPlugin,
             interactionPlugin
           ]}
-          // FullCalendar generates hashed CSS class names, so we attach our own
-          // stable js- classes to the elements our Cypress tests interact with.
+          // FullCalendar generates hashed CSS class names, and its toolbar
+          // buttons are only identifiable by their localised aria-label, so we
+          // attach our own stable class for the Cypress tests to target. The
+          // calendar grid itself needs no such hook: FullCalendar renders
+          // native `data-date`, `data-time` and `aria-current` attributes.
           buttonClass={({ name }) => `js-opening-hours-editor-button-${name}`}
-          dayCellClass={({ isToday }) =>
-            isToday && "js-opening-hours-editor-day-cell-today"
-          }
-          dayLaneClass="js-opening-hours-editor-day-lane"
           headerToolbar={{
             left: "dayGridMonth,timeGridWeek",
             center: "title",

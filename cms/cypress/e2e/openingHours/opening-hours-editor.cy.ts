@@ -82,7 +82,8 @@ const navigateToMonthViewAdmin = () => {
 };
 
 const selectTodayFromMonthViewAdmin = () => {
-  cy.get('.js-opening-hours-editor-day-cell-today').click();
+  // FullCalendar marks today's cell with aria-current="date".
+  cy.get('[role="gridcell"][aria-current="date"]').click();
 };
 
 const firstDateOfFebruary2024 = '2024-02-01';
@@ -91,30 +92,54 @@ const clickFirstDayInMonthViewAdmin = () => {
   cy.get('[data-date$="-01"]').first().click();
 };
 
+const THURSDAY = 4;
+
+// The week view has no element representing a single (day, time) cell: the days
+// are vertical lanes and the time slots are horizontal lanes drawn across all of
+// them. FullCalendar resolves the slot from the pointer coordinates instead, so
+// a click is unavoidable - but we can take those coordinates from the two
+// elements that actually represent the day and the time we are aiming for
+// rather than computing them from the lane height.
 const selectTimeOnThursdayFromWeekView = (start: TimeString): void => {
-  // FullCalendar renders each weekday as one 24-hour lane without per-slot
-  // elements, so we click the Thursday lane (weeks start on Monday) at the
-  // vertical offset of the start time. Aiming 15 minutes past the start
-  // keeps the click inside the half-hour slot beginning at the start time.
-  const [hours, minutes] = start.split(':').map(Number);
-  cy.get('.js-opening-hours-editor-day-lane')
-    .eq(3)
+  const [hours, minutes] = start.split(':');
+  const isoTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00`;
+
+  // Day lanes are the only `role="gridcell"` elements in the week view, one per
+  // weekday, each carrying the date it represents.
+  cy.get('[role="gridcell"][data-date]')
+    .filter(
+      (_, lane) => new Date(lane.dataset.date ?? '').getUTCDay() === THURSDAY,
+    )
+    .should('have.length', 1)
     .then(($lane) => {
-      const laneWidth = $lane.width() ?? 0;
-      const laneHeight = $lane.height() ?? 0;
-      const clickPositionY = (laneHeight * (hours + (minutes + 15) / 60)) / 24;
-      // FullCalendar ignores clicks on coordinates outside the visible
-      // viewport, and a forced click skips Cypress' own scrolling, so we
-      // scroll the click position into view ourselves.
-      cy.wrap($lane).scrollIntoView({
-        offset: {
-          top: clickPositionY - Cypress.config('viewportHeight') / 2,
-          left: 0,
-        },
-      });
-      // The lane is covered by the horizontal slot lines, so the click must
-      // be forced. FullCalendar resolves the slot from the coordinates.
-      cy.wrap($lane).click(laneWidth / 2, clickPositionY, { force: true });
+      // Slot lanes span every day, so we only take the vertical position from
+      // them. The slot header in the time axis carries the same `data-time`, so
+      // we single out the lane by it having no label of its own.
+      cy.get(`[data-time="${isoTime}"]`)
+        .filter((_, slot) => !slot.textContent?.trim())
+        .should('have.length', 1)
+        .then(($slot) => {
+          const lane = $lane[0].getBoundingClientRect();
+          const slot = $slot[0].getBoundingClientRect();
+          // Offsets within the lane, so they survive the scrolling below. The
+          // centre of the slot is always inside it, whatever the slot duration.
+          const offsetX = lane.width / 2;
+          const offsetY = slot.top + slot.height / 2 - lane.top;
+
+          // FullCalendar validates pointer hits with `elementFromPoint()`, which
+          // only recognises coordinates inside the viewport, and the forced
+          // click below skips Cypress' own scrolling - so scroll the click
+          // position into view ourselves.
+          cy.wrap($lane).scrollIntoView({
+            offset: {
+              top: offsetY - Cypress.config('viewportHeight') / 2,
+              left: 0,
+            },
+          });
+          // The lane is covered by the horizontal slot lanes, so the click has
+          // to be forced.
+          cy.wrap($lane).click(offsetX, offsetY, { force: true });
+        });
     });
 };
 
