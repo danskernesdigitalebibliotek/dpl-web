@@ -94,53 +94,54 @@ const clickFirstDayInMonthViewAdmin = () => {
 
 const THURSDAY = 4;
 
-// The week view has no element representing a single (day, time) cell: the days
-// are vertical lanes and the time slots are horizontal lanes drawn across all of
-// them. FullCalendar resolves the slot from the pointer coordinates instead, so
-// a click is unavoidable - but we can take those coordinates from the two
-// elements that actually represent the day and the time we are aiming for
-// rather than computing them from the lane height.
+// The week view has no element representing a single (day, time) cell, and its
+// lanes are not focusable, so FullCalendar only resolves a slot from pointer
+// coordinates - a click at a position is the only way in. What we can avoid is
+// *calculating* that position: both coordinates are measured off the two
+// elements that represent the day and the time we are aiming for.
 const selectTimeOnThursdayFromWeekView = (start: TimeString): void => {
   const [hours, minutes] = start.split(':');
   const isoTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00`;
 
   // Day lanes are the only `role="gridcell"` elements in the week view, one per
   // weekday, each carrying the date it represents.
-  cy.get('[role="gridcell"][data-date]')
-    .filter(
-      (_, lane) => new Date(lane.dataset.date ?? '').getUTCDay() === THURSDAY,
-    )
-    .should('have.length', 1)
-    .then(($lane) => {
-      // Slot lanes span every day, so we only take the vertical position from
-      // them. The slot header in the time axis carries the same `data-time`, so
-      // we single out the lane by it having no label of its own.
-      cy.get(`[data-time="${isoTime}"]`)
-        .filter((_, slot) => !slot.textContent?.trim())
-        .should('have.length', 1)
-        .then(($slot) => {
-          const lane = $lane[0].getBoundingClientRect();
-          const slot = $slot[0].getBoundingClientRect();
-          // Offsets within the lane, so they survive the scrolling below. The
-          // centre of the slot is always inside it, whatever the slot duration.
-          const offsetX = lane.width / 2;
-          const offsetY = slot.top + slot.height / 2 - lane.top;
+  const thursdayLane = () =>
+    cy
+      .get('[role="gridcell"][data-date]')
+      .filter(
+        (_, lane) => new Date(lane.dataset.date ?? '').getUTCDay() === THURSDAY,
+      )
+      .should('have.length', 1);
 
-          // FullCalendar validates pointer hits with `elementFromPoint()`, which
-          // only recognises coordinates inside the viewport, and the forced
-          // click below skips Cypress' own scrolling - so scroll the click
-          // position into view ourselves.
-          cy.wrap($lane).scrollIntoView({
-            offset: {
-              top: offsetY - Cypress.config('viewportHeight') / 2,
-              left: 0,
-            },
-          });
-          // The lane is covered by the horizontal slot lanes, so the click has
-          // to be forced.
-          cy.wrap($lane).click(offsetX, offsetY, { force: true });
-        });
+  // Slot lanes span every day, so they only give us the vertical position. The
+  // slot header in the time axis carries the same `data-time`, so we single out
+  // the lane by it having no label of its own.
+  const startSlot = () =>
+    cy
+      .get(`[data-time="${isoTime}"]`)
+      .filter((_, slot) => !slot.textContent?.trim())
+      .should('have.length', 1);
+
+  // FullCalendar validates pointer hits with `elementFromPoint()`, which only
+  // recognises coordinates inside the viewport, and the forced click below skips
+  // Cypress' own scrolling - so bring the slot into view first.
+  startSlot().scrollIntoView();
+
+  startSlot().then(($slot) => {
+    thursdayLane().then(($lane) => {
+      const lane = $lane[0].getBoundingClientRect();
+      const slot = $slot[0].getBoundingClientRect();
+
+      // The lane is covered by the slot lanes, so the click has to be forced.
+      // Aim at the centre of both elements, which is inside the wanted slot
+      // whatever the slot duration or the lane geometry.
+      cy.wrap($lane).click(
+        lane.width / 2,
+        slot.top + slot.height / 2 - lane.top,
+        { force: true },
+      );
     });
+  });
 };
 
 const fillOpeningHourForm = ({
