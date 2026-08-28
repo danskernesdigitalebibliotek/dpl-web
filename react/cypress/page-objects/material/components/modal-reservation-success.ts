@@ -10,12 +10,6 @@ export class ModalReservationSuccessComponent extends ComponentObject {
         );
         return element;
       },
-      reservedForYouText: () => {
-        const element = this.container().find(
-          "[data-cy='reservation-success-is-reserved-for-you-text']"
-        );
-        return element;
-      },
       numberInQueueText: () => {
         const element = this.container().find(
           "[data-cy='number-in-queue-text']"

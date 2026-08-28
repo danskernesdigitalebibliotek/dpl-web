@@ -501,6 +501,10 @@ describe("Material Page Object Test", () => {
         // Given: A material page with authentication and successful reservation setup
         materialPage = new MaterialPage();
         givenAMaterial();
+        cy.interceptGraphql({
+          operationName: "WorkRecommendations",
+          fixtureFilePath: "material/material-grid-related-recommendations.json"
+        });
         cy.createFakeAuthenticatedSession();
         givenReservationWillSucceed();
 
@@ -518,12 +522,7 @@ describe("Material Page Object Test", () => {
           // Title message
           success.elements
             .titleText()
-            .shouldContainAll(["Material is available and reserved for you!"]);
-
-          // Material title confirmation
-          success.elements
-            .reservedForYouText()
-            .shouldContainAll(["De syv søstre is reserved for you"]);
+            .shouldContainAll(['"De syv søstre" is reserved for you']);
 
           // Queue position and stock count
           success.elements
