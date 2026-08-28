@@ -6,6 +6,7 @@ namespace Drupal\dpl_app\Plugin\GraphQL\SchemaExtension;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Theme\ThemeInitializationInterface;
 use Drupal\graphql\GraphQL\ResolverBuilder;
@@ -30,12 +31,13 @@ class BrandSettingsExtension extends SdlSchemaExtensionPluginBase {
    */
   public function __construct(
     array $configuration,
-    $plugin_id,
-    $plugin_definition,
+    string $plugin_id,
+    mixed $plugin_definition,
     ModuleHandlerInterface $moduleHandler,
     protected ThemeInitializationInterface $themeInitialization,
     protected ConfigFactoryInterface $configFactory,
     protected FileUrlGeneratorInterface $fileUrlGenerator,
+    protected ThemeSettingsProvider $themeSettingsProvider,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $moduleHandler);
   }
@@ -51,7 +53,8 @@ class BrandSettingsExtension extends SdlSchemaExtensionPluginBase {
       $container->get('module_handler'),
       $container->get('theme.initialization'),
       $container->get('config.factory'),
-      $container->get('file_url_generator')
+      $container->get('file_url_generator'),
+      $container->get(ThemeSettingsProvider::class)
     );
   }
 
@@ -71,10 +74,10 @@ class BrandSettingsExtension extends SdlSchemaExtensionPluginBase {
       $builder->callback(function () {
         $default_theme = $this->configFactory->get('system.theme')->get('default');
 
-        $logo_path = theme_get_setting('logo.path', $default_theme);
+        $logo_path = $this->themeSettingsProvider->getSetting('logo.path', $default_theme);
 
         if (!$logo_path) {
-          $logo_setting = theme_get_setting('logo', $default_theme);
+          $logo_setting = $this->themeSettingsProvider->getSetting('logo', $default_theme);
           if (is_array($logo_setting) && !empty($logo_setting['logo'])) {
             $logo_path = $logo_setting['logo'];
           }

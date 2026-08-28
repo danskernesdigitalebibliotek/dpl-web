@@ -23,7 +23,7 @@ export const givenComplexSearchWithPaginationEmptyResponse = () => {
 export const givenComplexSearchWithPaginationResponseAndAlias = (
   alias: string
 ) => {
-  cy.intercept("POST", "**/graphql", (req) => {
+  cy.intercept("POST", "**/graphql*", (req) => {
     if (req.body?.operationName === "complexSearchWithPagination") {
       req.reply(buildComplexSearchWithPaginationResponse());
     }

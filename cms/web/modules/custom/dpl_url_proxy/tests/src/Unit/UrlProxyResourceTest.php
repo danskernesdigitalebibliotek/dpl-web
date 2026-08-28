@@ -145,7 +145,7 @@ class UrlProxyResourceTest extends UnitTestCase {
    * @return mixed[]
    *   The test data.
    */
-  public function thatEndpointChangesUrlProvider(): array {
+  public static function thatEndpointChangesUrlProvider(): array {
     $conf = [
       'prefix' => 'http://bib101.bibbaser.dk/login?url=',
       'hostnames' => [

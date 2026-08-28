@@ -42,7 +42,7 @@ export const mutator = async <ResponseType>(
           serviceUrl
         );
       }
-      return (responseBody as ResponseType) ?? (undefined as ResponseType);
+      return (responseBody as ResponseType) ?? (null as ResponseType);
       // If the response is not JSON, we catch the error and throw a syntax error.
     } catch (e) {
       if (!(e instanceof SyntaxError)) {
@@ -60,7 +60,7 @@ export const mutator = async <ResponseType>(
   }
   // We did not succeed in fetching the data.
   // and we return null to indicate that.
-  return undefined as ResponseType;
+  return null as ResponseType;
 };
 
 export default mutator;

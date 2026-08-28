@@ -9,7 +9,6 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\job_scheduler\Entity\JobSchedule;
 use Drupal\recurring_events\Entity\EventSeries;
-use Drupal\recurring_events\EventInstanceStorageInterface;
 
 /**
  * Cron workflow for unpublishing event series without published instances.
@@ -23,7 +22,6 @@ final class UnpublishSeriesSchedule {
    * Constructor.
    */
   public function __construct(
-    private EventInstanceStorageInterface $eventInstanceStorage,
     private EntityTypeManagerInterface $entityTypeManager,
     private ConfigFactoryInterface $configFactory,
   ) {}
@@ -73,14 +71,13 @@ final class UnpublishSeriesSchedule {
       ->condition('status', 1)
       ->execute();
 
-    /** @var \Drupal\recurring_events\Entity\EventSeries[] $publishedSeries */
     $publishedSeries = $eventSeriesStorage->loadMultiple($publishedSeriesIds);
     foreach ($publishedSeries as $eventSeries) {
       if (!$eventSeries instanceof EventSeries) {
         continue;
       }
 
-      $publishedEventInstanceCount = ($this->eventInstanceStorage->getQuery())
+      $publishedEventInstanceCount = ($this->entityTypeManager->getStorage('eventinstance')->getQuery())
         ->accessCheck(FALSE)
         ->condition('eventseries_id', $eventSeries->id())
         ->condition('status', 1)

@@ -3,11 +3,11 @@
 namespace Drupal\dpl_event\Workflows;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\EventState;
 use Drupal\job_scheduler\Entity\JobSchedule;
 use Drupal\job_scheduler\JobSchedulerInterface;
-use Drupal\recurring_events\EventInstanceStorageInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -24,7 +24,7 @@ class OccurredSchedule {
     private LoggerInterface $logger,
     private TimeInterface $time,
     private JobSchedulerInterface $jobScheduler,
-    private EventInstanceStorageInterface $eventInstanceStorage,
+    private EntityTypeManagerInterface $entityTypeManager,
   ) {}
 
   /**
@@ -45,7 +45,7 @@ class OccurredSchedule {
    * The callback which will be triggered when the scheduled event occurs.
    */
   public function callback(JobSchedule $job): void {
-    $event = $this->eventInstanceStorage->load($job->getId());
+    $event = $this->entityTypeManager->getStorage('eventinstance')->load($job->getId());
     if (!$event || !$event instanceof EventInstance) {
       return;
     }

@@ -28,9 +28,9 @@ form_settings:
     disable: true
     hidden: true
   media:
+    default_value: false
     disable: true
     hidden: true
-    default_value: false
   path_alias:
     default_value: true
     disable: true
@@ -80,3 +80,4 @@ form_settings_after_clone:
     redirect_to: edit-form
 no_suffix: false
 take_ownership: true
+handle_bundles: false

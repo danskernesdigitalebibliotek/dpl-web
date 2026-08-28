@@ -9,6 +9,7 @@ import type { CurrentEventsGET200ItemAddress } from "./currentEventsGET200ItemAd
 import type { CurrentEventsGET200ItemDateTime } from "./currentEventsGET200ItemDateTime";
 import type { CurrentEventsGET200ItemExternalData } from "./currentEventsGET200ItemExternalData";
 import type { CurrentEventsGET200ItemImage } from "./currentEventsGET200ItemImage";
+import type { CurrentEventsGET200ItemOrganizer } from "./currentEventsGET200ItemOrganizer";
 import type { CurrentEventsGET200ItemOriginalImage } from "./currentEventsGET200ItemOriginalImage";
 import type { CurrentEventsGET200ItemSeries } from "./currentEventsGET200ItemSeries";
 import type { CurrentEventsGET200ItemState } from "./currentEventsGET200ItemState";
@@ -44,6 +45,10 @@ export type CurrentEventsGET200Item = {
   date_time: CurrentEventsGET200ItemDateTime;
   /** The associated library branches. */
   branches?: string[];
+  /** External branch ids (ISIL) for the associated library branches. Aligned by index with the branches property, and always the same length. An entry is an empty string when no ISIL has been configured for that branch in the CMS. */
+  branch_isil_ids?: string[];
+  /** The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library. */
+  organizer?: CurrentEventsGET200ItemOrganizer;
   /** Where the event occurs. */
   address?: CurrentEventsGET200ItemAddress;
   /** The categories associated with the event. */
