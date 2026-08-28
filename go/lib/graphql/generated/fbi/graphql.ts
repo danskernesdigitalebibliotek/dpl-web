@@ -2473,6 +2473,34 @@ export type ComplexSearchForWorkTeaserQuery = { __typename?: 'Query', complexSea
         | { __typename: 'Person', display: string }
       >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCodeEnum }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', display: string, code: string } }>, workYear?: { __typename?: 'PublicationYear', display: string } | null }> } };
 
+export type GetManifestationsByFaustQueryVariables = Exact<{
+  faust: Array<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+
+export type GetManifestationsByFaustQuery = { __typename?: 'Query', manifestations: Array<{ __typename?: 'Manifestation', pid: string, audience?: { __typename?: 'Audience', childrenOrAdults: Array<{ __typename?: 'ChildOrAdult', code: ChildOrAdultCodeEnum }> } | null, ownerWork: { __typename?: 'Work', workId: string, manifestations: { __typename?: 'Manifestations', all: Array<{ __typename?: 'Manifestation', pid: string, genreAndForm: Array<string>, publisher: Array<string>, contributorsFromDescription: Array<string>, accessTypes: Array<{ __typename?: 'AccessType', code: AccessTypeCodeEnum, display: string }>, access: Array<
+            | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
+            | { __typename: 'DigitalArticleService', issn: string }
+            | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
+            | { __typename: 'InfomediaService', id: string }
+            | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+          >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', contributors: Array<string>, edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
+            | { __typename?: 'Corporation', display: string }
+            | { __typename?: 'Person', display: string }
+          > }>, bestRepresentation: { __typename?: 'Manifestation', pid: string, genreAndForm: Array<string>, publisher: Array<string>, contributorsFromDescription: Array<string>, accessTypes: Array<{ __typename?: 'AccessType', code: AccessTypeCodeEnum, display: string }>, access: Array<
+            | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
+            | { __typename: 'DigitalArticleService', issn: string }
+            | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
+            | { __typename: 'InfomediaService', id: string }
+            | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+          >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', contributors: Array<string>, edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
+            | { __typename?: 'Corporation', display: string }
+            | { __typename?: 'Person', display: string }
+          > } }, titles: { __typename?: 'WorkTitles', full: Array<string>, original?: Array<string> | null }, creators: Array<
+        | { __typename: 'Corporation', display: string }
+        | { __typename: 'Person', display: string }
+      >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCodeEnum }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', display: string, code: string } }>, workYear?: { __typename?: 'PublicationYear', display: string } | null } } | null> };
+
 export type GetMaterialQueryVariables = Exact<{
   wid: Scalars['String']['input'];
 }>;
@@ -2949,6 +2977,61 @@ useSuspenseComplexSearchForWorkTeaserQuery.getKey = (variables: ComplexSearchFor
 
 useComplexSearchForWorkTeaserQuery.fetcher = (variables: ComplexSearchForWorkTeaserQueryVariables, options?: RequestInit['headers']) => fetchData<ComplexSearchForWorkTeaserQuery, ComplexSearchForWorkTeaserQueryVariables>(ComplexSearchForWorkTeaserDocument, variables, options);
 
+export const GetManifestationsByFaustDocument = `
+    query getManifestationsByFaust($faust: [String!]!) {
+  manifestations(faust: $faust) {
+    pid
+    audience {
+      childrenOrAdults {
+        code
+      }
+    }
+    ownerWork {
+      ...WorkTeaserSearchPage
+    }
+  }
+}
+    ${WorkTeaserSearchPageFragmentDoc}`;
+
+export const useGetManifestationsByFaustQuery = <
+      TData = GetManifestationsByFaustQuery,
+      TError = unknown
+    >(
+      variables: GetManifestationsByFaustQueryVariables,
+      options?: Omit<UseQueryOptions<GetManifestationsByFaustQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetManifestationsByFaustQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetManifestationsByFaustQuery, TError, TData>(
+      {
+    queryKey: ['getManifestationsByFaust', variables],
+    queryFn: fetchData<GetManifestationsByFaustQuery, GetManifestationsByFaustQueryVariables>(GetManifestationsByFaustDocument, variables),
+    ...options
+  }
+    )};
+
+useGetManifestationsByFaustQuery.getKey = (variables: GetManifestationsByFaustQueryVariables) => ['getManifestationsByFaust', variables];
+
+export const useSuspenseGetManifestationsByFaustQuery = <
+      TData = GetManifestationsByFaustQuery,
+      TError = unknown
+    >(
+      variables: GetManifestationsByFaustQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<GetManifestationsByFaustQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetManifestationsByFaustQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<GetManifestationsByFaustQuery, TError, TData>(
+      {
+    queryKey: ['getManifestationsByFaust', variables],
+    queryFn: fetchData<GetManifestationsByFaustQuery, GetManifestationsByFaustQueryVariables>(GetManifestationsByFaustDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseGetManifestationsByFaustQuery.getKey = (variables: GetManifestationsByFaustQueryVariables) => ['getManifestationsByFaust', variables];
+
+
+useGetManifestationsByFaustQuery.fetcher = (variables: GetManifestationsByFaustQueryVariables, options?: RequestInit['headers']) => fetchData<GetManifestationsByFaustQuery, GetManifestationsByFaustQueryVariables>(GetManifestationsByFaustDocument, variables, options);
+
 export const GetMaterialDocument = `
     query getMaterial($wid: String!) {
   work(id: $wid) {
@@ -3001,6 +3084,7 @@ export const operationNames = {
     searchWithPagination: 'searchWithPagination' as const,
     searchFacets: 'searchFacets' as const,
     complexSearchForWorkTeaser: 'complexSearchForWorkTeaser' as const,
+    getManifestationsByFaust: 'getManifestationsByFaust' as const,
     getMaterial: 'getMaterial' as const
   },
   Fragment: {

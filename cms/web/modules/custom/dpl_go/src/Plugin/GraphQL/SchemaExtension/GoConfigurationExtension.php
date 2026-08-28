@@ -61,6 +61,10 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
     $registry->addFieldResolver('GoConfigurationPublic', 'searchProfiles',
       $builder->produce('search_profiles_producer')
     );
+
+    $registry->addFieldResolver('GoConfigurationPublic', 'blacklistedAvailabilityBranches',
+      $builder->produce('blacklisted_availability_branches_producer')
+    );
   }
 
 }

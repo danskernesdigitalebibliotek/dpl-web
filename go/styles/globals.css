@@ -46,10 +46,6 @@
     );
     --screen-minus-navigation-height: calc(100vh - var(--navigation-combined-height));
 
-    /* BORDER RADIUS */
-    --base-radius: 0.625rem; /* 10px */
-    --input-radius: 0.375rem; /* 5px */
-
     /* ASPECT RATIOS */
     --aspect-1-1: 1 / 1;
     --aspect-1-2: 1 / 2;
@@ -77,6 +73,8 @@
     /* COLORS */
     --black: hsla(0, 0%, 10.2%, 1);
     --white: hsla(255, 100%, 100%, 1);
+
+    --backdrop: hsla(0, 0%, 10.2%, 0.5);
 
     --beige: hsla(36, 45%, 98%, 1);
     --beige-overlay: hsla(42, 25%, 35%, 0.05);
@@ -137,6 +135,7 @@
     --background-overlay-solid: var(--beige-overlay-solid);
     --background-skeleton: var(--beige-skeleton);
     --foreground: var(--black);
+    --foreground-muted: hsla(0, 0%, 10.2%, 0.7);
 
     /* TRANSITION DURATIONS */
     --dark-mode-transition: 1000ms;
@@ -230,9 +229,9 @@
     --typo-tag-sm-line-height: 10px;
     --typo-tag-sm-letter-spacing: 0;
 
-    --typo-caption-size: 8px;
+    --typo-caption-size: 10px;
     --typo-caption-weight: 400;
-    --typo-caption-line-height: 8px;
+    --typo-caption-line-height: 10px;
     --typo-caption-letter-spacing: 0;
   }
 
@@ -245,7 +244,7 @@
       /* NAVIGATION */
       --navigation-top-height: 2rem; /* 32px */
       --navigation-height: 5rem; /* 80px */
-      --navigation-search-height: 6.25rem; /* 100px */
+      --navigation-search-height: 5rem; /* 100px */
 
       /* SPACING */
       --paragraph-spacing: 4rem; /* 64px */
@@ -351,6 +350,7 @@
     --background-overlay-solid: var(--blue-overlay-solid);
     --background-skeleton: var(--blue-skeleton);
     --foreground: var(--beige);
+    --foreground-muted: hsla(36, 45%, 98%, 0.9);
     --shadow-add-contrast: hsla(0, 0%, 0%, 0.5);
   }
 
@@ -385,6 +385,18 @@
     @apply font-headline;
   }
 
+  .text-typo-huge,
+  .text-typo-heading-1,
+  .text-typo-heading-2,
+  .text-typo-heading-3,
+  .text-typo-heading-4,
+  .text-typo-heading-5,
+  .text-typo-subtitle-lg,
+  .text-typo-subtitle-md,
+  .text-typo-subtitle-sm {
+    @apply text-balance;
+  }
+
   /* wysiwyg */
   .wysiwyg > *:first-child {
     @apply mt-0;
@@ -407,7 +419,7 @@
   }
 
   .wysiwyg p {
-    @apply text-typo-body-md dark:text-foreground/90 text-foreground/70 my-4;
+    @apply text-typo-body-md text-foreground-muted my-4;
   }
 
   .wysiwyg a {
@@ -416,18 +428,30 @@
 
   .wysiwyg ul,
   .wysiwyg ol {
-    @apply text-typo-body-md dark:text-foreground/90 text-foreground/70 my-4 space-y-2 font-light;
+    @apply text-typo-body-md text-foreground-muted my-4 space-y-2 font-light;
   }
 
   .wysiwyg ul {
-    @apply ml-4 list-disc lg:ml-5;
+    @apply list-outside list-decimal pl-[1.5em];
   }
 
   .wysiwyg ol {
-    @apply list-inside list-decimal;
+    @apply list-outside list-disc pl-[1.2em];
   }
 
   .wysiwyg li::marker {
+    @apply font-headline;
+  }
+
+  ol.ordered-list {
+    @apply list-outside list-decimal pl-[1.5em];
+  }
+
+  ul.unordered-list {
+    @apply list-outside list-disc pl-[1.2em];
+  }
+
+  .ordered-list li {
     @apply font-headline;
   }
 }
@@ -438,6 +462,11 @@
   }
   body {
     @apply bg-background font-body text-foreground;
+  }
+  /* Consistent underline distance on all links (and button-based links).
+     0.25em = 25% of the font size; Chrome drops percentage values here. */
+  :where(a, button) {
+    text-underline-offset: 0.25em;
   }
 }
 
