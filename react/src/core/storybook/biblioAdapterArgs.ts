@@ -2,13 +2,13 @@ export const argTypes = {
   useBiblioAdapterConfig: {
     description:
       "Lend through the service layer instead of Publizon (feature flag)",
-    control: { type: "text" }
+    control: { type: "text" } as const
   },
   biblioTolerateUnknownMaterialsConfig: {
     description:
       "TEMPORARY: render a material the adapter answers 404 for as " +
       "unavailable instead of failing the page",
-    control: { type: "text" }
+    control: { type: "text" } as const
   }
 };
 
