@@ -21,8 +21,7 @@ before editing:
   `@whitespace/storybook-addon-html`) and paste the markup into their own
   templates — Drupal Twig in the CMS theme, JSX in React, etc.
 - **React + Storybook is scaffolding**, used for authoring, previewing, and
-  visual-regression testing. There is no exported React component API. The
-  published npm package's `files` field is `build/**/*`.
+  visual-regression testing. There is no exported React component API.
 - **The public API is the contents of `build/`** — compiled CSS, copied
   icons, copied fonts, and loose `.js` behaviours. Consumers import paths
   like `…/build/css/base.css` and `…/build/icons/basic/icon-search.svg`.
@@ -68,7 +67,8 @@ A few rules that override generic SCSS instincts:
 - `base.scss`, `wysiwyg.scss`, `admin-base.scss` — the three SCSS entry
   points (frontend, CKEditor, CMS admin).
 - `src/styles/scss/tools/` — design tokens and mixins.
-- `bundle.sh` — exactly what goes into the released package.
+- The root Taskfile's `dev:design-system:build` — assembles `build/`, i.e.
+  exactly what the other projects consume.
 - `.storybook/main.js`, `.storybook/preview.js`, `.storybook/modes.js` —
   Storybook configuration, viewports, Chromatic modes.
 
@@ -78,7 +78,7 @@ A few rules that override generic SCSS instincts:
   site, `wysiwyg.scss` for CKEditor inside the CMS, `admin-base.scss` for
   the CMS admin UI. Don't add a component to all three "just in case" —
   opt in deliberately. The editor bundle in particular should stay small.
-- **`bundle.sh`'s `.js` collector is flat and recursive** — every `*.js`
+- **The build's `.js` collector is flat and recursive** — every `*.js`
   under `src/` ends up in `build/js/`. Same-basename files in different
   folders will collide; name uniquely.
 - **Loose `.js` companion files are framework-agnostic on purpose** so the
