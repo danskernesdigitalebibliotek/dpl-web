@@ -1,21 +1,17 @@
-import { TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../../../core/token";
 import {
   ReservationListPage,
   reservationListStory
 } from "../../../../cypress/page-objects/reservation-list/ReservationListPage";
 import { deleteReservationModalSelector } from "../../../../cypress/page-objects/reservation-list/components/delete-reservation-modal";
 import {
-  BIBLIO_MATERIAL,
-  biblioOfferedReservationFactory,
-  biblioReservationFactory
-} from "../../../../cypress/factories/biblio/biblio.factory";
-import {
-  givenBiblioCancelsReservation,
-  givenMaterialIsInBiblio,
-  givenMaterialIsNotInBiblio,
-  givenUserHasBiblioReservations
-} from "../../../../cypress/intercepts/biblio/biblio";
-import { publizonProductFactory } from "../../../../cypress/factories/publizon/publizon.factory";
+  BIBLIO_OFFERED_TITLE,
+  BIBLIO_QUEUED_ISBN,
+  BIBLIO_QUEUED_RESERVATION_ID,
+  BIBLIO_QUEUED_TITLE,
+  PUBLIZON_ISBN,
+  PUBLIZON_TITLE,
+  stubReservationListBackends
+} from "../../../../cypress/intercepts/reservation-list-page";
 
 /**
  * A user journey through the digital reservations during the Publizon →
@@ -27,29 +23,9 @@ import { publizonProductFactory } from "../../../../cypress/factories/publizon/p
  * succeeds while the reservation stays put. The journey therefore asserts
  * both which service was asked and which was not.
  *
- * ## The Biblio responses come from the adapter contract
- *
- * Every Biblio body is built by `cypress/factories/biblio/biblio.factory.ts`,
- * whose types are generated from `schemas/openapi/biblio-adapter.yaml`. A
- * response that drifts from the contract fails to typecheck rather than
- * quietly producing a test that passes against something the adapter would
- * never send. Publizon is simulated through its own factories, so it is
- * always clear which provider a given response belongs to.
+ * The reservations themselves, and the contract the Biblio responses are
+ * built from, come from the shared reservation-list intercepts.
  */
-
-// Publizon
-const PUBLIZON_ISBN = "9788771076940";
-const PUBLIZON_TITLE = "Tættere end man tror";
-
-// Biblio, described through the shared factory fixture.
-const BIBLIO_QUEUED_ISBN = BIBLIO_MATERIAL.ebook.isbn;
-const BIBLIO_QUEUED_TITLE = BIBLIO_MATERIAL.ebook.title;
-const BIBLIO_OFFERED_ISBN = BIBLIO_MATERIAL.audiobook.isbn;
-const BIBLIO_OFFERED_TITLE = BIBLIO_MATERIAL.audiobook.title;
-
-// The reservation Biblio cancels by - deliberately not the ISBN, which is
-// what Publizon would have used.
-const BIBLIO_QUEUED_RESERVATION_ID = "e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11";
 
 // Ready for pickup comes first, then the physical group, then the queued
 // digital ones sorted by the date they can be borrowed.
@@ -63,113 +39,6 @@ const GROUP = {
   readyForPickup: 0,
   physical: 1,
   digital: 2
-};
-
-const stubBackends = () => {
-  cy.window().then((win) => {
-    const friday20221021 = new Date("2022-10-21T10:00:00.000").getTime();
-    // Only Date is faked. Freezing setTimeout would stall TanStack Query's
-    // notify scheduler, leaving every component stuck in its loading state.
-    cy.clock(friday20221021, ["Date"]);
-    win.sessionStorage.setItem(TOKEN_LIBRARY_KEY, "random-token");
-    // Reservations are patron-scoped: the adapter answers 403 without a
-    // patron, so the service layer refuses to ask. This is a signed-in page.
-    win.sessionStorage.setItem(TOKEN_USER_KEY, "random-user-token");
-  });
-
-  cy.intercept("GET", "**/external/agencyid/patrons/patronid/v4**", {
-    patron: { blockStatus: null }
-  });
-
-  // This journey is about the digital reservations, so the user holds no
-  // physical ones.
-  cy.intercept("GET", "**/external/agencyid/patrons/patronid/reservations/v*", {
-    statusCode: 200,
-    body: []
-  });
-
-  // Given: one older reservation still held in Publizon, still queued
-  cy.intercept("GET", "**/v1/user/**", {
-    statusCode: 200,
-    body: {
-      reservations: [
-        {
-          identifier: PUBLIZON_ISBN,
-          createdDateUtc: "2022-10-18T06:32:30Z",
-          expectedRedeemDateUtc: "2022-11-05T06:32:30Z",
-          expireDateUtc: "2022-11-20T06:32:30Z",
-          productTitle: PUBLIZON_TITLE,
-          status: 1
-        }
-      ]
-    }
-  }).as("publizonReservations");
-
-  // Given: two reservations created through the service layer - one still
-  // queued, one already offered to the user.
-  givenUserHasBiblioReservations([
-    biblioReservationFactory.build({
-      id: BIBLIO_QUEUED_RESERVATION_ID,
-      material_id: BIBLIO_QUEUED_ISBN,
-      loan_date: "2022-11-10T06:32:30.000Z"
-    }),
-    biblioOfferedReservationFactory.build({
-      material_id: BIBLIO_OFFERED_ISBN
-    })
-  ]);
-
-  // A reservation carries no title, unlike a loan, so every provider is asked
-  // to describe its own material.
-  givenMaterialIsNotInBiblio(PUBLIZON_ISBN);
-  givenMaterialIsInBiblio({
-    isbn: BIBLIO_QUEUED_ISBN,
-    title: BIBLIO_QUEUED_TITLE
-  });
-  givenMaterialIsInBiblio({
-    isbn: BIBLIO_OFFERED_ISBN,
-    title: BIBLIO_OFFERED_TITLE,
-    materialType: "audiobook"
-  });
-
-  cy.intercept("GET", `**/v1/products/${PUBLIZON_ISBN}*`, {
-    statusCode: 200,
-    body: publizonProductFactory.build({
-      product: {
-        title: PUBLIZON_TITLE,
-        productType: 1,
-        externalProductId: { idType: 15, id: PUBLIZON_ISBN },
-        publisher: "Jentas",
-        publicationDate: "2016-05-12T00:00:00Z",
-        contributors: [
-          { type: "A01", firstName: "Jussi", lastName: "Adler-Olsen" }
-        ]
-      }
-    })
-  }).as("publizonProduct");
-
-  givenBiblioCancelsReservation();
-
-  // Publizon's own cancel endpoint. Aliased purely so the journey can prove
-  // it was never called for a Biblio reservation.
-  cy.intercept("DELETE", "**/v1/user/reservations/**", {
-    statusCode: 200,
-    body: { code: 101, message: "OK" }
-  }).as("publizonCancelReservation");
-
-  cy.interceptGraphql({
-    operationName: "GetCoversByPids",
-    fixtureFilePath: "cover/cover.json"
-  });
-  cy.interceptGraphql({
-    operationName: "GetBestRepresentationPidByIsbn",
-    fixtureFilePath: "cover/cover-get-best-representation-by-isbn.json"
-  });
-  // The details modal links to the material's work page, which is looked up
-  // by ISBN because a digital material carries no pid.
-  cy.interceptGraphql({
-    operationName: "complexSearchWithPagination",
-    fixtureFilePath: "reservation-details/complex-search-with-pagination.json"
-  });
 };
 
 /**
@@ -195,7 +64,7 @@ describe("Reservation list journey - cancelling a Biblio reservation", () => {
   let reservationList: ReservationListPage;
 
   beforeEach(() => {
-    stubBackends();
+    stubReservationListBackends();
 
     reservationList = new ReservationListPage(
       reservationListStory.withBiblioAdapter
