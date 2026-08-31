@@ -117,7 +117,7 @@
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@tanstack/react-query-devtools": "^5.102.8",
-    "@testing-library/react": "^16.3.2",
+    "@testing-library/react": "^16.3.3",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@tsconfig/create-react-app": "^2.0.11",
     "@types/jwt-simple": "^0.5.36",
