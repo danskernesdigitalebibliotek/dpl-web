@@ -321,6 +321,32 @@ describe("Material page - a material only Biblio provides", () => {
     cy.get("@biblioCreateLoan.all").should("have.length", 0);
   });
 
+  it("Does not tell the user they are queued when the adapter declines", () => {
+    // The adapter answers 201 with a decision rather than an HTTP error, so
+    // the status is the only thing separating a queue place from a spent
+    // quota - the same trap as the declined loan above, on the other endpoint.
+    givenBiblioCanLoan(CanLoanResponseType.reservable);
+    cy.intercept("POST", "**/v1/reservations", {
+      statusCode: 201,
+      body: {
+        status: "monthly_limit_exceeded",
+        org_id: BIBLIO_ORG_ID
+      }
+    }).as("biblioCreateReservationDeclined");
+
+    const material = new MaterialPage(materialStory.withBiblioAdapter, "e-bog");
+
+    openLoanModal(material);
+    material.onlineLoanModal().elements.approveButton().click();
+    cy.wait("@biblioCreateReservationDeclined");
+
+    // Asserted on the error state itself: asserting the absence of a success
+    // phrase passes trivially when the phrase is misremembered.
+    cy.get(onlineLoanModalSelector)
+      .should("contain", "Something went wrong.")
+      .and("not.contain", "reserved for you");
+  });
+
   it("Lets the user cancel a reservation they are queued for", () => {
     // A queued reservation replaces the loan button with a cancel button, and
     // it has to be the adapter's reservation id that is cancelled.
