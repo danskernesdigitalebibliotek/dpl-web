@@ -35,13 +35,25 @@ const useReaderSdkConfig = (): ReaderSdkConfig | null => {
   const config = useConfig();
 
   try {
-    return {
+    const values = {
       applicationId: config(configKeys.applicationId),
       firebaseApiKey: config(configKeys.firebaseApiKey),
       firebaseProjectId: config(configKeys.firebaseProjectId),
       firebaseAppId: config(configKeys.firebaseAppId),
       readerApiKey: config(configKeys.readerApiKey)
     };
+
+    // Blank is unconfigured, the same as absent: the SDK cannot start on a
+    // value it was not given, whether the key is missing or empty. The CMS
+    // guarantees all-or-none (see DplBiblioSettings::getSdkConfig), so this
+    // catches the hosts that do not - Storybook passes every arg it knows,
+    // blank ones included. Thrown rather than returned, to keep both forms of
+    // "no credentials here" on the one path below.
+    if (Object.values(values).some((value) => value === "")) {
+      throw new Error("Blank WeDoBooks credentials.");
+    }
+
+    return values;
   } catch {
     // Mirrors the warning Reader gives for a missing identifier: without it a
     // site that has not been given its WeDoBooks credentials renders an empty
@@ -50,7 +62,8 @@ const useReaderSdkConfig = (): ReaderSdkConfig | null => {
     console.warn(
       "The WeDoBooks reader and player need all five wedobooks* configs. " +
         "The CMS serves them from the WEDOBOOKS_* environment variables, " +
-        "which must all be set."
+        "and Storybook from the STORYBOOK_WEDOBOOKS_* ones. All five must " +
+        "be set."
     );
     return null;
   }
