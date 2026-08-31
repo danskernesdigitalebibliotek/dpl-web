@@ -2,7 +2,6 @@ import { Factory } from "fishery";
 import {
   type AcceptReservationOfferApiResponse,
   type CanLoanApiResponse,
-  type CombinedLoanQuotaDto,
   type CreateLoanApiResponse,
   type DeleteReservationApiResponse,
   type GetLoanQuotasApiResponse,
@@ -174,18 +173,6 @@ export const biblioSplitLoanQuotaFactory = Factory.define<SplitLoanQuotaDto>(
     current_monthly_loans: { ebook: 3, audiobook: 5 }
   })
 );
-
-export const biblioCombinedLoanQuotaFactory =
-  Factory.define<CombinedLoanQuotaDto>(() => ({
-    org_id: BIBLIO_ORG_ID,
-    org_name: "Eksempel Biblioteket",
-    ancestors: [],
-    split_on_format: false,
-    combined_max_user_loans: 12,
-    combined_max_concurrent_user_loans: 5,
-    combined_current_concurrent_loans: 2,
-    combined_current_monthly_loans: 4
-  }));
 
 export const biblioLoanQuotasFactory = Factory.define<GetLoanQuotasApiResponse>(
   () => ({

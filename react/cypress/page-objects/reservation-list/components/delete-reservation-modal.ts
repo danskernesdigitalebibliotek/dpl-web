@@ -13,7 +13,6 @@ export class DeleteReservationModalComponent extends ComponentObject {
   constructor() {
     super(() => cy.get(deleteReservationModalSelector));
     this.addElements = {
-      title: () => this.container().find("h2"),
       confirmButton: () =>
         this.container().find("[data-cy='delete-reservation-button']"),
       // Shown once the cancellation has gone through.

@@ -1,9 +1,13 @@
-import { PageObject, Elements } from "@hammzj/cypress-page-object";
+import { PageObject } from "@hammzj/cypress-page-object";
 
 /**
  * The patron page stories. `withBiblioAdapter` is the same app with the CMS
  * feature flag turned on, where the support identifier and the loan quotas
  * come from the adapter instead of Publizon.
+ *
+ * The page exposes no elements of its own: what the specs assert - the support
+ * identifier and the quota numbers - is plain text a user reads, so they match
+ * on the text rather than on a class the markup happens to use today.
  */
 export const patronPageStory = {
   default: "patron-page-entry",
@@ -11,18 +15,9 @@ export const patronPageStory = {
 } as const;
 
 export class PatronPagePage extends PageObject {
-  public elements!: Elements;
-
   constructor(story: string = patronPageStory.default) {
     super({
       path: `/iframe.html?path=/story/apps-patron-page--${story}`
     });
-
-    this.elements = {
-      // The whole "Status" block, which only renders once quotas are known.
-      statusSection: () => cy.get(".dpl-status-loans"),
-      quotaLabels: () => cy.get(".dpl-progress-bar__header .text-label"),
-      patronDetails: () => cy.get(".dpl-patron-info__text")
-    };
   }
 }

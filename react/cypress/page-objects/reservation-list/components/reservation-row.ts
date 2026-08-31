@@ -9,9 +9,7 @@ export class ReservationRowComponent extends ComponentObject {
   constructor(index = 0) {
     super(() => cy.get(".list-reservation").eq(index));
     this.addElements = {
-      title: () => this.container().find(".list-reservation__title__text"),
-      materialType: () => this.container().find(".status-label"),
-      author: () => this.container().find(".list-reservation__about p").first()
+      title: () => this.container().find(".list-reservation__title__text")
     };
   }
 }
