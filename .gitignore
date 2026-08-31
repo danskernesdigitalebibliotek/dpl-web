@@ -1,6 +1,39 @@
+# Repository-wide ignores.
+#
+# Anything that applies to every project — dependencies, local environment
+# files, OS cruft, editor state — belongs here rather than being repeated in
+# each subproject. Subproject .gitignore files cover only what is specific to
+# that project: build output, test artefacts and toolchain caches.
+#
+# Patterns without a leading slash match at any depth, so a single entry here
+# covers cms/, design-system/, go/, react/, packages/* and so on.
+
+# Dependencies
 node_modules
+.pnpm-store
+
+# Local environment. The central .env is generated (see dev:dotenv:* tasks)
+# and symlinked into the subprojects; .env.1pass and .env.example are tracked.
+.env
+.env*.local
+.envrc
+
 # Task checksum cache
 .task/
-.env
-.envrc
-.pnpm-store
+
+# Marker file written by `task dockerinit`
+.run-in-docker
+
+# Written into the CMS working dir by the release workflow
+.version
+
+# OS cruft
+.DS_Store
+
+# Editors
+.vscode
+.idea/
+.history
+
+# Package manager debug output
+npm-debug.log*
