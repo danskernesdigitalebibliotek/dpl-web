@@ -78,20 +78,12 @@ describe("Material page - online availability through the Biblio adapter", () =>
     cy.get("@biblioCanLoan.all").should("have.length", 0);
   });
 
-  it("Leaves Biblio alone when the flag is off", () => {
-    // Biblio would say otherwise if it were asked
-    givenBiblioCanLoan(CanLoanResponseType.reservable);
-
-    // When: the same page at a library that has not enabled Biblio
-    const material = new MaterialPage(materialStory.default);
-    material.visit([]);
-
-    // Then: Publizon decides, and says the e-book is available
-    cy.wait("@publizonLoanStatus");
-    ebookLabel(material).should("contain", "Available");
-
-    cy.get("@biblioCanLoan.all").should("have.length", 0);
-  });
+  // No flag-off test here. Whether the label asks Biblio at all is decided in
+  // the availability hook, and the unit tests pin it from both sides - "Asks
+  // Biblio about the material" and "Leaves Biblio alone at a library that has
+  // not switched" - where the flag flips without a story per state. What the
+  // flag gates beyond the label, the write path, is covered by
+  // material-biblio.test.ts.
 });
 
 /**

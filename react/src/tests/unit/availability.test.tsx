@@ -469,6 +469,19 @@ describe("useOnlineAvailabilityData tests", () => {
     );
   });
 
+  it("Leaves Biblio alone at a library that has not switched", () => {
+    // The flag defaults to off in this block. Biblio is not merely ignored -
+    // the query is disabled, so nothing is asked of an adapter the library
+    // has not opted in to, and Publizon keeps answering.
+    render();
+
+    expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, { enabled: false });
+    expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ query: { enabled: true } })
+    );
+  });
+
   describe("once the library has switched to Biblio", () => {
     beforeEach(() => {
       mockedFlag.mockReturnValue(true);
