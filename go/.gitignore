@@ -46,3 +46,6 @@ cypress/screenshots
 .env.local
 
 certificates
+
+# Storybook build output
+storybook-static/

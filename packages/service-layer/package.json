@@ -19,10 +19,15 @@
   "dependencies": {
     "zod": "^4.3.6"
   },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.101.0",
+    "react": "^18 || ^19"
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^24",
+    "@types/react": "^19",
     "eslint": "^10.4.0",
     "globals": "^17.6.0",
     "orval": "^7.21.0",
