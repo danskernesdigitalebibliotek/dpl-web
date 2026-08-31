@@ -11,4 +11,3 @@ index.html
 .env
 .cache
 .docker/wiremock/**/*.log
-dist.zip
