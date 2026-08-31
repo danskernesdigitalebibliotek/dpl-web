@@ -81,7 +81,7 @@
     "react-parallax-tilt": "^1.7.339",
     "replace-in-file": "^9.0.0",
     "sharp": "^0.35.4",
-    "soap": "^1.10.0",
+    "soap": "^1.11.0",
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7",
