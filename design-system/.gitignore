@@ -1,9 +1,5 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Only design-system specifics. Dependencies, .env files, OS cruft and editor
+# state are ignored repo-wide by the root .gitignore.
 
 # testing
 /coverage
@@ -11,22 +7,8 @@
 # production
 /build
 
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-
 # storybook
 storybook-static
 
 # SCSS to CSS
 /src/styles/css
-
-# Dev Tools
-.vscode
-.history
-
