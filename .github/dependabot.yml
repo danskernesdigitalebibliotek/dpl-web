@@ -1,9 +1,11 @@
 # Unified Dependabot configuration for DPL Web monorepo
-# This configuration manages dependency updates for all four projects:
-# - cms (Drupal CMS with Composer and npm)
-# - design-system (React/Storybook with npm)
-# - go (Next.js with npm)
-# - react (React components with npm)
+# This configuration manages dependency updates for every package in the
+# repository:
+# - cms (Drupal CMS with Composer and pnpm)
+# - design-system (React/Storybook with pnpm)
+# - go (Next.js with pnpm)
+# - react (React components with pnpm)
+# - packages/* (shared TypeScript packages with pnpm)
 version: 2
 updates:
   # GitHub Actions - applies to all workflows in .github/workflows
@@ -371,3 +373,50 @@ updates:
         versions: [">=6.0.0"]
       - dependency-name: "@graphql-codegen/typescript-operations"
         versions: [">=6.0.0"]
+
+  # Shared workspace packages - npm dependencies.
+  # `directories` (plural) is the only form that supports globbing, so this
+  # one entry covers every current and future package under packages/ without
+  # needing a new entry per package. Directories without a manifest are
+  # skipped.
+  - package-ecosystem: npm
+    directories:
+      - "/packages/*"
+    cooldown:
+      default-days: 3
+    open-pull-requests-limit: 20
+    versioning-strategy: increase
+    schedule:
+      interval: weekly
+      day: sunday
+      time: "20:00"
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "packages"
+    groups:
+      typescript-eslint:
+        patterns:
+          - "typescript-eslint"
+          - "@typescript-eslint/*"
+          - "@eslint/js"
+          - "eslint"
+      prettier:
+        patterns:
+          - "prettier"
+          - "@trivago/prettier-plugin-sort-imports"
+    ignore:
+      # @types/node are linked to the Node version used within the project.
+      # Bump the package manually when upgrading to a new Node version.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # The consuming projects' lint stacks are not ESLint 10 compatible yet,
+      # so keep this package on the same major as react/ and go/.
+      - dependency-name: "eslint"
+        versions: [">=10.0.0"]
+      # orval v8 requires breaking config/fetcher changes — upgrade tracked
+      # separately, and must happen in step with react/ and go/.
+      - dependency-name: "orval"
+        update-types: ["version-update:semver-major"]
