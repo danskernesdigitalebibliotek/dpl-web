@@ -418,10 +418,18 @@ describe("Material page - flag on, the adapter refuses the loan", () => {
     // The material is not the problem, the user's quota is - so it stays
     // available while the loan is withheld.
     cy.getBySel("availability-label").first().should("contain", "Available");
-    cy.contains("button", "Loading").should("be.disabled");
-    cy.getBySel("material-header-buttons-online-internal-reader").should(
-      "not.exist"
-    );
+
+    // Wait for the refusal itself. Until it lands the page still shows the
+    // disabled "Loading" button, and asserting on the buttons before then
+    // would pass on the spinner rather than on the answer.
+    cy.wait("@biblioCanLoan");
+
+    // The button stays, but cannot be used: a refusal has to read as "not
+    // offered" rather than as "still loading", which is what an unanswered
+    // page looks like.
+    cy.getBySel("material-header-buttons-online-internal-reader")
+      .first()
+      .should("be.disabled");
 
     cy.get("@publizonCreateLoan.all").should("have.length", 0);
     cy.get("@biblioCreateLoan.all").should("have.length", 0);
