@@ -22,7 +22,6 @@ export class PatronPagePage extends PageObject {
       // The whole "Status" block, which only renders once quotas are known.
       statusSection: () => cy.get(".dpl-status-loans"),
       quotaLabels: () => cy.get(".dpl-progress-bar__header .text-label"),
-      quotaBars: () => cy.get(".dpl-progress-bar__progress-bar div"),
       patronDetails: () => cy.get(".dpl-patron-info__text")
     };
   }

@@ -299,6 +299,34 @@ describe("StatusSection component tests", () => {
       expect(container.textContent).toContain("2 ud af 4");
     });
 
+    it("Shows a spent quota as full rather than hiding it", () => {
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
+        data: [
+          {
+            splitOnFormat: true,
+            orgId: "org-1",
+            orgName: "Eksempel Biblioteket",
+            maxLoans: { ebook: 10, audiobook: 10 },
+            // The audiobook quota is spent: one allowed, one held.
+            maxConcurrentLoans: { ebook: 4, audiobook: 1 },
+            currentConcurrentLoans: { ebook: 1, audiobook: 1 },
+            currentMonthlyLoans: { ebook: 1, audiobook: 1 }
+          }
+        ]
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+
+      const { container } = render(<StatusSection />);
+
+      // A user who cannot borrow another audiobook has to be able to see why,
+      // so the bar reads full rather than being left out.
+      expect(container.textContent).toContain("1 ud af 1");
+
+      const progressBars = container.querySelectorAll(
+        ".dpl-progress-bar__progress-bar div"
+      );
+      expect(progressBars[1].getAttribute("style")).toBe("width: 100%;");
+    });
+
     it("Renders nothing until the quotas have loaded", () => {
       vi.mocked(useDigitalLoanQuotas).mockReturnValue({
         data: undefined
