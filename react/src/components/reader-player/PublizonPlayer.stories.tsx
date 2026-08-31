@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Player from "./PublizonPlayer";
 
 const meta: Meta<typeof Player> = {
-  title: "ReaderPlayer / Player",
+  title: "ReaderPlayer / Player / Publizon",
   component: Player,
   argTypes: {
     identifier: {
