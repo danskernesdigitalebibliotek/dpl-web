@@ -91,14 +91,20 @@ and that leaves no room to grow. Plain `field_service_*` reads as
 "service" in general; the contraction stays short while naming the
 bundle it belongs to.
 
+Listed in form order:
+
 | Field | Type | Notes |
 |---|---|---|
-| `field_svcmsg_placement` | `list_string` | `global` / `in_page`. Required. Determines rendering and severity. |
 | `field_svcmsg_heading` | `string` | "Titel". Optional. |
 | `field_svcmsg_body` | `text_long` | "Brødtekst". Optional, restricted format. |
 | `field_svcmsg_link` | `link` | Optional. Makes the whole message clickable. |
+| `field_svcmsg_placement` | `list_string` | `global` / `in_page`. Required. Determines rendering and severity. |
 | `field_svcmsg_frontpage` | `boolean` | "Forsiden". Only for `in_page`. |
 | `field_svcmsg_branches` | `entity_reference` | Unlimited, target bundle `branch`. Only for `in_page`. |
+
+Placement sits with the two fields it governs rather than at the top of
+the form as in the wireframes: the editor writes the message first, then
+says where it goes.
 
 A constraint requires at least one of heading/body, and for `in_page` at
 least one of frontpage/branches.
