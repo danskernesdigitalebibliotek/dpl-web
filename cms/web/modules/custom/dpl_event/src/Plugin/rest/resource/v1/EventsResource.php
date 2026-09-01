@@ -90,6 +90,11 @@ final class EventsResource extends EventResourceBase {
 
     $ids = $query->execute();
 
+    // Create cache metadata.
+    $cache_metadata = new CacheableMetadata();
+    $cache_metadata->setCacheContexts(['url.query_args:from_date']);
+    $cache_metadata->setCacheTags(['eventinstance_list', 'eventseries_list']);
+
     $event_responses = [];
 
     foreach ($ids as $id) {
@@ -97,16 +102,17 @@ final class EventsResource extends EventResourceBase {
 
       if ($event_instance instanceof EventInstance) {
         $event_responses[] = $this->mapper->getResponse($event_instance);
+
+        // The response describes the branches of the event, so it has to be
+        // invalidated when one of them changes.
+        foreach ($event_instance->getBranches() ?? [] as $branch) {
+          $cache_metadata->addCacheableDependency($branch);
+        }
       }
     }
 
     $event_responses = $this->serializer->serialize($event_responses, $this->serializerFormat($request));
     $response = new CacheableResponse($event_responses);
-
-    // Create cache metadata.
-    $cache_metadata = new CacheableMetadata();
-    $cache_metadata->setCacheContexts(['url.query_args:from_date']);
-    $cache_metadata->setCacheTags(['eventinstance_list', 'eventseries_list']);
 
     // Add cache metadata to the response.
     $response->addCacheableDependency($cache_metadata);

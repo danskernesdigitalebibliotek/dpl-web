@@ -6,12 +6,12 @@ namespace Drupal\dpl_event\Workflows;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\job_scheduler\Entity\JobSchedule;
 use Drupal\job_scheduler\JobSchedulerInterface;
-use Drupal\recurring_events\EventInstanceStorageInterface;
 
 /**
  * Schedule for automatically marking events.
@@ -27,7 +27,7 @@ final class UnpublishSchedule {
     private LoggerChannelInterface $logger,
     private TimeInterface $time,
     private JobSchedulerInterface $jobScheduler,
-    private EventInstanceStorageInterface $eventInstanceStorage,
+    private EntityTypeManagerInterface $entityTypeManager,
     private ConfigFactoryInterface $configFactory,
   ) {}
 
@@ -60,7 +60,7 @@ final class UnpublishSchedule {
       return;
     }
 
-    $event = $this->eventInstanceStorage->load($job->getId());
+    $event = $this->entityTypeManager->getStorage('eventinstance')->load($job->getId());
     if (!$event || !$event instanceof EventInstance) {
       throw new \UnexpectedValueException("Unable to load event instance {$job->getId()} for automatic unpublication");
     }
@@ -116,12 +116,13 @@ final class UnpublishSchedule {
   public function rescheduleAll(): int {
     $this->jobScheduler->removeAll(self::JOB_SCHEDULE_NAME, self::JOB_SCHEDULE_TYPE);
 
-    $publishedEventInstanceIds = ($this->eventInstanceStorage->getQuery())
+    $eventInstanceStorage = $this->entityTypeManager->getStorage('eventinstance');
+    $publishedEventInstanceIds = ($eventInstanceStorage->getQuery())
       ->accessCheck(FALSE)
       ->condition('status', 1)
       ->execute();
     /** @var \Drupal\dpl_event\Entity\EventInstance[] $publishedEventInstances */
-    $publishedEventInstances = $this->eventInstanceStorage->loadMultiple($publishedEventInstanceIds);
+    $publishedEventInstances = $eventInstanceStorage->loadMultiple($publishedEventInstanceIds);
 
     array_walk($publishedEventInstances, function (EventInstance $event) {
       $this->scheduleUnpublication($event);

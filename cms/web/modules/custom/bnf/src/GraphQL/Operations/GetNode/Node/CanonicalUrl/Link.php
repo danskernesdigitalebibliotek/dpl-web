@@ -18,7 +18,7 @@ class Link extends \Spawnia\Sailor\ObjectLike
 
         $instance->__typename = 'Link';
         if ($url !== self::UNDEFINED) {
-            $instance->url = $url;
+            $instance->__set('url', $url);
         }
 
         return $instance;

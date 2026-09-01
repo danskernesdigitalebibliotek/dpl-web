@@ -38,6 +38,7 @@ const MaterialDescription: React.FC<MaterialDescriptionProps> = ({ work }) => {
   const searchUrl = u("searchUrl");
   const advancedSearchUrl = u("advancedSearchUrl");
   const materialUrl = u("materialUrl");
+  const seriesUrl = u("seriesUrl");
   const {
     fictionNonfiction,
     series,
@@ -146,6 +147,7 @@ const MaterialDescription: React.FC<MaterialDescriptionProps> = ({ work }) => {
           <SeriesList
             series={series}
             searchUrl={searchUrl}
+            seriesUrl={seriesUrl}
             t={t}
             workId={work.workId}
             dataCy="material-description-series"

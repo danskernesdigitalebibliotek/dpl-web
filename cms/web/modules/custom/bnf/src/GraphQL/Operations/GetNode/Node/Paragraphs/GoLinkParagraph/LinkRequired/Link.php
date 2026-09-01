@@ -26,17 +26,17 @@ class Link extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($internal !== self::UNDEFINED) {
-            $instance->internal = $internal;
+            $instance->__set('internal', $internal);
         }
         $instance->__typename = 'Link';
         if ($title !== self::UNDEFINED) {
-            $instance->title = $title;
+            $instance->__set('title', $title);
         }
         if ($url !== self::UNDEFINED) {
-            $instance->url = $url;
+            $instance->__set('url', $url);
         }
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
 
         return $instance;

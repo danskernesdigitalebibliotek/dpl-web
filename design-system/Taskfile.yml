@@ -2,6 +2,12 @@ version: '3'
 
 dotenv: [".task.env"]
 
+env:
+  # The node container bind-mounts this directory, so it must run as the host
+  # user or the build output lands here owned by someone else.
+  UID:
+    sh: id -u
+
 vars:
   COMMIT_COUNT:
     sh: git rev-list --count origin/main

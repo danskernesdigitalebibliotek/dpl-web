@@ -26,17 +26,17 @@ class ParagraphGoLink extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($linkRequired !== self::UNDEFINED) {
-            $instance->linkRequired = $linkRequired;
+            $instance->__set('linkRequired', $linkRequired);
         }
         $instance->__typename = 'ParagraphGoLink';
         if ($targetBlank !== self::UNDEFINED) {
-            $instance->targetBlank = $targetBlank;
+            $instance->__set('targetBlank', $targetBlank);
         }
         if ($ariaLabel !== self::UNDEFINED) {
-            $instance->ariaLabel = $ariaLabel;
+            $instance->__set('ariaLabel', $ariaLabel);
         }
 
         return $instance;

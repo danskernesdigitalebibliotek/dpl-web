@@ -31,6 +31,10 @@ const meta: Meta<typeof FavoritesListEntry> = {
       description: "Path to the search result page",
       control: { type: "text" }
     },
+    seriesUrl: {
+      description: "Path to the series landing page",
+      control: { type: "text" }
+    },
     pageSizeMobile: {
       description: "Number of favorite items on mobile",
       control: { type: "number" }
@@ -86,6 +90,7 @@ export const Primary: Story = {
     blacklistedAvailabilityBranchesConfig:
       "FBS-751032,FBS-751031,FBS-751009,FBS-751027,FBS-751024",
     searchUrl: "/search",
+    seriesUrl: "/serie/:seriesid",
     pageSizeMobile: 20,
     showMoreText: "show more",
     resultPagerStatusText: "Showing @itemsShown out of @hitcount results",

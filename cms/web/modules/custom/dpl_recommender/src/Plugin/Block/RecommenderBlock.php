@@ -35,7 +35,7 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private DplReactConfigInterface $recommenderSettings,
+    protected DplReactConfigInterface $recommenderSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;

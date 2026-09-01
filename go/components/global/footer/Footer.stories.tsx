@@ -5,7 +5,7 @@ import { darkModeDecorator } from "@/.storybook/decorators"
 import Footer from "./Footer"
 
 const meta = {
-  title: "components/Footer",
+  title: "globals/Footer",
   component: Footer,
   parameters: { layout: "centered" },
   args: {},

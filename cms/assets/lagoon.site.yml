@@ -1,5 +1,5 @@
 '*':
-  host: 20.238.147.183
+  host: 130.226.25.97
   paths:
     files: /app/cms/web/sites/default/files
   user: ${env-name}

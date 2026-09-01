@@ -104,7 +104,7 @@ class VideoTool extends MediaSourceBase {
    *
    * @var array<string, array<string, string>>
    */
-  private array $metaDataCache = [];
+  protected array $metaDataCache = [];
 
   public function __construct(
     array $configuration,
@@ -284,6 +284,9 @@ class VideoTool extends MediaSourceBase {
     // Compute the local thumbnail URI, regardless of whether it exists.
     $directory = $this->configuration['thumbnails_directory'];
     preg_match('/\?vn=(.*)/', $media_url, $matches);
+    if (!isset($matches[1])) {
+      return NULL;
+    }
     $local_thumbnail_uri = "$directory/" . $matches[1] . '.jpg';
 
     // If the local thumbnail already exists, return its URI.

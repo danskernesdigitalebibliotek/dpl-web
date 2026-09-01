@@ -233,6 +233,9 @@ tasks:
       - 'base.scss'
       - 'wysiwyg.scss'
       - 'admin-base.scss'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'tsconfig.json'
     generates:
       - 'build/**/*.*'
     cmds:
@@ -269,6 +272,12 @@ tasks:
       - 'src/**/*.scss'
       - 'webpack.config.js'
       - 'webpack.helpers.js'
+      - 'postcss.config.js'
+      - 'tsconfig.json'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      # React imports from @danskernesdigitalebibliotek/dpl-design-system/build/*.
+      - '../design-system/build/**/*.*'
     generates:
       - 'dist/**/*.*'
     cmds:
@@ -290,6 +299,10 @@ tasks:
     desc: "Copy design-system build into CMS theme assets"
     deps:
       - dev:design-system:build
+    sources:
+      - '{{ .DESIGN_SYSTEM_BUILD }}/**/*.*'
+    generates:
+      - '{{ .CMS_DESIGN_SYSTEM_ASSETS }}/**/*.*'
     cmds:
       - rm -rf {{ .CMS_DESIGN_SYSTEM_ASSETS }}
       - mkdir -p {{ .CMS_DESIGN_SYSTEM_ASSETS }}
@@ -302,6 +315,10 @@ tasks:
     desc: "Copy React dist into CMS libraries"
     deps:
       - dev:react:build
+    sources:
+      - './react/dist/**/*.*'
+    generates:
+      - '{{ .CMS_REACT_LIBRARY }}/**/*.*'
     cmds:
       - rm -rf {{ .CMS_REACT_LIBRARY }}
       - mkdir -p {{ .CMS_REACT_LIBRARY }}

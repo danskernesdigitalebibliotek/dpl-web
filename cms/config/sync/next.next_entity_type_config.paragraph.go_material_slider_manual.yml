@@ -1,11 +1,14 @@
 uuid: c877b16a-dc18-47a9-8dad-1ec775888e6a
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.go_material_slider_manual
 id: paragraph.go_material_slider_manual
 site_resolver: site_selector
 configuration:
   sites:
     go: go
+draft_enabled: true
 revalidator: cache_tag
 revalidator_configuration: {  }

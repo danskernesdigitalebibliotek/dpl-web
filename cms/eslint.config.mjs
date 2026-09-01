@@ -29,7 +29,10 @@ export default [
       '**/web/libraries/**',
       '**/web/modules/contrib/**',
       '**/web/sites/**/files/**',
+      // Scaffolded verbatim from drupal/core. Reformatting them to satisfy
+      // Prettier only lasts until the next `composer drupal:scaffold`.
       '**/web/sites/default/default.services.yml',
+      '**/web/sites/development.services.yml',
       '**/web/themes/custom/novel/assets/**',
       '**/web/themes/contrib/**',
       '**/web/modules/local/**',

@@ -18,7 +18,7 @@ class GetNodeTitle extends \Spawnia\Sailor\ObjectLike
 
         $instance->__typename = 'Query';
         if ($node !== self::UNDEFINED) {
-            $instance->node = $node;
+            $instance->__set('node', $node);
         }
 
         return $instance;

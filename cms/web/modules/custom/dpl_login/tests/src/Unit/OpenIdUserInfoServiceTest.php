@@ -178,7 +178,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   /**
    * Data provider for testHashCreationThatCprHasPrecedenceOverUniqueid.
    */
-  public function cprHasPrecedenceOverUniqueIdData(): array {
+  public static function cprHasPrecedenceOverUniqueIdData(): array {
     return [
       'cpr is getting hashed when both cpr and uniqueId are present' => [
         [
@@ -205,7 +205,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   /**
    * Data provider for testThatHashedIdentifiersAreUnique.
    */
-  public function weGetUniqueHashesNotMatterWhatData(): array {
+  public static function weGetUniqueHashesNotMatterWhatData(): array {
     return [
       'a pair of cpr that starts with the same character' => [
         '1234567890',

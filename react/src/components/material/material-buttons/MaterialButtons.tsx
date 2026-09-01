@@ -23,6 +23,11 @@ export interface MaterialButtonsProps {
   dataCy?: string;
   materialTitleId: string;
   isEditionPicker?: boolean;
+
+  /**
+   * If no buttons are available, this fallback will be rendered instead.
+   */
+  fallback?: React.ReactNode;
 }
 
 const MaterialButtons: FC<MaterialButtonsProps> = ({
@@ -32,7 +37,8 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
   workId,
   dataCy = "material-buttons",
   materialTitleId,
-  isEditionPicker = false
+  isEditionPicker = false,
+  fallback
 }) => {
   const faustIds = getAllFaustIds(manifestations);
   // We don't want to show physical buttons/find on shelf for articles because
@@ -62,6 +68,12 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
     hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) ||
     (hasCorrectAccess("DigitalArticleService", manifestations) &&
       isArticle(manifestations));
+
+  const showFallback = !showPhysicalButtons && !showOnlineButtons && fallback;
+
+  if (showFallback) {
+    return fallback;
+  }
 
   return (
     <>

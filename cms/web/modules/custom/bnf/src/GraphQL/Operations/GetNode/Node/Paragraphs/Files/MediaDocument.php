@@ -20,13 +20,13 @@ class MediaDocument extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($name !== self::UNDEFINED) {
-            $instance->name = $name;
+            $instance->__set('name', $name);
         }
         if ($mediaFile !== self::UNDEFINED) {
-            $instance->mediaFile = $mediaFile;
+            $instance->__set('mediaFile', $mediaFile);
         }
         $instance->__typename = 'MediaDocument';
 

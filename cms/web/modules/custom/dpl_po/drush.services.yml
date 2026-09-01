@@ -10,6 +10,7 @@ services:
       - '@http_client'
       - '@entity_field.manager'
       - '@cache.config'
+      - '@Drupal\locale\LocaleImportBatch'
     tags:
       - { name: drush.command }
   dpl_po.scan_source_commands:

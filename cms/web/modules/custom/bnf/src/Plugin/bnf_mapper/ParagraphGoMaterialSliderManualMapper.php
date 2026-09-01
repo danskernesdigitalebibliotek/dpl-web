@@ -35,7 +35,7 @@ class ParagraphGoMaterialSliderManualMapper extends BnfMapperParagraphPluginBase
       ];
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'go_material_slider_manual',
       'field_title' => $object->title,
       'field_material_slider_work_ids' => $workIdsValues,

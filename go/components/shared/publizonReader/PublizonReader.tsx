@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 
 import { appendAsset, removeAsset } from "@/lib/helpers/helper.scripts"
 
@@ -22,13 +22,18 @@ type ReaderType =
     }
 
 const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
+  // Latest callback via ref so the asset effect runs once — a changing
+  // onBackCallback would re-append the scripts and break the load.
+  const onBackRef = useRef(onBackCallback)
+  onBackRef.current = onBackCallback
+
   useEffect(() => {
     readerAssets.forEach(appendAsset)
 
     // Attach the onReaderBackCallback function to the window object to be able to enable callback methods calls through the close button
     // @ts-ignore
     window.onReaderBackCallback = () => {
-      onBackCallback()
+      onBackRef.current()
     }
 
     return () => {
@@ -36,12 +41,12 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
       delete window.onReaderBackCallback
       readerAssets.forEach(removeAsset)
     }
-  }, [onBackCallback])
+  }, [])
 
   if (type === "loan") {
     return (
       <div
-        style={{ height: "100vh" }}
+        style={{ height: "100%" }}
         id="pubhub-reader"
         order-id={orderId}
         role="button"
@@ -57,9 +62,9 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
   if (type === "preview") {
     return (
       <div
-        style={{ height: "100vh" }}
+        style={{ height: "100%" }}
         id="pubhub-reader"
-        // identifier is a reserved attribute and causes a warning in the ts therefore we ignore it
+        // identifier is a reserved attribute — TS warns, so ignore
         // @ts-ignore
         identifier={identifier}
         // This is a workaround to make the close button work in the reader

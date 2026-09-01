@@ -74,13 +74,14 @@ Cypress.Commands.add(
     statusCode = 200,
     middleware = false
   }: InterceptGraphqlParams) => {
-    // Use **/graphql (not **/next*/graphql) to match both next/graphql and
+    // Use **/graphql* (not **/next*/graphql) to match both next/graphql and
     // next-present/graphql. Cypress 15's LIFO handler chain is unreliable with
-    // concurrent requests when using the narrower path pattern.
+    // concurrent requests when using the narrower path pattern. The trailing *
+    // matches the operation name we append as a query parameter.
     cy.intercept(
       {
         method: "POST",
-        url: "**/graphql",
+        url: "**/graphql*",
         ...(middleware ? { middleware } : {})
       },
       (req) => {

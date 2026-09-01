@@ -32,23 +32,23 @@ class ParagraphGoLinkbox extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($title !== self::UNDEFINED) {
-            $instance->title = $title;
+            $instance->__set('title', $title);
         }
         if ($goDescription !== self::UNDEFINED) {
-            $instance->goDescription = $goDescription;
+            $instance->__set('goDescription', $goDescription);
         }
         if ($goLinkParagraph !== self::UNDEFINED) {
-            $instance->goLinkParagraph = $goLinkParagraph;
+            $instance->__set('goLinkParagraph', $goLinkParagraph);
         }
         $instance->__typename = 'ParagraphGoLinkbox';
         if ($goColor !== self::UNDEFINED) {
-            $instance->goColor = $goColor;
+            $instance->__set('goColor', $goColor);
         }
         if ($goImage !== self::UNDEFINED) {
-            $instance->goImage = $goImage;
+            $instance->__set('goImage', $goImage);
         }
 
         return $instance;
