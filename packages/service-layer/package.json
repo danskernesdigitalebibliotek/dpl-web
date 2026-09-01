@@ -17,7 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "zod": "^4.3.6"
+    "zod": "^4.5.2"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.101.0",
