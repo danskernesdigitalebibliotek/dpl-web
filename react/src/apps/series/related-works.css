@@ -1,0 +1,37 @@
+/*
+ * Prototype styling only - see the note in related-works-slider.css for why
+ * this is JS-imported .css rather than .scss.
+ */
+
+.related-works {
+  margin-top: 48px;
+}
+
+.related-works__heading {
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+.related-works__card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.related-works__cover {
+  margin-bottom: 8px;
+}
+
+.related-works__title {
+  font-weight: 600;
+
+  /* Long titles are clamped like bibliotek.dk's cards. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.related-works__author {
+  font-size: 14px;
+}

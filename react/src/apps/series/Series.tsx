@@ -25,6 +25,7 @@ import {
   MemberWithCoverOrigin,
   sortSeriesMembers
 } from "./helper";
+import RelatedWorks from "./RelatedWorks";
 import SeriesCard from "./SeriesCard";
 import SeriesSkeleton, { headerCoverCount } from "./SeriesSkeleton";
 
@@ -222,6 +223,17 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
       </ul>
 
       <PagerComponent isLoading={isLoading} />
+
+      <RelatedWorks
+        author={author}
+        currentSeries={{
+          seriesId,
+          title: series.title,
+          // The series query does not select mainLanguages yet; a later
+          // commit adds it alongside the real data pipeline.
+          mainLanguage: null
+        }}
+      />
     </div>
   );
 };
