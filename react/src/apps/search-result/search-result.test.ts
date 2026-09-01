@@ -422,4 +422,31 @@ describe("Search Result", () => {
       });
     });
   });
+
+  describe("Campaign", () => {
+    const visitWithCampaign = (openInNewTab: boolean) => {
+      cy.intercept("POST", "**/dpl_campaign/match", {
+        statusCode: 200,
+        body: {
+          data: {
+            id: "1",
+            title: "Campaign title",
+            url: "https://example.com/campaign",
+            open_in_new_tab: openInNewTab
+          }
+        }
+      });
+      page.visit([]);
+    };
+
+    it("opens the campaign link in a new tab when the editor has chosen so", () => {
+      visitWithCampaign(true);
+      cy.getBySel("campaign-body").should("have.attr", "target", "_blank");
+    });
+
+    it("opens the campaign link in the same tab otherwise", () => {
+      visitWithCampaign(false);
+      cy.getBySel("campaign-body").should("not.have.attr", "target");
+    });
+  });
 });
