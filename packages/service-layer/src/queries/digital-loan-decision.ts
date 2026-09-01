@@ -2,9 +2,10 @@ import { queryOptions } from "@tanstack/react-query"
 
 import { getDigitalLoanDecision } from "../digital-loan-decision"
 import type { ServiceLayerConfig } from "../types"
+import { serviceLayerNamespace } from "./namespace"
 
 export const digitalLoanDecisionQueryKey = (materialId: string | null) =>
-  ["serviceLayer", "digitalLoanDecision", materialId] as const
+  [serviceLayerNamespace, "digitalLoanDecision", materialId] as const
 
 export const digitalLoanDecisionQuery = (config: ServiceLayerConfig, materialId: string | null) =>
   queryOptions({

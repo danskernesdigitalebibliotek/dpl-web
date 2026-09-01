@@ -2,8 +2,9 @@ import { queryOptions } from "@tanstack/react-query"
 
 import { getReaderSignInToken } from "../reader"
 import type { ServiceLayerConfig } from "../types"
+import { serviceLayerNamespace } from "./namespace"
 
-export const readerSignInTokenQueryKey = () => ["serviceLayer", "readerSignInToken"] as const
+export const readerSignInTokenQueryKey = () => [serviceLayerNamespace, "readerSignInToken"] as const
 
 export const readerSignInTokenQuery = (config: ServiceLayerConfig) =>
   queryOptions({

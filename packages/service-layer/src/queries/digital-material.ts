@@ -2,9 +2,10 @@ import { queryOptions } from "@tanstack/react-query"
 
 import { getDigitalMaterial } from "../digital-material"
 import type { ServiceLayerConfig } from "../types"
+import { serviceLayerNamespace } from "./namespace"
 
 export const digitalMaterialQueryKey = (isbn: string | null) =>
-  ["serviceLayer", "digitalMaterial", isbn] as const
+  [serviceLayerNamespace, "digitalMaterial", isbn] as const
 
 export const digitalMaterialQuery = (config: ServiceLayerConfig, isbn: string | null) =>
   queryOptions({
