@@ -19,6 +19,7 @@ dependencies:
     - node.type.go_category
     - node.type.go_page
     - node.type.page
+    - node.type.service_message
     - rest.resource.dpl_opening_hours_create
     - rest.resource.dpl_opening_hours_delete
     - rest.resource.dpl_opening_hours_update
@@ -42,6 +43,7 @@ dependencies:
     - dpl_library_agency
     - dpl_mapp
     - dpl_opening_hours
+    - dpl_service_message
     - dpl_url_proxy
     - dpl_webform
     - entity_clone
@@ -93,6 +95,7 @@ permissions:
   - 'administer advanced webform element settings'
   - 'administer dpl_footer settings'
   - 'administer dpl_mapp configuration'
+  - 'administer global service messages'
   - 'administer instant loan configuration'
   - 'administer library agency configuration'
   - 'administer menu'
@@ -125,6 +128,7 @@ permissions:
   - 'create image media'
   - 'create media'
   - 'create page content'
+  - 'create service_message content'
   - 'create terms in audiences'
   - 'create terms in breadcrumb_structure'
   - 'create terms in categories'
@@ -150,6 +154,7 @@ permissions:
   - 'delete any image media'
   - 'delete any media'
   - 'delete any page content'
+  - 'delete any service_message content'
   - 'delete any video media'
   - 'delete any videotool media'
   - 'delete any webform'
@@ -177,10 +182,12 @@ permissions:
   - 'delete own go_page content'
   - 'delete own image media'
   - 'delete own page content'
+  - 'delete own service_message content'
   - 'delete own video media'
   - 'delete own videotool media'
   - 'delete own webform'
   - 'delete page revisions'
+  - 'delete service_message revisions'
   - 'delete terms in audiences'
   - 'delete terms in breadcrumb_structure'
   - 'delete terms in categories'
@@ -199,6 +206,7 @@ permissions:
   - 'edit any go_page content'
   - 'edit any image media'
   - 'edit any page content'
+  - 'edit any service_message content'
   - 'edit any video media'
   - 'edit any videotool media'
   - 'edit any webform'
@@ -219,6 +227,7 @@ permissions:
   - 'edit own go_page content'
   - 'edit own image media'
   - 'edit own page content'
+  - 'edit own service_message content'
   - 'edit own video media'
   - 'edit own videotool media'
   - 'edit own webform'
@@ -245,6 +254,7 @@ permissions:
   - 'revert go_category revisions'
   - 'revert go_page revisions'
   - 'revert page revisions'
+  - 'revert service_message revisions'
   - 'role-assign users by role'
   - 'schedule publishing of eventseries'
   - 'schedule publishing of nodes'
@@ -266,6 +276,7 @@ permissions:
   - 'view any unpublished go_category content'
   - 'view any unpublished go_page content'
   - 'view any unpublished page content'
+  - 'view any unpublished service_message content'
   - 'view article revisions'
   - 'view campaign revisions'
   - 'view go_article revisions'
@@ -278,6 +289,7 @@ permissions:
   - 'view scheduled eventseries'
   - 'view scheduled media'
   - 'view scheduled taxonomy_term'
+  - 'view service_message revisions'
   - 'view the administration theme'
   - 'view unpublished eventinstance entity'
   - 'view unpublished eventseries entity'

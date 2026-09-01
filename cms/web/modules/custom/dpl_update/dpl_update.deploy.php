@@ -689,3 +689,35 @@ function dpl_update_deploy_remove_maintenance_permissions(): string {
 
   return 'Remove unused maintenance mode permission';
 }
+
+/**
+ * Add service message permissions.
+ */
+function dpl_update_deploy_service_message_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['local_administrator', 'editor', 'mediator'],
+    [
+      'create service_message content',
+      'delete any service_message content',
+      'delete own service_message content',
+      'edit any service_message content',
+      'edit own service_message content',
+      'view any unpublished service_message content',
+    ],
+    TRUE);
+
+  // The global bar is red, says "alert" and shows on every page, so it sits
+  // behind its own permission - and revisions follow the roles that have them
+  // for the other content types.
+  _dpl_update_alter_permissions(
+    ['local_administrator', 'editor'],
+    [
+      'administer global service messages',
+      'delete service_message revisions',
+      'revert service_message revisions',
+      'view service_message revisions',
+    ],
+    TRUE);
+
+  return 'Allow editors to write service messages';
+}

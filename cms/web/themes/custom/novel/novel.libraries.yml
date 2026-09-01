@@ -3,6 +3,7 @@ base:
     theme:
       assets/dpl-design-system/css/base.css: {}
       css/novel.css: {}
+      css/service-message.css: {}
   dependencies:
     - core/drupal
 
