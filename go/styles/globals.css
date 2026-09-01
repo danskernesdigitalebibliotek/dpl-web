@@ -460,6 +460,21 @@
   * {
     @apply border-border;
   }
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  /* Radix/react-remove-scroll sets overflow:hidden on body, which removes the
+     scrollbar on Windows and shifts layout. Lock scroll on html instead so the
+     stable gutter keeps its space, and skip the library's margin compensation. */
+  html:has(body[data-scroll-locked]) {
+    overflow: hidden;
+  }
+
+  body[data-scroll-locked] {
+    margin-right: 0 !important;
+  }
+
   body {
     @apply bg-background font-body text-foreground;
   }
