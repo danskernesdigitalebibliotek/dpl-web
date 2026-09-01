@@ -248,6 +248,15 @@ updates:
       # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
       - dependency-name: "orval"
         update-types: ["version-update:semver-major"]
+      # Next 16.3.0 update fails tests. DDF-480.
+      - dependency-name: "next"
+        versions: [">=16.3.0"]
+      - dependency-name: "@next/env"
+        versions: [">=16.3.0"]
+      - dependency-name: "eslint-config-next"
+        versions: [">=16.3.0"]
+      - dependency-name: "@next/eslint-plugin-next"
+        versions: [">=16.3.0"]
 
   # React - npm dependencies
   - package-ecosystem: npm
