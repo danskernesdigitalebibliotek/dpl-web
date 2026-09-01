@@ -48,8 +48,7 @@
   --aspect-16\/9: var(--aspect-16-9);
 
   --font-*: initial;
-  --font-headline: var(--font-headline);
-  --font-body: var(--font-body);
+  --font-sans: var(--font-sans);
 
   --text-*: initial;
   --text-typo-huge: var(--typo-huge-size);
