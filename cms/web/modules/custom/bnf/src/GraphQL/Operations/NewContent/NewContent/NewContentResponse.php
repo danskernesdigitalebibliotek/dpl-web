@@ -20,13 +20,13 @@ class NewContentResponse extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($uuids !== self::UNDEFINED) {
-            $instance->uuids = $uuids;
+            $instance->__set('uuids', $uuids);
         }
         if ($youngest !== self::UNDEFINED) {
-            $instance->youngest = $youngest;
+            $instance->__set('youngest', $youngest);
         }
         if ($errors !== self::UNDEFINED) {
-            $instance->errors = $errors;
+            $instance->__set('errors', $errors);
         }
         $instance->__typename = 'NewContentResponse';
 

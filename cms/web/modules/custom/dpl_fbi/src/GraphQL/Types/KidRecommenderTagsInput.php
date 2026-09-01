@@ -19,10 +19,10 @@ class KidRecommenderTagsInput extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($tag !== self::UNDEFINED) {
-            $instance->tag = $tag;
+            $instance->__set('tag', $tag);
         }
         if ($weight !== self::UNDEFINED) {
-            $instance->weight = $weight;
+            $instance->__set('weight', $weight);
         }
 
         return $instance;

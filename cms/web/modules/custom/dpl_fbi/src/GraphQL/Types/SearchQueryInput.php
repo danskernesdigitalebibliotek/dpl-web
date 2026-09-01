@@ -25,16 +25,16 @@ class SearchQueryInput extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($all !== self::UNDEFINED) {
-            $instance->all = $all;
+            $instance->__set('all', $all);
         }
         if ($creator !== self::UNDEFINED) {
-            $instance->creator = $creator;
+            $instance->__set('creator', $creator);
         }
         if ($subject !== self::UNDEFINED) {
-            $instance->subject = $subject;
+            $instance->__set('subject', $subject);
         }
         if ($title !== self::UNDEFINED) {
-            $instance->title = $title;
+            $instance->__set('title', $title);
         }
 
         return $instance;

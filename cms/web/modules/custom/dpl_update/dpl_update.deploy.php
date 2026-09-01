@@ -136,7 +136,7 @@ function _dpl_update_set_value(string $field_name, mixed $value, string $entity_
       ->accessCheck(FALSE)
       ->execute();
 
-  if (!is_array($ids) || empty($ids)) {
+  if (empty($ids)) {
     return "No $entity_type entities to update.";
   }
 
@@ -180,7 +180,7 @@ function _dpl_update_generate_url_aliases(string $entity_type): string {
       ->accessCheck(FALSE)
       ->execute();
 
-  if (!is_array($ids) || empty($ids)) {
+  if (empty($ids)) {
     return "No $entity_type entities to update.";
   }
 
@@ -675,4 +675,36 @@ function dpl_update_deploy_mark_orphaned_files_temporary(array &$sandbox): strin
   }
 
   return "Marked {$sandbox['current']}/{$sandbox['total']} unused permanent files as temporary.";
+}
+
+/**
+ * Remove maintenance permission, defunct after Drupal 11.
+ */
+function dpl_update_deploy_remove_maintenance_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['administrator'],
+    ['Administer maintenance mode'],
+    FALSE,
+  );
+
+  return 'Remove unused maintenance mode permission';
+}
+
+/**
+ * Allow anonymous and authenticated users to access the events endpoint.
+ *
+ * The permission is named after the REST resource, which has since been
+ * renamed from current_events to happening_events. This hook has already run
+ * on every existing site - dpl_update_update_10081() moves the permission
+ * there - so the only sites left for it to run on are fresh installs, where
+ * the new name is the right one to grant.
+ */
+function dpl_update_deploy_add_current_events_endpoint_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['anonymous', 'authenticated'],
+    ['restful get happening_events'],
+    TRUE,
+  );
+
+  return 'Make sure that the events endpoint is accessible';
 }

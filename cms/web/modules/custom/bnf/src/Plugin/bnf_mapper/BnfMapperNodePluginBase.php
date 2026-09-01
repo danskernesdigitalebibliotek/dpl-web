@@ -12,7 +12,6 @@ use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeGoPage;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodePage;
 use Drupal\bnf\Plugin\Traits\DateTimeTrait;
 use Drupal\bnf\Plugin\Traits\ImageTrait;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
@@ -27,11 +26,6 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
   use ImageTrait;
   use DateTimeTrait;
-
-  /**
-   * Entity storage to create node in.
-   */
-  protected EntityStorageInterface $nodeStorage;
 
   /**
    * {@inheritdoc}
@@ -49,8 +43,6 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
     protected LoggerInterface $logger,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
-
-    $this->nodeStorage = $entityTypeManager->getStorage('node');
   }
 
   /**
@@ -61,14 +53,14 @@ abstract class BnfMapperNodePluginBase extends BnfMapperPluginBase {
    */
   public function getNode(NodeArticle|NodePage|NodeGoArticle|NodeGoCategory|NodeGoPage $object, string $bundle): NodeInterface {
     /** @var \Drupal\node\Entity\Node[] $existing */
-    $existing = $this->nodeStorage->loadByProperties(['uuid' => $object->id]);
+    $existing = $this->entityTypeManager->getStorage('node')->loadByProperties(['uuid' => $object->id]);
 
     if ($existing) {
       $node = reset($existing);
     }
     else {
       /** @var \Drupal\node\Entity\Node $node */
-      $node = $this->nodeStorage->create([
+      $node = $this->entityTypeManager->getStorage('node')->create([
         'type' => $bundle,
         'uuid' => $object->id,
       ]);

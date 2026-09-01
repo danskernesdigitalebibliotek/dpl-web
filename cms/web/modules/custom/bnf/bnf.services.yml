@@ -29,3 +29,5 @@ services:
     class: Drupal\bnf\Hook\PageHooks
   Drupal\bnf\Hook\GraphQLComposeHooks:
     class: Drupal\bnf\Hook\GraphQLComposeHooks
+  Drupal\bnf\Hook\EntityHooks: {}
+  Drupal\bnf\Hook\ThemeHooks: {}

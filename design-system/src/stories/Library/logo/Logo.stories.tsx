@@ -21,6 +21,7 @@ LogoWithImage.args = {
   libraryName: "Hjørring",
   libraryPlace: "Bibliotekerne",
   altText: "Logo",
+  frontpageLabel: "forside",
 };
 
 export const LogoWithoutImage = Template.bind({});
@@ -29,4 +30,13 @@ LogoWithoutImage.args = {
   libraryName: "Hjørring",
   libraryPlace: "Bibliotekerne",
   altText: "Logo",
+  frontpageLabel: "forside",
+};
+
+export const LogoWithoutPlace = Template.bind({});
+LogoWithoutPlace.args = {
+  hasImage: false,
+  libraryName: "Hjørring",
+  altText: "Logo",
+  frontpageLabel: "forside",
 };

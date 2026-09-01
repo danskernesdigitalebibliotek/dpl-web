@@ -1,13 +1,16 @@
 uuid: 2c668012-d465-4607-b92d-bd3c5b22c276
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - node.type.go_category
 id: node.go_category
 site_resolver: site_selector
 configuration:
   sites:
     go: go
   field_name: {  }
+draft_enabled: true
 revalidator: cache_tag
 revalidator_configuration:
   revalidate_page: 0

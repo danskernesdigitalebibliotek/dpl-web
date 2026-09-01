@@ -23,8 +23,8 @@ final class CollationFixerForm extends ConfirmFormBase {
    * Constructor.
    */
   public function __construct(
-    private CollationFixer $collationFixer,
-    private ?CollationMismatch $mismatch = NULL,
+    protected CollationFixer $collationFixer,
+    protected ?CollationMismatch $mismatch = NULL,
   ) {}
 
   /**

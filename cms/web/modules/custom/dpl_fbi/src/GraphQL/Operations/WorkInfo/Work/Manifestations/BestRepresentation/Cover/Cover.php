@@ -18,7 +18,7 @@ class Cover extends \Spawnia\Sailor\ObjectLike
 
         $instance->__typename = 'Cover';
         if ($large !== self::UNDEFINED) {
-            $instance->large = $large;
+            $instance->__set('large', $large);
         }
 
         return $instance;

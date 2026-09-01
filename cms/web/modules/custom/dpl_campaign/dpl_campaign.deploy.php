@@ -1,7 +1,6 @@
 <?php
 
 use Drupal\media\Entity\Media;
-use Drupal\node\NodeInterface;
 
 /**
  * Migrate campaign images from field_campaign_image to field_campaign_media.
@@ -19,20 +18,15 @@ function dpl_campaign_deploy_migrate_campaign_images(): string {
     ->accessCheck(FALSE)
     ->execute();
 
-  if (!is_array($campaign_ids) || empty($campaign_ids)) {
+  if (empty($campaign_ids)) {
     return 'No campaigns with images to migrate.';
   }
 
-  /** @var \Drupal\node\NodeInterface[] $campaigns */
   $campaigns = $storage->loadMultiple($campaign_ids);
   $migrated = 0;
   $skipped = 0;
 
   foreach ($campaigns as $campaign) {
-    if (!($campaign instanceof NodeInterface)) {
-      continue;
-    }
-
     if (!$campaign->get('field_campaign_media')->isEmpty()) {
       $skipped++;
       continue;

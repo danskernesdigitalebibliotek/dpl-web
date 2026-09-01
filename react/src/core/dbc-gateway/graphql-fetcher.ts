@@ -2,7 +2,7 @@ import { QueryFunctionContext } from "@tanstack/react-query";
 import FetchFailedCriticalError from "../fetchers/FetchFailedCriticalError";
 import { getToken, TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../token";
 import DbcGateWayHttpError from "./DbcGateWayHttpError";
-import { getQueryUrlFromContext } from "./helper";
+import { addOperationNameToUrl, getQueryUrlFromContext } from "./helper";
 
 export const fetcher = <TData, TVariables>(
   query: string,
@@ -11,7 +11,10 @@ export const fetcher = <TData, TVariables>(
 ) => {
   return (context?: QueryFunctionContext): Promise<TData> => {
     // Resolve the url based on the query name if present.
-    const url = urlOverride ?? getQueryUrlFromContext(context);
+    const baseUrl = urlOverride ?? getQueryUrlFromContext(context);
+    // Tag the url with the operation name so requests are identifiable in the
+    // network log.
+    const url = addOperationNameToUrl(baseUrl, query);
 
     // The whole concept of agency id, profile and and bearer token needs to be refined.
     // First version is with a library token.

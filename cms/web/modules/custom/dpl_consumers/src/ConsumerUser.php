@@ -53,13 +53,7 @@ class ConsumerUser {
     if (empty($users)) {
       throw new \RuntimeException('Failed to load user.');
     }
-    $user = reset($users);
-
-    if (!($user instanceof UserInterface)) {
-      throw new \RuntimeException('Failed to load user.');
-    }
-
-    return $user;
+    return reset($users);
   }
 
   /**

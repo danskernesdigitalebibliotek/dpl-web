@@ -58,7 +58,7 @@ class VideoToolFormatter extends FormatterBase {
       }
       else {
         $element[$delta] = [
-          '#markup' => $item->value,
+          '#markup' => $item->getString(),
         ];
       }
     }

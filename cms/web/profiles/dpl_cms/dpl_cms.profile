@@ -5,6 +5,7 @@
  * Enables modules and site configuration for a standard site installation.
  */
 
+use Drupal\locale\LocaleFetch;
 use Drupal\user\Entity\User;
 
 /**
@@ -27,8 +28,19 @@ function dpl_cms_updater_info_alter(array &$updaters): void {
  *   An array of the modules that were installed.
  */
 function dpl_cms_modules_installed(array $modules, bool $is_syncing): void {
-  /** @var \Drupal\user\UserInterface $user */
+  // This hook also runs during site installation, starting with the very first
+  // module (System) that core installs. At that point the user module is not
+  // installed, so its classes cannot even be autoloaded, and later during the
+  // installation the admin user has not been created yet. In both cases there
+  // is nothing to configure.
+  if (!\Drupal::moduleHandler()->moduleExists('user')) {
+    return;
+  }
+
   $user = User::load(1);
+  if (!$user) {
+    return;
+  }
 
   // Make sure that the admin language of the admin user is set to english.
   // That will make sure that config is exported in english.
@@ -68,7 +80,7 @@ function dpl_cms_batch_alter(array &$batch): void {
   foreach ($batch['sets'] as $key => $set) {
     if (
       array_key_exists('finished', $set)
-      && $set['finished'] === 'locale_translation_batch_fetch_finished'
+      && $set['finished'] === LocaleFetch::class . ':batchFinished'
     ) {
       $batch['sets'][$key]['finished'] = 'dpl_cms_locale_translation_batch_fetch_finished';
     }
@@ -96,5 +108,5 @@ function dpl_cms_locale_translation_batch_fetch_finished(bool $success, array $r
     \Drupal::logger('dpl_cms')->notice("No new translations were imported.");
   }
 
-  locale_translation_batch_fetch_finished($success, $results);
+  \Drupal::service(LocaleFetch::class)->batchFinished($success, $results);
 }

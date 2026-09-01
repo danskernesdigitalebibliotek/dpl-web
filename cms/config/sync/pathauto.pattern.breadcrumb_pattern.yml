@@ -12,7 +12,6 @@ selection_criteria:
   f8e93f99-e638-4c48-9901-278f15d59aa1:
     id: 'entity_bundle:node'
     negate: false
-    uuid: f8e93f99-e638-4c48-9901-278f15d59aa1
     context_mapping:
       node: node
     bundles:
@@ -20,6 +19,7 @@ selection_criteria:
       branch: branch
       campaign: campaign
       page: page
+    uuid: f8e93f99-e638-4c48-9901-278f15d59aa1
 selection_logic: and
 weight: -5
 relationships: {  }

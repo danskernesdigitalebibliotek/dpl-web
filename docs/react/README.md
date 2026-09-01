@@ -12,17 +12,6 @@ Danish public libraries.
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [Dory](https://github.com/FreedomBen/dory)
 
-Before you can install the project you need to create the file `~/.npmrc` to
-[access the GitHub package registry as described using a personal access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token).
-[The token must be created with the required scopes: `repo` and `read:packages`](https://github.com/settings/tokens/new?description=npm&scopes=repo,read:packages)
-
-This can be achieved by running the following command and using the token when
-prompted for password.
-
-```bash
-pnpm login --registry=https://npm.pkg.github.com
-```
-
 ### Howto
 
 1. Run `pnpm install` from the **repository root** to install dependencies for all workspace members.
@@ -464,10 +453,14 @@ So let's say you wanted to make use of an application within an existing HTML
 page such as what might be generated serverside by platforms like Drupal,
 WordPress etc.
 
-For this use case you should download the `dist.zip` package from
-[the latest release of the project](/danskernesdigitalebibliotek/dpl-react/releases/latest)
-and unzip somewhere within the web root of your project. The package contains a
-set of artifacts needed to use one or more applications within an HTML page.
+For this use case you need the built artifacts from `react/dist/`. Build them
+from source with `task dev:react:build` from the repository root, then place
+them somewhere within the web root of your project. The build contains the set
+of artifacts needed to use one or more applications within an HTML page.
+
+Inside this monorepo you do not have to do that by hand: `task dev:cms:link`
+copies the build into the CMS library directory, and releases bake it into the
+CMS source image via the `build-cms-assets` action.
 
 <details>
   <summary>HTML Example</summary>

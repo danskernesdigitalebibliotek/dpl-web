@@ -175,17 +175,31 @@ class BnfImporter {
    * Returns UUIDs of new/updated content, and the timestamp of the last change
    * (suitable for passing to this function as `since` the next time round).
    *
-   * @return array{'uuids': string[], 'youngest': int}
+   * A failed query yields the same "nothing new" answer as a stream that has
+   * simply been quiet, so that a source we cannot reach stalls the
+   * subscription rather than resetting it. `success` is what tells the two
+   * apart, for callers that care about the difference - reporting how the
+   * synchronisation is faring, mainly, since the outcome is otherwise only in
+   * the log.
+   *
+   * @return array{'uuids': string[], 'youngest': int, 'success': bool}
    *   Updated content data.
    */
   public function newContent(string $uuid, int $since, string $endpointUrl): array {
     $this->setEndpoint($endpointUrl);
+
+    $success = TRUE;
 
     try {
       $response = NewContent::execute($uuid, (new DateTimeImmutable("@$since"))->format(\DateTimeInterface::RFC3339));
       $newContent = $response->errorFree()->data->newContent;
 
       if ($newContent->errors) {
+        // Errors and content are not exclusive: the response may still carry
+        // uuids, and we take them. The check was not clean, though, so it is
+        // not reported as a success either.
+        $success = FALSE;
+
         foreach ($newContent->errors as $error) {
           $this->logger->error('GraphQL error querying new content: @message', ['@message' => $error->message]);
         }
@@ -196,10 +210,13 @@ class BnfImporter {
           'uuids' => $newContent->uuids,
           'youngest' => DateTimeImmutable::createFromFormat(\DateTimeInterface::RFC3339, $newContent->youngest)
             ->getTimestamp(),
+          'success' => $success,
         ];
       }
     }
     catch (\Throwable $e) {
+      $success = FALSE;
+
       $this->logger->error('Error querying new content: @message', ['@message' => $e->getMessage()]);
     }
 
@@ -207,6 +224,7 @@ class BnfImporter {
     return [
       'uuids' => [],
       'youngest' => $since,
+      'success' => $success,
     ];
   }
 

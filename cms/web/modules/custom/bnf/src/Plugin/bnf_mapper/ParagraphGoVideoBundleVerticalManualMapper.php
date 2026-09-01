@@ -38,7 +38,7 @@ class ParagraphGoVideoBundleVerticalManualMapper extends BnfMapperParagraphPlugi
       ];
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'go_video_bundle_vertical_manual',
       'field_go_video_title' => $object->goVideoTitle,
       'field_video_bundle_work_ids' => $workIdsValues,

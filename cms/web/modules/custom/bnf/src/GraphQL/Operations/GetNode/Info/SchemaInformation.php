@@ -18,7 +18,7 @@ class SchemaInformation extends \Spawnia\Sailor\ObjectLike
 
         $instance->__typename = 'SchemaInformation';
         if ($name !== self::UNDEFINED) {
-            $instance->name = $name;
+            $instance->__set('name', $name);
         }
 
         return $instance;

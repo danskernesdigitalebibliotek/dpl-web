@@ -50,7 +50,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
         </div>
       )}
       <Button
-        aria-label="Vis filtreringsmuligheder"
+        ariaLabel="Vis filtreringsmuligheder"
         onClick={() =>
           openSheet({
             sheetType: "SearchFilterSheet",
@@ -58,9 +58,9 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
           })
         }
         data-cy={cyKeys["filters-button"]}
-        className="text-typo-link flex flex-row items-center gap-1">
-        <Icon name="adjust" className="h-[40px]" />
-        VIS FILTRE
+        variant="icon-text"
+        icon="adjust">
+        Vis filtre
       </Button>
     </div>
   )

@@ -4,7 +4,6 @@ namespace Drupal\dpl_redia_legacy;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\PriceFormatter;
 use Drupal\node\NodeInterface;
@@ -46,12 +45,7 @@ class RediaEvent extends ControllerBase {
 
     $changed_date = DrupalDateTime::createFromFormat('U', strval($event_instance->getChangedTime()));
 
-    $media = NULL;
-    $media_field = $event_instance->get('event_image');
-
-    if (($media_field instanceof FieldItemListInterface)) {
-      $media = $media_field->referencedEntities()[0] ?? NULL;
-    }
+    $media = $event_instance->get('event_image')->referencedEntities()[0] ?? NULL;
 
     $this->title = $event_instance->label();
     $this->description = $event_instance->getDescription();

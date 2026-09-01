@@ -1,24 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import React from "react"
 
+import { darkModeDecorator } from "@/.storybook/decorators"
 import MaterialSlider from "@/components/paragraphs/MaterialSlider/MaterialSlider"
 
 import { worksMock } from "./MaterialSlider.mockData"
 
-const queryClient = new QueryClient()
-
-// TODO: fix this typing of StoryComponent
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const withQueryClient = (StoryComponent: any) => (
-  <QueryClientProvider client={queryClient}>
-    <StoryComponent />
+const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
+  <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+    <Story />
   </QueryClientProvider>
 )
 
 const meta = {
-  title: "components/MaterialSlider",
+  title: "paragraphs/MaterialSlider",
   component: MaterialSlider,
-  parameters: { layout: "centered" },
+  parameters: { layout: "fullscreen" },
   args: {
     title: "Material Slider",
     works: worksMock,
@@ -29,17 +27,8 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// TODO: add MaterialSlider to the story when request mocking through fishery is implemented
-export const Default: Story = {
-  render: () => <div className="h-full w-[100vw]">{/* <MaterialSlider {...args} /> */}</div>,
-}
+export const Default: Story = {}
 
-// TODO: add MaterialSlider to the story when request mocking through fishery is implemented
-// export const MaterialSliderDarkMode: Story = {
-//   decorators: [darkModeDecorator],
-//   render: args => (
-//     <div className="h-full w-[100vw]">
-//       <MaterialSlider {...args} />
-//     </div>
-//   ),
-// }
+export const DarkMode: Story = {
+  decorators: [darkModeDecorator],
+}

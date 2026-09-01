@@ -52,7 +52,7 @@ class ParagraphMediasMapper extends BnfMapperParagraphPluginBase {
       $mediasValues[] = $this->getImageValue($media);
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'medias',
       'field_medias' => $mediasValues,
     ]);

@@ -12,11 +12,11 @@ selection_criteria:
   284730c1-4945-4da4-818f-bdd4907174ab:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 284730c1-4945-4da4-818f-bdd4907174ab
     context_mapping:
       node: node
     bundles:
       go_category: go_category
+    uuid: 284730c1-4945-4da4-818f-bdd4907174ab
 selection_logic: and
 weight: -5
 relationships: {  }

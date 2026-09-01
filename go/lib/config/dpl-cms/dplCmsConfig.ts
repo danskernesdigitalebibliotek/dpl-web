@@ -90,6 +90,7 @@ const getDplCmsPublicConfigData = async () => {
       unilogin: {
         municipalityId: null,
       },
+      blacklistedAvailabilityBranches: [],
     }
   }
 }

@@ -8,3 +8,4 @@ dependencies:
   - graphql_compose_preview:graphql_compose_preview
   - dpl_unilogin:dpl_unilogin
   - dpl_lagoon:dpl_lagoon
+  - dpl_library_agency:dpl_library_agency

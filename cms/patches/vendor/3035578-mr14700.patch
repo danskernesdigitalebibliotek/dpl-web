@@ -1,0 +1,75 @@
+diff --git a/core/lib/Drupal/Core/Form/FormAjaxResponseBuilder.php b/core/lib/Drupal/Core/Form/FormAjaxResponseBuilder.php
+index 85e07719ccd21e3b195ed18c10ff5934640b296e..2484b36b4db08fd67051c03b436a1dbe8e94345b 100644
+--- a/core/lib/Drupal/Core/Form/FormAjaxResponseBuilder.php
++++ b/core/lib/Drupal/Core/Form/FormAjaxResponseBuilder.php
+@@ -39,10 +39,30 @@ public function buildResponse(Request $request, array $form, FormStateInterface
+     // content. It is up to the #ajax['callback'] function of the element (may
+     // or may not be a button) that triggered the Ajax request to determine what
+     // needs to be rendered.
+-    $callback = NULL;
+-    if (($triggering_element = $form_state->getTriggeringElement()) && isset($triggering_element['#ajax']['callback'])) {
+-      $callback = $triggering_element['#ajax']['callback'];
++    $triggering_element = $form_state->getTriggeringElement();
++    if (empty($triggering_element)) {
++      throw new HttpException(500, sprintf('No triggering element found for the "%s" form Ajax request.',
++        $form['#build_id'] ?? ''
++      ));
+     }
++
++    if (!empty($triggering_element['#array_parents'])) {
++      $array_parents_string = implode(':', $triggering_element['#array_parents']);
++    }
++    else {
++      $array_parents_string = '';
++    }
++
++    // Sanity check the callback.
++    if (empty($triggering_element['#ajax']['callback'])) {
++      throw new HttpException(500, sprintf('The specified "%s" form #ajax callback is empty for triggering form element "%s" with array parents "%s".',
++        $form['#build_id'] ?? '',
++        $triggering_element['#name'],
++        $array_parents_string
++      ));
++    }
++
++    $callback = $triggering_element['#ajax']['callback'];
+     $callback = $form_state->prepareCallback($callback);
+     if (empty($callback)) {
+       throw new HttpException(500, 'The specified #ajax callback is empty or not callable.');
+diff --git a/core/tests/Drupal/FunctionalJavascriptTests/Ajax/FormValuesTest.php b/core/tests/Drupal/FunctionalJavascriptTests/Ajax/FormValuesTest.php
+index afd0a2f31e13c4f6f8d198560bbbc0fa1dc981d9..ac69a7cdef9aa9a79e788c3800e03b7576fc5222 100644
+--- a/core/tests/Drupal/FunctionalJavascriptTests/Ajax/FormValuesTest.php
++++ b/core/tests/Drupal/FunctionalJavascriptTests/Ajax/FormValuesTest.php
+@@ -92,9 +92,12 @@ public function testSimpleInvalidCallbacksAjaxFormValue(): void {
+     // whilst doing so are expected. Do not interpret them as a test failure.
+     $this->failOnJavascriptConsoleErrors = FALSE;
+ 
+-    // We don't need to check for the X-Drupal-Ajax-Token header with these
+-    // invalid requests.
+-    foreach (['null', 'empty', 'nonexistent'] as $key) {
++    $invalid_callbacks = [
++      'null' => NULL,
++      'empty' => '',
++      'nonexistent' => 'some_function_that_does_not_exist',
++    ];
++    foreach ($invalid_callbacks as $key => $value) {
+       $element_name = 'select_' . $key . '_callback';
+       // Updating the field will trigger an AJAX request/response.
+       $session->getPage()->selectFieldOption($element_name, 'green');
+@@ -107,8 +110,14 @@ public function testSimpleInvalidCallbacksAjaxFormValue(): void {
+       // Not using File API, a potential error must trigger a PHP warning, which
+       // should be logged in the error.log.
+       $this->assertFileExists(DRUPAL_ROOT . '/' . $this->siteDirectory . '/error.log');
+-      $this->assertStringContainsString('"The specified #ajax callback is empty or not callable."', file_get_contents(DRUPAL_ROOT . '/' . $this->siteDirectory . '/error.log'));
+-      // Remove error.log, so we have a clean slate for the next request.
++      if ($value) {
++        $this->assertStringContainsString(sprintf('"The specified #ajax callback %s is not callable for triggering form element with array parents "%s"."', $value, $element_name), file_get_contents(DRUPAL_ROOT . '/' . $this->siteDirectory . '/error.log'));
++      }
++      else {
++        $this->assertStringContainsString(sprintf('"The specified #ajax callback is empty for triggering form element with array parents "%s"."', $element_name), file_get_contents(DRUPAL_ROOT . '/' . $this->siteDirectory . '/error.log'));
++      }
++      // The exceptions are expected. Do not interpret them as a test failure.
++      // Not using File API; a potential error must trigger a PHP warning.
+       unlink(\Drupal::root() . '/' . $this->siteDirectory . '/error.log');
+     }
+     // We need to reload the page to kill any unfinished AJAX calls before

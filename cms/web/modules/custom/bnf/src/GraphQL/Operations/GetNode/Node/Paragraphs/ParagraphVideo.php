@@ -18,10 +18,10 @@ class ParagraphVideo extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($embedVideo !== self::UNDEFINED) {
-            $instance->embedVideo = $embedVideo;
+            $instance->__set('embedVideo', $embedVideo);
         }
         $instance->__typename = 'ParagraphVideo';
 

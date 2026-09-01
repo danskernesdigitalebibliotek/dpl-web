@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGetInfomediaQuery } from "../../../core/dbc-gateway/generated/graphql";
-import Modal from "../../../core/utils/modal";
+import Modal, { useIsModalOpen } from "../../../core/utils/modal";
 import { useText } from "../../../core/utils/text";
 import { useConfig } from "../../../core/utils/config";
 import { Pid } from "../../../core/utils/types/ids";
@@ -13,18 +13,17 @@ import {
   getManifestationAuthors,
   getManifestationTitle
 } from "../../../apps/material/helper";
-import { first } from "lodash";
 import { isAnonymous } from "../../../core/utils/helpers/user";
 
 export const infomediaModalId = (pid: Pid) => `infomedia-modal-${pid}`;
 
 interface InfomediaModalProps {
-  selectedManifestations: Manifestation[];
+  manifestation: Manifestation;
   infoMediaId: string;
 }
 
 const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
-  selectedManifestations,
+  manifestation,
   infoMediaId
 }) => {
   const t = useText();
@@ -42,6 +41,12 @@ const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
     }
   }, [userInfo, siteAgencyId]);
 
+  const modalId = infomediaModalId(manifestation.pid);
+  const isModalOpen = useIsModalOpen(modalId);
+
+  // The article body is only worth fetching once the reader asks for it: a
+  // modal is rendered for every edition of the work, and each fetch returns a
+  // whole article.
   const {
     data,
     error,
@@ -51,21 +56,20 @@ const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
       id: infoMediaId
     },
     {
-      enabled: shouldFetchData
+      enabled: shouldFetchData && isModalOpen
     }
   );
-  const firstManifestation = first(selectedManifestations);
 
-  if (!data || error || !firstManifestation) {
+  if (error) {
     return null;
   }
 
-  const author = getManifestationAuthors(firstManifestation);
-  const title = getManifestationTitle(firstManifestation);
+  const author = getManifestationAuthors(manifestation);
+  const title = getManifestationTitle(manifestation);
 
   return (
     <Modal
-      modalId={infomediaModalId(firstManifestation.pid)}
+      modalId={modalId}
       screenReaderModalDescriptionText={t(
         "infomediaModalScreenReaderModalDescriptionText"
       )}

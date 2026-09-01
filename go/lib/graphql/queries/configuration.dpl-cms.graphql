@@ -28,6 +28,7 @@ query getDplCmsPublicConfiguration {
       unilogin {
         municipalityId
       }
+      blacklistedAvailabilityBranches
     }
   }
 }

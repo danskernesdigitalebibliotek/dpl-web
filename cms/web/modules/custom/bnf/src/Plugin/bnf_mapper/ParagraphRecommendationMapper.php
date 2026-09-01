@@ -25,7 +25,7 @@ class ParagraphRecommendationMapper extends BnfMapperParagraphPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'recommendation',
       'field_image_position_right' => $object->imagePositionRight ?? FALSE,
       'field_recommendation_description' => $object->recommendationDescription ?? NULL,

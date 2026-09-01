@@ -23,14 +23,14 @@ class Work extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($titles !== self::UNDEFINED) {
-            $instance->titles = $titles;
+            $instance->__set('titles', $titles);
         }
         if ($manifestations !== self::UNDEFINED) {
-            $instance->manifestations = $manifestations;
+            $instance->__set('manifestations', $manifestations);
         }
         $instance->__typename = 'Work';
         if ($abstract !== self::UNDEFINED) {
-            $instance->abstract = $abstract;
+            $instance->__set('abstract', $abstract);
         }
 
         return $instance;

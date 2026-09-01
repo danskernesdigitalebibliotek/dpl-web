@@ -49,7 +49,7 @@ const FeeList: FC<FeeListProps> = ({ pageSize }) => {
   });
   const {
     fbs: { overdue: loansOverduePhysical, isLoading: isLoadingFbs },
-    publizon: { overdue: loansOverdueDigital, isLoading: isLoadingPublizon }
+    digital: { overdue: loansOverdueDigital, isLoading: isLoadingDigital }
   } = useLoans();
   const [overdueLoans, setOverdueLoans] = useState<LoanType[]>([]);
   const [feeDetailsData, setFeeDetailsData] = useState<FeeV2[]>();
@@ -75,7 +75,7 @@ const FeeList: FC<FeeListProps> = ({ pageSize }) => {
     return calculateFeeAmount(fbsFees, false);
   }, [fbsFees]);
   const shouldShowWarningBar =
-    overdueLoans.length > 0 && !isLoadingFbs && !isLoadingPublizon;
+    overdueLoans.length > 0 && !isLoadingFbs && !isLoadingDigital;
   const openLoanDetailsModal = useCallback(
     (loan: LoanType) => {
       setModalLoan(loan);
@@ -85,13 +85,13 @@ const FeeList: FC<FeeListProps> = ({ pageSize }) => {
   );
 
   useEffect(() => {
-    if (!isLoadingFbs && !isLoadingPublizon) {
+    if (!isLoadingFbs && !isLoadingDigital) {
       setOverdueLoans([...loansOverduePhysical, ...loansOverdueDigital]);
     }
     // We don't want to call this when loansOverduePhysical or loansOverdueDigital
     // change, because then the component rerenders indefinitely.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoadingFbs, isLoadingPublizon]);
+  }, [isLoadingFbs, isLoadingDigital]);
 
   const openLoanModal = useCallback(
     (loans: LoanType[]) => {

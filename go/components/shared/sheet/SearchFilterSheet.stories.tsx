@@ -17,7 +17,7 @@ const withQueryClient = (StoryComponent: any) => (
 )
 
 const meta = {
-  title: "components/SearchFilterSheet",
+  title: "sheets/SearchFilterSheet",
   component: SearchFilterSheet,
   parameters: {
     layout: "centered",

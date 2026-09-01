@@ -43,6 +43,24 @@ describe("Recommended Material", () => {
       .should("have.attr", "href")
       .should("match", /\/work\/work-of:\d+-basis:\d+/);
   });
+
+  it("forces the prioritised type when the work has that manifestation type", () => {
+    cy.visit(
+      "/iframe.html?id=apps-recommended-material--material-with-available-type&viewMode=story"
+    );
+    cy.get(".recommended-material a")
+      .should("have.attr", "href")
+      .should("contain", "type=e-bog");
+  });
+
+  it("omits the type when the work has no manifestation of that type", () => {
+    cy.visit(
+      "/iframe.html?id=apps-recommended-material--material-with-unavailable-type&viewMode=story"
+    );
+    cy.get(".recommended-material a")
+      .should("have.attr", "href")
+      .should("not.contain", "type=");
+  });
 });
 
 export {};

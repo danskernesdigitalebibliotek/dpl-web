@@ -40,8 +40,8 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private DplLoansSettings $loansSettings,
-    private GeneralSettings $generalSettings,
+    protected DplLoansSettings $loansSettings,
+    protected GeneralSettings $generalSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;

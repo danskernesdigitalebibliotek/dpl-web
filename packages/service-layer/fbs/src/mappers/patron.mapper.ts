@@ -6,7 +6,10 @@ const FbsPatronResponseSchema = z.object({
   authenticateStatus: z.enum(["VALID", "INVALID", "LOANER_LOCKED_OUT"]),
   patron: z
     .object({
-      name: z.string().optional(),
+      name: z.string().nullish(),
+      preferredPickupBranch: z.string(),
+      emailAddress: z.string().nullish(),
+      phoneNumber: z.string().nullish(),
     })
     .optional(),
 })
@@ -15,7 +18,10 @@ export function parseAndMapPatron(raw: unknown): Patron | undefined {
   const parsed = FbsPatronResponseSchema.parse(raw)
   if (!parsed.patron) return undefined
   return {
-    name: parsed.patron.name,
+    name: parsed.patron.name ?? undefined,
     isLocked: parsed.authenticateStatus === "LOANER_LOCKED_OUT",
+    pickupBranchId: parsed.patron.preferredPickupBranch,
+    emailAddress: parsed.patron.emailAddress ?? undefined,
+    phoneNumber: parsed.patron.phoneNumber ?? undefined,
   }
 }

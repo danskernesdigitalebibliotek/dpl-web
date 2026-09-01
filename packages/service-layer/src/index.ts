@@ -1,2 +1,101 @@
+// Domain types — what apps reason about.
+export type {
+  ApiId,
+  Patron,
+  MaterialAvailability,
+  ServiceLayerConfig,
+  CreateReservationInput,
+  CreateReservationResult,
+  CreateReservationSuccess,
+  CreateReservationFailed,
+  FailureReason,
+  Reservation,
+  Fee,
+  Loan,
+  RenewedLoan,
+  RenewedLoanSuccess,
+  RenewedLoanFailed,
+  RenewalFailureReason,
+} from "./types"
+
+export { RESERVATION_FAILURE_REASONS, RENEWAL_FAILURE_REASONS } from "./types"
+
+// React provider — wraps an app subtree and supplies config to the hooks.
+export { ServiceLayerProvider, useServiceLayerConfig } from "./context/ServiceLayerContext"
+
+// React hooks — fetch + lifecycle. Require ServiceLayerProvider above in the tree.
+export { usePatron } from "./hooks/usePatron"
+export { useMaterialAvailability } from "./hooks/useMaterialAvailability"
+export { useReservations } from "./hooks/useReservations"
+export { useCreateReservation } from "./hooks/useCreateReservation"
+export { useDeleteReservation } from "./hooks/useDeleteReservation"
+export { useLoans } from "./hooks/useLoans"
+export { useFees } from "./hooks/useFees"
+export { useRenewLoans } from "./hooks/useRenewLoans"
+
+// queryOptions factories — for prefetchQuery / setQueryData in non-hook contexts.
+export { patronQuery } from "./queries/patron"
+export { materialAvailabilityQuery } from "./queries/availability"
+export { reservationsQuery } from "./queries/reservations"
+export { loansQuery } from "./queries/loans"
+export { feesQuery } from "./queries/fees"
+
+// Query keys — for cache mutations (tests, stories, setQueryData).
+export { patronQueryKey } from "./queries/patron"
+export { materialAvailabilityQueryKey } from "./queries/availability"
+export { reservationsQueryKey } from "./queries/reservations"
+export { loansQueryKey } from "./queries/loans"
+export { feesQueryKey } from "./queries/fees"
+
+// Imperative fetchers — for non-react-query contexts (e.g. baking patron name into session).
 export { getPatron } from "./patron"
-export type { Patron } from "./types"
+export { getMaterialAvailability } from "./availability"
+export { createReservation } from "./reservation"
+export { getReservations, deleteReservation } from "./reservations"
+export { getLoans, renewLoans } from "./loans"
+export { getFees } from "./fees"
+
+// Biblio adapter — the digital-materials provider behind the CMS feature flag.
+// Only what the apps consume is exported: hooks, the predicates reading their
+// answers, the query keys they invalidate, and the reader's query. The raw
+// functions stay internal until something server-side needs them.
+export {
+  isMaterialAvailable,
+  isMaterialLoanable,
+  isMaterialReservable,
+  isRequestGranted,
+  isUnknownMaterial,
+} from "./digital-loan-decision"
+export { isCostFreeLoan } from "./digital-loans"
+export { getDigitalLoanQuota } from "./digital-quotas"
+export { digitalLoanDecisionQueryKey } from "./queries/digital-loan-decision"
+export { digitalLoansQueryKey } from "./queries/digital-loans"
+export { digitalLoanQuotasQueryKey } from "./queries/digital-quotas"
+export { digitalReservationsQueryKey } from "./queries/digital-reservations"
+export { readerSignInTokenQuery } from "./queries/reader"
+export { useDigitalAcceptOffer } from "./hooks/useDigitalAcceptOffer"
+export { useDigitalCreateLoan } from "./hooks/useDigitalCreateLoan"
+export { useDigitalCreateReservation } from "./hooks/useDigitalCreateReservation"
+export { useDigitalDeleteReservation } from "./hooks/useDigitalDeleteReservation"
+export { useDigitalLoanDecision } from "./hooks/useDigitalLoanDecision"
+export { useDigitalLoanQuotas } from "./hooks/useDigitalLoanQuotas"
+export { useDigitalLoans } from "./hooks/useDigitalLoans"
+export { useDigitalQuotas } from "./hooks/useDigitalQuotas"
+export { useDigitalMaterial } from "./hooks/useDigitalMaterial"
+export { useDigitalReservations } from "./hooks/useDigitalReservations"
+export { useDigitalSupportId } from "./hooks/useDigitalSupportId"
+export type { QuotaUsage } from "./digital-quotas"
+export type {
+  DigitalMaterial,
+  DigitalMaterialType,
+  MaterialType,
+  LoanProvider,
+  DigitalLoan,
+  DigitalReservation,
+  LoanDecision,
+  LoanDecisionStatus,
+  LoanRequestResult,
+  DigitalLoanQuota,
+  DigitalReservationLimits,
+  ReaderSignInToken,
+} from "./types"

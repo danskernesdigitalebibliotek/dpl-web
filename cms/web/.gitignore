@@ -5,8 +5,16 @@
 /INSTALL.txt
 /README.md
 /autoload.php
+/autoload_runtime.php
 /example.gitignore
 /index.php
+/modules/README.txt
+/profiles/README.txt
 /robots.txt
+/sites/README.txt
+/sites/development.services.yml
+/sites/example.settings.local.php
+/sites/example.sites.php
+/themes/README.txt
 /update.php
 /web.config

@@ -1,0 +1,111 @@
+$_series-card--text-max-width: 560px;
+
+.series-card {
+  @include show-svg-on-hover;
+  @include teaser-hover-shadow;
+
+  background-color: $color__global-white;
+  cursor: pointer;
+  display: grid;
+  // The row gap only bites on mobile, where availability wraps below the text.
+  gap: 22px $s-md;
+  grid-template-columns: min-content 1fr;
+  // A search result row's height, so a member without a description does not
+  // sit shorter than the rest of the listing.
+  min-height: 184px;
+  padding: $s-md;
+
+  @include media-query__small {
+    // Cover, text, availability, arrow - as card-list-item, but with a wider
+    // cap on the text column. card-list-item stops at 407px; the description
+    // needs more, and $_series-card--text-max-width comfortably fits the 65ch
+    // the description itself is bounded to.
+    grid-template-columns:
+      min-content minmax(min-content, $_series-card--text-max-width)
+      1fr max-content;
+    // Row gap 0, column gap $s-lg. One shorthand so a later `gap` cannot
+    // silently reset the column value.
+    gap: 0 $s-lg;
+    padding: $s-lg;
+  }
+}
+
+.series-card__cover {
+  grid-row: span 2;
+
+  @include media-query__small {
+    grid-row: auto;
+  }
+}
+
+.series-card__availability {
+  align-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  grid-column: 2;
+
+  @include media-query__small {
+    grid-column: 3;
+  }
+}
+
+// Wraps as a row rather than letting the tag and the number break mid-phrase,
+// which is what happens at narrow widths without this.
+.series-card__meta {
+  // Top aligned, which is where the search result teasers sit their part
+  // number. It also leaves the tag at its own height instead of stretching it
+  // to the height of the favourite button beside it.
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+// The library's own colour rather than tag--fill's beige. Every site sets its
+// own identity hue, so this must not be a fixed green.
+.series-card__tag {
+  background-color: $color__identity-primary;
+  color: $color__text-primary-white;
+}
+
+// Reads the same as the part number in the search result teasers, where it is
+// a .text-label-bold heading inside .horizontal-term-line - and that container
+// lifts every descendant to 12px.
+.series-card__number {
+  @include typography($typo__label--large-bold);
+
+  white-space: nowrap;
+}
+
+// Margins, clamp and line-height are card-list-item's, so a title sits at the
+// same height and wraps the same way as one in a search result.
+.series-card__title {
+  margin-bottom: $s-xs;
+  margin-top: 10px;
+
+  & > a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @include media-query__small {
+    @include text-ellipsis-truncation(2);
+
+    line-height: calc(120% + 2px);
+    margin-top: $s-md;
+  }
+}
+
+// Clamped so that one long abstract cannot dominate a listing of 20+ members.
+// Six lines is what the design shows; abstracts vary a lot in length.
+.series-card__description {
+  @include typography($typo__body-small--multiline);
+  @include text-ellipsis-truncation(6);
+
+  margin-top: $s-md;
+  max-width: 65ch;
+}

@@ -13,6 +13,7 @@ interface ReservationProps {
   state: "initial" | "success" | "error";
   showPromoBar?: boolean;
   showInstantLoan?: boolean;
+  showRecommendations?: boolean;
 }
 
 const Reservation = ({
@@ -24,21 +25,22 @@ const Reservation = ({
   state,
   showPromoBar,
   showInstantLoan,
+  showRecommendations,
 }: ReservationProps) => {
   if (state === "success")
     return (
-      <Modal shownModal>
-        <ReservationSucces />
+      <Modal shownModal classNames="modal--reservation">
+        <ReservationSucces showRecommendations={showRecommendations} />
       </Modal>
     );
   if (state === "error")
     return (
-      <Modal shownModal>
+      <Modal shownModal classNames="modal--reservation">
         <ReservationError />;
       </Modal>
     );
   return (
-    <Modal shownModal>
+    <Modal shownModal classNames="modal--reservation">
       <section className="reservation-modal">
         <ReservationHeader author={author} label={label} title={title} />
         <ReservationForm

@@ -40,9 +40,9 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private DplFavoritesListSettings $favoritesSettings,
-    private BranchSettings $branchSettings,
-    private BranchRepositoryInterface $branchRepository,
+    protected DplFavoritesListSettings $favoritesSettings,
+    protected BranchSettings $branchSettings,
+    protected BranchRepositoryInterface $branchRepository,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;

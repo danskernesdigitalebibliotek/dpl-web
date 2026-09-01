@@ -26,6 +26,11 @@ class BnfMapperManagerTest extends KernelTestBase {
    */
   protected static $modules = [
     'bnf',
+    // Dependencies of bnf. Kernel tests do not install those on their own, and
+    // plugin discovery skips any plugin whose parent classes or traits live in
+    // a module that is not enabled.
+    'autowire_plugin_trait',
+    'enum_field',
     'node',
     'user',
     // Needed for the bnf_state base field.

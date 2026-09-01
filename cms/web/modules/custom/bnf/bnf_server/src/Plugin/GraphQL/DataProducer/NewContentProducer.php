@@ -6,7 +6,6 @@ namespace Drupal\bnf_server\Plugin\GraphQL\DataProducer;
 
 use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf_server\GraphQL\NewContentResponse;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
@@ -39,21 +38,15 @@ class NewContentProducer extends DataProducerPluginBase implements ContainerFact
   use AutowirePluginTrait;
 
   /**
-   * Node storage.
-   */
-  protected EntityStorageInterface $nodeStorage;
-
-  /**
    * {@inheritdoc}
    */
   public function __construct(
     array $configuration,
     string $pluginId,
     mixed $pluginDefinition,
-    EntityTypeManagerInterface $entityManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
-    $this->nodeStorage = $entityManager->getStorage('node');
   }
 
   /**
@@ -73,10 +66,11 @@ class NewContentProducer extends DataProducerPluginBase implements ContainerFact
 
     // The `node_list` cache tag is cleared when saving any node, so we'll be
     // able to catch both changes to existing nodes and new nodes.
-    $fieldContext->addCacheTags($this->nodeStorage->getEntityType()->getListCacheTags());
-    $fieldContext->addCacheContexts($this->nodeStorage->getEntityType()->getListCacheContexts());
+    $nodeStorage = $this->entityTypeManager->getStorage('node');
+    $fieldContext->addCacheTags($nodeStorage->getEntityType()->getListCacheTags());
+    $fieldContext->addCacheContexts($nodeStorage->getEntityType()->getListCacheContexts());
 
-    $query = $this->nodeStorage->getQuery();
+    $query = $nodeStorage->getQuery();
     $query->condition('changed', $since->getTimestamp(), '>');
 
     $query->condition(
@@ -88,7 +82,7 @@ class NewContentProducer extends DataProducerPluginBase implements ContainerFact
     $nids = $query->accessCheck()->execute();
 
     /** @var \Drupal\node\Entity\Node[] $nodes */
-    $nodes = $this->nodeStorage->loadMultiple(array_values($nids));
+    $nodes = $nodeStorage->loadMultiple(array_values($nids));
 
     if ($nodes) {
       $result->uuids = array_map(fn ($node) => (string) $node->uuid(), $nodes);

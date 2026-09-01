@@ -18,10 +18,10 @@ class ParagraphGoImages extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($goImages !== self::UNDEFINED) {
-            $instance->goImages = $goImages;
+            $instance->__set('goImages', $goImages);
         }
         $instance->__typename = 'ParagraphGoImages';
 

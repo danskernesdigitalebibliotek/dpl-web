@@ -10,7 +10,7 @@ export default async (baseUri?: string, options?: Options) => {
       persistent: true,
       request: {
         method: "POST",
-        urlPattern: "/next.*/graphql",
+        urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("searchWithPagination"),
@@ -31,7 +31,7 @@ export default async (baseUri?: string, options?: Options) => {
       persistent: true,
       request: {
         method: "POST",
-        urlPattern: "/next.*/graphql",
+        urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("intelligentFacets"),
@@ -52,7 +52,7 @@ export default async (baseUri?: string, options?: Options) => {
       persistent: true,
       request: {
         method: "POST",
-        urlPattern: "/next.*/graphql",
+        urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("searchFacet"),
@@ -74,7 +74,7 @@ export default async (baseUri?: string, options?: Options) => {
       persistent: true,
       request: {
         method: "POST",
-        urlPattern: "/next.*/graphql",
+        urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("GetCoversByPids"),

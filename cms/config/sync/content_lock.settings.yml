@@ -1,6 +1,6 @@
 _core:
   default_config_hash: 6Ka3T1c-CIjEUO1Q64NXKksLthkMhj53a6zy4RJBtkc
-verbose: 0
+verbose: false
 types:
   crop: {  }
   file: {  }
@@ -20,7 +20,6 @@ types:
   redirect: {  }
   webform_submission: {  }
 types_translation_lock: {  }
-types_js_lock: {  }
 form_op_lock:
   crop:
     mode: 0
@@ -67,3 +66,4 @@ form_op_lock:
   webform_submission:
     mode: 0
     values: {  }
+types_js_lock: {  }

@@ -12,7 +12,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 /**
  * Testing the nav_spots_manual mapper.
  */
-class ParagraphNavSpotsManualMapperTest extends BnfMapperImportReferencePluginBaseTest {
+class ParagraphNavSpotsManualMapperTest extends BnfMapperImportReferenceTestBase {
 
   /**
    * Entity prophecy.

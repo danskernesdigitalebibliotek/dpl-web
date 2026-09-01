@@ -3,9 +3,9 @@
 namespace Drupal\dpl_library_agency\Branch;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\dpl_library_agency\Entity\BranchNode;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\gsearch\AddressGsearchItemInterface;
-use Drupal\node\NodeInterface;
 
 /**
  * Value object representing a branch in an agency.
@@ -27,7 +27,7 @@ class Branch {
   /**
    * The Drupal node that may be associated to this branch, via editor-mapping.
    */
-  public ?NodeInterface $node = NULL;
+  public ?BranchNode $node = NULL;
 
   /**
    * The title that originally came from upstream.
@@ -57,10 +57,10 @@ class Branch {
   /**
    * Getting a (possibly) associated Drupal 'branch' node.
    *
-   * @return ?NodeInterface
+   * @return ?BranchNode
    *   A branch node if available.
    */
-  public function getNode(): ?NodeInterface {
+  public function getNode(): ?BranchNode {
     $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
 
     $storage = $entity_type_manager->getStorage('node');
@@ -70,7 +70,7 @@ class Branch {
     ]);
 
     $node = reset($nodes);
-    return ($node instanceof NodeInterface) ? $node : NULL;
+    return ($node instanceof BranchNode) ? $node : NULL;
   }
 
   /**
@@ -80,19 +80,7 @@ class Branch {
    *   The address field, along with metadata such as GPS coordinates.
    */
   public function getAddressData(): ?AddressGsearchItemInterface {
-    if (!($this->node) || !$this->node->hasField('field_address_gsearch')) {
-      return NULL;
-    }
-
-    $field = $this->node->get('field_address_gsearch');
-
-    if ($field->isEmpty()) {
-      return NULL;
-    }
-
-    $value = $field->first();
-
-    return ($value instanceof AddressGsearchItemInterface) ? $value : NULL;
+    return $this->node?->getAddressData();
   }
 
 }

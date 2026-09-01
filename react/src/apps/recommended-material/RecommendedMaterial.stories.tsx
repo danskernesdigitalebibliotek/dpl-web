@@ -63,3 +63,20 @@ export const materialWithoutType: Story = {
     materialType: undefined
   }
 };
+
+// The fixture work has a manifestation of this type, so the link should open it.
+export const materialWithAvailableType: Story = {
+  args: {
+    ...Default.args,
+    materialType: "e-bog" as ManifestationMaterialType
+  }
+};
+
+// The fixture work has no manifestation of this type, so the link should fall
+// back to the normal logic and not force the type onto the URL.
+export const materialWithUnavailableType: Story = {
+  args: {
+    ...Default.args,
+    materialType: "lydbog (online)" as ManifestationMaterialType
+  }
+};

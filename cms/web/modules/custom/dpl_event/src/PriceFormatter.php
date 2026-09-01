@@ -83,14 +83,14 @@ class PriceFormatter {
   public function formatPriceRange(array $prices): string {
     sort($prices);
 
-    // Check if the array is empty or all prices are zero (free).
-    if (empty($prices) || max($prices) == 0) {
-      return $this->translation->translate("Free");
-    }
-
     $has_free_price = in_array(0, $prices);
     // Remove free prices (0 values) for further processing.
     $filtered_prices = array_filter($prices, fn($price) => $price > 0);
+
+    // If the array is empty or all prices are zero the event is free.
+    if (empty($filtered_prices)) {
+      return $this->translation->translate("Free");
+    }
 
     // Determine the highest price in the range.
     $highest_price_raw = max($filtered_prices);
@@ -157,6 +157,10 @@ class PriceFormatter {
    *   Formatted price range string.
    */
   public function formatRawPriceRange(array $prices): string {
+    if (empty($prices)) {
+      return '';
+    }
+
     sort($prices);
     $lowest_price = min($prices);
     $highest_price = max($prices);

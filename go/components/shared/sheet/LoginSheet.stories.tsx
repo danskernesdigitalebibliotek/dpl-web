@@ -5,7 +5,7 @@ import { darkModeDecorator } from "@/.storybook/decorators"
 import LoginSheet from "./LoginSheet"
 
 const meta = {
-  title: "components/LoginSheet",
+  title: "sheets/LoginSheet",
   component: LoginSheet,
   parameters: {
     layout: "centered",

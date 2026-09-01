@@ -74,4 +74,13 @@
       max-width: 346px;
     }
   }
+
+  // The notice takes the place of the buttons when a material has no available
+  // actions. It is prose, so it should not be constrained to button width.
+  &__button > .material-unavailable-notice {
+    @include media-query__medium {
+      width: auto;
+      max-width: 65ch;
+    }
+  }
 }

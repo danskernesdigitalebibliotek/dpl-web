@@ -18,10 +18,32 @@ class RequestTyped {
   ) {}
 
   /**
+   * Retrieves a raw value from the request.
+   *
+   * Symfony 7.4 deprecated Request::get(). It looked through the route
+   * attributes, the query string and the request body in that order, and
+   * callers rely on all three, so do the same lookup here. The query and
+   * request bags are read through all() because InputBag::get() rejects
+   * anything that is not a scalar.
+   */
+  private function getRaw(string $key): mixed {
+    if ($this->request->attributes->has($key)) {
+      return $this->request->attributes->get($key);
+    }
+    if ($this->request->query->has($key)) {
+      return $this->request->query->all()[$key];
+    }
+    if ($this->request->request->has($key)) {
+      return $this->request->request->all()[$key];
+    }
+    return NULL;
+  }
+
+  /**
    * Retrieve a value as a string.
    */
   public function getString(string $key, ?string $default = NULL): ?string {
-    $value = $this->request->get($key);
+    $value = $this->getRaw($key);
     if ($value === NULL) {
       return $default;
     }
@@ -35,7 +57,7 @@ class RequestTyped {
    * Retrieve a value as an integer.
    */
   public function getInt(string $key, ?int $default = NULL): ?int {
-    $value = $this->request->get($key);
+    $value = $this->getRaw($key);
     if ($value === NULL) {
       return $default;
     }
@@ -51,7 +73,7 @@ class RequestTyped {
    * Retrieve a value as a data time.
    */
   public function getDateTime(string $key, ?\DateTimeInterface $default = NULL) : ?\DateTimeInterface {
-    $value = $this->request->get($key);
+    $value = $this->getRaw($key);
     if ($value) {
       try {
         return new DateTimeImmutable($value);
@@ -83,7 +105,7 @@ class RequestTyped {
    *   An array of integers.
    */
   public function getInts(string $key, array $default = [], string $separator = ","): array {
-    $value = $this->request->get($key);
+    $value = $this->getRaw($key);
     if ($value === NULL) {
       return $default;
     }

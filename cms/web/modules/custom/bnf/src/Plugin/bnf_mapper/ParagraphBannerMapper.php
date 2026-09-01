@@ -47,7 +47,7 @@ class ParagraphBannerMapper extends BnfMapperParagraphPluginBase {
 
     $link = $this->mapper->map($object->bannerLink);
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'banner',
       'field_underlined_title' => [
         'value' => $object->underlinedTitle->value ?? '',

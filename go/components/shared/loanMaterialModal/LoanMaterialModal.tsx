@@ -2,26 +2,39 @@ import { useQueryClient } from "@tanstack/react-query"
 import React, { useState } from "react"
 
 import {
+  getEbookReadUrl,
   getManifestationLabel,
   getManifestationMaterialTypeIcon,
+  getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
-import AlertBox from "@/components/shared/alertBox/AlertBox"
-import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
+import { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
 import { Button } from "@/components/shared/button/Button"
-import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
-import Icon from "@/components/shared/icon/Icon"
+import DigitalExpiryStatusLabel from "@/components/shared/loanCard/DigitalExpiryStatusLabel"
+import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
+import LoanAlreadyLoanedContent from "@/components/shared/loanMaterialModal/LoanAlreadyLoanedContent"
+import { publizonErrorMessageMap } from "@/components/shared/loanMaterialModal/helper"
+import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
+import { useModalFlow } from "@/components/shared/modalFlow/useModalFlow"
+import Player from "@/components/shared/publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
-import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
+import SmartLink from "@/components/shared/smartLink/SmartLink"
+import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
-import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  ManifestationSearchPageTeaserFragment,
+  useGetMaterialQuery,
+} from "@/lib/graphql/generated/fbi/graphql"
+import { displayCreators } from "@/lib/helpers/helper.creators"
+import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
+import type { CreateLoanResult, LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 import { getGetV1UserLoansAdapterQueryKey } from "@/lib/rest/publizon/adapter/generated/publizon"
 import { ApiResponseCode } from "@/lib/rest/publizon/local-adapter/generated/model"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import usePostV1UserLoansIdentifier from "@/lib/rest/publizon/usePostV1UserLoansIdentifier"
 
-import { publizonErrorMessageMap } from "./helper"
-
+// One dialog with three views: loan confirmation, "Dit lån" details after
+// a successful loan, and (for audiobooks) the player.
 const LoanMaterialModal = ({
   open,
   onClose,
@@ -35,18 +48,20 @@ const LoanMaterialModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
-  const manifestation = data?.work?.manifestations?.all?.find(m => m.pid === pid)
+  const manifestation = findManifestationByPid(data?.work, pid)
   const { mutate } = usePostV1UserLoansIdentifier()
   const { data: loansData, isLoading: isLoadingLoans } = useGetV1UserLoans()
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
-  const [publizonError, setPublizonError] = useState<{
-    code: ApiResponseCode
-    message: string
-  } | null>(null)
+  const [loanResult, setLoanResult] = useState<CreateLoanResult | null>(null)
+  const flow = useModalFlow<"confirm" | "details" | "player">({ initial: "confirm" })
 
   const identifier = getPublizonIdentifierFromManifestation(manifestation)
   const isAlreadyLoaned =
     loansData?.loans?.some(loan => loan.libraryBook?.identifier === identifier) ?? false
+
+  const label = manifestation ? getManifestationLabel(manifestation) : ""
+  const category = getMaterialCategory(manifestation?.materialTypes[0]?.materialTypeSpecific.code)
+  const isBlue = useIsBlueTitle(manifestation)
 
   const handleLoanMaterial = () => {
     if (!manifestation || !identifier) return
@@ -54,89 +69,160 @@ const LoanMaterialModal = ({
     mutate(
       { identifier },
       {
-        onSuccess: () => {
-          // Refetch data to update the UI for WorkPageButtons
-          queryClient.invalidateQueries({ queryKey: getGetV1UserLoansAdapterQueryKey() })
+        onSuccess: result => {
           setIsHandlingLoan(false)
-          onClose()
+          if (!result) {
+            onClose()
+            return
+          }
+          // Publizon's loan list lags behind the create call, so a refetch
+          // would miss the new loan. Write it into the cache from the
+          // create response instead.
+          queryClient.setQueryData<LoanListResult>(
+            getGetV1UserLoansAdapterQueryKey(),
+            previous => ({
+              ...previous,
+              loans: [
+                ...(previous?.loans ?? []),
+                {
+                  orderId: result.orderId,
+                  orderDateUtc: new Date().toISOString(),
+                  loanExpireDateUtc: result.expirationDateUtc,
+                  libraryBook: { identifier },
+                },
+              ],
+            })
+          )
+
+          // Continue to "Dit lån" with the read/listen action ready.
+          if (result.expirationDateUtc) {
+            setLoanResult(result)
+            flow.goTo("details")
+          } else {
+            onClose()
+          }
         },
         onError: error => {
+          setIsHandlingLoan(false)
+          let code: ApiResponseCode | undefined
           if (error instanceof Error) {
-            const errorData = JSON.parse(error.message)
-            setPublizonError(errorData)
-            setIsHandlingLoan(false)
+            try {
+              code = (JSON.parse(error.message) as { code?: ApiResponseCode }).code
+            } catch {
+              // Non-JSON error message — fall through to the generic copy.
+            }
           }
+          toast.error(
+            (code !== undefined && publizonErrorMessageMap[code]) ||
+              "Lånet kunne ikke gennemføres. Prøv igen senere."
+          )
         },
       }
     )
   }
 
+  const titleText =
+    flow.view === "player"
+      ? `Lyt til ${label}`
+      : flow.view === "details"
+        ? "Dit lån"
+        : (manifestation && `Lån ${label}`) || ""
+
   return (
     <ResponsiveDialog
       open={open}
       onClose={onClose}
-      title={(manifestation && `Lån ${getManifestationLabel(manifestation)}`) || ""}>
-      <AnimateChangeInHeight>
-        {manifestation && (
-          <>
-            <div
-              className="rounded-base relative flex aspect-1/1 h-36 w-full flex-col items-center
-                justify-center lg:aspect-4/5">
-              <CoverPicture alt="Forsidebillede på værket" covers={manifestation.cover} />
-              <MaterialTypeIconWrapper
-                iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-                className="bg-background absolute -bottom-6 h-10 w-10 outline-1"
-              />
-            </div>
-
-            <div className="mx-auto mt-10 mb-5 w-full max-w-prose space-y-4">
-              <p className="text-typo-subtitle-md text-center">
-                {`Er du sikker på, at du vil låne materialet${` (${getManifestationLabel(manifestation)})?` || "?"}`}
-              </p>
-              {isAlreadyLoaned && (
-                <AlertBox
-                  variant="warning"
-                  message={`Du har allerede lånt denne ${getManifestationLabel(manifestation)}. Find den på Min side.`}
-                />
-              )}
-              {publizonError && <AlertBox message={publizonErrorMessageMap[publizonError.code]} />}
-            </div>
-
-            <div className="flex flex-row items-center justify-center gap-6">
-              {!isAlreadyLoaned && !publizonError && (
-                <Button
-                  theme={"primary"}
-                  size={"lg"}
-                  data-cy={cyKeys["approve-loan-button"]}
-                  onClick={handleLoanMaterial}
-                  disabled={isHandlingLoan || isLoadingLoans}>
-                  {!isHandlingLoan && "Ja"}
-                  {isHandlingLoan && (
-                    <Icon
-                      name="go-spinner"
-                      ariaLabel="Indlæser"
-                      className="animate-spin-reverse h-[24px] w-[24px]"
-                    />
-                  )}
-                </Button>
-              )}
-              <Button
-                size={"lg"}
-                disabled={isHandlingLoan || isLoadingLoans}
-                onClick={() => onClose()}>
-                {!isHandlingLoan && (publizonError || isAlreadyLoaned ? "Luk" : "Nej")}
-                {isHandlingLoan && (
-                  <Icon
-                    name="go-spinner"
-                    ariaLabel="Indlæser"
-                    className="animate-spin-reverse h-[24px] w-[24px]"
+      onBack={flow.view === "player" ? () => flow.back() : undefined}
+      viewDirection={flow.direction}
+      title={flow.animatedTitle(titleText)}>
+      {flow.renderBody(
+        flow.view === "player" && loanResult?.orderId ? (
+          <div>
+            <Player type="loan" orderId={loanResult.orderId} />
+          </div>
+        ) : flow.view === "details" && manifestation && loanResult?.expirationDateUtc ? (
+          <LoanDetailsContent
+            loan={{ dueDate: loanResult.expirationDateUtc, loanDate: new Date().toISOString() }}
+            manifestation={manifestation as unknown as ManifestationSearchPageTeaserFragment}
+            title={data?.work?.titles.full[0] ?? ""}
+            creators={displayCreators(data?.work?.creators ?? [], 1)}
+            dueDateLabel="Udløber"
+            blueTitle
+            status={<DigitalExpiryStatusLabel dueDate={loanResult?.expirationDateUtc} />}
+          />
+        ) : (
+          manifestation && (
+            <div data-cy={cyKeys["loan-material-modal"]}>
+              {isAlreadyLoaned ? (
+                <LoanAlreadyLoanedContent manifestation={manifestation} />
+              ) : (
+                <>
+                  <ManifestationCover
+                    cover={manifestation.cover}
+                    iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+                    className="mx-auto w-32 shrink-0"
+                    costFree={isBlue}
+                    iconClassName={
+                      isBlue ? "bg-content-blue-100 dark:text-blue-title-dark h-10 w-10" : undefined
+                    }
                   />
-                )}
-              </Button>
+
+                  <div className="mx-auto mt-10 mb-5 w-full space-y-4">
+                    <h3 className="text-typo-heading-5 text-center">
+                      {`Er du sikker på, at du vil låne${` ${getManifestationLabel(manifestation, "definite")}?`}`}
+                    </h3>
+                  </div>
+                </>
+              )}
             </div>
-          </>
-        )}
-      </AnimateChangeInHeight>
+          )
+        )
+      )}
+
+      {manifestation && flow.view === "confirm" && (
+        <ResponsiveDialog.Actions>
+          {!isAlreadyLoaned && (
+            <Button
+              theme="primary"
+              size="lg"
+              data-cy={cyKeys["approve-loan-button"]}
+              onClick={handleLoanMaterial}
+              disabled={isHandlingLoan || isLoadingLoans}
+              isLoading={isHandlingLoan}>
+              Ja
+            </Button>
+          )}
+          <Button size="lg" disabled={isHandlingLoan || isLoadingLoans} onClick={() => onClose()}>
+            {isAlreadyLoaned ? "Luk" : "Nej"}
+          </Button>
+        </ResponsiveDialog.Actions>
+      )}
+
+      {flow.view === "details" && loanResult?.orderId && (
+        <ResponsiveDialog.Actions>
+          {category === "ebook" ? (
+            <Button
+              theme="primary"
+              size="lg"
+              ariaLabel={`Læs ${label}`}
+              data-cy={cyKeys["read-loan-button"]}
+              asChild>
+              <SmartLink href={getEbookReadUrl(wid, loanResult.orderId)} reload>
+                Læs {label}
+              </SmartLink>
+            </Button>
+          ) : category === "audio" ? (
+            <Button
+              theme="primary"
+              size="lg"
+              ariaLabel={`Lyt til ${label}`}
+              data-cy={cyKeys["listen-loan-button"]}
+              onClick={() => flow.goTo("player")}>
+              Lyt til {label}
+            </Button>
+          ) : null}
+        </ResponsiveDialog.Actions>
+      )}
     </ResponsiveDialog>
   )
 }

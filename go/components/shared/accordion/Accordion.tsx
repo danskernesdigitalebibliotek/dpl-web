@@ -12,9 +12,15 @@ const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
 >(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Item ref={ref} className={cn(className)} {...props}>
+  <AccordionPrimitive.Item
+    ref={ref}
+    className={cn(
+      `border-foreground/10 border-b last:border-b-0 last:[&>div[data-state]]:pb-0
+      first:[&>h3>button]:pt-0 last:[&>h3>button[data-state=closed]]:pb-0`,
+      className
+    )}
+    {...props}>
     {children}
-    <hr className="mt-1 mb-1" />
   </AccordionPrimitive.Item>
 ))
 AccordionItem.displayName = "AccordionItem"
@@ -27,14 +33,14 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        `text-typo-subtitle-md hover:bg-background-overlay flex flex-1 items-center justify-between
-        rounded-md p-4 text-left font-medium transition-all [&[data-state=open]>svg]:rotate-180`,
+        `text-typo-subtitle-md hover:text-foreground-muted flex flex-1 items-center justify-between
+        gap-4 py-5 pr-2 text-left font-medium transition-colors [&[data-state=open]>svg]:rotate-180`,
         className
       )}
       {...props}>
       {children}
       <ChevronDownIcon
-        className="text-muted-foreground h-8 w-8 shrink-0 transition-transform duration-200"
+        className="text-muted-foreground h-5 w-5 shrink-0 transition-transform duration-200"
       />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
@@ -48,7 +54,7 @@ const AccordionContent = React.forwardRef<
   <AccordionPrimitive.Content
     ref={ref}
     className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down
-      overflow-hidden p-4 pt-1"
+      overflow-hidden pb-5"
     {...props}>
     <div className={cn(className)}>{children}</div>
   </AccordionPrimitive.Content>

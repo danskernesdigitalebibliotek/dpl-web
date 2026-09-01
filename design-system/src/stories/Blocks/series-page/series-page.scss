@@ -1,0 +1,122 @@
+.series-page {
+  @include block-spacing();
+
+  background-color: $color__global-primary;
+}
+
+// The container lives here rather than on each child, so the intro text and the
+// covers share one grid.
+.series-page__header {
+  @include layout-container($block-max-width__large);
+
+  display: grid;
+  gap: $s-xl;
+  grid-template-columns: 1fr;
+  // Clears the whole intro - description as well as covers - from the member
+  // list below it. 48px is the standard block spacing; the scale has no single
+  // step for it, so it is composed from two that add up.
+  padding-bottom: $s-xl + $s-md;
+
+  @include media-query__medium {
+    // Top aligned: the intro is the content, the covers only decorate it, so
+    // the title starts at the top of the block no matter which column is
+    // taller.
+    align-items: start;
+    grid-template-columns: 1fr auto;
+  }
+}
+
+.series-page__byline {
+  @include typography($typo__tags-large);
+
+  color: $color__text-secondary-gray;
+}
+
+.series-page__byline-link {
+  color: inherit;
+}
+
+.series-page__title {
+  @include typography($typo__h1);
+
+  margin-top: $s-sm;
+}
+
+// Roughly a third of series have no description, so nothing here may rely on
+// it being present.
+.series-page__description {
+  @include typography($typo__body-large);
+
+  margin-top: $s-lg;
+  // A readable line length. The header grid already narrows this column when
+  // there are covers beside it; the cap is what keeps the text readable when
+  // there are none.
+  max-width: 60ch;
+}
+
+// Decoration only, and the first thing to go when there is no room for it.
+.series-page__covers {
+  display: none;
+
+  @include media-query__medium {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.series-page__cover {
+  filter: drop-shadow(0 $s-xs 12px rgb(72 72 72 / 30%));
+
+  // Fanned out, each tucked behind the next.
+  &:not(:first-child) {
+    margin-left: -$s-2xl;
+  }
+
+  // Angles for the full fan of three, which is what the design asks for and
+  // what nearly every series can fill. The count modifiers below rebalance
+  // them when there are fewer covers to fan.
+  &:nth-child(1) {
+    transform: rotate(-7deg);
+  }
+
+  &:nth-child(2) {
+    transform: rotate(-1deg);
+  }
+
+  &:nth-child(3) {
+    transform: rotate(6deg);
+  }
+}
+
+// Not every series has three covers worth showing - a short one may only have
+// one or two materials, and covers no library has supplied an image for are
+// left out. Left as-is the angles above would lean the whole fan to one side,
+// so each smaller count keeps the same step between covers but centres them
+// the way the full fan is centred. There is no --count-3 rule: that is what
+// the angles above already are.
+.series-page__covers--count-2 {
+  .series-page__cover:nth-child(1) {
+    transform: rotate(-4deg);
+  }
+
+  .series-page__cover:nth-child(2) {
+    transform: rotate(3deg);
+  }
+}
+
+.series-page__covers--count-1 {
+  .series-page__cover:nth-child(1) {
+    transform: rotate(-1deg);
+  }
+}
+
+.series-page__members {
+  @include layout-container($block-max-width__large);
+
+  display: flex;
+  flex-direction: column;
+  // 16px at every width. Anything wider and the rows stop reading as one
+  // listing.
+  gap: $s-md;
+  margin-top: $s-xl;
+}

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 
-import VideoEmbed from "@/components/paragraphs/shared/VideoEmbed"
+import VideoEmbed from "@/components/shared/videoEmbed/VideoEmbed"
 
 vi.mock("next/image", () => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

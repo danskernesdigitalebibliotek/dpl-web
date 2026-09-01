@@ -20,11 +20,11 @@ class ParagraphFiles extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         $instance->__typename = 'ParagraphFiles';
         if ($files !== self::UNDEFINED) {
-            $instance->files = $files;
+            $instance->__set('files', $files);
         }
 
         return $instance;

@@ -14,8 +14,10 @@ import { MappArgs } from "../../core/storybook/mappArgs";
 import { EditionSwitchModalArgs } from "../../core/storybook/editionSwitchModalArgs";
 import { PlayerModalProps } from "../../core/storybook/playerModalArgs";
 import { OpenOrderProps } from "../../core/storybook/openOrderArgs";
+import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
 import withPageStatistics from "../../core/statistics/withPageStatistics";
 import useSetSmoothScroll from "../../core/utils/useSetSmoothScroll";
+import { MaterialUnavailableNoticeArgs } from "../../components/material/MaterialUnavailableNotice/MaterialUnavailableNoticeArgs";
 
 interface MaterialEntryTextProps {
   alreadyReservedText: string;
@@ -173,9 +175,9 @@ interface MaterialEntryTextProps {
   reservationErrorsTitleText: string;
   reservationModalCloseModalAriaLabelText: string;
   reservationModalScreenReaderModalDescriptionText: string;
+  reservationRecommendationsTitleText: string;
   reservationSuccesIsReservedForYouText: string;
   reservationSuccessPreferredPickupBranchText: string;
-  reservationSuccesTitleText: string;
   reserveBookText: string;
   reserveText: string;
   reserveWithMaterialTypeText: string;
@@ -218,7 +220,9 @@ export interface MaterialEntryProps
     MappArgs,
     EditionSwitchModalArgs,
     PlayerModalProps,
-    OpenOrderProps {
+    BiblioAdapterArgs,
+    OpenOrderProps,
+    MaterialUnavailableNoticeArgs {
   wid: WorkId;
 }
 

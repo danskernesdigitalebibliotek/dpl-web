@@ -1,75 +1,126 @@
 "use client"
 
+import { useSelector } from "@xstate/react"
+import { usePathname } from "next/navigation"
 import { useQueryStates } from "nuqs"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
+import CompensationModal from "@/components/shared/compensationModal/CompensationModal"
+import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import FeesModal from "@/components/shared/feesModal/FeesModal"
+import PhysicalLoansModal from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
+import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
+import { TModalType, VALID_MODAL_TYPES, modalParsers } from "@/lib/helpers/modal-url"
 import {
-  TModalType,
-  TModalUrlParams,
-  VALID_MODAL_TYPES,
-  modalParsers,
-} from "@/lib/helpers/modal-url"
+  TModalRegistry,
+  TModalStoreType,
+  closeModal,
+  modalStore,
+  openModal,
+} from "@/store/modal.store"
 
+import LoanDetailsModal from "../loanDetailsModal/LoanDetailsModal"
+import LoanLoginModal from "../loanLoginModal/LoanLoginModal"
 import LoanMaterialModal from "../loanMaterialModal/LoanMaterialModal"
 import PlayerModal from "../playerModal/playerModal"
 import PlayerPreviewModal from "../playerPreviewModal/playerPreviewModal"
+import ReservationDetailsModal from "../reservationDetailsModal/ReservationDetailsModal"
+import ReservationLoginModal from "../reservationModal/ReservationLoginModal"
+import ReservationModal from "../reservationModal/ReservationModal"
+import ReservationUniloginModal from "../reservationModal/ReservationUniloginModal"
 
-export function DynamicModal() {
-  const [{ modal, modalProps }, setModal] = useQueryStates(modalParsers, { scroll: false })
+const ModalComponents: {
+  [K in TModalStoreType]: React.ComponentType<
+    TModalRegistry[K] & { open: boolean; onClose: () => void }
+  >
+} = {
+  PlayerModal,
+  PlayerPreviewModal,
+  CompensationModal,
+  DigitalLoansModal,
+  FeesModal,
+  LoanDetailsModal,
+  PhysicalLoansModal,
+  ReservationsModal,
+  ReservationDetailsModal,
+  LoanMaterialModal,
+  LoanLoginModal,
+  ReservationModal,
+  ReservationLoginModal,
+  ReservationUniloginModal,
+}
 
-  const modalType = modal && VALID_MODAL_TYPES.has(modal) ? (modal as TModalType) : null
-  const wid = modalProps?.wid ?? null
-  const pid = modalProps?.pid ?? null
-
-  const [open, setOpen] = useState(!!modalType)
-  const [activeModal, setActiveModal] = useState<TModalType | null>(modalType)
-  const [activeParams, setActiveParams] = useState<TModalUrlParams[TModalType] | null>(modalProps)
+// Opens a modal from URL query params and strips them right away — the way
+// external flows hand a modal over to the store. The case that needs this:
+// a user tries to loan without being logged in, logs in, and the redirect
+// lands here with the loan modal in the URL so it can reopen. Stripping is
+// deliberate: the params are a one-shot handover, not state — if they stayed,
+// the modal would become part of history/bookmarks and reopen on
+// back-navigation or page restore.
+function ModalUrlListener() {
+  const [{ modal, modalProps }, setModal] = useQueryStates(modalParsers, {
+    scroll: false,
+    history: "replace",
+  })
 
   useEffect(() => {
-    if (modalType && wid && pid) {
-      setActiveModal(modalType)
-      setActiveParams({ wid, pid })
-      setOpen(true)
-    } else {
-      setOpen(false)
-      const timer = setTimeout(() => setActiveModal(null), 500)
-      return () => clearTimeout(timer)
-    }
-  }, [modalType, wid, pid])
-
-  const closeModal = useCallback(() => {
+    if (!modal || !VALID_MODAL_TYPES.has(modal) || !modalProps?.wid || !modalProps?.pid) return
+    openModal(modal as TModalType, { wid: modalProps.wid, pid: modalProps.pid })
     setModal({ modal: null, modalProps: null })
-  }, [setModal])
-
-  if (!activeModal || !activeParams) return null
-
-  if (activeModal === "LoanMaterialModal") {
-    return (
-      <LoanMaterialModal
-        open={open}
-        onClose={closeModal}
-        wid={activeParams.wid}
-        pid={activeParams.pid}
-      />
-    )
-  }
-
-  if (activeModal === "PlayerPreviewModal") {
-    return (
-      <PlayerPreviewModal
-        open={open}
-        onClose={closeModal}
-        wid={activeParams.wid}
-        pid={activeParams.pid}
-      />
-    )
-  }
-
-  if (activeModal === "PlayerModal") {
-    return (
-      <PlayerModal open={open} onClose={closeModal} wid={activeParams.wid} pid={activeParams.pid} />
-    )
-  }
+  }, [modal, modalProps, setModal])
 
   return null
+}
+
+// Renders the modal opened through the modal store. Keeps the closing modal
+// mounted until its exit animation has played, and closes on route changes —
+// the store outlives page navigations. Exported so stories can mount the
+// store-driven host without the nuqs-dependent URL listener.
+export function StoreModal() {
+  const { open, modalType, props } = useSelector(modalStore, state => state.context)
+  const [active, setActive] = useState<{
+    modalType: TModalStoreType
+    props: TModalRegistry[TModalStoreType]
+  } | null>(null)
+  // The modal mounts closed and opens on the next frame, so the enter
+  // animation plays from a fully committed tree instead of the dialog
+  // painting empty (a blank full-size flash) on mount.
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (open && modalType && props) {
+      setActive({ modalType, props })
+      const frame = requestAnimationFrame(() => setVisible(true))
+      return () => cancelAnimationFrame(frame)
+    } else {
+      setVisible(false)
+      const timer = setTimeout(() => setActive(null), 500)
+      return () => clearTimeout(timer)
+    }
+  }, [open, modalType, props])
+
+  const pathname = usePathname()
+  const previousPathname = useRef(pathname)
+  useEffect(() => {
+    if (previousPathname.current !== pathname) {
+      previousPathname.current = pathname
+      closeModal()
+    }
+  }, [pathname])
+
+  if (!active) return null
+
+  const ModalComponent = ModalComponents[active.modalType] as React.ComponentType<
+    TModalRegistry[TModalStoreType] & { open: boolean; onClose: () => void }
+  >
+  return <ModalComponent open={open && visible} onClose={closeModal} {...active.props} />
+}
+
+export function DynamicModal() {
+  return (
+    <>
+      <ModalUrlListener />
+      <StoreModal />
+    </>
+  )
 }

@@ -23,9 +23,9 @@ class UploadForm extends FormBase {
    * Constructor.
    */
   public function __construct(
-    private Parser $yamlParser,
-    private ConfigFactoryInterface $config,
-    private ModuleInstallerInterface $moduleInstaller,
+    protected Parser $yamlParser,
+    protected ConfigFactoryInterface $config,
+    protected ModuleInstallerInterface $moduleInstaller,
     MessengerInterface $messenger,
   ) {
     // We cannot use constructor property promotion as the property is already

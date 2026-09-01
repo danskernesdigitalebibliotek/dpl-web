@@ -18,10 +18,10 @@ class ParagraphSimpleLinks extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($link !== self::UNDEFINED) {
-            $instance->link = $link;
+            $instance->__set('link', $link);
         }
         $instance->__typename = 'ParagraphSimpleLinks';
 

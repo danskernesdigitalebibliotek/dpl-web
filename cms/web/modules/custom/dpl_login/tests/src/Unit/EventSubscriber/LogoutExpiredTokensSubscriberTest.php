@@ -76,7 +76,7 @@ class LogoutExpiredTokensSubscriberTest extends UnitTestCase {
    * @return array<string, array{bool, ?int, bool}>
    *   Array of test cases
    */
-  public function provideTokenCases(): array {
+  public static function provideTokenCases(): array {
     return [
       'Anonymous user' => [FALSE, NULL, FALSE],
       'Authenticated, tokenless user' => [TRUE, NULL, FALSE],

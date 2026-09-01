@@ -1,11 +1,14 @@
 uuid: b4d7a0c7-fa44-4c07-888f-3834556a0ee4
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.go_linkbox
 id: paragraph.go_linkbox
 site_resolver: site_selector
 configuration:
   sites:
     go: go
+draft_enabled: true
 revalidator: cache_tag
 revalidator_configuration: {  }

@@ -21,10 +21,10 @@ class WorkId extends \Spawnia\Sailor\ObjectLike
 
         $instance->__typename = 'WorkId';
         if ($material_type !== self::UNDEFINED) {
-            $instance->material_type = $material_type;
+            $instance->__set('material_type', $material_type);
         }
         if ($work_id !== self::UNDEFINED) {
-            $instance->work_id = $work_id;
+            $instance->__set('work_id', $work_id);
         }
 
         return $instance;

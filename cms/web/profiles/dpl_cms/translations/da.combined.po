@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-18 16:28+0200\n"
-"PO-Revision-Date: 2026-08-18 16:28+0200\n"
+"POT-Creation-Date: 2026-09-14 11:43+0200\n"
+"PO-Revision-Date: 2026-09-14 11:43+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-18 16:28+0200\n"
-"PO-Revision-Date: 2026-08-18 16:28+0200\n"
+"POT-Creation-Date: 2026-09-14 11:43+0200\n"
+"PO-Revision-Date: 2026-09-14 11:43+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -114,6 +114,12 @@ msgid ""
 "        (in the left-most column). See the clone form (by cloning an entity) "
 "for more information.\n"
 "      "
+msgstr ""
+
+msgctxt "views.view.user_admin_people:display:default:display_options:fields:status:alter:text"
+msgid ""
+"\n"
+"{{ status__value }}"
 msgstr ""
 
 msgctxt "DPL event"
@@ -303,11 +309,11 @@ msgstr "-"
 
 msgctxt "core.entity_view_display.eventinstance.default.list:content:date:settings:separator"
 msgid "-"
-msgstr ""
+msgstr "-"
 
 msgctxt "views.view.event_instance_list:display:default:display_options:fields:date__value:settings:separator"
 msgid "-"
-msgstr ""
+msgstr "-"
 
 msgid "- All -"
 msgstr "- Alle -"
@@ -404,6 +410,9 @@ msgctxt "views.view.webform_submissions:display:default:display_options:pager:op
 msgid "- All -"
 msgstr ""
 
+msgid "- Any -"
+msgstr "- Enhver -"
+
 msgctxt "facets.facet.audience:widget:config:default_option_label"
 msgid "- Any -"
 msgstr ""
@@ -459,6 +468,9 @@ msgstr " - Spring felt over -"
 
 msgid "-- Select --"
 msgstr "--Vælg--"
+
+msgid "-Any-"
+msgstr ""
 
 msgctxt "Paragraphs Features"
 msgid "..."
@@ -1553,6 +1565,9 @@ msgstr "@translated_language (Originalsprog)"
 msgid "@type"
 msgstr "@type"
 
+msgid "@type - @bundle"
+msgstr ""
+
 msgid "@type edit page"
 msgstr "@type redigér side"
 
@@ -1714,6 +1729,12 @@ msgstr ""
 "En bibliografisk reference til ressourcen. Anbefalet praksis er at inkludere "
 "tilstrækkelig bibliografisk detalje til at identificere ressourcen så "
 "entydigt som muligt."
+
+msgid ""
+"A boolean field can be three values (TRUE, FALSE, ANY). So when unchecked "
+"default will be act like \"ANY\" but this setting will treat the filter as "
+"FALSE."
+msgstr ""
 
 msgid "A brief URL, often created by a URL shortening service."
 msgstr "En kort URL, typisk lavet af en URL forkortelsesservice."
@@ -3089,6 +3110,9 @@ msgstr ""
 msgid "Administer Custom tags"
 msgstr ""
 
+msgid "Administer DPL Biblio configuration"
+msgstr ""
+
 msgid "Administer DPL footer settings"
 msgstr ""
 
@@ -3428,13 +3452,19 @@ msgctxt "views.view.webform_submissions:display:default:display_options:argument
 msgid "All"
 msgstr ""
 
+msgid "All %type crops have been deleted."
+msgstr ""
+
+msgid "All %type crops were deleted."
+msgstr ""
+
 msgctxt "DPL admin UX"
 msgid "All caches cleared."
 msgstr "Alle cacher tømt."
 
 msgctxt "dpl_event"
 msgid "All dates"
-msgstr ""
+msgstr "Alle datoer"
 
 msgid "All day"
 msgstr "Hele dagen"
@@ -3641,6 +3671,9 @@ msgstr ""
 "Tillader visning af enhver bruger med <i>tilladte</i> roller. Bemærk at "
 "denne tilladelse kun kontrollerer direkte visning af en enkelt bruger, den "
 "påvirker ikke Views."
+
+msgid "Allows you to configure separate clone settings for each entity bundle."
+msgstr ""
 
 msgid ""
 "Allows you to specify some exposed form elements as being secondary options "
@@ -4151,6 +4184,9 @@ msgctxt "views.view.media_library:display:default:display_options:exposed_form:o
 msgid "Apply filters"
 msgstr ""
 
+msgid "Apply soft limit to children"
+msgstr ""
+
 msgid "Appropriate keywords for this content."
 msgstr "Passende nøgleord for dette indhold."
 
@@ -4211,6 +4247,9 @@ msgstr "Er du sikker på du vil slette beskæringstypen %type?"
 
 msgid "Are you sure you want to delete the group %group?"
 msgstr "Er du sikker på, at du ønsker at slette gruppen %group?"
+
+msgid "Are you sure you want to flush all %type crops?"
+msgstr ""
 
 msgid "Are you sure you want to remove this paragraph?"
 msgstr ""
@@ -4402,6 +4441,9 @@ msgstr ""
 msgctxt "views.view.webform_submissions:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
 msgstr ""
+
+msgid "Ascending"
+msgstr "Stigende"
 
 msgid "Aspect Ratio"
 msgstr "Aspekt ratio"
@@ -4683,6 +4725,9 @@ msgstr ""
 msgid "Auto-submit"
 msgstr ""
 
+msgid "Auto-submit sort only"
+msgstr ""
+
 msgid "Autocomplete"
 msgstr "Autofuldfør"
 
@@ -4751,8 +4796,16 @@ msgstr ""
 msgid "Automatically submits the form when an element has changed."
 msgstr "Indsender automatisk formularen, når et element er ændret."
 
+msgid ""
+"Automatically submits the form when sorts has changed. Note submits the full "
+"form."
+msgstr ""
+
 msgid "Autostart login process"
 msgstr "Autostart log ind proces"
+
+msgid "Autosubmit breakpoint"
+msgstr ""
 
 msgid "Availability"
 msgstr "Tilgængelighed"
@@ -4815,9 +4868,6 @@ msgstr ""
 "BEF tilbyder noget ekstra HTML-struktur for at hjælpe dig med at style dine "
 "udsatte filtre. For nogle almindelige eksempler se <a href=\":doco\">online "
 "dokumentation</a>."
-
-msgid "BEF: library noUiSlider"
-msgstr "BEF: bibliotek noUiSlider"
 
 msgctxt "Fees list"
 msgid "BEFORE 27/10 2020"
@@ -5018,18 +5068,6 @@ msgstr ""
 "et begrænset antal muligheder, såsom<a href=\":node\">Node</a>:Type or <a "
 "href=\":taxonomy\">Taxonomy</a>:TermID."
 
-msgid "Better exposed filters library noUiSlider is installed locally."
-msgstr "Better exposed filters-biblioteket noUiSlider er installeret lokalt."
-
-msgid ""
-"Better exposed filters library noUiSlider is not installed locally and will "
-"be loaded from CDN. Loading external files from a CDN may be a data "
-"protection violation."
-msgstr ""
-"Better exposed filters-biblioteket noUiSlider er ikke installeret lokalt og "
-"vil blive hentet fra CDN. Indlæsning af eksterne filer fra et CDN kan være "
-"en overtrædelse af databeskyttelsesregler."
-
 msgid "Better, faster, stronger types"
 msgstr "Bedre, hurtigere, stærkere typer"
 
@@ -5041,6 +5079,18 @@ msgstr ""
 
 msgid "Bibliographic Citation"
 msgstr "Bibliografisk citation"
+
+msgctxt "Work Page"
+msgid "Bibliotek.dk"
+msgstr "Bibliotek.dk"
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:3:label"
+msgid "Billedbog"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:4:label"
+msgid "Billedbog (online)"
+msgstr ""
 
 msgid "Bing"
 msgstr "Bing"
@@ -5153,6 +5203,10 @@ msgctxt "field.field.paragraph.user_registration_item.field_body:label"
 msgid "Body"
 msgstr ""
 
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:0:label"
+msgid "Bog"
+msgstr ""
+
 msgid "Book"
 msgstr "Bog"
 
@@ -5203,7 +5257,7 @@ msgid "Borrow before @date"
 msgstr "Lån før @date"
 
 msgid "Both"
-msgstr ""
+msgstr "Begge"
 
 msgid "Bounce slide"
 msgstr "Springer"
@@ -5349,6 +5403,14 @@ msgstr ""
 msgid "Break the lock."
 msgstr "Bryd låsen."
 
+msgid "Breakpoint autosubmit"
+msgstr ""
+
+msgid ""
+"Breakpoint to determinate whether auto-submit should be enabled for the "
+"current screen dimensions."
+msgstr ""
+
 msgid "Brief URL"
 msgstr "Kort URL"
 
@@ -5392,6 +5454,9 @@ msgid "Bundle restrictions"
 msgstr "Begrænsninger for grupper"
 
 msgid "Bundle type"
+msgstr ""
+
+msgid "Bundle-specific clone settings"
 msgstr ""
 
 msgid "Button Text"
@@ -5464,6 +5529,9 @@ msgctxt "dpl_fbi"
 msgid "By relevance"
 msgstr "Bedste match"
 
+msgid "By result count (if available)"
+msgstr ""
+
 msgctxt "Work Page"
 msgid "By same author"
 msgstr "Af samme forfatter"
@@ -5486,6 +5554,12 @@ msgstr "Titel (A - Å)"
 msgctxt "dpl_fbi"
 msgid "By title (descending)"
 msgstr "Titel (Å - A)"
+
+msgid "By value key (ascending)"
+msgstr ""
+
+msgid "By value key (descending)"
+msgstr ""
 
 msgctxt "field.field.media.image.field_byline:label"
 msgid "Byline"
@@ -5965,6 +6039,9 @@ msgstr "Afkrydsningfelter/radioknapper"
 msgid "Check for new subscription content."
 msgstr ""
 
+msgid "Check to treat field as FALSE"
+msgstr ""
+
 msgid "Checkboxes default value"
 msgstr "Standardværdi for afkrydsningsfelter"
 
@@ -6043,6 +6120,9 @@ msgid ""
 msgstr ""
 "Vælg mellem åben eller planlagt registrering. Åben registrering slutter, når "
 "arrangementet starter."
+
+msgid "Choose how the filter options should be sorted."
+msgstr ""
 
 msgctxt "Create patron"
 msgid "Choose library"
@@ -6337,6 +6417,12 @@ msgstr "Sammenklappelig"
 
 msgid "Collapsible details element title"
 msgstr "Titel på dropdown detaljeelement"
+
+msgid ""
+"Collapsible filter will be opened by default. It can be collapsed by the "
+"user if they wish, but after the page reload (or AJAX view refresh) it will "
+"be opened again."
+msgstr ""
 
 msgid "Collation Fixer"
 msgstr "Kollationsfikser"
@@ -6676,6 +6762,10 @@ msgstr "Kontaktinformation for arrangementet."
 
 msgid "Contact registrants"
 msgstr ""
+
+msgctxt "Work Page"
+msgid "Contact the library for access"
+msgstr "Kontakt biblioteket for at få adgang"
 
 msgid "Container (invisible)"
 msgstr "Oversigt (usynlig)"
@@ -7081,6 +7171,9 @@ msgstr ""
 msgid "Could not fetch VideoTool metadata from {url}: {message}"
 msgstr ""
 
+msgid "Could not fetch series title from FBI: @message"
+msgstr ""
+
 msgid "Could not fetch work title from FBI: @message"
 msgstr ""
 
@@ -7111,6 +7204,9 @@ msgstr ""
 msgctxt "translation handling"
 msgid "Could not locate temp PO file."
 msgstr "Kunne ikke lokalisere midlertidig PO-fil."
+
+msgid "Could not look up series @id in FBI: @message"
+msgstr ""
 
 msgid "Could not migrate data for address search. @message"
 msgstr ""
@@ -7480,6 +7576,9 @@ msgstr "Brugerdefineret URL"
 msgid "Custom animation speed in milliseconds"
 msgstr ""
 
+msgid "Custom classes added to the field element"
+msgstr ""
+
 msgid "Custom handling related to Events."
 msgstr "Tilpas håndtering relateret til arrangementer"
 
@@ -7502,6 +7601,13 @@ msgstr "Brugerdefineret tidsplan"
 
 msgid "Custom scopes, separated by spaces, for example: openid email"
 msgstr "Brugerdefinerede scopes, adskilt med mellemrum, f.eks.: openid email"
+
+msgid ""
+"Custom sorting is not available for this filter type. Entity reference "
+"fields (taxonomy terms, users, content) cannot be easily reordered due to "
+"deep integration with Drupal core. Consider using JavaScript-based client-"
+"side sorting if needed."
+msgstr ""
 
 msgid "Custom tag"
 msgstr "Brugerdefineret tag"
@@ -7803,6 +7909,9 @@ msgstr "Dato"
 
 msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
 msgid "Date"
+msgstr ""
+
+msgid "Date & Time Picker"
 msgstr ""
 
 msgid "Date (often a range) of validity of a resource."
@@ -8664,6 +8773,9 @@ msgctxt "views.view.webform_submissions:display:default:display_options:exposed_
 msgid "Desc"
 msgstr ""
 
+msgid "Descending"
+msgstr "Faldende"
+
 msgid "Describe this crop type."
 msgstr "Beskriv beskæringstype."
 
@@ -8986,6 +9098,9 @@ msgstr "Vis etiketten af de refererede enhedsrevisioner."
 
 msgid "Display the referenced entities rendered by entity_view()."
 msgstr "Vis de refererede entities renderet af entity_view()."
+
+msgid "Display the referenced entities with a given view mode."
+msgstr ""
 
 msgid "Display the subdivision name instead of the subdivision code"
 msgstr "Vis underafdelingsnavnet i stedet for underafdelingskoden"
@@ -9409,6 +9524,10 @@ msgid "Dynamic entity reference rendered entity display format settings"
 msgstr ""
 
 msgid "Dynamic entity reference selection plugin settings"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:1:label"
+msgid "E-bog"
 msgstr ""
 
 msgctxt "Global"
@@ -9890,8 +10009,17 @@ msgstr "Aktivér en OpenID Connect-klient"
 msgid "Enable auto-submit"
 msgstr "Aktiver auto-submit"
 
+msgid "Enable auto-submit for sorts only."
+msgstr ""
+
 msgid "Enable confirmation on paragraphs remove"
 msgstr "Aktiver bekræftelse ved fjernelse af paragraphs"
+
+msgid ""
+"Enable custom sorting of filter options. Note: This feature is not available "
+"for entity reference fields (taxonomy, users, content) due to technical "
+"limitations."
+msgstr ""
 
 msgid ""
 "Enable event specific excluded dates? To add global excluded dates visit the "
@@ -9958,6 +10086,11 @@ msgctxt "Library Agency Configuration"
 msgid "Enable share buttons on material pages"
 msgstr "Tilføj deleknapper på værkvisningen"
 
+msgid ""
+"Enable the Breakpoint Module if you want to limit auto-submit feature only "
+"for specific device dimensions."
+msgstr ""
+
 msgid "Enable the Token module to allow token replacement in this field."
 msgstr "Aktiver Token-modulet for at tillade token-erstatning i dette felt."
 
@@ -9978,6 +10111,9 @@ msgctxt "field.field.paragraph.filtered_event_list.field_allow_multiple_per_seri
 msgid ""
 "Enable this to show several instances from the same series, in a stacked "
 "view. If not enabled, only the first matching instance will be shown."
+msgstr ""
+
+msgid "Enable tooltips"
 msgstr ""
 
 msgid "Enabled"
@@ -10094,6 +10230,9 @@ msgstr ""
 "Datoen og tiden vil være tilfældig inden for intervallet startende senere "
 "end enhedsoprettelsesdatoen og offentliggørelsesdatoen, op til et tidspunkt "
 "i fremtiden, der matcher samme span som valgt ovenfor."
+
+msgid "Enter a query parameter to use for combined sorts"
+msgstr ""
 
 msgid ""
 "Enter a unique identifier for this custom tag. This identifier can contain "
@@ -10382,9 +10521,6 @@ msgstr "Enhedsklon indstillinger."
 msgid "Entity id @id is not a @type entity. Processing skipped."
 msgstr ""
 
-msgid "Entity provider @id not found."
-msgstr "Enhedsudbyder @id ikke fundet."
-
 msgctxt "views.view.entity_reference_content:label"
 msgid "Entity reference - content"
 msgstr ""
@@ -10471,6 +10607,9 @@ msgstr ""
 msgctxt "Material search"
 msgid "Error retrieving saved data. Inputs not found."
 msgstr "Fejl ved hentning af gemte data. Intet indhold fundet."
+
+msgid "Error saving @view_id"
+msgstr ""
 
 msgid "Error warning icon"
 msgstr "Fejl advarsel ikon"
@@ -11495,6 +11634,22 @@ msgctxt "dpl_fbi"
 msgid "Fill out fields using link (optional)"
 msgstr "Udfyld felter i Materialekomponent med link til CQL-søgning (valgfrit)"
 
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:10:label"
+msgid "Film (blu-ray 4K)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:9:label"
+msgid "Film (blu-ray)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:11:label"
+msgid "Film (dvd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:12:label"
+msgid "Film (online)"
+msgstr ""
+
 msgctxt "Work Page"
 msgid "Film adaptations"
 msgstr "Filmatisering"
@@ -11818,6 +11973,9 @@ msgstr ""
 msgid ""
 "Flag to reduce actions dropdown to a button when there is only one option"
 msgstr ""
+
+msgid "Flush"
+msgstr "Ryd"
 
 msgid "Focal Point"
 msgstr "Fokuspunkt"
@@ -12329,6 +12487,9 @@ msgstr "Fornavn"
 
 msgid "Given name(s) or first name(s)"
 msgstr "Fornavn(e) eller fornavn(e)"
+
+msgid "Gives access to the Biblio adapter settings form."
+msgstr ""
 
 msgid "Giving admins a clearer access to cache-clearing, and the consequences."
 msgstr ""
@@ -14460,6 +14621,9 @@ msgstr "Begræns søgeresultater"
 msgid "Limit the amount of results displayed when searching."
 msgstr "Begræns mængden af resultater, der vises ved søgning."
 
+msgid "Limit the number of displayed items via JavaScript."
+msgstr ""
+
 msgid "Limit: @limit"
 msgstr "Grænse: @limit"
 
@@ -15059,6 +15223,10 @@ msgstr "Lav"
 msgctxt "dpl_campaign"
 msgid "Low (National)"
 msgstr "Lav (national)"
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:2:label"
+msgid "Lydbog (online)"
+msgstr ""
 
 msgid "MIME type"
 msgstr "MIME type"
@@ -15835,6 +16003,9 @@ msgstr "Metatags (Skjult felt for JSON support)"
 msgid "Metatags for @view : @display have been saved."
 msgstr "Metatags for @view : @display er blevet gemt."
 
+msgid "Middle"
+msgstr "Midt"
+
 msgid "Middle name"
 msgstr "Mellemnavn"
 
@@ -16057,6 +16228,14 @@ msgstr "Vælg alle"
 msgctxt "Global"
 msgid "Music"
 msgstr "Musik"
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:7:label"
+msgid "Musik (cd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:8:label"
+msgid "Musik (grammofonplade)"
+msgstr ""
 
 msgid ""
 "Must be the same as the profile selected on the form display for this field."
@@ -16400,6 +16579,9 @@ msgstr ""
 
 msgid "No key defined for @module notifications."
 msgstr "Ingen nøgle defineret for @module notifikationer."
+
+msgid "No limit"
+msgstr "Ingen grænse"
 
 msgid "No link"
 msgstr "Intet link"
@@ -17288,6 +17470,9 @@ msgstr ""
 msgid "Open Registration"
 msgstr "Åben registrering"
 
+msgid "Open by default"
+msgstr ""
+
 msgctxt "image.style.open_graph:label"
 msgid "Open graph (1200x630)"
 msgstr ""
@@ -17504,7 +17689,7 @@ msgstr "Bestil en digital kopi og modtag artiklen direkte på mail"
 
 msgctxt "Open order"
 msgid "Order from another library:"
-msgstr ""
+msgstr "Bestilt fra et andet bibliotek:"
 
 msgctxt "Work Page"
 msgid "Ordered from another library"
@@ -18353,6 +18538,12 @@ msgstr "Fyldtekst"
 msgid "Placeholder text for the filter"
 msgstr ""
 
+msgid "Placement Location"
+msgstr ""
+
+msgid "Placement location of slider"
+msgstr ""
+
 msgid ""
 "Places this element in the secondary options portion of the exposed form."
 msgstr ""
@@ -18655,6 +18846,10 @@ msgstr ""
 
 msgctxt "block.block.gin_primary_local_tasks:settings:label"
 msgid "Primary tabs"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_priority_material_type:label"
+msgid "Prioritised material type"
 msgstr ""
 
 msgid "Priority"
@@ -19272,6 +19467,9 @@ msgstr "Placerer filtermulighederne i et sammenklappeligt detaljeelement."
 msgid "Puts the sort options in a collapsible details element."
 msgstr "Placerer sorteringsmulighederne i et sammenklappeligt detaljeelement."
 
+msgid "Query parameter to use for combined sorts"
+msgstr ""
+
 msgid "Query string value"
 msgstr "Query-streng værdi"
 
@@ -19547,9 +19745,6 @@ msgstr "Referencefelt"
 
 msgid "Reference method"
 msgstr "Referencemetode"
-
-msgid "Reference revisions"
-msgstr "Referencerevisioner"
 
 msgid "Reference type"
 msgstr "Referencetype"
@@ -19902,6 +20097,10 @@ msgstr "Fjernede meta tags fra @config metatag konfiguration."
 msgid "Removing orphaned entities."
 msgstr "Fjerner hjemløse enheder."
 
+msgid ""
+"Render materials the adapter does not know as unavailable instead of failing"
+msgstr ""
+
 msgid "Rendered as @mode"
 msgstr "Renderet som @mode"
 
@@ -20223,7 +20422,7 @@ msgstr "Forhandler vare-ID"
 msgid "Retrieve all events"
 msgstr "Hent alle arrangementer"
 
-msgid "Retrieve current events"
+msgid "Retrieve happening events"
 msgstr ""
 
 msgctxt "Global"
@@ -20772,6 +20971,12 @@ msgstr "Scroll fremad"
 msgid "Scroll maximum height"
 msgstr "Scroll maksimal højde"
 
+msgid "Scrollable container height (px)"
+msgstr ""
+
+msgid "Scrollable container height in pixels"
+msgstr ""
+
 msgid "Search"
 msgstr "Søg"
 
@@ -21215,6 +21420,13 @@ msgid ""
 "below."
 msgstr "Vælg hvilken af udgaverne, som du vil reservere."
 
+msgctxt "field.field.paragraph.material_grid_automatic.field_priority_material_type:description"
+msgid ""
+"Select which material type should be prioritised when borrowers click a "
+"material. If the material has a manifestation with that material type, it "
+"will be opened. Otherwise the website's normal logic applies."
+msgstr ""
+
 msgid "Select which roles should be able to see unpublished nodes."
 msgstr "Vælg hvilke roller, der skal kunne se upublicerede noder."
 
@@ -21355,6 +21567,10 @@ msgstr "Serieregistrering"
 msgid "Series Starts"
 msgstr "Serien starter"
 
+msgctxt "Series Page"
+msgid "Series by"
+msgstr "En serie af"
+
 msgctxt "views.view.event_series_admin:display:default:display_options:fields:eventseries_start_date:label"
 msgid "Series start date"
 msgstr ""
@@ -21364,7 +21580,7 @@ msgid "Series title"
 msgstr "Serie"
 
 msgid "Server time: %utc"
-msgstr ""
+msgstr "Server tid: %utc"
 
 msgctxt "Open order"
 msgid "Service is currently unavailable"
@@ -21726,8 +21942,15 @@ msgctxt "advanced search 2"
 msgid "Show less"
 msgstr "Vis mindre"
 
+msgid "Show less label"
+msgstr ""
+
 msgid "Show links"
 msgstr "Vis links"
+
+msgctxt "Dpl Biblio"
+msgid "Show materials the adapter does not know as unavailable"
+msgstr ""
 
 msgid "Show message"
 msgstr "Vis besked"
@@ -21738,6 +21961,9 @@ msgstr "Vis flere"
 msgctxt "advanced search 2"
 msgid "Show more"
 msgstr "Vis flere"
+
+msgid "Show more label"
+msgstr ""
 
 msgid "Show only used items"
 msgstr "Vis kun brugte elementer"
@@ -21996,7 +22222,16 @@ msgstr "Links til sociale medier"
 msgid "Soft limit"
 msgstr "Blød grænse"
 
+msgid "Soft limit count"
+msgstr ""
+
 msgid "Soft limit height"
+msgstr ""
+
+msgid "Soft limit label show less"
+msgstr ""
+
+msgid "Soft limit label show more"
 msgstr ""
 
 msgid "Soft limit width"
@@ -22166,10 +22401,19 @@ msgstr ""
 msgid "Sort direction"
 msgstr "Sorteringsretning"
 
+msgid "Sort filter options"
+msgstr ""
+
 msgid "Sort filter options alphabetically"
 msgstr ""
 
 msgid "Sort is a secondary option"
+msgstr ""
+
+msgid "Sort method"
+msgstr ""
+
+msgid "Sort method for filter options"
 msgstr ""
 
 msgid "Sort options"
@@ -22191,6 +22435,9 @@ msgstr "Sorting code"
 msgctxt "Address label"
 msgid "Sorting code"
 msgstr "Sorting code"
+
+msgid "Sorting options"
+msgstr ""
 
 msgid "Source"
 msgstr "Kilde"
@@ -22367,6 +22614,10 @@ msgstr ""
 
 msgid "Start typing to find content."
 msgstr "Begynd at skrive for at finde indhold."
+
+msgctxt "Series Page"
+msgid "Start with this one"
+msgstr "Begynd med denne"
 
 msgctxt "Address label"
 msgid "State"
@@ -22983,6 +23234,14 @@ msgstr ""
 msgid "Technical details"
 msgstr "Tekniske detaljer"
 
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:5:label"
+msgid "Tegneserie"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:6:label"
+msgid "Tegneserie (online)"
+msgstr ""
+
 msgid "Telephone Formatter"
 msgstr "Telefonformater"
 
@@ -23009,6 +23268,14 @@ msgstr "Midlertidige karakteristika af ressourcen."
 
 msgctxt "views.view.files:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Temporary"
+msgstr ""
+
+msgctxt "Dpl Biblio"
+msgid ""
+"Temporary. The catalogue lists digital materials that are not yet "
+"provisioned in WeDoBooks, and the adapter answers \"Material not found\" for "
+"those. With this enabled such a material is shown as unavailable; without it "
+"the material page fails. Publizon is never asked either way."
 msgstr ""
 
 msgid "Term"
@@ -24097,6 +24364,16 @@ msgid ""
 msgstr ""
 "Indholdet <em>@entity (@entity_id)</em> af typen <em>@type</em> blev klonet."
 
+msgid ""
+"The entity associated with crop @uuid (@id) cannot be loaded. This will "
+"probably cause unexpected behavior when the crop is imported later."
+msgstr ""
+
+msgid ""
+"The entity associated with crop @uuid (@target_type @target_uuid) could not "
+"be loaded."
+msgstr ""
+
 msgid "The entity type does not support changing the creation time."
 msgstr ""
 
@@ -24502,14 +24779,16 @@ msgstr ""
 msgctxt "Open order"
 msgid "The material cannot be ordered from another library"
 msgstr ""
-
-msgctxt "Work Page"
-msgid "The material is available and is now reserved for you!"
-msgstr "Materialet er nu reserveret til dig!"
+"Dette materiale kan ikke bestilles fra et andet bibliotek. Kontakt evt. "
+"biblioteket og hør nærmere."
 
 msgctxt "Work Page"
 msgid "The material is available at these nearby libraries"
 msgstr "Materialet er hjemme på disse biblioteker i nærheden"
+
+msgctxt "Work Page"
+msgid "The material is not available through the website"
+msgstr "Materialet er ikke tilgængeligt for dig på hjemmesiden"
 
 msgctxt "Global"
 msgid ""
@@ -24863,9 +25142,6 @@ msgstr "Indholdstypens valgfri beskrivelse."
 msgid "The optional description of the menu."
 msgstr "Menuens valgfri beskrivelse."
 
-msgid "The options will be sorted alphabetically."
-msgstr "Mulighederne vil blive sorteret alfabetisk."
-
 msgctxt "Open order"
 msgid "The order is invalid"
 msgstr ""
@@ -24929,6 +25205,9 @@ msgstr "Pinkoden skal være på @pincodeLengthMin cifre"
 msgctxt "Global"
 msgid "The pincodes are not the same"
 msgstr "Pinkoderne er ikke identiske"
+
+msgid "The placement of the slider."
+msgstr ""
 
 msgid "The policy governing the addition of items to a collection."
 msgstr "Den politik, der styrer tilføjelsen af genstande til en samling."
@@ -25614,6 +25893,9 @@ msgstr ""
 "Der er fejl med nogle installerede temaer. Besøg <a href=\":link\">status "
 "report page</a> for mere information."
 
+msgid "There are no %type crops, so you can safely delete this crop type."
+msgstr ""
+
 msgid ""
 "There are no @label yet, or you do not have the permission to view a menu."
 msgstr ""
@@ -26170,6 +26452,8 @@ msgstr "Dette materiale skal opdateres"
 msgctxt "Open order"
 msgid "This material type cannot be ordered from another library"
 msgstr ""
+"Denne materialetype kan ikke bestilles fra et andet bibliotek. Kontakt evt. "
+"biblioteket og hør nærmere."
 
 msgid ""
 "This message will show in the message area when a user successfully "
@@ -26426,6 +26710,12 @@ msgstr ""
 msgid "This text will be displayed on the <em>Add event</em> page."
 msgstr "Denne tekst vil blive vist på <em>Add event</em> side."
 
+msgid "This text will be used for \"Show less\" link."
+msgstr ""
+
+msgid "This text will be used for \"Show more\" link."
+msgstr ""
+
 msgctxt "views.view.events:description"
 msgid ""
 "This view displays a list of upcoming events from current day and onwards."
@@ -26442,6 +26732,12 @@ msgid ""
 msgstr ""
 "Dette vil kunne udtrække URL'en fra et billedfelt, hvis feltet er "
 "konfigureret korrekt."
+
+msgid ""
+"This will be the $_GET parameter used in query strings. Useful for "
+"preventing collisions between exposed filters when there are multiple "
+"instances of BEF on the page."
+msgstr ""
 
 msgid ""
 "This will be truncated to a maximum of %max characters after any tokens are "
@@ -26468,11 +26764,11 @@ msgstr ""
 "Tilføj/rediger serie."
 
 msgid "Threshold"
-msgstr "Varsel"
+msgstr "Tærskelværdi"
 
 msgctxt "dpl_instant_loan"
 msgid "Threshold"
-msgstr "Varsel"
+msgstr "Tærskelværdi"
 
 msgid "Thumbnail"
 msgstr "Thumbnail"
@@ -26743,6 +27039,9 @@ msgctxt "views.view.redirect:display:default:display_options:filters:redirect_re
 msgid "To"
 msgstr ""
 
+msgid "To add multiple classes separate them with a space"
+msgstr ""
+
 msgid ""
 "To allow editing multiple translations concurrently you need to install "
 "%module"
@@ -26942,6 +27241,18 @@ msgctxt "system.menu.tools:label"
 msgid "Tools"
 msgstr ""
 
+msgid "Tooltip value prefix"
+msgstr ""
+
+msgid "Tooltip value suffix"
+msgstr ""
+
+msgid "Tooltips value prefix"
+msgstr ""
+
+msgid "Tooltips value suffix"
+msgstr ""
+
 msgid "Top level of the book."
 msgstr "Bogens topniveau."
 
@@ -27068,6 +27379,22 @@ msgstr "Tirsdag"
 msgctxt "Fees list"
 msgid "Turned in @date"
 msgstr "Mellemværende oprettet @date"
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:14:label"
+msgid "Tv-serie (blu-ray 4K)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:13:label"
+msgid "Tv-serie (blu-ray)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:15:label"
+msgid "Tv-serie (dvd)"
+msgstr ""
+
+msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:16:label"
+msgid "Tv-serie (online)"
+msgstr ""
 
 msgid "Tweaks to various DPL paragraphs"
 msgstr "Ændringer til forskellige Paragraphs"
@@ -27229,6 +27556,9 @@ msgstr "Typen af element der skal refereres til"
 msgid "Types"
 msgstr "Typer"
 
+msgid "UI Slider"
+msgstr ""
+
 msgid "URI"
 msgstr "URI"
 
@@ -27365,6 +27695,9 @@ msgstr ""
 "Fjern markeringen for at deaktivere certifikatbekræftelse (dette er "
 "usikkert!)."
 
+msgid "Uncheck to treat field as FALSE"
+msgstr ""
+
 msgid "Undefined group '%group' on tag '%tag'"
 msgstr ""
 
@@ -27439,6 +27772,10 @@ msgid_plural "Uninstalled themes"
 msgstr[0] ""
 msgstr[1] "Afinstallerede temaer"
 
+msgid "Unknown"
+msgstr "Ukendt"
+
+msgctxt "DPL admin UX"
 msgid "Unknown"
 msgstr "Ukendt"
 
@@ -27866,6 +28203,17 @@ msgstr ""
 msgid "Use metadata from when the link was created"
 msgstr "Brug metadata fra det tidspunkt, hvor linket blev oprettet"
 
+msgid "Use natural sorting"
+msgstr ""
+
+msgid "Use natural sorting algorithm"
+msgstr ""
+
+msgid ""
+"Use natural sorting algorithm (e.g., \"Item 2\" comes before \"Item 10\"). "
+"This works better with numbers and mixed content."
+msgstr ""
+
 msgid "Use off-canvas dialog"
 msgstr "Brug off-canvas dialog"
 
@@ -27890,6 +28238,9 @@ msgstr ""
 msgid "Use replacement tokens from the first row"
 msgstr "Brug erstatnings-tokens fra den første række"
 
+msgid "Use scrollable container"
+msgstr ""
+
 msgid "Use sidebar: No"
 msgstr "Brug sidebjælke: Nej"
 
@@ -27903,11 +28254,11 @@ msgstr ""
 "rolle."
 
 msgid "Use the Biblio adapter for digital materials"
-msgstr ""
+msgstr "Brug Biblio adapteren til digitale materialer"
 
 msgctxt "Dpl Biblio"
 msgid "Use the Biblio adapter for digital materials"
-msgstr ""
+msgstr "Brug Biblio adapteren til digitale materialer"
 
 msgctxt "DPL Event"
 msgid "Use the address from associated branch as fallback."
@@ -28459,6 +28810,10 @@ msgctxt "Address label"
 msgid "Village/Township"
 msgstr "Landsby"
 
+msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:bef:filter:roles_target_id:soft_limit_label_more"
+msgid "Vis flere"
+msgstr ""
+
 msgctxt "field.field.paragraph.card_grid_automatic.field_more_link:default_value:0:title"
 msgid "Vis mere"
 msgstr ""
@@ -28467,12 +28822,24 @@ msgctxt "field.field.paragraph.card_grid_manual.field_more_link:default_value:0:
 msgid "Vis mere"
 msgstr ""
 
+msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:bef:filter:roles_target_id:soft_limit_label_less"
+msgid "Vis mindre"
+msgstr ""
+
 msgid ""
 "Visit the <a href=\":project_link\">View Unpublished project pages</a> on "
 "Drupal.org for more information."
 msgstr ""
 "Besøg <a href=\":project_link\">View upublicerede projektsider</a> på "
 "Drupal.org for mere information."
+
+msgctxt "Work Page"
+msgid ""
+"Visit the library and get help from a librarian or check whether the "
+"material is available at"
+msgstr ""
+"Kontakt evt. biblioteket og få hjælp fra en bibliotekar til at få adgang til "
+"materialet eller prøv på"
 
 msgid "Vocabulary"
 msgstr "Ordforråd"
@@ -28676,6 +29043,11 @@ msgctxt "Dpl Biblio"
 msgid ""
 "When enabled the web apps will use the Biblio adapter instead of Publizon. "
 "Leave disabled to keep using Publizon."
+msgstr ""
+
+msgid ""
+"When enabled, the soft limit counts all items including nested children. "
+"When disabled, only top-level items are counted."
 msgstr ""
 
 msgid "When entering a time, only show hours and minutes in the input field."
@@ -28956,6 +29328,9 @@ msgid "Work types"
 msgstr ""
 
 msgid "Would you like to continue with removing the above?"
+msgstr ""
+
+msgid "Wrap the filter options in a scrollable container with a fixed height."
 msgstr ""
 
 msgid "Wrap the meta tags in a collapsed details container."
@@ -29327,6 +29702,10 @@ msgstr ""
 "mailadresse da du reserverede materialet, vil du modtage en notifikation, "
 "når materialet er klar. "
 
+msgctxt "Work Page"
+msgid "You might also be interested in..."
+msgstr "Du kunne måske også være interesseret i:"
+
 msgid ""
 "You must add a contextual filter for the country code to use this filter for "
 "administrative areas."
@@ -29463,10 +29842,12 @@ msgstr "Din lokation er ikke tilgængelig i øjeblikket."
 msgctxt "Open order"
 msgid "Your material has been ordered from another library"
 msgstr ""
+"Materialet er bestilt fra et andet bibliotek. Materialer fra andre "
+"biblioteker har øget leveringstid."
 
 msgctxt "Open order"
 msgid "Your order is accepted"
-msgstr ""
+msgstr "Din bestilling er modtaget"
 
 msgctxt "Patron page"
 msgid "Your pincode was saved"
@@ -29970,6 +30351,9 @@ msgctxt "views.view.user_admin_people:display:default:display_options:exposed_fo
 msgid "basic"
 msgstr ""
 
+msgid "bef_number"
+msgstr ""
+
 msgid "before the event starts"
 msgstr "før arrangementet begynder"
 
@@ -30415,9 +30799,6 @@ msgstr "jQuery UI Accordion is deprecated"
 msgid "jQuery UI Date Picker"
 msgstr ""
 
-msgid "jQuery UI Slider"
-msgstr ""
-
 msgctxt "core.date_format.long:pattern"
 msgid "l, F j, Y - H:i"
 msgstr ""
@@ -30850,10 +31231,6 @@ msgstr ""
 
 msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
 msgid "{{ message }}"
-msgstr ""
-
-msgctxt "views.view.user_admin_people:display:default:display_options:fields:status:alter:text"
-msgid "{{ status__value }} "
 msgstr ""
 
 msgid "{{ title }}"

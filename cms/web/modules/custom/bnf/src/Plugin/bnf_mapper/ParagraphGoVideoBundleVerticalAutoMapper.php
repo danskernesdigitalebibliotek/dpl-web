@@ -28,7 +28,7 @@ class ParagraphGoVideoBundleVerticalAutoMapper extends BnfMapperParagraphPluginB
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'go_video_bundle_vertical_auto',
       'field_go_video_title' => $object->goVideoTitle,
       'field_embed_video' => $this->getEmbedVideoValue($object->embedVideo),

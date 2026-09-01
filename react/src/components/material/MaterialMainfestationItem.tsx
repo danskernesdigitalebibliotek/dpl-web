@@ -11,6 +11,7 @@ import {
 import { useText } from "../../core/utils/text";
 import MaterialDetailsList, { ListData } from "./MaterialDetailsList";
 import MaterialButtons from "./material-buttons/MaterialButtons";
+import MaterialUnavailableNotice from "./MaterialUnavailableNotice/MaterialUnavailableNotice";
 import CopyLink from "../copy-link/CopyLink";
 import MaterialContents from "./MaterialContents/MaterialContents";
 import { Manifestation } from "../../core/utils/types/entities";
@@ -19,6 +20,7 @@ import {
   getManifestationAudience,
   getManifestationAuthors,
   getManifestationContributors,
+  getManifestationDigitalIdentifier,
   getManifestationEdition,
   getManifestationGenreAndForm,
   getManifestationIsbn,
@@ -47,7 +49,7 @@ export interface MaterialMainfestationItemProps {
 }
 
 const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
-  manifestation: { materialTypes, pid, creators, identifiers, edition },
+  manifestation: { materialTypes, pid, creators, edition },
   manifestation,
   workId,
   isEditionPicker = false
@@ -138,7 +140,7 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
           key={`${faustId}-material-manifestation-item`}
           manifestText={materialTypes[0]?.materialTypeSpecific.display}
           faustIds={[faustId]}
-          isbns={identifiers.map((identifier) => identifier.value)}
+          identifier={getManifestationDigitalIdentifier(manifestation) || null}
           accessTypes={accessTypesCodes}
           access={access}
           isVisualOnly
@@ -209,6 +211,7 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
           workId={workId}
           materialTitleId={mainfestationTitleId}
           isEditionPicker={isEditionPicker}
+          fallback={<MaterialUnavailableNotice variant="compact" />}
         />
       </div>
     </div>

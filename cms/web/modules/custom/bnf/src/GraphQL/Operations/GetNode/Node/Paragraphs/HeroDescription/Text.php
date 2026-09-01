@@ -21,10 +21,10 @@ class Text extends \Spawnia\Sailor\ObjectLike
 
         $instance->__typename = 'Text';
         if ($format !== self::UNDEFINED) {
-            $instance->format = $format;
+            $instance->__set('format', $format);
         }
         if ($value !== self::UNDEFINED) {
-            $instance->value = $value;
+            $instance->__set('value', $value);
         }
 
         return $instance;

@@ -19,10 +19,10 @@ class BetweenFloatInput extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($min !== self::UNDEFINED) {
-            $instance->min = $min;
+            $instance->__set('min', $min);
         }
         if ($max !== self::UNDEFINED) {
-            $instance->max = $max;
+            $instance->__set('max', $max);
         }
 
         return $instance;

@@ -1,0 +1,22 @@
+query SeriesInfo($seriesId: String!) {
+  series(seriesId: $seriesId) {
+    title
+    description
+    members(limit: 5) {
+      readThisFirst
+      work {
+        manifestations {
+          bestRepresentation {
+            cover {
+              large {
+                url
+                height
+                width
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+"use client"
+
+import { type Loan } from "@danskernesdigitalebibliotek/dpl-service-layer"
+
+import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
+import { Button } from "@/components/shared/button/Button"
+import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
+import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
+import { cyKeys } from "@/cypress/support/constants"
+import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
+import { dueStatus } from "@/lib/helpers/helper.due-status"
+import { openModal } from "@/store/modal.store"
+
+export type PhysicalLoanCardProps = {
+  loan: Loan
+  manifestation: ManifestationSearchPageTeaserFragment
+  title: string
+  workId: string
+  creators?: string
+  className?: string
+}
+
+export const dueStatusText = (daysUntil: number) => {
+  if (daysUntil <= 0) {
+    return "Skal afleveres i dag"
+  }
+  return `Skal afleveres om ${daysUntil} ${daysUntil === 1 ? "dag" : "dage"}`
+}
+
+const PhysicalLoanCard = ({
+  loan,
+  manifestation,
+  title,
+  workId,
+  creators,
+  className,
+}: PhysicalLoanCardProps) => {
+  const { state, daysUntil } = dueStatus(loan.dueDate)
+  // An unparseable due date degrades to NaN day counts — skip the status
+  // rather than render "om NaN dage".
+  const hasDueStatus = !Number.isNaN(daysUntil)
+  // Compact single-line labels; the expanded (subline) StatusLabel form is
+  // reserved for modal contexts.
+  const statusText = state === "overdue" ? "Afleveringsfrist overskredet" : dueStatusText(daysUntil)
+
+  return (
+    <div className={cn("relative w-full", className)}>
+      <div className="w-full space-y-3 px-[15%]">
+        <button
+          type="button"
+          aria-label={`Se detaljer om dit lån af ${title}.${hasDueStatus ? ` ${statusText}` : ""}`}
+          className="focus-visible outline-accent-foreground rounded-base relative block w-full
+            cursor-pointer focus:outline-offset-2"
+          onClick={() =>
+            openModal("LoanDetailsModal", { loan, manifestation, title, workId, creators })
+          }>
+          <ManifestationCover
+            cover={manifestation.cover}
+            iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
+            alt={`${title} cover billede`}
+            className="w-full"
+            iconClassName="bg-background-overlay-solid"
+          />
+        </button>
+        {/* pt clears the material-type icon straddling the cover's bottom edge. */}
+        {hasDueStatus && (
+          <div className="flex w-full justify-center pt-5">
+            <StatusLabel
+              variant={state === "overdue" ? "error" : state === "neutral" ? "neutral" : "warning"}>
+              {statusText}
+            </StatusLabel>
+          </div>
+        )}
+        {loan.isRenewable && (
+          <div className="flex w-full justify-center">
+            <Button
+              size="sm"
+              ariaLabel={`Forlæng lån af ${title}`}
+              data-cy={cyKeys["renew-loan-button"]}
+              onClick={() =>
+                openModal("LoanDetailsModal", { loan, manifestation, title, workId, creators })
+              }>
+              Forlæng lån
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default PhysicalLoanCard

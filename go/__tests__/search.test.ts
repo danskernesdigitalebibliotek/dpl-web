@@ -44,9 +44,6 @@ beforeEach(() => {
     if (key === "search.facets") {
       return facets
     }
-    if (key === "search.branch.ids") {
-      return ["11", "22", "33"]
-    }
 
     return null
   })

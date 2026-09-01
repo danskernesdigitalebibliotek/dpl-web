@@ -55,6 +55,10 @@ type GoConfigurationPublic {
   mapp: MappTracking
   searchProfiles: SearchProfiles
   unilogin: UniloginConfigurationPublic
+  """
+  Branch ids whose materials should be excluded when computing availability.
+  """
+  blacklistedAvailabilityBranches: [String!]
 }
 
 type GoConfiguration {

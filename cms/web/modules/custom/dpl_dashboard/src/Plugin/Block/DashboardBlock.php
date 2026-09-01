@@ -44,10 +44,10 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private DplDashboardSettings $dashboardSettings,
-    private BranchSettings $branchSettings,
-    private BranchRepositoryInterface $branchRepository,
-    private GeneralSettings $generalSettings,
+    protected DplDashboardSettings $dashboardSettings,
+    protected BranchSettings $branchSettings,
+    protected BranchRepositoryInterface $branchRepository,
+    protected GeneralSettings $generalSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;

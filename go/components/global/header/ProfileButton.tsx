@@ -30,7 +30,7 @@ function ProfileButton() {
 
   return (
     <Button
-      aria-label={userIsAnonymous(session) ? "Login" : "Tilgå profilsiden"}
+      ariaLabel={userIsAnonymous(session) ? "Login" : "Tilgå profilsiden"}
       variant="icon"
       onClick={() => handleOnClick()}
       data-cy={cyKeys["profile-button"]}>

@@ -1,10 +1,11 @@
-import clsx from "clsx";
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
-import { getManifestationBasedOnType } from "../../apps/material/helper";
+import {
+  getAvailablePriorityMaterialType,
+  getManifestationBasedOnType
+} from "../../apps/material/helper";
 import RecommendedMaterialSkeleton from "./RecommendedMaterialSkeleton";
-import Link from "../../components/atoms/links/Link";
 import ButtonFavourite, {
   ButtonFavouriteId
 } from "../../components/button-favourite/button-favourite";
@@ -24,6 +25,7 @@ import { ManifestationMaterialType } from "../../core/utils/types/material-type"
 import { useUrls } from "../../core/utils/url";
 import { useEventStatistics } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
+import { StaticRecommendedMaterial } from "./static-recommended-material";
 
 export type RecommendedMaterialProps = {
   wid: WorkId;
@@ -54,7 +56,6 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
   const {
     work: {
       titles: { full: fullTitle },
-      manifestations: { bestRepresentation },
       creators
     }
   } = data;
@@ -62,13 +63,24 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
   const work = data.work as Work;
   const materialManifestationForDisplay = materialType
     ? getManifestationBasedOnType(work, materialType)
-    : bestRepresentation;
+    : work.manifestations.bestRepresentation;
 
   const { pid } = materialManifestationForDisplay;
 
   const author = creatorsToString(flattenCreators(creators), t);
 
-  const materialFullUrl = constructMaterialUrl(materialUrl, wid, materialType);
+  // Only add the type to the URL when the work actually has it; otherwise let
+  // the work page apply its normal logic. Reuse the manifestation already
+  // resolved for display instead of resolving it a second time.
+  const urlMaterialType = getAvailablePriorityMaterialType(
+    materialManifestationForDisplay,
+    materialType
+  );
+  const materialFullUrl = constructMaterialUrl(
+    materialUrl,
+    wid,
+    urlMaterialType
+  );
   const addToListRequest = (id: ButtonFavouriteId) => {
     dispatch(
       guardedRequest({
@@ -93,52 +105,33 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
     });
 
   return (
-    <div
-      className={clsx(
-        "recommended-material",
-        partOfGrid && "recommended-material--in-grid"
-      )}
-    >
-      <div className="recommended-material__icon">
+    <StaticRecommendedMaterial
+      title={fullTitle.join(", ")}
+      author={author}
+      isPartOfGrid={partOfGrid}
+      linkProps={{
+        href: materialFullUrl,
+        trackClick: trackData
+      }}
+      cover={
+        <Cover
+          ids={[pid]}
+          url={materialFullUrl}
+          size="large"
+          animate
+          alt=""
+          shadow="medium"
+          trackClick={trackData}
+        />
+      }
+      favoriteButton={
         <ButtonFavourite
           title={String(fullTitle)}
           id={wid}
           addToListRequest={addToListRequest}
         />
-      </div>
-      <Cover
-        ids={[pid]}
-        url={materialFullUrl}
-        size="large"
-        animate
-        alt=""
-        shadow="medium"
-        trackClick={trackData}
-      />
-      <div className="recommended-material__texts">
-        {fullTitle && (
-          <Link
-            href={materialFullUrl}
-            className="recommended-material__description"
-            dataCy="recommended-description"
-            trackClick={trackData}
-          >
-            {fullTitle}
-          </Link>
-        )}
-
-        {author && (
-          <Link
-            href={materialFullUrl}
-            className="recommended-material__author"
-            dataCy="recommended-author"
-            trackClick={trackData}
-          >
-            {author}
-          </Link>
-        )}
-      </div>
-    </div>
+      }
+    />
   );
 };
 export default RecommendedMaterialComp;

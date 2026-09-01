@@ -53,7 +53,7 @@ class ParagraphHeroMapper extends BnfMapperParagraphPluginBase {
       $link = $this->mapper->map($object->heroLink);
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'hero',
       // We are specifically ignoring the categories, as we do not wish
       // to support foreign terms. The categories field is NOT required.

@@ -45,7 +45,7 @@ class ParagraphGoLinkMapper extends BnfMapperParagraphPluginBase {
     $goLinkValue = $this->manager->map($object->linkRequired);
 
     /** @var \Drupal\paragraphs\Entity\Paragraph $goLink */
-    $goLink = $this->paragraphStorage->create([
+    $goLink = $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'go_link',
     ]);
     $goLink->set('field_aria_label', $object->ariaLabel);

@@ -16,7 +16,7 @@ class NewContent extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($newContent !== self::UNDEFINED) {
-            $instance->newContent = $newContent;
+            $instance->__set('newContent', $newContent);
         }
         $instance->__typename = 'Query';
 

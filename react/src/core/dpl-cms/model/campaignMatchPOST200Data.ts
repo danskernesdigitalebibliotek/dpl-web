@@ -21,4 +21,6 @@ export type CampaignMatchPOST200Data = {
   image?: CampaignMatchPOST200DataImage;
   /** The url the campaign should link to */
   url?: string;
+  /** Whether the campaign link should be opened in a new tab */
+  open_in_new_tab?: boolean;
 };

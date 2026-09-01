@@ -17,10 +17,10 @@ class SortInput extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($index !== self::UNDEFINED) {
-            $instance->index = $index;
+            $instance->__set('index', $index);
         }
         if ($order !== self::UNDEFINED) {
-            $instance->order = $order;
+            $instance->__set('order', $order);
         }
 
         return $instance;

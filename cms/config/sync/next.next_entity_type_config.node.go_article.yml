@@ -1,12 +1,15 @@
 uuid: fa7d3fd7-c669-454c-8f6d-dae5154eb0f5
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - node.type.go_article
 id: node.go_article
 site_resolver: site_selector
 configuration:
   sites:
     go: go
+draft_enabled: true
 revalidator: cache_tag
 revalidator_configuration:
   revalidate_page: 0

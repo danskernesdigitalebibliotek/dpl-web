@@ -55,6 +55,10 @@ const meta: Meta<typeof AdvancedSearchEntry> = {
       description: "Path to the search result page",
       control: { type: "text" }
     },
+    seriesUrl: {
+      description: "Path to the series landing page",
+      control: { type: "text" }
+    },
     etAlText: {
       description: "Et al. Text",
       control: { type: "text" }
@@ -392,6 +396,7 @@ export const Primary: Story = {
     materialUrl: "/work/:workid",
     authUrl: "",
     searchUrl: "/search",
+    seriesUrl: "/serie/:seriesid",
     etAlText: "et al.",
     byAuthorText: "By",
     showMoreText: "show more",

@@ -16,7 +16,7 @@ class Import extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($import !== self::UNDEFINED) {
-            $instance->import = $import;
+            $instance->__set('import', $import);
         }
         $instance->__typename = 'Mutation';
 

@@ -23,6 +23,11 @@ export interface MaterialButtonsProps {
   dataCy?: string;
   materialTitleId: string;
   isEditionPicker?: boolean;
+
+  /**
+   * If no buttons are available, this fallback will be rendered instead.
+   */
+  fallback?: React.ReactNode;
 }
 
 const MaterialButtons: FC<MaterialButtonsProps> = ({
@@ -32,7 +37,8 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
   workId,
   dataCy = "material-buttons",
   materialTitleId,
-  isEditionPicker = false
+  isEditionPicker = false,
+  fallback
 }) => {
   const faustIds = getAllFaustIds(manifestations);
   // We don't want to show physical buttons/find on shelf for articles because
@@ -42,7 +48,13 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
   const { materialIsReservableFromAnotherLibrary } =
     useReservableFromAnotherLibrary(manifestations);
 
-  if (materialIsReservableFromAnotherLibrary) {
+  const showPhysicalButtons =
+    hasCorrectAccessType(AccessTypeCodeEnum.Physical, manifestations) &&
+    !isArticle(manifestations);
+
+  // Reserving from another library is a physical reservation, and it opens the
+  // same modal the ordinary reserve button does.
+  if (materialIsReservableFromAnotherLibrary && showPhysicalButtons) {
     return (
       <MaterialButtonReservableFromAnotherLibrary
         workId={workId}
@@ -52,9 +64,6 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
       />
     );
   }
-  const showPhysicalButtons =
-    hasCorrectAccessType(AccessTypeCodeEnum.Physical, manifestations) &&
-    !isArticle(manifestations);
   // Show online material buttons if, either the material has an online access type or it has
   // a DigitalArticleService access & at the same time is an article. This way
   // we avoid showing both physical and online action buttons at one, which shouldn't happen
@@ -62,6 +71,12 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
     hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) ||
     (hasCorrectAccess("DigitalArticleService", manifestations) &&
       isArticle(manifestations));
+
+  const showFallback = !showPhysicalButtons && !showOnlineButtons && fallback;
+
+  if (showFallback) {
+    return fallback;
+  }
 
   return (
     <>

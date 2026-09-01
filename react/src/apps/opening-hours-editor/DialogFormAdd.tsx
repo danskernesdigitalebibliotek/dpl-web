@@ -1,5 +1,5 @@
 import React from "react";
-import { DateSelectArg } from "@fullcalendar/core";
+import { DateSelectInfo } from "@fullcalendar/react";
 import {
   adjustEndDateToStartDayGridMonth,
   adjustEndDateToStartDayTimeGridWeek,
@@ -20,7 +20,7 @@ import {
 } from "../../core/utils/helpers/date";
 
 type DialogFormAddProps = {
-  selectedEventInfo: DateSelectArg;
+  selectedEventInfo: DateSelectInfo;
   handleEventAdd: (event: DplOpeningHoursCreatePOSTBody) => void;
   closeDialog: () => void;
   openingHoursCategories: OpeningHoursCategoriesType[];

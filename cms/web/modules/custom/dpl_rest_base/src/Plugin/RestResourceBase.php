@@ -51,7 +51,7 @@ abstract class RestResourceBase extends ResourceBase {
     if (!$contentTypeFormat) {
       // Default to JSON format. Some code generators will not provide a default
       // value even though it is provided in the spec.
-      $contentTypeFormat = $request->get('_format', 'json');
+      $contentTypeFormat = $request->attributes->get('_format') ?? $request->query->get('_format') ?? 'json';
     }
     $mimeType = $request->getMimeType($contentTypeFormat);
     if (!$mimeType) {

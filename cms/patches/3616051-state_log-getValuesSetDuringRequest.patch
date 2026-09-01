@@ -1,0 +1,18 @@
+diff --git a/src/StateLog.php b/src/StateLog.php
+index 0938d9a..8faef69 100644
+--- a/src/StateLog.php
++++ b/src/StateLog.php
+@@ -120,6 +120,13 @@ class StateLog implements StateInterface, DestructableInterface {
+     $this->state->resetCache();
+   }
+ 
++  /**
++   * {@inheritdoc}
++   */
++  public function getValuesSetDuringRequest(string $key): ?array {
++    return $this->state->getValuesSetDuringRequest($key);
++  }
++
+   /**
+    * Returns whether the state_name is ignored.
+    *

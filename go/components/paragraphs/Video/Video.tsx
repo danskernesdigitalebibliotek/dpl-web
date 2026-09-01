@@ -1,6 +1,6 @@
 "use client"
 
-import VideoEmbed from "@/components/paragraphs/shared/VideoEmbed"
+import VideoEmbed from "@/components/shared/videoEmbed/VideoEmbed"
 import type {
   MediaVideotool,
   ParagraphGoVideo as Video,

@@ -79,8 +79,11 @@ async function proxyRequest(
       body,
     })
 
-    const json = await result.json()
-    return new NextResponse(JSON.stringify(json), {
+    // Some FBS endpoints return 204 No Content (e.g. DELETE) — calling .json()
+    // on an empty body throws. Pass the raw text through; clients that expect
+    // JSON parse it themselves.
+    const text = await result.text()
+    return new NextResponse(text || null, {
       status: result.status,
       headers: {
         ...request.headers,

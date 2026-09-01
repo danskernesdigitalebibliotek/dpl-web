@@ -26,17 +26,17 @@ class ParagraphGoMaterialSliderAutomatic extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($sliderAmountOfMaterials !== self::UNDEFINED) {
-            $instance->sliderAmountOfMaterials = $sliderAmountOfMaterials;
+            $instance->__set('sliderAmountOfMaterials', $sliderAmountOfMaterials);
         }
         if ($title !== self::UNDEFINED) {
-            $instance->title = $title;
+            $instance->__set('title', $title);
         }
         $instance->__typename = 'ParagraphGoMaterialSliderAutomatic';
         if ($cqlSearch !== self::UNDEFINED) {
-            $instance->cqlSearch = $cqlSearch;
+            $instance->__set('cqlSearch', $cqlSearch);
         }
 
         return $instance;

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_admin\Hook;
 
-use Drupal\content_lock\ContentLock\ContentLock;
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -13,7 +12,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Hooks for content lock integration.
@@ -21,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @todo Remove the procedural hook in dpl_admin.module and the service
  *   registration in dpl_admin.services.yml when upgrading to Drupal 11.
  */
-class ContentLockHooks implements ContainerInjectionInterface {
+class ContentLockHooks {
 
   use StringTranslationTrait;
 
@@ -29,47 +27,10 @@ class ContentLockHooks implements ContainerInjectionInterface {
    * Constructor.
    */
   public function __construct(
-    protected ContentLock $contentLock,
+    protected ContentLockInterface $contentLock,
     protected AccountProxyInterface $currentUser,
     protected EntityTypeManagerInterface $entityTypeManager,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('content_lock'),
-      $container->get('current_user'),
-      $container->get('entity_type.manager'),
-    );
-  }
-
-  /**
-   * Show warning for locked nodes on delete confirmation.
-   *
-   * @param array<mixed> $form
-   *   The form array.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
-   */
-  #[Hook('form_node_confirm_form_alter')]
-  public function nodeConfirmFormAlter(array &$form, FormStateInterface $form_state): void {
-    $this->alterDeleteConfirmForm($form, $form_state);
-  }
-
-  /**
-   * Show warning for locked taxonomy terms on delete confirmation.
-   *
-   * @param array<mixed> $form
-   *   The form array.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
-   */
-  #[Hook('form_taxonomy_term_confirm_form_alter')]
-  public function taxonomyTermConfirmFormAlter(array &$form, FormStateInterface $form_state): void {
-    $this->alterDeleteConfirmForm($form, $form_state);
-  }
 
   /**
    * Alter delete confirmation form to show warning for locked content.
@@ -82,7 +43,9 @@ class ContentLockHooks implements ContainerInjectionInterface {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The form state.
    */
-  protected function alterDeleteConfirmForm(array &$form, FormStateInterface $form_state): void {
+  #[Hook('form_node_confirm_form_alter')]
+  #[Hook('form_taxonomy_term_confirm_form_alter')]
+  public function alterDeleteConfirmForm(array &$form, FormStateInterface $form_state): void {
     $form_object = $form_state->getFormObject();
 
     if (!($form_object instanceof EntityFormInterface)) {

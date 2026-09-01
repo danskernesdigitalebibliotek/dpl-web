@@ -20,13 +20,13 @@ class MediaVideo extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($name !== self::UNDEFINED) {
-            $instance->name = $name;
+            $instance->__set('name', $name);
         }
         if ($mediaOembedVideo !== self::UNDEFINED) {
-            $instance->mediaOembedVideo = $mediaOembedVideo;
+            $instance->__set('mediaOembedVideo', $mediaOembedVideo);
         }
         $instance->__typename = 'MediaVideo';
 

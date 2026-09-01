@@ -16,7 +16,7 @@ class WorkTitles extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($full !== self::UNDEFINED) {
-            $instance->full = $full;
+            $instance->__set('full', $full);
         }
         $instance->__typename = 'WorkTitles';
 

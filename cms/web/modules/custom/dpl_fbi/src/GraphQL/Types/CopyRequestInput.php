@@ -55,46 +55,46 @@ class CopyRequestInput extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($pid !== self::UNDEFINED) {
-            $instance->pid = $pid;
+            $instance->__set('pid', $pid);
         }
         if ($userName !== self::UNDEFINED) {
-            $instance->userName = $userName;
+            $instance->__set('userName', $userName);
         }
         if ($userMail !== self::UNDEFINED) {
-            $instance->userMail = $userMail;
+            $instance->__set('userMail', $userMail);
         }
         if ($publicationTitle !== self::UNDEFINED) {
-            $instance->publicationTitle = $publicationTitle;
+            $instance->__set('publicationTitle', $publicationTitle);
         }
         if ($publicationDateOfComponent !== self::UNDEFINED) {
-            $instance->publicationDateOfComponent = $publicationDateOfComponent;
+            $instance->__set('publicationDateOfComponent', $publicationDateOfComponent);
         }
         if ($publicationYearOfComponent !== self::UNDEFINED) {
-            $instance->publicationYearOfComponent = $publicationYearOfComponent;
+            $instance->__set('publicationYearOfComponent', $publicationYearOfComponent);
         }
         if ($volumeOfComponent !== self::UNDEFINED) {
-            $instance->volumeOfComponent = $volumeOfComponent;
+            $instance->__set('volumeOfComponent', $volumeOfComponent);
         }
         if ($authorOfComponent !== self::UNDEFINED) {
-            $instance->authorOfComponent = $authorOfComponent;
+            $instance->__set('authorOfComponent', $authorOfComponent);
         }
         if ($titleOfComponent !== self::UNDEFINED) {
-            $instance->titleOfComponent = $titleOfComponent;
+            $instance->__set('titleOfComponent', $titleOfComponent);
         }
         if ($pagesOfComponent !== self::UNDEFINED) {
-            $instance->pagesOfComponent = $pagesOfComponent;
+            $instance->__set('pagesOfComponent', $pagesOfComponent);
         }
         if ($userInterestDate !== self::UNDEFINED) {
-            $instance->userInterestDate = $userInterestDate;
+            $instance->__set('userInterestDate', $userInterestDate);
         }
         if ($pickUpAgencySubdivision !== self::UNDEFINED) {
-            $instance->pickUpAgencySubdivision = $pickUpAgencySubdivision;
+            $instance->__set('pickUpAgencySubdivision', $pickUpAgencySubdivision);
         }
         if ($issueOfComponent !== self::UNDEFINED) {
-            $instance->issueOfComponent = $issueOfComponent;
+            $instance->__set('issueOfComponent', $issueOfComponent);
         }
         if ($openURL !== self::UNDEFINED) {
-            $instance->openURL = $openURL;
+            $instance->__set('openURL', $openURL);
         }
 
         return $instance;

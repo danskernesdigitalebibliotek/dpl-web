@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\dpl_login\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Routing\LocalRedirectResponse;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -30,11 +29,6 @@ class DplLoginController extends ControllerBase {
   use StringTranslationTrait;
 
   /**
-   * OpenID connect client storage.
-   */
-  protected EntityStorageInterface $clientStorage;
-
-  /**
    * {@inheritdoc}
    */
   public function __construct(
@@ -44,9 +38,7 @@ class DplLoginController extends ControllerBase {
     protected OpenIDConnectSessionInterface $session,
     protected User $user,
     protected DplLoginSession $dplLoginSession,
-  ) {
-    $this->clientStorage = $this->entityTypeManager()->getStorage('openid_connect_client');
-  }
+  ) {}
 
   /**
    * Logs out user externally and internally.
@@ -144,7 +136,7 @@ class DplLoginController extends ControllerBase {
 
     $client_name = 'adgangsplatformen';
     /** @var null|\Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
-    $client = $this->clientStorage->load($client_name);
+    $client = $this->entityTypeManager()->getStorage('openid_connect_client')->load($client_name);
 
     if (!$client) {
       throw new \RuntimeException("No {$client_name} openid_connect client");

@@ -18,7 +18,7 @@ class WorkInfo extends \Spawnia\Sailor\ObjectLike
 
         $instance->__typename = 'Query';
         if ($work !== self::UNDEFINED) {
-            $instance->work = $work;
+            $instance->__set('work', $work);
         }
 
         return $instance;

@@ -131,7 +131,7 @@ class UrlProxyResource extends ResourceBase {
    */
   public function get(Request $request) {
     $conf = $this->getConfiguration();
-    $url_param = $request->get('url');
+    $url_param = $request->query->get('url');
     $url = $url_param;
 
     if (!$url_param) {

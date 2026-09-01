@@ -20,6 +20,11 @@ export const publicConfigSchema = z.object({
   unilogin: z.object({
     municipalityId: z.string().nullable(),
   }),
+  blacklistedAvailabilityBranches: z
+    .array(z.string())
+    .nullable()
+    .optional()
+    .transform(value => value ?? []),
 })
 
 export const privateConfigSchema = z.object({

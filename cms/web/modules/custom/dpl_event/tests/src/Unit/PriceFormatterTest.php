@@ -28,7 +28,7 @@ class PriceFormatterTest extends UnitTestCase {
    *   Array of examples. Each example contains a price string and how it
    *   should be formatted. This matches signature of testPriceFormatting().
    */
-  public function priceProvider(): array {
+  public static function priceProvider(): array {
     return [
       [0, "Free"],
       [0.0, "Free"],
@@ -67,7 +67,7 @@ class PriceFormatterTest extends UnitTestCase {
    *   Array of examples. Each example contains a raw price string and how it
    *   should be formatted. This matches signature of testRawPriceFormatting().
    */
-  public function rawPriceProvider(): array {
+  public static function rawPriceProvider(): array {
     return [
       // Whole number.
       [20, "20"],
@@ -107,7 +107,7 @@ class PriceFormatterTest extends UnitTestCase {
    *   they should be formatted. This matches signature of
    *   testPriceRangeFormatting().
    */
-  public function priceRangeProvider(): array {
+  public static function priceRangeProvider(): array {
     return [
           // Only free prices.
           [[0], "Free"],
@@ -156,7 +156,7 @@ class PriceFormatterTest extends UnitTestCase {
    *   they should be formatted. This matches signature of
    *   testPriceRangeFormatting().
    */
-  public function rawPriceRangeProvider(): array {
+  public static function rawPriceRangeProvider(): array {
     return [
       // Only free prices.
       [[0], "0"],

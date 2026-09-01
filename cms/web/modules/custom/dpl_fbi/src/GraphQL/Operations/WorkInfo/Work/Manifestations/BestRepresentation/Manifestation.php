@@ -16,7 +16,7 @@ class Manifestation extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($cover !== self::UNDEFINED) {
-            $instance->cover = $cover;
+            $instance->__set('cover', $cover);
         }
         $instance->__typename = 'Manifestation';
 

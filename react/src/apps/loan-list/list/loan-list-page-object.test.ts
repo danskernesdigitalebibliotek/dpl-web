@@ -45,11 +45,11 @@ const stubLoanListBackends = ({
 
   if (stubFbiGateway) {
     // DBC Gateway is not relevant for the digital flow — stub it out.
-    cy.intercept("POST", "**/next/graphql", {
+    cy.intercept("POST", "**/next/graphql*", {
       statusCode: 200,
       body: { data: null }
     });
-    cy.intercept("POST", "**/next-present/graphql", {
+    cy.intercept("POST", "**/next-present/graphql*", {
       statusCode: 200,
       body: { data: null }
     });

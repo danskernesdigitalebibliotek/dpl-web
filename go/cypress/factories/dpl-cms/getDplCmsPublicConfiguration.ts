@@ -27,6 +27,7 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery>(() => {
         unilogin: {
           municipalityId: "101",
         },
+        blacklistedAvailabilityBranches: [],
       } satisfies TDplCmsPublicConfig,
     },
   }

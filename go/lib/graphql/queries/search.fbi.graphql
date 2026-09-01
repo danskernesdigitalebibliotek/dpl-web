@@ -38,3 +38,19 @@ query complexSearchForWorkTeaser(
     }
   }
 }
+
+# Exact record lookup for pairing FBS record ids (FAUST) with works — the
+# complex search index does not resolve term.faust reliably.
+query getManifestationsByFaust($faust: [String!]!) {
+  manifestations(faust: $faust) {
+    pid
+    audience {
+      childrenOrAdults {
+        code
+      }
+    }
+    ownerWork {
+      ...WorkTeaserSearchPage
+    }
+  }
+}

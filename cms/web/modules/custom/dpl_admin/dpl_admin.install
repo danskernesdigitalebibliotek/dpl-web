@@ -35,9 +35,15 @@ function dpl_admin_requirements(string $phase): array {
 
   $version = $service->getVersion();
 
+  // Deployed environments always have a version. A local checkout may not, and
+  // the status report must not break over one missing value.
+  $value = ($version !== NULL)
+    ? t('<code>@version</code>', ['@version' => $version], ['context' => 'DPL admin UX'])
+    : t('Unknown', [], ['context' => 'DPL admin UX']);
+
   $requirements['dpl_admin_version'] = [
     'title' => t('CMS release version', [], ['context' => 'DPL admin UX']),
-    'value' => t('<code>@version</code>', ['@version' => $version], ['context' => 'DPL admin UX']),
+    'value' => $value,
     'severity' => REQUIREMENT_INFO,
   ];
 

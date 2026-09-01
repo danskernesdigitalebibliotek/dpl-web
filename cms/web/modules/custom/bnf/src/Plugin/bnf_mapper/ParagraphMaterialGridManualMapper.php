@@ -35,7 +35,7 @@ class ParagraphMaterialGridManualMapper extends BnfMapperParagraphPluginBase {
       ];
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'material_grid_manual',
       'field_material_grid_title' => $object->materialGridTitle,
       'field_material_grid_description' => $object->materialGridDescription,

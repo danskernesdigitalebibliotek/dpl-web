@@ -1,0 +1,73 @@
+// Only the parts a card with no content cannot size on its own. The grid,
+// padding and gaps all come from series-card.scss, so the skeleton occupies the
+// same space as the loaded row.
+// These selectors combine the block with the Skeleton Screen Css classes, so
+// they deliberately do not follow BEM - as the other *-skeleton.scss files do.
+
+// .ssc asks for a progress cursor and .series-card for a pointer. Both are one
+// class, so source order would otherwise decide which wins.
+.series-card.ssc {
+  cursor: progress;
+}
+
+// cover--size-small only carries its width inside a .cover element, so a bare
+// ssc-square collapses without this. The values are the ones the real cover
+// measures at each breakpoint.
+.series-card.ssc .ssc-square.cover--size-small {
+  height: 104px;
+  width: 70px;
+
+  @include media-query__small {
+    height: 137px;
+    width: 95px;
+  }
+}
+
+// Normally the row is as tall as the favourite button and tag inside it. 31px
+// is what the favourite button measures, and reserving it is what keeps the
+// title below from sitting higher here than on the loaded card. The loaded
+// card top-aligns this row; the skeleton centres it instead. A
+// placeholder line is a third of the height of the button it stands in for, so
+// pinning it to the top leaves the rest of the row reading as a gap above the
+// title rather than as a row with something in it.
+.series-card.ssc .series-card__meta {
+  align-items: center;
+  min-height: 31px;
+}
+
+// Stands in for the title, so it carries the title's own margins - the
+// placeholder has none of its own - and the height of one h4 line. Borrowing
+// h4's font-size is what lets the height track the title across breakpoints,
+// where 18px grows to 24px and then 26px; ssc-head-line's own 24px only
+// happens to be right at one of the three. The 1.2em + 2px repeats the
+// line-height .series-card__title sets.
+.series-card.ssc .ssc-head-line {
+  @include typography($typo__h4);
+
+  height: calc(1.2em + 2px);
+  // The loaded card sets 4px here, where a small grey caption sits under a
+  // large serif title. As two grey bars that reads as a title with a
+  // sub-heading stuck to it, so the placeholder takes the roomier gap
+  // card-list-item's skeleton uses.
+  margin-bottom: $s-md;
+  margin-top: $s-md;
+}
+
+// Stacked rather than side by side. Real labels are wide enough that they each
+// take their own line, and two placeholders sitting next to each other read as
+// one odd wide bar instead of a list.
+// Turning the row into a column moves the main axis, so the vertical centring
+// the loaded card gets from align-content comes from justify-content here.
+.series-card.ssc .series-card__availability {
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// Availability labels size themselves to their text, so a bare ssc-line has
+// neither the width nor the height to stand in for one. 25px is what
+// .availability-label measures.
+.series-card.ssc .series-card__availability .ssc-line {
+  height: 25px;
+  width: 140px;
+}

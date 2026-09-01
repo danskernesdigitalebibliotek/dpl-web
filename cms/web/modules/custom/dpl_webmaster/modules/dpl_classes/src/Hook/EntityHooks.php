@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_classes\Hook;
 
-use Drupal\node\NodeForm;
+use Drupal\node\Form\NodeForm;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Form\FormStateInterface;

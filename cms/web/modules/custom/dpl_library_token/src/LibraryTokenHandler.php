@@ -96,10 +96,7 @@ class LibraryTokenHandler {
     // In that way we are sure that the token is always valid.
     $expire = $token->expiresIn / 2;
 
-    if (!$expireInterval = \DateInterval::createFromDateString(sprintf('%d seconds', $expire))) {
-      throw new \InvalidArgumentException('Invalid expire date.');
-    }
-
+    $expireInterval = \DateInterval::createFromDateString(sprintf('%d seconds', $expire));
     $expireDateTime = (new DateTime("now"))->add($expireInterval);
 
     $this->tokenCollection

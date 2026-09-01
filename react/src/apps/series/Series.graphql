@@ -1,0 +1,34 @@
+query getSeries($seriesId: String!, $limit: Int!, $offset: Int!) {
+  series(seriesId: $seriesId) {
+    title
+    description
+    # The total member count. The member list is paged - asking for it without
+    # arguments silently returns only the first 50 - so this is what tells the
+    # pager whether there is more to load.
+    hitcount
+    members(limit: $limit, offset: $offset) {
+      # Pre-labelled and localised ("Del 1", "Bind 2"), so rendered verbatim.
+      # helper.ts extracts the digits for sorting.
+      numberInSeries
+      # Drives the "start here" badge only. It is not necessarily part 1, so it
+      # must not influence order.
+      readThisFirst
+      # The same fragment the search result rows use. Hand-picking fields here
+      # drifts from what AvailabilityLabels and the creator helpers expect.
+      work {
+        ...WorkSmall
+        # WorkSmall carries no cover data, and the fanned-out covers in the
+        # header need to skip the members FBI has no real cover for - see
+        # getHeaderCoverPids() in helper.ts. Only the origin is needed: the
+        # Cover component fetches the image urls itself.
+        manifestations {
+          bestRepresentation {
+            cover {
+              origin
+            }
+          }
+        }
+      }
+    }
+  }
+}

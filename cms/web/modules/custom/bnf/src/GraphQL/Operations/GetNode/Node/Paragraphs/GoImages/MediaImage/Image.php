@@ -23,14 +23,14 @@ class Image extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($url !== self::UNDEFINED) {
-            $instance->url = $url;
+            $instance->__set('url', $url);
         }
         $instance->__typename = 'Image';
         if ($alt !== self::UNDEFINED) {
-            $instance->alt = $alt;
+            $instance->__set('alt', $alt);
         }
         if ($title !== self::UNDEFINED) {
-            $instance->title = $title;
+            $instance->__set('title', $title);
         }
 
         return $instance;

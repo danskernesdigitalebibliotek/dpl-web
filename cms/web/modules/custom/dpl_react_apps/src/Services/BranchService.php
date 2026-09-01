@@ -4,10 +4,10 @@ namespace Drupal\dpl_react_apps\Services;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
+use Drupal\dpl_library_agency\Entity\BranchNode;
 use Drupal\file\FileInterface;
 use Drupal\image\ImageStyleInterface;
 use Drupal\media\MediaInterface;
-use Drupal\gsearch\AddressGsearchItemInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -44,7 +44,10 @@ class BranchService {
 
     $branches = [];
     foreach ($nodes as $node) {
-      /** @var \Drupal\node\NodeInterface $node */
+      if (!$node instanceof BranchNode) {
+        continue;
+      }
+
       $branch = [
         'title' => $node->label(),
         'url' => $node->toUrl()->toString(),
@@ -112,19 +115,16 @@ class BranchService {
   /**
    * Get address data from a branch node.
    *
-   * @param \Drupal\node\NodeInterface $node
+   * @param \Drupal\dpl_library_agency\Entity\BranchNode $node
    *   The branch node.
    *
    * @return array{address: string, city: ?string}|array{}
    *   Address and city, or empty array if not available.
    */
-  private function getAddress(NodeInterface $node): array {
-    if (!$node->hasField('field_address_gsearch') || $node->get('field_address_gsearch')->isEmpty()) {
-      return [];
-    }
+  private function getAddress(BranchNode $node): array {
+    $item = $node->getAddressData();
 
-    $item = $node->get('field_address_gsearch')->first();
-    if (!($item instanceof AddressGsearchItemInterface)) {
+    if (!$item) {
       return [];
     }
 
@@ -137,19 +137,16 @@ class BranchService {
   /**
    * Get GPS coordinates from a branch node's address field.
    *
-   * @param \Drupal\node\NodeInterface $node
+   * @param \Drupal\dpl_library_agency\Entity\BranchNode $node
    *   The branch node.
    *
    * @return array{lat: string, lng: string}|array{}
    *   Lat/lng coordinates, or empty array if not available.
    */
-  private function getCoordinates(NodeInterface $node): array {
-    if (!$node->hasField('field_address_gsearch') || $node->get('field_address_gsearch')->isEmpty()) {
-      return [];
-    }
+  private function getCoordinates(BranchNode $node): array {
+    $item = $node->getAddressData();
 
-    $item = $node->get('field_address_gsearch')->first();
-    if (!($item instanceof AddressGsearchItemInterface)) {
+    if (!$item) {
       return [];
     }
 

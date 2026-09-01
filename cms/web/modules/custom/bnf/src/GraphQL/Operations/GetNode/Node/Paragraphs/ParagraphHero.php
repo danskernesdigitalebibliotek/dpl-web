@@ -35,26 +35,26 @@ class ParagraphHero extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($heroTitle !== self::UNDEFINED) {
-            $instance->heroTitle = $heroTitle;
+            $instance->__set('heroTitle', $heroTitle);
         }
         $instance->__typename = 'ParagraphHero';
         if ($heroContentType !== self::UNDEFINED) {
-            $instance->heroContentType = $heroContentType;
+            $instance->__set('heroContentType', $heroContentType);
         }
         if ($heroDate !== self::UNDEFINED) {
-            $instance->heroDate = $heroDate;
+            $instance->__set('heroDate', $heroDate);
         }
         if ($heroDescription !== self::UNDEFINED) {
-            $instance->heroDescription = $heroDescription;
+            $instance->__set('heroDescription', $heroDescription);
         }
         if ($heroImage !== self::UNDEFINED) {
-            $instance->heroImage = $heroImage;
+            $instance->__set('heroImage', $heroImage);
         }
         if ($heroLink !== self::UNDEFINED) {
-            $instance->heroLink = $heroLink;
+            $instance->__set('heroLink', $heroLink);
         }
 
         return $instance;

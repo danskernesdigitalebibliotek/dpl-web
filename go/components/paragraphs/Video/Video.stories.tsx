@@ -4,7 +4,7 @@ import { darkModeDecorator } from "@/.storybook/decorators"
 import Video from "@/components/paragraphs/Video/Video"
 
 const meta = {
-  title: "components/Video",
+  title: "paragraphs/Video",
   component: Video,
   parameters: {
     layout: "centered",

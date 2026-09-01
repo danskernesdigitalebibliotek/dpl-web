@@ -34,7 +34,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private DplFeesSettings $feesSettings,
+    protected DplFeesSettings $feesSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;

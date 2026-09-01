@@ -26,17 +26,17 @@ class ParagraphCardGridManual extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         $instance->__typename = 'ParagraphCardGridManual';
         if ($titleOptional !== self::UNDEFINED) {
-            $instance->titleOptional = $titleOptional;
+            $instance->__set('titleOptional', $titleOptional);
         }
         if ($moreLink !== self::UNDEFINED) {
-            $instance->moreLink = $moreLink;
+            $instance->__set('moreLink', $moreLink);
         }
         if ($gridContentUuids !== self::UNDEFINED) {
-            $instance->gridContentUuids = $gridContentUuids;
+            $instance->__set('gridContentUuids', $gridContentUuids);
         }
 
         return $instance;

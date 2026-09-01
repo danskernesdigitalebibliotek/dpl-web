@@ -428,13 +428,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              local_administrator: '0'
-              editor: '0'
-              mediator: '0'
-              patron: '0'
-              external_system: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -479,13 +472,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              local_administrator: '0'
-              editor: '0'
-              mediator: '0'
-              patron: '0'
-              external_system: '0'
             min_placeholder: ''
             max_placeholder: ''
             placeholder: ''
@@ -544,6 +530,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
       query:

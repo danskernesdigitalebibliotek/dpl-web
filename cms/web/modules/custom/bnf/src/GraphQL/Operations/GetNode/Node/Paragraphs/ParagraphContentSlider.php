@@ -23,14 +23,14 @@ class ParagraphContentSlider extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         $instance->__typename = 'ParagraphContentSlider';
         if ($contentReferences !== self::UNDEFINED) {
-            $instance->contentReferences = $contentReferences;
+            $instance->__set('contentReferences', $contentReferences);
         }
         if ($underlinedTitle !== self::UNDEFINED) {
-            $instance->underlinedTitle = $underlinedTitle;
+            $instance->__set('underlinedTitle', $underlinedTitle);
         }
 
         return $instance;

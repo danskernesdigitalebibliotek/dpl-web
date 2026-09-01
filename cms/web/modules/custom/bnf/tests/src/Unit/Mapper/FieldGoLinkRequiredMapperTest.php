@@ -10,7 +10,7 @@ use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\GoLinkParagraph\LinkRe
 /**
  * Testing importing of reference-links.
  */
-class FieldGoLinkRequiredMapperTest extends BnfMapperImportReferencePluginBaseTest {
+class FieldGoLinkRequiredMapperTest extends BnfMapperImportReferenceTestBase {
 
   /**
    * {@inheritDoc}

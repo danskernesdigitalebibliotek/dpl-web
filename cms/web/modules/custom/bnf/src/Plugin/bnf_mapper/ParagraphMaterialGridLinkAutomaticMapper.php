@@ -25,7 +25,7 @@ class ParagraphMaterialGridLinkAutomaticMapper extends BnfMapperParagraphPluginB
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'material_grid_link_automatic',
       'field_material_grid_title' => $object->materialGridTitle,
       'field_material_grid_description' => $object->materialGridDescription,

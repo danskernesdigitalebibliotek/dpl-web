@@ -4,7 +4,7 @@ import { darkModeDecorator } from "@/.storybook/decorators"
 import TextBody from "@/components/paragraphs/TextBody/TextBody"
 
 const meta = {
-  title: "components/TextBody",
+  title: "paragraphs/TextBody",
   component: TextBody,
   parameters: {
     layout: "centered",

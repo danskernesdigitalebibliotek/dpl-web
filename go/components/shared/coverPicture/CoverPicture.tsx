@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useState } from "react"
 import Tilt from "react-parallax-tilt"
 
 import Icon from "@/components/shared/icon/Icon"
@@ -15,75 +15,33 @@ type CoverPictureProps = {
   withTilt?: boolean
 }
 export const CoverPicture = ({ covers, alt, withTilt = false, className }: CoverPictureProps) => {
-  const imageAspectRatio = (covers.large?.width ?? 0) / (covers.large?.height ?? 0)
+  const { width, height } = covers.large ?? {}
 
-  const ref = useRef<HTMLDivElement>(null)
-
-  const [containerSize, setContainerSize] = useState<{ width: number; height: number } | null>(null)
-
-  // Keep container size in sync with layout changes using ResizeObserver so we also react
-  // when Keen slider changes slide width (without requiring a window resize).
-  useEffect(() => {
-    if (!ref.current) return
-
-    const el = ref.current
-    const observer = new ResizeObserver(entries => {
-      const entry = entries[0]
-      if (!entry) return
-
-      const { width, height } = entry.contentRect
-      if (!width || !height) return
-
-      setContainerSize(prev => {
-        if (prev && prev.width === width && prev.height === height) return prev
-        return { width, height }
-      })
-    })
-
-    observer.observe(el)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
-
-  const containerHeight = containerSize?.height ?? 0
-  const containerWidth = containerSize?.width ?? 0
-
-  // Fallback to image aspect ratio if we don't yet know the container size to avoid NaN calculations
-  const hasContainerSize = containerHeight > 0 && containerWidth > 0 && imageAspectRatio > 0
-
-  // Calculate a width/height that fits INSIDE the container ("object-fit: contain" behavior)
-  let coverWidth = 0
-  let coverHeight = 0
-
-  if (hasContainerSize) {
-    // Start by filling the container width
-    coverWidth = containerWidth
-    coverHeight = coverWidth / imageAspectRatio
-
-    // If the result becomes taller than the container, constrain by height instead
-    if (coverHeight > containerHeight) {
-      coverHeight = containerHeight
-      coverWidth = coverHeight * imageAspectRatio
-    }
-  }
+  // Contain-fit in pure CSS: the wrapper takes the image's aspect ratio and
+  // a width capped by both the container's width (100cqw) and the width the
+  // container's height allows through the ratio (100cqh × ratio) — the same
+  // result as an "object-fit: contain" measured in JS, but it tracks layout
+  // changes (keen-slider, resize) for free.
+  const coverWrapperStyle: React.CSSProperties =
+    width && height
+      ? {
+          aspectRatio: `${width} / ${height}`,
+          width: `min(100cqw, calc(100cqh * ${width / height}))`,
+          maxWidth: "100%",
+          maxHeight: "100%",
+        }
+      : { width: "100%", height: "100%" }
 
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
-  // Use a style that either matches the calculated size or falls back to 100%
-  const coverWrapperStyle: React.CSSProperties = hasContainerSize
-    ? { width: `${coverWidth}px`, height: `${coverHeight}px` }
-    : { width: "100%", height: "100%" }
-
   return (
-    <div className={cn("flex h-full w-full items-center", className)} ref={ref}>
+    <div className={cn("[container-type:size] flex h-full w-full items-center", className)}>
       {!imageError && covers.thumbnail ? (
         <CoverPictureTiltWrapper
           key={covers.thumbnail}
           withTilt={withTilt}
-          className={"relative m-auto"}
+          className={"relative mx-auto"}
           style={coverWrapperStyle}>
           {covers.thumbnail && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -93,7 +51,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
               sizes="20px"
               loading="lazy"
               className={cn(
-                `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain
+                `absolute inset-0 h-full w-full overflow-hidden rounded-xs object-contain
                   transition-all duration-500 will-change-transform`,
                 imageLoaded ? "shadow-none" : "shadow-cover-picture"
               )}
@@ -107,7 +65,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
               alt={alt}
               loading="lazy"
               className={cn(
-                `shadow-cover-picture absolute inset-0 h-auto w-full overflow-hidden rounded-sm
+                `shadow-cover-picture absolute inset-0 h-full w-full overflow-hidden rounded-xs
                   object-contain transition-all duration-500 will-change-transform`,
                 imageLoaded ? "opacity-100" : "opacity-0"
               )}
@@ -125,7 +83,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="flex w-full flex-col items-center justify-center">
+          className="relative flex w-full flex-col items-center justify-center">
           <Icon
             name="question-mark"
             className="text-foreground h-[50px] opacity-20 lg:h-[100px]"
@@ -170,7 +128,7 @@ const CoverPictureTiltWrapper = ({
 export const CoverPictureSkeleton = ({ className }: { className?: string }) => {
   return (
     <div
-      className={cn("bg-background-skeleton h-full w-full animate-pulse rounded-md", className)}
+      className={cn("bg-background-skeleton h-full w-full animate-pulse rounded-xs", className)}
     />
   )
 }

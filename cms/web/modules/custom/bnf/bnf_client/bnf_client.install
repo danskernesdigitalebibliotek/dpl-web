@@ -6,6 +6,7 @@
  */
 
 use Drupal\bnf_client\Entity\Subscription;
+use Drupal\bnf_client\Hook\EntityHooks;
 use Drupal\Core\Database\Connection;
 use Drupal\drupal_typed\DrupalTyped;
 
@@ -22,7 +23,7 @@ function bnf_client_install(): void {
   // that upgrade in-place; the guard keeps it idempotent for those.
   $definition_manager = \Drupal::entityDefinitionUpdateManager();
 
-  foreach (_bnf_client_node_field_definitions() as $key => $field) {
+  foreach (DrupalTyped::service(EntityHooks::class)->fieldDefinitions() as $key => $field) {
     if (!$definition_manager->getFieldStorageDefinition($key, 'node')) {
       $definition_manager->installFieldStorageDefinition($key, 'node', 'bnf_client', $field);
     }
@@ -89,7 +90,7 @@ function bnf_client_update_10104(): string {
  * Install node field 'bnf_source_subscriptions'.
  */
 function bnf_client_update_10105(): string {
-  $fields = _bnf_client_node_field_definitions();
+  $fields = DrupalTyped::service(EntityHooks::class)->fieldDefinitions();
 
   $definition_manager = \Drupal::entityDefinitionUpdateManager();
 

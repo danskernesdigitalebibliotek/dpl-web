@@ -388,7 +388,6 @@ class BreadcrumbHelper {
 
       $contents = $item->get('field_content')->referencedEntities();
 
-      /** @var \Drupal\Core\Entity\FieldableEntityInterface $content */
       $content = reset($contents);
 
       if (!($content instanceof FieldableEntityInterface)) {

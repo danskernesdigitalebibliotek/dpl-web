@@ -10,7 +10,7 @@ export default async (baseUri?: string, options?: Options) => {
       persistent: true,
       request: {
         method: "POST",
-        urlPattern: "/next.*/graphql",
+        urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {matchesJsonPath: matchGraphqlQuery("getMaterial")},
           {or: [
@@ -33,7 +33,7 @@ export default async (baseUri?: string, options?: Options) => {
       persistent: true,
       request: {
         method: "POST",
-        urlPattern: "/next.*/graphql",
+        urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {matchesJsonPath: matchGraphqlQuery("getMaterial")},
           {matchesJsonPath: matchWidVariable("work-of:150060-pressdisp:9GVA")},
@@ -53,7 +53,7 @@ export default async (baseUri?: string, options?: Options) => {
       persistent: true,
       request: {
         method: "POST",
-        urlPattern: "/next.*/graphql",
+        urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {matchesJsonPath: matchGraphqlQuery("WorkInfo")},
           {matchesJsonPath: matchWidVariable("work-of:870970-basis:25245784")}
@@ -73,7 +73,7 @@ export default async (baseUri?: string, options?: Options) => {
       persistent: true,
       request: {
         method: "POST",
-        urlPattern: "/next.*/graphql",
+        urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {matchesJsonPath: matchGraphqlQuery("WorkInfo")},
           {matchesJsonPath: matchWidVariable("work-of:150060-pressdisp:9GVA")},
@@ -93,7 +93,7 @@ export default async (baseUri?: string, options?: Options) => {
       persistent: true,
       request: {
         method: "POST",
-        urlPattern: "/next.*/graphql",
+        urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("getInfomedia"),
@@ -129,7 +129,7 @@ export default async (baseUri?: string, options?: Options) => {
     persistent: true,
     request: {
       method: "POST",
-      urlPattern: "/next.*/graphql",
+      urlPathPattern: "/next.*/graphql",
       bodyPatterns: [
         {matchesJsonPath: matchGraphqlQuery("WorkRecommendations")},
       ],

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\bnf_client\Drush\Commands;
 
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drush\Attributes\Argument;
 use Drush\Attributes\Command;
@@ -24,17 +23,11 @@ class SubscriptionCommands extends DrushCommands {
   use AutowireTrait;
 
   /**
-   * Subscription storage.
-   */
-  protected EntityStorageInterface $storage;
-
-  /**
    * Constructor.
    */
   public function __construct(
-    EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
   ) {
-    $this->storage = $entityTypeManager->getStorage('bnf_subscription');
     parent::__construct();
   }
 
@@ -49,7 +42,7 @@ class SubscriptionCommands extends DrushCommands {
     description: 'Subscribe to 8f647000-cb67-40d0-b942-3f7fbf899c88.'
   )]
   public function createSubscription(string $uuid = '', string $label = ''): void {
-    $this->storage->create([
+    $this->entityTypeManager->getStorage('bnf_subscription')->create([
       'subscription_uuid' => $uuid,
       'label' => $label,
     ])
@@ -67,9 +60,9 @@ class SubscriptionCommands extends DrushCommands {
     description: 'Delete the subscription with UUID 4b426ec8-482d-401c-af0e-7f15dc9bfa5c.'
   )]
   public function deleteSubscription(string $uuid = ''): void {
-    $entities = $this->storage->loadMultiple(['uuid' => $uuid]);
+    $entities = $this->entityTypeManager->getStorage('bnf_subscription')->loadMultiple(['uuid' => $uuid]);
 
-    $this->storage->delete($entities);
+    $this->entityTypeManager->getStorage('bnf_subscription')->delete($entities);
   }
 
   /**
@@ -82,9 +75,9 @@ class SubscriptionCommands extends DrushCommands {
     description: 'Delete all subscriptions'
   )]
   public function deleteAllSubscriptions(): void {
-    $entities = $this->storage->loadMultiple();
+    $entities = $this->entityTypeManager->getStorage('bnf_subscription')->loadMultiple();
 
-    $this->storage->delete($entities);
+    $this->entityTypeManager->getStorage('bnf_subscription')->delete($entities);
   }
 
   /**
@@ -103,7 +96,7 @@ class SubscriptionCommands extends DrushCommands {
   ])]
   public function listSubscriptions(): RowsOfFields {
     /** @var \Drupal\bnf_client\Entity\Subscription[] $subscriptions */
-    $subscriptions = $this->storage->loadMultiple();
+    $subscriptions = $this->entityTypeManager->getStorage('bnf_subscription')->loadMultiple();
 
     $rows = [];
 

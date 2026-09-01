@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DatesSetArg, EventInput } from "@fullcalendar/core";
+import { DatesSetInfo, EventInput } from "@fullcalendar/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { formatCmsEventsToFullCalendar } from "./helper";
 import {
@@ -22,7 +22,7 @@ const useOpeningHoursEditor = () => {
   const openingHoursBranchId = config("openingHoursBranchIdConfig", {
     transformer: "stringToNumber"
   });
-  const [datesSet, setDatseSet] = useState<null | DatesSetArg>(null);
+  const [datesSet, setDatseSet] = useState<null | DatesSetInfo>(null);
   const queryClient = useQueryClient();
   const { data: openingHoursData } = useDplOpeningHoursListGET(
     {
@@ -49,7 +49,7 @@ const useOpeningHoursEditor = () => {
     }
   }, [openingHoursData]);
 
-  const handleDatesSet = (datesInView: DatesSetArg) => {
+  const handleDatesSet = (datesInView: DatesSetInfo) => {
     setDatseSet(datesInView);
   };
 

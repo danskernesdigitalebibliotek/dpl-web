@@ -22,7 +22,7 @@ trait LinkTrait {
     }
 
     /** @var \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Link\Link $link */
-    if (empty($link?->title) || $link->internal) {
+    if (empty($link->title) || $link->internal) {
       return [];
     }
 
