@@ -9,9 +9,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 // story around it.
 
 export const ShowcaseTitle = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-typo-caption text-foreground-muted font-medium tracking-wide">
-    {children}
-  </h2>
+  <h2 className="text-typo-caption text-foreground-muted font-medium tracking-wide">{children}</h2>
 )
 
 export const ShowcaseCaption = ({ children }: { children: React.ReactNode }) => (
