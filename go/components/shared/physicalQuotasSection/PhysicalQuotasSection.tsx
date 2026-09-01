@@ -1,0 +1,104 @@
+"use client"
+
+import React from "react"
+
+import { cyKeys } from "@/cypress/support/constants"
+import { dueStatus } from "@/lib/helpers/helper.due-status"
+import { type PhysicalLoanItem, type ReservationItem } from "@/lib/helpers/helper.patron"
+import { openModal } from "@/store/modal.store"
+
+export type PhysicalQuotasSectionProps = {
+  // Counts and modals both use the paired items: pairing resolves records
+  // through FBI and filters out adult-only materials, which the raw FBS
+  // data cannot distinguish.
+  loanItems: PhysicalLoanItem[]
+  reservationItems: ReservationItem[]
+}
+
+// Opens the same modal as the card's "Vis alle".
+const StatBox = ({
+  count,
+  label,
+  onClick,
+}: {
+  count: number
+  label: string
+  onClick: () => void
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="bg-background-overlay focus-visible flex flex-1 cursor-pointer flex-col items-center
+      justify-center gap-2 rounded-sm p-6 text-center md:min-h-36">
+    <span className="text-typo-heading-3 block">{count}</span>
+    <span className="text-typo-subtitle-sm block opacity-70">{label}</span>
+  </button>
+)
+
+const OverviewCard = ({
+  title,
+  onViewAll,
+  viewAllDataCy,
+  children,
+}: {
+  title: string
+  onViewAll: () => void
+  viewAllDataCy: string
+  children: React.ReactNode
+}) => (
+  <div
+    className="bg-background duration-dark-mode p-grid-edge rounded-base flex-1 space-y-4
+      transition-all md:p-8">
+    <div className="flex items-center justify-between">
+      <h3 className="text-typo-subtitle-sm opacity-70">{title}</h3>
+      <button
+        type="button"
+        onClick={onViewAll}
+        // eslint-disable-next-line no-restricted-syntax -- viewAllDataCy comes from cyKeys at call site
+        data-cy={viewAllDataCy}
+        className="text-typo-link focus-visible cursor-pointer underline">
+        Vis alle
+      </button>
+    </div>
+    <div className="flex w-full flex-row gap-4 md:gap-6">{children}</div>
+  </div>
+)
+
+// Overview under the physical loan slider: loan counts and reservation
+// counts, each with a "Vis alle" opening the matching modal.
+const PhysicalQuotasSection = ({ loanItems, reservationItems }: PhysicalQuotasSectionProps) => {
+  // "Skal afleveres" counts anything with a pressing due date, overdue included.
+  const dueSoonCount = loanItems.filter(
+    ({ loan }) => dueStatus(loan.dueDate).state !== "neutral"
+  ).length
+  const readyCount = reservationItems.filter(
+    ({ reservation }) => reservation.state === "readyForPickup"
+  ).length
+  const queuedCount = reservationItems.length - readyCount
+
+  const openLoans = () => openModal("PhysicalLoansModal", { items: loanItems })
+  const openReservations = () => openModal("ReservationsModal", { items: reservationItems })
+
+  return (
+    <div className="col-span-full">
+      <div className="gap-grid-edge flex w-full flex-col md:gap-6 lg:flex-row">
+        <OverviewCard
+          title="Mine lån"
+          onViewAll={openLoans}
+          viewAllDataCy={cyKeys["view-all-physical-loans-button"]}>
+          <StatBox count={loanItems.length} label="Lånte bøger" onClick={openLoans} />
+          <StatBox count={dueSoonCount} label="Skal afleveres" onClick={openLoans} />
+        </OverviewCard>
+        <OverviewCard
+          title="Mine reserveringer"
+          onViewAll={openReservations}
+          viewAllDataCy={cyKeys["view-all-reservations-button"]}>
+          <StatBox count={readyCount} label="Klar til afhentning" onClick={openReservations} />
+          <StatBox count={queuedCount} label="I kø" onClick={openReservations} />
+        </OverviewCard>
+      </div>
+    </div>
+  )
+}
+
+export default PhysicalQuotasSection

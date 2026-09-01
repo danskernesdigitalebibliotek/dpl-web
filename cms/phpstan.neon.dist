@@ -46,8 +46,6 @@ parameters:
     - '#Drupal\\.*\\Plugin\\.*::create\(\) .* no value type specified in iterable type array\.#'
     # Ignore Plugin definitions parameter.
     - '#Drupal\\.*\\Plugin\\.*::getPluginDefinition\(\) return type has no value type specified in iterable type array\.#'
-    # Ignore iterable types for FieldItemListInterface.
-    - '#no value type specified in iterable type Drupal\\Core\\Field\\FieldItemListInterface#'
     # Allow no doc block details in HOOK_dpl_react_apps_data() functions
     - '#Function .*_dpl_react_apps_data\(\) has parameter \$variables with no value type specified in iterable type array\.#'
     - '#Function .*_dpl_react_apps_data\(\) has parameter \$data with no value type specified in iterable type array\.#'
@@ -72,14 +70,21 @@ parameters:
       path: web/modules/custom/dpl_po/src/Services/CtpConfigManager.php
     # Drupal field widget formElement() method has parameters and return type which we cannot provide more detailed typing of.
     - '#Method Drupal\\.*\\Plugin\\Field\\FieldWidget\\.*::formElement\(\) .* no value type specified in iterable type array\.#'
-    -
-      message: "#Variable .* might not be defined#"
-      path: web/modules/custom/dpl_login/src/OpenIdUserInfoService.php
     # Ignore options for Drush commands. These are specified using specialized annotations.
     - '#Method Drupal\\.*\Commands\\.* has parameter \$options with no value type specified in iterable type array\.#'
-    # These attributes is Drupal 11, but PHP ignores unknown
-    # attributes by design. So tell phpstan these are okay.
-    - '#Attribute class Drupal\\Core\\Hook\\Attribute\\(Legacy)?Hook does not exist\.#'
+    # dpl_webmaster deliberately reuses core's archiver/updater machinery to
+    # let webmaster sites upload modules through the UI. These APIs are
+    # deprecated in Drupal 11 without any replacement, so we keep using them
+    # until Drupal 12 forces a rewrite.
+    -
+      message: '#deprecated (class Drupal\\Core\\Archiver\\ArchiverManager|interface Drupal\\Core\\Archiver\\ArchiverInterface)#'
+      path: web/modules/custom/dpl_webmaster/src/Form/InstallOrUpdateModule.php
+    -
+      message: '#The "plugin\.manager\.archiver" service is deprecated#'
+      path: web/modules/custom/dpl_webmaster/src/Form/InstallOrUpdateModule.php
+    -
+      message: '#deprecated (class Drupal\\Core\\Updater\\Module|interface Drupal\\Core\\Updater\\UpdaterInterface)#'
+      path: web/profiles/dpl_cms/src/Updater/Module.php
 
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.

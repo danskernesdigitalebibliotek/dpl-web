@@ -1,4 +1,7 @@
 services:
+  # Hook services, can be removed when upgrading to Drupal 11.2.
+  Drupal\dpl_webmaster\Hook\AssetInjectorHooks: {}
+
   dpl_webmaster.route_subscriber:
     class: Drupal\dpl_webmaster\Routing\RouteSubscriber
     tags:

@@ -22,8 +22,12 @@ x-volumes:
 
 x-user:
   &default-user
-    # The default user under which the containers should run. Change this if you are on linux and run with another user than id `1000`
-    user: ${UID:-1000}
+    # Everything writing into the bind-mounted /app must run as the host user,
+    # or the repo fills up with files you cannot edit. The Taskfile sets UID;
+    # the default covers a bare `docker compose`. Group 0 is what the Lagoon
+    # images make their own directories writable to - the host's group breaks
+    # the entrypoint. Both overridable from .env.
+    user: ${UID:-1000}:${GID:-0}
 
 x-environment:
   &default-environment
@@ -34,6 +38,11 @@ x-environment:
     LAGOON_ENVIRONMENT: 'local'
     LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
     WEBROOT: cms/web
+    # Host of the key-value store holding Prometheus metric counters. Settings
+    # fall back to non-persistent in-process storage when this is unset, so
+    # environments without the service keep working (metrics are just useless
+    # there).
+    METRICS_REDIS_HOST: redis-metrics
     # Uncomment if you like to have the system behave like in production
     #LAGOON_ENVIRONMENT_TYPE: production
 
@@ -88,8 +97,16 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/cli.dockerfile
-    << : *default-volumes # loads the defined volumes from the top
-    user: root
+      args: &skip-baked-in-builds
+        # /app is bind-mounted over the image content in dev/CI, so baked-in
+        # vendor and JS assets are never used there. The Taskfile sets
+        # SKIP_BAKED_IN_BUILDS=true for every compose command; Lagoon builds
+        # never see these args (shyaml does not resolve extends) and fall
+        # back to the dockerfile defaults, giving full builds.
+        SKIP_COMPOSER_INSTALL: "${SKIP_BAKED_IN_BUILDS:-false}"
+        SKIP_JS_ASSETS: "${SKIP_BAKED_IN_BUILDS:-false}"
+    # loads the defined volumes and user from the top
+    <<: [*default-volumes, *default-user]
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Uncomment to enable xdebug for cli tools
@@ -105,6 +122,7 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/nginx.dockerfile
+      args: *skip-baked-in-builds
     depends_on:
       - php
     # loads the defined volumes and user from the top
@@ -123,8 +141,11 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/php.dockerfile
+      args: *skip-baked-in-builds
     depends_on:
       redis:
+        condition: service_started
+      redis-metrics:
         condition: service_started
       mariadb:
         condition: service_healthy
@@ -159,6 +180,20 @@ services:
   redis: # In-memory key-value database used as the Drupal Core cache backend.
     # https://docs.lagoon.sh/docker-images/redis/
     image: uselagoon/redis-8:latest
+    labels:
+      lagoon.type: redis
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment
+
+  redis-metrics: # Key-value store holding Prometheus metric counters.
+    # Deliberately separate from the cache instance above: that one runs an LRU
+    # eviction policy and gets flushed wholesale (see dev-scripts/flush-redis-
+    # cache.php), either of which would corrupt counters. See the dockerfile for
+    # why the memory settings live there rather than here.
+    build:
+      context: ..
+      dockerfile: cms/lagoon/redis-metrics.dockerfile
     labels:
       lagoon.type: redis
     << : *default-user # uses the defined user from top

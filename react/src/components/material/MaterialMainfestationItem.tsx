@@ -11,6 +11,7 @@ import {
 import { useText } from "../../core/utils/text";
 import MaterialDetailsList, { ListData } from "./MaterialDetailsList";
 import MaterialButtons from "./material-buttons/MaterialButtons";
+import MaterialUnavailableNotice from "./MaterialUnavailableNotice/MaterialUnavailableNotice";
 import CopyLink from "../copy-link/CopyLink";
 import MaterialContents from "./MaterialContents/MaterialContents";
 import { Manifestation } from "../../core/utils/types/entities";
@@ -209,6 +210,7 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
           workId={workId}
           materialTitleId={mainfestationTitleId}
           isEditionPicker={isEditionPicker}
+          fallback={<MaterialUnavailableNotice variant="compact" />}
         />
       </div>
     </div>

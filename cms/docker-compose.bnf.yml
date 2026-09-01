@@ -7,7 +7,7 @@ x-volumes:
 
 x-user:
   &default-user
-    user: ${UID:-1000}
+    user: ${UID:-1000}:${GID:-0}
 
 x-environment:
   &default-environment
@@ -20,6 +20,7 @@ x-environment:
     #
     MARIADB_HOST: bnfmariadb
     REDIS_HOST: bnfredis
+    METRICS_REDIS_HOST: bnfredis-metrics
     VARNISH_BACKEND_HOST: bnfnginx
     NGINX_FASTCGI_PASS: bnfphp
 
@@ -71,8 +72,13 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/cli.dockerfile
-    << : *default-volumes # loads the defined volumes from the top
-    user: root
+      # Same reasoning as in docker-compose.yml: image content is shadowed
+      # by the /app bind mount in dev/CI.
+      args: &skip-baked-in-builds
+        SKIP_COMPOSER_INSTALL: "${SKIP_BAKED_IN_BUILDS:-false}"
+        SKIP_JS_ASSETS: "${SKIP_BAKED_IN_BUILDS:-false}"
+    # loads the defined volumes and user from the top
+    <<: [*default-volumes, *default-user]
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Uncomment to enable xdebug for cli tools
@@ -83,6 +89,7 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/nginx.dockerfile
+      args: *skip-baked-in-builds
     depends_on:
       - bnfphp
     # loads the defined volumes and user from the top
@@ -97,8 +104,11 @@ services:
     build:
       context: ..
       dockerfile: cms/lagoon/php.dockerfile
+      args: *skip-baked-in-builds
     depends_on:
       bnfredis:
+        condition: service_started
+      bnfredis-metrics:
         condition: service_started
       bnfmariadb:
         condition: service_healthy
@@ -127,6 +137,17 @@ services:
   bnfredis: # In-memory key-value database used as the Drupal Core cache backend.
     # https://docs.lagoon.sh/docker-images/redis/
     image: uselagoon/redis-8:latest
+    labels:
+      lagoon.type: redis
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment
+
+  bnfredis-metrics: # Key-value store holding Prometheus metric counters.
+    # See the redis-metrics service in docker-compose.yml for the rationale.
+    build:
+      context: ..
+      dockerfile: cms/lagoon/redis-metrics.dockerfile
     labels:
       lagoon.type: redis
     << : *default-user # uses the defined user from top

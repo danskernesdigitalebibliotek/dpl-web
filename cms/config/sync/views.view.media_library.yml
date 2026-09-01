@@ -325,13 +325,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              local_administrator: '0'
-              editor: '0'
-              mediator: '0'
-              patron: '0'
-              external_system: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -375,8 +368,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -473,18 +464,7 @@ display:
         - 'url.query_args:sort_by'
         - user
         - user.permissions
-      tags:
-        - 'config:core.entity_view_display.media.document.default'
-        - 'config:core.entity_view_display.media.document.media_library'
-        - 'config:core.entity_view_display.media.image.card'
-        - 'config:core.entity_view_display.media.image.default'
-        - 'config:core.entity_view_display.media.image.hero_wide'
-        - 'config:core.entity_view_display.media.image.list_teaser'
-        - 'config:core.entity_view_display.media.image.media_library'
-        - 'config:core.entity_view_display.media.image.paragraph_squared'
-        - 'config:core.entity_view_display.media.image.paragraph_wide'
-        - 'config:core.entity_view_display.media.video.default'
-        - 'config:core.entity_view_display.media.video.media_library'
+      tags: {  }
   page:
     id: page
     display_title: Page
@@ -781,18 +761,7 @@ display:
         - 'url.query_args:sort_by'
         - user
         - user.permissions
-      tags:
-        - 'config:core.entity_view_display.media.document.default'
-        - 'config:core.entity_view_display.media.document.media_library'
-        - 'config:core.entity_view_display.media.image.card'
-        - 'config:core.entity_view_display.media.image.default'
-        - 'config:core.entity_view_display.media.image.hero_wide'
-        - 'config:core.entity_view_display.media.image.list_teaser'
-        - 'config:core.entity_view_display.media.image.media_library'
-        - 'config:core.entity_view_display.media.image.paragraph_squared'
-        - 'config:core.entity_view_display.media.image.paragraph_wide'
-        - 'config:core.entity_view_display.media.video.default'
-        - 'config:core.entity_view_display.media.video.media_library'
+      tags: {  }
   widget:
     id: widget
     display_title: Widget
@@ -1050,18 +1019,7 @@ display:
         - 'url.query_args:sort_by'
         - user
         - user.permissions
-      tags:
-        - 'config:core.entity_view_display.media.document.default'
-        - 'config:core.entity_view_display.media.document.media_library'
-        - 'config:core.entity_view_display.media.image.card'
-        - 'config:core.entity_view_display.media.image.default'
-        - 'config:core.entity_view_display.media.image.hero_wide'
-        - 'config:core.entity_view_display.media.image.list_teaser'
-        - 'config:core.entity_view_display.media.image.media_library'
-        - 'config:core.entity_view_display.media.image.paragraph_squared'
-        - 'config:core.entity_view_display.media.image.paragraph_wide'
-        - 'config:core.entity_view_display.media.video.default'
-        - 'config:core.entity_view_display.media.video.media_library'
+      tags: {  }
   widget_table:
     id: widget_table
     display_title: 'Widget (table)'
@@ -1191,6 +1149,7 @@ display:
         options:
           row_class: 'media-library-item media-library-item--table js-media-library-item js-click-to-select'
           default_row_class: true
+          class: ''
       row:
         type: fields
       defaults:

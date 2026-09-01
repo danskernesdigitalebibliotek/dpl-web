@@ -293,6 +293,60 @@
                       "description": "The name of a branch."
                     }
                   },
+                  "branch_isil_ids": {
+                    "type": "array",
+                    "description": "External branch ids (ISIL) for the associated library branches. Aligned by index with the branches property, and always the same length. An entry is an empty string when no ISIL has been configured for that branch in the CMS.",
+                    "items": {
+                      "type": "string",
+                      "description": "External branch id (ISIL)",
+                      "example": "DK-710100"
+                    }
+                  },
+                  "organizer": {
+                    "type": "object",
+                    "description": "The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library.",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "A unique identifier for the organizer. It is stable across updates, and unique across libraries."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the branch arranging the event."
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "An absolute URL for the page describing the branch."
+                      },
+                      "street": {
+                        "type": "string",
+                        "description": "Street name and number of the branch."
+                      },
+                      "zip_code": {
+                        "type": "integer",
+                        "description": "Zip code of the branch."
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "City of the branch."
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "Country code in ISO 3166-1 alpha-2 format. E.g. DK for Denmark."
+                      },
+                      "phone": {
+                        "type": "string",
+                        "description": "Phone number of the branch."
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Email address of the branch."
+                      }
+                    },
+                    "required": ["id", "name"]
+                  },
                   "address": {
                     "type": "object",
                     "description": "Where the event occurs.",
@@ -1326,6 +1380,60 @@
                       "type": "string",
                       "description": "The name of a branch."
                     }
+                  },
+                  "branch_isil_ids": {
+                    "type": "array",
+                    "description": "External branch ids (ISIL) for the associated library branches. Aligned by index with the branches property, and always the same length. An entry is an empty string when no ISIL has been configured for that branch in the CMS.",
+                    "items": {
+                      "type": "string",
+                      "description": "External branch id (ISIL)",
+                      "example": "DK-710100"
+                    }
+                  },
+                  "organizer": {
+                    "type": "object",
+                    "description": "The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library.",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "A unique identifier for the organizer. It is stable across updates, and unique across libraries."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the branch arranging the event."
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "An absolute URL for the page describing the branch."
+                      },
+                      "street": {
+                        "type": "string",
+                        "description": "Street name and number of the branch."
+                      },
+                      "zip_code": {
+                        "type": "integer",
+                        "description": "Zip code of the branch."
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "City of the branch."
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "Country code in ISO 3166-1 alpha-2 format. E.g. DK for Denmark."
+                      },
+                      "phone": {
+                        "type": "string",
+                        "description": "Phone number of the branch."
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Email address of the branch."
+                      }
+                    },
+                    "required": ["id", "name"]
                   },
                   "address": {
                     "type": "object",

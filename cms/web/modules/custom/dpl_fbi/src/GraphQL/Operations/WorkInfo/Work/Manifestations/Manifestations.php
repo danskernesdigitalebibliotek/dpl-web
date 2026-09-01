@@ -16,7 +16,7 @@ class Manifestations extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($bestRepresentation !== self::UNDEFINED) {
-            $instance->bestRepresentation = $bestRepresentation;
+            $instance->__set('bestRepresentation', $bestRepresentation);
         }
         $instance->__typename = 'Manifestations';
 

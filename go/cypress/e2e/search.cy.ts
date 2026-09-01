@@ -34,8 +34,10 @@ describe("Search Result Tests", () => {
       isMobile => isMobile && cy.dataCy("filters-button").should("exist").click()
     )
 
-    // Check if facets are displayed
-    cy.dataCy("filter-button").should("have.length.above", 10)
+    // Both SearchFiltersDesktop and SearchFiltersMobile render filter-buttons:
+    // on mobile the desktop column is in DOM but hidden via `display: none`,
+    // so we must scope to visible elements before counting/clicking.
+    cy.dataCy("filter-button").filter(":visible").should("have.length.above", 10)
 
     // Intercept search request with only one result
     cy.interceptGraphql({
@@ -44,10 +46,10 @@ describe("Search Result Tests", () => {
     })
 
     // Select a facet
-    cy.dataCy("filter-button").first().click()
+    cy.dataCy("filter-button").filter(":visible").first().click()
 
     // Check if facet is selected
-    cy.dataCy("filter-button").first().should("have.class", "bg-foreground")
+    cy.dataCy("filter-button").filter(":visible").first().should("have.class", "bg-foreground")
 
     // Check that only one result is displayed
     cy.dataCy("work-card").should("have.length", 1)

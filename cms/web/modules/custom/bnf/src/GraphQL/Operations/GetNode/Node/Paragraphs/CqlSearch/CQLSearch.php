@@ -18,7 +18,7 @@ class CQLSearch extends \Spawnia\Sailor\ObjectLike
 
         $instance->__typename = 'CQLSearch';
         if ($value !== self::UNDEFINED) {
-            $instance->value = $value;
+            $instance->__set('value', $value);
         }
 
         return $instance;

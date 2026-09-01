@@ -21,7 +21,7 @@ function Header() {
         <div className="flex flex-0 items-center" data-cy={cyKeys["go-logo"]}>
           <Button ariaLabel="Gå til forsiden" asChild className="inline-flex px-3">
             <SmartLink href="/" className="inline-flex">
-              <Icon name="logo-borderless" />
+              <Icon name="logo-borderless" className="h-[21px] w-[61px]" />
             </SmartLink>
           </Button>
         </div>

@@ -84,7 +84,9 @@ function WorkPageLayout({ workId }: { workId: string }) {
   }
 
   return (
-    <div className="content-container my-grid-gap-2 lg:my-grid-gap-half flex-row flex-wrap">
+    <div
+      className="content-container mb-grid-gap-2 lg:mb-grid-gap-half flex flex-col flex-row
+        flex-wrap gap-y-10">
       {work && selectedManifestation && (
         <>
           <WorkPageHeader

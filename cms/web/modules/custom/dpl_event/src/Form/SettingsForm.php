@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\dpl_event\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -24,10 +25,11 @@ final class SettingsForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
-    private DateFormatterInterface $dateFormatter,
-    private UnpublishSchedule $unpublishSchedule,
+    TypedConfigManagerInterface $typedConfigManager,
+    protected DateFormatterInterface $dateFormatter,
+    protected UnpublishSchedule $unpublishSchedule,
   ) {
-    parent::__construct($config_factory);
+    parent::__construct($config_factory, $typedConfigManager);
   }
 
   /**
@@ -36,6 +38,7 @@ final class SettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container): static {
     return new static(
           $container->get('config.factory'),
+          $container->get('config.typed'),
           $container->get('date.formatter'),
           $container->get('dpl_event.unpublish_schedule')
       );

@@ -56,8 +56,8 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
       <input
         ref={inputRef}
         className={cn(
-          `focus-visible rounded-base bg-background-overlay text-typo-subtitle-lg
-          placeholder:text-muted-foreground flex h-[50px] w-full px-5 transition-colors
+          `focus-visible bg-background-overlay text-typo-subtitle-lg
+          placeholder:text-muted-foreground rounded-base flex h-[50px] w-full px-5 transition-colors
           disabled:cursor-not-allowed disabled:opacity-50 lg:h-20`,
           className
         )}

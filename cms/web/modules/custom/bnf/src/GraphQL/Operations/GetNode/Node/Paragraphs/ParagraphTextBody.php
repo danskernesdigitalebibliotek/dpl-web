@@ -18,10 +18,10 @@ class ParagraphTextBody extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($body !== self::UNDEFINED) {
-            $instance->body = $body;
+            $instance->__set('body', $body);
         }
         $instance->__typename = 'ParagraphTextBody';
 

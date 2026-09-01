@@ -198,8 +198,8 @@ describe('Adgangsplatformen', () => {
     // Let Drupal start the OpenID Connect flow
     cy.visit('/login');
 
-    // After the full OpenID flow, an unregistered user should end up on front page
-    cy.url().should('match', /\/frontpage.*/);
+    // After full OpenID flow, unregistered users should end up on frontpage.
+    cy.location('pathname').should('eq', '/');
 
     // And see an error message
     cy.get('.error-message__description').should(

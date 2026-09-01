@@ -20,13 +20,13 @@ class ParagraphGoMaterialSliderManual extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($materialSliderWorkIds !== self::UNDEFINED) {
-            $instance->materialSliderWorkIds = $materialSliderWorkIds;
+            $instance->__set('materialSliderWorkIds', $materialSliderWorkIds);
         }
         if ($title !== self::UNDEFINED) {
-            $instance->title = $title;
+            $instance->__set('title', $title);
         }
         $instance->__typename = 'ParagraphGoMaterialSliderManual';
 

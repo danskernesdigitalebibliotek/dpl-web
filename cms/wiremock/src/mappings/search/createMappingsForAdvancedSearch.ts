@@ -10,7 +10,7 @@ export default async (baseUri?: string, options?: Options) => {
       persistent: true,
       request: {
         method: "POST",
-        urlPattern: "/next.*/graphql",
+        urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("complexSearchWithPagination"),

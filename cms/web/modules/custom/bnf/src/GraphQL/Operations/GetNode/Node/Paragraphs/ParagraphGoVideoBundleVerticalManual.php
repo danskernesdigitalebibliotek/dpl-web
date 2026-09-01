@@ -26,17 +26,17 @@ class ParagraphGoVideoBundleVerticalManual extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($goVideoTitle !== self::UNDEFINED) {
-            $instance->goVideoTitle = $goVideoTitle;
+            $instance->__set('goVideoTitle', $goVideoTitle);
         }
         if ($embedVideo !== self::UNDEFINED) {
-            $instance->embedVideo = $embedVideo;
+            $instance->__set('embedVideo', $embedVideo);
         }
         $instance->__typename = 'ParagraphGoVideoBundleVerticalManual';
         if ($videoBundleWorkIds !== self::UNDEFINED) {
-            $instance->videoBundleWorkIds = $videoBundleWorkIds;
+            $instance->__set('videoBundleWorkIds', $videoBundleWorkIds);
         }
 
         return $instance;

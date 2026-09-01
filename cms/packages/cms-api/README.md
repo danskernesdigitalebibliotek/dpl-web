@@ -161,6 +161,7 @@ Class | Method | HTTP request | Description
  - [EventsGET200ResponseInnerAddress](docs/Model/EventsGET200ResponseInnerAddress.md)
  - [EventsGET200ResponseInnerDateTime](docs/Model/EventsGET200ResponseInnerDateTime.md)
  - [EventsGET200ResponseInnerImage](docs/Model/EventsGET200ResponseInnerImage.md)
+ - [EventsGET200ResponseInnerOrganizer](docs/Model/EventsGET200ResponseInnerOrganizer.md)
  - [EventsGET200ResponseInnerOriginalImage](docs/Model/EventsGET200ResponseInnerOriginalImage.md)
  - [EventsGET200ResponseInnerSeries](docs/Model/EventsGET200ResponseInnerSeries.md)
  - [EventsGET200ResponseInnerTeaserImage](docs/Model/EventsGET200ResponseInnerTeaserImage.md)

@@ -8,12 +8,12 @@ use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_client\Form\SettingsForm;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Queue\QueueInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\dpl_metrics\MetricsRegistry;
 
 /**
  * Check for new content on subscription and queue fetching.
@@ -32,11 +32,6 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
    * The BNF site base URL.
    */
   protected string $baseUrl;
-
-  /**
-   * Subscription storage.
-   */
-  protected EntityStorageInterface $storage;
 
   /**
    * Node update queue.
@@ -60,19 +55,21 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
    *   BNF importer.
    * @param \Drupal\Core\Queue\QueueFactory $queueFactory
    *   Queue factory.
+   * @param \Drupal\dpl_metrics\MetricsRegistry $metrics
+   *   Records whether we managed to reach delingstjenesten.dk.
    */
   public function __construct(
     array $configuration,
     $pluginId,
     $pluginDefinition,
-    EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
     ConfigFactoryInterface $configFactory,
     protected BnfImporter $importer,
     QueueFactory $queueFactory,
+    protected MetricsRegistry $metrics,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
 
-    $this->storage = $entityTypeManager->getStorage('bnf_subscription');
     $this->baseUrl = $configFactory->get(SettingsForm::CONFIG_NAME)->get('base_url');
 
     $this->nodeQueue = $queueFactory->get('bnf_client_node_update');
@@ -84,10 +81,14 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
   #[\Override]
   public function processItem($data): void {
     /** @var ?\Drupal\bnf_client\Entity\Subscription $subscription */
-    $subscription = $this->storage->load($data['id']);
+    $subscription = $this->entityTypeManager->getStorage('bnf_subscription')->load($data['id']);
 
     if (!$subscription) {
       // Subscription deleted. Carry on.
+      //
+      // Deliberately not counted: nothing was asked of delingstjenesten.dk,
+      // so counting this either way would move a metric that is there to say
+      // whether we can reach them.
       return;
     }
 
@@ -95,6 +96,17 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
       $subscription->getSubscriptionUuid(),
       $subscription->getLast(),
       $this->baseUrl . 'graphql'
+    );
+
+    // A failed check is otherwise invisible from the outside: the importer
+    // answers "nothing new" either way, so a site cut off from
+    // delingstjenesten.dk goes on looking exactly like one whose streams have
+    // been quiet. Only this tells the two apart, and until content is
+    // conspicuously missing it is the only thing that will.
+    $this->metrics->incrementCounter(
+      'bnf_sync_subscription_checks_total',
+      'Checks for new subscription content on delingstjenesten.dk, by outcome.',
+      ['result' => $newContent['success'] ? 'success' : 'failure'],
     );
 
     foreach ($newContent['uuids'] as $uuid) {

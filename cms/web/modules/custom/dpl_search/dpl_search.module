@@ -27,7 +27,7 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
 
   $input = \Drupal::request()->query->get(DplSearchSettings::MATERIAL_QUERY_KEY);
 
-  if (empty($input) || !is_string($input)) {
+  if (empty($input)) {
     return;
   }
 
