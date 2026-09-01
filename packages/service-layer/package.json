@@ -29,7 +29,7 @@
     "@types/node": "^24",
     "@types/react": "^19",
     "eslint": "^10.4.0",
-    "globals": "^17.6.0",
+    "globals": "^17.11.0",
     "orval": "^7.21.0",
     "prettier": "^3.8.3",
     "typescript": "^5.9.3",
