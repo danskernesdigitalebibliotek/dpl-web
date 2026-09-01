@@ -10,6 +10,7 @@ import { cookies } from "next/headers"
 import React, { Suspense } from "react"
 
 import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
+import WorkPageLoading from "@/components/pages/workPageLayout/WorkPageLoading"
 import { isPhysicalMaterialType } from "@/components/pages/workPageLayout/helper"
 import { branchTitleQueryKey } from "@/hooks/useBranchTitle.keys"
 import { getBranchTitle } from "@/lib/actions/getBranchTitle"
@@ -96,7 +97,7 @@ async function WorkPage({ params }: TWorkPageProps) {
 
 async function Page({ params }: TWorkPageProps) {
   return (
-    <Suspense>
+    <Suspense fallback={<WorkPageLoading />}>
       <WorkPage params={params} />
     </Suspense>
   )
