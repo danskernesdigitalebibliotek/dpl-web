@@ -17,6 +17,10 @@ describe("Search Result", () => {
 
     // These intercepts are not relevant to the tests but prevent 401 errors
     // from external services that would otherwise break the test environment.
+    cy.interceptGraphql({
+      operationName: "GetCoversByPids",
+      fixtureFilePath: "cover/cover.json"
+    });
     cy.intercept(
       { url: /materiallist\.dandigbib\.org/ },
       { statusCode: 200, body: [] }
@@ -425,7 +429,7 @@ describe("Search Result", () => {
 
   describe("Campaign", () => {
     const visitWithCampaign = (openInNewTab: boolean) => {
-      cy.intercept("POST", "**/dpl_campaign/match", {
+      cy.intercept("POST", "**/dpl_campaign/match*", {
         statusCode: 200,
         body: {
           data: {
