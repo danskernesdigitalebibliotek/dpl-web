@@ -6,6 +6,11 @@ x-links: &links
   # For mapp-tracking.cy.ts
   - "wiremock:responder.wt-safetag.com"
 
+# Same as docker-compose.yml: containers writing into the bind-mounted /app
+# must run as the host user, or the repo fills up with files you cannot edit.
+x-user: &default-user
+  user: ${UID:-1000}:${GID:-0}
+
 # The repo root is bind-mounted at /app, so .git is now visible inside the
 # containers. The checked-out files are owned by the host/runner user, not the
 # container user, so git refuses to use the repo ("dubious ownership"). Tools
@@ -27,6 +32,7 @@ services:
     depends_on:
       - wiremock
     working_dir: "/app/cms"
+    <<: *default-user
     environment:
       <<: *git-safe-directory
       CYPRESS_INSTALL_BINARY: 0
@@ -40,9 +46,16 @@ services:
     working_dir: "/app/cms"
     depends_on:
       - wiremock
+    <<: *default-user
     environment:
       <<: *git-safe-directory
       CYPRESS_BASE_URL: "http://varnish:8080"
+      # The image bakes the 787MB browser into /root/.cache/Cypress and chmods
+      # root's home 0777 so a non-root uid can still use it. Point HOME there:
+      # a uid the image does not know (the CI runner's) otherwise gets HOME=/,
+      # where Electron cannot write its config - the smoke test then times out
+      # - and Cypress looks for the browser somewhere it was never unpacked.
+      HOME: /root
 
   wiremock:
     image: wiremock/wiremock:2.32.0
@@ -56,6 +69,10 @@ services:
     command: "--port=80 --https-port=443 --local-response-templating --enable-stub-cors --verbose --disable-banner"
     volumes:
       - "../:/app"
+    # Deliberately root, unlike the others: the mappings are registered with
+    # `persistent: true`, which writes them to ./mappings under the image's
+    # root-owned /home/wiremock. Nothing here writes into the /app bind mount,
+    # so it is not a source of root-owned files on the host.
     ports:
       - 80
       - 443
