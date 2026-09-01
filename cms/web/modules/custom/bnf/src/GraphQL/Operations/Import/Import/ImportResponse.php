@@ -18,10 +18,10 @@ class ImportResponse extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($status !== self::UNDEFINED) {
-            $instance->status = $status;
+            $instance->__set('status', $status);
         }
         if ($message !== self::UNDEFINED) {
-            $instance->message = $message;
+            $instance->__set('message', $message);
         }
         $instance->__typename = 'ImportResponse';
 

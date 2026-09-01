@@ -19,6 +19,7 @@ use Drupal\dpl_library_agency\ReservationSettings;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use function Safe\json_encode;
 
 /**
@@ -571,6 +572,13 @@ class DplReactAppsController extends ControllerBase {
       'material-is-available-in-another-edition-text' => $this->t('Skip the queue - The material is available in another edition - @title @authorAndYear - reservations: @reservations', [], ['context' => 'Work Page']),
       'material-is-included-text' => $this->t('Material is included', [], ['context' => 'Work Page']),
       'material-is-loaned-out-text' => $this->t('Material is loaned out', [], ['context' => 'Work Page']),
+      // Shown instead of the action buttons when a material cannot be borrowed,
+      // reserved or opened through the website.
+      'material-unavailable-title-text' => $this->t('The material is not available through the website', [], ['context' => 'Work Page']),
+      'material-unavailable-description-text' => $this->t('Visit the library and get help from a librarian or check whether the material is available at', [], ['context' => 'Work Page']),
+      'material-unavailable-compact-description-text' => $this->t('Contact the library for access', [], ['context' => 'Work Page']),
+      'material-unavailable-link-text' => $this->t('Bibliotek.dk', [], ['context' => 'Work Page']),
+      'material-unavailable-url' => 'https://bibliotek.dk',
       'material-reservation-info-text' => [
         'type' => 'plural',
         'text' => [
@@ -757,6 +765,86 @@ class DplReactAppsController extends ControllerBase {
       '#name' => 'branch-list',
       '#data' => $data,
     ];
+  }
+
+  /**
+   * Page title callback for the series landing page.
+   *
+   * @param string $series_id
+   *   The id of the series to display.
+   */
+  public function seriesTitle(string $series_id): string {
+    try {
+      return $this->fbi->getSeriesTitle($series_id) ?? '';
+    }
+    catch (\Throwable $e) {
+      $this->getLogger('dpl_react_apps')->error(
+        'Could not fetch series title from FBI: @message', [
+          '@message' => $e->getMessage(),
+        ]);
+      // Fall back to empty string.
+      return '';
+    }
+  }
+
+  /**
+   * Render the series landing page app.
+   *
+   * @param string $series_id
+   *   The id of the series to display.
+   *
+   * @return mixed[]
+   *   Render array.
+   *
+   * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+   *   If FBI knows no series with the given id.
+   */
+  public function series(string $series_id): array {
+    try {
+      $series_exists = $this->fbi->getSeriesTitle($series_id) !== NULL;
+    }
+    catch (\Throwable $e) {
+      $this->getLogger('dpl_react_apps')->error(
+        'Could not look up series @id in FBI: @message', [
+          '@id' => $series_id,
+          '@message' => $e->getMessage(),
+        ]);
+      // Assume the series exists. An unreachable FBI is transient, and the 404
+      // would be cached and served to everyone for as long as it lived.
+      $series_exists = TRUE;
+    }
+
+    if (!$series_exists) {
+      throw new NotFoundHttpException();
+    }
+
+    $data = [
+      'series-id' => $series_id,
+
+      // Config.
+      // The availability labels on each card exclude blacklisted branches from
+      // the FBS lookup, and the statistics hook behind them reads the Mapp
+      // settings. Both are declared per page rather than globally.
+      'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
+      'mapp-domain-config' => $this->config('dpl_mapp.settings')->get('domain'),
+      'mapp-id-config' => $this->config('dpl_mapp.settings')->get('id'),
+
+      // Texts.
+      'series-read-this-first-text' => $this->t('Start with this one', [], ['context' => 'Series Page']),
+      'series-by-author-text' => $this->t('Series by', [], ['context' => 'Series Page']),
+
+      // Add external API base urls.
+    ] + self::externalApiBaseUrls();
+
+    $app = [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'series',
+      '#data' => $data,
+    ];
+
+    $this->renderer->addCacheableDependency($app, $this->branchSettings);
+
+    return $app;
   }
 
   /**

@@ -197,6 +197,19 @@ $typo__body-small: (
   ),
 );
 
+// "Body Copy - S", with the line-height a paragraph of several lines needs.
+// $typo__body-small sits at 16px, which is tight enough that stacked lines run
+// together and descenders touch the line below.
+$typo__body-small--multiline: (
+  mobile: (
+    font-family: $font__body,
+    font-style: normal,
+    font-weight: $font__weight--normal,
+    font-size: 14px,
+    line-height: 20px,
+  ),
+);
+
 // "Button text"
 $typo__button: (
   mobile: (
@@ -278,6 +291,20 @@ $typo__label: (
     font-style: normal,
     font-weight: $font__weight--normal,
     font-size: 10px,
+    line-height: normal,
+    letter-spacing: 0.02em,
+  ),
+);
+
+// A part number - "Del 1" - as shown on series cards and in the search result
+// teasers. A label at the size of $typo__tags-large, bold and without the
+// uppercasing that the tag styles apply.
+$typo__label--large-bold: (
+  mobile: (
+    font-family: $font__body,
+    font-style: normal,
+    font-weight: $font__weight--bold,
+    font-size: 12px,
     line-height: normal,
     letter-spacing: 0.02em,
   ),

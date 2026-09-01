@@ -8,9 +8,6 @@ import workMock from "@/lib/mocks/work/infoBox.mock"
 const meta = {
   title: "components/InfoBox",
   component: InfoBox,
-  parameters: {
-    layout: "centered",
-  },
   argTypes: {
     work: {
       control: { type: "object" },

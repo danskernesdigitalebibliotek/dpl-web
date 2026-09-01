@@ -38,29 +38,29 @@ class NodeGoPage extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($title !== self::UNDEFINED) {
-            $instance->title = $title;
+            $instance->__set('title', $title);
         }
         if ($url !== self::UNDEFINED) {
-            $instance->url = $url;
+            $instance->__set('url', $url);
         }
         if ($status !== self::UNDEFINED) {
-            $instance->status = $status;
+            $instance->__set('status', $status);
         }
         if ($changed !== self::UNDEFINED) {
-            $instance->changed = $changed;
+            $instance->__set('changed', $changed);
         }
         if ($created !== self::UNDEFINED) {
-            $instance->created = $created;
+            $instance->__set('created', $created);
         }
         if ($publicationDate !== self::UNDEFINED) {
-            $instance->publicationDate = $publicationDate;
+            $instance->__set('publicationDate', $publicationDate);
         }
         $instance->__typename = 'NodeGoPage';
         if ($paragraphs !== self::UNDEFINED) {
-            $instance->paragraphs = $paragraphs;
+            $instance->__set('paragraphs', $paragraphs);
         }
 
         return $instance;

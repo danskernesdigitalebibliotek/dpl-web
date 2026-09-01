@@ -27,12 +27,12 @@ describe("Material Page Object Test", () => {
     // Intercept all external API calls that could cause issues
 
     // DBC Gateway GraphQL calls (both main and present)
-    cy.intercept("POST", "**/next/graphql", {
+    cy.intercept("POST", "**/next/graphql*", {
       statusCode: 200,
       body: { data: null }
     }).as("dbcGatewayMain");
 
-    cy.intercept("POST", "**/next-present/graphql", {
+    cy.intercept("POST", "**/next-present/graphql*", {
       statusCode: 200,
       body: { data: null }
     }).as("dbcGatewayPresent");

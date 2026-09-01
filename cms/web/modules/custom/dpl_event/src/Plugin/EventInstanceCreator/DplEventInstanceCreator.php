@@ -76,6 +76,15 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
 
   /**
    * {@inheritDoc}
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The service container.
+   * @param mixed[] $configuration
+   *   The plugin configuration.
+   * @param string $plugin_id
+   *   The plugin ID.
+   * @param mixed $plugin_definition
+   *   The plugin definition.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     $plugin = new static(
@@ -293,6 +302,10 @@ class DplEventInstanceCreator extends EventInstanceCreatorBase implements Contai
     $created_count = 0;
 
     foreach ($periods as $period) {
+      // The @return docblock of createEventInstance() claims it always
+      // returns an instance, but it actually returns NULL for translations
+      // without a matching instance in the default language.
+      /** @var \Drupal\recurring_events\Entity\EventInstance|null $instance */
       $instance = $this->creationService->createEventInstance(
         $series,
         $period->getStartDrupalDateTime(),

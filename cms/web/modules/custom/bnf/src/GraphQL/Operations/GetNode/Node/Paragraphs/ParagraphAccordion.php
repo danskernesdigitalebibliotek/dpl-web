@@ -23,14 +23,14 @@ class ParagraphAccordion extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($accordionTitle !== self::UNDEFINED) {
-            $instance->accordionTitle = $accordionTitle;
+            $instance->__set('accordionTitle', $accordionTitle);
         }
         $instance->__typename = 'ParagraphAccordion';
         if ($accordionDescription !== self::UNDEFINED) {
-            $instance->accordionDescription = $accordionDescription;
+            $instance->__set('accordionDescription', $accordionDescription);
         }
 
         return $instance;

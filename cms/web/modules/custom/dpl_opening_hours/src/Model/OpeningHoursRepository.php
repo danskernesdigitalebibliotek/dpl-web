@@ -3,13 +3,13 @@
 namespace Drupal\dpl_opening_hours\Model;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\Statement\FetchAs;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\dpl_opening_hours\Model\Repetition\NoRepetition;
 use Drupal\dpl_opening_hours\Model\Repetition\RepetitionRepository;
 use Drupal\dpl_opening_hours\Model\Repetition\WeeklyRepetition;
 use Drupal\node\NodeInterface;
-use Drupal\node\NodeStorageInterface;
 use Drupal\taxonomy\TermInterface;
-use Drupal\taxonomy\TermStorageInterface;
 use Psr\Log\LoggerInterface;
 use Safe\DateTimeImmutable;
 
@@ -26,8 +26,7 @@ class OpeningHoursRepository {
   public function __construct(
     private LoggerInterface $logger,
     private Connection $connection,
-    private NodeStorageInterface $branchStorage,
-    private TermStorageInterface $categoryTermStorage,
+    private EntityTypeManagerInterface $entityTypeManager,
     private RepetitionRepository $repetitionRepository,
   ) {}
 
@@ -105,7 +104,7 @@ class OpeningHoursRepository {
         $this->logger->error("Unable to load opening hours instance: %message", ["%message" => $e->getMessage()]);
         return NULL;
       }
-    }, $result->fetchAll(\PDO::FETCH_ASSOC));
+    }, $result->fetchAll(FetchAs::Associative));
 
     // Using array_values to reindex the array after filtering out NULL values.
     // This is necessary because we don't handle the deletion of opening hour
@@ -276,12 +275,12 @@ class OpeningHoursRepository {
    *   The row data.
    */
   private function toObject(array $data): OpeningHoursInstance {
-    $branch = $this->branchStorage->load($data['branch_nid']);
-    if (!$branch || !$branch instanceof NodeInterface) {
+    $branch = $this->entityTypeManager->getStorage('node')->load($data['branch_nid']);
+    if (!$branch instanceof NodeInterface) {
       throw new \OutOfBoundsException("Invalid branch id {$data['branch_nid']} for opening hours instance {$data['id']}");
     }
-    $categoryTerm = $this->categoryTermStorage->load($data['category_tid']);
-    if (!$categoryTerm || !$categoryTerm instanceof TermInterface) {
+    $categoryTerm = $this->entityTypeManager->getStorage('taxonomy_term')->load($data['category_tid']);
+    if (!$categoryTerm instanceof TermInterface) {
       throw new \OutOfBoundsException("Invalid category term id {$data['category_tid']} for opening hours instance {$data['category_tid']}");
     }
     $repetition = $this->repetitionRepository->load($data['repetition_id']);

@@ -1,21 +1,43 @@
 ---
 services:
+  _defaults:
+    autowire: true
+
   bnf_client.exporter:
     class: Drupal\bnf_client\Services\BnfExporter
-    autowire: true
     arguments:
       $logger: '@logger.channel.bnf'
 
   Drupal\bnf_client\BnfScheduler:
     class: Drupal\bnf_client\BnfScheduler
+
+  logger.channel.bnf_client:
+    parent: logger.channel_base
+    arguments:
+      - 'bnf_client'
+
+  Drupal\bnf_client\Collector\SubscriptionCollector:
+    class: Drupal\bnf_client\Collector\SubscriptionCollector
     autowire: true
+    tags:
+      - { name: dpl_metrics_collector }
+
+  Drupal\bnf_client\Collector\SyncQueueCollector:
+    class: Drupal\bnf_client\Collector\SyncQueueCollector
+    autowire: true
+    tags:
+      - { name: dpl_metrics_collector }
 
   # These hook services definitions is only needed by Drupal 10, they
   # can be removed when we upgrade to Drupal 11.
   Drupal\bnf_client\Hook\SubscriptionHooks:
     class: Drupal\bnf_client\Hook\SubscriptionHooks
-    autowire: true
 
   Drupal\bnf_client\Hook\JobSchedulerHooks:
     class: Drupal\bnf_client\Hook\JobSchedulerHooks
-    autowire: true
+
+  Drupal\bnf_client\Hook\EntityHooks: {}
+
+  Drupal\bnf_client\Hook\FormHooks:
+    arguments:
+      $logger: '@logger.channel.bnf_client'
