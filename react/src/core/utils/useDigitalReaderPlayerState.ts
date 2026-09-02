@@ -98,6 +98,8 @@ const useDigitalReaderPlayerState = ({
     canBeLoaned:
       Boolean(offerId) || (status ? isMaterialLoanable(status) : false),
     canBeReserved: status ? isMaterialReservable(status) : false,
+    // Only the Publizon queue is frozen - see usePublizonReservationsClosed.
+    reservationsClosed: false,
     // The service layer's loan id plays the same role as Publizon's order id.
     orderId: loan?.loanId ?? null,
     // Mapped rather than passed through so cancelling routes correctly: the

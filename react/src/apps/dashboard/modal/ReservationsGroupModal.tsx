@@ -10,6 +10,7 @@ import StatusCircleModalHeader from "../../../components/GroupModal/StatusCircle
 import StatusCircle from "../../loan-list/materials/utils/status-circle";
 import useReservations from "../../../core/utils/useReservations";
 import { getModalIds } from "../../../core/utils/helpers/modal-helpers";
+import useCanCancelReservation from "../../../core/utils/useCanCancelReservation";
 
 interface ReservationGroupModalProps {
   pageSize: number;
@@ -26,6 +27,7 @@ const ReservationGroupModal: FC<ReservationGroupModalProps> = ({
 }) => {
   const { fbs, digital } = useReservations();
   const t = useText();
+  const canCancelReservation = useCanCancelReservation();
   const { reservationsReady, reservationsQueued } = getModalIds();
   const [materialsToDelete, setMaterialsToDelete] = useState<ReservationType[]>(
     []
@@ -48,10 +50,16 @@ const ReservationGroupModal: FC<ReservationGroupModalProps> = ({
     setMaterialsToDelete([]);
   }, [modalId]);
 
+  // TEMPORARY: a reservation in a queue that is being migrated cannot be
+  // cancelled, so it is neither selectable on its own nor picked up by
+  // "select all". It stays in the list - it is still a reservation the patron
+  // has - and the reason is given in its details, where it is stated per
+  // reservation: this group mixes providers, so a note over the whole list
+  // would speak for rows it does not apply to.
   const selectableReservations = [
     ...physicalReservations,
     ...digitalReservations
-  ];
+  ].filter(canCancelReservation);
 
   const selectMaterials = (materials: ReservationType[]) => {
     setMaterialsToDelete(materials);
@@ -108,6 +116,7 @@ const ReservationGroupModal: FC<ReservationGroupModalProps> = ({
           >
             <GroupModalReservationsList
               openDetailsModal={openDetailsModal}
+              canSelectMaterial={canCancelReservation}
               header={t("physicalReservationsHeaderText")}
               materials={physicalReservations}
               pageSize={pageSize}
@@ -118,6 +127,7 @@ const ReservationGroupModal: FC<ReservationGroupModalProps> = ({
             <GroupModalReservationsList
               marginBottonPager
               openDetailsModal={openDetailsModal}
+              canSelectMaterial={canCancelReservation}
               header={t("digitalReservationsHeaderText")}
               materials={digitalReservations}
               pageSize={pageSize}

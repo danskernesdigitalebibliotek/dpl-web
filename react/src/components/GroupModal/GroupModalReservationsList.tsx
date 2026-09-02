@@ -19,6 +19,16 @@ export interface GroupModalReservationsListProps {
   selectMaterials: (materialIds: ListType[]) => void;
   marginBottonPager: boolean;
   openDetailsModal: (reservation: ReservationType) => void;
+  /**
+   * Whether a row may be selected for removal. Rows that may not are still
+   * listed and still open their details - they just cannot be picked.
+   *
+   * TEMPORARY: the only caller that refuses a row today is the Publizon
+   * reservation freeze - see `usePublizonReservationsClosed`. Required rather
+   * than defaulted so that removing the freeze fails to compile here instead
+   * of leaving a predicate nobody answers.
+   */
+  canSelectMaterial: (reservation: ReservationType) => boolean;
 }
 
 const GroupModalReservationsList: FC<GroupModalReservationsListProps> = ({
@@ -28,7 +38,8 @@ const GroupModalReservationsList: FC<GroupModalReservationsListProps> = ({
   pageSize,
   header,
   marginBottonPager,
-  openDetailsModal
+  openDetailsModal,
+  canSelectMaterial
 }) => {
   const t = useText();
   const [displayedMaterials, setDisplayedMaterials] = useState<
@@ -97,7 +108,7 @@ const GroupModalReservationsList: FC<GroupModalReservationsListProps> = ({
                 key={reservationId(material)}
                 selected={selected}
                 onMaterialChecked={onMaterialChecked}
-                disabled={false}
+                disabled={!canSelectMaterial(material)}
                 statusMessageComponentMobile={null}
                 statusMessageComponentDesktop={null}
               />

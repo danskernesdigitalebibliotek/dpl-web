@@ -17,6 +17,7 @@ import PhysicalListDetails from "./physical-list-details";
 import { useConfig } from "../../../../core/utils/config";
 import MaterialButtonLoading from "../../../../components/material/material-buttons/generic/MaterialButtonLoading";
 import useWorkUrl from "../../../../core/utils/useWorkUrl";
+import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
 
 export interface ReservationDetailsProps {
   reservation: ReservationType;
@@ -30,6 +31,11 @@ const ReservationDetails: FC<ReservationDetailsProps & MaterialProps> = ({
 }) => {
   const t = useText();
   const config = useConfig();
+  const canCancelReservation = useCanCancelReservation();
+  // TEMPORARY: a reservation in the queue Biblio is migrating stays put.
+  // Derived once here because the button row below is rendered again per
+  // breakpoint, and the reason should be given once.
+  const cancellable = canCancelReservation(reservation);
   const { state, identifier } = reservation;
   const { authors, pid, year, title, description, materialType } =
     material || {};
@@ -87,6 +93,7 @@ const ReservationDetails: FC<ReservationDetailsProps & MaterialProps> = ({
             <ReservationDetailsRedirect
               openReservationDeleteModal={openReservationDeleteModal}
               reservation={reservation}
+              cancellable={cancellable}
               className="modal-details__buttons--hide-on-mobile"
               linkClassNames="mx-16"
               workUrl={workUrl}
@@ -100,6 +107,16 @@ const ReservationDetails: FC<ReservationDetailsProps & MaterialProps> = ({
               <PhysicalListDetails reservation={reservation} />
             )}
           </div>
+          {/* TEMPORARY: both remove buttons above are refused while the queue
+              this reservation lives in is being migrated. Stated here because
+              they are rendered once per breakpoint and the reason should be
+              given once. Delete this block once the freeze is lifted - see
+              usePublizonReservationsClosed. */}
+          {!cancellable && (
+            <p className="text-small-caption mt-16" role="alert">
+              {t("digitalReservationCancelClosedInfoText")}
+            </p>
+          )}
           {isPhysicalReservation(reservation) &&
             allowUserRemoveReadyReservations && (
               <ReservationDetailsButton
@@ -113,6 +130,7 @@ const ReservationDetails: FC<ReservationDetailsProps & MaterialProps> = ({
               openReservationDeleteModal={openReservationDeleteModal}
               linkClassNames="my-16"
               reservation={reservation}
+              cancellable={cancellable}
               workUrl={workUrl}
             />
           )}

@@ -77,6 +77,9 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
     identifier,
     canBeLoaned: acquisition.canBeLoaned,
     canBeReserved: acquisition.canBeReserved,
+    // TEMPORARY: why the reservation is refused, so the page can say so -
+    // see usePublizonReservationsClosed.
+    reservationsClosed: acquisition.reservationsClosed,
     // The offer belongs with acquiring: claiming it is how the user gets the
     // material, and only the lending provider hands one out.
     offerId: acquisition.offerId,
