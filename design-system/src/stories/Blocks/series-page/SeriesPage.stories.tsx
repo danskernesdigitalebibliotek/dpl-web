@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react-webpack5";
 import SeriesPage, { SeriesPageProps } from "./SeriesPage";
 import SeriesPageSkeleton from "./SeriesPageSkeleton";
+import { RelatedWorkItem } from "./RelatedWorks";
 import { SeriesCardProps } from "../../Library/series-card/SeriesCard";
 
 const members: SeriesCardProps[] = [
@@ -46,6 +47,56 @@ const members: SeriesCardProps[] = [
   },
 ];
 
+// Enough items that the track actually overflows and the slider has
+// something to slide; series firsts (labelled) lead, like the fill algorithm
+// orders them, and one long title exercises the ellipsis.
+const relatedWorks: RelatedWorkItem[] = [
+  {
+    title: "Den fantastiske fortælling",
+    href: "/",
+    coverSrc: "images/book_cover_1.jpg",
+    seriesLabel: "Del 1 i serien Eventyrkrøniken",
+  },
+  {
+    title: "Mysteriet på Møllegården : en fortælling fra landet",
+    href: "/",
+    coverSrc: "images/book_cover_2.jpg",
+    seriesLabel: "Del 1 i serien Møllegården",
+  },
+  {
+    title: "Vinterbørn",
+    href: "/",
+    coverSrc: "images/book_cover_3.jpg",
+    seriesLabel: "Bind 1 i serien Årstiderne",
+  },
+  // The padding tier: newest works without a series-opener label.
+  {
+    title: "Sommerdage",
+    href: "/",
+    coverSrc: "images/book_cover_1.jpg",
+  },
+  {
+    title: "Huset ved havet",
+    href: "/",
+    coverSrc: "images/book_cover_2.jpg",
+  },
+  {
+    title: "Rejsen hjem",
+    href: "/",
+    coverSrc: "images/book_cover_3.jpg",
+  },
+  {
+    title: "Den sidste sommer",
+    href: "/",
+    coverSrc: "images/book_cover_1.jpg",
+  },
+  {
+    title: "Stormfulde nætter",
+    href: "/",
+    coverSrc: "images/book_cover_2.jpg",
+  },
+];
+
 export default {
   title: "Blocks / Series Page",
   component: SeriesPage,
@@ -72,6 +123,8 @@ export default {
     // More members than the four listed, so the pager keeps its "show more"
     // button - the state a visitor lands on for any series worth paging.
     totalMembers: 12,
+    relatedWorksHeading: "Mere af J.K. Rowling",
+    relatedWorks,
   },
 } as Meta<typeof SeriesPage>;
 
@@ -93,10 +146,14 @@ export const SkeletonVersion: StoryFn<typeof SeriesPageSkeleton> = () => (
   <SeriesPageSkeleton />
 );
 
-// Not every series has an author to name - anthologies and mixed series do not.
+// Not every series has an author to name - anthologies and mixed series do
+// not. Without an author there is also nobody to anchor the related-works
+// slider on, so it disappears with the byline.
 export const WithoutAuthor = Template.bind({});
 WithoutAuthor.args = {
   author: undefined,
+  relatedWorksHeading: undefined,
+  relatedWorks: [],
 };
 
 // With no covers the description keeps its own readable width rather than

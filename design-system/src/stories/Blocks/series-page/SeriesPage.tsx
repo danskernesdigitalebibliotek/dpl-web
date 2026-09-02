@@ -3,6 +3,7 @@ import ResultPager from "../../Library/card-list-page/ResultPager";
 import SeriesCard, {
   SeriesCardProps,
 } from "../../Library/series-card/SeriesCard";
+import RelatedWorks, { RelatedWorkItem } from "./RelatedWorks";
 
 export type SeriesPageProps = {
   title: string;
@@ -18,6 +19,11 @@ export type SeriesPageProps = {
   // series run to hundreds, so anything above the number listed leaves the
   // "show more" button in place. Defaults to a series that fits on one page.
   totalMembers?: number;
+  // The "Mere af {author}" slider below the member list. Absent when the
+  // series has no derivable author or the author has no other works - the
+  // section simply does not render then.
+  relatedWorksHeading?: string;
+  relatedWorks?: RelatedWorkItem[];
 };
 
 // The whole series landing page, so that Chromatic covers the page-level
@@ -31,6 +37,8 @@ export const SeriesPage = ({
   coverSrcs = [],
   members,
   totalMembers = members.length,
+  relatedWorksHeading,
+  relatedWorks = [],
 }: SeriesPageProps) => {
   return (
     <div className="series-page">
@@ -87,6 +95,10 @@ export const SeriesPage = ({
         currentResults={members.length}
         totalResults={totalMembers}
       />
+
+      {relatedWorksHeading && relatedWorks.length > 0 && (
+        <RelatedWorks heading={relatedWorksHeading} items={relatedWorks} />
+      )}
     </div>
   );
 };
