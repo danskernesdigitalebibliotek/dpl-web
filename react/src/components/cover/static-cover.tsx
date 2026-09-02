@@ -6,13 +6,13 @@ import { DisplaySize } from "./cover.types";
 
 type StaticCoverProps = {
   src: string;
+  displaySize: DisplaySize;
   animate?: boolean;
   tint?: Tint;
   alt?: string;
   shadow?: CoverImageProps["shadow"];
   onImageLoaded?: CoverImageProps["onImageLoaded"];
   hasImageLoaded?: boolean;
-  displaySize: DisplaySize;
   linkProps?: {
     url?: LinkNoStyleProps["url"];
     ariaLabelledBy?: LinkNoStyleProps["ariaLabelledBy"];
