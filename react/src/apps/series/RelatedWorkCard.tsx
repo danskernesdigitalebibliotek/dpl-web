@@ -21,7 +21,13 @@ const RelatedWorkCard: React.FC<RelatedWorkCardProps> = ({
 }) => (
   <Link href={url} className="related-works__card">
     <div className="related-works__cover">
-      <Cover ids={[coverPid]} size="medium" animate={false} alt="" />
+      <Cover
+        ids={[coverPid]}
+        size="medium"
+        animate={false}
+        alt=""
+        shadow="medium"
+      />
     </div>
     <p className="related-works__title text-body-small-medium">{title}</p>
     {seriesLabel && (

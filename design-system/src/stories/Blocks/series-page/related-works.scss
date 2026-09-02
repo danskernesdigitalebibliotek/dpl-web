@@ -113,10 +113,13 @@ $_related-works-cover-height: 240px;
   // same bottom edge, so the text block starts at one shared line.
   height: $_related-works-cover-height;
 
+  // The shadow itself comes from the cover's own shadow modifier
+  // (cover__img--shadow-*): a drop-shadow filter that follows the visible
+  // image, where a box-shadow here would outline the letterboxed element box
+  // around covers smaller than the slot.
   img {
     max-height: 100%;
     width: auto;
-    box-shadow: 0 2px 8px rgba($color__text-primary-black, 0.3);
   }
 }
 

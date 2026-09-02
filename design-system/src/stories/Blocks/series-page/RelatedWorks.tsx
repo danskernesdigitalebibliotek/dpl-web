@@ -104,7 +104,12 @@ export const RelatedWorks = ({ heading, items }: RelatedWorksProps) => {
               <div className="keen-slider__slide" key={index}>
                 <a href={item.href} className="related-works__card">
                   <div className="related-works__cover">
-                    <Cover src={item.coverSrc} size="medium" animate={false} />
+                    <Cover
+                      src={item.coverSrc}
+                      size="medium"
+                      animate={false}
+                      shadow="medium"
+                    />
                   </div>
                   <p className="related-works__title text-body-small-medium">
                     {item.title}
