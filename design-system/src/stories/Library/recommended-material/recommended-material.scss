@@ -45,15 +45,19 @@ $_recommended-material-max-width: 378px;
   text-decoration: none;
 }
 .recommended-material__description {
-  font-weight: $font__weight--bold;
+  font-weight: $font__weight--semi-bold;
   line-height: 2;
+}
+.recommended-material__author {
+  color: $color__global-grey;
 }
 
 // Modifier for when the component is used in a grid presentation.
 // I.e. then  <MaterialGrid/> component
 .recommended-material--in-grid {
+  background-color: transparent;
   max-width: unset;
-  border: 1px solid $color__global-tertiary-1;
+  outline: 1px solid $color__global-tertiary-1;
   aspect-ratio: unset;
 
   grid-template-rows: min-content $cover_height_small 1fr;
