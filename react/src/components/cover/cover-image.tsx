@@ -1,19 +1,19 @@
 import React, { FC } from "react";
 import clsx from "clsx";
 
-type CoverImageType = {
+export type CoverImageProps = {
   src: string;
   altText?: string;
   animate: boolean;
-  setImageLoaded: () => void;
+  onImageLoaded: () => void;
   shadow?: "small" | "medium";
 };
 
-const CoverImage: FC<CoverImageType> = ({
+const CoverImage: FC<CoverImageProps> = ({
   src,
   altText,
   animate,
-  setImageLoaded,
+  onImageLoaded: setImageLoaded,
   shadow
 }) => (
   <img
