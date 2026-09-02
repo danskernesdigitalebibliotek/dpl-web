@@ -93,10 +93,19 @@ export const campaignMatchPOST = async (
   params: CampaignMatchPOSTParams,
   options?: Parameters<typeof mutator>[1]
 ): Promise<CampaignMatchPOST200> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<CampaignMatchPOST200>(getCampaignMatchPOSTUrl(params), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(campaignMatchPOSTBody)
   });
 };
@@ -378,12 +387,21 @@ export const dplOpeningHoursCreatePOST = async (
   params: DplOpeningHoursCreatePOSTParams,
   options?: Parameters<typeof mutator>[1]
 ): Promise<DplOpeningHoursCreatePOST200Item[]> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<DplOpeningHoursCreatePOST200Item[]>(
     getDplOpeningHoursCreatePOSTUrl(params),
     {
       ...options,
       method: "POST",
-      headers: { "Content-Type": "application/json", ...options?.headers },
+      headers: {
+        "Content-Type": "application/json",
+        ...getHeaders(options?.headers)
+      },
       body: JSON.stringify(dplOpeningHoursCreatePOSTBody)
     }
   );
@@ -796,12 +814,21 @@ export const dplOpeningHoursUpdatePATCH = async (
   params: DplOpeningHoursUpdatePATCHParams,
   options?: Parameters<typeof mutator>[1]
 ): Promise<DplOpeningHoursUpdatePATCH200Item[]> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<DplOpeningHoursUpdatePATCH200Item[]>(
     getDplOpeningHoursUpdatePATCHUrl(id, params),
     {
       ...options,
       method: "PATCH",
-      headers: { "Content-Type": "application/json", ...options?.headers },
+      headers: {
+        "Content-Type": "application/json",
+        ...getHeaders(options?.headers)
+      },
       body: JSON.stringify(dplOpeningHoursUpdatePATCHBody)
     }
   );
@@ -1113,10 +1140,19 @@ export const eventPATCH = async (
   params: EventPATCHParams,
   options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<void>(getEventPATCHUrl(uuid, params), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(eventPATCHBody)
   });
 };

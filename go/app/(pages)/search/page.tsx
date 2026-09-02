@@ -4,6 +4,7 @@ import { headers } from "next/headers"
 import { Suspense } from "react"
 
 import SearchPageLayout from "@/components/pages/searchPageLayout/SearchPageLayout"
+import SearchPageLoading from "@/components/pages/searchPageLayout/SearchPageLoading"
 import getQueryClient from "@/lib/getQueryClient"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
@@ -33,7 +34,7 @@ const SearchPage = async (props: TSearchPageProps) => {
 
 async function Page(props: TSearchPageProps) {
   return (
-    <Suspense>
+    <Suspense fallback={<SearchPageLoading />}>
       <SearchPage {...props} />
     </Suspense>
   )

@@ -5,6 +5,7 @@ import React, { Suspense } from "react"
 
 import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
+import PageLoading from "@/components/shared/pageLoading/PageLoading"
 import goConfig from "@/lib/config/goConfig"
 import { NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { getEntityFromPageData, loadPageData } from "@/lib/helpers/dpl-cms-content"
@@ -58,7 +59,7 @@ async function BasicPage(props: { params: Promise<{ slug: string[] }> }) {
 
 async function Page({ params }: { params: Promise<{ slug: string[] }> }) {
   return (
-    <Suspense>
+    <Suspense fallback={<PageLoading />}>
       <BasicPage params={params} />
     </Suspense>
   )
