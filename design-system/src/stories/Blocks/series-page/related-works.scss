@@ -1,0 +1,132 @@
+// The "Mere af {author}" slider at the bottom of the series page: other
+// works by the series' author, first books of their other series leading.
+// The slider itself is keen-slider (rendered by dpl-react), so the
+// .keen-slider/.keen-slider__slide classes referenced here come from that
+// library's stylesheet.
+
+// Slides have a fixed width - wide screens show more of them - and the cover
+// area a fixed height, so every card in a row lines up top and bottom no
+// matter the cover proportions and title length.
+$_related-works-slide-width: 250px;
+$_related-works-cover-height: 240px;
+
+.related-works {
+  // Free-standing ribbon: clear of the member list above and of the page
+  // bottom below. 48px, composed like series-page's block clearance - the
+  // spacing scale has no single step for it.
+  margin: ($s-xl + $s-md) 0;
+  padding: $s-xl 0;
+  background: $color__global-tertiary-2;
+  color: $color__global-primary;
+
+  // Slides overflow the inset slider container (see below) and are clipped
+  // here, at the section edge, so the track runs edge-to-edge.
+  overflow: hidden;
+}
+
+// Heading left, prev/next controls right, on one shared line above the
+// track. Inset to match the resting slider below.
+.related-works-slider__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $s-md;
+  margin: 0 $s-xl $s-md;
+}
+
+.related-works__heading {
+  margin: 0;
+}
+
+// The container is inset so the resting slider starts at the section
+// padding, while overflow stays visible so moving slides run all the way to
+// the screen edge (same pattern as GO's MaterialSlider).
+.related-works .keen-slider {
+  margin: 0 $s-xl;
+  overflow: visible;
+}
+
+// keen-slider is configured with perView "auto" and takes each slide's width
+// from CSS; both bounds are needed or the flex track stretches/shrinks the
+// slides.
+.related-works-slider .keen-slider__slide {
+  min-width: $_related-works-slide-width;
+  max-width: $_related-works-slide-width;
+}
+
+.related-works-slider__controls {
+  display: flex;
+  gap: $s-sm;
+}
+
+.related-works-slider__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid rgba($color__global-primary, 0.6);
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  &:hover:not(:disabled) {
+    background: rgba($color__global-primary, 0.15);
+    border-color: currentcolor;
+  }
+}
+
+.related-works__card {
+  // Fill the slide so every border box in the row is equally tall,
+  // regardless of cover height and title length.
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: $s-md;
+  text-decoration: none;
+  color: inherit;
+  text-align: left;
+  border: 1px solid $color__global-grey;
+}
+
+.related-works__cover {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: $s-lg;
+
+  // Fixed cover area: tall covers cap out here, short ones hang from the
+  // same bottom edge, so the text block starts at one shared line.
+  height: $_related-works-cover-height;
+
+  img {
+    max-height: 100%;
+    width: auto;
+    box-shadow: 0 2px 8px rgba($color__text-primary-black, 0.3);
+  }
+}
+
+.related-works__title {
+  // Single line; long titles ellipsize rather than wrap.
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.related-works__series-label {
+  margin-top: $s-sm;
+}
+
+.related-works__loading {
+  margin: 0 $s-xl;
+}

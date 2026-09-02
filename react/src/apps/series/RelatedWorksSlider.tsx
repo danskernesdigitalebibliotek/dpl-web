@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import type { KeenSliderInstance } from "keen-slider/react";
+// keen-slider's own functional stylesheet (track/slide layout). The visual
+// styling of the section lives in the design system
+// (Blocks/series-page/related-works.scss).
 import "keen-slider/keen-slider.min.css";
-import "./related-works-slider.css";
 
 // The design system's icon set has no plain chevron of this weight, so the
 // arrow is drawn inline; it inherits the button's text color via stroke.

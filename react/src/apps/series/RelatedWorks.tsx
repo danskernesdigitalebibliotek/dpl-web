@@ -6,7 +6,6 @@ import { RelatedWork } from "./relatedWorks.types";
 import RelatedWorkCard from "./RelatedWorkCard";
 import RelatedWorksSlider from "./RelatedWorksSlider";
 import useRelatedWorks, { UseRelatedWorksArgs } from "./useRelatedWorks";
-import "./related-works.css";
 
 type RelatedWorksProps = UseRelatedWorksArgs;
 
