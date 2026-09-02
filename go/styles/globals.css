@@ -76,14 +76,14 @@
 
     --backdrop: hsla(0, 0%, 10.2%, 0.5);
 
-    --beige: hsl(67, 24%, 93%);
-    --beige-overlay: hsl(30, 40%, 98%);
-    --beige-overlay-solid: hsl(30, 40%, 98%);
+    --beige: hsl(30, 40%, 98%);
+    --beige-overlay: hsl(67, 24%, 93%);
+    --beige-overlay-solid: hsl(67, 24%, 93%);
     --beige-skeleton: hsla(42, 25%, 35%, 0.1);
 
-    --blue: hsl(150, 64%, 5%);
-    --blue-overlay: hsl(149, 57%, 10%);
-    --blue-overlay-solid: hsl(148, 56%, 10%);
+    --blue: hsl(148, 56%, 10%);
+    --blue-overlay: hsl(150, 64%, 5%);
+    --blue-overlay-solid: hsl(150, 64%, 5%);
     --blue-skeleton: hsla(238, 54%, 89%, 0.18);
 
     --border: hsla(48, 4.4%, 77.8%, 1);
