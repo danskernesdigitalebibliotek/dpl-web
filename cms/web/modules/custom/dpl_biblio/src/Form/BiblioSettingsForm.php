@@ -41,6 +41,14 @@ class BiblioSettingsForm extends ConfigFormBase {
       '#config_target' => self::CONFIG_NAME . ':enabled',
     ];
 
+    // TEMPORARY - remove once Biblio has taken over the reservation queue.
+    $form['settings']['publizon_reservations_closed_react'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Close Publizon reservations on the website', [], ['context' => 'Dpl Biblio']),
+      '#description' => $this->t('Temporary. While Biblio migrates the reservation queue away from Publizon it has to stand still: with this enabled patrons can neither reserve a digital material through Publizon nor cancel a reservation they already have, and the website tells them why. Loans are unaffected. This covers the website only - GO freezes in its own period and has its own setting.', [], ['context' => 'Dpl Biblio']),
+      '#config_target' => self::CONFIG_NAME . ':publizon_reservations_closed_react',
+    ];
+
     // TEMPORARY - remove when the catalogue and the adapter agree on which
     // materials exist.
     $form['settings']['tolerate_unknown_materials'] = [

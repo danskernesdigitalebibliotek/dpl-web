@@ -15,3 +15,9 @@ dpl_biblio.settings:
     tolerate_unknown_materials:
       type: boolean
       label: 'Render materials the adapter does not know as unavailable instead of failing'
+    # TEMPORARY - remove once Biblio has taken over the reservation queue.
+    # Named after the frontend it closes: the website (the React apps) and GO
+    # freeze in different periods, so each gets its own flag.
+    publizon_reservations_closed_react:
+      type: boolean
+      label: 'Close Publizon reservations in the React apps'
