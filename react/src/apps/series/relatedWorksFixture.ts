@@ -6,9 +6,10 @@ import { Pid, WorkId } from "../../core/utils/types/ids";
 // descending - the exact query the real pipeline will run. Real ids, so
 // covers resolve to real images while jamming on the design.
 //
-// The data is kept raw (as the query returns it, newest first) - the fill
-// algorithm that turns this into "first books of other series, padded with
-// newest" arrives in a later commit and will be fed data of this shape.
+// The entries are hand-ordered to preview the fill algorithm's output:
+// first-in-series works first (newest first), then the remaining works
+// (newest first). The real algorithm arrives in a later commit and will do
+// this - plus dedupe within a series - from the raw response order.
 //
 // Edge cases, all genuine except the one marked hand-edited:
 // - W.I.T.C.H members have numberInSeries: null (unnumbered series)
@@ -70,6 +71,71 @@ const inSeries = (
 });
 
 export const relatedWorksFixture: RelatedWork[] = [
+  // --- First parts of a series, newest first ------------------------------
+  work(
+    "work-of:870970-basis:29153884",
+    "Fortællinger om bærfolket",
+    KAABERBOEL,
+    2011,
+    [inSeries(BAERFOLKET, "Fortællinger om bærfolket", "Del 1", true)],
+    "870970-basis:29153884"
+  ),
+  work(
+    "work-of:870970-basis:28456735",
+    "Kadaverdoktoren",
+    KAABERBOEL,
+    2010,
+    [
+      inSeries(
+        MADELEINE_KARNO,
+        "Krimiserien med Madeleine Karno",
+        "Del 1",
+        true
+      )
+    ],
+    "870970-basis:51163028"
+  ),
+  work(
+    "work-of:870970-basis:28655630",
+    "Kadaverdoktoren. Bind 1 (Stor skrift)",
+    KAABERBOEL,
+    2010,
+    [inSeries(KADAVERDOKTOREN_STORSKRIFT, "Kadaverdoktoren", "Bind 1")],
+    "870970-basis:28655630"
+  ),
+  work(
+    "work-of:800010-katalog:99122408312905763__1",
+    "Vildheks. 1. samling",
+    KAABERBOEL,
+    2010,
+    [inSeries(VILDHEKS, "Vildheks", "Del 1", true)],
+    "870970-basis:29601151"
+  ),
+  work(
+    "work-of:870970-basis:28394438",
+    "Vildheks. Bind 1 : Ildprøven",
+    KAABERBOEL,
+    2010,
+    [inSeries(VILDHEKS, "Vildheks", "Del 1", true)],
+    "870970-basis:38283812"
+  ),
+  work(
+    "work-of:870970-basis:27522181",
+    "Drengen i kufferten : kriminalroman",
+    KAABERBOEL_FRIIS,
+    2008,
+    [inSeries(NINA_BORG, "Krimiserien med Nina Borg", "Del 1", true)],
+    "870970-basis:27522181"
+  ),
+  work(
+    "work-of:870970-basis:22758454",
+    "Skammerens datter",
+    KAABERBOEL,
+    2000,
+    [inSeries(SKAMMEREN, "Skammerens datter", "Del 1", true)],
+    "870970-basis:48778798"
+  ),
+  // --- Everything else, newest first --------------------------------------
   work(
     "work-of:870970-basis:24210758",
     "Den grusomme kejserinde",
@@ -144,14 +210,6 @@ export const relatedWorksFixture: RelatedWork[] = [
     "870970-basis:38283855"
   ),
   work(
-    "work-of:870970-basis:29153884",
-    "Fortællinger om bærfolket",
-    KAABERBOEL,
-    2011,
-    [inSeries(BAERFOLKET, "Fortællinger om bærfolket", "Del 1", true)],
-    "870970-basis:29153884"
-  ),
-  work(
     "work-of:870970-basis:28990243",
     "Nattergalens død : en Nina Borg-krimi",
     KAABERBOEL_FRIIS,
@@ -176,59 +234,12 @@ export const relatedWorksFixture: RelatedWork[] = [
     "870970-basis:38283847"
   ),
   work(
-    "work-of:870970-basis:28456735",
-    "Kadaverdoktoren",
-    KAABERBOEL,
-    2010,
-    [
-      inSeries(
-        MADELEINE_KARNO,
-        "Krimiserien med Madeleine Karno",
-        "Del 1",
-        true
-      )
-    ],
-    "870970-basis:51163028"
-  ),
-  work(
-    "work-of:870970-basis:28655630",
-    "Kadaverdoktoren. Bind 1 (Stor skrift)",
-    KAABERBOEL,
-    2010,
-    [inSeries(KADAVERDOKTOREN_STORSKRIFT, "Kadaverdoktoren", "Bind 1")],
-    "870970-basis:28655630"
-  ),
-  work(
     "work-of:870970-basis:28136013",
     "Et stille umærkeligt drab : en Nina Borg roman",
     KAABERBOEL_FRIIS,
     2010,
     [inSeries(NINA_BORG, "Krimiserien med Nina Borg", "Del 2")],
     "870970-basis:28136013"
-  ),
-  work(
-    "work-of:800010-katalog:99122408312905763__1",
-    "Vildheks. 1. samling",
-    KAABERBOEL,
-    2010,
-    [inSeries(VILDHEKS, "Vildheks", "Del 1", true)],
-    "870970-basis:29601151"
-  ),
-  work(
-    "work-of:870970-basis:28394438",
-    "Vildheks. Bind 1 : Ildprøven",
-    KAABERBOEL,
-    2010,
-    [inSeries(VILDHEKS, "Vildheks", "Del 1", true)],
-    "870970-basis:38283812"
-  ),
-  work(
-    "work-of:870970-basis:27522181",
-    "Drengen i kufferten : kriminalroman",
-    KAABERBOEL_FRIIS,
-    2008,
-    [inSeries(NINA_BORG, "Krimiserien med Nina Borg", "Del 1", true)],
-    "870970-basis:27522181"
   ),
   work(
     "work-of:870970-basis:26488613",
@@ -277,13 +288,5 @@ export const relatedWorksFixture: RelatedWork[] = [
     1992,
     [inSeries(SOELVHESTEN, "Sølvhesten", "Del 3")],
     "870970-basis:53648010"
-  ),
-  work(
-    "work-of:870970-basis:22758454",
-    "Skammerens datter",
-    KAABERBOEL,
-    2000,
-    [inSeries(SKAMMEREN, "Skammerens datter", "Del 1", true)],
-    "870970-basis:48778798"
   )
 ];

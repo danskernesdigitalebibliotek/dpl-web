@@ -7,23 +7,28 @@ type RelatedWorkCardProps = {
   title: string;
   url: URL;
   coverPid: Pid;
-  authorLine: string;
+  // E.g. "Del 1 i serien Vildheks"; only first-in-series cards carry one.
+  seriesLabel?: string;
 };
 
-// Bare-bones prototype card: cover, title, author. What actually goes on the
-// card (series label, year, badges) is decided in the design phase.
+// Bare-bones prototype card: cover and title. No author line - the section
+// heading already names the author, so repeating it per card is noise.
 const RelatedWorkCard: React.FC<RelatedWorkCardProps> = ({
   title,
   url,
   coverPid,
-  authorLine
+  seriesLabel
 }) => (
   <Link href={url} className="related-works__card">
     <div className="related-works__cover">
       <Cover ids={[coverPid]} size="medium" animate={false} alt="" />
     </div>
-    <p className="related-works__title">{title}</p>
-    <p className="related-works__author">{authorLine}</p>
+    <p className="related-works__title text-body-small-medium">{title}</p>
+    {seriesLabel && (
+      <p className="related-works__series-label text-small-caption">
+        {seriesLabel}
+      </p>
+    )}
   </Link>
 );
 

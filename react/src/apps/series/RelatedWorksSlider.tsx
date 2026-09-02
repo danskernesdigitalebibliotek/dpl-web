@@ -4,8 +4,32 @@ import type { KeenSliderInstance } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import "./related-works-slider.css";
 
+// The design system's icon set has no plain chevron of this weight, so the
+// arrow is drawn inline; it inherits the button's text color via stroke.
+const Chevron: React.FC<{ direction: "left" | "right" }> = ({ direction }) => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    aria-hidden="true"
+    style={direction === "left" ? { transform: "scaleX(-1)" } : undefined}
+  >
+    <path
+      d="M6 3l5 5-5 5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 type RelatedWorksSliderProps = {
   children: React.ReactNode;
+  // Rendered on the header row, with the prev/next controls right-aligned
+  // beside it.
+  heading: React.ReactNode;
 };
 
 // A thin wrapper around keen-slider: lays its children out as slides and
@@ -13,7 +37,8 @@ type RelatedWorksSliderProps = {
 // slides arrive as children - so the related-works cards can be redesigned
 // without touching it.
 const RelatedWorksSlider: React.FC<RelatedWorksSliderProps> = ({
-  children
+  children,
+  heading
 }) => {
   // Both start true so the buttons are disabled until keen-slider reports a
   // real position - and stay that way when every slide fits in the viewport,
@@ -34,15 +59,12 @@ const RelatedWorksSlider: React.FC<RelatedWorksSliderProps> = ({
     setIsAtEnd(details.rel === details.maxIdx);
   };
 
-  // Fractional perView leaves the last visible slide peeking out at the edge,
-  // signalling that the row scrolls - same affordance as bibliotek.dk's
-  // series page slider.
+  // perView "auto" sizes slides from their CSS width (set on
+  // .keen-slider__slide in the stylesheet), so cards keep a fixed max width
+  // and constant spacing on every screen size - wide screens simply show
+  // more of them.
   const [sliderRef, instanceRef] = useKeenSlider({
-    slides: { perView: 2.2, spacing: 16 },
-    breakpoints: {
-      "(min-width: 768px)": { slides: { perView: 3.2, spacing: 16 } },
-      "(min-width: 1024px)": { slides: { perView: 5.2, spacing: 24 } }
-    },
+    slides: { perView: "auto", spacing: 12 },
     created: updateEdges,
     slideChanged: updateEdges,
     updated: updateEdges
@@ -58,31 +80,34 @@ const RelatedWorksSlider: React.FC<RelatedWorksSliderProps> = ({
 
   return (
     <div className="related-works-slider">
+      <div className="related-works-slider__header">
+        {heading}
+        <div className="related-works-slider__controls">
+          {/* Copy is hardcoded for the prototype; becomes *Text props before release. */}
+          <button
+            type="button"
+            className="related-works-slider__button"
+            aria-label="Vis forrige"
+            disabled={isAtStart}
+            onClick={() => instanceRef.current?.prev()}
+          >
+            <Chevron direction="left" />
+          </button>
+          <button
+            type="button"
+            className="related-works-slider__button"
+            aria-label="Vis næste"
+            disabled={isAtEnd}
+            onClick={() => instanceRef.current?.next()}
+          >
+            <Chevron direction="right" />
+          </button>
+        </div>
+      </div>
       <div ref={sliderRef} className="keen-slider">
         {React.Children.map(children, (child) => (
           <div className="keen-slider__slide">{child}</div>
         ))}
-      </div>
-      <div className="related-works-slider__controls">
-        {/* Copy is hardcoded for the prototype; becomes *Text props before release. */}
-        <button
-          type="button"
-          className="related-works-slider__button"
-          aria-label="Vis forrige"
-          disabled={isAtStart}
-          onClick={() => instanceRef.current?.prev()}
-        >
-          ‹
-        </button>
-        <button
-          type="button"
-          className="related-works-slider__button"
-          aria-label="Vis næste"
-          disabled={isAtEnd}
-          onClick={() => instanceRef.current?.next()}
-        >
-          ›
-        </button>
       </div>
     </div>
   );

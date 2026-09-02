@@ -4,34 +4,75 @@
  */
 
 .related-works {
-  margin-top: 48px;
-}
+  /* Free-standing ribbon: clear of the member list above and of the page
+     bottom below. */
+  margin: 48px 0;
+  padding: 32px 0;
 
-.related-works__heading {
-  margin-bottom: 16px;
-  font-size: 24px;
-}
+  /* $color__global-tertiary-2 / $color__global-primary, via the custom
+     properties the design system publishes on :root. The cards inherit the
+     text color. */
+  background: var(--c-global-tertiary-2);
+  color: var(--c-global-primary);
 
-.related-works__card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-}
-
-.related-works__cover {
-  margin-bottom: 8px;
-}
-
-.related-works__title {
-  font-weight: 600;
-
-  /* Long titles are clamped like bibliotek.dk's cards. */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  /* Slides overflow the inset slider container (see below) and are clipped
+     here, at the section edge, so the track runs edge-to-edge. */
   overflow: hidden;
 }
 
-.related-works__author {
-  font-size: 14px;
+.related-works__heading {
+  margin: 0;
+}
+
+/* The container is inset so the resting slider starts at the section
+   padding, while overflow stays visible so moving slides run all the way to
+   the screen edge (same pattern as GO's MaterialSlider). */
+.related-works .keen-slider {
+  margin: 0 32px;
+  overflow: visible;
+}
+
+.related-works__card {
+  /* Fill the slide so every border box in the row is equally tall,
+     regardless of cover height and title length. */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  text-align: left;
+
+  /* $color__global-grey. Unlike the other colors here it has no custom
+     property on :root, so the value is inlined; goes away when these styles
+     move to design-system SCSS. */
+  border: 1px solid #484848;
+}
+
+.related-works__cover {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 24px;
+
+  /* Fixed cover area: tall covers cap out here, short ones hang from the
+     same bottom edge, so the text block starts at one shared line. */
+  height: 240px;
+}
+
+.related-works__cover img {
+  max-height: 100%;
+  width: auto;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
+}
+
+.related-works__title {
+  /* Single line; long titles ellipsize rather than wrap. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.related-works__series-label {
+  margin-top: 8px;
 }
