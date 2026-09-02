@@ -1336,3 +1336,14 @@ function dpl_update_update_10078(): string {
 function dpl_update_update_10079(): string {
   return _dpl_update_install_modules(['dpl_metrics']);
 }
+
+/**
+ * Add Biblo subscription.
+ */
+function dpl_update_update_10080(): string {
+  return _dpl_update_add_bnf_subscription(
+    'e22cc1dc-9c92-418e-bb77-df78f6eb620b',
+    'Biblo',
+    'Biblo',
+  );
+}
