@@ -25,7 +25,7 @@ export const metadata: Metadata = setLayoutMetadata()
 // When adding or changing fonts, remember to update the imports in .storybook/preview.tsx
 const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 })
