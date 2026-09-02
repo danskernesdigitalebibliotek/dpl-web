@@ -14,7 +14,11 @@ import { DeleteReservationModalComponent } from "./components/delete-reservation
  */
 export const reservationListStory = {
   default: "reservation-list-entry",
-  withBiblioAdapter: "reservation-list-with-biblio-adapter"
+  withBiblioAdapter: "reservation-list-with-biblio-adapter",
+  // TEMPORARY: the Publizon queue frozen while Biblio migrates it, where the
+  // reservations it holds cannot be cancelled - see the story.
+  withClosedPublizonReservations:
+    "reservation-list-with-closed-publizon-reservations"
 } as const;
 
 export class ReservationListPage extends PageObject {
