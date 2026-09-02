@@ -7,6 +7,7 @@ import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/Redirec
 import ArticlePageLayout, {
   TArticlePageLayoutProps,
 } from "@/components/pages/articlePageLayout/ArticlePageLayout"
+import PageLoading from "@/components/shared/pageLoading/PageLoading"
 import { getEntityFromPageData, loadPageData } from "@/lib/helpers/dpl-cms-content"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
@@ -60,7 +61,7 @@ async function ArticlePage({ params }: TArticlePageProps) {
 
 async function Page({ params }: TArticlePageProps) {
   return (
-    <Suspense>
+    <Suspense fallback={<PageLoading />}>
       <ArticlePage params={params} />
     </Suspense>
   )

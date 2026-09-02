@@ -22,8 +22,12 @@ x-volumes:
 
 x-user:
   &default-user
-    # The default user under which the containers should run. Change this if you are on linux and run with another user than id `1000`
-    user: ${UID:-1000}
+    # Everything writing into the bind-mounted /app must run as the host user,
+    # or the repo fills up with files you cannot edit. The Taskfile sets UID;
+    # the default covers a bare `docker compose`. Group 0 is what the Lagoon
+    # images make their own directories writable to - the host's group breaks
+    # the entrypoint. Both overridable from .env.
+    user: ${UID:-1000}:${GID:-0}
 
 x-environment:
   &default-environment
@@ -101,8 +105,8 @@ services:
         # back to the dockerfile defaults, giving full builds.
         SKIP_COMPOSER_INSTALL: "${SKIP_BAKED_IN_BUILDS:-false}"
         SKIP_JS_ASSETS: "${SKIP_BAKED_IN_BUILDS:-false}"
-    << : *default-volumes # loads the defined volumes from the top
-    user: root
+    # loads the defined volumes and user from the top
+    <<: [*default-volumes, *default-user]
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Uncomment to enable xdebug for cli tools

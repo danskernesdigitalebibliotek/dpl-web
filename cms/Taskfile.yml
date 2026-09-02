@@ -8,6 +8,12 @@ dotenv: [".task.env"]
 interval: 500ms
 
 env:
+  # The containers must run as the host user or the repo fills up with files
+  # you cannot edit. From the host, so a new checkout needs no setup. See
+  # docker-compose.yml for why the group is not set the same way.
+  UID:
+    sh: id -u
+
   # Everything this Taskfile runs is dev or CI, where /app is bind-mounted
   # over the image content. Make every docker compose command — explicit
   # builds and implicit ones during up/run alike — skip the baked-in
