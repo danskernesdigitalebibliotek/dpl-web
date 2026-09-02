@@ -34129,7 +34129,7 @@ msgstr ""
 
 #: 
 msgid "Use the Biblio adapter for digital materials"
-msgstr ""
+msgstr "Brug Biblio adapteren til digitale materialer"
 
 #: 
 msgid "Use this field to rewrite the filter options displayed. Use the format of current_text|replacement_text, one replacement per line. For example: <pre>\n"
@@ -35155,12 +35155,12 @@ msgstr ""
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:bef:filter:roles_target_id:soft_limit_label_more"
 msgid "Vis flere"
-msgstr ""
+msgstr "Vis flere"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:bef:filter:roles_target_id:soft_limit_label_less"
 msgid "Vis mindre"
-msgstr ""
+msgstr "Vis mindre"
 
 #: 
 msgid "When enabled, the soft limit counts all items including nested children. When disabled, only top-level items are counted."
