@@ -6384,6 +6384,45 @@ export type ComplexSearchWithPaginationQuery = {
   };
 };
 
+export type GetRelatedWorksQueryVariables = Exact<{
+  cql: Scalars["String"]["input"];
+  offset: Scalars["Int"]["input"];
+  limit: Scalars["PaginationLimitScalar"]["input"];
+  filters: ComplexSearchFiltersInput;
+  sort?: InputMaybe<Array<SortInput> | SortInput>;
+}>;
+
+export type GetRelatedWorksQuery = {
+  __typename?: "Query";
+  complexSearch: {
+    __typename?: "ComplexSearchResponse";
+    works: Array<{
+      __typename?: "Work";
+      workId: string;
+      titles: { __typename?: "WorkTitles"; full: Array<string> };
+      creators: Array<
+        | { __typename?: "Corporation"; display: string }
+        | { __typename?: "Person"; display: string }
+      >;
+      workYear?: {
+        __typename?: "PublicationYear";
+        year?: number | null;
+      } | null;
+      series: Array<{
+        __typename?: "Series";
+        seriesId?: string | null;
+        title: string;
+        numberInSeries?: string | null;
+        readThisFirst?: boolean | null;
+      }>;
+      manifestations: {
+        __typename?: "Manifestations";
+        bestRepresentation: { __typename?: "Manifestation"; pid: string };
+      };
+    }>;
+  };
+};
+
 export type GetSeriesQueryVariables = Exact<{
   seriesId: Scalars["String"]["input"];
   limit: Scalars["Int"]["input"];
@@ -10185,6 +10224,58 @@ export const useComplexSearchWithPaginationQuery = <
   });
 };
 
+export const GetRelatedWorksDocument = `
+    query getRelatedWorks($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: ComplexSearchFiltersInput!, $sort: [SortInput!]) {
+  complexSearch(cql: $cql, filters: $filters) {
+    works(offset: $offset, limit: $limit, sort: $sort) {
+      workId
+      titles {
+        full
+      }
+      creators {
+        display
+      }
+      workYear {
+        year
+      }
+      series {
+        seriesId
+        title
+        numberInSeries
+        readThisFirst
+      }
+      manifestations {
+        bestRepresentation {
+          pid
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetRelatedWorksQuery = <
+  TData = GetRelatedWorksQuery,
+  TError = unknown
+>(
+  variables: GetRelatedWorksQueryVariables,
+  options?: Omit<
+    UseQueryOptions<GetRelatedWorksQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<GetRelatedWorksQuery, TError, TData>["queryKey"];
+  }
+) => {
+  return useQuery<GetRelatedWorksQuery, TError, TData>({
+    queryKey: ["getRelatedWorks", variables],
+    queryFn: fetcher<GetRelatedWorksQuery, GetRelatedWorksQueryVariables>(
+      GetRelatedWorksDocument,
+      variables
+    ),
+    ...options
+  });
+};
+
 export const GetSeriesDocument = `
     query getSeries($seriesId: String!, $limit: Int!, $offset: Int!) {
   series(seriesId: $seriesId) {
@@ -10514,6 +10605,7 @@ export const operationNames = {
     complexSearchWithPaginationWorkAccess:
       "complexSearchWithPaginationWorkAccess" as const,
     complexSearchWithPagination: "complexSearchWithPagination" as const,
+    getRelatedWorks: "getRelatedWorks" as const,
     getSeries: "getSeries" as const,
     suggestionsFromQueryString: "suggestionsFromQueryString" as const,
     GetCoversByPids: "GetCoversByPids" as const,
