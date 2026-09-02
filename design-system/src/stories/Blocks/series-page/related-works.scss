@@ -41,7 +41,11 @@ $_related-works-cover-height: 240px;
 // The container is inset so the resting slider starts at the section
 // padding, while overflow stays visible so moving slides run all the way to
 // the screen edge (same pattern as GO's MaterialSlider).
-.related-works .keen-slider {
+// Three classes on purpose: keen-slider's own stylesheet declares
+// `.keen-slider:not(...)` (specificity 0,2,0) and loads after base.css, so a
+// two-class selector would lose the overflow to the library's `hidden` and
+// the track would clip at the inset instead of the screen edge.
+.related-works .related-works-slider .keen-slider {
   margin: 0 $s-xl;
   overflow: visible;
 }
