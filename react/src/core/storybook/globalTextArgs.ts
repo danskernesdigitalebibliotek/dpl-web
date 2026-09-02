@@ -287,6 +287,19 @@ export const argTypes = {
     },
     control: { type: "text" }
   },
+  // TEMPORARY, see usePublizonReservationsClosed.
+  digitalReservationsClosedInfoText: {
+    description:
+      "Why a digital material cannot be reserved while the Publizon queue " +
+      "is frozen for migration",
+    control: { type: "text" }
+  },
+  digitalReservationCancelClosedInfoText: {
+    description:
+      "Why a digital reservation cannot be cancelled while the Publizon " +
+      "queue is frozen for migration",
+    control: { type: "text" }
+  },
   errorBoundaryAlertBodyButtonAriaText: {
     table: {
       defaultValue: { summary: "Close error message" }
@@ -358,6 +371,11 @@ export default {
   reservationPickUpLatestText: "Pick up before @date",
   reservationListReadyText: "Ready",
   reservationListDigitalPickupText: "Online access",
+  // TEMPORARY, see usePublizonReservationsClosed.
+  digitalReservationsClosedInfoText:
+    "Reservations of digital materials are closed while we are moving to a new service. Please try again later.",
+  digitalReservationCancelClosedInfoText:
+    "You cannot cancel this reservation while we are moving to a new service. Your place in the queue is kept.",
   errorBoundaryAlertBodyButtonAriaText: "Close error message",
   loadingText: "Loading...",
   pincodeSectionDescriptionText: "Length of 4 characters"
@@ -406,6 +424,9 @@ export interface GlobalEntryTextProps {
   reservationPickUpLatestText: string;
   reservationListReadyText: string;
   reservationListDigitalPickupText: string;
+  // TEMPORARY, see usePublizonReservationsClosed.
+  digitalReservationsClosedInfoText: string;
+  digitalReservationCancelClosedInfoText: string;
   pincodeSectionDescriptionText: string;
   errorBoundaryAlertBodyButtonAriaText: string;
   buttonText: string;

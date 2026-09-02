@@ -15,6 +15,7 @@ import { useText } from "../../../../core/utils/text";
 import fetchDigitalMaterial from "../../../loan-list/materials/utils/digital-material-fetch-hoc";
 import PhysicalListDetails from "./physical-list-details";
 import { useConfig } from "../../../../core/utils/config";
+import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
 import MaterialButtonLoading from "../../../../components/material/material-buttons/generic/MaterialButtonLoading";
 import useWorkUrl from "../../../../core/utils/useWorkUrl";
 
@@ -30,6 +31,12 @@ const ReservationDetails: FC<ReservationDetailsProps & MaterialProps> = ({
 }) => {
   const t = useText();
   const config = useConfig();
+  // TEMPORARY: why both remove buttons below are refused while the queue this
+  // reservation lives in is migrated. Stated here rather than in the rows,
+  // which are rendered once per breakpoint and lay their children out in a
+  // row. Delete this and the block below once the freeze is lifted - see
+  // usePublizonReservationsClosed.
+  const cancellable = useCanCancelReservation()(reservation);
   const { state, identifier } = reservation;
   const { authors, pid, year, title, description, materialType } =
     material || {};
@@ -100,6 +107,12 @@ const ReservationDetails: FC<ReservationDetailsProps & MaterialProps> = ({
               <PhysicalListDetails reservation={reservation} />
             )}
           </div>
+          {/* TEMPORARY, see above. */}
+          {!cancellable && (
+            <p className="text-small-caption mt-16" role="alert">
+              {t("digitalReservationCancelClosedInfoText")}
+            </p>
+          )}
           {isPhysicalReservation(reservation) &&
             allowUserRemoveReadyReservations && (
               <ReservationDetailsButton

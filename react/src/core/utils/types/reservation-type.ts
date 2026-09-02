@@ -64,6 +64,19 @@ export function isDigitalReservation(
   return !!reservation.identifier;
 }
 
+/**
+ * A digital reservation Publizon holds, as opposed to one the service layer
+ * holds. Both carry a material identifier; only the service layer's carries
+ * its own reservation id, which is also what it is cancelled by.
+ */
+export function isPublizonReservation(
+  reservation: ReservationType
+): reservation is DigitalReservationType {
+  return (
+    isDigitalReservation(reservation) && !hasDigitalReservationId(reservation)
+  );
+}
+
 export type DigitalReservationWithId = ReservationType &
   NonNullableFields<Required<Pick<Reservation, "digitalReservationId">>>;
 
