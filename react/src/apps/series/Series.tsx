@@ -49,10 +49,11 @@ type SeriesMember = {
 };
 
 // The pages loaded so far. Members accumulate across "show more" clicks;
-// title and description are the same on every page.
+// title, description and languages are the same on every page.
 type LoadedSeries = {
   title: string;
   description?: string | null;
+  mainLanguages: string[];
   members: SeriesMember[];
 };
 
@@ -96,14 +97,14 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
       return;
     }
 
-    const { title, description } = data.series;
+    const { title, description, mainLanguages } = data.series;
     const pageMembers = data.series.members as SeriesMember[];
 
     setHitcount(data.series.hitcount);
     setSeries((previous) =>
       page > 0 && previous
         ? { ...previous, members: [...previous.members, ...pageMembers] }
-        : { title, description, members: pageMembers }
+        : { title, description, mainLanguages, members: pageMembers }
     );
   }, [data, page]);
 
@@ -229,9 +230,7 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
         currentSeries={{
           seriesId,
           title: series.title,
-          // The series query does not select mainLanguages yet; a later
-          // commit adds it alongside the real data pipeline.
-          mainLanguage: null
+          mainLanguage: series.mainLanguages[0] ?? null
         }}
       />
     </div>

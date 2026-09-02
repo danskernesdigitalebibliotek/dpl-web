@@ -1,9 +1,14 @@
+import {
+  SortOrderEnum,
+  useGetRelatedWorksQuery
+} from "../../core/dbc-gateway/generated/graphql";
+import { Pid, WorkId } from "../../core/utils/types/ids";
+import { getRelatedWorks } from "./getRelatedWorks";
 import { RelatedWork } from "./relatedWorks.types";
-import { relatedWorksFixture } from "./relatedWorksFixture";
 
 export type UseRelatedWorksArgs = {
   // The series page's derived author (getSeriesAuthor); null hides the
-  // section, so no query should run.
+  // section, so no query runs.
   author: string | null;
   currentSeries: {
     seriesId: string | null;
@@ -18,21 +23,74 @@ export type UseRelatedWorksResult = {
   isLoading: boolean;
 };
 
-// MOCKED implementation. The contract is final; the internals are not: a
-// later commit replaces the fixture with the real pipeline (CQL built from
-// the args -> complex search sorted by first edition, newest first -> the
-// fill algorithm picking series firsts and padding with newest works).
-// The fixture is returned raw and unfiltered, so while jamming on the design
-// the slider simply shows Lene Kaaberbøl's books newest-first, regardless of
-// which series page hosts it.
-const useRelatedWorks = ({
-  author
-}: UseRelatedWorksArgs): UseRelatedWorksResult => {
-  if (!author) {
-    return { works: [], isLoading: false };
-  }
+// The fill algorithm picks at most 20; fetching well past that leaves it
+// slack to skip later volumes of the same series. Authors with more than a
+// hundred candidate books exist, but by then the slider is full many times
+// over, so a second page is never worth the request.
+const FETCH_LIMIT = 100;
 
-  return { works: relatedWorksFixture, isLoading: false };
+// Books by the author, excluding the series the page is about. The language
+// clause keeps translated editions of the same works out (Vildheks vs.
+// Wildwitch). Values are interpolated unescaped like the rest of the
+// codebase's CQL building (see prepareCreatorCql) - the gateway treats a
+// quote in a name as a search miss, not an error.
+const buildCql = ({ author, currentSeries }: UseRelatedWorksArgs): string => {
+  const anded = [
+    `term.creator='${author}'`,
+    "phrase.generalmaterialtype='bøger'",
+    ...(currentSeries.mainLanguage
+      ? [`phrase.mainlanguage="${currentSeries.mainLanguage}"`]
+      : [])
+  ].join(" AND ");
+
+  return `${anded} NOT term.series='${currentSeries.title}'`;
+};
+
+const useRelatedWorks = ({
+  author,
+  currentSeries
+}: UseRelatedWorksArgs): UseRelatedWorksResult => {
+  const { data, isLoading } = useGetRelatedWorksQuery(
+    {
+      cql: buildCql({ author, currentSeries }),
+      offset: 0,
+      limit: FETCH_LIMIT,
+      filters: {},
+      // First edition year, newest first: "the author's latest work", immune
+      // to reprints (sort.latestpublicationdate would surface a 1995 novel
+      // reissued last month).
+      sort: [{ index: "sort.datefirstedition", order: SortOrderEnum.Desc }]
+    },
+    {
+      enabled: !!author,
+      // The section is decorative: a failed request hides it (works stays
+      // empty) instead of throwing to the ErrorBoundary and taking the
+      // whole series page down with it.
+      throwOnError: false
+    }
+  );
+
+  const candidates: RelatedWork[] =
+    data?.complexSearch.works.map((work) => ({
+      workId: work.workId as WorkId,
+      title: work.titles.full.join(", "),
+      creators: work.creators.map((creator) => creator.display),
+      year: work.workYear?.year ?? null,
+      series: work.series.map((series) => ({
+        seriesId: series.seriesId ?? null,
+        title: series.title,
+        numberInSeries: series.numberInSeries ?? null,
+        readThisFirst: series.readThisFirst ?? null
+      })),
+      coverPid: work.manifestations.bestRepresentation.pid as Pid
+    })) ?? [];
+
+  return {
+    works: getRelatedWorks(candidates, currentSeries),
+    // isLoading is false while the query is disabled (no author), so the
+    // section skips straight to its hidden state.
+    isLoading
+  };
 };
 
 export default useRelatedWorks;
