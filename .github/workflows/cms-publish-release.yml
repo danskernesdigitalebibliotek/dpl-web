@@ -29,20 +29,17 @@ jobs:
         run: |
           echo "{\"version\": \"${{ steps.get_version.outputs.RELEASE_TAG }}\"}" > .version
 
-      # Build design-system + React and copy them into the CMS source tree so
-      # they get baked into the source image (no Composer package download).
-      - name: Build CMS frontend assets
-        uses: ./.github/actions/build-cms-assets
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-
-      # Build + publish the source image. The prebuilt design-system/React
-      # assets are picked up by `COPY cms /app/cms` in cli.dockerfile.
+      # The design system and React are NOT built here. `.dockerignore` keeps
+      # host-built assets out of the build context on purpose, so anything
+      # built on the runner is invisible to `COPY cms /app/cms`. The image
+      # builds them itself in cli.dockerfile's js-assets stage.
       - name: Build and publish source
         env:
           GH_TOKEN: ${{ github.token }}
           CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+          # The js-assets stage installs the WeDoBooks SDK from their private
+          # registry. `source:build` forwards this to docker as a build arg.
+          WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
           VERSION: ${{ steps.get_version.outputs.RELEASE_TAG }}
           RELEASE: ${{ steps.get_version.outputs.RELEASE_TAG }}
           RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
