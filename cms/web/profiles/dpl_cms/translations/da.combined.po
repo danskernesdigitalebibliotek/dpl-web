@@ -34736,17 +34736,17 @@ msgstr "Bibliotek.dk"
 #: 
 msgctxt "Work Page"
 msgid "Contact the library for access"
-msgstr ""
+msgstr "Kontakt biblioteket for at få adgang"
 
 #: 
 msgctxt "Work Page"
 msgid "The material is not available through the website"
-msgstr ""
+msgstr "Materialet er ikke tilgængeligt for dig på hjemmesiden"
 
 #: 
 msgctxt "Work Page"
 msgid "Visit the library and get help from a librarian or check whether the material is available at"
-msgstr ""
+msgstr "Kontakt evt. biblioteket og få hjælp fra en bibliotekar til at få adgang til materialet eller prøv på"
 
 #: 
 msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:3:label"
