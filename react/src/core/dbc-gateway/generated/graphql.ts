@@ -6396,6 +6396,7 @@ export type GetSeriesQuery = {
     __typename?: "Series";
     title: string;
     description?: string | null;
+    mainLanguages: Array<string>;
     hitcount: number;
     members: Array<{
       __typename?: "SerieWork";
@@ -10189,6 +10190,7 @@ export const GetSeriesDocument = `
   series(seriesId: $seriesId) {
     title
     description
+    mainLanguages
     hitcount
     members(limit: $limit, offset: $offset) {
       numberInSeries

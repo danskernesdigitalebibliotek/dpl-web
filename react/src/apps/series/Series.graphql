@@ -2,6 +2,10 @@ query getSeries($seriesId: String!, $limit: Int!, $offset: Int!) {
   series(seriesId: $seriesId) {
     title
     description
+    # Feeds the related-works query's language clause, so translated editions
+    # of other series don't surface alongside the originals. Only the first
+    # entry is used.
+    mainLanguages
     # The total member count. The member list is paged - asking for it without
     # arguments silently returns only the first 50 - so this is what tells the
     # pager whether there is more to load.
