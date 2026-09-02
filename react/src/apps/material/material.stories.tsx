@@ -1308,6 +1308,16 @@ export const MaterialWithBiblioAdapter: Story = {
   }
 };
 
+// TEMPORARY: the Publizon reservation queue frozen for migration. The flag
+// that switches provider is off - the library still lends through Publizon -
+// so this is the state where a material on loan can no longer be reserved.
+export const MaterialWithClosedPublizonReservations: Story = {
+  args: {
+    ...Default.args,
+    publizonReservationsClosedConfig: "1"
+  }
+};
+
 // TEMPORARY, with the toleration flag it exercises: the adapter answers 404
 // for materials the catalogue lists but WeDoBooks has not provisioned yet,
 // and this story lets the tests cover that they render as unavailable

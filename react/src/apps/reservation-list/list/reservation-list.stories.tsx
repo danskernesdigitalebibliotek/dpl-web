@@ -303,6 +303,15 @@ export const ReservationListWithBiblioAdapter: Story = {
   }
 };
 
+// TEMPORARY: the Publizon reservation queue frozen for migration, where the
+// reservations the patron already holds cannot be cancelled either.
+export const ReservationListWithClosedPublizonReservations: Story = {
+  args: {
+    ...Default.args,
+    publizonReservationsClosedConfig: "1"
+  }
+};
+
 const { reservationDetails } = getModalIds();
 export const ReservationListDigitalDetailsModal: Story = {
   parameters: {
