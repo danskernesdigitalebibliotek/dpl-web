@@ -59,6 +59,9 @@ class ReactAppsHooks {
       'use-biblio-adapter' => $this->biblioSettings->isEnabled() ? '1' : '0',
       // TEMPORARY, see DplBiblioSettings::shouldTolerateUnknownMaterials().
       'biblio-tolerate-unknown-materials' => $this->biblioSettings->shouldTolerateUnknownMaterials() ? '1' : '0',
+      // TEMPORARY, see DplBiblioSettings::arePublizonReservationsClosed().
+      // React reads it as publizonReservationsClosedConfig.
+      'publizon-reservations-closed' => $this->biblioSettings->arePublizonReservationsClosed() ? '1' : '0',
     ];
 
     // Left out entirely when unconfigured, so React can tell "no SDK here"
