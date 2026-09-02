@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import React, { useCallback, useState } from "react";
 import {
   useGetBestRepresentationPidByIsbnQuery,
@@ -6,8 +5,6 @@ import {
 } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
-import LinkNoStyle from "../atoms/links/LinkNoStyle";
-import CoverImage from "./cover-image";
 import { CoverIdType, FbiCoverImageSizeKey, DisplaySize } from "./cover.types";
 import {
   createIsbnCql,
@@ -16,6 +13,7 @@ import {
   getCoverUrl,
   resolveCoverPidValues
 } from "./helper";
+import { StaticCover } from "./static-cover";
 
 export type CoverProps = {
   animate: boolean;
@@ -87,61 +85,25 @@ export const Cover = ({
     size: size
   });
 
-  type TintClassesType = {
-    [key: string]: string;
-  };
-
-  const tintClasses: TintClassesType = {
-    default: "bg-identity-tint-120",
-    "120": "bg-identity-tint-120",
-    "100": "bg-identity-tint-100",
-    "80": "bg-identity-tint-80",
-    "40": "bg-identity-tint-40",
-    "20": "bg-identity-tint-20"
-  };
-
-  const classes = {
-    wrapper: clsx(
-      "cover",
-      `cover--size-${coverDisplaySize}`,
-      `cover--aspect-${coverDisplaySize}`,
-      imageLoaded || tintClasses[tint || "default"]
-    )
-  };
-
-  if (url) {
-    return (
-      <LinkNoStyle
-        className={classes.wrapper}
-        url={url}
-        ariaLabelledBy={linkAriaLabelledBy}
-        isHiddenFromScreenReaders={!alt}
-        trackClick={trackClick}
-      >
-        {coverSrc && (
-          <CoverImage
-            setImageLoaded={handleSetImageLoaded}
-            src={coverSrc}
-            altText={alt}
-            animate={animate}
-            shadow={shadow}
-          />
-        )}
-      </LinkNoStyle>
-    );
+  if (!coverSrc) {
+    return null;
   }
 
   return (
-    <div className={classes.wrapper}>
-      {coverSrc && (
-        <CoverImage
-          setImageLoaded={handleSetImageLoaded}
-          src={coverSrc}
-          altText={alt}
-          animate={animate}
-          shadow={shadow}
-        />
-      )}
-    </div>
+    <StaticCover
+      src={coverSrc}
+      alt={alt}
+      animate={animate}
+      tint={tint}
+      shadow={shadow}
+      displaySize={coverDisplaySize}
+      onImageLoaded={handleSetImageLoaded}
+      hasImageLoaded={imageLoaded}
+      linkProps={{
+        url,
+        ariaLabelledBy: linkAriaLabelledBy,
+        trackClick
+      }}
+    />
   );
 };
