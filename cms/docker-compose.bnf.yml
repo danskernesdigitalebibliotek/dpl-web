@@ -7,7 +7,7 @@ x-volumes:
 
 x-user:
   &default-user
-    user: ${UID:-1000}:${GID:-0}
+    user: ${UID:-1000}
 
 x-environment:
   &default-environment
@@ -77,8 +77,8 @@ services:
       args: &skip-baked-in-builds
         SKIP_COMPOSER_INSTALL: "${SKIP_BAKED_IN_BUILDS:-false}"
         SKIP_JS_ASSETS: "${SKIP_BAKED_IN_BUILDS:-false}"
-    # loads the defined volumes and user from the top
-    <<: [*default-volumes, *default-user]
+    << : *default-volumes # loads the defined volumes from the top
+    user: root
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Uncomment to enable xdebug for cli tools
