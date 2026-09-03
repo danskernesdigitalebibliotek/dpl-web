@@ -30,7 +30,6 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
 // the right edge. Sized like the track below so heading, controls and cards
 // share edges.
 .related-works-slider__header {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,8 +67,6 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
   // screen edge: at most the large layout width, with the 32px inset
   // surviving as the minimum edge distance on narrower screens. The width
   // override outranks the library's 100%.
-  width: calc(100% - #{$s-xl * 2});
-  max-width: $layout__max-width--large;
   overflow: visible;
 
   // The slides stop clipping too (the library hides their overflow), for the
@@ -83,7 +80,7 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
 
 .related-works-slider__controls {
   position: absolute;
-  right: 0;
+  right: 48px;
   display: flex;
   flex-direction: column;
   gap: $s-sm;

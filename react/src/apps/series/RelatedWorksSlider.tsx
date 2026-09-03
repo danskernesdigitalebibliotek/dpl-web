@@ -54,6 +54,7 @@ const RelatedWorksSlider: React.FC<RelatedWorksSliderProps> = ({
   // where there is nothing to scroll to.
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(true);
+  const [showsAllSlides, setShowsAllSlides] = useState(false);
 
   const updateEdges = (slider: KeenSliderInstance) => {
     const details = slider.track?.details;
@@ -66,6 +67,16 @@ const RelatedWorksSlider: React.FC<RelatedWorksSliderProps> = ({
 
     setIsAtStart(details.rel === 0);
     setIsAtEnd(details.rel === details.maxIdx);
+
+    const totalSlideWidth = slider.slides.reduce(
+      (totalWidth, slide) => totalWidth + slide.clientWidth,
+      0
+    );
+
+    console.log("totalSlideWidth", totalSlideWidth, "slider.size", slider.size);
+
+    // If the slides' total width is less than the slider's, center them
+    setShowsAllSlides(slider.size > totalSlideWidth);
   };
 
   // perView "auto" sizes slides from their CSS width (set on
@@ -116,7 +127,11 @@ const RelatedWorksSlider: React.FC<RelatedWorksSliderProps> = ({
           </button>
         </div>
       </div>
-      <div ref={sliderRef} className="keen-slider">
+      <div
+        ref={sliderRef}
+        className="keen-slider"
+        style={{ justifyContent: showsAllSlides ? "center" : undefined }}
+      >
         {React.Children.map(children, (child) => (
           <div className="keen-slider__slide">{child}</div>
         ))}
