@@ -81,7 +81,7 @@ const RelatedWorks: React.FC<RelatedWorksProps> = ({
       <RelatedWorksSlider
         heading={
           // Copy is hardcoded for the prototype; becomes *Text props before release.
-          <h2 className="related-works__heading text-header-h3">
+          <h2 className="related-works__heading text-header-h2">
             Mere af {author}
           </h2>
         }
