@@ -81,7 +81,7 @@ export const RelatedWorks = ({ heading, items }: RelatedWorksProps) => {
       <section className="related-works">
         <div className="related-works-slider">
           <div className="related-works-slider__header">
-            <h2 className="related-works__heading text-header-h4">{heading}</h2>
+            <h2 className="related-works__heading text-header-h3">{heading}</h2>
             <div className="related-works-slider__controls">
               <button
                 type="button"

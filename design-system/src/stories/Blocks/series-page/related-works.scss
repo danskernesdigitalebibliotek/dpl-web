@@ -15,7 +15,9 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
   // bottom below. 48px, composed like series-page's block clearance - the
   // spacing scale has no single step for it.
   margin: ($s-xl + $s-md) 0;
-  padding: $s-xl 0;
+  // 96px - generous hero-like breathing room; the scale has no single step
+  // for it, so it is composed like the 48px clearance above.
+  padding: ($s-4xl + $s-md) 0;
   background: $color__global-secondary;
   color: $color__text-primary-black;
 
@@ -24,18 +26,22 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
   overflow: hidden;
 }
 
-// Heading left, prev/next controls right, on one shared line above the
-// track. Inset to match the resting slider below.
+// Heading centered above the track, prev/next controls on the same line at
+// the right edge. Sized like the track below so heading, controls and cards
+// share edges.
 .related-works-slider__header {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: $s-md;
-  margin: 0 $s-xl $s-md;
+  justify-content: center;
+  width: calc(100% - #{$s-xl * 2});
+  max-width: $layout__max-width--large;
+  margin: 0 auto $s-md;
 }
 
 .related-works__heading {
   margin: 0;
+  text-align: center;
 }
 
 // keen-slider is configured with perView "auto" and takes each slide's width
@@ -54,7 +60,13 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
 // two-class selector would lose the overflow to the library's `hidden` and
 // the track would clip at the inset instead of the screen edge.
 .related-works .related-works-slider .keen-slider {
-  margin: 0 $s-xl;
+  // Centered like MaterialGrid's layout container instead of hugging the
+  // screen edge: at most the large layout width, with the 32px inset
+  // surviving as the minimum edge distance on narrower screens. The width
+  // override outranks the library's 100%.
+  width: calc(100% - #{$s-xl * 2});
+  max-width: $layout__max-width--large;
+  margin: 0 auto;
   overflow: visible;
 
   // The slides stop clipping too (the library hides their overflow), for the
@@ -67,6 +79,8 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
 }
 
 .related-works-slider__controls {
+  position: absolute;
+  right: 0;
   display: flex;
   gap: $s-sm;
 }
