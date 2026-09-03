@@ -10,9 +10,18 @@ import type { BiblioCanLoan } from "../types"
 type BiblioCanLoanQueryKey = ReturnType<typeof biblioCanLoanQueryKey>
 
 type UseBiblioCanLoanOptions = Omit<
-  UseQueryOptions<BiblioCanLoan, Error, BiblioCanLoan, BiblioCanLoanQueryKey>,
+  UseQueryOptions<BiblioCanLoan | null, Error, BiblioCanLoan | null, BiblioCanLoanQueryKey>,
   "queryKey" | "queryFn" | "enabled"
-> & { enabled?: boolean }
+> & {
+  enabled?: boolean
+  /**
+   * TEMPORARY, with the toleration flag that feeds it: resolve a material
+   * the adapter does not know to null instead of an error. Off by default:
+   * asking about an unknown material is normally a routing mistake worth
+   * hearing about.
+   */
+  allowNotFound?: boolean
+}
 
 /**
  * Whether the user can borrow a material through the Biblio adapter.
@@ -25,11 +34,11 @@ type UseBiblioCanLoanOptions = Omit<
 export const useBiblioCanLoan = (
   materialId: string | null,
   options?: UseBiblioCanLoanOptions
-): UseQueryResult<BiblioCanLoan, Error> => {
+): UseQueryResult<BiblioCanLoan | null, Error> => {
   const config = useServiceLayerConfig()
-  const { enabled = true, ...restOptions } = options ?? {}
+  const { enabled = true, allowNotFound, ...restOptions } = options ?? {}
   return useQuery({
-    ...biblioCanLoanQuery(config, materialId),
+    ...biblioCanLoanQuery(config, materialId, { allowNotFound }),
     ...restOptions,
     enabled: config.isPatronAuthenticated && enabled && Boolean(materialId),
   })

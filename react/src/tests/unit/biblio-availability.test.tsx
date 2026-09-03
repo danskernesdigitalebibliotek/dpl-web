@@ -4,6 +4,7 @@ import useBiblioAvailability from "../../core/biblio/useBiblioAvailability";
 import { useBiblioCanLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../core/utils/helpers/user";
+import useBiblioTolerateUnknownMaterials from "../../core/biblio/useBiblioTolerateUnknownMaterials";
 
 // Only the query is stubbed. isBiblioMaterialAvailable stays real - it is the
 // rule this hook is here to apply, and a copy of it in the test would pass
@@ -21,6 +22,9 @@ vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
+vi.mock("../../core/biblio/useBiblioTolerateUnknownMaterials", () => ({
+  default: vi.fn()
+}));
 
 const mockedCanLoan = vi.mocked(useBiblioCanLoan);
 const mockedFlag = vi.mocked(useBiblioAdapter);
@@ -47,6 +51,7 @@ describe("useBiblioAvailability", () => {
     vi.clearAllMocks();
     mockedFlag.mockReturnValue(true);
     mockedIsAnonymous.mockReturnValue(false);
+    vi.mocked(useBiblioTolerateUnknownMaterials).mockReturnValue(false);
     mockedCanLoan.mockReturnValue({
       data: undefined,
       isLoading: false
@@ -57,7 +62,10 @@ describe("useBiblioAvailability", () => {
     const { result } = render();
 
     expect(result.current.isAnswering).toBe(true);
-    expect(mockedCanLoan).toHaveBeenCalledWith(ISBN, { enabled: true });
+    expect(mockedCanLoan).toHaveBeenCalledWith(ISBN, {
+      enabled: true,
+      allowNotFound: false
+    });
   });
 
   it("Leaves Biblio alone when the flag is off", () => {
@@ -68,14 +76,20 @@ describe("useBiblioAvailability", () => {
     expect(result.current.isAnswering).toBe(false);
     // The query is still declared - hooks cannot be conditional - but it is
     // disabled, so no request is made.
-    expect(mockedCanLoan).toHaveBeenCalledWith(ISBN, { enabled: false });
+    expect(mockedCanLoan).toHaveBeenCalledWith(ISBN, {
+      enabled: false,
+      allowNotFound: false
+    });
   });
 
   it("Leaves Biblio alone without an isbn to ask about", () => {
     const { result } = render(null);
 
     expect(result.current.isAnswering).toBe(false);
-    expect(mockedCanLoan).toHaveBeenCalledWith(null, { enabled: false });
+    expect(mockedCanLoan).toHaveBeenCalledWith(null, {
+      enabled: false,
+      allowNotFound: false
+    });
   });
 
   it("Reports nothing until Biblio has answered", () => {
@@ -101,5 +115,37 @@ describe("useBiblioAvailability", () => {
     givenAdapterAnswers("loanable");
 
     expect(render().result.current.isAvailable).toBe(true);
+  });
+
+  describe("TEMPORARY: materials the adapter does not know", () => {
+    // Goes with useBiblioTolerateUnknownMaterials when the catalogue and the
+    // adapter agree on which materials exist.
+    it("Asks strictly by default, so a 404 stays the error it is", () => {
+      render();
+
+      expect(mockedCanLoan).toHaveBeenCalledWith(ISBN, {
+        enabled: true,
+        allowNotFound: false
+      });
+    });
+
+    it("Counts a tolerated unknown material as unavailable", () => {
+      vi.mocked(useBiblioTolerateUnknownMaterials).mockReturnValue(true);
+      // The tolerated 404: the query resolved, and Biblio has no answer.
+      mockedCanLoan.mockReturnValue({
+        data: null,
+        isLoading: false
+      } as unknown as ReturnType<typeof useBiblioCanLoan>);
+
+      const { result } = render();
+
+      // Unavailable rather than an error - and never a fallback to Publizon:
+      // with the flag on, a material Biblio cannot lend is not on offer.
+      expect(result.current.isAvailable).toBe(false);
+      expect(mockedCanLoan).toHaveBeenCalledWith(ISBN, {
+        enabled: true,
+        allowNotFound: true
+      });
+    });
   });
 });

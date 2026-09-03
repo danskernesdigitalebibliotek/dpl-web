@@ -120,6 +120,15 @@ export const givenBiblioCreatesLoan = (loan?: LoanDto) => {
   }).as("biblioCreateLoan");
 };
 
+// TEMPORARY, with the toleration flag it exists for: the adapter answers
+// 404 for a material the catalogue lists but WeDoBooks has not provisioned.
+export const givenBiblioCannotAnswerCanLoan = (materialId: string) => {
+  cy.intercept("GET", "**/v1/loans/can-loan*", {
+    statusCode: 404,
+    body: { message: `Material not found: ${materialId}` }
+  }).as("biblioCanLoanUnknown");
+};
+
 /**
  * Given: the user holds reservations in Biblio. One with an `offer_id` has
  * been offered and can be accepted as a loan.

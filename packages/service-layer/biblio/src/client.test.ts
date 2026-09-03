@@ -199,6 +199,27 @@ describe("createBiblioClient.canLoan", () => {
     })
   })
 
+  it("throws on a material the adapter does not know", async () => {
+    // The default: a 404 from can-loan is an error - asking about an unknown
+    // material is normally a routing mistake worth hearing about.
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse({ message: "Material not found: 9788758855752" }, 404)
+    )
+
+    await expect(buildClient().canLoan("9788758855752")).rejects.toThrow("404")
+  })
+
+  // TEMPORARY, with the toleration flag the option serves.
+  it("resolves an unknown material to undefined when told to tolerate it", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse({ message: "Material not found: 9788758855752" }, 404)
+    )
+
+    await expect(
+      buildClient().canLoan("9788758855752", { allowNotFound: true })
+    ).resolves.toBeUndefined()
+  })
+
   it("maps the block reason when lending is blocked", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(
       mockJsonResponse({ status: "lending_blocked", lending_block_reason: "quarantined" })

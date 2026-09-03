@@ -36,12 +36,19 @@ export async function getBiblioMaterial(
 // Whether the user can borrow a material right now. The answer covers both the
 // material (is it available?) and the user (quota, lending blocks), so callers
 // must pick the part they care about - see isBiblioMaterialAvailable.
+//
+// TEMPORARY, with the toleration flag it serves: with allowNotFound a
+// material the adapter does not know resolves to null - null rather than
+// undefined, because TanStack Query rejects undefined as query data. Without
+// it the 404 stays an error, which is the honest default: asking about an
+// unknown material is normally a routing mistake.
 export async function getBiblioCanLoan(
   config: ServiceLayerConfig,
-  materialId: string
-): Promise<BiblioCanLoan> {
+  materialId: string,
+  options?: { allowNotFound?: boolean }
+): Promise<BiblioCanLoan | null> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  return biblio.canLoan(materialId)
+  return (await biblio.canLoan(materialId, options)) ?? null
 }
 
 /**

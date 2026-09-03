@@ -70,4 +70,15 @@ class DplBiblioSettings extends DplReactConfigBase {
     return (bool) $this->loadConfig()->get('enabled');
   }
 
+  /**
+   * TEMPORARY: whether unknown materials render as unavailable, not as errors.
+   *
+   * The catalogue lists digital materials WeDoBooks has not provisioned yet,
+   * and the adapter answers 404 for those. Remove together with the flag once
+   * the two agree on which materials exist.
+   */
+  public function shouldTolerateUnknownMaterials(): bool {
+    return (bool) $this->loadConfig()->get('tolerate_unknown_materials');
+  }
+
 }

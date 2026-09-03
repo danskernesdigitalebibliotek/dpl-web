@@ -41,6 +41,15 @@ class BiblioSettingsForm extends ConfigFormBase {
       '#config_target' => self::CONFIG_NAME . ':enabled',
     ];
 
+    // TEMPORARY - remove when the catalogue and the adapter agree on which
+    // materials exist.
+    $form['settings']['tolerate_unknown_materials'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show materials the adapter does not know as unavailable', [], ['context' => 'Dpl Biblio']),
+      '#description' => $this->t('Temporary. The catalogue lists digital materials that are not yet provisioned in WeDoBooks, and the adapter answers "Material not found" for those. With this enabled such a material is shown as unavailable; without it the material page fails. Publizon is never asked either way.', [], ['context' => 'Dpl Biblio']),
+      '#config_target' => self::CONFIG_NAME . ':tolerate_unknown_materials',
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 

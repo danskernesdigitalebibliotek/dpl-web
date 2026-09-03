@@ -64,6 +64,11 @@ vi.mock("../../core/publizon/publizon", () => ({
 
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: () => false }));
 vi.mock("../../core/utils/useBiblioAdapter", () => ({ default: vi.fn() }));
+// TEMPORARY toleration flag; reads config from Redux, which these renders
+// have no provider for. Off keeps the strict default under test.
+vi.mock("../../core/biblio/useBiblioTolerateUnknownMaterials", () => ({
+  default: () => false
+}));
 
 const publizonSays = (quotas: {
   limit: number | undefined;

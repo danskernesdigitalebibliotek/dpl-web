@@ -17,7 +17,9 @@ import { OnlineLoanModalComponent } from "./components/modal-online-loan";
  */
 export const materialStory = {
   default: "default",
-  withBiblioAdapter: "material-with-biblio-adapter"
+  withBiblioAdapter: "material-with-biblio-adapter",
+  // TEMPORARY, with the toleration flag it renders - see the story.
+  withTolerantBiblioAdapter: "material-with-tolerant-biblio-adapter"
 } as const;
 
 export class MaterialPage extends PageObject {

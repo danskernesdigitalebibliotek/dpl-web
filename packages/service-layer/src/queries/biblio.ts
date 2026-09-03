@@ -38,7 +38,15 @@ export const biblioMaterialQuery = (config: ServiceLayerConfig, isbn: string | n
 export const biblioCanLoanQueryKey = (materialId: string | null) =>
   ["serviceLayer", "biblioCanLoan", materialId] as const
 
-export const biblioCanLoanQuery = (config: ServiceLayerConfig, materialId: string | null) =>
+export const biblioCanLoanQuery = (
+  config: ServiceLayerConfig,
+  materialId: string | null,
+  // TEMPORARY, with the toleration flag it serves. Deliberately not part of
+  // the key: every caller derives it from the same site-wide setting, so two
+  // values cannot meet within one page - and react invalidates by the plain
+  // key, which a longer one would escape.
+  options?: { allowNotFound?: boolean }
+) =>
   queryOptions({
     queryKey: biblioCanLoanQueryKey(materialId),
     queryFn: () => {
@@ -47,7 +55,7 @@ export const biblioCanLoanQuery = (config: ServiceLayerConfig, materialId: strin
         // the query options must not end up asking about "null".
         throw new Error("biblioCanLoanQuery cannot fetch without a material id")
       }
-      return getBiblioCanLoan(config, materialId)
+      return getBiblioCanLoan(config, materialId, options)
     },
   })
 
