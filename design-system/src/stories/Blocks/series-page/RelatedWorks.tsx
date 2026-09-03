@@ -55,9 +55,11 @@ export const RelatedWorks = ({ heading, items }: RelatedWorksProps) => {
       }
 
       clearInterval(poll);
-      // Same options as the dpl-react slider: slide width comes from CSS.
+      // Same options as the dpl-react slider: slide width comes from CSS,
+      // and the 1px spacing is the shared pixel neighbouring cards' outlines
+      // overlap into, like MaterialGrid's 1px grid-gap.
       sliderRef.current = new KeenSlider(trackRef.current, {
-        slides: { perView: "auto", spacing: 12 },
+        slides: { perView: "auto", spacing: 1 },
       });
     }, 100);
 

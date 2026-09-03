@@ -16,8 +16,8 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
   // spacing scale has no single step for it.
   margin: ($s-xl + $s-md) 0;
   padding: $s-xl 0;
-  background: $color__global-tertiary-2;
-  color: $color__global-primary;
+  background: $color__global-secondary;
+  color: $color__text-primary-black;
 
   // Slides overflow the inset slider container (see below) and are clipped
   // here, at the section edge, so the track runs edge-to-edge.
@@ -78,7 +78,7 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
   width: 36px;
   height: 36px;
   padding: 0;
-  border: 1px solid rgba($color__global-primary, 0.6);
+  border: 1px solid rgba($color__text-primary-black, 0.6);
   border-radius: 50%;
   background: transparent;
   color: inherit;
@@ -93,7 +93,7 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
   }
 
   &:hover:not(:disabled) {
-    background: rgba($color__global-primary, 0.15);
+    background: rgba($color__text-primary-black, 0.08);
     border-color: currentcolor;
   }
 }

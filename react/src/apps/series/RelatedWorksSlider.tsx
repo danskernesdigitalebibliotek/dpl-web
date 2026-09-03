@@ -65,8 +65,11 @@ const RelatedWorksSlider: React.FC<RelatedWorksSliderProps> = ({
   // .keen-slider__slide in the stylesheet), so cards keep a fixed max width
   // and constant spacing on every screen size - wide screens simply show
   // more of them.
+  // 1px spacing, not 0: like MaterialGrid's 1px grid-gap, it gives the
+  // neighbouring cards' outlines one shared pixel to overlap into, so cards
+  // sit edge-to-edge separated by a single line instead of a doubled one.
   const [sliderRef, instanceRef] = useKeenSlider({
-    slides: { perView: "auto", spacing: 12 },
+    slides: { perView: "auto", spacing: 1 },
     created: updateEdges,
     slideChanged: updateEdges,
     updated: updateEdges
