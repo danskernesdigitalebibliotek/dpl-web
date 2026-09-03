@@ -85,13 +85,9 @@ export const Cover = ({
     size: size
   });
 
-  if (!coverSrc) {
-    return null;
-  }
-
   return (
     <StaticCover
-      src={coverSrc}
+      src={coverSrc ?? undefined}
       alt={alt}
       animate={animate}
       tint={tint}
