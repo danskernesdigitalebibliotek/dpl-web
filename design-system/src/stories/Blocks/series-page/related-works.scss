@@ -85,30 +85,23 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
   gap: $s-sm;
 }
 
+// Styled like the Slider block's long-line arrows (Library/slider): bare
+// glyphs that fade out entirely when there is nothing to scroll to.
 .related-works-slider__button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 115px;
+  max-width: 100%;
   padding: 0;
-  border: 1px solid rgba($color__text-primary-black, 0.6);
-  border-radius: 50%;
+  border: 0;
   background: transparent;
   color: inherit;
   cursor: pointer;
-  transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease;
+  transition: opacity 0.2s ease-in-out;
 
   &:disabled {
-    opacity: 0.35;
+    opacity: 0;
     cursor: default;
-  }
-
-  &:hover:not(:disabled) {
-    background: rgba($color__text-primary-black, 0.08);
-    border-color: currentcolor;
   }
 }
 
