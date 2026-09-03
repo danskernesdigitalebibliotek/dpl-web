@@ -18,6 +18,7 @@ go/lib/rest/publizon/local-adapter/generated/** linguist-generated
 
 # Orval codegen (service layer)
 packages/service-layer/fbs/src/generated/** linguist-generated
+packages/service-layer/biblio/src/generated/** linguist-generated
 
 # Orval codegen (react)
 react/src/core/dpl-cms/dpl-cms.ts linguist-generated
