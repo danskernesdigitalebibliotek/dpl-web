@@ -42,6 +42,9 @@ import openOrderArgs, {
 import materialUnavailableNoticeArgs, {
   argTypes as materialUnavailableNoticeArgTypes
 } from "../../components/material/MaterialUnavailableNotice/MaterialUnavailableNoticeArgs";
+import biblioAdapterArgs, {
+  argTypes as biblioAdapterArgTypes
+} from "../../core/storybook/biblioAdapterArgs";
 
 const meta: Meta<typeof MaterialEntry> = {
   title: "Apps / Material",
@@ -50,6 +53,7 @@ const meta: Meta<typeof MaterialEntry> = {
   // @ts-ignore: can't figure out how to type serviceUrlArgTypes and globalTextArgTypes
   argTypes: {
     ...serviceUrlArgTypes,
+    ...biblioAdapterArgTypes,
     ...globalTextArgTypes,
     ...globalConfigArgTypes,
     ...deleteReservationModalArgTypes,
@@ -820,6 +824,7 @@ const meta: Meta<typeof MaterialEntry> = {
   },
   args: {
     ...serviceUrlArgs,
+    ...biblioAdapterArgs,
     ...globalTextArgs,
     ...globalConfigArgs,
     ...deleteReservationModalArgs,
@@ -1291,5 +1296,14 @@ export const ContentsRaw: Story = {
   args: {
     ...Default.args,
     wid: "work-of:150086-netmusik:00795041726629"
+  }
+};
+
+// The Biblio adapter feature flag turned on. Digital materials are then
+// served by Biblio rather than Publizon.
+export const MaterialWithBiblioAdapter: Story = {
+  args: {
+    ...Default.args,
+    useBiblioAdapterConfig: "1"
   }
 };

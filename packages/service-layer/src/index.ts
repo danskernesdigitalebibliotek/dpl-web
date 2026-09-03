@@ -56,13 +56,21 @@ export { getLoans, renewLoans } from "./loans"
 export { getFees } from "./fees"
 
 // Biblio adapter — the digital-materials provider behind the CMS feature flag.
-export { getBiblioLoans, getBiblioMaterial } from "./biblio"
 export {
+  getBiblioCanLoan,
+  getBiblioLoans,
+  getBiblioMaterial,
+  isBiblioMaterialAvailable,
+} from "./biblio"
+export {
+  biblioCanLoanQuery,
+  biblioCanLoanQueryKey,
   biblioLoansQuery,
   biblioLoansQueryKey,
   biblioMaterialQuery,
   biblioMaterialQueryKey,
 } from "./queries/biblio"
+export { useBiblioCanLoan } from "./hooks/useBiblioCanLoan"
 export { useBiblioLoans } from "./hooks/useBiblioLoans"
 export { useBiblioMaterial } from "./hooks/useBiblioMaterial"
 export { createBiblioClient } from "../biblio/src"
