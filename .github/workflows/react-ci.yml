@@ -256,6 +256,53 @@ jobs:
           flags: integration
           fail_ci_if_error: false
 
+  # Runs the real production webpack bundle in a browser and asserts every app
+  # chunk evaluates and registers without throwing. Catches regressions that
+  # unit tests (jsdom defines `process`) and a green build (never executes the
+  # code) both miss — e.g. a leaked `process.env` reference in a shared chunk
+  # producing `process is not defined` at runtime.
+  smoke:
+    name: React / Production bundle smoke test
+    needs: design-system
+    if: "!github.event.deleted"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: react
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download design-system build
+        uses: actions/download-artifact@v6
+        with:
+          name: design-system-build
+          path: design-system/build
+      - name: Build production bundle
+        run: pnpm run build:js:prod
+      - name: Install Chrome
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+      - name: Smoke test the production bundle in a browser
+        uses: cypress-io/github-action@v7
+        with:
+          install: false
+          start: pnpm run smoke:serve
+          wait-on: "http://localhost:57022"
+          browser: ${{ steps.setup-chrome.outputs.chrome-path }}
+          working-directory: react
+          config-file: cypress.smoke.config.js
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: cypress-smoke-screenshots
+          path: react/cypress/screenshots
+
   unit:
     name: React / Unit test
     needs: design-system
