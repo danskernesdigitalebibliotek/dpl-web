@@ -43,8 +43,8 @@ const meta: Meta<typeof AvailabilityLabel> = {
       name: "Cypress data attribute",
       control: { type: "text" }
     },
-    isbns: {
-      name: "ISBN",
+    identifier: {
+      name: "Digital identifier",
       control: { type: "text" }
     },
     accessTypes: {
@@ -60,7 +60,7 @@ const meta: Meta<typeof AvailabilityLabel> = {
     faustIds: ["62523611"],
     cursorPointer: false,
     dataCy: "",
-    isbns: [],
+    identifier: null,
     accessTypes: [],
     manifestText: "Bog",
     url: new URL("/", getCurrentLocation()),
@@ -107,7 +107,7 @@ export const Unavailable: Story = {
 
 export const EBogPrinsenHarry: Story = {
   args: {
-    isbns: ["9788763844123"],
+    identifier: "9788763844123",
     manifestText: "ebog",
     accessTypes: [AccessTypeCodeEnum.Online]
   }

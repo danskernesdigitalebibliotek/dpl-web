@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import { first } from "lodash";
 import { useDeepCompareEffect } from "react-use";
 import { useText } from "../../core/utils/text";
 import LinkNoStyle from "../atoms/links/LinkNoStyle";
@@ -22,7 +21,10 @@ export interface AvailabilityLabelProps {
   handleSelectManifestation?: () => void | undefined;
   cursorPointer?: boolean;
   dataCy?: string;
-  isbns: string[];
+  // The identifier a digital material is borrowed by - the same one the loan
+  // buttons use, so label and buttons ask the providers about the same
+  // edition and share one request.
+  identifier: string | null;
   isVisualOnly?: boolean;
 }
 
@@ -36,7 +38,7 @@ export const AvailabilityLabel: React.FC<AvailabilityLabelProps> = ({
   handleSelectManifestation,
   cursorPointer = false,
   dataCy = "availability-label",
-  isbns,
+  identifier,
   isVisualOnly
 }) => {
   const { collectPageStatistics } = useCollectPageStatistics();
@@ -46,7 +48,7 @@ export const AvailabilityLabel: React.FC<AvailabilityLabelProps> = ({
     accessTypes,
     access,
     faustIds,
-    isbn: first(isbns) || null,
+    isbn: identifier,
     manifestText
   });
 

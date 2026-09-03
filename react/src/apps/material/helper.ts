@@ -464,16 +464,6 @@ export const divideManifestationsByMaterialType = (
     {}
   );
 
-export const getAllIsbns = (manifestations: Manifestation[]) => {
-  return manifestations
-    .map((manifestation) =>
-      manifestation.identifiers
-        .filter((identifier) => identifier.type === IdentifierTypeEnum.Isbn)
-        .map((identifier) => identifier.value)
-    )
-    .flat();
-};
-
 export const getManifestationsWithMaterialType = (
   manifestations: Manifestation[]
 ) => {
