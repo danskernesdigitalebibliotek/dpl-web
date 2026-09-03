@@ -31,6 +31,11 @@ RUN if [ "$SKIP_JS_ASSETS" = "true" ]; then mkdir -p design-system/build; else \
     find src -name "*.js" | while read -r f; do cp "$f" build/js/"$(basename "$f")"; done; \
     fi
 
+# Workspace packages consumed by React ship raw TypeScript, so their source
+# has to be present in the image - the manifest copied above only lets pnpm
+# link them during install.
+COPY packages ./packages/
+
 COPY react ./react/
 RUN if [ "$SKIP_JS_ASSETS" = "true" ]; then mkdir -p react/dist; else cd react && pnpm build; fi
 

@@ -7,7 +7,9 @@ import type { BiblioLoan } from "../../../src/types"
 export const MaterialTypeSchema = z.enum(["ebook", "audiobook", "paper_book"])
 
 // We only read the fields consumers need; zod strips unknown keys so new
-// fields in the adapter responses do not break parsing.
+// fields in the adapter responses do not break parsing. What we do read
+// follows the contract: every field below is required there, so a response
+// missing one is a contract breach and throws.
 export const LoanSchema = z.object({
   id: z.string(),
   material_id: z.string(),
@@ -15,6 +17,10 @@ export const LoanSchema = z.object({
   start: z.string(),
   end: z.string(),
   active: z.boolean(),
+  title: z.string(),
+  author: z.string(),
+  publisher: z.string(),
+  publish_date: z.string(),
 })
 
 const GetLoansResponseSchema = z.object({
@@ -32,6 +38,10 @@ export function mapLoan(loan: z.infer<typeof LoanSchema>): BiblioLoan {
     startDate: loan.start,
     endDate: loan.end,
     active: loan.active,
+    title: loan.title,
+    author: loan.author,
+    publisher: loan.publisher,
+    publishDate: loan.publish_date,
   }
 }
 

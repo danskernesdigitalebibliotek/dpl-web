@@ -21,7 +21,7 @@ export type {
 export { RESERVATION_FAILURE_REASONS, RENEWAL_FAILURE_REASONS } from "./types"
 
 // React provider — wraps an app subtree and supplies config to the hooks.
-export { ServiceLayerProvider } from "./context/ServiceLayerContext"
+export { ServiceLayerProvider, useServiceLayerConfig } from "./context/ServiceLayerContext"
 
 // React hooks — fetch + lifecycle. Require ServiceLayerProvider above in the tree.
 export { usePatron } from "./hooks/usePatron"
@@ -56,6 +56,15 @@ export { getLoans, renewLoans } from "./loans"
 export { getFees } from "./fees"
 
 // Biblio adapter — the digital-materials provider behind the CMS feature flag.
+export { getBiblioLoans, getBiblioMaterial } from "./biblio"
+export {
+  biblioLoansQuery,
+  biblioLoansQueryKey,
+  biblioMaterialQuery,
+  biblioMaterialQueryKey,
+} from "./queries/biblio"
+export { useBiblioLoans } from "./hooks/useBiblioLoans"
+export { useBiblioMaterial } from "./hooks/useBiblioMaterial"
 export { createBiblioClient } from "../biblio/src"
 export type { BiblioConfig } from "../biblio/src"
 export type {

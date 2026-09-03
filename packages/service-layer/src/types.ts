@@ -1,6 +1,6 @@
 // Backends this package knows how to talk to. Apps never name these in
 // hook calls — only in the resolvers they implement on ServiceLayerConfig.
-export type ApiId = "fbs"
+export type ApiId = "fbs" | "biblio"
 
 export type ServiceLayerConfig = {
   getBaseUrl: (api: ApiId) => string
@@ -147,6 +147,12 @@ export type RenewedLoan = RenewedLoanSuccess | RenewedLoanFailed
 export type BiblioMaterial = {
   isbn: string
   materialType: "ebook" | "audiobook"
+  title: string
+  description: string
+  publishDate: string
+  languages: string[]
+  // The only catalogue field the contract does not require.
+  authors: string[]
 }
 
 // The broad material type used by the loan and reservation DTOs. The metadata
@@ -160,6 +166,12 @@ export type BiblioLoan = {
   startDate: string
   endDate: string
   active: boolean
+  // A loan carries its own catalogue fields, so presenting it needs no
+  // metadata lookup. `author` is one string here, a list on BiblioMaterial.
+  title: string
+  author: string
+  publisher: string
+  publishDate: string
 }
 
 export type BiblioReservation = {

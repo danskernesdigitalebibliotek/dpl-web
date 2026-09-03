@@ -1,12 +1,15 @@
 import { useGetLoansV2 } from "../fbs/fbs";
 import { useGetV1UserLoans } from "../publizon/publizon";
+import { useBiblioLoans } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { calculateRoundedUpDaysUntil } from "./helpers/date";
 import { materialIsOverdue } from "./helpers/general";
 import {
+  mapBiblioLoanToLoanType,
   mapFBSLoanToLoanType,
   mapPublizonLoanToLoanType
 } from "./helpers/list-mapper";
 import { LoanType } from "./types/loan-type";
+import useBiblioAdapter from "./useBiblioAdapter";
 import useLoanThresholds from "./useLoanThresholds";
 
 // Loans with more than warning-threshold days until due
@@ -47,16 +50,20 @@ type Loans = {
 type UseLoansType = {
   all: Loans;
   fbs: Loans;
-  publizon: Loans;
+  // Publizon and Biblio loans as one list. Which provider a loan came from
+  // does not change how it is rendered, and during the transition a user has
+  // loans from both.
+  digital: Loans;
 };
 
 type UseLoans = () => UseLoansType;
 
-// useLoans is a custom hook that fetches loans from both FBS and Publizon
-// and combines them into lists. The loans are then divided into three
-// categories: overdue, soon overdue, and far from overdue.
+// useLoans is a custom hook that fetches loans from both FBS and the digital
+// materials providers and combines them into lists. The loans are then
+// divided into three categories: overdue, soon overdue, and far from overdue.
 // The hook is NOT responsible for any sorting of the loans.
 const useLoans: UseLoans = () => {
+  const useBiblio = useBiblioAdapter();
   const {
     data: loansFbs,
     isLoading: isLoadingFbs,
@@ -67,10 +74,19 @@ const useLoans: UseLoans = () => {
     isLoading: isLoadingPublizon,
     isError: isErrorPublizon
   } = useGetV1UserLoans();
+  const {
+    data: loansBiblio,
+    isLoading: isLoadingBiblio,
+    isError: isErrorBiblio
+  } = useBiblioLoans({ enabled: useBiblio });
 
   const threshold = useLoanThresholds();
-  const loansIsLoading = isLoadingFbs || isLoadingPublizon;
-  const loansIsError = isErrorFbs || isErrorPublizon;
+  // A disabled query is never loading or in error so the Biblio states only
+  // count when the feature flag has enabled the query.
+  const isLoadingDigital = isLoadingPublizon || isLoadingBiblio;
+  const isErrorDigital = isErrorPublizon || isErrorBiblio;
+  const loansIsLoading = isLoadingFbs || isLoadingDigital;
+  const loansIsError = isErrorFbs || isErrorDigital;
 
   // map loans to same type
   const mappedLoansFbs =
@@ -81,41 +97,44 @@ const useLoans: UseLoans = () => {
         // there are loans without dueDate in the publizon MOCK data
         .filter((item) => item.dueDate)
     : [];
+  const mappedLoansBiblio = loansBiblio?.loans
+    ? mapBiblioLoanToLoanType(loansBiblio.loans)
+    : [];
+  const mappedLoansDigital = [...mappedLoansPublizon, ...mappedLoansBiblio];
 
-  // Combine all loans from both FBS and Publizon
-  const loans = [...mappedLoansFbs, ...mappedLoansPublizon];
+  // Combine all loans from both FBS and the digital materials provider
+  const loans = [...mappedLoansFbs, ...mappedLoansDigital];
 
-  // Combine "overdue loans" from both FBS and Publizon
+  // Combine "overdue loans" from both FBS and the digital materials provider
   const loansOverdueFBS = filterLoansOverdue(mappedLoansFbs);
-  const LoansOverduePublizon = filterLoansOverdue(mappedLoansPublizon);
-  const loansOverdue = [...loansOverdueFBS, ...LoansOverduePublizon];
+  const loansOverdueDigital = filterLoansOverdue(mappedLoansDigital);
+  const loansOverdue = [...loansOverdueFBS, ...loansOverdueDigital];
 
-  // combine "soon overdue" loans from both FBS and Publizon
+  // combine "soon overdue" loans from both FBS and the digital materials
+  // provider
   const loansSoonOverdueFBS = filterLoansSoonOverdue(
     mappedLoansFbs,
     threshold.warning
   );
-  const loansSoonOverduePublizon = filterLoansSoonOverdue(
-    mappedLoansPublizon,
+  const loansSoonOverdueDigital = filterLoansSoonOverdue(
+    mappedLoansDigital,
     threshold.warning
   );
-  const loansSoonOverdue = [
-    ...loansSoonOverdueFBS,
-    ...loansSoonOverduePublizon
-  ];
+  const loansSoonOverdue = [...loansSoonOverdueFBS, ...loansSoonOverdueDigital];
 
-  // combine "far from overdue" loans from both FBS and Publizon
+  // combine "far from overdue" loans from both FBS and the digital materials
+  // provider
   const loansFarFromOverdueFBS = filterLoansNotOverdue(
     mappedLoansFbs,
     threshold.warning
   );
-  const loansFarFromOverduePublizon = filterLoansNotOverdue(
-    mappedLoansPublizon,
+  const loansFarFromOverdueDigital = filterLoansNotOverdue(
+    mappedLoansDigital,
     threshold.warning
   );
   const loansFarFromOverdue = [
     ...loansFarFromOverdueFBS,
-    ...loansFarFromOverduePublizon
+    ...loansFarFromOverdueDigital
   ];
 
   return {
@@ -135,13 +154,13 @@ const useLoans: UseLoans = () => {
       isLoading: isLoadingFbs,
       isError: isErrorFbs
     },
-    publizon: {
-      loans: mappedLoansPublizon,
-      overdue: LoansOverduePublizon,
-      soonOverdue: loansSoonOverduePublizon,
-      farFromOverdue: loansFarFromOverduePublizon,
-      isLoading: isLoadingPublizon,
-      isError: isErrorPublizon
+    digital: {
+      loans: mappedLoansDigital,
+      overdue: loansOverdueDigital,
+      soonOverdue: loansSoonOverdueDigital,
+      farFromOverdue: loansFarFromOverdueDigital,
+      isLoading: isLoadingDigital,
+      isError: isErrorDigital
     }
   };
 };
