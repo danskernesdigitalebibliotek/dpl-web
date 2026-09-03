@@ -8,6 +8,19 @@ import type {
   ReaderSignInToken,
 } from "../../src/types"
 import {
+  getAcceptReservationOfferForAuthenticatedUserUrl,
+  getCanLoanForAuthenticatedUserUrl,
+  getCreateReservationForAuthenticatedUserUrl,
+  getCreateSignInTokenForAuthenticatedUserUrl,
+  getDeleteReservationForAuthenticatedUserUrl,
+  getGetLoanQuotasForAuthenticatedUserUrl,
+  getGetLoansForAuthenticatedUserUrl,
+  getGetMetadataByMaterialIdUrl,
+  getGetReservationsForAuthenticatedUserUrl,
+  getGetSupportIdForAuthenticatedUserUrl,
+  getRequestLoanForAuthenticatedUserUrl,
+} from "./generated/biblio"
+import {
   parseAndMapLoanDecision,
   parseAndMapLoanRequestResult,
 } from "./mappers/loan-decision.mapper"
@@ -29,8 +42,9 @@ type PageParams = {
 
 type RequestOptions = {
   method: "GET" | "POST" | "DELETE"
+  // Path and query as the generated get*Url helpers produce them, so the
+  // routes are spelled once, in the OpenAPI contract.
   path: string
-  query?: Record<string, string | number | boolean | undefined>
   body?: unknown
   // Return undefined instead of throwing on a 404 response.
   allowNotFound?: boolean
@@ -46,15 +60,9 @@ type RequestOptions = {
 // checklist (favorites) and batch loan status.
 export function createBiblioClient(config: BiblioConfig) {
   const request = async (options: RequestOptions): Promise<unknown> => {
-    const { method, path, query, body, allowNotFound } = options
+    const { method, path, body, allowNotFound } = options
 
-    const queryEntries = Object.entries(query ?? {}).filter(
-      (entry): entry is [string, string | number | boolean] => entry[1] !== undefined
-    )
-    const queryString = queryEntries.length
-      ? `?${queryEntries.map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join("&")}`
-      : ""
-    const url = `${config.baseUrl}${path}${queryString}`
+    const url = `${config.baseUrl}${path}`
 
     const authHeader = await config.getAuthHeader()
     const response = await fetch(url, {
@@ -85,7 +93,8 @@ export function createBiblioClient(config: BiblioConfig) {
     getMetadata: async (isbn: string): Promise<DigitalMaterial | undefined> => {
       const raw = await request({
         method: "GET",
-        path: `/v1/metadata/${encodeURIComponent(isbn)}`,
+        // The generated helpers interpolate path parameters as they are.
+        path: getGetMetadataByMaterialIdUrl(encodeURIComponent(isbn)),
         allowNotFound: true,
       })
       if (raw === undefined) {
@@ -99,8 +108,11 @@ export function createBiblioClient(config: BiblioConfig) {
     ): Promise<{ loans: DigitalLoan[]; nextCursor?: string }> => {
       const raw = await request({
         method: "GET",
-        path: "/v1/loans",
-        query: { active: params?.active, limit: params?.limit, cursor: params?.cursor },
+        path: getGetLoansForAuthenticatedUserUrl({
+          active: params?.active,
+          limit: params?.limit,
+          cursor: params?.cursor,
+        }),
       })
       return parseAndMapLoans(raw)
     },
@@ -118,8 +130,7 @@ export function createBiblioClient(config: BiblioConfig) {
     ): Promise<LoanDecision | undefined> => {
       const raw = await request({
         method: "GET",
-        path: "/v1/loans/can-loan",
-        query: { material_id: materialId },
+        path: getCanLoanForAuthenticatedUserUrl({ material_id: materialId }),
         allowNotFound: options?.allowNotFound,
       })
       if (raw === undefined) {
@@ -131,7 +142,7 @@ export function createBiblioClient(config: BiblioConfig) {
     createLoan: async (materialId: string): Promise<LoanRequestResult> => {
       const raw = await request({
         method: "POST",
-        path: "/v1/loans",
+        path: getRequestLoanForAuthenticatedUserUrl(),
         body: { material_id: materialId },
       })
       return parseAndMapLoanRequestResult(raw)
@@ -142,8 +153,10 @@ export function createBiblioClient(config: BiblioConfig) {
     ): Promise<{ reservations: DigitalReservation[]; nextCursor?: string }> => {
       const raw = await request({
         method: "GET",
-        path: "/v1/reservations",
-        query: { limit: params?.limit, cursor: params?.cursor },
+        path: getGetReservationsForAuthenticatedUserUrl({
+          limit: params?.limit,
+          cursor: params?.cursor,
+        }),
       })
       return parseAndMapReservations(raw)
     },
@@ -151,7 +164,7 @@ export function createBiblioClient(config: BiblioConfig) {
     createReservation: async (materialId: string): Promise<LoanRequestResult> => {
       const raw = await request({
         method: "POST",
-        path: "/v1/reservations",
+        path: getCreateReservationForAuthenticatedUserUrl(),
         body: { material_id: materialId },
       })
       return parseAndMapLoanRequestResult(raw)
@@ -160,7 +173,7 @@ export function createBiblioClient(config: BiblioConfig) {
     deleteReservation: async (reservationId: string): Promise<boolean> => {
       const raw = await request({
         method: "DELETE",
-        path: `/v1/reservations/${encodeURIComponent(reservationId)}`,
+        path: getDeleteReservationForAuthenticatedUserUrl(encodeURIComponent(reservationId)),
       })
       return parseDeleteReservation(raw)
     },
@@ -171,7 +184,7 @@ export function createBiblioClient(config: BiblioConfig) {
     ): Promise<{ success: boolean; loanId?: string }> => {
       const raw = await request({
         method: "POST",
-        path: "/v1/reservations/accept-offer",
+        path: getAcceptReservationOfferForAuthenticatedUserUrl(),
         body: { offer_id: offerId },
       })
       return parseAndMapAcceptReservationOffer(raw)
@@ -180,21 +193,24 @@ export function createBiblioClient(config: BiblioConfig) {
     // Loan quotas per organization - the equivalent of the quota part of
     // Publizon's library profile.
     getLoanQuotas: async (): Promise<DigitalLoanQuota[]> => {
-      const raw = await request({ method: "GET", path: "/v1/users/get_loan_quotas" })
+      const raw = await request({ method: "GET", path: getGetLoanQuotasForAuthenticatedUserUrl() })
       return parseAndMapLoanQuotas(raw)
     },
 
     // Stable identifier the user can hand to support - the equivalent of
     // Publizon's friendly card number.
     getSupportId: async (): Promise<string> => {
-      const raw = await request({ method: "GET", path: "/v1/users/get_support_id" })
+      const raw = await request({ method: "GET", path: getGetSupportIdForAuthenticatedUserUrl() })
       return parseAndMapSupportId(raw)
     },
 
     // Custom token for the WeDoBooks SDK's users.signIn() used by the
     // reader/player.
     createSignInToken: async (): Promise<ReaderSignInToken> => {
-      const raw = await request({ method: "POST", path: "/v1/auth/create-sign-in-token" })
+      const raw = await request({
+        method: "POST",
+        path: getCreateSignInTokenForAuthenticatedUserUrl(),
+      })
       return parseAndMapSignInToken(raw)
     },
   }
