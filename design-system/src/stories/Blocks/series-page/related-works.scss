@@ -4,11 +4,11 @@
 // .keen-slider/.keen-slider__slide classes referenced here come from that
 // library's stylesheet.
 
-// Slides have a fixed width - wide screens show more of them - and the cover
-// area a fixed height, so every card in a row lines up top and bottom no
-// matter the cover proportions and title length.
-$_related-works-slide-width: 250px;
-$_related-works-cover-height: 240px;
+// Slides have a fixed width - wide screens simply show more of them. The
+// width matches a MaterialGrid column (its four-column grid inside the large
+// layout container), since the cards are the same recommended-material
+// components: MaterialGrid's look, in one long line.
+$_related-works-slide-width: calc($layout__max-width--large / 4);
 
 .related-works {
   // Free-standing ribbon: clear of the member list above and of the page
@@ -88,50 +88,6 @@ $_related-works-cover-height: 240px;
     background: rgba($color__global-primary, 0.15);
     border-color: currentcolor;
   }
-}
-
-.related-works__card {
-  // Fill the slide so every border box in the row is equally tall,
-  // regardless of cover height and title length.
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: $s-md;
-  text-decoration: none;
-  color: inherit;
-  text-align: left;
-  border: 1px solid $color__global-grey;
-}
-
-.related-works__cover {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  margin-bottom: $s-lg;
-
-  // Fixed cover area: tall covers cap out here, short ones hang from the
-  // same bottom edge, so the text block starts at one shared line.
-  height: $_related-works-cover-height;
-
-  // The shadow itself comes from the cover's own shadow modifier
-  // (cover__img--shadow-*): a drop-shadow filter that follows the visible
-  // image, where a box-shadow here would outline the letterboxed element box
-  // around covers smaller than the slot.
-  img {
-    max-height: 100%;
-    width: auto;
-  }
-}
-
-.related-works__title {
-  // Single line; long titles ellipsize rather than wrap.
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.related-works__series-label {
-  margin-top: $s-sm;
 }
 
 .related-works__loading {

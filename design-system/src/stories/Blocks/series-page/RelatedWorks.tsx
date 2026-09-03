@@ -1,13 +1,13 @@
 import { FC, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet";
-import Cover from "../../Library/cover/Cover";
+import { RecommendedMaterial } from "../../Library/recommended-material/RecommendedMaterial";
 
 export type RelatedWorkItem = {
   title: string;
   href: string;
   coverSrc: string;
   // E.g. "Del 1 i serien Vildheks"; only works that open one of the author's
-  // series carry one.
+  // series carry one. Rendered on the card's subtitle line.
   seriesLabel?: string;
 };
 
@@ -100,26 +100,21 @@ export const RelatedWorks = ({ heading, items }: RelatedWorksProps) => {
             </div>
           </div>
           <div ref={trackRef} className="keen-slider">
+            {/*
+              The cards are the same recommended-material markup MaterialGrid
+              items use - in dpl-react they are composed from the static
+              components with a series-opener label on the subtitle line.
+            */}
             {items.map((item, index) => (
               <div className="keen-slider__slide" key={index}>
-                <a href={item.href} className="related-works__card">
-                  <div className="related-works__cover">
-                    <Cover
-                      src={item.coverSrc}
-                      size="medium"
-                      animate={false}
-                      shadow="medium"
-                    />
-                  </div>
-                  <p className="related-works__title text-body-small-medium">
-                    {item.title}
-                  </p>
-                  {item.seriesLabel && (
-                    <p className="related-works__series-label text-small-caption">
-                      {item.seriesLabel}
-                    </p>
-                  )}
-                </a>
+                <RecommendedMaterial
+                  description={item.title}
+                  author={item.seriesLabel}
+                  src={item.coverSrc}
+                  alt=""
+                  materialUrl={item.href}
+                  partOfGrid
+                />
               </div>
             ))}
           </div>
