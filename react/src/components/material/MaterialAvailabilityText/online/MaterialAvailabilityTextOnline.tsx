@@ -63,8 +63,7 @@ const MaterialAvailabilityTextOnline: React.FC<
     enabled: !isUserAnonymous && viaBiblioAdapter
   });
 
-  // Only read for its licence - see isCostFree below. A tolerated unknown
-  // material resolves to null, which the falsy checks handle.
+  // Only read for its licence - see isCostFree below.
   const { data: loanDecision } = useDigitalLoanDecision(identifier, {
     enabled: Boolean(identifier) && viaBiblioAdapter
   });

@@ -108,12 +108,9 @@ export function createBiblioClient(config: BiblioConfig) {
     },
 
     // Whether the user can loan the material right now - the equivalent of
-    // Publizon's loan status for an identifier.
-    //
-    // TEMPORARY, with the toleration flag it serves: the adapter answers 404
-    // for a material it does not know, and with allowNotFound that becomes
-    // undefined - "Biblio has no answer" - for callers that want to render
-    // the material as unavailable rather than fail on it.
+    // Publizon's loan status for an identifier. The adapter answers 404 for a
+    // material it does not know; with allowNotFound that is `undefined`, as
+    // for getMetadata.
     getLoanDecision: async (
       materialId: string,
       options?: { allowNotFound?: boolean }

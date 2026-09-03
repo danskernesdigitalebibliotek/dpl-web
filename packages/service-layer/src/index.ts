@@ -64,6 +64,7 @@ export {
   isMaterialLoanable,
   isMaterialReservable,
   isRequestGranted,
+  isUnknownMaterial,
 } from "./digital-loan-decision"
 export { isCostFreeLoan } from "./digital-loans"
 export { getDigitalLoanQuota } from "./digital-quotas"

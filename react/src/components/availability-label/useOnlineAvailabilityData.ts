@@ -73,14 +73,10 @@ const useOnlineAvailabilityData = ({
   // Both derivations are gated on who was asked, not just on the query: an
   // answer sitting in the cache from a provider that may no longer answer
   // must be ignored. Within a gate, null means "not answered yet".
-  const isAvailableViaServiceLayer = askServiceLayer
-    ? // null is the tolerated 404: the service layer is THE lending provider,
-      // so a material it does not know cannot be lent - unavailable, no
-      // fallback. undefined is simply not answered yet.
-      loanDecision === null
-      ? false
-      : ((loanDecision && isMaterialAvailable(loanDecision.status)) ?? null)
-    : null;
+  const isAvailableViaServiceLayer =
+    askServiceLayer && loanDecision
+      ? isMaterialAvailable(loanDecision.status)
+      : null;
 
   const isAvailableViaPublizon =
     askPublizon && dataPublizon?.loanStatus

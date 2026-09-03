@@ -579,11 +579,14 @@ describe("useOnlineAvailabilityData tests", () => {
 
     describe("TEMPORARY: materials the adapter does not know", () => {
       // Remove with ServiceLayerConfig.tolerateUnknownMaterials. The service
-      // layer decides whether a 404 is tolerated; this hook only reads the answer.
+      // layer turns the tolerated 404 into an ordinary unavailable decision;
+      // this hook reads it like any other.
       it("Counts a tolerated unknown material as unavailable", () => {
-        // The tolerated 404: the query resolved, and Biblio has no answer.
         mockedLoanDecision.mockReturnValue({
-          data: null,
+          data: {
+            status: "unavailable",
+            unavailableReason: "unknown_material"
+          },
           isLoading: false
         } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 

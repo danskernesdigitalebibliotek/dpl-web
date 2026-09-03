@@ -1,6 +1,7 @@
 import {
   isMaterialLoanable,
   isMaterialReservable,
+  isUnknownMaterial,
   useDigitalLoanDecision,
   useDigitalLoans,
   useDigitalReservations
@@ -35,9 +36,6 @@ const useDigitalReaderPlayerState = ({
   // same deal Publizon gets.
   const isActiveForUser = isActive && !isUserAnonymous;
 
-  // A tolerated unknown material resolves to null - see ServiceLayerConfig's
-  // TEMPORARY toleration setting - and null offers nothing: exactly what a
-  // material the provider cannot lend should get.
   const { data: loanDecision, isLoading: isLoadingLoanDecision } =
     useDigitalLoanDecision(identifier, {
       enabled: isActiveForUser
@@ -92,10 +90,7 @@ const useDigitalReaderPlayerState = ({
       ? mapDigitalReservationToReservationType([queuedReservation])[0]
       : null,
     offerId,
-    // A tolerated 404 (null) means the adapter does not know the material at
-    // all - then it has no sample either, and offering one would open an
-    // empty reader or player.
-    canBeSampled: loanDecision !== null,
+    canBeSampled: !isUnknownMaterial(loanDecision),
     // Disabled queries never report loading, so this only counts the
     // questions actually asked.
     isLoading: isLoadingLoanDecision || isLoadingLoans || isLoadingReservations

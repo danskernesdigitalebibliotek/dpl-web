@@ -14,13 +14,12 @@ import { type DigitalQueryOptions, useDigitalQuery } from "./internal"
  *
  * Patron-scoped: the adapter answers 403 to a library token, which with
  * errors surfaced takes the whole page down, so the hook refuses to ask
- * without a patron. An unknown material resolves to null when the config
- * tolerates it - see ServiceLayerConfig.
+ * without a patron.
  */
 export const useDigitalLoanDecision = (
   materialId: string | null,
-  options?: DigitalQueryOptions<LoanDecision | null, ReturnType<typeof digitalLoanDecisionQueryKey>>
-): UseQueryResult<LoanDecision | null, Error> =>
+  options?: DigitalQueryOptions<LoanDecision, ReturnType<typeof digitalLoanDecisionQueryKey>>
+): UseQueryResult<LoanDecision, Error> =>
   useDigitalQuery({
     query: config => digitalLoanDecisionQuery(config, materialId),
     options,

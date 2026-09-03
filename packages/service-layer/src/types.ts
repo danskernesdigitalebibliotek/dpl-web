@@ -11,12 +11,10 @@ export type ServiceLayerConfig = {
   // Unilogin and anonymous) never fire doomed 401 requests. Public data
   // (material availability) ignores it. Defaults to true when omitted.
   isPatronAuthenticated?: boolean
-  // TEMPORARY, with the toleration setting it carries: whether a material the
-  // adapter does not know may resolve to "cannot be lent" instead of an
-  // error. Answered here rather than per call so no call site can forget it
-  // — the same reasoning as isPatronAuthenticated. A resolver like the
-  // others, because the host's setting lands after this object is built.
-  // Omitted means the host does not tolerate them.
+  // TEMPORARY: whether a material the adapter does not know is answered as
+  // unavailable instead of an error - see getDigitalLoanDecision, the one
+  // place that acts on it. A resolver like the others, because the host's
+  // setting lands after this object is built. Omitted means no.
   tolerateUnknownMaterials?: () => boolean
 }
 

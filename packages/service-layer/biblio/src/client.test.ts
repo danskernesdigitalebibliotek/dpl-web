@@ -202,7 +202,6 @@ describe("createBiblioClient.getLoanDecision", () => {
     await expect(buildClient().getLoanDecision("9788758855752")).rejects.toThrow("404")
   })
 
-  // TEMPORARY, with the toleration flag the option serves.
   it("resolves an unknown material to undefined when told to tolerate it", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(
       mockJsonResponse({ message: "Material not found: 9788758855752" }, 404)

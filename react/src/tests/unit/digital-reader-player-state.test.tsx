@@ -216,9 +216,9 @@ describe("useDigitalReaderPlayerState", () => {
     });
 
     it("Offers no sample for a material the adapter does not know", () => {
-      // The tolerated 404: the query resolved, and the adapter has no answer.
+      // The tolerated 404, as the service layer answers it.
       vi.mocked(useDigitalLoanDecision).mockReturnValue({
-        data: null,
+        data: { status: "unavailable", unavailableReason: "unknown_material" },
         isLoading: false
       } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
