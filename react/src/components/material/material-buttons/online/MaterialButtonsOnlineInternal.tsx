@@ -31,6 +31,7 @@ import { statistics } from "../../../../core/statistics/statistics";
 import PlayerModal from "../../player-modal/PlayerModal";
 import PlayerButton from "../../../reader-player/PlayerButton";
 import MaterialButtonLoading from "../generic/MaterialButtonLoading";
+import MaterialButtonDisabled from "../generic/MaterialButtonDisabled";
 import { useModalIdsToCloseForReservation } from "../../../../core/utils/useModalIdsToCloseForReservation";
 
 type MaterialButtonsOnlineInternalType = {
@@ -177,25 +178,17 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
-    return renderUnavailableButton(`${dataCy}-reader`);
+    // The providers have answered and nothing applies: the material can
+    // neither be opened nor acquired right now. A disabled button says so -
+    // a spinner would promise an answer that has already arrived.
+    return (
+      <MaterialButtonDisabled
+        dataCy={`${dataCy}-reader`}
+        label={loanLabel}
+        size={size}
+      />
+    );
   };
-
-  // The providers have answered and nothing applies: the material can
-  // neither be opened nor acquired right now. A disabled button says so -
-  // the spinner this used to fall back to promised an answer that had
-  // already arrived.
-  const renderUnavailableButton = (buttonDataCy: string) => (
-    <Button
-      dataCy={buttonDataCy}
-      label={loanLabel}
-      buttonType="none"
-      variant="filled"
-      size={size || "large"}
-      onClick={() => {}}
-      disabled
-      collapsible={false}
-    />
-  );
 
   // The disabled stand-in both teasers show while sampling is unavailable -
   // identical apart from which teaser it stands in for.
@@ -308,7 +301,16 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
-    return renderUnavailableButton(`${dataCy}-player`);
+    // The providers have answered and nothing applies: the material can
+    // neither be opened nor acquired right now. A disabled button says so -
+    // a spinner would promise an answer that has already arrived.
+    return (
+      <MaterialButtonDisabled
+        dataCy={`${dataCy}-player`}
+        label={loanLabel}
+        size={size}
+      />
+    );
   };
 
   const renderPlayerTeaserButton = () => {
