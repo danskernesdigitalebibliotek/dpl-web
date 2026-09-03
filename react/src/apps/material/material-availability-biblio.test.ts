@@ -9,6 +9,7 @@ import {
   givenBiblioCannotAnswerCanLoan
 } from "../../../cypress/intercepts/biblio/biblio";
 import { stubMaterialPageBackends } from "../../../cypress/intercepts/material-page";
+import { ContentLoanStatusEnum } from "../../core/publizon/model";
 
 /**
  * The availability label on the material page during the transition.
@@ -22,7 +23,8 @@ import { stubMaterialPageBackends } from "../../../cypress/intercepts/material-p
 // Publizon calls the e-book available (status 4, the shared default). The
 // tests below expect the opposite, so a label that says otherwise can only
 // have come from Biblio - and one that agrees with Publizon proves nothing.
-const stubBackends = () => stubMaterialPageBackends();
+const stubBackends = (publizonLoanStatus?: ContentLoanStatusEnum) =>
+  stubMaterialPageBackends(publizonLoanStatus);
 
 const ebookLabel = (material: MaterialPage) =>
   material.elements
@@ -59,10 +61,10 @@ describe("Material page - online availability through the Biblio adapter", () =>
   // "Keeps Publizon from answering at all once Biblio is the provider" covers
   // the availability hook itself, where the two can be told apart.
 
-  // TEMPORARY, with the gate it covers: today a visitor who is not signed in
-  // gets Publizon's answer, because Biblio has no way to give one.
-  it("Leaves Biblio alone when nobody is signed in", () => {
-    // Given: Biblio would say otherwise if it were asked
+  it("Asks nobody when nobody is signed in, and shows the material as available", () => {
+    // Given: both providers would call it unavailable if they were asked -
+    // Publizon's shared default is overridden below to say so.
+    stubBackends(ContentLoanStatusEnum.NUMBER_5);
     givenBiblioCanLoan(CanLoanResponseType.reservable);
     cy.window().then((win) => win.sessionStorage.removeItem(TOKEN_USER_KEY));
 
@@ -70,12 +72,13 @@ describe("Material page - online availability through the Biblio adapter", () =>
     const material = new MaterialPage(materialStory.withBiblioAdapter);
     material.visit([]);
 
-    // Then: Publizon answers instead, and the page survives - asking Biblio
-    // would be a 403 that takes the whole material page down.
-    cy.wait("@publizonLoanStatus");
+    // Then: the label falls back to the default for online materials. Biblio
+    // cannot be asked without a user - a 403 would take the page down - and
+    // Publizon must not stand in for it.
     ebookLabel(material).should("contain", "Available");
 
     cy.get("@biblioCanLoan.all").should("have.length", 0);
+    cy.get("@publizonLoanStatus.all").should("have.length", 0);
   });
 
   // No flag-off test here. Whether the label asks Biblio at all is decided in

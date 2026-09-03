@@ -505,20 +505,28 @@ describe("useOnlineAvailabilityData tests", () => {
       });
     });
 
-    it("Leaves Biblio alone for an anonymous visitor, so Publizon answers", () => {
-      // TEMPORARY with the fallback: can-loan is patron-scoped, so the
-      // service layer cannot be asked without a user yet.
+    it("Asks nobody for an anonymous visitor, who sees the material as available", () => {
+      // can-loan is patron-scoped, so Biblio cannot be asked without a user -
+      // and Publizon must not stand in for it, not even then. Online
+      // materials default to available while nobody has answered.
       mockedIsAnonymous.mockReturnValue(true);
 
-      render();
+      const { result } = render();
 
       expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
         enabled: false
       });
       expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(
         expect.anything(),
-        expect.objectContaining({ query: { enabled: true } })
+        expect.objectContaining({ query: { enabled: false } })
       );
+      expect(useGetV1LoanstatusIdentifier).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          query: expect.objectContaining({ enabled: false })
+        })
+      );
+      expect(result.current.isAvailable).toBe(true);
     });
 
     it("Lets Biblio dictate the availability", () => {
