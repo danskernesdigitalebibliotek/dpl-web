@@ -1,6 +1,8 @@
 node_modules
 # Task checksum cache
 .task/
+.devenv
+.direnv
 .env
 .envrc
 .pnpm-store
