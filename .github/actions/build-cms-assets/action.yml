@@ -19,6 +19,8 @@ runs:
       with:
         token: ${{ inputs.token }}
         wedobooks-token: ${{ inputs.wedobooks-token }}
+        # The React build below inlines the wrapper's dist.
+        build-wedobooks: 'true'
     - name: Install go-task
       uses: arduino/setup-task@v2
       with:

@@ -39,7 +39,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
           # Design-system-only job: nothing here imports the wrapper.
-          build-wedobooks: 'false'
 
       - run: pnpm run css:build
 

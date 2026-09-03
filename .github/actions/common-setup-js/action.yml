@@ -14,12 +14,13 @@ inputs:
   build-wedobooks:
     description: >-
       Whether to build the WeDoBooks wrapper after installing. Unlike the
-      token, the build is only needed by jobs that typecheck or build code
-      importing the wrapper. Defaults to true so a job cannot silently miss a
-      dist it needs; jobs that never compile TypeScript opt out to skip
-      bundling the SDK.
+      token, the build is only needed by the jobs that typecheck, lint or
+      build react/ - the only package importing the wrapper. Everything else
+      (go/, service-layer, design-system, codegen, translations, and the CMS
+      jobs whose site is built inside docker images) never reads the dist, so
+      it is off by default and those jobs opt in explicitly.
     required: false
-    default: 'true'
+    default: 'false'
 runs:
   using: composite
   steps:

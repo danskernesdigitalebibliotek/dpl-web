@@ -27,7 +27,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
           # Lint-only job: nothing here compiles code that imports the wrapper.
-          build-wedobooks: 'false'
       - name: Run css:lint
         run: pnpm run css:lint
         working-directory: design-system
@@ -42,7 +41,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
           # Lint-only job: nothing here compiles code that imports the wrapper.
-          build-wedobooks: 'false'
       - name: Run js:lint
         run: pnpm run js:lint
         working-directory: design-system
@@ -58,7 +56,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
           # Lint-only job: nothing here compiles code that imports the wrapper.
-          build-wedobooks: 'false'
       - name: Run markdown:lint
         run: pnpm run markdown:lint
         working-directory: design-system
