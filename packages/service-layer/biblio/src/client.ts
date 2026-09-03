@@ -1,13 +1,16 @@
 import type {
-  BiblioCanLoan,
-  BiblioLoan,
-  BiblioLoanQuota,
-  BiblioLoanResult,
-  BiblioMaterial,
-  BiblioReservation,
-  BiblioSignInToken,
+  DigitalLoan,
+  DigitalLoanQuota,
+  DigitalMaterial,
+  DigitalReservation,
+  LoanDecision,
+  LoanRequestResult,
+  ReaderSignInToken,
 } from "../../src/types"
-import { parseAndMapCanLoan, parseAndMapLoanResult } from "./mappers/can-loan.mapper"
+import {
+  parseAndMapLoanDecision,
+  parseAndMapLoanRequestResult,
+} from "./mappers/loan-decision.mapper"
 import { parseAndMapLoans } from "./mappers/loan.mapper"
 import { parseAndMapMetadata } from "./mappers/metadata.mapper"
 import { parseAndMapLoanQuotas } from "./mappers/quotas.mapper"
@@ -79,7 +82,7 @@ export function createBiblioClient(config: BiblioConfig) {
     // means the material is unknown to Biblio, which we surface as
     // `undefined` rather than an error so callers can use it as a provider
     // probe.
-    getMetadata: async (isbn: string): Promise<BiblioMaterial | undefined> => {
+    getMetadata: async (isbn: string): Promise<DigitalMaterial | undefined> => {
       const raw = await request({
         method: "GET",
         path: `/v1/metadata/${encodeURIComponent(isbn)}`,
@@ -93,7 +96,7 @@ export function createBiblioClient(config: BiblioConfig) {
 
     getLoans: async (
       params?: PageParams & { active?: boolean }
-    ): Promise<{ loans: BiblioLoan[]; nextCursor?: string }> => {
+    ): Promise<{ loans: DigitalLoan[]; nextCursor?: string }> => {
       const raw = await request({
         method: "GET",
         path: "/v1/loans",
@@ -109,10 +112,10 @@ export function createBiblioClient(config: BiblioConfig) {
     // for a material it does not know, and with allowNotFound that becomes
     // undefined - "Biblio has no answer" - for callers that want to render
     // the material as unavailable rather than fail on it.
-    canLoan: async (
+    getLoanDecision: async (
       materialId: string,
       options?: { allowNotFound?: boolean }
-    ): Promise<BiblioCanLoan | undefined> => {
+    ): Promise<LoanDecision | undefined> => {
       const raw = await request({
         method: "GET",
         path: "/v1/loans/can-loan",
@@ -122,21 +125,21 @@ export function createBiblioClient(config: BiblioConfig) {
       if (raw === undefined) {
         return undefined
       }
-      return parseAndMapCanLoan(raw)
+      return parseAndMapLoanDecision(raw)
     },
 
-    createLoan: async (materialId: string): Promise<BiblioLoanResult> => {
+    createLoan: async (materialId: string): Promise<LoanRequestResult> => {
       const raw = await request({
         method: "POST",
         path: "/v1/loans",
         body: { material_id: materialId },
       })
-      return parseAndMapLoanResult(raw)
+      return parseAndMapLoanRequestResult(raw)
     },
 
     getReservations: async (
       params?: PageParams
-    ): Promise<{ reservations: BiblioReservation[]; nextCursor?: string }> => {
+    ): Promise<{ reservations: DigitalReservation[]; nextCursor?: string }> => {
       const raw = await request({
         method: "GET",
         path: "/v1/reservations",
@@ -145,13 +148,13 @@ export function createBiblioClient(config: BiblioConfig) {
       return parseAndMapReservations(raw)
     },
 
-    createReservation: async (materialId: string): Promise<BiblioLoanResult> => {
+    createReservation: async (materialId: string): Promise<LoanRequestResult> => {
       const raw = await request({
         method: "POST",
         path: "/v1/reservations",
         body: { material_id: materialId },
       })
-      return parseAndMapLoanResult(raw)
+      return parseAndMapLoanRequestResult(raw)
     },
 
     deleteReservation: async (reservationId: string): Promise<boolean> => {
@@ -176,7 +179,7 @@ export function createBiblioClient(config: BiblioConfig) {
 
     // Loan quotas per organization - the equivalent of the quota part of
     // Publizon's library profile.
-    getLoanQuotas: async (): Promise<BiblioLoanQuota[]> => {
+    getLoanQuotas: async (): Promise<DigitalLoanQuota[]> => {
       const raw = await request({ method: "GET", path: "/v1/users/get_loan_quotas" })
       return parseAndMapLoanQuotas(raw)
     },
@@ -190,7 +193,7 @@ export function createBiblioClient(config: BiblioConfig) {
 
     // Custom token for the WeDoBooks SDK's users.signIn() used by the
     // reader/player.
-    createSignInToken: async (): Promise<BiblioSignInToken> => {
+    createSignInToken: async (): Promise<ReaderSignInToken> => {
       const raw = await request({ method: "POST", path: "/v1/auth/create-sign-in-token" })
       return parseAndMapSignInToken(raw)
     },

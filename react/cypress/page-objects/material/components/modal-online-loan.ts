@@ -16,7 +16,6 @@ export class OnlineLoanModalComponent extends ComponentObject {
   constructor() {
     super(() => cy.get(onlineLoanModalSelector));
     this.addElements = {
-      title: () => this.container().find(".text-header-h2"),
       // "You have borrowed X of Y this month", rendered by
       // MaterialAvailabilityTextParagraph.
       quotaText: () =>

@@ -1,5 +1,8 @@
 import * as React from "react";
-import { getAllIsbns } from "../../../apps/material/helper";
+import {
+  getLoanableManifestation,
+  getManifestationDigitalIdentifier
+} from "../../../apps/material/helper";
 import { AccessTypeCodeEnum } from "../../../core/dbc-gateway/generated/graphql";
 import {
   getAllPids,
@@ -20,7 +23,6 @@ interface Props {
 const MaterialAvailabilityText: React.FC<Props> = ({ manifestations }) => {
   const t = useText();
   const materialType = getMaterialType(manifestations);
-  const isbns = getAllIsbns(manifestations);
   const { materialIsReservableFromAnotherLibrary } =
     useReservableFromAnotherLibrary(manifestations);
 
@@ -38,12 +40,25 @@ const MaterialAvailabilityText: React.FC<Props> = ({ manifestations }) => {
 
   if (
     hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) &&
-    isbns.length > 0 &&
     materialType
   ) {
+    // The same identifier the loan buttons act on, so the availability text
+    // and the buttons ask the providers about the same edition - and share
+    // one request. A loanable pick without any identifier of its own renders
+    // no text: the buttons cannot lend it either, and describing some other
+    // edition's availability here would promise what the buttons cannot
+    // deliver - or, with the adapter on, fire a can-loan request keyed to an
+    // edition it may not know.
+    const loanableManifestation = getLoanableManifestation(manifestations);
+    const identifier = loanableManifestation
+      ? getManifestationDigitalIdentifier(loanableManifestation)
+      : null;
+    if (!identifier) {
+      return null;
+    }
     return (
       <MaterialAvailabilityTextOnline
-        isbns={isbns}
+        identifier={identifier}
         materialType={materialType}
       />
     );

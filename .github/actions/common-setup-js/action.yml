@@ -11,6 +11,15 @@ inputs:
       workspace from the root, so the package is resolved even by jobs that
       never touch it.
     required: false
+  build-wedobooks:
+    description: >-
+      Whether to build the WeDoBooks wrapper after installing. Unlike the
+      token, the build is only needed by jobs that typecheck or build code
+      importing the wrapper. Defaults to true so a job cannot silently miss a
+      dist it needs; jobs that never compile TypeScript opt out to skip
+      bundling the SDK.
+    required: false
+    default: 'true'
 runs:
   using: composite
   steps:
@@ -47,6 +56,6 @@ runs:
     # instead of sources - the SDK has to be pre-bundled for webpack to accept
     # it. Nothing that imports it can typecheck or build until its dist exists.
     - name: Build the WeDoBooks wrapper
-      if: inputs.wedobooks-token != ''
+      if: inputs.wedobooks-token != '' && inputs.build-wedobooks == 'true'
       shell: bash
       run: pnpm --filter @danskernesdigitalebibliotek/dpl-wedobooks build

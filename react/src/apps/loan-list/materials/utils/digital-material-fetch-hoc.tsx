@@ -1,16 +1,15 @@
-import React, { useEffect, useState, ComponentType, FC } from "react";
+import React, { ComponentType, FC } from "react";
 import { useGetV1ProductsIdentifier } from "../../../../core/publizon/publizon";
-import { BasicDetailsType } from "../../../../core/utils/types/basic-details-type";
 import { MaterialProps } from "./material-fetch-hoc";
 import {
-  mapBiblioMaterialToBasicDetailsType,
+  mapDigitalMaterialToBasicDetailsType,
   mapProductToBasicDetailsType
 } from "../../../../core/utils/helpers/list-mapper";
 import { ListType } from "../../../../core/utils/types/list-type";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
-import { useBiblioMaterial } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalMaterial } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
-  isBiblioReservation,
+  hasDigitalReservationId,
   isReservationType
 } from "../../../../core/utils/types/reservation-type";
 
@@ -32,54 +31,41 @@ const fetchDigitalMaterial =
     }
 
     if (item.identifier) {
-      const [digitalMaterial, setDigitalMaterial] =
-        useState<BasicDetailsType>();
-      const useBiblio = useBiblioAdapter();
+      const viaBiblioAdapter = useBiblioAdapter();
 
-      // A Biblio loan carries its own catalogue fields; nothing to look up.
+      // A service layer loan carries its own catalogue fields; nothing to
+      // look up.
       const hasOwnDetails = Boolean(item.details);
 
       // Who describes a material is read off the item, never discovered by
       // asking. A loan from before the switch is Publizon's - the only reason
       // Publizon is still asked during the transition.
-      const isBiblioItem = isReservationType(item) && isBiblioReservation(item);
-      const isProvidedByBiblio = useBiblio && !hasOwnDetails && isBiblioItem;
+      const isDigitalItem =
+        isReservationType(item) && hasDigitalReservationId(item);
+      const isProvidedByServiceLayer =
+        viaBiblioAdapter && !hasOwnDetails && isDigitalItem;
 
-      const { data: biblioMaterial, isLoading: isLoadingBiblio } =
-        useBiblioMaterial(isProvidedByBiblio ? item.identifier : null);
+      const { data: serviceLayerMaterial, isLoading: isLoadingServiceLayer } =
+        useDigitalMaterial(isProvidedByServiceLayer ? item.identifier : null);
 
-      const {
-        data: productsData,
-        isSuccess: isSuccessDigital,
-        isLoading: isLoadingPublizon
-      } = useGetV1ProductsIdentifier(item.identifier, {
-        query: {
-          enabled: !!item.identifier && !hasOwnDetails && !isProvidedByBiblio
-        }
-      });
+      const { data: productsData, isLoading: isLoadingPublizon } =
+        useGetV1ProductsIdentifier(item.identifier, {
+          query: { enabled: !hasOwnDetails && !isProvidedByServiceLayer }
+        });
 
-      useEffect(() => {
-        if (item.details) {
-          setDigitalMaterial(item.details);
-          return;
-        }
-        if (biblioMaterial) {
-          setDigitalMaterial(
-            mapBiblioMaterialToBasicDetailsType(biblioMaterial)
-          );
-          return;
-        }
-        if (productsData && isSuccessDigital && productsData.product) {
-          setDigitalMaterial(
-            mapProductToBasicDetailsType(productsData.product)
-          );
-        } else {
-          // todo error handling, missing in figma
-        }
-      }, [productsData, isSuccessDigital, biblioMaterial, item.details]);
+      // The description is whatever the most authoritative source has: the
+      // fields the item itself carries, otherwise the provider that was asked.
+      const digitalMaterial =
+        item.details ??
+        (serviceLayerMaterial
+          ? mapDigitalMaterialToBasicDetailsType(serviceLayerMaterial)
+          : null) ??
+        (productsData?.product
+          ? mapProductToBasicDetailsType(productsData.product)
+          : null);
 
       // if the fallback component is provided we can show it while the data is loading
-      if (isLoadingBiblio || isLoadingPublizon)
+      if (isLoadingServiceLayer || isLoadingPublizon)
         return LoadingComponent ? <LoadingComponent /> : null;
 
       if (!digitalMaterial) return null;

@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import type { BiblioLoanQuota } from "../../../src/types"
+import type { DigitalLoanQuota } from "../../../src/types"
 
 const ByMaterialTypeSchema = z.object({
   ebook: z.number(),
@@ -36,7 +36,7 @@ const GetLoanQuotasResponseSchema = z.object({
   ),
 })
 
-export function parseAndMapLoanQuotas(raw: unknown): BiblioLoanQuota[] {
+export function parseAndMapLoanQuotas(raw: unknown): DigitalLoanQuota[] {
   const parsed = GetLoanQuotasResponseSchema.parse(raw)
   return parsed.loan_quotas.map(quota => {
     if (quota.split_on_format) {

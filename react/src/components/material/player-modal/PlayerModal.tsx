@@ -2,18 +2,18 @@ import React, { FC } from "react";
 import { createPortal } from "react-dom";
 import Modal from "../../../core/utils/modal";
 import { useText } from "../../../core/utils/text";
-import Player, { PlayerType } from "../../reader-player/Player";
+import Player, { PublizonPlayerType } from "../../reader-player/PublizonPlayer";
 import { playerModalId } from "./helper";
 
 /**
  * Publizon's audiobook player, in a modal.
  *
  * Publizon-only, and meant to be deleted with the rest of the Publizon
- * integration: a Biblio loan never reaches this modal - its player is a page
- * (see BiblioReaderPlayer), because the WeDoBooks player bar pins itself to
+ * integration: a digital loan never reaches this modal - its player is a page
+ * (see DigitalReaderPlayer), because the SDK's player bar pins itself to
  * the bottom of the viewport and cannot live in a modal.
  */
-const PlayerModal: FC<PlayerType> = ({ identifier, orderId }) => {
+const PlayerModal: FC<PublizonPlayerType> = ({ identifier, orderId }) => {
   const t = useText();
   const id = orderId ?? identifier;
   if (!id) return null;

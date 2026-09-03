@@ -1,10 +1,10 @@
 import { useGetLoansV2 } from "../fbs/fbs";
 import { useGetV1UserLoans } from "../publizon/publizon";
-import { useBiblioLoans } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalLoans } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { calculateRoundedUpDaysUntil } from "./helpers/date";
 import { materialIsOverdue } from "./helpers/general";
 import {
-  mapBiblioLoanToLoanType,
+  mapDigitalLoanToLoanType,
   mapFBSLoanToLoanType,
   mapPublizonLoanToLoanType
 } from "./helpers/list-mapper";
@@ -50,9 +50,9 @@ type Loans = {
 type UseLoansType = {
   all: Loans;
   fbs: Loans;
-  // Publizon and Biblio loans as one list. Which provider a loan came from
-  // does not change how it is rendered, and during the transition a user has
-  // loans from both.
+  // Digital loans as one list, whichever service issued them. Which provider
+  // a loan came from does not change how it is rendered, and during the
+  // transition a user has loans from both.
   digital: Loans;
 };
 
@@ -63,7 +63,7 @@ type UseLoans = () => UseLoansType;
 // divided into three categories: overdue, soon overdue, and far from overdue.
 // The hook is NOT responsible for any sorting of the loans.
 const useLoans: UseLoans = () => {
-  const useBiblio = useBiblioAdapter();
+  const viaBiblioAdapter = useBiblioAdapter();
   const {
     data: loansFbs,
     isLoading: isLoadingFbs,
@@ -75,16 +75,16 @@ const useLoans: UseLoans = () => {
     isError: isErrorPublizon
   } = useGetV1UserLoans();
   const {
-    data: loansBiblio,
-    isLoading: isLoadingBiblio,
-    isError: isErrorBiblio
-  } = useBiblioLoans({ enabled: useBiblio });
+    data: loansServiceLayer,
+    isLoading: isLoadingServiceLayer,
+    isError: isErrorServiceLayer
+  } = useDigitalLoans({ enabled: viaBiblioAdapter });
 
   const threshold = useLoanThresholds();
-  // A disabled query is never loading or in error so the Biblio states only
-  // count when the feature flag has enabled the query.
-  const isLoadingDigital = isLoadingPublizon || isLoadingBiblio;
-  const isErrorDigital = isErrorPublizon || isErrorBiblio;
+  // A disabled query is never loading or in error so the service layer states
+  // only count when the feature flag has enabled the query.
+  const isLoadingDigital = isLoadingPublizon || isLoadingServiceLayer;
+  const isErrorDigital = isErrorPublizon || isErrorServiceLayer;
   const loansIsLoading = isLoadingFbs || isLoadingDigital;
   const loansIsError = isErrorFbs || isErrorDigital;
 
@@ -97,10 +97,13 @@ const useLoans: UseLoans = () => {
         // there are loans without dueDate in the publizon MOCK data
         .filter((item) => item.dueDate)
     : [];
-  const mappedLoansBiblio = loansBiblio?.loans
-    ? mapBiblioLoanToLoanType(loansBiblio.loans)
+  const mappedLoansServiceLayer = loansServiceLayer?.loans
+    ? mapDigitalLoanToLoanType(loansServiceLayer.loans)
     : [];
-  const mappedLoansDigital = [...mappedLoansPublizon, ...mappedLoansBiblio];
+  const mappedLoansDigital = [
+    ...mappedLoansPublizon,
+    ...mappedLoansServiceLayer
+  ];
 
   // Combine all loans from both FBS and the digital materials provider
   const loans = [...mappedLoansFbs, ...mappedLoansDigital];

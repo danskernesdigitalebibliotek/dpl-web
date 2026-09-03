@@ -897,19 +897,15 @@ class DplReactAppsController extends ControllerBase {
     // instead, which knows the loan by its own id. Publizon's reader does not
     // recognise it and vice versa, so they cannot share a parameter.
     $loanid = $request->query->get('loanid');
-    // Which kind of sample an identifier link asks for. A sample has no loan
-    // to read the material type from, so the link carries it.
-    $sampletype = $request->query->get('sampletype');
 
     if (!$identifier && !$orderid && !$loanid) {
       throw new BadRequestHttpException('Either identifier, orderid or loanid must be provided.');
     }
 
     $data = [
-      'identifier' => $identifier ?? NULL,
-      'orderid' => $orderid ?? NULL,
-      'loanid' => $loanid ?? NULL,
-      'sampletype' => $sampletype ?? NULL,
+      'identifier' => $identifier,
+      'orderid' => $orderid,
+      'loanid' => $loanid,
       // Add external API base urls. Publizon's reader is loaded straight from
       // their CDN and talks to no API of ours, but the WeDoBooks one needs the
       // adapter to vouch for the patron before it can open anything.
@@ -923,6 +919,46 @@ class DplReactAppsController extends ControllerBase {
 
     return $app;
 
+  }
+
+  /**
+   * Render the Player React app.
+   *
+   * Audiobooks get their own page: the SDK's player bar pins itself to the
+   * bottom of the viewport and leaves the rest of the page free, unlike the
+   * reader, which owns the whole screen. Only WeDoBooks plays here - Publizon
+   * audiobooks play in a modal on the page the patron came from.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The HTTP request containing query parameters.
+   *
+   * @return mixed[]
+   *   Render array with the Player app block.
+   *
+   * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+   */
+  public function player(Request $request): array {
+    // The WeDoBooks player knows a loan by the loan's own id. An identifier
+    // with no loan behind it is a sample.
+    $loanid = $request->query->get('loanid');
+    $identifier = $request->query->get('identifier');
+
+    if (!$identifier && !$loanid) {
+      throw new BadRequestHttpException('Either identifier or loanid must be provided.');
+    }
+
+    $data = [
+      'identifier' => $identifier,
+      'loanid' => $loanid,
+      // The WeDoBooks player needs the adapter to vouch for the patron
+      // before it can play anything.
+    ] + self::externalApiBaseUrls();
+
+    return [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'player',
+      '#data' => $data,
+    ];
   }
 
 }

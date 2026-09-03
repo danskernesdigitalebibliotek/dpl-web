@@ -1,4 +1,4 @@
-import { TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../../core/token";
+import { TOKEN_USER_KEY } from "../../core/token";
 import {
   MaterialPage,
   materialStory
@@ -8,10 +8,7 @@ import {
   givenBiblioCanLoan,
   givenBiblioCannotAnswerCanLoan
 } from "../../../cypress/intercepts/biblio/biblio";
-import { givenAMaterial } from "../../../cypress/intercepts/fbi/material";
-import { interceptFbsCalls } from "../../../cypress/intercepts/fbs/fbs";
-import { interceptPublizonCalls } from "../../../cypress/intercepts/publizon/interceptPublizonCalls";
-import { ContentLoanStatusEnum } from "../../core/publizon/model";
+import { stubMaterialPageBackends } from "../../../cypress/intercepts/material-page";
 
 /**
  * The availability label on the material page during the transition.
@@ -22,43 +19,10 @@ import { ContentLoanStatusEnum } from "../../core/publizon/model";
  * user actually sees.
  */
 
-const stubBackends = () => {
-  cy.viewport(1280, 720);
-  cy.window().then((win) => {
-    win.sessionStorage.setItem(TOKEN_LIBRARY_KEY, "random-token");
-    // can-loan is patron-scoped, so the availability tests need a signed-in
-    // user for Biblio to answer on behalf of.
-    win.sessionStorage.setItem(TOKEN_USER_KEY, "random-user-token");
-  });
-
-  interceptFbsCalls();
-  // Publizon calls the e-book available (status 4). Both tests below expect
-  // the opposite, so a label that says otherwise can only have come from
-  // Biblio - and one that agrees with Publizon proves nothing.
-  interceptPublizonCalls({
-    loanStatus: { loanStatus: ContentLoanStatusEnum.NUMBER_4 }
-  });
-
-  cy.intercept("POST", "**/next/graphql*", {
-    statusCode: 200,
-    body: { data: null }
-  });
-  cy.intercept("POST", "**/next-present/graphql*", {
-    statusCode: 200,
-    body: { data: null }
-  });
-
-  // Registered after the catch-all so the work query wins.
-  givenAMaterial();
-
-  cy.intercept("HEAD", "**/materiallist.dandigbib.org/list/**", {
-    statusCode: 200
-  });
-  cy.intercept("GET", "**/materiallist.dandigbib.org/list/**", {
-    statusCode: 200,
-    body: []
-  });
-};
+// Publizon calls the e-book available (status 4, the shared default). The
+// tests below expect the opposite, so a label that says otherwise can only
+// have come from Biblio - and one that agrees with Publizon proves nothing.
+const stubBackends = () => stubMaterialPageBackends();
 
 const ebookLabel = (material: MaterialPage) =>
   material.elements
@@ -114,20 +78,12 @@ describe("Material page - online availability through the Biblio adapter", () =>
     cy.get("@biblioCanLoan.all").should("have.length", 0);
   });
 
-  it("Leaves Biblio alone when the flag is off", () => {
-    // Biblio would say otherwise if it were asked
-    givenBiblioCanLoan(CanLoanResponseType.reservable);
-
-    // When: the same page at a library that has not enabled Biblio
-    const material = new MaterialPage(materialStory.default);
-    material.visit([]);
-
-    // Then: Publizon decides, and says the e-book is available
-    cy.wait("@publizonLoanStatus");
-    ebookLabel(material).should("contain", "Available");
-
-    cy.get("@biblioCanLoan.all").should("have.length", 0);
-  });
+  // No flag-off test here. Whether the label asks Biblio at all is decided in
+  // the availability hook, and the unit tests pin it from both sides - "Asks
+  // Biblio about the material" and "Leaves Biblio alone at a library that has
+  // not switched" - where the flag flips without a story per state. What the
+  // flag gates beyond the label, the write path, is covered by
+  // material-biblio.test.ts.
 });
 
 /**
@@ -136,7 +92,7 @@ describe("Material page - online availability through the Biblio adapter", () =>
  * The catalogue lists digital materials WeDoBooks has not provisioned yet,
  * and the adapter answers 404 for those. Without the flag that error takes
  * the whole material page down; with it the material is simply unavailable.
- * Remove together with useBiblioTolerateUnknownMaterials.
+ * Remove together with ServiceLayerConfig.tolerateUnknownMaterials.
  */
 describe("Material page - a material the adapter does not know", () => {
   beforeEach(() => stubBackends());

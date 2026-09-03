@@ -1,74 +1,64 @@
-# Hand-written client and validation boundary in service-layer adapters
+# Service-layer adapters call their API by hand, not through the generated client
 
 ## Context
 
-The service layer (`packages/service-layer/`) sits between the monorepo apps
-and external APIs. Its adapters (`fbs/`, `biblio/`) are consumed by two very
-different hosts: `go/` calls them server-side with per-request user tokens,
-and `react/` calls them from the browser where the base url and tokens come
-from the app mount contract (data attributes and sessionStorage).
+Per [ADR-001](adr-001-shared-api-contracts.md) each service-layer adapter
+(`packages/service-layer/fbs/`, `biblio/`) generates a typed client from the
+shared contract in `/schemas` with Orval. Yet every adapter's `client.ts`
+builds its own requests and validates its own responses, and nothing imports
+the generated client at runtime.
 
-Per [ADR-001](adr-001-shared-api-contracts.md) each adapter generates a typed
-client from the shared contract in `/schemas` with Orval. This raises a fair
-question whenever someone reads an adapter: why does `client.ts` hand-write
-requests and response validation when a generated client exists?
-
-Three constraints shape the answer:
-
-1. **Per-instance configuration.** Orval's generated fetch client builds
-   relative URLs (unusable in a server-side `fetch`) and its only injection
-   point is a module-global mutator. A module-global cannot carry the
-   per-instance config (`baseUrl` + `getAuthHeader`) that `go` needs per
-   request and `react` wires up from the mount contract. This is exactly why
-   the mutator pattern works for `react/`'s own Orval clients (there the
-   wiring *is* module-global) but not for a package shared by both hosts.
-2. **Runtime validation.** Generated types are compile-time only — response
-   data is `unknown` at runtime. The service layer is the anti-corruption
-   boundary, so it must actually check what arrives before handing it to
-   consumers.
-3. **Contract fidelity is not guaranteed.** Some upstream contracts (e.g.
-   the Biblio adapter) are hand-extracted from provider documentation rather
-   than served by the provider, so responses may deviate from the contract.
+That looks like duplicated effort, and it is the first thing a reader of an
+adapter asks about. This ADR is the answer.
 
 ## Decision
 
-Service-layer adapters keep a hand-written boundary:
+The generated client stays as the typed reference for the contract. It is
+not used to call the API. Instead each adapter hand-writes two things:
 
-- Each adapter exposes a `create<X>Client(config)` factory. The transport
-  (auth header, URL and query building, error semantics) is a thin
-  hand-written `request` helper.
-- Responses are validated with hand-written **lean** zod schemas in
-  `mappers/` which only validate the fields consumers actually use, and are
-  then mapped to camelCase domain DTOs in `src/types.ts`. Unknown fields are
-  stripped, so additive upstream changes do not break parsing.
-- The Orval-generated client stays in `generated/` as the typed contract
-  reference but is not imported at runtime.
+- **Transport.** A `create<X>Client(config)` factory holding a small
+  `request` helper that applies the auth header, builds the URL and query,
+  and turns HTTP status into the adapter's error semantics.
+- **Validation.** Zod schemas in `mappers/`, which parse the response and map
+  it to the camelCase domain types in `src/types.ts`.
 
 ## Consequences
 
-- Both hosts can use the same adapter with their own config; nothing in the
-  package depends on module-global state.
-- Consumers are decoupled from wire formats: upstream renames and additions
-  stop at the mapper.
-- The transport plumbing duplicates logic Orval also generates (URL and
-  query building), and hand-written schemas can drift from the contract.
-  Drift is caught by mapper tests and at runtime — not at compile time.
-- The generated client is dead weight at runtime and exists purely as
-  reference documentation of the full contract.
+Three constraints made this the cheaper option:
+
+1. **The generated client cannot be configured per instance.** It builds
+   relative URLs, which a server-side `fetch` cannot use, and its only
+   injection point is a module-global mutator. The service layer is consumed
+   by two hosts at once — `go/` calls it server-side with a per-request user
+   token, `react/` calls it from the browser with a base url from the mount
+   contract — so a module-global cannot carry the config either of them
+   needs. (The same mutator pattern *does* work for `react/`'s own Orval
+   clients, where the wiring genuinely is module-global.)
+2. **Generated types are compile-time only.** Response data is `unknown` at
+   runtime. As the anti-corruption boundary, the service layer has to check
+   what actually arrived before handing it on.
+3. **The contract is not always authoritative.** The Biblio contract is
+   hand-extracted from provider documentation rather than served by the
+   provider, so responses can legitimately deviate from it.
+
+What we pay for it:
+
+- The transport re-implements URL and query building that Orval also
+  generates.
+- Hand-written schemas can drift from the contract. Drift surfaces in mapper
+  tests and at runtime, not at compile time.
+- Consumers gain the decoupling in exchange: upstream renames and added
+  fields stop at the mapper, because unknown fields are stripped.
 
 ## Alternatives considered
 
-- **Use the generated fetch client directly.** Rejected: relative URLs break
-  server-side, the module-global mutator cannot carry per-instance config,
-  and it performs no runtime validation.
-- **Generate the zod schemas with Orval (`client: "zod"`).** Evaluated
-  against the Biblio contract (Orval 7.21, zod 4): the output type-checks,
-  enums, `anyOf` unions and complex schema keys generate correctly, and
-  unknown fields are stripped just like our hand-written schemas. The
-  trade-off is that generated schemas are contract-strict about *required*
-  fields, where our lean schemas only validate what we consume — stronger
-  enforcement, but brittle when a hand-extracted contract deviates from
-  reality (see constraint 3). Adopting this would remove the schema-drift
-  risk and should be decided for the whole service layer (`fbs/` and
-  `biblio/` together) in a future ADR; it was deliberately not bundled into
-  the change that introduced the Biblio adapter.
+- **Call the API through the generated client.** Rejected on constraints 1
+  and 2: relative URLs break server-side, the module-global mutator cannot
+  carry per-instance config, and it validates nothing.
+- **Generate the zod schemas with Orval (`client: "zod"`).** Viable — it was
+  evaluated against the Biblio contract and the output works. It is not
+  adopted here because generated schemas enforce the contract's *required*
+  fields, which is the wrong trade-off while constraint 3 holds, and because
+  the choice belongs to the whole service layer rather than to the change
+  that introduced one adapter. Worth revisiting once the Biblio contract is
+  served by the provider.

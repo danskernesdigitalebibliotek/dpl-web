@@ -95,12 +95,12 @@ export const getOrderIdByIdentifier = ({
  * Where a digital loan opens.
  *
  * The reader page takes one parameter per provider because the two readers do
- * not recognise each other's keys: pubhub knows an order id, the WeDoBooks SDK
- * a loan id. Kept here rather than at the call sites so the contract with the
- * reader route lives in one place.
+ * not recognise each other's keys: Publizon knows an order id, the service
+ * layer a loan id. Kept here rather than at the call sites so the contract
+ * with the reader route lives in one place.
  */
 export const readerUrl = (id: string, provider?: DigitalProvider | null) => {
-  const parameter = provider === "biblio" ? "loanid" : "orderid";
+  const parameter = provider === "serviceLayer" ? "loanid" : "orderid";
   return new URL(
     `/reader?${parameter}=${encodeURIComponent(id)}`,
     window.location.href
@@ -108,18 +108,35 @@ export const readerUrl = (id: string, provider?: DigitalProvider | null) => {
 };
 
 /**
+ * Where a service layer audiobook loan plays.
+ *
+ * Only service layer loans have a page to play on - Publizon audiobooks play
+ * in a modal, so no Publizon key ever links here.
+ */
+export const playerUrl = (loanId: string) =>
+  new URL(`/player?loanid=${encodeURIComponent(loanId)}`, window.location.href);
+
+/**
+ * Whether a loan from this provider plays in the Publizon modal.
+ *
+ * Service layer loans play on the player page instead (see `playerUrl`), so a
+ * caller that owns a `PlayerModal` only needs to mount it when this is true.
+ */
+export const playsInModal = (provider?: DigitalProvider | null) =>
+  provider !== "serviceLayer";
+
+/**
  * Where a sample of a material opens.
  *
- * A sample has no loan to read the material type from, so the link carries
- * it - the reader page hands it to whichever sample component the type calls
- * for. Publizon's reader ignores the extra parameter.
+ * A sample has no loan to read the material type from, so the route carries
+ * it: e-books sample on the reader page, audiobooks on the player page.
  */
 export const sampleUrl = (
   identifier: string,
   materialType: "ebook" | "audiobook"
 ) =>
   new URL(
-    `/reader?identifier=${encodeURIComponent(identifier)}&sampletype=${materialType}`,
+    `/${materialType === "audiobook" ? "player" : "reader"}?identifier=${encodeURIComponent(identifier)}`,
     window.location.href
   );
 

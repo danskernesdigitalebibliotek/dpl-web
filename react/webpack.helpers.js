@@ -1,3 +1,4 @@
+const path = require("path");
 const dotenv = require("dotenv");
 
 // react/.env is a symlink to the central root .env, which also holds server-side
@@ -27,3 +28,26 @@ exports.getWebPackEnvVariables = () => {
   const variables = getEnvVariables();
   return variables ? convertEnvVariablesToWebpack(variables) : null;
 };
+
+// Force singleton instances of packages that hold React context. Workspace
+// packages such as the service layer get their own node_modules, and resolving
+// a second copy there gives it a separate QueryClientContext - the provider in
+// this project then looks unset from inside the package. Mirrors the aliasing
+// GO does for the same reason. Shared by webpack.config.js and
+// .storybook/main.ts so the two builds cannot drift apart.
+const singletonModules = ["react", "react-dom", "@tanstack/react-query"];
+
+// Babel's polyfill-corejs3 plugin injects `core-js/modules/…` imports into
+// every file it transpiles, and webpack resolves those from the importing
+// file's own directory. The workspace packages we transpile from source - the
+// service layer - live outside this project and carry no core-js of their
+// own, so a `new Set()` in there fails the build looking for polyfills. This
+// project picks the polyfill strategy, so it also supplies the polyfills.
+const polyfillModules = ["core-js"];
+
+exports.moduleAliases = Object.fromEntries(
+  [...singletonModules, ...polyfillModules].map((m) => [
+    m,
+    path.resolve(__dirname, "node_modules", m)
+  ])
+);

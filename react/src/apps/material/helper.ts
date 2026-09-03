@@ -173,7 +173,7 @@ export const getManifestationIsbn = (manifestation: Manifestation) => {
 /**
  * The identifier a digital material is borrowed, reserved and read by.
  *
- * Both providers use it: it is Publizon's identifier and Biblio's
+ * Both providers use it: it is Publizon's identifier and the service layer's
  * `material_id`, and it is what `identifier` means on LoanType and
  * ReservationType - see `isDigitalReservation`.
  *

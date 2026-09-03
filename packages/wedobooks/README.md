@@ -70,7 +70,7 @@ The SDK keeps its own session against WeDoBooks rather than going through the
 adapter, so opening a book takes two steps:
 
 1. Ask the adapter to vouch for the patron we already authenticated —
-   `POST /v1/auth/create-sign-in-token`, exposed as `biblioSignInTokenQuery`.
+   `POST /v1/auth/create-sign-in-token`, exposed as `readerSignInTokenQuery`.
 2. Hand the resulting token to `signInWedoBooksUser`.
 
 The SDK reports a refused sign-in as a resolved result rather than a rejection,
@@ -91,9 +91,9 @@ through `next/dynamic` with `ssr: false`, never a static import.
 
 Two more things a GO integration will need, neither of which exists yet:
 
-- **The orchestration lives in `react/`, not here.** `useWedoBooksSdk`,
-  `useWedoBooksCheckout` and `useWedoBooksConfig` sit in
-  `react/src/core/biblio/`, and the config hook reads React's Redux store. Only
+- **The orchestration lives in `react/`, not here.** `useReaderSdk`,
+  `useReaderCheckout` and `useReaderSdkConfig` sit in
+  `react/src/core/digital/`, and the config hook reads React's Redux store. Only
   that last part is host-specific; the chain from config to signed-in session to
   entitlement is generic. Moving it here - taking the config and the token
   getter as inputs, the way `ServiceLayerConfig` already does for the adapter -
@@ -104,7 +104,7 @@ Two more things a GO integration will need, neither of which exists yet:
 
 - **A loan cannot be handed back early.** The SDK stopped ending the
   entitlement when a book is finished, leaving it to the integration — but
-  neither `LoanOperations` nor the Biblio adapter exposes a way to return a
+  neither the SDK nor the Biblio adapter exposes a way to return a
   loan, so it runs to its expiry either way. Open with DBC.
 - **The SDK declares `lodash-es` but imports `lodash`.** A packaging bug on
   their side; `lodash` is pinned here so esbuild can resolve it. Drop it once

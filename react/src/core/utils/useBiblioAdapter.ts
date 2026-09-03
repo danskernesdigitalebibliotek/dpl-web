@@ -1,7 +1,8 @@
 import { useConfig } from "./config";
 
-// Set in the CMS, shipped to every app as data-use-biblio-adapter-config.
-// Publizon remains the default.
+// Whether digital materials go through the Biblio adapter (the service
+// layer) rather than straight to Publizon, which remains the default.
+// Named after the flag the CMS ships it as: data-use-biblio-adapter-config.
 const useBiblioAdapter = (): boolean => {
   const config = useConfig();
 

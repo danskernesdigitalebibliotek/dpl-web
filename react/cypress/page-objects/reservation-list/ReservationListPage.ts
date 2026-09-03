@@ -30,10 +30,7 @@ export class ReservationListPage extends PageObject {
     this.elements = {
       // One header per group (ready for pickup, queued, …), each carrying its
       // own count.
-      headers: () => cy.get("[data-cy='reservation-list-header']"),
-      reservationContainers: () =>
-        cy.get("[data-cy='list-reservation-container']"),
-      emptyListMessages: () => cy.get(".dpl-list-empty")
+      headers: () => cy.get("[data-cy='reservation-list-header']")
     };
 
     this.addNestedComponents = {

@@ -14,17 +14,17 @@ import {
 } from "../../../../core/publizon/publizon";
 import { useMultipleRequestsWithStatus } from "../../../../core/utils/useRequestsWithStatus";
 import {
-  OperationBiblio,
   OperationDigital,
   OperationPhysical,
-  ParamsBiblio,
+  OperationPublizon,
   ParamsDigital,
   ParamsPhysical,
+  ParamsPublizon,
   requestsAndReservations
 } from "./helper";
 import {
-  useBiblioDeleteReservation,
-  biblioReservationsQueryKey
+  useDigitalDeleteReservation,
+  digitalReservationsQueryKey
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import ModalMessage from "../../../../components/message/modal-message/ModalMessage";
 import { ApiResult } from "../../../../core/publizon/model";
@@ -53,9 +53,9 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
   const t = useText();
   const queryClient = useQueryClient();
   const { mutate: deletePhysicalReservation } = useDeleteReservations();
-  const { mutate: deleteDigitalReservation } =
+  const { mutate: deletePublizonReservation } =
     useDeleteV1UserReservationsIdentifier();
-  const { mutate: deleteBiblioReservation } = useBiblioDeleteReservation();
+  const { mutate: deleteDigitalReservation } = useDigitalDeleteReservation();
   const [deletedReservations, setDeletedReservations] = useState<number | null>(
     null
   );
@@ -63,22 +63,22 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
   const {
     requests,
     reservationsPhysical,
-    reservationsDigital,
-    reservationsBiblio
+    reservationsPublizon,
+    reservationsDigital
   } = useMemo(
     () =>
       requestsAndReservations({
         operations: {
-          digital: deleteDigitalReservation,
+          publizon: deletePublizonReservation,
           physical: deletePhysicalReservation,
-          biblio: deleteBiblioReservation
+          digital: deleteDigitalReservation
         },
         reservations
       }),
     [
-      deleteDigitalReservation,
+      deletePublizonReservation,
       deletePhysicalReservation,
-      deleteBiblioReservation,
+      deleteDigitalReservation,
       reservations
     ]
   );
@@ -88,8 +88,8 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
     requestStatus,
     setRequestStatus
   } = useMultipleRequestsWithStatus<
-    OperationPhysical | OperationDigital | OperationBiblio,
-    ParamsPhysical | ParamsDigital | ParamsBiblio,
+    OperationPhysical | OperationPublizon | OperationDigital,
+    ParamsPhysical | ParamsPublizon | ParamsDigital,
     ApiResult | boolean | void | null
   >({
     requests,
@@ -105,7 +105,7 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
         queryKey: getGetReservationsV2QueryKey()
       });
       queryClient.invalidateQueries({
-        queryKey: biblioReservationsQueryKey()
+        queryKey: digitalReservationsQueryKey()
       });
       if (reservations.length) {
         reservations.forEach((res) => {
@@ -122,8 +122,8 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
   const removeSelectedReservationsHandler = () => {
     if (
       reservationsPhysical.length ||
-      reservationsDigital.length ||
-      reservationsBiblio.length
+      reservationsPublizon.length ||
+      reservationsDigital.length
     ) {
       removeReservationsHandler();
     }

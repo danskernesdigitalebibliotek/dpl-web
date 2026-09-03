@@ -1,45 +1,30 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { FC } from "react";
 import {
   useGetV1LibraryProfile,
   useGetV1UserLoans
 } from "../../../core/publizon/publizon";
-import { LibraryProfile, UserData } from "../../../core/publizon/model";
 import { useText } from "../../../core/utils/text";
 import { getPatronLoanQuotas } from "../../../core/utils/helpers/publizon";
 import {
-  getBiblioLoanQuota,
-  useBiblioLoanQuotas
+  getDigitalLoanQuota,
+  useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
 
 const StatusSection: FC = () => {
   const t = useText();
-  const useBiblio = useBiblioAdapter();
+  const viaBiblioAdapter = useBiblioAdapter();
 
-  const { data: libraryProfileFetched } = useGetV1LibraryProfile({
-    query: { enabled: !useBiblio }
+  const { data: libraryProfile } = useGetV1LibraryProfile({
+    query: { enabled: !viaBiblioAdapter }
   });
-  const { isSuccess, data } = useGetV1UserLoans(
+  const { data } = useGetV1UserLoans(
     {},
-    { query: { enabled: !useBiblio } }
+    { query: { enabled: !viaBiblioAdapter } }
   );
-  const { data: biblioQuotas } = useBiblioLoanQuotas({ enabled: useBiblio });
-  const [libraryProfile, setLibraryProfile] = useState<LibraryProfile | null>(
-    null
-  );
-  const [patronData, setPatronData] = useState<UserData | null>(null);
-
-  useEffect(() => {
-    if (isSuccess && data && data.userData) {
-      setPatronData(data.userData);
-    }
-  }, [isSuccess, data]);
-
-  useEffect(() => {
-    if (libraryProfileFetched) {
-      setLibraryProfile(libraryProfileFetched);
-    }
-  }, [libraryProfileFetched]);
+  const { data: digitalQuotas } = useDigitalLoanQuotas({
+    enabled: viaBiblioAdapter
+  });
 
   const {
     maxConcurrentAudioReservationsPerBorrower = 0,
@@ -47,43 +32,52 @@ const StatusSection: FC = () => {
   } = libraryProfile || {};
 
   const publizonQuotas = getPatronLoanQuotas({
-    userData: patronData ?? undefined,
+    userData: data?.userData,
     loans: data?.loans
   });
 
   // This section counts the loans the user holds right now, so the concurrent
-  // counters are the Biblio equivalent of Publizon's maxConcurrent limits.
-  const biblioEbook = getBiblioLoanQuota({
-    quotas: biblioQuotas,
+  // counters are the service layer equivalent of Publizon's maxConcurrent
+  // limits.
+  const digitalEbookQuota = getDigitalLoanQuota({
+    quotas: digitalQuotas,
     format: "ebook",
     period: "concurrent"
   });
-  const biblioAudio = getBiblioLoanQuota({
-    quotas: biblioQuotas,
+  const digitalAudioQuota = getDigitalLoanQuota({
+    quotas: digitalQuotas,
     format: "audiobook",
     period: "concurrent"
   });
 
-  const patronEbookLoans = useBiblio
-    ? biblioEbook.current
-    : publizonQuotas.patronEbookLoans;
-  const patronAudioBookLoans = useBiblio
-    ? biblioAudio.current
-    : publizonQuotas.patronAudioLoans;
-  const maxConcurrentEbookLoansPerBorrower = useBiblio
-    ? biblioEbook.limit
-    : libraryProfile?.maxConcurrentEbookLoansPerBorrower;
-  const maxConcurrentAudioLoansPerBorrower = useBiblio
-    ? biblioAudio.limit
-    : libraryProfile?.maxConcurrentAudioLoansPerBorrower;
-
-  // Publizon gates the whole section on its library profile. Biblio has no
-  // equivalent document, so its quotas take that role.
-  // An empty array is an answer, not a quota: rendering the section from it
-  // would show a heading with two blank counters.
-  const hasQuotas = useBiblio
-    ? Boolean(biblioQuotas?.length)
-    : Boolean(libraryProfile);
+  // One provider answers the whole section, so the choice is made once.
+  // Publizon gates the section on its library profile. The service layer has
+  // no equivalent document, so its quotas take that role - and an empty array
+  // is an answer, not a quota: rendering the section from it would show a
+  // heading with two blank counters.
+  const {
+    patronEbookLoans,
+    patronAudioBookLoans,
+    maxConcurrentEbookLoansPerBorrower,
+    maxConcurrentAudioLoansPerBorrower,
+    hasQuotas
+  } = viaBiblioAdapter
+    ? {
+        patronEbookLoans: digitalEbookQuota.current,
+        patronAudioBookLoans: digitalAudioQuota.current,
+        maxConcurrentEbookLoansPerBorrower: digitalEbookQuota.limit,
+        maxConcurrentAudioLoansPerBorrower: digitalAudioQuota.limit,
+        hasQuotas: Boolean(digitalQuotas?.length)
+      }
+    : {
+        patronEbookLoans: publizonQuotas.patronEbookLoans,
+        patronAudioBookLoans: publizonQuotas.patronAudioLoans,
+        maxConcurrentEbookLoansPerBorrower:
+          libraryProfile?.maxConcurrentEbookLoansPerBorrower,
+        maxConcurrentAudioLoansPerBorrower:
+          libraryProfile?.maxConcurrentAudioLoansPerBorrower,
+        hasQuotas: Boolean(libraryProfile)
+      };
 
   // Publizon doesn't account for "subscription" (aka, "blue", aka
   // "non-quota") loans, so we have to figure out how many of the
@@ -111,9 +105,9 @@ const StatusSection: FC = () => {
           <div className="text-body-small-regular mb-8">
             {t("patronPageStatusSectionBodyText")}
           </div>
-          {/* Biblio's quotas cover loans only - it has no reservation limits
+          {/* The service layer's quotas cover loans only - there are no reservation limits
               to show, so the line is left out rather than rendered as zero. */}
-          {!useBiblio && (
+          {!viaBiblioAdapter && (
             <div className="text-body-small-regular mt-8 mb-8">
               {t("patronPageStatusSectionReservationsText", {
                 placeholders: {

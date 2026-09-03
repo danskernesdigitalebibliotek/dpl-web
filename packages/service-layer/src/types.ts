@@ -11,6 +11,13 @@ export type ServiceLayerConfig = {
   // Unilogin and anonymous) never fire doomed 401 requests. Public data
   // (material availability) ignores it. Defaults to true when omitted.
   isPatronAuthenticated?: boolean
+  // TEMPORARY, with the toleration setting it carries: whether a material the
+  // adapter does not know may resolve to "cannot be lent" instead of an
+  // error. Answered here rather than per call so no call site can forget it
+  // — the same reasoning as isPatronAuthenticated. A resolver like the
+  // others, because the host's setting lands after this object is built.
+  // Omitted means the host does not tolerate them.
+  tolerateUnknownMaterials?: () => boolean
 }
 
 export type Patron = {
@@ -144,9 +151,31 @@ export type RenewedLoanFailed = {
 
 export type RenewedLoan = RenewedLoanSuccess | RenewedLoanFailed
 
-export type BiblioMaterial = {
+// The types below describe what an app reasons about — a digital loan, a
+// reservation, a lending decision — not which service happened to answer.
+// Biblio (WeDoBooks) is the only source today, but a second one would arrive
+// as another mapper onto these same types rather than as a parallel set of
+// service-prefixed ones. What is service-specific is the client that fetches
+// (`createBiblioClient`) and the functions that name which backend to ask
+// (`getDigitalLoans`), not the shape they hand back.
+//
+// "Digital" is the meaningful distinction, not the vendor: these are the
+// materials a patron reads or listens to in a reader, as opposed to the
+// physical ones FBS lends out.
+
+// Formats a digital material comes in. Loans and reservations may also report
+// `paper_book` — see MaterialType.
+export type DigitalMaterialType = "ebook" | "audiobook"
+
+// The broad material type used by the loan and reservation DTOs. Metadata
+// only ever describes digital materials, so it uses the narrower
+// DigitalMaterialType.
+export type MaterialType = DigitalMaterialType | "paper_book"
+
+// Catalogue fields for a digital material.
+export type DigitalMaterial = {
   isbn: string
-  materialType: "ebook" | "audiobook"
+  materialType: DigitalMaterialType
   title: string
   description: string
   publishDate: string
@@ -155,32 +184,28 @@ export type BiblioMaterial = {
   authors: string[]
 }
 
-// The broad material type used by the loan and reservation DTOs. The metadata
-// endpoints use the narrower BiblioMaterial["materialType"].
-export type BiblioMaterialType = "ebook" | "audiobook" | "paper_book"
-
-export type BiblioLoan = {
+export type DigitalLoan = {
   loanId: string
   materialId: string
-  materialType: BiblioMaterialType
+  materialType: MaterialType
   startDate: string
   endDate: string
   active: boolean
   // A loan carries its own catalogue fields, so presenting it needs no
-  // metadata lookup. `author` is one string here, a list on BiblioMaterial.
+  // metadata lookup. `author` is one string here, a list on DigitalMaterial.
   title: string
   author: string
   publisher: string
   publishDate: string
-  // Which licence the loan was made under. "selection" marks a blue title:
-  // a loan that costs the user nothing and draws on no quota.
-  loanProvider: BiblioLoanProvider
+  // Which licence the loan was made under - see LoanProvider, and
+  // isCostFreeLoan for which of them cost the patron nothing.
+  loanProvider: LoanProvider
 }
 
-export type BiblioReservation = {
+export type DigitalReservation = {
   reservationId: string
   materialId: string
-  materialType: BiblioMaterialType
+  materialType: MaterialType
   createdDate: string
   // Date where the reservation is expected to be converted to a loan at the
   // latest.
@@ -191,7 +216,7 @@ export type BiblioReservation = {
   offerExpiresAt?: string
 }
 
-export type BiblioCanLoanStatus =
+export type LoanDecisionStatus =
   | "loanable"
   | "reservable"
   | "wishable"
@@ -203,27 +228,44 @@ export type BiblioCanLoanStatus =
 
 // Which licence the loan would be made under. The organization configures a
 // prioritized list of providers, and the backend reports the one it picked.
-// "selection" - the licence Danish blue titles answer with - is the one
-// verified to cost the user nothing; the rest, including the unobserved
-// "free", count against the quota until DBC confirms otherwise.
-export type BiblioLoanProvider = "free" | "k-fond" | "click" | "package" | "premium" | "selection"
+//
+// "selection" is the licence Danish blue titles answer with: WeDoBooks states
+// those are bought out and exempt from the quotas, so it is the one the UI
+// may call included - see isCostFreeLoan. The rest ("click" is pay-per-loan,
+// "package" a subscription) are ways the LIBRARY pays for a loan that still
+// counts against the patron's quota.
+//
+// "free" sits between the two: not in use yet, and confirmed only to be
+// exempt from every quota when it arrives - which is not the same as being
+// free to the patron.
+export type LoanProvider = "free" | "k-fond" | "click" | "package" | "premium" | "selection"
 
-export type BiblioCanLoan = {
-  status: BiblioCanLoanStatus
-  loanProvider?: BiblioLoanProvider
+// Whether a loan can be made right now, and if not, why. The answer covers
+// both the material (is it out on loan?) and the patron (quota, lending
+// blocks), so callers pick the part they care about - see
+// isMaterialAvailable.
+//
+// The same decision comes back from two places: asking up front whether a
+// loan is possible, and asking for the loan itself - the adapter answers a
+// refused request with a decision rather than an HTTP error. Hence one type
+// for the decision, and LoanRequestResult for a decision that also produced
+// a loan.
+export type LoanDecision = {
+  status: LoanDecisionStatus
+  loanProvider?: LoanProvider
   unavailableReason?: string
   lendingBlockReason?: string
 }
 
-// Result of creating a loan or a reservation. The loan is only set when the
-// operation resulted in an actual loan.
-export type BiblioLoanResult = BiblioCanLoan & {
-  loan: BiblioLoan | undefined
+// The outcome of asking for a loan or a reservation: the decision, plus the
+// loan when the request actually produced one.
+export type LoanRequestResult = LoanDecision & {
+  loan: DigitalLoan | undefined
 }
 
 // Loan quotas for the user per organization. Organizations either count
 // e-books and audiobooks together (combined) or separately (split on format).
-export type BiblioLoanQuota =
+export type DigitalLoanQuota =
   | {
       splitOnFormat: false
       orgId: string
@@ -243,7 +285,8 @@ export type BiblioLoanQuota =
       currentMonthlyLoans: { ebook: number; audiobook: number }
     }
 
-export type BiblioSignInToken = {
+// Short-lived token that signs the patron in to the reader and player.
+export type ReaderSignInToken = {
   token: string
   expiresInSeconds: number
 }

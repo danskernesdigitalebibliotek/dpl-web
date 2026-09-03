@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import type { BiblioMaterial } from "../../../src/types"
+import type { DigitalMaterial } from "../../../src/types"
 
 // The metadata endpoints return one envelope shape for both the single- and
 // batch-lookup routes: `{ materials: [...] }`. Unknown material_ids are
@@ -29,7 +29,7 @@ const GetMetadataResponseSchema = z.object({
   materials: z.array(MaterialInformationSchema),
 })
 
-export function parseAndMapMetadata(raw: unknown): BiblioMaterial | undefined {
+export function parseAndMapMetadata(raw: unknown): DigitalMaterial | undefined {
   const parsed = GetMetadataResponseSchema.parse(raw)
   const material = parsed.materials[0]
   if (!material) return undefined

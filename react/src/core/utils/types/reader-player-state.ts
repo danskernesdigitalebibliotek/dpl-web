@@ -4,8 +4,9 @@ import { ReservationType } from "./reservation-type";
  * What a provider has to be able to say about one digital material for the
  * material page to offer it.
  *
- * This is the seam of the Publizon → Biblio transition. Two hooks produce it -
- * `usePublizonReaderPlayerState` and `useBiblioReaderPlayerState` - and
+ * This is the seam of the Publizon → service layer transition. Two hooks
+ * produce it -
+ * `usePublizonReaderPlayerState` and `useDigitalReaderPlayerState` - and
  * `useReaderPlayer` composes the result. Keeping the shape provider-neutral is
  * what lets the Publizon side be deleted without touching a single component:
  * when it goes, one producer is removed and the composition collapses into the
@@ -37,7 +38,7 @@ export type ReaderPlayerState = {
   canBeReserved: boolean;
   /**
    * Holding: the key that opens the loan in the reader/player. Publizon calls
-   * it an order id, Biblio a loan id; both serve the same purpose.
+   * it an order id, the service layer a loan id; both serve the same purpose.
    */
   orderId: string | null;
   /** Holding: the reservation the user can cancel, when there is one. */
@@ -47,11 +48,23 @@ export type ReaderPlayerState = {
    * material becomes a loan, or null when the provider has no such step.
    *
    * Publizon has none - a redeemable reservation simply shows the loan button
-   * - so it always reports null. Biblio makes the acceptance explicit, and
+   * - so it always reports null. The service layer makes the acceptance
+   * explicit, and
    * this is what identifies the offer to accept.
    */
   offerId: string | null;
-  /** True while the provider has not answered yet. */
+  /**
+   * Acquiring: whether the provider can offer a sample of the material at
+   * all. Not an availability question - a reserved-out material still has its
+   * sample - but a material the lending provider does not know has no sample
+   * to play, and offering one would open an empty reader or player.
+   */
+  canBeSampled: boolean;
+  /**
+   * True while an enabled provider is still fetching the answers above. A
+   * provider that is not asked reports false: not knowing is not the same as
+   * loading, and a disabled provider will never answer.
+   */
   isLoading: boolean;
 };
 
@@ -70,7 +83,8 @@ export const unknownReaderPlayerState: ReaderPlayerState = {
   orderId: null,
   reservation: null,
   offerId: null,
-  isLoading: true
+  canBeSampled: false,
+  isLoading: false
 };
 
 export default {};

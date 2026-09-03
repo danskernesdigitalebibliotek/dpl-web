@@ -13,10 +13,10 @@ const publizonReservation: ReservationType = {
   identifier: "9788771076940"
 };
 
-const biblioReservation: ReservationType = {
+const serviceLayerReservation: ReservationType = {
   faust: null,
   identifier: "9788727319346",
-  biblioReservationId: "e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11"
+  digitalReservationId: "e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11"
 };
 
 describe("getReservationsToDelete", () => {
@@ -24,29 +24,30 @@ describe("getReservationsToDelete", () => {
     const result = getReservationsToDelete([
       physicalReservation,
       publizonReservation,
-      biblioReservation
+      serviceLayerReservation
     ]);
 
     expect(result.physical).toEqual([111, 222]);
-    expect(result.digital).toEqual(["9788771076940"]);
-    expect(result.biblio).toEqual(["e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11"]);
+    expect(result.publizon).toEqual(["9788771076940"]);
+    expect(result.digital).toEqual(["e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11"]);
   });
 
-  it("Keeps a Biblio reservation out of the Publizon list even though it has an identifier", () => {
-    const result = getReservationsToDelete([biblioReservation]);
+  it("Keeps a service layer reservation out of the Publizon list even though it has an identifier", () => {
+    const result = getReservationsToDelete([serviceLayerReservation]);
 
-    // Both providers carry a material identifier, so cancelling a Biblio
-    // reservation through Publizon would silently target the wrong service.
-    expect(result.digital).toEqual([]);
-    // And Biblio cancels by its own id, never by that identifier.
-    expect(result.biblio).toEqual(["e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11"]);
+    // Both providers carry a material identifier, so cancelling through
+    // Publizon would silently target the wrong service.
+    expect(result.publizon).toEqual([]);
+    // The service layer cancels by the reservation's own id, never by that
+    // identifier.
+    expect(result.digital).toEqual(["e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11"]);
   });
 
   it("Returns empty lists when there is nothing to delete", () => {
     expect(getReservationsToDelete([])).toEqual({
       physical: [],
-      digital: [],
-      biblio: []
+      publizon: [],
+      digital: []
     });
   });
 });
@@ -56,16 +57,16 @@ describe("requestsAndReservations", () => {
     const { requestsAndReservations } =
       await import("../../apps/reservation-list/modal/delete-reservation/helper");
     const physical = vi.fn();
+    const publizon = vi.fn();
     const digital = vi.fn();
-    const biblio = vi.fn();
 
     const { requests } = requestsAndReservations({
       reservations: [
         physicalReservation,
         publizonReservation,
-        biblioReservation
+        serviceLayerReservation
       ],
-      operations: { physical, digital, biblio }
+      operations: { physical, publizon, digital }
     });
 
     expect(requests).toHaveLength(3);
@@ -76,12 +77,13 @@ describe("requestsAndReservations", () => {
     });
     expect(requests[1]).toEqual({
       params: { identifier: "9788771076940" },
-      operation: digital
+      operation: publizon
     });
-    // Biblio takes the reservation id directly rather than an object.
+    // The service layer takes the reservation id directly rather than an
+    // object.
     expect(requests[2]).toEqual({
       params: "e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11",
-      operation: biblio
+      operation: digital
     });
   });
 });

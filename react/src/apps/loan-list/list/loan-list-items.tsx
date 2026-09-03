@@ -52,7 +52,7 @@ const LoanListItems: FC<LoanListItemProps> = ({
     null
   );
 
-  // Publizon only: a Biblio audiobook links to the reader page instead, so it
+  // Publizon only: a digital audiobook links to the player page instead, so it
   // never reaches this handler - see digital-loan-card.
   const handlePlayDigital = (loan: LoanType) => {
     if (!loan.orderId) return;

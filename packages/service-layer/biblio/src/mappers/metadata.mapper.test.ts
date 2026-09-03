@@ -15,7 +15,7 @@ const upstreamMaterial = {
 }
 
 describe("parseAndMapMetadata", () => {
-  it("maps an upstream material to a BiblioMaterial", () => {
+  it("maps an upstream material to a DigitalMaterial", () => {
     expect(parseAndMapMetadata({ materials: [upstreamMaterial] })).toEqual({
       isbn: "9788711234567",
       materialType: "ebook",

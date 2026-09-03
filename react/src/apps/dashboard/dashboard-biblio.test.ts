@@ -43,7 +43,7 @@ const stubBackends = () => {
     body: publizonLoanListFactory.build({ loans: [] })
   }).as("publizonLoans");
 
-  // Given: two loans created through the Biblio adapter - the e-book runs
+  // Given: two loans created through the service layer - the e-book runs
   // until 16 Nov, the audiobook until 24 Oct, seen from 21 Oct.
   givenUserHasBiblioLoans([
     biblioLoanFactory.build(),

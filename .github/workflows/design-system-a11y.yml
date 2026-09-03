@@ -24,6 +24,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          # Design-system-only job: nothing here imports the wrapper.
+          build-wedobooks: 'false'
 
       - name: Design / Install Playwright Browsers
         run: pnpm exec playwright install --with-deps chromium

@@ -15,11 +15,11 @@ interface Reservation extends ListType {
   periodical: string;
   reservationType: string;
   /**
-   * Id of a reservation in the Biblio adapter. Set only for Biblio
+   * Id of a reservation in the service layer. Set only for service layer
    * reservations, which are cancelled by their own id rather than by the
    * material identifier Publizon uses.
    */
-  biblioReservationId: string;
+  digitalReservationId: string;
 }
 
 export type ReservationType = Nullable<Partial<Reservation>>;
@@ -64,11 +64,11 @@ export function isDigitalReservation(
   return !!reservation.identifier;
 }
 
-export type BiblioReservationType = ReservationType &
-  NonNullableFields<Required<Pick<Reservation, "biblioReservationId">>>;
+export type DigitalReservationWithId = ReservationType &
+  NonNullableFields<Required<Pick<Reservation, "digitalReservationId">>>;
 
-export function isBiblioReservation(
+export function hasDigitalReservationId(
   reservation: ReservationType
-): reservation is BiblioReservationType {
-  return !!reservation.biblioReservationId;
+): reservation is DigitalReservationWithId {
+  return !!reservation.digitalReservationId;
 }

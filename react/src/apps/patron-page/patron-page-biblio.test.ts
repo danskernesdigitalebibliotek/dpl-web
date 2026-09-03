@@ -4,10 +4,6 @@ import {
   patronPageStory
 } from "../../../cypress/page-objects/patron-page/PatronPagePage";
 import {
-  biblioCombinedLoanQuotaFactory,
-  biblioSplitLoanQuotaFactory
-} from "../../../cypress/factories/biblio/biblio.factory";
-import {
   givenUserHasBiblioLoanQuotas,
   givenUserHasBiblioSupportId
 } from "../../../cypress/intercepts/biblio/biblio";
@@ -133,51 +129,12 @@ describe("Patron page - Biblio adapter feature flag", () => {
     cy.contains("3 out of").should("not.exist");
   });
 
-  it("Leaves out the reservation limits, which Biblio does not provide", () => {
-    const patronPage = new PatronPagePage(patronPageStory.withBiblioAdapter);
-
-    patronPage.visit([]);
-    cy.wait("@biblioLoanQuotas");
-
-    // Rendering the line would claim the user can reserve zero materials.
-    cy.contains("You can reserve").should("not.exist");
-  });
-
-  it("Applies the same numbers to both formats for a combined quota", () => {
-    givenUserHasBiblioLoanQuotas([biblioCombinedLoanQuotaFactory.build()]);
-
-    const patronPage = new PatronPagePage(patronPageStory.withBiblioAdapter);
-    patronPage.visit([]);
-    cy.wait("@biblioLoanQuotas");
-
-    // An organization that counts e-books and audiobooks together shows one
-    // pair of numbers twice.
-    cy.contains("E-books").should("exist");
-    cy.get(".dpl-progress-bar__header .text-label")
-      .filter(':contains("out of")')
-      .should("have.length", 2)
-      .each(($label) => {
-        expect($label.text()).to.equal("2 out of 5");
-      });
-  });
-
-  it("Shows a spent quota as full rather than hiding it", () => {
-    givenUserHasBiblioLoanQuotas([
-      biblioSplitLoanQuotaFactory.build({
-        max_concurrent_user_loans: { ebook: 4, audiobook: 1 },
-        current_concurrent_loans: { ebook: 1, audiobook: 1 }
-      })
-    ]);
-
-    const patronPage = new PatronPagePage(patronPageStory.withBiblioAdapter);
-    patronPage.visit([]);
-    cy.wait("@biblioLoanQuotas");
-
-    // A user who cannot borrow another audiobook has to be able to see why.
-    cy.contains("1 out of 1").should("exist");
-    patronPage.elements
-      .quotaBars()
-      .eq(1)
-      .should("have.attr", "style", "width: 100%;");
-  });
+  // The quota rendering itself is not repeated here. Whether the reservation
+  // line is left out, how a combined quota applies one pair of numbers to both
+  // formats and how a spent quota reads as full are all decided in
+  // StatusSection from the quota it is handed, and its unit tests pin each of
+  // them - a story per quota shape would prove the same arithmetic in a
+  // browser. What this spec covers is the part only the real page can show:
+  // that the flag moves the whole section, identifier included, from one
+  // provider to the other.
 });

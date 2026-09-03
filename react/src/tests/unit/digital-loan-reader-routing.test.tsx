@@ -2,32 +2,36 @@ import React from "react";
 import { describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
 import type { Loan } from "../../core/publizon/model";
-import type { BiblioLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import type { DigitalLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
-  mapBiblioLoanToLoanType,
+  mapDigitalLoanToLoanType,
   mapPublizonLoanToLoanType
 } from "../../core/utils/helpers/list-mapper";
-import { readerUrl } from "../../components/reader-player/helper";
-import BiblioReaderPlayer from "../../components/reader-player/BiblioReaderPlayer";
-import useWedoBooksCheckout from "../../core/biblio/useWedoBooksCheckout";
+import {
+  playerUrl,
+  readerUrl,
+  sampleUrl
+} from "../../components/reader-player/helper";
+import DigitalReaderPlayer from "../../components/reader-player/DigitalReaderPlayer";
+import useReaderCheckout from "../../components/reader-player/useReaderCheckout";
 
 // The reader and player themselves need the SDK; which of them mounts is the
 // decision under test, so they are reduced to markers.
-vi.mock("../../components/reader-player/BiblioReader", () => ({
+vi.mock("../../components/reader-player/DigitalReader", () => ({
   default: () => <div data-testid="reader" />
 }));
-vi.mock("../../components/reader-player/BiblioPlayer", () => ({
+vi.mock("../../components/reader-player/DigitalPlayer", () => ({
   default: () => <div data-testid="player" />
 }));
-vi.mock("../../core/biblio/useWedoBooksCheckout", () => ({
+vi.mock("../../components/reader-player/useReaderCheckout", () => ({
   default: vi.fn()
 }));
 
 const givenCheckout = (materialType: string | null) =>
-  vi.mocked(useWedoBooksCheckout).mockReturnValue({
+  vi.mocked(useReaderCheckout).mockReturnValue({
     sdk: {},
     checkout: materialType ? { material_type: materialType } : null
-  } as unknown as ReturnType<typeof useWedoBooksCheckout>);
+  } as unknown as ReturnType<typeof useReaderCheckout>);
 import { store } from "../../core/store";
 import { addTextEntries } from "../../core/text.slice";
 
@@ -48,7 +52,7 @@ const publizonLoan = {
   libraryBook: { identifier: "9788727319346" }
 } as Loan;
 
-const biblioLoan: BiblioLoan = {
+const digitalLoan: DigitalLoan = {
   loanId: "VAcPZZkCeqvnNRnOdP17",
   materialId: "9788758855769",
   materialType: "audiobook",
@@ -77,9 +81,9 @@ describe("Which reader a digital loan opens in", () => {
       })
     );
 
-    const [loan] = mapBiblioLoanToLoanType([biblioLoan]);
+    const [loan] = mapDigitalLoanToLoanType([digitalLoan]);
 
-    expect(loan.digitalProvider).toBe("biblio");
+    expect(loan.digitalProvider).toBe("serviceLayer");
   });
 
   it("gives both providers the key their own reader opens the loan with", () => {
@@ -91,22 +95,22 @@ describe("Which reader a digital loan opens in", () => {
     );
 
     const [publizon] = mapPublizonLoanToLoanType([publizonLoan]);
-    const [biblio] = mapBiblioLoanToLoanType([biblioLoan]);
+    const [biblio] = mapDigitalLoanToLoanType([digitalLoan]);
 
     // Same field, different id: the order id for Publizon, the loan id for
     // Biblio. This is exactly why the provider has to be carried alongside it.
     expect(publizon.orderId).toBe(publizonLoan.orderId);
-    expect(biblio.orderId).toBe(biblioLoan.loanId);
+    expect(biblio.orderId).toBe(digitalLoan.loanId);
   });
 });
 
-describe("readerUrl", () => {
+describe("Where a digital material's url points", () => {
   // The /reader route reads one parameter per provider, and the readers do
   // not recognise each other's keys - pubhub expects an order id, the
   // WeDoBooks SDK a loan id. This mapping is the whole reason
   // digitalProvider exists, so it gets pinned on its own.
   it("opens a Biblio loan by its loan id", () => {
-    expect(readerUrl("VAcPZZkCeqvnNRnOdP17", "biblio").search).toBe(
+    expect(readerUrl("VAcPZZkCeqvnNRnOdP17", "serviceLayer").search).toBe(
       "?loanid=VAcPZZkCeqvnNRnOdP17"
     );
   });
@@ -120,17 +124,34 @@ describe("readerUrl", () => {
     // callers - must keep opening where they always did.
     expect(readerUrl("082bb01a").search).toBe("?orderid=082bb01a");
   });
+
+  it("plays a Biblio audiobook loan on the player page", () => {
+    const url = playerUrl("VAcPZZkCeqvnNRnOdP17");
+
+    expect(url.pathname).toBe("/player");
+    expect(url.search).toBe("?loanid=VAcPZZkCeqvnNRnOdP17");
+  });
+
+  it("sends each sample to the page its material type plays on", () => {
+    // The route carries the type: a sample has no loan to read it from.
+    expect(sampleUrl("9788711623497", "ebook").pathname).toBe("/reader");
+    expect(sampleUrl("9788711823453", "audiobook").pathname).toBe("/player");
+    expect(sampleUrl("9788711823453", "audiobook").search).toBe(
+      "?identifier=9788711823453"
+    );
+  });
 });
 
-describe("What the reader page opens a Biblio loan in", () => {
-  // The page is reached with nothing but a loan id, so the loan's own
-  // material type is the only thing that can pick reader vs player - and a
-  // deep link has to open the right one no matter which button made it.
+describe("What a page opens a Biblio loan in", () => {
+  // Both pages mount this component and are reached with nothing but a loan
+  // id, so the loan's own material type is the only thing that can pick
+  // reader vs player - a deep link opens the right thing no matter which
+  // page it names.
   it("plays an audiobook in the player", () => {
     givenCheckout("audiobook");
 
     const { container } = render(
-      <BiblioReaderPlayer loanId="loan-1" onClose={() => {}} />
+      <DigitalReaderPlayer loanId="loan-1" onClose={() => {}} />
     );
 
     expect(container.querySelector("[data-testid='player']")).not.toBeNull();
@@ -141,7 +162,7 @@ describe("What the reader page opens a Biblio loan in", () => {
     givenCheckout("ebook");
 
     const { container } = render(
-      <BiblioReaderPlayer loanId="loan-1" onClose={() => {}} />
+      <DigitalReaderPlayer loanId="loan-1" onClose={() => {}} />
     );
 
     expect(container.querySelector("[data-testid='reader']")).not.toBeNull();
@@ -152,7 +173,7 @@ describe("What the reader page opens a Biblio loan in", () => {
     givenCheckout(null);
 
     const { container } = render(
-      <BiblioReaderPlayer loanId="loan-1" onClose={() => {}} />
+      <DigitalReaderPlayer loanId="loan-1" onClose={() => {}} />
     );
 
     expect(container.querySelector("[data-testid='reader']")).toBeNull();

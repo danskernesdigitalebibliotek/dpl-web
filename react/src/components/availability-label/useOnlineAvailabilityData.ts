@@ -1,113 +1,77 @@
-import { useEffect, useState } from "react";
+import {
+  isMaterialAvailable,
+  useDigitalLoanDecision
+} from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
   useGetV1LoanstatusIdentifier,
   useGetV1ProductsIdentifier
 } from "../../core/publizon/publizon";
-import { FaustId } from "../../core/utils/types/ids";
 import { publizonProductStatuses } from "./types";
 import { AccessTypes } from "../../core/utils/types/entities";
-import useBiblioAvailability from "../../core/biblio/useBiblioAvailability";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import { isAnonymous } from "../../core/utils/helpers/user";
 
+/**
+ * Availability of an online material: the service layer answers for the
+ * materials it provides, Publizon for the rest.
+ *
+ * With the flag on the service layer is THE lending provider: a material it
+ * cannot lend is not available, and Publizon must not stand in. Falling back
+ * would mean offering a loan the library has decided not to make, and the
+ * user would end up borrowing from the service we are migrating away from.
+ *
+ * TEMPORARY, and only this part: can-loan is patron-scoped, so the service
+ * layer is silent for visitors and Publizon answers for them - the two
+ * providers disagree until the service layer can be asked without a user.
+ * Remove that fallback then; the gate itself stays.
+ */
 const useOnlineAvailabilityData = ({
   enabled,
   access,
-  faustIds,
   isbn
 }: {
   enabled: boolean;
   access: AccessTypes[];
-  faustIds: FaustId[] | null;
   isbn: string | null;
 }) => {
-  const [isAvailable, setIsAvailable] = useState<null | boolean>(null);
+  const viaBiblioAdapter = useBiblioAdapter();
 
   // An online material outside the e-book service - a PressReader newspaper,
-  // whose only identifier is a URI - is in neither Publizon nor Biblio, so
-  // asking about it can only produce a 404.
+  // whose only identifier is a URI - is in neither Publizon nor the service
+  // layer, so asking about it can only produce a 404.
   const isEreolMaterial = access.some((acc) => acc === "Ereol");
 
-  // Gates on the feature flag itself, so no check is needed here.
-  const { isAnswering: isBiblioAnswering, isAvailable: isAvailableBiblio } =
-    useBiblioAvailability({
-      enabled: enabled && isEreolMaterial && isAvailable === null,
-      isbn
-    });
+  // Who answers is decided here, once: the service layer when the library
+  // has switched and there is a patron to ask on behalf of - can-loan is
+  // patron-scoped - and Publizon for everything the service layer does not
+  // answer. Both need an ISBN to do lookups.
+  const askServiceLayer =
+    viaBiblioAdapter && enabled && isEreolMaterial && !!isbn && !isAnonymous();
+  const askPublizon = enabled && isEreolMaterial && !!isbn && !askServiceLayer;
 
-  // Publizon answers for everything Biblio does not.
+  const { data: loanDecision, isLoading: isLoadingServiceLayer } =
+    useDigitalLoanDecision(isbn, { enabled: askServiceLayer });
 
   // Find out if the material is cost free.
   const { isLoading: isLoadingIdentifier, data: dataIdentifier } =
-    // We never want to pass an empty string to the API
-    // So we only enable the query if we have an isbn
     useGetV1ProductsIdentifier(isbn ?? "", {
-      query: {
-        // Publizon / useGetV1ProductsIdentifier is responsible for online
-        // materials. It requires an ISBN to do lookups.
-        enabled:
-          enabled &&
-          isEreolMaterial &&
-          isAvailable === null &&
-          !!isbn &&
-          !isBiblioAnswering
-      }
+      query: { enabled: askPublizon }
     });
 
-  // Publizon request.
+  // Publizon / useGetV1LoanstatusIdentifier shows loan status per material.
+  // This status is only available for products found on Publizon. Other online
+  // materials are always supposed to be shown as "available".
   const { isLoading: isLoadingPublizonData, data: dataPublizon } =
     useGetV1LoanstatusIdentifier(isbn || "", {
-      // Publizon / useGetV1LoanstatusIdentifier shows loan status per material.
-      // This status is only available for products found on Publizon. Other online
-      // materials are always supposed to be shown as "available"
       query: {
         enabled:
-          enabled &&
-          isEreolMaterial &&
-          isAvailable === null &&
-          !!isbn &&
-          !isBiblioAnswering &&
+          askPublizon &&
           // If the material is free (I think it is called blue material btw.)
           // we should not load the loan status because then we know that it is available.
           // So If the material is not free and we know it is an "Publizon" material we should load the loan status.
           dataIdentifier?.product?.costFree === false
       }
     });
-
-  useEffect(() => {
-    if (!enabled || isAvailable !== null) {
-      return;
-    }
-
-    // Biblio answers for the materials it provides.
-    if (isAvailableBiblio !== null) {
-      setIsAvailable(isAvailableBiblio);
-      return;
-    }
-
-    // Publizon must not answer at all while Biblio is the provider.
-    if (
-      isBiblioAnswering ||
-      isLoadingIdentifier !== false ||
-      isLoadingPublizonData !== false
-    ) {
-      return;
-    }
-
-    // If we have Publizon data, we can use that to determine the availability.
-    if (dataPublizon && dataPublizon.loanStatus) {
-      setIsAvailable(
-        publizonProductStatuses[dataPublizon.loanStatus].isAvailable
-      );
-    }
-  }, [
-    isLoadingIdentifier,
-    isAvailable,
-    faustIds,
-    enabled,
-    dataPublizon,
-    isLoadingPublizonData,
-    isAvailableBiblio,
-    isBiblioAnswering
-  ]);
 
   // If hook is not enabled make it clear that the loading and availability status is unknown.
   if (!enabled) {
@@ -117,18 +81,34 @@ const useOnlineAvailabilityData = ({
     };
   }
 
-  // An online material is by default always available if the availability status has not been set yet.
-  if (isAvailable === null) {
-    return {
-      isLoading: false,
-      isAvailable: true
-    };
-  }
+  // Both derivations are gated on who was asked, not just on the query: an
+  // answer sitting in the cache from a provider that may no longer answer
+  // must be ignored. Within a gate, null means "not answered yet".
+  const isAvailableViaServiceLayer = askServiceLayer
+    ? // null is the tolerated 404: the service layer is THE lending provider,
+      // so a material it does not know cannot be lent - unavailable, no
+      // fallback. undefined is simply not answered yet.
+      loanDecision === null
+      ? false
+      : ((loanDecision && isMaterialAvailable(loanDecision.status)) ?? null)
+    : null;
 
-  // Return the availability status.
+  const isAvailableViaPublizon =
+    askPublizon && dataPublizon?.loanStatus
+      ? publizonProductStatuses[dataPublizon.loanStatus].isAvailable
+      : null;
+
+  // The first provider that was asked and has answered wins.
+  const isAvailable = isAvailableViaServiceLayer ?? isAvailableViaPublizon;
+
   return {
-    isLoading: isLoadingIdentifier && isLoadingPublizonData,
-    isAvailable
+    // Disabled queries never report loading, so this only counts the
+    // questions actually asked.
+    isLoading:
+      isLoadingServiceLayer || isLoadingIdentifier || isLoadingPublizonData,
+    // An online material neither service answers for is always available -
+    // cost-free Publizon materials and other online materials alike.
+    isAvailable: isAvailable ?? true
   };
 };
 

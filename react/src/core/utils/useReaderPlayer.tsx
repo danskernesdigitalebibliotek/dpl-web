@@ -3,7 +3,7 @@ import { getManifestationDigitalIdentifier } from "../../apps/material/helper";
 import { getReaderPlayerType } from "../../components/reader-player/helper";
 import useBiblioAdapter from "./useBiblioAdapter";
 import { DigitalProvider } from "./types/digital-provider";
-import useBiblioReaderPlayerState from "./useBiblioReaderPlayerState";
+import useDigitalReaderPlayerState from "./useDigitalReaderPlayerState";
 import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
 
 /**
@@ -25,37 +25,39 @@ import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
  *
  * ## When Publizon goes away
  *
- * Delete `usePublizonReaderPlayerState` and return the Biblio state directly.
+ * Delete `usePublizonReaderPlayerState` and return the service layer state
+ * directly.
  * No component changes, because they all consume `ReaderPlayerState` and never
  * learn which provider produced it.
  */
 const useReaderPlayer = (manifestation: Manifestation | null) => {
-  const useBiblio = useBiblioAdapter();
+  const viaBiblioAdapter = useBiblioAdapter();
 
   const type = getReaderPlayerType(manifestation);
   const identifier = manifestation
     ? getManifestationDigitalIdentifier(manifestation)
     : null;
 
-  const biblio = useBiblioReaderPlayerState({
+  const serviceLayer = useDigitalReaderPlayerState({
     identifier,
-    enabled: useBiblio
+    enabled: viaBiblioAdapter
   });
 
   const publizon = usePublizonReaderPlayerState({
     identifier,
     // Publizon is always asked what the user already holds, but it may only
     // decide on a new loan while it is still the lending provider.
-    canAcquire: !useBiblio
+    canAcquire: !viaBiblioAdapter
   });
 
-  const acquisition = useBiblio ? biblio : publizon;
+  const acquisition = viaBiblioAdapter ? serviceLayer : publizon;
 
   // A material is held by one provider or the other, never both: whoever has
   // the loan or the reservation answers for it.
-  const heldByBiblio = biblio.isAlreadyLoaned || biblio.isAlreadyReserved;
+  const heldByServiceLayer =
+    serviceLayer.isAlreadyLoaned || serviceLayer.isAlreadyReserved;
   const heldByPublizon = publizon.isAlreadyLoaned || publizon.isAlreadyReserved;
-  const holding = heldByBiblio ? biblio : publizon;
+  const holding = heldByServiceLayer ? serviceLayer : publizon;
   // Which reader or player opens what the user holds - the same fact a loan
   // carries as LoanType.digitalProvider. Called "holding" here because this
   // hook also answers who may LEND the material, and on a switched library
@@ -64,9 +66,11 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
   // Derived here rather than reported by each provider: it is a fact about the
   // composition, and asking both to state their own identity duplicated the
   // predicate above.
-  const holdingProvider: DigitalProvider | null = heldByBiblio
-    ? "biblio"
-    : (heldByPublizon && "publizon") || null;
+  const holdingProvider: DigitalProvider | null = heldByServiceLayer
+    ? "serviceLayer"
+    : heldByPublizon
+      ? "publizon"
+      : null;
 
   return {
     type,
@@ -76,11 +80,18 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
     // The offer belongs with acquiring: claiming it is how the user gets the
     // material, and only the lending provider hands one out.
     offerId: acquisition.offerId,
+    // Samples follow the lending provider too: they play through its reader
+    // and player, so only its own answer can promise one.
+    canBeSampled: acquisition.canBeSampled,
     isAlreadyLoaned: holding.isAlreadyLoaned,
     isAlreadyReserved: holding.isAlreadyReserved,
     orderId: holding.orderId,
     holdingProvider,
-    reservation: holding.reservation
+    reservation: holding.reservation,
+    // Loading while any provider that was actually asked has not answered -
+    // a disabled provider reports false, so this settles as soon as the
+    // relevant answers are in.
+    isLoading: serviceLayer.isLoading || publizon.isLoading
   };
 };
 

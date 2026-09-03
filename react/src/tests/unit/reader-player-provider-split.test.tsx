@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
-import useBiblioReaderPlayerState from "../../core/utils/useBiblioReaderPlayerState";
+import useDigitalReaderPlayerState from "../../core/utils/useDigitalReaderPlayerState";
 import usePublizonReaderPlayerState from "../../core/utils/usePublizonReaderPlayerState";
 import {
   ReaderPlayerState,
@@ -23,8 +23,10 @@ import {
  * existing loans stop opening.
  */
 
-vi.mock("../../core/utils/useBiblioAdapter", () => ({ default: vi.fn() }));
-vi.mock("../../core/utils/useBiblioReaderPlayerState", () => ({
+vi.mock("../../core/utils/useBiblioAdapter", () => ({
+  default: vi.fn()
+}));
+vi.mock("../../core/utils/useDigitalReaderPlayerState", () => ({
   default: vi.fn()
 }));
 vi.mock("../../core/utils/usePublizonReaderPlayerState", () => ({
@@ -42,7 +44,6 @@ const BIBLIO_LOAN_ID = "3f7b1c62-9d4e-4a71-b0c3-1d5a8e2f4b90";
 
 const state = (overrides: Partial<ReaderPlayerState>): ReaderPlayerState => ({
   ...unknownReaderPlayerState,
-  isLoading: false,
   ...overrides
 });
 
@@ -56,7 +57,7 @@ const given = ({
   publizon?: Partial<ReaderPlayerState>;
 }) => {
   vi.mocked(useBiblioAdapter).mockReturnValue(flagOn);
-  vi.mocked(useBiblioReaderPlayerState).mockReturnValue(state(biblio));
+  vi.mocked(useDigitalReaderPlayerState).mockReturnValue(state(biblio));
   vi.mocked(usePublizonReaderPlayerState).mockReturnValue(state(publizon));
 };
 
@@ -146,7 +147,7 @@ describe("useReaderPlayer - which provider answers what", () => {
 
       expect(render()).toMatchObject({
         orderId: BIBLIO_LOAN_ID,
-        holdingProvider: "biblio"
+        holdingProvider: "serviceLayer"
       });
     });
 
@@ -164,6 +165,33 @@ describe("useReaderPlayer - which provider answers what", () => {
         isAlreadyReserved: true,
         reservation: { identifier: "9788727319346" }
       });
+    });
+  });
+  describe("sampling", () => {
+    it("Follows the lending provider's sample answer", () => {
+      given({
+        flagOn: true,
+        biblio: { canBeSampled: false },
+        publizon: { canBeSampled: true }
+      });
+
+      // The sample plays through the lending provider's reader and player, so
+      // only its own answer can promise one.
+      expect(render().canBeSampled).toBe(false);
+    });
+  });
+
+  describe("loading", () => {
+    it("Loads while any provider that was asked has not answered", () => {
+      given({ flagOn: true, biblio: { isLoading: true } });
+
+      expect(render().isLoading).toBe(true);
+    });
+
+    it("Settles once every asked provider has answered", () => {
+      given({ flagOn: true });
+
+      expect(render().isLoading).toBe(false);
     });
   });
 });

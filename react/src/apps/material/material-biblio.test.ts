@@ -1,4 +1,3 @@
-import { TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../../core/token";
 import {
   MaterialPage,
   materialStory
@@ -28,14 +27,12 @@ import {
   givenUserHasNoBiblioReservations
 } from "../../../cypress/intercepts/biblio/biblio";
 import { ContentLoanStatusEnum } from "../../core/publizon/model";
-import { givenAMaterial } from "../../../cypress/intercepts/fbi/material";
+import { stubMaterialPageBackends } from "../../../cypress/intercepts/material-page";
 import {
   buildGetMaterialResponse,
   materialFactory
 } from "../../../cypress/factories/material/material.factory";
 import { onlineAudioBookManifestation } from "../../../cypress/factories/manifestation/variants/onlineAudioBookManifestation";
-import { interceptFbsCalls } from "../../../cypress/intercepts/fbs/fbs";
-import { interceptPublizonCalls } from "../../../cypress/intercepts/publizon/interceptPublizonCalls";
 
 /**
  * Borrowing and reserving a digital material through the Biblio adapter.
@@ -62,45 +59,7 @@ const PUBLIZON_ORDER_ID = "082bb01a-8979-424b-93a6-7cc7081f8a45";
 const stubBackends = (
   publizonLoanStatus: ContentLoanStatusEnum = ContentLoanStatusEnum.NUMBER_4
 ) => {
-  cy.viewport(1280, 720);
-
-  cy.window().then((win) => {
-    // Opening the confirm-loan modal goes through a login guard, so the user
-    // has to be signed in. Every backend below is stubbed, so the token only
-    // needs to exist - the Biblio client picks it up too.
-    win.sessionStorage.setItem(TOKEN_USER_KEY, "random-user-token");
-    win.sessionStorage.setItem(TOKEN_LIBRARY_KEY, "random-token");
-  });
-
-  // The material page pulls from FBI, FBS and Publizon at once, so all three
-  // are served from the shared factory intercepts rather than reaching the
-  // real gateways - a fake token is rejected by every one of them.
-  interceptFbsCalls();
-  // Publizon's loan status decides the button for the materials Publizon
-  // still holds. For a material the adapter provides, the adapter's can-loan
-  // answer takes over - see the last two describes in this file.
-  interceptPublizonCalls({ loanStatus: { loanStatus: publizonLoanStatus } });
-
-  cy.intercept("POST", "**/next/graphql*", {
-    statusCode: 200,
-    body: { data: null }
-  }).as("dbcGatewayMain");
-  cy.intercept("POST", "**/next-present/graphql*", {
-    statusCode: 200,
-    body: { data: null }
-  }).as("dbcGatewayPresent");
-
-  // Registered after the catch-all above so the work query wins - Cypress
-  // matches the most recently registered route first.
-  givenAMaterial();
-
-  cy.intercept("HEAD", "**/materiallist.dandigbib.org/list/**", {
-    statusCode: 200
-  });
-  cy.intercept("GET", "**/materiallist.dandigbib.org/list/**", {
-    statusCode: 200,
-    body: []
-  });
+  stubMaterialPageBackends(publizonLoanStatus);
 
   cy.interceptRest({
     aliasName: "UserInfo",
@@ -362,6 +321,32 @@ describe("Material page - a material only Biblio provides", () => {
     cy.get("@biblioCreateLoan.all").should("have.length", 0);
   });
 
+  it("Does not tell the user they are queued when the adapter declines", () => {
+    // The adapter answers 201 with a decision rather than an HTTP error, so
+    // the status is the only thing separating a queue place from a spent
+    // quota - the same trap as the declined loan above, on the other endpoint.
+    givenBiblioCanLoan(CanLoanResponseType.reservable);
+    cy.intercept("POST", "**/v1/reservations", {
+      statusCode: 201,
+      body: {
+        status: "monthly_limit_exceeded",
+        org_id: BIBLIO_ORG_ID
+      }
+    }).as("biblioCreateReservationDeclined");
+
+    const material = new MaterialPage(materialStory.withBiblioAdapter, "e-bog");
+
+    openLoanModal(material);
+    material.onlineLoanModal().elements.approveButton().click();
+    cy.wait("@biblioCreateReservationDeclined");
+
+    // Asserted on the error state itself: asserting the absence of a success
+    // phrase passes trivially when the phrase is misremembered.
+    cy.get(onlineLoanModalSelector)
+      .should("contain", "Something went wrong.")
+      .and("not.contain", "reserved for you");
+  });
+
   it("Lets the user cancel a reservation they are queued for", () => {
     // A queued reservation replaces the loan button with a cancel button, and
     // it has to be the adapter's reservation id that is cancelled.
@@ -459,10 +444,18 @@ describe("Material page - flag on, the adapter refuses the loan", () => {
     // The material is not the problem, the user's quota is - so it stays
     // available while the loan is withheld.
     cy.getBySel("availability-label").first().should("contain", "Available");
-    cy.contains("button", "Loading").should("be.disabled");
-    cy.getBySel("material-header-buttons-online-internal-reader").should(
-      "not.exist"
-    );
+
+    // Wait for the refusal itself. Until it lands the page still shows the
+    // disabled "Loading" button, and asserting on the buttons before then
+    // would pass on the spinner rather than on the answer.
+    cy.wait("@biblioCanLoan");
+
+    // The button stays, but cannot be used: a refusal has to read as "not
+    // offered" rather than as "still loading", which is what an unanswered
+    // page looks like.
+    cy.getBySel("material-header-buttons-online-internal-reader")
+      .first()
+      .should("be.disabled");
 
     cy.get("@publizonCreateLoan.all").should("have.length", 0);
     cy.get("@biblioCreateLoan.all").should("have.length", 0);
