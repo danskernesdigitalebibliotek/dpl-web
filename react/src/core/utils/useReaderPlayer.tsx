@@ -2,6 +2,7 @@ import { Manifestation } from "./types/entities";
 import { getManifestationDigitalIdentifier } from "../../apps/material/helper";
 import { getReaderPlayerType } from "../../components/reader-player/helper";
 import useBiblioAdapter from "./useBiblioAdapter";
+import { DigitalProvider } from "./types/digital-provider";
 import useBiblioReaderPlayerState from "./useBiblioReaderPlayerState";
 import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
 
@@ -52,8 +53,20 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
 
   // A material is held by one provider or the other, never both: whoever has
   // the loan or the reservation answers for it.
-  const holding =
-    biblio.isAlreadyLoaned || biblio.isAlreadyReserved ? biblio : publizon;
+  const heldByBiblio = biblio.isAlreadyLoaned || biblio.isAlreadyReserved;
+  const heldByPublizon = publizon.isAlreadyLoaned || publizon.isAlreadyReserved;
+  const holding = heldByBiblio ? biblio : publizon;
+  // Which reader or player opens what the user holds - the same fact a loan
+  // carries as LoanType.digitalProvider. Called "holding" here because this
+  // hook also answers who may LEND the material, and on a switched library
+  // those are different providers.
+  //
+  // Derived here rather than reported by each provider: it is a fact about the
+  // composition, and asking both to state their own identity duplicated the
+  // predicate above.
+  const holdingProvider: DigitalProvider | null = heldByBiblio
+    ? "biblio"
+    : (heldByPublizon && "publizon") || null;
 
   return {
     type,
@@ -66,6 +79,7 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
     isAlreadyLoaned: holding.isAlreadyLoaned,
     isAlreadyReserved: holding.isAlreadyReserved,
     orderId: holding.orderId,
+    holdingProvider,
     reservation: holding.reservation
   };
 };

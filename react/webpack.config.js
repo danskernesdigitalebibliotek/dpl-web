@@ -55,6 +55,19 @@ module.exports = (_env, argv) => {
     );
   }
 
+  if (production) {
+    // Source maps for everything except the WeDoBooks chunk. That chunk is the
+    // pre-bundled SDK, and its map would embed Colibrio's modules in readable
+    // form - which both defeats the minification their licence asks for and
+    // ships ~15 MB of it to every library site.
+    plugins.push(
+      new webpack.SourceMapDevToolPlugin({
+        filename: "[file].map",
+        exclude: /wedobooks/
+      })
+    );
+  }
+
   // Add environment variables to webpack in development mode
   if (!production) {
     const variables = getWebPackEnvVariables();
@@ -73,12 +86,28 @@ module.exports = (_env, argv) => {
       path: path.resolve(__dirname, "dist")
     },
     mode: argv.mode,
-    devtool: production ? "source-map" : "inline-source-map",
+    // Production maps come from SourceMapDevToolPlugin above, which can
+    // exclude the WeDoBooks chunk; the `devtool` shorthand cannot.
+    devtool: production ? false : "inline-source-map",
     optimization: {
       runtimeChunk: "single",
       splitChunks: {
         name: () => "bundle",
-        chunks: "all"
+        chunks: "all",
+        cacheGroups: {
+          // The WeDoBooks SDK is megabytes of reading framework, Firebase and
+          // component library, and only a patron opening a book needs any of
+          // it. Everything else here is deliberately merged into one shared
+          // bundle, which would drag the SDK onto every page that loads any
+          // DPL app - so this group keeps its async chunk to itself.
+          wedobooks: {
+            test: /[\\/]packages[\\/]wedobooks[\\/]/,
+            name: "wedobooks",
+            chunks: "async",
+            priority: 10,
+            enforce: true
+          }
+        }
       },
       // Enable tree-shaking to remove unused Lodash methods
       usedExports: true
@@ -91,7 +120,12 @@ module.exports = (_env, argv) => {
       rules: [
         {
           test: /\.(js|jsx|ts|tsx)$/,
-          exclude: /node_modules/,
+          // The WeDoBooks wrapper is the one workspace package that ships a
+          // build rather than sources: esbuild has already bundled the SDK and
+          // its polyfills into browser-ready output. Running it through Babel
+          // again makes preset-env inject core-js imports it cannot resolve
+          // from that package's own directory.
+          exclude: [/node_modules/, /packages[\\/]wedobooks[\\/]dist/],
           use: [
             {
               loader: "babel-loader",

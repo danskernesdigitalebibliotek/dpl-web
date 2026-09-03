@@ -39,6 +39,15 @@ x-environment:
     # environments without the service keep working (metrics are just useless
     # there).
     METRICS_REDIS_HOST: redis-metrics
+    # WeDoBooks SDK configuration for the ebook reader / audiobook player.
+    # One set for the whole platform, per environment - served to the browser
+    # by dpl_biblio, so they are runtime values, not build arguments. On
+    # Lagoon they arrive as environment variables; locally from the root .env.
+    WEDOBOOKS_APPLICATION_ID: ${WEDOBOOKS_APPLICATION_ID:-}
+    WEDOBOOKS_FIREBASE_API_KEY: ${WEDOBOOKS_FIREBASE_API_KEY:-}
+    WEDOBOOKS_FIREBASE_PROJECT_ID: ${WEDOBOOKS_FIREBASE_PROJECT_ID:-}
+    WEDOBOOKS_FIREBASE_APP_ID: ${WEDOBOOKS_FIREBASE_APP_ID:-}
+    WEDOBOOKS_READER_API_KEY: ${WEDOBOOKS_READER_API_KEY:-}
     # Uncomment if you like to have the system behave like in production
     #LAGOON_ENVIRONMENT_TYPE: production
 
@@ -101,6 +110,10 @@ services:
         # back to the dockerfile defaults, giving full builds.
         SKIP_COMPOSER_INSTALL: "${SKIP_BAKED_IN_BUILDS:-false}"
         SKIP_JS_ASSETS: "${SKIP_BAKED_IN_BUILDS:-false}"
+        # Read-only token for WeDoBooks' private npm registry, which serves
+        # the SDK behind the reader and the player. Comes from the root .env
+        # (cms/.env symlinks to it). Used only in the discarded asset stage.
+        WEDOBOOKS_NPM_TOKEN: ${WEDOBOOKS_NPM_TOKEN:-}
     << : *default-volumes # loads the defined volumes from the top
     user: root
     environment:

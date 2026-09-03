@@ -52,6 +52,13 @@ class ReactAppsHooks {
     $data['configs'] += [
       'use-biblio-adapter' => $this->biblioSettings->isEnabled() ? '1' : '0',
     ];
+
+    // The reader and the player run on the WeDoBooks SDK, which is configured
+    // in the browser. Left out entirely when unconfigured, so React can tell
+    // "no SDK here" from "SDK with blank values".
+    if ($sdk_config = $this->biblioSettings->getSdkConfig()) {
+      $data['configs'] += $sdk_config;
+    }
   }
 
 }

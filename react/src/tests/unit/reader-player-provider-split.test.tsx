@@ -130,7 +130,10 @@ describe("useReaderPlayer - which provider answers what", () => {
 
       expect(render()).toMatchObject({
         isAlreadyLoaned: true,
-        orderId: PUBLIZON_ORDER_ID
+        orderId: PUBLIZON_ORDER_ID,
+        // The key alone cannot say which reader opens it - the two ids are
+        // indistinguishable by shape, so this is what routes the button.
+        holdingProvider: "publizon"
       });
     });
 
@@ -141,7 +144,10 @@ describe("useReaderPlayer - which provider answers what", () => {
         publizon: { isAlreadyLoaned: false }
       });
 
-      expect(render().orderId).toBe(BIBLIO_LOAN_ID);
+      expect(render()).toMatchObject({
+        orderId: BIBLIO_LOAN_ID,
+        holdingProvider: "biblio"
+      });
     });
 
     it("Lets the user cancel a reservation held in either service", () => {

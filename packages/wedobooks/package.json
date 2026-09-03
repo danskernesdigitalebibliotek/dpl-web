@@ -1,0 +1,37 @@
+{
+  "name": "@danskernesdigitalebibliotek/dpl-wedobooks",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WeDoBooks SDK wrapper for the reader and the player",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && node build.mjs && tsc --emitDeclarationOnly",
+    "build:watch": "rm -rf dist && (node build.mjs --watch & tsc --emitDeclarationOnly --watch)",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@wedobooks/sdk": "0.2.4",
+    "esbuild": "^0.27.0",
+    "esbuild-plugin-polyfill-node": "^0.3.0",
+    "lodash": "^4.17.23",
+    "typescript": "^5.9.3"
+  },
+  "sideEffects": false
+}
