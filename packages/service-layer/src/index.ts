@@ -57,24 +57,49 @@ export { getFees } from "./fees"
 
 // Biblio adapter — the digital-materials provider behind the CMS feature flag.
 export {
+  acceptBiblioReservationOffer,
+  createBiblioLoan,
+  createBiblioReservation,
+  deleteBiblioReservation,
   getBiblioCanLoan,
+  getBiblioLoanQuotas,
   getBiblioLoans,
   getBiblioMaterial,
+  getBiblioReservations,
+  getBiblioSupportId,
+  getBiblioLoanQuota,
   isBiblioMaterialAvailable,
+  isBiblioMaterialLoanable,
+  isBiblioMaterialReservable,
+  isBiblioRequestGranted,
 } from "./biblio"
 export {
   biblioCanLoanQuery,
   biblioCanLoanQueryKey,
+  biblioLoanQuotasQuery,
+  biblioLoanQuotasQueryKey,
   biblioLoansQuery,
   biblioLoansQueryKey,
   biblioMaterialQuery,
   biblioMaterialQueryKey,
+  biblioReservationsQuery,
+  biblioReservationsQueryKey,
+  biblioSupportIdQuery,
+  biblioSupportIdQueryKey,
 } from "./queries/biblio"
+export { useBiblioAcceptOffer } from "./hooks/useBiblioAcceptOffer"
 export { useBiblioCanLoan } from "./hooks/useBiblioCanLoan"
+export { useBiblioCreateLoan } from "./hooks/useBiblioCreateLoan"
+export { useBiblioCreateReservation } from "./hooks/useBiblioCreateReservation"
+export { useBiblioDeleteReservation } from "./hooks/useBiblioDeleteReservation"
+export { useBiblioLoanQuotas } from "./hooks/useBiblioLoanQuotas"
 export { useBiblioLoans } from "./hooks/useBiblioLoans"
 export { useBiblioMaterial } from "./hooks/useBiblioMaterial"
+export { useBiblioReservations } from "./hooks/useBiblioReservations"
+export { useBiblioSupportId } from "./hooks/useBiblioSupportId"
 export { createBiblioClient } from "../biblio/src"
 export type { BiblioConfig } from "../biblio/src"
+export type { BiblioQuota } from "./biblio"
 export type {
   BiblioMaterial,
   BiblioMaterialType,

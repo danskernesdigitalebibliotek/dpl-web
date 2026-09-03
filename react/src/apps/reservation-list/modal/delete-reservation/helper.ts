@@ -5,9 +5,11 @@ import { UseTextFunction } from "../../../../core/utils/text";
 import { RequestStatus } from "../../../../core/utils/types/request";
 import {
   ReservationType,
+  isBiblioReservation,
   isDigitalReservation,
   isPhysicalReservation
 } from "../../../../core/utils/types/reservation-type";
+import { useBiblioDeleteReservation } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 export type OperationPhysical = ReturnType<
   typeof useDeleteReservations
@@ -15,9 +17,15 @@ export type OperationPhysical = ReturnType<
 export type OperationDigital = ReturnType<
   typeof useDeleteV1UserReservationsIdentifier
 >["mutate"];
+export type OperationBiblio = ReturnType<
+  typeof useBiblioDeleteReservation
+>["mutate"];
 
 export type ParamsPhysical = { params: DeleteReservationsParams };
 export type ParamsDigital = Parameters<OperationDigital>;
+// Biblio cancels by the reservation's own id, so the mutation takes it
+// directly rather than an object.
+export type ParamsBiblio = string;
 
 type Request =
   | {
@@ -27,22 +35,35 @@ type Request =
   | {
       params: ParamsDigital;
       operation: OperationDigital;
+    }
+  | {
+      params: ParamsBiblio;
+      operation: OperationBiblio;
     };
 
 export const getReservationsToDelete = (reservations: ReservationType[]) => {
   if (!reservations.length) {
-    return { physical: [], digital: [] };
+    return { physical: [], digital: [], biblio: [] };
   }
   const physical = reservations
     .filter(isPhysicalReservation)
     .map(({ reservationIds }) => reservationIds)
     .flat();
 
+  const biblio = reservations
+    .filter(isBiblioReservation)
+    .map(({ biblioReservationId }) => biblioReservationId);
+
+  // Both providers carry a material identifier, so Biblio reservations are
+  // excluded here to keep them from being cancelled through Publizon.
   const digital = reservations
-    .filter(isDigitalReservation)
+    .filter(
+      (reservation) =>
+        isDigitalReservation(reservation) && !isBiblioReservation(reservation)
+    )
     .map(({ identifier }) => identifier);
 
-  return { physical, digital };
+  return { physical, digital, biblio };
 };
 
 export const getDeleteButtonLabel = ({
@@ -68,14 +89,22 @@ export const requestsAndReservations = ({
   operations
 }: {
   reservations: ReservationType[];
-  operations: { physical: OperationPhysical; digital: OperationDigital };
+  operations: {
+    physical: OperationPhysical;
+    digital: OperationDigital;
+    biblio: OperationBiblio;
+  };
 }): {
   requests: Request[];
   reservationsPhysical: ReturnType<typeof getReservationsToDelete>["physical"];
   reservationsDigital: ReturnType<typeof getReservationsToDelete>["digital"];
+  reservationsBiblio: ReturnType<typeof getReservationsToDelete>["biblio"];
 } => {
-  const { physical: reservationsPhysical, digital: reservationsDigital } =
-    getReservationsToDelete(reservations);
+  const {
+    physical: reservationsPhysical,
+    digital: reservationsDigital,
+    biblio: reservationsBiblio
+  } = getReservationsToDelete(reservations);
 
   const requests = [];
   if (reservationsPhysical.length) {
@@ -92,8 +121,21 @@ export const requestsAndReservations = ({
       });
     });
   }
+  if (reservationsBiblio.length) {
+    reservationsBiblio.forEach((id) => {
+      requests.push({
+        params: String(id),
+        operation: operations.biblio
+      });
+    });
+  }
 
-  return { requests, reservationsPhysical, reservationsDigital };
+  return {
+    requests,
+    reservationsPhysical,
+    reservationsDigital,
+    reservationsBiblio
+  };
 };
 
 export default {};

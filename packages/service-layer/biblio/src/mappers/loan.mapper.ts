@@ -6,6 +6,20 @@ import type { BiblioLoan } from "../../../src/types"
 // restricted to ebook | audiobook.
 export const MaterialTypeSchema = z.enum(["ebook", "audiobook", "paper_book"])
 
+// The licence types a loan can be made under. "selection" is the one Danish
+// blue titles answer with: such a loan costs the user nothing and draws on no
+// quota. The remaining types are ways the library pays for a loan that still
+// counts against the user's quota - including, until DBC confirms otherwise,
+// the unobserved "free".
+export const LoanProviderSchema = z.enum([
+  "free",
+  "k-fond",
+  "click",
+  "package",
+  "premium",
+  "selection",
+])
+
 // We only read the fields consumers need; zod strips unknown keys so new
 // fields in the adapter responses do not break parsing. What we do read
 // follows the contract: every field below is required there, so a response
@@ -21,6 +35,9 @@ export const LoanSchema = z.object({
   author: z.string(),
   publisher: z.string(),
   publish_date: z.string(),
+  // Which licence the loan was made under - what identifies a blue
+  // ("selection") loan, the kind that draws on no quota.
+  license: z.object({ type: LoanProviderSchema }),
 })
 
 const GetLoansResponseSchema = z.object({
@@ -42,6 +59,7 @@ export function mapLoan(loan: z.infer<typeof LoanSchema>): BiblioLoan {
     author: loan.author,
     publisher: loan.publisher,
     publishDate: loan.publish_date,
+    loanProvider: loan.license.type,
   }
 }
 

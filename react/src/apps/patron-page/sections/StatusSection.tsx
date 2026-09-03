@@ -6,12 +6,24 @@ import {
 import { LibraryProfile, UserData } from "../../../core/publizon/model";
 import { useText } from "../../../core/utils/text";
 import { getPatronLoanQuotas } from "../../../core/utils/helpers/publizon";
+import {
+  getBiblioLoanQuota,
+  useBiblioLoanQuotas
+} from "@danskernesdigitalebibliotek/dpl-service-layer";
+import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
 
 const StatusSection: FC = () => {
   const t = useText();
+  const useBiblio = useBiblioAdapter();
 
-  const { data: libraryProfileFetched } = useGetV1LibraryProfile();
-  const { isSuccess, data } = useGetV1UserLoans();
+  const { data: libraryProfileFetched } = useGetV1LibraryProfile({
+    query: { enabled: !useBiblio }
+  });
+  const { isSuccess, data } = useGetV1UserLoans(
+    {},
+    { query: { enabled: !useBiblio } }
+  );
+  const { data: biblioQuotas } = useBiblioLoanQuotas({ enabled: useBiblio });
   const [libraryProfile, setLibraryProfile] = useState<LibraryProfile | null>(
     null
   );
@@ -30,17 +42,48 @@ const StatusSection: FC = () => {
   }, [libraryProfileFetched]);
 
   const {
-    maxConcurrentAudioLoansPerBorrower,
-    maxConcurrentEbookLoansPerBorrower,
     maxConcurrentAudioReservationsPerBorrower = 0,
     maxConcurrentEbookReservationsPerBorrower = 0
   } = libraryProfile || {};
 
-  const { patronEbookLoans, patronAudioLoans: patronAudioBookLoans } =
-    getPatronLoanQuotas({
-      userData: patronData ?? undefined,
-      loans: data?.loans
-    });
+  const publizonQuotas = getPatronLoanQuotas({
+    userData: patronData ?? undefined,
+    loans: data?.loans
+  });
+
+  // This section counts the loans the user holds right now, so the concurrent
+  // counters are the Biblio equivalent of Publizon's maxConcurrent limits.
+  const biblioEbook = getBiblioLoanQuota({
+    quotas: biblioQuotas,
+    format: "ebook",
+    period: "concurrent"
+  });
+  const biblioAudio = getBiblioLoanQuota({
+    quotas: biblioQuotas,
+    format: "audiobook",
+    period: "concurrent"
+  });
+
+  const patronEbookLoans = useBiblio
+    ? biblioEbook.current
+    : publizonQuotas.patronEbookLoans;
+  const patronAudioBookLoans = useBiblio
+    ? biblioAudio.current
+    : publizonQuotas.patronAudioLoans;
+  const maxConcurrentEbookLoansPerBorrower = useBiblio
+    ? biblioEbook.limit
+    : libraryProfile?.maxConcurrentEbookLoansPerBorrower;
+  const maxConcurrentAudioLoansPerBorrower = useBiblio
+    ? biblioAudio.limit
+    : libraryProfile?.maxConcurrentAudioLoansPerBorrower;
+
+  // Publizon gates the whole section on its library profile. Biblio has no
+  // equivalent document, so its quotas take that role.
+  // An empty array is an answer, not a quota: rendering the section from it
+  // would show a heading with two blank counters.
+  const hasQuotas = useBiblio
+    ? Boolean(biblioQuotas?.length)
+    : Boolean(libraryProfile);
 
   // Publizon doesn't account for "subscription" (aka, "blue", aka
   // "non-quota") loans, so we have to figure out how many of the
@@ -60,7 +103,7 @@ const StatusSection: FC = () => {
 
   return (
     <section className="dpl-status-loans">
-      {libraryProfile && (
+      {hasQuotas && (
         <>
           <h2 className="text-header-h4 mt-64 mb-16">
             {t("patronPageStatusSectionHeaderText")}
@@ -68,14 +111,18 @@ const StatusSection: FC = () => {
           <div className="text-body-small-regular mb-8">
             {t("patronPageStatusSectionBodyText")}
           </div>
-          <div className="text-body-small-regular mt-8 mb-8">
-            {t("patronPageStatusSectionReservationsText", {
-              placeholders: {
-                "@countEbooks": maxConcurrentEbookReservationsPerBorrower,
-                "@countAudiobooks": maxConcurrentAudioReservationsPerBorrower
-              }
-            })}
-          </div>
+          {/* Biblio's quotas cover loans only - it has no reservation limits
+              to show, so the line is left out rather than rendered as zero. */}
+          {!useBiblio && (
+            <div className="text-body-small-regular mt-8 mb-8">
+              {t("patronPageStatusSectionReservationsText", {
+                placeholders: {
+                  "@countEbooks": maxConcurrentEbookReservationsPerBorrower,
+                  "@countAudiobooks": maxConcurrentAudioReservationsPerBorrower
+                }
+              })}
+            </div>
+          )}
           <div className="dpl-status-loans__column">
             <div className="dpl-status mt-32">
               <h3 className="text-small-caption">

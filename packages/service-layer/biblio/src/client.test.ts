@@ -118,6 +118,7 @@ const loanBody = {
   author: "Christie, Agatha",
   publisher: "Forlag",
   publish_date: "2014-11-07T00:00:00Z",
+  license: { id: "lic-1", type: "selection" },
   // Fields the mapper does not consume must be tolerated.
   uid: "user-1",
   org_id: "org-1",
@@ -135,6 +136,7 @@ const mappedLoan = {
   author: "Christie, Agatha",
   publisher: "Forlag",
   publishDate: "2014-11-07T00:00:00Z",
+  loanProvider: "selection",
 }
 
 describe("createBiblioClient.getLoans", () => {

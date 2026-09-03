@@ -96,8 +96,10 @@ export const hasPublizonIdentifier = (manifestation: Manifestation) =>
     (identifier) => identifier.type === IdentifierTypeEnum.Publizon
   ) ?? false;
 
-// Picks the manifestation to loan/reserve through Publizon: prefer the one
-// carrying a PUBLIZON identifier (the loanable edition), else the first.
+// Picks the manifestation a digital loan or reservation is made from: prefer
+// the one carrying FBI's PUBLIZON identifier, which marks the loanable
+// edition, else the first. The identifier type is FBI's field name and says
+// nothing about which provider holds the material.
 export const getLoanableManifestation = (manifestations: Manifestation[]) => {
   return (
     manifestations.find(hasPublizonIdentifier) ??
@@ -168,15 +170,26 @@ export const getManifestationIsbn = (manifestation: Manifestation) => {
   return isbnIdentifier?.value ?? "";
 };
 
-// Identifier used for every Publizon call (loan, reservation, loan status,
-// order id). Prefer the PUBLIZON identifier; fall back to the ISBN.
-export const getManifestationPublizonIdentifier = (
+/**
+ * The identifier a digital material is borrowed, reserved and read by.
+ *
+ * Both providers use it: it is Publizon's identifier and Biblio's
+ * `material_id`, and it is what `identifier` means on LoanType and
+ * ReservationType - see `isDigitalReservation`.
+ *
+ * `IdentifierTypeEnum.Publizon` is FBI's name for the field, not a statement
+ * about which service we call, so it stays the preferred source no matter who
+ * holds the material. It is preferred over the ISBN because a manifestation
+ * can carry several ISBNs and the leading one is not always the right edition
+ * - a deselected PDF, for instance.
+ */
+export const getManifestationDigitalIdentifier = (
   manifestation: Manifestation
 ) => {
-  const publizonIdentifier = manifestation.identifiers?.find(
+  const fbiPublizonIdentifier = manifestation.identifiers?.find(
     (identifier) => identifier.type === IdentifierTypeEnum.Publizon
   );
-  return publizonIdentifier?.value ?? getManifestationIsbn(manifestation);
+  return fbiPublizonIdentifier?.value ?? getManifestationIsbn(manifestation);
 };
 
 export const getManifestationSource = (manifestation: Manifestation) => {
