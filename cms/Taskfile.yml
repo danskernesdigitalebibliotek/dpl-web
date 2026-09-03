@@ -15,9 +15,9 @@ env:
   SKIP_BAKED_IN_BUILDS: "true"
 
 includes:
-  translations: ./task/Taskfile.translations.yml
-  lagoon: ./task/Taskfile.lagoon.yml
-  database-snapshot: ./task/Taskfile.database-snapshot.yml
+  translations: ./taskfiles/Taskfile.translations.yml
+  lagoon: ./taskfiles/Taskfile.lagoon.yml
+  database-snapshot: ./taskfiles/Taskfile.database-snapshot.yml
 
 vars:
   # Docker image registry.
