@@ -1,7 +1,8 @@
 "use client"
 
 import { motion, useInView } from "framer-motion"
-import { useEffect, useRef } from "react"
+import { useSearchParams } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
 
 import SearchResults, {
   SearchResultsSkeleton,
@@ -16,15 +17,16 @@ import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 const SearchPageLayout = () => {
   const loadMoreRef = useRef(null)
   const loadMoreRefIsInView = useInView(loadMoreRef)
+  const searchParams = useSearchParams()
+  const qFromUrl = searchParams.get("q") ?? ""
   const actor = useSearchMachineActor()
-  const {
-    data,
-    isLoadingFacets,
-    isLoadingResults,
-    isLoadingMoreResults,
-    machineIsReady,
-    searchQuery,
-  } = useSearchDataAndLoadingStates()
+  const { data, isLoadingFacets, isLoadingResults, isLoadingMoreResults } =
+    useSearchDataAndLoadingStates()
+  const [isHydrated, setIsHydrated] = useState(false)
+
+  useEffect(() => {
+    setIsHydrated(true)
+  }, [])
 
   useEffect(() => {
     if (loadMoreRefIsInView) {
@@ -35,29 +37,35 @@ const SearchPageLayout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadMoreRefIsInView])
 
-  const isNoSearchResult = !isLoadingResults && (!data.search || !data.search.pages[0].length)
-  const hitCountText = data.search?.hitcount ? `(${data.search.hitcount})` : ""
-  const searchQueryText = searchQuery ? `"${searchQuery}"` : ""
+  const hasSearchQuery = Boolean(qFromUrl)
+  const hasSearchData = Boolean(data.search)
+  const isSearching = isLoadingResults || isLoadingMoreResults
+  // XState data is client-only; defer result UI until after hydration to match SSR.
+  const showResultsSkeleton = hasSearchQuery && (!isHydrated || isSearching || !hasSearchData)
+  const showNoResults =
+    isHydrated && hasSearchQuery && hasSearchData && !isSearching && !data.search?.pages[0]?.length
+  const hitCountText = isHydrated && data.search?.hitcount ? `(${data.search.hitcount})` : ""
+  const searchQueryText = `"${qFromUrl}"`
 
   return (
     <div className="content-container space-y-grid-gap-2">
-      {searchQuery && machineIsReady && (
+      {hasSearchQuery && (
         <>
           <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
             {`Viser resultater for ${searchQueryText} ${hitCountText}`}
           </h1>
           <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
-            {!isLoadingResults && data.search
+            {isHydrated && !isLoadingResults && data.search
               ? data.search.hitcount
-                ? `Viser ${data.search.hitcount} resultater for søgningen "${searchQuery}"`
+                ? `Viser ${data.search.hitcount} resultater for søgningen "${qFromUrl}"`
                 : "Intet søgeresultat"
               : ""}
           </div>
         </>
       )}
-      {searchQuery && machineIsReady ? (
+      {hasSearchQuery ? (
         <>
-          {!isLoadingFacets && data.facets && data.facets.length > 0 ? (
+          {isHydrated && !isLoadingFacets && data.facets && data.facets.length > 0 ? (
             <div className="relative">
               <div className="lg:hidden">
                 <SearchFiltersMobile facets={data.facets} />
@@ -75,11 +83,11 @@ const SearchPageLayout = () => {
           )}
           <hr />
           <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
-            {isNoSearchResult && (
+            {showNoResults && (
               <p className="text-typo-subtitle-lg opacity-35">Intet søgeresultat</p>
             )}
-            {data.search &&
-              data.search.pages.map(
+            {isHydrated &&
+              data.search?.pages.map(
                 (works, i) =>
                   works && (
                     <motion.div
@@ -92,7 +100,7 @@ const SearchPageLayout = () => {
                     </motion.div>
                   )
               )}
-            {(isLoadingMoreResults || isLoadingResults) && <SearchResultsSkeleton />}
+            {showResultsSkeleton && <SearchResultsSkeleton />}
           </div>
         </>
       ) : (
