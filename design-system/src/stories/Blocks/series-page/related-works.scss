@@ -38,6 +38,14 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
   margin: 0;
 }
 
+// keen-slider is configured with perView "auto" and takes each slide's width
+// from CSS; both bounds are needed or the flex track stretches/shrinks the
+// slides.
+.related-works-slider .keen-slider__slide {
+  min-width: $_related-works-slide-width;
+  max-width: $_related-works-slide-width;
+}
+
 // The container is inset so the resting slider starts at the section
 // padding, while overflow stays visible so moving slides run all the way to
 // the screen edge (same pattern as GO's MaterialSlider).
@@ -48,14 +56,14 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
 .related-works .related-works-slider .keen-slider {
   margin: 0 $s-xl;
   overflow: visible;
-}
 
-// keen-slider is configured with perView "auto" and takes each slide's width
-// from CSS; both bounds are needed or the flex track stretches/shrinks the
-// slides.
-.related-works-slider .keen-slider__slide {
-  min-width: $_related-works-slide-width;
-  max-width: $_related-works-slide-width;
+  // The slides stop clipping too (the library hides their overflow), for the
+  // same reason as the track and one more: the cards draw their in-grid
+  // outline just outside their box, and a clipping slide would swallow it.
+  // The library's slide selector is three classes deep, hence the fourth.
+  .keen-slider__slide {
+    overflow: visible;
+  }
 }
 
 .related-works-slider__controls {
