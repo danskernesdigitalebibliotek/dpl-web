@@ -51,6 +51,26 @@ tasks:
     env:
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
 
+  normalize:
+    desc: Rewrite the combined translation file in our canonical serialization
+    summary: |
+      Rewrite the combined translation file with the same msgcat invocation
+      that conf:merge uses to produce it. POEditor commits the file in its own
+      serialization (unwrapped lines, its internal term order, its own
+      header), so every later conf:merge commit would otherwise rewrite the
+      whole file and drown the real changes in formatting noise. Normalizing
+      right after a POEditor export keeps the committed file in one format.
+    cmds:
+      - task dev:cli -- msgcat --sort-output -o web/$PATH_TO_FILE.normalized web/$PATH_TO_FILE
+      - task dev:cli -- mv web/$PATH_TO_FILE.normalized web/$PATH_TO_FILE
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
+    requires:
+      vars: [LANGUAGE, PO_DIR]
+    env:
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
+
   separate:
     desc: Save translations from combined file into separate file
     cmds:

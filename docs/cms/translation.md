@@ -30,6 +30,12 @@ To make the "translation traffic" work following components are being used:
   * Merges the two files: `*.po` and `*.config.po` into a `*.combined.po` file
   * Notifies POEditor that new translatable strings are available
   * When a project is exported from POEditor:
+    * The `*.combined.po` file is normalized: POEditor commits it in its own
+      serialization (unwrapped lines, its internal term order), so it is
+      rewritten with the same `msgcat` invocation that produced it and
+      committed again. This keeps the committed file in one canonical format,
+      so both POEditor exports and scan commits only show actual changes
+      instead of whole-file rewrites.
     * The `*.combined.po` is split into two files: `*.po` and `*.config.po`
     * The `*.po` files are published to GitHub Pages
 * POEditor
@@ -69,6 +75,7 @@ sequenceDiagram
   Translator ->> POEditor: Translate strings
   Translator ->> POEditor: Export strings to GitHub
   POEditor ->> GitHub: Commit combined.po file with updated translations to develop
+  GitHub ->> GitHub: .combined.po is normalized to the canonical serialization
   GitHub ->> GitHub: .combined.po is split into two files: .po and .config.po
   GitHub ->> GitHub: All the po files are published to Github Pages
   DplCms ->> GitHub: Fetch .po file with latest translations

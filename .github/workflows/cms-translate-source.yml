@@ -17,10 +17,12 @@ jobs:
       run:
         working-directory: cms
     # Avoid systems crossing each other by not looking for string changes
-    # in commits coming from POEditor or from the job itself.
+    # in commits coming from POEditor or from the jobs in this workflow.
     # Commits from POEditor are in the format: "Update [file] (POEditor.com)"
-    # Commits from the this job says: "New translations were found"
-    if: ${{ !contains(github.event.head_commit.message, 'POEditor.com') && !contains(github.event.head_commit.message, 'New translations were found') }}
+    # Commits from this job say: "New translations were found"
+    # Commits from the normalization step say: "Normalize the combined
+    # translation file"
+    if: ${{ !contains(github.event.head_commit.message, 'POEditor.com') && !contains(github.event.head_commit.message, 'New translations were found') && !contains(github.event.head_commit.message, 'Normalize the combined translation file') }}
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the
       # added or changed files to the repository.
@@ -86,6 +88,9 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          # We have branch protection on. To get around it, we use a PAT,
+          # supplied by the DPL Platform Bot.
+          token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -95,6 +100,18 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
         run: task ci:reset
+        # POEditor commits the file in its own serialization. Rewrite it in
+        # the format the SendToPoeditor job produces, so the next scan commit
+        # only contains actual string changes instead of a whole-file rewrite.
+      - name: Normalize the combined translation file
+        run: task translations:normalize
+      - name: Commit the normalized translation file
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          file_pattern: "./cms/web/profiles/dpl_cms/translations/*.combined.po"
+          # The SendToPoeditor job skips commits with this message. Keep the
+          # two in sync.
+          commit_message: Normalize the combined translation file
       - name: Separate danish translations into po file
         run: task translations:separate
       - name: Separate danish configuration translations into po file
