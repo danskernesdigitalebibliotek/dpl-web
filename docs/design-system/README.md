@@ -73,38 +73,17 @@ source code.
 
 ## Usage
 
-The project is available in two ways and should be consumed accordingly:
+The design system is a workspace package inside this monorepo. It is not
+published to any registry, so there is nothing to install or authenticate
+against — `pnpm install` from the repository root links it into the projects
+that depend on it.
 
-1. As package in the local npm registry for this repository
-2. As a `dist.zip` file attached to a release for this repository
-
-Both releases contain the built assets of the project: JavaScript files, CSS
-styles and icons.
+The built assets — JavaScript files, CSS styles and icons — land in `build/`
+after `task dev:design-system:build`. That directory is the public API;
+consumers import paths like `…/build/css/base.css`.
 
 You can find the HTML output for a given story under the HTML tab inside
 storybook.
-
-### NPM package
-
-[The GitHub NPM package registry requires authentication if you are to access
-packages there](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token).
-
-Consequently, if you want to use the design system as an NPM package or if you
-use a project that depends on the design system as an NPM package you must
-authenticate:
-
-1. [Create a GitHub token with the required scopes: `repo` and `read:packages`](https://github.com/settings/tokens/new?description=npm&scopes=repo,read:packages)
-2. Run `npm login --registry=https://npm.pkg.github.com`
-3. Enter the following information:
-
-```shell
-> Username: [Your GitHub username]
-> Password: [Your GitHub token]
-> Email: [An email address used with your GitHub account]
-```
-
-Note that you will need to reauthenticate when your personal access token
-expires.
 
 ## Deployment and releases
 

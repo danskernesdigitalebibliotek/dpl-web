@@ -2,20 +2,22 @@
 
 ## Building and publishing releases
 
-A release of dpl-cms can be build by pushing a tag that matches the following
-pattern:
+A CMS release is built by pushing a tag that matches the following pattern:
 
 ```shell
 # Replace <version> with the version.
 git tag <version>
 
 # Eg.
-git tag 1.2.3
+git tag 2026.34.2
 ```
 
-The actual release is performed by the `Publish source` Github action which
-invokes `task source:deploy`  which in turn uses the tasks `source:build` and
-`source:push` to build and publish the release.
+The actual release is performed by the `CMS / Publish release` GitHub Actions
+workflow (`.github/workflows/cms-publish-release.yml`). Its `CMS / Publish
+source` job invokes `task source:deploy`, which in turn uses the tasks
+`source:build` and `source:push` to build and publish the release. The same
+workflow publishes the database snapshot image and appends links to both
+container images to the GitHub release notes.
 
 Using the action should be the preferred choice for building and publishing
 releases, but should you need to - it is possible to run the task manually
