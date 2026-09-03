@@ -85,6 +85,7 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
   position: absolute;
   right: 0;
   display: flex;
+  flex-direction: column;
   gap: $s-sm;
 }
 

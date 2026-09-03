@@ -99,20 +99,20 @@ const RelatedWorksSlider: React.FC<RelatedWorksSliderProps> = ({
           <button
             type="button"
             className="related-works-slider__button"
-            aria-label="Vis forrige"
-            disabled={isAtStart}
-            onClick={() => instanceRef.current?.prev()}
-          >
-            <Arrow direction="left" />
-          </button>
-          <button
-            type="button"
-            className="related-works-slider__button"
             aria-label="Vis næste"
             disabled={isAtEnd}
             onClick={() => instanceRef.current?.next()}
           >
             <Arrow direction="right" />
+          </button>
+          <button
+            type="button"
+            className="related-works-slider__button"
+            aria-label="Vis forrige"
+            disabled={isAtStart}
+            onClick={() => instanceRef.current?.prev()}
+          >
+            <Arrow direction="left" />
           </button>
         </div>
       </div>
