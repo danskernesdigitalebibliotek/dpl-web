@@ -1,6 +1,7 @@
 {% set has_image = (image is not empty) and logo_img_enable %}
+{% set logo_text = place ? title ~ ' ' ~ place : title %}
 
-<a href="{{ path('<front>') }}" class="logo" aria-label="{{ '@site_title: frontpage'|t({'@site_title': title}) }}">
+<a href="{{ path('<front>') }}" class="logo" aria-label="{{ '@site_title: frontpage'|t({'@site_title': logo_text}) }}">
   <figure class="logo__content">
     {% if has_image %}
       {{ image }}
