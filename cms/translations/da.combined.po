@@ -29639,7 +29639,7 @@ msgstr ""
 
 #: 
 msgid "Server time: %utc"
-msgstr ""
+msgstr "Server tid: %utc"
 
 #: 
 msgid "Timecheck"
@@ -34129,7 +34129,7 @@ msgstr ""
 
 #: 
 msgid "Use the Biblio adapter for digital materials"
-msgstr ""
+msgstr "Brug Biblio adapteren til digitale materialer"
 
 #: 
 msgid "Use this field to rewrite the filter options displayed. Use the format of current_text|replacement_text, one replacement per line. For example: <pre>\n"
@@ -34736,17 +34736,17 @@ msgstr "Bibliotek.dk"
 #: 
 msgctxt "Work Page"
 msgid "Contact the library for access"
-msgstr ""
+msgstr "Kontakt biblioteket for at få adgang"
 
 #: 
 msgctxt "Work Page"
 msgid "The material is not available through the website"
-msgstr ""
+msgstr "Materialet er ikke tilgængeligt for dig på hjemmesiden"
 
 #: 
 msgctxt "Work Page"
 msgid "Visit the library and get help from a librarian or check whether the material is available at"
-msgstr ""
+msgstr "Kontakt evt. biblioteket og få hjælp fra en bibliotekar til at få adgang til materialet eller prøv på"
 
 #: 
 msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:3:label"
@@ -35155,12 +35155,12 @@ msgstr ""
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:bef:filter:roles_target_id:soft_limit_label_more"
 msgid "Vis flere"
-msgstr ""
+msgstr "Vis flere"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:bef:filter:roles_target_id:soft_limit_label_less"
 msgid "Vis mindre"
-msgstr ""
+msgstr "Vis mindre"
 
 #: 
 msgid "When enabled, the soft limit counts all items including nested children. When disabled, only top-level items are counted."

@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-08-31 15:47+0200\n"
-"PO-Revision-Date: 2026-08-31 15:47+0200\n"
+"POT-Creation-Date: 2026-09-03 10:40+0200\n"
+"PO-Revision-Date: 2026-09-03 10:40+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8121,9 +8121,9 @@ msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:bef:filter:roles_target_id:soft_limit_label_more"
 msgid "Vis flere"
-msgstr ""
+msgstr "Vis flere"
 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:bef:filter:roles_target_id:soft_limit_label_less"
 msgid "Vis mindre"
-msgstr ""
+msgstr "Vis mindre"
 
