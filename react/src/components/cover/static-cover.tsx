@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { DisplaySize } from "./cover.types";
 
 type StaticCoverProps = {
-  src: string;
+  src?: string;
   displaySize: DisplaySize;
   animate?: boolean;
   tint?: Tint;
@@ -51,6 +51,22 @@ export const StaticCover = ({
         isHiddenFromScreenReaders={!alt}
         trackClick={trackClick}
       >
+        {src && (
+          <CoverImage
+            onImageLoaded={onImageLoaded}
+            src={src}
+            altText={alt}
+            animate={animate}
+            shadow={shadow}
+          />
+        )}
+      </LinkNoStyle>
+    );
+  }
+
+  return (
+    <div className={classes.wrapper}>
+      {src && (
         <CoverImage
           onImageLoaded={onImageLoaded}
           src={src}
@@ -58,19 +74,7 @@ export const StaticCover = ({
           animate={animate}
           shadow={shadow}
         />
-      </LinkNoStyle>
-    );
-  }
-
-  return (
-    <div className={classes.wrapper}>
-      <CoverImage
-        onImageLoaded={onImageLoaded}
-        src={src}
-        altText={alt}
-        animate={animate}
-        shadow={shadow}
-      />
+      )}
     </div>
   );
 };
