@@ -4,7 +4,10 @@ import serviceUrlArgs from "../../core/storybook/serviceUrlArgs";
 import { withConfig } from "../../core/utils/config";
 import { getCurrentLocation } from "../../core/utils/helpers/url";
 import { withUrls } from "../../core/utils/url";
-import { AvailabilityLabel } from "./availability-label";
+import {
+  AvailabilityLabel,
+  AvailabilityLabelProps
+} from "./availability-label";
 import globalTextArgs from "../../core/storybook/globalTextArgs";
 import globalConfigArgs from "../../core/storybook/globalConfigArgs";
 import { AccessTypeCodeEnum } from "../../core/dbc-gateway/generated/graphql";
@@ -12,7 +15,13 @@ import { AccessTypeCodeEnum } from "../../core/dbc-gateway/generated/graphql";
 // The configuration below addresses the different variables,
 // their default values, and how they translate into storybook
 // controls.
-const meta: Meta<typeof AvailabilityLabel> = {
+// The label reads the blacklisted branches from config, so the story has to
+// provide that entry alongside the component props.
+type AvailabilityLabelStoryArgs = AvailabilityLabelProps & {
+  blacklistedAvailabilityBranchesConfig: string;
+};
+
+const meta: Meta<AvailabilityLabelStoryArgs> = {
   title: "Components/Availability Label",
   component: AvailabilityLabel,
   argTypes: {
@@ -51,12 +60,17 @@ const meta: Meta<typeof AvailabilityLabel> = {
       name: "Access types",
       options: [...Object.values(AccessTypeCodeEnum)],
       control: { type: "check" }
+    },
+    blacklistedAvailabilityBranchesConfig: {
+      description: "Branches excluded from the availability lookup",
+      control: { type: "text" }
     }
   },
   args: {
     ...serviceUrlArgs,
     ...globalTextArgs,
     ...globalConfigArgs,
+    blacklistedAvailabilityBranchesConfig: "",
     faustIds: ["62523611"],
     cursorPointer: false,
     dataCy: "",
@@ -76,7 +90,7 @@ const meta: Meta<typeof AvailabilityLabel> = {
 
 export default meta;
 
-type Story = StoryObj<typeof AvailabilityLabel>;
+type Story = StoryObj<AvailabilityLabelStoryArgs>;
 
 export const Available: Story = {
   args: {
