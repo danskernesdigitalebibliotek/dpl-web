@@ -2,9 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import { parseAndMapMetadata } from "./metadata.mapper"
 
-// Everything the contract requires. Tests below override only the field they
-// are about - a record missing any of these is a contract breach and throws,
-// which is covered separately.
+// Everything the contract requires; tests override only the field they are about.
 const upstreamMaterial = {
   isbn: "9788711234567",
   material_type: "ebook",
@@ -69,7 +67,6 @@ describe("parseAndMapMetadata", () => {
       ],
     }
 
-    // Duration, publisher and thema codes have no place in the mapped shape.
     expect(parseAndMapMetadata(raw)).not.toHaveProperty("duration_seconds")
     expect(parseAndMapMetadata(raw)).not.toHaveProperty("publisher")
     expect(parseAndMapMetadata(raw)).not.toHaveProperty("thema_codes")

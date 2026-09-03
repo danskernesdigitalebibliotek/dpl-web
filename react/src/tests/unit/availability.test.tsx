@@ -506,9 +506,8 @@ describe("useOnlineAvailabilityData tests", () => {
     });
 
     it("Asks nobody for an anonymous visitor, who sees the material as available", () => {
-      // can-loan is patron-scoped, so Biblio cannot be asked without a user -
-      // and Publizon must not stand in for it, not even then. Online
-      // materials default to available while nobody has answered.
+      // Biblio cannot be asked without a user, and Publizon must not stand
+      // in - so nobody answers and the online default applies.
       mockedIsAnonymous.mockReturnValue(true);
 
       const { result } = render();
@@ -579,10 +578,8 @@ describe("useOnlineAvailabilityData tests", () => {
     });
 
     describe("TEMPORARY: materials the adapter does not know", () => {
-      // Goes with ServiceLayerConfig's toleration setting when the catalogue
-      // and the adapter agree on which materials exist. Whether a 404 is
-      // tolerated is the service layer's own business now; this hook only
-      // has to read the tolerated answer correctly.
+      // Remove with ServiceLayerConfig.tolerateUnknownMaterials. The service
+      // layer decides whether a 404 is tolerated; this hook only reads the answer.
       it("Counts a tolerated unknown material as unavailable", () => {
         // The tolerated 404: the query resolved, and Biblio has no answer.
         mockedLoanDecision.mockReturnValue({

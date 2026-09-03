@@ -56,11 +56,9 @@ export { getLoans, renewLoans } from "./loans"
 export { getFees } from "./fees"
 
 // Biblio adapter — the digital-materials provider behind the CMS feature flag.
-// The public surface is what the apps actually consume: the hooks, the
-// predicates that read their answers, the query keys they invalidate, and
-// the one query the reader consumes directly. The raw functions and query
-// builders behind them stay internal until something server-side needs them
-// - a smaller surface is less to keep stable.
+// Only what the apps consume is exported: hooks, the predicates reading their
+// answers, the query keys they invalidate, and the reader's query. The raw
+// functions stay internal until something server-side needs them.
 export {
   isMaterialAvailable,
   isMaterialLoanable,

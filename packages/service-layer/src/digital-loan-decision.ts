@@ -32,8 +32,7 @@ export async function getDigitalLoanDecision(
  */
 export const isMaterialAvailable = (status: LoanDecisionStatus): boolean => {
   switch (status) {
-    // The material cannot be borrowed now: it can at most be reserved or
-    // wished for. Equivalent to Publizon's status 5 (reservation queue).
+    // Equivalent to Publizon's status 5 (reservation queue).
     case "reservable":
     case "wishable":
     case "unavailable":
@@ -44,13 +43,8 @@ export const isMaterialAvailable = (status: LoanDecisionStatus): boolean => {
 }
 
 /**
- * Whether the user can borrow the material right now.
- *
- * Unlike `isMaterialAvailable`, which asks about the material alone,
- * this is the answer the loan button needs - so a status describing the user
- * counts as "no". A spent quota therefore leaves neither this nor
- * `isMaterialReservable` true, which matches Publizon's status 0 ("not
- * loanable, max loans reached"): inherited behaviour, not a Biblio decision.
+ * Whether the user can borrow the material right now - the loan button's
+ * answer, so a spent quota counts as "no", as with Publizon's status 0.
  */
 export const isMaterialLoanable = (status: LoanDecisionStatus): boolean => status === "loanable"
 

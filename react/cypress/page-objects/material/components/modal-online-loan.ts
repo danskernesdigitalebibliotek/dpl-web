@@ -3,13 +3,7 @@ import { ComponentObject, Elements } from "@hammzj/cypress-page-object";
 /** The modal's root selector, needed on its own to assert absence. */
 export const onlineLoanModalSelector = "[data-cy='online-internal-modal']";
 
-/**
- * The modal that confirms a loan of a digital material.
- *
- * It shows the quota line for the material and the button that actually
- * creates the loan, so it is where a Biblio-provided material becomes visible
- * to the user.
- */
+/** The modal that confirms a loan of a digital material. */
 export class OnlineLoanModalComponent extends ComponentObject {
   public elements!: Elements;
 

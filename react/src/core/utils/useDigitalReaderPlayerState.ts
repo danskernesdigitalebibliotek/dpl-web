@@ -13,27 +13,13 @@ import {
 } from "./types/reader-player-state";
 
 /**
- * What the service layer says about a digital material.
+ * What the service layer says about a digital material - the service layer
+ * half of the transition, see `ReaderPlayerState`. Callers gate through
+ * `enabled` so the adapter is only asked about materials it provides.
  *
- * The service layer half of the transition - see `ReaderPlayerState` for how
- * it is
- * kept interchangeable with the Publizon half. Callers gate on the provider
- * probe through `enabled`; this hook only asks the adapter about materials it
- * actually provides.
- *
- * ## Where the service layer differs from Publizon
- *
- * Publizon answers everything from one loan status per material, including
- * whether the user already holds it. The service layer splits that across three
- * endpoints, which is an improvement: the loan the user holds is the same
- * record that gives us the key to open it in the reader, rather than a status
- * code that happens to say "loaned".
- *
- * An offered reservation is the other difference. Publizon has no redeem step
- * - a redeemable reservation simply shows the loan button - so an offer is
- * reported here as `canBeLoaned` too. What that takes is then decided in
- * useOnlineInternalHandleLoanReservation, which accepts the offer instead of
- * creating a second loan.
+ * Publizon has no redeem step, so an offered reservation is reported as
+ * `canBeLoaned` too; useOnlineInternalHandleLoanReservation then accepts the
+ * offer instead of creating a second loan.
  */
 const useDigitalReaderPlayerState = ({
   identifier,

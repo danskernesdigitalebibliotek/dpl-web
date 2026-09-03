@@ -214,9 +214,8 @@ export const Primary: Story = {
   }
 };
 
-// The Biblio adapter feature flag turned on. During the transition period the
-// digital loan counts combine existing Publizon loans with loans from the
-// Biblio adapter, so this story exercises both providers at once.
+// The Biblio adapter feature flag turned on: the digital loan counts combine
+// Publizon loans with loans from the Biblio adapter.
 export const DashboardWithBiblioAdapter: Story = {
   args: {
     ...Primary.args,

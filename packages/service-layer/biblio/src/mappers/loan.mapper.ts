@@ -6,10 +6,8 @@ import type { DigitalLoan } from "../../../src/types"
 // restricted to ebook | audiobook.
 export const MaterialTypeSchema = z.enum(["ebook", "audiobook", "paper_book"])
 
-// The licence types a loan can be made under. "selection" (Danish blue
-// titles) costs the patron nothing and draws on no quota; the rest are ways
-// the library pays for a loan that still counts against the patron's quota.
-// See LoanProvider for where the unused "free" sits.
+// The licence types a loan can be made under - see LoanProvider in src/types
+// for what each of them means.
 export const LoanProviderSchema = z.enum([
   "free",
   "k-fond",
@@ -19,10 +17,8 @@ export const LoanProviderSchema = z.enum([
   "selection",
 ])
 
-// We only read the fields consumers need; zod strips unknown keys so new
-// fields in the adapter responses do not break parsing. What we do read
-// follows the contract: every field below is required there, so a response
-// missing one is a contract breach and throws.
+// zod strips unknown keys, so new adapter fields do not break parsing. Every
+// field below is required by the contract, so a missing one throws.
 export const LoanSchema = z.object({
   id: z.string(),
   material_id: z.string(),
@@ -34,8 +30,6 @@ export const LoanSchema = z.object({
   author: z.string(),
   publisher: z.string(),
   publish_date: z.string(),
-  // Which licence the loan was made under - what identifies a cost-free
-  // loan, the kind that draws on no quota.
   license: z.object({ type: LoanProviderSchema }),
 })
 

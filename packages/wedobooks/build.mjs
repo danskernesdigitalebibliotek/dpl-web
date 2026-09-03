@@ -12,11 +12,9 @@ const buildOptions = {
   platform: "browser",
   target: "es2020",
   // Colibrio, the reading framework the SDK bundles, licenses its
-  // redistributables on the condition that they are "compiled or bundled in a
-  // manner so that any of its modules are not easily extractable" - so this
-  // build is minified, and no source map is emitted. A map would hand the
-  // original modules straight back, and this output is served publicly from
-  // every library site.
+  // redistributables only "compiled or bundled in a manner so that any of its
+  // modules are not easily extractable". Hence minified with no source map:
+  // this output is served publicly from every library site.
   minify: true,
   sourcemap: false,
   external: ["react", "react-dom"],
@@ -27,12 +25,9 @@ const buildOptions = {
   // copied into ours where it would drift.
   loader: { ".css": "text" },
   // `@colibrio/colibrio-reader-framework` (transitive dep of the SDK) ships
-  // UMD modules. esbuild bundles them but leaves the AMD
-  // `define([...], factory)` branches intact — consumer webpack builds then
-  // pick up those dependency strings via static analysis and try to resolve
-  // them as real modules. Replacing the identifier `define` with `undefined`
-  // makes the AMD branch's `typeof define === 'function'` check statically
-  // false, so esbuild dead-code-eliminates the problematic strings.
+  // UMD modules whose AMD `define([...], factory)` branches survive bundling,
+  // and webpack then tries to resolve their dependency strings as modules.
+  // With `define` statically undefined esbuild drops the branch.
   define: {
     define: "undefined",
   },

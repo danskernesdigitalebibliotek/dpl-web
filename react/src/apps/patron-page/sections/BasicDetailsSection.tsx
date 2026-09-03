@@ -4,10 +4,8 @@ import { useText } from "../../../core/utils/text";
 interface BasicDetailsSectionProps {
   patron: PatronV5;
   /**
-   * The identifier the user can hand to support. Publizon calls it a friendly
-   * card number, the service layer a support id - the section only renders
-   * the value, so
-   * the caller picks the provider.
+   * The identifier the user can hand to support: Publizon's friendly card
+   * number or the service layer's support id - the caller picks the provider.
    */
   patronCardNumber?: string | null;
 }

@@ -1,11 +1,8 @@
 import { ComponentObject, Elements } from "@hammzj/cypress-page-object";
 
 /**
- * The modal's root selector.
- *
- * Needed on its own because `container()` resolves through `cy.get`, which
- * waits for the element to exist - so it cannot express "the modal is not
- * open". Assert absence with `cy.get(loanDetailsModalSelector)` instead.
+ * The modal's root selector, needed on its own to assert absence:
+ * `container()` goes through `cy.get`, which waits for the element to exist.
  */
 export const loanDetailsModalSelector = ".modal-details";
 

@@ -71,15 +71,9 @@ const useOnlineInternalHandleLoanReservation = ({
   const { mutate: mutateAcceptOffer } = useDigitalAcceptOffer();
   const { data: userData } = usePatronData();
 
-  // With the adapter enabled every new loan and reservation goes there, with
-  // no falling back: useReaderPlayer only reports a material as obtainable
+  // No falling back: useReaderPlayer only reports a material as obtainable
   // when the lending provider said so, so a material the adapter cannot lend
-  // never reaches these branches. Sending it to Publizon instead would keep
-  // pulling new loans into the service we are migrating away from.
-  //
-  // offerId is set when the provider hands out a grant that has to be claimed
-  // before it becomes a loan. Only the service layer does; Publizon reports
-  // null.
+  // never reaches these branches. offerId is set only by the service layer.
   const {
     canBeLoaned,
     canBeReserved,
@@ -109,9 +103,7 @@ const useOnlineInternalHandleLoanReservation = ({
     });
 
   // Everything the adapter's answer for this material was derived from is
-  // stale once the user has borrowed or reserved it: the loan and
-  // reservation lists, the can-loan decision behind the button, and the
-  // quota counts the availability text reads.
+  // stale once the user has borrowed or reserved it.
   const invalidateDigital = () => {
     [
       digitalLoansQueryKey(),

@@ -53,8 +53,6 @@ const fetchDigitalMaterial =
           query: { enabled: !hasOwnDetails && !isProvidedByServiceLayer }
         });
 
-      // The description is whatever the most authoritative source has: the
-      // fields the item itself carries, otherwise the provider that was asked.
       const digitalMaterial =
         item.details ??
         (serviceLayerMaterial

@@ -3,14 +3,9 @@ import type { Checkout, ReaderMaterialData } from "@wedobooks/sdk"
 
 /**
  * The reader and the player, wrapped so the rest of the platform never imports
- * the SDK directly.
- *
- * The wrapper exists for two reasons beyond tidiness. The SDK pulls in Firebase
- * and the Colibrio reading framework, and Colibrio ships UMD modules whose AMD
- * branches confuse webpack's static analysis - `build.mjs` pre-bundles around
- * that, so consumers get one plain CommonJS file. And the SDK touches `window`
- * on construction, so it can only ever exist in the browser; keeping that in
- * one place means one guard rather than one per caller.
+ * the SDK directly: `build.mjs` pre-bundles around Colibrio's UMD modules (see
+ * there), and the SDK touches `window` on construction, so the browser guard
+ * lives here once instead of in every caller.
  */
 
 /** The SDK client the reader and the player are opened through. */
@@ -46,10 +41,8 @@ let cachedSdk: WdbLibrarySdk | null = null
  * The SDK client, created once per page.
  *
  * Constructing it initialises Firebase, and a second instance would mean a
- * second auth session - so every caller gets the same client. That is safe to
- * cache without regard for the configuration: it is served by the CMS and is
- * therefore one value for the whole page. Callers can ask for the client
- * freely, including from a render.
+ * second auth session. The cache ignores `config` on purpose: the CMS serves
+ * one value for the whole page.
  */
 export function createWedoBooksSdk(config: WedoBooksSdkConfig): WedoBooksSdk {
   if (typeof window === "undefined") {

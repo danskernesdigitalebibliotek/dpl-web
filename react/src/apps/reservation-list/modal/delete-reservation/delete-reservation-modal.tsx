@@ -117,10 +117,8 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
               queryKey: getGetV1LoanstatusIdentifierQueryKey(res.identifier)
             });
           }
-          // The service layer's can-loan answer was given while the
-          // reservation existed, and the material page derives its button
-          // from it - the same invalidation a new loan or reservation makes
-          // in useOnlineInternalHandleLoanReservation.
+          // The material page derives its button from the can-loan answer,
+          // which was given while the reservation still existed.
           if (hasDigitalReservationId(res)) {
             queryClient.invalidateQueries({
               queryKey: digitalLoanDecisionQueryKey(res.identifier ?? null)

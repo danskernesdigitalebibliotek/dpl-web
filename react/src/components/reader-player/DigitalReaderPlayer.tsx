@@ -10,20 +10,13 @@ export type DigitalReaderPlayerProps = {
 };
 
 /**
- * Opens a digital loan in whichever component its material type calls for.
+ * Opens a digital loan in the reader or the player, decided from the loan
+ * itself: the SDK's checkout carries the material type, so a pasted url opens
+ * the right thing no matter which page it names.
  *
- * The reader and player pages are reached with nothing but a loan id, so the
- * loan itself answers whether it reads or plays: the SDK's checkout carries
- * the material type. Deciding here rather than trusting the address keeps
- * deep links working - a pasted url opens the right thing no matter which
- * page it names.
- *
- * Audiobooks get a page rather than a modal on purpose. The SDK's player bar
- * pins itself to the bottom of the viewport regardless of where it is
- * mounted, which leaves a wrapping modal empty - and a bar overlaid on the
- * material page would promise Spotify-style playback across navigation that
- * full page loads cannot deliver. A dedicated page frames the truth: leaving
- * it ends playback, exactly like closing the e-book reader.
+ * Audiobooks get a page rather than a modal: the SDK's player bar pins itself
+ * to the bottom of the viewport, which leaves a wrapping modal empty, and a
+ * bar over the material page would promise playback across full page loads.
  */
 const DigitalReaderPlayer: React.FC<DigitalReaderPlayerProps> = ({
   loanId,
@@ -31,9 +24,8 @@ const DigitalReaderPlayer: React.FC<DigitalReaderPlayerProps> = ({
 }) => {
   const { sdk, checkout } = useReaderCheckout(loanId);
 
-  // Nothing to decide from until the session and the entitlement are here.
-  // The reader and player render nothing during their own load anyway, so
-  // this adds no wait.
+  // No spinner: the reader and player render nothing during their own load
+  // anyway, so returning null here adds no visible wait.
   if (!sdk || !checkout) return null;
 
   // String() rather than importing the SDK's MaterialType enum: a value

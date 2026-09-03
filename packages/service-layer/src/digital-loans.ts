@@ -23,24 +23,11 @@ export async function createDigitalLoan(
 }
 
 /**
- * Whether a loan under this licence costs the patron nothing - which is what
- * lets the UI promise that the material is included.
- *
- * Only "selection", the licence Danish blue titles answer with: WeDoBooks
- * states those are bought out AND exempt from the quotas.
- *
- * "free" is deliberately not included. It is not in use yet, and what
- * WeDoBooks has confirmed about it is only that titles arriving on it will be
- * exempt from every quota - drawing on no quota is not the same as being free
- * to the patron, and only the latter is worth promising. Revisit when the
- * first title shows up on it.
- *
- * The field is optional by contract: absent means no provider could be picked
- * at all, which promises the patron nothing.
- *
- * Note that cost-free is not the same as unlimited. There is a separate cap
- * on how many cost-free loans a patron may hold at once, and reaching it
- * answers "concurrent_limit_exceeded" like any other ceiling.
+ * Whether a loan under this licence costs the patron nothing - what lets the
+ * UI promise the material is included. Only "selection" qualifies; "free" is
+ * deliberately left out until the first title shows up on it - see
+ * LoanProvider for what each licence means. Cost-free is not unlimited: a
+ * separate concurrent cap still answers "concurrent_limit_exceeded".
  */
 export const isCostFreeLoan = (loanProvider: LoanProvider | undefined): boolean =>
   loanProvider === "selection"

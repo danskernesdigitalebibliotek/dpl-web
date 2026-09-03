@@ -13,13 +13,9 @@ export type PlayerPageProps = {
 };
 
 /**
- * Opens whatever the player page was pointed at.
- *
- * The audiobook counterpart to `Reader`. Only WeDoBooks plays here: Publizon
- * audiobooks play in a modal on the page the patron came from, so no Publizon
- * key ever links to this page. The SDK's player bar pins itself to the bottom
- * of the viewport and leaves the rest of the page free - room this page owns,
- * unlike the reader, which takes the whole screen.
+ * Opens whatever the player page was pointed at. The audiobook counterpart to
+ * `Reader`. Only WeDoBooks plays here: Publizon audiobooks play in a modal on
+ * the page the patron came from, so no Publizon key ever links to this page.
  */
 const PlayerPage: React.FC<PlayerPageProps> = ({
   identifier,
@@ -34,10 +30,7 @@ const PlayerPage: React.FC<PlayerPageProps> = ({
     return <DigitalReaderPlayer loanId={loanid} onClose={onClose} />;
   }
 
-  // Same guard as the reader page's samples: with the flag on the service
-  // layer is the lending provider, and it answers samples for signed-in
-  // sessions only - a hand-made link lands on an empty page rather than in
-  // the service being left.
+  // Same guard as the reader page's samples - see Reader.
   if (identifier && viaBiblioAdapter) {
     return <DigitalSamplePlayer identifier={identifier} onClose={onClose} />;
   }

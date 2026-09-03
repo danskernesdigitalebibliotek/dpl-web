@@ -5,26 +5,16 @@ import { ensureWedoBooksStyles } from "./readerStyles"
 /**
  * Mount an SDK web component into an element React owns but does not manage.
  *
- * The reader and the player differ only in which SDK call opens them, but the
- * mounting itself is subtle enough that it should exist once.
+ * Opening writes `last_opened_at` back onto the entitlement, so callers key
+ * the effect on the entitlement id, not the object - otherwise each write
+ * would trigger the next mount.
  *
- * Opening writes `last_opened_at` back onto the entitlement, so the effect
- * keys on the entitlement id rather than the entitlement. Depending on the
- * object would make each write trigger the next mount.
- *
- * ## Why each run gets its own element
- *
- * Opening is asynchronous, so a run can still be opening when the deps change
- * and the next run starts. If both mounted into the same container, the first
- * one's late callback could no longer tell whether what it found there was its
- * own work or its successor's - and clearing the container blindly would wipe
- * a reader that had just been built.
- *
- * Giving each run a child of its own removes the question. Teardown removes
- * that child, which is also the SDK's own signal to stop: its custom elements
- * unmount on `disconnectedCallback`, so an audiobook stops playing rather than
- * being left orphaned. A mount that lands after teardown lands in a detached
- * node, never connects, and therefore never starts.
+ * Each run gets a child element of its own: opening is asynchronous, so a run
+ * can still be opening when the deps change and the next starts, and with a
+ * shared container the first run's late callback could not tell its own work
+ * from its successor's. Teardown removes the child, which is also the SDK's
+ * signal to stop (its custom elements unmount on `disconnectedCallback`); a
+ * mount landing after teardown lands in a detached node and never starts.
  *
  * Returns the ref to attach to the container.
  */

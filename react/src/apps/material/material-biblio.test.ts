@@ -41,10 +41,6 @@ import { onlineAudioBookManifestation } from "../../../cypress/factories/manifes
  * reservation must be created in Biblio rather than Publizon, the quota shown
  * while confirming has to be Biblio's too, and an offer the user already
  * holds must be accepted rather than borrowed anew.
- *
- * All Biblio bodies come from the factories typed against the generated
- * contract client, so a response that drifts from
- * `schemas/openapi/biblio-adapter.yaml` fails to typecheck.
  */
 
 // The ISBN of the e-book edition in the default material factory.
@@ -267,8 +263,6 @@ describe("Material page - reserving with the flag off", () => {
     openLoanModal(material);
     material.onlineLoanModal().elements.approveButton().click();
 
-    // Publizon takes contact details to notify the user with; the adapter
-    // derives the user from the token and needs none.
     cy.wait("@publizonCreateReservation")
       .its("request.url")
       .should("contain", EBOOK_ISBN);
@@ -278,13 +272,9 @@ describe("Material page - reserving with the flag off", () => {
 });
 
 /**
- * A material Publizon has never heard of.
- *
- * This is where every digital material ends up once it has moved, and it used
- * to be the one case the transition could not serve: whether the button lends
- * or reserves came from Publizon's loan status alone, so a material only
- * Biblio provides left it stuck on a disabled "Loading". The adapter now
- * answers that question for its own materials.
+ * A material Publizon has never heard of - where every digital material ends
+ * up once it has moved. Whether the button lends or reserves can then only
+ * come from the adapter's can-loan answer, never from Publizon's loan status.
  */
 describe("Material page - a material only Biblio provides", () => {
   beforeEach(() => {
@@ -363,9 +353,7 @@ describe("Material page - a material only Biblio provides", () => {
     material.visit([]);
     cy.getBySel("availability-label").contains("e-bog").first().click();
 
-    // The button was derived from the can-loan answer given while the
-    // reservation existed; count those requests before cancelling so the
-    // refetch below can be told apart from the initial one.
+    // Count the can-loan requests first, so the refetch can be told apart.
     cy.wait("@biblioCanLoan");
     cy.get("@biblioCanLoan.all")
       .its("length")
@@ -377,8 +365,8 @@ describe("Material page - a material only Biblio provides", () => {
           .its("request.url")
           .should("contain", `/v1/reservations/${BIBLIO_RESERVATION_ID}`);
 
-        // Then: the material is asked about again, so the button does not
-        // keep describing a reservation that no longer exists.
+        // Then: can-loan is asked again, so the button stops describing a
+        // reservation that no longer exists
         cy.get("@biblioCanLoan.all").should(
           "have.length.greaterThan",
           canLoanRequestsBefore
@@ -425,18 +413,13 @@ describe("Material page - a material only Biblio provides", () => {
 });
 
 /**
- * The adapter refuses, and Publizon would not have.
+ * The adapter refuses, and Publizon would not have. The refusal must stand
+ * rather than be routed to Publizon, which would keep pulling new loans into
+ * the service being migrated away from.
  *
- * A library that switched provider has decided to stop lending through
- * Publizon, so a refusal must stand rather than be quietly routed there -
- * that would keep pulling new loans into the service being migrated away
- * from. The material is simply not offered.
- *
- * The refusal used here is a spent quota on purpose: the material itself is
- * still "available", so the availability label stays green and the ONLY thing
- * withholding the button is the rule that the adapter decides. A material the
- * adapter does not have at all would also read as unavailable, which would
- * hide the button for a second reason and make the test prove less.
+ * A spent quota is used on purpose: the material itself stays "available", so
+ * the only thing withholding the button is that the adapter decides. An
+ * unknown material would also hide it for a second reason and prove less.
  */
 describe("Material page - flag on, the adapter refuses the loan", () => {
   beforeEach(() => {

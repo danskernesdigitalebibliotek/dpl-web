@@ -18,10 +18,6 @@ import {
  * Unlike the loan list, there is no provider probe here: profile data belongs
  * to the user rather than to a single material, so the feature flag alone
  * decides where the support identifier and the loan quotas come from.
- *
- * Every Biblio body is built by the factories in
- * cypress/factories/biblio/biblio.factory.ts, whose types are generated from
- * `schemas/openapi/biblio-adapter.yaml`.
  */
 
 const PUBLIZON_CARD_NUMBER = "1234567890";
@@ -129,12 +125,7 @@ describe("Patron page - Biblio adapter feature flag", () => {
     cy.contains("3 out of").should("not.exist");
   });
 
-  // The quota rendering itself is not repeated here. Whether the reservation
-  // line is left out, how a combined quota applies one pair of numbers to both
-  // formats and how a spent quota reads as full are all decided in
-  // StatusSection from the quota it is handed, and its unit tests pin each of
-  // them - a story per quota shape would prove the same arithmetic in a
-  // browser. What this spec covers is the part only the real page can show:
-  // that the flag moves the whole section, identifier included, from one
-  // provider to the other.
+  // The quota rendering itself (no reservation line, combined quotas, a spent
+  // quota reading as full) is pinned by StatusSection's unit tests. This spec
+  // covers what only the real page shows: the flag moving the whole section.
 });

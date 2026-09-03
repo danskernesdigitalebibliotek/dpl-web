@@ -31,15 +31,11 @@ class DplBiblioSettings extends DplReactConfigBase {
   /**
    * Configuration the WeDoBooks SDK needs to run the reader and the player.
    *
-   * Read from the environment, not from Drupal config: the values are one
-   * set for the whole platform, provisioned by WeDoBooks per environment
-   * (stage/production) - never per library, so they are deliberately not
-   * exposed anywhere a library can see or edit them. The browser still needs
-   * them, so this is where they enter the page.
-   *
-   * Returns NULL unless every value is set: the SDK cannot start on a partial
-   * configuration, and an environment without the values should fall back
-   * rather than hand React something it will fail on.
+   * Read from the environment, not Drupal config: WeDoBooks provisions one
+   * set per environment for the whole platform, never per library, so no
+   * library may see or edit it. NULL unless every value is set - the SDK
+   * cannot start on a partial configuration, so React gets nothing rather
+   * than blanks.
    *
    * @return array<string, string>|null
    *   The SDK configuration, keyed as the React apps expect it.

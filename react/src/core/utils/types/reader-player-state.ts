@@ -1,24 +1,13 @@
 import { ReservationType } from "./reservation-type";
 
 /**
- * What a provider has to be able to say about one digital material for the
- * material page to offer it.
- *
- * This is the seam of the Publizon → service layer transition. Two hooks
- * produce it -
- * `usePublizonReaderPlayerState` and `useDigitalReaderPlayerState` - and
- * `useReaderPlayer` composes the result. Keeping the shape provider-neutral is
- * what lets the Publizon side be deleted without touching a single component:
- * when it goes, one producer is removed and the composition collapses into the
- * remaining hook.
- *
- * Note that `useReaderPlayer` does not take one provider's answer wholesale.
- * The fields fall into two groups that get their answer from different places
- * during the transition: what the user can *acquire* comes from the library's
- * chosen provider only, while what the user already *holds* comes from
- * whichever provider holds it. See `useReaderPlayer` for why.
- *
- * Anything provider-specific therefore belongs behind this type, not in it.
+ * What a provider has to say about one digital material for the material page
+ * to offer it - the seam of the Publizon → service layer transition. Produced
+ * by `usePublizonReaderPlayerState` and `useDigitalReaderPlayerState`, composed
+ * by `useReaderPlayer`, which answers *acquiring* from the library's provider
+ * and *holding* from whoever holds the item. Provider-neutral so the Publizon
+ * producer can be deleted without touching a component; anything
+ * provider-specific belongs behind this type, not in it.
  */
 export type ReaderPlayerState = {
   /** Holding: the user already has this material as a loan. */
@@ -45,12 +34,7 @@ export type ReaderPlayerState = {
   reservation: ReservationType | null;
   /**
    * Acquiring: the id of a pending grant the user has to claim before the
-   * material becomes a loan, or null when the provider has no such step.
-   *
-   * Publizon has none - a redeemable reservation simply shows the loan button
-   * - so it always reports null. The service layer makes the acceptance
-   * explicit, and
-   * this is what identifies the offer to accept.
+   * material becomes a loan. Publizon has no such step and always reports null.
    */
   offerId: string | null;
   /**

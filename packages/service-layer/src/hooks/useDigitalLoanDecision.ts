@@ -12,14 +12,10 @@ import { type DigitalQueryOptions, useDigitalQuery } from "./internal"
 /**
  * Whether the user can borrow a material through the Biblio adapter.
  *
- * Patron-scoped: the operation is canLoanForAuthenticatedUser, and the adapter
- * answers 403 for a library token - which, with errors surfaced, takes the
- * whole page down. The hook therefore refuses to ask without a patron, so a
- * call site cannot forget to guard.
- *
- * A material the adapter does not know resolves to null when the config
- * tolerates unknown materials - see ServiceLayerConfig - so call sites need
- * no per-call opt-in either.
+ * Patron-scoped: the adapter answers 403 to a library token, which with
+ * errors surfaced takes the whole page down, so the hook refuses to ask
+ * without a patron. An unknown material resolves to null when the config
+ * tolerates it - see ServiceLayerConfig.
  */
 export const useDigitalLoanDecision = (
   materialId: string | null,

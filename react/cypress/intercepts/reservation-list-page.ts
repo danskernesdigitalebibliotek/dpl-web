@@ -17,24 +17,14 @@ import { publizonProductFactory } from "../factories/publizon/publizon.factory";
  * one older reservation still held in Publizon and two created through the
  * service layer, one queued and one already offered to the user.
  *
- * The same set serves both the flag-off spec, which proves none of the Biblio
- * requests are made at all, and the journey spec, which walks a user through
- * cancelling one of them. Sharing it keeps the two specs describing the same
- * library rather than two that happen to look alike.
- *
- * Every Biblio body is built by `factories/biblio/biblio.factory.ts`, whose
- * types are generated from `schemas/openapi/biblio-adapter.yaml`, so a
- * response that drifts from the contract fails to typecheck rather than
- * quietly producing a test that passes against something the adapter would
- * never send. Publizon is simulated through its own factories, so it is
- * always clear which provider a given response belongs to.
+ * Shared by the flag-off spec, which proves the adapter is never contacted,
+ * and the journey spec, which cancels one of them - so both describe the
+ * same library.
  */
 
-// Publizon
 export const PUBLIZON_ISBN = "9788771076940";
 export const PUBLIZON_TITLE = "Tættere end man tror";
 
-// Biblio, described through the shared factory fixture.
 export const BIBLIO_QUEUED_ISBN = BIBLIO_MATERIAL.ebook.isbn;
 export const BIBLIO_QUEUED_TITLE = BIBLIO_MATERIAL.ebook.title;
 export const BIBLIO_OFFERED_ISBN = BIBLIO_MATERIAL.audiobook.isbn;

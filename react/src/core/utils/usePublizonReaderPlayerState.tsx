@@ -19,19 +19,12 @@ import {
 } from "./types/reader-player-state";
 
 /**
- * What Publizon says about a digital material.
+ * What Publizon says about a digital material - the Publizon half of the
+ * transition, to be deleted with it; see `ReaderPlayerState`.
  *
- * This is the Publizon half of the transition and is meant to be deleted with
- * the rest of the Publizon integration - see `ReaderPlayerState`.
- *
- * ## Why acquiring is gated separately from holding
- *
- * A library that has switched to the adapter keeps its old Publizon loans, and
- * those must stay readable: the loan was made there, the reader opens it from
- * there. But Publizon may no longer decide whether a NEW loan is possible -
- * that is the whole point of switching. `canAcquire` separates the two, so
- * holdings are always read while the loan decision is only asked for when
- * Publizon is still the lending provider.
+ * `canAcquire` gates the loan decision separately from holdings: a switched
+ * library keeps its old Publizon loans readable, but Publizon may no longer
+ * decide whether a NEW loan is possible.
  */
 const usePublizonReaderPlayerState = ({
   identifier,

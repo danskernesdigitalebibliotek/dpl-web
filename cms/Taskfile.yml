@@ -581,9 +581,8 @@ tasks:
   source:build:
     summary: Build core source image.
     cmds:
-      # WEDOBOOKS_NPM_TOKEN is passed without a value so docker reads it from
-      # the environment rather than the command line. The cli image builds the
-      # JS assets, and the SDK behind the reader sits behind a private registry.
+      # Passed without a value so docker reads WEDOBOOKS_NPM_TOKEN from the
+      # environment instead of the command line.
       - docker build -f {{ .LAGOON_DIR }}/cli.dockerfile --build-arg WEDOBOOKS_NPM_TOKEN --tag dpl-cms-cli:0.0.0 ..
       - docker build -f {{ .LAGOON_DIR }}/source.dockerfile --tag {{ .RELEASE_FULL_NAME }} ..
 

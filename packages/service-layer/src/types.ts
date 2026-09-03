@@ -152,16 +152,11 @@ export type RenewedLoanFailed = {
 export type RenewedLoan = RenewedLoanSuccess | RenewedLoanFailed
 
 // The types below describe what an app reasons about — a digital loan, a
-// reservation, a lending decision — not which service happened to answer.
-// Biblio (WeDoBooks) is the only source today, but a second one would arrive
-// as another mapper onto these same types rather than as a parallel set of
-// service-prefixed ones. What is service-specific is the client that fetches
-// (`createBiblioClient`) and the functions that name which backend to ask
-// (`getDigitalLoans`), not the shape they hand back.
-//
-// "Digital" is the meaningful distinction, not the vendor: these are the
-// materials a patron reads or listens to in a reader, as opposed to the
-// physical ones FBS lends out.
+// reservation, a lending decision — not which service answered. Biblio
+// (WeDoBooks) is the only source today; a second one would be another mapper
+// onto these same types, not a parallel service-prefixed set. "Digital" means
+// read or listened to in a reader, as opposed to the physical materials FBS
+// lends out.
 
 // Formats a digital material comes in. Loans and reservations may also report
 // `paper_book` — see MaterialType.
@@ -226,30 +221,19 @@ export type LoanDecisionStatus =
   | "no_valid_credentials"
   | "lending_blocked"
 
-// Which licence the loan would be made under. The organization configures a
-// prioritized list of providers, and the backend reports the one it picked.
-//
-// "selection" is the licence Danish blue titles answer with: WeDoBooks states
-// those are bought out and exempt from the quotas, so it is the one the UI
-// may call included - see isCostFreeLoan. The rest ("click" is pay-per-loan,
-// "package" a subscription) are ways the LIBRARY pays for a loan that still
-// counts against the patron's quota.
-//
-// "free" sits between the two: not in use yet, and confirmed only to be
-// exempt from every quota when it arrives - which is not the same as being
-// free to the patron.
+// Which licence the loan would be made under: the organization configures a
+// prioritized list of providers and the backend reports the one it picked.
+// "selection" (Danish blue titles) is bought out and exempt from the quotas,
+// so it is the one the UI may call included - see isCostFreeLoan. The rest
+// ("click" pay-per-loan, "package" subscription) are ways the LIBRARY pays for
+// a loan that still counts against the patron's quota. "free" is not in use
+// yet and confirmed only to be quota-exempt, not free to the patron.
 export type LoanProvider = "free" | "k-fond" | "click" | "package" | "premium" | "selection"
 
-// Whether a loan can be made right now, and if not, why. The answer covers
-// both the material (is it out on loan?) and the patron (quota, lending
-// blocks), so callers pick the part they care about - see
-// isMaterialAvailable.
-//
-// The same decision comes back from two places: asking up front whether a
-// loan is possible, and asking for the loan itself - the adapter answers a
-// refused request with a decision rather than an HTTP error. Hence one type
-// for the decision, and LoanRequestResult for a decision that also produced
-// a loan.
+// Whether a loan can be made right now, and if not, why. Covers both the
+// material and the patron (quota, lending blocks) - see isMaterialAvailable.
+// The adapter answers a refused loan/reservation request with this same
+// decision rather than an HTTP error; LoanRequestResult adds the loan.
 export type LoanDecision = {
   status: LoanDecisionStatus
   loanProvider?: LoanProvider

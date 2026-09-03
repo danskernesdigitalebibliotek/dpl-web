@@ -906,8 +906,7 @@ class DplReactAppsController extends ControllerBase {
       'identifier' => $identifier,
       'orderid' => $orderid,
       'loanid' => $loanid,
-      // Add external API base urls. Publizon's reader is loaded straight from
-      // their CDN and talks to no API of ours, but the WeDoBooks one needs the
+      // Publizon's reader talks to no API of ours; the WeDoBooks one needs the
       // adapter to vouch for the patron before it can open anything.
     ] + self::externalApiBaseUrls();
 

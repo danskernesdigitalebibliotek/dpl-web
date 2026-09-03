@@ -7,28 +7,17 @@ import useDigitalReaderPlayerState from "./useDigitalReaderPlayerState";
 import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
 
 /**
- * Everything the material page needs to offer one digital material: whether
- * the user already has it, whether they can get it, and the key that opens it.
+ * Everything the material page needs to offer one digital material. Two
+ * questions with different answers during the transition:
  *
- * The hook derives what belongs to the material - its type and its identifier -
- * and asks the providers for the rest. Two different questions are asked, and
- * they do NOT have the same answer during the transition:
+ * - **Acquiring** follows the library's chosen provider, with no falling back:
+ *   a material the adapter cannot lend is not offered, because borrowing it
+ *   from Publizon would keep pulling new loans into the service being left.
+ * - **Holding** follows whoever holds it: a Publizon loan from before the
+ *   switch keeps its old reader and player.
  *
- * - **Acquiring** a material follows the library's choice of provider. With the
- *   adapter enabled it is the only one asked, and there is no falling back: a
- *   material it cannot lend simply is not offered. Quietly borrowing it from
- *   Publizon instead would keep pulling new loans into the service we are
- *   migrating away from, which is worse than the loan not happening.
- * - **Reading** a material the user already holds follows whoever holds it. A
- *   loan made under Publizon before the switch keeps its old reader and player,
- *   because that is where the loan lives.
- *
- * ## When Publizon goes away
- *
- * Delete `usePublizonReaderPlayerState` and return the service layer state
- * directly.
- * No component changes, because they all consume `ReaderPlayerState` and never
- * learn which provider produced it.
+ * When Publizon goes away, delete `usePublizonReaderPlayerState` and return
+ * the service layer state directly.
  */
 const useReaderPlayer = (manifestation: Manifestation | null) => {
   const viaBiblioAdapter = useBiblioAdapter();
@@ -59,13 +48,8 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
   const heldByPublizon = publizon.isAlreadyLoaned || publizon.isAlreadyReserved;
   const holding = heldByServiceLayer ? serviceLayer : publizon;
   // Which reader or player opens what the user holds - the same fact a loan
-  // carries as LoanType.digitalProvider. Called "holding" here because this
-  // hook also answers who may LEND the material, and on a switched library
-  // those are different providers.
-  //
-  // Derived here rather than reported by each provider: it is a fact about the
-  // composition, and asking both to state their own identity duplicated the
-  // predicate above.
+  // carries as LoanType.digitalProvider. "Holding" because this hook also
+  // answers who may LEND, and on a switched library those differ.
   const holdingProvider: DigitalProvider | null = heldByServiceLayer
     ? "serviceLayer"
     : heldByPublizon

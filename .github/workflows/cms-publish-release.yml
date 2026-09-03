@@ -29,10 +29,9 @@ jobs:
         run: |
           echo "{\"version\": \"${{ steps.get_version.outputs.RELEASE_TAG }}\"}" > .version
 
-      # The design system and React are NOT built here. `.dockerignore` keeps
-      # host-built assets out of the build context on purpose, so anything
-      # built on the runner is invisible to `COPY cms /app/cms`. The image
-      # builds them itself in cli.dockerfile's js-assets stage.
+      # The image builds the design system and React itself (cli.dockerfile's
+      # js-assets stage); `.dockerignore` keeps host-built assets out of the
+      # build context, so building them on the runner would change nothing.
       - name: Build and publish source
         env:
           GH_TOKEN: ${{ github.token }}

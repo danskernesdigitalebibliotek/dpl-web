@@ -54,9 +54,8 @@ export class LoanListPage extends PageObject {
 
   /**
    * A digital loan row addressed directly rather than through
-   * `components.DigitalLoanRow`. The nested-component helper scopes the row
-   * inside the page container with `cy.within`, which swallows clicks that
-   * open a modal portaled to document.body - so interactions use this.
+   * `components.DigitalLoanRow`: `cy.within` scoping swallows clicks that
+   * open a modal portaled to document.body.
    */
   digitalLoanRow(index = 0) {
     return new DigitalLoanRowComponent(index);

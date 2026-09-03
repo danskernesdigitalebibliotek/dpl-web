@@ -64,9 +64,7 @@ vi.mock("../../core/publizon/publizon", () => ({
   useGetV1UserLoans: vi.fn()
 }));
 
-// Mock the Biblio adapter hooks. The feature flag reads app config through
-// Redux, and the quota hook is a TanStack query, so neither can run without
-// their providers here.
+// The feature flag reads app config through Redux, which has no provider here.
 vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));

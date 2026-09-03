@@ -2,8 +2,6 @@ import { createBiblioClient } from "../biblio/src"
 import { resolveBiblioConfig } from "./internal/resolveBiblioConfig"
 import type { DigitalLoanQuota, ServiceLayerConfig } from "./types"
 
-// One quota per organization. A patron belongs to a single library in
-// practice - see getDigitalLoanQuota for how a format's numbers are read out.
 export async function getDigitalLoanQuotas(
   config: ServiceLayerConfig
 ): Promise<DigitalLoanQuota[]> {
@@ -20,20 +18,16 @@ export type QuotaUsage = {
  * The user's loan quota for a format.
  *
  * Biblio counts loans two ways and the consumers need different ones: the
- * availability texts talk about loans "this month", while the profile page
- * shows how many loans the user holds right now. Organizations either count
- * e-books and audiobooks together or split them per format.
+ * availability texts talk about loans "this month", the profile page about
+ * loans held right now. Organizations either combine e-books and audiobooks
+ * or split them per format.
  *
- * The adapter returns one quota per organization. A patron belongs to a
- * single library in practice, so the first one is used - if a patron can ever
- * belong to several, this needs a rule from DBC.
+ * One quota per organization arrives; a patron belongs to a single library
+ * in practice, so the first is used - several would need a rule from DBC.
  *
- * Cost-free loans draw on no quota, and the adapter's counters exclude them
- * at the source - confirmed by WeDoBooks, and verified against the real
- * adapter by borrowing a blue (selection-licence) title and watching the
- * counters stand still, then a click-licence title and watching them move. So
- * unlike the Publizon path, which subtracts its subscription loans itself,
- * the numbers are used as they arrive.
+ * Cost-free loans draw on no quota and the adapter's counters already exclude
+ * them (confirmed by WeDoBooks), so unlike the Publizon path nothing is
+ * subtracted here.
  */
 export const getDigitalLoanQuota = ({
   quotas,

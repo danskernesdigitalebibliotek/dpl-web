@@ -96,10 +96,8 @@ export const hasPublizonIdentifier = (manifestation: Manifestation) =>
     (identifier) => identifier.type === IdentifierTypeEnum.Publizon
   ) ?? false;
 
-// Picks the manifestation a digital loan or reservation is made from: prefer
-// the one carrying FBI's PUBLIZON identifier, which marks the loanable
-// edition, else the first. The identifier type is FBI's field name and says
-// nothing about which provider holds the material.
+// The PUBLIZON identifier marks the loanable edition. The type is FBI's field
+// name and says nothing about which provider holds the material.
 export const getLoanableManifestation = (manifestations: Manifestation[]) => {
   return (
     manifestations.find(hasPublizonIdentifier) ??
@@ -171,17 +169,12 @@ export const getManifestationIsbn = (manifestation: Manifestation) => {
 };
 
 /**
- * The identifier a digital material is borrowed, reserved and read by.
+ * The identifier a digital material is borrowed, reserved and read by - both
+ * Publizon's identifier and the service layer's `material_id`.
  *
- * Both providers use it: it is Publizon's identifier and the service layer's
- * `material_id`, and it is what `identifier` means on LoanType and
- * ReservationType - see `isDigitalReservation`.
- *
- * `IdentifierTypeEnum.Publizon` is FBI's name for the field, not a statement
- * about which service we call, so it stays the preferred source no matter who
- * holds the material. It is preferred over the ISBN because a manifestation
- * can carry several ISBNs and the leading one is not always the right edition
- * - a deselected PDF, for instance.
+ * `IdentifierTypeEnum.Publizon` is FBI's field name, not the provider we call.
+ * Preferred over the ISBN because a manifestation can carry several ISBNs and
+ * the leading one is not always the right edition - a deselected PDF, say.
  */
 export const getManifestationDigitalIdentifier = (
   manifestation: Manifestation

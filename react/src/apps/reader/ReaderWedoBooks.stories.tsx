@@ -13,11 +13,8 @@ import wedobooksArgs, {
 /**
  * The reader page opening a WeDoBooks book.
  *
- * Kept apart from the Publizon stories because the two readers share nothing
- * but the page they mount on: different provider, different keys, different
- * credentials. Which one opens is decided from the url parameters, so these
- * stories are the ways this page can be reached - not variations of one
- * component.
+ * Kept apart from the Publizon stories: the two readers share only the page
+ * they mount on, and which one opens is decided from the url parameters.
  *
  * Three things must be in place, and the page renders empty if any is
  * missing - the console says which:

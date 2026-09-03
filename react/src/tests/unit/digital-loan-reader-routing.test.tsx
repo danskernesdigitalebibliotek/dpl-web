@@ -105,10 +105,8 @@ describe("Which reader a digital loan opens in", () => {
 });
 
 describe("Where a digital material's url points", () => {
-  // The /reader route reads one parameter per provider, and the readers do
-  // not recognise each other's keys - pubhub expects an order id, the
-  // WeDoBooks SDK a loan id. This mapping is the whole reason
-  // digitalProvider exists, so it gets pinned on its own.
+  // The /reader route reads one parameter per provider: pubhub expects an
+  // order id, the WeDoBooks SDK a loan id.
   it("opens a Biblio loan by its loan id", () => {
     expect(readerUrl("VAcPZZkCeqvnNRnOdP17", "serviceLayer").search).toBe(
       "?loanid=VAcPZZkCeqvnNRnOdP17"

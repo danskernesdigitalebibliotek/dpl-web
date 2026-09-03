@@ -32,9 +32,8 @@ const PatronPage: FC = () => {
   const { data: digitalSupportId } = useDigitalSupportId({
     enabled: !!patronData && viaBiblioAdapter
   });
-  // Publizon's friendly card number and the service layer's support id
-  // serve the same
-  // purpose: an identifier the user can hand to support.
+  // Publizon's friendly card number and the service layer's support id serve
+  // the same purpose: an identifier the user can hand to support.
   const supportIdentifier = viaBiblioAdapter
     ? digitalSupportId
     : (patronCardNumber as FriendlyCardResult)?.friendlyCardNumber;

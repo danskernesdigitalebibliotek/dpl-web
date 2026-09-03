@@ -21,8 +21,7 @@ export interface AvailabilityLabelProps {
   handleSelectManifestation?: () => void | undefined;
   cursorPointer?: boolean;
   dataCy?: string;
-  // The identifier a digital material is borrowed by - the same one the loan
-  // buttons use, so label and buttons ask the providers about the same
+  // The same identifier the loan buttons use, so both ask about the same
   // edition and share one request.
   identifier: string | null;
   isVisualOnly?: boolean;

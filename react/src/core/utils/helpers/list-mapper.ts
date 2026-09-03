@@ -69,11 +69,9 @@ export const mapPublizonLoanToLoanType = (list: Loan[]): LoanType[] => {
   );
 };
 
-// digital-loan-card picks the reader/player button from Publizon's integer
-// enum, so a service layer material type has to be expressed in those
-// numbers too.
-// Goes away with the Publizon integration, when the card stops keying on
-// Publizon's enum.
+// digital-loan-card keys the reader/player button on Publizon's integer enum,
+// so a service layer material type is expressed in those numbers too. Goes
+// away with the Publizon integration.
 const publizonProductTypeFor = (materialType: MaterialType) =>
   materialType === "audiobook"
     ? PUBLIZON_PRODUCT_TYPE.AUDIOBOOK
@@ -89,7 +87,6 @@ const digitalMaterialTypeText = (materialType: MaterialType) => {
     : texts.publizonEbookText;
 };
 
-// The catalogue fields a digital loan carries, as a BasicDetailsType.
 const mapDigitalLoanToBasicDetailsType = (loan: DigitalLoan) => {
   // A loan states its author as one string, where the metadata endpoints use
   // a list.
@@ -212,8 +209,6 @@ export const mapProductToBasicDetailsType = (material: Product) => {
   } as BasicDetailsType;
 };
 
-// A DigitalMaterial carries the catalogue fields Publizon states on its
-// Product type.
 export const mapDigitalMaterialToBasicDetailsType = (
   material: DigitalMaterial
 ) => {
@@ -323,8 +318,6 @@ export const mapPublizonReservationToReservationType = (
   );
 };
 
-// A DigitalReservation is the service layer's equivalent of Publizon's own
-// Reservation type.
 export const mapDigitalReservationToReservationType = (
   list: DigitalReservation[]
 ): ReservationType[] => {

@@ -92,12 +92,9 @@ export const getOrderIdByIdentifier = ({
 };
 
 /**
- * Where a digital loan opens.
- *
- * The reader page takes one parameter per provider because the two readers do
- * not recognise each other's keys: Publizon knows an order id, the service
- * layer a loan id. Kept here rather than at the call sites so the contract
- * with the reader route lives in one place.
+ * Where a digital loan opens. One url parameter per provider, because the two
+ * readers do not recognise each other's keys: Publizon knows an order id, the
+ * service layer a loan id.
  */
 export const readerUrl = (id: string, provider?: DigitalProvider | null) => {
   const parameter = provider === "serviceLayer" ? "loanid" : "orderid";

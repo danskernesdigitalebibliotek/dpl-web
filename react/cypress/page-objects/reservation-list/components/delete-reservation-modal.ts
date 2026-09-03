@@ -1,12 +1,8 @@
 import { ComponentObject, Elements } from "@hammzj/cypress-page-object";
 
-/**
- * The modal's root selector. See the note in reservation-details-modal.ts for
- * why the raw selector is exported alongside the component.
- */
+/** The modal's root selector, needed on its own to assert absence. */
 export const deleteReservationModalSelector = ".modal-cta";
 
-/** The confirmation shown before a reservation is actually cancelled. */
 export class DeleteReservationModalComponent extends ComponentObject {
   public elements!: Elements;
 

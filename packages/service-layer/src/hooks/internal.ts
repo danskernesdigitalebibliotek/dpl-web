@@ -18,15 +18,12 @@ export type DigitalQueryOptions<TData, TKey extends QueryKey> = Omit<
   "queryKey" | "queryFn" | "enabled"
 > & { enabled?: boolean }
 
-// The shared shape of every digital query hook: resolve the query from the
-// config, let the consumer's options through, and own the `enabled` answer.
-// Patron-scoped queries never fire without a patron session, regardless of
-// the consumer's own `enabled` condition, and a query that `requires` an
-// input it does not have stays off the wire.
+// Shared mechanics of every digital query hook. Patron-scoped queries never
+// fire without a patron session, whatever the consumer's `enabled` says, and
+// a query that `requires` an input it lacks stays off the wire.
 //
-// Each hook keeps its own file on purpose: the hooks are where future
-// aggregation across lending providers would live, so they must be able to
-// grow apart - only the mechanics they agree on belong here.
+// Each hook keeps its own file on purpose: hooks are where aggregation across
+// lending providers would live, so only the shared mechanics belong here.
 export const useDigitalQuery = <TData, TKey extends QueryKey>({
   query,
   options,

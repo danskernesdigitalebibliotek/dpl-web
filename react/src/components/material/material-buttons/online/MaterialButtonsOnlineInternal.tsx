@@ -62,11 +62,9 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const { track } = useEventStatistics();
   const t = useText();
   const viaBiblioAdapter = useBiblioAdapter();
-  // With the flag on, the service layer is the lending provider, so a
-  // signed-in patron samples through it on the reader or player page - and Publizon
-  // must not stand in for anyone. Samples are only answered for a signed-in
-  // session, so an anonymous visitor gets a disabled button until an
-  // anonymous sample exists.
+  // With the flag on, samples go through the service layer and Publizon must
+  // not stand in. It answers samples for signed-in sessions only, so an
+  // anonymous visitor gets a disabled button until an anonymous sample exists.
   const samplesThroughServiceLayer = viaBiblioAdapter && !isAnonymous();
   const samplingUnavailable = viaBiblioAdapter && isAnonymous();
   const { open } = useModalButtonHandler();
@@ -178,9 +176,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
-    // The providers have answered and nothing applies: the material can
-    // neither be opened nor acquired right now. A disabled button says so -
-    // a spinner would promise an answer that has already arrived.
+    // Nothing applies: a disabled button, not a spinner - the answer is in.
     return (
       <MaterialButtonDisabled
         dataCy={`${dataCy}-reader`}
@@ -190,8 +186,6 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     );
   };
 
-  // The disabled stand-in both teasers show while sampling is unavailable -
-  // identical apart from which teaser it stands in for.
   const renderDisabledTeaserButton = (teaserDataCy: string) => (
     <Button
       dataCy={teaserDataCy}
@@ -301,9 +295,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
-    // The providers have answered and nothing applies: the material can
-    // neither be opened nor acquired right now. A disabled button says so -
-    // a spinner would promise an answer that has already arrived.
+    // Nothing applies: a disabled button, not a spinner - the answer is in.
     return (
       <MaterialButtonDisabled
         dataCy={`${dataCy}-player`}
@@ -327,9 +319,8 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       return renderDisabledTeaserButton(`${dataCy}-player-teaser`);
     }
 
-    // The SDK's player pins itself to the bottom of the viewport, which
-    // leaves a wrapping modal empty - so a digital sample gets the player
-    // page, exactly like a digital loan does.
+    // Audiobook samples play on the player page, like digital loans - see
+    // DigitalReaderPlayer for why not a modal.
     if (samplesThroughServiceLayer) {
       return (
         <MaterialSecondaryLink

@@ -50,11 +50,9 @@ const StatusSection: FC = () => {
     period: "concurrent"
   });
 
-  // One provider answers the whole section, so the choice is made once.
-  // Publizon gates the section on its library profile. The service layer has
-  // no equivalent document, so its quotas take that role - and an empty array
-  // is an answer, not a quota: rendering the section from it would show a
-  // heading with two blank counters.
+  // Publizon gates the section on its library profile; the service layer has
+  // no equivalent document, so its quotas take that role. An empty array is
+  // an answer, not a quota - rendering from it would show two blank counters.
   const {
     patronEbookLoans,
     patronAudioBookLoans,

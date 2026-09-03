@@ -26,14 +26,9 @@ export type PlayerButtonProps = {
 };
 
 /**
- * Starts an audiobook loan, wherever that loan plays.
- *
- * The two providers do not play in the same place, and that is not a styling
- * detail: Publizon's player lives in a modal, while the SDK's player bar pins
- * itself to the bottom of the viewport and would leave a wrapping modal empty
- * - so a digital audiobook plays on the player page instead (see
- * `PlayerPage`). Callers ask for "play this loan" and get whichever of the
- * two the loan calls for.
+ * Starts an audiobook loan, wherever that loan plays: Publizon's player lives
+ * in a modal, a digital loan on the player page (see `PlayerPage`). Callers
+ * ask for "play this loan" and get whichever the loan calls for.
  */
 const PlayerButton: React.FC<PlayerButtonProps> = ({
   orderId,

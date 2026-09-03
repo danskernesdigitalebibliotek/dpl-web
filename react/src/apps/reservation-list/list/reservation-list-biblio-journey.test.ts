@@ -22,9 +22,6 @@ import {
  * branch would be cancelled against the wrong service - a request that
  * succeeds while the reservation stays put. The journey therefore asserts
  * both which service was asked and which was not.
- *
- * The reservations themselves, and the contract the Biblio responses are
- * built from, come from the shared reservation-list intercepts.
  */
 
 // Ready for pickup comes first, then the physical group, then the queued
@@ -114,7 +111,6 @@ describe("Reservation list journey - cancelling a Biblio reservation", () => {
       .detailsModal()
       .elements.authors()
       .should("contain", "Sherman, L.");
-    // The audiobook in the same list is labelled by its own material type.
     reservationList
       .detailsModal()
       .elements.statusLabels()

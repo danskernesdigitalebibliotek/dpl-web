@@ -5,9 +5,8 @@ import { PageObject } from "@hammzj/cypress-page-object";
  * feature flag turned on, where the support identifier and the loan quotas
  * come from the adapter instead of Publizon.
  *
- * The page exposes no elements of its own: what the specs assert - the support
- * identifier and the quota numbers - is plain text a user reads, so they match
- * on the text rather than on a class the markup happens to use today.
+ * No elements of its own: the specs assert plain text the user reads, not a
+ * class the markup happens to use today.
  */
 export const patronPageStory = {
   default: "patron-page-entry",

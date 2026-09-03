@@ -11,15 +11,8 @@ describe("parseAndMapLoanDecision", () => {
     })
   })
 
-  /**
-   * The licence the loan would be made under.
-   *
-   * Only "selection" - what Danish blue titles answer with - is free to the
-   * patron and draws on no quota, so this one field decides whether the
-   * material page promises "included" or counts the loan against the monthly
-   * quota. It travels from here through useDigitalLoanDecision to
-   * MaterialAvailabilityTextOnline, and nothing between them re-derives it.
-   */
+  // Only "selection" (Danish blue titles) is free and draws on no quota, so
+  // this one field decides whether the material page promises "included".
   describe("the licence", () => {
     it("carries the licence a blue title is lent under", () => {
       expect(
@@ -44,11 +37,8 @@ describe("parseAndMapLoanDecision", () => {
     })
 
     it("throws on a licence the contract does not list", () => {
-      // A licence type WeDoBooks adds later must fail loudly here rather than
-      // arrive as a quiet undefined, which would read as "not included" and
-      // silently charge the patron's quota for a material they may hold for
-      // free. The availability label dies with it - that is the intended
-      // trade: a visible failure over a wrong promise.
+      // A new WeDoBooks licence must fail loudly here: a quiet undefined would
+      // read as "not included" and charge the patron's quota for a free title.
       expect(() =>
         parseAndMapLoanDecision({ status: "loanable", loan_provider: "brand-new-licence" })
       ).toThrow(/loan_provider/)

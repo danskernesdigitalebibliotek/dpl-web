@@ -28,11 +28,9 @@ services:
     build:
       dockerfile: cms/lagoon/cli.dockerfile
       args:
-        # Read-only token for WeDoBooks' private npm registry, which serves the
-        # SDK behind the reader and the player. Repeated here rather than
-        # inherited: Lagoon reads this file with shyaml and does not resolve
-        # "extends", so build args set in cms/docker-compose.yml never arrive.
-        # Requires a Lagoon build-scoped variable of the same name.
+        # Repeated rather than inherited: Lagoon reads this file with shyaml and
+        # does not resolve "extends", so build args set in cms/docker-compose.yml
+        # never arrive. Requires a Lagoon build-scoped variable of the same name.
         WEDOBOOKS_NPM_TOKEN: ${WEDOBOOKS_NPM_TOKEN:-}
     labels:
       lagoon.type: cli-persistent
@@ -46,11 +44,7 @@ services:
     build:
       dockerfile: cms/lagoon/nginx.dockerfile
       args:
-        # Read-only token for WeDoBooks' private npm registry, which serves the
-        # SDK behind the reader and the player. Repeated here rather than
-        # inherited: Lagoon reads this file with shyaml and does not resolve
-        # "extends", so build args set in cms/docker-compose.yml never arrive.
-        # Requires a Lagoon build-scoped variable of the same name.
+        # Same as for cli above: Lagoon does not resolve "extends".
         WEDOBOOKS_NPM_TOKEN: ${WEDOBOOKS_NPM_TOKEN:-}
     labels:
       lagoon.type: nginx-php-persistent
@@ -64,11 +58,7 @@ services:
     build:
       dockerfile: cms/lagoon/php.dockerfile
       args:
-        # Read-only token for WeDoBooks' private npm registry, which serves the
-        # SDK behind the reader and the player. Repeated here rather than
-        # inherited: Lagoon reads this file with shyaml and does not resolve
-        # "extends", so build args set in cms/docker-compose.yml never arrive.
-        # Requires a Lagoon build-scoped variable of the same name.
+        # Same as for cli above: Lagoon does not resolve "extends".
         WEDOBOOKS_NPM_TOKEN: ${WEDOBOOKS_NPM_TOKEN:-}
     labels:
       lagoon.type: nginx-php-persistent

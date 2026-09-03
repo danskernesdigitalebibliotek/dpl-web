@@ -6,12 +6,9 @@ import Player, { PublizonPlayerType } from "../../reader-player/PublizonPlayer";
 import { playerModalId } from "./helper";
 
 /**
- * Publizon's audiobook player, in a modal.
- *
- * Publizon-only, and meant to be deleted with the rest of the Publizon
- * integration: a digital loan never reaches this modal - its player is a page
- * (see DigitalReaderPlayer), because the SDK's player bar pins itself to
- * the bottom of the viewport and cannot live in a modal.
+ * Publizon's audiobook player, in a modal. Publizon-only - goes away with the
+ * Publizon integration. Digital loans play on a page instead, see
+ * DigitalReaderPlayer.
  */
 const PlayerModal: FC<PublizonPlayerType> = ({ identifier, orderId }) => {
   const t = useText();

@@ -12,17 +12,9 @@ import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../core/utils/helpers/user";
 
 /**
- * Availability of an online material: the service layer answers for the
- * materials it provides, Publizon for the rest.
- *
- * With the flag on the service layer is THE lending provider: a material it
- * cannot lend is not available, and Publizon must not stand in - not even for
- * a visitor who is not signed in. Falling back would mean offering a loan the
- * library has decided not to make, and the user would end up borrowing from
- * the service we are migrating away from.
- *
- * can-loan is patron-scoped, so nobody answers for a visitor: the label shows
- * the default for online materials - available - until they sign in.
+ * Availability of an online material: the service layer answers when the
+ * library has switched, Publizon when it has not - never both. Falling back
+ * to Publizon would offer a loan the library has decided not to make.
  */
 const useOnlineAvailabilityData = ({
   enabled,
@@ -40,10 +32,8 @@ const useOnlineAvailabilityData = ({
   // layer, so asking about it can only produce a 404.
   const isEreolMaterial = access.some((acc) => acc === "Ereol");
 
-  // Who answers is decided here, once, by the flag alone: the service layer
-  // when the library has switched, Publizon when it has not. Both need an
-  // ISBN to do lookups. can-loan is patron-scoped, so with the flag on and
-  // no patron nobody is asked and the default applies.
+  // can-loan is patron-scoped, so with the flag on and no patron nobody is
+  // asked and the default applies.
   const askServiceLayer =
     viaBiblioAdapter && enabled && isEreolMaterial && !!isbn && !isAnonymous();
   const askPublizon = !viaBiblioAdapter && enabled && isEreolMaterial && !!isbn;
@@ -97,7 +87,6 @@ const useOnlineAvailabilityData = ({
       ? publizonProductStatuses[dataPublizon.loanStatus].isAvailable
       : null;
 
-  // The first provider that was asked and has answered wins.
   const isAvailable = isAvailableViaServiceLayer ?? isAvailableViaPublizon;
 
   return {

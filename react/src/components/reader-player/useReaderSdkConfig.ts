@@ -43,12 +43,9 @@ const useReaderSdkConfig = (): ReaderSdkConfig | null => {
       readerApiKey: config(configKeys.readerApiKey)
     };
 
-    // Blank is unconfigured, the same as absent: the SDK cannot start on a
-    // value it was not given, whether the key is missing or empty. The CMS
-    // guarantees all-or-none (see DplBiblioSettings::getSdkConfig), so this
-    // catches the hosts that do not - Storybook passes every arg it knows,
-    // blank ones included. Thrown rather than returned, to keep both forms of
-    // "no credentials here" on the one path below.
+    // Blank is unconfigured, the same as absent. The CMS guarantees all-or-none
+    // (see DplBiblioSettings::getSdkConfig); Storybook does not - it passes
+    // every arg it knows, blank ones included. Thrown to share the catch below.
     if (Object.values(values).some((value) => value === "")) {
       throw new Error("Blank WeDoBooks credentials.");
     }

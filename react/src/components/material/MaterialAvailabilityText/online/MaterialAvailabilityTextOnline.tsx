@@ -63,10 +63,8 @@ const MaterialAvailabilityTextOnline: React.FC<
     enabled: !isUserAnonymous && viaBiblioAdapter
   });
 
-  // Which licence this material would be lent under. Needed here because
-  // it is what decides whether the loan costs the user anything - see
-  // isCostFree below. A tolerated unknown material resolves to null and has
-  // no licence to read a price from, which the falsy checks below handle.
+  // Only read for its licence - see isCostFree below. A tolerated unknown
+  // material resolves to null, which the falsy checks handle.
   const { data: loanDecision } = useDigitalLoanDecision(identifier, {
     enabled: Boolean(identifier) && viaBiblioAdapter
   });
@@ -126,13 +124,9 @@ const MaterialAvailabilityTextOnline: React.FC<
     }
   };
 
-  // Whether the loan costs the patron nothing, which is what decides between
-  // "this material is included" and the ordinary loan text.
-  //
-  // Publizon states it outright on the product. The service layer does not:
-  // the organization configures a prioritized list of licences and can-loan
-  // reports the one it picked, so which licences are cost-free is the service
-  // layer's rule to know - see isCostFreeLoan.
+  // Publizon states cost-free outright on the product. The service layer
+  // reports the licence can-loan picked; which licences are cost-free is its
+  // rule to know - see isCostFreeLoan.
   const isCostFree = viaBiblioAdapter
     ? isCostFreeLoan(loanDecision?.loanProvider)
     : Boolean(productsData?.product?.costFree);

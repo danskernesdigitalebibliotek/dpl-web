@@ -34,13 +34,10 @@ const ebookLabel = (material: MaterialPage) =>
 describe("Material page - online availability through the Biblio adapter", () => {
   beforeEach(() => stubBackends());
 
-  // Note there is no test for the opposite direction - adapter says loanable,
-  // label says available. An online material defaults to available while no
-  // answer has arrived, so such a test passes whether Biblio was heard or
-  // ignored; the unit test "Counts a loanable material as available" covers
-  // that direction where the mapping can be isolated. The test below covers
-  // the same mechanism in the direction where the assertion can actually
-  // fail.
+  // No test for "adapter says loanable, label says available": an online
+  // material defaults to available before any answer arrives, so it would
+  // pass whether Biblio was heard or ignored. The unit test "Counts a
+  // loanable material as available" pins that direction.
   it("Shows it as unavailable when Biblio will only queue the user", () => {
     // Given: Biblio will not lend it, only queue the user
     givenBiblioCanLoan(CanLoanResponseType.reservable);
@@ -55,15 +52,8 @@ describe("Material page - online availability through the Biblio adapter", () =>
     ebookLabel(material).should("contain", "Unavailable");
   });
 
-  // No test here that Publizon is never contacted. The material page still
-  // asks it for loan status through useReaderPlayer, which is not
-  // provider-aware yet - that comes with the reader/player PR. The unit test
-  // "Keeps Publizon from answering at all once Biblio is the provider" covers
-  // the availability hook itself, where the two can be told apart.
-
   it("Asks nobody when nobody is signed in, and shows the material as available", () => {
-    // Given: both providers would call it unavailable if they were asked -
-    // Publizon's shared default is overridden below to say so.
+    // Given: both providers would call it unavailable if they were asked
     stubBackends(ContentLoanStatusEnum.NUMBER_5);
     givenBiblioCanLoan(CanLoanResponseType.reservable);
     cy.window().then((win) => win.sessionStorage.removeItem(TOKEN_USER_KEY));
@@ -72,21 +62,17 @@ describe("Material page - online availability through the Biblio adapter", () =>
     const material = new MaterialPage(materialStory.withBiblioAdapter);
     material.visit([]);
 
-    // Then: the label falls back to the default for online materials. Biblio
-    // cannot be asked without a user - a 403 would take the page down - and
-    // Publizon must not stand in for it.
+    // Then: nobody was asked, so the label shows the default for online
+    // materials - Biblio needs a user, and Publizon must not stand in
     ebookLabel(material).should("contain", "Available");
 
     cy.get("@biblioCanLoan.all").should("have.length", 0);
     cy.get("@publizonLoanStatus.all").should("have.length", 0);
   });
 
-  // No flag-off test here. Whether the label asks Biblio at all is decided in
-  // the availability hook, and the unit tests pin it from both sides - "Asks
-  // Biblio about the material" and "Leaves Biblio alone at a library that has
-  // not switched" - where the flag flips without a story per state. What the
-  // flag gates beyond the label, the write path, is covered by
-  // material-biblio.test.ts.
+  // No flag-off test here: whether the label asks Biblio at all is decided in
+  // the availability hook, whose unit tests pin both flag states. The write
+  // path the flag gates is covered by material-biblio.test.ts.
 });
 
 /**

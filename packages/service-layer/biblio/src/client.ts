@@ -42,22 +42,15 @@ type PageParams = {
 
 type RequestOptions = {
   method: "GET" | "POST" | "DELETE"
-  // Path and query as the generated get*Url helpers produce them, so the
-  // routes are spelled once, in the OpenAPI contract.
   path: string
   body?: unknown
   // Return undefined instead of throwing on a 404 response.
   allowNotFound?: boolean
 }
 
-// The client surface mirrors the Publizon calls the frontends make today so
-// they can switch provider behind the feature flag: loans, loan status,
-// reservations (incl. the offer flow which replaces Publizon's redeem
-// concept), loan quotas (Publizon library profile), support id (Publizon
-// friendly card number) and the sign-in token for the reader/player SDK.
-//
-// Not covered because the adapter has no equivalent endpoints: the Publizon
-// checklist (favorites) and batch loan status.
+// Mirrors the Publizon calls the frontends make so they can switch provider
+// behind the feature flag. Not covered because the adapter has no
+// equivalent: the Publizon checklist (favorites) and batch loan status.
 export function createBiblioClient(config: BiblioConfig) {
   const request = async (options: RequestOptions): Promise<unknown> => {
     const { method, path, body, allowNotFound } = options
@@ -84,16 +77,13 @@ export function createBiblioClient(config: BiblioConfig) {
   }
 
   return {
-    // Resolves a single material by its ISBN-13 via the Biblio adapter's
-    // metadata endpoint. This is the only adapter surface callable without an
-    // end-user token (a client_credentials bearer token is enough). A 404
-    // means the material is unknown to Biblio, which we surface as
-    // `undefined` rather than an error so callers can use it as a provider
-    // probe.
+    // The only adapter call that works with a client_credentials token alone.
+    // A 404 means Biblio does not know the ISBN; returned as `undefined` so
+    // callers can use it as a provider probe.
     getMetadata: async (isbn: string): Promise<DigitalMaterial | undefined> => {
       const raw = await request({
         method: "GET",
-        // The generated helpers interpolate path parameters as they are.
+        // The generated helpers do not encode path parameters.
         path: getGetMetadataByMaterialIdUrl(encodeURIComponent(isbn)),
         allowNotFound: true,
       })

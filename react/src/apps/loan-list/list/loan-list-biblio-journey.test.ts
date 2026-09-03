@@ -30,9 +30,8 @@ import {
  */
 
 /**
- * The four loans the user holds, in the order the list renders them - sorted
- * by due date, oldest first. `row` travels with the material it belongs to,
- * so a material and its place on screen cannot drift apart.
+ * The four loans the user holds, in the order the list renders them - by due
+ * date, oldest first. `row` is each material's place on screen.
  */
 // The ids the WeDoBooks reader and player open the two Biblio loans by.
 const BIBLIO_EBOOK_LOAN_ID = "3f7b1c62-9d4e-4a71-b0c3-1d5a8e2f4b90";
@@ -228,12 +227,9 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
   });
 
   it("Opens a Biblio loan in the reader by its loan id, not an order id", () => {
-    // The two readers do not recognise each other's keys: Publizon's opens
-    // by order id, the WeDoBooks reader by loan id. A swapped parameter is
-    // invisible until a patron clicks and gets an empty reader.
-    //
-    // Stubbed so the click can navigate without unloading the storybook
-    // iframe - same pattern as the orderid test in loan-list-page-object.
+    // Publizon's reader opens by order id, the WeDoBooks reader by loan id -
+    // a swapped parameter is invisible until a patron gets an empty reader.
+    // Stubbed so the click can navigate without unloading the storybook iframe.
     cy.intercept("GET", "**/reader?loanid=*", {
       statusCode: 200,
       body: "<html><body>reader</body></html>",
@@ -312,9 +308,8 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
       .elements.loanDetailsButton()
       .click();
 
-    // Then: the modal describes the material from the loan alone. Every field
-    // here came with the loan - no metadata was fetched for it, which is the
-    // whole point of the contract requiring them.
+    // Then: the modal describes the material from the loan alone - no
+    // metadata was fetched for it.
     const modal = loanList.detailsModal();
     modal.container().should("be.visible");
     modal.elements
@@ -329,10 +324,8 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
   });
 
   it("Asks no provider more than it has to when describing the list", () => {
-    // Both halves assert a request that must not happen - which passes
-    // trivially if it runs before the request would have been made. Wait for
-    // the work to be over first; only then does a count of zero mean
-    // anything.
+    // A "never requested" assertion passes trivially before the request would
+    // have been made, so wait for the list to finish describing itself first.
     loanList.elements
       .digitalLoanContainer()
       .find(".list-reservation")

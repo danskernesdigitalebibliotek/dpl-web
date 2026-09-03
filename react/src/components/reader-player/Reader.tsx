@@ -37,12 +37,9 @@ const Reader: React.FC<ReaderProps> = ({
     return <DigitalReaderPlayer loanId={loanid} onClose={onClose} />;
   }
 
-  // An identifier with no order behind it is an e-book sample - audiobook
-  // samples live on the player page. With the flag on the service layer is
-  // the lending provider, so the sample goes through it and Publizon is never
-  // asked to stand in. Samples need a signed-in session, so the teaser
-  // buttons are disabled for anonymous visitors - a hand-made link lands on
-  // an empty page rather than in the service being left.
+  // An identifier with no order behind it is an e-book sample (audiobooks
+  // sample on the player page). With the flag on it goes through the service
+  // layer, never Publizon; DigitalSampleReader explains the sign-in rule.
   if (identifier && !orderid && viaBiblioAdapter) {
     return <DigitalSampleReader identifier={identifier} onClose={onClose} />;
   }

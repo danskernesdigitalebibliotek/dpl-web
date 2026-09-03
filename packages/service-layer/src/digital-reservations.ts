@@ -32,14 +32,11 @@ export async function acceptDigitalOffer(
 }
 
 /**
- * Cancel a reservation, by its own id - Publizon cancels by material
- * identifier, Biblio by the reservation.
+ * Cancel a reservation by its own id (Publizon cancels by material id).
  *
- * The adapter answers 200 with `{ success: false }` when it accepted the
- * request but removed nothing: an already consumed or expired reservation.
- * That is a failed cancellation to the user, so it is turned into a rejection
- * here - callers report their outcome from the promise, and a resolved one
- * would read as "reservation deleted" while it is still in the list.
+ * The adapter answers 200 `{ success: false }` when it removed nothing - an
+ * already consumed or expired reservation. Callers report their outcome from
+ * the promise, so that is turned into a rejection here.
  */
 export async function deleteDigitalReservation(
   config: ServiceLayerConfig,

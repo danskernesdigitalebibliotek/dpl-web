@@ -61,10 +61,8 @@ class ReactAppsHooks {
       'biblio-tolerate-unknown-materials' => $this->biblioSettings->shouldTolerateUnknownMaterials() ? '1' : '0',
     ];
 
-    // The reader and the player run on the WeDoBooks SDK, which is configured
-    // in the browser - and they are the only apps that do, so the keys stay
-    // off every other app's markup. Left out entirely when unconfigured, so
-    // React can tell "no SDK here" from "SDK with blank values".
+    // Left out entirely when unconfigured, so React can tell "no SDK here"
+    // from "SDK with blank values".
     if (!in_array($variables['name'] ?? NULL, self::SDK_APPS, TRUE)) {
       return;
     }
