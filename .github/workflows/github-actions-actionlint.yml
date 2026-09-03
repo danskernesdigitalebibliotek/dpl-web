@@ -25,7 +25,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-          # Lint-only job: nothing here compiles code that imports the wrapper.
       - name: Install go-task
         uses: arduino/setup-task@v3
         with:
