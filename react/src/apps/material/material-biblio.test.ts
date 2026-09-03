@@ -363,12 +363,27 @@ describe("Material page - a material only Biblio provides", () => {
     material.visit([]);
     cy.getBySel("availability-label").contains("e-bog").first().click();
 
-    cy.getBySel("remove-digital-reservation-button").first().click();
-    cy.getBySel("delete-reservation-button").click();
+    // The button was derived from the can-loan answer given while the
+    // reservation existed; count those requests before cancelling so the
+    // refetch below can be told apart from the initial one.
+    cy.wait("@biblioCanLoan");
+    cy.get("@biblioCanLoan.all")
+      .its("length")
+      .then((canLoanRequestsBefore) => {
+        cy.getBySel("remove-digital-reservation-button").first().click();
+        cy.getBySel("delete-reservation-button").click();
 
-    cy.wait("@biblioCancelReservation")
-      .its("request.url")
-      .should("contain", `/v1/reservations/${BIBLIO_RESERVATION_ID}`);
+        cy.wait("@biblioCancelReservation")
+          .its("request.url")
+          .should("contain", `/v1/reservations/${BIBLIO_RESERVATION_ID}`);
+
+        // Then: the material is asked about again, so the button does not
+        // keep describing a reservation that no longer exists.
+        cy.get("@biblioCanLoan.all").should(
+          "have.length.greaterThan",
+          canLoanRequestsBefore
+        );
+      });
   });
 
   it("Offers to read a loan the user already holds rather than borrow it again", () => {

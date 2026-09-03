@@ -24,11 +24,14 @@ import {
 } from "./helper";
 import {
   useDigitalDeleteReservation,
+  digitalLoanDecisionQueryKey,
+  digitalLoanQuotasQueryKey,
   digitalReservationsQueryKey
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import ModalMessage from "../../../../components/message/modal-message/ModalMessage";
 import { ApiResult } from "../../../../core/publizon/model";
 import {
+  hasDigitalReservationId,
   reservationId,
   ReservationType
 } from "../../../../core/utils/types/reservation-type";
@@ -114,6 +117,20 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
               queryKey: getGetV1LoanstatusIdentifierQueryKey(res.identifier)
             });
           }
+          // The service layer's can-loan answer was given while the
+          // reservation existed, and the material page derives its button
+          // from it - the same invalidation a new loan or reservation makes
+          // in useOnlineInternalHandleLoanReservation.
+          if (hasDigitalReservationId(res)) {
+            queryClient.invalidateQueries({
+              queryKey: digitalLoanDecisionQueryKey(res.identifier ?? null)
+            });
+          }
+        });
+      }
+      if (reservationsDigital.length) {
+        queryClient.invalidateQueries({
+          queryKey: digitalLoanQuotasQueryKey()
         });
       }
     }
