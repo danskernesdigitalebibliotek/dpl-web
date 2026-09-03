@@ -1,9 +1,16 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import ButtonFavourite, {
+  ButtonFavouriteId
+} from "../../components/button-favourite/button-favourite";
+import { StaticCover } from "../../components/cover/static-cover";
+import { StaticRecommendedMaterial } from "../../components/recommended-material/static-recommended-material";
+import { guardedRequest } from "../../core/guardedRequests.slice";
+import { TypedDispatch } from "../../core/store";
 import { constructMaterialUrl } from "../../core/utils/helpers/url";
 import { useUrls } from "../../core/utils/url";
 import { parseNumberInSeries } from "./helper";
 import { RelatedWork } from "./relatedWorks.types";
-import RelatedWorkCard from "./RelatedWorkCard";
 import RelatedWorksSlider from "./RelatedWorksSlider";
 import useRelatedWorks, { UseRelatedWorksArgs } from "./useRelatedWorks";
 
@@ -27,18 +34,33 @@ const getSeriesLabel = (work: RelatedWork): string | undefined => {
 
 // The "other works by this author" section at the bottom of the series page.
 // This is the only component in the section with any wiring - data comes from
-// the useRelatedWorks hook, everything below renders plain props.
+// the useRelatedWorks hook, the cards are the same static components
+// MaterialGrid items are built from.
 //
 // Renders nothing when the series has no derivable author or nothing
 // survived filtering: an absent section is the designed outcome, not an
 // error state.
+//
+// Card clicks are deliberately not tracked yet: reusing another feature's
+// Mapp statistic would miscount it, and a dedicated id needs coordination.
 const RelatedWorks: React.FC<RelatedWorksProps> = ({
   author,
   currentSeries
 }) => {
   const u = useUrls();
   const materialUrl = u("materialUrl");
+  const dispatch = useDispatch<TypedDispatch>();
   const { works, isLoading } = useRelatedWorks({ author, currentSeries });
+
+  const addToListRequest = (id: ButtonFavouriteId) => {
+    dispatch(
+      guardedRequest({
+        type: "addFavorite",
+        args: { id },
+        app: "series"
+      })
+    );
+  };
 
   if (!author) {
     return null;
@@ -64,15 +86,35 @@ const RelatedWorks: React.FC<RelatedWorksProps> = ({
           </h2>
         }
       >
-        {works.map((work) => (
-          <RelatedWorkCard
-            key={work.workId}
-            title={work.title}
-            url={constructMaterialUrl(materialUrl, work.workId)}
-            coverPid={work.coverPid}
-            seriesLabel={getSeriesLabel(work)}
-          />
-        ))}
+        {works.map((work) => {
+          const workUrl = constructMaterialUrl(materialUrl, work.workId);
+
+          return (
+            <StaticRecommendedMaterial
+              key={work.workId}
+              title={work.title}
+              subtitle={getSeriesLabel(work)}
+              isPartOfGrid
+              linkProps={{ href: workUrl }}
+              cover={
+                <StaticCover
+                  src={work.coverSrc ?? undefined}
+                  displaySize="large"
+                  shadow="medium"
+                  alt=""
+                  linkProps={{ url: workUrl }}
+                />
+              }
+              favoriteButton={
+                <ButtonFavourite
+                  title={work.title}
+                  id={work.workId}
+                  addToListRequest={addToListRequest}
+                />
+              }
+            />
+          );
+        })}
       </RelatedWorksSlider>
     </section>
   );

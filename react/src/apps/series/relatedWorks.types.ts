@@ -20,4 +20,8 @@ export type RelatedWork = {
   year: number | null;
   series: RelatedWorkSeries[];
   coverPid: Pid;
+  // Resolved cover image url, batch-fetched for the picked works only -
+  // null when FBI has no cover in the wanted size (the cover component
+  // falls back to a tinted placeholder).
+  coverSrc?: string | null;
 };

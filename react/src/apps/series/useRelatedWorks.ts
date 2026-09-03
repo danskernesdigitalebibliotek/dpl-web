@@ -1,7 +1,9 @@
 import {
   SortOrderEnum,
+  useGetCoversByPidsQuery,
   useGetRelatedWorksQuery
 } from "../../core/dbc-gateway/generated/graphql";
+import { getCoverUrl } from "../../components/cover/helper";
 import { Pid, WorkId } from "../../core/utils/types/ids";
 import { getRelatedWorks } from "./getRelatedWorks";
 import { RelatedWork } from "./relatedWorks.types";
@@ -85,10 +87,37 @@ const useRelatedWorks = ({
       coverPid: work.manifestations.bestRepresentation.pid as Pid
     })) ?? [];
 
+  const picked = getRelatedWorks(candidates, currentSeries);
+
+  // One batched lookup for the covers of the picked works only - the cards
+  // are static components that take a resolved image url, unlike the member
+  // list's cover component which fetches per card.
+  const { data: coverData } = useGetCoversByPidsQuery(
+    { pids: picked.map((work) => work.coverPid) },
+    { enabled: picked.length > 0, throwOnError: false }
+  );
+
+  const coverManifestations =
+    coverData?.manifestations.filter(
+      (manifestation) => manifestation !== null
+    ) ?? [];
+
+  const works = picked.map((work) => ({
+    ...work,
+    coverSrc: getCoverUrl({
+      coverData: coverManifestations.filter(
+        (manifestation) => manifestation.pid === work.coverPid
+      ),
+      size: "large"
+    })
+  }));
+
   return {
-    works: getRelatedWorks(candidates, currentSeries),
+    works,
     // isLoading is false while the query is disabled (no author), so the
-    // section skips straight to its hidden state.
+    // section skips straight to its hidden state. The covers arrive
+    // separately and later: cards render immediately with the tinted
+    // placeholder and fill in as the batch lands.
     isLoading
   };
 };
