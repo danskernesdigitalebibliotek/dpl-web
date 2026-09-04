@@ -8,7 +8,10 @@ import {
 } from "../../core/publizon/publizon";
 import { FileExtensionType } from "../../core/publizon/model";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
-import { useDigitalLoanQuotas } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import {
+  useDigitalLoanQuotas,
+  useDigitalReservationLimits
+} from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 // Only the hooks under test are stubbed; the rest of the package stays
 // real, so pure helpers keep behaving as they do in production.
@@ -18,7 +21,8 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useDigitalLoanQuotas: vi.fn()
+    useDigitalLoanQuotas: vi.fn(),
+    useDigitalReservationLimits: vi.fn()
   })
 );
 
@@ -76,6 +80,9 @@ describe("StatusSection component tests", () => {
     vi.mocked(useDigitalLoanQuotas).mockReturnValue({
       data: undefined
     } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+    vi.mocked(useDigitalReservationLimits).mockReturnValue({
+      data: undefined
+    } as unknown as ReturnType<typeof useDigitalReservationLimits>);
   });
   it("should render nothing if library profile is not loaded", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
@@ -233,6 +240,16 @@ describe("StatusSection component tests", () => {
   });
 
   describe("with the Biblio adapter feature flag on", () => {
+    const splitQuota = {
+      splitOnFormat: true,
+      orgId: "org-1",
+      orgName: "Eksempel Biblioteket",
+      maxLoans: { ebook: 10, audiobook: 10 },
+      maxConcurrentLoans: { ebook: 4, audiobook: 2 },
+      currentConcurrentLoans: { ebook: 1, audiobook: 1 },
+      currentMonthlyLoans: { ebook: 7, audiobook: 6 }
+    };
+
     beforeEach(() => {
       vi.mocked(useBiblioAdapter).mockReturnValue(true);
       // Publizon is not asked at all when the flag is on.
@@ -274,7 +291,38 @@ describe("StatusSection component tests", () => {
       expect(progressBars[1].getAttribute("style")).toBe("width: 50%;");
     });
 
-    it("Leaves out the reservation limits, which Biblio does not provide", () => {
+    it("Renders the reservation limits the patron's organization allows", () => {
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
+        data: [splitQuota]
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+      vi.mocked(useDigitalReservationLimits).mockReturnValue({
+        data: {
+          splitOnFormat: true,
+          maxConcurrentReservations: { ebook: 5, audiobook: 4 }
+        }
+      } as unknown as ReturnType<typeof useDigitalReservationLimits>);
+
+      const { container } = render(<StatusSection />);
+
+      expect(container.textContent).toContain(
+        "Du kan reservere op til 5 e-bøger og 4 lydbøger."
+      );
+    });
+
+    it("Asks the organization the quotas were issued for", () => {
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
+        data: [splitQuota]
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+
+      render(<StatusSection />);
+
+      expect(useDigitalReservationLimits).toHaveBeenCalledWith(
+        splitQuota.orgId,
+        expect.anything()
+      );
+    });
+
+    it("Leaves out the reservation line when the organization counts the formats as one", () => {
       vi.mocked(useDigitalLoanQuotas).mockReturnValue({
         data: [
           {
@@ -288,10 +336,13 @@ describe("StatusSection component tests", () => {
           }
         ]
       } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+      vi.mocked(useDigitalReservationLimits).mockReturnValue({
+        // Five reservations in total - saying "5 and 5" would promise ten.
+        data: { splitOnFormat: false, maxConcurrentReservations: 5 }
+      } as unknown as ReturnType<typeof useDigitalReservationLimits>);
 
       const { container } = render(<StatusSection />);
 
-      // Rendering the line would claim the user can reserve zero materials.
       expect(container.textContent).not.toContain("Du kan reservere op til");
       // A combined quota applies the same numbers to both formats.
       expect(container.textContent).toContain("2 ud af 4");

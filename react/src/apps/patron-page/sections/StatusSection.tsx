@@ -7,7 +7,9 @@ import { useText } from "../../../core/utils/text";
 import { getPatronLoanQuotas } from "../../../core/utils/helpers/publizon";
 import {
   getDigitalLoanQuota,
-  useDigitalLoanQuotas
+  getDigitalQuotaOrganizationId,
+  useDigitalLoanQuotas,
+  useDigitalReservationLimits
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
 
@@ -26,10 +28,21 @@ const StatusSection: FC = () => {
     enabled: viaBiblioAdapter
   });
 
-  const {
-    maxConcurrentAudioReservationsPerBorrower = 0,
-    maxConcurrentEbookReservationsPerBorrower = 0
-  } = libraryProfile || {};
+  // The ceilings are asked for by the organization that issued the quotas,
+  // so they belong to the same library as the numbers beside them.
+  const { data: digitalReservationLimits } = useDigitalReservationLimits(
+    getDigitalQuotaOrganizationId(digitalQuotas) ?? null,
+    { enabled: viaBiblioAdapter }
+  );
+
+  // An organization that counts the two formats together is left out. A
+  // combined ceiling of 5 means five reservations in total, and the sentence
+  // below has room for exactly two numbers - saying "5 and 5" would promise
+  // ten. Until there is wording for it, no line beats a wrong one; no Danish
+  // organization counts that way today.
+  const digitalReservationCeilings = digitalReservationLimits?.splitOnFormat
+    ? digitalReservationLimits.maxConcurrentReservations
+    : undefined;
 
   const publizonQuotas = getPatronLoanQuotas({
     userData: data?.userData,
@@ -58,6 +71,7 @@ const StatusSection: FC = () => {
     patronAudioBookLoans,
     maxConcurrentEbookLoansPerBorrower,
     maxConcurrentAudioLoansPerBorrower,
+    reservationCeilings,
     hasQuotas
   } = viaBiblioAdapter
     ? {
@@ -65,6 +79,7 @@ const StatusSection: FC = () => {
         patronAudioBookLoans: digitalAudioQuota.current,
         maxConcurrentEbookLoansPerBorrower: digitalEbookQuota.limit,
         maxConcurrentAudioLoansPerBorrower: digitalAudioQuota.limit,
+        reservationCeilings: digitalReservationCeilings, // { ebook, audiobook } when the organization splits on format.
         hasQuotas: Boolean(digitalQuotas?.length)
       }
     : {
@@ -74,6 +89,11 @@ const StatusSection: FC = () => {
           libraryProfile?.maxConcurrentEbookLoansPerBorrower,
         maxConcurrentAudioLoansPerBorrower:
           libraryProfile?.maxConcurrentAudioLoansPerBorrower,
+        reservationCeilings: {
+          ebook: libraryProfile?.maxConcurrentEbookReservationsPerBorrower ?? 0,
+          audiobook:
+            libraryProfile?.maxConcurrentAudioReservationsPerBorrower ?? 0
+        },
         hasQuotas: Boolean(libraryProfile)
       };
 
@@ -103,14 +123,12 @@ const StatusSection: FC = () => {
           <div className="text-body-small-regular mb-8">
             {t("patronPageStatusSectionBodyText")}
           </div>
-          {/* The service layer's quotas cover loans only - there are no reservation limits
-              to show, so the line is left out rather than rendered as zero. */}
-          {!viaBiblioAdapter && (
+          {reservationCeilings && (
             <div className="text-body-small-regular mt-8 mb-8">
               {t("patronPageStatusSectionReservationsText", {
                 placeholders: {
-                  "@countEbooks": maxConcurrentEbookReservationsPerBorrower,
-                  "@countAudiobooks": maxConcurrentAudioReservationsPerBorrower
+                  "@countEbooks": reservationCeilings.ebook,
+                  "@countAudiobooks": reservationCeilings.audiobook
                 }
               })}
             </div>
