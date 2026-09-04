@@ -17,6 +17,9 @@ import { ManifestationMaterialType } from "../../../../core/utils/types/material
 import MaterialButtonsOnlineInternal from "./MaterialButtonsOnlineInternal";
 import { getReaderPlayerType } from "../../../reader-player/helper";
 import { getLoanableManifestation } from "../../../../apps/material/helper";
+import { isBlocked } from "../../../../core/utils/helpers/user";
+import { usePatronData } from "../../../../core/utils/helpers/usePatronData";
+import MaterialButtonUserBlocked from "../generic/MaterialButtonUserBlocked";
 
 export interface MaterialButtonsOnlineProps {
   manifestations: Manifestation[];
@@ -36,6 +39,10 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
   isEditionPicker = false
 }) => {
   const { track } = useEventStatistics();
+  const { data: userData } = usePatronData();
+  // The article modals are only rendered for a patron who is not blocked, so
+  // without this the button would be live with nothing behind it.
+  const isUserBlocked = !!(userData?.patron && isBlocked(userData.patron));
   const trackOnlineView = () => {
     return track("click", {
       id: statistics.onlineReservation.id,
@@ -107,6 +114,15 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
     hasCorrectAccess("DigitalArticleService", manifestations) &&
     hasCorrectMaterialType(ManifestationMaterialType.article, manifestations)
   ) {
+    if (isUserBlocked) {
+      return (
+        <MaterialButtonUserBlocked
+          size={size}
+          dataCy={`${dataCy}-digital-article`}
+        />
+      );
+    }
+
     return (
       <MaterialButtonOnlineDigitalArticle
         pid={manifestations[0].pid}
@@ -117,6 +133,15 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
   }
 
   if (hasCorrectAccess("InfomediaService", manifestations)) {
+    if (isUserBlocked) {
+      return (
+        <MaterialButtonUserBlocked
+          size={size}
+          dataCy={`${dataCy}-infomedia-article`}
+        />
+      );
+    }
+
     return (
       <MaterialButtonOnlineInfomediaArticle
         size={size}

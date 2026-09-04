@@ -29,6 +29,7 @@ import {
 } from "../../core/utils/helpers/url";
 import {
   flattenCreators,
+  getAllFaustIds,
   getMaterialType,
   orderManifestationsByYear
 } from "../../core/utils/helpers/general";
@@ -515,6 +516,18 @@ export const reservationModalId = (faustIds: FaustId[]) => {
 
 export const onlineInternalModalId = (faustIds: FaustId[]) => {
   return constructModalId("online-internal-modal", faustIds.sort());
+};
+
+// One online-internal modal is rendered per manifestation, so a button that
+// covers several editions must ask for the single one it is going to lend -
+// an id built from the whole set matches no modal and opens nothing.
+export const loanableOnlineInternalModalId = (
+  manifestations: Manifestation[]
+) => {
+  const loanableManifestation = getLoanableManifestation(manifestations);
+  return onlineInternalModalId(
+    loanableManifestation ? getAllFaustIds([loanableManifestation]) : []
+  );
 };
 
 export const editionSwitchModalId = () => {

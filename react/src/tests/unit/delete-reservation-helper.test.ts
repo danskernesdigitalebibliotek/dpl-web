@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { getReservationsToDelete } from "../../apps/reservation-list/modal/delete-reservation/helper";
+import { deleteReservationModalId } from "../../apps/reservation-list/modal/delete-reservation/delete-reservation-modal";
+import { getModalIds } from "../../core/utils/helpers/modal-helpers";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 
 const physicalReservation: ReservationType = {
@@ -85,5 +87,25 @@ describe("requestsAndReservations", () => {
       params: "e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11",
       operation: digital
     });
+  });
+});
+
+describe("deleteReservationModalId", () => {
+  it("carries the configured prefix", () => {
+    // Reading a key the configuration does not have leaves the literal
+    // "undefined" in every id, and the query parameter that restores the modal
+    // then matches nothing.
+    expect(deleteReservationModalId(physicalReservation)).toBe(
+      `${getModalIds().deleteReservation}111`
+    );
+    expect(deleteReservationModalId(physicalReservation)).toBe(
+      "delete-reservation111"
+    );
+  });
+
+  it("identifies a digital reservation by its identifier", () => {
+    expect(deleteReservationModalId(publizonReservation)).toBe(
+      "delete-reservation9788771076940"
+    );
   });
 });

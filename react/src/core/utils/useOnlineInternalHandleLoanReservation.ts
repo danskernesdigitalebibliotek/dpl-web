@@ -12,12 +12,9 @@ import { useUrls } from "../../core/utils/url";
 import { useModalButtonHandler } from "../../core/utils/modal";
 import {
   getLoanableManifestation,
-  onlineInternalModalId
+  loanableOnlineInternalModalId
 } from "../../apps/material/helper";
-import {
-  formatDanishPhoneNumber,
-  getAllFaustIds
-} from "../../core/utils/helpers/general";
+import { formatDanishPhoneNumber } from "../../core/utils/helpers/general";
 import { Manifestation } from "../../core/utils/types/entities";
 import { RequestStatus } from "../../core/utils/types/request";
 import { ApiResult, CreateLoanResult } from "../publizon/model";
@@ -235,7 +232,7 @@ const useOnlineInternalHandleLoanReservation = ({
     if (openModal) {
       openGuarded({
         authUrl,
-        modalId: onlineInternalModalId(getAllFaustIds(manifestations)),
+        modalId: loanableOnlineInternalModalId(manifestations),
         options: { modalsToClose }
       });
       return;

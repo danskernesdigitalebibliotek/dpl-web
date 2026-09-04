@@ -179,7 +179,6 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
     work,
     t
   });
-  const infomediaIds = getInfomediaIds(selectedManifestations);
 
   return (
     <>
@@ -212,17 +211,29 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
               />
             )
           )}
-          {infomediaIds.length > 0 && !isAnonymous() && !isUserBlocked && (
-            <InfomediaModal
-              selectedManifestations={selectedManifestations}
-              infoMediaId={infomediaIds[0]}
-            />
-          )}
-          {hasCorrectAccess("DigitalArticleService", selectedManifestations) &&
-            !isAnonymous() &&
-            !isUserBlocked && (
-              <DigitalModal pid={selectedManifestations[0].pid} workId={wid} />
-            )}
+          {/* An article button is rendered for every edition, so every edition
+              that offers one needs its own modal - like the online loan modals
+              above. A single modal for the selected edition leaves the buttons
+              on the other editions opening an id that nothing renders. */}
+          {!isAnonymous() &&
+            !isUserBlocked &&
+            manifestations.map((manifestation) => {
+              const [infomediaId] = getInfomediaIds([manifestation]);
+
+              return (
+                <React.Fragment key={`article-modals-${manifestation.pid}`}>
+                  {infomediaId && (
+                    <InfomediaModal
+                      selectedManifestations={[manifestation]}
+                      infoMediaId={infomediaId}
+                    />
+                  )}
+                  {hasCorrectAccess("DigitalArticleService", [
+                    manifestation
+                  ]) && <DigitalModal pid={manifestation.pid} workId={wid} />}
+                </React.Fragment>
+              );
+            })}
           {/* Only create a main version of "reservation" & "find on shelf" modal for physical materials with multiple editions.
         Online materials lead to external links, or to same modals as are created for singular editions. */}
           {isParallelReservation(selectedManifestations) && (
