@@ -88,9 +88,14 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
 .related-works-slider__controls {
   position: absolute;
   right: 48px;
-  display: flex;
   flex-direction: column;
   gap: $s-sm;
+
+  display: none;
+
+  @include media-query__medium {
+    display: flex;
+  }
 }
 
 // Styled like the Slider block's long-line arrows (Library/slider): bare
