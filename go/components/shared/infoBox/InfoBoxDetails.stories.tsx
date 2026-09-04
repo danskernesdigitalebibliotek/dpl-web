@@ -7,18 +7,6 @@ import manifestationMock from "@/lib/mocks/manifestation/infoBox.mock"
 const meta = {
   title: "components/InfoBoxDetails",
   component: InfoBoxDetails,
-  parameters: {
-    layout: "centered",
-  },
-  decorators: [
-    Story => {
-      return (
-        <div className="content-container my-grid-gap-2 lg:my-grid-gap-half flex-row flex-wrap">
-          <Story />
-        </div>
-      )
-    },
-  ],
   argTypes: {
     selectedManifestation: {
       control: { type: "object" },

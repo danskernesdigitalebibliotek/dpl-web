@@ -7,7 +7,6 @@ namespace Drupal\bnf_server\Collector;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\dpl_metrics\Collector\MetricCollectorInterface;
 use Drupal\dpl_metrics\MetricsRegistry;
-use Drupal\taxonomy\TermInterface;
 
 /**
  * Publishes the names of the content streams libraries can subscribe to.
@@ -69,15 +68,12 @@ class StreamCollector implements MetricCollectorInterface {
    * {@inheritdoc}
    */
   public function collect(MetricsRegistry $registry): void {
+    /** @var \Drupal\taxonomy\TermInterface[] $terms */
     $terms = $this->entityTypeManager
       ->getStorage('taxonomy_term')
       ->loadByProperties(['vid' => self::VOCABULARIES]);
 
     foreach ($terms as $term) {
-      if (!$term instanceof TermInterface) {
-        continue;
-      }
-
       $registry->setGauge(
         'bnf_stream_info',
         'A content stream libraries can subscribe to. Always 1 - read the labels.',

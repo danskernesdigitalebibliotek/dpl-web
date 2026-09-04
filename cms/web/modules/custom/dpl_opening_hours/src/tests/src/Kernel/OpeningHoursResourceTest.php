@@ -9,6 +9,7 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseI
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition as OpeningHoursRepetitionResponse;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData as OpeningHoursWeeklyData;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
@@ -23,6 +24,7 @@ use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy\TermStorageInterface;
 use Prophecy\Argument;
 use Safe\DateTime;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -67,7 +69,6 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $categoryStorage = ($this->prophesize(TermStorageInterface::class))
       ->loadByProperties(Argument::any())->willReturn([$category->reveal()])->getObjectProphecy()
       ->load(Argument::any())->willReturn($category->reveal())->getObjectProphecy();
-    $container->set('dpl_opening_hours.category_storage', $categoryStorage->reveal());
 
     $branchStorage = $this->prophesize(NodeStorageInterface::class);
     foreach ([1, 2] as $branchId) {
@@ -80,7 +81,18 @@ class OpeningHoursResourceTest extends KernelTestBase {
       );
     }
 
-    $container->set('dpl_opening_hours.branch_storage', $branchStorage->reveal());
+    $entityTypeManager = $this->prophesize(EntityTypeManagerInterface::class);
+    $entityTypeManager->getStorage('node')->willReturn($branchStorage->reveal());
+    $entityTypeManager->getStorage('taxonomy_term')->willReturn($categoryStorage->reveal());
+    $container->set('dpl_opening_hours.test_entity_type_manager', $entityTypeManager->reveal());
+
+    // The repository and mapper resolve their storages through the entity
+    // type manager. Point them to the mock without replacing the real
+    // entity type manager which the rest of the container depends on.
+    $container->getDefinition('dpl_opening_hours.repository')
+      ->replaceArgument(2, new Reference('dpl_opening_hours.test_entity_type_manager'));
+    $container->getDefinition('dpl_opening_hours.mapper')
+      ->replaceArgument(0, new Reference('dpl_opening_hours.test_entity_type_manager'));
   }
 
   /**

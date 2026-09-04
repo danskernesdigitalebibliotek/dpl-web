@@ -29,20 +29,20 @@ class ParagraphMaterialGridAutomatic extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         if ($materialAmount !== self::UNDEFINED) {
-            $instance->materialAmount = $materialAmount;
+            $instance->__set('materialAmount', $materialAmount);
         }
         $instance->__typename = 'ParagraphMaterialGridAutomatic';
         if ($cqlSearch !== self::UNDEFINED) {
-            $instance->cqlSearch = $cqlSearch;
+            $instance->__set('cqlSearch', $cqlSearch);
         }
         if ($materialGridDescription !== self::UNDEFINED) {
-            $instance->materialGridDescription = $materialGridDescription;
+            $instance->__set('materialGridDescription', $materialGridDescription);
         }
         if ($materialGridTitle !== self::UNDEFINED) {
-            $instance->materialGridTitle = $materialGridTitle;
+            $instance->__set('materialGridTitle', $materialGridTitle);
         }
 
         return $instance;

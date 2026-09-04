@@ -26,17 +26,17 @@ class ParagraphNavGridManual extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         $instance->__typename = 'ParagraphNavGridManual';
         if ($titleOptional !== self::UNDEFINED) {
-            $instance->titleOptional = $titleOptional;
+            $instance->__set('titleOptional', $titleOptional);
         }
         if ($showSubtitles !== self::UNDEFINED) {
-            $instance->showSubtitles = $showSubtitles;
+            $instance->__set('showSubtitles', $showSubtitles);
         }
         if ($contentReferenceUuids !== self::UNDEFINED) {
-            $instance->contentReferenceUuids = $contentReferenceUuids;
+            $instance->__set('contentReferenceUuids', $contentReferenceUuids);
         }
 
         return $instance;

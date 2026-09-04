@@ -101,9 +101,11 @@ locally.
 
 ### Metrics
 
-Both sides report subscriptions to Prometheus through the
-`dpl_metrics` module, so that the BNF team can see how the network
-uses a given content stream without asking 100+ libraries.
+Both sides report to Prometheus through the `dpl_metrics` module, so
+that the BNF team can see how the network uses a given content stream,
+and how the synchronisation is faring, without asking 100+ libraries.
+
+#### Subscriptions
 
 Client sites emit one series per stream they subscribe to, plus the
 number of subscriptions so that a site subscribing to nothing is
@@ -136,3 +138,52 @@ Publishing the name from the BNF site rather than looking it up from
 each client is deliberate: a lookup at scrape time would have every
 library site call delingstjenesten.dk every scrape interval. Prometheus
 already collects from both ends, so the join costs nothing.
+
+#### Synchronisation
+
+Client sites report how the sync process is doing. The two queues are
+reported separately, because a pile-up in each means something
+different — work waiting in `bnf_client_new_content` means we are not
+getting around to asking delingstjenesten.dk what is new, while a pile
+in `bnf_client_node_update` means we have asked and cannot keep up with
+importing the answers:
+
+```text
+dpl_cms_bnf_sync_queue_depth{queue="bnf_client_new_content"} 3
+dpl_cms_bnf_sync_queue_depth{queue="bnf_client_node_update"} 42
+```
+
+Each node the sync queue handles is counted by what became of it:
+
+```text
+dpl_cms_bnf_sync_nodes_total{result="imported"} 12
+dpl_cms_bnf_sync_nodes_total{result="skipped"} 431
+dpl_cms_bnf_sync_nodes_total{result="failed"} 1
+```
+
+`imported` on its own is the number of nodes actually synchronised.
+`skipped` is the ordinary outcome, not a problem: every node we have
+ever imported is re-queued once an hour, and most of them turn out to
+be unchanged upstream — the label also covers nodes the editor has
+claimed locally, and nodes unpublished upstream that we do not have.
+`failed` is the one to alert on:
+
+```promql
+rate(dpl_cms_bnf_sync_nodes_total{result="failed"}[15m]) > 0
+```
+
+Finally, each check for new content on a subscription is counted by
+whether we reached delingstjenesten.dk:
+
+```text
+dpl_cms_bnf_sync_subscription_checks_total{result="success"} 96
+dpl_cms_bnf_sync_subscription_checks_total{result="failure"} 4
+```
+
+This one is worth watching precisely because nothing else shows it.
+`BnfImporter::newContent()` deliberately answers "nothing new" when the
+query fails, so that an unreachable source stalls the subscription
+rather than resetting it — which means a site cut off from
+delingstjenesten.dk looks exactly like one whose streams happen to be
+quiet. Only this metric tells the two apart, and until content is
+conspicuously missing, nothing else will.

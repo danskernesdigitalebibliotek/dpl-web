@@ -13,14 +13,12 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleInstallerInterface;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_update\Services\ConfigIgnore;
 use Drupal\drupal_typed\DrupalTyped;
-use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
 use Drupal\next\Entity\NextSite;
@@ -145,12 +143,6 @@ function _dpl_update_add_field_columns(string $field_type, array $fields): strin
 
   // Loop through all configs.
   foreach ($field_storage_configs as $field_storage) {
-
-    // Just to play safe.
-    if (!($field_storage instanceof FieldStorageDefinitionInterface)) {
-      throw new \Exception('Unexpected entity type loaded: ' . get_class($field_storage));
-    }
-
     // Get the most updated schema from field stroage.
     $schema = $field_storage->getSchema();
     $table_name = str_replace('.', '__', (string) $field_storage->id());
@@ -1229,38 +1221,106 @@ function dpl_update_update_10075(): string {
 }
 
 /**
+ * Implements hook_update_dependencies().
+ *
+ * The address_dawa module is no longer part of the codebase, so nothing can
+ * instantiate the address_dawa field type any more. Until the leftover
+ * field_address_dawa configuration is gone, every update hook that touches
+ * entity field definitions dies with "Unable to determine class for field type
+ * 'address_dawa'". Pull the two hooks that do so behind our own cleanup.
+ *
+ * @return array<string, array<int, array<string, int>>>
+ *   Update dependencies.
+ *
+ * @see dpl_update_update_10076()
+ */
+function dpl_update_update_dependencies(): array {
+  return [
+    'next' => [
+      9108 => ['dpl_update' => 10076],
+    ],
+    'field_inheritance' => [
+      10300 => ['dpl_update' => 10076],
+    ],
+  ];
+}
+
+/**
  * Empty and remove field_address_dawa, in preparation for uninstalling DAWA.
  */
 function dpl_update_update_10076(): string {
-  $storage = FieldStorageConfig::loadByName('node', 'field_address_dawa');
+  $config_factory = \Drupal::configFactory();
+  $deleted = [];
 
-  if (!$storage instanceof FieldStorageConfig) {
-    return "field_address_dawa does not exist - nothing to delete.";
+  // Go through the config factory rather than FieldStorageConfig. Loading a
+  // field config entity instantiates its field type, and the plugin went away
+  // with the address_dawa module, so loading throws before we get a chance to
+  // delete anything.
+  $field_names = $config_factory->listAll('field.field.');
+  $field_names[] = 'field.storage.node.field_address_dawa';
+
+  foreach ($field_names as $config_name) {
+    if (!str_ends_with($config_name, '.field_address_dawa')) {
+      continue;
+    }
+
+    $config = $config_factory->getEditable($config_name);
+    if ($config->isNew()) {
+      continue;
+    }
+
+    $config->delete();
+    $deleted[] = $config_name;
   }
 
-  // Remember the identifier before deleting - after deletion the storage is
-  // only reachable through the deleted fields repository, keyed by this ID.
-  $storage_id = $storage->getUniqueStorageIdentifier();
+  // Deleting the config this way leaves the field data behind, since the
+  // regular purge runs through the field type as well. The branch address was
+  // only ever a display convenience, so drop the tables outright.
+  $schema = Database::getConnection()->schema();
+  foreach (['node__field_address_dawa', 'node_revision__field_address_dawa'] as $table) {
+    if ($schema->tableExists($table)) {
+      $schema->dropTable($table);
+      $deleted[] = $table;
+    }
+  }
 
-  // Deleting the storage also deletes the field on the branch bundle, but it
-  // only marks the actual field data as deleted. The rows are normally purged
-  // later, by cron.
-  $storage->delete();
+  if (!$deleted) {
+    return "No field_address_dawa remnants found - nothing to delete.";
+  }
 
-  // A module cannot be uninstalled while it has fields pending deletion, so
-  // purge the data now instead of waiting for cron. The batch size is an upper
-  // bound of nodes to purge - branches are counted in the tens, so a single
-  // pass is plenty.
-  field_purge_batch(10000, $storage_id);
-
-  return "Deleted field_address_dawa data on branch nodes.";
+  return 'Removed field_address_dawa remnants: ' . implode(', ', $deleted) . '.';
 }
 
 /**
  * Uninstall address_dawa module.
  */
 function dpl_update_update_10077(): string {
-  return _dpl_update_uninstall_modules(['address_dawa']);
+  $module = 'address_dawa';
+
+  // The module installer needs the module on disk to uninstall it, and silently
+  // does nothing when it is missing. It is missing here - the module was
+  // dropped from the codebase in the same release that stopped using it - so
+  // take it out of the installed list ourselves.
+  if (!\Drupal::service('extension.list.module')->exists($module)) {
+    $extensions = \Drupal::configFactory()->getEditable('core.extension');
+    $modules = $extensions->get('module') ?? [];
+
+    if (!array_key_exists($module, $modules)) {
+      return "The {$module} module is already uninstalled.";
+    }
+
+    unset($modules[$module]);
+    $extensions->set('module', $modules)->save();
+
+    // Without this the update registry keeps offering the module's own update
+    // hooks, which cannot run any more either.
+    \Drupal::keyValue('system.schema')->delete($module);
+    \Drupal::service('extension.list.module')->reset();
+
+    return "Removed the missing {$module} module from the installed modules.";
+  }
+
+  return _dpl_update_uninstall_modules([$module]);
 }
 
 /**
@@ -1275,4 +1335,15 @@ function dpl_update_update_10078(): string {
  */
 function dpl_update_update_10079(): string {
   return _dpl_update_install_modules(['dpl_metrics']);
+}
+
+/**
+ * Add Biblo subscription.
+ */
+function dpl_update_update_10080(): string {
+  return _dpl_update_add_bnf_subscription(
+    'e22cc1dc-9c92-418e-bb77-df78f6eb620b',
+    'Biblo',
+    'Biblo',
+  );
 }

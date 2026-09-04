@@ -1,0 +1,31 @@
+diff --git a/src/EventSubscriber/FieldStorageDefinitionSubscriber.php b/src/EventSubscriber/FieldStorageDefinitionSubscriber.php
+index 300f7ec..c06aaed 100644
+--- a/src/EventSubscriber/FieldStorageDefinitionSubscriber.php
++++ b/src/EventSubscriber/FieldStorageDefinitionSubscriber.php
+@@ -7,6 +7,7 @@ namespace Drupal\field_inheritance\EventSubscriber;
+ use Drupal\Core\Database\Connection;
+ use Drupal\Core\Entity\EntityFieldManagerInterface;
+ use Drupal\Core\Entity\EntityTypeManagerInterface;
++use Drupal\Core\Entity\FieldableEntityInterface;
+ use Drupal\Core\Field\FieldStorageDefinitionEvent;
+ use Drupal\Core\Field\FieldStorageDefinitionEvents;
+ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+@@ -42,11 +43,17 @@ final class FieldStorageDefinitionSubscriber implements EventSubscriberInterface
+    */
+   public function onFieldStorageDefinitionCreate(FieldStorageDefinitionEvent $event, $event_name): void {
+     $entity_type_id = $event->getFieldStorageDefinition()->getTargetEntityTypeId();
++    $entity_type = $this->entityTypeManager->getDefinition($entity_type_id);
++    // Any module may install a field storage definition, including for entity
++    // types that hold no fields at all. Asking those for their base fields
++    // throws, so leave them alone: they cannot inherit fields either.
++    if (!$entity_type->entityClassImplements(FieldableEntityInterface::class)) {
++      return;
++    }
+     $base_fields = $this->entityFieldManager->getBaseFieldDefinitions($entity_type_id);
+     if (!array_key_exists('field_inheritance', $base_fields)) {
+       return;
+     }
+-    $entity_type = $this->entityTypeManager->getDefinition($entity_type_id);
+     $data_table = $entity_type->getDataTable() ?? $entity_type->getBaseTable();
+     if ($data_table) {
+       $this->database->update($data_table)

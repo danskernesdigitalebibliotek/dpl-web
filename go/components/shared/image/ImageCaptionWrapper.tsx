@@ -12,7 +12,7 @@ const ImageCaptionWrapper = ({
   return (
     <div className={className}>
       {children}
-      <p className="text-typo-caption text-foreground/80 mt-1">{caption}</p>
+      <p className="text-typo-caption text-foreground-muted mt-1">{caption}</p>
     </div>
   )
 }

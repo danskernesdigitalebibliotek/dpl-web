@@ -20,11 +20,11 @@ class ParagraphNavSpotsManual extends \Spawnia\Sailor\ObjectLike
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
-            $instance->id = $id;
+            $instance->__set('id', $id);
         }
         $instance->__typename = 'ParagraphNavSpotsManual';
         if ($navSpotsContentUuids !== self::UNDEFINED) {
-            $instance->navSpotsContentUuids = $navSpotsContentUuids;
+            $instance->__set('navSpotsContentUuids', $navSpotsContentUuids);
         }
 
         return $instance;

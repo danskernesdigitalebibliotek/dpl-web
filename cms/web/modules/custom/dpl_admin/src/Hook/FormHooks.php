@@ -43,7 +43,7 @@ class FormHooks {
    * but the user form is the only one needing it.
    *
    * @phpstan-ignore missingType.iterableValue ($form is to complex for
-   * typehint), class.notFound (Order attribute comes in D11)
+   *  typehint)
    */
   #[Hook('form_alter', order: new OrderAfter(['password_policy']))]
   public function formAlter(array &$form, FormStateInterface $form_state, string $form_id): void {

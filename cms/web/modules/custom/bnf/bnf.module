@@ -35,7 +35,7 @@ function bnf_entity_base_field_info(EntityTypeInterface $entity_type): array {
 /**
  * Implements hook_page_attachments().
  *
- * @param array[] $page
+ * @param mixed[] $page
  *   The page render array.
  */
 #[LegacyHook]

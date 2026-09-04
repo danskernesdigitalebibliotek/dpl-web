@@ -39,7 +39,7 @@ class ParagraphSimpleLinksMapper extends BnfMapperParagraphPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    return $this->paragraphStorage->create([
+    return $this->entityTypeManager->getStorage('paragraph')->create([
       'type' => 'simple_links',
       'field_link' => $this->mapper->mapAll($object->link),
     ]);
