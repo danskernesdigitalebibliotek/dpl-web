@@ -29,9 +29,16 @@ jobs:
         run: |
           echo "{\"version\": \"${{ steps.get_version.outputs.RELEASE_TAG }}\"}" > .version
 
-      # The image builds the design system and React itself (cli.dockerfile's
-      # js-assets stage); `.dockerignore` keeps host-built assets out of the
-      # build context, so building them on the runner would change nothing.
+      # Build design-system + React and copy them into the CMS source tree so
+      # they get baked into the source image (no Composer package download).
+      - name: Build CMS frontend assets
+        uses: ./.github/actions/build-cms-assets
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+
+      # Build + publish the source image. The prebuilt design-system/React
+      # assets are picked up by `COPY cms /app/cms` in cli.dockerfile.
       - name: Build and publish source
         env:
           GH_TOKEN: ${{ github.token }}
