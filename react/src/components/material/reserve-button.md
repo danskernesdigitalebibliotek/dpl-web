@@ -34,5 +34,5 @@ CannotbeReserved[The button says 'Cannot be reserved' + Is disabled]
 6{Does the manifestation have an issn digital article id?}
 --yes--> DigitalArticle[The button says: 'Order digital copy']
 6{Does the manifestation have an issn digital article id?}
---No--> InfomediaArticle[The button says 'See online']
+--No--> RetrieverArticle[The button says 'See online']
 ```

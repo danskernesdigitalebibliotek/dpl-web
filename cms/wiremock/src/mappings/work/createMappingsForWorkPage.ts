@@ -85,8 +85,8 @@ export default async (baseUri?: string, options?: Options) => {
     })
   );
 
-  // Get Infomedia.
-  await import("./data/fbi/getInfomedia.json").then((json) =>
+  // Get Retriever.
+  await import("./data/fbi/getRetriever.json").then((json) =>
     wiremock(baseUri, options).mappings.createMapping({
       // Persistent so it survives cy.resetMappings() (the login/session flow
       // resets mappings mid-suite; without this the FBI mocks vanish -> 404).
@@ -96,7 +96,7 @@ export default async (baseUri?: string, options?: Options) => {
         urlPathPattern: "/next.*/graphql",
         bodyPatterns: [
           {
-            matchesJsonPath: matchGraphqlQuery("getInfomedia"),
+            matchesJsonPath: matchGraphqlQuery("getRetriever"),
           },
         ],
       },

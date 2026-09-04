@@ -1,15 +1,24 @@
 # schemas/
 
-> ## 🚨 ACTION REQUIRED ON NEXT DBC-FBI REFRESH 🚨
+> ## 🚨 STATUS: dbc-fbi snapshots cannot be consolidated yet 🚨
 >
-> **Do not just re-run the existing refresh tasks.** As of 2026-06-01,
-> `graphql/dbc-fbi.temp-next.graphql` and `graphql/dbc-fbi.fbcms-go.graphql`
-> are byte-identical — `temp-next` has caught up to `fbcms-go`.
+> The earlier plan to collapse the two `dbc-fbi.*.graphql` files into one
+> is **on hold**. Upstream has removed the `submitOrder` mutation from
+> every profile we can introspect (`fbi-api.dbc.dk/next`,
+> `temp.fbi-api.dbc.dk/next`, `fbi-api.dbc.dk/fbcms-go` — checked
+> 2026-08-05), while `react/` still ships the `openOrder` mutation that
+> reservations depend on.
 >
-> On the next refresh, **collapse them into a single `graphql/dbc-fbi.graphql`**
-> sourced from `fbi-api.dbc.dk/fbcms-go` (the canonical truth), and repoint
-> `react/`, `go/`, and `cms/` codegen at the merged file. Then delete the
-> per-consumer rows from the refresh table below.
+> Until that is resolved, `dbc-fbi.temp-next.graphql` is **not a pure
+> introspection snapshot**: it is the last snapshot that still contains
+> `SubmitOrder`, with the `Retriever*` definitions (AccessUnion member,
+> `Query.retriever`, and the four `Retriever*` types) hand-copied from the
+> refreshed `fbcms-go` snapshot. **Do not re-run
+> `task schemas:refresh:dbc-fbi:temp-next`** — it will drop `submitOrder`
+> and break react codegen. First find out where order submission is
+> supposed to live now; then refresh, and if the profiles really are
+> identical again, do the single-file consolidation described in the git
+> history of this README.
 
 Single source of truth for API contracts shared across sub-projects or
 sourced from an external system. Generated clients live inside each
@@ -31,8 +40,8 @@ sub-project; only the contracts live here.
    in so codegen doesn't need a bearer token. Schemas defined by our
    own code are vendored alongside their producer instead — see rule 5.
 
-   **See the banner above** — the two `dbc-fbi.*.graphql` files are due
-   to be collapsed into one on the next refresh.
+   **See the banner above** — `dbc-fbi.temp-next.graphql` currently
+   carries a hand-applied patch and must not be blindly refreshed.
 5. **CMS-produced artifacts stay in `cms/`.** `cms/openapi.json` (REST
    surface) and `cms/dpl-cms.bnf.graphql` (BNF GraphQL SDL,
    snapshotted via Sailor) are artifacts produced by the Drupal CMS
@@ -43,7 +52,7 @@ sub-project; only the contracts live here.
 
 | Spec | Upstream                                                                                                                                                | Refresh |
 |---|---------------------------------------------------------------------------------------------------------------------------------------------------------|---|
-| `graphql/dbc-fbi.temp-next.graphql` | DBC FBI gateway @ `temp.fbi-api.dbc.dk/next` (will be removed on next refresh - see above) — consumed by `react/`                                       | `task schemas:refresh:dbc-fbi:temp-next` |
+| `graphql/dbc-fbi.temp-next.graphql` | DBC FBI gateway @ `temp.fbi-api.dbc.dk/next` (⚠️ hand-patched, do not refresh — see banner) — consumed by `react/`                                      | `task schemas:refresh:dbc-fbi:temp-next` |
 | `graphql/dbc-fbi.fbcms-go.graphql` | DBC FBI gateway @ `fbi-api.dbc.dk/fbcms-go` (prod host, profile matching go's runtime) — consumed by `go/` and `cms/` (via Sailor in the cli container) | `task schemas:refresh:dbc-fbi:fbcms-go` |
 | `openapi/material-list.yaml` | `danskernesdigitalebibliotek/ddb-material-list@develop`                                                                                                 | `task schemas:refresh:material-list` |
 | `openapi/fbs-adapter.yaml` | FBS swagger 1.2 (Cicero), converted via [`itk-dev/dpl-fbs-adapter-tool`](https://github.com/itk-dev/dpl-fbs-adapter-tool)                               | `task schemas:refresh:fbs` (clones the tool into `.cache/`, runs its docker pipeline) |

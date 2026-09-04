@@ -642,16 +642,16 @@ const meta: Meta<typeof MaterialEntry> = {
       description: "Choose one text",
       control: { type: "text" }
     },
-    infomediaModalScreenReaderModalDescriptionText: {
-      description: "Infomedia modal screen reader description",
+    retrieverModalScreenReaderModalDescriptionText: {
+      description: "Retriever modal screen reader description",
       control: { type: "text" }
     },
-    infomediaModalCloseModalAriaLabelText: {
-      description: "Close infomedia modal",
+    retrieverModalCloseModalAriaLabelText: {
+      description: "Close Retriever modal",
       control: { type: "text" }
     },
-    infomediaCopyrightText: {
-      description: "Infomedia copyright notice text",
+    retrieverCopyrightText: {
+      description: "Retriever copyright notice text",
       control: { type: "text" }
     },
     saveButtonText: {
@@ -1006,9 +1006,9 @@ const meta: Meta<typeof MaterialEntry> = {
     modalReservationFormPickupHeaderDescriptionText:
       "If you wish to change the pick-up location for your reservation, you can do it here.",
     chooseOneText: "Choose one",
-    infomediaModalScreenReaderModalDescriptionText: "Modal for infomedia",
-    infomediaModalCloseModalAriaLabelText: "Close infomedia modal",
-    infomediaCopyrightText:
+    retrieverModalScreenReaderModalDescriptionText: "Modal for Retriever",
+    retrieverModalCloseModalAriaLabelText: "Close Retriever modal",
+    retrieverCopyrightText:
       "All material in Retriever is covered by copyright law and may not be copied without special permission.",
     saveButtonText: "Save",
     orderDigitalCopyModalScreenReaderModalDescriptionText:
@@ -1106,7 +1106,7 @@ export const newspaperPeriodical: Story = {
   }
 };
 
-export const Infomedia: Story = {
+export const Retriever: Story = {
   args: {
     ...Default.args,
     wid: "work-of:870971-avis:138119807"
