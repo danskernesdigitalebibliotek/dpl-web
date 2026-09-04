@@ -396,6 +396,32 @@ describe("createBiblioClient user endpoints", () => {
     ])
   })
 
+  it("asks the organization it is given for its reservation ceiling", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse({
+        organization_configurations: {
+          split_on_format: true,
+          loan_config: { max_concurrent_user_reservations: { ebook: 3, audiobook: 2 } },
+          combined_loan_config: {},
+        },
+      })
+    )
+
+    await expect(buildClient().getReservationLimits("org-2")).resolves.toEqual({
+      splitOnFormat: true,
+      maxConcurrentReservations: { ebook: 3, audiobook: 2 },
+    })
+    // The endpoint resolves no organization from the token, so the id has to
+    // reach it as a query parameter.
+    expect(fetch).toHaveBeenCalledWith(
+      `${baseUrl}/v1/organizations/configs?organization_id=org-2`,
+      {
+        method: "GET",
+        headers: { authorization: "Bearer abc" },
+      }
+    )
+  })
+
   it("returns the support id", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ support_id: "SUP-123" }))
 

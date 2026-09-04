@@ -67,10 +67,11 @@ export {
   isUnknownMaterial,
 } from "./digital-loan-decision"
 export { isCostFreeLoan } from "./digital-loans"
-export { getDigitalLoanQuota } from "./digital-quotas"
+export { getDigitalLoanQuota, getDigitalQuotaOrganizationId } from "./digital-quotas"
 export { digitalLoanDecisionQueryKey } from "./queries/digital-loan-decision"
 export { digitalLoansQueryKey } from "./queries/digital-loans"
 export { digitalLoanQuotasQueryKey } from "./queries/digital-quotas"
+export { digitalReservationLimitsQueryKey } from "./queries/digital-reservation-limits"
 export { digitalReservationsQueryKey } from "./queries/digital-reservations"
 export { readerSignInTokenQuery } from "./queries/reader"
 export { useDigitalAcceptOffer } from "./hooks/useDigitalAcceptOffer"
@@ -80,6 +81,7 @@ export { useDigitalDeleteReservation } from "./hooks/useDigitalDeleteReservation
 export { useDigitalLoanDecision } from "./hooks/useDigitalLoanDecision"
 export { useDigitalLoanQuotas } from "./hooks/useDigitalLoanQuotas"
 export { useDigitalLoans } from "./hooks/useDigitalLoans"
+export { useDigitalReservationLimits } from "./hooks/useDigitalReservationLimits"
 export { useDigitalMaterial } from "./hooks/useDigitalMaterial"
 export { useDigitalReservations } from "./hooks/useDigitalReservations"
 export { useDigitalSupportId } from "./hooks/useDigitalSupportId"
@@ -95,5 +97,6 @@ export type {
   LoanDecisionStatus,
   LoanRequestResult,
   DigitalLoanQuota,
+  DigitalReservationLimits,
   ReaderSignInToken,
 } from "./types"

@@ -1,6 +1,6 @@
 import { createBiblioClient } from "../biblio/src"
 import { resolveBiblioConfig } from "./internal/resolveBiblioConfig"
-import type { DigitalLoanQuota, ServiceLayerConfig } from "./types"
+import type { DigitalLoanQuota, DigitalReservationLimits, ServiceLayerConfig } from "./types"
 
 export async function getDigitalLoanQuotas(
   config: ServiceLayerConfig
@@ -8,6 +8,28 @@ export async function getDigitalLoanQuotas(
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return biblio.getLoanQuotas()
 }
+
+/**
+ * The quota that applies to the patron.
+ *
+ * One arrives per organization the patron belongs to; in practice that is a
+ * single library, so the first is it - several would need a rule from DBC.
+ * Everything keyed on "the patron's organization" goes through here, so that
+ * rule lives in one place.
+ */
+const patronQuota = (quotas: DigitalLoanQuota[] | undefined) => quotas?.[0]
+
+/**
+ * The organization the patron's quotas were issued for.
+ *
+ * Callers need it to ask about anything the adapter scopes to an
+ * organization rather than to the patron - the reservation ceiling today -
+ * so the ceiling belongs to the same library as the quotas beside it.
+ * Undefined until the quotas have arrived.
+ */
+export const getDigitalQuotaOrganizationId = (
+  quotas: DigitalLoanQuota[] | undefined
+): string | undefined => patronQuota(quotas)?.orgId
 
 export type QuotaUsage = {
   current: number
@@ -22,8 +44,7 @@ export type QuotaUsage = {
  * loans held right now. Organizations either combine e-books and audiobooks
  * or split them per format.
  *
- * One quota per organization arrives; a patron belongs to a single library
- * in practice, so the first is used - several would need a rule from DBC.
+ * Which of the arriving quotas applies is decided by patronQuota above.
  *
  * Cost-free loans draw on no quota and the adapter's counters already exclude
  * them (confirmed by WeDoBooks), so unlike the Publizon path nothing is
@@ -38,7 +59,7 @@ export const getDigitalLoanQuota = ({
   format: "ebook" | "audiobook"
   period?: "monthly" | "concurrent"
 }): QuotaUsage => {
-  const quota = quotas?.[0]
+  const quota = patronQuota(quotas)
 
   if (!quota) {
     return { current: 0, limit: undefined }
@@ -65,4 +86,14 @@ export const getDigitalLoanQuota = ({
         current: quota.currentMonthlyLoans,
         limit: quota.maxLoans,
       }
+}
+
+// The reservation ceiling for the organization the patron's quotas came from
+// - see getReservationLimits for why the organization is passed in.
+export async function getDigitalReservationLimits(
+  config: ServiceLayerConfig,
+  organizationId: string
+): Promise<DigitalReservationLimits> {
+  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  return biblio.getReservationLimits(organizationId)
 }

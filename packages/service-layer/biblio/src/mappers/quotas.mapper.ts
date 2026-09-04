@@ -2,7 +2,9 @@ import { z } from "zod"
 
 import type { DigitalLoanQuota } from "../../../src/types"
 
-const ByMaterialTypeSchema = z.object({
+// Shared with organization-configs.mapper.ts: the adapter uses this shape
+// wherever a number is given per material type.
+export const ByMaterialTypeSchema = z.object({
   ebook: z.number(),
   audiobook: z.number(),
 })
