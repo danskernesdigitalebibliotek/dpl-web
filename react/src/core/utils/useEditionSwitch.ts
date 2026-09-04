@@ -5,7 +5,7 @@ import { hasCorrectAccessType } from "../../components/material/material-buttons
 import { AccessTypeCodeEnum } from "../dbc-gateway/generated/graphql";
 import {
   reservationModalId,
-  onlineInternalModalId
+  loanableOnlineInternalModalId
 } from "../../apps/material/helper";
 import { getAllPids, convertPostIdsToFaustIds } from "./helpers/general";
 import { Manifestation } from "./types/entities";
@@ -36,7 +36,7 @@ export const useEditionSwitch = (
 
     const modalId = isPhysical
       ? reservationModalId(faustIds)
-      : onlineInternalModalId(faustIds);
+      : loanableOnlineInternalModalId(selectedManifestations);
 
     openGuarded({
       authUrl,
