@@ -7,19 +7,22 @@ import { LoanId } from "../../../../core/utils/types/ids";
 import StatusCircle from "../utils/status-circle";
 import StatusBadge from "../utils/status-badge";
 import LinkButton from "../../../../components/Buttons/LinkButton";
-import { Button } from "../../../../components/Buttons/Button";
+import PlayerButton from "../../../../components/reader-player/PlayerButton";
 import { Cover } from "../../../../components/cover/cover";
 import AuthorYear from "../../../../components/author-year/authorYear";
 import { useText } from "../../../../core/utils/text";
 import { formatDateTimeUtc } from "../../../../core/utils/helpers/date";
-import { getReaderPlayerTypeFromPublizonProductType } from "../../../../components/reader-player/helper";
+import {
+  getReaderPlayerTypeFromPublizonProductType,
+  readerUrl
+} from "../../../../components/reader-player/helper";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 
 export interface DigitalLoanCardProps {
   loan: LoanType;
   openLoanDetailsModal: (loan: LoanType) => void;
-  onPlayDigital: (orderId: string) => void;
+  onPlayDigital: (loan: LoanType) => void;
   loanId?: LoanId | null;
 }
 
@@ -30,12 +33,19 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
   onPlayDigital,
   loanId
 }) => {
-  const { dueDate, loanDate, identifier, periodical, orderId } = loan;
+  const {
+    dueDate,
+    loanDate,
+    identifier,
+    periodical,
+    orderId,
+    digitalProvider
+  } = loan;
   const t = useText();
   const { track } = useEventStatistics();
 
   const readerPlayerType = getReaderPlayerTypeFromPublizonProductType(
-    material?.digitalProductType
+    material?.publizonProductType
   );
   const titleId = `${loanId || identifier}-title`;
   const openDetails = () => openLoanDetailsModal(loan);
@@ -56,12 +66,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
     if (readerPlayerType === "reader") {
       return (
         <LinkButton
-          url={
-            new URL(
-              `/reader?orderid=${encodeURIComponent(orderId)}`,
-              window.location.href
-            )
-          }
+          url={readerUrl(orderId, digitalProvider)}
           buttonType="none"
           variant="filled"
           size="small"
@@ -81,23 +86,23 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
       );
     }
     return (
-      <Button
-        dataCy="loan-list-player-button"
+      <PlayerButton
+        orderId={orderId}
+        provider={digitalProvider}
         label={t("onlineMaterialPlayerText", {
           placeholders: { "@materialType": material?.materialType || "" }
         })}
-        buttonType="none"
-        variant="filled"
         size="small"
-        collapsible={false}
-        onClick={() => {
+        dataCy="loan-list-player-button"
+        trackClick={() =>
           track("click", {
             id: statistics.publizonReadListen.id,
             name: statistics.publizonReadListen.name,
             trackedData: orderId
-          });
-          onPlayDigital(orderId);
-        }}
+          })
+        }
+        // The list mounts the Publizon modal itself, one per open player.
+        onPlayInModal={() => onPlayDigital(loan)}
       />
     );
   };

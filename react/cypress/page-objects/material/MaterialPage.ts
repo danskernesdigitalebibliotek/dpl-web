@@ -9,14 +9,33 @@ import { ModalReservationComponent } from "./components/modal-reservation";
 import { ModalEditionsSwitchComponent } from "./components/modal-editions-switch";
 import { ModalFindOnShelfComponent } from "./components/modal-find-on-shelf";
 import { ModalReservationSuccessComponent } from "./components/modal-reservation-success";
+import { OnlineLoanModalComponent } from "./components/modal-online-loan";
+
+/**
+ * The material page stories. `withBiblioAdapter` is the same app with the CMS
+ * feature flag turned on, where digital materials are served by Biblio.
+ */
+export const materialStory = {
+  default: "default",
+  withBiblioAdapter: "material-with-biblio-adapter",
+  // TEMPORARY, with the toleration flag it renders - see the story.
+  withTolerantBiblioAdapter: "material-with-tolerant-biblio-adapter"
+} as const;
 
 export class MaterialPage extends PageObject {
   public elements!: Elements;
   public components!: NestedComponents;
 
-  constructor() {
+  /**
+   * @param story which story to render
+   * @param materialType the edition to preselect, eg. "e-bog". The page reads
+   *   it from the url, and without it no availability labels are rendered.
+   */
+  constructor(story: string = materialStory.default, materialType?: string) {
     super({
-      path: `/iframe.html?id=apps-material--default&viewMode=story`
+      path: `/iframe.html?id=apps-material--${story}&viewMode=story${
+        materialType ? `&type=${encodeURIComponent(materialType)}` : ""
+      }`
     });
     this.elements = {
       title: () => cy.get(".text-header-h1")
@@ -101,5 +120,13 @@ export class MaterialPage extends PageObject {
 
   getHeaderAvailabilityLabel(index: number) {
     return this.elements.headerAvailabilityLabels().eq(index);
+  }
+
+  /**
+   * The confirm-loan modal for a digital material. Exposed directly rather
+   * than as a nested component because it is portaled outside the page.
+   */
+  onlineLoanModal() {
+    return new OnlineLoanModalComponent();
   }
 }

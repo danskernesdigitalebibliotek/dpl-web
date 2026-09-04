@@ -27,6 +27,11 @@ services:
   cli:
     build:
       dockerfile: cms/lagoon/cli.dockerfile
+      args:
+        # Repeated rather than inherited: Lagoon reads this file with shyaml and
+        # does not resolve "extends", so build args set in cms/docker-compose.yml
+        # never arrive. Requires a Lagoon build-scoped variable of the same name.
+        WEDOBOOKS_NPM_TOKEN: ${WEDOBOOKS_NPM_TOKEN:-}
     labels:
       lagoon.type: cli-persistent
       lagoon.persistent.name: nginx
@@ -38,6 +43,9 @@ services:
   nginx:
     build:
       dockerfile: cms/lagoon/nginx.dockerfile
+      args:
+        # Same as for cli above: Lagoon does not resolve "extends".
+        WEDOBOOKS_NPM_TOKEN: ${WEDOBOOKS_NPM_TOKEN:-}
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/cms/web/sites/default/files/
@@ -49,6 +57,9 @@ services:
   php:
     build:
       dockerfile: cms/lagoon/php.dockerfile
+      args:
+        # Same as for cli above: Lagoon does not resolve "extends".
+        WEDOBOOKS_NPM_TOKEN: ${WEDOBOOKS_NPM_TOKEN:-}
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx

@@ -2,10 +2,15 @@ import React, { FC } from "react";
 import { createPortal } from "react-dom";
 import Modal from "../../../core/utils/modal";
 import { useText } from "../../../core/utils/text";
-import Player, { PlayerType } from "../../reader-player/Player";
+import Player, { PublizonPlayerType } from "../../reader-player/PublizonPlayer";
 import { playerModalId } from "./helper";
 
-const PlayerModal: FC<PlayerType> = ({ identifier, orderId }) => {
+/**
+ * Publizon's audiobook player, in a modal. Publizon-only - goes away with the
+ * Publizon integration. Digital loans play on a page instead, see
+ * DigitalReaderPlayer.
+ */
+const PlayerModal: FC<PublizonPlayerType> = ({ identifier, orderId }) => {
   const t = useText();
   const id = orderId ?? identifier;
   if (!id) return null;

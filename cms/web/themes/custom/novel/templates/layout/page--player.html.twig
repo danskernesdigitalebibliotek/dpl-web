@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * Theme override to display a /player page.
+ *
+ * Like /reader (see page--reader.html.twig) the page hosts a single React
+ * app and nothing else, so the header and footer regions are removed: the
+ * WeDoBooks player bar pins itself to the bottom of the viewport, and site
+ * chrome around an otherwise empty page would only look broken.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - base_path: The base URL path of the Drupal installation. Will usually be
+ *   "/" unless you have installed Drupal in a sub-directory.
+ * - is_front: A flag indicating if the current page is the front page.
+ * - logged_in: A flag indicating if the user is registered and signed in.
+ * - is_admin: A flag indicating if the user has permission to access
+ *   administration pages.
+ *
+ */
+#}
+
+  <main id="main-content" role="main">
+    {{ page.content }}
+  </main>

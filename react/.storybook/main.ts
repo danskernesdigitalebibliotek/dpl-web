@@ -1,3 +1,8 @@
+// Same singleton aliasing as webpack.config.js: without it the service layer
+// resolves its own copy of react-query and its hooks cannot see the
+// QueryClientProvider this project mounts.
+const { moduleAliases } = require("../webpack.helpers");
+
 const config = {
   stories: ["../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
 
@@ -26,6 +31,15 @@ const config = {
 
   docs: {
     autodocs: "tag"
+  },
+
+  webpackFinal: async (config) => {
+    config.resolve = config.resolve ?? {};
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      ...moduleAliases
+    };
+    return config;
   }
 };
 

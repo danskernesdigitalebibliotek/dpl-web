@@ -1,11 +1,13 @@
 import React, { FC } from "react";
 import { PatronV5 } from "../../../core/fbs/model";
 import { useText } from "../../../core/utils/text";
-import { FriendlyCardResult } from "../../../core/publizon/model";
-
 interface BasicDetailsSectionProps {
   patron: PatronV5;
-  patronCardNumber?: FriendlyCardResult | null;
+  /**
+   * The identifier the user can hand to support: Publizon's friendly card
+   * number or the service layer's support id - the caller picks the provider.
+   */
+  patronCardNumber?: string | null;
 }
 
 const BasicDetailsSection: FC<BasicDetailsSectionProps> = ({
@@ -30,14 +32,12 @@ const BasicDetailsSection: FC<BasicDetailsSectionProps> = ({
         {t("patronPageBasicDetailsHeaderText")}
       </h2>
       <div className="dpl-patron-info">
-        {patronCardNumber?.friendlyCardNumber && (
+        {patronCardNumber && (
           <>
             <h3 className="dpl-patron-info__label text-header-h4">
               {t("patronPageBasicFriendlyCardNumberLabelText")}
             </h3>
-            <div className="dpl-patron-info__text">
-              {patronCardNumber.friendlyCardNumber}
-            </div>
+            <div className="dpl-patron-info__text">{patronCardNumber}</div>
           </>
         )}
         <h3 className="dpl-patron-info__label text-header-h4">

@@ -32,3 +32,6 @@
 /react/dist
 /cms/web/themes/custom/novel/assets/dpl-design-system
 /cms/web/libraries/dpl-react
+# The images build the WeDoBooks wrapper themselves, so copying a developer's
+# local dist in afterwards would overwrite what the image just produced.
+/packages/wedobooks/dist

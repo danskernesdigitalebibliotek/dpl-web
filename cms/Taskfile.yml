@@ -581,7 +581,9 @@ tasks:
   source:build:
     summary: Build core source image.
     cmds:
-      - docker build -f {{ .LAGOON_DIR }}/cli.dockerfile --tag dpl-cms-cli:0.0.0 ..
+      # Passed without a value so docker reads WEDOBOOKS_NPM_TOKEN from the
+      # environment instead of the command line.
+      - docker build -f {{ .LAGOON_DIR }}/cli.dockerfile --build-arg WEDOBOOKS_NPM_TOKEN --tag dpl-cms-cli:0.0.0 ..
       - docker build -f {{ .LAGOON_DIR }}/source.dockerfile --tag {{ .RELEASE_FULL_NAME }} ..
 
   source:push:

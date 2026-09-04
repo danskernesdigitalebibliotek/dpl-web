@@ -4,12 +4,18 @@ inputs:
   token:
     description: GitHub token for authenticating with the npm registry.
     required: true
+  wedobooks-token:
+    description: >-
+      Token for WeDoBooks' private npm registry. Passed through to
+      common-setup-js, which needs it to install the workspace.
+    required: false
 runs:
   using: composite
   steps:
     - uses: ./.github/actions/common-setup-js
       with:
         token: ${{ inputs.token }}
+        wedobooks-token: ${{ inputs.wedobooks-token }}
     - name: Install go-task
       uses: arduino/setup-task@v2
       with:

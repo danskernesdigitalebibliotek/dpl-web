@@ -1,5 +1,8 @@
 import { useGetV1UserReservations } from "../publizon/publizon";
+import { useDigitalReservations } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import useBiblioAdapter from "./useBiblioAdapter";
 import {
+  mapDigitalReservationToReservationType,
   mapFBSReservationGroupToReservationType,
   mapPublizonReservationToReservationType
 } from "./helpers/list-mapper";
@@ -30,12 +33,16 @@ type Reservations = {
 type UseReservationsType = {
   all: Reservations;
   fbs: Reservations;
-  publizon: Reservations;
+  // Digital reservations from both providers. During the transition a
+  // reservation made before the switch stays visible while new ones are
+  // created through the service layer.
+  digital: Reservations;
 };
 
 type UseReservations = () => UseReservationsType;
 
 const useReservations: UseReservations = () => {
+  const viaBiblioAdapter = useBiblioAdapter();
   const {
     data: reservationsFbs,
     isLoading: isLoadingFbs,
@@ -43,51 +50,68 @@ const useReservations: UseReservations = () => {
   } = useGetReservationGroups();
   const {
     data: reservationsPublizon,
-    isLoading: isLoadingPublizon,
-    isError: isErrorPublizon
+    isLoading: isLoadingPublizonData,
+    isError: isErrorPublizonData
   } = useGetV1UserReservations();
+  const {
+    data: reservationsServiceLayer,
+    isLoading: isLoadingServiceLayer,
+    isError: isErrorServiceLayer
+  } = useDigitalReservations({ enabled: viaBiblioAdapter });
 
-  const reservationsIsLoading = isLoadingFbs || isLoadingPublizon;
-  const reservationsIsError = isErrorFbs || isErrorPublizon;
+  // A disabled query is never loading or in error so the service layer states
+  // only count when the feature flag has enabled the query.
+  const isLoadingDigital = isLoadingPublizonData || isLoadingServiceLayer;
+  const isErrorDigital = isErrorPublizonData || isErrorServiceLayer;
+
+  const reservationsIsLoading = isLoadingFbs || isLoadingDigital;
+  const reservationsIsError = isErrorFbs || isErrorDigital;
 
   // map reservations to same type
   const mappedReservationsFbs = reservationsFbs
     ? mapFBSReservationGroupToReservationType(reservationsFbs)
     : [];
-  const mappedReservationsPublizon = reservationsPublizon?.reservations
-    ? mapPublizonReservationToReservationType(reservationsPublizon.reservations)
+  const mappedReservationsServiceLayer = reservationsServiceLayer?.reservations
+    ? mapDigitalReservationToReservationType(
+        reservationsServiceLayer.reservations
+      )
     : [];
-
-  // Combine all reservations from both FBS and Publizon
-  const reservations = [
-    ...mappedReservationsFbs,
-    ...mappedReservationsPublizon
+  const mappedReservationsDigital = [
+    ...(reservationsPublizon?.reservations
+      ? mapPublizonReservationToReservationType(
+          reservationsPublizon.reservations
+        )
+      : []),
+    ...mappedReservationsServiceLayer
   ];
 
-  // Combine "ready to loan" reservations from both FBS and Publizon
+  // Combine all reservations, physical and digital
+  const reservations = [...mappedReservationsFbs, ...mappedReservationsDigital];
+
+  // Combine "ready to loan" reservations, physical and digital
   // Sort by pickup number (alphanumeric) with fallback to pickup deadline
   const reservationsReadyToLoanFBS = sortByPickupNumber(
     getReadyForPickup(mappedReservationsFbs)
   );
-  const reservationsReadyToLoanPublizon = sortByPickupNumber(
-    getReadyForPickup(mappedReservationsPublizon)
+  const reservationsReadyToLoanDigital = sortByPickupNumber(
+    getReadyForPickup(mappedReservationsDigital)
   );
   const reservationsReadyToLoan = sortByPickupNumber([
     ...reservationsReadyToLoanFBS,
-    ...reservationsReadyToLoanPublizon
+    ...reservationsReadyToLoanDigital
   ]);
 
-  // Combine "still in queue" reservations from both FBS and Publizon
-  // FBS: Sort by queue number, Publizon: Sort by expected redeem date (pickupDeadline)
+  // Combine "still in queue" reservations, physical and digital
+  // FBS sorts by queue number, digital by expected redeem date (pickupDeadline)
   const reservationsQueuedFBS = sortByNumberInQueue(
     getQueuedReservations(mappedReservationsFbs)
   );
-  const reservationsQueuedPublizon = sortByOldestPickupDeadline(
-    getQueuedReservations(mappedReservationsPublizon)
+  const reservationsQueuedDigital = sortByOldestPickupDeadline(
+    getQueuedReservations(mappedReservationsDigital)
   ) as ReservationType[];
   const reservationsQueued = [
     ...reservationsQueuedFBS,
-    ...reservationsQueuedPublizon
+    ...reservationsQueuedDigital
   ];
 
   return {
@@ -105,12 +129,12 @@ const useReservations: UseReservations = () => {
       isLoading: isLoadingFbs,
       isError: isErrorFbs
     },
-    publizon: {
-      reservations: mappedReservationsPublizon,
-      readyToLoan: reservationsReadyToLoanPublizon,
-      queued: reservationsQueuedPublizon,
-      isLoading: isLoadingPublizon,
-      isError: isErrorPublizon
+    digital: {
+      reservations: mappedReservationsDigital,
+      readyToLoan: reservationsReadyToLoanDigital,
+      queued: reservationsQueuedDigital,
+      isLoading: isLoadingDigital,
+      isError: isErrorDigital
     }
   };
 };

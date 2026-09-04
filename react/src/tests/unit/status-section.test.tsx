@@ -1,5 +1,5 @@
 import React from "react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
 import StatusSection from "../../apps/patron-page/sections/StatusSection";
 import {
@@ -7,6 +7,20 @@ import {
   useGetV1UserLoans
 } from "../../core/publizon/publizon";
 import { FileExtensionType } from "../../core/publizon/model";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import { useDigitalLoanQuotas } from "@danskernesdigitalebibliotek/dpl-service-layer";
+
+// Only the hooks under test are stubbed; the rest of the package stays
+// real, so pure helpers keep behaving as they do in production.
+vi.mock(
+  "@danskernesdigitalebibliotek/dpl-service-layer",
+  async (importOriginal) => ({
+    ...(await importOriginal<
+      typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
+    >()),
+    useDigitalLoanQuotas: vi.fn()
+  })
+);
 
 // Mock the translation hook with some dummy translations and placeholder formatting
 vi.mock("../../core/utils/text", () => {
@@ -50,7 +64,19 @@ vi.mock("../../core/publizon/publizon", () => ({
   useGetV1UserLoans: vi.fn()
 }));
 
+// The feature flag reads app config through Redux, which has no provider here.
+vi.mock("../../core/utils/useBiblioAdapter", () => ({
+  default: vi.fn()
+}));
+
 describe("StatusSection component tests", () => {
+  beforeEach(() => {
+    // Default to the flag being off: Publizon answers, as before.
+    vi.mocked(useBiblioAdapter).mockReturnValue(false);
+    vi.mocked(useDigitalLoanQuotas).mockReturnValue({
+      data: undefined
+    } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+  });
   it("should render nothing if library profile is not loaded", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
       data: null
@@ -204,5 +230,109 @@ describe("StatusSection component tests", () => {
     expect(progressBars.length).toBe(2);
     expect(progressBars[0].getAttribute("style")).toBe("width: 100%;");
     expect(progressBars[1].getAttribute("style")).toBe("width: 100%;");
+  });
+
+  describe("with the Biblio adapter feature flag on", () => {
+    beforeEach(() => {
+      vi.mocked(useBiblioAdapter).mockReturnValue(true);
+      // Publizon is not asked at all when the flag is on.
+      vi.mocked(useGetV1LibraryProfile).mockReturnValue({
+        data: null
+      } as unknown as ReturnType<typeof useGetV1LibraryProfile>);
+      vi.mocked(useGetV1UserLoans).mockReturnValue({
+        isSuccess: false,
+        data: undefined
+      } as unknown as ReturnType<typeof useGetV1UserLoans>);
+    });
+
+    it("Renders the quotas from Biblio, counting the loans held right now", () => {
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
+        data: [
+          {
+            splitOnFormat: true,
+            orgId: "org-1",
+            orgName: "Eksempel Biblioteket",
+            maxLoans: { ebook: 10, audiobook: 10 },
+            maxConcurrentLoans: { ebook: 4, audiobook: 2 },
+            currentConcurrentLoans: { ebook: 1, audiobook: 1 },
+            // The monthly counters must NOT be the ones shown here.
+            currentMonthlyLoans: { ebook: 7, audiobook: 6 }
+          }
+        ]
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+
+      const { container } = render(<StatusSection />);
+
+      expect(container.textContent).toContain("1 ud af 4");
+      expect(container.textContent).toContain("1 ud af 2");
+      expect(container.textContent).not.toContain("7 ud af");
+
+      const progressBars = container.querySelectorAll(
+        ".dpl-progress-bar__progress-bar div"
+      );
+      expect(progressBars[0].getAttribute("style")).toBe("width: 25%;");
+      expect(progressBars[1].getAttribute("style")).toBe("width: 50%;");
+    });
+
+    it("Leaves out the reservation limits, which Biblio does not provide", () => {
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
+        data: [
+          {
+            splitOnFormat: false,
+            orgId: "org-2",
+            orgName: "Eksempel Biblioteket",
+            maxLoans: 10,
+            maxConcurrentLoans: 4,
+            currentConcurrentLoans: 2,
+            currentMonthlyLoans: 6
+          }
+        ]
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+
+      const { container } = render(<StatusSection />);
+
+      // Rendering the line would claim the user can reserve zero materials.
+      expect(container.textContent).not.toContain("Du kan reservere op til");
+      // A combined quota applies the same numbers to both formats.
+      expect(container.textContent).toContain("2 ud af 4");
+    });
+
+    it("Shows a spent quota as full rather than hiding it", () => {
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
+        data: [
+          {
+            splitOnFormat: true,
+            orgId: "org-1",
+            orgName: "Eksempel Biblioteket",
+            maxLoans: { ebook: 10, audiobook: 10 },
+            // The audiobook quota is spent: one allowed, one held.
+            maxConcurrentLoans: { ebook: 4, audiobook: 1 },
+            currentConcurrentLoans: { ebook: 1, audiobook: 1 },
+            currentMonthlyLoans: { ebook: 1, audiobook: 1 }
+          }
+        ]
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+
+      const { container } = render(<StatusSection />);
+
+      // A user who cannot borrow another audiobook has to be able to see why,
+      // so the bar reads full rather than being left out.
+      expect(container.textContent).toContain("1 ud af 1");
+
+      const progressBars = container.querySelectorAll(
+        ".dpl-progress-bar__progress-bar div"
+      );
+      expect(progressBars[1].getAttribute("style")).toBe("width: 100%;");
+    });
+
+    it("Renders nothing until the quotas have loaded", () => {
+      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
+        data: undefined
+      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+
+      const { container } = render(<StatusSection />);
+
+      expect(container.querySelector("h2")).toBeNull();
+    });
   });
 });

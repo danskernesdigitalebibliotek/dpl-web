@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import Menu from "./menu";
 import { withText } from "../../core/utils/text";
 import { withConfig } from "../../core/utils/config";
+import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
 import { withUrls } from "../../core/utils/url";
 import GlobalUrlEntryPropsInterface from "../../core/utils/types/global-url-props";
 import { GroupModalProps } from "../../core/storybook/groupModalArgs";
@@ -54,6 +55,7 @@ export interface MenuProps {
 
 export interface MenuEntryProps
   extends
+    BiblioAdapterArgs,
     MenuProps,
     GlobalUrlEntryPropsInterface,
     GroupModalProps,

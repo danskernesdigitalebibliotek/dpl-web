@@ -24,7 +24,7 @@ const ReservationGroupModal: FC<ReservationGroupModalProps> = ({
   setReservationsToDelete,
   openDetailsModal
 }) => {
-  const { fbs, publizon } = useReservations();
+  const { fbs, digital } = useReservations();
   const t = useText();
   const { reservationsReady, reservationsQueued } = getModalIds();
   const [materialsToDelete, setMaterialsToDelete] = useState<ReservationType[]>(
@@ -36,12 +36,12 @@ const ReservationGroupModal: FC<ReservationGroupModalProps> = ({
 
   if (modalId === reservationsReady) {
     physicalReservations = fbs.readyToLoan;
-    digitalReservations = publizon.readyToLoan;
+    digitalReservations = digital.readyToLoan;
   }
 
   if (modalId === reservationsQueued) {
     physicalReservations = fbs.queued;
-    digitalReservations = publizon.queued;
+    digitalReservations = digital.queued;
   }
 
   useEffect(() => {

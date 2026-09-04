@@ -10,3 +10,8 @@ dpl_biblio.settings:
     enabled:
       type: boolean
       label: 'Use the Biblio adapter for digital materials'
+    # TEMPORARY - remove when the catalogue and the adapter agree on which
+    # materials exist. See the matching flag in the React apps.
+    tolerate_unknown_materials:
+      type: boolean
+      label: 'Render materials the adapter does not know as unavailable instead of failing'
