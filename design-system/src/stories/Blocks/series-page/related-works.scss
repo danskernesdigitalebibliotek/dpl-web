@@ -51,8 +51,15 @@ $_related-works-slide-width: calc($layout__max-width--large / 4);
 // from CSS; both bounds are needed or the flex track stretches/shrinks the
 // slides.
 .related-works-slider .keen-slider__slide {
-  min-width: $_related-works-slide-width;
-  max-width: $_related-works-slide-width;
+  min-width: 250px;
+
+  @include media-query__small {
+    min-width: 300px;
+  }
+
+  @include media-query__medium {
+    min-width: 360px;
+  }
 }
 
 // The container is inset so the resting slider starts at the section
