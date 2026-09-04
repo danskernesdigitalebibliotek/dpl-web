@@ -48,7 +48,15 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
   const { materialIsReservableFromAnotherLibrary } =
     useReservableFromAnotherLibrary(manifestations);
 
-  if (materialIsReservableFromAnotherLibrary) {
+  const showPhysicalButtons =
+    hasCorrectAccessType(AccessTypeCodeEnum.Physical, manifestations) &&
+    !isArticle(manifestations);
+
+  // Reserving from another library is a physical reservation, and it opens the
+  // same modal the ordinary reserve button does. Offering it where that modal
+  // is never rendered - an article, or an online material - leaves a button
+  // that does nothing when pressed.
+  if (materialIsReservableFromAnotherLibrary && showPhysicalButtons) {
     return (
       <MaterialButtonReservableFromAnotherLibrary
         workId={workId}
@@ -58,9 +66,6 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
       />
     );
   }
-  const showPhysicalButtons =
-    hasCorrectAccessType(AccessTypeCodeEnum.Physical, manifestations) &&
-    !isArticle(manifestations);
   // Show online material buttons if, either the material has an online access type or it has
   // a DigitalArticleService access & at the same time is an article. This way
   // we avoid showing both physical and online action buttons at one, which shouldn't happen
