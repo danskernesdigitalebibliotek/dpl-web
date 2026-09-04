@@ -40,6 +40,10 @@ const isActionsElement = (child: React.ReactNode): child is React.ReactElement =
 
 type ResponsiveDialogProps = {
   title: React.ReactNode
+  // Names the dialog when the visible title isn't available yet (e.g. while
+  // its data loads) — the accessible name is announced once, at open. Leave
+  // undefined whenever the title is rendered, so the two can't drift apart.
+  ariaLabel?: string
   description?: string
   children: React.ReactNode
   open: boolean
@@ -53,6 +57,7 @@ type ResponsiveDialogProps = {
 
 function ResponsiveDialog({
   title,
+  ariaLabel,
   description,
   children,
   open,
@@ -63,11 +68,13 @@ function ResponsiveDialog({
   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
   // Navigating away through a link inside the modal should also leave it
-  // closed for when the page is revisited or restored.
+  // closed for when the page is revisited or restored. New-tab links keep
+  // the user on the page, so the modal stays open.
   const closeOnLinkClick = (event: React.MouseEvent) => {
     if (event.metaKey || event.ctrlKey || event.shiftKey) return
     const target = event.target as HTMLElement
-    if (target.closest?.("a[href]")) {
+    const link = target.closest?.("a[href]")
+    if (link && link.getAttribute("target") !== "_blank") {
       onClose()
     }
   }
@@ -86,13 +93,17 @@ function ResponsiveDialog({
     return (
       <Dialog open={open} onOpenChange={onClose}>
         <DialogContent
+          aria-label={ariaLabel}
           onClickCapture={closeOnLinkClick}
           className="flex max-h-[95dvh] flex-col gap-0 overflow-hidden p-0 lg:min-h-0">
           <div
             className="bg-background mx-grid-edge pt-grid-edge border-foreground/10 shrink-0
               border-b lg:mx-10 lg:pt-10 lg:pb-6">
             <DialogHeader>
-              <DialogTitle className="px-10" onBack={onBack}>
+              {/* The title text changes with the modal's internal view; the
+                  live region announces those otherwise silent view changes.
+                  Receipt views announce via their own role="status". */}
+              <DialogTitle aria-live="polite" className="px-10" onBack={onBack}>
                 {title}
               </DialogTitle>
               {description && <DialogDescription>{description}</DialogDescription>}
@@ -129,6 +140,7 @@ function ResponsiveDialog({
   return (
     <Drawer open={open} onOpenChange={onClose}>
       <DrawerContent
+        aria-label={ariaLabel}
         onClickCapture={closeOnLinkClick}
         className="flex max-h-[95dvh] min-h-0 flex-col overflow-hidden">
         <DrawerHeader className="shrink-0">
@@ -152,7 +164,8 @@ function ResponsiveDialog({
                 </motion.div>
               )}
             </AnimatePresence>
-            <DrawerTitle>{title}</DrawerTitle>
+            {/* Mirrors the dialog title: announces internal view changes. */}
+            <DrawerTitle aria-live="polite">{title}</DrawerTitle>
           </div>
           {description && <DrawerDescription>{description}</DrawerDescription>}
         </DrawerHeader>

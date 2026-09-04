@@ -10,8 +10,10 @@ type Props = {
   cover: Cover
 }
 
+// role="status" announces the receipt — the success feedback — when it appears.
 const DeleteReservationReceiptContent = ({ cover }: Props) => (
   <div
+    role="status"
     data-cy={cyKeys["delete-reservation-receipt"]}
     className="flex flex-col items-center gap-y-8 text-center">
     <ManifestationCover cover={cover} iconName="book" className="w-32 shrink-0" />

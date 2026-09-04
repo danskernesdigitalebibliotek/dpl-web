@@ -36,7 +36,7 @@ const allNotifications: Notification[] = [
     status: "error",
     label: "Mangler betaling",
     title: "Der mangler at blive betalt 58 kr.",
-    body: "Du har afleveret nogle bøger for sent på biblioteket.",
+    body: "Du har afleveret nogle bøger for sent på biblioteket. Få hjælp fra en voksen.",
     action: { label: "Vis gebyrer", onClick: () => {} },
   },
   {
@@ -44,7 +44,7 @@ const allNotifications: Notification[] = [
     status: "error",
     label: "Mangler betaling",
     title: "Der mangler at blive betalt 125 kr. i erstatning",
-    body: "Du har afleveret nogle bøger for sent på biblioteket.",
+    body: "Det sker, når en bog bliver væk, går i stykker eller ikke bliver afleveret. Få hjælp fra en voksen.",
     action: { label: "Vis erstatning", onClick: () => {} },
   },
   {
@@ -58,7 +58,7 @@ const allNotifications: Notification[] = [
     key: "overdue",
     status: "error",
     label: "Frist overskredet",
-    title: "1 bog skal afleveres på biblioteket nu",
+    title: "1 bog mangler at blive afleveret på biblioteket",
     action: { label: "Vis bøger", onClick: () => {} },
   },
   {

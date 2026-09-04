@@ -20,12 +20,14 @@ type LoanRenewalReceiptProps = {
   title: string
 }
 
+// role="status" announces the receipt — the success feedback — when it appears.
 const LoanRenewalReceiptContent = ({
   manifestation,
   renewedLoan,
   title,
 }: LoanRenewalReceiptProps) => (
   <div
+    role="status"
     data-cy={cyKeys["renew-loan-receipt"]}
     className="flex flex-col items-center gap-y-8 text-center">
     <ManifestationCover

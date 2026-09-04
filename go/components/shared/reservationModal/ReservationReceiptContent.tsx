@@ -31,8 +31,10 @@ const ReservationReceiptContent = ({ manifestation, result, patron }: Reservatio
   const { data: branchTitle, isSuccess: branchLoaded } = useBranchTitle(result.pickupBranchId)
   const pickupBranchName = branchTitle ?? (branchLoaded ? "Afhentningssted blev ikke fundet" : "")
 
+  // role="status" announces the receipt — the success feedback — when it appears.
   return (
     <div
+      role="status"
       data-cy={cyKeys["reservation-receipt"]}
       className="flex flex-col items-center gap-y-8 text-center">
       <ManifestationCover
