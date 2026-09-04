@@ -7,7 +7,7 @@ import {
   reservationId,
   ReservationType
 } from "../../core/utils/types/reservation-type";
-import StatusBadge from "../../apps/loan-list/materials/utils/status-badge";
+import StatusBadge from "../status-badge/status-badge";
 import { ListType } from "../../core/utils/types/list-type";
 import { getStatusText } from "../../apps/reservation-list/utils/helpers";
 

@@ -20,7 +20,7 @@ import EmptyList from "../../components/empty-list/empty-list";
 import FeePaymentButton from "./FeePaymentButton";
 import { formatCurrency } from "../../core/utils/helpers/currency";
 import FeeListSkeleton from "./FeeListSkeleton";
-import WarningBar from "../loan-list/materials/utils/warning-bar";
+import WarningBar from "../../components/warning-bar/warning-bar";
 import useLoans from "../../core/utils/useLoans";
 import { LoanType } from "../../core/utils/types/loan-type";
 import LoansGroupModal, {

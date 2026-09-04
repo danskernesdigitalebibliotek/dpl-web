@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from "react";
-import WarningBar from "../../apps/loan-list/materials/utils/warning-bar";
+import WarningBar from "../warning-bar/warning-bar";
 import { materialIsOverdue } from "../../core/utils/helpers/general";
 import { useUrls } from "../../core/utils/url";
 import { useText } from "../../core/utils/text";
