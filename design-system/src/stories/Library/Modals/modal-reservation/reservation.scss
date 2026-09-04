@@ -3,14 +3,35 @@
   width: 100%;
 }
 
-.reservation-modal--confirm {
+.reservation-error {
   display: grid;
   place-content: center;
+}
+
+.reservation-success {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $s-2xl;
+  width: max-content;
+  margin-inline: auto;
 }
 
 .reservation-modal__confirm-button {
   width: 193px;
   margin: 0 auto;
+}
+
+.reservation-success__text-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .text-section__title {
+    text-align: center;
+    text-wrap: balance;
+    max-width: 50ch;
+  }
 }
 
 .reservation-modal-header {
@@ -88,5 +109,38 @@
   &__footer {
     display: flex;
     justify-content: center;
+  }
+}
+
+.reservation-success__text {
+  @include typography($typo__body-small);
+  text-align: center;
+  line-height: 24px;
+}
+
+// The modal reserves a lot of horizontal padding at medium+ to keep prose at a
+// comfortable reading width. That padding leaves too little room for the
+// recommendations grid, which overflows and gives the modal a horizontal
+// scrollbar.
+.modal--reservation:has(.reservation-success) {
+  padding-top: $s-2xl;
+  padding-left: $s-xl;
+  padding-right: $s-xl;
+
+  @include media-query__small {
+    padding-top: $s-4xl;
+  }
+
+  .modal-btn-close {
+    // Makes the background semi-transparent so text elements behind
+    // the button are still visible.
+    background-color: #{$color__global-primary}50;
+  }
+}
+
+.reservation-success__recommendations {
+  .reservation-success__recommendations-title {
+    @include typography($typo__h4);
+    margin-bottom: 12px;
   }
 }

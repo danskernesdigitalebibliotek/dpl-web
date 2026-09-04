@@ -69,7 +69,8 @@ describe('User journey', () => {
     cy.getBySel('reservation-modal-submit-button').click();
     cy.getBySel('reservation-success-title-text')
       .should('exist')
-      .and('contain', 'The material is available and is now reserved for you!');
+      .and('contain', 'Harry Potter og Fønixordenen')
+      .and('contain', 'is reserved for you');
   });
 
   afterEach(() => {

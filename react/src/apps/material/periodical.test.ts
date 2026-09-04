@@ -65,7 +65,7 @@ describe("Material - Periodical", () => {
 
     cy.getBySel("reservation-success-title-text")
       .should("be.visible")
-      .and("contain", "Material is available and reserved for you!");
+      .and("contain", '"Alt for damerne" is reserved for you');
 
     cy.getBySel("number-in-queue-text")
       .should("be.visible")

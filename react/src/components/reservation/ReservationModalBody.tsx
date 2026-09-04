@@ -7,6 +7,7 @@ import {
   convertPostIdsToFaustIds,
   getAllPids,
   getMaterialType,
+  getWorkPid,
   materialIsFiction
 } from "../../core/utils/helpers/general";
 import { useText } from "../../core/utils/text";
@@ -63,7 +64,8 @@ import { excludeBlacklistedBranches } from "../../core/utils/branches";
 import { InstantLoanConfigType } from "../../core/utils/types/instant-loan";
 import {
   OpenOrderMutation,
-  useOpenOrderMutation
+  useOpenOrderMutation,
+  useWorkRecommendationsQuery
 } from "../../core/dbc-gateway/generated/graphql";
 import ModalMessage from "../message/modal-message/ModalMessage";
 import configuration, { getConf } from "../../core/configuration";
@@ -75,6 +77,8 @@ import {
   getFutureDateString,
   getFutureDateStringISO
 } from "../../core/utils/helpers/date";
+import MaterialGrid from "../material-grid/MaterialGrid";
+import { WorkId } from "../../core/utils/types/ids";
 
 type ReservationModalProps = {
   selectedManifestations: Manifestation[];
@@ -418,6 +422,7 @@ export const ReservationModalBody = ({
           )}
           holdings={holdings}
           numberInQueue={reservationDetails.numberInQueue}
+          recommendations={<Recommendations work={work} />}
         />
       )}
       {!reservationSuccess && reservationResults && (
@@ -427,6 +432,38 @@ export const ReservationModalBody = ({
         />
       )}
     </>
+  );
+};
+
+const Recommendations = (props: { work: Work }) => {
+  const t = useText();
+  const pid = getWorkPid(props.work);
+
+  const { data: recommendationData } = useWorkRecommendationsQuery(
+    {
+      pid,
+      limit: 4
+    },
+    { enabled: !!pid }
+  );
+
+  const recommendations = recommendationData?.recommend.result ?? [];
+
+  const workIds = recommendations.map((recommendation) => {
+    return recommendation.work.workId;
+  });
+
+  const materialProps = workIds.map((workId) => ({
+    wid: workId as WorkId
+  }));
+
+  return (
+    <div className="reservation-success__recommendations">
+      <h3 className="reservation-success__recommendations-title">
+        {t("reservationRecommendationsTitleText")}
+      </h3>
+      <MaterialGrid initialMaximumDisplay={4} materials={materialProps} />
+    </div>
   );
 };
 

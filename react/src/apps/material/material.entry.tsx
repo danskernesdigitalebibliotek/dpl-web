@@ -174,9 +174,9 @@ interface MaterialEntryTextProps {
   reservationErrorsTitleText: string;
   reservationModalCloseModalAriaLabelText: string;
   reservationModalScreenReaderModalDescriptionText: string;
+  reservationRecommendationsTitleText: string;
   reservationSuccesIsReservedForYouText: string;
   reservationSuccessPreferredPickupBranchText: string;
-  reservationSuccesTitleText: string;
   reserveBookText: string;
   reserveText: string;
   reserveWithMaterialTypeText: string;

@@ -47,7 +47,7 @@ const ReservationError: React.FC<ReservationErrorProps> = ({
         allowOutsideClick: true
       }}
     >
-      <section className="reservation-modal reservation-modal--confirm">
+      <section className="reservation-modal reservation-error">
         <h2 className="text-header-h3 pb-48">{reservationErrorInfo.title}</h2>
         {reservationErrorInfo.description && (
           <p className="text-body-medium-regular pb-48">

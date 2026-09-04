@@ -13,7 +13,7 @@ export default {
   args: {
     title: "10 gode bøger om Venner & Veninder",
     url: "#",
-    imageUrl: "https://picsum.photos/id/100/800/800",
+    imageUrl: "images/campaign_cover_square.jpeg",
   },
   parameters: {
     design: {

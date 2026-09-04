@@ -445,8 +445,8 @@ const meta: Meta<typeof MaterialEntry> = {
       description: "Days",
       control: { type: "text" }
     },
-    reservationSuccesTitleText: {
-      description: "Reservation Success title",
+    reservationRecommendationsTitleText: {
+      description: "Reservation Success recommendations title",
       control: { type: "text" }
     },
     reservationSuccesIsReservedForYouText: {
@@ -943,7 +943,7 @@ const meta: Meta<typeof MaterialEntry> = {
       "You will receive an email when the material is ready",
     reservationDetailsNoInterestAfterTitleText: "Have no interest after",
     daysText: "Days",
-    reservationSuccesTitleText: "Material is available and reserved for you!",
+    reservationRecommendationsTitleText: "You might also be interested in...",
     reservationSuccesIsReservedForYouText: "is reserved for you",
     reservationSuccessPreferredPickupBranchText:
       "Material is available and you will get a message when it is ready for pickup - pickup at @branch",
