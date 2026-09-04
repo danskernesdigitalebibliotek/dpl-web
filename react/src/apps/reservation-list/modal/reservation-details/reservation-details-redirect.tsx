@@ -11,6 +11,13 @@ export interface ReservationDetailsRedirectProps {
   className?: string;
   linkClassNames?: string;
   workUrl: URL;
+  /**
+   * TEMPORARY: whether the reservation may be given up at all - see
+   * `usePublizonReservationsClosed`. Decided by the parent, which renders this
+   * row once per breakpoint and states the reason once. Required rather than
+   * defaulted so that removing the freeze fails to compile here.
+   */
+  cancellable: boolean;
 }
 
 const ReservationDetailsRedirect: FC<
@@ -20,7 +27,8 @@ const ReservationDetailsRedirect: FC<
   openReservationDeleteModal,
   className,
   linkClassNames,
-  workUrl
+  workUrl,
+  cancellable
 }) => {
   const t = useText();
 
@@ -32,7 +40,7 @@ const ReservationDetailsRedirect: FC<
         size="small"
         variant="outline"
         collapsible={false}
-        disabled={false}
+        disabled={!cancellable}
         onClick={() => openReservationDeleteModal(reservation)}
         classNames={linkClassNames}
         dataCy="remove-digital-reservation-button"

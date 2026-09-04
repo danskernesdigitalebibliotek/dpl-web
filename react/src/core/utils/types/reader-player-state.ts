@@ -26,6 +26,17 @@ export type ReaderPlayerState = {
    */
   canBeReserved: boolean;
   /**
+   * TEMPORARY, acquiring: the provider would have taken a reservation for
+   * this material, but reservations are closed right now. `canBeReserved` is
+   * false whenever this is true - the two together are what lets the page say
+   * why it refuses rather than looking broken.
+   *
+   * Only Publizon reports it, and only while its queue is frozen for
+   * migration. Delete this field once the freeze is lifted - see
+   * `usePublizonReservationsClosed`.
+   */
+  reservationsClosed: boolean;
+  /**
    * Holding: the key that opens the loan in the reader/player. Publizon calls
    * it an order id, the service layer a loan id; both serve the same purpose.
    */
@@ -64,6 +75,7 @@ export const unknownReaderPlayerState: ReaderPlayerState = {
   isAlreadyReserved: false,
   canBeLoaned: false,
   canBeReserved: false,
+  reservationsClosed: false,
   orderId: null,
   reservation: null,
   offerId: null,

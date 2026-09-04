@@ -117,6 +117,10 @@ function dpl_react_apps_texts(): array {
       ],
     ]),
     'delete-reservation-modal-not-regrettable' => t('You cannot regret this action', [], ['context' => 'Global']),
+    // TEMPORARY - what a patron is told while the Publizon reservation queue
+    // is frozen, see DplBiblioSettings::arePublizonReservationsClosedInReact().
+    'digital-reservation-cancel-closed-info' => t('You cannot cancel this reservation while we are moving to a new service. Your place in the queue is kept.', [], ['context' => 'Global']),
+    'digital-reservations-closed-info' => t('Reservations of digital materials are closed while we are moving to a new service. Please try again later.', [], ['context' => 'Global']),
     'digital-reservations-header' => t('Digital reservations', [], ['context' => 'Global']),
     'et-al' => t('et al.', [], ['context' => 'Global']),
     'error-boundary-alert-body-button-aria' => t('Close error message', [], ['context' => 'React apps (Global error handling)']),
