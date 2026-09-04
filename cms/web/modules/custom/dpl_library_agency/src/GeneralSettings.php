@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_library_agency;
 
+use Drupal\Core\Url;
 use Drupal\dpl_fbi\FbiProfileType;
 use Drupal\dpl_react\DplReactConfigBase;
 
@@ -221,16 +222,35 @@ class GeneralSettings extends DplReactConfigBase {
   }
 
   /**
+   * Gets the node ID of the configured zero hits search page.
+   *
+   * @return string|null
+   *   The node ID, or NULL if no page has been configured.
+   */
+  public function getZeroHitsSearchNodeId(): ?string {
+    $node_id = $this->loadConfig()->get('zero_hits_search_node_id');
+
+    return ($node_id === NULL || $node_id === '') ? NULL : (string) $node_id;
+  }
+
+  /**
    * Gets the zero hits search URL.
+   *
+   * Derived from the configured page node so the reference is the single
+   * source of truth and the URL can never drift out of sync with it.
    *
    * @return string
    *   The zero hits search URL.
    */
   public function getZeroHitsSearchUrl(): string {
-    return dpl_react_apps_format_app_url(
-      $this->loadConfig()->get('zero_hits_search_url'),
-      self::ZERO_HITS_SEARCH_URL
-    );
+    $node_id = $this->getZeroHitsSearchNodeId();
+
+    if ($node_id !== NULL) {
+      return Url::fromRoute('entity.node.canonical', ['node' => $node_id])->toString();
+    }
+
+    // Fall back to the default path on sites that have not configured a page.
+    return self::ZERO_HITS_SEARCH_URL;
   }
 
 }

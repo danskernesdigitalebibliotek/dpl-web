@@ -3,3 +3,5 @@ description: Handling the search pages.
 package: DPL
 type: module
 core_version_requirement: ^10 || ^11
+dependencies:
+  - dpl_library_agency:dpl_library_agency

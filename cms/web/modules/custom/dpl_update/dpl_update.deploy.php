@@ -5,6 +5,8 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Url;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_update\Services\ConfigIgnore;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\file\Entity\File;
@@ -18,6 +20,8 @@ use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\user\Entity\Role;
 use Drupal\user\RoleInterface;
+use Safe\Exceptions\UrlException;
+use function Safe\parse_url;
 
 /**
  * Update the permissions for a supplied list of roles.
@@ -688,4 +692,93 @@ function dpl_update_deploy_remove_maintenance_permissions(): string {
   );
 
   return 'Remove unused maintenance mode permission';
+}
+
+/**
+ * Migrate the zero hits search page from a stored URL to a node reference.
+ *
+ * The page used to be stored as a URL string in
+ * dpl_library_agency.general_settings:zero_hits_search_url. It is now stored
+ * as a node ID in zero_hits_search_node_id, so the redirect URL is derived
+ * from the node and the two can never drift apart. Resolve the existing URL
+ * to its node once and drop the old key.
+ *
+ * Sites that never saved the general settings form have no URL stored and
+ * relied on the fallback path instead, so that path is resolved for them.
+ * Without a node reference the teaser would silently stop rendering on
+ * their zero hits page, even though the redirect to it still works.
+ */
+function dpl_update_deploy_zero_hits_search_node_reference(): string {
+  $config = \Drupal::configFactory()
+    ->getEditable('dpl_library_agency.general_settings');
+
+  // A previous run already migrated it. Don't resolve again - the reference
+  // may since have been changed by an editor.
+  if ($config->get('zero_hits_search_node_id') !== NULL) {
+    $config->clear('zero_hits_search_url')->save();
+    return 'Zero hits search page is already stored as a node reference.';
+  }
+
+  $stored_url = $config->get('zero_hits_search_url');
+
+  $url = (is_string($stored_url) && $stored_url !== '')
+    ? $stored_url
+    : GeneralSettings::ZERO_HITS_SEARCH_URL;
+
+  $node_id = _dpl_update_zero_hits_node_id_from_url($url);
+
+  $config->clear('zero_hits_search_url');
+
+  if ($node_id === NULL) {
+    $config->save();
+    return "Zero hits search URL '{$url}' does not resolve to a local node - left unset.";
+  }
+
+  $config->set('zero_hits_search_node_id', $node_id)->save();
+
+  return "Migrated zero hits search URL '{$url}' to node ID {$node_id}.";
+}
+
+/**
+ * Resolve a stored zero hits URL to a local node ID.
+ *
+ * Only relative paths and aliases can point at a node on this site, so URLs
+ * carrying a host are treated as external and skipped. The path is resolved
+ * through routing, so it matches whether it is stored as an alias or a
+ * /node/{id} path, with or without a trailing slash.
+ *
+ * @param string $url
+ *   The configured zero hits search URL.
+ *
+ * @return string|null
+ *   The node ID, or NULL if the URL does not point to a node on this site.
+ */
+function _dpl_update_zero_hits_node_id_from_url(string $url): ?string {
+  try {
+    $parts = parse_url($url);
+  }
+  catch (UrlException) {
+    return NULL;
+  }
+
+  if (!is_array($parts) || isset($parts['host'])) {
+    return NULL;
+  }
+
+  $path = $parts['path'] ?? NULL;
+
+  if (!is_string($path) || $path === '' || $path === '/') {
+    return NULL;
+  }
+
+  $resolved = \Drupal::service('path.validator')
+    ->getUrlIfValidWithoutAccessCheck(rtrim($path, '/'));
+
+  if (!$resolved instanceof Url || !$resolved->isRouted() || $resolved->getRouteName() !== 'entity.node.canonical') {
+    return NULL;
+  }
+
+  $node_id = $resolved->getRouteParameters()['node'] ?? NULL;
+
+  return is_scalar($node_id) ? (string) $node_id : NULL;
 }
