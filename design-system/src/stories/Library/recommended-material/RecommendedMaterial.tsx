@@ -3,7 +3,10 @@ import { ButtonFavourite } from "../Buttons/button-favourite/ButtonFavourite";
 import Cover from "../cover/Cover";
 
 export type RecommendedMaterialProps = {
-  author: string;
+  // The secondary line under the title: an author, or e.g. the series-opener
+  // label on the series page's related-works cards. Omitted entirely when
+  // absent, matching the markup dpl-react emits.
+  author?: string;
   description: string;
   src: string;
   alt: string;
@@ -43,9 +46,11 @@ export const RecommendedMaterial: React.FC<RecommendedMaterialProps> = ({
         <a href={materialUrl} className="recommended-material__description">
           {description}
         </a>
-        <a href={materialUrl} className="recommended-material__author">
-          {author}
-        </a>
+        {author && (
+          <a href={materialUrl} className="recommended-material__author">
+            {author}
+          </a>
+        )}
       </div>
     </div>
   );

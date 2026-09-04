@@ -1,0 +1,123 @@
+// The "Mere af {author}" slider at the bottom of the series page: other
+// works by the series' author, first books of their other series leading.
+// The slider itself is keen-slider (rendered by dpl-react), so the
+// .keen-slider/.keen-slider__slide classes referenced here come from that
+// library's stylesheet.
+
+// Slides have a fixed width - wide screens simply show more of them. The
+// width matches a MaterialGrid column (its four-column grid inside the large
+// layout container), since the cards are the same recommended-material
+// components: MaterialGrid's look, in one long line.
+$_related-works-slide-width: calc($layout__max-width--large / 4);
+
+.related-works {
+  // Free-standing ribbon: clear of the member list above and of the page
+  // bottom below. 48px, composed like series-page's block clearance - the
+  // spacing scale has no single step for it.
+  margin: ($s-xl + $s-md) 0;
+  // 96px - generous hero-like breathing room; the scale has no single step
+  // for it, so it is composed like the 48px clearance above.
+  padding: ($s-4xl + $s-md) 0;
+  background: $color__global-secondary;
+  color: $color__text-primary-black;
+
+  // Slides overflow the inset slider container (see below) and are clipped
+  // here, at the section edge, so the track runs edge-to-edge.
+  overflow: hidden;
+}
+
+// Heading centered above the track, prev/next controls on the same line at
+// the right edge. Sized like the track below so heading, controls and cards
+// share edges.
+.related-works-slider__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - #{$s-xl * 2});
+  max-width: $layout__max-width--large;
+  margin: 0 auto $s-md;
+
+  @include media-query__medium {
+    margin: 0 auto $s-2xl;
+  }
+}
+
+.related-works__heading {
+  margin: 0;
+  text-align: center;
+}
+
+// keen-slider is configured with perView "auto" and takes each slide's width
+// from CSS; both bounds are needed or the flex track stretches/shrinks the
+// slides.
+.related-works-slider .keen-slider__slide {
+  min-width: 250px;
+
+  @include media-query__small {
+    min-width: 300px;
+  }
+
+  @include media-query__medium {
+    min-width: 360px;
+  }
+}
+
+// The container is inset so the resting slider starts at the section
+// padding, while overflow stays visible so moving slides run all the way to
+// the screen edge (same pattern as GO's MaterialSlider).
+// Three classes on purpose: keen-slider's own stylesheet declares
+// `.keen-slider:not(...)` (specificity 0,2,0) and loads after base.css, so a
+// two-class selector would lose the overflow to the library's `hidden` and
+// the track would clip at the inset instead of the screen edge.
+.related-works .related-works-slider .keen-slider {
+  // Centered like MaterialGrid's layout container instead of hugging the
+  // screen edge: at most the large layout width, with the 32px inset
+  // surviving as the minimum edge distance on narrower screens. The width
+  // override outranks the library's 100%.
+  overflow: visible;
+
+  // The slides stop clipping too (the library hides their overflow), for the
+  // same reason as the track and one more: the cards draw their in-grid
+  // outline just outside their box, and a clipping slide would swallow it.
+  // The library's slide selector is three classes deep, hence the fourth.
+  .keen-slider__slide {
+    overflow: visible;
+  }
+}
+
+.related-works-slider__controls {
+  position: absolute;
+  right: 48px;
+  flex-direction: column;
+  gap: $s-sm;
+
+  display: none;
+
+  @include media-query__medium {
+    display: flex;
+  }
+}
+
+// Styled like the Slider block's long-line arrows (Library/slider): bare
+// glyphs that fade out entirely when there is nothing to scroll to.
+.related-works-slider__button {
+  display: flex;
+  align-items: center;
+  width: 115px;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+
+  &:disabled {
+    opacity: 0;
+    cursor: default;
+  }
+}
+
+.related-works__loading {
+  margin: 0 $s-xl;
+}

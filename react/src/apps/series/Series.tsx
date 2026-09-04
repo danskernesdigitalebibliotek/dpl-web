@@ -25,6 +25,7 @@ import {
   MemberWithCoverOrigin,
   sortSeriesMembers
 } from "./helper";
+import RelatedWorks from "./RelatedWorks";
 import SeriesCard from "./SeriesCard";
 import SeriesSkeleton, { headerCoverCount } from "./SeriesSkeleton";
 
@@ -48,10 +49,11 @@ type SeriesMember = {
 };
 
 // The pages loaded so far. Members accumulate across "show more" clicks;
-// title and description are the same on every page.
+// title, description and languages are the same on every page.
 type LoadedSeries = {
   title: string;
   description?: string | null;
+  mainLanguages: string[];
   members: SeriesMember[];
 };
 
@@ -95,14 +97,14 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
       return;
     }
 
-    const { title, description } = data.series;
+    const { title, description, mainLanguages } = data.series;
     const pageMembers = data.series.members as SeriesMember[];
 
     setHitcount(data.series.hitcount);
     setSeries((previous) =>
       page > 0 && previous
         ? { ...previous, members: [...previous.members, ...pageMembers] }
-        : { title, description, members: pageMembers }
+        : { title, description, mainLanguages, members: pageMembers }
     );
   }, [data, page]);
 
@@ -222,6 +224,15 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
       </ul>
 
       <PagerComponent isLoading={isLoading} />
+
+      <RelatedWorks
+        author={author}
+        currentSeries={{
+          seriesId,
+          title: series.title,
+          mainLanguage: series.mainLanguages[0] ?? null
+        }}
+      />
     </div>
   );
 };

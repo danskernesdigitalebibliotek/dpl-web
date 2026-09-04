@@ -5,7 +5,10 @@ import Link, { LinkProps } from "../atoms/links/Link";
 type StaticRecommendedMaterialProps = {
   title: string;
   linkProps: Pick<LinkProps, "href" | "trackClick">;
-  author?: string;
+  // The secondary line under the title - an author, a series label, or
+  // whatever the context calls for. The class names keep their historical
+  // "author" naming: they are the design system's wire format.
+  subtitle?: string;
   favoriteButton: React.ReactNode;
   cover: React.ReactNode;
   isPartOfGrid?: boolean;
@@ -14,7 +17,7 @@ type StaticRecommendedMaterialProps = {
 
 export const StaticRecommendedMaterial = ({
   title,
-  author,
+  subtitle,
   favoriteButton,
   cover,
   isPartOfGrid = false,
@@ -43,14 +46,14 @@ export const StaticRecommendedMaterial = ({
           </Link>
         )}
 
-        {author && (
+        {subtitle && (
           <Link
             href={href}
             className="recommended-material__author"
             dataCy="recommended-author"
             trackClick={trackData}
           >
-            {author}
+            {subtitle}
           </Link>
         )}
       </div>

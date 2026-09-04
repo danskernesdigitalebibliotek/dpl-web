@@ -53,6 +53,9 @@ importers:
       graphql-tag:
         specifier: ^2.12.7
         version: 2.12.7(graphql@16.14.2)
+      keen-slider:
+        specifier: 6.8.6
+        version: 6.8.6
       lodash:
         specifier: ^4.17.23
         version: 4.18.1
@@ -5638,6 +5641,9 @@ packages:
   katex@0.16.47:
     resolution: {integrity: sha512-Eeo8Ys1doU1z+x8AZsPpQu+p/QcZBI5PeOo7QGQdy2x2m0MU/hYagBbGOmXwr5KVbEfVuWv9LpnQWeehogurjg==}
     hasBin: true
+
+  keen-slider@6.8.6:
+    resolution: {integrity: sha512-dcEQ7GDBpCjUQA8XZeWh3oBBLLmyn8aoeIQFGL/NTVkoEOsmlnXqA4QykUm/SncolAZYGsEk/PfUhLZ7mwMM2w==}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -14126,6 +14132,8 @@ snapshots:
   katex@0.16.47:
     dependencies:
       commander: 8.3.0
+
+  keen-slider@6.8.6: {}
 
   keyv@4.5.4:
     dependencies:
