@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import localFont from "next/font/local"
+import { DM_Sans } from "next/font/google"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { Suspense } from "react"
 
@@ -23,18 +23,10 @@ import GlobalErrorBoundary from "./GlobalErrorBoundary"
 export const metadata: Metadata = setLayoutMetadata()
 
 // When adding or changing fonts, remember to update the imports in .storybook/preview.tsx
-const GTFlexa = localFont({
-  src: [
-    {
-      path: "../public/fonts/GT-Flexa-Expanded-Regular.woff2",
-      weight: "400",
-    },
-    {
-      path: "../public/fonts/GT-Flexa-Expanded-Medium.woff2",
-      weight: "500",
-    },
-  ],
-  variable: "--font-headline",
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-sans",
   display: "swap",
 })
 
@@ -76,7 +68,7 @@ export default function Layout({
 }>) {
   return (
     <html lang="da">
-      <body className={`${GTFlexa.variable} duration-dark-mode antialiased transition-all`}>
+      <body className={`${dmSans.variable} duration-dark-mode antialiased transition-all`}>
         <GridHelper hideInProduction />
         <Suspense>
           <RootLayout>

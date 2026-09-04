@@ -104,7 +104,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
           !isLast && "min-w-32 flex-1",
           isLast && "flex-2"
         )}>
-        <h3 className="text-typo-caption uppercase">{getFacetTranslation(facetFilter)}</h3>
+        <h3 className="text-typo-caption">{getFacetTranslation(facetFilter)}</h3>
 
         <AnimateChangeInHeight>
           <div

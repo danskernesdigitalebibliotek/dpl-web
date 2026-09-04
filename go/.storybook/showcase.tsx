@@ -4,18 +4,16 @@ import { cn } from "@/lib/helpers/helper.cn"
 
 // Shared scaffolding for showcase stories. The story furniture (captions,
 // section titles) is deliberately styled unlike any product typography —
-// muted, uppercase, caption-size — and the showcased components sit inside
+// muted, caption-size — and the showcased components sit inside
 // dashed boxes, so it is always clear what is the component and what is the
 // story around it.
 
 export const ShowcaseTitle = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-typo-caption text-foreground-muted font-medium tracking-wide uppercase">
-    {children}
-  </h2>
+  <h2 className="text-typo-caption text-foreground-muted font-medium tracking-wide">{children}</h2>
 )
 
 export const ShowcaseCaption = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-typo-caption text-foreground-muted uppercase">{children}</p>
+  <p className="text-typo-caption text-foreground-muted">{children}</p>
 )
 
 export const ShowcaseBox = ({

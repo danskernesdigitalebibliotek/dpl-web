@@ -29,7 +29,7 @@ const QuotasSection = ({ audioLoans, ebookLoans, blueLoans, onViewAll }: QuotasS
             type="button"
             onClick={onViewAll}
             data-cy={cyKeys["view-all-digital-loans-button"]}
-            className="text-typo-link focus-visible cursor-pointer underline">
+            className="text-typo-link focus-visible cursor-pointer">
             Vis alle
           </button>
         </div>
