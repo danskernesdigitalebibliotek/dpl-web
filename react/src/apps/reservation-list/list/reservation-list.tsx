@@ -82,7 +82,8 @@ const ReservationList: FC<ReservationListProps> = ({ pageSize }) => {
         }
       }
     }
-    // If there is a reservation delete query param, loan details modal should be opened
+    // If there is a reservation delete query param, the delete modal should be
+    // opened - it only renders once we know which reservation it is about.
     const deleteRes = deleteReservation as string;
     if (modalUrlParam && modalUrlParam.includes(deleteRes as string)) {
       const queryReservationId = getDetailsModalId(modalUrlParam, deleteRes);
@@ -93,7 +94,7 @@ const ReservationList: FC<ReservationListProps> = ({ pageSize }) => {
           })
           .at(0);
         if (reservationFromQuery) {
-          setReservationWithDetails(reservationFromQuery);
+          setReservationToDelete(reservationFromQuery);
         }
       }
     }
