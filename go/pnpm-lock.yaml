@@ -108,8 +108,8 @@ importers:
         specifier: 19.2.8
         version: 19.2.8(react@19.2.8)
       react-error-boundary:
-        specifier: ^6.1.3
-        version: 6.1.3(@types/react@19.2.18)(react@19.2.8)
+        specifier: ^6.1.4
+        version: 6.1.4(@types/react@19.2.18)(react@19.2.8)
       react-parallax-tilt:
         specifier: ^1.7.339
         version: 1.7.339(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -8697,8 +8697,8 @@ packages:
     peerDependencies:
       react: ^19.2.8
 
-  react-error-boundary@6.1.3:
-    resolution: {integrity: sha512-GnSKpCohFi2nQmJCWwP8O8wub7zexlePvpsejvQr35vS5RTouS1+utTNOmyc540yw5vyOXnSL1rBWsCQDmkyUA==}
+  react-error-boundary@6.1.4:
+    resolution: {integrity: sha512-7FgvbyjCFhu4dtKSZu807cW1MWG2nWAM4bwGqUByAtHVJXtlzoCJX0SSyZRyFrb+aBd7wtJkcOR4DsxXVEuDsA==}
     peerDependencies:
       '@types/react': ^18.0.0 || ^19.0.0
       react: ^18.0.0 || ^19.0.0
@@ -10314,6 +10314,9 @@ packages:
   zod@4.4.3:
     resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
+  zod@4.5.4:
+    resolution: {integrity: sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA==}
+
   zstd-codec@0.1.5:
     resolution: {integrity: sha512-v3fyjpK8S/dpY/X5WxqTK3IoCnp/ZOLxn144GZVlNUjtwAchzrVo03h+oMATFhCIiJ5KTr4V3vDQQYz4RU684g==}
 
@@ -11346,7 +11349,7 @@ snapshots:
     dependencies:
       '@tanstack/react-query': 5.102.8(react@19.2.8)
       react: 19.2.8
-      zod: 4.4.3
+      zod: 4.5.4
 
   '@emnapi/core@1.10.0':
     dependencies:
@@ -19638,7 +19641,7 @@ snapshots:
       react: 19.2.8
       scheduler: 0.27.0
 
-  react-error-boundary@6.1.3(@types/react@19.2.18)(react@19.2.8):
+  react-error-boundary@6.1.4(@types/react@19.2.18)(react@19.2.8):
     dependencies:
       react: 19.2.8
     optionalDependencies:
@@ -21406,5 +21409,7 @@ snapshots:
   zod@3.22.4: {}
 
   zod@4.4.3: {}
+
+  zod@4.5.4: {}
 
   zstd-codec@0.1.5: {}
