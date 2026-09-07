@@ -76,7 +76,7 @@
 
     --backdrop: hsla(0, 0%, 10.2%, 0.5);
 
-    --beige: hsl(30, 40%, 98%);
+    --beige: hsla(30, 40%, 98%, 1);
     --beige-overlay: hsla(0, 0%, 100%, 10);
     --beige-overlay-solid: hsl(30, 40%, 98%);
     --beige-skeleton: hsla(42, 25%, 35%, 0.1);
