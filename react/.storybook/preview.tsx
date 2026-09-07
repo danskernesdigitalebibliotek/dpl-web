@@ -9,10 +9,13 @@ import ErrorBoundaryAlert from "../src/components/error-boundary-alert/ErrorBoun
 import Store from "../src/components/store";
 
 const getSessionStorage = (type) => window.sessionStorage.getItem(type);
+// || rather than ??: Storybook inlines STORYBOOK_* variables from .env even
+// when they are empty, and an inlined "" would otherwise shadow the session
+// storage tokens Cypress sets - silently signing every test out.
 const userToken =
-  process.env.STORYBOOK_USER_TOKEN ?? getSessionStorage(TOKEN_USER_KEY);
+  process.env.STORYBOOK_USER_TOKEN || getSessionStorage(TOKEN_USER_KEY);
 const libraryToken =
-  process.env.STORYBOOK_LIBRARY_TOKEN ?? getSessionStorage(TOKEN_LIBRARY_KEY);
+  process.env.STORYBOOK_LIBRARY_TOKEN || getSessionStorage(TOKEN_LIBRARY_KEY);
 
 if (userToken) {
   setToken(TOKEN_USER_KEY, userToken);
