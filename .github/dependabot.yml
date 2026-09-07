@@ -7,6 +7,16 @@
 # - react (React components with pnpm)
 # - packages/* (shared TypeScript packages with pnpm)
 version: 2
+registries:
+  # WeDoBooks' own npm registry, which serves the SDK behind the reader and
+  # the player, and their mirror of Colibrio underneath it. The token is a
+  # Dependabot secret rather than an Actions secret - Dependabot cannot read
+  # the latter, which is also why workflow runs on its pull requests need the
+  # same secret registered separately.
+  wedobooks:
+    type: npm-registry
+    url: https://npm.pkg.wedobooks.io
+    token: ${{secrets.WEDOBOOKS_NPM_TOKEN}}
 updates:
   # GitHub Actions - applies to all workflows in .github/workflows
   - package-ecosystem: github-actions
@@ -373,6 +383,10 @@ updates:
   - package-ecosystem: npm
     directories:
       - "/packages/*"
+    # packages/wedobooks resolves the SDK and Colibrio from WeDoBooks'
+    # registry, which no other directory here reaches.
+    registries:
+      - wedobooks
     cooldown:
       default-days: 3
     open-pull-requests-limit: 20
