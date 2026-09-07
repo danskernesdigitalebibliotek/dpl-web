@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGetInfomediaQuery } from "../../../core/dbc-gateway/generated/graphql";
-import Modal from "../../../core/utils/modal";
+import Modal, { useIsModalOpen } from "../../../core/utils/modal";
 import { useText } from "../../../core/utils/text";
 import { useConfig } from "../../../core/utils/config";
 import { Pid } from "../../../core/utils/types/ids";
@@ -41,6 +41,12 @@ const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
     }
   }, [userInfo, siteAgencyId]);
 
+  const modalId = infomediaModalId(manifestation.pid);
+  const isModalOpen = useIsModalOpen(modalId);
+
+  // The article body is only worth fetching once the reader asks for it: a
+  // modal is rendered for every edition of the work, and each fetch returns a
+  // whole article.
   const {
     data,
     error,
@@ -50,10 +56,11 @@ const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
       id: infoMediaId
     },
     {
-      enabled: shouldFetchData
+      enabled: shouldFetchData && isModalOpen
     }
   );
-  if (!data || error) {
+
+  if (error) {
     return null;
   }
 
@@ -62,7 +69,7 @@ const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
 
   return (
     <Modal
-      modalId={infomediaModalId(manifestation.pid)}
+      modalId={modalId}
       screenReaderModalDescriptionText={t(
         "infomediaModalScreenReaderModalDescriptionText"
       )}
