@@ -6,8 +6,11 @@ vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
   CMS_REACT_LIBRARY: ./cms/web/libraries/dpl-react
   DESIGN_SYSTEM_BUILD: ./design-system/build
+  # The valueless -e forwards the WeDoBooks registry credential when the
+  # caller has it, and is inert for everyone else: docker drops a valueless -e
+  # whose variable is not in its own environment. See init:pnpm.
   CLI_PREFIX:
-    sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.15"; fi
+    sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI -e 'npm_config_//npm.pkg.wedobooks.io/:_authToken' --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.15"; fi
 
 tasks:
   init:
@@ -202,8 +205,24 @@ tasks:
       - react/pnpm-lock.yaml
       - packages/*/package.json
       - packages/*/pnpm-lock.yaml
+    dotenv: ['.env']
     cmds:
-      - task dev:cli -- corepack pnpm install
+      # packages/wedobooks needs a credential for WeDoBooks' registry, which
+      # .npmrc deliberately does not carry. pnpm takes any config key from the
+      # environment as npm_config_<key>, so the token in .env reaches it that
+      # way - and only when set, leaving a user-level `pnpm config set` (the
+      # route for a bare pnpm install, see packages/wedobooks/README.md) as the
+      # working alternative rather than overriding it with an empty value.
+      - |
+        if [ -n "${WEDOBOOKS_NPM_TOKEN:-}" ]; then
+          set -- "npm_config_//npm.pkg.wedobooks.io/:_authToken=$WEDOBOOKS_NPM_TOKEN"
+        else
+          set --
+          if ! grep -q "^//npm.pkg.wedobooks.io/:_authToken" "$HOME/.npmrc" 2>/dev/null; then
+            echo "warning: no credential for WeDoBooks' npm registry - WEDOBOOKS_NPM_TOKEN is missing from .env (run 'task dev:dotenv:generate') and the user-level npm config has none either. See packages/wedobooks/README.md." >&2
+          fi
+        fi
+        env "$@" task dev:cli -- corepack pnpm install
 
   # ---------------------------------------------------------------------------
   # Main orchestration
