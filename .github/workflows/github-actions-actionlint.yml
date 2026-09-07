@@ -24,6 +24,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Install go-task
         uses: arduino/setup-task@v3
         with:

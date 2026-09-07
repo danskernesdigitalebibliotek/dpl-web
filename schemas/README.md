@@ -48,6 +48,7 @@ sub-project; only the contracts live here.
 | `openapi/material-list.yaml` | `danskernesdigitalebibliotek/ddb-material-list@develop`                                                                                                 | `task schemas:refresh:material-list` |
 | `openapi/fbs-adapter.yaml` | FBS swagger 1.2 (Cicero), converted via [`itk-dev/dpl-fbs-adapter-tool`](https://github.com/itk-dev/dpl-fbs-adapter-tool)                               | `task schemas:refresh:fbs` (clones the tool into `.cache/`, runs its docker pipeline) |
 | `openapi/publizon-adapter.yaml` | None — edit by hand                                                                                                                                     | `task schemas:refresh:publizon` *(stub that prints this)* |
+| `openapi/biblio-adapter.yaml` | Biblio adapter (DBC) @ [`biblio-adapter.dbc.dk/docs`](https://biblio-adapter.dbc.dk/docs) — consumed by `packages/service-layer/`                                        | Manual: use the "Download OpenAPI specification" button on the docs page and convert the JSON to YAML |
 
 
 All refresh/format tasks run in Docker — `schemas/` has no local

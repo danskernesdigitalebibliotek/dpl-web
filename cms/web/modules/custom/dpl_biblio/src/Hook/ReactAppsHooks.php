@@ -13,6 +13,11 @@ use Drupal\dpl_biblio\DplBiblioSettings;
  */
 class ReactAppsHooks {
 
+  /**
+   * The React apps that mount the WeDoBooks SDK.
+   */
+  private const SDK_APPS = ['reader', 'player'];
+
   public function __construct(protected DplBiblioSettings $biblioSettings) {}
 
   /**
@@ -35,7 +40,8 @@ class ReactAppsHooks {
   /**
    * Expose the Biblio adapter feature flag to all React apps.
    *
-   * The flag ends up as data-use-biblio-adapter-config.
+   * The flag ends up as data-use-biblio-adapter-config. The WeDoBooks SDK
+   * configuration goes to the reader and the player only.
    *
    * @param mixed[] $data
    *   The data to provide to the React apps.
@@ -51,7 +57,18 @@ class ReactAppsHooks {
 
     $data['configs'] += [
       'use-biblio-adapter' => $this->biblioSettings->isEnabled() ? '1' : '0',
+      // TEMPORARY, see DplBiblioSettings::shouldTolerateUnknownMaterials().
+      'biblio-tolerate-unknown-materials' => $this->biblioSettings->shouldTolerateUnknownMaterials() ? '1' : '0',
     ];
+
+    // Left out entirely when unconfigured, so React can tell "no SDK here"
+    // from "SDK with blank values".
+    if (!in_array($variables['name'] ?? NULL, self::SDK_APPS, TRUE)) {
+      return;
+    }
+    if ($sdk_config = $this->biblioSettings->getSdkConfig()) {
+      $data['configs'] += $sdk_config;
+    }
   }
 
 }

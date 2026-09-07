@@ -3,7 +3,10 @@ name: Check failing actions (workflow_run)
 
 on:
   workflow_run:
-    workflows: ['*']
+    # Glob rules here are the same as for branch filters: '*' does not match
+    # '/', and almost all our workflows are named "Project / Task". '**'
+    # matches across '/' and thus actually covers every workflow.
+    workflows: ['**']
     types:
       - completed
 
