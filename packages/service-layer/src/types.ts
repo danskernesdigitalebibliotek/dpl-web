@@ -1,6 +1,6 @@
 // Backends this package knows how to talk to. Apps never name these in
 // hook calls — only in the resolvers they implement on ServiceLayerConfig.
-export type ApiId = "fbs"
+export type ApiId = "fbs" | "biblio"
 
 export type ServiceLayerConfig = {
   getBaseUrl: (api: ApiId) => string
@@ -11,6 +11,11 @@ export type ServiceLayerConfig = {
   // Unilogin and anonymous) never fire doomed 401 requests. Public data
   // (material availability) ignores it. Defaults to true when omitted.
   isPatronAuthenticated?: boolean
+  // TEMPORARY: whether a material the adapter does not know is answered as
+  // unavailable instead of an error - see getDigitalLoanDecision, the one
+  // place that acts on it. A resolver like the others, because the host's
+  // setting lands after this object is built. Omitted means no.
+  tolerateUnknownMaterials?: () => boolean
 }
 
 export type Patron = {
@@ -143,3 +148,127 @@ export type RenewedLoanFailed = {
 }
 
 export type RenewedLoan = RenewedLoanSuccess | RenewedLoanFailed
+
+// The types below describe what an app reasons about — a digital loan, a
+// reservation, a lending decision — not which service answered. Biblio
+// (WeDoBooks) is the only source today; a second one would be another mapper
+// onto these same types, not a parallel service-prefixed set. "Digital" means
+// read or listened to in a reader, as opposed to the physical materials FBS
+// lends out.
+
+// Formats a digital material comes in. Loans and reservations may also report
+// `paper_book` — see MaterialType.
+export type DigitalMaterialType = "ebook" | "audiobook"
+
+// The broad material type used by the loan and reservation DTOs. Metadata
+// only ever describes digital materials, so it uses the narrower
+// DigitalMaterialType.
+export type MaterialType = DigitalMaterialType | "paper_book"
+
+// Catalogue fields for a digital material.
+export type DigitalMaterial = {
+  isbn: string
+  materialType: DigitalMaterialType
+  title: string
+  description: string
+  publishDate: string
+  languages: string[]
+  // The only catalogue field the contract does not require.
+  authors: string[]
+}
+
+export type DigitalLoan = {
+  loanId: string
+  materialId: string
+  materialType: MaterialType
+  startDate: string
+  endDate: string
+  active: boolean
+  // A loan carries its own catalogue fields, so presenting it needs no
+  // metadata lookup. `author` is one string here, a list on DigitalMaterial.
+  title: string
+  author: string
+  publisher: string
+  publishDate: string
+  // Which licence the loan was made under - see LoanProvider, and
+  // isCostFreeLoan for which of them cost the patron nothing.
+  loanProvider: LoanProvider
+}
+
+export type DigitalReservation = {
+  reservationId: string
+  materialId: string
+  materialType: MaterialType
+  createdDate: string
+  // Date where the reservation is expected to be converted to a loan at the
+  // latest.
+  expectedLoanDate: string
+  // Set when the reservation has been offered to the user and can be
+  // accepted (redeemed) as a loan.
+  offerId?: string
+  offerExpiresAt?: string
+}
+
+export type LoanDecisionStatus =
+  | "loanable"
+  | "reservable"
+  | "wishable"
+  | "unavailable"
+  | "monthly_limit_exceeded"
+  | "concurrent_limit_exceeded"
+  | "no_valid_credentials"
+  | "lending_blocked"
+
+// Which licence the loan would be made under: the organization configures a
+// prioritized list of providers and the backend reports the one it picked.
+// "selection" (Danish blue titles) is bought out and exempt from the quotas,
+// so it is the one the UI may call included - see isCostFreeLoan. The rest
+// ("click" pay-per-loan, "package" subscription) are ways the LIBRARY pays for
+// a loan that still counts against the patron's quota. "free" is not in use
+// yet and confirmed only to be quota-exempt, not free to the patron.
+export type LoanProvider = "free" | "k-fond" | "click" | "package" | "premium" | "selection"
+
+// Whether a loan can be made right now, and if not, why. Covers both the
+// material and the patron (quota, lending blocks) - see isMaterialAvailable.
+// The adapter answers a refused loan/reservation request with this same
+// decision rather than an HTTP error; LoanRequestResult adds the loan.
+export type LoanDecision = {
+  status: LoanDecisionStatus
+  loanProvider?: LoanProvider
+  unavailableReason?: string
+  lendingBlockReason?: string
+}
+
+// The outcome of asking for a loan or a reservation: the decision, plus the
+// loan when the request actually produced one.
+export type LoanRequestResult = LoanDecision & {
+  loan: DigitalLoan | undefined
+}
+
+// Loan quotas for the user per organization. Organizations either count
+// e-books and audiobooks together (combined) or separately (split on format).
+export type DigitalLoanQuota =
+  | {
+      splitOnFormat: false
+      orgId: string
+      orgName: string
+      maxLoans: number
+      maxConcurrentLoans: number
+      currentConcurrentLoans: number
+      currentMonthlyLoans: number
+    }
+  | {
+      splitOnFormat: true
+      orgId: string
+      orgName: string
+      maxLoans: { ebook: number; audiobook: number }
+      maxConcurrentLoans: { ebook: number; audiobook: number }
+      currentConcurrentLoans: { ebook: number; audiobook: number }
+      currentMonthlyLoans: { ebook: number; audiobook: number }
+    }
+
+// Short-lived token that signs the patron in to the reader and player.
+export type ReaderSignInToken = {
+  token: string
+  expiresInSeconds: number
+}

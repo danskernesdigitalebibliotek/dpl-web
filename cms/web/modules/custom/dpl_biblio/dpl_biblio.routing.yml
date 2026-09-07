@@ -4,6 +4,6 @@ dpl_biblio.settings:
     _form: '\Drupal\dpl_biblio\Form\BiblioSettingsForm'
     _title: 'Biblio adapter settings'
   requirements:
-    _permission: 'administer site configuration'
+    _permission: 'administer dpl_biblio configuration'
   options:
     _admin_route: TRUE

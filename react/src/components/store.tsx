@@ -2,11 +2,13 @@ import React from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ServiceLayerProvider } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { store, persistor } from "../core/store";
 import FetcherHttpError from "../core/fetchers/FetcherHttpError";
 import FetcherError from "../core/fetchers/FetcherError";
 import FetcherCriticalHttpError from "../core/fetchers/FetcherCriticalHttpError";
 import InvalidUrlError from "../core/errors/InvalidUrlError";
+import getServiceLayerConfig from "../core/serviceLayerConfig";
 
 const queryErrorHandler = (error: unknown) => {
   // If we get an error that controls the error boundary make sure it does just that.
@@ -43,10 +45,19 @@ interface StoreProps {
 }
 
 function Store({ children }: StoreProps) {
+  // Resolved once: a new object on every render is a new context value, which
+  // re-renders everything below it. The resolvers inside read the base urls
+  // and tokens when a request is made, so nothing is captured too early.
+  const serviceLayerConfig = React.useMemo(() => getServiceLayerConfig(), []);
+
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <PersistGate persistor={persistor}>{children}</PersistGate>
+        <PersistGate persistor={persistor}>
+          <ServiceLayerProvider config={serviceLayerConfig}>
+            {children}
+          </ServiceLayerProvider>
+        </PersistGate>
       </QueryClientProvider>
     </Provider>
   );

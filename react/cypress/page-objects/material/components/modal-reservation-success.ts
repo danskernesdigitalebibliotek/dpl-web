@@ -2,17 +2,11 @@ import { ComponentObject } from "@hammzj/cypress-page-object";
 
 export class ModalReservationSuccessComponent extends ComponentObject {
   constructor() {
-    super(() => cy.get(".reservation-modal--confirm"));
+    super(() => cy.get(".reservation-success"));
     this.addElements = {
       titleText: () => {
         const element = this.container().find(
           "[data-cy='reservation-success-title-text']"
-        );
-        return element;
-      },
-      reservedForYouText: () => {
-        const element = this.container().find(
-          "[data-cy='reservation-success-is-reserved-for-you-text']"
         );
         return element;
       },

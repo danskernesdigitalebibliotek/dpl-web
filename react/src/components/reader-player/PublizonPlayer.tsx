@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { appendAsset, playerAssets, removeAppendedAssets } from "./helper";
 
-export type PlayerType =
+export type PublizonPlayerType =
   | {
       identifier?: string;
       orderId?: never;
@@ -11,7 +11,10 @@ export type PlayerType =
       orderId?: string;
     };
 
-const Player: React.FC<PlayerType> = ({ identifier, orderId }) => {
+const PublizonPlayer: React.FC<PublizonPlayerType> = ({
+  identifier,
+  orderId
+}) => {
   useEffect(() => {
     playerAssets.forEach(appendAsset);
 
@@ -51,4 +54,4 @@ const Player: React.FC<PlayerType> = ({ identifier, orderId }) => {
   return null;
 };
 
-export default Player;
+export default PublizonPlayer;

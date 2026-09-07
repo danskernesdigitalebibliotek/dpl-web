@@ -11,13 +11,15 @@ type ReservationSuccesProps = {
   preferredPickupBranch: string;
   numberInQueue?: number;
   holdings: number;
+  recommendations?: React.ReactNode;
 };
 
 const ReservationSucces: React.FC<ReservationSuccesProps> = ({
   title,
   preferredPickupBranch,
   numberInQueue,
-  holdings
+  holdings,
+  recommendations
 }) => {
   const dispatch = useDispatch();
   const t = useText();
@@ -28,50 +30,47 @@ const ReservationSucces: React.FC<ReservationSuccesProps> = ({
         allowOutsideClick: true
       }}
     >
-      <section className="reservation-modal reservation-modal--confirm">
-        <h2
-          data-cy="reservation-success-title-text"
-          className="text-header-h3 pb-48"
-        >
-          {t("reservationSuccesTitleText")}
-        </h2>
-        <p
-          data-cy="reservation-success-is-reserved-for-you-text"
-          className="text-body-medium-regular pb-24"
-        >
-          {title} {t("reservationSuccesIsReservedForYouText")}
-        </p>
-        <p
-          data-cy="number-in-queue-text"
-          className="text-body-medium-regular pb-24"
-        >
-          <StockAndReservationInfo
-            stockCount={holdings}
-            numberInQueue={numberInQueue}
+      <section className="reservation-modal reservation-success">
+        <div className="reservation-success__text-section">
+          <h2
+            data-cy="reservation-success-title-text"
+            className="text-header-h3 pb-32 text-section__title"
+          >
+            &quot;{title}&quot; {t("reservationSuccesIsReservedForYouText")}
+          </h2>
+          <p
+            data-cy="number-in-queue-text"
+            className="reservation-success__text pb-16"
+          >
+            <StockAndReservationInfo
+              stockCount={holdings}
+              numberInQueue={numberInQueue}
+            />
+          </p>
+          <p
+            data-cy="reservation-success-preferred-pickup-branch-text"
+            className="reservation-success__text pb-48"
+          >
+            {t("reservationSuccessPreferredPickupBranchText", {
+              placeholders: { "@branch": preferredPickupBranch }
+            })}
+            .
+          </p>
+          <Button
+            dataCy="reservation-success-close-button"
+            classNames="reservation-modal__confirm-button"
+            label={t("okButtonText")}
+            buttonType="none"
+            disabled={false}
+            collapsible={false}
+            size="small"
+            variant="filled"
+            onClick={() => {
+              dispatch(closeAllModals());
+            }}
           />
-        </p>
-        <p
-          data-cy="reservation-success-preferred-pickup-branch-text"
-          className="text-body-medium-regular pb-48"
-        >
-          {t("reservationSuccessPreferredPickupBranchText", {
-            placeholders: { "@branch": preferredPickupBranch }
-          })}
-          .
-        </p>
-        <Button
-          dataCy="reservation-success-close-button"
-          classNames="reservation-modal__confirm-button"
-          label={t("okButtonText")}
-          buttonType="none"
-          disabled={false}
-          collapsible={false}
-          size="small"
-          variant="filled"
-          onClick={() => {
-            dispatch(closeAllModals());
-          }}
-        />
+        </div>
+        {recommendations}
       </section>
     </FocusTrap>
   );

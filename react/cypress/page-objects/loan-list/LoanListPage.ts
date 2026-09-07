@@ -8,14 +8,19 @@ import { PhysicalLoanRowComponent } from "./components/physical-loan-row";
 import { PlayerModalComponent } from "./components/player-modal";
 import { LoanDetailsModalComponent } from "./components/loan-details-modal";
 
+export const loanListStory = {
+  default: "primary",
+  withBiblioAdapter: "loan-list-with-biblio-adapter"
+} as const;
+
 export class LoanListPage extends PageObject {
   public elements!: Elements;
 
   public components!: NestedComponents;
 
-  constructor() {
+  constructor(story: string = loanListStory.default) {
     super({
-      path: "/iframe.html?path=/story/apps-loan-list--primary"
+      path: `/iframe.html?path=/story/apps-loan-list--${story}`
     });
 
     this.elements = {
@@ -45,6 +50,15 @@ export class LoanListPage extends PageObject {
           fn
         )
     };
+  }
+
+  /**
+   * A digital loan row addressed directly rather than through
+   * `components.DigitalLoanRow`: `cy.within` scoping swallows clicks that
+   * open a modal portaled to document.body.
+   */
+  digitalLoanRow(index = 0) {
+    return new DigitalLoanRowComponent(index);
   }
 
   playerModal() {

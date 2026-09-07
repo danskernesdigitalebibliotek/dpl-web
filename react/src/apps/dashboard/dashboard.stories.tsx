@@ -36,6 +36,9 @@ import globalConfigArgs, {
 import blockedArgs, {
   argTypes as blockedArgTypes
 } from "../../core/storybook/blockedArgs";
+import biblioAdapterArgs, {
+  argTypes as biblioAdapterArgTypes
+} from "../../core/storybook/biblioAdapterArgs";
 
 const meta: Meta<typeof DashBoard> = {
   title: "Apps / Dashboard",
@@ -55,6 +58,7 @@ const meta: Meta<typeof DashBoard> = {
     ...reservationListArgTypes,
     ...globalTextArgTypes,
     ...globalConfigArgTypes,
+    ...biblioAdapterArgTypes,
     // Urls
     physicalLoansUrl: {
       control: { type: "text" }
@@ -173,6 +177,7 @@ export const Primary: Story = {
     ...reservationListArgs,
     ...globalTextArgs,
     ...globalConfigArgs,
+    ...biblioAdapterArgs,
     blacklistedAvailabilityBranchesConfig:
       "FBS-751032,FBS-751031,FBS-751009,FBS-751027,FBS-751024,DK-775164",
     physicalLoansUrl: "/user/me/loans",
@@ -206,5 +211,14 @@ export const Primary: Story = {
     dashboardLoansLinkText: "All loans",
     dashboardReservationsLinkText: "All reservations",
     materialDetailsOverdueText: "Overdue"
+  }
+};
+
+// The Biblio adapter feature flag turned on: the digital loan counts combine
+// Publizon loans with loans from the Biblio adapter.
+export const DashboardWithBiblioAdapter: Story = {
+  args: {
+    ...Primary.args,
+    useBiblioAdapterConfig: "1"
   }
 };

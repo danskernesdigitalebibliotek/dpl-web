@@ -37,6 +37,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
 
       - run: pnpm run css:build
 

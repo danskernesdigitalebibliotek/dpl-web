@@ -1,0 +1,6 @@
+# Granted to no role on purpose: the Biblio rollout is coordinated centrally,
+# so the settings form stays out of reach of the libraries' own administrators.
+administer dpl_biblio configuration:
+  title: 'Administer DPL Biblio configuration'
+  description: 'Gives access to the Biblio adapter settings form.'
+  restrict access: true

@@ -257,12 +257,34 @@ tasks:
     desc: "Build design-system and React"
     cmds:
       - task: dev:design-system:build
+      - task: dev:wedobooks:build
       - task: dev:react:build
+
+  dev:wedobooks:build:
+    desc: "Build the WeDoBooks SDK wrapper (reader + player) into dist/"
+    deps:
+      - init:pnpm
+    dir: ./packages/wedobooks
+    # The only workspace package that ships a build rather than sources: the
+    # SDK has to be pre-bundled before webpack will accept it. Requires access
+    # to WeDoBooks' private registry - see packages/wedobooks/README.md.
+    sources:
+      - 'src/**/*.ts'
+      - 'src/**/*.tsx'
+      - 'build.mjs'
+      - 'package.json'
+    generates:
+      - 'dist/**/*.*'
+    cmds:
+      - cd ../.. && task dev:cli -- sh -c "cd packages/wedobooks && corepack pnpm build"
 
   dev:react:build:
     desc: "Build React (pnpm build → dist/)"
     deps:
       - init:pnpm
+      # The React bundle inlines the wrapper's dist, so building React against
+      # a stale wrapper quietly ships yesterday's SDK integration.
+      - dev:wedobooks:build
     dir: ./react
     sources:
       - 'src/**/*.ts'
@@ -278,6 +300,9 @@ tasks:
       - 'pnpm-lock.yaml'
       # React imports from @danskernesdigitalebibliotek/dpl-design-system/build/*.
       - '../design-system/build/**/*.*'
+      # Inlined into the bundle - a fresh wrapper build must invalidate the
+      # React build's checksum, or the copy step ships the old bundle.
+      - '../packages/wedobooks/dist/**/*.*'
     generates:
       - 'dist/**/*.*'
     cmds:
