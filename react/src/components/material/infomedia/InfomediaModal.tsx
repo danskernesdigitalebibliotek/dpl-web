@@ -13,18 +13,17 @@ import {
   getManifestationAuthors,
   getManifestationTitle
 } from "../../../apps/material/helper";
-import { first } from "lodash";
 import { isAnonymous } from "../../../core/utils/helpers/user";
 
 export const infomediaModalId = (pid: Pid) => `infomedia-modal-${pid}`;
 
 interface InfomediaModalProps {
-  selectedManifestations: Manifestation[];
+  manifestation: Manifestation;
   infoMediaId: string;
 }
 
 const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
-  selectedManifestations,
+  manifestation,
   infoMediaId
 }) => {
   const t = useText();
@@ -54,18 +53,16 @@ const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
       enabled: shouldFetchData
     }
   );
-  const firstManifestation = first(selectedManifestations);
-
-  if (!data || error || !firstManifestation) {
+  if (!data || error) {
     return null;
   }
 
-  const author = getManifestationAuthors(firstManifestation);
-  const title = getManifestationTitle(firstManifestation);
+  const author = getManifestationAuthors(manifestation);
+  const title = getManifestationTitle(manifestation);
 
   return (
     <Modal
-      modalId={infomediaModalId(firstManifestation.pid)}
+      modalId={infomediaModalId(manifestation.pid)}
       screenReaderModalDescriptionText={t(
         "infomediaModalScreenReaderModalDescriptionText"
       )}
