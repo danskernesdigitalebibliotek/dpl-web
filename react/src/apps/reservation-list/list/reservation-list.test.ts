@@ -1,4 +1,5 @@
 import { FbiCoverUrlPattern } from "../../../../cypress/fixtures/fixture.types";
+import { deleteReservationModalSelector } from "../../../../cypress/page-objects/reservation-list/components/delete-reservation-modal";
 
 describe("Reservation list", () => {
   beforeEach(() => {
@@ -1008,6 +1009,21 @@ describe("Reservation list", () => {
       .find("img")
       .should("have.attr", "src")
       .and("match", FbiCoverUrlPattern);
+  });
+
+  it("Opens the delete modal a link points at", () => {
+    // A link to a modal has to be looked up before the modal can render, and
+    // an FBS reservation id is short - both of which the lookup has to handle.
+    cy.visit(
+      "/iframe.html?path=/story/apps-reservation-list--reservation-list-entry&modal=delete-reservation67804976"
+    );
+
+    cy.wait("@user");
+
+    cy.get(deleteReservationModalSelector)
+      .should("exist")
+      .find("[data-cy='delete-reservation-button']")
+      .should("exist");
   });
 });
 
