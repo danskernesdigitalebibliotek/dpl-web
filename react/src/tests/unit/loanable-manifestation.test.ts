@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   getLoanableManifestation,
-  getManifestationDigitalIdentifier
+  getManifestationDigitalIdentifier,
+  onlineInternalModalId
 } from "../../apps/material/helper";
 import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
@@ -66,5 +67,34 @@ describe("getManifestationDigitalIdentifier", () => {
     expect(
       getManifestationDigitalIdentifier(manifestation("pid:none", []))
     ).toBe("");
+  });
+});
+
+// The two e-book editions of "Verdens farligste krokodiller", where only the
+// 2019 one carries a PUBLIZON identifier and is therefore the one lent out.
+const ebook2019 = manifestation("870970-basis:46239784", [
+  { type: IdentifierTypeEnum.Publizon, value: "9788711913451" }
+]);
+const ebook2025 = manifestation("870970-basis:141423606", [
+  { type: IdentifierTypeEnum.Isbn, value: "9788728712054" }
+]);
+
+describe("onlineInternalModalId", () => {
+  it("is the id of the edition that is going to be lent", () => {
+    // One modal is rendered per manifestation, so an opener covering several
+    // editions still has to name a single one - and not the leading one.
+    expect(onlineInternalModalId([ebook2025, ebook2019])).toBe(
+      "online-internal-modal-46239784"
+    );
+  });
+
+  it("is the same id whether or not the set holds other editions", () => {
+    expect(onlineInternalModalId([ebook2019])).toBe(
+      "online-internal-modal-46239784"
+    );
+  });
+
+  it("returns the bare prefix when there is no manifestation to lend", () => {
+    expect(onlineInternalModalId([])).toBe("online-internal-modal");
   });
 });

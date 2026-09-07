@@ -29,6 +29,7 @@ import {
 } from "../../core/utils/helpers/url";
 import {
   flattenCreators,
+  getAllFaustIds,
   getMaterialType,
   orderManifestationsByYear
 } from "../../core/utils/helpers/general";
@@ -513,8 +514,14 @@ export const reservationModalId = (faustIds: FaustId[]) => {
   return constructModalId("reservation-modal", faustIds.sort());
 };
 
-export const onlineInternalModalId = (faustIds: FaustId[]) => {
-  return constructModalId("online-internal-modal", faustIds.sort());
+// Keyed on the one edition the loan is for, so an opener that covers several
+// editions and the modal rendered for a single one agree on the id.
+export const onlineInternalModalId = (manifestations: Manifestation[]) => {
+  const loanableManifestation = getLoanableManifestation(manifestations);
+  return constructModalId(
+    "online-internal-modal",
+    loanableManifestation ? getAllFaustIds([loanableManifestation]) : []
+  );
 };
 
 export const editionSwitchModalId = () => {
