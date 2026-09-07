@@ -10314,6 +10314,9 @@ packages:
   zod@4.4.3:
     resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
+  zod@4.5.4:
+    resolution: {integrity: sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA==}
+
   zstd-codec@0.1.5:
     resolution: {integrity: sha512-v3fyjpK8S/dpY/X5WxqTK3IoCnp/ZOLxn144GZVlNUjtwAchzrVo03h+oMATFhCIiJ5KTr4V3vDQQYz4RU684g==}
 
@@ -11346,7 +11349,7 @@ snapshots:
     dependencies:
       '@tanstack/react-query': 5.102.8(react@19.2.8)
       react: 19.2.8
-      zod: 4.4.3
+      zod: 4.5.4
 
   '@emnapi/core@1.10.0':
     dependencies:
@@ -21406,5 +21409,7 @@ snapshots:
   zod@3.22.4: {}
 
   zod@4.4.3: {}
+
+  zod@4.5.4: {}
 
   zstd-codec@0.1.5: {}
