@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-03 10:40+0200\n"
-"PO-Revision-Date: 2026-09-03 10:40+0200\n"
+"POT-Creation-Date: 2026-09-07 14:37+0200\n"
+"PO-Revision-Date: 2026-09-07 14:37+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -561,10 +561,6 @@ msgstr "Pop-up til reservering"
 msgctxt "Work Page"
 msgid "is reserved for you"
 msgstr "er reserveret til dig."
-
-msgctxt "Work Page"
-msgid "The material is available and is now reserved for you!"
-msgstr "Materialet er nu reserveret til dig!"
 
 msgctxt "Work Page"
 msgid ""
@@ -24312,5 +24308,33 @@ msgid "Wrap the filter options in a scrollable container with a fixed height."
 msgstr ""
 
 msgid "bef_number"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "You might also be interested in..."
+msgstr "Du kunne måske også være interesseret i:"
+
+msgid "Administer DPL Biblio configuration"
+msgstr ""
+
+msgid "Gives access to the Biblio adapter settings form."
+msgstr ""
+
+msgid ""
+"Render materials the adapter does not know as unavailable instead of "
+"failing"
+msgstr ""
+
+msgctxt "Dpl Biblio"
+msgid "Show materials the adapter does not know as unavailable"
+msgstr ""
+
+msgctxt "Dpl Biblio"
+msgid ""
+"Temporary. The catalogue lists digital materials that are not yet "
+"provisioned in WeDoBooks, and the adapter answers \"Material not "
+"found\" for those. With this enabled such a material is shown as "
+"unavailable; without it the material page fails. Publizon is never "
+"asked either way."
 msgstr ""
 
