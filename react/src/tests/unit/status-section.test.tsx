@@ -67,14 +67,14 @@ vi.mock("../../core/publizon/publizon", () => ({
 // The service layer hands the two apart so nothing about the loans waits for
 // the ceiling; the tests set whichever half they are about.
 const givenDigitalQuotas = ({
-  quotas,
+  loanQuotas,
   reservationLimits
 }: {
-  quotas?: unknown;
+  loanQuotas?: unknown;
   reservationLimits?: unknown;
 }) =>
   vi.mocked(useDigitalQuotas).mockReturnValue({
-    quotas: { data: quotas },
+    loanQuotas: { data: loanQuotas },
     reservationLimits: { data: reservationLimits }
   } as unknown as ReturnType<typeof useDigitalQuotas>);
 
@@ -268,7 +268,7 @@ describe("StatusSection component tests", () => {
     });
 
     it("Renders the quotas from Biblio, counting the loans held right now", () => {
-      givenDigitalQuotas({ quotas: [splitQuota] });
+      givenDigitalQuotas({ loanQuotas: [splitQuota] });
 
       const { container } = render(<StatusSection />);
 
@@ -286,7 +286,7 @@ describe("StatusSection component tests", () => {
 
     it("Renders the reservation limits the patron's organization allows", () => {
       givenDigitalQuotas({
-        quotas: [splitQuota],
+        loanQuotas: [splitQuota],
         reservationLimits: { ebook: 5, audiobook: 4 }
       });
 
@@ -299,7 +299,7 @@ describe("StatusSection component tests", () => {
 
     it("Leaves out the reservation line when there is no ceiling to show", () => {
       givenDigitalQuotas({
-        quotas: [
+        loanQuotas: [
           {
             splitOnFormat: false,
             orgId: "org-2",
@@ -324,7 +324,7 @@ describe("StatusSection component tests", () => {
 
     it("Shows a spent quota as full rather than hiding it", () => {
       givenDigitalQuotas({
-        quotas: [
+        loanQuotas: [
           {
             ...splitQuota,
             // The audiobook quota is spent: one allowed, one held.

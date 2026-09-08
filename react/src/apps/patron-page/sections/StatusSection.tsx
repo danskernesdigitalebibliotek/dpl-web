@@ -23,7 +23,7 @@ const StatusSection: FC = () => {
     { query: { enabled: !viaBiblioAdapter } }
   );
   const {
-    quotas: { data: digitalQuotas },
+    loanQuotas: { data: digitalLoanQuotas },
     reservationLimits: { data: digitalReservationLimits }
   } = useDigitalQuotas({ enabled: viaBiblioAdapter });
 
@@ -36,12 +36,12 @@ const StatusSection: FC = () => {
   // counters are the service layer equivalent of Publizon's maxConcurrent
   // limits.
   const digitalEbookQuota = getDigitalLoanQuota({
-    quotas: digitalQuotas,
+    quotas: digitalLoanQuotas,
     format: "ebook",
     period: "concurrent"
   });
   const digitalAudioQuota = getDigitalLoanQuota({
-    quotas: digitalQuotas,
+    quotas: digitalLoanQuotas,
     format: "audiobook",
     period: "concurrent"
   });
@@ -63,7 +63,7 @@ const StatusSection: FC = () => {
         maxConcurrentEbookLoansPerBorrower: digitalEbookQuota.limit,
         maxConcurrentAudioLoansPerBorrower: digitalAudioQuota.limit,
         reservationCeilings: digitalReservationLimits, // { ebook, audiobook } or null.
-        hasQuotas: Boolean(digitalQuotas?.length)
+        hasQuotas: Boolean(digitalLoanQuotas?.length)
       }
     : {
         patronEbookLoans: publizonQuotas.patronEbookLoans,
