@@ -7,9 +7,7 @@ import { useText } from "../../../core/utils/text";
 import { getPatronLoanQuotas } from "../../../core/utils/helpers/publizon";
 import {
   getDigitalLoanQuota,
-  getDigitalQuotaOrganizationId,
-  useDigitalLoanQuotas,
-  useDigitalReservationLimits
+  useDigitalQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
 
@@ -24,16 +22,10 @@ const StatusSection: FC = () => {
     {},
     { query: { enabled: !viaBiblioAdapter } }
   );
-  const { data: digitalQuotas } = useDigitalLoanQuotas({
-    enabled: viaBiblioAdapter
-  });
-
-  // The ceilings are asked for by the organization that issued the quotas,
-  // so they belong to the same library as the numbers beside them.
-  const { data: digitalReservationLimits } = useDigitalReservationLimits(
-    getDigitalQuotaOrganizationId(digitalQuotas),
-    { enabled: viaBiblioAdapter }
-  );
+  const {
+    quotas: { data: digitalQuotas },
+    reservationLimits: { data: digitalReservationLimits }
+  } = useDigitalQuotas({ enabled: viaBiblioAdapter });
 
   const publizonQuotas = getPatronLoanQuotas({
     userData: data?.userData,

@@ -67,7 +67,7 @@ export {
   isUnknownMaterial,
 } from "./digital-loan-decision"
 export { isCostFreeLoan } from "./digital-loans"
-export { getDigitalLoanQuota, getDigitalQuotaOrganizationId } from "./digital-quotas"
+export { getDigitalLoanQuota } from "./digital-quotas"
 export { digitalLoanDecisionQueryKey } from "./queries/digital-loan-decision"
 export { digitalLoansQueryKey } from "./queries/digital-loans"
 export { digitalLoanQuotasQueryKey } from "./queries/digital-quotas"
@@ -81,7 +81,7 @@ export { useDigitalDeleteReservation } from "./hooks/useDigitalDeleteReservation
 export { useDigitalLoanDecision } from "./hooks/useDigitalLoanDecision"
 export { useDigitalLoanQuotas } from "./hooks/useDigitalLoanQuotas"
 export { useDigitalLoans } from "./hooks/useDigitalLoans"
-export { useDigitalReservationLimits } from "./hooks/useDigitalReservationLimits"
+export { useDigitalQuotas } from "./hooks/useDigitalQuotas"
 export { useDigitalMaterial } from "./hooks/useDigitalMaterial"
 export { useDigitalReservations } from "./hooks/useDigitalReservations"
 export { useDigitalSupportId } from "./hooks/useDigitalSupportId"

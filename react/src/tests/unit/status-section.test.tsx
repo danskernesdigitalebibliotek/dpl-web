@@ -8,10 +8,7 @@ import {
 } from "../../core/publizon/publizon";
 import { FileExtensionType } from "../../core/publizon/model";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
-import {
-  useDigitalLoanQuotas,
-  useDigitalReservationLimits
-} from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalQuotas } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 // Only the hooks under test are stubbed; the rest of the package stays
 // real, so pure helpers keep behaving as they do in production.
@@ -21,8 +18,7 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useDigitalLoanQuotas: vi.fn(),
-    useDigitalReservationLimits: vi.fn()
+    useDigitalQuotas: vi.fn()
   })
 );
 
@@ -68,6 +64,20 @@ vi.mock("../../core/publizon/publizon", () => ({
   useGetV1UserLoans: vi.fn()
 }));
 
+// The service layer hands the two apart so nothing about the loans waits for
+// the ceiling; the tests set whichever half they are about.
+const givenDigitalQuotas = ({
+  quotas,
+  reservationLimits
+}: {
+  quotas?: unknown;
+  reservationLimits?: unknown;
+}) =>
+  vi.mocked(useDigitalQuotas).mockReturnValue({
+    quotas: { data: quotas },
+    reservationLimits: { data: reservationLimits }
+  } as unknown as ReturnType<typeof useDigitalQuotas>);
+
 // The feature flag reads app config through Redux, which has no provider here.
 vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
@@ -77,12 +87,7 @@ describe("StatusSection component tests", () => {
   beforeEach(() => {
     // Default to the flag being off: Publizon answers, as before.
     vi.mocked(useBiblioAdapter).mockReturnValue(false);
-    vi.mocked(useDigitalLoanQuotas).mockReturnValue({
-      data: undefined
-    } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
-    vi.mocked(useDigitalReservationLimits).mockReturnValue({
-      data: undefined
-    } as unknown as ReturnType<typeof useDigitalReservationLimits>);
+    givenDigitalQuotas({});
   });
   it("should render nothing if library profile is not loaded", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
@@ -263,9 +268,7 @@ describe("StatusSection component tests", () => {
     });
 
     it("Renders the quotas from Biblio, counting the loans held right now", () => {
-      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
-        data: [splitQuota]
-      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+      givenDigitalQuotas({ quotas: [splitQuota] });
 
       const { container } = render(<StatusSection />);
 
@@ -282,12 +285,10 @@ describe("StatusSection component tests", () => {
     });
 
     it("Renders the reservation limits the patron's organization allows", () => {
-      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
-        data: [splitQuota]
-      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
-      vi.mocked(useDigitalReservationLimits).mockReturnValue({
-        data: { ebook: 5, audiobook: 4 }
-      } as unknown as ReturnType<typeof useDigitalReservationLimits>);
+      givenDigitalQuotas({
+        quotas: [splitQuota],
+        reservationLimits: { ebook: 5, audiobook: 4 }
+      });
 
       const { container } = render(<StatusSection />);
 
@@ -296,22 +297,9 @@ describe("StatusSection component tests", () => {
       );
     });
 
-    it("Asks the organization the quotas were issued for", () => {
-      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
-        data: [splitQuota]
-      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
-
-      render(<StatusSection />);
-
-      expect(useDigitalReservationLimits).toHaveBeenCalledWith(
-        splitQuota.orgId,
-        expect.anything()
-      );
-    });
-
     it("Leaves out the reservation line when there is no ceiling to show", () => {
-      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
-        data: [
+      givenDigitalQuotas({
+        quotas: [
           {
             splitOnFormat: false,
             orgId: "org-2",
@@ -321,13 +309,11 @@ describe("StatusSection component tests", () => {
             currentConcurrentLoans: 2,
             currentMonthlyLoans: 6
           }
-        ]
-      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
-      vi.mocked(useDigitalReservationLimits).mockReturnValue({
+        ],
         // Which organizations have none is the service layer's call - an
         // organization that counts the formats together is one of them.
-        data: null
-      } as unknown as ReturnType<typeof useDigitalReservationLimits>);
+        reservationLimits: null
+      });
 
       const { container } = render(<StatusSection />);
 
@@ -337,8 +323,8 @@ describe("StatusSection component tests", () => {
     });
 
     it("Shows a spent quota as full rather than hiding it", () => {
-      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
-        data: [
+      givenDigitalQuotas({
+        quotas: [
           {
             ...splitQuota,
             // The audiobook quota is spent: one allowed, one held.
@@ -346,7 +332,7 @@ describe("StatusSection component tests", () => {
             currentMonthlyLoans: { ebook: 1, audiobook: 1 }
           }
         ]
-      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+      });
 
       const { container } = render(<StatusSection />);
 
@@ -361,9 +347,7 @@ describe("StatusSection component tests", () => {
     });
 
     it("Renders nothing until the quotas have loaded", () => {
-      vi.mocked(useDigitalLoanQuotas).mockReturnValue({
-        data: undefined
-      } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
+      givenDigitalQuotas({});
 
       const { container } = render(<StatusSection />);
 
