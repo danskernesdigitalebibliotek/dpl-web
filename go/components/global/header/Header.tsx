@@ -21,7 +21,7 @@ function Header() {
           <SmartLink
             href="/"
             aria-label="Gå til forsiden"
-            className="inline-flex h-[75px] w-[60px] lg:h-[104] lg:w-[72]">
+            className="inline-flex h-[60px] w-[47px] lg:h-[72px] lg:w-[56px]">
             <Icon name="logo-go-green" className="h-full w-full" />
           </SmartLink>
         </div>
