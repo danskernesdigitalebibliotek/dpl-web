@@ -105,7 +105,7 @@ describe("Material buttons", () => {
     });
 
     cy.visit(
-      "/iframe.html?id=apps-material--infomedia&viewMode=story&type=artikel+%28online%29"
+      "/iframe.html?id=apps-material--retriever&viewMode=story&type=artikel+%28online%29"
     )
       .getBySel("material-description")
       .scrollIntoView({ duration: 300 });
@@ -213,11 +213,11 @@ describe("Material buttons", () => {
     cy.getBySel("material-header-buttons-physical").should("not.exist");
   });
 
-  it("Renders the correct action button for infomedia articles", () => {
+  it("Renders the correct action button for Retriever articles", () => {
     cy.interceptGraphql({
       operationName: "getMaterial",
       fixtureFilePath:
-        "material-buttons/material-buttons-infomedia-fbi-api.json"
+        "material-buttons/material-buttons-retriever-fbi-api.json"
     });
     cy.interceptRest({
       aliasName: "UserInfo",
@@ -225,11 +225,11 @@ describe("Material buttons", () => {
       fixtureFilePath: "material/userinfo.json"
     });
     cy.createFakeAuthenticatedSession();
-    cy.visit("/iframe.html?id=apps-material--infomedia&viewMode=story")
+    cy.visit("/iframe.html?id=apps-material--retriever&viewMode=story")
       .getBySel("material-description")
       .scrollIntoView({ duration: 300 });
 
-    cy.getBySel("material-header-buttons-online-infomedia-article")
+    cy.getBySel("material-header-buttons-online-retriever-article")
       .should("exist")
       .and("contain", "Read article");
   });
