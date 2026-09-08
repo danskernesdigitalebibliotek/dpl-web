@@ -19,11 +19,11 @@ function Header() {
       </div>
       <div className="content-container h-navigation-height grid grid-cols-3 items-center">
         <div className="flex flex-0 items-center" data-cy={cyKeys["go-logo"]}>
-          <Button ariaLabel="Gå til forsiden" asChild className="inline-flex px-3">
-            <SmartLink href="/" className="inline-flex">
-              <Icon name="logo-borderless" className="h-[21px] w-[61px]" />
-            </SmartLink>
-          </Button>
+          {/*     <Button ariaLabel="Gå til forsiden" asChild className="inline-flex px-3">
+          </Button> */}
+          <SmartLink href="/" className="inline-flex h-[75] w-[60] lg:h-[100] lg:w-[72]">
+            <Icon name="logo-go-green"  className="h-full w-full" />
+          </SmartLink>
         </div>
         <div className="flex flex-1 justify-center">
           <DarkModeToggle />
