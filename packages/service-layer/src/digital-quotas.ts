@@ -25,11 +25,13 @@ const patronQuota = (quotas: DigitalLoanQuota[] | undefined) => quotas?.[0]
  * Callers need it to ask about anything the adapter scopes to an
  * organization rather than to the patron - the reservation ceiling today -
  * so the ceiling belongs to the same library as the quotas beside it.
- * Undefined until the quotas have arrived.
+ *
+ * Null until the quotas have arrived, which is what the id-gated hooks
+ * take to mean "not yet".
  */
 export const getDigitalQuotaOrganizationId = (
   quotas: DigitalLoanQuota[] | undefined
-): string | undefined => patronQuota(quotas)?.orgId
+): string | null => patronQuota(quotas)?.orgId ?? null
 
 export type QuotaUsage = {
   current: number
@@ -93,7 +95,7 @@ export const getDigitalLoanQuota = ({
 export async function getDigitalReservationLimits(
   config: ServiceLayerConfig,
   organizationId: string
-): Promise<DigitalReservationLimits> {
+): Promise<DigitalReservationLimits | null> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   return biblio.getReservationLimits(organizationId)
 }

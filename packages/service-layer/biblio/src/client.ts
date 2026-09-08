@@ -196,7 +196,9 @@ export function createBiblioClient(config: BiblioConfig) {
      * user-scoped: it resolves nothing from the token, so the caller passes
      * the org the quotas were issued for.
      */
-    getReservationLimits: async (organizationId: string): Promise<DigitalReservationLimits> => {
+    getReservationLimits: async (
+      organizationId: string
+    ): Promise<DigitalReservationLimits | null> => {
       const raw = await request({
         method: "GET",
         path: getGetOrganizationConfigsUrl({ organization_id: organizationId }),

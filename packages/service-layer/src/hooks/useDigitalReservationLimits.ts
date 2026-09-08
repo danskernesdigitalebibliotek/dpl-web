@@ -10,7 +10,7 @@ import type { DigitalReservationLimits } from "../types"
 import { type DigitalQueryOptions, useDigitalQuery } from "./internal"
 
 /**
- * How many reservations the patron's organization allows at once.
+ * How many reservations the patron's organization allows at once, per format.
  *
  * Takes the organization from the patron's loan quotas, so it follows them
  * rather than a second guess at which library the patron belongs to - and
@@ -23,10 +23,10 @@ import { type DigitalQueryOptions, useDigitalQuery } from "./internal"
 export const useDigitalReservationLimits = (
   organizationId: string | null,
   options?: DigitalQueryOptions<
-    DigitalReservationLimits,
+    DigitalReservationLimits | null,
     ReturnType<typeof digitalReservationLimitsQueryKey>
   >
-): UseQueryResult<DigitalReservationLimits, Error> =>
+): UseQueryResult<DigitalReservationLimits | null, Error> =>
   useDigitalQuery({
     query: config => digitalReservationLimitsQuery(config, organizationId),
     options,

@@ -31,18 +31,9 @@ const StatusSection: FC = () => {
   // The ceilings are asked for by the organization that issued the quotas,
   // so they belong to the same library as the numbers beside them.
   const { data: digitalReservationLimits } = useDigitalReservationLimits(
-    getDigitalQuotaOrganizationId(digitalQuotas) ?? null,
+    getDigitalQuotaOrganizationId(digitalQuotas),
     { enabled: viaBiblioAdapter }
   );
-
-  // An organization that counts the two formats together is left out. A
-  // combined ceiling of 5 means five reservations in total, and the sentence
-  // below has room for exactly two numbers - saying "5 and 5" would promise
-  // ten. Until there is wording for it, no line beats a wrong one; no Danish
-  // organization counts that way today.
-  const digitalReservationCeilings = digitalReservationLimits?.splitOnFormat
-    ? digitalReservationLimits.maxConcurrentReservations
-    : undefined;
 
   const publizonQuotas = getPatronLoanQuotas({
     userData: data?.userData,
@@ -79,7 +70,7 @@ const StatusSection: FC = () => {
         patronAudioBookLoans: digitalAudioQuota.current,
         maxConcurrentEbookLoansPerBorrower: digitalEbookQuota.limit,
         maxConcurrentAudioLoansPerBorrower: digitalAudioQuota.limit,
-        reservationCeilings: digitalReservationCeilings, // { ebook, audiobook } when the organization splits on format.
+        reservationCeilings: digitalReservationLimits, // { ebook, audiobook } or null.
         hasQuotas: Boolean(digitalQuotas?.length)
       }
     : {

@@ -268,27 +268,21 @@ export type DigitalLoanQuota =
     }
 
 /**
- * How many reservations the organization lets a patron hold at once.
+ * How many reservations the organization lets a patron hold at once, per
+ * format.
  *
  * A ceiling only - unlike the loan quotas, nothing here says how many the
  * patron has used. It comes from the organization's configuration rather
  * than from the patron's own record, which is also why it is a separate
  * call: the loan quotas carry their own limits, reservations do not.
  *
- * Split on format like the loan quotas, and just as consequentially: a
- * combined ceiling of 5 means five reservations in total, not five of each.
+ * The adapter also serves organizations that count the two formats together,
+ * but the consumers have no wording for that shape: a combined ceiling of 5
+ * means five reservations in total, so presenting it as one number per format
+ * would promise ten. Such an organization arrives as null, as does one that
+ * configures no ceiling at all. No Danish organization counts that way today.
  */
-export type DigitalReservationLimits =
-  | {
-      splitOnFormat: false
-      // Absent when the organization configures no ceiling - the field is
-      // optional by contract.
-      maxConcurrentReservations: number | undefined
-    }
-  | {
-      splitOnFormat: true
-      maxConcurrentReservations: { ebook: number; audiobook: number } | undefined
-    }
+export type DigitalReservationLimits = { ebook: number; audiobook: number }
 
 // Short-lived token that signs the patron in to the reader and player.
 export type ReaderSignInToken = {

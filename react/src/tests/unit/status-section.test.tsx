@@ -264,24 +264,14 @@ describe("StatusSection component tests", () => {
 
     it("Renders the quotas from Biblio, counting the loans held right now", () => {
       vi.mocked(useDigitalLoanQuotas).mockReturnValue({
-        data: [
-          {
-            splitOnFormat: true,
-            orgId: "org-1",
-            orgName: "Eksempel Biblioteket",
-            maxLoans: { ebook: 10, audiobook: 10 },
-            maxConcurrentLoans: { ebook: 4, audiobook: 2 },
-            currentConcurrentLoans: { ebook: 1, audiobook: 1 },
-            // The monthly counters must NOT be the ones shown here.
-            currentMonthlyLoans: { ebook: 7, audiobook: 6 }
-          }
-        ]
+        data: [splitQuota]
       } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
 
       const { container } = render(<StatusSection />);
 
       expect(container.textContent).toContain("1 ud af 4");
       expect(container.textContent).toContain("1 ud af 2");
+      // The monthly counters must not be the ones shown here.
       expect(container.textContent).not.toContain("7 ud af");
 
       const progressBars = container.querySelectorAll(
@@ -296,10 +286,7 @@ describe("StatusSection component tests", () => {
         data: [splitQuota]
       } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
       vi.mocked(useDigitalReservationLimits).mockReturnValue({
-        data: {
-          splitOnFormat: true,
-          maxConcurrentReservations: { ebook: 5, audiobook: 4 }
-        }
+        data: { ebook: 5, audiobook: 4 }
       } as unknown as ReturnType<typeof useDigitalReservationLimits>);
 
       const { container } = render(<StatusSection />);
@@ -322,7 +309,7 @@ describe("StatusSection component tests", () => {
       );
     });
 
-    it("Leaves out the reservation line when the organization counts the formats as one", () => {
+    it("Leaves out the reservation line when there is no ceiling to show", () => {
       vi.mocked(useDigitalLoanQuotas).mockReturnValue({
         data: [
           {
@@ -337,8 +324,9 @@ describe("StatusSection component tests", () => {
         ]
       } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
       vi.mocked(useDigitalReservationLimits).mockReturnValue({
-        // Five reservations in total - saying "5 and 5" would promise ten.
-        data: { splitOnFormat: false, maxConcurrentReservations: 5 }
+        // Which organizations have none is the service layer's call - an
+        // organization that counts the formats together is one of them.
+        data: null
       } as unknown as ReturnType<typeof useDigitalReservationLimits>);
 
       const { container } = render(<StatusSection />);
@@ -352,13 +340,9 @@ describe("StatusSection component tests", () => {
       vi.mocked(useDigitalLoanQuotas).mockReturnValue({
         data: [
           {
-            splitOnFormat: true,
-            orgId: "org-1",
-            orgName: "Eksempel Biblioteket",
-            maxLoans: { ebook: 10, audiobook: 10 },
+            ...splitQuota,
             // The audiobook quota is spent: one allowed, one held.
             maxConcurrentLoans: { ebook: 4, audiobook: 1 },
-            currentConcurrentLoans: { ebook: 1, audiobook: 1 },
             currentMonthlyLoans: { ebook: 1, audiobook: 1 }
           }
         ]

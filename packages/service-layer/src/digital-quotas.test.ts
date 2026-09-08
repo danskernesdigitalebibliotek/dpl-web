@@ -85,7 +85,7 @@ describe("getDigitalQuotaOrganizationId", () => {
   })
 
   it("Names none before the quotas have arrived", () => {
-    expect(getDigitalQuotaOrganizationId(undefined)).toBeUndefined()
-    expect(getDigitalQuotaOrganizationId([])).toBeUndefined()
+    expect(getDigitalQuotaOrganizationId(undefined)).toBeNull()
+    expect(getDigitalQuotaOrganizationId([])).toBeNull()
   })
 })

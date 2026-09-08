@@ -2,53 +2,47 @@ import { describe, expect, it } from "vitest"
 
 import { parseAndMapReservationLimits } from "./organization-configs.mapper"
 
-// The response always carries both loan configs; split_on_format names the
-// one the organization actually runs on. The other is present but stale, so
-// the mapper must not read it.
-const response = ({
-  splitOnFormat,
-  split,
-  combined,
-}: {
-  splitOnFormat: boolean
-  split?: { ebook: number; audiobook: number }
-  combined?: number
-}) => ({
-  organization_configurations: {
-    split_on_format: splitOnFormat,
-    loan_config: { max_concurrent_user_reservations: split },
-    combined_loan_config: { max_concurrent_user_reservations: combined },
-  },
-})
-
 describe("parseAndMapReservationLimits", () => {
-  it("reads the per-format ceiling when the organization splits on format", () => {
+  it("reads the ceiling per format when the organization splits on format", () => {
     expect(
-      parseAndMapReservationLimits(
-        response({ splitOnFormat: true, split: { ebook: 3, audiobook: 2 }, combined: 99 })
-      )
-    ).toEqual({
-      splitOnFormat: true,
-      maxConcurrentReservations: { ebook: 3, audiobook: 2 },
-    })
+      parseAndMapReservationLimits({
+        organization_configurations: {
+          split_on_format: true,
+          loan_config: { max_concurrent_user_reservations: { ebook: 3, audiobook: 2 } },
+          combined_loan_config: { max_concurrent_user_reservations: 99 },
+        },
+      })
+    ).toEqual({ ebook: 3, audiobook: 2 })
   })
 
-  it("reads the single ceiling when the organization combines the formats", () => {
+  it("reports no ceiling when the organization counts the formats together", () => {
     expect(
-      parseAndMapReservationLimits(
-        response({ splitOnFormat: false, split: { ebook: 99, audiobook: 99 }, combined: 5 })
-      )
-    ).toEqual({
-      splitOnFormat: false,
-      maxConcurrentReservations: 5,
-    })
+      parseAndMapReservationLimits({
+        organization_configurations: {
+          split_on_format: false,
+          combined_loan_config: { max_concurrent_user_reservations: 5 },
+        },
+      })
+    ).toBeNull()
   })
 
   it("reports no ceiling when the organization configures none", () => {
-    expect(parseAndMapReservationLimits(response({ splitOnFormat: true }))).toEqual({
-      splitOnFormat: true,
-      maxConcurrentReservations: undefined,
-    })
+    expect(
+      parseAndMapReservationLimits({
+        organization_configurations: { split_on_format: true, loan_config: {} },
+      })
+    ).toBeNull()
+  })
+
+  it("parses a response that omits the config the organization does not run on", () => {
+    expect(
+      parseAndMapReservationLimits({
+        organization_configurations: {
+          split_on_format: true,
+          loan_config: { max_concurrent_user_reservations: { ebook: 3, audiobook: 2 } },
+        },
+      })
+    ).toEqual({ ebook: 3, audiobook: 2 })
   })
 
   it("throws on a response that is not an organization configuration", () => {

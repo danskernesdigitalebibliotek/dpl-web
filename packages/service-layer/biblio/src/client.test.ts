@@ -408,8 +408,8 @@ describe("createBiblioClient user endpoints", () => {
     )
 
     await expect(buildClient().getReservationLimits("org-2")).resolves.toEqual({
-      splitOnFormat: true,
-      maxConcurrentReservations: { ebook: 3, audiobook: 2 },
+      ebook: 3,
+      audiobook: 2,
     })
     // The endpoint resolves no organization from the token, so the id has to
     // reach it as a query parameter.
