@@ -15,8 +15,11 @@ export const digitalReservationLimitsQuery = (
     queryKey: digitalReservationLimitsQueryKey(organizationId),
     // Organization configuration changes a few times a year, and this query
     // only runs once the quotas have answered - so the host's two-minute
-    // default would re-pay that wait on every visit and every window focus.
+    // default would re-pay that wait on every mount and every window focus.
+    // gcTime has to follow, or the entry is collected long before it goes
+    // stale and the wait is paid again anyway.
     staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 60,
     queryFn: () => {
       if (organizationId === null) {
         // The hook disables itself without an organization; a direct caller
