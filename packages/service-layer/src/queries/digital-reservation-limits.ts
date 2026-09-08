@@ -13,19 +13,12 @@ export const digitalReservationLimitsQuery = (
 ) =>
   queryOptions({
     queryKey: digitalReservationLimitsQueryKey(organizationId),
-    // Organization configuration changes a few times a year, and this query
-    // only runs once the quotas have answered - so the host's two-minute
-    // default would re-pay that wait on every mount and every window focus.
-    // gcTime has to follow, or the entry is collected long before it goes
-    // stale and the wait is paid again anyway.
+    // The query runs behind the quotas, so re-fetching costs that wait again.
+    // Organization configuration changes a few times a year; gcTime follows
+    // staleTime, or the entry is collected before it ever goes stale.
     staleTime: 1000 * 60 * 60,
     gcTime: 1000 * 60 * 60,
-    queryFn: () => {
-      if (organizationId === null) {
-        // The hook disables itself without an organization; a direct caller
-        // of the query options must not end up asking about "null".
-        throw new Error("digitalReservationLimitsQuery cannot fetch without an organization id")
-      }
-      return getDigitalReservationLimits(config, organizationId)
-    },
+    // Only reached with an organization: useDigitalQuotas gates the query on
+    // one, and nothing else can call this.
+    queryFn: () => getDigitalReservationLimits(config, organizationId as string),
   })

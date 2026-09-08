@@ -9,26 +9,11 @@ export async function getDigitalLoanQuotas(
   return biblio.getLoanQuotas()
 }
 
-/**
- * The quota that applies to the patron.
- *
- * One arrives per organization the patron belongs to; in practice that is a
- * single library, so the first is it - several would need a rule from DBC.
- * Everything keyed on "the patron's organization" goes through here, so that
- * rule lives in one place.
- */
+// One quota arrives per organization the patron belongs to; in practice that
+// is a single library, so the first is it - several would need a rule from
+// DBC. Both callers below key on that same rule.
 const patronQuota = (quotas: DigitalLoanQuota[] | undefined) => quotas?.[0]
 
-/**
- * The organization the patron's quotas were issued for.
- *
- * Callers need it to ask about anything the adapter scopes to an
- * organization rather than to the patron - the reservation ceiling today -
- * so the ceiling belongs to the same library as the quotas beside it.
- *
- * Null until the quotas have arrived, which is what the id-gated hooks
- * take to mean "not yet".
- */
 export const getDigitalQuotaOrganizationId = (
   quotas: DigitalLoanQuota[] | undefined
 ): string | null => patronQuota(quotas)?.orgId ?? null
@@ -45,8 +30,6 @@ export type QuotaUsage = {
  * availability texts talk about loans "this month", the profile page about
  * loans held right now. Organizations either combine e-books and audiobooks
  * or split them per format.
- *
- * Which of the arriving quotas applies is decided by patronQuota above.
  *
  * Cost-free loans draw on no quota and the adapter's counters already exclude
  * them (confirmed by WeDoBooks), so unlike the Publizon path nothing is
@@ -90,8 +73,6 @@ export const getDigitalLoanQuota = ({
       }
 }
 
-// The reservation ceiling for the organization the patron's quotas came from
-// - see getReservationLimits for why the organization is passed in.
 export async function getDigitalReservationLimits(
   config: ServiceLayerConfig,
   organizationId: string

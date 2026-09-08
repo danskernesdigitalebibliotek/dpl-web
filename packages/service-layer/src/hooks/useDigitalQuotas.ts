@@ -9,22 +9,13 @@ import { useDigitalQuery } from "./internal"
 import { useDigitalLoanQuotas } from "./useDigitalLoanQuotas"
 
 /**
- * Everything the adapter knows about what the patron may borrow and reserve.
+ * What the patron may borrow and reserve, from the two endpoints that answer
+ * it. The ceiling has no hook of its own: its endpoint is not patron-scoped,
+ * and the only source of an organization is the quotas beside it.
  *
- * The two arrive from endpoints of their own: the loan quotas describe the
- * patron and carry both usage and limits, the reservation ceiling describes
- * the organization and carries a limit only. The organization is the one the
- * quotas were issued for, so the ceiling belongs to the same library as the
- * numbers beside it - the caller does not have to name it, or know that the
- * ceiling is a round trip further out.
- *
- * The ceiling has no hook of its own because it cannot be asked for on its
- * own: the endpoint is not patron-scoped, and the only source of an
- * organization is the quotas above.
- *
- * The two results stay apart rather than merging into one loading state.
- * Nothing about the loans should wait for a ceiling that cannot be asked for
- * until the quotas have answered, so the consumer chooses what to wait for.
+ * The results stay apart rather than merging into one loading state - the
+ * ceiling is a round trip behind the quotas, and the loans should not wait
+ * for it.
  */
 export const useDigitalQuotas = ({ enabled }: { enabled?: boolean } = {}): {
   loanQuotas: UseQueryResult<DigitalLoanQuota[], Error>

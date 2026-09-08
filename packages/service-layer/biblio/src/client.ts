@@ -187,15 +187,10 @@ export function createBiblioClient(config: BiblioConfig) {
       return parseAndMapLoanQuotas(raw)
     },
 
-    /**
-     * How many reservations the organization lets a patron hold at once - the
-     * equivalent of Publizon's maxConcurrent…ReservationsPerBorrower, which
-     * the library profile carries and the Biblio quotas do not.
-     *
-     * Takes the organization explicitly because the endpoint is not
-     * user-scoped: it resolves nothing from the token, so the caller passes
-     * the org the quotas were issued for.
-     */
+    // How many reservations the organization lets a patron hold at once - the
+    // equivalent of Publizon's maxConcurrent…ReservationsPerBorrower, which
+    // the Biblio quotas do not carry. Takes the organization explicitly: the
+    // endpoint resolves nothing from the token.
     getReservationLimits: async (
       organizationId: string
     ): Promise<DigitalReservationLimits | null> => {
