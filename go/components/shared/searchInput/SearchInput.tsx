@@ -57,8 +57,8 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
         ref={inputRef}
         className={cn(
           `focus-visible bg-background-overlay text-typo-subtitle-lg
-          placeholder:text-muted-foreground rounded-base flex h-[50px] w-full px-5 transition-colors
-          disabled:cursor-not-allowed disabled:opacity-50 lg:h-20`,
+          placeholder:text-muted-foreground rounded-base flex h-[50px] w-full px-5
+          transition-colors disabled:cursor-not-allowed disabled:opacity-50 lg:h-20`,
           className
         )}
         value={currentQuery}

@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/nextjs"
 import MockDate from "mockdate"
-import localFont from "next/font/local"
+import { DM_Sans } from "next/font/google"
 import { useEffect } from "react"
 
 import "@/styles/globals.css"
@@ -13,18 +13,10 @@ import { useDarkMode, useLightMode } from "../lib/helpers/helper.theme"
 MockDate.set("2026-06-15T12:00:00")
 
 // When adding or changing fonts, remember to update the imports in the Layout file
-const GTFlexa = localFont({
-  src: [
-    {
-      path: "../fonts/GT-Flexa-Expanded-Regular.woff2",
-      weight: "400",
-    },
-    {
-      path: "../fonts/GT-Flexa-Expanded-Medium.woff2",
-      weight: "500",
-    },
-  ],
-  variable: "--font-headline",
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-sans",
   display: "swap",
 })
 
@@ -91,17 +83,17 @@ const preview: Preview = {
       const params = { useDarkMode, ...parameters }
 
       // Apply the font variable to <html> so portalled content (modals, drawers,
-      // sheets) renders with the correct headline font.
+      // sheets) renders with the correct font.
       useEffect(() => {
         const root = document.documentElement
-        root.classList.add(GTFlexa.variable, "antialiased")
+        root.classList.add(dmSans.variable, "antialiased")
         return () => {
-          root.classList.remove(GTFlexa.variable, "antialiased")
+          root.classList.remove(dmSans.variable, "antialiased")
         }
       }, [])
 
       return (
-        <div className={`${GTFlexa.variable} antialiased`}>
+        <div className={`${dmSans.variable} antialiased`}>
           <Story {...params} />
         </div>
       )
