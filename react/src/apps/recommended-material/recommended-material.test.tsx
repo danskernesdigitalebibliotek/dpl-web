@@ -22,7 +22,7 @@ describe("Recommended Material", () => {
     cy.getBySel("recommended-description")
       .should("be.visible")
       .and("contain", "Brillebjørn");
-    cy.getBySel("recommended-author")
+    cy.getBySel("recommended-subtitle")
       .should("be.visible")
       .and("contain", "Per Østergaard (f. 1950)");
   });

@@ -107,7 +107,7 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
   return (
     <StaticRecommendedMaterial
       title={fullTitle.join(", ")}
-      author={author}
+      subtitle={author}
       isPartOfGrid={partOfGrid}
       linkProps={{
         href: materialFullUrl,
