@@ -5,6 +5,7 @@ const campaigns = {
   andMixed: 'AND campaign with facets and phrases',
   highWeight: 'High weight campaign',
   lowWeight: 'Low weight campaign',
+  newTab: 'New tab campaign',
 } as const;
 
 type PostBody = {
@@ -157,6 +158,14 @@ const createLowWeight = () => {
   });
 };
 
+const createNewTab = () => {
+  createCampaign(() => {
+    fillCampaignFields(campaigns.newTab, 'OR');
+    addPhraseTrigger(0, 'new tab');
+    cy.get('#edit-field-campaign-link-0-target-blank').check();
+  });
+};
+
 describe('Campaign v2: facet + phrase triggers', () => {
   before(() => {
     cy.drupalLogin();
@@ -166,6 +175,7 @@ describe('Campaign v2: facet + phrase triggers', () => {
     createAndMixed();
     createHighWeight();
     createLowWeight();
+    createNewTab();
     cy.anonymousUser();
   });
 
@@ -332,6 +342,28 @@ describe('Campaign v2: facet + phrase triggers', () => {
         queries: [{ text: 'spæ' }],
       }).then((response) => {
         expect404(response);
+      });
+    });
+  });
+
+  // -- Link target --
+
+  describe('Link target', () => {
+    it('outputs open_in_new_tab true when the editor has checked it', () => {
+      postMatch({
+        queries: [{ text: 'new tab' }],
+      }).then((response) => {
+        expectCampaign(response, campaigns.newTab);
+        expect(response.body.data.open_in_new_tab).to.eq(true);
+      });
+    });
+
+    it('outputs open_in_new_tab false when the editor has not', () => {
+      postMatch({
+        queries: [{ text: 'krimi' }],
+      }).then((response) => {
+        expectCampaign(response, campaigns.orPhrasesOnly);
+        expect(response.body.data.open_in_new_tab).to.eq(false);
       });
     });
   });

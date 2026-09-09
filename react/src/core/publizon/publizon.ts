@@ -1334,10 +1334,19 @@ export const postV1Loanstatus = async (
   postV1LoanstatusBody?: string[],
   options?: Parameters<typeof mutator>[1]
 ): Promise<LoanStatusListResult> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<LoanStatusListResult>(getPostV1LoanstatusUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(postV1LoanstatusBody)
   });
 };
@@ -1887,12 +1896,21 @@ export const postV1UserReservationsIdentifier = async (
   reservationInput?: ReservationInput,
   options?: Parameters<typeof mutator>[1]
 ): Promise<ApiResult> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<ApiResult>(
     getPostV1UserReservationsIdentifierUrl(identifier),
     {
       ...options,
       method: "POST",
-      headers: { "Content-Type": "application/json", ...options?.headers },
+      headers: {
+        "Content-Type": "application/json",
+        ...getHeaders(options?.headers)
+      },
       body: JSON.stringify(reservationInput)
     }
   );
@@ -1984,12 +2002,21 @@ export const patchV1UserReservationsIdentifier = async (
   reservationInput?: ReservationInput,
   options?: Parameters<typeof mutator>[1]
 ): Promise<ApiResult> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<ApiResult>(
     getPatchV1UserReservationsIdentifierUrl(identifier),
     {
       ...options,
       method: "PATCH",
-      headers: { "Content-Type": "application/json", ...options?.headers },
+      headers: {
+        "Content-Type": "application/json",
+        ...getHeaders(options?.headers)
+      },
       body: JSON.stringify(reservationInput)
     }
   );

@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { withConfig } from "../../core/utils/config";
+import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
 import { pageSizeGlobal } from "../../core/utils/helpers/general";
 import { withText } from "../../core/utils/text";
 import { withUrls } from "../../core/utils/url";
@@ -25,6 +26,7 @@ interface FavoritesListTextEntryProps {
 
 export interface FavoritesListEntryProps
   extends
+    BiblioAdapterArgs,
     FavoritesListConfigEntryProps,
     FavoritesListTextEntryProps,
     GlobalEntryTextProps,

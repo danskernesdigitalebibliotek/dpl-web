@@ -554,10 +554,19 @@ export const addReservationsDeprecated = async (
   createReservationBatch: CreateReservationBatch,
   options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationDetails[]> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<ReservationDetails[]>(getAddReservationsDeprecatedUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(createReservationBatch)
   });
 };
@@ -666,10 +675,19 @@ export const updateReservations = async (
   updateReservationBatch: UpdateReservationBatch,
   options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationDetails[]> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<ReservationDetails[]>(getUpdateReservationsUrl(), {
     ...options,
     method: "PUT",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(updateReservationBatch)
   });
 };
@@ -994,10 +1012,19 @@ export const addReservationsV2 = async (
   createReservationBatchV2: CreateReservationBatchV2,
   options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationResponseV2> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<ReservationResponseV2>(getAddReservationsV2Url(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(createReservationBatchV2)
   });
 };
@@ -1663,10 +1690,19 @@ export const createV9 = async (
   createPatronRequestV7: CreatePatronRequestV7,
   options?: Parameters<typeof mutator>[1]
 ): Promise<AuthenticatedPatronV10> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<AuthenticatedPatronV10>(getCreateV9Url(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(createPatronRequestV7)
   });
 };
@@ -1759,10 +1795,19 @@ export const createWithGuardian = async (
   patronWithGuardianRequest: PatronWithGuardianRequest,
   options?: Parameters<typeof mutator>[1]
 ): Promise<number> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<number>(getCreateWithGuardianUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(patronWithGuardianRequest)
   });
 };
@@ -1862,10 +1907,19 @@ export const updateGuardian = async (
   updateGuardianRequest: UpdateGuardianRequest,
   options?: Parameters<typeof mutator>[1]
 ): Promise<number> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<number>(getUpdateGuardianUrl(), {
     ...options,
     method: "PUT",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(updateGuardianRequest)
   });
 };
@@ -1977,10 +2031,19 @@ export const renewLoansV2 = async (
   renewLoansV2Body: number[],
   options?: Parameters<typeof mutator>[1]
 ): Promise<RenewedLoanV2[]> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<RenewedLoanV2[]>(getRenewLoansV2Url(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(renewLoansV2Body)
   });
 };
@@ -2415,10 +2478,19 @@ export const updateV4 = async (
   updatePatronRequestV3: UpdatePatronRequestV3,
   options?: Parameters<typeof mutator>[1]
 ): Promise<AuthenticatedPatronV4> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<AuthenticatedPatronV4>(getUpdateV4Url(), {
     ...options,
     method: "PUT",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(updatePatronRequestV3)
   });
 };
@@ -2521,10 +2593,19 @@ export const updateV8 = async (
   updatePatronRequestV6: UpdatePatronRequestV6,
   options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
+  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Array.isArray(h)) return Object.fromEntries(h);
+    return h;
+  };
   return mutator<void>(getUpdateV8Url(), {
     ...options,
     method: "PUT",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(updatePatronRequestV6)
   });
 };

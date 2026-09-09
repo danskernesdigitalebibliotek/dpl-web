@@ -56,10 +56,10 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
   const [modalLoan, setModalLoan] = useState<LoanType | null>(null);
   const {
     fbs: { loans: fbsLoans, isLoading: isLoadingFbs },
-    publizon: { loans: publizonLoans, isLoading: isLoadingPublizon }
+    digital: { loans: digitalLoans, isLoading: isLoadingDigital }
   } = useLoans();
   const loansPhysical = sortByDueDate(fbsLoans);
-  const loansDigital = sortByDueDate(publizonLoans);
+  const loansDigital = sortByDueDate(digitalLoans);
   const stackedMaterialsDueDatesFbs = getDueDatesLoan(loansPhysical);
   const openLoanDetailsModal = useCallback(
     (loan: LoanType) => {
@@ -112,7 +112,7 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
 
   const shouldShowSkeletons =
     isLoadingFbs &&
-    isLoadingPublizon &&
+    isLoadingDigital &&
     loansPhysical.length === 0 &&
     loansDigital.length === 0;
 
@@ -171,7 +171,7 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
           )}
 
         {!isLoadingFbs &&
-          !isLoadingPublizon &&
+          !isLoadingDigital &&
           loansAreEmpty(loansPhysical) &&
           loansAreEmpty(loansDigital) && (
             <EmptyList

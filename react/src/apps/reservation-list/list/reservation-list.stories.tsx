@@ -19,6 +19,9 @@ import { getModalIds } from "../../../core/utils/helpers/modal-helpers";
 import globalTextArgs, {
   argTypes as globalTextArgTypes
 } from "../../../core/storybook/globalTextArgs";
+import biblioAdapterArgs, {
+  argTypes as biblioAdapterArgTypes
+} from "../../../core/storybook/biblioAdapterArgs";
 
 const meta: Meta<typeof ReservationList> = {
   title: "Apps / Reservation list",
@@ -33,6 +36,7 @@ const meta: Meta<typeof ReservationList> = {
     ...blockedArgTypes,
     ...reservationListArgTypes,
     ...globalTextArgTypes,
+    ...biblioAdapterArgTypes,
     blacklistedSearchBranchesConfig: {
       description: "Blacklisted search branches",
       control: { type: "text" }
@@ -211,6 +215,7 @@ export const Default: Story = {
     ...blockedArgs,
     ...reservationListArgs,
     ...globalTextArgs,
+    ...biblioAdapterArgs,
     blacklistedSearchBranchesConfig:
       "FBS-751032,FBS-751031,FBS-751009,FBS-751027,FBS-751024",
     blacklistedAvailabilityBranchesConfig:
@@ -286,6 +291,15 @@ export const Default: Story = {
 export const ReservationListEntry: Story = {
   args: {
     ...Default.args
+  }
+};
+
+// The Biblio adapter feature flag turned on. During the transition period the
+// digital reservations combine Publizon and Biblio adapter reservations.
+export const ReservationListWithBiblioAdapter: Story = {
+  args: {
+    ...Default.args,
+    useBiblioAdapterConfig: "1"
   }
 };
 
