@@ -1,0 +1,17 @@
+// The "Mere af {author}" section at the bottom of the series page: other
+// works by the series' author in a MaterialSlider, first books of their other
+// series leading.
+
+.related-works {
+  margin: ($s-xl + $s-md) 0;
+  padding: $s-2xl 0;
+
+  background: $color__global-secondary;
+  color: $color__text-primary-black;
+
+  overflow: hidden;
+
+  @include media-query__medium {
+    padding: ($s-4xl + $s-md) 0;
+  }
+}
