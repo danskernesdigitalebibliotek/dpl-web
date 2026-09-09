@@ -1,0 +1,37 @@
+# Other works by the series' author, for the "Mere af {author}" slider. The
+# CQL and sort are built in useRelatedWorks.
+query getRelatedWorks(
+  $cql: String!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: ComplexSearchFiltersInput!
+  $sort: [SortInput!]
+) {
+  complexSearch(cql: $cql, filters: $filters) {
+    works(offset: $offset, limit: $limit, sort: $sort) {
+      workId
+      titles {
+        full
+      }
+      series {
+        seriesId
+        title
+        # This work's own place in the series, pre-labelled ("Del 1") like on
+        # the members list.
+        numberInSeries
+        readThisFirst
+      }
+      manifestations {
+        bestRepresentation {
+          # The card size; resolved here so the cards need no separate
+          # cover lookup.
+          cover {
+            large {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
