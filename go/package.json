@@ -127,7 +127,7 @@
     "@typescript-eslint/eslint-plugin": "^8.65.0",
     "@vitejs/plugin-react": "^5.2.0",
     "axe-playwright": "^2.2.2",
-    "babel-loader": "9.2.1",
+    "babel-loader": "10.1.1",
     "cypress": "^14.5.4",
     "dayjs": "^1.11.23",
     "eslint": "^9.39.4",
