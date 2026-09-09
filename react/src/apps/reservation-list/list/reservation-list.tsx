@@ -35,6 +35,24 @@ export interface ReservationListProps {
   pageSize: number;
 }
 
+export const findReservationByModalParam = (
+  reservations: ReservationType[],
+  modalUrlParam: string | null,
+  prefix: string
+): ReservationType | null => {
+  if (!modalUrlParam?.includes(prefix)) {
+    return null;
+  }
+
+  const idFromUrl = getDetailsModalId(modalUrlParam, prefix);
+
+  return (
+    reservations.find(
+      (reservation) => reservationId(reservation) === idFromUrl
+    ) ?? null
+  );
+};
+
 const ReservationList: FC<ReservationListProps> = ({ pageSize }) => {
   const t = useText();
   const { modalIds } = useSelector((s: ModalIdsProps) => s.modal);
@@ -65,37 +83,26 @@ const ReservationList: FC<ReservationListProps> = ({ pageSize }) => {
     open(reservationDetailsModalId(reservationForModal));
   };
 
+  // A modal renders only once we know which reservation it is about, so a
+  // link straight to one has to be looked up before it can open.
   useDeepCompareEffect(() => {
     const modalUrlParam = getUrlQueryParam("modal");
-    // If there is a reservation details query param, loan details modal should be opened
-    const resDetails = reservationDetails as string;
-    if (modalUrlParam && modalUrlParam.includes(resDetails as string)) {
-      const queryReservationId = getDetailsModalId(modalUrlParam, resDetails);
-      if (queryReservationId && allReservations) {
-        const reservationFromQuery = allReservations
-          .filter((reservation) => {
-            return reservationId(reservation) === queryReservationId;
-          })
-          .at(0);
-        if (reservationFromQuery) {
-          setReservationWithDetails(reservationFromQuery);
-        }
-      }
+    const details = findReservationByModalParam(
+      allReservations,
+      modalUrlParam,
+      reservationDetails as string
+    );
+    if (details) {
+      setReservationWithDetails(details);
     }
-    // If there is a reservation delete query param, loan details modal should be opened
-    const deleteRes = deleteReservation as string;
-    if (modalUrlParam && modalUrlParam.includes(deleteRes as string)) {
-      const queryReservationId = getDetailsModalId(modalUrlParam, deleteRes);
-      if (queryReservationId && allReservations) {
-        const reservationFromQuery = allReservations
-          .filter((reservation) => {
-            return reservationId(reservation) === queryReservationId;
-          })
-          .at(0);
-        if (reservationFromQuery) {
-          setReservationWithDetails(reservationFromQuery);
-        }
-      }
+
+    const toDelete = findReservationByModalParam(
+      allReservations,
+      modalUrlParam,
+      deleteReservation as string
+    );
+    if (toDelete) {
+      setReservationToDelete(toDelete);
     }
   }, [allReservations, reservationDetails, deleteReservation]);
 
