@@ -13,18 +13,19 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\node\Form\NodeForm;
 use Drupal\node\NodeInterface;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * Subscription form hooks.
  */
-class FormHooks {
+class FormHooks implements LoggerAwareInterface {
 
   use StringTranslationTrait;
+  use LoggerAwareTrait;
 
   public function __construct(
     protected AccountInterface $currentUser,
-    protected LoggerInterface $logger,
     TranslationInterface $stringTranslation,
   ) {
     $this->setStringTranslation($stringTranslation);
@@ -68,7 +69,7 @@ class FormHooks {
     }
 
     if (empty($form['actions']['submit'])) {
-      $this->logger->error('Could not find submit button - cannot show BNF export flow.');
+      $this->logger?->error('Could not find submit button - cannot show BNF export flow.');
       return;
     }
 
