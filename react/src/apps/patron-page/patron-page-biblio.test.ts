@@ -23,7 +23,7 @@ import {
 const PUBLIZON_CARD_NUMBER = "1234567890";
 const BIBLIO_SUPPORT_ID = "BIB-000000-0001";
 
-const stubBackends = () => {
+const stubBackends = ({ resident = true } = {}) => {
   cy.window().then((win) => {
     // The profile page only loads patron data for a signed-in user -
     // isAnonymous() checks the user token specifically - and the Biblio
@@ -48,8 +48,7 @@ const stubBackends = () => {
       receiveEmail: true,
       receivePostalMail: false,
       onHold: {},
-      // The quota section only renders for a resident patron.
-      resident: true
+      resident
     }
   }).as("patron");
 
@@ -128,4 +127,34 @@ describe("Patron page - Biblio adapter feature flag", () => {
   // The quota rendering itself (no reservation line, combined quotas, a spent
   // quota reading as full) is pinned by StatusSection's unit tests. This spec
   // covers what only the real page shows: the flag moving the whole section.
+});
+
+describe("Patron page - quotas for a patron from another municipality", () => {
+  it("Hides the quotas when the flag is off", () => {
+    stubBackends({ resident: false });
+    const patronPage = new PatronPagePage(patronPageStory.default);
+
+    patronPage.visit([]);
+    // The loan list is what feeds the quota counters, so a hidden section
+    // never asks for it - the card number is the signal that the page is up.
+    cy.wait("@publizonCardNumber");
+
+    // Then: the section stays away - Publizon lends through the site's own
+    // retailer account, which grants a non-resident nothing to show.
+    cy.contains(PUBLIZON_CARD_NUMBER).should("exist");
+    cy.contains("2 out of 7").should("not.exist");
+  });
+
+  it("Shows the adapter's quotas when the flag is on", () => {
+    stubBackends({ resident: false });
+    const patronPage = new PatronPagePage(patronPageStory.withBiblioAdapter);
+
+    patronPage.visit([]);
+    cy.wait(["@biblioSupportId", "@biblioLoanQuotas"]);
+
+    // Then: the quotas render anyway - they belong to the patron's own
+    // municipality, so residency in the site's says nothing about them.
+    cy.contains("1 out of 4").should("exist");
+    cy.contains("2 out of 3").should("exist");
+  });
 });
