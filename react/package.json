@@ -94,7 +94,7 @@
     "concurrently": "^10.0.5",
     "core-js": "^3.50.0",
     "css-loader": "^7.1.5",
-    "cssnano": "^8.0.10",
+    "cssnano": "^9.0.1",
     "cypress": "15.18.0",
     "cypress-terminal-report": "^7.3.3",
     "dotenv": "^16.5.0",
