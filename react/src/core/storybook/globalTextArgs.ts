@@ -269,6 +269,18 @@ export const argTypes = {
     },
     control: { type: "text" }
   },
+  materialSliderNextText: {
+    table: {
+      defaultValue: { summary: "Show next" }
+    },
+    control: { type: "text" }
+  },
+  materialSliderPreviousText: {
+    table: {
+      defaultValue: { summary: "Show previous" }
+    },
+    control: { type: "text" }
+  },
   reservationPickUpLatestText: {
     table: {
       defaultValue: { summary: "Pick up before @date" }
@@ -355,6 +367,8 @@ export default {
   acceptModalAcceptButtonText: "Ja, forny mulige",
   acceptModalCancelButtonText: "Annuller fornyelse",
   isLoadingHeartText: "Indlæser",
+  materialSliderNextText: "Show next",
+  materialSliderPreviousText: "Show previous",
   reservationPickUpLatestText: "Pick up before @date",
   reservationListReadyText: "Ready",
   reservationListDigitalPickupText: "Online access",
@@ -403,6 +417,8 @@ export interface GlobalEntryTextProps {
   acceptModalCancelButtonText: string;
   acceptModalAcceptButtonText: string;
   isLoadingHeartText: string;
+  materialSliderNextText: string;
+  materialSliderPreviousText: string;
   reservationPickUpLatestText: string;
   reservationListReadyText: string;
   reservationListDigitalPickupText: string;

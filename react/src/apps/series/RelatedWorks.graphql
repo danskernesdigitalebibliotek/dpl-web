@@ -1,0 +1,31 @@
+query getRelatedWorks(
+  $cql: String!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: ComplexSearchFiltersInput!
+  $sort: [SortInput!]
+) {
+  complexSearch(cql: $cql, filters: $filters) {
+    works(offset: $offset, limit: $limit, sort: $sort) {
+      workId
+      titles {
+        full
+      }
+      series {
+        seriesId
+        title
+        numberInSeries
+        readThisFirst
+      }
+      manifestations {
+        bestRepresentation {
+          cover {
+            large {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}

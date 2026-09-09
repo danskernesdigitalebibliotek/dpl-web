@@ -75,6 +75,7 @@
     "flatpickr": "^4.6.13",
     "globals": "^17",
     "json": "^11.0.0",
+    "keen-slider": "6.8.6",
     "markdownlint-cli2": "^0.23.2",
     "playwright": "^1.62.1",
     "postcss": "^8.5.26",
