@@ -7,7 +7,7 @@ import {
   reservationModalId,
   onlineInternalModalId
 } from "../../apps/material/helper";
-import { getAllPids, convertPostIdsToFaustIds } from "./helpers/general";
+import { getAllFaustIds } from "./helpers/general";
 import { Manifestation } from "./types/entities";
 
 /**
@@ -26,8 +26,7 @@ export const useEditionSwitch = (
   const handleReserveFirstAvailable = () => {
     if (!selectedManifestations?.length) return;
 
-    const pids = getAllPids(selectedManifestations);
-    const faustIds = convertPostIdsToFaustIds(pids);
+    const faustIds = getAllFaustIds(selectedManifestations);
 
     const isPhysical = hasCorrectAccessType(
       AccessTypeCodeEnum.Physical,
@@ -36,7 +35,7 @@ export const useEditionSwitch = (
 
     const modalId = isPhysical
       ? reservationModalId(faustIds)
-      : onlineInternalModalId(faustIds);
+      : onlineInternalModalId(selectedManifestations);
 
     openGuarded({
       authUrl,

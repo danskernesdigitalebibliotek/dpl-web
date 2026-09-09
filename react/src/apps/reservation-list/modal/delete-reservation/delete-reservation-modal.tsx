@@ -43,7 +43,7 @@ interface DeleteReservationModalProps {
 }
 
 export function deleteReservationModalId(reservation: ReservationType): string {
-  const prefix = String(getModalIds().reservationDelete);
+  const prefix = String(getModalIds().deleteReservation);
   const fragment = reservationId(reservation);
   // TODO: Use constructModalId() instead of string concatenation.
   return `${prefix}${fragment}`;
