@@ -14,10 +14,7 @@ import {
   getLoanableManifestation,
   onlineInternalModalId
 } from "../../apps/material/helper";
-import {
-  formatDanishPhoneNumber,
-  getAllFaustIds
-} from "../../core/utils/helpers/general";
+import { formatDanishPhoneNumber } from "../../core/utils/helpers/general";
 import { Manifestation } from "../../core/utils/types/entities";
 import { RequestStatus } from "../../core/utils/types/request";
 import { ApiResult, CreateLoanResult } from "../publizon/model";
@@ -235,7 +232,7 @@ const useOnlineInternalHandleLoanReservation = ({
     if (openModal) {
       openGuarded({
         authUrl,
-        modalId: onlineInternalModalId(getAllFaustIds(manifestations)),
+        modalId: onlineInternalModalId(manifestations),
         options: { modalsToClose }
       });
       return;

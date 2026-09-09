@@ -143,6 +143,10 @@
                     "url": {
                       "type": "string",
                       "description": "The url the campaign should link to"
+                    },
+                    "open_in_new_tab": {
+                      "type": "boolean",
+                      "description": "Whether the campaign link should be opened in a new tab"
                     }
                   }
                 }

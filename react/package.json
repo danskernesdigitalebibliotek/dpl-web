@@ -28,7 +28,7 @@
     "watch:lint:scss": "chokidar \"./src/**/*.scss\" -c \"pnpm run lint:scss:fix\"",
     "watch:lint:js": "chokidar \"./src/**/*.{js,jsx,ts,tsx}\" -c \"pnpm run lint:js\"",
     "build:storybook": "storybook build -c .storybook -o dev",
-    "start:storybook:test": "NODE_ENV=test storybook dev --port 57021 --quiet --ci",
+    "start:storybook:test": "NODE_ENV=test storybook dev --port 57021 --exact-port --quiet --ci",
     "start:storybook:dev": "NODE_ENV=development storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
     "dev": "corepack pnpm dlx concurrently --raw \"pnpm run start:storybook:dev\" \"pnpm run watch\"",
     "typecheck": "tsc --noEmit",
