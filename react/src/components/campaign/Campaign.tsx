@@ -14,6 +14,8 @@ const Campaign: FC<CampaignProps> = ({ campaignData }) => {
     return null;
   }
 
+  const openInNewTab = campaignData.open_in_new_tab ?? false;
+
   const onClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (!campaignData.url) {
       return;
@@ -23,7 +25,8 @@ const Campaign: FC<CampaignProps> = ({ campaignData }) => {
 
     redirectWithUrlTracking({
       campaignUrl: campaignData.url,
-      parameterValue: campaignData.title as string
+      parameterValue: campaignData.title as string,
+      openInNewTab
     });
   };
 
@@ -31,6 +34,8 @@ const Campaign: FC<CampaignProps> = ({ campaignData }) => {
     <a
       className="campaign arrow arrow__hover--right-small"
       href={campaignData.url}
+      target={openInNewTab ? "_blank" : undefined}
+      rel={openInNewTab ? "noreferrer" : undefined}
       data-cy="campaign-body"
       onClick={onClick}
     >
