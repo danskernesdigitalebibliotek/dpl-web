@@ -24,9 +24,6 @@ const isFirstInSeries = (series: RelatedWorkSeries): boolean =>
 
 const isStandalone = (work: RelatedWork): boolean => work.series.length === 0;
 
-// A work in the current series never counts, whether as "opens a series" or
-// as "belongs to one" - the CQL already excludes the series, but only by
-// title, and this also covers the works the NOT clause missed.
 const isInCurrentSeries = (
   work: RelatedWork,
   currentSeries: CurrentSeries
