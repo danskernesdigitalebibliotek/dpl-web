@@ -133,10 +133,9 @@ const PatronPage: FC = () => {
             showCheckboxes={["email", "phone"]}
           />
         )}
-        {/* Publizon lends through the site's own retailer account, so a
-            patron from another municipality has no quotas there. The adapter
-            resolves them from the patron's own municipality instead, where
-            residency in the site's municipality decides nothing. */}
+        {/* Publizon's quotas live on the site's own retailer account, so a
+            non-resident has none there; the adapter resolves them from the
+            patron's own municipality. */}
         {(viaBiblioAdapter || patron?.resident) && <StatusSection />}
         {patron && (
           <ReservationDetailsSection

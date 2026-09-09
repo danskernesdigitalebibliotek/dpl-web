@@ -11,6 +11,7 @@ import {
   publizonLibraryProfileFactory,
   publizonLoanListFactory
 } from "../../../cypress/factories/publizon/publizon.factory";
+import { biblioSplitLoanQuotaFactory } from "../../../cypress/factories/biblio/biblio.factory";
 
 /**
  * The patron page during the Publizon → Biblio transition.
@@ -18,10 +19,21 @@ import {
  * Unlike the loan list, there is no provider probe here: profile data belongs
  * to the user rather than to a single material, so the feature flag alone
  * decides where the support identifier and the loan quotas come from.
+ *
+ * The quota rendering itself (no reservation line, combined quotas, a spent
+ * quota reading as full) is pinned by StatusSection's unit tests. This spec
+ * covers what only the real page shows: the flag moving the whole section,
+ * and residency no longer hiding it.
  */
 
 const PUBLIZON_CARD_NUMBER = "1234567890";
 const BIBLIO_SUPPORT_ID = "BIB-000000-0001";
+
+// The counters the adapter's quotas render as, read off the fixture so a
+// changed default cannot leave a stale literal behind.
+const biblioQuota = biblioSplitLoanQuotaFactory.build();
+const BIBLIO_EBOOKS_OUT_OF = `${biblioQuota.current_concurrent_loans.ebook} out of ${biblioQuota.max_concurrent_user_loans.ebook}`;
+const BIBLIO_AUDIOBOOKS_OUT_OF = `${biblioQuota.current_concurrent_loans.audiobook} out of ${biblioQuota.max_concurrent_user_loans.audiobook}`;
 
 const stubBackends = ({ resident = true } = {}) => {
   cy.window().then((win) => {
@@ -118,43 +130,36 @@ describe("Patron page - Biblio adapter feature flag", () => {
 
     // And: the quotas are the adapter's concurrent counters - the loans the
     // user holds right now, not the monthly totals.
-    cy.contains("1 out of 4").should("exist");
-    cy.contains("2 out of 3").should("exist");
+    cy.contains(BIBLIO_EBOOKS_OUT_OF).should("exist");
+    cy.contains(BIBLIO_AUDIOBOOKS_OUT_OF).should("exist");
     // The monthly figures from the same response must not surface here.
     cy.contains("3 out of").should("not.exist");
   });
-
-  // The quota rendering itself (no reservation line, combined quotas, a spent
-  // quota reading as full) is pinned by StatusSection's unit tests. This spec
-  // covers what only the real page shows: the flag moving the whole section.
 });
 
 describe("Patron page - quotas for a patron from another municipality", () => {
+  beforeEach(() => stubBackends({ resident: false }));
+
   it("Hides the quotas when the flag is off", () => {
-    stubBackends({ resident: false });
     const patronPage = new PatronPagePage(patronPageStory.default);
 
+    // When: the user opens their profile
     patronPage.visit([]);
-    // The loan list is what feeds the quota counters, so a hidden section
-    // never asks for it - the card number is the signal that the page is up.
-    cy.wait("@publizonCardNumber");
-
-    // Then: the section stays away - Publizon lends through the site's own
-    // retailer account, which grants a non-resident nothing to show.
     cy.contains(PUBLIZON_CARD_NUMBER).should("exist");
-    cy.contains("2 out of 7").should("not.exist");
+
+    // Then: the whole section stays away
+    cy.get("section.dpl-status-loans").should("not.exist");
   });
 
   it("Shows the adapter's quotas when the flag is on", () => {
-    stubBackends({ resident: false });
     const patronPage = new PatronPagePage(patronPageStory.withBiblioAdapter);
 
+    // When: the user opens their profile
     patronPage.visit([]);
     cy.wait(["@biblioSupportId", "@biblioLoanQuotas"]);
 
-    // Then: the quotas render anyway - they belong to the patron's own
-    // municipality, so residency in the site's says nothing about them.
-    cy.contains("1 out of 4").should("exist");
-    cy.contains("2 out of 3").should("exist");
+    // Then: the quotas render for a non-resident too
+    cy.contains(BIBLIO_EBOOKS_OUT_OF).should("exist");
+    cy.contains(BIBLIO_AUDIOBOOKS_OUT_OF).should("exist");
   });
 });
