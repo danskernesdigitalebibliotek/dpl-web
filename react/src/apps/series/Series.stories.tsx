@@ -35,6 +35,11 @@ const meta: Meta<typeof SeriesEntry> = {
       description: "Prefix on the byline above the series title",
       control: { type: "text" }
     },
+    seriesRelatedWorksHeadingText: {
+      description:
+        "Heading of the other works by the author below the members. @author is replaced with the author's name",
+      control: { type: "text" }
+    },
     materialUrl: {
       description: "Path to the material page each card links to",
       control: { type: "text" }
@@ -77,6 +82,7 @@ export const Primary: Story = {
       "2cd6e951ab00b96487628d4bc23ed0c7adc64e1c394ecbe116c9e9b63297e10f",
     seriesReadThisFirstText: "Start with this one",
     seriesByAuthorText: "Series by",
+    seriesRelatedWorksHeadingText: "More by @author",
     materialUrl: "/work/:workid",
     searchUrl: "/search",
     byAuthorText: "By",
