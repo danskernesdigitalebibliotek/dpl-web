@@ -5,18 +5,18 @@
  * The REST API provided by the core REST module.
  * OpenAPI spec version: Versioning not supported
  */
-import type { CurrentEventsGET200ItemAddress } from "./currentEventsGET200ItemAddress";
-import type { CurrentEventsGET200ItemDateTime } from "./currentEventsGET200ItemDateTime";
-import type { CurrentEventsGET200ItemExternalData } from "./currentEventsGET200ItemExternalData";
-import type { CurrentEventsGET200ItemImage } from "./currentEventsGET200ItemImage";
-import type { CurrentEventsGET200ItemOrganizer } from "./currentEventsGET200ItemOrganizer";
-import type { CurrentEventsGET200ItemOriginalImage } from "./currentEventsGET200ItemOriginalImage";
-import type { CurrentEventsGET200ItemSeries } from "./currentEventsGET200ItemSeries";
-import type { CurrentEventsGET200ItemState } from "./currentEventsGET200ItemState";
-import type { CurrentEventsGET200ItemTeaserImage } from "./currentEventsGET200ItemTeaserImage";
-import type { CurrentEventsGET200ItemTicketCategoriesItem } from "./currentEventsGET200ItemTicketCategoriesItem";
+import type { HappeningEventsGET200ItemAddress } from "./happeningEventsGET200ItemAddress";
+import type { HappeningEventsGET200ItemDateTime } from "./happeningEventsGET200ItemDateTime";
+import type { HappeningEventsGET200ItemExternalData } from "./happeningEventsGET200ItemExternalData";
+import type { HappeningEventsGET200ItemImage } from "./happeningEventsGET200ItemImage";
+import type { HappeningEventsGET200ItemOrganizer } from "./happeningEventsGET200ItemOrganizer";
+import type { HappeningEventsGET200ItemOriginalImage } from "./happeningEventsGET200ItemOriginalImage";
+import type { HappeningEventsGET200ItemSeries } from "./happeningEventsGET200ItemSeries";
+import type { HappeningEventsGET200ItemState } from "./happeningEventsGET200ItemState";
+import type { HappeningEventsGET200ItemTeaserImage } from "./happeningEventsGET200ItemTeaserImage";
+import type { HappeningEventsGET200ItemTicketCategoriesItem } from "./happeningEventsGET200ItemTicketCategoriesItem";
 
-export type CurrentEventsGET200Item = {
+export type HappeningEventsGET200Item = {
   /** A unique identifier for the event. */
   uuid: string;
   /** The event title. */
@@ -32,25 +32,25 @@ export type CurrentEventsGET200Item = {
   /** Whether the event is marked as relevant for ticket management systems */
   ticket_manager_relevance?: boolean;
   /** The main image for the event. (Scaled) */
-  image?: CurrentEventsGET200ItemImage;
+  image?: HappeningEventsGET200ItemImage;
   /** The main image for the event. (Original source) */
-  originalImage?: CurrentEventsGET200ItemOriginalImage;
+  originalImage?: HappeningEventsGET200ItemOriginalImage;
   /** The uniform teaser image for the event. */
-  teaserImage?: CurrentEventsGET200ItemTeaserImage;
+  teaserImage?: HappeningEventsGET200ItemTeaserImage;
   /** The state of the event. */
-  state: CurrentEventsGET200ItemState;
+  state: HappeningEventsGET200ItemState;
   /** Whether the event is marked as an all-day event, without time relevance. */
   all_day?: boolean;
   /** When the event occurs. */
-  date_time: CurrentEventsGET200ItemDateTime;
+  date_time: HappeningEventsGET200ItemDateTime;
   /** The associated library branches. */
   branches?: string[];
   /** External branch ids (ISIL) for the associated library branches. Aligned by index with the branches property, and always the same length. An entry is an empty string when no ISIL has been configured for that branch in the CMS. */
   branch_isil_ids?: string[];
   /** The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library. */
-  organizer?: CurrentEventsGET200ItemOrganizer;
+  organizer?: HappeningEventsGET200ItemOrganizer;
   /** Where the event occurs. */
-  address?: CurrentEventsGET200ItemAddress;
+  address?: HappeningEventsGET200ItemAddress;
   /** The categories associated with the event. */
   categories?: string[];
   /** The audiences associated with the event. */
@@ -60,15 +60,15 @@ export type CurrentEventsGET200Item = {
   /** The partners associated with the event. */
   partners?: string[];
   /** Ticket categories used for the event. Not present for events without ticketing. */
-  ticket_categories?: CurrentEventsGET200ItemTicketCategoriesItem[];
+  ticket_categories?: HappeningEventsGET200ItemTicketCategoriesItem[];
   /** Total number of tickets which can be sold for the event. */
   ticket_capacity?: number;
   /** An event may be part of a series. One example of this is recurring events. */
-  series?: CurrentEventsGET200ItemSeries;
+  series?: HappeningEventsGET200ItemSeries;
   /** An editorial WYSIWYG/HTML description of the event. */
   body?: string;
   /** Data for the event provided by a third party. */
-  external_data?: CurrentEventsGET200ItemExternalData;
+  external_data?: HappeningEventsGET200ItemExternalData;
   /** The screens this event should be shown on. */
   screen_names?: string[];
 };

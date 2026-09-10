@@ -5,14 +5,14 @@
  * The REST API provided by the core REST module.
  * OpenAPI spec version: Versioning not supported
  */
-import type { CurrentEventsGET200ItemAddressLocationType } from "./currentEventsGET200ItemAddressLocationType";
+import type { HappeningEventsGET200ItemAddressLocationType } from "./happeningEventsGET200ItemAddressLocationType";
 
 /**
  * Where the event occurs.
  */
-export type CurrentEventsGET200ItemAddress = {
+export type HappeningEventsGET200ItemAddress = {
   /** If an event is physical or not. */
-  locationType?: CurrentEventsGET200ItemAddressLocationType;
+  locationType?: HappeningEventsGET200ItemAddressLocationType;
   /** Name of the location where the event occurs. This could be the name of a library branch. */
   location?: string;
   /** Expanded description of location. */

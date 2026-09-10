@@ -6,9 +6,9 @@
  * OpenAPI spec version: Versioning not supported
  */
 
-export type CurrentEventsGET_Format =
-  (typeof CurrentEventsGET_Format)[keyof typeof CurrentEventsGET_Format];
+export type HappeningEventsGET_Format =
+  (typeof HappeningEventsGET_Format)[keyof typeof HappeningEventsGET_Format];
 
-export const CurrentEventsGET_Format = {
+export const HappeningEventsGET_Format = {
   json: "json"
 } as const;
