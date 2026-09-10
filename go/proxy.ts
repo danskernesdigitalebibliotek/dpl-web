@@ -64,6 +64,15 @@ export async function proxy(request: NextRequest) {
   }
 
   if (adgangsplatformenAccessTokenHasExpired(session)) {
+    // The Drupal session outlives the user token by weeks. Send the browser
+    // through the full logout flow so the CMS (and Adgangsplatformen SSO)
+    // session is torn down too — otherwise the CMS keeps serving the same
+    // dead token and the session resurrects on the next request.
+    // Only top-level navigations can be redirected through an external logout
+    // flow; other requests (RSC, prefetch, fetch) fall back to local teardown.
+    if (request.headers.get("sec-fetch-dest") === "document") {
+      return NextResponse.redirect(`${getBaseURL()}/auth/logout`)
+    }
     destroySession(session)
     return response
   }
