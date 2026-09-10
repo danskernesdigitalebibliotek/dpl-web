@@ -10,10 +10,16 @@
  */
 #}
 {% block content %}
-  <div class="service-message-bar" role="alert">
+  {# A named landmark rather than a live region. The message is server-rendered
+     and never changes after load, so `status`/`alert` would announce nothing;
+     a named region instead lets screen reader users find it and skip past it.
+     The name also carries what the bell icon carries visually - the icon is
+     decorative and hidden below. #}
+  <section class="service-message-bar"
+    aria-label="{{ 'Important service message'|t({}, {context: 'dpl_service_message'}) }}">
     {% if message.url %}<a href="{{ message.url }}">{% endif %}
-      {{ message.heading }}
+      <strong>{{ message.heading }}</strong>
       {{ message.body }}
     {% if message.url %}</a>{% endif %}
-  </div>
+  </section>
 {% endblock content %}
