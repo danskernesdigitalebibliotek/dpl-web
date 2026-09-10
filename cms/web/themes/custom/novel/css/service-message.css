@@ -243,10 +243,23 @@ written out here.
   line-height: 20px;
 }
 
+/*
+The arrow animates by translating its head 30px right and stretching its
+body, drawn outside the svg box (`overflow: visible` in the design system's
+arrows.scss). Without room reserved for that, the extended arrow runs into
+the edge of the message - KB-61.
+
+40px is the same reservation `content-list-item-grid` makes on /artikler,
+and it is not a padding-derived number: it is the 30px the arrow grows plus
+10px clearance. The design system lands on the same 10px in `.arrow-button`,
+whose 101px width is the 61px arrow plus 30px plus 10px.
+*/
+
 .service-messages__arrow {
   align-self: flex-end;
   display: flex;
   flex: 0 0 auto;
+  margin-right: 40px;
 }
 
 @media (min-width: 768px) {
