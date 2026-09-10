@@ -170,6 +170,31 @@ flowchart TD
     SessionExist -->|No| RedirectToFrontpage
 ```
 
+### Logout initiated on the CMS site
+
+The Adgangsplatformen session is shared with the CMS site, but the
+`go-session` cookie is host-only on the Go host — the CMS cannot clear it in
+its own responses. Logouts initiated on the CMS site (the logout button on
+the library site) therefore detour through Go:
+
+```mermaid
+sequenceDiagram
+    actor Patron
+    participant CMS
+    participant Adgangsplatformen
+    participant Go
+    Patron->>CMS: Clicks logout on the CMS site (/logout)
+    CMS->>CMS: Logs the user out of Drupal
+    CMS->>Adgangsplatformen: Redirects to single logout
+    Adgangsplatformen->>CMS: Redirects back to /go-session-logout
+    CMS->>Go: Redirects to /auth/logout/cms
+    Note over Go: Destroys the Go session if it is an Adgangsplatformen session.<br/>Unilogin sessions live independently of the CMS and survive.
+    Go->>CMS: Redirects to the CMS front page
+```
+
+Go-initiated logouts pass `current-path=/go-logout` to the CMS and skip the
+detour — the Go session is already destroyed before the redirect.
+
 ## Token handling
 
 ### Token types
@@ -191,6 +216,20 @@ The Adgangsplatformen access token is a part of the `go-session` iron-session co
 Whenever a fetch is fired and service requested needs an Adgangsplatformen access
 token as bearer token, the access token is fetched from the internal
 `/auth/session` route.
+
+The Adgangsplatformen access token cannot be renewed — the CMS returns the
+token stored at login verbatim — so the Go session lives exactly as long as
+the token (see ADR-012). When it expires:
+
+- The middleware sends document navigations through the full logout flow
+  (`/auth/logout`), which also tears down the Drupal session and the
+  Adgangsplatformen SSO session. Other request types destroy the session
+  locally.
+- `loadUserToken()` rejects tokens with a past expire timestamp, so a
+  lingering Drupal session cookie cannot recreate a dead session.
+- The `/ap-service` proxy checks expiry itself and destroys the session when
+  the upstream rejects the session's user token with 401/403 — this also
+  catches tokens revoked before their expire timestamp.
 
 #### Refresh token
 
