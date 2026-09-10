@@ -1,4 +1,4 @@
-uuid: b7d562b5-4864-44da-869b-060e93c2a66f
+uuid: 08d976e3-4d82-49d0-bdde-357c3c1e3d68
 langcode: en
 status: true
 dependencies:
@@ -7,8 +7,8 @@ dependencies:
     - dpl_event
     - serialization
     - user
-id: current_events
-plugin_id: current_events
+id: happening_events
+plugin_id: happening_events
 granularity: resource
 configuration:
   methods:

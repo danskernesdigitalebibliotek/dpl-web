@@ -702,3 +702,45 @@ function dpl_update_deploy_add_current_events_endpoint_permissions(): string {
 
   return 'Make sure that current events endpoint is accessible';
 }
+
+/**
+ * Move the current events endpoint to its happening events name.
+ *
+ * The REST resource plugin id changed from current_events to
+ * happening_events, which renames both its permission and its configuration
+ * entity. Neither rename can be left to the configuration import: libraries
+ * may edit their own permissions, and config_ignore_auto pins any
+ * configuration a library has touched against import.
+ *
+ * The stale configuration entity has to go for the same reason. Drupal builds
+ * the REST routes and the REST permissions by instantiating the plugin of
+ * every enabled resource config, so one left behind for a plugin that no
+ * longer exists takes the site down.
+ *
+ * This runs after dpl_update_deploy_add_current_events_endpoint_permissions()
+ * - deploy hooks are sorted by name - so a fresh install ends up with only the
+ * new permission, even though the older hook grants the old one.
+ */
+function dpl_update_deploy_rename_current_events_endpoint(): string {
+  _dpl_update_alter_permissions(
+    ['anonymous', 'authenticated'],
+    ['restful get happening_events'],
+    TRUE,
+  );
+  _dpl_update_alter_permissions(
+    ['anonymous', 'authenticated'],
+    ['restful get current_events'],
+    FALSE,
+  );
+
+  $storage = \Drupal::entityTypeManager()->getStorage('rest_resource_config');
+  $stale_config = $storage->load('current_events');
+
+  if ($stale_config) {
+    $storage->delete([$stale_config]);
+
+    return 'Renamed the current events endpoint to happening events, and removed the resource configuration left behind.';
+  }
+
+  return 'Renamed the current events endpoint to happening events.';
+}
