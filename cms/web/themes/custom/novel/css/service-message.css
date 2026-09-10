@@ -254,13 +254,32 @@ written out here.
     padding: 24px 44px;
   }
 
+  /*
+  Grid rather than flex, so the bell can sit on the first line without
+  giving up the centred box the design draws.
+
+  The design's 128px box is taller than a short message. `align-content:
+  center` centres the single content row inside it, which is what flex
+  centring gave; `align-self: start` on the bell then aligns it to the top of
+  that row rather than the top of the box. So the bell stays on the first
+  line however tall the content grows - a message whose text wraps, or
+  several messages stacked (KB-60) - and a short single message keeps its
+  centred box instead of leaving dead space beneath it.
+
+  Flex could not express both: there, the top of the content and the top of
+  the box are the same edge, so `flex-start` moved the text too.
+  */
+
   .service-messages__container {
-    align-items: center;
+    align-content: center;
     clip-path: polygon(24px 0, 0 24px, 0 100%, 100% 100%, 100% 0);
+    display: grid;
     gap: 32px;
+    grid-template-columns: auto 1fr;
     min-height: 128px;
     padding: 24px 32px;
   }
+
 
   .service-messages__container::before {
     border-bottom-width: 24px;
@@ -268,6 +287,7 @@ written out here.
   }
 
   .service-messages__icon {
+    align-self: start;
     margin-top: 0;
   }
 
