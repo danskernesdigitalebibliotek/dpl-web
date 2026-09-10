@@ -1336,3 +1336,42 @@ function dpl_update_update_10078(): string {
 function dpl_update_update_10079(): string {
   return _dpl_update_install_modules(['dpl_metrics']);
 }
+
+/**
+ * Replace the current_events endpoint permission with happening_events.
+ *
+ * The permission cannot be left to the configuration import: libraries may
+ * edit their own permissions, and config_ignore_auto pins any configuration
+ * they have touched against import.
+ *
+ * Deleting the renamed resource configuration cannot wait for the import
+ * either - a leftover one brings down the cache rebuild that runs earlier in
+ * `drush updatedb`, as Drupal instantiates the plugin of every enabled
+ * resource config to build the routes and the permissions.
+ */
+function dpl_update_update_10081(): string {
+  // _dpl_update_alter_permissions() sits with the deploy hooks, which the
+  // update system does not load on its own.
+  \Drupal::moduleHandler()->loadInclude('dpl_update', 'php', 'dpl_update.deploy');
+
+  // Go through the config factory rather than the entity storage. Loading a
+  // REST resource config entity instantiates its plugin, so loading throws
+  // before we get a chance to delete anything.
+  $stale_config = \Drupal::configFactory()->getEditable('rest.resource.current_events');
+  $had_stale_config = !$stale_config->isNew();
+
+  if ($had_stale_config) {
+    $stale_config->delete();
+  }
+
+  // Only with the stale configuration gone can a role be saved: working out
+  // the dependencies of a role asks every enabled resource config which
+  // permissions it provides.
+  $roles = ['anonymous', 'authenticated'];
+  _dpl_update_alter_permissions($roles, ['restful get happening_events'], TRUE);
+  _dpl_update_alter_permissions($roles, ['restful get current_events'], FALSE);
+
+  return $had_stale_config
+    ? 'Removed the current_events resource configuration, and moved its permission to happening_events.'
+    : 'Moved the current_events permission to happening_events; there was no resource configuration to remove.';
+}
