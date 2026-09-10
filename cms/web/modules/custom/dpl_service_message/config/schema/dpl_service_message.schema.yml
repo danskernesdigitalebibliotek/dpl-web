@@ -1,0 +1,5 @@
+# The widget is core's text area, offered to plain `string` fields - see
+# PlainTextareaWidget - so it takes core's settings unchanged.
+field.widget.settings.dpl_service_message_plain_textarea:
+  type: field.widget.settings.string_textarea
+  label: 'Plain text area widget settings'
