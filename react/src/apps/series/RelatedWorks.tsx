@@ -1,15 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { ButtonFavouriteId } from "../../components/button-favourite/button-favourite";
 import MaterialSlider from "../../components/material-slider/MaterialSlider";
-import { guardedRequest } from "../../core/guardedRequests.slice";
-import { TypedDispatch } from "../../core/store";
 import { constructMaterialUrl } from "../../core/utils/helpers/url";
 import { useText } from "../../core/utils/text";
 import { useUrls } from "../../core/utils/url";
 import { parseNumberInSeries } from "./helper";
 import { RelatedWork } from "./relatedWorks.types";
 import useRelatedWorks, { UseRelatedWorksArgs } from "./useRelatedWorks";
+import { useAddFavorite } from "../../components/button-favourite/useAddFavorite";
 
 type RelatedWorksProps = UseRelatedWorksArgs;
 
@@ -39,18 +36,9 @@ const RelatedWorks: React.FC<RelatedWorksProps> = ({
   const t = useText();
   const u = useUrls();
   const materialUrl = u("materialUrl");
-  const dispatch = useDispatch<TypedDispatch>();
   const { works, isLoading } = useRelatedWorks({ author, currentSeries });
 
-  const addToListRequest = (id: ButtonFavouriteId) => {
-    dispatch(
-      guardedRequest({
-        type: "addFavorite",
-        args: { id },
-        app: "series"
-      })
-    );
-  };
+  const addToListRequest = useAddFavorite({ app: "series" });
 
   // The section sits below the member list and is decorative, so it simply
   // appears once loaded rather than holding a placeholder open.

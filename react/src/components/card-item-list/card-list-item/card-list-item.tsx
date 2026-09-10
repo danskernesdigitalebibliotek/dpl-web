@@ -36,6 +36,7 @@ import useFilterHandler from "../../../apps/search-result/useFilterHandler";
 import { getFirstMaterialTypeFromFilters } from "../../../apps/search-result/helper";
 import SubjectNumber from "../../subject-number/SubjectNumber";
 import SeriesList from "./series-list";
+import { useAddFavorite } from "../../button-favourite/useAddFavorite";
 
 export interface CardListItemProps {
   item: Work;
@@ -101,15 +102,7 @@ const CardListItem: React.FC<CardListItemProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [materialFullUrl]);
 
-  const addToListRequest = (id: ButtonFavouriteId) => {
-    dispatch(
-      guardedRequest({
-        type: "addFavorite",
-        args: { id },
-        app: "search-result"
-      })
-    );
-  };
+  const addToListRequest = useAddFavorite({ app: "search-result" });
 
   return (
     // We know that is not following a11y recommendations to have an onclick
