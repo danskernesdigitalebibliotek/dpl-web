@@ -16,6 +16,7 @@ const mockTokenResponse = (timestamp: number) => {
   vi.mocked(getDplCmsSessionCookie).mockResolvedValue({ name: "SSESS123", value: "abc" })
   vi.mocked(useGetAdgangsplatformenUserTokenQuery.fetcher).mockReturnValue(() =>
     Promise.resolve({
+      go: { cacheTags: [] },
       dplTokens: {
         adgangsplatformen: { user: { token: "user-token", expire: { timestamp } } },
       },
