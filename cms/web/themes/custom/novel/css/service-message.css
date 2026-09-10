@@ -95,8 +95,17 @@ squeezed in beside the text.
 }
 
 @media (min-width: 768px) {
+  /*
+  `flex-start`, not `center`: the design draws the bar as a single line, and
+  centring is right for that. Once the text wraps, the bar grows tall and
+  centring strands the bell in the middle, away from the line it belongs to -
+  KB-63. Aligning to the top keeps it on the first line at any height, and is
+  identical to centring while the bar is one line tall. The arrow opts back
+  out below.
+  */
+
   .service-message-bar__inner {
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
     padding: 14px 44px;
   }
@@ -117,8 +126,15 @@ squeezed in beside the text.
     gap: 16px;
   }
 
+  /*
+  The heading may shrink. It was `0 0 auto`, which let a long heading hold
+  its full single-line width and squeeze the body into a narrow column of
+  wrapped lines beside it - KB-63. Shrinking lets the heading wrap too, so
+  the two share the row in proportion instead of one starving the other.
+  */
+
   .service-message-bar__heading {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
     font-size: 14px;
     line-height: 22px;
   }
@@ -129,7 +145,14 @@ squeezed in beside the text.
     line-height: 22px;
   }
 
+  /*
+  Centred against the whole bar rather than pinned to the first line: the
+  arrow stands for the message as a whole, not for the line of text it
+  happens to sit beside - KB-63.
+  */
+
   .service-message-bar__arrow {
+    align-self: center;
     display: flex;
   }
 }
