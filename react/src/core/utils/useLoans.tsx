@@ -47,7 +47,7 @@ type Loans = {
   isError: boolean;
 };
 
-type UseLoansType = {
+export type UseLoansType = {
   all: Loans;
   fbs: Loans;
   // Digital loans as one list, whichever service issued them. Which provider
