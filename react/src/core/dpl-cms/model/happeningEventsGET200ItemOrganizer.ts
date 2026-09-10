@@ -9,7 +9,7 @@
 /**
  * The library branch responsible for the event. Unlike address, this describes who arranges the event - not where it takes place. The two differ when an event is held outside the library.
  */
-export type CurrentEventsGET200ItemOrganizer = {
+export type HappeningEventsGET200ItemOrganizer = {
   /** A unique identifier for the organizer. It is stable across updates, and unique across libraries. */
   id: string;
   /** The name of the branch arranging the event. */

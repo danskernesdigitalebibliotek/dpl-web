@@ -5,11 +5,11 @@
  * The REST API provided by the core REST module.
  * OpenAPI spec version: Versioning not supported
  */
-import type { CurrentEventsGET_Format } from "./currentEventsGETFormat";
+import type { HappeningEventsGET_Format } from "./happeningEventsGETFormat";
 
-export type CurrentEventsGETParams = {
+export type HappeningEventsGETParams = {
   /**
    * Request format
    */
-  _format?: CurrentEventsGET_Format;
+  _format?: HappeningEventsGET_Format;
 };
