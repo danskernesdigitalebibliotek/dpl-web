@@ -3,29 +3,31 @@
 {% block content %}
   {% set tag = message.url ? 'a' : 'div' %}
 
-  <div class="service-message-bar" role="alert">
+  <section class="service-message-bar"
+    aria-label="{{ 'Important service message'|t({}, {context: 'dpl_service_message'}) }}">
     <{{ tag }}
       {% if message.url %}href="{{ message.url }}"{% endif %}
       class="service-message-bar__inner{{ message.url ? ' arrow arrow__hover--right-small' : '' }}">
 
-      <span class="service-message-bar__icon">
+      <span class="service-message-bar__icon" aria-hidden="true">
         {{ source(themeIconPath ~ '/icon-bell.svg') }}
       </span>
 
-      <span class="service-message-bar__content">
+      <div class="service-message-bar__content">
+        {# Not a heading element - see the in-page template for why. #}
         {% if message.heading %}
-          <span class="service-message-bar__heading">{{ message.heading }}</span>
+          <strong class="service-message-bar__heading">{{ message.heading }}</strong>
         {% endif %}
         {% if message.body %}
-          <span class="service-message-bar__body">{{ message.body }}</span>
+          <div class="service-message-bar__body">{{ message.body }}</div>
         {% endif %}
-      </span>
+      </div>
 
       {% if message.url %}
-        <span class="service-message-bar__arrow">
+        <span class="service-message-bar__arrow" aria-hidden="true">
           {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
         </span>
       {% endif %}
     </{{ tag }}>
-  </div>
+  </section>
 {% endblock %}
