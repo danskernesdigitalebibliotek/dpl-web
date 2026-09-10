@@ -4,13 +4,15 @@ status: true
 dependencies:
   module:
     - node
-    - text
 id: node.field_svcmsg_body
 field_name: field_svcmsg_body
 entity_type: node
-type: text_long
-settings: {  }
-module: text
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
 locked: false
 cardinality: 1
 translatable: true

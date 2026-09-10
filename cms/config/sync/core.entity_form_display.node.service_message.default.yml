@@ -12,9 +12,9 @@ dependencies:
     - node.type.service_message
   module:
     - dpl_link
+    - dpl_service_message
     - scheduler
     - select2
-    - text
 id: node.service_message.default
 targetEntityType: node
 bundle: service_message
@@ -27,7 +27,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_svcmsg_body:
-    type: text_textarea
+    type: dpl_service_message_plain_textarea
     weight: 2
     region: content
     settings:
