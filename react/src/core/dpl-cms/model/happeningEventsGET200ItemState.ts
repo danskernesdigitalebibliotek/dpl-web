@@ -9,10 +9,10 @@
 /**
  * The state of the event.
  */
-export type CurrentEventsGET200ItemState =
-  (typeof CurrentEventsGET200ItemState)[keyof typeof CurrentEventsGET200ItemState];
+export type HappeningEventsGET200ItemState =
+  (typeof HappeningEventsGET200ItemState)[keyof typeof HappeningEventsGET200ItemState];
 
-export const CurrentEventsGET200ItemState = {
+export const HappeningEventsGET200ItemState = {
   TicketSaleNotOpen: "TicketSaleNotOpen",
   Active: "Active",
   SoldOut: "SoldOut",
