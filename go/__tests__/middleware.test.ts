@@ -100,7 +100,7 @@ const getFakeSessions = () => {
     expires: add(new Date(), { days: 1 }),
   }
 
-  const adgangsPlatformenSessionThatShouldBeRefreshed = {
+  const adgangsplatformenSessionCloseToExpiry = {
     isLoggedIn: true,
     type: "adgangsplatformen",
     expires: add(new Date(), { seconds: 59 }),
@@ -114,7 +114,7 @@ const getFakeSessions = () => {
   }
 
   return {
-    adgangsPlatformenSessionThatShouldBeRefreshed,
+    adgangsplatformenSessionCloseToExpiry,
     uniloginSessionThatShouldBeRefreshed,
     uniloginSessionWithExpiredRefreshToken,
     adgangsplatformenSessionThatDoesNotNeedToBeRefreshed,
@@ -222,9 +222,11 @@ describe("Middleware", () => {
     expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(1)
   })
 
-  it("can refresh an Adgangsplatform session if it is expired", async () => {
+  // The GO session lives exactly as long as the user token — the CMS cannot
+  // renew it, so there is no refresh path for Adgangsplatformen sessions.
+  it("does NOT extend an Adgangsplatformen session that is close to expiry", async () => {
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
-      Promise.resolve(sessions.adgangsPlatformenSessionThatShouldBeRefreshed)
+      Promise.resolve(sessions.adgangsplatformenSessionCloseToExpiry)
     )
 
     const saveAdgangsplatformenSessionSpy = vi
@@ -246,7 +248,7 @@ describe("Middleware", () => {
 
     await middleware(getNextRequestWithLibraryTokenCookie())
 
-    expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(1)
+    expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(0)
   })
 
   it("does NOT refresh an Adgangsplatform session if it isn't expired yet", async () => {

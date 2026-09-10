@@ -11,7 +11,6 @@ import { loadUserToken } from "./lib/helpers/user-token"
 import { getUniloginClientConfig } from "./lib/session/oauth/uniloginClient"
 import {
   adgangsplatformenAccessTokenHasExpired,
-  adgangsplatformenAccessTokenShouldBeRefreshed,
   destroySession,
   getDplCmsSessionCookie,
   getSession,
@@ -79,13 +78,11 @@ export async function proxy(request: NextRequest) {
 
   // If the session is not logged in we will try to see if we have an ongoing Adgangsplatformen Drupal session.
   // If we have an active Drupal session we will try to load the user token from dpl-cms.
-  // OR:
-  // If the Adgangsplatformen user token is about to expire we will reload it from dpl-cms.
+  // There is no refresh path: the CMS returns the token stored at login
+  // verbatim and cannot renew it, so the GO session lives exactly as long as
+  // the user token — a dead token means a new login.
   const userIsLoggedInAtCms = await userIsLoggedInAtDplCms()
-  if (
-    (userIsAnonymous(session) && userIsLoggedInAtCms) ||
-    adgangsplatformenAccessTokenShouldBeRefreshed(session)
-  ) {
+  if (userIsAnonymous(session) && userIsLoggedInAtCms) {
     const tokenData = await loadUserToken()
     if (tokenData) {
       await saveAdgangsplatformenSession(session, tokenData)

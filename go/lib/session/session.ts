@@ -236,29 +236,6 @@ export const adgangsplatformenAccessTokenHasExpired = (session: IronSession<TSes
   return false
 }
 
-export const adgangsplatformenAccessTokenShouldBeRefreshed = (
-  session: IronSession<TSessionData>
-) => {
-  // If the session is not logged in, or it is not a adgangsplatformen session
-  // we don't need to refresh the access token.
-  if (userIsAnonymous(session) || session.type !== "adgangsplatformen") {
-    return false
-  }
-
-  const bufferedExp = { expires: new Date() }
-
-  // Create a buffer of 1 minute on expire times to make sure we don't run into any timing issues.
-  if (session.expires) {
-    bufferedExp.expires = sub(session.expires, { minutes: 1 })
-  }
-
-  if (session.expires && isPast(bufferedExp.expires)) {
-    return true
-  }
-
-  return false
-}
-
 export const getUniloginIdToken = async () => {
   const { cookies } = await import("next/headers")
   return (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
