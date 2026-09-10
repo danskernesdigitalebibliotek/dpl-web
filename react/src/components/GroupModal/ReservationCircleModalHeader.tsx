@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FC } from "react";
 import check from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-check.svg";
-import StatusCircleIcon from "../../apps/loan-list/materials/utils/status-circle-icon";
+import StatusCircleIcon from "../status-circle/status-circle-icon";
 import { getColors } from "../../core/utils/helpers/general";
 import { useText } from "../../core/utils/text";
 

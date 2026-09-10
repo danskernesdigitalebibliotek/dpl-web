@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from "react";
-import { getColors } from "../../../../core/utils/helpers/general";
+import { getColors } from "../../core/utils/helpers/general";
 
 interface StatusCircleIconProps {
   color?: string;

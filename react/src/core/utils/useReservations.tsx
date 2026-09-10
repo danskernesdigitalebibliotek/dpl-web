@@ -11,7 +11,7 @@ import {
   sortByPickupNumber,
   sortByNumberInQueue,
   sortByOldestPickupDeadline
-} from "../../apps/reservation-list/utils/helpers";
+} from "./helpers/reservation-sort";
 import { ReservationType } from "./types/reservation-type";
 import { dashboardReservedApiValueText } from "../configuration/api-strings";
 import useGetReservationGroups from "./useGetReservationGroups";

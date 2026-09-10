@@ -7,7 +7,7 @@ import SimpleModalHeader from "../../../components/GroupModal/SimpleModalHeader"
 import GroupModalReservationsList from "../../../components/GroupModal/GroupModalReservationsList";
 import { ReservationType } from "../../../core/utils/types/reservation-type";
 import StatusCircleModalHeader from "../../../components/GroupModal/StatusCircleModalHeader";
-import StatusCircle from "../../loan-list/materials/utils/status-circle";
+import StatusCircle from "../../../components/status-circle/status-circle";
 import useReservations from "../../../core/utils/useReservations";
 import { getModalIds } from "../../../core/utils/helpers/modal-helpers";
 
