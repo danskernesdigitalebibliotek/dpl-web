@@ -8,6 +8,7 @@ use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\AdminContext;
@@ -372,6 +373,26 @@ class DplServiceMessageHooks {
 
     $node->addConstraint('ServiceMessageContent');
     $node->addConstraint('GlobalPlacementAccess');
+  }
+
+  /**
+   * Keep service messages out of the "Link" autocomplete.
+   *
+   * A service message has no page of its own worth linking to, but Linkit's
+   * node matcher suggests every bundle, so editors could link to one - see
+   * KB-59.
+   *
+   * Excluded here rather than by listing the linkable bundles on the matcher:
+   * that setting is an allow-list, and a library that adds a content type of
+   * its own would find it silently unlinkable until someone updated the
+   * profile. Naming the one unlinkable bundle leaves every other one alone.
+   *
+   * The tag covers both places the profile is used - the CKEditor link plugin
+   * and the `dpl_link` widgets - because both go through the same matcher.
+   */
+  #[Hook('entity_query_tag__node__linkit_entity_autocomplete_alter')]
+  public function excludeFromLinkitSuggestions(QueryInterface $query): void {
+    $query->condition('type', ServiceMessageLoader::BUNDLE, '<>');
   }
 
 }
