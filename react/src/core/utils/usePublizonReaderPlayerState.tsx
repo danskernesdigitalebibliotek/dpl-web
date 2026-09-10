@@ -38,7 +38,7 @@ const usePublizonReaderPlayerState = ({
   const isUserAnonymous = isAnonymous();
   // TEMPORARY: the queue stands still while Biblio migrates it, so Publizon
   // may still decide on a loan but no longer on a reservation.
-  const isFrozen = usePublizonReservationsClosed();
+  const reservationQueueFrozen = usePublizonReservationsClosed();
   const hasIdentifier = Boolean(identifier);
   // An anonymous user has no holdings to look up, and the endpoints need a
   // user token anyway.
@@ -94,8 +94,8 @@ const usePublizonReaderPlayerState = ({
     isAlreadyReserved: Boolean(reservation),
     // An anonymous user is offered the loan so the login guard can take over.
     canBeLoaned: canAcquire && (isUserAnonymous || redeemable || loanable),
-    canBeReserved: wouldBeReservable && !isFrozen,
-    publizonReservationsClosed: wouldBeReservable && isFrozen,
+    canBeReserved: wouldBeReservable && !reservationQueueFrozen,
+    publizonReservationsClosed: wouldBeReservable && reservationQueueFrozen,
     orderId,
     reservation,
     // Publizon has no offer to accept - redeeming is folded into canBeLoaned.
