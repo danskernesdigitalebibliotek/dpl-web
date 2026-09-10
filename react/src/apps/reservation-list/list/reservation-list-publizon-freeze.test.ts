@@ -4,9 +4,11 @@ import {
 } from "../../../../cypress/page-objects/reservation-list/ReservationListPage";
 import { deleteReservationModalSelector } from "../../../../cypress/page-objects/reservation-list/components/delete-reservation-modal";
 import {
+  PUBLIZON_ISBN,
   PUBLIZON_TITLE,
   stubReservationListBackends
 } from "../../../../cypress/intercepts/reservation-list-page";
+import modalIds from "../../../core/configuration/modal-ids.json";
 
 /**
  * TEMPORARY: the reservations a patron already holds while the Publizon queue
@@ -67,6 +69,34 @@ describe("Reservation list - the Publizon reservation queue frozen", () => {
       .should("contain", CANCEL_CLOSED_TEXT);
 
     // And: the confirmation never opens, so nothing is cancelled
+    cy.get(deleteReservationModalSelector).should("not.exist");
+    cy.get("@publizonCancelReservation.all").should("have.length", 0);
+  });
+
+  it("Refuses the confirmation reached as a link, not only the button", () => {
+    // Given: the link a patron is left with after opening the confirmation
+    // once - in the address bar, a bookmark, a reload. It opens the modal
+    // without passing any of the buttons that refuse it.
+    const reservationList = new ReservationListPage(
+      reservationListStory.withClosedPublizonReservations
+    );
+
+    reservationList.visit([], {
+      qs: { modal: `${modalIds.deleteReservation}${PUBLIZON_ISBN}` }
+    });
+    cy.wait("@publizonReservations");
+
+    // Then: the modal explains itself instead of offering to cancel
+    reservationList
+      .deleteModal()
+      .container()
+      .should("contain", CANCEL_CLOSED_TEXT);
+    reservationList.deleteModal().elements.confirmButton().should("not.exist");
+
+    // And: acknowledging it closes the modal, and cancels nothing. The closed
+    // modal is the barrier - without it the count of zero would be read before
+    // any request could have been made.
+    reservationList.deleteModal().elements.acknowledgeButton().click();
     cy.get(deleteReservationModalSelector).should("not.exist");
     cy.get("@publizonCancelReservation.all").should("have.length", 0);
   });
