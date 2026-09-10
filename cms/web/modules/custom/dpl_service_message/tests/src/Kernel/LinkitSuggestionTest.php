@@ -97,7 +97,7 @@ class LinkitSuggestionTest extends KernelTestBase {
   protected function createServiceMessageFields(): void {
     $fields = [
       'field_svcmsg_heading' => 'string',
-      'field_svcmsg_body' => 'text_long',
+      'field_svcmsg_body' => 'string',
       'field_svcmsg_placement' => 'list_string',
     ];
 

@@ -69,10 +69,8 @@ class DplServiceMessageHooks {
       return;
     }
 
-    // ->value, not ->getString(): the latter joins every property of the
-    // field item, so a formatted text field hands back "the text, limited".
     $heading = trim((string) ($node->get('field_svcmsg_heading')->value ?? ''));
-    $body = trim(strip_tags((string) ($node->get('field_svcmsg_body')->value ?? '')));
+    $body = trim((string) ($node->get('field_svcmsg_body')->value ?? ''));
     $label = $heading ?: $body;
 
     if ($label === '') {

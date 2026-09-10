@@ -205,11 +205,18 @@ class ServiceMessageLoader {
   protected function messageVariables(NodeInterface $node): array {
     $link = $node->get('field_svcmsg_link')->first();
 
+    // The body is handed over as a string, not as the field's own render
+    // array. Both components draw it as a run of text a line or two long, and
+    // anything with structure in it - a paragraph break, a list, a link -
+    // breaks that layout (KB-63). Plain text at the field takes the markup
+    // away, and Twig escaping it here keeps a newline as whitespace: the field
+    // is edited in a text area, so the editor can type one, and the `string`
+    // formatter would put it back as a `<br>`.
+    $body = trim((string) ($node->get('field_svcmsg_body')->value ?? ''));
+
     return [
       'heading' => $node->get('field_svcmsg_heading')->getString(),
-      'body' => $node->get('field_svcmsg_body')->isEmpty()
-        ? NULL
-        : $node->get('field_svcmsg_body')->view(['label' => 'hidden']),
+      'body' => $body !== '' ? $body : NULL,
       'url' => $link instanceof LinkItem ? $link->getUrl()->toString() : NULL,
     ];
   }

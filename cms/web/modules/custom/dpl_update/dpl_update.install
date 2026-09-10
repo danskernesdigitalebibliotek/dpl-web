@@ -1332,3 +1332,58 @@ function dpl_update_update_10081(): string {
 function dpl_update_update_10082(): string {
   return _dpl_update_install_modules(['dpl_service_message']);
 }
+
+/**
+ * Recreate the service message body field as plain text.
+ *
+ * The body was a formatted text field, so an editor could put headings,
+ * lists and line breaks into a component the design draws as one or two
+ * lines of running text - and the markup broke the layout (KB-63). A plain
+ * single-line field takes the possibility away rather than styling around
+ * it, and its 255 characters cap what was an unbounded textarea.
+ *
+ * A field cannot change type in place, so the old one has to be gone before
+ * the configuration import creates the new one. Everything here is about
+ * clearing the way for that import; the import itself carries the new
+ * field.
+ *
+ * The stored body text does not survive, which is deliberate: the field went
+ * live with the module in this same release, so there is no production
+ * content to migrate.
+ */
+function dpl_update_update_10083(): string {
+  $config_factory = \Drupal::configFactory();
+  $deleted = [];
+
+  // Go through the config factory rather than FieldStorageConfig. Deleting
+  // the entity marks the field for purge and leaves its tables in place
+  // until cron gets to them, and the import that follows a few steps later
+  // would then try to create a table that still exists.
+  foreach ([
+    'field.field.node.service_message.field_svcmsg_body',
+    'field.storage.node.field_svcmsg_body',
+  ] as $config_name) {
+    $config = $config_factory->getEditable($config_name);
+
+    if ($config->isNew()) {
+      continue;
+    }
+
+    $config->delete();
+    $deleted[] = $config_name;
+  }
+
+  // Bypassing the entity API means nothing dropped the storage either.
+  $schema = Database::getConnection()->schema();
+
+  foreach (['node__field_svcmsg_body', 'node_revision__field_svcmsg_body'] as $table) {
+    if ($schema->tableExists($table)) {
+      $schema->dropTable($table);
+      $deleted[] = $table;
+    }
+  }
+
+  return $deleted
+    ? 'Removed the formatted-text service message body: ' . implode(', ', $deleted)
+    : 'No formatted-text service message body found to remove.';
+}

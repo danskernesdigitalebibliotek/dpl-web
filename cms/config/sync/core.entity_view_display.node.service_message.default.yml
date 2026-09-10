@@ -12,16 +12,16 @@ dependencies:
     - node.type.service_message
   module:
     - link
-    - text
 id: node.service_message.default
 targetEntityType: node
 bundle: service_message
 mode: default
 content:
   field_svcmsg_body:
-    type: text_default
+    type: string
     label: hidden
-    settings: {  }
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
     weight: 1
     region: content

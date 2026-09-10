@@ -96,7 +96,7 @@ Listed in form order:
 | Field | Type | Notes |
 |---|---|---|
 | `field_svcmsg_heading` | `string` | "Titel". Optional. |
-| `field_svcmsg_body` | `text_long` | "Brødtekst". Optional, restricted format. |
+| `field_svcmsg_body` | `string` | "Brødtekst". Optional, plain text, 255, text area. |
 | `field_svcmsg_link` | `link` | Optional. Makes the whole message clickable. |
 | `field_svcmsg_placement` | `list_string` | `global` / `in_page`. Required. Determines rendering and severity. |
 | `field_svcmsg_frontpage` | `boolean` | "Forsiden". Only for `in_page`. |
@@ -125,6 +125,30 @@ the little x, the final one does not — and left out. Additive later.
 cardinality below their storage, so reusing `field_branch` would either
 limit a message to one branch or force `article` and `page` to become
 multi-branch.
+
+**The body is plain text, written in a text area.** It started as a
+restricted-format `text_long`, which gave the editor a WYSIWYG - and with
+it paragraphs, lists and links inside a component the design draws as one
+or two lines of running text. Every one of those broke the layout
+(KB-63). Taking the markup away at the field is the only version of this
+that holds, because styling around it only covers the cases someone
+thought of.
+
+`string` rather than `string_long`, for the 255 characters the column
+caps it at: an unbounded field is the same layout problem arriving as
+length instead of markup. The form still shows a text area rather than
+the single-line input that field type comes with, because a single line
+scrolls what the editor typed out of sight at around 80 characters, and a
+message they cannot read back in full is one they cannot check - KB-63,
+after the first round of it. Core declares its text area widget for
+`string_long` alone, so `PlainTextareaWidget` offers the same widget to
+`string`, carrying the maximum length into the markup as the single-line
+input did.
+
+The output still ignores line breaks. Rendering skips the field formatter
+and hands the template the string, because the formatter would put a
+newline back as a `<br>`; escaped in Twig it stays whitespace, and the
+field description says so on the form.
 
 **The node title is hidden and generated.** The design wants body-only
 messages, but node titles are mandatory and every core UI needs a label.
