@@ -7,6 +7,7 @@ import {
   type GetLoanQuotasApiResponse,
   type GetLoansApiResponse,
   type GetMetadataApiResponse,
+  type GetOrganizationConfigsApiResponse,
   type GetReservationsApiResponse,
   type GetSupportIdApiResponse,
   type LoanDto,
@@ -179,6 +180,43 @@ export const biblioLoanQuotasFactory = Factory.define<GetLoanQuotasApiResponse>(
     loan_quotas: [biblioSplitLoanQuotaFactory.build()]
   })
 );
+
+/**
+ * `GET /v1/organizations/configs`, split on format like the quota factory.
+ * The response always carries both loan configs; split_on_format names the
+ * one that applies. Only the reservation ceiling is read from it, but the
+ * contract's required fields have to be there for the body to be one the
+ * adapter could send.
+ */
+export const biblioOrganizationConfigsFactory =
+  Factory.define<GetOrganizationConfigsApiResponse>(() => ({
+    organization_configurations: {
+      id: BIBLIO_ORG_ID,
+      split_on_format: true,
+      loan_config: {
+        loan_duration_days: { ebook: 30, audiobook: 30 },
+        max_concurrent_package_loans: { ebook: 2, audiobook: 2 },
+        max_concurrent_user_loans: { ebook: 4, audiobook: 3 },
+        max_concurrent_user_reservations: { ebook: 5, audiobook: 6 },
+        max_user_loans: { ebook: 10, audiobook: 8 },
+        max_user_loans_period: {
+          ebook: { days: 0, months: 1 },
+          audiobook: { days: 0, months: 1 }
+        }
+      },
+      combined_loan_config: {
+        loan_duration_days: 30,
+        max_concurrent_package_loans: 2,
+        max_concurrent_user_loans: 4,
+        max_concurrent_user_reservations: 5,
+        max_user_loans: 10,
+        max_user_loans_period: { days: 0, months: 1 }
+      },
+      loan_provider_config: {
+        selected_order: [LoanProvider.selection, LoanProvider.click]
+      }
+    }
+  }));
 
 /** `GET /v1/loans/can-loan`. The material is available by default. */
 export const biblioCanLoanFactory = Factory.define<CanLoanApiResponse>(() => ({

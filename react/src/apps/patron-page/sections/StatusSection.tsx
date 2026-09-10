@@ -7,7 +7,7 @@ import { useText } from "../../../core/utils/text";
 import { getPatronLoanQuotas } from "../../../core/utils/helpers/publizon";
 import {
   getDigitalLoanQuota,
-  useDigitalLoanQuotas
+  useDigitalQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
 
@@ -22,14 +22,10 @@ const StatusSection: FC = () => {
     {},
     { query: { enabled: !viaBiblioAdapter } }
   );
-  const { data: digitalQuotas } = useDigitalLoanQuotas({
-    enabled: viaBiblioAdapter
-  });
-
   const {
-    maxConcurrentAudioReservationsPerBorrower = 0,
-    maxConcurrentEbookReservationsPerBorrower = 0
-  } = libraryProfile || {};
+    loanQuotas: { data: digitalLoanQuotas },
+    reservationLimits: { data: digitalReservationLimits }
+  } = useDigitalQuotas({ enabled: viaBiblioAdapter });
 
   const publizonQuotas = getPatronLoanQuotas({
     userData: data?.userData,
@@ -40,12 +36,12 @@ const StatusSection: FC = () => {
   // counters are the service layer equivalent of Publizon's maxConcurrent
   // limits.
   const digitalEbookQuota = getDigitalLoanQuota({
-    quotas: digitalQuotas,
+    quotas: digitalLoanQuotas,
     format: "ebook",
     period: "concurrent"
   });
   const digitalAudioQuota = getDigitalLoanQuota({
-    quotas: digitalQuotas,
+    quotas: digitalLoanQuotas,
     format: "audiobook",
     period: "concurrent"
   });
@@ -58,6 +54,7 @@ const StatusSection: FC = () => {
     patronAudioBookLoans,
     maxConcurrentEbookLoansPerBorrower,
     maxConcurrentAudioLoansPerBorrower,
+    reservationCeilings,
     hasQuotas
   } = viaBiblioAdapter
     ? {
@@ -65,7 +62,8 @@ const StatusSection: FC = () => {
         patronAudioBookLoans: digitalAudioQuota.current,
         maxConcurrentEbookLoansPerBorrower: digitalEbookQuota.limit,
         maxConcurrentAudioLoansPerBorrower: digitalAudioQuota.limit,
-        hasQuotas: Boolean(digitalQuotas?.length)
+        reservationCeilings: digitalReservationLimits, // { ebook, audiobook } or null.
+        hasQuotas: Boolean(digitalLoanQuotas?.length)
       }
     : {
         patronEbookLoans: publizonQuotas.patronEbookLoans,
@@ -74,6 +72,11 @@ const StatusSection: FC = () => {
           libraryProfile?.maxConcurrentEbookLoansPerBorrower,
         maxConcurrentAudioLoansPerBorrower:
           libraryProfile?.maxConcurrentAudioLoansPerBorrower,
+        reservationCeilings: {
+          ebook: libraryProfile?.maxConcurrentEbookReservationsPerBorrower ?? 0,
+          audiobook:
+            libraryProfile?.maxConcurrentAudioReservationsPerBorrower ?? 0
+        },
         hasQuotas: Boolean(libraryProfile)
       };
 
@@ -103,14 +106,12 @@ const StatusSection: FC = () => {
           <div className="text-body-small-regular mb-8">
             {t("patronPageStatusSectionBodyText")}
           </div>
-          {/* The service layer's quotas cover loans only - there are no reservation limits
-              to show, so the line is left out rather than rendered as zero. */}
-          {!viaBiblioAdapter && (
+          {reservationCeilings && (
             <div className="text-body-small-regular mt-8 mb-8">
               {t("patronPageStatusSectionReservationsText", {
                 placeholders: {
-                  "@countEbooks": maxConcurrentEbookReservationsPerBorrower,
-                  "@countAudiobooks": maxConcurrentAudioReservationsPerBorrower
+                  "@countEbooks": reservationCeilings.ebook,
+                  "@countAudiobooks": reservationCeilings.audiobook
                 }
               })}
             </div>
