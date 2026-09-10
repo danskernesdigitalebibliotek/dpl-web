@@ -1,11 +1,5 @@
 import {
-  AccessUrl,
-  DigitalArticleService,
-  Ereol,
   FacetResult,
-  InfomediaService,
-  InterLibraryLoan,
-  Publizon,
   ManifestationReviewFieldsFragment,
   ManifestationsSimpleFieldsFragment,
   Relations,
@@ -64,11 +58,3 @@ export type Patron = PatronV5;
 export type AuthenticatedPatron = AuthenticatedPatronV8;
 
 export type Facets = FacetResult[] | null;
-
-export type AccessTypes =
-  | AccessUrl["__typename"]
-  | DigitalArticleService["__typename"]
-  | Ereol["__typename"]
-  | InfomediaService["__typename"]
-  | InterLibraryLoan["__typename"]
-  | Publizon["__typename"];

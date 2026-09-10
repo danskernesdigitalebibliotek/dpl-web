@@ -84,6 +84,11 @@ const rodloesEbook = manifestation("pid:rodloes-ebook", [
   { type: IdentifierTypeEnum.Isbn, value: "9788797577646" }
 ]);
 
+const ebookWithOtherIsbn = manifestation("pid:other-isbn", [
+  { type: IdentifierTypeEnum.Isbn, value: "9788797287996" },
+  { type: IdentifierTypeEnum.Publizon, value: "9788727319346" }
+]);
+
 describe("getManifestationDigitalIdentifier", () => {
   it("returns the PUBLIZON value, not the leading (deselected PDF) ISBN", () => {
     expect(getManifestationDigitalIdentifier(rodloesEbook)).toBe(
@@ -95,14 +100,24 @@ describe("getManifestationDigitalIdentifier", () => {
     expect(getManifestationDigitalIdentifier(epub)).toBe("9788797577646");
   });
 
-  it("falls back to the ISBN when there is no PUBLIZON identifier", () => {
-    expect(getManifestationDigitalIdentifier(pdf)).toBe("9788797287996");
+  it("returns the PUBLIZON value even when an ISBN says something else", () => {
+    // The two are separate identifiers of the same edition; only the
+    // PUBLIZON one is what the lending chain knows the material by.
+    expect(getManifestationDigitalIdentifier(ebookWithOtherIsbn)).toBe(
+      "9788727319346"
+    );
   });
 
-  it("returns an empty string when there is no usable identifier", () => {
+  it("returns null, not the ISBN, when there is no PUBLIZON identifier", () => {
+    // Handing the ISBN on would ask a provider about a material it does not
+    // lend - or about the wrong edition of one it does.
+    expect(getManifestationDigitalIdentifier(pdf)).toBeNull();
+  });
+
+  it("returns null when there is no identifier at all", () => {
     expect(
       getManifestationDigitalIdentifier(manifestation("pid:none", []))
-    ).toBe("");
+    ).toBeNull();
   });
 });
 

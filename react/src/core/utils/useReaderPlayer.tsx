@@ -22,10 +22,13 @@ import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
 const useReaderPlayer = (manifestation: Manifestation | null) => {
   const viaBiblioAdapter = useBiblioAdapter();
 
-  const type = getReaderPlayerType(manifestation);
   const identifier = manifestation
     ? getManifestationDigitalIdentifier(manifestation)
     : null;
+  // Without the identifier there is nothing to lend or open, so no reader or
+  // player is offered. The two must agree: the buttons wait for an identifier
+  // once a type says one is coming, and would otherwise never stop waiting.
+  const type = identifier ? getReaderPlayerType(manifestation) : null;
 
   const serviceLayer = useDigitalReaderPlayerState({
     identifier,
