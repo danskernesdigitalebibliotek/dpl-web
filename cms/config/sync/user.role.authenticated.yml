@@ -5,6 +5,7 @@ dependencies:
   config:
     - filter.format.webform_default
     - rest.resource.campaign.match
+    - rest.resource.current_events
     - rest.resource.dpl_opening_hours_list
     - rest.resource.events
     - rest.resource.proxy-url
@@ -22,6 +23,7 @@ weight: 1
 is_admin: false
 permissions:
   - 'access content'
+  - 'restful get current_events'
   - 'restful get dpl_opening_hours_list'
   - 'restful get events'
   - 'restful get proxy-url'

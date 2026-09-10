@@ -4,6 +4,7 @@ import {
   patronPageStory
 } from "../../../cypress/page-objects/patron-page/PatronPagePage";
 import {
+  givenOrganizationHasBiblioReservationLimits,
   givenUserHasBiblioLoanQuotas,
   givenUserHasBiblioSupportId
 } from "../../../cypress/intercepts/biblio/biblio";
@@ -11,7 +12,10 @@ import {
   publizonLibraryProfileFactory,
   publizonLoanListFactory
 } from "../../../cypress/factories/publizon/publizon.factory";
-import { biblioSplitLoanQuotaFactory } from "../../../cypress/factories/biblio/biblio.factory";
+import {
+  BIBLIO_ORG_ID,
+  biblioSplitLoanQuotaFactory
+} from "../../../cypress/factories/biblio/biblio.factory";
 
 /**
  * The patron page during the Publizon → Biblio transition.
@@ -95,6 +99,7 @@ const stubBackends = ({ resident = true } = {}) => {
 
   givenUserHasBiblioSupportId();
   givenUserHasBiblioLoanQuotas();
+  givenOrganizationHasBiblioReservationLimits();
 };
 
 describe("Patron page - Biblio adapter feature flag", () => {
@@ -115,6 +120,7 @@ describe("Patron page - Biblio adapter feature flag", () => {
     // And: the adapter is never contacted
     cy.get("@biblioSupportId.all").should("have.length", 0);
     cy.get("@biblioLoanQuotas.all").should("have.length", 0);
+    cy.get("@biblioOrganizationConfigs.all").should("have.length", 0);
   });
 
   it("Shows Biblio's support id and quotas when the flag is on", () => {
@@ -134,6 +140,13 @@ describe("Patron page - Biblio adapter feature flag", () => {
     cy.contains(BIBLIO_AUDIOBOOKS_OUT_OF).should("exist");
     // The monthly figures from the same response must not surface here.
     cy.contains("3 out of").should("not.exist");
+
+    // And: the reservation ceilings come from the organization the quotas
+    // were issued for.
+    cy.wait("@biblioOrganizationConfigs")
+      .its("request.query.organization_id")
+      .should("eq", BIBLIO_ORG_ID);
+    cy.contains("You can reserve 5 ebooks and 6 audiobooks").should("exist");
   });
 });
 

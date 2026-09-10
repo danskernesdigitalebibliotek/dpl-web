@@ -689,3 +689,16 @@ function dpl_update_deploy_remove_maintenance_permissions(): string {
 
   return 'Remove unused maintenance mode permission';
 }
+
+/**
+ * Allow anonymous and authenticated users to access current events endpoint.
+ */
+function dpl_update_deploy_add_current_events_endpoint_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['anonymous', 'authenticated'],
+    ['restful get current_events'],
+    TRUE,
+  );
+
+  return 'Make sure that current events endpoint is accessible';
+}
