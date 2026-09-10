@@ -17,8 +17,8 @@ import DeleteReservationModal, {
   deleteReservationModalId
 } from "../../reservation-list/modal/delete-reservation/delete-reservation-modal";
 import Notifications from "./Notifications";
-import useReservations from "../../../core/utils/useReservations";
-import useLoans from "../../../core/utils/useLoans";
+import { UseReservationsType } from "../../../core/utils/useReservations";
+import { UseLoansType } from "../../../core/utils/useLoans";
 import { ReservationType } from "../../../core/utils/types/reservation-type";
 import {
   constructModalId,
@@ -30,11 +30,15 @@ import { useUrls } from "../../../core/utils/url";
 export interface DashboardNotificationListProps {
   pageSize: number;
   columns: boolean;
+  loans: UseLoansType;
+  reservations: UseReservationsType;
 }
 
 const DashboardNotificationList: FC<DashboardNotificationListProps> = ({
   pageSize,
-  columns
+  columns,
+  loans: loansFromProps,
+  reservations: reservationsFromProps
 }) => {
   const t = useText();
   const u = useUrls();
@@ -47,7 +51,7 @@ const DashboardNotificationList: FC<DashboardNotificationListProps> = ({
       queued: reservationsQueued,
       isLoading: isLoadingReservations
     }
-  } = useReservations();
+  } = reservationsFromProps;
   const {
     all: { loans, soonOverdue, farFromOverdue, isLoading: isLoadingLoans },
     fbs: {
@@ -56,7 +60,7 @@ const DashboardNotificationList: FC<DashboardNotificationListProps> = ({
       farFromOverdue: loansFarFromOverduePhysical,
       isLoading: isLoadingLoansPhysical
     }
-  } = useLoans();
+  } = loansFromProps;
 
   const [reservationsForDeleting, setReservationsForDeleting] = useState<
     ReservationType[]
