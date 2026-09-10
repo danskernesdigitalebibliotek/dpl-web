@@ -3,6 +3,7 @@ import type {
   DigitalLoanQuota,
   DigitalMaterial,
   DigitalReservation,
+  DigitalReservationLimits,
   LoanDecision,
   LoanRequestResult,
   ReaderSignInToken,
@@ -16,6 +17,7 @@ import {
   getGetLoanQuotasForAuthenticatedUserUrl,
   getGetLoansForAuthenticatedUserUrl,
   getGetMetadataByMaterialIdUrl,
+  getGetOrganizationConfigsUrl,
   getGetReservationsForAuthenticatedUserUrl,
   getGetSupportIdForAuthenticatedUserUrl,
   getRequestLoanForAuthenticatedUserUrl,
@@ -26,6 +28,7 @@ import {
 } from "./mappers/loan-decision.mapper"
 import { parseAndMapLoans } from "./mappers/loan.mapper"
 import { parseAndMapMetadata } from "./mappers/metadata.mapper"
+import { parseAndMapReservationLimits } from "./mappers/organization-configs.mapper"
 import { parseAndMapLoanQuotas } from "./mappers/quotas.mapper"
 import {
   parseAndMapAcceptReservationOffer,
@@ -182,6 +185,20 @@ export function createBiblioClient(config: BiblioConfig) {
     getLoanQuotas: async (): Promise<DigitalLoanQuota[]> => {
       const raw = await request({ method: "GET", path: getGetLoanQuotasForAuthenticatedUserUrl() })
       return parseAndMapLoanQuotas(raw)
+    },
+
+    // How many reservations the organization lets a patron hold at once - the
+    // equivalent of Publizon's maxConcurrent…ReservationsPerBorrower, which
+    // the Biblio quotas do not carry. Takes the organization explicitly: the
+    // endpoint resolves nothing from the token.
+    getReservationLimits: async (
+      organizationId: string
+    ): Promise<DigitalReservationLimits | null> => {
+      const raw = await request({
+        method: "GET",
+        path: getGetOrganizationConfigsUrl({ organization_id: organizationId }),
+      })
+      return parseAndMapReservationLimits(raw)
     },
 
     // Stable identifier the user can hand to support - the equivalent of
