@@ -25,8 +25,6 @@ import type {
   CampaignMatchPOST200,
   CampaignMatchPOSTBody,
   CampaignMatchPOSTParams,
-  CurrentEventsGET200Item,
-  CurrentEventsGETParams,
   DplOpeningHoursCreatePOST200Item,
   DplOpeningHoursCreatePOSTBody,
   DplOpeningHoursCreatePOSTParams,
@@ -42,6 +40,8 @@ import type {
   EventPATCHParams,
   EventsGET200Item,
   EventsGETParams,
+  HappeningEventsGET200Item,
+  HappeningEventsGETParams,
   ProxyUrlGET200,
   ProxyUrlGETParams
 } from "./model";
@@ -173,184 +173,6 @@ export const useCampaignMatchPOST = <
 > => {
   return useMutation(getCampaignMatchPOSTMutationOptions(options), queryClient);
 };
-
-export const getCurrentEventsGETUrl = (params: CurrentEventsGETParams) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? "null" : String(value));
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0
-    ? `/api/v1/events/current?${stringifiedParams}`
-    : `/api/v1/events/current`;
-};
-
-/**
- * @summary Retrieve current events
- */
-export const currentEventsGET = async (
-  params: CurrentEventsGETParams,
-  options?: Parameters<typeof mutator>[1]
-): Promise<CurrentEventsGET200Item[]> => {
-  return mutator<CurrentEventsGET200Item[]>(getCurrentEventsGETUrl(params), {
-    ...options,
-    method: "GET"
-  });
-};
-
-export const getCurrentEventsGETQueryKey = (
-  params?: CurrentEventsGETParams
-) => {
-  return [`/api/v1/events/current`, ...(params ? [params] : [])] as const;
-};
-
-export const getCurrentEventsGETQueryOptions = <
-  TData = Awaited<ReturnType<typeof currentEventsGET>>,
-  TError = ErrorType<void>
->(
-  params: CurrentEventsGETParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof currentEventsGET>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof mutator>;
-  }
-) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
-
-  const queryKey =
-    queryOptions?.queryKey ?? getCurrentEventsGETQueryKey(params);
-
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof currentEventsGET>>
-  > = ({ signal }) => currentEventsGET(params, { signal, ...requestOptions });
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof currentEventsGET>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type CurrentEventsGETQueryResult = NonNullable<
-  Awaited<ReturnType<typeof currentEventsGET>>
->;
-export type CurrentEventsGETQueryError = ErrorType<void>;
-
-export function useCurrentEventsGET<
-  TData = Awaited<ReturnType<typeof currentEventsGET>>,
-  TError = ErrorType<void>
->(
-  params: CurrentEventsGETParams,
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof currentEventsGET>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof currentEventsGET>>,
-          TError,
-          Awaited<ReturnType<typeof currentEventsGET>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof mutator>;
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useCurrentEventsGET<
-  TData = Awaited<ReturnType<typeof currentEventsGET>>,
-  TError = ErrorType<void>
->(
-  params: CurrentEventsGETParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof currentEventsGET>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof currentEventsGET>>,
-          TError,
-          Awaited<ReturnType<typeof currentEventsGET>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof mutator>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useCurrentEventsGET<
-  TData = Awaited<ReturnType<typeof currentEventsGET>>,
-  TError = ErrorType<void>
->(
-  params: CurrentEventsGETParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof currentEventsGET>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof mutator>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-/**
- * @summary Retrieve current events
- */
-
-export function useCurrentEventsGET<
-  TData = Awaited<ReturnType<typeof currentEventsGET>>,
-  TError = ErrorType<void>
->(
-  params: CurrentEventsGETParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof currentEventsGET>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof mutator>;
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getCurrentEventsGETQueryOptions(params, options);
-
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
 
 export const getDplOpeningHoursCreatePOSTUrl = (
   params: DplOpeningHoursCreatePOSTParams
@@ -1338,6 +1160,187 @@ export function useEventsGET<
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
   const queryOptions = getEventsGETQueryOptions(params, options);
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+export const getHappeningEventsGETUrl = (params: HappeningEventsGETParams) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : String(value));
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/v1/events/happening?${stringifiedParams}`
+    : `/api/v1/events/happening`;
+};
+
+/**
+ * @summary Retrieve happening events
+ */
+export const happeningEventsGET = async (
+  params: HappeningEventsGETParams,
+  options?: Parameters<typeof mutator>[1]
+): Promise<HappeningEventsGET200Item[]> => {
+  return mutator<HappeningEventsGET200Item[]>(
+    getHappeningEventsGETUrl(params),
+    {
+      ...options,
+      method: "GET"
+    }
+  );
+};
+
+export const getHappeningEventsGETQueryKey = (
+  params?: HappeningEventsGETParams
+) => {
+  return [`/api/v1/events/happening`, ...(params ? [params] : [])] as const;
+};
+
+export const getHappeningEventsGETQueryOptions = <
+  TData = Awaited<ReturnType<typeof happeningEventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: HappeningEventsGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof happeningEventsGET>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof mutator>;
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getHappeningEventsGETQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof happeningEventsGET>>
+  > = ({ signal }) => happeningEventsGET(params, { signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof happeningEventsGET>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type HappeningEventsGETQueryResult = NonNullable<
+  Awaited<ReturnType<typeof happeningEventsGET>>
+>;
+export type HappeningEventsGETQueryError = ErrorType<void>;
+
+export function useHappeningEventsGET<
+  TData = Awaited<ReturnType<typeof happeningEventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: HappeningEventsGETParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof happeningEventsGET>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof happeningEventsGET>>,
+          TError,
+          Awaited<ReturnType<typeof happeningEventsGET>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof mutator>;
+  },
+  queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useHappeningEventsGET<
+  TData = Awaited<ReturnType<typeof happeningEventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: HappeningEventsGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof happeningEventsGET>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof happeningEventsGET>>,
+          TError,
+          Awaited<ReturnType<typeof happeningEventsGET>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof mutator>;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useHappeningEventsGET<
+  TData = Awaited<ReturnType<typeof happeningEventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: HappeningEventsGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof happeningEventsGET>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof mutator>;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary Retrieve happening events
+ */
+
+export function useHappeningEventsGET<
+  TData = Awaited<ReturnType<typeof happeningEventsGET>>,
+  TError = ErrorType<void>
+>(
+  params: HappeningEventsGETParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof happeningEventsGET>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof mutator>;
+  },
+  queryClient?: QueryClient
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getHappeningEventsGETQueryOptions(params, options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

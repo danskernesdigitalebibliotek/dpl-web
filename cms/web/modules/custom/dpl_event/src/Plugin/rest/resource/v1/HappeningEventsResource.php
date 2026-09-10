@@ -19,16 +19,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * REST resource for listing current events.
+ * REST resource for listing happening events.
  */
 #[RestResource(
-  id: "current_events",
-  label: new TranslatableMarkup("Retrieve current events"),
+  id: "happening_events",
+  label: new TranslatableMarkup("Retrieve happening events"),
   uri_paths: [
-    "canonical" => "/api/v1/events/current",
+    "canonical" => "/api/v1/events/happening",
   ],
   )]
-final class CurrentEventsResource extends EventResourceBase {
+final class HappeningEventsResource extends EventResourceBase {
 
   /**
    * Constructor.
@@ -83,7 +83,7 @@ final class CurrentEventsResource extends EventResourceBase {
       [
         'responses' => [
           200 => [
-            'description' => 'List of all current available events.',
+            'description' => 'List of all ongoing and future events.',
             'schema' => [
               'type' => 'array',
               'items' => $this->mapper->getRestDataDefinition(),
@@ -97,7 +97,7 @@ final class CurrentEventsResource extends EventResourceBase {
   }
 
   /**
-   * GET request: Get all current eventinstances.
+   * GET request: Get all happening eventinstances.
    */
   public function get(Request $request): Response {
 
@@ -110,7 +110,6 @@ final class CurrentEventsResource extends EventResourceBase {
 
     $date = new \DatetimeImmutable('@' . $this->dateTime->getRequestTime());
     $formattedDate = $date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
-    $query->condition('date.value', $formattedDate, '<=');
     $query->condition('date.end_value', $formattedDate, '>=');
 
     $ids = $query->execute();

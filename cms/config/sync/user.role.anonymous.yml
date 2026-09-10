@@ -7,6 +7,7 @@ dependencies:
     - rest.resource.dpl_opening_hours_legacy_list
     - rest.resource.dpl_opening_hours_list
     - rest.resource.events
+    - rest.resource.happening_events
     - rest.resource.proxy-url
   module:
     - media
@@ -26,6 +27,7 @@ permissions:
   - 'restful get dpl_opening_hours_legacy_list'
   - 'restful get dpl_opening_hours_list'
   - 'restful get events'
+  - 'restful get happening_events'
   - 'restful get proxy-url'
   - 'restful post campaign:match'
   - 'view eventinstance entity'

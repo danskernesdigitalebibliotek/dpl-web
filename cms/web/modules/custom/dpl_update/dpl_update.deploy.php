@@ -676,3 +676,22 @@ function dpl_update_deploy_mark_orphaned_files_temporary(array &$sandbox): strin
 
   return "Marked {$sandbox['current']}/{$sandbox['total']} unused permanent files as temporary.";
 }
+
+/**
+ * Allow anonymous and authenticated users to access the events endpoint.
+ *
+ * The permission is named after the REST resource, which has since been
+ * renamed from current_events to happening_events. This hook has already run
+ * on every existing site - dpl_update_update_10081() moves the permission
+ * there - so the only sites left for it to run on are fresh installs, where
+ * the new name is the right one to grant.
+ */
+function dpl_update_deploy_add_current_events_endpoint_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['anonymous', 'authenticated'],
+    ['restful get happening_events'],
+    TRUE,
+  );
+
+  return 'Make sure that the events endpoint is accessible';
+}

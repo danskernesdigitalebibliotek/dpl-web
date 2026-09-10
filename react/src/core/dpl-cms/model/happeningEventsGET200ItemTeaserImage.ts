@@ -9,7 +9,7 @@
 /**
  * The uniform teaser image for the event.
  */
-export type CurrentEventsGET200ItemTeaserImage = {
+export type HappeningEventsGET200ItemTeaserImage = {
   /** An absolute URL for the image. Unlike the main image, this is scaled and cropped to be identical in all instances - matching the teaser images of the website lists. */
   url: string;
 };
