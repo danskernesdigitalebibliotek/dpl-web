@@ -1,10 +1,11 @@
 {% extends '@dpl_service_message/dpl-service-messages.html.twig' %}
 
 {% block content %}
-  <div class="service-messages" role="status">
+  <section class="service-messages"
+    aria-label="{{ 'Service messages'|t({}, {context: 'dpl_service_message'}) }}">
     <div class="service-messages__container">
       {# One icon for the whole group, not one per message. #}
-      <span class="service-messages__icon">
+      <span class="service-messages__icon" aria-hidden="true">
         {{ source(themeIconPath ~ '/icon-bell.svg') }}
       </span>
 
@@ -17,17 +18,21 @@
               {% if message.url %}href="{{ message.url }}"{% endif %}
               class="service-messages__message{{ message.url ? ' arrow arrow__hover--right-small' : '' }}">
 
-              <span class="service-messages__text">
+              <div class="service-messages__text">
+                {# Deliberately not a heading element: the container renders above the
+                   page's h1, so any level chosen here skips the document hierarchy
+                   (KB-64, WCAG 1.3.1). `strong` marks it as important without
+                   claiming a level (KB-58). The global bar does the same. #}
                 {% if message.heading %}
-                  <h3 class="service-messages__heading">{{ message.heading }}</h3>
+                  <strong class="service-messages__heading">{{ message.heading }}</strong>
                 {% endif %}
                 {% if message.body %}
                   <div class="service-messages__body">{{ message.body }}</div>
                 {% endif %}
-              </span>
+              </div>
 
               {% if message.url %}
-                <span class="service-messages__arrow">
+                <span class="service-messages__arrow" aria-hidden="true">
                   {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
                 </span>
               {% endif %}
@@ -36,5 +41,5 @@
         {% endfor %}
       </ul>
     </div>
-  </div>
+  </section>
 {% endblock %}
