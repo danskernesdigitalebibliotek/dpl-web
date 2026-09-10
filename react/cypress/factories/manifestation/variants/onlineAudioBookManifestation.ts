@@ -29,9 +29,15 @@ export const onlineAudioBookManifestation = manifestationFactory.build({
     }
   ],
 
+  // The PUBLIZON identifier is what makes the edition digitally loanable; on
+  // a real Ereol record it is the ISBN-13 of that edition.
   identifiers: [
     {
       type: IdentifierTypeEnum.Isbn,
+      value: "9788763850637"
+    },
+    {
+      type: IdentifierTypeEnum.Publizon,
       value: "9788763850637"
     }
   ],

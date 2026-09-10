@@ -136,11 +136,10 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
   const { isAvailable, isLoading: isAvailabilityLoading } = useAvailabilityData(
     {
       accessTypes: [AccessTypeCodeEnum.Physical, AccessTypeCodeEnum.Online],
-      access: [undefined],
       faustIds: selectedManifestations
         ? getAllFaustIds(selectedManifestations)
         : [],
-      isbn: null, // Not needed.
+      identifier: null, // Only the physical half of the hook is wanted here.
       // "manifestText" is used inside the availability hook to check whether the material is an article
       // which we check inside shouldShowMaterialAvailabilityText() helper here.
       manifestText: "NOT AN ARTICLE",

@@ -12,6 +12,7 @@ import {
   ReaderPlayerState,
   unknownReaderPlayerState
 } from "./types/reader-player-state";
+import { DigitalMaterialId } from "./types/ids";
 
 /**
  * What the service layer says about a digital material - the service layer
@@ -26,7 +27,7 @@ const useDigitalReaderPlayerState = ({
   identifier,
   enabled
 }: {
-  identifier: string | null;
+  identifier: DigitalMaterialId | null;
   enabled: boolean;
 }): ReaderPlayerState => {
   const isUserAnonymous = isAnonymous();
