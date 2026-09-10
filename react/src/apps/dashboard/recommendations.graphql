@@ -1,0 +1,24 @@
+query getDashboardRecommendations($faust: String!, $limit: Int!) {
+  recommend(faust: $faust, limit: $limit) {
+    result {
+      work {
+        workId
+        titles {
+          full
+        }
+        creators {
+          display
+        }
+        manifestations {
+          bestRepresentation {
+            cover {
+              large {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
