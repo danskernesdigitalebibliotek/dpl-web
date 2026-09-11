@@ -1,5 +1,6 @@
 import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
+import { addOperationNameToUrl } from "@/lib/helpers/graphql"
 
 import AccessForbiddenError from "./AccessForbiddenError"
 
@@ -31,7 +32,12 @@ export function fetcher<TData, TVariables>(
 ) {
   const { next, headers } = options || {}
 
-  const dplCmsGraphqlEndpoint = `${getEnv("DPL_CMS_BASE_URL")}/graphql`
+  // Tag the url with the operation name so requests are identifiable in the
+  // network log.
+  const dplCmsGraphqlEndpoint = addOperationNameToUrl(
+    `${getEnv("DPL_CMS_BASE_URL")}/graphql`,
+    query
+  )
 
   return async (): Promise<TData> => {
     try {

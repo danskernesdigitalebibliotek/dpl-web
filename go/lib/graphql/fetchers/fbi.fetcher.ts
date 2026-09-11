@@ -1,4 +1,5 @@
 import { getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
+import { addOperationNameToUrl } from "@/lib/helpers/graphql"
 
 export const fetchData = <TData, TVariables>(
   query: string,
@@ -6,7 +7,9 @@ export const fetchData = <TData, TVariables>(
   options?: RequestInit["headers"]
 ): (() => Promise<TData>) => {
   return async () => {
-    const url = getAPServiceFetcherBaseUrl("fbi")
+    // Tag the url with the operation name so requests are identifiable in the
+    // network log.
+    const url = addOperationNameToUrl(getAPServiceFetcherBaseUrl("fbi"), query)
     try {
       const res = await fetch(url, {
         method: "POST",
