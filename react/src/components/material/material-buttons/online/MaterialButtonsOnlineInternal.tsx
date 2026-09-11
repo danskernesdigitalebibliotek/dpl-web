@@ -85,18 +85,23 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     isLoading
   } = useReaderPlayer(getLoanableManifestation(manifestations));
 
-  const handleModalLoanReservation = useOnlineInternalHandleLoanReservation({
-    manifestations,
-    openModal,
-    setReservationStatus,
-    setLoanResponse,
-    setLoanStatus,
-    setReservationOrLoanErrorResponse,
-    workId,
-    modalsToClose: isEditionPicker ? modalsToClose : undefined
-  });
+  const { handleModalLoanReservation, isSubmitting } =
+    useOnlineInternalHandleLoanReservation({
+      manifestations,
+      openModal,
+      setReservationStatus,
+      setLoanResponse,
+      setLoanStatus,
+      setReservationOrLoanErrorResponse,
+      workId,
+      modalsToClose: isEditionPicker ? modalsToClose : undefined
+    });
   const [reservationToDelete, setReservationToDelete] =
     useState<ReservationType | null>(null);
+
+  // The reader and player halves answer the same question, so they share
+  // the state in which there is nothing to offer yet.
+  const isBusy = !identifier || isLoading || isSubmitting;
 
   const manifestationType = getMaterialType(manifestations);
   const reseveLabel = openModal
@@ -116,7 +121,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   });
 
   const renderReaderButton = () => {
-    if (!identifier || isLoading) return <MaterialButtonLoading />;
+    if (isBusy) return <MaterialButtonLoading />;
 
     if (isAlreadyReserved && reservation) {
       return (
@@ -231,7 +236,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   };
 
   const renderPlayerButton = () => {
-    if (!identifier || isLoading) return <MaterialButtonLoading />;
+    if (isBusy) return <MaterialButtonLoading />;
 
     if (isAlreadyReserved && reservation) {
       return (

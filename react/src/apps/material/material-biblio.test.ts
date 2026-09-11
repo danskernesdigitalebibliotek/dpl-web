@@ -9,6 +9,7 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer/biblio/contract";
 import {
   BIBLIO_ORG_ID,
+  biblioAudiobookLoanFactory,
   biblioLoanFactory,
   biblioOfferedReservationFactory,
   biblioReservationFactory
@@ -20,19 +21,20 @@ import {
   givenBiblioCreatesLoan,
   givenBiblioCreatesReservation,
   givenMaterialIsInBiblio,
+  givenTheBiblioLoanListLags,
   givenUserHasBiblioLoanQuotas,
   givenUserHasBiblioLoans,
   givenUserHasBiblioReservations,
   givenUserHasNoBiblioLoans,
   givenUserHasNoBiblioReservations
 } from "../../../cypress/intercepts/biblio/biblio";
+import {
+  givenPublizonCreatesLoan,
+  givenThePublizonLoanListLags
+} from "../../../cypress/intercepts/publizon/publizon";
+import { givenAMaterialWithOnlineAudiobook } from "../../../cypress/intercepts/fbi/material";
 import { ContentLoanStatusEnum } from "../../core/publizon/model";
 import { stubMaterialPageBackends } from "../../../cypress/intercepts/material-page";
-import {
-  buildGetMaterialResponse,
-  materialFactory
-} from "../../../cypress/factories/material/material.factory";
-import { onlineAudioBookManifestation } from "../../../cypress/factories/manifestation/variants/onlineAudioBookManifestation";
 
 /**
  * Borrowing and reserving a digital material through the Biblio adapter.
@@ -45,6 +47,9 @@ import { onlineAudioBookManifestation } from "../../../cypress/factories/manifes
 
 // The ISBN of the e-book edition in the default material factory.
 const EBOOK_ISBN = "9788702441000";
+
+// The ISBN of `onlineAudioBookManifestation`, the streamed audiobook edition.
+const AUDIOBOOK_ISBN = "9788763850637";
 
 // Ids the adapter cancels and opens loans by - deliberately not the ISBN,
 // which is what Publizon uses for both.
@@ -84,6 +89,13 @@ const openLoanModal = (material: MaterialPage) => {
   cy.getBySel("availability-label").contains("e-bog").first().click();
   // The header button opens the modal; the one inside it creates the loan.
   cy.getBySel("material-header-buttons-online-internal-reader").first().click();
+};
+
+/** The audiobook twin of `openLoanModal`. */
+const openPlayerLoanModal = (material: MaterialPage) => {
+  material.visit([]);
+  cy.getBySel("availability-label").contains("lydbog (online)").click();
+  cy.getBySel("material-header-buttons-online-internal-player").first().click();
 };
 
 describe("Material page - borrowing through the Biblio adapter", () => {
@@ -179,13 +191,9 @@ describe("Material page - borrowing through the Biblio adapter", () => {
   });
 
   it("Leaves the adapter alone when the flag is off", () => {
-    // Publizon's create-loan endpoint, stubbed so the loan the click DOES
-    // create can be awaited - a count of zero only means anything after the
-    // work it is counting against has finished.
-    cy.intercept("POST", "**/v1/user/loans/**", {
-      statusCode: 200,
-      body: { orderId: PUBLIZON_ORDER_ID, code: 101, message: "OK" }
-    }).as("publizonCreateLoan");
+    // Stubbed so the loan the click DOES create can be awaited - a count of
+    // zero only means anything after the work it counts against has finished.
+    givenPublizonCreatesLoan(PUBLIZON_ORDER_ID);
 
     const material = new MaterialPage(materialStory.default, "e-bog");
 
@@ -427,10 +435,7 @@ describe("Material page - flag on, the adapter refuses the loan", () => {
     // Publizon would lend it - the default loan status is 4.
     givenBiblioCanLoan(CanLoanResponseType.monthly_limit_exceeded);
 
-    cy.intercept("POST", "**/v1/user/loans/**", {
-      statusCode: 200,
-      body: { orderId: "publizon-order-1", code: 101, message: "OK" }
-    }).as("publizonCreateLoan");
+    givenPublizonCreatesLoan("publizon-order-1");
   });
 
   it("Neither offers the loan nor borrows it from Publizon", () => {
@@ -520,21 +525,10 @@ describe("Material page - flag on, an older Publizon loan", () => {
  * break for the loans made before the switch.
  */
 describe("Material page - flag on, an older Publizon audiobook loan", () => {
-  const AUDIOBOOK_ISBN = "9788763850637";
-
   beforeEach(() => {
     // Publizon holds an audiobook loan for this material; the adapter none.
     stubBackends(ContentLoanStatusEnum.NUMBER_1);
-
-    // The default work has no streamed audiobook edition, so one is added.
-    // Registered after stubBackends so this material wins - Cypress matches
-    // the most recently registered route first.
-    const material = materialFactory.build();
-    material.work?.manifestations.all.push(onlineAudioBookManifestation);
-    cy.interceptGraphql({
-      operationName: "getMaterial",
-      body: buildGetMaterialResponse(material)
-    });
+    givenAMaterialWithOnlineAudiobook();
 
     cy.intercept("GET", "**/v1/user/loans**", {
       statusCode: 200,
@@ -581,5 +575,92 @@ describe("Material page - flag on, an older Publizon audiobook loan", () => {
     cy.getBySel("player-modal").should("be.visible");
 
     cy.get("@biblioCreateLoan.all").should("have.length", 0);
+  });
+});
+
+/**
+ * The receipt shown once the loan went through.
+ *
+ * The loan is read back from lists that are refetched rather than written to,
+ * so a receipt shown before that read-back lands still describes a material
+ * the user does not hold - and offers the loan they just made.
+ */
+describe("Material page - the loan receipt while the lists catch up", () => {
+  /**
+   * Then: the modal that says the loan went through never asks the user to
+   * borrow what they just borrowed. Checked without retrying on purpose - a
+   * retrying `not.contain` simply waits the flash out and passes.
+   */
+  const expectNoLoanOffer = () => {
+    cy.get(onlineLoanModalSelector)
+      .should("contain", "You have now borrowed")
+      .then(($modal) => {
+        expect($modal.text()).to.not.contain("Approve loan");
+      });
+  };
+
+  beforeEach(() => stubBackends());
+
+  it("Waits for the reader rather than offering the e-book again", () => {
+    givenTheBiblioLoanListLags(
+      biblioLoanFactory.build({ id: BIBLIO_LOAN_ID, material_id: EBOOK_ISBN })
+    );
+
+    const material = new MaterialPage(materialStory.withBiblioAdapter, "e-bog");
+    openLoanModal(material);
+    material.onlineLoanModal().elements.approveButton().click();
+    cy.wait("@biblioCreateLoan");
+
+    expectNoLoanOffer();
+
+    // And it hands the user the reader instead.
+    cy.get(onlineLoanModalSelector).should("contain", "Read e-bog");
+  });
+
+  it("Waits for the player rather than offering the audiobook again", () => {
+    givenAMaterialWithOnlineAudiobook();
+    givenMaterialIsInBiblio({
+      isbn: AUDIOBOOK_ISBN,
+      title: "De syv søstre (online)",
+      materialType: "audiobook"
+    });
+    givenTheBiblioLoanListLags(
+      biblioAudiobookLoanFactory.build({
+        id: BIBLIO_LOAN_ID,
+        material_id: AUDIOBOOK_ISBN
+      })
+    );
+
+    const material = new MaterialPage(
+      materialStory.withBiblioAdapter,
+      "lydbog (online)"
+    );
+    openPlayerLoanModal(material);
+    material.onlineLoanModal().elements.approvePlayerButton().click();
+    cy.wait("@biblioCreateLoan");
+
+    expectNoLoanOffer();
+
+    cy.get(onlineLoanModalSelector).should(
+      "contain",
+      "Listen to lydbog (online)"
+    );
+  });
+
+  it("Waits for the reader rather than offering a Publizon e-book again", () => {
+    // The flag is off, so Publizon lends: the flash predates the adapter and
+    // the wait has to cover the provider being migrated away from too.
+    givenPublizonCreatesLoan(PUBLIZON_ORDER_ID);
+    // The factory's default loan is already this material's e-book edition.
+    givenThePublizonLoanListLags({ orderId: PUBLIZON_ORDER_ID });
+
+    const material = new MaterialPage(materialStory.default, "e-bog");
+    openLoanModal(material);
+    material.onlineLoanModal().elements.approveButton().click();
+    cy.wait("@publizonCreateLoan");
+
+    expectNoLoanOffer();
+
+    cy.get(onlineLoanModalSelector).should("contain", "Read e-bog");
   });
 });

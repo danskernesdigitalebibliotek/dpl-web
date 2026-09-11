@@ -40,6 +40,26 @@ export const givenUserHasBiblioLoans = (loans?: LoanDto[]) => {
 /** Given: the user holds no loans in Biblio. */
 export const givenUserHasNoBiblioLoans = () => givenUserHasBiblioLoans([]);
 
+/**
+ * Given: a loan the user makes now only shows up on the next answer, and
+ * that answer is slow - the window where a freshly borrowed material still
+ * reads as unborrowed everywhere it is looked up.
+ */
+export const givenTheBiblioLoanListLags = (loan: LoanDto) => {
+  cy.intercept("GET", "**/v1/loans*", {
+    statusCode: 200,
+    delay: 500,
+    body: biblioLoansFactory.build({ loans: [loan] })
+  }).as("biblioLoansLagging");
+
+  // Registered last so it answers first, and only once: the page's own
+  // look-up, from before the loan existed.
+  cy.intercept(
+    { method: "GET", url: "**/v1/loans*", times: 1 },
+    { statusCode: 200, body: biblioLoansFactory.build({ loans: [] }) }
+  ).as("biblioLoansBeforeLoan");
+};
+
 /** Given: Biblio does not know this material. A 404 is a normal answer. */
 export const givenMaterialIsNotInBiblio = (materialId: string) => {
   cy.intercept("GET", `**/v1/metadata/${materialId}*`, {
