@@ -67,6 +67,22 @@ class DplBiblioSettings extends DplReactConfigBase {
   }
 
   /**
+   * TEMPORARY: whether the Publizon reservation queue is closed.
+   *
+   * Biblio needs a period where the Publizon reservation queue stands still
+   * so it can be migrated: a reservation made - or cancelled - after the
+   * queue has been copied would be lost. Loans are unaffected, so a library
+   * can keep lending through Publizon while its queue is being moved.
+   *
+   * The queue is a property of the library rather than of a frontend, so this
+   * is the one flag for it. Only the website reserves through Publizon today;
+   * GO has no digital reservations to freeze.
+   */
+  public function arePublizonReservationsClosed(): bool {
+    return (bool) $this->loadConfig()->get('publizon_reservations_closed');
+  }
+
+  /**
    * TEMPORARY: whether unknown materials render as unavailable, not as errors.
    *
    * The catalogue lists digital materials WeDoBooks has not provisioned yet,

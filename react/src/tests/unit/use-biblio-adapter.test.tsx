@@ -4,8 +4,10 @@ import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { useConfig } from "../../core/utils/config";
 
 /**
- * The feature flag every other Biblio path hangs off. The config is shipped
- * by the CMS, so a site on an older release will not have the key at all.
+ * The feature flag every other Biblio path hangs off, and with it the shared
+ * `useConfigFlag` reader every CMS flag goes through. The config is shipped by
+ * the CMS, so a site on an older release will not have the key at all - and a
+ * missing key must read as "off" rather than as an error.
  */
 
 vi.mock("../../core/utils/config", () => ({ useConfig: vi.fn() }));

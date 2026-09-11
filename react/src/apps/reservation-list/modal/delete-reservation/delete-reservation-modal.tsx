@@ -36,6 +36,7 @@ import {
   ReservationType
 } from "../../../../core/utils/types/reservation-type";
 import { getModalIds } from "../../../../core/utils/helpers/modal-helpers";
+import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
 
 interface DeleteReservationModalProps {
   modalId: string;
@@ -59,6 +60,7 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
   const { mutate: deletePublizonReservation } =
     useDeleteV1UserReservationsIdentifier();
   const { mutate: deleteDigitalReservation } = useDigitalDeleteReservation();
+  const canCancelReservation = useCanCancelReservation();
   const [deletedReservations, setDeletedReservations] = useState<number | null>(
     null
   );
@@ -145,6 +147,36 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
   };
 
   if (!reservations) return null;
+
+  // TEMPORARY: the last gate before the cancellation itself. Every button that
+  // opens this modal already refuses a reservation in the queue Biblio is
+  // migrating, but the modal opens from a `?modal=` link as well, which answers
+  // to no button - so without this the freeze can be stepped around by URL.
+  // Delete this block once the freeze is lifted - see
+  // usePublizonReservationsClosed.
+  if (!reservations.every(canCancelReservation)) {
+    return (
+      <Modal
+        modalId={modalId}
+        classNames="modal-cta modal-padding"
+        closeModalAriaLabelText={t("deleteReservationModalCloseModalText")}
+        screenReaderModalDescriptionText={t(
+          "deleteReservationModalAriaDescriptionText"
+        )}
+      >
+        <ModalMessage
+          title={t("deleteReservationModalHeaderText", {
+            count: reservations.length
+          })}
+          subTitle={t("digitalReservationCancelClosedInfoText")}
+          ctaButton={{
+            text: t("deleteReservationModalButtonText"),
+            closeAllModals: true
+          }}
+        />
+      </Modal>
+    );
+  }
 
   const ctaButtonParams = {
     text: t("deleteReservationModalButtonText"),

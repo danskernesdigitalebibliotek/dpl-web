@@ -33,6 +33,7 @@ import PlayerButton from "../../../reader-player/PlayerButton";
 import MaterialButtonLoading from "../generic/MaterialButtonLoading";
 import MaterialButtonDisabled from "../generic/MaterialButtonDisabled";
 import { useModalIdsToCloseForReservation } from "../../../../core/utils/useModalIdsToCloseForReservation";
+import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
 
 type MaterialButtonsOnlineInternalType = {
   size?: ButtonSize;
@@ -68,6 +69,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const samplesThroughServiceLayer = viaBiblioAdapter && !isAnonymous();
   const samplingUnavailable = viaBiblioAdapter && isAnonymous();
   const { open } = useModalButtonHandler();
+  const canCancelReservation = useCanCancelReservation();
   const modalsToClose = useModalIdsToCloseForReservation();
   const modalCloseOptions = isEditionPicker ? { modalsToClose } : undefined;
 
@@ -80,6 +82,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     isAlreadyLoaned,
     canBeLoaned,
     canBeReserved,
+    publizonReservationsClosed,
     canBeSampled,
     reservation,
     isLoading
@@ -117,6 +120,20 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
 
   const renderReaderButton = () => {
     if (!identifier || isLoading) return <MaterialButtonLoading />;
+
+    // TEMPORARY: the queue this reservation lives in is frozen while Biblio
+    // migrates it, so it cannot be given up yet. Delete this guard once the
+    // freeze is lifted - see usePublizonReservationsClosed.
+    if (reservation && !canCancelReservation(reservation)) {
+      return (
+        <MaterialButtonDisabled
+          label={t("reservationDetailsRemoveDigitalReservationText")}
+          reason={t("digitalReservationCancelClosedInfoText")}
+          size={size}
+          dataCy="remove-digital-reservation-button"
+        />
+      );
+    }
 
     if (isAlreadyReserved && reservation) {
       return (
@@ -158,6 +175,23 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
             placeholders: { "@materialType": manifestationType }
           })}
         </LinkButton>
+      );
+    }
+
+    // TEMPORARY: the material would have been reservable, but the queue is
+    // closed while Biblio migrates it. Answered before the acquire branch
+    // below, which offers a not-signed-in visitor the loan so the login guard
+    // can take over - that would promise an action this material cannot
+    // honour. Delete this guard once the freeze is lifted - see
+    // usePublizonReservationsClosed.
+    if (publizonReservationsClosed) {
+      return (
+        <MaterialButtonDisabled
+          label={reseveLabel}
+          reason={t("digitalReservationsClosedInfoText")}
+          size={size}
+          dataCy={`${dataCy}-reader`}
+        />
       );
     }
 
@@ -233,6 +267,20 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const renderPlayerButton = () => {
     if (!identifier || isLoading) return <MaterialButtonLoading />;
 
+    // TEMPORARY: the queue this reservation lives in is frozen while Biblio
+    // migrates it, so it cannot be given up yet. Delete this guard once the
+    // freeze is lifted - see usePublizonReservationsClosed.
+    if (reservation && !canCancelReservation(reservation)) {
+      return (
+        <MaterialButtonDisabled
+          label={t("reservationDetailsRemoveDigitalReservationText")}
+          reason={t("digitalReservationCancelClosedInfoText")}
+          size={size}
+          dataCy="remove-digital-reservation-button"
+        />
+      );
+    }
+
     if (isAlreadyReserved && reservation) {
       return (
         <>
@@ -277,6 +325,23 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
             }
           />
         </>
+      );
+    }
+
+    // TEMPORARY: the material would have been reservable, but the queue is
+    // closed while Biblio migrates it. Answered before the acquire branch
+    // below, which offers a not-signed-in visitor the loan so the login guard
+    // can take over - that would promise an action this material cannot
+    // honour. Delete this guard once the freeze is lifted - see
+    // usePublizonReservationsClosed.
+    if (publizonReservationsClosed) {
+      return (
+        <MaterialButtonDisabled
+          label={reseveLabel}
+          reason={t("digitalReservationsClosedInfoText")}
+          size={size}
+          dataCy={`${dataCy}-player`}
+        />
       );
     }
 

@@ -6,8 +6,8 @@ import { RequestStatus } from "../../../../core/utils/types/request";
 import {
   ReservationType,
   hasDigitalReservationId,
-  isDigitalReservation,
-  isPhysicalReservation
+  isPhysicalReservation,
+  isPublizonReservation
 } from "../../../../core/utils/types/reservation-type";
 import { useDigitalDeleteReservation } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
@@ -57,11 +57,7 @@ export const getReservationsToDelete = (reservations: ReservationType[]) => {
   // Both providers carry a material identifier, so the ones the service layer
   // owns are excluded here to keep them from being cancelled through Publizon.
   const publizon = reservations
-    .filter(
-      (reservation) =>
-        isDigitalReservation(reservation) &&
-        !hasDigitalReservationId(reservation)
-    )
+    .filter(isPublizonReservation)
     .map(({ identifier }) => identifier);
 
   return { physical, publizon, digital };
