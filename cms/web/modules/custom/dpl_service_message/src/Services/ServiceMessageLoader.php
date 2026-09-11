@@ -80,8 +80,8 @@ class ServiceMessageLoader {
    * Load the active global message.
    *
    * Only one global message is meant to be published at a time - see
-   * GlobalMessageInvariant. Rendering picks the newest defensively rather
-   * than trusting the data to hold a single one.
+   * GlobalMessageInvariant. Rendering picks the most recently saved one
+   * defensively rather than trusting the data to hold a single one.
    */
   public function loadGlobal(): ?NodeInterface {
     $storage = $this->entityTypeManager->getStorage('node');
@@ -91,7 +91,7 @@ class ServiceMessageLoader {
       ->condition('type', self::BUNDLE)
       ->condition('status', NodeInterface::PUBLISHED)
       ->condition('field_svcmsg_placement', ServiceMessagePlacement::GlobalBar->value)
-      ->sort('created', 'DESC')
+      ->sort('changed', 'DESC')
       ->range(0, 1)
       ->execute();
 
@@ -108,7 +108,7 @@ class ServiceMessageLoader {
    * Load the in-page messages targeting the page being rendered.
    *
    * @return \Drupal\node\NodeInterface[]
-   *   The messages, newest first.
+   *   The messages, most recently saved first.
    */
   public function loadInPage(): array {
     $branch = $this->currentBranch();
@@ -120,12 +120,14 @@ class ServiceMessageLoader {
 
     $storage = $this->entityTypeManager->getStorage('node');
 
+    // Ordered by last save, not creation: re-saving a message is the only
+    // lever an editor has over which one sits on top (KB-67).
     $query = $storage->getQuery()
       ->accessCheck(TRUE)
       ->condition('type', self::BUNDLE)
       ->condition('status', NodeInterface::PUBLISHED)
       ->condition('field_svcmsg_placement', ServiceMessagePlacement::InPage->value)
-      ->sort('created', 'DESC');
+      ->sort('changed', 'DESC');
 
     // A message can name the front page, a set of branches, or both, so the
     // two targets are an OR rather than separate queries.
