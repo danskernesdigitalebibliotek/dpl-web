@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-query"
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
-import { materialAvailabilityQueryKey } from "../queries/availability"
+import { serviceLayerNamespace } from "../queries/namespace"
 import { reservationsQueryKey } from "../queries/reservations"
 import { createReservation } from "../reservation"
 import type { CreateReservationInput, CreateReservationResult } from "../types"
@@ -41,7 +41,9 @@ export const useCreateReservation = (
       if (data.status === "success") {
         queryClient.invalidateQueries({ queryKey: reservationsQueryKey() })
         queryClient.invalidateQueries({
-          queryKey: materialAvailabilityQueryKey(variables.workId),
+          // Prefix of materialAvailabilityQueryKey: every availability
+          // variant for the reserved work.
+          queryKey: [serviceLayerNamespace, "materialAvailability", variables.workId],
         })
       }
       options?.onSuccess?.(data, variables, onMutateResult, context)

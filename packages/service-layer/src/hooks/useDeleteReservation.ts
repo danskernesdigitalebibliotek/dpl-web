@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-query"
 
 import { useServiceLayerConfig } from "../context/ServiceLayerContext"
-import { materialAvailabilityQueryKey } from "../queries/availability"
+import { serviceLayerNamespace } from "../queries/namespace"
 import { reservationsQueryKey } from "../queries/reservations"
 import { deleteReservation } from "../reservations"
 
@@ -23,7 +23,9 @@ export const useDeleteReservation = (
     mutationFn: reservationId => deleteReservation(config, reservationId),
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: reservationsQueryKey() })
-      queryClient.invalidateQueries({ queryKey: materialAvailabilityQueryKey() })
+      // Prefix of materialAvailabilityQueryKey: every work's availability
+      // (the deleted reservation's work is unknown here).
+      queryClient.invalidateQueries({ queryKey: [serviceLayerNamespace, "materialAvailability"] })
       options?.onSuccess?.(data, variables, onMutateResult, context)
     },
     ...options,

@@ -16,7 +16,6 @@ type ModalMaterialListItemProps = {
   blueTitle?: boolean
   // Status presentation under the title/author (e.g. a due or pickup label).
   status?: React.ReactNode
-  ariaLabel: string
   onSelect: () => void
 }
 
@@ -28,23 +27,23 @@ const ModalMaterialListItem = ({
   creators,
   blueTitle = false,
   status,
-  ariaLabel,
   onSelect,
 }: ModalMaterialListItemProps) => {
   const isBlue = useIsBlueTitle(manifestation, blueTitle)
 
   return (
     <li className="py-8 first:pt-0 last:pb-0 md:py-10">
+      {/* Named by its content — title, author and status — so screen readers
+          hear the same as the eye sees; an aria-label would override it all. */}
       <button
         type="button"
-        aria-label={ariaLabel}
         onClick={onSelect}
         className="focus-visible flex w-full cursor-pointer items-end gap-6 text-left md:gap-8">
         <div className="w-24 shrink-0 md:w-36">
           <ManifestationCover
             cover={manifestation.cover}
             iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-            alt={`${title} cover billede`}
+            alt=""
             className="w-full"
             costFree={isBlue}
             iconClassName={
@@ -64,6 +63,7 @@ const ModalMaterialListItem = ({
           </div>
           {status}
         </div>
+        <span className="sr-only">Vis detaljer</span>
       </button>
     </li>
   )

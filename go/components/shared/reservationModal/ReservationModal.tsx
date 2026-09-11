@@ -107,11 +107,16 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
 
   const submitDisabled = isSubmitting || !recordId
 
+  // The dialog must have a name from the start — while the material query
+  // loads and the visible title is empty, aria-label carries the bare action.
+  const title = manifestation ? `Reserver ${getManifestationLabel(manifestation)}` : ""
+
   return (
     <ResponsiveDialog
       open={open}
       onClose={onClose}
-      title={(manifestation && `Reserver ${getManifestationLabel(manifestation)}`) || ""}>
+      title={title}
+      ariaLabel={manifestation ? undefined : "Reserver"}>
       <ModalFlowBody viewKey={isReceiptStep ? "receipt" : "form"}>
         {manifestation && work && (
           <div data-cy={cyKeys["reservation-modal"]}>

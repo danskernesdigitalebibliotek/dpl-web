@@ -114,7 +114,6 @@ const DigitalLoansModal = ({
                   title={title}
                   creators={creators}
                   blueTitle
-                  ariaLabel={`Se detaljer om dit lån af ${title}`}
                   onSelect={() => {
                     const selection = buildSelectedLoan(work, loanData)
                     if (!selection) return

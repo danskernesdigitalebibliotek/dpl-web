@@ -167,7 +167,11 @@ const ReservationDetailsContent = ({ item }: { item: ReservationItem }) => {
 
         <p className="text-typo-caption text-foreground-muted text-center">
           Vil du ændre afhentningssted eller kontaktinformation, skal du bruge{" "}
-          <a className="text-foreground underline" href={profileUrl}>
+          <a
+            className="text-foreground underline"
+            href={profileUrl}
+            target="_blank"
+            rel="noopener noreferrer">
             voksen-hjemmesiden
           </a>
           .
