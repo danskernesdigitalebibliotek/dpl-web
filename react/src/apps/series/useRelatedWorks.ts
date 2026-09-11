@@ -2,6 +2,7 @@ import {
   SortOrderEnum,
   useGetRelatedWorksQuery
 } from "../../core/dbc-gateway/generated/graphql";
+import { cqlString } from "../../core/utils/helpers/cql";
 import { WorkId } from "../../core/utils/types/ids";
 import { getRelatedWorks } from "./getRelatedWorks";
 import { RelatedWork } from "./relatedWorks.types";
@@ -30,13 +31,13 @@ const FETCH_LIMIT = 50;
 // Wildwitch).
 const buildCql = ({ author, currentSeries }: UseRelatedWorksArgs): string => {
   const anded = [
-    `term.creator='${author}'`,
+    `term.creator=${cqlString(author)}`,
     ...(currentSeries.mainLanguage
-      ? [`phrase.mainlanguage="${currentSeries.mainLanguage}"`]
+      ? [`phrase.mainlanguage=${cqlString(currentSeries.mainLanguage)}`]
       : [])
   ].join(" AND ");
 
-  return `${anded} NOT term.series='${currentSeries.title}'`;
+  return `${anded} NOT term.series=${cqlString(currentSeries.title)}`;
 };
 
 const useRelatedWorks = ({
