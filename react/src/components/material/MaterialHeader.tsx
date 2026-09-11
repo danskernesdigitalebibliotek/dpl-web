@@ -1,8 +1,5 @@
 import React, { useId } from "react";
-import { useDispatch } from "react-redux";
 import { useDeepCompareEffect } from "react-use";
-import { guardedRequest } from "../../core/guardedRequests.slice";
-import { TypedDispatch } from "../../core/store";
 import {
   convertPostIdToFaustId,
   getManifestationsPids,
@@ -11,9 +8,7 @@ import {
 } from "../../core/utils/helpers/general";
 import { WorkId } from "../../core/utils/types/ids";
 import { AvailabilityLabels } from "../availability-label/availability-labels";
-import ButtonFavourite, {
-  ButtonFavouriteId
-} from "../button-favourite/button-favourite";
+import ButtonFavourite from "../button-favourite/button-favourite";
 import { Cover } from "../cover/cover";
 import MaterialAvailabilityText from "./MaterialAvailabilityText/MaterialAvailabilityText";
 import MaterialHeaderText from "./MaterialHeaderText";
@@ -32,6 +27,7 @@ import { isPeriodical, shouldShowMaterialAvailabilityText } from "./helper";
 import { first } from "lodash";
 import { hasCorrectMaterialType } from "./material-buttons/helper";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
+import { useAddFavorite } from "../button-favourite/useAddFavorite";
 
 interface MaterialHeaderProps {
   wid: WorkId;
@@ -61,16 +57,7 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
   isAvailable
 }) => {
   const materialTitleId = useId();
-  const dispatch = useDispatch<TypedDispatch>();
-  const addToListRequest = (id: ButtonFavouriteId) => {
-    dispatch(
-      guardedRequest({
-        type: "addFavorite",
-        args: { id },
-        app: "material"
-      })
-    );
-  };
+  const addToListRequest = useAddFavorite({ app: "material" });
   const title = getWorkTitle(work);
   const pid = getWorkPid(work);
   const coverPids = getManifestationsPids(selectedManifestations);

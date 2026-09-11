@@ -28,6 +28,7 @@ import {
 import RelatedWorks from "./RelatedWorks";
 import SeriesCard from "./SeriesCard";
 import SeriesSkeleton, { headerCoverCount } from "./SeriesSkeleton";
+import { useAddFavorite } from "../../components/button-favourite/useAddFavorite";
 
 export type SeriesProps = {
   seriesId: string;
@@ -108,15 +109,7 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
     );
   }, [data, page]);
 
-  const addToListRequest = (id: ButtonFavouriteId) => {
-    dispatch(
-      guardedRequest({
-        type: "addFavorite",
-        args: { id },
-        app: "series"
-      })
-    );
-  };
+  const addToListRequest = useAddFavorite({ app: "series" });
 
   // The id matched nothing - the schema returns a nullable Series, so a miss
   // is a success carrying null.

@@ -102,7 +102,12 @@ const MaterialSlider: React.FC<MaterialSliderProps> = ({
   return (
     <div className="material-slider">
       <div className="material-slider__header">
-        <h2 className="material-slider__heading text-header-h2">{heading}</h2>
+        <h2
+          className="material-slider__heading text-header-h2"
+          data-cy="material-slider-heading"
+        >
+          {heading}
+        </h2>
         <div className="material-slider__controls">
           <button
             type="button"

@@ -30,7 +30,7 @@ type Reservations = {
   isError: boolean;
 };
 
-type UseReservationsType = {
+export type UseReservationsType = {
   all: Reservations;
   fbs: Reservations;
   // Digital reservations from both providers. During the transition a
