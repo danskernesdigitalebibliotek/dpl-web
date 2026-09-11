@@ -172,9 +172,12 @@ and the rule holds for the ones that do not.
 Save-time validation would not be enough, because scheduler transitions
 happen later on cron: nothing at save time can see that two messages with
 overlapping windows will both publish tomorrow morning. Rendering also
-picks a single global message defensively, newest first.
+picks a single global message defensively, most recently saved first.
 
-In-page messages have no such limit; several stack, newest first.
+In-page messages have no such limit; several stack, most recently saved
+first. Ordering on the last save rather than creation gives editors the
+only control they have over the stack: re-saving a message moves it to
+the top (KB-67).
 
 ### 6. Rendering
 
