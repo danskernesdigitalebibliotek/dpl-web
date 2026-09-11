@@ -1,4 +1,4 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { QueryKey, useQueryClient } from "@tanstack/react-query";
 import {
   getGetV1LoanstatusIdentifierQueryKey,
   getGetV1UserLoansQueryKey,
@@ -45,6 +45,15 @@ type useOnlineInternalHandleLoanReservationType = {
   modalsToClose?: string[];
 };
 
+/**
+ * How long a loan or reservation waits for the lists it changed to answer
+ * before the user is told it went through anyway. react-query retries a
+ * failed refetch with backoff, and a connection that drops mid-refetch pauses
+ * it until the device is back - neither may hold a receipt hostage for
+ * something the server has already done.
+ */
+const readBackGraceMs = 3000;
+
 const useOnlineInternalHandleLoanReservation = ({
   manifestations,
   openModal,
@@ -61,11 +70,6 @@ const useOnlineInternalHandleLoanReservation = ({
   const { openGuarded } = useModalButtonHandler();
   const { track } = useEventStatistics();
   const viaBiblioAdapter = useBiblioAdapter();
-  const { mutate: mutateLoan } = usePostV1UserLoansIdentifier();
-  const { mutate: mutateDigitalLoan } = useDigitalCreateLoan();
-  const { mutate: mutateReservation } = usePostV1UserReservationsIdentifier();
-  const { mutate: mutateDigitalReservation } = useDigitalCreateReservation();
-  const { mutate: mutateAcceptOffer } = useDigitalAcceptOffer();
   const { data: userData } = usePatronData();
 
   // No falling back: useReaderPlayer only reports a material as obtainable
@@ -78,14 +82,6 @@ const useOnlineInternalHandleLoanReservation = ({
     offerId: digitalOfferId
   } = useReaderPlayer(getLoanableManifestation(manifestations));
 
-  const reportLoan = (status: RequestStatus) => setLoanStatus?.(status);
-  const reportReservation = (status: RequestStatus) =>
-    setReservationStatus?.(status);
-  const reportPublizonError = (err: unknown) => {
-    if (err instanceof PublizonServiceError) {
-      setReservationOrLoanErrorResponse?.(err.responseBody);
-    }
-  };
   const trackLoan = () =>
     track("click", {
       id: statistics.publizonLoan.id,
@@ -99,15 +95,113 @@ const useOnlineInternalHandleLoanReservation = ({
       trackedData: workId
     });
 
-  // Everything the adapter's answer for this material was derived from is
-  // stale once the user has borrowed or reserved it.
+  /**
+   * Refetch the given lists and answer once they have landed, or once the
+   * grace period is up, whichever comes first.
+   *
+   * The mutations below await this, which is what keeps them pending until
+   * the read-back is in: the receipt hands the user the same buttons the
+   * material page has, and read off lists that have not caught up they offer
+   * the loan that was just made. `refetchType: "all"` so the promise means
+   * "the answer is in" even for a list nothing is showing at the time.
+   */
+  const invalidate = (...queryKeys: QueryKey[]) =>
+    Promise.race([
+      Promise.all(
+        queryKeys.map((queryKey) =>
+          queryClient.invalidateQueries({ queryKey, refetchType: "all" })
+        )
+      ),
+      new Promise((resolve) => {
+        setTimeout(resolve, readBackGraceMs);
+      })
+    ]);
+
+  /** Everything the adapter's answer for this material was derived from. */
   const invalidateDigital = () => {
-    [
+    // The quota is read on the material page, never on the receipt, so it is
+    // refreshed without holding the user up.
+    queryClient.invalidateQueries({ queryKey: digitalLoanQuotasQueryKey() });
+
+    return invalidate(
       digitalLoansQueryKey(),
       digitalReservationsQueryKey(),
-      digitalLoanDecisionQueryKey(identifier),
-      digitalLoanQuotasQueryKey()
-    ].forEach((queryKey) => queryClient.invalidateQueries({ queryKey }));
+      digitalLoanDecisionQueryKey(identifier)
+    );
+  };
+
+  /** Publizon's half of the same staleness. */
+  const invalidatePublizon = (holdings: QueryKey, materialId: string) =>
+    invalidate(holdings, getGetV1LoanstatusIdentifierQueryKey(materialId));
+
+  // What follows from the request itself - counting it, and refetching what
+  // it changed - hangs off the mutations rather than off the mutate calls
+  // below: those belong to the modal, and are skipped altogether if the user
+  // closes it while the read-back is still running.
+  const { mutate: mutateLoan, isPending: isLoaningViaPublizon } =
+    usePostV1UserLoansIdentifier({
+      mutation: {
+        onSuccess: (_result, { identifier: materialId }) => {
+          trackLoan();
+          return invalidatePublizon(getGetV1UserLoansQueryKey(), materialId);
+        }
+      }
+    });
+  const { mutate: mutateDigitalLoan, isPending: isLoaningViaAdapter } =
+    useDigitalCreateLoan({
+      onSuccess: (result) => {
+        // A request the adapter accepted without acting on - a spent quota,
+        // say - changed nothing, so there is nothing to count or refetch.
+        if (!result.loan) return undefined;
+        trackLoan();
+        return invalidateDigital();
+      }
+    });
+  const { mutate: mutateReservation, isPending: isReservingViaPublizon } =
+    usePostV1UserReservationsIdentifier({
+      mutation: {
+        onSuccess: (_result, { identifier: materialId }) => {
+          trackReservation();
+          return invalidatePublizon(
+            getGetV1UserReservationsQueryKey(),
+            materialId
+          );
+        }
+      }
+    });
+  const { mutate: mutateDigitalReservation, isPending: isReservingViaAdapter } =
+    useDigitalCreateReservation({
+      onSuccess: (result) => {
+        if (!isRequestGranted(result.status)) return undefined;
+        trackReservation();
+        return invalidateDigital();
+      }
+    });
+  const { mutate: mutateAcceptOffer, isPending: isAcceptingOffer } =
+    useDigitalAcceptOffer({
+      onSuccess: (result) => {
+        if (!result.success) return undefined;
+        trackLoan();
+        return invalidateDigital();
+      }
+    });
+
+  // A request is in flight until its read-back has landed, because that is
+  // what the mutations above wait for.
+  const isSubmitting =
+    isLoaningViaPublizon ||
+    isLoaningViaAdapter ||
+    isReservingViaPublizon ||
+    isReservingViaAdapter ||
+    isAcceptingOffer;
+
+  const reportLoan = (status: RequestStatus) => setLoanStatus?.(status);
+  const reportReservation = (status: RequestStatus) =>
+    setReservationStatus?.(status);
+  const reportPublizonError = (err: unknown) => {
+    if (err instanceof PublizonServiceError) {
+      setReservationOrLoanErrorResponse?.(err.responseBody);
+    }
   };
 
   const acceptOffer = (offerId: string) => {
@@ -117,12 +211,10 @@ const useOnlineInternalHandleLoanReservation = ({
           reportLoan("error");
           return;
         }
-        trackLoan();
-        invalidateDigital();
-        reportLoan("success");
         // Accepting an offer answers with the loan id only, so the
         // expiration date is not known until the loan list is refetched.
         setLoanResponse?.(null);
+        reportLoan("success");
       },
       onError: () => reportLoan("error")
     });
@@ -137,11 +229,9 @@ const useOnlineInternalHandleLoanReservation = ({
           reportLoan("error");
           return;
         }
-        trackLoan();
-        invalidateDigital();
-        reportLoan("success");
         // Map to the shape the success modal expects.
         setLoanResponse?.({ expirationDateUtc: result.loan.endDate });
+        reportLoan("success");
       },
       onError: () => reportLoan("error")
     });
@@ -152,16 +242,8 @@ const useOnlineInternalHandleLoanReservation = ({
       { identifier: materialId },
       {
         onSuccess: (res) => {
-          trackLoan();
-          // Ensure that the button is updated after a successful loan
-          queryClient.invalidateQueries({
-            queryKey: getGetV1UserLoansQueryKey()
-          });
-          queryClient.invalidateQueries({
-            queryKey: getGetV1LoanstatusIdentifierQueryKey(materialId)
-          });
-          reportLoan("success");
           setLoanResponse?.(res);
+          reportLoan("success");
         },
         onError: (err) => {
           reportPublizonError(err);
@@ -181,10 +263,6 @@ const useOnlineInternalHandleLoanReservation = ({
           reportReservation("error");
           return;
         }
-        trackReservation();
-        // A reservation can be granted right away, in which case the
-        // adapter answers with a loan instead.
-        invalidateDigital();
         reportReservation("success");
       },
       onError: () => reportReservation("error")
@@ -209,17 +287,7 @@ const useOnlineInternalHandleLoanReservation = ({
         }
       },
       {
-        onSuccess: () => {
-          trackReservation();
-          // Ensure that the button is updated after a successful reservation
-          queryClient.invalidateQueries({
-            queryKey: getGetV1UserReservationsQueryKey()
-          });
-          queryClient.invalidateQueries({
-            queryKey: getGetV1LoanstatusIdentifierQueryKey(materialId)
-          });
-          reportReservation("success");
-        },
+        onSuccess: () => reportReservation("success"),
         onError: (err) => {
           reportPublizonError(err);
           reportReservation("error");
@@ -261,7 +329,7 @@ const useOnlineInternalHandleLoanReservation = ({
     }
   };
 
-  return handleModalLoanReservation;
+  return { handleModalLoanReservation, isSubmitting };
 };
 
 export default useOnlineInternalHandleLoanReservation;
