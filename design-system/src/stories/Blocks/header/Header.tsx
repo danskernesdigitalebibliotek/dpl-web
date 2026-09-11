@@ -43,6 +43,7 @@ export const Header = ({
             libraryName="Hjørring"
             libraryPlace="Bibliotekerne"
             altText="PromoTitle image of library"
+            frontpageLabel="forside"
           />
         </div>
 
@@ -74,6 +75,7 @@ export const Header = ({
                     libraryName="Lyngby-Taarbæk"
                     libraryPlace="Bibliotekerne"
                     altText="PromoTitle image of library"
+                    frontpageLabel="forside"
                   />
                 </div>
               </div>
