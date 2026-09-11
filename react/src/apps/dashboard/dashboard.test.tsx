@@ -1345,7 +1345,61 @@ describe("Dashboard", () => {
       }
     ).as("renew");
 
+    // The recommendations section bases itself on a random loan, reservation
+    // or favorite. The loans above carry fausts, so the recommend query is
+    // asked by faust and the ISBN lookup never fires. The favorites list is
+    // still fetched, so it needs an answer too.
+    cy.intercept("GET", "**/list/default**", {
+      statusCode: 200,
+      body: { id: "default", collections: [] }
+    }).as("favorites");
+
+    cy.interceptGraphql({
+      operationName: "getDashboardRecommendations",
+      body: {
+        data: {
+          recommend: {
+            result: [
+              {
+                work: {
+                  workId: "work-of:870970-basis:28822332",
+                  titles: { full: ["Alle vi børn i Snullerby"] },
+                  creators: [{ display: "Astrid Lindgren" }],
+                  manifestations: {
+                    bestRepresentation: { cover: { large: null } }
+                  }
+                }
+              },
+              {
+                work: {
+                  workId: "work-of:870970-basis:29048363",
+                  titles: { full: ["Pippi Langstrømpe"] },
+                  creators: [{ display: "Astrid Lindgren" }],
+                  manifestations: {
+                    bestRepresentation: { cover: { large: null } }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    });
+
     cy.visit("/iframe.html?id=apps-dashboard--primary&viewMode=story");
+  });
+
+  it("shows recommendations based on one of the patron's materials", () => {
+    cy.wait("@getDashboardRecommendations GraphQL operation");
+
+    cy.getBySel("material-slider-heading").should(
+      "have.text",
+      "Inspiration for you"
+    );
+    cy.getBySel("recommended-description")
+      .should("have.length", 2)
+      .first()
+      .should("have.text", "Alle vi børn i Snullerby");
   });
 
   it.skip("Dashboard general", () => {
