@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
@@ -7,7 +6,6 @@ import {
   getManifestationBasedOnType
 } from "../../apps/material/helper";
 import RecommendedMaterialSkeleton from "./RecommendedMaterialSkeleton";
-import Link from "../../components/atoms/links/Link";
 import ButtonFavourite, {
   ButtonFavouriteId
 } from "../../components/button-favourite/button-favourite";
@@ -27,6 +25,7 @@ import { ManifestationMaterialType } from "../../core/utils/types/material-type"
 import { useUrls } from "../../core/utils/url";
 import { useEventStatistics } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
+import { StaticRecommendedMaterial } from "./static-recommended-material";
 
 export type RecommendedMaterialProps = {
   wid: WorkId;
@@ -106,52 +105,33 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
     });
 
   return (
-    <div
-      className={clsx(
-        "recommended-material",
-        partOfGrid && "recommended-material--in-grid"
-      )}
-    >
-      <div className="recommended-material__icon">
+    <StaticRecommendedMaterial
+      title={fullTitle.join(", ")}
+      author={author}
+      isPartOfGrid={partOfGrid}
+      linkProps={{
+        href: materialFullUrl,
+        trackClick: trackData
+      }}
+      cover={
+        <Cover
+          ids={[pid]}
+          url={materialFullUrl}
+          size="large"
+          animate
+          alt=""
+          shadow="medium"
+          trackClick={trackData}
+        />
+      }
+      favoriteButton={
         <ButtonFavourite
           title={String(fullTitle)}
           id={wid}
           addToListRequest={addToListRequest}
         />
-      </div>
-      <Cover
-        ids={[pid]}
-        url={materialFullUrl}
-        size="large"
-        animate
-        alt=""
-        shadow="medium"
-        trackClick={trackData}
-      />
-      <div className="recommended-material__texts">
-        {fullTitle && (
-          <Link
-            href={materialFullUrl}
-            className="recommended-material__description"
-            dataCy="recommended-description"
-            trackClick={trackData}
-          >
-            {fullTitle}
-          </Link>
-        )}
-
-        {author && (
-          <Link
-            href={materialFullUrl}
-            className="recommended-material__author"
-            dataCy="recommended-author"
-            trackClick={trackData}
-          >
-            {author}
-          </Link>
-        )}
-      </div>
-    </div>
+      }
+    />
   );
 };
 export default RecommendedMaterialComp;
