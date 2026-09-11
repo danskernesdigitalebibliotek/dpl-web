@@ -6,12 +6,11 @@ import { getBaseURL } from "@/lib/config/getBaseURL"
 import goConfig from "./lib/config/goConfig"
 import { refreshUniloginTokens } from "./lib/helpers/bearer-token"
 import { ensureLibraryTokenExist } from "./lib/helpers/middleware"
-import { userIsAnonymous, userIsLoggedInAtDplCms } from "./lib/helpers/user"
+import { hasDplCmsSessionCookie, userIsAnonymous } from "./lib/helpers/user"
 import { loadUserToken } from "./lib/helpers/user-token"
 import { getUniloginClientConfig } from "./lib/session/oauth/uniloginClient"
 import {
   adgangsplatformenAccessTokenHasExpired,
-  adgangsplatformenAccessTokenShouldBeRefreshed,
   destroySession,
   getDplCmsSessionCookie,
   getSession,
@@ -64,19 +63,27 @@ export async function proxy(request: NextRequest) {
   }
 
   if (adgangsplatformenAccessTokenHasExpired(session)) {
+    // The Drupal session outlives the user token by weeks. Send the browser
+    // through the full logout flow so the CMS (and Adgangsplatformen SSO)
+    // session is torn down too — otherwise the CMS keeps serving the same
+    // dead token and the session resurrects on the next request.
+    // Only top-level navigations can be redirected through an external logout
+    // flow; other requests (RSC, prefetch, fetch) fall back to local teardown.
+    if (request.headers.get("sec-fetch-dest") === "document") {
+      return NextResponse.redirect(`${getBaseURL()}/auth/logout`)
+    }
     destroySession(session)
     return response
   }
 
-  // If the session is not logged in we will try to see if we have an ongoing Adgangsplatformen Drupal session.
-  // If we have an active Drupal session we will try to load the user token from dpl-cms.
-  // OR:
-  // If the Adgangsplatformen user token is about to expire we will reload it from dpl-cms.
-  const userIsLoggedInAtCms = await userIsLoggedInAtDplCms()
-  if (
-    (userIsAnonymous(session) && userIsLoggedInAtCms) ||
-    adgangsplatformenAccessTokenShouldBeRefreshed(session)
-  ) {
+  // If the session is not logged in but the browser carries a Drupal session
+  // cookie, we will try to load the user token from dpl-cms. loadUserToken()
+  // settles whether the cookie still represents a logged-in user with a live
+  // token — a lingering cookie for a dead session yields null.
+  // There is no refresh path: the CMS returns the token stored at login
+  // verbatim and cannot renew it, so the GO session lives exactly as long as
+  // the user token — a dead token means a new login.
+  if (userIsAnonymous(session) && (await hasDplCmsSessionCookie())) {
     const tokenData = await loadUserToken()
     if (tokenData) {
       await saveAdgangsplatformenSession(session, tokenData)
