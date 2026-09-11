@@ -2358,7 +2358,8 @@ export type ComplexSuggestQuery = {
 };
 
 export type GetDashboardRecommendationsQueryVariables = Exact<{
-  faust: Scalars["String"]["input"];
+  faust?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
   limit: Scalars["Int"]["input"];
 }>;
 
@@ -9796,8 +9797,8 @@ export const useComplexSuggestQuery = <
 };
 
 export const GetDashboardRecommendationsDocument = `
-    query getDashboardRecommendations($faust: String!, $limit: Int!) {
-  recommend(faust: $faust, limit: $limit) {
+    query getDashboardRecommendations($faust: String, $id: String, $limit: Int!) {
+  recommend(faust: $faust, id: $id, limit: $limit) {
     result {
       work {
         workId

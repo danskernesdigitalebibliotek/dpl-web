@@ -1,5 +1,5 @@
-query getDashboardRecommendations($faust: String!, $limit: Int!) {
-  recommend(faust: $faust, limit: $limit) {
+query getDashboardRecommendations($faust: String, $id: String, $limit: Int!) {
+  recommend(faust: $faust, id: $id, limit: $limit) {
     result {
       work {
         workId
