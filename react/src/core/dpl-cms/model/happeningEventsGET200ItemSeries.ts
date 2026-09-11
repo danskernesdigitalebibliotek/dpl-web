@@ -9,7 +9,7 @@
 /**
  * An event may be part of a series. One example of this is recurring events.
  */
-export type CurrentEventsGET200ItemSeries = {
+export type HappeningEventsGET200ItemSeries = {
   /** The unique identifier for the series. All events belonging to the same series will have the same value. */
   uuid: string;
 };

@@ -5,13 +5,13 @@
  * The REST API provided by the core REST module.
  * OpenAPI spec version: Versioning not supported
  */
-import type { CurrentEventsGET200ItemTicketCategoriesItemPrice } from "./currentEventsGET200ItemTicketCategoriesItemPrice";
+import type { HappeningEventsGET200ItemTicketCategoriesItemPrice } from "./happeningEventsGET200ItemTicketCategoriesItemPrice";
 
-export type CurrentEventsGET200ItemTicketCategoriesItem = {
+export type HappeningEventsGET200ItemTicketCategoriesItem = {
   /** A unique identifier for the ticket category. */
   uuid?: string;
   /** The name of the ticket category. */
   title: string;
   /** The price of a ticket in the category */
-  price: CurrentEventsGET200ItemTicketCategoriesItemPrice;
+  price: HappeningEventsGET200ItemTicketCategoriesItemPrice;
 };
