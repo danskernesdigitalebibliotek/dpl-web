@@ -76,6 +76,7 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   reservations,
   favorites
 }) => {
+  const t = useText();
   const u = useUrls();
   const materialUrl = u("materialUrl");
   const addToListRequest = useAddFavorite({ app: "dashboard" });
@@ -112,7 +113,7 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   return (
     <section className="related-works">
       <MaterialSlider
-        heading={"Sweet nok heading, synes du ikke?"}
+        heading={t("dashboardRecommendationsHeadingText")}
         items={works.map((work) => ({
           id: work.workId,
           title: work.title,
