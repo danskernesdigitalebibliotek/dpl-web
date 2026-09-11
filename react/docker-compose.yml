@@ -1,14 +1,8 @@
 version: "3.7"
 
-# The volumes below are binds to $PWD, so containers writing into them must
-# run as the host user or the repo fills up with files you cannot edit.
-x-user: &default-user
-  user: ${UID:-1000}:${GID:-0}
-
 services:
   wiremock:
     image: up9inc/wiremock-studio:2.32.0-18
-    <<: *default-user
     ports:
       - "9000"
       # FBS
@@ -25,7 +19,6 @@ services:
 
   wiremock-fbs:
     image: wiremock/wiremock:2.32.0
-    <<: *default-user
     command: "--enable-stub-cors  --global-response-templating" # Enable automatic sending of cross-origin (CORS) response headers.
     ports:
       - "8080"
@@ -37,7 +30,6 @@ services:
 
   wiremock-publizon:
     image: wiremock/wiremock:2.32.0
-    <<: *default-user
     command: "--enable-stub-cors  --global-response-templating" # Enable automatic sending of cross-origin (CORS) response headers.
     ports:
       - "8080"
@@ -49,7 +41,6 @@ services:
 
   wiremock-cms:
     image: wiremock/wiremock:2.32.0
-    <<: *default-user
     command: "--enable-stub-cors  --global-response-templating" # Enable automatic sending of cross-origin (CORS) response headers.
     ports:
       - "8080"

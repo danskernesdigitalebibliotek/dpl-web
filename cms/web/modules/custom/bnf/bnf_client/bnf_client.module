@@ -1,15 +1,8 @@
 <?php
 
 use Drupal\bnf\BnfStateEnum;
-use Drupal\bnf_client\Hook\EntityHooks;
-use Drupal\bnf_client\Hook\FormHooks;
-use Drupal\bnf_client\Hook\JobSchedulerHooks;
-use Drupal\bnf_client\Hook\SubscriptionHooks;
 use Drupal\bnf_client\Services\BnfExporter;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\drupal_typed\DrupalTyped;
 
 /**
@@ -65,69 +58,4 @@ function bnf_client_form_node_form_submit(array $form, FormStateInterface $form_
     \Drupal::logger('bnf_client')->error('Could not export node to BNF. @message', ['@message' => $e->getMessage()]);
 
   }
-}
-
-/*
- * The following hook functions is for Drupal 10, they can be removed, together
- * with the hook class service in `bnf_client.services.yml` when upgrading to
- * Drupal 11.
- */
-
-/**
- * Implements hook_form_alter().
- *
- * Altering the node edit form, and adding an option to export the node to BNF.
- * If checked, a custom form submit handler will take care of the rest.
- *
- * @see bnf_client_form_node_form_submit()
- */
-#[LegacyHook]
-function bnf_client_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
-  \Drupal::service(FormHooks::class)->nodeFormAlter($form, $form_state, $form_id);
-}
-
-/**
- * Implements hook_entity_base_field_info().
- *
- * @return \Drupal\Core\Field\FieldDefinitionInterface[]
- *   The field definitions.
- */
-#[LegacyHook]
-function bnf_client_entity_base_field_info(EntityTypeInterface $entity_type): array {
-  return \Drupal::service(EntityHooks::class)->baseFieldInfo($entity_type);
-}
-
-/**
- * Implements hook_ENTITY_TYPE_insert().
- */
-#[LegacyHook]
-function bnf_client_bnf_subscription_insert(EntityInterface $entity): void {
-  \Drupal::service(SubscriptionHooks::class)->queueUpdate($entity);
-}
-
-/**
- * Implements hook_ENTITY_TYPE_update().
- */
-#[LegacyHook]
-function bnf_client_bnf_subscription_update(EntityInterface $entity): void {
-  \Drupal::service(SubscriptionHooks::class)->queueUpdate($entity);
-}
-
-/**
- * Implements hook_ENTITY_TYPE_delete().
- */
-#[LegacyHook]
-function bnf_client_bnf_subscription_delete(EntityInterface $entity): void {
-  \Drupal::service(SubscriptionHooks::class)->subscriptionDelete($entity);
-}
-
-/**
- * Implements hook_cron_job_scheduler_info().
- *
- * @return non-empty-array<string, array{'worker callback': callable}>
- *   Job scheduler information.
- */
-#[LegacyHook]
-function bnf_client_cron_job_scheduler_info(): array {
-  return \Drupal::service(JobSchedulerHooks::class)->subscriptionsUpdateJobSchedule();
 }

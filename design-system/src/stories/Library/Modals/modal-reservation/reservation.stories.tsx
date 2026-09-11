@@ -19,11 +19,16 @@ export default {
     state: { name: "State for reservation", control: { type: "text" } },
     showPromoBar: { name: "Show PromoBar", control: "boolean" },
     showInstantLoan: { name: "Show instant loan", control: "boolean" },
+    showRecommendations: {
+      name: "Show recommendations (success state)",
+      control: "boolean",
+    },
   },
   args: {
     state: "initial",
     showPromoBar: false,
     showInstantLoan: false,
+    showRecommendations: true,
     label: "bog",
     title: "Stephen Hawking",
     author: "Af Isabel Sánchez Vegara, Amaia Arrazola (2018)",
@@ -63,4 +68,15 @@ WithInstantLoan.args = {
   submitInfo: "Vi har 8 eksemplarer og 21 står i kø",
   submitButton: "GODKEND RESERVERING",
   showInstantLoan: true,
+};
+
+export const Success = Template.bind({});
+Success.args = {
+  state: "success",
+};
+
+export const SuccessWithoutRecommendations = Template.bind({});
+SuccessWithoutRecommendations.args = {
+  state: "success",
+  showRecommendations: false,
 };

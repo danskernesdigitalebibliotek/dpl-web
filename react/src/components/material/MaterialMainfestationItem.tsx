@@ -20,6 +20,7 @@ import {
   getManifestationAudience,
   getManifestationAuthors,
   getManifestationContributors,
+  getManifestationDigitalIdentifier,
   getManifestationEdition,
   getManifestationGenreAndForm,
   getManifestationIsbn,
@@ -48,7 +49,7 @@ export interface MaterialMainfestationItemProps {
 }
 
 const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
-  manifestation: { materialTypes, pid, creators, identifiers, edition },
+  manifestation: { materialTypes, pid, creators, edition },
   manifestation,
   workId,
   isEditionPicker = false
@@ -139,7 +140,7 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
           key={`${faustId}-material-manifestation-item`}
           manifestText={materialTypes[0]?.materialTypeSpecific.display}
           faustIds={[faustId]}
-          isbns={identifiers.map((identifier) => identifier.value)}
+          identifier={getManifestationDigitalIdentifier(manifestation) || null}
           accessTypes={accessTypesCodes}
           access={access}
           isVisualOnly

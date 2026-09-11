@@ -19,6 +19,18 @@ Cypress.on("uncaught:exception", (err) => {
   return true;
 });
 
+// Stop the whole run at the first failing test when CYPRESS_FAIL_FAST=1.
+// A local run is usually about one broken thing, and letting the remaining
+// tests play out only delays the output that says what broke. Off by default,
+// so CI still runs every test.
+if (Cypress.env("FAIL_FAST")) {
+  afterEach(function stopOnFirstFailure(this: Mocha.Context) {
+    if (this.currentTest?.state === "failed") {
+      (Cypress as unknown as { runner: { stop: () => void } }).runner.stop();
+    }
+  });
+}
+
 // Stub real FBI cover image bytes for every spec so tests never touch the live
 // network. Specs that need a different stub can override with their own
 // cy.intercept — the most-recently-registered intercept wins.

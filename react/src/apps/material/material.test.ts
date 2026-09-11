@@ -445,6 +445,10 @@ describe("Material", () => {
       operationName: "getMaterial",
       fixtureFilePath: "material/fbi-api.json"
     });
+    cy.interceptGraphql({
+      operationName: "WorkRecommendations",
+      fixtureFilePath: "material/material-grid-related-recommendations.json"
+    });
     cy.createFakeAuthenticatedSession();
     cy.visit("/iframe.html?id=apps-material--default&viewMode=story&type=bog");
 
@@ -467,7 +471,7 @@ describe("Material", () => {
 
     cy.getBySel("reservation-success-title-text")
       .should("be.visible")
-      .and("contain", "Material is available and reserved for you!");
+      .and("contain", '"De syv søstre" is reserved for you');
 
     cy.getBySel("number-in-queue-text")
       .should("be.visible")

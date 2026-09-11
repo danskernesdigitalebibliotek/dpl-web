@@ -1,9 +1,7 @@
 {
   "name": "@danskernesdigitalebibliotek/dpl-react",
   "version": "1.0.0",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
+  "private": true,
   "engines": {
     "node": "24.15.0",
     "pnpm": "^10"
@@ -28,7 +26,7 @@
     "watch:lint:scss": "chokidar \"./src/**/*.scss\" -c \"pnpm run lint:scss:fix\"",
     "watch:lint:js": "chokidar \"./src/**/*.{js,jsx,ts,tsx}\" -c \"pnpm run lint:js\"",
     "build:storybook": "storybook build -c .storybook -o dev",
-    "start:storybook:test": "NODE_ENV=test storybook dev --port 57021 --quiet --ci",
+    "start:storybook:test": "NODE_ENV=test storybook dev --port 57021 --exact-port --quiet --ci",
     "start:storybook:dev": "NODE_ENV=development storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
     "dev": "corepack pnpm dlx concurrently --raw \"pnpm run start:storybook:dev\" \"pnpm run watch\"",
     "typecheck": "tsc --noEmit",
@@ -50,7 +48,7 @@
     "@chromatic-com/storybook": "^3",
     "@csstools/postcss-sass": "^5.1.1",
     "@cypress/code-coverage": "^4.0.3",
-    "@cypress/webpack-preprocessor": "^7.1.2",
+    "@cypress/webpack-preprocessor": "^8.0.0",
     "@eslint/js": "^9.39.2",
     "@graphql-codegen/add": "^6.0.1",
     "@graphql-codegen/cli": "^6.3.1",
@@ -94,7 +92,7 @@
     "concurrently": "^10.0.5",
     "core-js": "^3.50.0",
     "css-loader": "^7.1.5",
-    "cssnano": "^8.0.10",
+    "cssnano": "^9.0.1",
     "cypress": "15.18.0",
     "cypress-terminal-report": "^7.3.3",
     "dotenv": "^16.5.0",
@@ -141,10 +139,12 @@
     "vitest": "^2.1.9",
     "webpack": "^5.110.1",
     "webpack-cli": "^7.2.3",
-    "webpack-version-file-plugin": "0.5.0"
+    "webpack-version-file-plugin": "0.6.0"
   },
   "dependencies": {
     "@danskernesdigitalebibliotek/dpl-design-system": "workspace:*",
+    "@danskernesdigitalebibliotek/dpl-service-layer": "workspace:*",
+    "@danskernesdigitalebibliotek/dpl-wedobooks": "workspace:*",
     "@fullcalendar/react": "^7.0.2",
     "@hammzj/cypress-page-object": "^2.3.0",
     "@headlessui/react": "^2.2.10",

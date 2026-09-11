@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  getAllFaustIds,
-  getMaterialType
-} from "../../core/utils/helpers/general";
+import { getMaterialType } from "../../core/utils/helpers/general";
 import { useText } from "../../core/utils/text";
 import { Cover } from "../cover/cover";
 import { Manifestation } from "../../core/utils/types/entities";
@@ -43,7 +40,6 @@ const OnlineInternalModalBody = ({
     useState<ApiResult | null>(null);
 
   const manifestationType = getMaterialType(selectedManifestations);
-  const faustIds = getAllFaustIds(selectedManifestations);
   const manifestation = selectedManifestations[0];
   const authorLine = getAuthorLine(manifestation, t);
 
@@ -52,7 +48,7 @@ const OnlineInternalModalBody = ({
     getLoanableManifestation(selectedManifestations)
   );
 
-  if (loanStatus === "success" && loanResponse?.expirationDateUtc) {
+  if (loanStatus === "success") {
     return (
       <ModalMessage
         title={t("onlineInternalResponseLoanedTitleText")}
@@ -60,16 +56,21 @@ const OnlineInternalModalBody = ({
           placeholders: { "@title": manifestation.titles.main[0] }
         })}
       >
-        <p
-          data-cy="open-oprder-response-status-text"
-          className="text-body-medium-regular pt-24 mb-24"
-        >
-          {t("onlineInternalSuccessLoanedText", {
-            placeholders: {
-              "@expirationDate": formatDate(loanResponse.expirationDateUtc)
-            }
-          })}
-        </p>
+        {/* Accepting an offer answers with the loan id only, so the
+            expiration date is not always known - the loan succeeded either
+            way, and the sentence about the date is simply left out. */}
+        {loanResponse?.expirationDateUtc && (
+          <p
+            data-cy="open-oprder-response-status-text"
+            className="text-body-medium-regular pt-24 mb-24"
+          >
+            {t("onlineInternalSuccessLoanedText", {
+              placeholders: {
+                "@expirationDate": formatDate(loanResponse.expirationDateUtc)
+              }
+            })}
+          </p>
+        )}
         <MaterialButtonsOnlineInternal
           openModal={false}
           manifestations={selectedManifestations}
@@ -117,7 +118,7 @@ const OnlineInternalModalBody = ({
         })}
         ctaButton={{
           text: t("tryAginButtonText"),
-          modalId: onlineInternalModalId(faustIds),
+          modalId: onlineInternalModalId(selectedManifestations),
           dataCy: "online-internal-close-button"
         }}
       >
@@ -157,7 +158,7 @@ const OnlineInternalModalBody = ({
           <div className="reservation-modal-submit">
             {identifier && (
               <MaterialAvailabilityTextOnline
-                isbns={[identifier]}
+                identifier={identifier}
                 materialType={manifestationType}
               />
             )}
