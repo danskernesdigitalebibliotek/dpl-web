@@ -19,6 +19,7 @@ dependencies:
     - node.type.go_category
     - node.type.go_page
     - node.type.page
+    - node.type.service_message
     - taxonomy.vocabulary.tags
   module:
     - administerusersbyrole
@@ -76,6 +77,7 @@ permissions:
   - 'create image media'
   - 'create media'
   - 'create page content'
+  - 'create service_message content'
   - 'create terms in tags'
   - 'create url aliases'
   - 'create video media'
@@ -90,6 +92,7 @@ permissions:
   - 'delete any image media'
   - 'delete any media'
   - 'delete any page content'
+  - 'delete any service_message content'
   - 'delete any video media'
   - 'delete any videotool media'
   - 'delete eventinstance entity'
@@ -107,6 +110,7 @@ permissions:
   - 'delete own go_page content'
   - 'delete own image media'
   - 'delete own page content'
+  - 'delete own service_message content'
   - 'delete own video media'
   - 'delete own videotool media'
   - 'dpl admin access pages'
@@ -119,6 +123,7 @@ permissions:
   - 'edit any go_page content'
   - 'edit any image media'
   - 'edit any page content'
+  - 'edit any service_message content'
   - 'edit any video media'
   - 'edit any videotool media'
   - 'edit eventinstance entity'
@@ -134,6 +139,7 @@ permissions:
   - 'edit own go_page content'
   - 'edit own image media'
   - 'edit own page content'
+  - 'edit own service_message content'
   - 'edit own video media'
   - 'edit own videotool media'
   - 'edit terms in tags'
@@ -154,6 +160,7 @@ permissions:
   - 'view any unpublished go_category content'
   - 'view any unpublished go_page content'
   - 'view any unpublished page content'
+  - 'view any unpublished service_message content'
   - 'view own unpublished content'
   - 'view own unpublished media'
   - 'view scheduled content'

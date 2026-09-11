@@ -38,6 +38,8 @@ entity_config:
       enabled: true
       query_load_enabled: true
       routes_enabled: true
+    service_message:
+      enabled: false
   paragraph:
     accordion:
       enabled: true

@@ -1,0 +1,23 @@
+services:
+  Drupal\dpl_service_message\Services\ServiceMessageLoader:
+    class: Drupal\dpl_service_message\Services\ServiceMessageLoader
+    arguments:
+      - '@entity_type.manager'
+      - '@current_route_match'
+      - '@path.matcher'
+      - '@handy_cache_tags.manager'
+      - '@path_alias.manager'
+      - '@config.factory'
+  Drupal\dpl_service_message\Hook\DplServiceMessageHooks:
+    class: Drupal\dpl_service_message\Hook\DplServiceMessageHooks
+    arguments:
+      - '@Drupal\dpl_service_message\Services\ServiceMessageLoader'
+      - '@entity_type.manager'
+      - '@current_user'
+      - '@router.admin_context'
+  dpl_service_message.route_subscriber:
+    class: Drupal\dpl_service_message\EventSubscriber\ServiceMessageRouteSubscriber
+    arguments:
+      - '@page_cache_kill_switch'
+    tags:
+      - { name: event_subscriber }

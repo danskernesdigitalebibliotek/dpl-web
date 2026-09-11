@@ -1,0 +1,45 @@
+{% extends '@dpl_service_message/dpl-service-messages.html.twig' %}
+
+{% block content %}
+  <section class="service-messages"
+    aria-label="{{ 'Service messages'|t({}, {context: 'dpl_service_message'}) }}">
+    <div class="service-messages__container">
+      {# One icon for the whole group, not one per message. #}
+      <span class="service-messages__icon" aria-hidden="true">
+        {{ source(themeIconPath ~ '/icon-bell.svg') }}
+      </span>
+
+      <ul class="service-messages__list">
+        {% for message in messages %}
+          {% set tag = message.url ? 'a' : 'div' %}
+
+          <li class="service-messages__item">
+            <{{ tag }}
+              {% if message.url %}href="{{ message.url }}"{% endif %}
+              class="service-messages__message{{ message.url ? ' arrow arrow__hover--right-small' : '' }}">
+
+              <div class="service-messages__text">
+                {# Deliberately not a heading element: the container renders above the
+                   page's h1, so any level chosen here skips the document hierarchy
+                   (KB-64, WCAG 1.3.1). `strong` marks it as important without
+                   claiming a level (KB-58). The global bar does the same. #}
+                {% if message.heading %}
+                  <strong class="service-messages__heading">{{ message.heading }}</strong>
+                {% endif %}
+                {% if message.body %}
+                  <div class="service-messages__body">{{ message.body }}</div>
+                {% endif %}
+              </div>
+
+              {% if message.url %}
+                <span class="service-messages__arrow" aria-hidden="true">
+                  {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
+                </span>
+              {% endif %}
+            </{{ tag }}>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endblock %}

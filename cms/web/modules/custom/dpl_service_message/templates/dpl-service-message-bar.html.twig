@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * The global service message: a bar above the header, on every page.
+ *
+ * Available variables:
+ * - message: heading, body and url. Any of them may be empty.
+ *
+ * The theme overrides the content block with the real component markup.
+ */
+#}
+{% block content %}
+  {# A named landmark rather than a live region. The message is server-rendered
+     and never changes after load, so `status`/`alert` would announce nothing;
+     a named region instead lets screen reader users find it and skip past it.
+     The name also carries what the bell icon carries visually - the icon is
+     decorative and hidden below. #}
+  <section class="service-message-bar"
+    aria-label="{{ 'Important service message'|t({}, {context: 'dpl_service_message'}) }}">
+    {% if message.url %}<a href="{{ message.url }}">{% endif %}
+      <strong>{{ message.heading }}</strong>
+      {{ message.body }}
+    {% if message.url %}</a>{% endif %}
+  </section>
+{% endblock content %}

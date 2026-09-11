@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * In-page service messages, stacked in one container.
+ *
+ * Available variables:
+ * - messages: a list of heading, body and url. Any of them may be empty.
+ *
+ * The theme overrides the content block with the real component markup.
+ */
+#}
+{% block content %}
+  {# A named landmark rather than a live region - see the bar template. #}
+  <section class="service-messages"
+    aria-label="{{ 'Service messages'|t({}, {context: 'dpl_service_message'}) }}">
+    {% for message in messages %}
+      <div class="service-messages__item">
+        {% if message.url %}<a href="{{ message.url }}">{% endif %}
+          <strong>{{ message.heading }}</strong>
+          {{ message.body }}
+        {% if message.url %}</a>{% endif %}
+      </div>
+    {% endfor %}
+  </section>
+{% endblock content %}
