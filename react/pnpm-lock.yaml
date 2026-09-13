@@ -66,8 +66,8 @@ importers:
         specifier: ^2.10.1
         version: 2.10.1(react@19.2.8)
       proj4:
-        specifier: ^2.21.0
-        version: 2.21.0
+        specifier: ^2.22.0
+        version: 2.22.0
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -6686,8 +6686,8 @@ packages:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
 
-  proj4@2.21.0:
-    resolution: {integrity: sha512-33HfDftqw8kY+Cl1dcL16SJuqTSzYxmz4re7Nmhk+fs1/N1fFrAkkF579msQTR/4fLeJVSNne8/gpoCz0fk1uw==}
+  proj4@2.22.0:
+    resolution: {integrity: sha512-MVvH09QrYm3A235rcX39WDiCKanrBiblu28l0KYIn/B2DofmYhvP/LLS43kE66jNDfx/P1l/nah3JmsAq8UgbQ==}
     peerDependencies:
       geotiff: '*'
     peerDependenciesMeta:
@@ -11195,7 +11195,7 @@ snapshots:
 
   '@types/proj4@2.19.0':
     dependencies:
-      proj4: 2.21.0
+      proj4: 2.22.0
     transitivePeerDependencies:
       - geotiff
 
@@ -15212,7 +15212,7 @@ snapshots:
 
   process@0.11.10: {}
 
-  proj4@2.21.0:
+  proj4@2.22.0:
     dependencies:
       mgrs: 1.0.0
       wkt-parser: 1.5.6
