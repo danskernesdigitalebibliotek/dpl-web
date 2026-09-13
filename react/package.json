@@ -145,7 +145,7 @@
     "@danskernesdigitalebibliotek/dpl-design-system": "workspace:*",
     "@danskernesdigitalebibliotek/dpl-service-layer": "workspace:*",
     "@danskernesdigitalebibliotek/dpl-wedobooks": "workspace:*",
-    "@fullcalendar/react": "^7.0.2",
+    "@fullcalendar/react": "^7.1.0",
     "@hammzj/cypress-page-object": "^2.3.0",
     "@headlessui/react": "^2.2.10",
     "@reduxjs/toolkit": "^2.12.0",
