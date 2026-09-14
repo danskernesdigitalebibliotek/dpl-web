@@ -36,7 +36,7 @@ const setSessionType = (type: "unilogin" | "adgangsplatformen") => {
   // never mount. Any SSESS-prefixed cookie satisfies the check.
   if (type === "adgangsplatformen") {
     cy.setCookie("SSESS_dpl_cms", "test-drupal-session")
-    // The same SSESS cookie makes `userIsLoggedInAtDplCms` return true, which
+    // The same SSESS cookie makes `hasDplCmsSessionCookie` return true, which
     // can lead proxy.ts to call `loadUserToken` between tests. Without a mock
     // that DPL CMS query falls through to the catch arm and noisily fails,
     // and the resulting save-session work has been observed to delay the next
