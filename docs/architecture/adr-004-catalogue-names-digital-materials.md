@@ -49,7 +49,10 @@ first constraint rules it out for `go/`.
 - A loan list and a work page name the same material the same way.
   Reservations were fixed by the same change.
 - Listing loans now waits on FBI as well as on the provider. Rendering the
-  provider's title first would show the patron a name that then changes.
+  provider's title first would show the patron a name that then changes. The
+  wait is the price of a rendered description, so a caller that needs a loan's
+  id rather than its name asks for it without one — `getDigitalMaterialHolding`
+  is what a material page asks, and it does not search the catalogue.
 - One request per list holds for loans, which is the only list the service
   layer returns whole. A reservation list is composed row by row from
   `getDigitalMaterial`, so it searches the catalogue once per row - the cost
