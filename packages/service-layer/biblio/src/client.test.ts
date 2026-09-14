@@ -176,7 +176,7 @@ const mappedLoan = {
   endDate: "2026-08-31T10:00:00Z",
   active: true,
   title: "En bog",
-  author: "Christie, Agatha",
+  authors: ["Christie, Agatha"],
   publisher: "Forlag",
   publishDate: "2014-11-07T00:00:00Z",
   loanProvider: "selection",

@@ -1,4 +1,5 @@
 import { createBiblioClient } from "../biblio/src"
+import { withCatalogueDetails, withCatalogueDetailsForRequest } from "./catalogue"
 import { resolveBiblioConfig } from "./internal/resolveBiblioConfig"
 import type { DigitalLoan, LoanProvider, LoanRequestResult, ServiceLayerConfig } from "./types"
 
@@ -8,7 +9,13 @@ export async function getDigitalLoans(
   config: ServiceLayerConfig
 ): Promise<{ loans: DigitalLoan[]; nextCursor?: string }> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  return biblio.getLoans()
+  const { loans, nextCursor } = await biblio.getLoans()
+
+  // A material id is the ISBN-13 the provider lends the material under, the
+  // same key its metadata route takes.
+  const described = await withCatalogueDetails(config, loans, loan => loan.materialId)
+
+  return { loans: described, nextCursor }
 }
 
 // Create a digital loan. The adapter can accept the request without creating a
@@ -19,7 +26,7 @@ export async function createDigitalLoan(
   materialId: string
 ): Promise<LoanRequestResult> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  return biblio.createLoan(materialId)
+  return withCatalogueDetailsForRequest(config, biblio.createLoan(materialId), materialId)
 }
 
 /**
