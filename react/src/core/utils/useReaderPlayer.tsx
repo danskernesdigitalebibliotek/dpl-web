@@ -22,10 +22,10 @@ import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
 const useReaderPlayer = (manifestation: Manifestation | null) => {
   const viaBiblioAdapter = useBiblioAdapter();
 
-  const type = getReaderPlayerType(manifestation);
   const identifier = manifestation
     ? getManifestationDigitalIdentifier(manifestation)
     : null;
+  const type = getReaderPlayerType(manifestation);
 
   const serviceLayer = useDigitalReaderPlayerState({
     identifier,

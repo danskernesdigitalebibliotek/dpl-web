@@ -33,6 +33,8 @@ import {
   materialFactory
 } from "../../../cypress/factories/material/material.factory";
 import { onlineAudioBookManifestation } from "../../../cypress/factories/manifestation/variants/onlineAudioBookManifestation";
+import { eBookManifestation } from "../../../cypress/factories/manifestation/variants/eBookManifestation";
+import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 
 /**
  * Borrowing and reserving a digital material through the Biblio adapter.
@@ -43,8 +45,16 @@ import { onlineAudioBookManifestation } from "../../../cypress/factories/manifes
  * holds must be accepted rather than borrowed anew.
  */
 
-// The ISBN of the e-book edition in the default material factory.
+// The ISBN of the e-book edition in the default material factory. The
+// PUBLIZON identifier of that edition is the same string, as on a real Ereol
+// record - the two only come apart in the test that pulls them apart.
 const EBOOK_ISBN = "9788702441000";
+
+// A loanable edition whose PUBLIZON identifier is not its leading ISBN.
+// Deliberately unmistakable numbers: what is under test is which of the two
+// travels, not what either of them looks like.
+const DESELECTED_EDITION_ISBN = "11111111111";
+const PUBLIZON_MATERIAL_ID = "22222222222";
 
 // Ids the adapter cancels and opens loans by - deliberately not the ISBN,
 // which is what Publizon uses for both.
@@ -76,6 +86,29 @@ const stubBackends = (
   givenUserHasNoBiblioLoans();
   givenUserHasNoBiblioReservations();
   givenBiblioCreatesLoan();
+};
+
+/**
+ * The e-book edition rebuilt so its PUBLIZON identifier differs from its
+ * leading ISBN - the record shape that used to make the ISBN fallback lend
+ * the wrong edition. The manifestation is replaced rather than mutated: the
+ * factory hands out the same object to every test.
+ */
+const givenTheEbookIdentifiersDiffer = () => {
+  const material = materialFactory.build();
+  const manifestations = material.work?.manifestations.all ?? [];
+  manifestations.splice(manifestations.indexOf(eBookManifestation), 1, {
+    ...eBookManifestation,
+    identifiers: [
+      { type: IdentifierTypeEnum.Isbn, value: DESELECTED_EDITION_ISBN },
+      { type: IdentifierTypeEnum.Publizon, value: PUBLIZON_MATERIAL_ID }
+    ]
+  });
+
+  cy.interceptGraphql({
+    operationName: "getMaterial",
+    body: buildGetMaterialResponse(material)
+  });
 };
 
 const openLoanModal = (material: MaterialPage) => {
@@ -132,6 +165,24 @@ describe("Material page - borrowing through the Biblio adapter", () => {
     cy.wait("@biblioCreateLoan")
       .its("request.body")
       .should("deep.equal", { material_id: EBOOK_ISBN });
+  });
+
+  it("Borrows by the Publizon identifier, not by the leading ISBN", () => {
+    givenTheEbookIdentifiersDiffer();
+    givenMaterialIsInBiblio({
+      isbn: PUBLIZON_MATERIAL_ID,
+      title: "De syv søstre"
+    });
+
+    const material = new MaterialPage(materialStory.withBiblioAdapter, "e-bog");
+    openLoanModal(material);
+    material.onlineLoanModal().elements.approveButton().click();
+
+    // Then: the adapter is asked for the edition FBI marks as loanable. The
+    // ISBN it leads with belongs to an edition nobody can lend.
+    cy.wait("@biblioCreateLoan")
+      .its("request.body")
+      .should("deep.equal", { material_id: PUBLIZON_MATERIAL_ID });
   });
 
   it("Confirms the loan with the expiry date the adapter returned", () => {

@@ -18,12 +18,13 @@ import {
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
+import { DigitalMaterialId } from "../../../../core/utils/types/ids";
 
 interface MaterialAvailabilityTextOnlineProps {
   /** The digital identifier the material is lent by - see
    * getManifestationDigitalIdentifier. Shared with the loan buttons so both
    * ask the providers about the same edition. */
-  identifier: string;
+  identifier: DigitalMaterialId;
   materialType: ManifestationMaterialType;
 }
 

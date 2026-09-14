@@ -9,6 +9,7 @@ import {
   PublizonProductType
 } from "../../core/publizon/productType";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
+import { getManifestationDigitalIdentifier } from "../../apps/material/helper";
 
 type AssetType = {
   src: string;
@@ -151,11 +152,22 @@ export const playerTypes = [
   ManifestationMaterialType.audioBookTape
 ];
 
+/**
+ * Which of the two the material opens in, or null when we cannot open it at
+ * all.
+ *
+ * The identifier is part of the answer, not a separate question: everyone who
+ * acts on a type - the button router, the availability text, the buttons
+ * themselves - needs one to do anything with it. Answering "reader" without
+ * one sends the caller down a branch that can only render nothing, and past
+ * the external link it would otherwise have fallen through to.
+ */
 export const getReaderPlayerType = (
   manifestation: Manifestation | null
 ): "reader" | "player" | null => {
   if (!manifestation) return null;
   if (!hasCorrectAccess("Ereol", [manifestation])) return null;
+  if (getManifestationDigitalIdentifier(manifestation) === null) return null;
   const materialTypes = getMaterialTypes([manifestation]);
 
   if (readerTypes.some((type) => materialTypes.includes(type))) return "reader";

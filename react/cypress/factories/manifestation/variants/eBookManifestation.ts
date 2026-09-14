@@ -17,13 +17,15 @@ export const eBookManifestation = manifestationFactory.build({
     }
   ],
 
+  // The PUBLIZON identifier is what makes the edition digitally loanable; on
+  // a real Ereol record it is the ISBN-13 of that edition.
   identifiers: [
     {
       type: IdentifierTypeEnum.Isbn,
       value: "9788702441000"
     },
     {
-      type: IdentifierTypeEnum.Isbn,
+      type: IdentifierTypeEnum.Publizon,
       value: "9788702441000"
     }
   ],

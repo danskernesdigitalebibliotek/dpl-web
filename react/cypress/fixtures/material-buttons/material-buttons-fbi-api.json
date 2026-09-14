@@ -243,10 +243,12 @@
             "publisher": ["Cicero"],
             "identifiers": [
               {
-                "type": "ISBN", "type": "ISBN", "value": "9788763844123"
+                "type": "ISBN",
+                "value": "9788763844123"
               },
               {
-                "type": "ISBN", "type": "ISBN", "value": "9788763844123"
+                "type": "PUBLIZON",
+                "value": "9788763844123"
               }
             ],
             "contributors": [

@@ -8,6 +8,7 @@ import {
   useGetV1UserLoans
 } from "../../core/publizon/publizon";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import { DigitalMaterialId } from "../../core/utils/types/ids";
 import {
   useDigitalLoanDecision,
   useDigitalLoanQuotas
@@ -36,7 +37,7 @@ vi.mock(
  * spending.
  */
 
-const ISBN = "9788727319346";
+const IDENTIFIER = "9788727319346" as DigitalMaterialId;
 
 vi.mock("../../core/utils/text", () => ({
   useText:
@@ -86,7 +87,7 @@ const publizonSays = (quotas: {
 const renderText = () =>
   render(
     <MaterialAvailabilityTextOnline
-      identifier={ISBN}
+      identifier={IDENTIFIER}
       materialType={"e-bog" as never}
     />
   );

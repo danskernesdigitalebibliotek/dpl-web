@@ -31,7 +31,7 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { useEventStatistics } from "../statistics/useStatistics";
 import { statistics } from "../statistics/statistics";
-import { WorkId } from "./types/ids";
+import { DigitalMaterialId, WorkId } from "./types/ids";
 import useBiblioAdapter from "./useBiblioAdapter";
 
 type useOnlineInternalHandleLoanReservationType = {
@@ -128,7 +128,7 @@ const useOnlineInternalHandleLoanReservation = ({
     });
   };
 
-  const loanViaAdapter = (materialId: string) => {
+  const loanViaAdapter = (materialId: DigitalMaterialId) => {
     mutateDigitalLoan(materialId, {
       onSuccess: (result) => {
         // The adapter can accept the request without creating a loan,
@@ -147,7 +147,7 @@ const useOnlineInternalHandleLoanReservation = ({
     });
   };
 
-  const loanViaPublizon = (materialId: string) => {
+  const loanViaPublizon = (materialId: DigitalMaterialId) => {
     mutateLoan(
       { identifier: materialId },
       {
@@ -171,7 +171,7 @@ const useOnlineInternalHandleLoanReservation = ({
     );
   };
 
-  const reserveViaAdapter = (materialId: string) => {
+  const reserveViaAdapter = (materialId: DigitalMaterialId) => {
     mutateDigitalReservation(materialId, {
       onSuccess: (result) => {
         // The adapter answers 200 with a decision rather than an error when
@@ -193,7 +193,7 @@ const useOnlineInternalHandleLoanReservation = ({
 
   // Publizon takes email and phone number to notify with - the adapter, by
   // contrast, derives the user from the token and needs no contact details.
-  const reserveViaPublizon = (materialId: string) => {
+  const reserveViaPublizon = (materialId: DigitalMaterialId) => {
     if (!userData?.patron) {
       return;
     }

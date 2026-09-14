@@ -6,15 +6,13 @@ import { useCollectPageStatistics } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 import { getParentAvailabilityLabelClass } from "./helper";
 import AvailabilityLabelInside from "./availability-label-inside";
-import { FaustId } from "../../core/utils/types/ids";
 import useAvailabilityData from "./useAvailabilityData";
 import { AccessTypeCodeEnum } from "../../core/dbc-gateway/generated/graphql";
-import { AccessTypes } from "../../core/utils/types/entities";
+import { DigitalMaterialId, FaustId } from "../../core/utils/types/ids";
 
 export interface AvailabilityLabelProps {
   manifestText: string;
   accessTypes: AccessTypeCodeEnum[];
-  access: AccessTypes[];
   selected?: boolean;
   url?: URL;
   faustIds: FaustId[];
@@ -23,14 +21,13 @@ export interface AvailabilityLabelProps {
   dataCy?: string;
   // The same identifier the loan buttons use, so both ask about the same
   // edition and share one request.
-  identifier: string | null;
+  identifier: DigitalMaterialId | null;
   isVisualOnly?: boolean;
 }
 
 export const AvailabilityLabel: React.FC<AvailabilityLabelProps> = ({
   manifestText,
   accessTypes,
-  access,
   selected = false,
   url,
   faustIds,
@@ -45,9 +42,8 @@ export const AvailabilityLabel: React.FC<AvailabilityLabelProps> = ({
 
   const { isLoading, isAvailable } = useAvailabilityData({
     accessTypes,
-    access,
     faustIds,
-    isbn: identifier,
+    identifier,
     manifestText
   });
 

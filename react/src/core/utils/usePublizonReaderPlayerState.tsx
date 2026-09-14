@@ -17,6 +17,7 @@ import {
   ReaderPlayerState,
   unknownReaderPlayerState
 } from "./types/reader-player-state";
+import { DigitalMaterialId } from "./types/ids";
 
 /**
  * What Publizon says about a digital material - the Publizon half of the
@@ -30,15 +31,14 @@ const usePublizonReaderPlayerState = ({
   identifier,
   canAcquire
 }: {
-  identifier: string | null;
+  identifier: DigitalMaterialId | null;
   /** Whether Publizon may decide that a new loan or reservation is possible. */
   canAcquire: boolean;
 }): ReaderPlayerState => {
   const isUserAnonymous = isAnonymous();
-  const hasIdentifier = Boolean(identifier);
   // An anonymous user has no holdings to look up, and the endpoints need a
   // user token anyway.
-  const canReadHoldings = hasIdentifier && !isUserAnonymous;
+  const canReadHoldings = identifier !== null && !isUserAnonymous;
 
   const { data: loansPublizon, isLoading: isLoadingLoans } = useGetV1UserLoans(
     {},
@@ -48,13 +48,12 @@ const usePublizonReaderPlayerState = ({
   const { data: reservationsPublizon, isLoading: isLoadingReservations } =
     useGetV1UserReservations({ query: { enabled: canReadHoldings } });
 
-  // Safe to use identifier! because the query is disabled without one.
   const { data: dataLoanStatus, isLoading: isLoadingLoanStatus } =
-    useGetV1LoanstatusIdentifier(identifier!, {
-      query: { enabled: hasIdentifier && canAcquire }
+    useGetV1LoanstatusIdentifier(identifier ?? "", {
+      query: { enabled: identifier !== null && canAcquire }
     });
 
-  if (!hasIdentifier) {
+  if (identifier === null) {
     return unknownReaderPlayerState;
   }
 
