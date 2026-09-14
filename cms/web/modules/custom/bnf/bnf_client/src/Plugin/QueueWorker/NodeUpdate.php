@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  * @QueueWorker(
  *   id = "bnf_client_node_update",
  *   title = @Translation("Update node content."),
- *   cron = {"time" = 60}
+ *   cron = {"time" = 120}
  * )
  */
 class NodeUpdate extends QueueWorkerBase implements ContainerFactoryPluginInterface {
