@@ -15,7 +15,7 @@ MockDate.set("2026-06-15T12:00:00")
 // When adding or changing fonts, remember to update the imports in the Layout file
 const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 })
