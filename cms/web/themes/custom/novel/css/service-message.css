@@ -245,6 +245,11 @@ folds 16px on mobile and 24px from the small breakpoint up.
 Lora, the design system's title face. It has no custom property of its own -
 components reach it through the SCSS typography mixin - so the stack is
 written out here.
+
+This is an h2 (KB-64), so every property the user agent would set for one is
+overridden here: the face, the size, and `font-weight: 400` - the design draws
+the heading in regular Lora, not bold. The margin the UA adds is already zeroed
+by the design system's reset.
 */
 
 .service-messages__heading {

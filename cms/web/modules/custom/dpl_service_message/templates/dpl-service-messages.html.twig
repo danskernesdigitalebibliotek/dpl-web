@@ -16,7 +16,7 @@
     {% for message in messages %}
       <div class="service-messages__item">
         {% if message.url %}<a href="{{ message.url }}">{% endif %}
-          <strong>{{ message.heading }}</strong>
+          <h2>{{ message.heading }}</h2>
           {{ message.body }}
         {% if message.url %}</a>{% endif %}
       </div>
