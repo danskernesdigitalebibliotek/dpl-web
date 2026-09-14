@@ -3,7 +3,7 @@ import {
   isMaterialReservable,
   isUnknownMaterial,
   useDigitalLoanDecision,
-  useDigitalLoans,
+  useDigitalMaterialHolding,
   useDigitalReservations
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { mapDigitalReservationToReservationType } from "./helpers/list-mapper";
@@ -41,9 +41,13 @@ const useDigitalReaderPlayerState = ({
       enabled: isActiveForUser
     });
 
-  const { data: loansData, isLoading: isLoadingLoans } = useDigitalLoans({
-    enabled: isActiveForUser
-  });
+  // The loan is asked for by material rather than filtered out of the loan
+  // list: only its existence and its id are used here, and the list waits on
+  // the catalogue to describe every loan in it.
+  const { data: loan, isLoading: isLoadingLoan } = useDigitalMaterialHolding(
+    identifier,
+    { enabled: isActiveForUser }
+  );
 
   const { data: reservationsData, isLoading: isLoadingReservations } =
     useDigitalReservations({ enabled: isActiveForUser });
@@ -58,10 +62,6 @@ const useDigitalReaderPlayerState = ({
       canBeLoaned: true
     };
   }
-
-  const loan = loansData?.loans.find(
-    ({ materialId }) => materialId === identifier
-  );
 
   const digitalReservation = reservationsData?.reservations.find(
     ({ materialId }) => materialId === identifier
@@ -96,7 +96,7 @@ const useDigitalReaderPlayerState = ({
     canBeSampled: !isUnknownMaterial(loanDecision),
     // Disabled queries never report loading, so this only counts the
     // questions actually asked.
-    isLoading: isLoadingLoanDecision || isLoadingLoans || isLoadingReservations
+    isLoading: isLoadingLoanDecision || isLoadingLoan || isLoadingReservations
   };
 };
 

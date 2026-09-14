@@ -18,6 +18,28 @@ export async function getDigitalLoans(
   return { loans: described, nextCursor }
 }
 
+/**
+ * The loan the patron already holds on this material, if any.
+ *
+ * Deliberately not `getDigitalLoans().find(...)`: the caller is looking at the
+ * material and needs the loan's id and its existence, not its description, so
+ * the catalogue is not searched. Correcting a title here would put a second,
+ * sequential round trip in front of the borrow button on every material page.
+ * See ADR-004.
+ *
+ * Null rather than undefined for "no such loan": react-query rejects a query
+ * that resolves to undefined, and this is a query function.
+ */
+export async function getDigitalMaterialHolding(
+  config: ServiceLayerConfig,
+  materialId: string
+): Promise<DigitalLoan | null> {
+  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const { loans } = await biblio.getLoans()
+
+  return loans.find(loan => loan.materialId === materialId) ?? null
+}
+
 // Create a digital loan. The adapter can accept the request without creating a
 // loan - an exceeded quota, say - so the result only carries a loan when the
 // operation actually succeeded, and callers must check `loan`.
