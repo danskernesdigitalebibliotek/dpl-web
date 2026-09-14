@@ -4,6 +4,7 @@ import {
   publizonProductFactory
 } from "../../factories/publizon/publizon.factory";
 import {
+  ApiResponseCode,
   ContentLoanStatusEnum,
   FileExtensionType,
   IdentifierTypeEnum
@@ -61,6 +62,14 @@ export const givenUserHasLoanedEbook = (options?: {
       }
     })
   }).as("publizonUserLoansWithLoan");
+};
+
+/** Given: borrowing an e-material from Publizon succeeds. */
+export const givenPublizonCreatesLoan = (orderId: string) => {
+  cy.intercept("POST", "**/v1/user/loans/**", {
+    statusCode: 200,
+    body: { orderId, code: ApiResponseCode.NUMBER_101, message: "OK" }
+  }).as("publizonCreateLoan");
 };
 
 type DigitalLoanOverrides = {

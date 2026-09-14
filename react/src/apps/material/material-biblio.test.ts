@@ -26,13 +26,10 @@ import {
   givenUserHasNoBiblioLoans,
   givenUserHasNoBiblioReservations
 } from "../../../cypress/intercepts/biblio/biblio";
+import { givenPublizonCreatesLoan } from "../../../cypress/intercepts/publizon/publizon";
+import { givenAMaterialWithOnlineAudiobook } from "../../../cypress/intercepts/fbi/material";
 import { ContentLoanStatusEnum } from "../../core/publizon/model";
 import { stubMaterialPageBackends } from "../../../cypress/intercepts/material-page";
-import {
-  buildGetMaterialResponse,
-  materialFactory
-} from "../../../cypress/factories/material/material.factory";
-import { onlineAudioBookManifestation } from "../../../cypress/factories/manifestation/variants/onlineAudioBookManifestation";
 
 /**
  * Borrowing and reserving a digital material through the Biblio adapter.
@@ -179,13 +176,9 @@ describe("Material page - borrowing through the Biblio adapter", () => {
   });
 
   it("Leaves the adapter alone when the flag is off", () => {
-    // Publizon's create-loan endpoint, stubbed so the loan the click DOES
-    // create can be awaited - a count of zero only means anything after the
-    // work it is counting against has finished.
-    cy.intercept("POST", "**/v1/user/loans/**", {
-      statusCode: 200,
-      body: { orderId: PUBLIZON_ORDER_ID, code: 101, message: "OK" }
-    }).as("publizonCreateLoan");
+    // Stubbed so the loan the click DOES create can be awaited - a count of
+    // zero only means anything after the work it counts against has finished.
+    givenPublizonCreatesLoan(PUBLIZON_ORDER_ID);
 
     const material = new MaterialPage(materialStory.default, "e-bog");
 
@@ -427,10 +420,7 @@ describe("Material page - flag on, the adapter refuses the loan", () => {
     // Publizon would lend it - the default loan status is 4.
     givenBiblioCanLoan(CanLoanResponseType.monthly_limit_exceeded);
 
-    cy.intercept("POST", "**/v1/user/loans/**", {
-      statusCode: 200,
-      body: { orderId: "publizon-order-1", code: 101, message: "OK" }
-    }).as("publizonCreateLoan");
+    givenPublizonCreatesLoan("publizon-order-1");
   });
 
   it("Neither offers the loan nor borrows it from Publizon", () => {
@@ -525,16 +515,7 @@ describe("Material page - flag on, an older Publizon audiobook loan", () => {
   beforeEach(() => {
     // Publizon holds an audiobook loan for this material; the adapter none.
     stubBackends(ContentLoanStatusEnum.NUMBER_1);
-
-    // The default work has no streamed audiobook edition, so one is added.
-    // Registered after stubBackends so this material wins - Cypress matches
-    // the most recently registered route first.
-    const material = materialFactory.build();
-    material.work?.manifestations.all.push(onlineAudioBookManifestation);
-    cy.interceptGraphql({
-      operationName: "getMaterial",
-      body: buildGetMaterialResponse(material)
-    });
+    givenAMaterialWithOnlineAudiobook();
 
     cy.intercept("GET", "**/v1/user/loans**", {
       statusCode: 200,
