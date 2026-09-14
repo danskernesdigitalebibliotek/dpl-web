@@ -29,6 +29,7 @@ import {
 } from "../../core/utils/helpers/url";
 import {
   flattenCreators,
+  getAllFaustIds,
   getMaterialType,
   orderManifestationsByYear
 } from "../../core/utils/helpers/general";
@@ -96,12 +97,21 @@ export const hasPublizonIdentifier = (manifestation: Manifestation) =>
     (identifier) => identifier.type === IdentifierTypeEnum.Publizon
   ) ?? false;
 
-// The PUBLIZON identifier marks the loanable edition. The type is FBI's field
+// The PUBLIZON identifier marks a loanable edition. The type is FBI's field
 // name and says nothing about which provider holds the material.
+//
+// Several editions of one material type can be loanable, and the reader
+// expects the newest. Ordering copies the list: orderManifestationsByYear
+// sorts in place, and this list belongs to the caller.
 export const getLoanableManifestation = (manifestations: Manifestation[]) => {
-  return (
-    manifestations.find(hasPublizonIdentifier) ??
-    getFirstManifestation(manifestations)
+  const loanableManifestations = manifestations.filter(hasPublizonIdentifier);
+
+  if (!loanableManifestations.length) {
+    return getFirstManifestation(manifestations);
+  }
+
+  return getFirstManifestation(
+    orderManifestationsByYear([...loanableManifestations])
   );
 };
 
@@ -513,8 +523,14 @@ export const reservationModalId = (faustIds: FaustId[]) => {
   return constructModalId("reservation-modal", faustIds.sort());
 };
 
-export const onlineInternalModalId = (faustIds: FaustId[]) => {
-  return constructModalId("online-internal-modal", faustIds.sort());
+// Keyed on the one edition the loan is for, so an opener that covers several
+// editions and the modal rendered for a single one agree on the id.
+export const onlineInternalModalId = (manifestations: Manifestation[]) => {
+  const loanableManifestation = getLoanableManifestation(manifestations);
+  return constructModalId(
+    "online-internal-modal",
+    loanableManifestation ? getAllFaustIds([loanableManifestation]) : []
+  );
 };
 
 export const editionSwitchModalId = () => {

@@ -187,7 +187,7 @@ function CategorySlide({
             disabled
           />
         </div>
-        <p className="text-typo-subtitle-sm text-center">{category.categoryMenuTitle}</p>
+        <p className="text-typo-subtitle-md text-center">{category.categoryMenuTitle}</p>
       </SmartLink>
     </div>
   )

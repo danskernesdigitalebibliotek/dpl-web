@@ -258,11 +258,11 @@
 
       --typo-heading-1-size: 64px;
       --typo-heading-1-weight: 700;
-      --typo-heading-1-line-height: 58px;
+      --typo-heading-1-line-height: 64px;
       --typo-heading-1-letter-spacing: 0;
 
       --typo-heading-2-size: 42px;
-      --typo-heading-2-weight: 600;
+      --typo-heading-2-weight: 700;
       --typo-heading-2-line-height: 46px;
       --typo-heading-2-letter-spacing: 0;
 
@@ -273,7 +273,7 @@
 
       --typo-heading-4-size: 24px;
       --typo-heading-4-weight: 600;
-      --typo-heading-4-line-height: 27px;
+      --typo-heading-4-line-height: 30px;
       --typo-heading-4-letter-spacing: 0;
 
       --typo-heading-5-size: 20px;
@@ -281,14 +281,14 @@
       --typo-heading-5-line-height: 22px;
       --typo-heading-5-letter-spacing: 0;
 
-      --typo-subtitle-lg-size: 22px;
+      --typo-subtitle-lg-size: 24px;
       --typo-subtitle-lg-weight: 500;
-      --typo-subtitle-lg-line-height: 24px;
+      --typo-subtitle-lg-line-height: 32px;
       --typo-subtitle-lg-letter-spacing: 0;
 
       --typo-subtitle-md-size: 18px;
       --typo-subtitle-md-weight: 500;
-      --typo-subtitle-md-line-height: 20px;
+      --typo-subtitle-md-line-height: 24px;
       --typo-subtitle-md-letter-spacing: 0;
 
       --typo-subtitle-sm-size: 14px;
@@ -298,7 +298,7 @@
 
       --typo-body-lg-size: 18px;
       --typo-body-lg-weight: 400;
-      --typo-body-lg-line-height: 26px;
+      --typo-body-lg-line-height: 24px;
       --typo-body-lg-letter-spacing: 0.01em;
 
       --typo-body-md-size: 16px;
@@ -326,10 +326,10 @@
       --typo-link-line-height: 14px;
       --typo-link-letter-spacing: 0;
 
-      --typo-tag-lg-size: 12px;
-      --typo-tag-lg-weight: 400;
-      --typo-tag-lg-line-height: 12px;
-      --typo-tag-lg-letter-spacing: 0;
+      --typo-tag-lg-size: 14px;
+      --typo-tag-lg-weight: 500;
+      --typo-tag-lg-line-height: 16px;
+      --typo-tag-lg-letter-spacing: 0.05em;
 
       --typo-tag-sm-size: 10px;
       --typo-tag-sm-weight: 400;
@@ -399,7 +399,7 @@
   /* Button text L and Tag text L are uppercase on mobile only. */
   .text-typo-button-lg,
   .text-typo-tag-lg {
-    @apply uppercase lg:normal-case;
+    @apply uppercase;
   }
 
   .text-typo-link {

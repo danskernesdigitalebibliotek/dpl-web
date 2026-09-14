@@ -9,10 +9,10 @@
 /**
  * If an event is physical or not.
  */
-export type CurrentEventsGET200ItemAddressLocationType =
-  (typeof CurrentEventsGET200ItemAddressLocationType)[keyof typeof CurrentEventsGET200ItemAddressLocationType];
+export type HappeningEventsGET200ItemAddressLocationType =
+  (typeof HappeningEventsGET200ItemAddressLocationType)[keyof typeof HappeningEventsGET200ItemAddressLocationType];
 
-export const CurrentEventsGET200ItemAddressLocationType = {
+export const HappeningEventsGET200ItemAddressLocationType = {
   physical: "physical",
   online: "online"
 } as const;

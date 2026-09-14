@@ -267,6 +267,11 @@ export type DigitalLoanQuota =
       currentMonthlyLoans: { ebook: number; audiobook: number }
     }
 
+// How many reservations the organization lets a patron hold at once. Null for
+// an organization that counts the two formats together: a combined ceiling of
+// 5 means five in total, which no consumer has wording for.
+export type DigitalReservationLimits = { ebook: number; audiobook: number }
+
 // Short-lived token that signs the patron in to the reader and player.
 export type ReaderSignInToken = {
   token: string

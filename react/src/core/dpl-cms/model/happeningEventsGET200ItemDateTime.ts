@@ -9,7 +9,7 @@
 /**
  * When the event occurs.
  */
-export type CurrentEventsGET200ItemDateTime = {
+export type HappeningEventsGET200ItemDateTime = {
   /** Start time in ISO 8601 format. */
   start: string;
   /** End time in ISO 8601 format. */

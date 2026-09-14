@@ -9,7 +9,7 @@
 /**
  * Data for the event provided by a third party.
  */
-export type CurrentEventsGET200ItemExternalData = {
+export type HappeningEventsGET200ItemExternalData = {
   /** An absolute URL provided by the third party where end users can access the event. */
   url?: string;
   /** An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication. */

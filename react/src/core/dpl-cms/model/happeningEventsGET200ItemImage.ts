@@ -9,7 +9,7 @@
 /**
  * The main image for the event. (Scaled)
  */
-export type CurrentEventsGET200ItemImage = {
+export type HappeningEventsGET200ItemImage = {
   /** An absolute URL for the image. This is a link to a scaled version of the original image - the width will always be 1920px, but height/aspect ratio will vary. */
   url: string;
 };
