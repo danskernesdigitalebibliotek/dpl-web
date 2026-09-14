@@ -84,5 +84,11 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = (on, conf
       await mockApiServer.reset()
       return null
     },
+
+    // TEMPORARY (DDF-480 flake hunt): surface browser-side state in CI stdout.
+    debugLog(message: string) {
+      console.info(`\x1b[36m[debug]\x1b[0m ${message}`)
+      return null
+    },
   })
 }

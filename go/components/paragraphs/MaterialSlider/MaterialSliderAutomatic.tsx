@@ -33,7 +33,8 @@ const MaterialSliderAutomatic = ({
   const showSkeleton = isLoading || !paragraphIsInView
 
   return (
-    <div ref={paragraphRef}>
+    // TEMPORARY (DDF-480 flake hunt): expose both skeleton gates in the DOM.
+    <div ref={paragraphRef} data-in-view={paragraphIsInView} data-loading={isLoading}>
       {showSkeleton && <MaterialSliderSkeleton />}
       {!showSkeleton && <MaterialSlider works={data?.complexSearch.works} title={titleOptional} />}
     </div>
