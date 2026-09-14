@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { ButtonFavouriteId } from "../../components/button-favourite/button-favourite";
 import Link from "../../components/atoms/links/Link";
 import { Cover } from "../../components/cover/cover";
 import usePager from "../../components/result-pager/use-pager";
 import { useGetSeriesQuery } from "../../core/dbc-gateway/generated/graphql";
-import { guardedRequest } from "../../core/guardedRequests.slice";
-import { TypedDispatch } from "../../core/store";
 import {
   creatorsToString,
   flattenCreators,
@@ -28,6 +24,7 @@ import {
 import RelatedWorks from "./RelatedWorks";
 import SeriesCard from "./SeriesCard";
 import SeriesSkeleton, { headerCoverCount } from "./SeriesSkeleton";
+import { useAddFavorite } from "../../components/button-favourite/useAddFavorite";
 
 export type SeriesProps = {
   seriesId: string;
@@ -62,7 +59,6 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
   const u = useUrls();
   const materialUrl = u("materialUrl");
   const searchUrl = u("searchUrl");
-  const dispatch = useDispatch<TypedDispatch>();
 
   const [series, setSeries] = useState<LoadedSeries | null>(null);
   const [hitcount, setHitcount] = useState(0);
@@ -108,15 +104,7 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
     );
   }, [data, page]);
 
-  const addToListRequest = (id: ButtonFavouriteId) => {
-    dispatch(
-      guardedRequest({
-        type: "addFavorite",
-        args: { id },
-        app: "series"
-      })
-    );
-  };
+  const addToListRequest = useAddFavorite({ app: "series" });
 
   // The id matched nothing - the schema returns a nullable Series, so a miss
   // is a success carrying null.

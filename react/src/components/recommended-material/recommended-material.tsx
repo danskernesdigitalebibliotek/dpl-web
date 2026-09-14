@@ -1,18 +1,13 @@
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
 import {
   getAvailablePriorityMaterialType,
   getManifestationBasedOnType
 } from "../../apps/material/helper";
 import RecommendedMaterialSkeleton from "./RecommendedMaterialSkeleton";
-import ButtonFavourite, {
-  ButtonFavouriteId
-} from "../../components/button-favourite/button-favourite";
+import ButtonFavourite from "../../components/button-favourite/button-favourite";
 import { Cover } from "../../components/cover/cover";
 import { useGetMaterialQuery } from "../../core/dbc-gateway/generated/graphql";
-import { guardedRequest } from "../../core/guardedRequests.slice";
-import { TypedDispatch } from "../../core/store";
 import {
   creatorsToString,
   flattenCreators
@@ -26,6 +21,7 @@ import { useUrls } from "../../core/utils/url";
 import { useEventStatistics } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
 import { StaticRecommendedMaterial } from "./static-recommended-material";
+import { useAddFavorite } from "../button-favourite/useAddFavorite";
 
 export type RecommendedMaterialProps = {
   wid: WorkId;
@@ -42,12 +38,13 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
   const u = useUrls();
   const { track } = useEventStatistics();
   const materialUrl = u("materialUrl");
-  const dispatch = useDispatch<TypedDispatch>();
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useGetMaterialQuery({
     wid
   });
+
+  const addToListRequest = useAddFavorite({ app: "material", queryClient });
 
   if (isLoading || !data?.work) {
     return <RecommendedMaterialSkeleton partOfGrid={partOfGrid} />;
@@ -81,15 +78,6 @@ const RecommendedMaterialComp: React.FC<RecommendedMaterialProps> = ({
     wid,
     urlMaterialType
   );
-  const addToListRequest = (id: ButtonFavouriteId) => {
-    dispatch(
-      guardedRequest({
-        type: "addFavorite",
-        args: { id, queryClient },
-        app: "material"
-      })
-    );
-  };
 
   // Materials shown in a grid are tracked as their own Mapp event so DDF can
   // compare grid-formidling against other ways of presenting materials.
