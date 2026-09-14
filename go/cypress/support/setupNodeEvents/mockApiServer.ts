@@ -30,14 +30,37 @@ class MockApiServer {
     this.port = 9000 // The port to listen for incoming requests
   }
 
-  reset() {
+  /**
+   * TEMPORARY (DDF-480 flake hunt): name every request no rule matched.
+   * Unmatched requests otherwise surface only as mockttp's plain-text 503,
+   * which the fetchers report as an unhelpful JSON parse error.
+   *
+   * Rules are dropped by reset(), so this has to be re-registered after one.
+   */
+  async logUnmatchedRequests() {
+    await this.server.forUnmatchedRequest().thenCallback(async request => {
+      const body = await request.body.getText()
+      console.error(
+        `\x1b[31m[mock] UNMATCHED\x1b[0m ${request.method} ${request.url} :: ${body?.slice(0, 300) ?? "<no body>"}`
+      )
+      return {
+        status: 503,
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ error: "No mock rule matched this request" }),
+      }
+    })
+  }
+
+  async reset() {
     this.server.reset()
     this.shouldEnableDebug()
+    await this.logUnmatchedRequests()
   }
 
   async start() {
     await this.server.start(this.port)
     this.shouldEnableDebug()
+    await this.logUnmatchedRequests()
   }
 
   async stop() {

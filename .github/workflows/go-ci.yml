@@ -282,6 +282,8 @@ jobs:
           UNILOGIN_CLIENT_ID: http://localhost:9000/client
           UNILOGIN_WELLKNOWN_URL: http://localhost:9000
           DPL_GO_BASE_URL: http://localhost:3000
+          # TEMPORARY (DDF-480 flake hunt): log every mock server request.
+          DEBUG_MOCK_SERVER: true
         with:
           install: false
           build: pnpm run build
@@ -289,3 +291,13 @@ jobs:
           command: pnpm run cypress:run
           browser: chrome
           working-directory: go
+      # TEMPORARY (DDF-480 flake hunt): the failure screenshot is currently
+      # written and then thrown away, which leaves nothing to diagnose from.
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-screenshots
+          path: go/cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 5

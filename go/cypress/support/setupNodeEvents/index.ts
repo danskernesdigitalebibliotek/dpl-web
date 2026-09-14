@@ -80,8 +80,8 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = (on, conf
       return encodedSession
     },
 
-    resetApiMocks() {
-      mockApiServer.reset()
+    async resetApiMocks() {
+      await mockApiServer.reset()
       return null
     },
   })
