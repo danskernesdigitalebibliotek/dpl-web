@@ -399,7 +399,7 @@
   /* Button text L and Tag text L are uppercase on mobile only. */
   .text-typo-button-lg,
   .text-typo-tag-lg {
-    @apply uppercase lg:normal-case;
+    @apply uppercase;
   }
 
   .text-typo-link {
