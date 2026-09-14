@@ -1,4 +1,5 @@
 import {
+  publizonLoanFactory,
   publizonLoanStatusFactory,
   publizonLoanListFactory,
   publizonProductFactory
@@ -7,7 +8,8 @@ import {
   ApiResponseCode,
   ContentLoanStatusEnum,
   FileExtensionType,
-  IdentifierTypeEnum
+  IdentifierTypeEnum,
+  Loan
 } from "../../../src/core/publizon/model";
 import { PUBLIZON_PRODUCT_TYPE } from "../../../src/core/publizon/productType";
 
@@ -70,6 +72,27 @@ export const givenPublizonCreatesLoan = (orderId: string) => {
     statusCode: 200,
     body: { orderId, code: ApiResponseCode.NUMBER_101, message: "OK" }
   }).as("publizonCreateLoan");
+};
+
+/**
+ * Given: the Publizon twin of `givenTheBiblioLoanListLags` - the loan the
+ * user just made only appears on the next answer, and that answer is slow.
+ */
+export const givenThePublizonLoanListLags = (loan: Partial<Loan>) => {
+  const borrowedLoan = { ...publizonLoanFactory.build().loan, ...loan };
+
+  cy.intercept("GET", "**/v1/user/loans**", {
+    statusCode: 200,
+    delay: 500,
+    body: publizonLoanListFactory.build({ loans: [borrowedLoan] })
+  }).as("publizonUserLoansLagging");
+
+  // Registered last so it answers first, and only once: the page's own
+  // look-up, from before the loan existed.
+  cy.intercept(
+    { method: "GET", url: "**/v1/user/loans**", times: 1 },
+    { statusCode: 200, body: publizonLoanListFactory.build({ loans: [] }) }
+  ).as("publizonUserLoansBeforeLoan");
 };
 
 type DigitalLoanOverrides = {
