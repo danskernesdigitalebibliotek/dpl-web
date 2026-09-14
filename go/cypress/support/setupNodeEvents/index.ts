@@ -13,16 +13,16 @@ import MockApiServer from "./mockApiServer"
 export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = (on, config) => {
   const mockApiServer = new MockApiServer()
 
-  on("before:run", () => {
-    mockApiServer.start()
+  on("before:run", async () => {
+    await mockApiServer.start()
 
     if (config.env.viewport) {
       log("Running test with viewport:", config.env.viewport, true)
     }
   })
 
-  on("after:run", () => {
-    mockApiServer.stop()
+  on("after:run", async () => {
+    await mockApiServer.stop()
   })
 
   function log(requestType: string, operationName: string, force: boolean = false) {
@@ -32,30 +32,30 @@ export const e2eNodeEvents: Cypress.Config["e2e"]["setupNodeEvents"] = (on, conf
   }
 
   on("task", {
-    mockGraphQLQuery({ operationName, data }: MockGraphQLQueryParams) {
+    async mockGraphQLQuery({ operationName, data }: MockGraphQLQueryParams) {
       log("Mocking GraphQL query", operationName)
 
-      mockApiServer.mockGraphQLQuery({ operationName, data })
+      await mockApiServer.mockGraphQLQuery({ operationName, data })
       return null // Return null to indicate that the task has been completed
     },
 
-    mockGraphQLMutation({ operationName, data }: MockGraphQLMutationParams) {
+    async mockGraphQLMutation({ operationName, data }: MockGraphQLMutationParams) {
       log("Mocking GraphQL mutation", operationName)
 
-      mockApiServer.mockGraphQLMutation({ operationName, data })
+      await mockApiServer.mockGraphQLMutation({ operationName, data })
       return null // Return null to indicate that the task has been completed
     },
 
-    mockRestResponse({ method, path, data }: MockRestResponseParams) {
+    async mockRestResponse({ method, path, data }: MockRestResponseParams) {
       log("Mocking REST response", `${method} ${path}`)
 
-      mockApiServer.mockRestResponse({ method, path, data })
+      await mockApiServer.mockRestResponse({ method, path, data })
       return null // Return null to indicate that the task has been completed
     },
 
-    mockSoapResponse({ path, data }: MockSoapResponseParams) {
+    async mockSoapResponse({ path, data }: MockSoapResponseParams) {
       log("Mocking SOAP response", path)
-      mockApiServer.mockSoapResponse({ path, data })
+      await mockApiServer.mockSoapResponse({ path, data })
       return null // Return null to indicate that the task has been completed
     },
 

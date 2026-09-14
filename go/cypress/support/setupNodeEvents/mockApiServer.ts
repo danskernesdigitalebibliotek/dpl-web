@@ -7,6 +7,14 @@ import {
   MockSoapResponseParams,
 } from "../commands"
 
+/**
+ * Wrapper around the mockttp server backing the Cypress e2e suite.
+ *
+ * Rule registration and startup are asynchronous in mockttp, and callers must
+ * await them. A rule that is still in flight when the browser navigates leaves
+ * the request unmatched, and mockttp answers those with a plain-text 503 that
+ * the DPL CMS fetcher cannot parse. `reset()` is synchronous by contrast.
+ */
 class MockApiServer {
   private readonly server: Mockttp
   private readonly port: number
@@ -27,44 +35,43 @@ class MockApiServer {
     this.shouldEnableDebug()
   }
 
-  start() {
-    this.server.start(this.port)
+  async start() {
+    await this.server.start(this.port)
     this.shouldEnableDebug()
   }
 
-  stop() {
-    this.server.stop().then(() => {
-      console.info(`Mock API server stopped`)
-    })
+  async stop() {
+    await this.server.stop()
+    console.info(`Mock API server stopped`)
   }
 
-  mockGraphQLQuery({ operationName, data }: MockGraphQLQueryParams) {
-    this.server.forAnyRequest().withBodyIncluding(operationName).thenJson(200, { data })
+  async mockGraphQLQuery({ operationName, data }: MockGraphQLQueryParams) {
+    await this.server.forAnyRequest().withBodyIncluding(operationName).thenJson(200, { data })
   }
 
-  mockGraphQLMutation({ operationName, data }: MockGraphQLMutationParams) {
-    this.server.forAnyRequest().withBodyIncluding(operationName).thenJson(200, { data })
+  async mockGraphQLMutation({ operationName, data }: MockGraphQLMutationParams) {
+    await this.server.forAnyRequest().withBodyIncluding(operationName).thenJson(200, { data })
   }
 
-  mockRestResponse({ method, path: url, data, statusCode = 200 }: MockRestResponseParams) {
+  async mockRestResponse({ method, path: url, data, statusCode = 200 }: MockRestResponseParams) {
     switch (method) {
       case "GET":
-        this.server.forGet(url).thenJson(statusCode, data)
+        await this.server.forGet(url).thenJson(statusCode, data)
         break
       case "POST":
-        this.server.forPost(url).thenJson(statusCode, data)
+        await this.server.forPost(url).thenJson(statusCode, data)
         break
       case "PUT":
-        this.server.forPut(url).thenJson(statusCode, data)
+        await this.server.forPut(url).thenJson(statusCode, data)
         break
       case "DELETE":
-        this.server.forDelete(url).thenJson(statusCode, data)
+        await this.server.forDelete(url).thenJson(statusCode, data)
         break
     }
   }
 
-  mockSoapResponse({ path: url, data, statusCode = 200 }: MockSoapResponseParams) {
-    this.server.forPost(url).thenCallback(() => ({
+  async mockSoapResponse({ path: url, data, statusCode = 200 }: MockSoapResponseParams) {
+    await this.server.forPost(url).thenCallback(() => ({
       status: statusCode,
       headers: {
         "content-type": "application/soap+xml; charset=utf-8",
