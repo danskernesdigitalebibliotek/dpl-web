@@ -6,7 +6,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Advanced Woodworking",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_6.jpg",
+    src: "images/book_cover_6_medium.jpg",
     alt: "",
   },
   {
@@ -14,7 +14,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Modern Home Gardening",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_2.jpg",
+    src: "images/book_cover_2_medium.jpg",
     alt: "",
   },
   {
@@ -22,7 +22,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "The Art of Pottery",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_3.jpg",
+    src: "images/book_cover_3_medium.jpg",
     alt: "",
   },
   {
@@ -30,7 +30,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Creative Writing Essentials",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_4.jpg",
+    src: "images/book_cover_4_medium.jpg",
     alt: "",
   },
   {
@@ -38,7 +38,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Beginners Guide to Knitting",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_5.jpg",
+    src: "images/book_cover_5_medium.jpg",
     alt: "",
   },
   {
@@ -46,7 +46,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Healthy Vegetarian Recipes",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_1.jpg",
+    src: "images/book_cover_1_medium.jpg",
     alt: "",
   },
   {
@@ -54,7 +54,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "DIY Furniture Making",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_2.jpg",
+    src: "images/book_cover_2_medium.jpg",
     alt: "",
   },
   {
@@ -62,7 +62,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Interior Design on a Budget",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_3.jpg",
+    src: "images/book_cover_3_medium.jpg",
     alt: "",
   },
   {
@@ -70,7 +70,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Landscaping for Your Home",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_4.jpg",
+    src: "images/book_cover_4_medium.jpg",
     alt: "",
   },
   {
@@ -78,7 +78,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Easy and Fun Science Experiments",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_5.jpg",
+    src: "images/book_cover_5_medium.jpg",
     alt: "",
   },
   {
@@ -86,7 +86,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Photography for Nature Lovers",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_1.jpg",
+    src: "images/book_cover_1_medium.jpg",
     alt: "",
   },
   {
@@ -94,7 +94,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "The Beginner's Guide to Drawing",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_2.jpg",
+    src: "images/book_cover_2_medium.jpg",
     alt: "",
   },
   {
@@ -102,7 +102,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Advanced Woodworking",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_6.jpg",
+    src: "images/book_cover_6_medium.jpg",
     alt: "",
   },
   {
@@ -110,7 +110,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Modern Home Gardening",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_2.jpg",
+    src: "images/book_cover_2_medium.jpg",
     alt: "",
   },
   {
@@ -118,7 +118,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "The Art of Pottery",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_3.jpg",
+    src: "images/book_cover_3_medium.jpg",
     alt: "",
   },
   {
@@ -126,7 +126,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Creative Writing Essentials",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_4.jpg",
+    src: "images/book_cover_4_medium.jpg",
     alt: "",
   },
   {
@@ -134,7 +134,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Beginners Guide to Knitting",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_5.jpg",
+    src: "images/book_cover_5_medium.jpg",
     alt: "",
   },
   {
@@ -142,7 +142,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Healthy Vegetarian Recipes",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_1.jpg",
+    src: "images/book_cover_1_medium.jpg",
     alt: "",
   },
   {
@@ -150,7 +150,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "DIY Furniture Making",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_2.jpg",
+    src: "images/book_cover_2_medium.jpg",
     alt: "",
   },
   {
@@ -158,7 +158,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Interior Design on a Budget",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_3.jpg",
+    src: "images/book_cover_3_medium.jpg",
     alt: "",
   },
   {
@@ -166,7 +166,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Landscaping for Your Home",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_4.jpg",
+    src: "images/book_cover_4_medium.jpg",
     alt: "",
   },
   {
@@ -174,7 +174,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Easy and Fun Science Experiments",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_5.jpg",
+    src: "images/book_cover_5_medium.jpg",
     alt: "",
   },
   {
@@ -182,7 +182,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "Photography for Nature Lovers",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_1.jpg",
+    src: "images/book_cover_1_medium.jpg",
     alt: "",
   },
   {
@@ -190,7 +190,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     description: "The Beginner's Guide to Drawing",
     favoriteFill: false,
     materialUrl: "#",
-    src: "images/book_cover_2.jpg",
+    src: "images/book_cover_2_medium.jpg",
     alt: "",
   },
 ];

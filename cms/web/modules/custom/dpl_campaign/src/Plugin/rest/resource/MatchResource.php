@@ -131,6 +131,10 @@ class MatchResource extends ResourceBase {
                       'type' => 'string',
                       'description' => 'The url the campaign should link to',
                     ],
+                    'open_in_new_tab' => [
+                      'type' => 'boolean',
+                      'description' => 'Whether the campaign link should be opened in a new tab',
+                    ],
                   ],
                 ],
               ],
@@ -293,6 +297,11 @@ class MatchResource extends ResourceBase {
       /** @var \Drupal\Core\GeneratedUrl $url */
       $url = $link->getUrl()->setAbsolute(TRUE)->toString(TRUE);
       $output['url'] = $url->getGeneratedUrl();
+
+      // The link widget stores the editor's "open in new window/tab" choice
+      // as a target option on the link. See LinkitOptionsWidget.
+      $target = $link->getValue()['options']['target'] ?? NULL;
+      $output['open_in_new_tab'] = $target === '_blank';
     }
 
     return $output;

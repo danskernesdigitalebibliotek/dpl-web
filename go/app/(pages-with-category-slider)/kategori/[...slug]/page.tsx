@@ -5,6 +5,7 @@ import React, { Suspense } from "react"
 
 import RedirectNotFoundOrRenderPage from "@/components/global/dplCmsPage/RedirectNotFoundOrRenderPage"
 import CategoryPageLayout from "@/components/pages/categoryPageLayout/CategoryPageLayout"
+import PageLoading from "@/components/shared/pageLoading/PageLoading"
 import { NodeGoCategory } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { getEntityFromPageData, loadPageData } from "@/lib/helpers/dpl-cms-content"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
@@ -57,7 +58,7 @@ async function CategoryPage(props: { params: Promise<{ slug: string[] }> }) {
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   return (
-    <Suspense>
+    <Suspense fallback={<PageLoading />}>
       <CategoryPage {...props} />
     </Suspense>
   )

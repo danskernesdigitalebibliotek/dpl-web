@@ -5,24 +5,36 @@ import { UseTextFunction } from "../../../../core/utils/text";
 import { RequestStatus } from "../../../../core/utils/types/request";
 import {
   ReservationType,
+  hasDigitalReservationId,
   isDigitalReservation,
   isPhysicalReservation
 } from "../../../../core/utils/types/reservation-type";
+import { useDigitalDeleteReservation } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 export type OperationPhysical = ReturnType<
   typeof useDeleteReservations
 >["mutate"];
-export type OperationDigital = ReturnType<
+export type OperationPublizon = ReturnType<
   typeof useDeleteV1UserReservationsIdentifier
+>["mutate"];
+export type OperationDigital = ReturnType<
+  typeof useDigitalDeleteReservation
 >["mutate"];
 
 export type ParamsPhysical = { params: DeleteReservationsParams };
-export type ParamsDigital = Parameters<OperationDigital>;
+export type ParamsPublizon = Parameters<OperationPublizon>;
+// The service layer cancels by the reservation's own id, so the mutation
+// takes it directly rather than an object.
+export type ParamsDigital = string;
 
 type Request =
   | {
       params: ParamsPhysical;
       operation: OperationPhysical;
+    }
+  | {
+      params: ParamsPublizon;
+      operation: OperationPublizon;
     }
   | {
       params: ParamsDigital;
@@ -31,7 +43,7 @@ type Request =
 
 export const getReservationsToDelete = (reservations: ReservationType[]) => {
   if (!reservations.length) {
-    return { physical: [], digital: [] };
+    return { physical: [], publizon: [], digital: [] };
   }
   const physical = reservations
     .filter(isPhysicalReservation)
@@ -39,10 +51,20 @@ export const getReservationsToDelete = (reservations: ReservationType[]) => {
     .flat();
 
   const digital = reservations
-    .filter(isDigitalReservation)
+    .filter(hasDigitalReservationId)
+    .map(({ digitalReservationId }) => digitalReservationId);
+
+  // Both providers carry a material identifier, so the ones the service layer
+  // owns are excluded here to keep them from being cancelled through Publizon.
+  const publizon = reservations
+    .filter(
+      (reservation) =>
+        isDigitalReservation(reservation) &&
+        !hasDigitalReservationId(reservation)
+    )
     .map(({ identifier }) => identifier);
 
-  return { physical, digital };
+  return { physical, publizon, digital };
 };
 
 export const getDeleteButtonLabel = ({
@@ -68,14 +90,22 @@ export const requestsAndReservations = ({
   operations
 }: {
   reservations: ReservationType[];
-  operations: { physical: OperationPhysical; digital: OperationDigital };
+  operations: {
+    physical: OperationPhysical;
+    publizon: OperationPublizon;
+    digital: OperationDigital;
+  };
 }): {
   requests: Request[];
   reservationsPhysical: ReturnType<typeof getReservationsToDelete>["physical"];
+  reservationsPublizon: ReturnType<typeof getReservationsToDelete>["publizon"];
   reservationsDigital: ReturnType<typeof getReservationsToDelete>["digital"];
 } => {
-  const { physical: reservationsPhysical, digital: reservationsDigital } =
-    getReservationsToDelete(reservations);
+  const {
+    physical: reservationsPhysical,
+    publizon: reservationsPublizon,
+    digital: reservationsDigital
+  } = getReservationsToDelete(reservations);
 
   const requests = [];
   if (reservationsPhysical.length) {
@@ -84,16 +114,25 @@ export const requestsAndReservations = ({
       operation: operations.physical
     });
   }
-  if (reservationsDigital.length) {
-    reservationsDigital.forEach((id) => {
-      requests.push({
-        params: { identifier: String(id) },
-        operation: operations.digital
-      });
+  reservationsPublizon.forEach((id) => {
+    requests.push({
+      params: { identifier: String(id) },
+      operation: operations.publizon
     });
-  }
+  });
+  reservationsDigital.forEach((id) => {
+    requests.push({
+      params: id,
+      operation: operations.digital
+    });
+  });
 
-  return { requests, reservationsPhysical, reservationsDigital };
+  return {
+    requests,
+    reservationsPhysical,
+    reservationsPublizon,
+    reservationsDigital
+  };
 };
 
 export default {};

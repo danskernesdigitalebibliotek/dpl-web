@@ -18,7 +18,7 @@ const DisplayedReservations: FC<DisplayedReservationsProps> = ({
   const {
     all: { readyToLoan: readyToLoanReservations },
     fbs: { queued: reservedReservationsFBS },
-    publizon: { queued: reservedReservationsPublizon }
+    digital: { queued: reservedReservationsDigital }
   } = useReservations();
   return (
     <>
@@ -43,7 +43,7 @@ const DisplayedReservations: FC<DisplayedReservationsProps> = ({
         pageSize={pageSize}
         header={t("reservationListDigitalReservationsHeaderText")}
         emptyListDataCy="reservation-list-digital-reservations-empty-list"
-        reservations={reservedReservationsPublizon}
+        reservations={reservedReservationsDigital}
         emptyListLabel={t("reservationListDigitalReservationsEmptyText")}
       />
     </>

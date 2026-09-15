@@ -20,7 +20,9 @@ export class DigitalLoanRowComponent extends ComponentObject {
       title: () => this.container().find(".list-reservation__title__text"),
       materialType: () => this.container().find(".status-label"),
       author: () => this.container().find(".list-reservation__about p").first(),
-      dueDate: () => this.container().find(".list-reservation__deadline p")
+      dueDate: () => this.container().find(".list-reservation__deadline p"),
+      // Days left before the loan expires, rounded up.
+      daysLeft: () => this.container().find(".counter")
     };
   }
 }

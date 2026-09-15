@@ -683,8 +683,8 @@ class DplReactAppsController extends ControllerBase {
       'reservation-errors-title-text' => $this->t('Reservation error', [], ['context' => 'Work Page']),
       'reservation-modal-close-modal-aria-label-text' => $this->t('Close reservation modal', [], ['context' => 'Work Page']),
       'reservation-modal-screen-reader-modal-description-text' => $this->t('modal for reservation', [], ['context' => 'Work Page']),
+      'reservation-recommendations-title-text' => $this->t('You might also be interested in...', [], ['context' => 'Work Page']),
       'reservation-succes-is-reserved-for-you-text' => $this->t('is reserved for you', [], ['context' => 'Work Page']),
-      'reservation-succes-title-text' => $this->t('The material is available and is now reserved for you!', [], ['context' => 'Work Page']),
       'reservation-success-preferred-pickup-branch-text' => $this->t('Material is available and you will get a message when it is ready for pickup - pickup at @branch', [], ['context' => 'Work Page']),
       'reservations-for-this-material-text' => $this->t('reservations for this material', [], ['context' => 'Work Page']),
       'reserve-book-text' => $this->t('Reserve book', [], ['context' => 'Work Page']),
@@ -893,15 +893,22 @@ class DplReactAppsController extends ControllerBase {
   public function reader(Request $request): array {
     $identifier = $request->query->get('identifier');
     $orderid = $request->query->get('orderid');
+    // A loan made through the Biblio adapter opens in the WeDoBooks reader
+    // instead, which knows the loan by its own id. Publizon's reader does not
+    // recognise it and vice versa, so they cannot share a parameter.
+    $loanid = $request->query->get('loanid');
 
-    if (!$identifier && !$orderid) {
-      throw new BadRequestHttpException('Either identifier or orderid must be provided.');
+    if (!$identifier && !$orderid && !$loanid) {
+      throw new BadRequestHttpException('Either identifier, orderid or loanid must be provided.');
     }
 
     $data = [
-      'identifier' => $identifier ?? NULL,
-      'orderid' => $orderid ?? NULL,
-    ];
+      'identifier' => $identifier,
+      'orderid' => $orderid,
+      'loanid' => $loanid,
+      // Publizon's reader talks to no API of ours; the WeDoBooks one needs the
+      // adapter to vouch for the patron before it can open anything.
+    ] + self::externalApiBaseUrls();
 
     $app = [
       '#theme' => 'dpl_react_app',
@@ -911,6 +918,46 @@ class DplReactAppsController extends ControllerBase {
 
     return $app;
 
+  }
+
+  /**
+   * Render the Player React app.
+   *
+   * Audiobooks get their own page: the SDK's player bar pins itself to the
+   * bottom of the viewport and leaves the rest of the page free, unlike the
+   * reader, which owns the whole screen. Only WeDoBooks plays here - Publizon
+   * audiobooks play in a modal on the page the patron came from.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The HTTP request containing query parameters.
+   *
+   * @return mixed[]
+   *   Render array with the Player app block.
+   *
+   * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+   */
+  public function player(Request $request): array {
+    // The WeDoBooks player knows a loan by the loan's own id. An identifier
+    // with no loan behind it is a sample.
+    $loanid = $request->query->get('loanid');
+    $identifier = $request->query->get('identifier');
+
+    if (!$identifier && !$loanid) {
+      throw new BadRequestHttpException('Either identifier or loanid must be provided.');
+    }
+
+    $data = [
+      'identifier' => $identifier,
+      'loanid' => $loanid,
+      // The WeDoBooks player needs the adapter to vouch for the patron
+      // before it can play anything.
+    ] + self::externalApiBaseUrls();
+
+    return [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'player',
+      '#data' => $data,
+    ];
   }
 
 }

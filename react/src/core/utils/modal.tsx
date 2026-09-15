@@ -158,6 +158,14 @@ export type GuardedOpenModalProps = {
   options?: ModalOptions;
 };
 
+// Whether the modal with this id is the one currently shown, for work that is
+// only worth doing while the reader is looking at it.
+export const useIsModalOpen = (modalId: string) => {
+  const { modalIds } = useSelector((s: ModalIdsProps) => s.modal);
+
+  return !!modalIds?.includes(modalId);
+};
+
 export const useModalButtonHandler = () => {
   const dispatch = useDispatch();
   const { modalIds } = useSelector((s: ModalIdsProps) => s.modal);

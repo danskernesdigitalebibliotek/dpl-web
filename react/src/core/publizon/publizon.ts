@@ -398,6 +398,9 @@ export const postV1UserChecklistIdentifier = async (
   });
 };
 
+export const getPostV1UserChecklistIdentifierMutationKey = () =>
+  ["postV1UserChecklistIdentifier"] as const;
+
 export const getPostV1UserChecklistIdentifierMutationOptions = <
   TError = ErrorType<unknown>,
   TContext = unknown
@@ -405,17 +408,17 @@ export const getPostV1UserChecklistIdentifierMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postV1UserChecklistIdentifier>>,
     TError,
-    { identifier: string },
+    PostV1UserChecklistIdentifierMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postV1UserChecklistIdentifier>>,
   TError,
-  { identifier: string },
+  PostV1UserChecklistIdentifierMutationVariables,
   TContext
 > => {
-  const mutationKey = ["postV1UserChecklistIdentifier"];
+  const mutationKey = getPostV1UserChecklistIdentifierMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -426,7 +429,7 @@ export const getPostV1UserChecklistIdentifierMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postV1UserChecklistIdentifier>>,
-    { identifier: string }
+    PostV1UserChecklistIdentifierMutationVariables
   > = (props) => {
     const { identifier } = props ?? {};
 
@@ -441,6 +444,9 @@ export type PostV1UserChecklistIdentifierMutationResult = NonNullable<
 >;
 
 export type PostV1UserChecklistIdentifierMutationError = ErrorType<unknown>;
+export type PostV1UserChecklistIdentifierMutationVariables = {
+  identifier: string;
+};
 
 /**
  * @summary Add a book to the user's checklist.
@@ -453,7 +459,7 @@ export const usePostV1UserChecklistIdentifier = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof postV1UserChecklistIdentifier>>,
       TError,
-      { identifier: string },
+      PostV1UserChecklistIdentifierMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -462,7 +468,7 @@ export const usePostV1UserChecklistIdentifier = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof postV1UserChecklistIdentifier>>,
   TError,
-  { identifier: string },
+  PostV1UserChecklistIdentifierMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -488,6 +494,9 @@ export const deleteV1UserChecklistIdentifier = async (
   });
 };
 
+export const getDeleteV1UserChecklistIdentifierMutationKey = () =>
+  ["deleteV1UserChecklistIdentifier"] as const;
+
 export const getDeleteV1UserChecklistIdentifierMutationOptions = <
   TError = ErrorType<unknown>,
   TContext = unknown
@@ -495,17 +504,17 @@ export const getDeleteV1UserChecklistIdentifierMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteV1UserChecklistIdentifier>>,
     TError,
-    { identifier: string },
+    DeleteV1UserChecklistIdentifierMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof deleteV1UserChecklistIdentifier>>,
   TError,
-  { identifier: string },
+  DeleteV1UserChecklistIdentifierMutationVariables,
   TContext
 > => {
-  const mutationKey = ["deleteV1UserChecklistIdentifier"];
+  const mutationKey = getDeleteV1UserChecklistIdentifierMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -516,7 +525,7 @@ export const getDeleteV1UserChecklistIdentifierMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof deleteV1UserChecklistIdentifier>>,
-    { identifier: string }
+    DeleteV1UserChecklistIdentifierMutationVariables
   > = (props) => {
     const { identifier } = props ?? {};
 
@@ -531,6 +540,9 @@ export type DeleteV1UserChecklistIdentifierMutationResult = NonNullable<
 >;
 
 export type DeleteV1UserChecklistIdentifierMutationError = ErrorType<unknown>;
+export type DeleteV1UserChecklistIdentifierMutationVariables = {
+  identifier: string;
+};
 
 /**
  * @summary Delete a book from the user's checklist.
@@ -543,7 +555,7 @@ export const useDeleteV1UserChecklistIdentifier = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof deleteV1UserChecklistIdentifier>>,
       TError,
-      { identifier: string },
+      DeleteV1UserChecklistIdentifierMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -552,7 +564,7 @@ export const useDeleteV1UserChecklistIdentifier = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof deleteV1UserChecklistIdentifier>>,
   TError,
-  { identifier: string },
+  DeleteV1UserChecklistIdentifierMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -1074,6 +1086,9 @@ export const postV1UserLoansIdentifier = async (
   );
 };
 
+export const getPostV1UserLoansIdentifierMutationKey = () =>
+  ["postV1UserLoansIdentifier"] as const;
+
 export const getPostV1UserLoansIdentifierMutationOptions = <
   TError = ErrorType<unknown>,
   TContext = unknown
@@ -1081,17 +1096,17 @@ export const getPostV1UserLoansIdentifierMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postV1UserLoansIdentifier>>,
     TError,
-    { identifier: string; params?: PostV1UserLoansIdentifierParams },
+    PostV1UserLoansIdentifierMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postV1UserLoansIdentifier>>,
   TError,
-  { identifier: string; params?: PostV1UserLoansIdentifierParams },
+  PostV1UserLoansIdentifierMutationVariables,
   TContext
 > => {
-  const mutationKey = ["postV1UserLoansIdentifier"];
+  const mutationKey = getPostV1UserLoansIdentifierMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -1102,7 +1117,7 @@ export const getPostV1UserLoansIdentifierMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postV1UserLoansIdentifier>>,
-    { identifier: string; params?: PostV1UserLoansIdentifierParams }
+    PostV1UserLoansIdentifierMutationVariables
   > = (props) => {
     const { identifier, params } = props ?? {};
 
@@ -1117,6 +1132,10 @@ export type PostV1UserLoansIdentifierMutationResult = NonNullable<
 >;
 
 export type PostV1UserLoansIdentifierMutationError = ErrorType<unknown>;
+export type PostV1UserLoansIdentifierMutationVariables = {
+  identifier: string;
+  params?: PostV1UserLoansIdentifierParams;
+};
 
 /**
  * @summary Creates a new loan.
@@ -1129,7 +1148,7 @@ export const usePostV1UserLoansIdentifier = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof postV1UserLoansIdentifier>>,
       TError,
-      { identifier: string; params?: PostV1UserLoansIdentifierParams },
+      PostV1UserLoansIdentifierMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -1138,7 +1157,7 @@ export const usePostV1UserLoansIdentifier = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof postV1UserLoansIdentifier>>,
   TError,
-  { identifier: string; params?: PostV1UserLoansIdentifierParams },
+  PostV1UserLoansIdentifierMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -1334,13 +1353,40 @@ export const postV1Loanstatus = async (
   postV1LoanstatusBody?: string[],
   options?: Parameters<typeof mutator>[1]
 ): Promise<LoanStatusListResult> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
   return mutator<LoanStatusListResult>(getPostV1LoanstatusUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...getHeaders(options?.headers)
+    },
     body: JSON.stringify(postV1LoanstatusBody)
   });
 };
+
+export const getPostV1LoanstatusMutationKey = () =>
+  ["postV1Loanstatus"] as const;
 
 export const getPostV1LoanstatusMutationOptions = <
   TError = ErrorType<unknown>,
@@ -1349,17 +1395,17 @@ export const getPostV1LoanstatusMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postV1Loanstatus>>,
     TError,
-    { data?: BodyType<string[]> },
+    PostV1LoanstatusMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postV1Loanstatus>>,
   TError,
-  { data?: BodyType<string[]> },
+  PostV1LoanstatusMutationVariables,
   TContext
 > => {
-  const mutationKey = ["postV1Loanstatus"];
+  const mutationKey = getPostV1LoanstatusMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -1370,7 +1416,7 @@ export const getPostV1LoanstatusMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postV1Loanstatus>>,
-    { data?: BodyType<string[]> }
+    PostV1LoanstatusMutationVariables
   > = (props) => {
     const { data } = props ?? {};
 
@@ -1385,6 +1431,7 @@ export type PostV1LoanstatusMutationResult = NonNullable<
 >;
 export type PostV1LoanstatusMutationBody = BodyType<string[]> | undefined;
 export type PostV1LoanstatusMutationError = ErrorType<unknown>;
+export type PostV1LoanstatusMutationVariables = { data?: BodyType<string[]> };
 
 /**
  * @summary Get loan status of all products.
@@ -1397,7 +1444,7 @@ export const usePostV1Loanstatus = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof postV1Loanstatus>>,
       TError,
-      { data?: BodyType<string[]> },
+      PostV1LoanstatusMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -1406,7 +1453,7 @@ export const usePostV1Loanstatus = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof postV1Loanstatus>>,
   TError,
-  { data?: BodyType<string[]> },
+  PostV1LoanstatusMutationVariables,
   TContext
 > => {
   return useMutation(getPostV1LoanstatusMutationOptions(options), queryClient);
@@ -1887,16 +1934,43 @@ export const postV1UserReservationsIdentifier = async (
   reservationInput?: ReservationInput,
   options?: Parameters<typeof mutator>[1]
 ): Promise<ApiResult> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
   return mutator<ApiResult>(
     getPostV1UserReservationsIdentifierUrl(identifier),
     {
       ...options,
       method: "POST",
-      headers: { "Content-Type": "application/json", ...options?.headers },
+      headers: {
+        "Content-Type": "application/json",
+        ...getHeaders(options?.headers)
+      },
       body: JSON.stringify(reservationInput)
     }
   );
 };
+
+export const getPostV1UserReservationsIdentifierMutationKey = () =>
+  ["postV1UserReservationsIdentifier"] as const;
 
 export const getPostV1UserReservationsIdentifierMutationOptions = <
   TError = ErrorType<unknown>,
@@ -1905,17 +1979,17 @@ export const getPostV1UserReservationsIdentifierMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postV1UserReservationsIdentifier>>,
     TError,
-    { identifier: string; data?: BodyType<ReservationInput> },
+    PostV1UserReservationsIdentifierMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postV1UserReservationsIdentifier>>,
   TError,
-  { identifier: string; data?: BodyType<ReservationInput> },
+  PostV1UserReservationsIdentifierMutationVariables,
   TContext
 > => {
-  const mutationKey = ["postV1UserReservationsIdentifier"];
+  const mutationKey = getPostV1UserReservationsIdentifierMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -1926,7 +2000,7 @@ export const getPostV1UserReservationsIdentifierMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postV1UserReservationsIdentifier>>,
-    { identifier: string; data?: BodyType<ReservationInput> }
+    PostV1UserReservationsIdentifierMutationVariables
   > = (props) => {
     const { identifier, data } = props ?? {};
 
@@ -1942,6 +2016,10 @@ export type PostV1UserReservationsIdentifierMutationResult = NonNullable<
 export type PostV1UserReservationsIdentifierMutationBody =
   BodyType<ReservationInput> | undefined;
 export type PostV1UserReservationsIdentifierMutationError = ErrorType<unknown>;
+export type PostV1UserReservationsIdentifierMutationVariables = {
+  identifier: string;
+  data?: BodyType<ReservationInput>;
+};
 
 /**
  * @summary Creates a new reservation.
@@ -1954,7 +2032,7 @@ export const usePostV1UserReservationsIdentifier = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof postV1UserReservationsIdentifier>>,
       TError,
-      { identifier: string; data?: BodyType<ReservationInput> },
+      PostV1UserReservationsIdentifierMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -1963,7 +2041,7 @@ export const usePostV1UserReservationsIdentifier = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof postV1UserReservationsIdentifier>>,
   TError,
-  { identifier: string; data?: BodyType<ReservationInput> },
+  PostV1UserReservationsIdentifierMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -1984,16 +2062,43 @@ export const patchV1UserReservationsIdentifier = async (
   reservationInput?: ReservationInput,
   options?: Parameters<typeof mutator>[1]
 ): Promise<ApiResult> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
   return mutator<ApiResult>(
     getPatchV1UserReservationsIdentifierUrl(identifier),
     {
       ...options,
       method: "PATCH",
-      headers: { "Content-Type": "application/json", ...options?.headers },
+      headers: {
+        "Content-Type": "application/json",
+        ...getHeaders(options?.headers)
+      },
       body: JSON.stringify(reservationInput)
     }
   );
 };
+
+export const getPatchV1UserReservationsIdentifierMutationKey = () =>
+  ["patchV1UserReservationsIdentifier"] as const;
 
 export const getPatchV1UserReservationsIdentifierMutationOptions = <
   TError = ErrorType<unknown>,
@@ -2002,17 +2107,17 @@ export const getPatchV1UserReservationsIdentifierMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof patchV1UserReservationsIdentifier>>,
     TError,
-    { identifier: string; data?: BodyType<ReservationInput> },
+    PatchV1UserReservationsIdentifierMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof patchV1UserReservationsIdentifier>>,
   TError,
-  { identifier: string; data?: BodyType<ReservationInput> },
+  PatchV1UserReservationsIdentifierMutationVariables,
   TContext
 > => {
-  const mutationKey = ["patchV1UserReservationsIdentifier"];
+  const mutationKey = getPatchV1UserReservationsIdentifierMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -2023,7 +2128,7 @@ export const getPatchV1UserReservationsIdentifierMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof patchV1UserReservationsIdentifier>>,
-    { identifier: string; data?: BodyType<ReservationInput> }
+    PatchV1UserReservationsIdentifierMutationVariables
   > = (props) => {
     const { identifier, data } = props ?? {};
 
@@ -2039,6 +2144,10 @@ export type PatchV1UserReservationsIdentifierMutationResult = NonNullable<
 export type PatchV1UserReservationsIdentifierMutationBody =
   BodyType<ReservationInput> | undefined;
 export type PatchV1UserReservationsIdentifierMutationError = ErrorType<unknown>;
+export type PatchV1UserReservationsIdentifierMutationVariables = {
+  identifier: string;
+  data?: BodyType<ReservationInput>;
+};
 
 /**
  * @summary Updates the phone number and email address of a specific reservation.
@@ -2051,7 +2160,7 @@ export const usePatchV1UserReservationsIdentifier = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof patchV1UserReservationsIdentifier>>,
       TError,
-      { identifier: string; data?: BodyType<ReservationInput> },
+      PatchV1UserReservationsIdentifierMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -2060,7 +2169,7 @@ export const usePatchV1UserReservationsIdentifier = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof patchV1UserReservationsIdentifier>>,
   TError,
-  { identifier: string; data?: BodyType<ReservationInput> },
+  PatchV1UserReservationsIdentifierMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -2091,6 +2200,9 @@ export const deleteV1UserReservationsIdentifier = async (
   );
 };
 
+export const getDeleteV1UserReservationsIdentifierMutationKey = () =>
+  ["deleteV1UserReservationsIdentifier"] as const;
+
 export const getDeleteV1UserReservationsIdentifierMutationOptions = <
   TError = ErrorType<unknown>,
   TContext = unknown
@@ -2098,17 +2210,17 @@ export const getDeleteV1UserReservationsIdentifierMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteV1UserReservationsIdentifier>>,
     TError,
-    { identifier: string },
+    DeleteV1UserReservationsIdentifierMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof deleteV1UserReservationsIdentifier>>,
   TError,
-  { identifier: string },
+  DeleteV1UserReservationsIdentifierMutationVariables,
   TContext
 > => {
-  const mutationKey = ["deleteV1UserReservationsIdentifier"];
+  const mutationKey = getDeleteV1UserReservationsIdentifierMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -2119,7 +2231,7 @@ export const getDeleteV1UserReservationsIdentifierMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof deleteV1UserReservationsIdentifier>>,
-    { identifier: string }
+    DeleteV1UserReservationsIdentifierMutationVariables
   > = (props) => {
     const { identifier } = props ?? {};
 
@@ -2135,6 +2247,9 @@ export type DeleteV1UserReservationsIdentifierMutationResult = NonNullable<
 
 export type DeleteV1UserReservationsIdentifierMutationError =
   ErrorType<unknown>;
+export type DeleteV1UserReservationsIdentifierMutationVariables = {
+  identifier: string;
+};
 
 /**
  * @summary Cancels a reservation.
@@ -2147,7 +2262,7 @@ export const useDeleteV1UserReservationsIdentifier = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof deleteV1UserReservationsIdentifier>>,
       TError,
-      { identifier: string },
+      DeleteV1UserReservationsIdentifierMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -2156,7 +2271,7 @@ export const useDeleteV1UserReservationsIdentifier = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof deleteV1UserReservationsIdentifier>>,
   TError,
-  { identifier: string },
+  DeleteV1UserReservationsIdentifierMutationVariables,
   TContext
 > => {
   return useMutation(

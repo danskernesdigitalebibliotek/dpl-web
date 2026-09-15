@@ -8,6 +8,7 @@ import {
   PUBLIZON_PRODUCT_TYPE,
   PublizonProductType
 } from "../../core/publizon/productType";
+import { DigitalProvider } from "../../core/utils/types/digital-provider";
 
 type AssetType = {
   src: string;
@@ -89,6 +90,52 @@ export const getOrderIdByIdentifier = ({
   const loanWithIdentifier = loans.find((i) => i.identifier === identifier);
   return loanWithIdentifier ? loanWithIdentifier.orderId : null;
 };
+
+/**
+ * Where a digital loan opens. One url parameter per provider, because the two
+ * readers do not recognise each other's keys: Publizon knows an order id, the
+ * service layer a loan id.
+ */
+export const readerUrl = (id: string, provider?: DigitalProvider | null) => {
+  const parameter = provider === "serviceLayer" ? "loanid" : "orderid";
+  return new URL(
+    `/reader?${parameter}=${encodeURIComponent(id)}`,
+    window.location.href
+  );
+};
+
+/**
+ * Where a service layer audiobook loan plays.
+ *
+ * Only service layer loans have a page to play on - Publizon audiobooks play
+ * in a modal, so no Publizon key ever links here.
+ */
+export const playerUrl = (loanId: string) =>
+  new URL(`/player?loanid=${encodeURIComponent(loanId)}`, window.location.href);
+
+/**
+ * Whether a loan from this provider plays in the Publizon modal.
+ *
+ * Service layer loans play on the player page instead (see `playerUrl`), so a
+ * caller that owns a `PlayerModal` only needs to mount it when this is true.
+ */
+export const playsInModal = (provider?: DigitalProvider | null) =>
+  provider !== "serviceLayer";
+
+/**
+ * Where a sample of a material opens.
+ *
+ * A sample has no loan to read the material type from, so the route carries
+ * it: e-books sample on the reader page, audiobooks on the player page.
+ */
+export const sampleUrl = (
+  identifier: string,
+  materialType: "ebook" | "audiobook"
+) =>
+  new URL(
+    `/${materialType === "audiobook" ? "player" : "reader"}?identifier=${encodeURIComponent(identifier)}`,
+    window.location.href
+  );
 
 export const readerTypes = [
   ManifestationMaterialType.ebook,

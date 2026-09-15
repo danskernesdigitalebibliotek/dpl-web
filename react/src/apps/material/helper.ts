@@ -29,6 +29,7 @@ import {
 } from "../../core/utils/helpers/url";
 import {
   flattenCreators,
+  getAllFaustIds,
   getMaterialType,
   orderManifestationsByYear
 } from "../../core/utils/helpers/general";
@@ -96,12 +97,21 @@ export const hasPublizonIdentifier = (manifestation: Manifestation) =>
     (identifier) => identifier.type === IdentifierTypeEnum.Publizon
   ) ?? false;
 
-// Picks the manifestation to loan/reserve through Publizon: prefer the one
-// carrying a PUBLIZON identifier (the loanable edition), else the first.
+// The PUBLIZON identifier marks a loanable edition. The type is FBI's field
+// name and says nothing about which provider holds the material.
+//
+// Several editions of one material type can be loanable, and the reader
+// expects the newest. Ordering copies the list: orderManifestationsByYear
+// sorts in place, and this list belongs to the caller.
 export const getLoanableManifestation = (manifestations: Manifestation[]) => {
-  return (
-    manifestations.find(hasPublizonIdentifier) ??
-    getFirstManifestation(manifestations)
+  const loanableManifestations = manifestations.filter(hasPublizonIdentifier);
+
+  if (!loanableManifestations.length) {
+    return getFirstManifestation(manifestations);
+  }
+
+  return getFirstManifestation(
+    orderManifestationsByYear([...loanableManifestations])
   );
 };
 
@@ -168,15 +178,21 @@ export const getManifestationIsbn = (manifestation: Manifestation) => {
   return isbnIdentifier?.value ?? "";
 };
 
-// Identifier used for every Publizon call (loan, reservation, loan status,
-// order id). Prefer the PUBLIZON identifier; fall back to the ISBN.
-export const getManifestationPublizonIdentifier = (
+/**
+ * The identifier a digital material is borrowed, reserved and read by - both
+ * Publizon's identifier and the service layer's `material_id`.
+ *
+ * `IdentifierTypeEnum.Publizon` is FBI's field name, not the provider we call.
+ * Preferred over the ISBN because a manifestation can carry several ISBNs and
+ * the leading one is not always the right edition - a deselected PDF, say.
+ */
+export const getManifestationDigitalIdentifier = (
   manifestation: Manifestation
 ) => {
-  const publizonIdentifier = manifestation.identifiers?.find(
+  const fbiPublizonIdentifier = manifestation.identifiers?.find(
     (identifier) => identifier.type === IdentifierTypeEnum.Publizon
   );
-  return publizonIdentifier?.value ?? getManifestationIsbn(manifestation);
+  return fbiPublizonIdentifier?.value ?? getManifestationIsbn(manifestation);
 };
 
 export const getManifestationSource = (manifestation: Manifestation) => {
@@ -451,16 +467,6 @@ export const divideManifestationsByMaterialType = (
     {}
   );
 
-export const getAllIsbns = (manifestations: Manifestation[]) => {
-  return manifestations
-    .map((manifestation) =>
-      manifestation.identifiers
-        .filter((identifier) => identifier.type === IdentifierTypeEnum.Isbn)
-        .map((identifier) => identifier.value)
-    )
-    .flat();
-};
-
 export const getManifestationsWithMaterialType = (
   manifestations: Manifestation[]
 ) => {
@@ -517,8 +523,14 @@ export const reservationModalId = (faustIds: FaustId[]) => {
   return constructModalId("reservation-modal", faustIds.sort());
 };
 
-export const onlineInternalModalId = (faustIds: FaustId[]) => {
-  return constructModalId("online-internal-modal", faustIds.sort());
+// Keyed on the one edition the loan is for, so an opener that covers several
+// editions and the modal rendered for a single one agree on the id.
+export const onlineInternalModalId = (manifestations: Manifestation[]) => {
+  const loanableManifestation = getLoanableManifestation(manifestations);
+  return constructModalId(
+    "online-internal-modal",
+    loanableManifestation ? getAllFaustIds([loanableManifestation]) : []
+  );
 };
 
 export const editionSwitchModalId = () => {
