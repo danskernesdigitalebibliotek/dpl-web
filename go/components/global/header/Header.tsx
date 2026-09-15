@@ -12,8 +12,7 @@ import ProfileButton from "./ProfileButton"
 function Header() {
   return (
     <header>
-      <div
-        className="h-navigation-top-height flex items-center justify-center">
+      <div className="h-navigation-top-height flex items-center justify-center">
         <LinkToParentLibrary />
       </div>
       <div className="content-container h-navigation-height grid grid-cols-3 items-center">
