@@ -8,7 +8,7 @@ import {
 import useDigitalReaderPlayerState from "../../core/utils/useDigitalReaderPlayerState";
 import {
   useDigitalLoanDecision,
-  useDigitalLoans,
+  useDigitalMaterialHolding,
   useDigitalReservations
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { isAnonymous } from "../../core/utils/helpers/user";
@@ -22,7 +22,7 @@ vi.mock(
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
     useDigitalLoanDecision: vi.fn(),
-    useDigitalLoans: vi.fn(),
+    useDigitalMaterialHolding: vi.fn(),
     useDigitalReservations: vi.fn()
   })
 );
@@ -52,7 +52,7 @@ const loan: DigitalLoan = {
   endDate: "2022-11-16T08:15:00.000Z",
   active: true,
   title: "Din for en sommer",
-  author: "Sherman, L.",
+  authors: ["Sherman, L."],
   publisher: "Lindhardt og Ringhof",
   publishDate: "2022-06-18T00:00:00.000Z",
   loanProvider: "selection"
@@ -68,13 +68,15 @@ const reservation: DigitalReservation = {
 
 const givenAdapterSays = ({
   status,
-  loans = [],
+  heldLoan,
   reservations = [],
   anonymous = false,
   stillAnswering = false
 }: {
   status?: LoanDecision["status"];
-  loans?: DigitalLoan[];
+  // The loan the user holds on the material being rendered, if any. The
+  // service layer does the matching, so the hook is handed one loan or none.
+  heldLoan?: DigitalLoan;
   reservations?: DigitalReservation[];
   anonymous?: boolean;
   stillAnswering?: boolean;
@@ -84,10 +86,10 @@ const givenAdapterSays = ({
     data: status ? { status } : undefined,
     isLoading: stillAnswering
   } as unknown as ReturnType<typeof useDigitalLoanDecision>);
-  vi.mocked(useDigitalLoans).mockReturnValue({
-    data: { loans },
+  vi.mocked(useDigitalMaterialHolding).mockReturnValue({
+    data: heldLoan ?? null,
     isLoading: false
-  } as unknown as ReturnType<typeof useDigitalLoans>);
+  } as unknown as ReturnType<typeof useDigitalMaterialHolding>);
   vi.mocked(useDigitalReservations).mockReturnValue({
     data: { reservations },
     isLoading: false
@@ -155,7 +157,7 @@ describe("useDigitalReaderPlayerState", () => {
 
   describe("what the user already has", () => {
     it("Recognises a loan and hands over the key that opens it", () => {
-      givenAdapterSays({ status: "loanable", loans: [loan] });
+      givenAdapterSays({ status: "loanable", heldLoan: loan });
 
       // The Biblio loan id takes the role Publizon's order id plays.
       expect(render()).toMatchObject({
@@ -164,11 +166,10 @@ describe("useDigitalReaderPlayerState", () => {
       });
     });
 
-    it("Ignores a loan for a different material", () => {
-      givenAdapterSays({
-        status: "loanable",
-        loans: [{ ...loan, materialId: "9788740082265" }]
-      });
+    // Which loan belongs to this material is the service layer's question -
+    // see getDigitalMaterialHolding.
+    it("Offers nothing held when the user has no loan on the material", () => {
+      givenAdapterSays({ status: "loanable" });
 
       expect(render()).toMatchObject({
         isAlreadyLoaned: false,
@@ -241,7 +242,7 @@ describe("useDigitalReaderPlayerState", () => {
     });
 
     it("Knows nothing when another provider holds the material", () => {
-      givenAdapterSays({ status: "loanable", loans: [loan] });
+      givenAdapterSays({ status: "loanable", heldLoan: loan });
 
       expect(render(IDENTIFIER, false)).toMatchObject({
         canBeLoaned: false,

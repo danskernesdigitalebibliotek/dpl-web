@@ -1,6 +1,6 @@
 // Backends this package knows how to talk to. Apps never name these in
 // hook calls — only in the resolvers they implement on ServiceLayerConfig.
-export type ApiId = "fbs" | "biblio"
+export type ApiId = "fbs" | "biblio" | "fbi"
 
 export type ServiceLayerConfig = {
   getBaseUrl: (api: ApiId) => string
@@ -165,7 +165,8 @@ export type DigitalMaterialType = "ebook" | "audiobook"
 // DigitalMaterialType.
 export type MaterialType = DigitalMaterialType | "paper_book"
 
-// Catalogue fields for a digital material.
+// Catalogue fields for a digital material. Title and authors are FBI's where
+// it knows the ISBN — see withCatalogueDetails.
 export type DigitalMaterial = {
   isbn: string
   materialType: DigitalMaterialType
@@ -184,10 +185,10 @@ export type DigitalLoan = {
   startDate: string
   endDate: string
   active: boolean
-  // A loan carries its own catalogue fields, so presenting it needs no
-  // metadata lookup. `author` is one string here, a list on DigitalMaterial.
+  // Title and authors are the catalogue's, publisher and publishDate the
+  // provider's — see ADR-004 for why the correction stops there.
   title: string
-  author: string
+  authors: string[]
   publisher: string
   publishDate: string
   // Which licence the loan was made under - see LoanProvider, and

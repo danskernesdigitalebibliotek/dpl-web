@@ -60,7 +60,7 @@ const digitalLoan: DigitalLoan = {
   endDate: "2022-11-16T08:15:00.000Z",
   active: true,
   title: "Større end os",
-  author: "Sherman, L.",
+  authors: ["Sherman, L."],
   publisher: "Lindhardt og Ringhof",
   publishDate: "2022-06-18T00:00:00.000Z",
   loanProvider: "selection"
