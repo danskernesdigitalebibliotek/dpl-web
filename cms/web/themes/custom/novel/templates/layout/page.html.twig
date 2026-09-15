@@ -47,9 +47,12 @@
    make the page scroll horizontally on mobile. Keep `.overflow-x-clip`:
    `.overflow-hidden` here silently stops the header from sticking. #}
 <div class="overflow-x-clip">
+  {# The global service message is handed to the header rather than printed
+     here. It is part of the sticky header - see the header template. #}
   {{ include('@novel/layout/header.html.twig'
     , {
     header: page.header,
+    service_message_global: service_message_global,
     search_header: search.header,
     patron_menu: patron.menu,
     logo: logo,
@@ -57,6 +60,8 @@
     opening_hours_sidebar_large: opening_hours_sidebar_large,
     opening_hours_sidebar_small: opening_hours_sidebar_small,
   }, false) }}
+
+  {{ service_messages }}
 
   {{ drupal_block('system_messages_block') }}
 
