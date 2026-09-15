@@ -145,93 +145,98 @@
     /* FONTS MOBILE */
     --typo-huge-size: 42px;
     --typo-huge-weight: 700;
-    --typo-huge-line-height: 42px;
+    --typo-huge-line-height: 46px;
     --typo-huge-letter-spacing: 0;
 
     --typo-heading-1-size: 24px;
     --typo-heading-1-weight: 700;
-    --typo-heading-1-line-height: 28px;
+    --typo-heading-1-line-height: 32px;
     --typo-heading-1-letter-spacing: 0;
 
     --typo-heading-2-size: 22px;
     --typo-heading-2-weight: 600;
-    --typo-heading-2-line-height: 26px;
+    --typo-heading-2-line-height: 28px;
     --typo-heading-2-letter-spacing: 0;
 
     --typo-heading-3-size: 20px;
     --typo-heading-3-weight: 600;
-    --typo-heading-3-line-height: 24px;
+    --typo-heading-3-line-height: 26px;
     --typo-heading-3-letter-spacing: 0;
 
     --typo-heading-4-size: 18px;
     --typo-heading-4-weight: 600;
-    --typo-heading-4-line-height: 22px;
+    --typo-heading-4-line-height: 24px;
     --typo-heading-4-letter-spacing: 0;
 
     --typo-heading-5-size: 16px;
     --typo-heading-5-weight: 600;
-    --typo-heading-5-line-height: 19px;
+    --typo-heading-5-line-height: 22px;
     --typo-heading-5-letter-spacing: 0;
 
-    --typo-subtitle-lg-size: 16px;
+    --typo-subtitle-lg-size: 18px;
     --typo-subtitle-lg-weight: 500;
-    --typo-subtitle-lg-line-height: 18px;
+    --typo-subtitle-lg-line-height: 24px;
     --typo-subtitle-lg-letter-spacing: 0;
 
-    --typo-subtitle-md-size: 12px;
+    --typo-subtitle-md-size: 16px;
     --typo-subtitle-md-weight: 500;
-    --typo-subtitle-md-line-height: 14px;
+    --typo-subtitle-md-line-height: 22px;
     --typo-subtitle-md-letter-spacing: 0;
 
-    --typo-subtitle-sm-size: 10px;
+    --typo-subtitle-sm-size: 12px;
     --typo-subtitle-sm-weight: 600;
-    --typo-subtitle-sm-line-height: 12px;
+    --typo-subtitle-sm-line-height: 18px;
     --typo-subtitle-sm-letter-spacing: 0;
 
     --typo-body-lg-size: 18px;
     --typo-body-lg-weight: 400;
-    --typo-body-lg-line-height: 26px;
+    --typo-body-lg-line-height: 24px;
     --typo-body-lg-letter-spacing: 0;
 
     --typo-body-md-size: 14px;
     --typo-body-md-weight: 400;
-    --typo-body-md-line-height: 18px;
+    --typo-body-md-line-height: 20px;
     --typo-body-md-letter-spacing: 0;
 
     --typo-body-sm-size: 12px;
     --typo-body-sm-weight: 400;
-    --typo-body-sm-line-height: 16px;
+    --typo-body-sm-line-height: 18px;
     --typo-body-sm-letter-spacing: 0;
 
     --typo-button-lg-size: 12px;
-    --typo-button-lg-weight: 700;
+    --typo-button-lg-weight: 600;
     --typo-button-lg-line-height: 12px;
     --typo-button-lg-letter-spacing: 0;
 
-    --typo-button-sm-size: 9px;
-    --typo-button-sm-weight: 700;
-    --typo-button-sm-line-height: 9px;
+    --typo-button-sm-size: 10px;
+    --typo-button-sm-weight: 600;
+    --typo-button-sm-line-height: 10px;
     --typo-button-sm-letter-spacing: 0;
 
     --typo-link-size: 12px;
     --typo-link-weight: 400;
-    --typo-link-line-height: 12px;
+    --typo-link-line-height: 16px;
     --typo-link-letter-spacing: 0;
 
     --typo-tag-lg-size: 10px;
-    --typo-tag-lg-weight: 600;
-    --typo-tag-lg-line-height: 10px;
+    --typo-tag-lg-weight: 500;
+    --typo-tag-lg-line-height: 12px;
     --typo-tag-lg-letter-spacing: 0;
 
-    --typo-tag-sm-size: 8px;
-    --typo-tag-sm-weight: 400;
-    --typo-tag-sm-line-height: 10px;
+    --typo-tag-sm-size: 10px;
+    --typo-tag-sm-weight: 500;
+    --typo-tag-sm-line-height: 12px;
     --typo-tag-sm-letter-spacing: 5%;
 
-    --typo-caption-size: 8px;
-    --typo-caption-weight: 500;
-    --typo-caption-line-height: 8px;
+    --typo-caption-size: 10px;
+    --typo-caption-weight: 400;
+    --typo-caption-line-height: 12px;
     --typo-caption-letter-spacing: 0;
+  }
+
+  .text-typo-tag-lg,
+  .text-typo-tag-sm {
+    @apply uppercase;
   }
 
   @media (width >= theme(--breakpoint-lg)) {
@@ -258,7 +263,7 @@
 
       --typo-heading-1-size: 64px;
       --typo-heading-1-weight: 700;
-      --typo-heading-1-line-height: 58px;
+      --typo-heading-1-line-height: 72px;
       --typo-heading-1-letter-spacing: 0;
 
       --typo-heading-2-size: 42px;
@@ -278,7 +283,7 @@
 
       --typo-heading-5-size: 20px;
       --typo-heading-5-weight: 600;
-      --typo-heading-5-line-height: 22px;
+      --typo-heading-5-line-height: 26px;
       --typo-heading-5-letter-spacing: 0;
 
       --typo-subtitle-lg-size: 24px;
@@ -287,12 +292,12 @@
       --typo-subtitle-lg-letter-spacing: 0;
 
       --typo-subtitle-md-size: 18px;
-      --typo-subtitle-md-weight: 500;
+      --typo-subtitle-md-weight: 600;
       --typo-subtitle-md-line-height: 24px;
       --typo-subtitle-md-letter-spacing: 0;
 
       --typo-subtitle-sm-size: 14px;
-      --typo-subtitle-sm-weight: 500;
+      --typo-subtitle-sm-weight: 600;
       --typo-subtitle-sm-line-height: 20px;
       --typo-subtitle-sm-letter-spacing: 0;
 
@@ -303,7 +308,7 @@
 
       --typo-body-md-size: 16px;
       --typo-body-md-weight: 400;
-      --typo-body-md-line-height: 23px;
+      --typo-body-md-line-height: 22px;
       --typo-body-md-letter-spacing: 0;
 
       --typo-body-sm-size: 14px;
@@ -321,9 +326,9 @@
       --typo-button-sm-line-height: 14px;
       --typo-button-sm-letter-spacing: 0;
 
-      --typo-link-size: 14px;
+      --typo-link-size: 12px;
       --typo-link-weight: 400;
-      --typo-link-line-height: 14px;
+      --typo-link-line-height: 20px;
       --typo-link-letter-spacing: 0;
 
       --typo-tag-lg-size: 14px;
@@ -332,7 +337,7 @@
       --typo-tag-lg-letter-spacing: 0;
 
       --typo-tag-sm-size: 10px;
-      --typo-tag-sm-weight: 400;
+      --typo-tag-sm-weight: 600;
       --typo-tag-sm-line-height: 10px;
       --typo-tag-sm-letter-spacing: 5%;
 
@@ -394,12 +399,6 @@
   .text-typo-subtitle-md,
   .text-typo-subtitle-sm {
     @apply text-balance;
-  }
-
-  /* Button text L and Tag text L are uppercase on mobile only. */
-  .text-typo-button-lg,
-  .text-typo-tag-lg {
-    @apply uppercase;
   }
 
   .text-typo-link {
