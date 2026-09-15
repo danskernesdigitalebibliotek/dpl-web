@@ -80,6 +80,7 @@ export { useDigitalDeleteReservation } from "./hooks/useDigitalDeleteReservation
 export { useDigitalLoanDecision } from "./hooks/useDigitalLoanDecision"
 export { useDigitalLoanQuotas } from "./hooks/useDigitalLoanQuotas"
 export { useDigitalLoans } from "./hooks/useDigitalLoans"
+export { useDigitalQuotas } from "./hooks/useDigitalQuotas"
 export { useDigitalMaterial } from "./hooks/useDigitalMaterial"
 export { useDigitalReservations } from "./hooks/useDigitalReservations"
 export { useDigitalSupportId } from "./hooks/useDigitalSupportId"
@@ -95,5 +96,6 @@ export type {
   LoanDecisionStatus,
   LoanRequestResult,
   DigitalLoanQuota,
+  DigitalReservationLimits,
   ReaderSignInToken,
 } from "./types"

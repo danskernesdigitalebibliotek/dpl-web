@@ -2,6 +2,9 @@ version: '3'
 
 output: prefixed
 
+includes:
+  branch-tag-cleanup: ./taskfiles/Taskfile.branch-tag-cleanup.yml
+
 vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
   CMS_REACT_LIBRARY: ./cms/web/libraries/dpl-react

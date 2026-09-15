@@ -15,6 +15,7 @@ import {
   biblioLoanQuotasFactory,
   biblioLoansFactory,
   biblioMetadataFactory,
+  biblioOrganizationConfigsFactory,
   biblioReservationsFactory,
   biblioSupportIdFactory
 } from "../../factories/biblio/biblio.factory";
@@ -84,6 +85,18 @@ export const givenUserHasBiblioLoanQuotas = (
       ? biblioLoanQuotasFactory.build({ loan_quotas: quotas })
       : biblioLoanQuotasFactory.build()
   }).as("biblioLoanQuotas");
+};
+
+/**
+ * Given: how many reservations the user's organization allows at once. The
+ * ceiling lives on the organization rather than on the user, so it comes
+ * from its own endpoint, asked for by organization id.
+ */
+export const givenOrganizationHasBiblioReservationLimits = () => {
+  cy.intercept("GET", "**/v1/organizations/configs*", {
+    statusCode: 200,
+    body: biblioOrganizationConfigsFactory.build()
+  }).as("biblioOrganizationConfigs");
 };
 
 /** Given: the identifier the user can hand to support. */

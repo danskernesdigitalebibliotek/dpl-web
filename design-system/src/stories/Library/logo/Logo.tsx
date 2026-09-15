@@ -7,11 +7,23 @@ export type LogoProps = {
   libraryName: string;
   libraryPlace?: string;
   altText: string;
+  frontpageLabel: string;
 };
 
-const Logo = ({ hasImage, libraryName, libraryPlace, altText }: LogoProps) => {
+const Logo = ({
+  hasImage,
+  libraryName,
+  libraryPlace,
+  altText,
+  frontpageLabel,
+}: LogoProps) => {
+  // The library name and place are both visible inside the link, so they must
+  // both be part of its accessible name (WCAG 2.5.3 Label in Name).
+  const logoText = libraryPlace
+    ? `${libraryName} ${libraryPlace}`
+    : libraryName;
   return (
-    <a href="/" className="logo" aria-label="Gå til forsiden">
+    <a href="/" className="logo" aria-label={`${logoText}: ${frontpageLabel}`}>
       <figure className="logo__content">
         {hasImage && <img src={logo} alt={altText} />}
         <div

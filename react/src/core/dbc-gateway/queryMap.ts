@@ -14,10 +14,10 @@ export default {
   searchWithPagination: serviceUrlKeys.fbiLocal,
   suggestionsFromQueryString: serviceUrlKeys.fbiLocal,
   // Global requests.
-  getInfomedia: serviceUrlKeys.fbiGlobal,
   getManifestationViaBestRepresentationByFaust: serviceUrlKeys.fbiGlobal,
   getManifestationViaMaterialByFaust: serviceUrlKeys.fbiGlobal,
   getMaterialGlobally: serviceUrlKeys.fbiGlobal,
+  getRetriever: serviceUrlKeys.fbiGlobal,
   getReviewManifestations: serviceUrlKeys.fbiGlobal,
   getSmallWork: serviceUrlKeys.fbiGlobal,
   openOrder: serviceUrlKeys.fbiGlobal,
