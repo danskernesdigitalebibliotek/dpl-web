@@ -158,6 +158,8 @@ function dpl_react_apps_texts(): array {
     'loans-overdue' => t('Returned too late', [], ['context' => 'Global']),
     'loans-soon-overdue' => t('To be returned soon', [], ['context' => 'Global']),
     'material-and-author' => t('and', [], ['context' => 'Global']),
+    'material-slider-next' => t('Show next', [], ['context' => 'Global']),
+    'material-slider-previous' => t('Show previous', [], ['context' => 'Global']),
     'material-by-author' => t("By", [], ['context' => 'Global']),
     'material-details-close-modal-aria-label' => t('Close material details modal', [], ['context' => 'Global']),
     'material-details-digital-due-date-label' => t("Expires", [], ['context' => 'Global']),
