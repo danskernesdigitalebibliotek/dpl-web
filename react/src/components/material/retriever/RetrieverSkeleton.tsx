@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FC } from "react";
 
-const InfomediaSkeleton: FC = () => {
+const RetrieverSkeleton: FC = () => {
   return (
     <div className="scc-wrapper">
       <div className="ssc-square mb-32" />
@@ -12,4 +12,4 @@ const InfomediaSkeleton: FC = () => {
   );
 };
 
-export default InfomediaSkeleton;
+export default RetrieverSkeleton;

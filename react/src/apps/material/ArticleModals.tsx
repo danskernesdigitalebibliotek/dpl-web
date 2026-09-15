@@ -1,12 +1,12 @@
 import React from "react";
 import DigitalModal from "../../components/material/digital-modal/DigitalModal";
-import InfomediaModal from "../../components/material/infomedia/InfomediaModal";
+import RetrieverModal from "../../components/material/retriever/RetrieverModal";
 import { hasCorrectAccess } from "../../components/material/material-buttons/helper";
 import { PatronV5 } from "../../core/fbs/model";
 import { isAnonymous, isBlocked } from "../../core/utils/helpers/user";
 import { Manifestation } from "../../core/utils/types/entities";
 import { WorkId } from "../../core/utils/types/ids";
-import { getInfomediaIds } from "./helper";
+import { getRetrieverIds } from "./helper";
 
 export interface ArticleModalsProps {
   patron: PatronV5 | undefined;
@@ -27,17 +27,17 @@ const ArticleModals: React.FC<ArticleModalsProps> = ({
     return null;
   }
 
-  const [infomediaId] = getInfomediaIds([manifestation]);
+  const [retrieverId] = getRetrieverIds([manifestation]);
   const hasDigitalArticleAccess = hasCorrectAccess("DigitalArticleService", [
     manifestation
   ]);
 
   return (
     <>
-      {infomediaId && (
-        <InfomediaModal
+      {retrieverId && (
+        <RetrieverModal
           manifestation={manifestation}
-          infoMediaId={infomediaId}
+          retrieverId={retrieverId}
         />
       )}
       {hasDigitalArticleAccess && (
