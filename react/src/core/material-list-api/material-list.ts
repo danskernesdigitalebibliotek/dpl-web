@@ -224,6 +224,8 @@ export const hasItem = async (
   });
 };
 
+export const getHasItemMutationKey = () => ["hasItem"] as const;
+
 export const getHasItemMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -231,17 +233,17 @@ export const getHasItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof hasItem>>,
     TError,
-    { listId: string; itemId: string },
+    HasItemMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof hasItem>>,
   TError,
-  { listId: string; itemId: string },
+  HasItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["hasItem"];
+  const mutationKey = getHasItemMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -252,7 +254,7 @@ export const getHasItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof hasItem>>,
-    { listId: string; itemId: string }
+    HasItemMutationVariables
   > = (props) => {
     const { listId, itemId } = props ?? {};
 
@@ -267,13 +269,14 @@ export type HasItemMutationResult = NonNullable<
 >;
 
 export type HasItemMutationError = ErrorType<void>;
+export type HasItemMutationVariables = { listId: string; itemId: string };
 
 export const useHasItem = <TError = ErrorType<void>, TContext = unknown>(
   options?: {
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof hasItem>>,
       TError,
-      { listId: string; itemId: string },
+      HasItemMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -282,7 +285,7 @@ export const useHasItem = <TError = ErrorType<void>, TContext = unknown>(
 ): UseMutationResult<
   Awaited<ReturnType<typeof hasItem>>,
   TError,
-  { listId: string; itemId: string },
+  HasItemMutationVariables,
   TContext
 > => {
   return useMutation(getHasItemMutationOptions(options), queryClient);
@@ -306,6 +309,8 @@ export const addItem = async (
   });
 };
 
+export const getAddItemMutationKey = () => ["addItem"] as const;
+
 export const getAddItemMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -313,17 +318,17 @@ export const getAddItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof addItem>>,
     TError,
-    { listId: string; itemId: string },
+    AddItemMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof addItem>>,
   TError,
-  { listId: string; itemId: string },
+  AddItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["addItem"];
+  const mutationKey = getAddItemMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -334,7 +339,7 @@ export const getAddItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof addItem>>,
-    { listId: string; itemId: string }
+    AddItemMutationVariables
   > = (props) => {
     const { listId, itemId } = props ?? {};
 
@@ -349,13 +354,14 @@ export type AddItemMutationResult = NonNullable<
 >;
 
 export type AddItemMutationError = ErrorType<void>;
+export type AddItemMutationVariables = { listId: string; itemId: string };
 
 export const useAddItem = <TError = ErrorType<void>, TContext = unknown>(
   options?: {
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof addItem>>,
       TError,
-      { listId: string; itemId: string },
+      AddItemMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -364,7 +370,7 @@ export const useAddItem = <TError = ErrorType<void>, TContext = unknown>(
 ): UseMutationResult<
   Awaited<ReturnType<typeof addItem>>,
   TError,
-  { listId: string; itemId: string },
+  AddItemMutationVariables,
   TContext
 > => {
   return useMutation(getAddItemMutationOptions(options), queryClient);
@@ -388,6 +394,8 @@ export const removeItem = async (
   });
 };
 
+export const getRemoveItemMutationKey = () => ["removeItem"] as const;
+
 export const getRemoveItemMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -395,17 +403,17 @@ export const getRemoveItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof removeItem>>,
     TError,
-    { listId: string; itemId: string },
+    RemoveItemMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof removeItem>>,
   TError,
-  { listId: string; itemId: string },
+  RemoveItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["removeItem"];
+  const mutationKey = getRemoveItemMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -416,7 +424,7 @@ export const getRemoveItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof removeItem>>,
-    { listId: string; itemId: string }
+    RemoveItemMutationVariables
   > = (props) => {
     const { listId, itemId } = props ?? {};
 
@@ -431,13 +439,14 @@ export type RemoveItemMutationResult = NonNullable<
 >;
 
 export type RemoveItemMutationError = ErrorType<void>;
+export type RemoveItemMutationVariables = { listId: string; itemId: string };
 
 export const useRemoveItem = <TError = ErrorType<void>, TContext = unknown>(
   options?: {
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof removeItem>>,
       TError,
-      { listId: string; itemId: string },
+      RemoveItemMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -446,7 +455,7 @@ export const useRemoveItem = <TError = ErrorType<void>, TContext = unknown>(
 ): UseMutationResult<
   Awaited<ReturnType<typeof removeItem>>,
   TError,
-  { listId: string; itemId: string },
+  RemoveItemMutationVariables,
   TContext
 > => {
   return useMutation(getRemoveItemMutationOptions(options), queryClient);
