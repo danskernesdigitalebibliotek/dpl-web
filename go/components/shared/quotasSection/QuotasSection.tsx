@@ -31,7 +31,7 @@ const QuotasSection = ({ audioLoans, ebookLoans, blueLoans, onViewAll }: QuotasS
             // Starts with the visible label, so voice control still matches.
             aria-label="Vis alle digitale lån"
             data-cy={cyKeys["view-all-digital-loans-button"]}
-            className="text-typo-link focus-visible cursor-pointer underline">
+            className="text-typo-link focus-visible cursor-pointer">
             Vis alle
           </button>
         </div>
