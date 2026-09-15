@@ -100,7 +100,7 @@
             ],
             "access": [
               {
-                "__typename": "InfomediaService",
+                "__typename": "RetrieverService",
                 "id": "e3fba430"
               }
             ],
@@ -191,7 +191,7 @@
           ],
           "access": [
             {
-              "__typename": "InfomediaService",
+              "__typename": "RetrieverService",
               "id": "e3fba430"
             }
           ],
@@ -281,7 +281,7 @@
           ],
           "access": [
             {
-              "__typename": "InfomediaService",
+              "__typename": "RetrieverService",
               "id": "e3fba430"
             }
           ],
@@ -302,7 +302,7 @@
             "code": "ARTICLES"
           },
           "materialTypeSpecific": {
-            "display": "artikel (online)"
+            "display": "artikel"
           }
         },
         {
@@ -310,7 +310,7 @@
             "code": "ARTICLES"
           },
           "materialTypeSpecific": {
-            "display": "artikel"
+            "display": "artikel (online)"
           }
         }
       ],

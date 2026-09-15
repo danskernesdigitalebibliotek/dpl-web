@@ -10,6 +10,7 @@ import {
 import StatusBadge from "../../apps/loan-list/materials/utils/status-badge";
 import { ListType } from "../../core/utils/types/list-type";
 import { getStatusText } from "../../apps/reservation-list/utils/helpers";
+import useCanCancelReservation from "../../core/utils/useCanCancelReservation";
 
 export interface GroupModalReservationsListProps {
   materials: ReservationType[];
@@ -31,6 +32,11 @@ const GroupModalReservationsList: FC<GroupModalReservationsListProps> = ({
   openDetailsModal
 }) => {
   const t = useText();
+  // TEMPORARY: a reservation in the queue Biblio is migrating cannot be given
+  // up, so its row is listed and still opens its details but cannot be picked
+  // for removal. Delete this line and restore `disabled={false}` below once
+  // the freeze is lifted - see usePublizonReservationsClosed.
+  const canCancelReservation = useCanCancelReservation();
   const [displayedMaterials, setDisplayedMaterials] = useState<
     ReservationType[]
   >([]);
@@ -97,7 +103,7 @@ const GroupModalReservationsList: FC<GroupModalReservationsListProps> = ({
                 key={reservationId(material)}
                 selected={selected}
                 onMaterialChecked={onMaterialChecked}
-                disabled={false}
+                disabled={!canCancelReservation(material)}
                 statusMessageComponentMobile={null}
                 statusMessageComponentDesktop={null}
               />

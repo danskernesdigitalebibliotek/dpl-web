@@ -1,8 +1,8 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import InfomediaModal from "../../components/material/infomedia/InfomediaModal";
-import { useGetInfomediaQuery } from "../../core/dbc-gateway/generated/graphql";
+import RetrieverModal from "../../components/material/retriever/RetrieverModal";
+import { useGetRetrieverQuery } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
 
@@ -13,7 +13,7 @@ import { Pid } from "../../core/utils/types/ids";
  */
 
 const PID = "870971-avis:47696135";
-const MODAL_ID = `infomedia-modal-${PID}`;
+const MODAL_ID = `retriever-modal-${PID}`;
 
 let openModalIds: string[] = [];
 
@@ -27,7 +27,7 @@ vi.mock("../../core/utils/modal", () => ({
 }));
 
 vi.mock("../../core/dbc-gateway/generated/graphql", () => ({
-  useGetInfomediaQuery: vi.fn()
+  useGetRetrieverQuery: vi.fn()
 }));
 
 vi.mock("../../core/adgangsplatformen/useUserInfo", () => ({
@@ -58,26 +58,26 @@ const manifestation = {
 
 const renderModal = () =>
   render(
-    <InfomediaModal
+    <RetrieverModal
       manifestation={manifestation}
-      infoMediaId="03500720200125gUJ80JzxQGmYeVHrNsfmA"
+      retrieverId="03500720200125gUJ80JzxQGmYeVHrNsfmA"
     />
   );
 
 const askedForTheArticle = () => {
-  const calls = vi.mocked(useGetInfomediaQuery).mock.calls;
+  const calls = vi.mocked(useGetRetrieverQuery).mock.calls;
   const [, options] = calls[calls.length - 1];
   return (options as { enabled: boolean }).enabled;
 };
 
-describe("InfomediaModal article fetching", () => {
+describe("RetrieverModal article fetching", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(useGetInfomediaQuery).mockReturnValue({
+    vi.mocked(useGetRetrieverQuery).mockReturnValue({
       data: undefined,
       error: null,
       isLoading: false
-    } as unknown as ReturnType<typeof useGetInfomediaQuery>);
+    } as unknown as ReturnType<typeof useGetRetrieverQuery>);
   });
 
   it("leaves the article alone while the modal is closed", () => {
@@ -93,7 +93,7 @@ describe("InfomediaModal article fetching", () => {
   });
 
   it("ignores another edition's open modal", () => {
-    openModalIds = ["infomedia-modal-870971-avis:48356117"];
+    openModalIds = ["retriever-modal-870971-avis:48356117"];
     renderModal();
     expect(askedForTheArticle()).toBe(false);
   });

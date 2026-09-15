@@ -113,9 +113,7 @@ export const ReservationDetails: Story = {
   args: baseArgs,
   play: async () => {
     const { screen, userEvent } = await import("@storybook/test")
-    const [firstRow] = await screen.findAllByRole("button", {
-      name: /se detaljer om din reservering/i,
-    })
+    const [firstRow] = await screen.findAllByRole("button", { name: /vis detaljer/i })
     await userEvent.click(firstRow)
     await screen.findByRole("heading", { name: "Din reservering" })
   },
