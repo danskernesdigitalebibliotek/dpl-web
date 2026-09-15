@@ -78,7 +78,7 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-error-boundary": "^6.1.4",
-    "react-parallax-tilt": "^1.7.341",
+    "react-parallax-tilt": "^1.7.342",
     "replace-in-file": "^9.0.0",
     "sharp": "^0.35.4",
     "soap": "^1.12.0",

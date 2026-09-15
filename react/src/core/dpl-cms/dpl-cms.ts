@@ -93,11 +93,26 @@ export const campaignMatchPOST = async (
   params: CampaignMatchPOSTParams,
   options?: Parameters<typeof mutator>[1]
 ): Promise<CampaignMatchPOST200> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<CampaignMatchPOST200>(getCampaignMatchPOSTUrl(params), {
     ...options,
@@ -110,6 +125,9 @@ export const campaignMatchPOST = async (
   });
 };
 
+export const getCampaignMatchPOSTMutationKey = () =>
+  ["campaignMatchPOST"] as const;
+
 export const getCampaignMatchPOSTMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -117,17 +135,17 @@ export const getCampaignMatchPOSTMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof campaignMatchPOST>>,
     TError,
-    { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams },
+    CampaignMatchPOSTMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof campaignMatchPOST>>,
   TError,
-  { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams },
+  CampaignMatchPOSTMutationVariables,
   TContext
 > => {
-  const mutationKey = ["campaignMatchPOST"];
+  const mutationKey = getCampaignMatchPOSTMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -138,7 +156,7 @@ export const getCampaignMatchPOSTMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof campaignMatchPOST>>,
-    { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams }
+    CampaignMatchPOSTMutationVariables
   > = (props) => {
     const { data, params } = props ?? {};
 
@@ -153,6 +171,10 @@ export type CampaignMatchPOSTMutationResult = NonNullable<
 >;
 export type CampaignMatchPOSTMutationBody = BodyType<CampaignMatchPOSTBody>;
 export type CampaignMatchPOSTMutationError = ErrorType<void>;
+export type CampaignMatchPOSTMutationVariables = {
+  data: BodyType<CampaignMatchPOSTBody>;
+  params: CampaignMatchPOSTParams;
+};
 
 /**
  * @summary Get campaign matching search result facets
@@ -165,10 +187,7 @@ export const useCampaignMatchPOST = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof campaignMatchPOST>>,
       TError,
-      {
-        data: BodyType<CampaignMatchPOSTBody>;
-        params: CampaignMatchPOSTParams;
-      },
+      CampaignMatchPOSTMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -177,7 +196,7 @@ export const useCampaignMatchPOST = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof campaignMatchPOST>>,
   TError,
-  { data: BodyType<CampaignMatchPOSTBody>; params: CampaignMatchPOSTParams },
+  CampaignMatchPOSTMutationVariables,
   TContext
 > => {
   return useMutation(getCampaignMatchPOSTMutationOptions(options), queryClient);
@@ -209,11 +228,26 @@ export const dplOpeningHoursCreatePOST = async (
   params: DplOpeningHoursCreatePOSTParams,
   options?: Parameters<typeof mutator>[1]
 ): Promise<DplOpeningHoursCreatePOST200Item[]> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<DplOpeningHoursCreatePOST200Item[]>(
     getDplOpeningHoursCreatePOSTUrl(params),
@@ -229,6 +263,9 @@ export const dplOpeningHoursCreatePOST = async (
   );
 };
 
+export const getDplOpeningHoursCreatePOSTMutationKey = () =>
+  ["dplOpeningHoursCreatePOST"] as const;
+
 export const getDplOpeningHoursCreatePOSTMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -236,23 +273,17 @@ export const getDplOpeningHoursCreatePOSTMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof dplOpeningHoursCreatePOST>>,
     TError,
-    {
-      data: BodyType<DplOpeningHoursCreatePOSTBody>;
-      params: DplOpeningHoursCreatePOSTParams;
-    },
+    DplOpeningHoursCreatePOSTMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof dplOpeningHoursCreatePOST>>,
   TError,
-  {
-    data: BodyType<DplOpeningHoursCreatePOSTBody>;
-    params: DplOpeningHoursCreatePOSTParams;
-  },
+  DplOpeningHoursCreatePOSTMutationVariables,
   TContext
 > => {
-  const mutationKey = ["dplOpeningHoursCreatePOST"];
+  const mutationKey = getDplOpeningHoursCreatePOSTMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -263,10 +294,7 @@ export const getDplOpeningHoursCreatePOSTMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof dplOpeningHoursCreatePOST>>,
-    {
-      data: BodyType<DplOpeningHoursCreatePOSTBody>;
-      params: DplOpeningHoursCreatePOSTParams;
-    }
+    DplOpeningHoursCreatePOSTMutationVariables
   > = (props) => {
     const { data, params } = props ?? {};
 
@@ -282,6 +310,10 @@ export type DplOpeningHoursCreatePOSTMutationResult = NonNullable<
 export type DplOpeningHoursCreatePOSTMutationBody =
   BodyType<DplOpeningHoursCreatePOSTBody>;
 export type DplOpeningHoursCreatePOSTMutationError = ErrorType<void>;
+export type DplOpeningHoursCreatePOSTMutationVariables = {
+  data: BodyType<DplOpeningHoursCreatePOSTBody>;
+  params: DplOpeningHoursCreatePOSTParams;
+};
 
 /**
  * @summary Create individual opening hours
@@ -294,10 +326,7 @@ export const useDplOpeningHoursCreatePOST = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof dplOpeningHoursCreatePOST>>,
       TError,
-      {
-        data: BodyType<DplOpeningHoursCreatePOSTBody>;
-        params: DplOpeningHoursCreatePOSTParams;
-      },
+      DplOpeningHoursCreatePOSTMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -306,10 +335,7 @@ export const useDplOpeningHoursCreatePOST = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof dplOpeningHoursCreatePOST>>,
   TError,
-  {
-    data: BodyType<DplOpeningHoursCreatePOSTBody>;
-    params: DplOpeningHoursCreatePOSTParams;
-  },
+  DplOpeningHoursCreatePOSTMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -535,6 +561,9 @@ export const dplOpeningHoursDeleteDELETE = async (
   });
 };
 
+export const getDplOpeningHoursDeleteDELETEMutationKey = () =>
+  ["dplOpeningHoursDeleteDELETE"] as const;
+
 export const getDplOpeningHoursDeleteDELETEMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -542,17 +571,17 @@ export const getDplOpeningHoursDeleteDELETEMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof dplOpeningHoursDeleteDELETE>>,
     TError,
-    { id: string; params: DplOpeningHoursDeleteDELETEParams },
+    DplOpeningHoursDeleteDELETEMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof dplOpeningHoursDeleteDELETE>>,
   TError,
-  { id: string; params: DplOpeningHoursDeleteDELETEParams },
+  DplOpeningHoursDeleteDELETEMutationVariables,
   TContext
 > => {
-  const mutationKey = ["dplOpeningHoursDeleteDELETE"];
+  const mutationKey = getDplOpeningHoursDeleteDELETEMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -563,7 +592,7 @@ export const getDplOpeningHoursDeleteDELETEMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof dplOpeningHoursDeleteDELETE>>,
-    { id: string; params: DplOpeningHoursDeleteDELETEParams }
+    DplOpeningHoursDeleteDELETEMutationVariables
   > = (props) => {
     const { id, params } = props ?? {};
 
@@ -578,6 +607,10 @@ export type DplOpeningHoursDeleteDELETEMutationResult = NonNullable<
 >;
 
 export type DplOpeningHoursDeleteDELETEMutationError = ErrorType<void>;
+export type DplOpeningHoursDeleteDELETEMutationVariables = {
+  id: string;
+  params: DplOpeningHoursDeleteDELETEParams;
+};
 
 /**
  * @summary Delete individual opening hours
@@ -590,7 +623,7 @@ export const useDplOpeningHoursDeleteDELETE = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof dplOpeningHoursDeleteDELETE>>,
       TError,
-      { id: string; params: DplOpeningHoursDeleteDELETEParams },
+      DplOpeningHoursDeleteDELETEMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -599,7 +632,7 @@ export const useDplOpeningHoursDeleteDELETE = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof dplOpeningHoursDeleteDELETE>>,
   TError,
-  { id: string; params: DplOpeningHoursDeleteDELETEParams },
+  DplOpeningHoursDeleteDELETEMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -636,11 +669,26 @@ export const dplOpeningHoursUpdatePATCH = async (
   params: DplOpeningHoursUpdatePATCHParams,
   options?: Parameters<typeof mutator>[1]
 ): Promise<DplOpeningHoursUpdatePATCH200Item[]> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<DplOpeningHoursUpdatePATCH200Item[]>(
     getDplOpeningHoursUpdatePATCHUrl(id, params),
@@ -656,6 +704,9 @@ export const dplOpeningHoursUpdatePATCH = async (
   );
 };
 
+export const getDplOpeningHoursUpdatePATCHMutationKey = () =>
+  ["dplOpeningHoursUpdatePATCH"] as const;
+
 export const getDplOpeningHoursUpdatePATCHMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -663,25 +714,17 @@ export const getDplOpeningHoursUpdatePATCHMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof dplOpeningHoursUpdatePATCH>>,
     TError,
-    {
-      id: string;
-      data: BodyType<DplOpeningHoursUpdatePATCHBody>;
-      params: DplOpeningHoursUpdatePATCHParams;
-    },
+    DplOpeningHoursUpdatePATCHMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof dplOpeningHoursUpdatePATCH>>,
   TError,
-  {
-    id: string;
-    data: BodyType<DplOpeningHoursUpdatePATCHBody>;
-    params: DplOpeningHoursUpdatePATCHParams;
-  },
+  DplOpeningHoursUpdatePATCHMutationVariables,
   TContext
 > => {
-  const mutationKey = ["dplOpeningHoursUpdatePATCH"];
+  const mutationKey = getDplOpeningHoursUpdatePATCHMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -692,11 +735,7 @@ export const getDplOpeningHoursUpdatePATCHMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof dplOpeningHoursUpdatePATCH>>,
-    {
-      id: string;
-      data: BodyType<DplOpeningHoursUpdatePATCHBody>;
-      params: DplOpeningHoursUpdatePATCHParams;
-    }
+    DplOpeningHoursUpdatePATCHMutationVariables
   > = (props) => {
     const { id, data, params } = props ?? {};
 
@@ -712,6 +751,11 @@ export type DplOpeningHoursUpdatePATCHMutationResult = NonNullable<
 export type DplOpeningHoursUpdatePATCHMutationBody =
   BodyType<DplOpeningHoursUpdatePATCHBody>;
 export type DplOpeningHoursUpdatePATCHMutationError = ErrorType<void>;
+export type DplOpeningHoursUpdatePATCHMutationVariables = {
+  id: string;
+  data: BodyType<DplOpeningHoursUpdatePATCHBody>;
+  params: DplOpeningHoursUpdatePATCHParams;
+};
 
 /**
  * @summary Update individual opening hours
@@ -724,11 +768,7 @@ export const useDplOpeningHoursUpdatePATCH = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof dplOpeningHoursUpdatePATCH>>,
       TError,
-      {
-        id: string;
-        data: BodyType<DplOpeningHoursUpdatePATCHBody>;
-        params: DplOpeningHoursUpdatePATCHParams;
-      },
+      DplOpeningHoursUpdatePATCHMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -737,11 +777,7 @@ export const useDplOpeningHoursUpdatePATCH = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof dplOpeningHoursUpdatePATCH>>,
   TError,
-  {
-    id: string;
-    data: BodyType<DplOpeningHoursUpdatePATCHBody>;
-    params: DplOpeningHoursUpdatePATCHParams;
-  },
+  DplOpeningHoursUpdatePATCHMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -962,11 +998,26 @@ export const eventPATCH = async (
   params: EventPATCHParams,
   options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<void>(getEventPATCHUrl(uuid, params), {
     ...options,
@@ -979,6 +1030,8 @@ export const eventPATCH = async (
   });
 };
 
+export const getEventPATCHMutationKey = () => ["eventPATCH"] as const;
+
 export const getEventPATCHMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -986,17 +1039,17 @@ export const getEventPATCHMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof eventPATCH>>,
     TError,
-    { uuid: string; data: BodyType<EventPATCHBody>; params: EventPATCHParams },
+    EventPATCHMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof eventPATCH>>,
   TError,
-  { uuid: string; data: BodyType<EventPATCHBody>; params: EventPATCHParams },
+  EventPATCHMutationVariables,
   TContext
 > => {
-  const mutationKey = ["eventPATCH"];
+  const mutationKey = getEventPATCHMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -1007,7 +1060,7 @@ export const getEventPATCHMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof eventPATCH>>,
-    { uuid: string; data: BodyType<EventPATCHBody>; params: EventPATCHParams }
+    EventPATCHMutationVariables
   > = (props) => {
     const { uuid, data, params } = props ?? {};
 
@@ -1022,6 +1075,11 @@ export type EventPATCHMutationResult = NonNullable<
 >;
 export type EventPATCHMutationBody = BodyType<EventPATCHBody>;
 export type EventPATCHMutationError = ErrorType<void>;
+export type EventPATCHMutationVariables = {
+  uuid: string;
+  data: BodyType<EventPATCHBody>;
+  params: EventPATCHParams;
+};
 
 /**
  * @summary Update single events
@@ -1031,11 +1089,7 @@ export const useEventPATCH = <TError = ErrorType<void>, TContext = unknown>(
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof eventPATCH>>,
       TError,
-      {
-        uuid: string;
-        data: BodyType<EventPATCHBody>;
-        params: EventPATCHParams;
-      },
+      EventPATCHMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -1044,7 +1098,7 @@ export const useEventPATCH = <TError = ErrorType<void>, TContext = unknown>(
 ): UseMutationResult<
   Awaited<ReturnType<typeof eventPATCH>>,
   TError,
-  { uuid: string; data: BodyType<EventPATCHBody>; params: EventPATCHParams },
+  EventPATCHMutationVariables,
   TContext
 > => {
   return useMutation(getEventPATCHMutationOptions(options), queryClient);
