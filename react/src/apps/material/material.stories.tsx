@@ -42,6 +42,9 @@ import openOrderArgs, {
 import materialUnavailableNoticeArgs, {
   argTypes as materialUnavailableNoticeArgTypes
 } from "../../components/material/MaterialUnavailableNotice/MaterialUnavailableNoticeArgs";
+import biblioAdapterArgs, {
+  argTypes as biblioAdapterArgTypes
+} from "../../core/storybook/biblioAdapterArgs";
 
 const meta: Meta<typeof MaterialEntry> = {
   title: "Apps / Material",
@@ -50,6 +53,7 @@ const meta: Meta<typeof MaterialEntry> = {
   // @ts-ignore: can't figure out how to type serviceUrlArgTypes and globalTextArgTypes
   argTypes: {
     ...serviceUrlArgTypes,
+    ...biblioAdapterArgTypes,
     ...globalTextArgTypes,
     ...globalConfigArgTypes,
     ...deleteReservationModalArgTypes,
@@ -445,8 +449,8 @@ const meta: Meta<typeof MaterialEntry> = {
       description: "Days",
       control: { type: "text" }
     },
-    reservationSuccesTitleText: {
-      description: "Reservation Success title",
+    reservationRecommendationsTitleText: {
+      description: "Reservation Success recommendations title",
       control: { type: "text" }
     },
     reservationSuccesIsReservedForYouText: {
@@ -642,16 +646,16 @@ const meta: Meta<typeof MaterialEntry> = {
       description: "Choose one text",
       control: { type: "text" }
     },
-    infomediaModalScreenReaderModalDescriptionText: {
-      description: "Infomedia modal screen reader description",
+    retrieverModalScreenReaderModalDescriptionText: {
+      description: "Retriever modal screen reader description",
       control: { type: "text" }
     },
-    infomediaModalCloseModalAriaLabelText: {
-      description: "Close infomedia modal",
+    retrieverModalCloseModalAriaLabelText: {
+      description: "Close Retriever modal",
       control: { type: "text" }
     },
-    infomediaCopyrightText: {
-      description: "Infomedia copyright notice text",
+    retrieverCopyrightText: {
+      description: "Retriever copyright notice text",
       control: { type: "text" }
     },
     saveButtonText: {
@@ -820,6 +824,7 @@ const meta: Meta<typeof MaterialEntry> = {
   },
   args: {
     ...serviceUrlArgs,
+    ...biblioAdapterArgs,
     ...globalTextArgs,
     ...globalConfigArgs,
     ...deleteReservationModalArgs,
@@ -943,7 +948,7 @@ const meta: Meta<typeof MaterialEntry> = {
       "You will receive an email when the material is ready",
     reservationDetailsNoInterestAfterTitleText: "Have no interest after",
     daysText: "Days",
-    reservationSuccesTitleText: "Material is available and reserved for you!",
+    reservationRecommendationsTitleText: "You might also be interested in...",
     reservationSuccesIsReservedForYouText: "is reserved for you",
     reservationSuccessPreferredPickupBranchText:
       "Material is available and you will get a message when it is ready for pickup - pickup at @branch",
@@ -1006,9 +1011,9 @@ const meta: Meta<typeof MaterialEntry> = {
     modalReservationFormPickupHeaderDescriptionText:
       "If you wish to change the pick-up location for your reservation, you can do it here.",
     chooseOneText: "Choose one",
-    infomediaModalScreenReaderModalDescriptionText: "Modal for infomedia",
-    infomediaModalCloseModalAriaLabelText: "Close infomedia modal",
-    infomediaCopyrightText:
+    retrieverModalScreenReaderModalDescriptionText: "Modal for Retriever",
+    retrieverModalCloseModalAriaLabelText: "Close Retriever modal",
+    retrieverCopyrightText:
       "All material in Retriever is covered by copyright law and may not be copied without special permission.",
     saveButtonText: "Save",
     orderDigitalCopyModalScreenReaderModalDescriptionText:
@@ -1106,7 +1111,7 @@ export const newspaperPeriodical: Story = {
   }
 };
 
-export const Infomedia: Story = {
+export const Retriever: Story = {
   args: {
     ...Default.args,
     wid: "work-of:870971-avis:138119807"
@@ -1291,5 +1296,36 @@ export const ContentsRaw: Story = {
   args: {
     ...Default.args,
     wid: "work-of:150086-netmusik:00795041726629"
+  }
+};
+
+// The Biblio adapter feature flag turned on. Digital materials are then
+// served by Biblio rather than Publizon.
+export const MaterialWithBiblioAdapter: Story = {
+  args: {
+    ...Default.args,
+    useBiblioAdapterConfig: "1"
+  }
+};
+
+// TEMPORARY: the Publizon reservation queue frozen for migration. The flag
+// that switches provider is off - the library still lends through Publizon -
+// so this is the state where a material on loan can no longer be reserved.
+export const MaterialWithClosedPublizonReservations: Story = {
+  args: {
+    ...Default.args,
+    publizonReservationsClosedConfig: "1"
+  }
+};
+
+// TEMPORARY, with the toleration flag it exercises: the adapter answers 404
+// for materials the catalogue lists but WeDoBooks has not provisioned yet,
+// and this story lets the tests cover that they render as unavailable
+// rather than fail the page.
+export const MaterialWithTolerantBiblioAdapter: Story = {
+  args: {
+    ...Default.args,
+    useBiblioAdapterConfig: "1",
+    biblioTolerateUnknownMaterialsConfig: "1"
   }
 };

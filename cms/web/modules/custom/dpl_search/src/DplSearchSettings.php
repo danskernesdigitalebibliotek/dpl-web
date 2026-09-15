@@ -9,5 +9,6 @@ class DplSearchSettings {
   const EDITORIAL_VIEW_ID = 'editorial_search';
   const EDITORIAL_QUERY_KEY = 'search';
   const MATERIAL_QUERY_KEY = 'q';
+  const FACETS_QUERY_KEY = 'facets';
 
 }

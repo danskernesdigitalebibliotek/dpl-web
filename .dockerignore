@@ -1,6 +1,10 @@
-# The cli/php/nginx images build with the repository root as their Docker build
-# context (see cms/docker-compose.yml), so this file — not cms/.dockerignore —
-# governs what those builds receive and copy.
+# The cli/php/nginx images (and go/lagoon/stage1.dockerfile) build with the
+# repository root as their Docker build context (see cms/docker-compose.yml), so
+# this file governs what those builds receive and copy.
+
+# node_moules inside workspace packages only contain symlinks under pnpm, no
+# point including them in the Docker context, since we do pnpm install anyway.
+**/node_modules
 
 # Repo metadata / tooling not needed in any image.
 /.git
@@ -32,3 +36,6 @@
 /react/dist
 /cms/web/themes/custom/novel/assets/dpl-design-system
 /cms/web/libraries/dpl-react
+# The images build the WeDoBooks wrapper themselves, so copying a developer's
+# local dist in afterwards would overwrite what the image just produced.
+/packages/wedobooks/dist

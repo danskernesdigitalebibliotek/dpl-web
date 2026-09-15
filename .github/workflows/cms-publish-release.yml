@@ -35,6 +35,7 @@ jobs:
         uses: ./.github/actions/build-cms-assets
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
 
       # Build + publish the source image. The prebuilt design-system/React
       # assets are picked up by `COPY cms /app/cms` in cli.dockerfile.
@@ -42,6 +43,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+          # The js-assets stage installs the WeDoBooks SDK from their private
+          # registry. `source:build` forwards this to docker as a build arg.
+          WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
           VERSION: ${{ steps.get_version.outputs.RELEASE_TAG }}
           RELEASE: ${{ steps.get_version.outputs.RELEASE_TAG }}
           RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
@@ -83,6 +87,7 @@ jobs:
         uses: ./.github/actions/build-cms-assets
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
 
       - name: Install site
         env:

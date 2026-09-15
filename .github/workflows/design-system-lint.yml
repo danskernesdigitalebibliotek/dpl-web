@@ -25,6 +25,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Run css:lint
         run: pnpm run css:lint
         working-directory: design-system
@@ -37,6 +38,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Run js:lint
         run: pnpm run js:lint
         working-directory: design-system
@@ -50,6 +52,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Run markdown:lint
         run: pnpm run markdown:lint
         working-directory: design-system

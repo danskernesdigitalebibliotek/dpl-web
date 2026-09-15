@@ -6,6 +6,7 @@ interface GlobalUrlEntryPropsInterface {
   fbsBaseUrl: string;
   feesPageUrl: string;
   publizonBaseUrl: string;
+  biblioBaseUrl: string;
   dplCmsBaseUrl: string;
   coverBaseUrl: string;
   materialBaseUrl: string;

@@ -1,6 +1,5 @@
 import React from "react";
 import { onlineInternalModalId } from "../../apps/material/helper";
-import { getAllFaustIds } from "../../core/utils/helpers/general";
 import Modal from "../../core/utils/modal";
 import { useText } from "../../core/utils/text";
 import { Manifestation } from "../../core/utils/types/entities";
@@ -19,11 +18,10 @@ const OnlineInternalModal = ({
   dataCy
 }: OnlineInternalModalProps) => {
   const t = useText();
-  const faustIds = getAllFaustIds(selectedManifestations);
 
   return (
     <Modal
-      modalId={onlineInternalModalId(faustIds)}
+      modalId={onlineInternalModalId(selectedManifestations)}
       screenReaderModalDescriptionText={t(
         "onlineInternalModalScreenReaderDescriptionText"
       )}

@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import GuardedApp from "../../components/guarded-app";
 import withIsPatronBlockedHoc from "../../core/utils/withIsPatronBlockedHoc";
 import { withConfig } from "../../core/utils/config";
 import { pageSizeGlobal } from "../../core/utils/helpers/general";
@@ -14,6 +15,7 @@ import { GroupModalReservationsProps } from "../../core/storybook/reservationGro
 import { DeleteReservationModalArgs } from "../../core/storybook/deleteReservationModalArgs";
 import { RenewalArgs } from "../../core/storybook/renewalArgs";
 import { GlobalEntryTextProps } from "../../core/storybook/globalTextArgs";
+import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
 
 export interface DashBoardProps {
   // Url
@@ -28,6 +30,7 @@ export interface DashBoardProps {
   expirationWarningDaysBeforeConfig: string;
   // Texts
   dashboardNumberInLineText: string;
+  dashboardRecommendationsHeadingText: string;
   deleteReservationModalDeleteButtonText: string;
   deleteReservationModalDeleteProcessingText: string;
   deleteReservationModalErrorsStatusText: string;
@@ -73,7 +76,8 @@ const DashboardEntry: FC<
     RenewalArgs &
     ReservationMaterialDetailsProps &
     MaterialDetailsModalProps &
-    GlobalEntryTextProps
+    GlobalEntryTextProps &
+    BiblioAdapterArgs
 > = ({ pageSizeDesktop, pageSizeMobile }) => {
   const pageSize = pageSizeGlobal(
     {
@@ -83,7 +87,14 @@ const DashboardEntry: FC<
     "pageSizeLoanList"
   );
 
-  return <DashBoard pageSize={pageSize} />;
+  // GuardedApp replays the favourite request the recommendations persist when
+  // the heart is clicked before login. It matches on the app id, so the id
+  // here and the one in RecommendedMaterials have to agree.
+  return (
+    <GuardedApp app="dashboard">
+      <DashBoard pageSize={pageSize} />
+    </GuardedApp>
+  );
 };
 
 export default withConfig(

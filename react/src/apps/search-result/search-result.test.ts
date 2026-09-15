@@ -1,5 +1,8 @@
 import { SearchResultPage } from "../../../cypress/page-objects/search-result/SearchResultPage";
-import { givenSearchWithPaginationResponse } from "../../../cypress/intercepts/fbi/searchWithPagination";
+import {
+  givenSearchWithPaginationResponse,
+  givenSearchWithPaginationEmptyResponse
+} from "../../../cypress/intercepts/fbi/searchWithPagination";
 import { givenSearchFacetResponse } from "../../../cypress/intercepts/fbi/searchFacet";
 
 describe("Search Result", () => {
@@ -17,6 +20,10 @@ describe("Search Result", () => {
 
     // These intercepts are not relevant to the tests but prevent 401 errors
     // from external services that would otherwise break the test environment.
+    cy.interceptGraphql({
+      operationName: "GetCoversByPids",
+      fixtureFilePath: "cover/cover.json"
+    });
     cy.intercept(
       { url: /materiallist\.dandigbib\.org/ },
       { statusCode: 200, body: [] }
@@ -420,6 +427,77 @@ describe("Search Result", () => {
         filters.clickShowAllInGroup("Genre and form");
         filters.verifyFacetItemCount("Genre and form", 10);
       });
+    });
+  });
+
+  describe("Web Search Teaser", () => {
+    it("shows the teaser when the phrase has web search results", () => {
+      page.visitStory("with-web-search-teaser");
+
+      page.verifyWebSearchTeaser({
+        label: "skovbadning (12)",
+        href: "/search/web?search=skovbadning"
+      });
+    });
+
+    it("hides the teaser when the config has no web search results", () => {
+      // The default story's config lacks hasWebSearchResults, mirroring a
+      // CMS that found no web results for the phrase.
+      page.verifyNoWebSearchTeaser();
+    });
+  });
+
+  describe("Zero Hits", () => {
+    const facets = [{ facetName: "subjects", selectedValues: ["skovbadning"] }];
+
+    it("redirects to the zero hits page with the search parameters", () => {
+      givenSearchWithPaginationEmptyResponse();
+      page.visit([], { qs: { facets: JSON.stringify(facets) } });
+
+      // The zero hits page must receive the q and facets parameters so it
+      // can offer the web search teaser for the same phrase.
+      page.verifyRedirectedToZeroHitsPage("harry", facets);
+    });
+
+    it("does not redirect when already on the zero hits page", () => {
+      givenSearchWithPaginationEmptyResponse();
+      page.visitStory("on-zero-hits-page");
+
+      // The app stays and renders the empty result state instead of
+      // redirecting to itself in a loop. A redirect fires right after the
+      // search response, so give it time to (wrongly) happen, then check
+      // the story id — it is only present on the original URL.
+      page.verifyResultsHeadingContains("0 materials");
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(1000);
+      page.verifyUrlContains("id=apps-search-result--on-zero-hits-page");
+    });
+  });
+
+  describe("Campaign", () => {
+    const visitWithCampaign = (openInNewTab: boolean) => {
+      cy.intercept("POST", "**/dpl_campaign/match*", {
+        statusCode: 200,
+        body: {
+          data: {
+            id: "1",
+            title: "Campaign title",
+            url: "https://example.com/campaign",
+            open_in_new_tab: openInNewTab
+          }
+        }
+      });
+      page.visit([]);
+    };
+
+    it("opens the campaign link in a new tab when the editor has chosen so", () => {
+      visitWithCampaign(true);
+      cy.getBySel("campaign-body").should("have.attr", "target", "_blank");
+    });
+
+    it("opens the campaign link in the same tab otherwise", () => {
+      visitWithCampaign(false);
+      cy.getBySel("campaign-body").should("not.have.attr", "target");
     });
   });
 });

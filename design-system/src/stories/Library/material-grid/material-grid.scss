@@ -29,6 +29,7 @@
 .material-grid__items {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1px;
 }
 
 .material-grid__show-more {
