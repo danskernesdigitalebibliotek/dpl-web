@@ -191,17 +191,17 @@
     --typo-body-lg-size: 18px;
     --typo-body-lg-weight: 400;
     --typo-body-lg-line-height: 26px;
-    --typo-body-lg-letter-spacing: 0.01em;
+    --typo-body-lg-letter-spacing: 0;
 
     --typo-body-md-size: 14px;
     --typo-body-md-weight: 400;
     --typo-body-md-line-height: 18px;
-    --typo-body-md-letter-spacing: 0.01em;
+    --typo-body-md-letter-spacing: 0;
 
     --typo-body-sm-size: 12px;
     --typo-body-sm-weight: 400;
     --typo-body-sm-line-height: 16px;
-    --typo-body-sm-letter-spacing: 0.01em;
+    --typo-body-sm-letter-spacing: 0;
 
     --typo-button-lg-size: 12px;
     --typo-button-lg-weight: 700;
@@ -221,12 +221,12 @@
     --typo-tag-lg-size: 10px;
     --typo-tag-lg-weight: 600;
     --typo-tag-lg-line-height: 10px;
-    --typo-tag-lg-letter-spacing: 0.05em;
+    --typo-tag-lg-letter-spacing: 0;
 
     --typo-tag-sm-size: 8px;
     --typo-tag-sm-weight: 400;
     --typo-tag-sm-line-height: 10px;
-    --typo-tag-sm-letter-spacing: 0;
+    --typo-tag-sm-letter-spacing: 5%;
 
     --typo-caption-size: 8px;
     --typo-caption-weight: 500;
@@ -299,17 +299,17 @@
       --typo-body-lg-size: 18px;
       --typo-body-lg-weight: 400;
       --typo-body-lg-line-height: 24px;
-      --typo-body-lg-letter-spacing: 0.01em;
+      --typo-body-lg-letter-spacing: 0;
 
       --typo-body-md-size: 16px;
       --typo-body-md-weight: 400;
       --typo-body-md-line-height: 23px;
-      --typo-body-md-letter-spacing: 0.01em;
+      --typo-body-md-letter-spacing: 0;
 
       --typo-body-sm-size: 14px;
       --typo-body-sm-weight: 400;
       --typo-body-sm-line-height: 20px;
-      --typo-body-sm-letter-spacing: 0.01em;
+      --typo-body-sm-letter-spacing: 0;
 
       --typo-button-lg-size: 16px;
       --typo-button-lg-weight: 600;
@@ -329,12 +329,12 @@
       --typo-tag-lg-size: 14px;
       --typo-tag-lg-weight: 500;
       --typo-tag-lg-line-height: 16px;
-      --typo-tag-lg-letter-spacing: 0.05em;
+      --typo-tag-lg-letter-spacing: 0;
 
       --typo-tag-sm-size: 10px;
       --typo-tag-sm-weight: 400;
       --typo-tag-sm-line-height: 10px;
-      --typo-tag-sm-letter-spacing: 0;
+      --typo-tag-sm-letter-spacing: 5%;
 
       --typo-caption-size: 12px;
       --typo-caption-weight: 400;
