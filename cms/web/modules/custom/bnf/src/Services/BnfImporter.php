@@ -35,6 +35,13 @@ class BnfImporter {
   ];
 
   /**
+   * Node uuids that was imported in this request.
+   *
+   * @var bool[]
+   */
+  protected array $importedNodes = [];
+
+  /**
    * Constructor.
    */
   public function __construct(
@@ -43,6 +50,18 @@ class BnfImporter {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected ImportContextStack $importContext,
   ) {}
+
+  /**
+   * Whether the given node/uuid was imported in this request.
+   */
+  public function wasJustImported(NodeInterface|string $node) : bool {
+    if ($node instanceof NodeInterface) {
+      /** @var string $node */
+      $node = $node->uuid();
+    }
+
+    return array_key_exists($node, $this->importedNodes);
+  }
 
   /**
    * Get node title from BNF.
@@ -98,6 +117,8 @@ class BnfImporter {
           return NULL;
         }
       }
+
+      $this->importedNodes[$uuid] = TRUE;
 
       $newSourceChanged = (string) $nodeData->changed->timestamp;
 
