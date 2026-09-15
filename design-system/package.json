@@ -4,7 +4,7 @@
   "private": true,
   "engines": {
     "node": "24.15.0",
-    "pnpm": "^10"
+    "pnpm": "^11"
   },
   "scripts": {
     "storybook": "DISABLE_ESLINT_PLUGIN=true storybook dev --port 6006 --host 0.0.0.0 --no-open --ci",
@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-env": "7.29.7",
     "@chanzuckerberg/axe-storybook-testing": "^9.0.0",
     "@eslint/js": "^10",
     "@storybook/addon-a11y": "^9.1.20",
