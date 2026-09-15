@@ -1,5 +1,15 @@
 {{ attach_library('novel/header') }}
 <header class="header">
+    {# Inside the sticky header, not above it. The header sticks and is moved
+       out of view and back by scroll direction (header-sticky.js); a bar left
+       outside stays where the page put it, so scrolling down and up again
+       left the header hanging below an empty strip where the bar had been -
+       DDF-592. As a row of the header grid the bar travels with the menu it
+       belongs to, and the script's offset measurement becomes zero: the
+       header returns to the top of the viewport rather than to the bar's
+       former height. #}
+    {{ service_message_global }}
+
     <div class="header__logo-desktop">
             {{ logo }}
     </div>

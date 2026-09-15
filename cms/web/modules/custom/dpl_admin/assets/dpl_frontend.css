@@ -30,11 +30,22 @@
   placed in a wrong position.
   We'll just completely disable the dynamic movement, when the toolbar is
   visible.
+
+  Parked below the toolbar rather than at 0: the admin toolbar is fixed to the
+  top of the viewport, so a sticky header stuck at 0 sits underneath it and
+  loses whatever is at its top edge - since DDF-592 that is the red service
+  message bar, which disappeared entirely for logged-in editors.
+
+  `--gin-toolbar-y-offset` is the height of the part of the toolbar that stays
+  fixed, and is what Gin insets its own sticky elements by. Core's
+  `--drupal-displace-offset-top` is the fallback for a toolbar without Gin; it
+  is not the first choice because Gin also counts the secondary toolbar in it,
+  and that one scrolls away - insetting by it would leave a gap.
 */
 .toolbar-fixed {
   .header,
   .header[style] {
-    top: 0 !important;
+    top: var(--gin-toolbar-y-offset, var(--drupal-displace-offset-top, 0px)) !important;
   }
 }
 

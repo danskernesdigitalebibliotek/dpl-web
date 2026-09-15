@@ -21,8 +21,8 @@ service message at all. Neither workaround can be scheduled to disappear.
 Casper Hach's frontend design and editor wireframes settle on two
 variants of one kind of content.
 
-**Global.** A bar above the header, on every page, always in the critical
-rendering. Optional heading, optional body, optional link; with a link
+**Global.** A bar at the top of the header, on every page, always in the
+critical rendering. Optional heading, optional body, optional link; with a link
 the whole bar is clickable.
 
 **In-page.** A container between header and hero, on the front page and
@@ -160,8 +160,8 @@ heading, falling back to a truncated body.
 Explicit, rather than "empty branch field means global" — which is
 ambiguous and cannot express "front page *and* two named branches".
 
-- `global` — bar above the header on every page; frontpage and branch
-  fields hidden.
+- `global` — bar at the top of the header on every page; frontpage and
+  branch fields hidden.
 - `in_page` — shown on the front page if `field_svcmsg_frontpage` is
   set, and on each branch page in `field_svcmsg_branches`.
 
@@ -209,8 +209,14 @@ the top (KB-67).
 variables, following `dpl_related_content`'s pattern for injecting
 `related_content`:
 
-- `service_message_global` — printed in `novel`'s `page.html.twig`
-  immediately before the header include.
+- `service_message_global` — handed to `novel`'s `header.html.twig` and
+  printed as the first row of the header's own grid. Inside the header
+  rather than above it: the header is sticky and is pulled out of view and
+  back by scroll direction, and a bar left outside stayed behind while the
+  menu came back, leaving an empty strip at the top of the viewport
+  (DDF-592). The admin toolbar is fixed over that same strip, so
+  `dpl_admin`'s frontend CSS insets the sticky header by the toolbar's
+  height rather than pinning it to 0.
 - `service_messages` — printed between the header include and
   `page.content`, where the design puts the container on both page types.
 

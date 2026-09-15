@@ -1,9 +1,9 @@
 /*
 Service messages - short, time-limited operational notices.
 
-Two components: the global bar above the header, and the in-page container
-shown on the front page and on branch pages. The placement decides the tone,
-so neither has variants: global is always critical, in-page always
+Two components: the global bar, a row of the sticky header, and the in-page
+container shown on the front page and on branch pages. The placement decides
+the tone, so neither has variants: global is always critical, in-page always
 informational.
 
 Sizes are transcribed from Casper's frontend design, which draws a 375 and a
@@ -14,9 +14,17 @@ system sets no font on body - every component declares its own.
 
 /* --- Global bar ------------------------------------------------------- */
 
+/*
+The bar is a full-width row of the header's grid - it is printed inside the
+`<header>` so that it sticks, hides and returns with the menu instead of
+sitting still above it (DDF-592). `1 / -1` because the header's own columns
+change with the breakpoint and with the burger menu.
+*/
+
 .service-message-bar {
   background-color: var(--c-signal-alert);
   color: var(--c-text-primary-white);
+  grid-column: 1 / -1;
 }
 
 .service-message-bar__inner {
@@ -76,14 +84,28 @@ into the page they can follow the text colour instead.
 }
 
 /*
-The bar is clickable in full, so on mobile - where the design uses a "Læs
-mere" text link the CMS has no field for - the arrow is left out rather than
-squeezed in beside the text.
+The bar is clickable in full, and the arrow is what says so - at every width.
+The design puts a "Læs mere" text link there on mobile, which the CMS has no
+field for; leaving the arrow out to match left the mobile bar with nothing at
+all to show it was a link, while the in-page messages showed theirs (DDF-592).
+
+Centred against the whole bar rather than pinned to the first line: the arrow
+stands for the message as a whole, not for the line of text it happens to sit
+beside.
+
+The margin is room for the animation: the head travels 30px right on hover
+(arrows.scss), and the bar's 16px of padding is not enough for it - the head
+slid out of the bar and was clipped by the page's `overflow-x-clip`. The
+in-page messages reserve the same way (KB-61) with 30px plus 10px clearance;
+here the padding is the clearance. The breakpoint below drops the margin,
+where 44px of padding already holds the travel.
 */
 
 .service-message-bar__arrow {
-  display: none;
+  align-self: center;
+  display: flex;
   flex: 0 0 auto;
+  margin-right: 30px;
 }
 
 .service-message-bar__arrow .arrow__body {
@@ -100,8 +122,8 @@ squeezed in beside the text.
   centring is right for that. Once the text wraps, the bar grows tall and
   centring strands the bell in the middle, away from the line it belongs to -
   KB-63. Aligning to the top keeps it on the first line at any height, and is
-  identical to centring while the bar is one line tall. The arrow opts back
-  out below.
+  identical to centring while the bar is one line tall. The arrow opts out of
+  it, above.
   */
 
   .service-message-bar__inner {
@@ -145,15 +167,8 @@ squeezed in beside the text.
     line-height: 22px;
   }
 
-  /*
-  Centred against the whole bar rather than pinned to the first line: the
-  arrow stands for the message as a whole, not for the line of text it
-  happens to sit beside - KB-63.
-  */
-
   .service-message-bar__arrow {
-    align-self: center;
-    display: flex;
+    margin-right: 0;
   }
 }
 
