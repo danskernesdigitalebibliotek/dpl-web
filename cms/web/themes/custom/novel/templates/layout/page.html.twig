@@ -47,11 +47,10 @@
    make the page scroll horizontally on mobile. Keep `.overflow-x-clip`:
    `.overflow-hidden` here silently stops the header from sticking. #}
 <div class="overflow-x-clip">
-  {{ service_message_global }}
-
   {{ include('@novel/layout/header.html.twig'
     , {
     header: page.header,
+    service_message_global: service_message_global,
     search_header: search.header,
     patron_menu: patron.menu,
     logo: logo,
