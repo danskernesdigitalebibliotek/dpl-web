@@ -7,6 +7,13 @@ import { useModalButtonHandler } from "../../../../core/utils/modal";
 import { useText } from "../../../../core/utils/text";
 import { ButtonSize } from "../../../../core/utils/types/button";
 import useReaderPlayer from "../../../../core/utils/useReaderPlayer";
+import {
+  playsInModal,
+  readerUrl,
+  sampleUrl
+} from "../../../reader-player/helper";
+import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
+import { isAnonymous } from "../../../../core/utils/helpers/user";
 import LinkButton from "../../../Buttons/LinkButton";
 import { Button } from "../../../Buttons/Button";
 import { getMaterialType } from "../../../../core/utils/helpers/general";
@@ -22,8 +29,11 @@ import { WorkId } from "../../../../core/utils/types/ids";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 import PlayerModal from "../../player-modal/PlayerModal";
+import PlayerButton from "../../../reader-player/PlayerButton";
 import MaterialButtonLoading from "../generic/MaterialButtonLoading";
+import MaterialButtonDisabled from "../generic/MaterialButtonDisabled";
 import { useModalIdsToCloseForReservation } from "../../../../core/utils/useModalIdsToCloseForReservation";
+import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
 
 type MaterialButtonsOnlineInternalType = {
   size?: ButtonSize;
@@ -52,19 +62,30 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
 }) => {
   const { track } = useEventStatistics();
   const t = useText();
+  const viaBiblioAdapter = useBiblioAdapter();
+  // With the flag on, samples go through the service layer and Publizon must
+  // not stand in. It answers samples for signed-in sessions only, so an
+  // anonymous visitor gets a disabled button until an anonymous sample exists.
+  const samplesThroughServiceLayer = viaBiblioAdapter && !isAnonymous();
+  const samplingUnavailable = viaBiblioAdapter && isAnonymous();
   const { open } = useModalButtonHandler();
+  const canCancelReservation = useCanCancelReservation();
   const modalsToClose = useModalIdsToCloseForReservation();
   const modalCloseOptions = isEditionPicker ? { modalsToClose } : undefined;
 
   const {
     type,
     orderId,
+    holdingProvider,
     identifier,
     isAlreadyReserved,
     isAlreadyLoaned,
     canBeLoaned,
     canBeReserved,
-    reservation
+    publizonReservationsClosed,
+    canBeSampled,
+    reservation,
+    isLoading
   } = useReaderPlayer(getLoanableManifestation(manifestations));
 
   const handleModalLoanReservation = useOnlineInternalHandleLoanReservation({
@@ -98,7 +119,21 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   });
 
   const renderReaderButton = () => {
-    if (!identifier) return <MaterialButtonLoading />;
+    if (!identifier || isLoading) return <MaterialButtonLoading />;
+
+    // TEMPORARY: the queue this reservation lives in is frozen while Biblio
+    // migrates it, so it cannot be given up yet. Delete this guard once the
+    // freeze is lifted - see usePublizonReservationsClosed.
+    if (reservation && !canCancelReservation(reservation)) {
+      return (
+        <MaterialButtonDisabled
+          label={t("reservationDetailsRemoveDigitalReservationText")}
+          reason={t("digitalReservationCancelClosedInfoText")}
+          size={size}
+          dataCy="remove-digital-reservation-button"
+        />
+      );
+    }
 
     if (isAlreadyReserved && reservation) {
       return (
@@ -123,12 +158,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     if (isAlreadyLoaned && orderId) {
       return (
         <LinkButton
-          url={
-            new URL(
-              `/reader?orderid=${encodeURIComponent(orderId)}`,
-              window.location.href
-            )
-          }
+          url={readerUrl(orderId, holdingProvider)}
           buttonType="none"
           variant="filled"
           size={size || "large"}
@@ -148,6 +178,23 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
+    // TEMPORARY: the material would have been reservable, but the queue is
+    // closed while Biblio migrates it. Answered before the acquire branch
+    // below, which offers a not-signed-in visitor the loan so the login guard
+    // can take over - that would promise an action this material cannot
+    // honour. Delete this guard once the freeze is lifted - see
+    // usePublizonReservationsClosed.
+    if (publizonReservationsClosed) {
+      return (
+        <MaterialButtonDisabled
+          label={reseveLabel}
+          reason={t("digitalReservationsClosedInfoText")}
+          size={size}
+          dataCy={`${dataCy}-reader`}
+        />
+      );
+    }
+
     if (canBeReserved || canBeLoaned) {
       return (
         <Button
@@ -163,38 +210,76 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
-    return <MaterialButtonLoading />;
+    // Nothing applies: a disabled button, not a spinner - the answer is in.
+    return (
+      <MaterialButtonDisabled
+        dataCy={`${dataCy}-reader`}
+        label={loanLabel}
+        size={size}
+      />
+    );
   };
 
-  const renderReaderTeaserButton = () => {
-    // Don't show teaser if already loaned or not in modal view
-    if (isAlreadyLoaned || !openModal) return null;
+  const renderDisabledTeaserButton = (teaserDataCy: string) => (
+    <Button
+      dataCy={teaserDataCy}
+      label={tryLabel}
+      buttonType="none"
+      variant="outline"
+      size={size || "large"}
+      onClick={() => {}}
+      disabled
+      collapsible={false}
+    />
+  );
 
-    if (identifier) {
-      return (
-        <MaterialSecondaryLink
-          label={tryLabel}
-          size={size || "large"}
-          url={
-            new URL(`/reader?identifier=${identifier}`, window.location.href)
-          }
-          dataCy={`${dataCy}-reader-teaser`}
-          trackClick={() =>
-            track("click", {
-              id: statistics.publizonTry.id,
-              name: statistics.publizonTry.name,
-              trackedData: workId
-            })
-          }
-        />
-      );
+  const renderReaderTeaserButton = () => {
+    if (!openModal) return null;
+    // Wait for the providers before deciding: a teaser that shows while the
+    // loan is still being looked up would flash and vanish.
+    if (!identifier || isLoading) return <MaterialButtonLoading />;
+    if (isAlreadyLoaned) return null;
+    // A material the lending provider does not know has no sample to offer -
+    // hiding the teaser beats opening an empty reader or player.
+    if (!canBeSampled) return null;
+
+    if (samplingUnavailable) {
+      return renderDisabledTeaserButton(`${dataCy}-reader-teaser`);
     }
-    // Show loading only if we don't have identifier yet
-    return <MaterialButtonLoading />;
+
+    return (
+      <MaterialSecondaryLink
+        label={tryLabel}
+        size={size || "large"}
+        url={sampleUrl(identifier, "ebook")}
+        dataCy={`${dataCy}-reader-teaser`}
+        trackClick={() =>
+          track("click", {
+            id: statistics.publizonTry.id,
+            name: statistics.publizonTry.name,
+            trackedData: workId
+          })
+        }
+      />
+    );
   };
 
   const renderPlayerButton = () => {
-    if (!identifier) return <MaterialButtonLoading />;
+    if (!identifier || isLoading) return <MaterialButtonLoading />;
+
+    // TEMPORARY: the queue this reservation lives in is frozen while Biblio
+    // migrates it, so it cannot be given up yet. Delete this guard once the
+    // freeze is lifted - see usePublizonReservationsClosed.
+    if (reservation && !canCancelReservation(reservation)) {
+      return (
+        <MaterialButtonDisabled
+          label={t("reservationDetailsRemoveDigitalReservationText")}
+          reason={t("digitalReservationCancelClosedInfoText")}
+          size={size}
+          dataCy="remove-digital-reservation-button"
+        />
+      );
+    }
 
     if (isAlreadyReserved && reservation) {
       return (
@@ -219,27 +304,44 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     if (isAlreadyLoaned && orderId) {
       return (
         <>
-          <PlayerModal orderId={orderId} />
-          <Button
-            dataCy={`${dataCy}-player`}
+          {playsInModal(holdingProvider) && <PlayerModal orderId={orderId} />}
+          <PlayerButton
+            orderId={orderId}
+            provider={holdingProvider}
             label={t("onlineMaterialPlayerText", {
               placeholders: { "@materialType": manifestationType }
             })}
-            buttonType="none"
-            variant="filled"
             size={size || "large"}
-            onClick={() => {
+            dataCy={`${dataCy}-player`}
+            trackClick={() =>
               track("click", {
                 id: statistics.publizonReadListen.id,
                 name: statistics.publizonReadListen.name,
                 trackedData: workId
-              });
-              open(playerModalId(orderId), modalCloseOptions);
-            }}
-            disabled={false}
-            collapsible={false}
+              })
+            }
+            onPlayInModal={() =>
+              open(playerModalId(orderId), modalCloseOptions)
+            }
           />
         </>
+      );
+    }
+
+    // TEMPORARY: the material would have been reservable, but the queue is
+    // closed while Biblio migrates it. Answered before the acquire branch
+    // below, which offers a not-signed-in visitor the loan so the login guard
+    // can take over - that would promise an action this material cannot
+    // honour. Delete this guard once the freeze is lifted - see
+    // usePublizonReservationsClosed.
+    if (publizonReservationsClosed) {
+      return (
+        <MaterialButtonDisabled
+          label={reseveLabel}
+          reason={t("digitalReservationsClosedInfoText")}
+          size={size}
+          dataCy={`${dataCy}-player`}
+        />
       );
     }
 
@@ -258,36 +360,69 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
-    return <MaterialButtonLoading />;
+    // Nothing applies: a disabled button, not a spinner - the answer is in.
+    return (
+      <MaterialButtonDisabled
+        dataCy={`${dataCy}-player`}
+        label={loanLabel}
+        size={size}
+      />
+    );
   };
 
   const renderPlayerTeaserButton = () => {
-    // Don't show teaser if already loaned or not in modal view
-    if (isAlreadyLoaned || !openModal) return null;
+    if (!openModal) return null;
+    // Wait for the providers before deciding: a teaser that shows while the
+    // loan is still being looked up would flash and vanish.
+    if (!identifier || isLoading) return <MaterialButtonLoading />;
+    if (isAlreadyLoaned) return null;
+    // A material the lending provider does not know has no sample to offer -
+    // hiding the teaser beats opening an empty reader or player.
+    if (!canBeSampled) return null;
 
-    if (identifier) {
+    if (samplingUnavailable) {
+      return renderDisabledTeaserButton(`${dataCy}-player-teaser`);
+    }
+
+    // Audiobook samples play on the player page, like digital loans - see
+    // DigitalReaderPlayer for why not a modal.
+    if (samplesThroughServiceLayer) {
       return (
-        <>
-          <PlayerModal identifier={identifier} />
-          <MaterialSecondaryButton
-            label={tryLabel}
-            size={size || "large"}
-            onClick={() => {
-              track("click", {
-                id: statistics.publizonTry.id,
-                name: statistics.publizonTry.name,
-                trackedData: workId
-              });
-              open(playerModalId(identifier), modalCloseOptions);
-            }}
-            dataCy={`${dataCy}-player-teaser`}
-            ariaDescribedBy={t("onlineMaterialTeaserText")}
-          />
-        </>
+        <MaterialSecondaryLink
+          label={tryLabel}
+          size={size || "large"}
+          url={sampleUrl(identifier, "audiobook")}
+          dataCy={`${dataCy}-player-teaser`}
+          trackClick={() =>
+            track("click", {
+              id: statistics.publizonTry.id,
+              name: statistics.publizonTry.name,
+              trackedData: workId
+            })
+          }
+        />
       );
     }
-    // Show loading only if we don't have identifier yet
-    return <MaterialButtonLoading />;
+
+    return (
+      <>
+        <PlayerModal identifier={identifier} />
+        <MaterialSecondaryButton
+          label={tryLabel}
+          size={size || "large"}
+          onClick={() => {
+            track("click", {
+              id: statistics.publizonTry.id,
+              name: statistics.publizonTry.name,
+              trackedData: workId
+            });
+            open(playerModalId(identifier), modalCloseOptions);
+          }}
+          dataCy={`${dataCy}-player-teaser`}
+          ariaDescribedBy={t("onlineMaterialTeaserText")}
+        />
+      </>
+    );
   };
 
   const renderDeleteReservationModal = () => {

@@ -14,6 +14,12 @@ interface Reservation extends ListType {
   title: string;
   periodical: string;
   reservationType: string;
+  /**
+   * Id of a reservation in the service layer. Set only for service layer
+   * reservations, which are cancelled by their own id rather than by the
+   * material identifier Publizon uses.
+   */
+  digitalReservationId: string;
 }
 
 export type ReservationType = Nullable<Partial<Reservation>>;
@@ -56,4 +62,26 @@ export function isDigitalReservation(
   reservation: ReservationType
 ): reservation is DigitalReservationType {
   return !!reservation.identifier;
+}
+
+/**
+ * A digital reservation Publizon holds, as opposed to one the service layer
+ * holds. Both carry a material identifier; only the service layer's carries
+ * its own reservation id, which is also what it is cancelled by.
+ */
+export function isPublizonReservation(
+  reservation: ReservationType
+): reservation is DigitalReservationType {
+  return (
+    isDigitalReservation(reservation) && !hasDigitalReservationId(reservation)
+  );
+}
+
+export type DigitalReservationWithId = ReservationType &
+  NonNullableFields<Required<Pick<Reservation, "digitalReservationId">>>;
+
+export function hasDigitalReservationId(
+  reservation: ReservationType
+): reservation is DigitalReservationWithId {
+  return !!reservation.digitalReservationId;
 }

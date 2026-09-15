@@ -144,6 +144,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Install go-task
         uses: arduino/setup-task@v3
         with:
@@ -151,6 +152,11 @@ jobs:
       - name: Setup site
         run: task ci:reset
         working-directory: cms
+        # The images build the JS assets during `docker compose build`, and
+        # compose reads the token from the host environment as a build
+        # argument - the runner-level npm config does not reach the container.
+        env:
+          WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Run Lighthouse test
         run: task ci:lighthouse
         working-directory: cms
@@ -172,6 +178,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Install go-task
         uses: arduino/setup-task@v3
         with:
@@ -179,6 +186,11 @@ jobs:
       - name: Setup site
         run: task ci:reset
         working-directory: cms
+        # The images build the JS assets during `docker compose build`, and
+        # compose reads the token from the host environment as a build
+        # argument - the runner-level npm config does not reach the container.
+        env:
+          WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Run Pa11y
         run: task ci:pa11y
         working-directory: cms
@@ -192,42 +204,56 @@ jobs:
   CypressUnmapped:
     name: CMS / Cypress unmapped tests
     uses: ./.github/workflows/cms-cypress-workflow.yml
+    secrets:
+      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
     with:
       id: unmapped
 
   CypressMapped:
     name: CMS / Cypress mapped tests
     uses: ./.github/workflows/cms-cypress-workflow.yml
+    secrets:
+      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
     with:
       id: mapped
 
   CypressWebmaster:
     name: CMS / Cypress webmaster tests
     uses: ./.github/workflows/cms-cypress-workflow.yml
+    secrets:
+      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
     with:
       id: webmaster
 
   CypressOpeningHours:
     name: CMS / Cypress opening hours tests
     uses: ./.github/workflows/cms-cypress-workflow.yml
+    secrets:
+      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
     with:
       id: opening-hours
 
   CypressParagraphs:
     name: CMS / Cypress paragraphs tests
     uses: ./.github/workflows/cms-cypress-workflow.yml
+    secrets:
+      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
     with:
       id: paragraphs
 
   CypressCampaigns:
     name: CMS / Cypress campaigns tests
     uses: ./.github/workflows/cms-cypress-workflow.yml
+    secrets:
+      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
     with:
       id: campaigns
 
   CypressEvents:
     name: CMS / Cypress events tests
     uses: ./.github/workflows/cms-cypress-workflow.yml
+    secrets:
+      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
     with:
       id: events
 
@@ -246,6 +272,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Install problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint Markdown
@@ -289,6 +316,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Run ESLint
         run: pnpm exec eslint web -c eslint.config.mjs
 
@@ -304,6 +332,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Run ESLint
         working-directory: cms
         run: pnpm exec eslint cypress -c cypress/eslint.config.mjs
@@ -320,6 +349,7 @@ jobs:
       - uses: ./.github/actions/common-setup-js
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Install go-task
         uses: arduino/setup-task@v3
         with:
@@ -327,6 +357,11 @@ jobs:
       - name: Setup site
         run: task ci:reset:clean
         working-directory: cms
+        # The images build the JS assets during `docker compose build`, and
+        # compose reads the token from the host environment as a build
+        # argument - the runner-level npm config does not reach the container.
+        env:
+          WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Export configuration
         run: task dev:cli -- drush config-export -y
         working-directory: cms

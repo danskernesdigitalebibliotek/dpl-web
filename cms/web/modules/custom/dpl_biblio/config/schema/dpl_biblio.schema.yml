@@ -10,3 +10,14 @@ dpl_biblio.settings:
     enabled:
       type: boolean
       label: 'Use the Biblio adapter for digital materials'
+    # TEMPORARY - remove when the catalogue and the adapter agree on which
+    # materials exist. See the matching flag in the React apps.
+    tolerate_unknown_materials:
+      type: boolean
+      label: 'Render materials the adapter does not know as unavailable instead of failing'
+    # TEMPORARY - remove once Biblio has taken over the reservation queue.
+    # The queue belongs to the library, not to a frontend, so one flag covers
+    # it. Only the website reserves through Publizon today.
+    publizon_reservations_closed:
+      type: boolean
+      label: 'Close Publizon reservations while the queue is migrated'

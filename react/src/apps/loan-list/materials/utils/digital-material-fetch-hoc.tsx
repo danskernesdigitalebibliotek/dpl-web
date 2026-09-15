@@ -1,9 +1,17 @@
-import React, { useEffect, useState, ComponentType, FC } from "react";
+import React, { ComponentType, FC } from "react";
 import { useGetV1ProductsIdentifier } from "../../../../core/publizon/publizon";
-import { BasicDetailsType } from "../../../../core/utils/types/basic-details-type";
 import { MaterialProps } from "./material-fetch-hoc";
-import { mapProductToBasicDetailsType } from "../../../../core/utils/helpers/list-mapper";
+import {
+  mapDigitalMaterialToBasicDetailsType,
+  mapProductToBasicDetailsType
+} from "../../../../core/utils/helpers/list-mapper";
 import { ListType } from "../../../../core/utils/types/list-type";
+import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
+import { useDigitalMaterial } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import {
+  hasDigitalReservationId,
+  isReservationType
+} from "../../../../core/utils/types/reservation-type";
 
 type InputProps = {
   item: ListType;
@@ -23,33 +31,40 @@ const fetchDigitalMaterial =
     }
 
     if (item.identifier) {
-      const [digitalMaterial, setDigitalMaterial] =
-        useState<BasicDetailsType>();
+      const viaBiblioAdapter = useBiblioAdapter();
 
-      const {
-        data: productsData,
-        isSuccess: isSuccessDigital,
-        isLoading
-      } = useGetV1ProductsIdentifier(item.identifier, {
-        query: {
-          // We never want to pass an empty string to the API
-          // So we only enable the query if we have an isbn
-          enabled: !!item.identifier
-        }
-      });
+      // A service layer loan carries its own catalogue fields; nothing to
+      // look up.
+      const hasOwnDetails = Boolean(item.details);
 
-      useEffect(() => {
-        if (productsData && isSuccessDigital && productsData.product) {
-          setDigitalMaterial(
-            mapProductToBasicDetailsType(productsData.product)
-          );
-        } else {
-          // todo error handling, missing in figma
-        }
-      }, [productsData, isSuccessDigital]);
+      // Who describes a material is read off the item, never discovered by
+      // asking. A loan from before the switch is Publizon's - the only reason
+      // Publizon is still asked during the transition.
+      const isDigitalItem =
+        isReservationType(item) && hasDigitalReservationId(item);
+      const isProvidedByServiceLayer =
+        viaBiblioAdapter && !hasOwnDetails && isDigitalItem;
+
+      const { data: serviceLayerMaterial, isLoading: isLoadingServiceLayer } =
+        useDigitalMaterial(isProvidedByServiceLayer ? item.identifier : null);
+
+      const { data: productsData, isLoading: isLoadingPublizon } =
+        useGetV1ProductsIdentifier(item.identifier, {
+          query: { enabled: !hasOwnDetails && !isProvidedByServiceLayer }
+        });
+
+      const digitalMaterial =
+        item.details ??
+        (serviceLayerMaterial
+          ? mapDigitalMaterialToBasicDetailsType(serviceLayerMaterial)
+          : null) ??
+        (productsData?.product
+          ? mapProductToBasicDetailsType(productsData.product)
+          : null);
 
       // if the fallback component is provided we can show it while the data is loading
-      if (isLoading) return LoadingComponent ? <LoadingComponent /> : null;
+      if (isLoadingServiceLayer || isLoadingPublizon)
+        return LoadingComponent ? <LoadingComponent /> : null;
 
       if (!digitalMaterial) return null;
 

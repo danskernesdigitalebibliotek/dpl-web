@@ -38,7 +38,11 @@
       // Only enable JSX parsing/transform for .jsx/.tsx files. Applying
       // preset-react globally (Babel 8) makes the parser treat generic
       // arrow functions in .ts files (`const f = <T>(x: T) => x`) as JSX.
-      "test": ["**/*.jsx", "**/*.tsx"],
+      // The "../" variants matter: workspace packages such as the service
+      // layer resolve to paths outside this project root, and a leading "**"
+      // does not match past "..". Without them their .tsx files reach the
+      // parser with JSX disabled.
+      "test": ["**/*.jsx", "**/*.tsx", "../**/*.jsx", "../**/*.tsx"],
       "presets": ["@babel/preset-react"]
     }
   ],

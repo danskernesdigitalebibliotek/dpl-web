@@ -453,7 +453,7 @@ const AdvancedSearchSummary: React.FC = () => {
               <Campaign
                 url="#"
                 title="Bøger af folk der hedder Anders eller Heidi"
-                imageUrl="https://picsum.photos/id/777/300/100"
+                imageUrl="images/campaign_cover.jpg"
               />
             </li>
             <li className="content-list__item">

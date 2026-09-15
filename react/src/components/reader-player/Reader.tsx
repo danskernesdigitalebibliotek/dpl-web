@@ -1,58 +1,50 @@
-import React, { CSSProperties, useEffect } from "react";
-import { appendAsset, readerAssets, removeAppendedAssets } from "./helper";
+import React from "react";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import DigitalReaderPlayer from "./DigitalReaderPlayer";
+import DigitalSampleReader from "./DigitalSampleReader";
+import PublizonReader from "./PublizonReader";
 
-export type ReaderType = {
+export type ReaderProps = {
+  // Lowercase because these come from the url via Drupal.
+  /** Publizon's key for a material, and the key a Publizon sample opens by. */
   identifier?: string;
-  // orderid must be in lowercase bacause its comes from the url / Drupal
+  /** Publizon's key for a loan. */
   orderid?: string;
+  /** The service layer's key for a loan. */
+  loanid?: string;
+  onClose: () => void;
 };
 
-const Reader: React.FC<ReaderType> = ({ identifier, orderid }: ReaderType) => {
-  useEffect(() => {
-    readerAssets.forEach(appendAsset);
+/**
+ * Opens whatever the reader page was pointed at.
+ *
+ * Callers hand over the url parameters and get the reader that can open them;
+ * which one that is stays in here. The choice follows the loan rather than the
+ * library's current provider, because a patron whose library has switched
+ * still holds loans from before it, and each provider only recognises its own
+ * keys.
+ */
+const Reader: React.FC<ReaderProps> = ({
+  identifier,
+  orderid,
+  loanid,
+  onClose
+}) => {
+  const viaBiblioAdapter = useBiblioAdapter();
 
-    return () => {
-      removeAppendedAssets();
-    };
-  }, [identifier, orderid]);
-
-  const readerStyles: CSSProperties = {
-    height: "100vh"
-  };
-
-  if (orderid) {
-    return (
-      <div
-        style={readerStyles}
-        id="pubhub-reader"
-        // The iframe that is created by the reader app has order-id and close-href attribute
-        // that are not valid HTML attributes. This is why we have to use the @ts-ignore
-        // eslint-disable-next-line react/no-unknown-property
-        order-id={orderid}
-        // eslint-disable-next-line react/no-unknown-property, no-script-url
-        close-href="javascript:window.history.back()"
-      />
-    );
+  // A loan id is the service layer's key, and no Publizon loan has one.
+  if (loanid) {
+    return <DigitalReaderPlayer loanId={loanid} onClose={onClose} />;
   }
 
-  if (identifier) {
-    return (
-      <div
-        style={readerStyles}
-        id="pubhub-reader"
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        // eslint-disable-next-line react/no-unknown-property
-        identifier={identifier}
-        // eslint-disable-next-line react/no-unknown-property, no-script-url
-        close-href="javascript:window.history.back()"
-      />
-    );
+  // An identifier with no order behind it is an e-book sample (audiobooks
+  // sample on the player page). With the flag on it goes through the service
+  // layer, never Publizon; DigitalSampleReader explains the sign-in rule.
+  if (identifier && !orderid && viaBiblioAdapter) {
+    return <DigitalSampleReader identifier={identifier} onClose={onClose} />;
   }
 
-  // eslint-disable-next-line no-console
-  console.warn("No identifier or orderid provided for the Reader app.");
-  return null;
+  return <PublizonReader identifier={identifier} orderid={orderid} />;
 };
 
 export default Reader;

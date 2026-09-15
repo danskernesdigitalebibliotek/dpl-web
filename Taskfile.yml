@@ -2,12 +2,18 @@ version: '3'
 
 output: prefixed
 
+includes:
+  branch-tag-cleanup: ./taskfiles/Taskfile.branch-tag-cleanup.yml
+
 vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
   CMS_REACT_LIBRARY: ./cms/web/libraries/dpl-react
   DESIGN_SYSTEM_BUILD: ./design-system/build
+  # The valueless -e forwards the WeDoBooks registry credential when the
+  # caller has it, and is inert for everyone else: docker drops a valueless -e
+  # whose variable is not in its own environment. See init:pnpm.
   CLI_PREFIX:
-    sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.15"; fi
+    sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI -e 'npm_config_//npm.pkg.wedobooks.io/:_authToken' --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.15"; fi
 
 tasks:
   init:
@@ -185,9 +191,11 @@ tasks:
 
   init:pnpm:
     desc: "Install dependencies with pnpm"
-    # Sources are listed explicitly per workspace package. A "**/package.json"
-    # glob would also walk every node_modules tree, which makes the
-    # up-to-date check take ~45 seconds with no output at all.
+    # Sources are listed explicitly per workspace package, down to each package
+    # under packages/ - any glob here, "packages/*" included, walks the whole
+    # tree below it and so every node_modules in it, which makes the
+    # up-to-date check take half a minute with no output at all. A new
+    # workspace package has to be added by hand.
     sources:
       - package.json
       - pnpm-lock.yaml
@@ -200,10 +208,28 @@ tasks:
       - go/pnpm-lock.yaml
       - react/package.json
       - react/pnpm-lock.yaml
-      - packages/*/package.json
-      - packages/*/pnpm-lock.yaml
+      - packages/service-layer/package.json
+      - packages/service-layer/pnpm-lock.yaml
+      - packages/wedobooks/package.json
+      - packages/wedobooks/pnpm-lock.yaml
+    dotenv: ['.env']
     cmds:
-      - task dev:cli -- corepack pnpm install
+      # packages/wedobooks needs a credential for WeDoBooks' registry, which
+      # .npmrc deliberately does not carry. pnpm takes any config key from the
+      # environment as npm_config_<key>, so the token in .env reaches it that
+      # way - and only when set, leaving a user-level `pnpm config set` (the
+      # route for a bare pnpm install, see packages/wedobooks/README.md) as the
+      # working alternative rather than overriding it with an empty value.
+      - |
+        if [ -n "${WEDOBOOKS_NPM_TOKEN:-}" ]; then
+          set -- "npm_config_//npm.pkg.wedobooks.io/:_authToken=$WEDOBOOKS_NPM_TOKEN"
+        else
+          set --
+          if ! grep -q "^//npm.pkg.wedobooks.io/:_authToken" "$HOME/.npmrc" 2>/dev/null; then
+            echo "warning: no credential for WeDoBooks' npm registry - WEDOBOOKS_NPM_TOKEN is missing from .env (run 'task dev:dotenv:generate') and the user-level npm config has none either. See packages/wedobooks/README.md." >&2
+          fi
+        fi
+        env "$@" task dev:cli -- corepack pnpm install
 
   # ---------------------------------------------------------------------------
   # Main orchestration
@@ -257,12 +283,34 @@ tasks:
     desc: "Build design-system and React"
     cmds:
       - task: dev:design-system:build
+      - task: dev:wedobooks:build
       - task: dev:react:build
+
+  dev:wedobooks:build:
+    desc: "Build the WeDoBooks SDK wrapper (reader + player) into dist/"
+    deps:
+      - init:pnpm
+    dir: ./packages/wedobooks
+    # The only workspace package that ships a build rather than sources: the
+    # SDK has to be pre-bundled before webpack will accept it. Requires access
+    # to WeDoBooks' private registry - see packages/wedobooks/README.md.
+    sources:
+      - 'src/**/*.ts'
+      - 'src/**/*.tsx'
+      - 'build.mjs'
+      - 'package.json'
+    generates:
+      - 'dist/**/*.*'
+    cmds:
+      - cd ../.. && task dev:cli -- sh -c "cd packages/wedobooks && corepack pnpm build"
 
   dev:react:build:
     desc: "Build React (pnpm build → dist/)"
     deps:
       - init:pnpm
+      # The React bundle inlines the wrapper's dist, so building React against
+      # a stale wrapper quietly ships yesterday's SDK integration.
+      - dev:wedobooks:build
     dir: ./react
     sources:
       - 'src/**/*.ts'
@@ -278,6 +326,9 @@ tasks:
       - 'pnpm-lock.yaml'
       # React imports from @danskernesdigitalebibliotek/dpl-design-system/build/*.
       - '../design-system/build/**/*.*'
+      # Inlined into the bundle - a fresh wrapper build must invalidate the
+      # React build's checksum, or the copy step ships the old bundle.
+      - '../packages/wedobooks/dist/**/*.*'
     generates:
       - 'dist/**/*.*'
     cmds:

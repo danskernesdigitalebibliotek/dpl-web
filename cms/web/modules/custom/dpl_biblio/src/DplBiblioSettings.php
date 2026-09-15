@@ -29,6 +29,30 @@ class DplBiblioSettings extends DplReactConfigBase {
   }
 
   /**
+   * Configuration the WeDoBooks SDK needs to run the reader and the player.
+   *
+   * Read from the environment, not Drupal config: WeDoBooks provisions one
+   * set per environment for the whole platform, never per library, so no
+   * library may see or edit it. NULL unless every value is set - the SDK
+   * cannot start on a partial configuration, so React gets nothing rather
+   * than blanks.
+   *
+   * @return array<string, string>|null
+   *   The SDK configuration, keyed as the React apps expect it.
+   */
+  public function getSdkConfig(): ?array {
+    $values = [
+      'wedobooks-application-id' => (string) getenv('WEDOBOOKS_APPLICATION_ID'),
+      'wedobooks-firebase-api-key' => (string) getenv('WEDOBOOKS_FIREBASE_API_KEY'),
+      'wedobooks-firebase-project-id' => (string) getenv('WEDOBOOKS_FIREBASE_PROJECT_ID'),
+      'wedobooks-firebase-app-id' => (string) getenv('WEDOBOOKS_FIREBASE_APP_ID'),
+      'wedobooks-reader-api-key' => (string) getenv('WEDOBOOKS_READER_API_KEY'),
+    ];
+
+    return in_array('', $values, TRUE) ? NULL : $values;
+  }
+
+  /**
    * Get the base url of the Biblio adapter.
    */
   public function getBaseUrl(): ?string {
@@ -40,6 +64,33 @@ class DplBiblioSettings extends DplReactConfigBase {
    */
   public function isEnabled(): bool {
     return (bool) $this->loadConfig()->get('enabled');
+  }
+
+  /**
+   * TEMPORARY: whether the Publizon reservation queue is closed.
+   *
+   * Biblio needs a period where the Publizon reservation queue stands still
+   * so it can be migrated: a reservation made - or cancelled - after the
+   * queue has been copied would be lost. Loans are unaffected, so a library
+   * can keep lending through Publizon while its queue is being moved.
+   *
+   * The queue is a property of the library rather than of a frontend, so this
+   * is the one flag for it. Only the website reserves through Publizon today;
+   * GO has no digital reservations to freeze.
+   */
+  public function arePublizonReservationsClosed(): bool {
+    return (bool) $this->loadConfig()->get('publizon_reservations_closed');
+  }
+
+  /**
+   * TEMPORARY: whether unknown materials render as unavailable, not as errors.
+   *
+   * The catalogue lists digital materials WeDoBooks has not provisioned yet,
+   * and the adapter answers 404 for those. Remove together with the flag once
+   * the two agree on which materials exist.
+   */
+  public function shouldTolerateUnknownMaterials(): bool {
+    return (bool) $this->loadConfig()->get('tolerate_unknown_materials');
   }
 
 }

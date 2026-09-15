@@ -19,6 +19,7 @@ const FooterWidgets: FC<FooterWidgetsType> = ({ footerLanguages }) => {
         libraryName="Hjørring"
         libraryPlace="Bibliotekerne"
         altText="logo"
+        frontpageLabel="forside"
       />
     </div>
   );

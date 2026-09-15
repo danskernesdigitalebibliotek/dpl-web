@@ -16,17 +16,27 @@ import { useMultipleRequestsWithStatus } from "../../../../core/utils/useRequest
 import {
   OperationDigital,
   OperationPhysical,
+  OperationPublizon,
   ParamsDigital,
   ParamsPhysical,
+  ParamsPublizon,
   requestsAndReservations
 } from "./helper";
+import {
+  useDigitalDeleteReservation,
+  digitalLoanDecisionQueryKey,
+  digitalLoanQuotasQueryKey,
+  digitalReservationsQueryKey
+} from "@danskernesdigitalebibliotek/dpl-service-layer";
 import ModalMessage from "../../../../components/message/modal-message/ModalMessage";
 import { ApiResult } from "../../../../core/publizon/model";
 import {
+  hasDigitalReservationId,
   reservationId,
   ReservationType
 } from "../../../../core/utils/types/reservation-type";
 import { getModalIds } from "../../../../core/utils/helpers/modal-helpers";
+import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
 
 interface DeleteReservationModalProps {
   modalId: string;
@@ -34,7 +44,7 @@ interface DeleteReservationModalProps {
 }
 
 export function deleteReservationModalId(reservation: ReservationType): string {
-  const prefix = String(getModalIds().reservationDelete);
+  const prefix = String(getModalIds().deleteReservation);
   const fragment = reservationId(reservation);
   // TODO: Use constructModalId() instead of string concatenation.
   return `${prefix}${fragment}`;
@@ -47,22 +57,35 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
   const t = useText();
   const queryClient = useQueryClient();
   const { mutate: deletePhysicalReservation } = useDeleteReservations();
-  const { mutate: deleteDigitalReservation } =
+  const { mutate: deletePublizonReservation } =
     useDeleteV1UserReservationsIdentifier();
+  const { mutate: deleteDigitalReservation } = useDigitalDeleteReservation();
+  const canCancelReservation = useCanCancelReservation();
   const [deletedReservations, setDeletedReservations] = useState<number | null>(
     null
   );
 
-  const { requests, reservationsPhysical, reservationsDigital } = useMemo(
+  const {
+    requests,
+    reservationsPhysical,
+    reservationsPublizon,
+    reservationsDigital
+  } = useMemo(
     () =>
       requestsAndReservations({
         operations: {
-          digital: deleteDigitalReservation,
-          physical: deletePhysicalReservation
+          publizon: deletePublizonReservation,
+          physical: deletePhysicalReservation,
+          digital: deleteDigitalReservation
         },
         reservations
       }),
-    [deleteDigitalReservation, deletePhysicalReservation, reservations]
+    [
+      deletePublizonReservation,
+      deletePhysicalReservation,
+      deleteDigitalReservation,
+      reservations
+    ]
   );
 
   const {
@@ -70,9 +93,9 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
     requestStatus,
     setRequestStatus
   } = useMultipleRequestsWithStatus<
-    OperationPhysical | OperationDigital,
-    ParamsPhysical | ParamsDigital,
-    ApiResult | void | null
+    OperationPhysical | OperationPublizon | OperationDigital,
+    ParamsPhysical | ParamsPublizon | ParamsDigital,
+    ApiResult | boolean | void | null
   >({
     requests,
     onSuccess: () => {
@@ -86,6 +109,9 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
       queryClient.invalidateQueries({
         queryKey: getGetReservationsV2QueryKey()
       });
+      queryClient.invalidateQueries({
+        queryKey: digitalReservationsQueryKey()
+      });
       if (reservations.length) {
         reservations.forEach((res) => {
           if (res.identifier) {
@@ -93,18 +119,64 @@ const DeleteReservationModal: FC<DeleteReservationModalProps> = ({
               queryKey: getGetV1LoanstatusIdentifierQueryKey(res.identifier)
             });
           }
+          // The material page derives its button from the can-loan answer,
+          // which was given while the reservation still existed.
+          if (hasDigitalReservationId(res)) {
+            queryClient.invalidateQueries({
+              queryKey: digitalLoanDecisionQueryKey(res.identifier ?? null)
+            });
+          }
+        });
+      }
+      if (reservationsDigital.length) {
+        queryClient.invalidateQueries({
+          queryKey: digitalLoanQuotasQueryKey()
         });
       }
     }
   });
 
   const removeSelectedReservationsHandler = () => {
-    if (reservationsPhysical.length || reservationsDigital.length) {
+    if (
+      reservationsPhysical.length ||
+      reservationsPublizon.length ||
+      reservationsDigital.length
+    ) {
       removeReservationsHandler();
     }
   };
 
   if (!reservations) return null;
+
+  // TEMPORARY: the last gate before the cancellation itself. Every button that
+  // opens this modal already refuses a reservation in the queue Biblio is
+  // migrating, but the modal opens from a `?modal=` link as well, which answers
+  // to no button - so without this the freeze can be stepped around by URL.
+  // Delete this block once the freeze is lifted - see
+  // usePublizonReservationsClosed.
+  if (!reservations.every(canCancelReservation)) {
+    return (
+      <Modal
+        modalId={modalId}
+        classNames="modal-cta modal-padding"
+        closeModalAriaLabelText={t("deleteReservationModalCloseModalText")}
+        screenReaderModalDescriptionText={t(
+          "deleteReservationModalAriaDescriptionText"
+        )}
+      >
+        <ModalMessage
+          title={t("deleteReservationModalHeaderText", {
+            count: reservations.length
+          })}
+          subTitle={t("digitalReservationCancelClosedInfoText")}
+          ctaButton={{
+            text: t("deleteReservationModalButtonText"),
+            closeAllModals: true
+          }}
+        />
+      </Modal>
+    );
+  }
 
   const ctaButtonParams = {
     text: t("deleteReservationModalButtonText"),

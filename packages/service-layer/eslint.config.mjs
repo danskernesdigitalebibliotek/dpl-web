@@ -4,7 +4,7 @@ import tseslint from "typescript-eslint"
 
 export default tseslint.config(
   {
-    ignores: ["fbs/src/generated/**", "node_modules/**"],
+    ignores: ["fbs/src/generated/**", "biblio/src/generated/**", "node_modules/**"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
