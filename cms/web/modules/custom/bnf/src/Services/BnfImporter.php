@@ -91,8 +91,7 @@ class BnfImporter {
         return NULL;
       }
 
-      // If the node we're looking to import is unpublished, we want to see
-      // if it already exists. If not, we want to ignore it.
+      // Don't create nodes that haven't been published on BNF yet.
       if (!$nodeData->status) {
         if (!$existingNode instanceof NodeInterface) {
           $this->logger->info("Skipped BNF import of unpublished node {$uuid}.");
