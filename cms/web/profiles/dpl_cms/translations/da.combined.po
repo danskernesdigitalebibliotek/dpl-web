@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-15 10:52+0200\n"
-"PO-Revision-Date: 2026-09-15 10:52+0200\n"
+"POT-Creation-Date: 2026-09-15 11:27+0200\n"
+"PO-Revision-Date: 2026-09-15 11:27+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-15 10:53+0200\n"
-"PO-Revision-Date: 2026-09-15 10:53+0200\n"
+"POT-Creation-Date: 2026-09-15 11:28+0200\n"
+"PO-Revision-Date: 2026-09-15 11:28+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1420,6 +1420,10 @@ msgctxt "views.view.administerusersbyrole_people:display:default:display_options
 msgid "@interval ago"
 msgstr ""
 
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:settings:past_format"
+msgid "@interval ago"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:access:settings:past_format"
 msgid "@interval ago"
 msgstr ""
@@ -1428,6 +1432,10 @@ msgid "@interval hence"
 msgstr "om @interval"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:access:settings:future_format"
+msgid "@interval hence"
+msgstr ""
+
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:settings:future_format"
 msgid "@interval hence"
 msgstr ""
 
@@ -19238,6 +19246,14 @@ msgctxt "field.field.node.page.field_publication_date:label"
 msgid "Publication date"
 msgstr ""
 
+msgctxt "views.view.importable_content:display:default:display_options:sorts:field_publication_date_value:expose:label"
+msgid "Publication date"
+msgstr ""
+
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:admin_label"
+msgid "Publication date (since)"
+msgstr ""
+
 msgctxt "Material search"
 msgid "Publication year"
 msgstr "Udgivelsesår"
@@ -19357,6 +19373,10 @@ msgid "Published"
 msgstr ""
 
 msgctxt "views.view.event_series_admin:display:default:display_options:filters:status:group_info:label"
+msgid "Published"
+msgstr ""
+
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date:label"
 msgid "Published"
 msgstr ""
 
@@ -28012,10 +28032,6 @@ msgctxt "views.view.firstaccessiondate_content_admin:display:default:display_opt
 msgid "Updated"
 msgstr ""
 
-msgctxt "views.view.importable_content:display:default:display_options:fields:changed_1:label"
-msgid "Updated"
-msgstr ""
-
 msgctxt "views.view.media:display:default:display_options:fields:changed:label"
 msgid "Updated"
 msgstr ""
@@ -31195,12 +31211,6 @@ msgstr ""
 msgid "{{ \"View Series\"|t }}"
 msgstr ""
 
-msgctxt "views.view.importable_content:display:default:display_options:fields:changed_1:alter:text"
-msgid ""
-"{{ changed_1 }}<br>\r\n"
-"<small>({{ changed }})</small>"
-msgstr ""
-
 msgid "{{ date__value }}"
 msgstr ""
 
@@ -31210,6 +31220,12 @@ msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:field_author_name:alter:text"
 msgid "{{ field_author_name__value }} <br><small>{{ mail }}</small>"
+msgstr ""
+
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date:alter:text"
+msgid ""
+"{{ field_publication_date }}<br>\r\n"
+"<small>({{ field_publication_date_1 }})</small>"
 msgstr ""
 
 msgctxt "views.view.importable_content:display:default:display_options:fields:field_subtitle:alter:text"
