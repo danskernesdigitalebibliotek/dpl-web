@@ -1,4 +1,7 @@
-import { ServiceLayerProvider } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import {
+  type DigitalLoan,
+  ServiceLayerProvider,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 
@@ -38,7 +41,41 @@ export const fixtureLoans = [
   { identifier: "9788711917145", expiresInDays: 2.5, costFree: true },
 ]
 
+// Loans made through the Biblio adapter, shown merged with the Publizon ones
+// while the two providers coexist. One e-book and one audiobook (the works
+// factory alternates, e-book first); expiries interleave with the Publizon
+// fixtures so the merged list demonstrates cross-provider sorting.
+export const fixtureBiblioLoans: DigitalLoan[] = [
+  {
+    loanId: "biblio-loan-ebook",
+    materialId: "9788711917146",
+    materialType: "ebook",
+    startDate: daysFromNow(-10),
+    endDate: daysFromNow(1),
+    active: true,
+    title: "Dette er titlen på en e-bog",
+    author: "Forfatter Fornavnsen",
+    publisher: "Forlaget",
+    publishDate: "2024-01-01",
+    loanProvider: "free",
+  },
+  {
+    loanId: "biblio-loan-audiobook",
+    materialId: "9788711917147",
+    materialType: "audiobook",
+    startDate: daysFromNow(-10),
+    endDate: daysFromNow(20),
+    active: true,
+    title: "Dette er titlen på en lydbog",
+    author: "Forfatter Fornavnsen",
+    publisher: "Forlaget",
+    publishDate: "2024-01-01",
+    loanProvider: "free",
+  },
+]
+
 const identifiers = fixtureLoans.map(l => l.identifier)
+const biblioIdentifiers = fixtureBiblioLoans.map(l => l.materialId)
 
 // Real covers come in varying proportions; rotate through a tall, a standard
 // and a near-square ratio so cover-edge-anchored details (material type icon)
@@ -61,17 +98,25 @@ const buildCover = (index: number) => {
   })
 }
 
-export const fixtureWorks = worksWithIdentifiersFactory
-  .transient({ identifiers })
-  .build()
-  .map((work, index) => {
-    const cover = buildCover(index)
-    const manifestation = { ...work.manifestations.all[0], cover }
-    return {
-      ...work,
-      manifestations: { all: [manifestation], bestRepresentation: manifestation },
-    }
-  })
+const buildWorks = (ids: string[]) =>
+  worksWithIdentifiersFactory
+    .transient({ identifiers: ids })
+    .build()
+    .map((work, index) => {
+      const cover = buildCover(index)
+      const manifestation = { ...work.manifestations.all[0], cover }
+      return {
+        ...work,
+        manifestations: { all: [manifestation], bestRepresentation: manifestation },
+      }
+    })
+
+export const fixtureWorks = buildWorks(identifiers)
+
+// The works behind the Biblio loans, and both providers' works side by side —
+// only the merged stories use these, so the Publizon-only stories stay stable.
+export const fixtureBiblioWorks = buildWorks(biblioIdentifiers)
+export const fixtureMergedWorks = [...fixtureWorks, ...fixtureBiblioWorks]
 
 export const loanListResult = {
   loans: fixtureLoans.map(l => ({
@@ -94,6 +139,13 @@ export const seedClient = (loanData = loanListResult) => {
   fixtureLoans.forEach(l => {
     client.setQueryData(getGetV1ProductsIdentifierAdapterQueryKey(l.identifier), {
       product: { costFree: l.costFree },
+    })
+  })
+  // The "BLÅ" lookup runs per shown material, so the Biblio works need an
+  // answer too — seeded as not cost-free.
+  biblioIdentifiers.forEach(identifier => {
+    client.setQueryData(getGetV1ProductsIdentifierAdapterQueryKey(identifier), {
+      product: { costFree: false },
     })
   })
   return client
