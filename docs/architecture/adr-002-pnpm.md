@@ -46,13 +46,15 @@ Adopt **pnpm** as the package manager for the whole repo:
   per-directory update entries, but it can find and update a lockfile sitting
   next to each `package.json`. The Lagoon dockerfiles copy each package's
   lockfile alongside its manifest before `pnpm install --frozen-lockfile`.
-- The version is pinned via `packageManager: pnpm@10.x` in the root
+- The version is pinned via `packageManager: pnpm@11.x` in the root
   `package.json` and provisioned through Corepack, so local and CI
   toolchains match.
 - Supply-chain policy is declared centrally in `pnpm-workspace.yaml`:
   `minimumReleaseAge` (a 2-day quarantine on new versions),
-  `blockExoticSubdeps`, and an `onlyBuiltDependencies` allowlist gating
-  which packages may run install scripts. **Caveat:** pnpm 10.x silently
+  `blockExoticSubdeps`, and an `allowBuilds` allowlist gating
+  which packages may run install scripts — with pnpm 11's `strictDepBuilds`
+  default, a dependency missing from that list fails the install rather than
+  silently skipping its build scripts. **Caveat:** pnpm silently
   ignores `minimumReleaseAge` when `sharedWorkspaceLockfile` is `false`, so
   the quarantine is currently *not* enforced — the setting is kept so the
   protection returns once that bug is fixed or we move off split lockfiles.

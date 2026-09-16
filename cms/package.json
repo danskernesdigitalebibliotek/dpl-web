@@ -3,8 +3,8 @@
   "description": "Node.js tools for working with DPL CMS",
   "version": "1.0.0",
   "engines": {
-    "node": "24.15.0",
-    "pnpm": "^10"
+    "node": "24.21.0",
+    "pnpm": "^11"
   },
   "license": "AGPL-3.0",
   "devDependencies": {
