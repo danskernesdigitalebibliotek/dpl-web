@@ -22,9 +22,9 @@ vars:
   PRETTIER_VERSION: 3.8.3
   GRAPHQL_INSPECTOR_VERSION: 6.0.7
 
-  # DBC FBI gateway endpoints. Names = host+profile, see README.
-  DBC_FBI_TEMP_NEXT_URL: https://temp.fbi-api.dbc.dk/next/graphql
-  DBC_FBI_FBCMS_GO_URL: https://fbi-api.dbc.dk/fbcms-go/graphql
+  # DBC FBI gateway. One snapshot, introspected from the prod host; the
+  # profiles serve identical schemas, see README.
+  DBC_FBI_URL: https://fbi-api.dbc.dk/fbcms-go/graphql
 
 tasks:
 
@@ -90,31 +90,15 @@ tasks:
       - cp "{{.FBS_TOOL_DIR}}/fbs-adapter.yaml" openapi/fbs-adapter.yaml
       - task: format
 
-  refresh:dbc-fbi:temp-next:
-    desc: Refresh graphql/dbc-fbi.temp-next.graphql from temp.fbi-api.dbc.dk/next.
-    dir: '{{.TASKFILE_DIR}}'
-    cmds:
-      - task: _introspect-fbi
-        vars:
-          URL: '{{.DBC_FBI_TEMP_NEXT_URL}}'
-          OUT: graphql/dbc-fbi.temp-next.graphql
-      - task: format
-
-  refresh:dbc-fbi:fbcms-go:
-    desc: Refresh graphql/dbc-fbi.fbcms-go.graphql from fbi-api.dbc.dk/fbcms-go.
-    dir: '{{.TASKFILE_DIR}}'
-    cmds:
-      - task: _introspect-fbi
-        vars:
-          URL: '{{.DBC_FBI_FBCMS_GO_URL}}'
-          OUT: graphql/dbc-fbi.fbcms-go.graphql
-      - task: format
-
   refresh:dbc-fbi:
-    desc: Refresh both DBC FBI snapshots (temp-next + fbcms-go).
+    desc: Refresh graphql/dbc-fbi.graphql from fbi-api.dbc.dk/fbcms-go.
+    dir: '{{.TASKFILE_DIR}}'
     cmds:
-      - task: refresh:dbc-fbi:temp-next
-      - task: refresh:dbc-fbi:fbcms-go
+      - task: _introspect-fbi
+        vars:
+          URL: '{{.DBC_FBI_URL}}'
+          OUT: graphql/dbc-fbi.graphql
+      - task: format
 
   refresh:publizon:
     desc: "Stub: publizon-adapter.yaml has no automated upstream. Edit it by hand."

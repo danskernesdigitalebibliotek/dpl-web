@@ -7,8 +7,8 @@ import type { CodegenConfig } from "@graphql-codegen/cli"
 // Refresh with `task dev:codegen:bnf-graphql` in cms/.
 const DPL_CMS_SCHEMA_PATH = "../cms/dpl-cms.bnf.graphql"
 
-// Refresh with `task schemas:refresh:dbc-fbi:fbcms-go`.
-const FBI_SCHEMA_PATH = "../schemas/graphql/dbc-fbi.fbcms-go.graphql"
+// Refresh with `task refresh:dbc-fbi`, run from schemas/.
+const FBI_SCHEMA_PATH = "../schemas/graphql/dbc-fbi.graphql"
 
 const config: CodegenConfig = {
   overwrite: true,

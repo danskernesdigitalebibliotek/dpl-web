@@ -182,6 +182,18 @@
             "deprecationReason": null
           },
           {
+            "name": "proxyUrl",
+            "description": "Proxy/login url for the resource when relevant.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "status",
             "description": "Status from linkcheck",
             "args": [],
@@ -949,6 +961,30 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "ComplexSearchCQLFiltersInput",
+        "description": "CQL based filters. Mutually exclusive with ComplexSearchFiltersInput.",
+        "isOneOf": false,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "cqlfilterquery",
+            "description": "A CQL expression used to filter the search result.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "ComplexSearchFacetResponse",
         "description": "The complete facet in response",
@@ -1486,6 +1522,26 @@
             "deprecationReason": null
           },
           {
+            "name": "floatGroup",
+            "description": "The floatgroup of the item",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "NON_NULL",
+                "ofType": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "issueId",
             "description": "Id of publishing issue.",
             "type": {
@@ -1526,8 +1582,60 @@
             "deprecationReason": null
           },
           {
+            "name": "lastloandate",
+            "description": "The last loan date of the item",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "loanrestriction",
+            "description": "The loan restriction of the item, g, a or nothing",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "NON_NULL",
+                "ofType": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "location",
             "description": "Where is the book physically located  (eg. skønlitteratur).",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "NON_NULL",
+                "ofType": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "section",
+            "description": "The section which the item belongs to",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -2832,6 +2940,18 @@
         "isOneOf": null,
         "fields": [
           {
+            "name": "andOthers",
+            "description": "True when the corporation is followed by 'm.fl.' (and others) in the publication,\nmeaning that additional unnamed corporations contributed to this creation",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "attributeToName",
             "description": "Added information about the corporation, like M. Folmer Andersen (firma)",
             "args": [],
@@ -3239,6 +3359,18 @@
         "isOneOf": null,
         "fields": [
           {
+            "name": "andOthers",
+            "description": "True when the creator is followed by 'm.fl.' (and others) in the publication,\nmeaning that additional unnamed creators contributed to this creation",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "display",
             "description": "Name of the creator",
             "args": [],
@@ -3597,8 +3729,8 @@
                 }
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
           },
           {
             "name": "edition",
@@ -5782,8 +5914,8 @@
               "name": "CataloguedPublicationStatus",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Use 'Manifestation.materialSelection.cataloguedPublicationStatus' instead expires: 05/12-2026"
           },
           {
             "name": "classifications",
@@ -6110,6 +6242,18 @@
             "deprecationReason": null
           },
           {
+            "name": "materialSelection",
+            "description": "Metadata related to material selection, including publication status,\nselection group, and librarian assessment.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "MaterialSelection",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "materialTypes",
             "description": "The type of material of the manifestation based on bibliotek.dk types",
             "args": [],
@@ -6310,8 +6454,8 @@
                 }
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
           },
           {
             "name": "relations",
@@ -6336,6 +6480,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "ManifestationReview",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ris",
+            "description": "Bibliographic reference data for this manifestation formatted as RIS.\nWhen fetching RIS for multiple manifestations, each record is returned on the\nmanifestation. To combine them into a single RIS file, join the records with a newline.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -6786,8 +6942,8 @@
               "name": "String",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
           },
           {
             "name": "titlePlusLanguage",
@@ -6818,8 +6974,8 @@
                 }
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
           },
           {
             "name": "tvSeries",
@@ -6980,6 +7136,372 @@
                   "kind": "OBJECT",
                   "ofType": null
                 }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "MaterialSelection",
+        "description": "Metadata related to material selection, including publication status,\nselection group, and librarian assessment.",
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "cataloguedPublicationStatus",
+            "description": "Publication status of the manifestation (e.g. new title, new edition, new print run).",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "MaterialSelectionCataloguedPublicationStatus",
+                    "kind": "OBJECT",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "librarianAssessment",
+            "description": "The type of library assessment associated with the manifestation:\nliterature, movie, or multimedia.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "MaterialSelectionLibrarianAssessment",
+                    "kind": "OBJECT",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "selectionGroup",
+            "description": "Recommended selection group for the manifestation: adult, children, or school libraries.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "MaterialSelectionSelectionGroup",
+                    "kind": "OBJECT",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "MaterialSelectionCataloguedPublicationStatus",
+        "description": "Publication status entry within material selection.",
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "display",
+            "description": "Danish display label for the publication status, e.g. \"Ny titel\".",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "searchValues",
+            "description": "Values that can be used for Complex Search filtering, e.g. [\"nt\", \"ny titel\"].\nUse these values with term.cataloguedPublicationStatus in Complex Search.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "String",
+                    "kind": "SCALAR",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "The publication status enum value.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": "MaterialSelectionPublicationStatusEnum",
+                "kind": "ENUM",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "MaterialSelectionGroupEnum",
+        "description": null,
+        "isOneOf": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ADULT",
+            "description": "Adult. Display label example: \"Voksenafdelinger\".",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CHILDREN",
+            "description": "Children. Display label example: \"Børnebiblioteker\".",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SCHOOL",
+            "description": "School. Display label example: \"Skolebiblioteker\".",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "MaterialSelectionLibrarianAssessment",
+        "description": "Librarian assessment entry within material selection.",
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "display",
+            "description": "Danish display label for the assessment, e.g. \"Har lektørudtalelse (materialevurdering)\".",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "searchValues",
+            "description": "Values that can be used for Complex Search filtering, e.g. [\"l\", \"lektørudtalelse\"].\nUse these values with term.librarianAssessment in Complex Search.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "String",
+                    "kind": "SCALAR",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "The librarian assessment enum value.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": "MaterialSelectionLibrarianAssessmentEnum",
+                "kind": "ENUM",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "MaterialSelectionLibrarianAssessmentEnum",
+        "description": null,
+        "isOneOf": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "LITERATURE",
+            "description": "Literature assessment.\nDisplay label example: \"Har lektørudtalelse (materialevurdering)\".",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MOVIE",
+            "description": "Has a film review. Display label example: \"Har filmvurdering\".",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MULTIMEDIA",
+            "description": "Has a multimedia review. Display label example: \"Har multimedievurdering\".",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "MaterialSelectionPublicationStatusEnum",
+        "description": null,
+        "isOneOf": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "NEW_EDITION",
+            "description": "New edition. Display label example: \"Ny udgave\".",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NEW_PRINT",
+            "description": "New print run. Display label example: \"Nyt oplag\".",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NEW_TITLE",
+            "description": "New title. Display label example: \"Ny titel\".",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "MaterialSelectionSelectionGroup",
+        "description": "Selection group entry within material selection.",
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "display",
+            "description": "Danish display label for the selection group, e.g. \"Voksenafdelinger\".",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "searchValues",
+            "description": "Values that can be used for Complex Search filtering, e.g. [\"v\", \"voksen\"].\nUse these values with term.selectionGroup in Complex Search.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "String",
+                    "kind": "SCALAR",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "The selection group enum value.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": "MaterialSelectionGroupEnum",
+                "kind": "ENUM",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -8428,8 +8950,8 @@
               "name": "String",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
           },
           {
             "name": "type",
@@ -8746,6 +9268,18 @@
                   }
                 }
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "andOthers",
+            "description": "True when the person is followed by 'm.fl.' (and others) in the publication,\nmeaning that additional unnamed persons contributed to this creation",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -9299,6 +9833,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "cqlfilter",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ComplexSearchCQLFiltersInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "facets",
                 "description": null,
                 "type": {
@@ -9446,8 +9992,8 @@
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Use 'retriever' instead expires: 18/12-2026"
           },
           {
             "name": "linkCheck",
@@ -9825,7 +10371,7 @@
           },
           {
             "name": "ris",
-            "description": null,
+            "description": "Returns bibliographic records formatted as RIS reference data for one or more manifestation pids.\nWhen multiple pids are provided, each RIS record is separated by a newline.\nRecords are returned in the same order as the provided pids.\nIf a pid is not found, it is omitted from the response.",
             "args": [
               {
                 "name": "pids",
@@ -14827,8 +15373,8 @@
               "name": "String",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
           },
           {
             "name": "disc",
@@ -15940,8 +16486,8 @@
               "name": "String",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
           },
           {
             "name": "titlePlusLanguage",
@@ -15972,8 +16518,8 @@
                 }
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
           },
           {
             "name": "tvSeries",

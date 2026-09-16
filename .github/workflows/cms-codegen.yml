@@ -6,7 +6,7 @@ on:
     paths:
       - 'cms/**'
       - 'schemas/openapi/fbs-adapter.yaml'
-      - 'schemas/graphql/dbc-fbi.fbcms-go.graphql'
+      - 'schemas/graphql/dbc-fbi.graphql'
       - '.github/workflows/cms-codegen.yml'
 
 concurrency:

@@ -4,18 +4,18 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
 
 class ComplexSuggestionTypeEnum
 {
-    public const HOSTPUBLICATION = 'HOSTPUBLICATION';
     public const CONTRIBUTORFUNCTION = 'CONTRIBUTORFUNCTION';
     public const CREATOR = 'CREATOR';
-    public const DEFAULT = 'DEFAULT';
+    public const CREATORCONTRIBUTOR = 'CREATORCONTRIBUTOR';
     public const CREATORCONTRIBUTORFUNCTION = 'CREATORCONTRIBUTORFUNCTION';
     public const CREATORFUNCTION = 'CREATORFUNCTION';
-    public const SUBJECT = 'SUBJECT';
+    public const DEFAULT = 'DEFAULT';
     public const FICTIONALCHARACTER = 'FICTIONALCHARACTER';
-    public const TITLE = 'TITLE';
-    public const CREATORCONTRIBUTOR = 'CREATORCONTRIBUTOR';
-    public const SERIES = 'SERIES';
+    public const HOSTPUBLICATION = 'HOSTPUBLICATION';
     public const PUBLISHER = 'PUBLISHER';
+    public const SERIES = 'SERIES';
+    public const SUBJECT = 'SUBJECT';
+    public const TITLE = 'TITLE';
 
     public static function endpoint(): string
     {
