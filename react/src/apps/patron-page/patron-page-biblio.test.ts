@@ -4,6 +4,7 @@ import {
   patronPageStory
 } from "../../../cypress/page-objects/patron-page/PatronPagePage";
 import {
+  givenOrganizationHasBiblioReservationLimits,
   givenUserHasBiblioLoanQuotas,
   givenUserHasBiblioSupportId
 } from "../../../cypress/intercepts/biblio/biblio";
@@ -11,6 +12,10 @@ import {
   publizonLibraryProfileFactory,
   publizonLoanListFactory
 } from "../../../cypress/factories/publizon/publizon.factory";
+import {
+  BIBLIO_ORG_ID,
+  biblioSplitLoanQuotaFactory
+} from "../../../cypress/factories/biblio/biblio.factory";
 
 /**
  * The patron page during the Publizon → Biblio transition.
@@ -18,12 +23,23 @@ import {
  * Unlike the loan list, there is no provider probe here: profile data belongs
  * to the user rather than to a single material, so the feature flag alone
  * decides where the support identifier and the loan quotas come from.
+ *
+ * The quota rendering itself (no reservation line, combined quotas, a spent
+ * quota reading as full) is pinned by StatusSection's unit tests. This spec
+ * covers what only the real page shows: the flag moving the whole section,
+ * and residency no longer hiding it.
  */
 
 const PUBLIZON_CARD_NUMBER = "1234567890";
 const BIBLIO_SUPPORT_ID = "BIB-000000-0001";
 
-const stubBackends = () => {
+// The counters the adapter's quotas render as, read off the fixture so a
+// changed default cannot leave a stale literal behind.
+const biblioQuota = biblioSplitLoanQuotaFactory.build();
+const BIBLIO_EBOOKS_OUT_OF = `${biblioQuota.current_concurrent_loans.ebook} out of ${biblioQuota.max_concurrent_user_loans.ebook}`;
+const BIBLIO_AUDIOBOOKS_OUT_OF = `${biblioQuota.current_concurrent_loans.audiobook} out of ${biblioQuota.max_concurrent_user_loans.audiobook}`;
+
+const stubBackends = ({ resident = true } = {}) => {
   cy.window().then((win) => {
     // The profile page only loads patron data for a signed-in user -
     // isAnonymous() checks the user token specifically - and the Biblio
@@ -48,8 +64,7 @@ const stubBackends = () => {
       receiveEmail: true,
       receivePostalMail: false,
       onHold: {},
-      // The quota section only renders for a resident patron.
-      resident: true
+      resident
     }
   }).as("patron");
 
@@ -84,6 +99,7 @@ const stubBackends = () => {
 
   givenUserHasBiblioSupportId();
   givenUserHasBiblioLoanQuotas();
+  givenOrganizationHasBiblioReservationLimits();
 };
 
 describe("Patron page - Biblio adapter feature flag", () => {
@@ -104,6 +120,7 @@ describe("Patron page - Biblio adapter feature flag", () => {
     // And: the adapter is never contacted
     cy.get("@biblioSupportId.all").should("have.length", 0);
     cy.get("@biblioLoanQuotas.all").should("have.length", 0);
+    cy.get("@biblioOrganizationConfigs.all").should("have.length", 0);
   });
 
   it("Shows Biblio's support id and quotas when the flag is on", () => {
@@ -119,13 +136,43 @@ describe("Patron page - Biblio adapter feature flag", () => {
 
     // And: the quotas are the adapter's concurrent counters - the loans the
     // user holds right now, not the monthly totals.
-    cy.contains("1 out of 4").should("exist");
-    cy.contains("2 out of 3").should("exist");
+    cy.contains(BIBLIO_EBOOKS_OUT_OF).should("exist");
+    cy.contains(BIBLIO_AUDIOBOOKS_OUT_OF).should("exist");
     // The monthly figures from the same response must not surface here.
     cy.contains("3 out of").should("not.exist");
+
+    // And: the reservation ceilings come from the organization the quotas
+    // were issued for.
+    cy.wait("@biblioOrganizationConfigs")
+      .its("request.query.organization_id")
+      .should("eq", BIBLIO_ORG_ID);
+    cy.contains("You can reserve 5 ebooks and 6 audiobooks").should("exist");
+  });
+});
+
+describe("Patron page - quotas for a patron from another municipality", () => {
+  beforeEach(() => stubBackends({ resident: false }));
+
+  it("Hides the quotas when the flag is off", () => {
+    const patronPage = new PatronPagePage(patronPageStory.default);
+
+    // When: the user opens their profile
+    patronPage.visit([]);
+    cy.contains(PUBLIZON_CARD_NUMBER).should("exist");
+
+    // Then: the whole section stays away
+    cy.get("section.dpl-status-loans").should("not.exist");
   });
 
-  // The quota rendering itself (no reservation line, combined quotas, a spent
-  // quota reading as full) is pinned by StatusSection's unit tests. This spec
-  // covers what only the real page shows: the flag moving the whole section.
+  it("Shows the adapter's quotas when the flag is on", () => {
+    const patronPage = new PatronPagePage(patronPageStory.withBiblioAdapter);
+
+    // When: the user opens their profile
+    patronPage.visit([]);
+    cy.wait(["@biblioSupportId", "@biblioLoanQuotas"]);
+
+    // Then: the quotas render for a non-resident too
+    cy.contains(BIBLIO_EBOOKS_OUT_OF).should("exist");
+    cy.contains(BIBLIO_AUDIOBOOKS_OUT_OF).should("exist");
+  });
 });

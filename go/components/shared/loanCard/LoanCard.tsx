@@ -95,7 +95,7 @@ const LoanCard = ({
         <ManifestationCover
           cover={manifestation.cover}
           iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
-          alt={`${title} cover billede`}
+          alt={title}
           className="w-full"
           costFree={isCostFree}
           iconClassName={
