@@ -14,11 +14,11 @@ vars:
 
   # Pinned dockerized toolchain — keeps schemas/ self-contained, no
   # reach-in to sibling sub-projects. Prettier and graphql-inspector
-  # both run as ephemeral `npx` invocations inside `node:22-alpine`;
+  # both run as ephemeral `npx` invocations inside `node:24-alpine`;
   # nothing is installed locally. (Note: kamilkisiela/graphql-inspector
   # docker images are broken — v3.4.0 has a buggy undici, master is
   # missing internal loader deps — so we run the npm package directly.)
-  NODE_IMAGE: node:22-alpine
+  NODE_IMAGE: node:24-alpine
   PRETTIER_VERSION: 3.8.3
   GRAPHQL_INSPECTOR_VERSION: 6.0.7
 
