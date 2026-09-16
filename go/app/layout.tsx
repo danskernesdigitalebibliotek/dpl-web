@@ -3,9 +3,7 @@ import localFont from "next/font/local"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { Suspense } from "react"
 
-import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
-import Header from "@/components/global/header/Header"
 import MappTracking from "@/components/global/mappTracking/MappTracking"
 import Theme from "@/components/global/theme/Theme"
 import { DynamicModal } from "@/components/shared/dynamicModal/DynamicModal"
@@ -50,12 +48,13 @@ async function RootLayout({
         <Theme>
           <ReactQueryProvider>
             <ServiceLayerProvider>
-              <Header />
+              {/* Header and Footer live in the route group layouts, not here:
+                the reader route group renders without page chrome, the same
+                footing the WeDoBooks reader has in the CMS. */}
               <DynamicSheet />
               <DynamicModal />
               <Toaster />
               {children}
-              <Footer />
               {/* Own Suspense boundary: MappTracking reads useSearchParams, which
                 would otherwise opt the whole layout into client rendering. */}
               <Suspense>
