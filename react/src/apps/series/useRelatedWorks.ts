@@ -4,7 +4,7 @@ import {
 } from "../../core/dbc-gateway/generated/graphql";
 import { cqlString } from "../../core/utils/helpers/cql";
 import { WorkId } from "../../core/utils/types/ids";
-import { getRelatedWorks } from "./getRelatedWorks";
+import { DISPLAY_LIMIT, getRelatedWorks } from "./getRelatedWorks";
 import { RelatedWork } from "./relatedWorks.types";
 
 export type UseRelatedWorksArgs = {
@@ -21,10 +21,11 @@ export type UseRelatedWorksResult = {
   isLoading: boolean;
 };
 
-// The fill algorithm picks at most 20; fetching past that leaves it slack to
-// skip later volumes of the same series. A single page is enough - by the
-// time an author has this many candidates the slider is full anyway.
-const FETCH_LIMIT = 50;
+// Over-fetch so the fill algorithm has slack: articles and later series
+// volumes display last, and for a prolific author they can make up much of a
+// newest-first page. A wider page is cheaper than a second books-only query
+// until an author outgrows it.
+const FETCH_LIMIT = DISPLAY_LIMIT * 5;
 
 // Works by the author, excluding the series the page is about. The language
 // clause keeps translated editions of the same works out (Vildheks vs.
@@ -73,6 +74,7 @@ const useRelatedWorks = ({
         numberInSeries: series.numberInSeries ?? null,
         readThisFirst: series.readThisFirst ?? null
       })),
+      workTypes: work.workTypes,
       coverSrc: work.manifestations.bestRepresentation.cover.large?.url ?? null
     })) ?? [];
 
