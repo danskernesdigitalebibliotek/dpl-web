@@ -58,21 +58,16 @@ export async function proxy(request: NextRequest) {
   if (!userIsAnonymous(session) && session.type === "adgangsplatformen") {
     const sessionCookie = await getDplCmsSessionCookie()
     if (!sessionCookie) {
-      destroySession(session)
+      await destroySession(session)
     }
   }
 
   if (adgangsplatformenAccessTokenHasExpired(session)) {
-    // The Drupal session outlives the user token by weeks. Send the browser
-    // through the full logout flow so the CMS (and Adgangsplatformen SSO)
-    // session is torn down too — otherwise the CMS keeps serving the same
-    // dead token and the session resurrects on the next request.
-    // Only top-level navigations can be redirected through an external logout
-    // flow; other requests (RSC, prefetch, fetch) fall back to local teardown.
-    if (request.headers.get("sec-fetch-dest") === "document") {
-      return NextResponse.redirect(`${getBaseURL()}/auth/logout`)
-    }
-    destroySession(session)
+    // Drupal logs out patrons whose token has expired, so the CMS stops
+    // answering for this session and cannot hand the dead token back. Tearing
+    // down the GO session is therefore enough: the next request is anonymous
+    // and stays that way.
+    await destroySession(session)
     return response
   }
 
