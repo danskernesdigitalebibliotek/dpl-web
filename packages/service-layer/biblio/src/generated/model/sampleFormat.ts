@@ -64,16 +64,10 @@ These endpoints are available in the `Biblio API`, but not in this adapter.
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetReservationOffersForAuthenticatedUserParams = {
-  /**
-   * Maximum number of items to return in a single page.
-   * @minimum 1
-   * @maximum 1000
-   */
-  limit?: number
-  /**
- * Pagination cursor for fetching the next page. Pass the `cursor` value returned in the previous response's `pagination` object; omit it to fetch the first page. The final page returns no cursor.
+export type SampleFormat = (typeof SampleFormat)[keyof typeof SampleFormat]
 
- */
-  cursor?: string
-}
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const SampleFormat = {
+  epub: "epub",
+  mp3: "mp3",
+} as const

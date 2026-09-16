@@ -29,7 +29,7 @@ Obtain an OAuth2 access token from [login.bib.dk](https://login.bib.dk) and send
 
 Endpoints that read or change a user's loans, reservations, or user data require a token representing the end user, issued via the OAuth2 `authorization_code` grant.
 
-Metadata endpoints can be accessed with either an end-user token or a server-to-server token.
+Metadata and sample endpoints can be accessed with either an end-user token or a server-to-server token.
 
 Server-to-server access requires a token issued via the OAuth2 `client_credentials` grant. The OAuth client must be configured with access to the endpoint.
 
@@ -37,12 +37,12 @@ Server-to-server access requires a token issued via the OAuth2 `client_credentia
 
 User-scoped endpoints do not accept client-supplied `user_id` or organization ids. Resolve them from login.bib.dk userinfo `attributes` as follows:
 
-1. If both `uniqueId` and `municipalityAgencyId` are present:
+1. If both `uniqueId` and `municipality` are present:
    - `user_id` = `uniqueId`
-   - `organization_third_party_id` = `municipalityAgencyId`
+   - `organization_third_party_id` = `municipality`
 2. Otherwise, use the Unilogin fallback:
    - `user_id` = `uniloginUniIdHash`
-   - `organization_third_party_id` = `uniloginAgencyId`
+   - `organization_third_party_id` = `uniloginMunicipality`
 
 
 Unilogin fallback requires an active Unilogin license; otherwise the adapter returns 403 with `User is missing license`.
@@ -66,9 +66,11 @@ These endpoints are available in the `Biblio API`, but not in this adapter.
 
 export * from "./acceptReservationOfferApiResponse"
 export * from "./acceptReservationOfferForAuthenticatedUserBody"
+export * from "./allowEduLoans"
 export * from "./apiErrorResponse"
 export * from "./appMessage"
 export * from "./appThemeId"
+export * from "./byMaterialTypeLoanPeriod"
 export * from "./byMaterialTypeNumber"
 export * from "./canLoanApiResponse"
 export * from "./canLoanForAuthenticatedUser200"
@@ -77,6 +79,7 @@ export * from "./canLoanRejectReasons"
 export * from "./canLoanResponseType"
 export * from "./canLoanResponseTypeConcurrentLimitExceeded"
 export * from "./canLoanResponseTypePeriodLimitExceeded"
+export * from "./combinedLoanConfig"
 export * from "./combinedLoanQuotaDto"
 export * from "./contactPerson"
 export * from "./createLoanApiResponse"
@@ -84,6 +87,7 @@ export * from "./createReservationApiResponse"
 export * from "./createReservationForAuthenticatedUserBody"
 export * from "./createSignInTokenApiResponse"
 export * from "./deleteReservationApiResponse"
+export * from "./drmConfig"
 export * from "./getLoanApiResponse"
 export * from "./getLoanForAuthenticatedUser200"
 export * from "./getLoanQuotasApiResponse"
@@ -94,6 +98,8 @@ export * from "./getLoansForAuthenticatedUserParams"
 export * from "./getMetadataApiResponse"
 export * from "./getMetadataByMaterialIdsParams"
 export * from "./getOrganizationApiResponse"
+export * from "./getOrganizationConfigsApiResponse"
+export * from "./getOrganizationConfigsParams"
 export * from "./getOrganizationParams"
 export * from "./getReservationApiResponse"
 export * from "./getReservationOffersApiResponse"
@@ -103,19 +109,24 @@ export * from "./getReservationsForAuthenticatedUserParams"
 export * from "./getSupportIdApiResponse"
 export * from "./getSupportIdForAuthenticatedUser200"
 export * from "./importMaterialType"
+export * from "./lendingBlockReason"
 export * from "./loanDto"
 export * from "./loanLicenseInfo"
 export * from "./loanPeriod"
 export * from "./loanProvider"
+export * from "./loanProviderConfig"
 export * from "./materialInformationDto"
 export * from "./materialType"
 export * from "./materialTypeAudiobook"
 export * from "./materialTypeEbook"
+export * from "./omitLibraryConfigLibrarySystemOrCardCredentials"
 export * from "./organizationAddress"
+export * from "./organizationConfigsDto"
 export * from "./organizationContactInfo"
 export * from "./organizationDto"
 export * from "./organizationType"
 export * from "./pagination"
+export * from "./pickLibraryConfigExcludeKeyofLibraryConfigLibrarySystemOrCardCredentials"
 export * from "./pickMaterialInformationAuthorOrCategoryOrDescriptionOrCollectionTitleOrCollectionVolumeNumberOrDurationSecondsOrEditorOrFileBytesOrIsbnOrLanguagesOrMaterialTypeOrNarratorOrPublishDateOrPublisherOrThemaCodesOrTitleOrTranslator"
 export * from "./quotaReject"
 export * from "./requestLoanForAuthenticatedUser201"
@@ -128,20 +139,12 @@ export * from "./requestLoanReservationGroup"
 export * from "./reservationDto"
 export * from "./reservationOfferDto"
 export * from "./reservationOfferStatus"
+export * from "./splitLoanConfig"
 export * from "./splitLoanConfigType"
 export * from "./splitLoanQuotaDto"
 export * from "./splitLoanQuotaDtoMaxUserLoansPeriod"
-export * from "./allowEduLoans"
-export * from "./byMaterialTypeLoanPeriod"
-export * from "./combinedLoanConfig"
-export * from "./drmConfig"
-export * from "./getOrganizationConfigsApiResponse"
-export * from "./getOrganizationConfigsParams"
-export * from "./lendingBlockReason"
-export * from "./loanProviderConfig"
-export * from "./omitLibraryConfigLibrarySystemOrCardCredentials"
-export * from "./organizationConfigsDto"
-export * from "./pickLibraryConfigExcludeKeyofLibraryConfigLibrarySystemOrCardCredentials"
-export * from "./splitLoanConfig"
 export * from "./traceparentHeaderParameter"
 export * from "./unavailableReason"
+export * from "./getSampleApiResponse"
+export * from "./getSampleParams"
+export * from "./sampleFormat"

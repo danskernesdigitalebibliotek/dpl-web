@@ -63,17 +63,13 @@ These endpoints are available in the `Biblio API`, but not in this adapter.
 
  * OpenAPI spec version: 1.0.0
  */
+import type { SampleFormat } from "./sampleFormat"
 
-export type GetReservationOffersForAuthenticatedUserParams = {
-  /**
-   * Maximum number of items to return in a single page.
-   * @minimum 1
-   * @maximum 1000
-   */
-  limit?: number
-  /**
- * Pagination cursor for fetching the next page. Pass the `cursor` value returned in the previous response's `pagination` object; omit it to fetch the first page. The final page returns no cursor.
-
- */
-  cursor?: string
+export interface GetSampleApiResponse {
+  /** ISBN-13 of the material the sample belongs to. */
+  material_id: string
+  /** File format of the returned sample. */
+  format: SampleFormat
+  /** Time-limited signed URL to download the sample. Valid for 7 days. */
+  sample_url: string
 }
