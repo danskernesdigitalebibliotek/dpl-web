@@ -35,6 +35,12 @@ no refresh path — a dead token means a new login:
   middleware destroys the session once it passes. That covers a token running
   out of time; a token revoked *before* its expire timestamp is invisible to
   every clock and is only discovered when a service refuses it.
+- Drupal can also retire the session while the services still accept the
+  token — it logs out patrons with an expired token, and a patron can log out
+  on the library site. GO cannot see either, so the middleware re-asks the CMS
+  on top-level navigations (`sec-fetch-dest: document`, one call per page view
+  rather than one per prefetch) and ends the session when the answer is "no
+  token".
 - An expired GO session is destroyed locally by the middleware. The user
   continues on the page they asked for, as an anonymous visitor.
 - The Adgangsplatformen SSO session is deliberately left alone. While it is

@@ -86,6 +86,26 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  // Drupal can retire the session before the token's own expiry runs out: it
+  // logs out patrons with an expired token, and a patron can log out on the
+  // library site. Neither is visible to GO's copy of the expiry, and the
+  // services keep accepting the token, so the CMS is the only party that
+  // knows. Ask it on top-level navigations — one call per page view, not per
+  // prefetch. An error leaves the session alone: it says nothing about the
+  // patron, and logging people out because the CMS blinked would be worse
+  // than showing them a stale page.
+  if (
+    !userIsAnonymous(session) &&
+    session.type === "adgangsplatformen" &&
+    request.headers.get("sec-fetch-dest") === "document"
+  ) {
+    const tokenData = await loadUserToken()
+    if (tokenData.status === "no-token") {
+      await destroySession(session)
+      return response
+    }
+  }
+
   if (uniloginAccessTokenHasExpired(session)) {
     destroySession(session)
     return response

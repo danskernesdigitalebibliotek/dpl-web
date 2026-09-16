@@ -227,6 +227,9 @@ Go makes to read the token. When it expires:
   token from the CMS means no session. A 401 or 403 counts as "no token";
   only a transport failure counts as an error, and an error never ends a
   session.
+- On top-level navigations the middleware re-asks the CMS even for a session
+  that still looks live, since Drupal may have retired it while the services
+  keep accepting the token.
 - The middleware destroys the expired Go session and lets the request
   continue as anonymous. The Adgangsplatformen SSO session is left alone, so
   logging in again is a round trip the user barely notices.

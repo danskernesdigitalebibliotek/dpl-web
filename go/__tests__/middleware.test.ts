@@ -405,6 +405,61 @@ describe("Middleware", () => {
     expect(destroySessionSpy).toHaveResolvedTimes(1)
   })
 
+  // Drupal can retire the session while the token is still accepted by the
+  // services, so the CMS is the only party that knows it is over.
+  const setUpLoggedInRevalidation = (tokenResult: unknown) => {
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
+      Promise.resolve(sessions.adgangsplatformenSessionThatDoesNotNeedToBeRefreshed)
+    )
+    vi.spyOn(sessionFunctions, "getDplCmsSessionCookie").mockResolvedValue(
+      Promise.resolve(fakeDrupalSessionRequestCookie)
+    )
+    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
+      Promise.resolve({
+        getAll: vi.fn(() => [fakeDrupalSessionRequestCookie]),
+        get: vi.fn(() => fakeDrupalSessionRequestCookie),
+      })
+    )
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(Promise.resolve(tokenResult))
+
+    const request = getNextRequestWithLibraryTokenCookie()
+    request.headers.set("sec-fetch-dest", "document")
+    return request
+  }
+
+  it("destroys a logged in Adgangsplatformen session when the CMS has no token for it", async () => {
+    const request = setUpLoggedInRevalidation({ status: "no-token" })
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
+
+    await middleware(request)
+
+    expect(destroySessionSpy).toHaveResolvedTimes(1)
+  })
+
+  it("keeps a logged in Adgangsplatformen session when the CMS cannot be reached", async () => {
+    const request = setUpLoggedInRevalidation({ status: "error" })
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
+
+    await middleware(request)
+
+    expect(destroySessionSpy).toHaveBeenCalledTimes(0)
+  })
+
+  // One call per page view, not per prefetch.
+  it("does not revalidate a logged in session on non-document requests", async () => {
+    const request = setUpLoggedInRevalidation({ status: "no-token" })
+    request.headers.set("sec-fetch-dest", "empty")
+    const loadUserTokenSpy = vi.spyOn(userTokenFunctions, "loadUserToken")
+
+    await middleware(request)
+
+    expect(loadUserTokenSpy).toHaveBeenCalledTimes(0)
+  })
+
   it("removes PKCE code verifier from session if it exists", async () => {
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
       Promise.resolve({
