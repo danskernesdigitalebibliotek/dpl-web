@@ -47,6 +47,13 @@ if ! site_is_installed; then
   exit 1
 fi
 
+# Bring the database in sync with the codebase, import configuration and run
+# deploy hooks. A snapshot-restored database is at the schema of the site the
+# snapshot was taken from, so this has to run before anything else touches the
+# site. This mirrors .lagoon.yml, which also deploys before importing
+# translations.
+drush deploy -y
+
 # Ensure translation path is available.
 # This is prepared in locale_install() so rerun it.
 drush php:eval "\Drupal::moduleHandler()->loadInclude('locale', 'install'); locale_install()"
@@ -59,9 +66,6 @@ else
   drush locale-update
   drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
 fi
-
-# Run deploy hooks.
-drush deploy -y
 
 # Clear external caches to ensure we have a pristine setup.
 drush cache:rebuild-external -y

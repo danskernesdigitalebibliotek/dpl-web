@@ -33,14 +33,18 @@ module.exports = (_env, argv) => {
   ];
 
   if (process.env.VERSION_FILE_NAME && process.env.VERSION_FILE_VERSION) {
-    const currentTime = new Date();
     plugins.push(
       new VersionFile({
         template: path.join(__dirname, ".version.json.ejs"),
-        outputFile: path.join(__dirname, "dist/version.json"),
-        name: process.env.VERSION_FILE_NAME,
-        version: process.env.VERSION_FILE_VERSION,
-        currentTime, // Required
+        // Relative to webpack's output.path (dist). The plugin rejects
+        // absolute paths.
+        outputFile: "version.json",
+        // Only `package`, `buildTime` and `extras` are exposed to the
+        // template, so our own values have to travel in `extras`.
+        extras: {
+          name: process.env.VERSION_FILE_NAME,
+          version: process.env.VERSION_FILE_VERSION
+        },
         // We intentionally do not use any information from package.json but
         // VersionFile requires that we provide it.
         packageFile: path.join(__dirname, "package.json")
