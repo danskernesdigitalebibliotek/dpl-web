@@ -5,7 +5,24 @@ import { GetDplCmsPublicConfigurationQuery } from "@/lib/graphql/generated/dpl-c
 
 import defaultGoResponse from "./factory-parts/defaultGoResponse"
 
-export default Factory.define<GetDplCmsPublicConfigurationQuery>(() => {
+// A complete Biblio configuration for specs that switch the adapter on —
+// useBiblioAdapter() requires flag, base url and SDK keys all present.
+export const biblioEnabledConfig: TDplCmsPublicConfig["biblio"] = {
+  enabled: true,
+  baseUrl: "https://biblio-adapter.test",
+  sdk: {
+    applicationId: "test-app",
+    firebaseApiKey: "test-firebase-api-key",
+    firebaseProjectId: "test-firebase-project",
+    firebaseAppId: "test-firebase-app",
+    readerApiKey: "test-reader-api-key",
+  },
+}
+
+export default Factory.define<
+  GetDplCmsPublicConfigurationQuery,
+  { appUrl?: string; biblio?: TDplCmsPublicConfig["biblio"] }
+>(({ transientParams }) => {
   return {
     go: defaultGoResponse.build(),
     goConfiguration: {
@@ -28,6 +45,7 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery>(() => {
           municipalityId: "101",
         },
         blacklistedAvailabilityBranches: [],
+        biblio: transientParams.biblio ?? { enabled: false, baseUrl: null, sdk: null },
       } satisfies TDplCmsPublicConfig,
     },
   }
