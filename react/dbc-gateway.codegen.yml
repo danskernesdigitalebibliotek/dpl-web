@@ -1,5 +1,8 @@
 overwrite: true
-schema: "../schemas/graphql/dbc-fbi.temp-next.graphql"
+schema:
+  - "../schemas/graphql/dbc-fbi.graphql"
+  # Upstream removed submitOrder; see that file's header for why it exists.
+  - "../schemas/graphql/dbc-fbi.local-submit-order.graphql"
 documents: "src/**/*.graphql"
 generates:
   src/core/dbc-gateway/generated/graphql.ts:

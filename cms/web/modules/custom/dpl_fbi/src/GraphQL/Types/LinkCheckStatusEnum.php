@@ -4,10 +4,10 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
 
 class LinkCheckStatusEnum
 {
-    public const OK = 'OK';
     public const BROKEN = 'BROKEN';
-    public const INVALID = 'INVALID';
     public const GONE = 'GONE';
+    public const INVALID = 'INVALID';
+    public const OK = 'OK';
 
     public static function endpoint(): string
     {

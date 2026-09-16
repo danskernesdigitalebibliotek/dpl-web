@@ -4,97 +4,97 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
 
 /**
  * @property string $pid
- * @property string|null $userName
- * @property string|null $userMail
- * @property string|null $publicationTitle
- * @property string|null $publicationDateOfComponent
- * @property string|null $publicationYearOfComponent
- * @property string|null $volumeOfComponent
  * @property string|null $authorOfComponent
- * @property string|null $titleOfComponent
- * @property string|null $pagesOfComponent
- * @property string|null $userInterestDate
- * @property string|null $pickUpAgencySubdivision
  * @property string|null $issueOfComponent
  * @property string|null $openURL
+ * @property string|null $pagesOfComponent
+ * @property string|null $pickUpAgencySubdivision
+ * @property string|null $publicationDateOfComponent
+ * @property string|null $publicationTitle
+ * @property string|null $publicationYearOfComponent
+ * @property string|null $titleOfComponent
+ * @property string|null $userInterestDate
+ * @property string|null $userMail
+ * @property string|null $userName
+ * @property string|null $volumeOfComponent
  */
 class CopyRequestInput extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $pid
-     * @param string|null $userName
-     * @param string|null $userMail
-     * @param string|null $publicationTitle
-     * @param string|null $publicationDateOfComponent
-     * @param string|null $publicationYearOfComponent
-     * @param string|null $volumeOfComponent
      * @param string|null $authorOfComponent
-     * @param string|null $titleOfComponent
-     * @param string|null $pagesOfComponent
-     * @param string|null $userInterestDate
-     * @param string|null $pickUpAgencySubdivision
      * @param string|null $issueOfComponent
      * @param string|null $openURL
+     * @param string|null $pagesOfComponent
+     * @param string|null $pickUpAgencySubdivision
+     * @param string|null $publicationDateOfComponent
+     * @param string|null $publicationTitle
+     * @param string|null $publicationYearOfComponent
+     * @param string|null $titleOfComponent
+     * @param string|null $userInterestDate
+     * @param string|null $userMail
+     * @param string|null $userName
+     * @param string|null $volumeOfComponent
      */
     public static function make(
         $pid,
-        $userName = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $userMail = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $publicationTitle = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $publicationDateOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $publicationYearOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $volumeOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $authorOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $titleOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $pagesOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $userInterestDate = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $pickUpAgencySubdivision = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $issueOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $openURL = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $pagesOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $pickUpAgencySubdivision = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $publicationDateOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $publicationTitle = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $publicationYearOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $titleOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $userInterestDate = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $userMail = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $userName = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $volumeOfComponent = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
     ): self {
         $instance = new self;
 
         if ($pid !== self::UNDEFINED) {
             $instance->__set('pid', $pid);
         }
-        if ($userName !== self::UNDEFINED) {
-            $instance->__set('userName', $userName);
-        }
-        if ($userMail !== self::UNDEFINED) {
-            $instance->__set('userMail', $userMail);
-        }
-        if ($publicationTitle !== self::UNDEFINED) {
-            $instance->__set('publicationTitle', $publicationTitle);
-        }
-        if ($publicationDateOfComponent !== self::UNDEFINED) {
-            $instance->__set('publicationDateOfComponent', $publicationDateOfComponent);
-        }
-        if ($publicationYearOfComponent !== self::UNDEFINED) {
-            $instance->__set('publicationYearOfComponent', $publicationYearOfComponent);
-        }
-        if ($volumeOfComponent !== self::UNDEFINED) {
-            $instance->__set('volumeOfComponent', $volumeOfComponent);
-        }
         if ($authorOfComponent !== self::UNDEFINED) {
             $instance->__set('authorOfComponent', $authorOfComponent);
-        }
-        if ($titleOfComponent !== self::UNDEFINED) {
-            $instance->__set('titleOfComponent', $titleOfComponent);
-        }
-        if ($pagesOfComponent !== self::UNDEFINED) {
-            $instance->__set('pagesOfComponent', $pagesOfComponent);
-        }
-        if ($userInterestDate !== self::UNDEFINED) {
-            $instance->__set('userInterestDate', $userInterestDate);
-        }
-        if ($pickUpAgencySubdivision !== self::UNDEFINED) {
-            $instance->__set('pickUpAgencySubdivision', $pickUpAgencySubdivision);
         }
         if ($issueOfComponent !== self::UNDEFINED) {
             $instance->__set('issueOfComponent', $issueOfComponent);
         }
         if ($openURL !== self::UNDEFINED) {
             $instance->__set('openURL', $openURL);
+        }
+        if ($pagesOfComponent !== self::UNDEFINED) {
+            $instance->__set('pagesOfComponent', $pagesOfComponent);
+        }
+        if ($pickUpAgencySubdivision !== self::UNDEFINED) {
+            $instance->__set('pickUpAgencySubdivision', $pickUpAgencySubdivision);
+        }
+        if ($publicationDateOfComponent !== self::UNDEFINED) {
+            $instance->__set('publicationDateOfComponent', $publicationDateOfComponent);
+        }
+        if ($publicationTitle !== self::UNDEFINED) {
+            $instance->__set('publicationTitle', $publicationTitle);
+        }
+        if ($publicationYearOfComponent !== self::UNDEFINED) {
+            $instance->__set('publicationYearOfComponent', $publicationYearOfComponent);
+        }
+        if ($titleOfComponent !== self::UNDEFINED) {
+            $instance->__set('titleOfComponent', $titleOfComponent);
+        }
+        if ($userInterestDate !== self::UNDEFINED) {
+            $instance->__set('userInterestDate', $userInterestDate);
+        }
+        if ($userMail !== self::UNDEFINED) {
+            $instance->__set('userMail', $userMail);
+        }
+        if ($userName !== self::UNDEFINED) {
+            $instance->__set('userName', $userName);
+        }
+        if ($volumeOfComponent !== self::UNDEFINED) {
+            $instance->__set('volumeOfComponent', $volumeOfComponent);
         }
 
         return $instance;
@@ -107,19 +107,19 @@ class CopyRequestInput extends \Spawnia\Sailor\ObjectLike
 
         return $converters ??= [
             'pid' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'userName' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'userMail' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'publicationTitle' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'publicationDateOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'publicationYearOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'volumeOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'authorOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'titleOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'pagesOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'userInterestDate' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'pickUpAgencySubdivision' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'issueOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'openURL' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'pagesOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'pickUpAgencySubdivision' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'publicationDateOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'publicationTitle' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'publicationYearOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'titleOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'userInterestDate' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'userMail' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'userName' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
+            'volumeOfComponent' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }
 

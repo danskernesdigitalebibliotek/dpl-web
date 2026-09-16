@@ -4,8 +4,8 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
 
 class HoldingsStatusEnum
 {
-    public const ONSHELF = 'ONSHELF';
     public const ONLOAN = 'ONLOAN';
+    public const ONSHELF = 'ONSHELF';
 
     public static function endpoint(): string
     {

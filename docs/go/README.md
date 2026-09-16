@@ -175,7 +175,7 @@ task codegen:pubhub           # SOAP — PubHub
 task codegen:unilogin         # SOAP — Unilogin
 ```
 
-Generated output lives in `lib/rest/` (REST), `lib/graphql/generated/` (GraphQL), and `lib/soap/` (SOAP). To pick up upstream schema changes, refresh the relevant contract in `/schemas` first (`task -d ../schemas refresh:dpl-cms-graphql`, `:dbc-fbi:fbcms-go`, `:material-list`, …) and then re-run codegen here.
+Generated output lives in `lib/rest/` (REST), `lib/graphql/generated/` (GraphQL), and `lib/soap/` (SOAP). To pick up upstream schema changes, refresh the relevant contract in `/schemas` first (`task -d ../schemas refresh:dbc-fbi`, `:material-list`, …) and then re-run codegen here.
 
 ### Custom types
 

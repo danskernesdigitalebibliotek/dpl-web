@@ -68,7 +68,7 @@ export const argTypes = {
     table: {
       type: { summary: "text" },
       defaultValue: {
-        summary: "https://temp.fbi-api.dbc.dk/next-present/graphql"
+        summary: "https://fbi-api.dbc.dk/next-present/graphql"
       }
     }
   },
@@ -78,7 +78,7 @@ export const argTypes = {
     table: {
       type: { summary: "text" },
       defaultValue: {
-        summary: "https://temp.fbi-api.dbc.dk/next/graphql"
+        summary: "https://fbi-api.dbc.dk/next/graphql"
       }
     }
   },
@@ -88,7 +88,7 @@ export const argTypes = {
     table: {
       type: { summary: "text" },
       defaultValue: {
-        summary: "https://temp.fbi-api.dbc.dk/next-present/graphql"
+        summary: "https://fbi-api.dbc.dk/next-present/graphql"
       }
     }
   },
@@ -114,9 +114,8 @@ export default {
   [serviceUrlKeys.dplCms]: readEnv("CMS_BASEURL") ?? "https://dpl-cms.local",
   [serviceUrlKeys.cover]: "https://cover.dandigbib.org",
   [serviceUrlKeys.materialList]: "https://prod.materiallist.dandigbib.org",
-  [serviceUrlKeys.fbi]: "https://temp.fbi-api.dbc.dk/next-present/graphql",
-  [serviceUrlKeys.fbiLocal]: "https://temp.fbi-api.dbc.dk/next/graphql",
-  [serviceUrlKeys.fbiGlobal]:
-    "https://temp.fbi-api.dbc.dk/next-present/graphql",
+  [serviceUrlKeys.fbi]: "https://fbi-api.dbc.dk/next-present/graphql",
+  [serviceUrlKeys.fbiLocal]: "https://fbi-api.dbc.dk/next/graphql",
+  [serviceUrlKeys.fbiGlobal]: "https://fbi-api.dbc.dk/next-present/graphql",
   userinfoUrl: "https://login.bib.dk/userinfo"
 };

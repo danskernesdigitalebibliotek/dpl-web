@@ -14,11 +14,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  /**
-   * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
-   * `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO
-   * 8601 standard for representation of dates and times using the Gregorian
-   */
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: { input: unknown; output: unknown; }
   /** An integer in the range from 1 to 100 */
   PaginationLimitScalar: { input: unknown; output: unknown; }
@@ -35,7 +31,7 @@ export type AccessTypeCodeEnum =
   | 'PHYSICAL'
   | 'UNKNOWN';
 
-export type AccessUnion = AccessUrl | DigitalArticleService | Ereol | InfomediaService | InterLibraryLoan | RetrieverService;
+export type AccessUnion = AccessUrl | DigitalArticleService | Ereol | InfomediaService | InterLibraryLoan | Publizon | RetrieverService;
 
 export type AccessUrl = {
   __typename?: 'AccessUrl';
@@ -45,6 +41,8 @@ export type AccessUrl = {
   note?: Maybe<Scalars['String']['output']>;
   /** The origin, e.g. "DBC Webarkiv" */
   origin: Scalars['String']['output'];
+  /** Proxy/login url for the resource when relevant. */
+  proxyUrl?: Maybe<Scalars['String']['output']>;
   /** Status from linkcheck */
   status: LinkStatusEnum;
   /** The type of content that can be found at this URL */
@@ -65,13 +63,10 @@ export type AccessUrlTypeEnum =
 
 export type Audience = {
   __typename?: 'Audience';
-  /**
-   * PEGI age rating for games
-   * @deprecated Use 'Audience.pegi' instead expires: 01/06-2025
-   */
-  PEGI?: Maybe<Pegi>;
   /** Range of numbers with either beginning of range or end of range or both e.g. 6-10, 1980-1999 */
   ages: Array<Range>;
+  /** Appropriate audience for this manifestation */
+  audienceGeneral: Array<AudienceGeneral>;
   /** Is this material for children or adults */
   childrenOrAdults: Array<ChildOrAdult>;
   /** Appropriate audience for this manifestation */
@@ -92,12 +87,40 @@ export type Audience = {
   players?: Maybe<Players>;
   /** Primary target audience for this manifestation */
   primaryTarget: Array<Scalars['String']['output']>;
-  /**
-   * Is this material for use in schools (folkeskole/ungdomsuddannelse) or is this
-   * material for use in schools by the teacher (folkeskole only)
-   */
+  /** Is this material for use in schools (folkeskole/ungdomsuddannelse) or is this material for use in schools by the teacher (folkeskole only) */
   schoolUse: Array<SchoolUse>;
 };
+
+/** A single general audience object containing a subject word and a possible associated language */
+export type AudienceGeneral = {
+  __typename?: 'AudienceGeneral';
+  /** Appropriate audience for this manifestation */
+  display?: Maybe<Scalars['String']['output']>;
+  /** The associated language of the audience term, if applicable */
+  language?: Maybe<Language>;
+};
+
+export type BibliographicCategory = {
+  __typename?: 'BibliographicCategory';
+  /** Code for bibliographic category */
+  code?: Maybe<Scalars['String']['output']>;
+  /** The code as displayable text */
+  display?: Maybe<Scalars['String']['output']>;
+};
+
+export type CsHoldingsStatusEnum =
+  /** Item is discarded by the branch */
+  | 'DISCARDED'
+  /** Item is lost by the branch and not available */
+  | 'LOST'
+  /** Item is not for loan by the branch */
+  | 'NOTFORLOAN'
+  /** Item is on loan and not available */
+  | 'ONLOAN'
+  /** Item is on order by the branch */
+  | 'ONORDER'
+  /** Item is physically available at the branch */
+  | 'ONSHELF';
 
 export type CatalogueCodes = {
   __typename?: 'CatalogueCodes';
@@ -148,6 +171,12 @@ export type Classification = {
   system: Scalars['String']['output'];
 };
 
+/** CQL based filters. Mutually exclusive with ComplexSearchFiltersInput. */
+export type ComplexSearchCqlFiltersInput = {
+  /** A CQL expression used to filter the search result. */
+  cqlfilterquery?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** The complete facet in response */
 export type ComplexSearchFacetResponse = {
   __typename?: 'ComplexSearchFacetResponse';
@@ -176,6 +205,7 @@ export type ComplexSearchFacetsEnum =
   | 'CREATORCONTRIBUTOR'
   | 'CREATORCONTRIBUTORFUNCTION'
   | 'CREATORFUNCTION'
+  | 'DATEFIRSTEDITION'
   | 'FICTIONALCHARACTER'
   | 'FILMNATIONALITY'
   | 'GAMEPLATFORM'
@@ -183,6 +213,7 @@ export type ComplexSearchFacetsEnum =
   | 'GENERALMATERIALTYPE'
   | 'GENREANDFORM'
   | 'HOSTPUBLICATION'
+  | 'HOSTPUBLICATIONTYPE'
   | 'INSTRUMENT'
   | 'ISSUE'
   | 'LANGUAGE'
@@ -221,20 +252,32 @@ export type ComplexSearchFiltersInput = {
   branch?: InputMaybe<Array<Scalars['String']['input']>>;
   /** BranchId. */
   branchId?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** The circulationrule of the item */
+  circulationRule?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Overall location in library (eg. Voksne). */
   department?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Date of first accession */
   firstAccessionDate?: InputMaybe<Scalars['String']['input']>;
+  /** The floatgroup of the item */
+  floatGroup?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Id of publishing issue. */
   issueId?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Local id of the item. */
   itemId?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** The last loan date of the item */
+  lastloandate?: InputMaybe<Scalars['String']['input']>;
+  /** The loan restriction of the item, g, a or nothing */
+  loanrestriction?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Where is the book physically located  (eg. skønlitteratur). */
   location?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** The section which the item belongs to */
+  section?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Onloan or OnShelf. */
-  status?: InputMaybe<Array<HoldingsStatusEnum>>;
+  status?: InputMaybe<Array<CsHoldingsStatusEnum>>;
   /** More specific location (eg. Fantasy). */
   sublocation?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Boolean to denote whether to include or exclude online holdingsitems */
+  useOnlineHoldings?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ComplexSearchIndex = {
@@ -316,16 +359,9 @@ export type Complexity = {
 
 export type ContentEntry = {
   __typename?: 'ContentEntry';
-  /**
-   * Additional 'authors' (lyricists, arrangers, performers/soloists etc.), quoted
-   * as strings (including possible author's statement) from the record
-   */
+  /** Additional 'authors' (lyricists, arrangers, performers/soloists etc.), quoted as strings (including possible author's statement) from the record */
   contributors?: Maybe<Array<Scalars['String']['output']>>;
-  /**
-   * Main creator(s) of the entry i.e. composer (classical music), artist/band
-   * (rhythmic music), author (fiction, articles). For music and sheet music always
-   * only 1 creator, for articles and fiction possibly more than 1
-   */
+  /** Main creator(s) of the entry i.e. composer (classical music), artist/band (rhythmic music), author (fiction, articles). For music and sheet music always only 1 creator, for articles and fiction possibly more than 1 */
   creators?: Maybe<ContentEntryCreators>;
   /** Playing time for music tracks, quoted from the record */
   playingTime?: Maybe<Scalars['String']['output']>;
@@ -351,11 +387,7 @@ export type ContentEntryTitle = {
 
 export type ContentSublevel = {
   __typename?: 'ContentSublevel';
-  /**
-   * Additional 'authors' (lyricists, arrangers, performers/soloists etc.) related
-   * to the title on sublevel 1, quoted as strings (including possible author's
-   * statement) from the record
-   */
+  /** Additional 'authors' (lyricists, arrangers, performers/soloists etc.) related to the title on sublevel 1, quoted as strings (including possible author's statement) from the record */
   contributors?: Maybe<Array<Scalars['String']['output']>>;
   /** Playing time for music tracks */
   playingTime?: Maybe<Scalars['String']['output']>;
@@ -367,11 +399,7 @@ export type ContentSublevel = {
 
 export type ContentSublevelLast = {
   __typename?: 'ContentSublevelLast';
-  /**
-   * Additional 'authors' (lyricists, arrangers, performers/soloists etc.) related
-   * to the title on sublevel 1, quoted as strings (including possible author's
-   * statement) from the record
-   */
+  /** Additional 'authors' (lyricists, arrangers, performers/soloists etc.) related to the title on sublevel 1, quoted as strings (including possible author's statement) from the record */
   contributors?: Maybe<Array<Scalars['String']['output']>>;
   /** Playing time for music tracks */
   playingTime?: Maybe<Scalars['String']['output']>;
@@ -385,10 +413,7 @@ export type ContentsEntity = {
   entries?: Maybe<Array<ContentEntry>>;
   /** Heading for the contents of this entity */
   heading: Scalars['String']['output'];
-  /**
-   * Contents text note quoted as it is from the marc field. Used for
-   * non-machine-decipherable content notes (un)formatted in only 1 subfield)
-   */
+  /** Contents text note quoted as it is from the marc field. Used for non-machine-decipherable content notes (un)formatted in only 1 subfield) */
   raw?: Maybe<Scalars['String']['output']>;
   /** ENUM for type of content entries (music tracks, articles, fiction etc.) in this entity */
   type: ContentsEntityEnum;
@@ -442,6 +467,11 @@ export type CopyRequestStatusEnum =
 
 export type Corporation = CreatorInterface & SubjectInterface & {
   __typename?: 'Corporation';
+  /**
+   * True when the corporation is followed by 'm.fl.' (and others) in the publication,
+   * meaning that additional unnamed corporations contributed to this creation
+   */
+  andOthers?: Maybe<Scalars['Boolean']['output']>;
   /** Added information about the corporation, like M. Folmer Andersen (firma) */
   attributeToName?: Maybe<Scalars['String']['output']>;
   /** The full corporation or conference name */
@@ -463,15 +493,8 @@ export type Corporation = CreatorInterface & SubjectInterface & {
   type: SubjectTypeEnum;
   /** VIAF identifier of the creator */
   viafid?: Maybe<Scalars['String']['output']>;
-  /** Additional data from Wikidata */
-  wikidata?: Maybe<Wikidata>;
   /** Year of the conference */
   year?: Maybe<Scalars['String']['output']>;
-};
-
-
-export type CorporationWikidataArgs = {
-  language?: InputMaybe<LanguageCodeEnum>;
 };
 
 export type Cover = {
@@ -497,18 +520,12 @@ export type CoverDetails = {
   width?: Maybe<Scalars['Int']['output']>;
 };
 
-export type CreatorImage = {
-  __typename?: 'CreatorImage';
-  attributionText?: Maybe<Scalars['String']['output']>;
-  /** Url to creator image. Width 1800px */
-  large?: Maybe<Scalars['String']['output']>;
-  /** Url to creator image. Width 1200px */
-  medium?: Maybe<Scalars['String']['output']>;
-  /** Url to creator image. Width 800px */
-  small?: Maybe<Scalars['String']['output']>;
-};
-
 export type CreatorInterface = {
+  /**
+   * True when the creator is followed by 'm.fl.' (and others) in the publication,
+   * meaning that additional unnamed creators contributed to this creation
+   */
+  andOthers?: Maybe<Scalars['Boolean']['output']>;
   /** Name of the creator */
   display: Scalars['String']['output'];
   /** Name of the creator which can be used to sort after */
@@ -563,7 +580,10 @@ export type DigitalArticleService = {
 
 export type Edition = {
   __typename?: 'Edition';
-  /** Quotation of contributor statements related to the edition */
+  /**
+   * Quotation of contributor statements related to the edition
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   contributors: Array<Scalars['String']['output']>;
   /** The edition number and name */
   edition?: Maybe<Scalars['String']['output']>;
@@ -571,10 +591,7 @@ export type Edition = {
   note?: Maybe<Scalars['String']['output']>;
   /** A year as displayable text and as number */
   publicationYear?: Maybe<PublicationYear>;
-  /**
-   * Properties 'edition', 'contributorsToEdition' and 'publicationYear' as one
-   * string, e.g.: '3. udgave, revideret af Hugin Eide, 2005'
-   */
+  /** Properties 'edition', 'contributorsToEdition' and 'publicationYear' as one string, e.g.: '3. udgave, revideret af Hugin Eide, 2005' */
   summary: Scalars['String']['output'];
 };
 
@@ -668,10 +685,7 @@ export type FictionNonfiction = {
   __typename?: 'FictionNonfiction';
   /** Binary code fiction/nonfiction used for filtering */
   code: FictionNonfictionCodeEnum;
-  /**
-   * Displayable overall category/genre. In Danish skønlitteratur/faglitteratur
-   * for literature, fiktion/nonfiktion for other types.
-   */
+  /** Displayable overall category/genre. In Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for other types. */
   display: Scalars['String']['output'];
 };
 
@@ -704,6 +718,14 @@ export type GeneralMaterialTypeCodeEnum =
   | 'PODCASTS'
   | 'SHEET_MUSIC'
   | 'TV_SERIES';
+
+export type GenreForm = {
+  __typename?: 'GenreForm';
+  /** The genre/form term */
+  display?: Maybe<Scalars['String']['output']>;
+  /** Language of the genre/form term, if applicable */
+  language?: Maybe<Language>;
+};
 
 export type HoldingsStatusEnum =
   /** Holding is on loan */
@@ -760,6 +782,14 @@ export type IdentifierTypeEnum =
   | 'PUBLIZON'
   | 'UPC'
   | 'URI';
+
+export type IllAutomationMaterialGroup = {
+  __typename?: 'IllAutomationMaterialGroup';
+  /** The material group (1-9) */
+  id: Scalars['Int']['output'];
+  /** The name of the material group */
+  name: Scalars['String']['output'];
+};
 
 export type InfomediaArticle = {
   __typename?: 'InfomediaArticle';
@@ -831,17 +861,11 @@ export type LanguageCodeEnum =
 
 export type Languages = {
   __typename?: 'Languages';
-  /**
-   * Summary/abstract languages of this manifestation, if the manifestation
-   * contains short summaries of the content in another language
-   */
+  /** Summary/abstract languages of this manifestation, if the manifestation contains short summaries of the content in another language */
   abstract?: Maybe<Array<Language>>;
   /** Main language of this manifestation */
   main?: Maybe<Array<Language>>;
-  /**
-   * Notes of the languages that describe subtitles, spoken/written (original,
-   * dubbed/synchonized), visual interpretation, parallel (notes are written in
-   */
+  /** Notes of the languages that describe subtitles, spoken/written (original, dubbed/synchonized), visual interpretation, parallel (notes are written in Danish) */
   notes?: Maybe<Array<Scalars['String']['output']>>;
   /** Original language of this manifestation */
   original?: Maybe<Array<Language>>;
@@ -910,16 +934,18 @@ export type Manifestation = {
   accessTypes: Array<AccessType>;
   /** Different kinds of definitions of appropriate audience for this manifestation */
   audience?: Maybe<Audience>;
+  /** Code for bibliographic category */
+  bibliographicCategory?: Maybe<BibliographicCategory>;
   /** CatalogueCodes divided in codes from the national bibliography and other codes */
   catalogueCodes: CatalogueCodes;
-  /** The publication status of a catalogued manifestation. */
+  /**
+   * The publication status of a catalogued manifestation.
+   * @deprecated Use 'Manifestation.materialSelection.cataloguedPublicationStatus' instead expires: 05/12-2026
+   */
   cataloguedPublicationStatus?: Maybe<CataloguedPublicationStatus>;
   /** Classification codes for this manifestation from any classification system */
   classifications: Array<Classification>;
-  /**
-   * Content title entries with possible creators, contributors and playing time
-   * for music tracks, sheet music titles, articles, poems, short stories etc.
-   */
+  /** Content title entries with possible creators, contributors and playing time for music tracks, sheet music titles, articles, poems, short stories etc. */
   contents?: Maybe<Array<ContentsEntity>>;
   /** Contributors to the manifestation, actors, illustrators etc */
   contributors: Array<CreatorInterface>;
@@ -935,18 +961,18 @@ export type Manifestation = {
   dateFirstEdition?: Maybe<PublicationYear>;
   /** Edition details for this manifestation */
   edition?: Maybe<Edition>;
-  /**
-   * Overall literary category/genre of this manifestation. e.g. fiction or
-   * nonfiction. In Danish skønlitteratur/faglitteratur for literature,
-   * fiktion/nonfiktion for other types.
-   */
+  /** Overall literary category/genre of this manifestation. e.g. fiction or nonfiction. In Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for other types. */
   fictionNonfiction?: Maybe<FictionNonfiction>;
   /** The genre, (literary) form, type etc. of this manifestation */
   genreAndForm: Array<Scalars['String']['output']>;
+  /** The genre and (literary) form of this manifestation */
+  genreForm: Array<GenreForm>;
   /** Details about the host publications of this manifestation */
   hostPublication?: Maybe<HostPublication>;
   /** Identifiers for this manifestation - often used for search indexes */
   identifiers: Array<Identifier>;
+  /** automation material group info */
+  illAutomationMaterialGroup?: Maybe<IllAutomationMaterialGroup>;
   /** Languages in this manifestation */
   languages?: Maybe<Languages>;
   /** Details about the latest printing of this manifestation */
@@ -954,48 +980,61 @@ export type Manifestation = {
   /** Identification of the local id of this manifestation */
   localId?: Maybe<Scalars['String']['output']>;
   /**
-   * Tracks on music album, sheet music content, or articles/short stories etc. in this manifestation
-   * @deprecated Use 'Manifestation.contents' instead expires: 01/11-2025
+   * Metadata related to material selection, including publication status,
+   * selection group, and librarian assessment.
    */
-  manifestationParts?: Maybe<ManifestationParts>;
+  materialSelection?: Maybe<MaterialSelection>;
   /** The type of material of the manifestation based on bibliotek.dk types */
   materialTypes: Array<MaterialType>;
+  /** Information on music shelving */
+  musicShelf?: Maybe<MusicShelf>;
   /** Notes about the manifestation */
   notes: Array<Note>;
   /** The work that this manifestation is part of */
   ownerWork: Work;
+  /** Code for type of periodical */
+  periodicalType?: Maybe<PeriodicalType>;
   /** Physical description  of this manifestation like extent (pages/minutes), illustrations etc. */
   physicalDescription?: Maybe<PhysicalUnitDescription>;
   /** Unique identification of the manifestation e.g 870970-basis:54029519 */
   pid: Scalars['String']['output'];
+  /** The city or place where the item was published */
+  placeOfPublication: Array<Scalars['String']['output']>;
   /** Publisher of this manifestion */
   publisher: Array<Scalars['String']['output']>;
   /** The creation date of the record describing this manifestation in the format YYYYMMDD */
   recordCreationDate: Scalars['String']['output'];
-  /** Notes about relations to this book/periodical/journal, - like previous names or related journals */
+  /**
+   * Notes about relations to this book/periodical/journal, - like previous names or related journals
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   relatedPublications: Array<RelatedPublication>;
   /** Relations to other manifestations */
   relations: Relations;
   /** Some review data, if this manifestation is a review */
   review?: Maybe<ManifestationReview>;
+  /**
+   * Bibliographic reference data for this manifestation formatted as RIS.
+   * When fetching RIS for multiple manifestations, each record is returned on the
+   * manifestation. To combine them into a single RIS file, join the records with a newline.
+   */
+  ris?: Maybe<Scalars['String']['output']>;
   /** Series for this manifestation */
   series: Array<Series>;
   /** Material that can be identified as sheet music */
   sheetMusicCategories?: Maybe<SheetMusicCategory>;
+  /** The creator of the manifestation that the material can be located under on the shelf */
+  shelfCreator?: Maybe<ShelfCreator>;
   /** Information about on which shelf in the library this manifestation can be found */
   shelfmark?: Maybe<Shelfmark>;
-  /**
-   * The source of the manifestation, e.g. own library catalogue
-   * (Bibliotekskatalog) or online source e.g. Filmstriben, Ebook Central, eReolen
-   */
+  /** The records type of sound recording - excluding music recordings and its material */
+  soundRecording?: Maybe<SoundRecording>;
+  /** The source of the manifestation, e.g. own library catalogue (Bibliotekskatalog) or online source e.g. Filmstriben, Ebook Central, eReolen Global etc. */
   source: Array<Scalars['String']['output']>;
+  /** Code for comics, children's picture books and drama */
+  specialMaterialGroup?: Maybe<SpecialMaterialGroup>;
   /** Subjects for this manifestation */
   subjects: SubjectContainer;
-  /**
-   * Quotation of the manifestation's table of contents or a similar content list
-   * @deprecated Use 'Manifestation.contents' instead expires: 01/11-2025
-   */
-  tableOfContents?: Maybe<TableOfContent>;
   /** Different kinds of titles for this work */
   titles: ManifestationTitles;
   /**
@@ -1016,43 +1055,6 @@ export type Manifestation = {
   workYear?: Maybe<PublicationYear>;
 };
 
-export type ManifestationPart = {
-  __typename?: 'ManifestationPart';
-  /** Classification of this entry (music track or literary analysis) */
-  classifications: Array<Classification>;
-  /** Contributors from description - additional contributor to this entry */
-  contributorsFromDescription: Array<Scalars['String']['output']>;
-  /** The creator of the music track or literary analysis */
-  creators: Array<CreatorInterface>;
-  /**
-   * Additional creator or contributor to this entry (music track or literary
-   * analysis) as described on the publication. E.g. 'arr.: H. Cornell'
-   */
-  creatorsFromDescription: Array<Scalars['String']['output']>;
-  /** The playing time for this specific part (i.e. the duration of a music track) */
-  playingTime?: Maybe<Scalars['String']['output']>;
-  /** Subjects of this entry (music track or literary analysis) */
-  subjects?: Maybe<Array<SubjectInterface>>;
-  /** The title of the entry (music track or title of a literary analysis) */
-  title: Scalars['String']['output'];
-};
-
-export type ManifestationPartTypeEnum =
-  | 'MUSIC_TRACKS'
-  | 'NOT_SPECIFIED'
-  | 'PARTS_OF_BOOK'
-  | 'SHEET_MUSIC_CONTENT';
-
-export type ManifestationParts = {
-  __typename?: 'ManifestationParts';
-  /** Heading for the music content note */
-  heading?: Maybe<Scalars['String']['output']>;
-  /** The creator and title etc of the individual parts */
-  parts: Array<ManifestationPart>;
-  /** The type of manifestation parts, is this music tracks, book parts etc. */
-  type: ManifestationPartTypeEnum;
-};
-
 export type ManifestationReview = {
   __typename?: 'ManifestationReview';
   rating?: Maybe<Scalars['String']['output']>;
@@ -1065,30 +1067,27 @@ export type ManifestationTitles = {
   alternative: Array<Scalars['String']['output']>;
   /** The full title(s) of the manifestation including subtitles etc */
   full: Array<Scalars['String']['output']>;
-  /**
-   * Information that distinguishes this manifestation from a similar manifestation
-   * with same title, e.g. 'illustrated by Ted Kirby'
-   */
+  /** Information that distinguishes this manifestation from a similar manifestation with same title, e.g. 'illustrated by Ted Kirby' */
   identifyingAddition?: Maybe<Scalars['String']['output']>;
   /** The main title(s) of the work */
   main: Array<Scalars['String']['output']>;
-  /**
-   * The title of the work that this expression/manifestation is translated from or
-   * based on. The original title(s) of a film which has a different distribution
-   */
+  /** The title of the work that this expression/manifestation is translated from or based on. The original title(s) of a film which has a different distribution title. */
   original?: Maybe<Array<Scalars['String']['output']>>;
   /** Titles (in other languages) parallel to the main 'title' of the manifestation */
   parallel: Array<Scalars['String']['output']>;
   /** The sorted title of the entity */
   sort: Scalars['String']['output'];
-  /** The standard title of the entity, used for music and movies */
-  standard?: Maybe<Scalars['String']['output']>;
   /**
-   * The title of the entity with the language of the entity in parenthesis after.
-   * This field is only generated for non-danish titles.
+   * The standard title of the entity, used for music and movies
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
    */
+  standard?: Maybe<Scalars['String']['output']>;
+  /** The title of the entity with the language of the entity in parenthesis after. This field is only generated for non-danish titles. */
   titlePlusLanguage?: Maybe<Scalars['String']['output']>;
-  /** Danish translation of the main title */
+  /**
+   * Danish translation of the main title
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   translated?: Maybe<Array<Scalars['String']['output']>>;
   /** detailed title for tv series */
   tvSeries?: Maybe<TvSeries>;
@@ -1097,7 +1096,9 @@ export type ManifestationTitles = {
 export type Manifestations = {
   __typename?: 'Manifestations';
   all: Array<Manifestation>;
+  /** The best representation of all manifestations. Corresponds to the first element in the bestRepresentations list. */
   bestRepresentation: Manifestation;
+  /** All manifestations sorted after best representation. Newer is better. Records from DBC or KB are considered better. MaterialType.specific 'bog', 'music (cd)', and 'film (dvd)' are also considered better */
   bestRepresentations: Array<Manifestation>;
   first: Manifestation;
   latest: Manifestation;
@@ -1110,6 +1111,92 @@ export type Manifestations = {
    * Only one manifestation per unit is returned.
    */
   searchHits?: Maybe<Array<SearchHit>>;
+};
+
+/**
+ * Metadata related to material selection, including publication status,
+ * selection group, and librarian assessment.
+ */
+export type MaterialSelection = {
+  __typename?: 'MaterialSelection';
+  /** Publication status of the manifestation (e.g. new title, new edition, new print run). */
+  cataloguedPublicationStatus: Array<MaterialSelectionCataloguedPublicationStatus>;
+  /**
+   * The type of library assessment associated with the manifestation:
+   * literature, movie, or multimedia.
+   */
+  librarianAssessment: Array<MaterialSelectionLibrarianAssessment>;
+  /** Recommended selection group for the manifestation: adult, children, or school libraries. */
+  selectionGroup: Array<MaterialSelectionSelectionGroup>;
+};
+
+/** Publication status entry within material selection. */
+export type MaterialSelectionCataloguedPublicationStatus = {
+  __typename?: 'MaterialSelectionCataloguedPublicationStatus';
+  /** Danish display label for the publication status, e.g. "Ny titel". */
+  display?: Maybe<Scalars['String']['output']>;
+  /**
+   * Values that can be used for Complex Search filtering, e.g. ["nt", "ny titel"].
+   * Use these values with term.cataloguedPublicationStatus in Complex Search.
+   */
+  searchValues: Array<Scalars['String']['output']>;
+  /** The publication status enum value. */
+  type: MaterialSelectionPublicationStatusEnum;
+};
+
+export type MaterialSelectionGroupEnum =
+  /** Adult. Display label example: "Voksenafdelinger". */
+  | 'ADULT'
+  /** Children. Display label example: "Børnebiblioteker". */
+  | 'CHILDREN'
+  /** School. Display label example: "Skolebiblioteker". */
+  | 'SCHOOL';
+
+/** Librarian assessment entry within material selection. */
+export type MaterialSelectionLibrarianAssessment = {
+  __typename?: 'MaterialSelectionLibrarianAssessment';
+  /** Danish display label for the assessment, e.g. "Har lektørudtalelse (materialevurdering)". */
+  display?: Maybe<Scalars['String']['output']>;
+  /**
+   * Values that can be used for Complex Search filtering, e.g. ["l", "lektørudtalelse"].
+   * Use these values with term.librarianAssessment in Complex Search.
+   */
+  searchValues: Array<Scalars['String']['output']>;
+  /** The librarian assessment enum value. */
+  type: MaterialSelectionLibrarianAssessmentEnum;
+};
+
+export type MaterialSelectionLibrarianAssessmentEnum =
+  /**
+   * Literature assessment.
+   * Display label example: "Har lektørudtalelse (materialevurdering)".
+   */
+  | 'LITERATURE'
+  /** Has a film review. Display label example: "Har filmvurdering". */
+  | 'MOVIE'
+  /** Has a multimedia review. Display label example: "Har multimedievurdering". */
+  | 'MULTIMEDIA';
+
+export type MaterialSelectionPublicationStatusEnum =
+  /** New edition. Display label example: "Ny udgave". */
+  | 'NEW_EDITION'
+  /** New print run. Display label example: "Nyt oplag". */
+  | 'NEW_PRINT'
+  /** New title. Display label example: "Ny titel". */
+  | 'NEW_TITLE';
+
+/** Selection group entry within material selection. */
+export type MaterialSelectionSelectionGroup = {
+  __typename?: 'MaterialSelectionSelectionGroup';
+  /** Danish display label for the selection group, e.g. "Voksenafdelinger". */
+  display?: Maybe<Scalars['String']['output']>;
+  /**
+   * Values that can be used for Complex Search filtering, e.g. ["v", "voksen"].
+   * Use these values with term.selectionGroup in Complex Search.
+   */
+  searchValues: Array<Scalars['String']['output']>;
+  /** The selection group enum value. */
+  type: MaterialSelectionGroupEnum;
 };
 
 export type MaterialType = {
@@ -1291,6 +1378,14 @@ export type MoodTagRecommendResponse = {
   work: Work;
 };
 
+export type MusicShelf = {
+  __typename?: 'MusicShelf';
+  /** The shelf where the material can be found */
+  display?: Maybe<Scalars['String']['output']>;
+  /** The sort version of 'display' */
+  sort?: Maybe<Scalars['String']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   elba: ElbaServices;
@@ -1308,7 +1403,10 @@ export type Note = {
   __typename?: 'Note';
   /** The actual notes */
   display: Array<Scalars['String']['output']>;
-  /** Heading before note */
+  /**
+   * Heading before note
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   heading?: Maybe<Scalars['String']['output']>;
   /** The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known. */
   type: NoteTypeEnum;
@@ -1344,10 +1442,23 @@ export type Pegi = {
   minimumAge?: Maybe<Scalars['Int']['output']>;
 };
 
+export type PeriodicalType = {
+  __typename?: 'PeriodicalType';
+  /** A code for the type of periodical */
+  code?: Maybe<Scalars['String']['output']>;
+  /** The code as displayable text */
+  display?: Maybe<Scalars['String']['output']>;
+};
+
 export type Person = CreatorInterface & SubjectInterface & {
   __typename?: 'Person';
   /** Creator aliases, creators behind used pseudonym */
   aliases: Array<Person>;
+  /**
+   * True when the person is followed by 'm.fl.' (and others) in the publication,
+   * meaning that additional unnamed persons contributed to this creation
+   */
+  andOthers?: Maybe<Scalars['Boolean']['output']>;
   /** Added information about the person, like Henri, konge af Frankrig */
   attributeToName?: Maybe<Scalars['String']['output']>;
   /** Birth year of the person */
@@ -1369,13 +1480,6 @@ export type Person = CreatorInterface & SubjectInterface & {
   type: SubjectTypeEnum;
   /** VIAF identifier of the creator */
   viafid?: Maybe<Scalars['String']['output']>;
-  /** Additional metadata for the creator */
-  wikidata?: Maybe<Wikidata>;
-};
-
-
-export type PersonWikidataArgs = {
-  language?: InputMaybe<LanguageCodeEnum>;
 };
 
 export type PhysicalUnitDescription = {
@@ -1420,6 +1524,28 @@ export type PublicationYear = {
   year?: Maybe<Scalars['Int']['output']>;
 };
 
+export type Publizon = {
+  __typename?: 'Publizon';
+  /** URL to the material on the public library's website, built from the agency's lookupUrl and the manifestation workId. Defaults to the logged-in user's municipality agency. */
+  agencyUrl?: Maybe<Scalars['String']['output']>;
+  /** The total duration of the resource in seconds, if available. */
+  durationInSeconds?: Maybe<Scalars['Int']['output']>;
+  /** The file size of the resource in bytes, if available. */
+  fileSizeInBytes?: Maybe<Scalars['Int']['output']>;
+  /** The file format of the Publizon resource (e.g., "epub", "mp3"). */
+  format?: Maybe<Scalars['String']['output']>;
+  /**
+   * URL of the sample provided by Publizon (Pubhub), typically a preview
+   * of the e-book or audiobook content.
+   */
+  sample: Scalars['String']['output'];
+};
+
+
+export type PublizonAgencyUrlArgs = {
+  agencyId?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   complexSearch: ComplexSearchResponse;
@@ -1427,6 +1553,7 @@ export type Query = {
   complexSearchIndexes?: Maybe<Array<ComplexSearchIndex>>;
   complexSuggest: ComplexSuggestResponse;
   debug?: Maybe<Debug>;
+  /** @deprecated Use 'retriever' instead expires: 18/12-2026 */
   infomedia: InfomediaResponse;
   linkCheck: LinkCheckService;
   localSuggest: LocalSuggestResponse;
@@ -1438,8 +1565,6 @@ export type Query = {
   /** Access to various types of recommendations. */
   recommendations: Recommendations;
   refWorks: Scalars['String']['output'];
-  /** @deprecated Use 'Recommendations.subjects' instead expires: 01/03-2025 */
-  relatedSubjects?: Maybe<Array<Scalars['String']['output']>>;
   /**
    * Fetch a single article from Retriever by its document id.
    *
@@ -1450,6 +1575,12 @@ export type Query = {
    * Check `error` on the response for access or lookup failures.
    */
   retriever: RetrieverResponse;
+  /**
+   * Returns bibliographic records formatted as RIS reference data for one or more manifestation pids.
+   * When multiple pids are provided, each RIS record is separated by a newline.
+   * Records are returned in the same order as the provided pids.
+   * If a pid is not found, it is omitted from the response.
+   */
   ris: Scalars['String']['output'];
   search: SearchResponse;
   series?: Maybe<Series>;
@@ -1462,6 +1593,7 @@ export type Query = {
 
 export type QueryComplexSearchArgs = {
   cql: Scalars['String']['input'];
+  cqlfilter?: InputMaybe<ComplexSearchCqlFiltersInput>;
   facets?: InputMaybe<ComplexSearchFacetsInput>;
   filters?: InputMaybe<ComplexSearchFiltersInput>;
 };
@@ -1509,12 +1641,6 @@ export type QueryRecommendArgs = {
 
 export type QueryRefWorksArgs = {
   pids: Array<Scalars['String']['input']>;
-};
-
-
-export type QueryRelatedSubjectsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  q: Array<Scalars['String']['input']>;
 };
 
 
@@ -1652,10 +1778,7 @@ export type Relations = {
   hasDescriptionFromPublisher: Array<Manifestation>;
   /** This movie is based on this manuscript */
   hasManuscript: Array<Manifestation>;
-  /**
-   * This manifestation has a 'materialevurdering' that was originally made for
-   * another manifestation, but it is still relevant (e.g. book/ebook)
-   */
+  /** This manifestation has a 'materialevurdering' that was originally made for another manifestation, but it is still relevant (e.g. book/ebook) */
   hasReusedReview: Array<Manifestation>;
   /** This manifestation has these reviews */
   hasReview: Array<Manifestation>;
@@ -1675,10 +1798,7 @@ export type Relations = {
   isPartOfAlbum: Array<Manifestation>;
   /** This article or book part can be found in these manifestations */
   isPartOfManifestation: Array<Manifestation>;
-  /**
-   * This 'materialevurdering' can also be used to review these relevant
-   * manifestations, even though it was originally made for another publication
-   */
+  /** This 'materialevurdering' can also be used to review these relevant manifestations, even though it was originally made for another publication */
   isReusedReviewOf: Array<Manifestation>;
   /** This manifestation is a review of these manifestations */
   isReviewOf: Array<Manifestation>;
@@ -1792,10 +1912,7 @@ export type ReviewElementTypeEnum =
 
 export type Role = {
   __typename?: 'Role';
-  /**
-   * The type of creator/contributor as text in singular and plural in Danish, e.g.
-   * forfatter/forfattere, komponist/komponister etc
-   */
+  /** The type of creator/contributor as text in singular and plural in Danish, e.g. forfatter/forfattere, komponist/komponister etc */
   function: Translation;
   /** The code for the type of creator or contributor, e.g. 'aut' for author, 'ill' for illustrator etc */
   functionCode: Scalars['String']['output'];
@@ -1912,10 +2029,7 @@ export type SerieWork = {
   numberInSeries?: Maybe<Scalars['String']['output']>;
   /** Information about whether this work in the series should be read first */
   readThisFirst?: Maybe<Scalars['Boolean']['output']>;
-  /**
-   * Information about whether this work in the series can be read without
-   * considering the order of the series, it can be read at any time
-   */
+  /** Information about whether this work in the series can be read without considering the order of the series, it can be read at any time */
   readThisWhenever?: Maybe<Scalars['Boolean']['output']>;
   /** Work of a serieWork */
   work: Work;
@@ -1943,10 +2057,7 @@ export type Series = {
   parallelTitles: Array<Scalars['String']['output']>;
   /** Information about whether this work in the series should be read first */
   readThisFirst?: Maybe<Scalars['Boolean']['output']>;
-  /**
-   * Information about whether this work in the series can be read without
-   * considering the order of the series, it can be read at any time
-   */
+  /** Information about whether this work in the series can be read without considering the order of the series, it can be read at any time */
   readThisWhenever?: Maybe<Scalars['Boolean']['output']>;
   /** Identifier for the series */
   seriesId?: Maybe<Scalars['String']['output']>;
@@ -1986,6 +2097,14 @@ export type SheetMusicCategory = {
   orchestraTypes: Array<Scalars['String']['output']>;
 };
 
+export type ShelfCreator = {
+  __typename?: 'ShelfCreator';
+  /** The display name of the creator */
+  display?: Maybe<Scalars['String']['output']>;
+  /** The sort version of the creator name */
+  sort?: Maybe<Scalars['String']['output']>;
+};
+
 export type Shelfmark = {
   __typename?: 'Shelfmark';
   /** A postfix to the shelfmark, eg. 99.4 Christensen, Inger. f. 1935 */
@@ -2002,6 +2121,22 @@ export type SortInput = {
 export type SortOrderEnum =
   | 'ASC'
   | 'DESC';
+
+export type SoundRecording = {
+  __typename?: 'SoundRecording';
+  /** A code for the type of sound recording */
+  code?: Maybe<Scalars['String']['output']>;
+  /** The code as displayable text */
+  display?: Maybe<Scalars['String']['output']>;
+};
+
+export type SpecialMaterialGroup = {
+  __typename?: 'SpecialMaterialGroup';
+  /** A code for the type of the special material group */
+  code?: Maybe<Scalars['String']['output']>;
+  /** The code as displayable text */
+  display?: Maybe<Scalars['String']['output']>;
+};
 
 export type SpecificMaterialType = {
   __typename?: 'SpecificMaterialType';
@@ -2114,13 +2249,6 @@ export type SuggestionTypeEnum =
   | 'SUBJECT'
   | 'TITLE';
 
-export type TableOfContent = {
-  __typename?: 'TableOfContent';
-  content?: Maybe<Scalars['String']['output']>;
-  heading?: Maybe<Scalars['String']['output']>;
-  listOfContent?: Maybe<Array<TableOfContent>>;
-};
-
 export type TimePeriod = SubjectInterface & {
   __typename?: 'TimePeriod';
   display: Scalars['String']['output'];
@@ -2140,7 +2268,10 @@ export type Translation = {
 
 export type TvSeries = {
   __typename?: 'TvSeries';
-  /** Dansih translated title of the tv serie */
+  /**
+   * Dansih translated title of the tv serie
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   danishLaunchTitle?: Maybe<Scalars['String']['output']>;
   /** Detailed information about the disc */
   disc?: Maybe<TvSeriesDetails>;
@@ -2241,17 +2372,6 @@ export type UniverseContentResult = {
 
 export type UniverseContentUnion = Series | Work;
 
-export type Wikidata = {
-  __typename?: 'Wikidata';
-  awards?: Maybe<Array<Scalars['String']['output']>>;
-  description?: Maybe<Scalars['String']['output']>;
-  education?: Maybe<Array<Scalars['String']['output']>>;
-  image?: Maybe<CreatorImage>;
-  nationality?: Maybe<Scalars['String']['output']>;
-  occupation?: Maybe<Array<Scalars['String']['output']>>;
-  wikidataId?: Maybe<Scalars['String']['output']>;
-};
-
 export type Work = {
   __typename?: 'Work';
   /** Abstract of the entity */
@@ -2260,10 +2380,7 @@ export type Work = {
   creators: Array<CreatorInterface>;
   /** DK5 main entry for this work */
   dk5MainEntry?: Maybe<Dk5MainEntry>;
-  /**
-   * Overall literary category/genre of this work. e.g. fiction or nonfiction. In
-   * Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for
-   */
+  /** Overall literary category/genre of this work. e.g. fiction or nonfiction. In Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for other types. */
   fictionNonfiction?: Maybe<FictionNonfiction>;
   /** The genre, (literary) form, type etc. of this work */
   genreAndForm: Array<Scalars['String']['output']>;
@@ -2304,23 +2421,23 @@ export type WorkTitles = {
   full: Array<Scalars['String']['output']>;
   /** The main title(s) of the work */
   main: Array<Scalars['String']['output']>;
-  /**
-   * The title of the work that this expression/manifestation is translated from or
-   * based on. The original title(s) of a film which has a different distribution
-   */
+  /** The title of the work that this expression/manifestation is translated from or based on. The original title(s) of a film which has a different distribution title. */
   original?: Maybe<Array<Scalars['String']['output']>>;
   /** Titles (in other languages) parallel to the main 'title' of the work */
   parallel: Array<Scalars['String']['output']>;
   /** The sorted title of the entity */
   sort: Scalars['String']['output'];
-  /** The standard title of the entity, used for music and movies */
-  standard?: Maybe<Scalars['String']['output']>;
   /**
-   * The title of the entity with the language of the entity in parenthesis after.
-   * This field is only generated for non-danish titles.
+   * The standard title of the entity, used for music and movies
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
    */
+  standard?: Maybe<Scalars['String']['output']>;
+  /** The title of the entity with the language of the entity in parenthesis after. This field is only generated for non-danish titles. */
   titlePlusLanguage?: Maybe<Scalars['String']['output']>;
-  /** Danish translation of the main title */
+  /**
+   * Danish translation of the main title
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   translated?: Maybe<Array<Scalars['String']['output']>>;
   /** detailed title for tv series */
   tvSeries?: Maybe<TvSeries>;
@@ -2354,6 +2471,7 @@ export type ManifestationAccessFragment = { __typename?: 'Manifestation', access
     | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
     | { __typename: 'InfomediaService' }
     | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+    | { __typename: 'Publizon' }
     | { __typename: 'RetrieverService', id: string }
   > };
 
@@ -2385,6 +2503,7 @@ export type ManifestationSearchPageTeaserFragment = { __typename?: 'Manifestatio
     | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
     | { __typename: 'InfomediaService' }
     | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+    | { __typename: 'Publizon' }
     | { __typename: 'RetrieverService', id: string }
   >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
     | { __typename?: 'Corporation', display: string }
@@ -2397,6 +2516,7 @@ export type ManifestationWorkPageFragment = { __typename?: 'Manifestation', pid:
     | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
     | { __typename: 'InfomediaService' }
     | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+    | { __typename: 'Publizon' }
     | { __typename: 'RetrieverService', id: string }
   >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
       | { __typename?: 'Corporation', display: string }
@@ -2418,6 +2538,7 @@ export type WorkAccessFragment = { __typename?: 'Work', workId: string, manifest
         | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
         | { __typename: 'InfomediaService' }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+        | { __typename: 'Publizon' }
         | { __typename: 'RetrieverService', id: string }
       > }> } };
 
@@ -2440,6 +2561,7 @@ export type WorkTeaserSearchPageFragment = { __typename?: 'Work', workId: string
         | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
         | { __typename: 'InfomediaService' }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+        | { __typename: 'Publizon' }
         | { __typename: 'RetrieverService', id: string }
       >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
         | { __typename?: 'Corporation', display: string }
@@ -2450,6 +2572,7 @@ export type WorkTeaserSearchPageFragment = { __typename?: 'Work', workId: string
         | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
         | { __typename: 'InfomediaService' }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+        | { __typename: 'Publizon' }
         | { __typename: 'RetrieverService', id: string }
       >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
         | { __typename?: 'Corporation', display: string }
@@ -2465,6 +2588,7 @@ export type WorkFullWorkPageFragment = { __typename?: 'Work', workId: string, ab
         | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
         | { __typename: 'InfomediaService' }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+        | { __typename: 'Publizon' }
         | { __typename: 'RetrieverService', id: string }
       >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
           | { __typename?: 'Corporation', display: string }
@@ -2484,6 +2608,7 @@ export type WorkFullWorkPageFragment = { __typename?: 'Work', workId: string, ab
         | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
         | { __typename: 'InfomediaService' }
         | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+        | { __typename: 'Publizon' }
         | { __typename: 'RetrieverService', id: string }
       >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
           | { __typename?: 'Corporation', display: string }
@@ -2516,6 +2641,7 @@ export type SearchWithPaginationQuery = { __typename?: 'Query', search: { __type
             | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
             | { __typename: 'InfomediaService' }
             | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'Publizon' }
             | { __typename: 'RetrieverService', id: string }
           >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
             | { __typename?: 'Corporation', display: string }
@@ -2526,6 +2652,7 @@ export type SearchWithPaginationQuery = { __typename?: 'Query', search: { __type
             | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
             | { __typename: 'InfomediaService' }
             | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'Publizon' }
             | { __typename: 'RetrieverService', id: string }
           >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
             | { __typename?: 'Corporation', display: string }
@@ -2559,6 +2686,7 @@ export type ComplexSearchForWorkTeaserQuery = { __typename?: 'Query', complexSea
             | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
             | { __typename: 'InfomediaService' }
             | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'Publizon' }
             | { __typename: 'RetrieverService', id: string }
           >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
             | { __typename?: 'Corporation', display: string }
@@ -2569,6 +2697,7 @@ export type ComplexSearchForWorkTeaserQuery = { __typename?: 'Query', complexSea
             | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
             | { __typename: 'InfomediaService' }
             | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'Publizon' }
             | { __typename: 'RetrieverService', id: string }
           >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
             | { __typename?: 'Corporation', display: string }
@@ -2589,6 +2718,7 @@ export type GetManifestationsByFaustQuery = { __typename?: 'Query', manifestatio
             | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
             | { __typename: 'InfomediaService' }
             | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'Publizon' }
             | { __typename: 'RetrieverService', id: string }
           >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
             | { __typename?: 'Corporation', display: string }
@@ -2599,6 +2729,7 @@ export type GetManifestationsByFaustQuery = { __typename?: 'Query', manifestatio
             | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
             | { __typename: 'InfomediaService' }
             | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'Publizon' }
             | { __typename: 'RetrieverService', id: string }
           >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
             | { __typename?: 'Corporation', display: string }
@@ -2619,6 +2750,7 @@ export type GetMaterialQuery = { __typename?: 'Query', work?: { __typename?: 'Wo
           | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
           | { __typename: 'InfomediaService' }
           | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+          | { __typename: 'Publizon' }
           | { __typename: 'RetrieverService', id: string }
         >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
             | { __typename?: 'Corporation', display: string }
@@ -2638,6 +2770,7 @@ export type GetMaterialQuery = { __typename?: 'Query', work?: { __typename?: 'Wo
           | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
           | { __typename: 'InfomediaService' }
           | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+          | { __typename: 'Publizon' }
           | { __typename: 'RetrieverService', id: string }
         >, titles: { __typename?: 'ManifestationTitles', identifyingAddition?: string | null, full: Array<string> }, languages?: { __typename?: 'Languages', main?: Array<{ __typename?: 'Language', display: string, iso639Set1: string }> | null } | null, audience?: { __typename?: 'Audience', ages: Array<{ __typename?: 'Range', display: string }> } | null, series: Array<{ __typename?: 'Series', numberInSeries?: string | null, title: string }>, subjects: { __typename?: 'SubjectContainer', all: Array<
             | { __typename?: 'Corporation', display: string }

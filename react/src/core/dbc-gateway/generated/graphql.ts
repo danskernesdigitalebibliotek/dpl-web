@@ -67,6 +67,8 @@ export type AccessUrl = {
   note?: Maybe<Scalars["String"]["output"]>;
   /** The origin, e.g. "DBC Webarkiv" */
   origin: Scalars["String"]["output"];
+  /** Proxy/login url for the resource when relevant. */
+  proxyUrl?: Maybe<Scalars["String"]["output"]>;
   /** Status from linkcheck */
   status: LinkStatusEnum;
   /** The type of content that can be found at this URL */
@@ -199,6 +201,12 @@ export type Classification = {
   system: Scalars["String"]["output"];
 };
 
+/** CQL based filters. Mutually exclusive with ComplexSearchFiltersInput. */
+export type ComplexSearchCqlFiltersInput = {
+  /** A CQL expression used to filter the search result. */
+  cqlfilterquery?: InputMaybe<Scalars["String"]["input"]>;
+};
+
 /** The complete facet in response */
 export type ComplexSearchFacetResponse = {
   __typename?: "ComplexSearchFacetResponse";
@@ -281,12 +289,20 @@ export type ComplexSearchFiltersInput = {
   department?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Date of first accession */
   firstAccessionDate?: InputMaybe<Scalars["String"]["input"]>;
+  /** The floatgroup of the item */
+  floatGroup?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Id of publishing issue. */
   issueId?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Local id of the item. */
   itemId?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  /** The last loan date of the item */
+  lastloandate?: InputMaybe<Scalars["String"]["input"]>;
+  /** The loan restriction of the item, g, a or nothing */
+  loanrestriction?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Where is the book physically located  (eg. skønlitteratur). */
   location?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  /** The section which the item belongs to */
+  section?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Onloan or OnShelf. */
   status?: InputMaybe<Array<CsHoldingsStatusEnum>>;
   /** More specific location (eg. Fantasy). */
@@ -485,6 +501,11 @@ export enum CopyRequestStatusEnum {
 export type Corporation = CreatorInterface &
   SubjectInterface & {
     __typename?: "Corporation";
+    /**
+     * True when the corporation is followed by 'm.fl.' (and others) in the publication,
+     * meaning that additional unnamed corporations contributed to this creation
+     */
+    andOthers?: Maybe<Scalars["Boolean"]["output"]>;
     /** Added information about the corporation, like M. Folmer Andersen (firma) */
     attributeToName?: Maybe<Scalars["String"]["output"]>;
     /** The full corporation or conference name */
@@ -534,6 +555,11 @@ export type CoverDetails = {
 };
 
 export type CreatorInterface = {
+  /**
+   * True when the creator is followed by 'm.fl.' (and others) in the publication,
+   * meaning that additional unnamed creators contributed to this creation
+   */
+  andOthers?: Maybe<Scalars["Boolean"]["output"]>;
   /** Name of the creator */
   display: Scalars["String"]["output"];
   /** Name of the creator which can be used to sort after */
@@ -588,7 +614,10 @@ export type DigitalArticleService = {
 
 export type Edition = {
   __typename?: "Edition";
-  /** Quotation of contributor statements related to the edition */
+  /**
+   * Quotation of contributor statements related to the edition
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   contributors: Array<Scalars["String"]["output"]>;
   /** The edition number and name */
   edition?: Maybe<Scalars["String"]["output"]>;
@@ -950,7 +979,10 @@ export type Manifestation = {
   bibliographicCategory?: Maybe<BibliographicCategory>;
   /** CatalogueCodes divided in codes from the national bibliography and other codes */
   catalogueCodes: CatalogueCodes;
-  /** The publication status of a catalogued manifestation. */
+  /**
+   * The publication status of a catalogued manifestation.
+   * @deprecated Use 'Manifestation.materialSelection.cataloguedPublicationStatus' instead expires: 05/12-2026
+   */
   cataloguedPublicationStatus?: Maybe<CataloguedPublicationStatus>;
   /** Classification codes for this manifestation from any classification system */
   classifications: Array<Classification>;
@@ -988,6 +1020,11 @@ export type Manifestation = {
   latestPrinting?: Maybe<Printing>;
   /** Identification of the local id of this manifestation */
   localId?: Maybe<Scalars["String"]["output"]>;
+  /**
+   * Metadata related to material selection, including publication status,
+   * selection group, and librarian assessment.
+   */
+  materialSelection?: Maybe<MaterialSelection>;
   /** The type of material of the manifestation based on bibliotek.dk types */
   materialTypes: Array<MaterialType>;
   /** Information on music shelving */
@@ -1008,12 +1045,21 @@ export type Manifestation = {
   publisher: Array<Scalars["String"]["output"]>;
   /** The creation date of the record describing this manifestation in the format YYYYMMDD */
   recordCreationDate: Scalars["String"]["output"];
-  /** Notes about relations to this book/periodical/journal, - like previous names or related journals */
+  /**
+   * Notes about relations to this book/periodical/journal, - like previous names or related journals
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   relatedPublications: Array<RelatedPublication>;
   /** Relations to other manifestations */
   relations: Relations;
   /** Some review data, if this manifestation is a review */
   review?: Maybe<ManifestationReview>;
+  /**
+   * Bibliographic reference data for this manifestation formatted as RIS.
+   * When fetching RIS for multiple manifestations, each record is returned on the
+   * manifestation. To combine them into a single RIS file, join the records with a newline.
+   */
+  ris?: Maybe<Scalars["String"]["output"]>;
   /** Series for this manifestation */
   series: Array<Series>;
   /** Material that can be identified as sheet music */
@@ -1072,11 +1118,17 @@ export type ManifestationTitles = {
   parallel: Array<Scalars["String"]["output"]>;
   /** The sorted title of the entity */
   sort: Scalars["String"]["output"];
-  /** The standard title of the entity, used for music and movies */
+  /**
+   * The standard title of the entity, used for music and movies
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   standard?: Maybe<Scalars["String"]["output"]>;
   /** The title of the entity with the language of the entity in parenthesis after. This field is only generated for non-danish titles. */
   titlePlusLanguage?: Maybe<Scalars["String"]["output"]>;
-  /** Danish translation of the main title */
+  /**
+   * Danish translation of the main title
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   translated?: Maybe<Array<Scalars["String"]["output"]>>;
   /** detailed title for tv series */
   tvSeries?: Maybe<TvSeries>;
@@ -1100,6 +1152,95 @@ export type Manifestations = {
    * Only one manifestation per unit is returned.
    */
   searchHits?: Maybe<Array<SearchHit>>;
+};
+
+/**
+ * Metadata related to material selection, including publication status,
+ * selection group, and librarian assessment.
+ */
+export type MaterialSelection = {
+  __typename?: "MaterialSelection";
+  /** Publication status of the manifestation (e.g. new title, new edition, new print run). */
+  cataloguedPublicationStatus: Array<MaterialSelectionCataloguedPublicationStatus>;
+  /**
+   * The type of library assessment associated with the manifestation:
+   * literature, movie, or multimedia.
+   */
+  librarianAssessment: Array<MaterialSelectionLibrarianAssessment>;
+  /** Recommended selection group for the manifestation: adult, children, or school libraries. */
+  selectionGroup: Array<MaterialSelectionSelectionGroup>;
+};
+
+/** Publication status entry within material selection. */
+export type MaterialSelectionCataloguedPublicationStatus = {
+  __typename?: "MaterialSelectionCataloguedPublicationStatus";
+  /** Danish display label for the publication status, e.g. "Ny titel". */
+  display?: Maybe<Scalars["String"]["output"]>;
+  /**
+   * Values that can be used for Complex Search filtering, e.g. ["nt", "ny titel"].
+   * Use these values with term.cataloguedPublicationStatus in Complex Search.
+   */
+  searchValues: Array<Scalars["String"]["output"]>;
+  /** The publication status enum value. */
+  type: MaterialSelectionPublicationStatusEnum;
+};
+
+export enum MaterialSelectionGroupEnum {
+  /** Adult. Display label example: "Voksenafdelinger". */
+  Adult = "ADULT",
+  /** Children. Display label example: "Børnebiblioteker". */
+  Children = "CHILDREN",
+  /** School. Display label example: "Skolebiblioteker". */
+  School = "SCHOOL"
+}
+
+/** Librarian assessment entry within material selection. */
+export type MaterialSelectionLibrarianAssessment = {
+  __typename?: "MaterialSelectionLibrarianAssessment";
+  /** Danish display label for the assessment, e.g. "Har lektørudtalelse (materialevurdering)". */
+  display?: Maybe<Scalars["String"]["output"]>;
+  /**
+   * Values that can be used for Complex Search filtering, e.g. ["l", "lektørudtalelse"].
+   * Use these values with term.librarianAssessment in Complex Search.
+   */
+  searchValues: Array<Scalars["String"]["output"]>;
+  /** The librarian assessment enum value. */
+  type: MaterialSelectionLibrarianAssessmentEnum;
+};
+
+export enum MaterialSelectionLibrarianAssessmentEnum {
+  /**
+   * Literature assessment.
+   * Display label example: "Har lektørudtalelse (materialevurdering)".
+   */
+  Literature = "LITERATURE",
+  /** Has a film review. Display label example: "Har filmvurdering". */
+  Movie = "MOVIE",
+  /** Has a multimedia review. Display label example: "Har multimedievurdering". */
+  Multimedia = "MULTIMEDIA"
+}
+
+export enum MaterialSelectionPublicationStatusEnum {
+  /** New edition. Display label example: "Ny udgave". */
+  NewEdition = "NEW_EDITION",
+  /** New print run. Display label example: "Nyt oplag". */
+  NewPrint = "NEW_PRINT",
+  /** New title. Display label example: "Ny titel". */
+  NewTitle = "NEW_TITLE"
+}
+
+/** Selection group entry within material selection. */
+export type MaterialSelectionSelectionGroup = {
+  __typename?: "MaterialSelectionSelectionGroup";
+  /** Danish display label for the selection group, e.g. "Voksenafdelinger". */
+  display?: Maybe<Scalars["String"]["output"]>;
+  /**
+   * Values that can be used for Complex Search filtering, e.g. ["v", "voksen"].
+   * Use these values with term.selectionGroup in Complex Search.
+   */
+  searchValues: Array<Scalars["String"]["output"]>;
+  /** The selection group enum value. */
+  type: MaterialSelectionGroupEnum;
 };
 
 export type MaterialType = {
@@ -1305,7 +1446,10 @@ export type Note = {
   __typename?: "Note";
   /** The actual notes */
   display: Array<Scalars["String"]["output"]>;
-  /** Heading before note */
+  /**
+   * Heading before note
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   heading?: Maybe<Scalars["String"]["output"]>;
   /** The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known. */
   type: NoteTypeEnum;
@@ -1364,6 +1508,11 @@ export type Person = CreatorInterface &
     __typename?: "Person";
     /** Creator aliases, creators behind used pseudonym */
     aliases: Array<Person>;
+    /**
+     * True when the person is followed by 'm.fl.' (and others) in the publication,
+     * meaning that additional unnamed persons contributed to this creation
+     */
+    andOthers?: Maybe<Scalars["Boolean"]["output"]>;
     /** Added information about the person, like Henri, konge af Frankrig */
     attributeToName?: Maybe<Scalars["String"]["output"]>;
     /** Birth year of the person */
@@ -1457,6 +1606,7 @@ export type Query = {
   complexSearchIndexes?: Maybe<Array<ComplexSearchIndex>>;
   complexSuggest: ComplexSuggestResponse;
   debug?: Maybe<Debug>;
+  /** @deprecated Use 'retriever' instead expires: 18/12-2026 */
   infomedia: InfomediaResponse;
   linkCheck: LinkCheckService;
   localSuggest: LocalSuggestResponse;
@@ -1478,6 +1628,12 @@ export type Query = {
    * Check `error` on the response for access or lookup failures.
    */
   retriever: RetrieverResponse;
+  /**
+   * Returns bibliographic records formatted as RIS reference data for one or more manifestation pids.
+   * When multiple pids are provided, each RIS record is separated by a newline.
+   * Records are returned in the same order as the provided pids.
+   * If a pid is not found, it is omitted from the response.
+   */
   ris: Scalars["String"]["output"];
   search: SearchResponse;
   series?: Maybe<Series>;
@@ -1489,6 +1645,7 @@ export type Query = {
 
 export type QueryComplexSearchArgs = {
   cql: Scalars["String"]["input"];
+  cqlfilter?: InputMaybe<ComplexSearchCqlFiltersInput>;
   facets?: InputMaybe<ComplexSearchFacetsInput>;
   filters?: InputMaybe<ComplexSearchFiltersInput>;
 };
@@ -2231,7 +2388,10 @@ export type Translation = {
 
 export type TvSeries = {
   __typename?: "TvSeries";
-  /** Dansih translated title of the tv serie */
+  /**
+   * Dansih translated title of the tv serie
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   danishLaunchTitle?: Maybe<Scalars["String"]["output"]>;
   /** Detailed information about the disc */
   disc?: Maybe<TvSeriesDetails>;
@@ -2384,11 +2544,17 @@ export type WorkTitles = {
   parallel: Array<Scalars["String"]["output"]>;
   /** The sorted title of the entity */
   sort: Scalars["String"]["output"];
-  /** The standard title of the entity, used for music and movies */
+  /**
+   * The standard title of the entity, used for music and movies
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   standard?: Maybe<Scalars["String"]["output"]>;
   /** The title of the entity with the language of the entity in parenthesis after. This field is only generated for non-danish titles. */
   titlePlusLanguage?: Maybe<Scalars["String"]["output"]>;
-  /** Danish translation of the main title */
+  /**
+   * Danish translation of the main title
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   translated?: Maybe<Array<Scalars["String"]["output"]>>;
   /** detailed title for tv series */
   tvSeries?: Maybe<TvSeries>;
