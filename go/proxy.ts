@@ -74,14 +74,14 @@ export async function proxy(request: NextRequest) {
   // If the session is not logged in but the browser carries a Drupal session
   // cookie, we will try to load the user token from dpl-cms. loadUserToken()
   // settles whether the cookie still represents a logged-in user with a live
-  // token — a lingering cookie for a dead session yields null.
-  // There is no refresh path: the CMS returns the token stored at login
-  // verbatim and cannot renew it, so the GO session lives exactly as long as
-  // the user token — a dead token means a new login.
+  // token — a lingering cookie for a dead or expired session yields no token.
+  // There is no refresh path: the CMS cannot renew the token, so the GO
+  // session lives exactly as long as the user token — a dead token means a
+  // new login.
   if (userIsAnonymous(session) && (await hasDplCmsSessionCookie())) {
     const tokenData = await loadUserToken()
-    if (tokenData) {
-      await saveAdgangsplatformenSession(session, tokenData)
+    if (tokenData.status === "token") {
+      await saveAdgangsplatformenSession(session, tokenData.data)
       return response
     }
   }

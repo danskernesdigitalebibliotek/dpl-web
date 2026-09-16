@@ -10,9 +10,9 @@ export async function GET() {
   await connection() // Opt into dynamic rendering
   const userTokenData = await loadUserToken()
 
-  if (userTokenData) {
+  if (userTokenData.status === "token") {
     const session = await getSession()
-    await saveAdgangsplatformenSession(session, userTokenData)
+    await saveAdgangsplatformenSession(session, userTokenData.data)
     const loginRedirectUrl = await getAndClearLoginRedirectUrl()
     if (loginRedirectUrl) {
       return NextResponse.redirect(`${getBaseURL()}${loginRedirectUrl}`)

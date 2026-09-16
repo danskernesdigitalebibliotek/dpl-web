@@ -144,8 +144,11 @@ describe("Middleware", () => {
   it("can ensure that a library token is present if it is not already", async () => {
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
     vi.spyOn(libraryTokenFunctions, "loadLibraryToken").mockResolvedValueOnce(
@@ -212,8 +215,11 @@ describe("Middleware", () => {
     )
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
 
@@ -241,8 +247,11 @@ describe("Middleware", () => {
     )
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
 
@@ -268,8 +277,11 @@ describe("Middleware", () => {
     )
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
 
@@ -302,8 +314,11 @@ describe("Middleware", () => {
     )
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
 
@@ -377,8 +392,11 @@ describe("Middleware", () => {
     )
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
 
