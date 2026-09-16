@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@danskernesdigitalebibliotek/dpl-service-layer": "file:../packages/service-layer",
+    "@danskernesdigitalebibliotek/dpl-wedobooks": "file:../packages/wedobooks",
     "@next/env": "16.3.4",
     "@plaiceholder/next": "^3.0.0",
     "@radix-ui/react-accordion": "^1.2.20",

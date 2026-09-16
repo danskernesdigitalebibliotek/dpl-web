@@ -11,6 +11,9 @@ importers:
       '@danskernesdigitalebibliotek/dpl-service-layer':
         specifier: file:../packages/service-layer
         version: file:../packages/service-layer(@tanstack/react-query@5.102.8(react@19.2.8))(react@19.2.8)
+      '@danskernesdigitalebibliotek/dpl-wedobooks':
+        specifier: file:../packages/wedobooks
+        version: file:../packages/wedobooks(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@next/env':
         specifier: 16.3.4
         version: 16.3.4
@@ -1153,6 +1156,12 @@ packages:
     peerDependencies:
       '@tanstack/react-query': ^5.101.0
       react: ^18 || ^19
+
+  '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks':
+    resolution: {directory: ../packages/wedobooks, type: directory}
+    peerDependencies:
+      react: ^18 || ^19
+      react-dom: ^18 || ^19
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -10234,8 +10243,8 @@ packages:
   zod@4.4.3:
     resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
-  zod@4.5.4:
-    resolution: {integrity: sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA==}
+  zod@4.6.2:
+    resolution: {integrity: sha512-lh5RCAGFa1Cm2hjtNwLQhSs/AsqdWnTQaBER9fEwN/88pSh7KOtJavtBx/0VlkN/uFd61SwYmljLMDAsHlvzBQ==}
 
   zstd-codec@0.1.5:
     resolution: {integrity: sha512-v3fyjpK8S/dpY/X5WxqTK3IoCnp/ZOLxn144GZVlNUjtwAchzrVo03h+oMATFhCIiJ5KTr4V3vDQQYz4RU684g==}
@@ -11269,7 +11278,12 @@ snapshots:
     dependencies:
       '@tanstack/react-query': 5.102.8(react@19.2.8)
       react: 19.2.8
-      zod: 4.5.4
+      zod: 4.6.2
+
+  '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
 
   '@emnapi/core@1.10.0':
     dependencies:
@@ -21301,6 +21315,6 @@ snapshots:
 
   zod@4.4.3: {}
 
-  zod@4.5.4: {}
+  zod@4.6.2: {}
 
   zstd-codec@0.1.5: {}
