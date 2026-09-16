@@ -67,6 +67,16 @@ class DplBiblioSettings extends DplReactConfigBase {
   }
 
   /**
+   * Whether GO should use the Biblio adapter for digital materials.
+   *
+   * Independent of {@link isEnabled()}: the CMS web apps and GO are
+   * switched separately.
+   */
+  public function isEnabledForGo(): bool {
+    return (bool) $this->loadConfig()->get('enabled_go');
+  }
+
+  /**
    * TEMPORARY: whether unknown materials render as unavailable, not as errors.
    *
    * The catalogue lists digital materials WeDoBooks has not provisioned yet,
