@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  getAllFaustIds,
-  getMaterialType
-} from "../../core/utils/helpers/general";
+import { getMaterialType } from "../../core/utils/helpers/general";
 import { useText } from "../../core/utils/text";
 import { Cover } from "../cover/cover";
 import { Manifestation } from "../../core/utils/types/entities";
@@ -43,7 +40,6 @@ const OnlineInternalModalBody = ({
     useState<ApiResult | null>(null);
 
   const manifestationType = getMaterialType(selectedManifestations);
-  const faustIds = getAllFaustIds(selectedManifestations);
   const manifestation = selectedManifestations[0];
   const authorLine = getAuthorLine(manifestation, t);
 
@@ -122,7 +118,7 @@ const OnlineInternalModalBody = ({
         })}
         ctaButton={{
           text: t("tryAginButtonText"),
-          modalId: onlineInternalModalId(faustIds),
+          modalId: onlineInternalModalId(selectedManifestations),
           dataCy: "online-internal-close-button"
         }}
       >

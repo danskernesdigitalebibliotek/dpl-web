@@ -32,8 +32,21 @@ Three reasons, none of them cosmetic:
 
 The SDK is published to WeDoBooks' own registry, not to npm, and so is their
 mirror of Colibrio. `.npmrc` at the repository root maps both scopes; the
-credential is the one part that stays out of the repository - set it once in
-the user-level npm config:
+credential is the one part that stays out of the repository.
+
+Locally it comes from the central `.env`, which holds `WEDOBOOKS_NPM_TOKEN`
+from 1Password - so `task dev:dotenv:generate` is enough, and `task init:pnpm`
+(and everything that depends on it, including `task dev:reset:clean`) picks it
+up from there. `init:pnpm` passes it to pnpm as the environment config key
+`npm_config_//npm.pkg.wedobooks.io/:_authToken`, which is also how it crosses
+into the container when the repository is set up to run in docker.
+
+Without it the install fails on the Colibrio tarball with
+`ERR_PNPM_FETCH_401`, and the task that happens to be installing - typically
+`dev:design-system:build` - is what reports the failure.
+
+For a bare `pnpm install` outside Task, set it once in the user-level npm
+config instead:
 
 ```sh
 pnpm config set "//npm.pkg.wedobooks.io/:_authToken" "$WEDOBOOKS_NPM_TOKEN"
@@ -42,6 +55,13 @@ pnpm config set "//npm.pkg.wedobooks.io/:_authToken" "$WEDOBOOKS_NPM_TOKEN"
 In CI the same line runs from `.github/actions/common-setup-js`, fed by the
 `WEDOBOOKS_NPM_TOKEN` repository secret. The Lagoon images take it as a build
 argument of the same name, used only in the throwaway build stage.
+
+Dependabot needs that token registered a second time, as a *Dependabot* secret
+of the same name: workflow runs on its pull requests are not given the Actions
+secrets, so without it `secrets.WEDOBOOKS_NPM_TOKEN` is empty there, the setup
+action skips authenticating, and every job on those pull requests fails
+installing. The registry entry in `.github/dependabot.yml`, which lets the
+updater itself see the SDK, reads the same secret.
 
 ## Build
 

@@ -272,6 +272,9 @@ export const deleteReservations = async (
   });
 };
 
+export const getDeleteReservationsMutationKey = () =>
+  ["deleteReservations"] as const;
+
 export const getDeleteReservationsMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -279,17 +282,17 @@ export const getDeleteReservationsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteReservations>>,
     TError,
-    { params: DeleteReservationsParams },
+    DeleteReservationsMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof deleteReservations>>,
   TError,
-  { params: DeleteReservationsParams },
+  DeleteReservationsMutationVariables,
   TContext
 > => {
-  const mutationKey = ["deleteReservations"];
+  const mutationKey = getDeleteReservationsMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -300,7 +303,7 @@ export const getDeleteReservationsMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof deleteReservations>>,
-    { params: DeleteReservationsParams }
+    DeleteReservationsMutationVariables
   > = (props) => {
     const { params } = props ?? {};
 
@@ -315,6 +318,9 @@ export type DeleteReservationsMutationResult = NonNullable<
 >;
 
 export type DeleteReservationsMutationError = ErrorType<void>;
+export type DeleteReservationsMutationVariables = {
+  params: DeleteReservationsParams;
+};
 
 /**
  * @summary Delete existing reservations.
@@ -327,7 +333,7 @@ export const useDeleteReservations = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof deleteReservations>>,
       TError,
-      { params: DeleteReservationsParams },
+      DeleteReservationsMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -336,7 +342,7 @@ export const useDeleteReservations = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof deleteReservations>>,
   TError,
-  { params: DeleteReservationsParams },
+  DeleteReservationsMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -554,11 +560,26 @@ export const addReservationsDeprecated = async (
   createReservationBatch: CreateReservationBatch,
   options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationDetails[]> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<ReservationDetails[]>(getAddReservationsDeprecatedUrl(), {
     ...options,
@@ -571,6 +592,9 @@ export const addReservationsDeprecated = async (
   });
 };
 
+export const getAddReservationsDeprecatedMutationKey = () =>
+  ["addReservationsDeprecated"] as const;
+
 export const getAddReservationsDeprecatedMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -578,17 +602,17 @@ export const getAddReservationsDeprecatedMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof addReservationsDeprecated>>,
     TError,
-    { data: BodyType<CreateReservationBatch> },
+    AddReservationsDeprecatedMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof addReservationsDeprecated>>,
   TError,
-  { data: BodyType<CreateReservationBatch> },
+  AddReservationsDeprecatedMutationVariables,
   TContext
 > => {
-  const mutationKey = ["addReservationsDeprecated"];
+  const mutationKey = getAddReservationsDeprecatedMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -599,7 +623,7 @@ export const getAddReservationsDeprecatedMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof addReservationsDeprecated>>,
-    { data: BodyType<CreateReservationBatch> }
+    AddReservationsDeprecatedMutationVariables
   > = (props) => {
     const { data } = props ?? {};
 
@@ -615,6 +639,9 @@ export type AddReservationsDeprecatedMutationResult = NonNullable<
 export type AddReservationsDeprecatedMutationBody =
   BodyType<CreateReservationBatch>;
 export type AddReservationsDeprecatedMutationError = ErrorType<void>;
+export type AddReservationsDeprecatedMutationVariables = {
+  data: BodyType<CreateReservationBatch>;
+};
 
 /**
  * @summary Create new reservations for the patron (DEPRECATED).
@@ -627,7 +654,7 @@ export const useAddReservationsDeprecated = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof addReservationsDeprecated>>,
       TError,
-      { data: BodyType<CreateReservationBatch> },
+      AddReservationsDeprecatedMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -636,7 +663,7 @@ export const useAddReservationsDeprecated = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof addReservationsDeprecated>>,
   TError,
-  { data: BodyType<CreateReservationBatch> },
+  AddReservationsDeprecatedMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -675,11 +702,26 @@ export const updateReservations = async (
   updateReservationBatch: UpdateReservationBatch,
   options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationDetails[]> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<ReservationDetails[]>(getUpdateReservationsUrl(), {
     ...options,
@@ -692,6 +734,9 @@ export const updateReservations = async (
   });
 };
 
+export const getUpdateReservationsMutationKey = () =>
+  ["updateReservations"] as const;
+
 export const getUpdateReservationsMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -699,17 +744,17 @@ export const getUpdateReservationsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateReservations>>,
     TError,
-    { data: BodyType<UpdateReservationBatch> },
+    UpdateReservationsMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateReservations>>,
   TError,
-  { data: BodyType<UpdateReservationBatch> },
+  UpdateReservationsMutationVariables,
   TContext
 > => {
-  const mutationKey = ["updateReservations"];
+  const mutationKey = getUpdateReservationsMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -720,7 +765,7 @@ export const getUpdateReservationsMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof updateReservations>>,
-    { data: BodyType<UpdateReservationBatch> }
+    UpdateReservationsMutationVariables
   > = (props) => {
     const { data } = props ?? {};
 
@@ -735,6 +780,9 @@ export type UpdateReservationsMutationResult = NonNullable<
 >;
 export type UpdateReservationsMutationBody = BodyType<UpdateReservationBatch>;
 export type UpdateReservationsMutationError = ErrorType<void>;
+export type UpdateReservationsMutationVariables = {
+  data: BodyType<UpdateReservationBatch>;
+};
 
 /**
  * @summary Update existing reservations.
@@ -747,7 +795,7 @@ export const useUpdateReservations = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof updateReservations>>,
       TError,
-      { data: BodyType<UpdateReservationBatch> },
+      UpdateReservationsMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -756,7 +804,7 @@ export const useUpdateReservations = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof updateReservations>>,
   TError,
-  { data: BodyType<UpdateReservationBatch> },
+  UpdateReservationsMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -1012,11 +1060,26 @@ export const addReservationsV2 = async (
   createReservationBatchV2: CreateReservationBatchV2,
   options?: Parameters<typeof mutator>[1]
 ): Promise<ReservationResponseV2> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<ReservationResponseV2>(getAddReservationsV2Url(), {
     ...options,
@@ -1029,6 +1092,9 @@ export const addReservationsV2 = async (
   });
 };
 
+export const getAddReservationsV2MutationKey = () =>
+  ["addReservationsV2"] as const;
+
 export const getAddReservationsV2MutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -1036,17 +1102,17 @@ export const getAddReservationsV2MutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof addReservationsV2>>,
     TError,
-    { data: BodyType<CreateReservationBatchV2> },
+    AddReservationsV2MutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof addReservationsV2>>,
   TError,
-  { data: BodyType<CreateReservationBatchV2> },
+  AddReservationsV2MutationVariables,
   TContext
 > => {
-  const mutationKey = ["addReservationsV2"];
+  const mutationKey = getAddReservationsV2MutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -1057,7 +1123,7 @@ export const getAddReservationsV2MutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof addReservationsV2>>,
-    { data: BodyType<CreateReservationBatchV2> }
+    AddReservationsV2MutationVariables
   > = (props) => {
     const { data } = props ?? {};
 
@@ -1072,6 +1138,9 @@ export type AddReservationsV2MutationResult = NonNullable<
 >;
 export type AddReservationsV2MutationBody = BodyType<CreateReservationBatchV2>;
 export type AddReservationsV2MutationError = ErrorType<void>;
+export type AddReservationsV2MutationVariables = {
+  data: BodyType<CreateReservationBatchV2>;
+};
 
 /**
  * @summary Create new reservations for the patron.
@@ -1084,7 +1153,7 @@ export const useAddReservationsV2 = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof addReservationsV2>>,
       TError,
-      { data: BodyType<CreateReservationBatchV2> },
+      AddReservationsV2MutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -1093,7 +1162,7 @@ export const useAddReservationsV2 = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof addReservationsV2>>,
   TError,
-  { data: BodyType<CreateReservationBatchV2> },
+  AddReservationsV2MutationVariables,
   TContext
 > => {
   return useMutation(getAddReservationsV2MutationOptions(options), queryClient);
@@ -1690,11 +1759,26 @@ export const createV9 = async (
   createPatronRequestV7: CreatePatronRequestV7,
   options?: Parameters<typeof mutator>[1]
 ): Promise<AuthenticatedPatronV10> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<AuthenticatedPatronV10>(getCreateV9Url(), {
     ...options,
@@ -1707,6 +1791,8 @@ export const createV9 = async (
   });
 };
 
+export const getCreateV9MutationKey = () => ["createV9"] as const;
+
 export const getCreateV9MutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -1714,17 +1800,17 @@ export const getCreateV9MutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createV9>>,
     TError,
-    { data: BodyType<CreatePatronRequestV7> },
+    CreateV9MutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createV9>>,
   TError,
-  { data: BodyType<CreatePatronRequestV7> },
+  CreateV9MutationVariables,
   TContext
 > => {
-  const mutationKey = ["createV9"];
+  const mutationKey = getCreateV9MutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -1735,7 +1821,7 @@ export const getCreateV9MutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof createV9>>,
-    { data: BodyType<CreatePatronRequestV7> }
+    CreateV9MutationVariables
   > = (props) => {
     const { data } = props ?? {};
 
@@ -1750,6 +1836,9 @@ export type CreateV9MutationResult = NonNullable<
 >;
 export type CreateV9MutationBody = BodyType<CreatePatronRequestV7>;
 export type CreateV9MutationError = ErrorType<void>;
+export type CreateV9MutationVariables = {
+  data: BodyType<CreatePatronRequestV7>;
+};
 
 /**
  * @summary Create a new patron who is a person.
@@ -1759,7 +1848,7 @@ export const useCreateV9 = <TError = ErrorType<void>, TContext = unknown>(
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof createV9>>,
       TError,
-      { data: BodyType<CreatePatronRequestV7> },
+      CreateV9MutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -1768,7 +1857,7 @@ export const useCreateV9 = <TError = ErrorType<void>, TContext = unknown>(
 ): UseMutationResult<
   Awaited<ReturnType<typeof createV9>>,
   TError,
-  { data: BodyType<CreatePatronRequestV7> },
+  CreateV9MutationVariables,
   TContext
 > => {
   return useMutation(getCreateV9MutationOptions(options), queryClient);
@@ -1795,11 +1884,26 @@ export const createWithGuardian = async (
   patronWithGuardianRequest: PatronWithGuardianRequest,
   options?: Parameters<typeof mutator>[1]
 ): Promise<number> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<number>(getCreateWithGuardianUrl(), {
     ...options,
@@ -1812,6 +1916,9 @@ export const createWithGuardian = async (
   });
 };
 
+export const getCreateWithGuardianMutationKey = () =>
+  ["createWithGuardian"] as const;
+
 export const getCreateWithGuardianMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -1819,17 +1926,17 @@ export const getCreateWithGuardianMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createWithGuardian>>,
     TError,
-    { data: BodyType<PatronWithGuardianRequest> },
+    CreateWithGuardianMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createWithGuardian>>,
   TError,
-  { data: BodyType<PatronWithGuardianRequest> },
+  CreateWithGuardianMutationVariables,
   TContext
 > => {
-  const mutationKey = ["createWithGuardian"];
+  const mutationKey = getCreateWithGuardianMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -1840,7 +1947,7 @@ export const getCreateWithGuardianMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof createWithGuardian>>,
-    { data: BodyType<PatronWithGuardianRequest> }
+    CreateWithGuardianMutationVariables
   > = (props) => {
     const { data } = props ?? {};
 
@@ -1856,6 +1963,9 @@ export type CreateWithGuardianMutationResult = NonNullable<
 export type CreateWithGuardianMutationBody =
   BodyType<PatronWithGuardianRequest>;
 export type CreateWithGuardianMutationError = ErrorType<void>;
+export type CreateWithGuardianMutationVariables = {
+  data: BodyType<PatronWithGuardianRequest>;
+};
 
 /**
  * @summary Creates a person patron with a guardian (eg A financial responsible).
@@ -1868,7 +1978,7 @@ export const useCreateWithGuardian = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof createWithGuardian>>,
       TError,
-      { data: BodyType<PatronWithGuardianRequest> },
+      CreateWithGuardianMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -1877,7 +1987,7 @@ export const useCreateWithGuardian = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof createWithGuardian>>,
   TError,
-  { data: BodyType<PatronWithGuardianRequest> },
+  CreateWithGuardianMutationVariables,
   TContext
 > => {
   return useMutation(
@@ -1907,11 +2017,26 @@ export const updateGuardian = async (
   updateGuardianRequest: UpdateGuardianRequest,
   options?: Parameters<typeof mutator>[1]
 ): Promise<number> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<number>(getUpdateGuardianUrl(), {
     ...options,
@@ -1924,6 +2049,8 @@ export const updateGuardian = async (
   });
 };
 
+export const getUpdateGuardianMutationKey = () => ["updateGuardian"] as const;
+
 export const getUpdateGuardianMutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -1931,17 +2058,17 @@ export const getUpdateGuardianMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateGuardian>>,
     TError,
-    { data: BodyType<UpdateGuardianRequest> },
+    UpdateGuardianMutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateGuardian>>,
   TError,
-  { data: BodyType<UpdateGuardianRequest> },
+  UpdateGuardianMutationVariables,
   TContext
 > => {
-  const mutationKey = ["updateGuardian"];
+  const mutationKey = getUpdateGuardianMutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -1952,7 +2079,7 @@ export const getUpdateGuardianMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof updateGuardian>>,
-    { data: BodyType<UpdateGuardianRequest> }
+    UpdateGuardianMutationVariables
   > = (props) => {
     const { data } = props ?? {};
 
@@ -1967,6 +2094,9 @@ export type UpdateGuardianMutationResult = NonNullable<
 >;
 export type UpdateGuardianMutationBody = BodyType<UpdateGuardianRequest>;
 export type UpdateGuardianMutationError = ErrorType<void>;
+export type UpdateGuardianMutationVariables = {
+  data: BodyType<UpdateGuardianRequest>;
+};
 
 /**
  * @summary Updates a person patron's guardian (eg A financial responsible).
@@ -1976,7 +2106,7 @@ export const useUpdateGuardian = <TError = ErrorType<void>, TContext = unknown>(
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof updateGuardian>>,
       TError,
-      { data: BodyType<UpdateGuardianRequest> },
+      UpdateGuardianMutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -1985,7 +2115,7 @@ export const useUpdateGuardian = <TError = ErrorType<void>, TContext = unknown>(
 ): UseMutationResult<
   Awaited<ReturnType<typeof updateGuardian>>,
   TError,
-  { data: BodyType<UpdateGuardianRequest> },
+  UpdateGuardianMutationVariables,
   TContext
 > => {
   return useMutation(getUpdateGuardianMutationOptions(options), queryClient);
@@ -2031,11 +2161,26 @@ export const renewLoansV2 = async (
   renewLoansV2Body: number[],
   options?: Parameters<typeof mutator>[1]
 ): Promise<RenewedLoanV2[]> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<RenewedLoanV2[]>(getRenewLoansV2Url(), {
     ...options,
@@ -2048,6 +2193,8 @@ export const renewLoansV2 = async (
   });
 };
 
+export const getRenewLoansV2MutationKey = () => ["renewLoansV2"] as const;
+
 export const getRenewLoansV2MutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -2055,17 +2202,17 @@ export const getRenewLoansV2MutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof renewLoansV2>>,
     TError,
-    { data: BodyType<number[]> },
+    RenewLoansV2MutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof renewLoansV2>>,
   TError,
-  { data: BodyType<number[]> },
+  RenewLoansV2MutationVariables,
   TContext
 > => {
-  const mutationKey = ["renewLoansV2"];
+  const mutationKey = getRenewLoansV2MutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -2076,7 +2223,7 @@ export const getRenewLoansV2MutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof renewLoansV2>>,
-    { data: BodyType<number[]> }
+    RenewLoansV2MutationVariables
   > = (props) => {
     const { data } = props ?? {};
 
@@ -2091,6 +2238,7 @@ export type RenewLoansV2MutationResult = NonNullable<
 >;
 export type RenewLoansV2MutationBody = BodyType<number[]>;
 export type RenewLoansV2MutationError = ErrorType<void>;
+export type RenewLoansV2MutationVariables = { data: BodyType<number[]> };
 
 /**
  * @summary Renew loans.
@@ -2100,7 +2248,7 @@ export const useRenewLoansV2 = <TError = ErrorType<void>, TContext = unknown>(
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof renewLoansV2>>,
       TError,
-      { data: BodyType<number[]> },
+      RenewLoansV2MutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -2109,7 +2257,7 @@ export const useRenewLoansV2 = <TError = ErrorType<void>, TContext = unknown>(
 ): UseMutationResult<
   Awaited<ReturnType<typeof renewLoansV2>>,
   TError,
-  { data: BodyType<number[]> },
+  RenewLoansV2MutationVariables,
   TContext
 > => {
   return useMutation(getRenewLoansV2MutationOptions(options), queryClient);
@@ -2478,11 +2626,26 @@ export const updateV4 = async (
   updatePatronRequestV3: UpdatePatronRequestV3,
   options?: Parameters<typeof mutator>[1]
 ): Promise<AuthenticatedPatronV4> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<AuthenticatedPatronV4>(getUpdateV4Url(), {
     ...options,
@@ -2495,6 +2658,8 @@ export const updateV4 = async (
   });
 };
 
+export const getUpdateV4MutationKey = () => ["updateV4"] as const;
+
 export const getUpdateV4MutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -2502,17 +2667,17 @@ export const getUpdateV4MutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateV4>>,
     TError,
-    { data: BodyType<UpdatePatronRequestV3> },
+    UpdateV4MutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateV4>>,
   TError,
-  { data: BodyType<UpdatePatronRequestV3> },
+  UpdateV4MutationVariables,
   TContext
 > => {
-  const mutationKey = ["updateV4"];
+  const mutationKey = getUpdateV4MutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -2523,7 +2688,7 @@ export const getUpdateV4MutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof updateV4>>,
-    { data: BodyType<UpdatePatronRequestV3> }
+    UpdateV4MutationVariables
   > = (props) => {
     const { data } = props ?? {};
 
@@ -2538,6 +2703,9 @@ export type UpdateV4MutationResult = NonNullable<
 >;
 export type UpdateV4MutationBody = BodyType<UpdatePatronRequestV3>;
 export type UpdateV4MutationError = ErrorType<void>;
+export type UpdateV4MutationVariables = {
+  data: BodyType<UpdatePatronRequestV3>;
+};
 
 /**
  * @summary Update information about the patron.
@@ -2547,7 +2715,7 @@ export const useUpdateV4 = <TError = ErrorType<void>, TContext = unknown>(
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof updateV4>>,
       TError,
-      { data: BodyType<UpdatePatronRequestV3> },
+      UpdateV4MutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -2556,7 +2724,7 @@ export const useUpdateV4 = <TError = ErrorType<void>, TContext = unknown>(
 ): UseMutationResult<
   Awaited<ReturnType<typeof updateV4>>,
   TError,
-  { data: BodyType<UpdatePatronRequestV3> },
+  UpdateV4MutationVariables,
   TContext
 > => {
   return useMutation(getUpdateV4MutationOptions(options), queryClient);
@@ -2593,11 +2761,26 @@ export const updateV8 = async (
   updatePatronRequestV6: UpdatePatronRequestV6,
   options?: Parameters<typeof mutator>[1]
 ): Promise<void> => {
-  const getHeaders = (h?: HeadersInit | Headers): Record<string, string> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>
+  ): Record<string, string | readonly string[]> => {
     if (!h) return {};
     if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string]
+        )
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<
+      string | readonly string[] | undefined
+    >(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
   };
   return mutator<void>(getUpdateV8Url(), {
     ...options,
@@ -2610,6 +2793,8 @@ export const updateV8 = async (
   });
 };
 
+export const getUpdateV8MutationKey = () => ["updateV8"] as const;
+
 export const getUpdateV8MutationOptions = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -2617,17 +2802,17 @@ export const getUpdateV8MutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateV8>>,
     TError,
-    { data: BodyType<UpdatePatronRequestV6> },
+    UpdateV8MutationVariables,
     TContext
   >;
   request?: SecondParameter<typeof mutator>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateV8>>,
   TError,
-  { data: BodyType<UpdatePatronRequestV6> },
+  UpdateV8MutationVariables,
   TContext
 > => {
-  const mutationKey = ["updateV8"];
+  const mutationKey = getUpdateV8MutationKey();
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -2638,7 +2823,7 @@ export const getUpdateV8MutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof updateV8>>,
-    { data: BodyType<UpdatePatronRequestV6> }
+    UpdateV8MutationVariables
   > = (props) => {
     const { data } = props ?? {};
 
@@ -2653,6 +2838,9 @@ export type UpdateV8MutationResult = NonNullable<
 >;
 export type UpdateV8MutationBody = BodyType<UpdatePatronRequestV6>;
 export type UpdateV8MutationError = ErrorType<void>;
+export type UpdateV8MutationVariables = {
+  data: BodyType<UpdatePatronRequestV6>;
+};
 
 /**
  * @summary Update information about the patron.
@@ -2662,7 +2850,7 @@ export const useUpdateV8 = <TError = ErrorType<void>, TContext = unknown>(
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof updateV8>>,
       TError,
-      { data: BodyType<UpdatePatronRequestV6> },
+      UpdateV8MutationVariables,
       TContext
     >;
     request?: SecondParameter<typeof mutator>;
@@ -2671,7 +2859,7 @@ export const useUpdateV8 = <TError = ErrorType<void>, TContext = unknown>(
 ): UseMutationResult<
   Awaited<ReturnType<typeof updateV8>>,
   TError,
-  { data: BodyType<UpdatePatronRequestV6> },
+  UpdateV8MutationVariables,
   TContext
 > => {
   return useMutation(getUpdateV8MutationOptions(options), queryClient);

@@ -104,7 +104,6 @@ const PhysicalLoansModal = ({
                   manifestation={item.manifestation}
                   title={title}
                   creators={creators}
-                  ariaLabel={`Se detaljer om dit lån af ${title}`}
                   onSelect={() => {
                     setSelected(item)
                     flow.goTo("details")

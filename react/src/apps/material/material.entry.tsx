@@ -76,9 +76,6 @@ interface MaterialEntryTextProps {
   goToText: string;
   reservationDetailsNoInterestAfterTitleText: string;
   identifierText: string;
-  infomediaCopyrightText: string;
-  infomediaModalCloseModalAriaLabelText: string;
-  infomediaModalScreenReaderModalDescriptionText: string;
   inSameSeriesText: string;
   inSeriesText: string;
   instantLoanSubTitleText: string;
@@ -181,6 +178,9 @@ interface MaterialEntryTextProps {
   reserveBookText: string;
   reserveText: string;
   reserveWithMaterialTypeText: string;
+  retrieverCopyrightText: string;
+  retrieverModalCloseModalAriaLabelText: string;
+  retrieverModalScreenReaderModalDescriptionText: string;
   reviewsText: string;
   saveButtonText: string;
   seeOnlineText: string;

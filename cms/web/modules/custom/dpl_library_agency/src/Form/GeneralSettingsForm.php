@@ -5,6 +5,7 @@ namespace Drupal\dpl_library_agency\Form;
 use DanskernesDigitaleBibliotek\FBS\ApiException;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -34,6 +35,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     protected ReservationSettings $reservationSettings,
     protected BranchSettings $branchSettings,
     protected GeneralSettings $generalSettings,
+    protected EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct($configFactory, $typedConfigManager);
   }
@@ -53,7 +55,8 @@ class GeneralSettingsForm extends ConfigFormBase {
       $container->get('dpl_library_agency.branch.repository.cache'),
       $container->get('dpl_library_agency.reservation_settings'),
       $container->get('dpl_library_agency.branch_settings'),
-      $container->get('dpl_library_agency.general_settings')
+      $container->get('dpl_library_agency.general_settings'),
+      $container->get('entity_type.manager')
     );
   }
 
@@ -238,18 +241,18 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('pause_reservation_info_url') ?? GeneralSettings::PAUSE_RESERVATION_INFO_URL,
     ];
 
-    $form['reservations']['zero_hits_search_url'] = [
-      '#type' => 'linkit',
-      '#title' => $this->t('URL til 0-hits søgninger', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('URL to the page that should be shown when a search returns zero results. <br />
-                                         You can add a relative url (e.g. /no-results). <br />
-                                         You can search for an internal url. <br />
-                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
-      '#autocomplete_route_name' => 'linkit.autocomplete',
-      '#autocomplete_route_parameters' => [
-        'linkit_profile_id' => 'default',
-      ],
-      '#default_value' => $config->get('zero_hits_search_url') ?? GeneralSettings::ZERO_HITS_SEARCH_URL,
+    $zero_hits_node_id = $config->get('zero_hits_search_node_id');
+    $zero_hits_node = $zero_hits_node_id
+      ? $this->entityTypeManager->getStorage('node')->load($zero_hits_node_id)
+      : NULL;
+
+    $form['reservations']['zero_hits_search_node_id'] = [
+      '#type' => 'entity_autocomplete',
+      '#target_type' => 'node',
+      '#selection_settings' => ['target_bundles' => ['page']],
+      '#title' => $this->t('Side til 0-hits søgninger', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('Select the page that visitors are redirected to when a search returns zero results.', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $zero_hits_node,
     ];
 
     $form['search'] = [
@@ -458,7 +461,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('default_interest_period_config', $form_state->getValue('default_interest_period_config'))
       ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
-      ->set('zero_hits_search_url', $form_state->getValue('zero_hits_search_url'))
+      ->set('zero_hits_search_node_id', $form_state->getValue('zero_hits_search_node_id'))
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
       ->set('local_subjects_agency_ids', $form_state->getValue('local_subjects_agency_ids'))
       ->set('enable_address_search_branch', $form_state->getValue('enable_address_search_branch'))

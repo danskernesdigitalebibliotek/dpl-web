@@ -2,7 +2,7 @@ import { RecommendedMaterialProps } from "../recommended-material/RecommendedMat
 
 const MaterialGridData: RecommendedMaterialProps[] = [
   {
-    author: "Daniel Lee (2023)",
+    subtitle: "Daniel Lee (2023)",
     description: "Advanced Woodworking",
     favoriteFill: false,
     materialUrl: "#",
@@ -10,7 +10,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Emma Clark (2024)",
+    subtitle: "Emma Clark (2024)",
     description: "Modern Home Gardening",
     favoriteFill: false,
     materialUrl: "#",
@@ -18,7 +18,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "George Martin (2023)",
+    subtitle: "George Martin (2023)",
     description: "The Art of Pottery",
     favoriteFill: false,
     materialUrl: "#",
@@ -26,7 +26,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Isabella Brown (2022)",
+    subtitle: "Isabella Brown (2022)",
     description: "Creative Writing Essentials",
     favoriteFill: false,
     materialUrl: "#",
@@ -34,7 +34,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Jack Taylor (2021)",
+    subtitle: "Jack Taylor (2021)",
     description: "Beginners Guide to Knitting",
     favoriteFill: false,
     materialUrl: "#",
@@ -42,7 +42,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Lucy White (2020)",
+    subtitle: "Lucy White (2020)",
     description: "Healthy Vegetarian Recipes",
     favoriteFill: false,
     materialUrl: "#",
@@ -50,7 +50,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Max Johnson (2019)",
+    subtitle: "Max Johnson (2019)",
     description: "DIY Furniture Making",
     favoriteFill: false,
     materialUrl: "#",
@@ -58,7 +58,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Nora Edwards (2024)",
+    subtitle: "Nora Edwards (2024)",
     description: "Interior Design on a Budget",
     favoriteFill: false,
     materialUrl: "#",
@@ -66,7 +66,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Oliver Smith (2023)",
+    subtitle: "Oliver Smith (2023)",
     description: "Landscaping for Your Home",
     favoriteFill: false,
     materialUrl: "#",
@@ -74,7 +74,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Penelope Jones (2022)",
+    subtitle: "Penelope Jones (2022)",
     description: "Easy and Fun Science Experiments",
     favoriteFill: false,
     materialUrl: "#",
@@ -82,7 +82,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Quinn Davis (2021)",
+    subtitle: "Quinn Davis (2021)",
     description: "Photography for Nature Lovers",
     favoriteFill: false,
     materialUrl: "#",
@@ -90,7 +90,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Ryan Wilson (2020)",
+    subtitle: "Ryan Wilson (2020)",
     description: "The Beginner's Guide to Drawing",
     favoriteFill: false,
     materialUrl: "#",
@@ -98,7 +98,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Daniel Lee (2023)",
+    subtitle: "Daniel Lee (2023)",
     description: "Advanced Woodworking",
     favoriteFill: false,
     materialUrl: "#",
@@ -106,7 +106,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Emma Clark (2024)",
+    subtitle: "Emma Clark (2024)",
     description: "Modern Home Gardening",
     favoriteFill: false,
     materialUrl: "#",
@@ -114,7 +114,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "George Martin (2023)",
+    subtitle: "George Martin (2023)",
     description: "The Art of Pottery",
     favoriteFill: false,
     materialUrl: "#",
@@ -122,7 +122,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Isabella Brown (2022)",
+    subtitle: "Isabella Brown (2022)",
     description: "Creative Writing Essentials",
     favoriteFill: false,
     materialUrl: "#",
@@ -130,7 +130,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Jack Taylor (2021)",
+    subtitle: "Jack Taylor (2021)",
     description: "Beginners Guide to Knitting",
     favoriteFill: false,
     materialUrl: "#",
@@ -138,7 +138,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Lucy White (2020)",
+    subtitle: "Lucy White (2020)",
     description: "Healthy Vegetarian Recipes",
     favoriteFill: false,
     materialUrl: "#",
@@ -146,7 +146,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Max Johnson (2019)",
+    subtitle: "Max Johnson (2019)",
     description: "DIY Furniture Making",
     favoriteFill: false,
     materialUrl: "#",
@@ -154,7 +154,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Nora Edwards (2024)",
+    subtitle: "Nora Edwards (2024)",
     description: "Interior Design on a Budget",
     favoriteFill: false,
     materialUrl: "#",
@@ -162,7 +162,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Oliver Smith (2023)",
+    subtitle: "Oliver Smith (2023)",
     description: "Landscaping for Your Home",
     favoriteFill: false,
     materialUrl: "#",
@@ -170,7 +170,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Penelope Jones (2022)",
+    subtitle: "Penelope Jones (2022)",
     description: "Easy and Fun Science Experiments",
     favoriteFill: false,
     materialUrl: "#",
@@ -178,7 +178,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Quinn Davis (2021)",
+    subtitle: "Quinn Davis (2021)",
     description: "Photography for Nature Lovers",
     favoriteFill: false,
     materialUrl: "#",
@@ -186,7 +186,7 @@ const MaterialGridData: RecommendedMaterialProps[] = [
     alt: "",
   },
   {
-    author: "Ryan Wilson (2020)",
+    subtitle: "Ryan Wilson (2020)",
     description: "The Beginner's Guide to Drawing",
     favoriteFill: false,
     materialUrl: "#",
