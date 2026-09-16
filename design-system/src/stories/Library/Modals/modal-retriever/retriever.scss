@@ -1,0 +1,45 @@
+.retriever-logo {
+  display: block;
+  object-fit: contain;
+  height: $s-lg;
+  margin-bottom: $s-lg;
+}
+
+.retriever-article {
+  max-width: $layout__max-width--small;
+  margin: 0 auto;
+  font-family: $font__title;
+}
+
+.retriever-headline {
+  @include typography($typo__h2);
+  margin-bottom: $s-lg;
+}
+
+.retriever-subheadline {
+  @include typography($typo__h4);
+  margin-bottom: $s-md;
+}
+
+.retriever-byline {
+  font-weight: $font__weight--bold;
+  margin-bottom: $s-sm;
+}
+
+.retriever-meta {
+  margin-bottom: $s-md;
+}
+
+.retriever-content {
+  > * {
+    @include typography($typo__body-large);
+    margin-bottom: $s-md;
+  }
+}
+
+.retriever-copyright {
+  font-weight: $font__weight--bold;
+  font-size: 14px;
+  text-align: center;
+  padding-bottom: $s-xl;
+}

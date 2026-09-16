@@ -1,0 +1,20 @@
+uuid: 08d976e3-4d82-49d0-bdde-357c3c1e3d68
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - dpl_event
+    - serialization
+    - user
+id: happening_events
+plugin_id: happening_events
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth
+    - cookie

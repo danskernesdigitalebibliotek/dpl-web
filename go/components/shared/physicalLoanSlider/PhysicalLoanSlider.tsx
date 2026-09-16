@@ -58,6 +58,12 @@ const PhysicalLoanSlider = ({ items, reservationItems }: PhysicalLoanSliderProps
   const onRightClick = () => {
     internalSlider.current?.next()
   }
+  // Slides move by transform, so the browser can't scroll a keyboard-focused
+  // card into view itself — follow focus, but leave fully visible cards alone.
+  const bringIntoView = (index: number) => {
+    const slide = internalSlider.current?.track?.details?.slides[index]
+    if (slide && slide.portion < 1) internalSlider.current?.moveToIdx(index)
+  }
 
   return (
     <div
@@ -95,6 +101,7 @@ const PhysicalLoanSlider = ({ items, reservationItems }: PhysicalLoanSliderProps
             <div
               data-cy={cyKeys["physical-loan-slider-work"]}
               key={loan.loanId}
+              onFocus={() => bringIntoView(index)}
               className="keen-slider__slide flex items-center !overflow-visible">
               <PhysicalLoanCard
                 loan={loan}

@@ -37,11 +37,8 @@ export const dateFromDueDateModalQueryParam = (queryParam: string) => {
 };
 
 export const getDetailsModalId = (queryParam: string, prefix: string) => {
-  // regex for finding loan details concatenated with id from modal query param
-  const regexIdentifier = new RegExp(
-    `(?<=${prefix})((\\d{13})|((\\d{10}))||((\\d{9}))|(\\d{8}))`,
-    "g"
-  );
+  // The id is whatever digits follow the prefix, of any length.
+  const regexIdentifier = new RegExp(`(?<=${prefix})\\d+`, "g");
   const modalId = queryParam.match(regexIdentifier);
   if (modalId) {
     const [returnId] = modalId;
