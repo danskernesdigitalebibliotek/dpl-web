@@ -553,3 +553,14 @@
     --sidebar-ring: oklch(0.439 0 0);
   }
 }
+
+/* Tailwind's `container` utility collides with the class names the WeDoBooks
+   SDK renders in light DOM (`section.container`, `div.container`, ...) and
+   clamps the reader to Tailwind's breakpoint widths — 1024px on a 1183px
+   viewport, say. Neutralized inside the SDK's elements; its own stylesheet
+   already sizes them (width/height 100%). Unlayered on purpose: layered
+   utilities would otherwise win over a @layer components rule. */
+wdb-reader .container,
+wdb-player-bar .container {
+  max-width: none;
+}
