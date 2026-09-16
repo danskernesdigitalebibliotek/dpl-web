@@ -1,4 +1,8 @@
-import { type Loan, type Reservation } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import {
+  type DigitalLoan,
+  type Loan,
+  type Reservation,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 
 import {
   type TMaterialCategory,
@@ -105,22 +109,66 @@ export const buildReservationItems = (
     return match ? [...acc, { reservation, ...match }] : acc
   }, [])
 
-// --- Digital loans (Publizon) ---
+// --- Digital loans (Publizon + Biblio) ---
+//
+// Two providers coexist while the Biblio adapter is being rolled out: new
+// loans are made through Biblio, but existing Publizon loans stay visible
+// until they expire. Both identify materials the same way (ISBN/identifier),
+// so pairing with FBI works is shared; which provider a loan came from only
+// matters when opening it — orderId opens pubhub's reader/player, loanId the
+// WeDoBooks one.
+//
+// TODO(publizon-sunset): when the Publizon API is phased out, drop the
+// LoanListResult parameters and the Publizon halves below — the biblio
+// arguments become the only source: digitalLoanIsbns, pairDigitalLoanWorks,
+// sortWorksBySoonestExpiry, buildSelectedLoan (incl. SelectedLoan.orderId),
+// findPublizonLoan and digitalLoanForWork go entirely.
 
-// ISBNs of the patron's digital loans, most urgent first. The order is part
-// of the search query identity.
-export const digitalLoanIsbns = (loanData: LoanListResult | null | undefined): string[] =>
-  [...(loanData?.loans ?? [])]
+// ISBNs of the patron's digital loans across both providers, most urgent
+// first. The order is part of the search query identity.
+export const digitalLoanIsbns = (
+  loanData: LoanListResult | null | undefined,
+  biblioLoans?: DigitalLoan[]
+): string[] => {
+  const publizon = (loanData?.loans ?? []).map(loan => ({
+    identifier: loan?.libraryBook?.identifier ?? "",
+    expiry: loan?.loanExpireDateUtc ?? null,
+  }))
+  const biblio = (biblioLoans ?? []).map(loan => ({
+    identifier: loan.materialId,
+    expiry: loan.endDate,
+  }))
+
+  return [...publizon, ...biblio]
     .sort(
       (a, b) =>
-        new Date(a?.loanExpireDateUtc ?? 8640000000000000).getTime() -
-        new Date(b?.loanExpireDateUtc ?? 8640000000000000).getTime()
+        new Date(a.expiry ?? 8640000000000000).getTime() -
+        new Date(b.expiry ?? 8640000000000000).getTime()
     )
-    .map(loan => loan?.libraryBook?.identifier ?? "")
+    .map(({ identifier }) => identifier)
     .filter(Boolean)
+}
 
 export const isbnSearchCql = (isbns: string[]): string =>
   isbns.map(isbn => `term.isbn=${isbn}`).join(" OR ") || ""
+
+// The patron's Publizon loan on a material, matched on the identifier the
+// loan was created with. The single definition of "is this on loan" — the
+// work page buttons and the loan modal must never disagree on it.
+export const findPublizonLoan = (
+  loanData: LoanListResult | null | undefined,
+  identifier: string | null | undefined
+) =>
+  identifier
+    ? loanData?.loans?.find(loan => loan.libraryBook?.identifier === identifier)
+    : undefined
+
+// The Biblio counterpart of findPublizonLoan.
+export const findBiblioLoan = (
+  loans: DigitalLoan[] | undefined,
+  identifier: string | null | undefined
+): DigitalLoan | undefined =>
+  identifier ? loans?.find(loan => loan.materialId === identifier) : undefined
 
 // The Publizon loan behind a paired work. Paired works carry exactly the
 // loaned manifestation, so its first ISBN identifies the loan.
@@ -134,13 +182,25 @@ export const digitalLoanForWork = (
   return loanData.loans?.find(loan => loan.libraryBook?.identifier === isbn)
 }
 
+// The Biblio loan behind a paired work. Matched on any identifier rather
+// than ISBN only: the adapter's material id is the identifier the loan was
+// made with, which is not always typed ISBN in the catalogue.
+export const biblioLoanForWork = (
+  work: WorkTeaserSearchPageFragment,
+  biblioLoans: DigitalLoan[] | undefined
+): DigitalLoan | undefined =>
+  biblioLoans?.find(loan =>
+    work.manifestations.all[0].identifiers.some(identifier => identifier.value === loan.materialId)
+  )
+
 // Pair each loan ISBN with its work, narrowed to the loaned manifestation —
 // one work per loan, in loan order.
 export const pairDigitalLoanWorks = (
   loanData: LoanListResult | null | undefined,
-  works: WorkTeaserSearchPageFragment[] | undefined
+  works: WorkTeaserSearchPageFragment[] | undefined,
+  biblioLoans?: DigitalLoan[]
 ): WorkTeaserSearchPageFragment[] =>
-  digitalLoanIsbns(loanData).reduce<WorkTeaserSearchPageFragment[]>((acc, isbn) => {
+  digitalLoanIsbns(loanData, biblioLoans).reduce<WorkTeaserSearchPageFragment[]>((acc, isbn) => {
     const work = works?.find(work =>
       work.manifestations.all.some(manifestation =>
         manifestation.identifiers.some(identifier => identifier.value === isbn)
@@ -163,16 +223,21 @@ export const pairDigitalLoanWorks = (
 // Paired works sorted by their loan's expiry; works without a loan go last.
 export const sortWorksBySoonestExpiry = (
   works: WorkTeaserSearchPageFragment[],
-  loanData: LoanListResult
+  loanData: LoanListResult,
+  biblioLoans?: DigitalLoan[]
 ): WorkTeaserSearchPageFragment[] => {
   const expiryOf = (work: WorkTeaserSearchPageFragment) => {
-    const expiry = digitalLoanForWork(work, loanData)?.loanExpireDateUtc
+    const expiry =
+      digitalLoanForWork(work, loanData)?.loanExpireDateUtc ??
+      biblioLoanForWork(work, biblioLoans)?.endDate
     return expiry ? new Date(expiry).getTime() : Infinity
   }
   return [...works].sort((a, b) => expiryOf(a) - expiryOf(b))
 }
 
 // Everything the "Dit lån" details view needs about one digital loan.
+// Exactly one of `orderId`/`loanId` is set: orderId opens the Publizon
+// reader/player, loanId the WeDoBooks one.
 export type SelectedLoan = {
   manifestation: ManifestationSearchPageTeaserFragment
   title: string
@@ -180,6 +245,7 @@ export type SelectedLoan = {
   dueDate: string
   loanDate?: string
   orderId?: string
+  loanId?: string
   workId: string
   category: TMaterialCategory
   label: string
@@ -188,20 +254,38 @@ export type SelectedLoan = {
 // Returns null when the loan (or its expiry) is missing.
 export const buildSelectedLoan = (
   work: WorkTeaserSearchPageFragment,
-  loanData: LoanListResult
+  loanData: LoanListResult,
+  biblioLoans?: DigitalLoan[]
 ): SelectedLoan | null => {
   const manifestation = work.manifestations.all[0]
-  const loan = digitalLoanForWork(work, loanData)
-  if (!loan?.loanExpireDateUtc) return null
-  return {
+  const shared = {
     manifestation,
     title: work.titles.full[0],
     creators: displayCreators(work.creators, 1),
-    dueDate: loan.loanExpireDateUtc,
-    loanDate: loan.orderDateUtc ?? undefined,
-    orderId: loan.orderId ?? undefined,
     workId: work.workId,
     category: getMaterialCategory(manifestation.materialTypes[0]?.materialTypeSpecific.code),
     label: getManifestationLabel(manifestation),
   }
+
+  const loan = digitalLoanForWork(work, loanData)
+  if (loan?.loanExpireDateUtc) {
+    return {
+      ...shared,
+      dueDate: loan.loanExpireDateUtc,
+      loanDate: loan.orderDateUtc ?? undefined,
+      orderId: loan.orderId ?? undefined,
+    }
+  }
+
+  const biblioLoan = biblioLoanForWork(work, biblioLoans)
+  if (biblioLoan) {
+    return {
+      ...shared,
+      dueDate: biblioLoan.endDate,
+      loanDate: biblioLoan.startDate,
+      loanId: biblioLoan.loanId,
+    }
+  }
+
+  return null
 }

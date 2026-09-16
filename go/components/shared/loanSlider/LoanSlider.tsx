@@ -1,5 +1,6 @@
 "use client"
 
+import type { DigitalLoan } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useWindowSize } from "@uidotdev/usehooks"
 import { differenceInDays } from "date-fns"
 import "keen-slider/keen-slider.min.css"
@@ -20,16 +21,22 @@ import { cyKeys } from "@/cypress/support/constants"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
-import { buildSelectedLoan } from "@/lib/helpers/helper.patron"
+import { biblioLoanForWork, buildSelectedLoan } from "@/lib/helpers/helper.patron"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 import { openModal } from "@/store/modal.store"
 
+// TODO(publizon-sunset): remove when the Publizon API is phased out —
+// loanData goes and biblioLoans becomes the only loan source (expiry lookup
+// and modal props below).
 type LoanSliderProps = {
   works: WorkTeaserSearchPageFragment[]
   loanData: LoanListResult
+  // Loans made through the Biblio adapter, shown alongside the Publizon ones
+  // while the two providers coexist.
+  biblioLoans?: DigitalLoan[]
 }
 
-const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
+const LoanSlider = ({ works, loanData, biblioLoans }: LoanSliderProps) => {
   const router = useRouter()
   const [sliderRef, internalSlider] = useKeenSlider(loanSliderOptions, [WheelControls])
   const [reachedStart, setReachStart] = useState(true)
@@ -108,9 +115,8 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
               identifier => identifier.type === "ISBN"
             )?.value
             const loan = loanData.loans?.find(l => l.libraryBook?.identifier === manifestationIsbn)
-            const daysUntil = loan?.loanExpireDateUtc
-              ? differenceInDays(new Date(loan.loanExpireDateUtc), new Date())
-              : null
+            const expiry = loan?.loanExpireDateUtc ?? biblioLoanForWork(work, biblioLoans)?.endDate
+            const daysUntil = expiry ? differenceInDays(new Date(expiry), new Date()) : null
             return (
               <button
                 type="button"
@@ -122,9 +128,14 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
                   cursor-pointer items-center !overflow-visible focus:outline-offset-2`
                 )}
                 onClick={() => {
-                  const selection = buildSelectedLoan(work, loanData)
+                  const selection = buildSelectedLoan(work, loanData, biblioLoans)
                   if (!selection) return
-                  openModal("DigitalLoansModal", { works, loanData, initialLoan: selection })
+                  openModal("DigitalLoansModal", {
+                    works,
+                    loanData,
+                    biblioLoans,
+                    initialLoan: selection,
+                  })
                 }}>
                 <LoanCard
                   manifestation={loanManifestation}
@@ -176,7 +187,7 @@ const LoanSlider = ({ works, loanData }: LoanSliderProps) => {
           audioLoans={audioLoans}
           ebookLoans={ebookLoans}
           blueLoans={blueLoans}
-          onViewAll={() => openModal("DigitalLoansModal", { works, loanData })}
+          onViewAll={() => openModal("DigitalLoansModal", { works, loanData, biblioLoans })}
         />
       </Suspense>
     </div>
