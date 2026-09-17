@@ -100,6 +100,56 @@ describe("createBiblioClient.getMetadata", () => {
   })
 })
 
+describe("createBiblioClient.getSample", () => {
+  const sampleUrl = (isbn: string) => `${baseUrl}/v1/samples/${isbn}`
+
+  const sampleBody = {
+    material_id: "9788711234567",
+    format: "epub",
+    sample_url: "https://storage.example/samples/9788711234567.epub?signature=abc",
+  }
+
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("returns the mapped sample, with no format asked for", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(sampleBody))
+
+    const result = await buildClient().getSample("9788711234567")
+
+    // No query string: the adapter derives the format from the material type
+    // it has registered, which beats anything the caller could guess.
+    expect(fetch).toHaveBeenCalledWith(sampleUrl("9788711234567"), {
+      method: "GET",
+      headers: { authorization: "Bearer abc" },
+    })
+    expect(result).toEqual({
+      format: "epub",
+      url: "https://storage.example/samples/9788711234567.epub?signature=abc",
+    })
+  })
+
+  it("treats a material without a sample as an absence, not a failure", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 404))
+
+    await expect(buildClient().getSample("9788711234567")).resolves.toBeUndefined()
+  })
+
+  it("fails on a refusal rather than reporting no sample", async () => {
+    // The adapter answers 403 both where Biblio has not enabled samples yet
+    // and where it will not accept our token. Reporting the second as "no
+    // excerpt" would hide a broken client behind an empty teaser slot.
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 403))
+
+    await expect(buildClient().getSample("9788711234567")).rejects.toThrow()
+  })
+})
+
 const loanBody = {
   id: "loan-1",
   material_id: "9788711234567",
@@ -208,7 +258,7 @@ describe("createBiblioClient.getLoanDecision", () => {
     )
 
     await expect(
-      buildClient().getLoanDecision("9788758855752", { allowNotFound: true })
+      buildClient().getLoanDecision("9788758855752", { absentStatuses: [404] })
     ).resolves.toBeUndefined()
   })
 

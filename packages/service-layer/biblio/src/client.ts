@@ -4,6 +4,7 @@ import type {
   DigitalMaterial,
   DigitalReservation,
   DigitalReservationLimits,
+  DigitalSample,
   LoanDecision,
   LoanRequestResult,
   ReaderSignInToken,
@@ -19,6 +20,7 @@ import {
   getGetMetadataByMaterialIdUrl,
   getGetOrganizationConfigsUrl,
   getGetReservationsForAuthenticatedUserUrl,
+  getGetSampleUrl,
   getGetSupportIdForAuthenticatedUserUrl,
   getRequestLoanForAuthenticatedUserUrl,
 } from "./generated/biblio"
@@ -35,6 +37,7 @@ import {
   parseAndMapReservations,
   parseDeleteReservation,
 } from "./mappers/reservation.mapper"
+import { parseAndMapSample } from "./mappers/sample.mapper"
 import { parseAndMapSignInToken, parseAndMapSupportId } from "./mappers/user.mapper"
 import type { BiblioConfig } from "./types"
 
@@ -47,8 +50,9 @@ type RequestOptions = {
   method: "GET" | "POST" | "DELETE"
   path: string
   body?: unknown
-  // Return undefined instead of throwing on a 404 response.
-  allowNotFound?: boolean
+  // Statuses that mean "nothing here" rather than a failure: `request`
+  // returns undefined for them instead of throwing.
+  absentStatuses?: number[]
 }
 
 // Mirrors the Publizon calls the frontends make so they can switch provider
@@ -56,7 +60,7 @@ type RequestOptions = {
 // equivalent: the Publizon checklist (favorites) and batch loan status.
 export function createBiblioClient(config: BiblioConfig) {
   const request = async (options: RequestOptions): Promise<unknown> => {
-    const { method, path, body, allowNotFound } = options
+    const { method, path, body, absentStatuses } = options
 
     const url = `${config.baseUrl}${path}`
 
@@ -70,7 +74,7 @@ export function createBiblioClient(config: BiblioConfig) {
       ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
     })
 
-    if (allowNotFound && response.status === 404) {
+    if (absentStatuses?.includes(response.status)) {
       return undefined
     }
     if (!response.ok) {
@@ -88,12 +92,36 @@ export function createBiblioClient(config: BiblioConfig) {
         method: "GET",
         // The generated helpers do not encode path parameters.
         path: getGetMetadataByMaterialIdUrl(encodeURIComponent(isbn)),
-        allowNotFound: true,
+        absentStatuses: [404],
       })
       if (raw === undefined) {
         return undefined
       }
       return parseAndMapMetadata(raw)
+    },
+
+    // A promotional excerpt, for anyone - the adapter takes a
+    // client_credentials token here, so a sample needs no patron.
+    //
+    // `format` is deliberately left out: the adapter derives it from the
+    // material type Biblio has registered, which is a better source than
+    // anything the catalogue can tell us, and it comes back on the answer.
+    //
+    // Only the 404 is tolerated. The adapter also answers 403 where Biblio
+    // has not switched samples on yet, but 403 is its identity and licence
+    // failure too - swallowing it would hide a token the adapter no longer
+    // accepts behind "this material has no excerpt", on every site at once.
+    getSample: async (materialId: string): Promise<DigitalSample | undefined> => {
+      const raw = await request({
+        method: "GET",
+        // The generated helpers do not encode path parameters.
+        path: getGetSampleUrl(encodeURIComponent(materialId)),
+        absentStatuses: [404],
+      })
+      if (raw === undefined) {
+        return undefined
+      }
+      return parseAndMapSample(raw)
     },
 
     getLoans: async (
@@ -112,16 +140,16 @@ export function createBiblioClient(config: BiblioConfig) {
 
     // Whether the user can loan the material right now - the equivalent of
     // Publizon's loan status for an identifier. The adapter answers 404 for a
-    // material it does not know; with allowNotFound that is `undefined`, as
-    // for getMetadata.
+    // material it does not know; callers that tolerate one pass it as an
+    // absent status and get `undefined`, as for getMetadata.
     getLoanDecision: async (
       materialId: string,
-      options?: { allowNotFound?: boolean }
+      options?: { absentStatuses?: number[] }
     ): Promise<LoanDecision | undefined> => {
       const raw = await request({
         method: "GET",
         path: getCanLoanForAuthenticatedUserUrl({ material_id: materialId }),
-        allowNotFound: options?.allowNotFound,
+        absentStatuses: options?.absentStatuses,
       })
       if (raw === undefined) {
         return undefined
