@@ -17,7 +17,7 @@ on:
       - ".github/workflows/react-ci.yml"
       - ".github/actions/**"
       - "schemas/openapi/**"
-      - "schemas/graphql/dbc-fbi*.graphql"
+      - "schemas/graphql/dbc-fbi.graphql"
       - "cms/openapi.json"
   pull_request:
     paths:
@@ -25,7 +25,7 @@ on:
       - ".github/workflows/react-ci.yml"
       - ".github/actions/**"
       - "schemas/openapi/**"
-      - "schemas/graphql/dbc-fbi*.graphql"
+      - "schemas/graphql/dbc-fbi.graphql"
       - "cms/openapi.json"
 
 jobs:
