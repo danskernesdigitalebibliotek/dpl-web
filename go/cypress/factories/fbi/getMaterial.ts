@@ -473,7 +473,6 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
                 display: "2016",
                 year: 2016,
               },
-              contributors: [],
               edition: "1. e-bogsudgave",
               summary: "2016 (1. e-bogsudgave)",
             },
