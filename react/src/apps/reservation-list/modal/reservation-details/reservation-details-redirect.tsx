@@ -4,6 +4,7 @@ import { MaterialProps } from "../../../loan-list/materials/utils/material-fetch
 import { ReservationType } from "../../../../core/utils/types/reservation-type";
 import LinkButton from "../../../../components/Buttons/LinkButton";
 import { Button } from "../../../../components/Buttons/Button";
+import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
 
 export interface ReservationDetailsRedirectProps {
   reservation: ReservationType;
@@ -23,6 +24,11 @@ const ReservationDetailsRedirect: FC<
   workUrl
 }) => {
   const t = useText();
+  // TEMPORARY: a reservation in the queue Biblio is migrating stays put, so
+  // giving it up is refused. Why is stated by the parent, which renders this
+  // row once per breakpoint. Delete this line and the `disabled` expression
+  // once the freeze is lifted - see usePublizonReservationsClosed.
+  const cancellable = useCanCancelReservation()(reservation);
 
   return (
     <div className={`modal-details__buttons ${className}`}>
@@ -32,7 +38,7 @@ const ReservationDetailsRedirect: FC<
         size="small"
         variant="outline"
         collapsible={false}
-        disabled={false}
+        disabled={!cancellable}
         onClick={() => openReservationDeleteModal(reservation)}
         classNames={linkClassNames}
         dataCy="remove-digital-reservation-button"

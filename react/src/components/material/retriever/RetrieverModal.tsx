@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useGetInfomediaQuery } from "../../../core/dbc-gateway/generated/graphql";
+import { useGetRetrieverQuery } from "../../../core/dbc-gateway/generated/graphql";
 import Modal, { useIsModalOpen } from "../../../core/utils/modal";
 import { useText } from "../../../core/utils/text";
 import { useConfig } from "../../../core/utils/config";
 import { Pid } from "../../../core/utils/types/ids";
-import InfomediaModalBody from "./InfomediaModalBody";
+import RetrieverModalBody from "./RetrieverModalBody";
 import { Manifestation } from "../../../core/utils/types/entities";
-import InfomediaSkeleton from "./InfomediaSkeleton";
+import RetrieverSkeleton from "./RetrieverSkeleton";
 import { isResident } from "../../../core/utils/helpers/userInfo";
 import useUserInfo from "../../../core/adgangsplatformen/useUserInfo";
 import {
@@ -15,16 +15,16 @@ import {
 } from "../../../apps/material/helper";
 import { isAnonymous } from "../../../core/utils/helpers/user";
 
-export const infomediaModalId = (pid: Pid) => `infomedia-modal-${pid}`;
+export const retrieverModalId = (pid: Pid) => `retriever-modal-${pid}`;
 
-interface InfomediaModalProps {
+interface RetrieverModalProps {
   manifestation: Manifestation;
-  infoMediaId: string;
+  retrieverId: string;
 }
 
-const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
+const RetrieverModal: React.FunctionComponent<RetrieverModalProps> = ({
   manifestation,
-  infoMediaId
+  retrieverId
 }) => {
   const t = useText();
   const config = useConfig();
@@ -41,7 +41,7 @@ const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
     }
   }, [userInfo, siteAgencyId]);
 
-  const modalId = infomediaModalId(manifestation.pid);
+  const modalId = retrieverModalId(manifestation.pid);
   const isModalOpen = useIsModalOpen(modalId);
 
   // The article body is only worth fetching once the reader asks for it: a
@@ -50,10 +50,10 @@ const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
   const {
     data,
     error,
-    isLoading: isLoadingInfomedia
-  } = useGetInfomediaQuery(
+    isLoading: isLoadingRetriever
+  } = useGetRetrieverQuery(
     {
-      id: infoMediaId
+      id: retrieverId
     },
     {
       enabled: shouldFetchData && isModalOpen
@@ -71,24 +71,24 @@ const InfomediaModal: React.FunctionComponent<InfomediaModalProps> = ({
     <Modal
       modalId={modalId}
       screenReaderModalDescriptionText={t(
-        "infomediaModalScreenReaderModalDescriptionText"
+        "retrieverModalScreenReaderModalDescriptionText"
       )}
-      closeModalAriaLabelText={t("infomediaModalCloseModalAriaLabelText")}
-      dataCy="infomedia-modal"
+      closeModalAriaLabelText={t("retrieverModalCloseModalAriaLabelText")}
+      dataCy="retriever-modal"
     >
-      {(isLoadingUserInfo || isLoadingInfomedia) && <InfomediaSkeleton />}
-      {data?.infomedia?.article && data.infomedia.article.text && (
-        <InfomediaModalBody
-          headLine={title}
-          hedLine={data.infomedia.article.hedLine ?? ""}
-          paper={data.infomedia.article.paper ?? ""}
+      {(isLoadingUserInfo || isLoadingRetriever) && <RetrieverSkeleton />}
+      {data?.retriever?.article && data.retriever.article.fullTextHtml && (
+        <RetrieverModalBody
+          headline={title}
+          subHeadline={data.retriever.article.subHeadline ?? ""}
+          sourceName={data.retriever.article.sourceName ?? ""}
           byLine={author}
-          dateLine={data.infomedia.article.dateLine ?? ""}
-          text={data.infomedia.article.text ?? ""}
+          publishingDate={data.retriever.article.publishingDate ?? ""}
+          textHtml={data.retriever.article.fullTextHtml ?? ""}
         />
       )}
     </Modal>
   );
 };
 
-export default InfomediaModal;
+export default RetrieverModal;

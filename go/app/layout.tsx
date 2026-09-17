@@ -13,6 +13,7 @@ import { Toaster } from "@/components/shared/toaster/Toaster"
 import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { setLayoutMetadata } from "@/lib/helpers/helper.metadata"
 import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
+import MotionProvider from "@/lib/providers/MotionProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import ServiceLayerProvider from "@/lib/providers/ServiceLayerProvider"
 import "@/styles/globals.css"
@@ -47,24 +48,26 @@ async function RootLayout({
     <NuqsAdapter>
       <DplCmsConfigContextProvider dplCmsConfig={dplCmsConfig}>
         <Theme>
-          <ReactQueryProvider>
-            <ServiceLayerProvider>
-              {/* Header and Footer live in the route group layouts, not here:
-                the reader route group renders without page chrome, the same
-                footing the WeDoBooks reader has in the CMS. */}
-              <DynamicSheet />
-              <DynamicModal />
-              <Toaster />
-              {/* Outside DynamicModal on purpose: playback survives navigation. */}
-              <GlobalPlayer />
-              {children}
-              {/* Own Suspense boundary: MappTracking reads useSearchParams, which
+          <MotionProvider>
+            <ReactQueryProvider>
+              <ServiceLayerProvider>
+                {/* Header and Footer live in the route group layouts, not here:
+                  the reader route group renders without page chrome, the same
+                  footing the WeDoBooks reader has in the CMS. */}
+                <DynamicSheet />
+                <DynamicModal />
+                <Toaster />
+                {/* Outside DynamicModal on purpose: playback survives navigation. */}
+                <GlobalPlayer />
+                {children}
+                {/* Own Suspense boundary: MappTracking reads useSearchParams, which
                 would otherwise opt the whole layout into client rendering. */}
-              <Suspense>
-                <MappTracking />
-              </Suspense>
-            </ServiceLayerProvider>
-          </ReactQueryProvider>
+                <Suspense>
+                  <MappTracking />
+                </Suspense>
+              </ServiceLayerProvider>
+            </ReactQueryProvider>
+          </MotionProvider>
         </Theme>
       </DplCmsConfigContextProvider>
     </NuqsAdapter>

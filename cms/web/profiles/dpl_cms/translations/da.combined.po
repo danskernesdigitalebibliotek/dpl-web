@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-14 11:43+0200\n"
-"PO-Revision-Date: 2026-09-14 11:43+0200\n"
+"POT-Creation-Date: 2026-09-16 09:15+0200\n"
+"PO-Revision-Date: 2026-09-16 09:15+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-14 11:43+0200\n"
-"PO-Revision-Date: 2026-09-14 11:43+0200\n"
+"POT-Creation-Date: 2026-09-16 09:15+0200\n"
+"PO-Revision-Date: 2026-09-16 09:15+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1420,6 +1420,10 @@ msgctxt "views.view.administerusersbyrole_people:display:default:display_options
 msgid "@interval ago"
 msgstr ""
 
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:settings:past_format"
+msgid "@interval ago"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:access:settings:past_format"
 msgid "@interval ago"
 msgstr ""
@@ -1428,6 +1432,10 @@ msgid "@interval hence"
 msgstr "om @interval"
 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:access:settings:future_format"
+msgid "@interval hence"
+msgstr ""
+
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:settings:future_format"
 msgid "@interval hence"
 msgstr ""
 
@@ -3497,11 +3505,9 @@ msgstr "Alle lån"
 
 msgctxt "Work Page"
 msgid ""
-"All material in Infomedia is covered by copyright law and may not be copied "
+"All material in Retriever is covered by copyright law and may not be copied "
 "without special permission."
 msgstr ""
-"Alt materiale i Retriever er omfattet af lov om ophavsret og må ikke "
-"kopieres uden særlig tilladelse."
 
 msgid "All meta tags in the \"@group\" group."
 msgstr "Alle meta tags i \"@group\"-gruppen."
@@ -6332,6 +6338,17 @@ msgctxt "Work Page"
 msgid "Close Order digital copy modal"
 msgstr "Luk pop-up"
 
+msgctxt "Dpl Biblio"
+msgid "Close Publizon reservations on the website"
+msgstr ""
+
+msgid "Close Publizon reservations while the queue is migrated"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Close Retriever modal"
+msgstr ""
+
 msgctxt "Global (Aria)"
 msgid "Close blocked patron modal"
 msgstr "Luk pop-up til blokeret bruger"
@@ -6358,10 +6375,6 @@ msgstr "Luk pop-up"
 
 msgctxt "Fees list (Aria)"
 msgid "Close fee details modal"
-msgstr "Luk pop-up"
-
-msgctxt "Work Page"
-msgid "Close infomedia modal"
 msgstr "Luk pop-up"
 
 msgctxt "Global"
@@ -13774,10 +13787,6 @@ msgstr "Indstillinger for infinite scroll"
 msgid "Infinite Scroll Pager"
 msgstr ""
 
-msgctxt "Work Page"
-msgid "Infomedia modal screen reader description"
-msgstr "Retriever pop-up beskrivelse til skærmlæser"
-
 msgid ""
 "Information about rights held in and over the resource. Typically, rights "
 "information includes a statement about various property rights associated "
@@ -16170,6 +16179,10 @@ msgstr "Måneder"
 
 msgid "More Information"
 msgstr "Mere Information"
+
+msgctxt "Series Page"
+msgid "More by @author"
+msgstr ""
 
 msgctxt "advanced search 2"
 msgid "More filters"
@@ -19238,6 +19251,14 @@ msgctxt "field.field.node.page.field_publication_date:label"
 msgid "Publication date"
 msgstr ""
 
+msgctxt "views.view.importable_content:display:default:display_options:sorts:field_publication_date_value:expose:label"
+msgid "Publication date"
+msgstr ""
+
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:admin_label"
+msgid "Publication date (since)"
+msgstr ""
+
 msgctxt "Material search"
 msgid "Publication year"
 msgstr "Udgivelsesår"
@@ -19357,6 +19378,10 @@ msgid "Published"
 msgstr ""
 
 msgctxt "views.view.event_series_admin:display:default:display_options:filters:status:group_info:label"
+msgid "Published"
+msgstr ""
+
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date:label"
 msgid "Published"
 msgstr ""
 
@@ -20260,6 +20285,12 @@ msgctxt "List size (settings)"
 msgid "Reservations list size settings"
 msgstr "Listestørrelse på reserveringsoversigt"
 
+msgctxt "Global"
+msgid ""
+"Reservations of digital materials are closed while we are moving to a new "
+"service. Please try again later."
+msgstr ""
+
 msgctxt "Patron menu"
 msgid "Reservations ready for pickup"
 msgstr "Reserveringer klar til lån"
@@ -20423,6 +20454,10 @@ msgid "Retrieve all events"
 msgstr "Hent alle arrangementer"
 
 msgid "Retrieve happening events"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Retriever modal screen reader description"
 msgstr ""
 
 msgctxt "Global"
@@ -21303,6 +21338,12 @@ msgstr "Vælg materialetype"
 msgid "Select the method/strategy used to inherit data."
 msgstr "Vælg den metode/strategi der skal bruges til at arve data."
 
+msgctxt "Library Agency Configuration"
+msgid ""
+"Select the page that visitors are redirected to when a search returns zero "
+"results."
+msgstr ""
+
 msgid "Select the plugin to use when creating event instances."
 msgstr "Vælg pluginet, til når du skal oprette arrangementinstanser."
 
@@ -21965,6 +22006,10 @@ msgstr "Vis flere"
 msgid "Show more label"
 msgstr ""
 
+msgctxt "Global"
+msgid "Show next"
+msgstr ""
+
 msgid "Show only used items"
 msgstr "Vis kun brugte elementer"
 
@@ -21977,6 +22022,10 @@ msgstr "Vis antal elementer i valgmuligheder"
 
 msgid "Show pixel dimensions"
 msgstr "Vis pixel-dimensioner"
+
+msgctxt "Global"
+msgid "Show previous"
+msgstr ""
 
 msgctxt "Search Result"
 msgid "Show results"
@@ -22066,6 +22115,10 @@ msgstr "Vist"
 
 msgctxt "views.view.importable_content:display:default:display_options:filters:field_categories_target_id_1:expose:description"
 msgid "Shows content that has been tagged with a category, by BNR"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Side til 0-hits søgninger"
 msgstr ""
 
 msgctxt "Patron menu"
@@ -23276,6 +23329,14 @@ msgid ""
 "provisioned in WeDoBooks, and the adapter answers \"Material not found\" for "
 "those. With this enabled such a material is shown as unavailable; without it "
 "the material page fails. Publizon is never asked either way."
+msgstr ""
+
+msgctxt "Dpl Biblio"
+msgid ""
+"Temporary. While Biblio migrates the reservation queue away from Publizon it "
+"has to stand still: with this enabled patrons can neither reserve a digital "
+"material through Publizon nor cancel a reservation they already have, and "
+"the website tells them why. Loans are unaffected."
 msgstr ""
 
 msgid "Term"
@@ -27582,29 +27643,6 @@ msgstr "URL eller UUID"
 msgid "URL substitution"
 msgstr "URL-erstatning"
 
-msgctxt "Library Agency Configuration"
-msgid "URL til 0-hits søgninger"
-msgstr "URL til 0-hits søgninger"
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"URL to the page that should be shown when a search returns zero results. "
-"<br />\n"
-"                                         You can add a relative url (e.g. /"
-"no-results). <br />\n"
-"                                         You can search for an internal url. "
-"<br />\n"
-"                                         You can add an external url "
-"(starting with \"http://\" or \"https://\")."
-msgstr ""
-"URL til den side, der bliver vist, når en søgning har 0 resultater. <br />\n"
-"                                         Du kan tilføje en relativ url (fx /"
-"din-sogning-har-0-resultater). <br />\n"
-"                                         Du kan søge efter en intern url. "
-"<br />\n"
-"                                         Du kan tilføje en ekstern url (der "
-"starter med with \"http://\" or \"https://\")."
-
 msgid "URLs to related content"
 msgstr "URL'er til relateret indhold"
 
@@ -28022,10 +28060,6 @@ msgid "Updated"
 msgstr ""
 
 msgctxt "views.view.firstaccessiondate_content_admin:display:default:display_options:fields:changed:label"
-msgid "Updated"
-msgstr ""
-
-msgctxt "views.view.importable_content:display:default:display_options:fields:changed_1:label"
 msgid "Updated"
 msgstr ""
 
@@ -29542,6 +29576,12 @@ msgstr ""
 
 msgid "You can test Scheduler's lightweight cron process interactively"
 msgstr "Du kan teste Schedulers letvægts cron-proces interaktivt"
+
+msgctxt "Global"
+msgid ""
+"You cannot cancel this reservation while we are moving to a new service. "
+"Your place in the queue is kept."
+msgstr ""
 
 msgid "You cannot connect another user's account."
 msgstr "Du kan ikke tilslutte en anden brugers konto."
@@ -31208,12 +31248,6 @@ msgstr ""
 msgid "{{ \"View Series\"|t }}"
 msgstr ""
 
-msgctxt "views.view.importable_content:display:default:display_options:fields:changed_1:alter:text"
-msgid ""
-"{{ changed_1 }}<br>\r\n"
-"<small>({{ changed }})</small>"
-msgstr ""
-
 msgid "{{ date__value }}"
 msgstr ""
 
@@ -31223,6 +31257,12 @@ msgstr ""
 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:field_author_name:alter:text"
 msgid "{{ field_author_name__value }} <br><small>{{ mail }}</small>"
+msgstr ""
+
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date:alter:text"
+msgid ""
+"{{ field_publication_date }}<br>\r\n"
+"<small>({{ field_publication_date_1 }})</small>"
 msgstr ""
 
 msgctxt "views.view.importable_content:display:default:display_options:fields:field_subtitle:alter:text"

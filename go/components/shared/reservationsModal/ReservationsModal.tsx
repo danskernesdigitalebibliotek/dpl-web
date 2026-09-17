@@ -33,7 +33,6 @@ const ReservationRow = ({ item, onSelect }: { item: ReservationItem; onSelect: (
       manifestation={manifestation}
       title={title}
       creators={displayCreators(work.creators, 1)}
-      ariaLabel={`Se detaljer om din reservering af ${title}`}
       onSelect={onSelect}
       status={<ReservationStatus item={item} />}
     />
