@@ -17,7 +17,10 @@ const useWedoBooksSdk = () => {
   const config = useReaderSdkConfig();
 
   return useQuery<WedoBooksSdk>({
-    // Keyed on the application: one client per set of credentials.
+    // The application id is in the key to say which credentials the client was
+    // built from, not to get a second one: `createWedoBooksSdk` caches the
+    // first client it makes and ignores the config afterwards, because a
+    // second instance would mean a second Firebase auth session.
     queryKey: ["reader", "sdk", config?.applicationId],
     enabled: Boolean(config),
     // The client outlives any staleness the cache could express.

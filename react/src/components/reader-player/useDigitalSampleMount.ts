@@ -28,7 +28,13 @@ type SampleMount = {
  */
 const useDigitalSampleMount = (identifier: string): SampleMount | null => {
   const { data: sdk } = useWedoBooksSdk();
-  const { data: sample } = useDigitalSample(identifier);
+  // The query keeps failures quiet for the teaser's sake, where a missing
+  // excerpt just means no offer. Here the excerpt is the page, so a failure
+  // has to be seen: without this it renders as nothing at all, which is
+  // indistinguishable from still loading and never resolves.
+  const { data: sample } = useDigitalSample(identifier, {
+    throwOnError: true
+  });
   const { data: material } = useDigitalMaterial(identifier);
 
   if (!sdk || !sample || !material) return null;
