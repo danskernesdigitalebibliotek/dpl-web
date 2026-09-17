@@ -122,8 +122,10 @@ if (getenv('CI')) {
   $config['dpl_fbi.settings'] = ['base_url' => 'http://fbi.dpl-cms.local/[profile]/graphql'];
   $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs.dpl-cms.local'];
   $config['dpl_publizon.settings'] = ['base_url' => 'https://pubhub-openplatform.dbc.dk'];
-  // Adressevælgeren, the Danish address API used by dk_address.
-  $config['dk_address.settings']['api_url'] = 'http://adressevaelger.dpl-cms.local';
+  // Adressevælgeren, the Danish address API used by dk_address, is not
+  // mocked: it currently accepts the shared token the module ships with, so
+  // CI calls the real API. That also makes CI notice the day
+  // Klimadatastyrelsen retire the shared token.
   // Adgangsplatformen OpenID Connect client.
   $config['openid_connect.client.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://adgangsplatformen.dpl-cms.local/oauth/authorize';
   $config['openid_connect.client.adgangsplatformen']['settings']['token_endpoint'] = 'http://adgangsplatformen.dpl-cms.local/oauth/token/';
