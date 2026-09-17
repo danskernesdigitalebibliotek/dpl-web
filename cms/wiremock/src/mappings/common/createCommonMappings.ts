@@ -91,34 +91,42 @@ export default async (baseUri?: string, options?: Options) => {
     })
   );
 
-  // Mapping for GSearch / Dataforsyningen address API.
-  // The GSearch module calls this server-side when resolving addresses.
-  // Persistent so it survives cy.resetMappings() from other Cypress specs.
-  await import("./data/gsearch/getAdresse.json").then((json) =>
-    wiremock(baseUri, options).mappings.createMapping({
+  // Mappings for Adressevælgeren, the Danish address API. The dk_address
+  // module calls it server-side: first the two searches when the editor types
+  // in the address widget, then a lookup of the chosen id when the form is
+  // saved. The responses are captured from the real API for the Ishøj address
+  // used in branches.cy.ts. Persistent so they survive cy.resetMappings() from
+  // other Cypress specs.
+  const adressevaelgerMappings = [
+    {
+      urlPathPattern: "/husnumre/soeg",
+      json: await import("./data/adressevaelger/husnumreSoeg.json"),
+    },
+    {
+      urlPathPattern: "/adresser/soeg",
+      json: await import("./data/adressevaelger/adresserSoeg.json"),
+    },
+    {
+      urlPathPattern: "/husnumre/[0-9a-f-]{36}",
+      json: await import("./data/adressevaelger/husnummer.json"),
+    },
+    {
+      urlPathPattern: "/adresser/[0-9a-f-]{36}",
+      json: await import("./data/adressevaelger/adresse.json"),
+    },
+  ];
+  for (const { urlPathPattern, json } of adressevaelgerMappings) {
+    await wiremock(baseUri, options).mappings.createMapping({
       persistent: true,
       request: {
         method: "GET",
-        urlPattern: "/adresse.*",
+        urlPathPattern,
       },
       response: {
         jsonBody: json.default,
       },
-    })
-  );
-
-  await import('./data/gsearch/getHusnummer.json').then((json) =>
-    wiremock(baseUri, options).mappings.createMapping({
-      persistent: true,
-      request: {
-        method: 'GET',
-        urlPattern: '/husnummer.*',
-      },
-      response: {
-        jsonBody: json.default,
-      },
-    })
-  );
+    });
+  }
 
   // Mapings for autosuggest
   await import("../search/data/fbi/autosugggest.json").then((json) =>

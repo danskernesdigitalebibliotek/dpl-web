@@ -340,8 +340,8 @@ describe('Events', () => {
         .get(`input[name="field_event_location_type"][value="${value}"]`)
         .check();
 
-    // Use the freetext path of the gsearch widget so the test doesn't depend
-    // on the live GSearch autocomplete endpoint.
+    // Use the freetext path of the address widget so the test doesn't depend
+    // on the live address autocomplete endpoint.
     const fillFreetextAddress = (address: Address) => {
       cy.get('@freetextToggle').check();
       cy.get('@street').clear();
