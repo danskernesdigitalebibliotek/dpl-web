@@ -13,7 +13,7 @@ import {
   sampleUrl
 } from "../../components/reader-player/helper";
 import DigitalReaderPlayer from "../../components/reader-player/DigitalReaderPlayer";
-import useReaderCheckout from "../../components/reader-player/useReaderCheckout";
+import useDigitalCheckout from "../../components/reader-player/useDigitalCheckout";
 
 // The reader and player themselves need the SDK; which of them mounts is the
 // decision under test, so they are reduced to markers.
@@ -23,15 +23,15 @@ vi.mock("../../components/reader-player/DigitalReader", () => ({
 vi.mock("../../components/reader-player/DigitalPlayer", () => ({
   default: () => <div data-testid="player" />
 }));
-vi.mock("../../components/reader-player/useReaderCheckout", () => ({
+vi.mock("../../components/reader-player/useDigitalCheckout", () => ({
   default: vi.fn()
 }));
 
 const givenCheckout = (materialType: string | null) =>
-  vi.mocked(useReaderCheckout).mockReturnValue({
+  vi.mocked(useDigitalCheckout).mockReturnValue({
     sdk: {},
     checkout: materialType ? { material_type: materialType } : null
-  } as unknown as ReturnType<typeof useReaderCheckout>);
+  } as unknown as ReturnType<typeof useDigitalCheckout>);
 import { store } from "../../core/store";
 import { addTextEntries } from "../../core/text.slice";
 

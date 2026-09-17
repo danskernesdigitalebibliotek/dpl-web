@@ -7,7 +7,7 @@ import { useConfig } from "../../core/utils/config";
  * application to WeDoBooks; they say nothing about which patron is reading -
  * that comes from the sign-in token the adapter mints.
  */
-export type ReaderSdkConfig = {
+export type DigitalSdkConfig = {
   applicationId: string;
   firebaseApiKey: string;
   firebaseProjectId: string;
@@ -31,7 +31,7 @@ const configKeys = {
  * misconfiguration to report. Callers fall back to not offering the material,
  * which is what a library that has not finished the switch should see.
  */
-const useReaderSdkConfig = (): ReaderSdkConfig | null => {
+const useDigitalSdkConfig = (): DigitalSdkConfig | null => {
   const config = useConfig();
 
   try {
@@ -66,4 +66,4 @@ const useReaderSdkConfig = (): ReaderSdkConfig | null => {
   }
 };
 
-export default useReaderSdkConfig;
+export default useDigitalSdkConfig;

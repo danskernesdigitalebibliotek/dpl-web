@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import useDigitalSampleMount from "./useDigitalSampleMount";
+import useDigitalSampleProps from "./useDigitalSampleProps";
 
 // Loaded on demand - see DigitalReader.
 const SdkSampleReader = React.lazy(() =>
@@ -36,21 +36,22 @@ const DigitalSample: React.FC<DigitalSampleProps> = ({
   identifier,
   onClose
 }) => {
-  const mount = useDigitalSampleMount(identifier);
+  const sdkProps = useDigitalSampleProps(identifier);
 
   // Nothing to render until the file and its catalogue record are in hand. The
   // reader and player draw their own loading state once mounted, so showing
   // one here as well would only make the wait look like two waits.
-  if (!mount) return null;
+  if (!sdkProps) return null;
 
-  const SdkSample = mount.format === "mp3" ? SdkSamplePlayer : SdkSampleReader;
+  const SdkSample =
+    sdkProps.format === "mp3" ? SdkSamplePlayer : SdkSampleReader;
 
   return (
     <Suspense fallback={null}>
       <SdkSample
-        sdk={mount.sdk}
-        sampleUrl={mount.sampleUrl}
-        material={mount.material}
+        sdk={sdkProps.sdk}
+        sampleUrl={sdkProps.sampleUrl}
+        material={sdkProps.material}
         onClose={onClose}
       />
     </Suspense>

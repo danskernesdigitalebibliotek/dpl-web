@@ -5,7 +5,7 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { isAnonymous } from "../../core/utils/helpers/user";
 import type { WedoBooksSdk } from "@danskernesdigitalebibliotek/dpl-wedobooks";
-import useWedoBooksSdk from "./useWedoBooksSdk";
+import useDigitalSdk from "./useDigitalSdk";
 
 /**
  * The SDK with the patron signed in, ready to open a book they hold.
@@ -13,10 +13,10 @@ import useWedoBooksSdk from "./useWedoBooksSdk";
  * The SDK keeps its own session against WeDoBooks, so signing in takes two
  * steps: ask the adapter to vouch for the patron we already authenticated,
  * then hand the resulting token to the SDK. Everything up to that point is
- * `useWedoBooksSdk`, which samples use on its own.
+ * `useDigitalSdk`, which is the same client before anyone is signed in.
  */
-const useReaderSdk = () => {
-  const { data: sdk } = useWedoBooksSdk();
+const useDigitalSdkSession = () => {
+  const { data: sdk } = useDigitalSdk();
   const serviceLayerConfig = useServiceLayerConfig();
   const queryClient = useQueryClient();
   // The reader page is public, but signing in is patron-scoped, and the token
@@ -58,4 +58,4 @@ const useReaderSdk = () => {
   });
 };
 
-export default useReaderSdk;
+export default useDigitalSdkSession;

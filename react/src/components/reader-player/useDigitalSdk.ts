@@ -1,20 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import type { WedoBooksSdk } from "@danskernesdigitalebibliotek/dpl-wedobooks";
-import useReaderSdkConfig from "./useReaderSdkConfig";
+import useDigitalSdkConfig from "./useDigitalSdkConfig";
 
 /**
- * The WeDoBooks SDK client, constructed but not signed in.
+ * The WeDoBooks SDK client as a sample needs it: constructed, not signed in.
  *
- * This is all a sample needs: the SDK's url-based sample functions never
- * reach WeDoBooks' backend, so there is no session to establish. A loan is
- * different - it has to be opened as the patron who holds it, which is what
- * `useReaderSdk` adds on top of this.
+ * The SDK's url-based sample functions never reach WeDoBooks' backend, so
+ * there is no session to establish, and a visitor who is not signed in can
+ * use it. A loan is different - it has to be opened as the patron who holds
+ * it, which is what `useDigitalSdkSession` adds on top of this same client.
  *
  * The client is a page-lifetime singleton behind this query (see
  * `createWedoBooksSdk`), so there is one instance whoever asks for it.
  */
-const useWedoBooksSdk = () => {
-  const config = useReaderSdkConfig();
+const useDigitalSdk = () => {
+  const config = useDigitalSdkConfig();
 
   return useQuery<WedoBooksSdk>({
     // The application id is in the key to say which credentials the client was
@@ -43,4 +43,4 @@ const useWedoBooksSdk = () => {
   });
 };
 
-export default useWedoBooksSdk;
+export default useDigitalSdk;
