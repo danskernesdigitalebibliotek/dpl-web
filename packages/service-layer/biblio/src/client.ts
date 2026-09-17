@@ -50,9 +50,8 @@ type RequestOptions = {
   method: "GET" | "POST" | "DELETE"
   path: string
   body?: unknown
-  // Statuses that mean "nothing here" rather than a failure: `request`
-  // returns undefined for them instead of throwing.
-  absentStatuses?: number[]
+  // Return undefined instead of throwing on a 404 response.
+  allowNotFound?: boolean
 }
 
 // Mirrors the Publizon calls the frontends make so they can switch provider
@@ -60,7 +59,7 @@ type RequestOptions = {
 // equivalent: the Publizon checklist (favorites) and batch loan status.
 export function createBiblioClient(config: BiblioConfig) {
   const request = async (options: RequestOptions): Promise<unknown> => {
-    const { method, path, body, absentStatuses } = options
+    const { method, path, body, allowNotFound } = options
 
     const url = `${config.baseUrl}${path}`
 
@@ -74,7 +73,7 @@ export function createBiblioClient(config: BiblioConfig) {
       ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
     })
 
-    if (absentStatuses?.includes(response.status)) {
+    if (allowNotFound && response.status === 404) {
       return undefined
     }
     if (!response.ok) {
@@ -92,7 +91,7 @@ export function createBiblioClient(config: BiblioConfig) {
         method: "GET",
         // The generated helpers do not encode path parameters.
         path: getGetMetadataByMaterialIdUrl(encodeURIComponent(isbn)),
-        absentStatuses: [404],
+        allowNotFound: true,
       })
       if (raw === undefined) {
         return undefined
@@ -116,7 +115,7 @@ export function createBiblioClient(config: BiblioConfig) {
         method: "GET",
         // The generated helpers do not encode path parameters.
         path: getGetSampleUrl(encodeURIComponent(materialId)),
-        absentStatuses: [404],
+        allowNotFound: true,
       })
       if (raw === undefined) {
         return undefined
@@ -140,16 +139,16 @@ export function createBiblioClient(config: BiblioConfig) {
 
     // Whether the user can loan the material right now - the equivalent of
     // Publizon's loan status for an identifier. The adapter answers 404 for a
-    // material it does not know; callers that tolerate one pass it as an
-    // absent status and get `undefined`, as for getMetadata.
+    // material it does not know; with allowNotFound that is `undefined`, as
+    // for getMetadata.
     getLoanDecision: async (
       materialId: string,
-      options?: { absentStatuses?: number[] }
+      options?: { allowNotFound?: boolean }
     ): Promise<LoanDecision | undefined> => {
       const raw = await request({
         method: "GET",
         path: getCanLoanForAuthenticatedUserUrl({ material_id: materialId }),
-        absentStatuses: options?.absentStatuses,
+        allowNotFound: options?.allowNotFound,
       })
       if (raw === undefined) {
         return undefined

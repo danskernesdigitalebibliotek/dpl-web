@@ -258,7 +258,7 @@ describe("createBiblioClient.getLoanDecision", () => {
     )
 
     await expect(
-      buildClient().getLoanDecision("9788758855752", { absentStatuses: [404] })
+      buildClient().getLoanDecision("9788758855752", { allowNotFound: true })
     ).resolves.toBeUndefined()
   })
 

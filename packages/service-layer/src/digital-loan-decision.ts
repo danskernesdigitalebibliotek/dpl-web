@@ -24,7 +24,7 @@ export async function getDigitalLoanDecision(
 ): Promise<LoanDecision> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
   const decision = await biblio.getLoanDecision(materialId, {
-    absentStatuses: config.tolerateUnknownMaterials?.() ? [404] : undefined,
+    allowNotFound: config.tolerateUnknownMaterials?.() ?? false,
   })
   return decision ?? unknownMaterialDecision
 }
