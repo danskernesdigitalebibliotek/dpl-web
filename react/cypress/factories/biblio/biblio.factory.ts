@@ -9,6 +9,7 @@ import {
   type GetMetadataApiResponse,
   type GetOrganizationConfigsApiResponse,
   type GetReservationsApiResponse,
+  type GetSampleApiResponse,
   type GetSupportIdApiResponse,
   type LoanDto,
   type ReservationDto,
@@ -148,6 +149,16 @@ export const biblioMetadataFactory = Factory.define<GetMetadataApiResponse>(
     materials: []
   })
 );
+
+/**
+ * `GET /v1/samples/{material_id}`. The url is signed and time-limited in
+ * production; here it only has to be something the SDK can be handed.
+ */
+export const biblioSampleFactory = Factory.define<GetSampleApiResponse>(() => ({
+  material_id: "0000000000000",
+  format: "epub",
+  sample_url: "https://samples.invalid/excerpt.epub?signature=test"
+}));
 
 /** `GET /v1/users/get_support_id` - the equivalent of Publizon's friendly
  * card number. */
