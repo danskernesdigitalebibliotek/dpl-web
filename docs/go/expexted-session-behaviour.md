@@ -72,9 +72,11 @@ the token (see ADR-012). The Drupal session cookie lives much longer.
 
 - A user logs into the Go Site with Adgangsplatformen
 - The user returns after the token has expired (e.g. after a weekend)
-- On the next page navigation the user is sent through the full logout flow:
-  the Go session, the Drupal session and the Adgangsplatformen SSO session
-  are all torn down, and the user lands on the Go front page as logged out
+- On the next page navigation the Go session is destroyed and the page is
+  shown to an anonymous visitor, offering login
+- The Drupal session ends too, the next time the CMS sees the session cookie
+- The Adgangsplatformen SSO session is left alone, so logging in again is a
+  round trip the user barely notices
 - Data requests fired with the dead token (e.g. an already-open profile
   page) destroy the Go session as well when the upstream answers 401/403
 
