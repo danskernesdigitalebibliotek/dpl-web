@@ -52,19 +52,6 @@ variable already exported by your shell. If `LIBRARY_TOKEN` is exported
 empty, the value in `.env` is ignored and every refresh runs anonymously.
 Unset it in your shell rather than fighting the Taskfile.
 
-## A note on the `Retriever*` definitions
-
-`a0cde7ec2` added the `Retriever*` SDL (the `AccessUnion` member,
-`Query.retriever`, and the `RetrieverArticle` / `RetrieverResponse` /
-`RetrieverErrorEnum` / `RetrieverService` types) **by hand** to the FBI
-snapshots, as a 153-line additive patch, because upstream did not serve
-it yet.
-
-That is no longer a patch to maintain. Every profile now serves all of it
-natively, and byte-identically to the hand-written SDL. Refreshing does
-**not** lose the Retriever types, and nothing needs re-applying
-afterwards. Do not treat these definitions as local edits.
-
 ## Refresh
 
 These tasks live in `schemas/Taskfile.yml`, which the repo-root
