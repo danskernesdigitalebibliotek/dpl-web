@@ -24,32 +24,33 @@ sub-project; only the contracts live here.
    itself, not upstream contracts — they live next to the code that
    generates them. `go/` codegen reads them from `cms/` directly.
 
-## The FBI gateway: one snapshot, one local extension
+## The FBI gateway: one snapshot, and why it must be authenticated
 
 `graphql/dbc-fbi.graphql` is the whole upstream schema, introspected from
 `fbi-api.dbc.dk/fbcms-go` and consumed by `react/`, `go/` and `cms/`
 alike. The gateway's profiles (`next`, `next-present`, `fbcms-go`) serve
-byte-identical schemas — verified by introspecting all three on the same
-day — so one snapshot covers every consumer regardless of which profile
-it talks to at runtime. Pick the profile in runtime config, not here.
+the same schema, so one snapshot covers every consumer regardless of
+which profile it talks to at runtime. Pick the profile in runtime config,
+not here.
 
-`graphql/dbc-fbi.local-submit-order.graphql` is **not** upstream schema.
-It is a hand-maintained SDL extension carrying `Mutation.submitOrder` and
-its input/response types, which DBC removed from every profile we can
-introspect. `react/` still ships the mutation
-(`react/src/apps/material/openOrder.graphql`, called from
-`ReservationModalBody.tsx` for interlibrary loans), so `react/` codegens
-against both files while `go/` and `cms/` read only the upstream one.
+**Introspection must be authenticated.** The gateway does not reject a
+missing or empty bearer token — it treats the caller as anonymous and
+serves a *reduced* schema. `Mutation.submitOrder` and its input and
+response types are among the fields missing from it, so an anonymous
+refresh silently vendors a contract that is a subset of what our clients
+actually query, and react's `openOrder` document then fails to validate
+against it.
 
-Be clear about what that buys: it keeps react's codegen green, it does
-**not** make the mutation work. Upstream's whole `Mutation` type is now
-`elba: ElbaServices!`, whose only field is `placeCopyRequest` (article
-copies, not material orders) — so the replacement is not another profile,
-it is another service. If `submitOrder` is really gone from the gateway,
-that reservation flow is already failing at runtime, and vendoring the
-types here changes nothing either way. **Finding out where order
-submission is supposed to live now is the open task.** Once it is
-answered, delete the extension file and the `openOrder` document with it.
+`_introspect-fbi` therefore refuses to run without `LIBRARY_TOKEN`, and
+checks the result for `AUTH_ONLY_SENTINEL` before keeping it — a token
+that is present but expired, revoked or under-privileged still returns
+200 with the anonymous schema, which a presence check alone would miss.
+A snapshot that fails the check is set aside as `.rejected`.
+
+One environment gotcha behind both: `task`'s `dotenv` does not override a
+variable already exported by your shell. If `LIBRARY_TOKEN` is exported
+empty, the value in `.env` is ignored and every refresh runs anonymously.
+Unset it in your shell rather than fighting the Taskfile.
 
 ## A note on the `Retriever*` definitions
 
@@ -73,7 +74,6 @@ There is no `schemas:` prefix.
 | Spec | Upstream                                                                                                                                                | Refresh |
 |---|---------------------------------------------------------------------------------------------------------------------------------------------------------|---|
 | `graphql/dbc-fbi.graphql` | DBC FBI gateway @ `fbi-api.dbc.dk/fbcms-go` — consumed by `react/`, `go/`, `cms/` (via Sailor in the cli container) and `packages/service-layer/` | `task refresh:dbc-fbi` |
-| `graphql/dbc-fbi.local-submit-order.graphql` | None — hand-maintained, see above                                                                                     | Never refresh |
 | `openapi/material-list.yaml` | `danskernesdigitalebibliotek/ddb-material-list@develop`                                                                                                 | `task refresh:material-list` |
 | `openapi/fbs-adapter.yaml` | FBS swagger 1.2 (Cicero), converted via [`itk-dev/dpl-fbs-adapter-tool`](https://github.com/itk-dev/dpl-fbs-adapter-tool)                               | `task refresh:fbs` (clones the tool into `.cache/`, runs its docker pipeline) |
 | `openapi/publizon-adapter.yaml` | None — edit by hand                                                                                                                                     | `task refresh:publizon` *(stub that prints this)* |
@@ -111,8 +111,5 @@ clients export, and TypeScript code importing a removed type will not be
 caught by validating the `.graphql` documents alone.
 
 ## TO-DOs
-- **Replace react's `openOrder`/`submitOrder`** — see the FBI section
-  above. This is the only thing keeping a hand-maintained SDL extension in
-  this directory.
 - Move SOAP parts to `/schemas` also. (`/go/lib/soap`)
 - Consider more strict GH Action triggers, rather than broad (e.g. `/go/**`)

@@ -1,9 +1,6 @@
 {
   "name": "DPL React",
-  "schema": [
-    "../schemas/graphql/dbc-fbi.graphql",
-    "../schemas/graphql/dbc-fbi.local-submit-order.graphql"
-  ],
+  "schema": "../schemas/graphql/dbc-fbi.graphql",
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {

@@ -76,6 +76,23 @@ enum AccessUrlTypeEnum {
   THUMBNAIL
 }
 
+type AddBookmarksResponse {
+  """
+  A list of materials for which bookmark addition failed.
+  """
+  items: [BookmarksStatusItem!]!
+
+  """
+  The overall status of the bookmark addition operation.
+  """
+  status: BookmarksOverallStatusEnum!
+}
+
+type AddHistoricalLoansResponse {
+  items: [PatronHistoricalLoanStatusItem!]!
+  status: PatronLoansOverallStatusEnum!
+}
+
 type Audience {
   """
   Range of numbers with either beginning of range or end of range or both e.g. 6-10, 1980-1999
@@ -168,6 +185,155 @@ type BibliographicCategory {
   The code as displayable text
   """
   display: String
+}
+
+type BookmarkItem {
+  """
+  The application the bookmark belongs to
+  """
+  application: String!
+
+  """
+  creation date of the bookmark
+  """
+  createdAt: DateTime!
+
+  """
+  The unique identifier for the bookmark
+  """
+  id: String!
+
+  """
+  The bibliographic record associated with the bookmark, if it can still be resolved.
+  """
+  material: BookmarkMaterial!
+
+  """
+  The unique identifier for the material this bookmark points to.
+  """
+  materialId: String!
+
+  """
+  The selection applied to the bookmarked work.
+  """
+  selection: BookmarkSelection
+
+  """
+  Stored metadata captured when the bookmark was created.
+  """
+  snapshot: BookmarkSnapshot!
+}
+
+type BookmarkMaterial {
+  manifestation: Manifestation
+
+  """
+  Manifestations matching the bookmark selection. This is not necessarily
+  every manifestation in the work.
+  """
+  manifestations: [Manifestation!]
+  work: Work
+}
+
+type BookmarkMaterialTypesSelection {
+  general: [GeneralMaterialTypeCodeEnum!]
+  specific: [String!]
+}
+
+input BookmarkMaterialTypesSelectionInput {
+  general: [GeneralMaterialTypeCodeEnum!]
+  specific: [String!]
+}
+
+type BookmarkSelection {
+  materialTypes: BookmarkMaterialTypesSelection!
+}
+
+input BookmarkSelectionInput {
+  materialTypes: BookmarkMaterialTypesSelectionInput!
+}
+
+type BookmarkSnapshot {
+  creator: String
+
+  """
+  Stored material types for a manifestation or a work selection. This is
+  null for a bookmark of an entire work.
+  """
+  materialTypes: [PatronMaterialTypeSnapshot!]
+  periodical: PeriodicalSnapshot
+  pid: String
+  title: String
+  version: Int
+  workId: String
+  workType: String
+}
+
+type Bookmarks {
+  """
+  The total number of bookmarks for the patron
+  """
+  hitcount: Int!
+
+  """
+  The list of bookmarks for the patron
+  """
+  items: [BookmarkItem!]!
+
+  """
+  The overall status of the bookmarks
+  """
+  status: BookmarksOverallStatusEnum!
+}
+
+input BookmarksInput {
+  materialId: String!
+  selection: BookmarkSelectionInput
+}
+
+enum BookmarksOverallStatusEnum {
+  ERROR_MISSING_CLIENT_CONFIGURATION
+  ERROR_UNAUTHENTICATED_TOKEN
+  FAILED
+  OK
+  PARTIALLY_FAILED
+}
+
+enum BookmarksStatusEnum {
+  ALREADY_EXISTS
+  FAILED
+  INVALID_ID
+  INVALID_MATERIAL_ID
+  NOT_FOUND
+  OK
+  UNKNOWN_ERROR
+}
+
+type BookmarksStatusItem {
+  """
+  The unique identifier for the bookmark that was attempted to be added or deleted.
+  """
+  id: String
+
+  """
+  The material for which bookmark addition failed.
+  """
+  material: BookmarkMaterial
+
+  """
+  The unique identifier for the material for which bookmark addition failed (e.g., a PID or work ID).
+  """
+  materialId: String
+
+  """
+  The normalized selection for the bookmark operation.
+  """
+  selection: BookmarkSelection
+
+  """
+  Status of the bookmark addition or deletion attempt for a specific material.
+  """
+  status: BookmarksStatusEnum!
 }
 
 enum CSHoldingsStatusEnum {
@@ -824,6 +990,43 @@ interface CreatorInterface {
   viafid: String
 }
 
+type CurrentLoan {
+  """
+  Account information for the patron who owns the loan.
+  """
+  account: PatronAccount
+
+  """
+  Branch information for the agency where the loan belongs.
+  """
+  agency: PatronAgency
+
+  """
+  Due date reported by OpenUserStatus.
+  """
+  dueDate: DateTime!
+
+  """
+  Identifier assigned to the loan by the library system.
+  """
+  id: String!
+
+  """
+  The manifestation associated with the loan, when it can be resolved.
+  """
+  manifestation: Manifestation
+
+  """
+  Fallback metadata reported by OpenUserStatus.
+  """
+  snapshot: PatronMaterialSnapshot
+
+  """
+  Status computed from the due date in the Europe/Copenhagen timezone.
+  """
+  status: PatronLoanStatusEnum!
+}
+
 type DK5MainEntry {
   """
   Main DK5 classification code
@@ -842,6 +1045,11 @@ type DK5MainEntry {
 }
 
 """
+A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
+"""
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar DateTime
@@ -849,6 +1057,23 @@ scalar DateTime
 type Debug {
   complexity: Complexity!
   depth: Depth!
+}
+
+type DeleteBookmarksResponse {
+  """
+  Number of failed bookmark deletions (e.g., due to non-existent bookmark IDs).
+  """
+  items: [BookmarksStatusItem!]!
+
+  """
+  The overall status of the bookmark deletion operation.
+  """
+  status: BookmarksOverallStatusEnum!
+}
+
+type DeleteHistoricalLoansResponse {
+  items: [PatronHistoricalLoanStatusItem!]!
+  status: PatronLoansOverallStatusEnum!
 }
 
 type Depth {
@@ -1083,6 +1308,44 @@ type GenreForm {
   Language of the genre/form term, if applicable
   """
   language: Language
+}
+
+type HistoricalLoan {
+  """
+  The patron's current account for the loan agency, when that account still exists.
+  This is not a snapshot of the account at the time of the historical loan.
+  """
+  account: PatronAccount
+
+  """
+  Branch information for the agency where the loan belonged.
+  """
+  agency: PatronAgency
+
+  """
+  Stable public UserData identifier used when deleting the historical loan.
+  """
+  id: String!
+
+  """
+  Date on which the material was borrowed, when known.
+  """
+  loanedAt: Date
+
+  """
+  The manifestation associated with the historical loan, when it can still be resolved.
+  """
+  manifestation: Manifestation
+
+  """
+  Date on which the material was returned, when known.
+  """
+  returnedAt: Date
+
+  """
+  Stored fallback metadata captured when the historical loan was ingested.
+  """
+  snapshot: PatronMaterialSnapshot
 }
 
 enum HoldingsStatusEnum {
@@ -2073,6 +2336,12 @@ type MusicShelf {
 
 type Mutation {
   elba: ElbaServices!
+
+  """
+  Updates patron information, such as adding or removing bookmarks.
+  """
+  patron: PatronMutation @deprecated(reason: "@draft")
+  submitOrder(dryRun: Boolean, input: SubmitOrderInput!): SubmitOrder
 }
 
 type NarrativeTechnique implements SubjectInterface {
@@ -2128,6 +2397,32 @@ enum NoteTypeEnum {
   WITHDRAWN_PUBLICATION
 }
 
+"""
+Enum for sorting bookmarks
+"""
+enum OrderBookmarksByEnum {
+  CREATEDAT_ASC
+  CREATEDAT_DESC
+  TITLE_ASC
+  TITLE_DESC
+}
+
+enum OrderLoansByEnum {
+  DUEDATE_ASC
+  DUEDATE_DESC
+  TITLE_ASC
+  TITLE_DESC
+}
+
+enum OrderTypeEnum {
+  ESTIMATE
+  HOLD
+  LOAN
+  NON_RETURNABLE_COPY
+  NORMAL
+  STACK_RETRIEVAL
+}
+
 type PEGI {
   """
   Display string for PEGI minimum age
@@ -2144,6 +2439,554 @@ type PEGI {
 An integer in the range from 1 to 100
 """
 scalar PaginationLimitScalar
+
+"""
+Information about the patron associated with the current access token.
+"""
+type Patron {
+  """
+  Retrieves the list of accounts for the patron, including pagination and sorting options.
+  """
+  accounts: [PatronAccount]!
+
+  """
+  Address of the current patron.
+  """
+  address: String
+
+  """
+  Indicates whether the current patron is blocked.
+  """
+  blocked: Boolean!
+
+  """
+  Retrieves the list of bookmarks for the patron, including pagination and sorting options.
+  """
+  bookmarks(
+    applications: [String!]
+    limit: PaginationLimitScalar
+    offset: Int
+    orderBy: OrderBookmarksByEnum
+  ): Bookmarks!
+
+  """
+  Country of the current patron.
+  """
+  country: String
+
+  """
+  Retrieves current loans live from OpenUserStatus.
+  """
+  currentLoans(
+    limit: PaginationLimitScalar
+    offset: Int
+    orderBy: OrderLoansByEnum
+    status: PatronLoanStatusEnum
+  ): PatronCurrentLoans!
+
+  """
+  Email address of the current patron.
+  """
+  email: String
+
+  """
+  Retrieves consent for storing historical loans and whether the patron is old enough to change it.
+  """
+  historicalLoanConsent: PatronHistoricalLoanConsent!
+
+  """
+  Retrieves historical loans stored in UserData.
+  """
+  historicalLoans(
+    limit: PaginationLimitScalar
+    offset: Int
+  ): PatronHistoricalLoans!
+
+  """
+  Agency ID where the current patron is logged in.
+  """
+  loggedInAgencyId: String
+
+  """
+  Branch ID where the current patron is logged in.
+  """
+  loggedInBranchId: String
+
+  """
+  Municipality agency ID of the current patron.
+  """
+  municipalityAgencyId: String
+
+  """
+  Municipality number of the current patron.
+  """
+  municipalityNumber: String
+
+  """
+  Name of the current patron.
+  """
+  name: String
+
+  """
+  Postal code of the current patron.
+  """
+  postalCode: String
+}
+
+type PatronAccount {
+  """
+  The address of the patron.
+  """
+  address: String
+
+  """
+  The library agency associated with the patron account.
+  """
+  agency: PatronAgency
+
+  """
+  Indicates whether the patron is blocked or not.
+  """
+  blocked: Boolean!
+
+  """
+  The country of the patron.
+  """
+  country: String
+
+  """
+  The email address of the patron.
+  """
+  email: String
+
+  """
+  The agency ID of the patron.
+  """
+  municipalityAgencyId: String
+
+  """
+  The municipality number of the patron.
+  """
+  municipalityNumber: String
+
+  """
+  Name of the patron.
+  """
+  name: String
+
+  """
+  The postal code of the patron.
+  """
+  postalCode: String
+}
+
+type PatronAgency {
+  """
+  The postal address of the agency's main branch.
+  """
+  address: String
+
+  """
+  The branches belonging to the agency.
+  """
+  branches: [PatronBranch!]!
+
+  """
+  The catalogue URL of the agency's main branch.
+  """
+  catalogueUrl: String
+
+  """
+  The city in which the agency's main branch is located.
+  """
+  city: String
+
+  """
+  The email address of the agency's main branch.
+  """
+  email: String
+
+  """
+  The unique identifier of the agency.
+  """
+  id: String!
+
+  """
+  The lookup URL of the agency's main branch.
+  """
+  lookupUrl: String
+
+  """
+  The primary name of the agency.
+  """
+  name: String
+
+  """
+  Alternative names associated with the agency.
+  """
+  names: [String!]
+
+  """
+  The total number of branches belonging to the agency.
+  """
+  numberOfBranches: Int!
+
+  """
+  The opening hours of the agency's main branch.
+  """
+  openingHours: String
+
+  """
+  The phone number of the agency's main branch.
+  """
+  phone: String
+
+  """
+  Indicates whether pickup is allowed at the agency's main branch.
+  """
+  pickupAllowed: Boolean!
+
+  """
+  The postal code of the agency's main branch.
+  """
+  postalCode: String
+
+  """
+  The current status of the agency.
+  """
+  status: String
+
+  """
+  Indicates whether the agency's main branch is temporarily closed.
+  """
+  temporarilyClosed: Boolean!
+
+  """
+  The type of library agency.
+  """
+  type: String
+
+  """
+  The website URL of the agency's main branch.
+  """
+  websiteUrl: String
+}
+
+type PatronBranch {
+  """
+  The postal address of the branch.
+  """
+  address: String
+
+  """
+  The agency to which the branch belongs.
+  """
+  agency: PatronAgency
+
+  """
+  The catalogue URL of the branch.
+  """
+  catalogueUrl: String
+
+  """
+  The city in which the branch is located.
+  """
+  city: String
+
+  """
+  The email address of the branch.
+  """
+  email: String
+
+  """
+  The unique identifier of the branch.
+  """
+  id: String!
+
+  """
+  The lookup URL of the branch.
+  """
+  lookupUrl: String
+
+  """
+  The name of the branch.
+  """
+  name: String
+
+  """
+  The opening hours of the branch.
+  """
+  openingHours: String
+
+  """
+  The phone number of the branch.
+  """
+  phone: String
+
+  """
+  Indicates whether pickup is allowed at the branch.
+  """
+  pickupAllowed: Boolean!
+
+  """
+  The postal code of the branch.
+  """
+  postalCode: String
+
+  """
+  The current status of the branch.
+  """
+  status: String
+
+  """
+  Indicates whether the branch is temporarily closed.
+  """
+  temporarilyClosed: Boolean!
+
+  """
+  The type of library branch.
+  """
+  type: String
+
+  """
+  The website URL of the branch.
+  """
+  websiteUrl: String
+}
+
+type PatronCurrentLoans {
+  """
+  The total number of current loans before filtering and pagination.
+  """
+  hitcount: Int!
+
+  """
+  Current loans for the requested page.
+  """
+  items: [CurrentLoan!]!
+
+  """
+  The overall status of the current-loan lookup.
+  """
+  status: PatronLoansOverallStatusEnum!
+}
+
+type PatronHistoricalLoanConsent {
+  """
+  Whether the patron's age can be verified as at least 15 years.
+  """
+  canBeChanged: Boolean!
+
+  """
+  Whether the patron has given consent. Null when the status could not be retrieved.
+  """
+  isGranted: Boolean
+
+  """
+  The result of retrieving or changing consent, including age eligibility.
+  """
+  status: PatronHistoricalLoanConsentStatusEnum!
+}
+
+enum PatronHistoricalLoanConsentStatusEnum {
+  AGE_NOT_VERIFIABLE
+  ERROR_UNAUTHENTICATED_TOKEN
+  FAILED
+  GRANTED
+  NOT_GRANTED
+  UNDER_AGE
+}
+
+input PatronHistoricalLoanInput {
+  """
+  Agency ID for the library where the material was borrowed, when known.
+  """
+  agencyId: String
+
+  """
+  Borrowing date in YYYY-MM-DD format, when known.
+  When both dates are supplied, this date cannot be after returnedAt.
+  """
+  loanedAt: Date
+
+  """
+  PID or numeric faust number. The identifier type is detected by the gateway.
+  """
+  materialId: String!
+
+  """
+  Return date in YYYY-MM-DD format, when known.
+  When both dates are supplied, this date cannot be before loanedAt.
+  """
+  returnedAt: Date
+}
+
+type PatronHistoricalLoanStatusItem {
+  id: String
+  materialId: String
+  status: PatronLoanMutationStatusEnum!
+}
+
+type PatronHistoricalLoans {
+  """
+  The total number of historical loans before pagination.
+  """
+  hitcount: Int!
+
+  """
+  Historical loans in UserData service order.
+  """
+  items: [HistoricalLoan!]!
+
+  """
+  The overall status of the historical-loan lookup.
+  """
+  status: PatronLoansOverallStatusEnum!
+}
+
+enum PatronLoanMutationStatusEnum {
+  ALREADY_EXISTS
+  FAILED
+  INVALID_DATE_RANGE
+  INVALID_ID
+  INVALID_MATERIAL_ID
+  NOT_FOUND
+  OK
+  UNKNOWN_ERROR
+}
+
+enum PatronLoanStatusEnum {
+  ACTIVE
+  OVERDUE
+}
+
+enum PatronLoansOverallStatusEnum {
+  CONSENT_REQUIRED
+  ERROR_MANUAL_ADDS_DISABLED
+  ERROR_UNAUTHENTICATED_TOKEN
+  FAILED
+  OK
+  PARTIALLY_FAILED
+}
+
+type PatronMaterialSnapshot {
+  """
+  Stored creator for the material.
+  """
+  creator: String
+
+  """
+  Stored material type for the material.
+  """
+  materialType: String
+
+  """
+  Stored general and specific material types.
+  """
+  materialTypes: [PatronMaterialTypeSnapshot!]!
+
+  """
+  Stored metadata about the periodical host publication, when relevant.
+  """
+  periodical: PeriodicalSnapshot
+
+  """
+  Stored pid for the material, if known.
+  """
+  pid: String
+
+  """
+  Stored title for the material.
+  """
+  title: String
+
+  """
+  Version of the stored snapshot format.
+  """
+  version: Int
+
+  """
+  Stored work id for the material, if known.
+  """
+  workId: String
+
+  """
+  Stored work type for the material.
+  """
+  workType: String
+}
+
+type PatronMaterialTypeSnapshot {
+  materialTypeGeneral: PatronMaterialTypeValueSnapshot!
+  materialTypeSpecific: PatronMaterialTypeValueSnapshot!
+}
+
+type PatronMaterialTypeValueSnapshot {
+  code: String
+  display: String
+}
+
+type PatronMutation {
+  """
+  Adds one or more bookmarks for the patron. If a bookmark already exists, it will be ignored.
+  """
+  addBookmarks(
+    bookmarks: [BookmarksInput!]!
+    dryRun: Boolean
+  ): AddBookmarksResponse!
+
+  """
+  Adds one or more manual historical loans for integration testing.
+  Snapshot data is resolved by the gateway and cannot be supplied by the client.
+  """
+  addHistoricalLoans(
+    dryRun: Boolean
+    loans: [PatronHistoricalLoanInput!]!
+  ): AddHistoricalLoansResponse!
+
+  """
+  Deletes one or more bookmarks for the patron. If a bookmark does not exist, it will be ignored.
+  """
+  deleteBookmarks(dryRun: Boolean, ids: [String!]!): DeleteBookmarksResponse!
+
+  """
+  Deletes one or more historical loans by their public UserData IDs.
+  """
+  deleteHistoricalLoans(
+    dryRun: Boolean
+    ids: [String!]!
+  ): DeleteHistoricalLoansResponse!
+
+  """
+  Changes consent for storing historical loans.
+  """
+  setHistoricalLoanConsent(
+    consent: Boolean!
+    dryRun: Boolean
+  ): SetHistoricalLoanConsentResponse!
+}
+
+type PeriodicalSnapshot {
+  """
+  Stored edition statement for the host publication.
+  """
+  edition: String
+
+  """
+  Stored language of the periodical material.
+  """
+  language: String
+
+  """
+  Stored pages within the host publication.
+  """
+  pages: String
+
+  """
+  Stored publisher of the host publication.
+  """
+  publisher: String
+}
 
 type PeriodicalType {
   """
@@ -2365,6 +3208,11 @@ type Query {
   manifestation(faust: String, pid: String): Manifestation
   manifestations(faust: [String!], pid: [String!]): [Manifestation]!
   mood: MoodQueries!
+
+  """
+  Retrieves information about the patron, such as bookmarks, reservations, and loans.
+  """
+  patron: Patron @deprecated(reason: "@draft")
 
   """
   Get recommendations
@@ -3033,6 +3881,26 @@ type Series {
   workTypes: [String!]!
 }
 
+type SetHistoricalLoanConsentResponse {
+  """
+  The updated consent state. Null when the operation was not performed or failed.
+  """
+  historicalLoanConsent: PatronHistoricalLoanConsent
+
+  """
+  Whether the consent update operation succeeded.
+  """
+  status: SetHistoricalLoanConsentStatusEnum!
+}
+
+enum SetHistoricalLoanConsentStatusEnum {
+  AGE_NOT_VERIFIABLE
+  ERROR_UNAUTHENTICATED_TOKEN
+  FAILED
+  OK
+  UNDER_AGE
+}
+
 type Setting implements SubjectInterface {
   display: String!
   language: Language
@@ -3233,6 +4101,147 @@ type SubjectWithRating implements SubjectInterface {
   """
   rating: Int
   type: SubjectTypeEnum!
+}
+
+type SubmitOrder {
+  deleted: Boolean
+  message: String
+
+  """
+  if order was submitted successfully
+  """
+  ok: Boolean
+  orderId: String
+  orsId: String
+  status: SubmitOrderStatusEnum!
+}
+
+input SubmitOrderInput {
+  author: String
+  authorOfComponent: String
+  exactEdition: Boolean
+
+  """
+  expires is required to be iso 8601 dateTime eg. "2024-03-15T12:24:32Z"
+  """
+  expires: String
+  key: String
+  orderType: OrderTypeEnum
+  pagination: String
+  pickUpBranch: String!
+  pids: [String!]!
+  publicationDate: String
+  publicationDateOfComponent: String
+  title: String
+  titleOfComponent: String
+  userParameters: SubmitOrderUserParametersInput!
+  volume: String
+}
+
+enum SubmitOrderStatusEnum {
+  """
+  Authentication error
+  """
+  AUTHENTICATION_ERROR
+
+  """
+  Borchk: User is blocked by agency
+  """
+  BORCHK_USER_BLOCKED_BY_AGENCY
+
+  """
+  Borchk: User could not be verified
+  """
+  BORCHK_USER_NOT_VERIFIED
+
+  """
+  Borchk: User is no longer loaner at the provided pickupbranch
+  """
+  BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY
+
+  """
+  Pincode was not found in arguments
+  """
+  ERROR_MISSING_PINCODE
+
+  """
+  Order does not validate
+  """
+  INVALID_ORDER
+
+  """
+  Item not available at pickupAgency, item localised for ILL
+  """
+  NOT_OWNED_ILL_LOC
+
+  """
+  Item not available at pickupAgency, item not localised for ILL
+  """
+  NOT_OWNED_NO_ILL_LOC
+
+  """
+  Item not available at pickupAgency, ILL of mediumType not accepted
+  """
+  NOT_OWNED_WRONG_ILL_MEDIUMTYPE
+
+  """
+  ServiceRequester is obligatory
+  """
+  NO_SERVICEREQUESTER
+
+  """
+  Error sending order to ORS
+  """
+  ORS_ERROR
+
+  """
+  Item available at pickupAgency, order accepted
+  """
+  OWNED_ACCEPTED
+
+  """
+  Item available at pickupAgency, item may be ordered through the library's catalogue
+  """
+  OWNED_OWN_CATALOGUE
+
+  """
+  Item available at pickupAgency, order of mediumType not accepted
+  """
+  OWNED_WRONG_MEDIUMTYPE
+
+  """
+  Service unavailable
+  """
+  SERVICE_UNAVAILABLE
+
+  """
+  Unknown error occured, status is unknown
+  """
+  UNKNOWN_ERROR
+
+  """
+  PickupAgency not found
+  """
+  UNKNOWN_PICKUPAGENCY
+
+  """
+  User not found
+  """
+  UNKNOWN_USER
+}
+
+input SubmitOrderUserParametersInput {
+  barcode: String
+  cardno: String
+  cpr: String
+  customId: String
+  pincode: String
+  userAddress: String
+  userDateOfBirth: String
+  userId: String
+  userMail: String
+  userName: String
+  userTelephone: String
 }
 
 type SuggestResponse {
