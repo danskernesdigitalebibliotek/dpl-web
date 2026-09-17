@@ -2,7 +2,7 @@
 
 namespace Drupal\dpl_library_agency\Entity;
 
-use Drupal\gsearch\AddressGsearchItemInterface;
+use Drupal\dk_address\DkAddressItemInterface;
 use Drupal\node\Entity\Node;
 
 /**
@@ -46,10 +46,10 @@ class BranchNode extends Node {
   /**
    * Get the address of the branch, with metadata such as GPS coordinates.
    */
-  public function getAddressData(): ?AddressGsearchItemInterface {
+  public function getAddressData(): ?DkAddressItemInterface {
     $value = $this->get('field_address_gsearch')->first();
 
-    return ($value instanceof AddressGsearchItemInterface) ? $value : NULL;
+    return ($value instanceof DkAddressItemInterface) ? $value : NULL;
   }
 
 }

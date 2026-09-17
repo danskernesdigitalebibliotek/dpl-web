@@ -30,9 +30,9 @@ dependencies:
     - recurring_events.eventinstance_type.default
   module:
     - datetime_range
+    - dk_address
     - field_group
     - field_inheritance
-    - gsearch
     - link
     - media_library
     - media_library_edit
@@ -255,7 +255,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_event_address_gsearch:
-    type: address_gsearch
+    type: dk_address
     weight: 23
     region: content
     settings:
