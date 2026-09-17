@@ -5,10 +5,10 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
 class MoodSearchFieldValuesEnum
 {
     public const ALL = 'ALL';
-    public const TITLE = 'TITLE';
+    public const ALLTAGS = 'ALLTAGS';
     public const CREATOR = 'CREATOR';
     public const MOODTAGS = 'MOODTAGS';
-    public const ALLTAGS = 'ALLTAGS';
+    public const TITLE = 'TITLE';
 
     public static function endpoint(): string
     {

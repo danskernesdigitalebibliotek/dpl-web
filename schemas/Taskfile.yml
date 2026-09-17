@@ -14,17 +14,22 @@ vars:
 
   # Pinned dockerized toolchain — keeps schemas/ self-contained, no
   # reach-in to sibling sub-projects. Prettier and graphql-inspector
-  # both run as ephemeral `npx` invocations inside `node:22-alpine`;
+  # both run as ephemeral `npx` invocations inside `node:24-alpine`;
   # nothing is installed locally. (Note: kamilkisiela/graphql-inspector
   # docker images are broken — v3.4.0 has a buggy undici, master is
   # missing internal loader deps — so we run the npm package directly.)
-  NODE_IMAGE: node:22-alpine
+  NODE_IMAGE: node:24-alpine
   PRETTIER_VERSION: 3.8.3
   GRAPHQL_INSPECTOR_VERSION: 6.0.7
 
-  # DBC FBI gateway endpoints. Names = host+profile, see README.
-  DBC_FBI_TEMP_NEXT_URL: https://temp.fbi-api.dbc.dk/next/graphql
-  DBC_FBI_FBCMS_GO_URL: https://fbi-api.dbc.dk/fbcms-go/graphql
+  # DBC FBI gateway. One snapshot, introspected from the prod host; the
+  # profiles serve identical schemas, see README.
+  DBC_FBI_URL: https://fbi-api.dbc.dk/fbcms-go/graphql
+
+  # A field the gateway serves only to authorized clients. _introspect-fbi
+  # asserts it is present, so an expired or unprivileged token fails the
+  # refresh instead of quietly vendoring the anonymous schema.
+  AUTH_ONLY_SENTINEL: "submitOrder("
 
 tasks:
 
@@ -35,6 +40,25 @@ tasks:
       vars: [URL, OUT]
     cmds:
       - |
+        set -eu
+
+        # The gateway does not reject a missing or empty bearer. It treats the
+        # caller as anonymous and serves a REDUCED schema — Mutation.submitOrder,
+        # submitMultipleOrders, deleteOrder, renewLoan and friends are simply
+        # absent from it. Vendoring that subset silently is how this repo came to
+        # believe DBC had deleted submitOrder, froze a second snapshot to keep
+        # react compiling, and carried the two-file split for months (DDF-607).
+        #
+        # So: refuse to introspect without a token, and refuse to keep the result
+        # if it came back looking anonymous.
+        if [ -z "${LIBRARY_TOKEN:-}" ]; then
+          echo "introspect: LIBRARY_TOKEN is empty or unset in the root .env." >&2
+          echo "Introspecting without it vendors the reduced anonymous schema," >&2
+          echo "which is a subset of what our clients actually query." >&2
+          echo "Run 'task token:generate' from the repo root first." >&2
+          exit 1
+        fi
+
         docker run --rm \
           --volume "$(pwd):/work" \
           --workdir /work \
@@ -43,6 +67,21 @@ tasks:
             graphql-inspector introspect "{{.URL}}" \
             --write "{{.OUT}}" \
             --header "Authorization: Bearer $LIBRARY_TOKEN"
+
+        # A token that is present but expired, revoked or under-privileged still
+        # gets a 200 and still yields the anonymous schema, so the check above
+        # cannot catch it. Assert a field only authorized clients are served.
+        if ! grep -q '{{.AUTH_ONLY_SENTINEL}}' "{{.OUT}}"; then
+          echo "introspect: {{.OUT}} does not contain '{{.AUTH_ONLY_SENTINEL}}'." >&2
+          echo "That field is served only to authorized clients, so the token was" >&2
+          echo "rejected or lacks privileges and this is the anonymous schema." >&2
+          echo "Refusing to vendor it. Run 'task token:generate' from the repo" >&2
+          echo "root and try again." >&2
+          rm -f "{{.OUT}}.rejected"
+          mv "{{.OUT}}" "{{.OUT}}.rejected"
+          echo "The rejected snapshot is at {{.OUT}}.rejected for inspection." >&2
+          exit 1
+        fi
 
   format:
     desc: Normalize whitespace and quote style in openapi/ and graphql/ via prettier (dockerized).
@@ -90,31 +129,15 @@ tasks:
       - cp "{{.FBS_TOOL_DIR}}/fbs-adapter.yaml" openapi/fbs-adapter.yaml
       - task: format
 
-  refresh:dbc-fbi:temp-next:
-    desc: Refresh graphql/dbc-fbi.temp-next.graphql from temp.fbi-api.dbc.dk/next.
-    dir: '{{.TASKFILE_DIR}}'
-    cmds:
-      - task: _introspect-fbi
-        vars:
-          URL: '{{.DBC_FBI_TEMP_NEXT_URL}}'
-          OUT: graphql/dbc-fbi.temp-next.graphql
-      - task: format
-
-  refresh:dbc-fbi:fbcms-go:
-    desc: Refresh graphql/dbc-fbi.fbcms-go.graphql from fbi-api.dbc.dk/fbcms-go.
-    dir: '{{.TASKFILE_DIR}}'
-    cmds:
-      - task: _introspect-fbi
-        vars:
-          URL: '{{.DBC_FBI_FBCMS_GO_URL}}'
-          OUT: graphql/dbc-fbi.fbcms-go.graphql
-      - task: format
-
   refresh:dbc-fbi:
-    desc: Refresh both DBC FBI snapshots (temp-next + fbcms-go).
+    desc: Refresh graphql/dbc-fbi.graphql from fbi-api.dbc.dk/fbcms-go.
+    dir: '{{.TASKFILE_DIR}}'
     cmds:
-      - task: refresh:dbc-fbi:temp-next
-      - task: refresh:dbc-fbi:fbcms-go
+      - task: _introspect-fbi
+        vars:
+          URL: '{{.DBC_FBI_URL}}'
+          OUT: graphql/dbc-fbi.graphql
+      - task: format
 
   refresh:publizon:
     desc: "Stub: publizon-adapter.yaml has no automated upstream. Edit it by hand."

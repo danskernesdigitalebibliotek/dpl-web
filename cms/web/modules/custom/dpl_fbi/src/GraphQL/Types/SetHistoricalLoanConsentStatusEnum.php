@@ -2,12 +2,13 @@
 
 namespace Drupal\dpl_fbi\GraphQL\Types;
 
-class LinkCheckStatusEnum
+class SetHistoricalLoanConsentStatusEnum
 {
-    public const BROKEN = 'BROKEN';
-    public const GONE = 'GONE';
-    public const INVALID = 'INVALID';
+    public const AGE_NOT_VERIFIABLE = 'AGE_NOT_VERIFIABLE';
+    public const ERROR_UNAUTHENTICATED_TOKEN = 'ERROR_UNAUTHENTICATED_TOKEN';
+    public const FAILED = 'FAILED';
     public const OK = 'OK';
+    public const UNDER_AGE = 'UNDER_AGE';
 
     public static function endpoint(): string
     {

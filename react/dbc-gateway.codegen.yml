@@ -1,5 +1,5 @@
 overwrite: true
-schema: "../schemas/graphql/dbc-fbi.temp-next.graphql"
+schema: "../schemas/graphql/dbc-fbi.graphql"
 documents: "src/**/*.graphql"
 generates:
   src/core/dbc-gateway/generated/graphql.ts:

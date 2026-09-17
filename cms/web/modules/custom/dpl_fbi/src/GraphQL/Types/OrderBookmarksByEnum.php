@@ -2,10 +2,12 @@
 
 namespace Drupal\dpl_fbi\GraphQL\Types;
 
-class ChildOrAdultCodeEnum
+class OrderBookmarksByEnum
 {
-    public const FOR_ADULTS = 'FOR_ADULTS';
-    public const FOR_CHILDREN = 'FOR_CHILDREN';
+    public const CREATEDAT_ASC = 'CREATEDAT_ASC';
+    public const CREATEDAT_DESC = 'CREATEDAT_DESC';
+    public const TITLE_ASC = 'TITLE_ASC';
+    public const TITLE_DESC = 'TITLE_DESC';
 
     public static function endpoint(): string
     {

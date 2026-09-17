@@ -2,10 +2,11 @@
 
 namespace Drupal\dpl_fbi\GraphQL\Types;
 
-class ChildOrAdultCodeEnum
+class MaterialSelectionGroupEnum
 {
-    public const FOR_ADULTS = 'FOR_ADULTS';
-    public const FOR_CHILDREN = 'FOR_CHILDREN';
+    public const ADULT = 'ADULT';
+    public const CHILDREN = 'CHILDREN';
+    public const SCHOOL = 'SCHOOL';
 
     public static function endpoint(): string
     {

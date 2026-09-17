@@ -1,10 +1,10 @@
 {
   "name": "DPL React",
-  "schemaPath": "../schemas/graphql/dbc-fbi.temp-next.graphql",
+  "schema": "../schemas/graphql/dbc-fbi.graphql",
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
-        "url": "https://temp.fbi-api.dbc.dk/next/graphql"
+        "url": "https://fbi-api.dbc.dk/next/graphql"
       }
     }
   }

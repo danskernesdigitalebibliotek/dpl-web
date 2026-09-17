@@ -32,6 +32,23 @@ docs first.
 - Cross-project topics (working in the CMS + React + design-system loop)
   live at the docs root — see [`development.md`](./development.md).
 
+## Document the present, not the journey
+
+Docs describe how things work **now**. Write in the present tense, and
+leave out how the code got here — the migration that is finished, the
+bug that is fixed, the workaround that is gone. A reader arriving cold
+should not have to sort current behaviour from a changelog.
+
+That history is not lost, it just lives elsewhere: git log and blame for
+what changed, `architecture/` ADRs for why a decision was made. Link to
+an ADR rather than retelling it.
+
+The exception is history that still constrains the reader — a lingering
+workaround, a constraint that is not obvious from the code, a trap
+someone would otherwise re-introduce. Keep that, phrased as the rule it
+implies rather than the story behind it, and delete it once it stops
+being true.
+
 ## Related
 
 - Public DPL documentation site:
