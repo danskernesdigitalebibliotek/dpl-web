@@ -19,7 +19,7 @@ export const isUniloginUserAuthorizedToLogIn = async (
   const institution = await getInstitutionRequest(institutionId)
   const municipalityId = await getLibraryMunicipalityId()
   // If the institution is DDF we are using a test user and therefore allow access
-  if (institution.instnr === "A04441") {
+  if (institution.instnr === "R00263") {
     return true
   }
 
