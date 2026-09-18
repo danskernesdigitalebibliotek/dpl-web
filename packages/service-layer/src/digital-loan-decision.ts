@@ -30,17 +30,6 @@ export async function getDigitalLoanDecision(
 }
 
 /**
- * Whether the decision stands in for a material the adapter does not know.
- *
- * Such a material is unavailable like any other, but it also has no sample:
- * offering one would open an empty reader or player. TEMPORARY with the
- * toleration setting - once every catalogue material exists in the adapter,
- * this is always false.
- */
-export const isUnknownMaterial = (decision: LoanDecision | undefined): boolean =>
-  decision?.unavailableReason === UNKNOWN_MATERIAL_REASON
-
-/**
  * Whether the MATERIAL itself can be borrowed right now.
  *
  * Statuses that describe the user rather than the material - an exhausted

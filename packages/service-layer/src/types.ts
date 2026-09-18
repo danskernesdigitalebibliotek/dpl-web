@@ -272,6 +272,21 @@ export type DigitalLoanQuota =
 // 5 means five in total, which no consumer has wording for.
 export type DigitalReservationLimits = { ebook: number; audiobook: number }
 
+// A promotional excerpt of a digital material: the file itself, not a loan.
+// `url` is signed and short-lived - measured at roughly six hours, though the
+// contract claims a week - so a page opens the one it was given rather than
+// holding on to it across sessions. `format` is the adapter's
+// own answer for what the material is, so it decides whether the excerpt
+// opens in the reader or in the player.
+export type DigitalSample = {
+  format: DigitalSampleFormat
+  url: string
+}
+
+// The file a sample arrives as - an excerpt of an e-book is an EPUB, of an
+// audiobook an MP3.
+export type DigitalSampleFormat = "epub" | "mp3"
+
 // Short-lived token that signs the patron in to the reader and player.
 export type ReaderSignInToken = {
   token: string

@@ -17,6 +17,7 @@ import {
   biblioMetadataFactory,
   biblioOrganizationConfigsFactory,
   biblioReservationsFactory,
+  biblioSampleFactory,
   biblioSupportIdFactory
 } from "../../factories/biblio/biblio.factory";
 
@@ -35,6 +36,36 @@ export const givenUserHasBiblioLoans = (loans?: LoanDto[]) => {
   }).as("biblioLoans");
 
   return body.loans;
+};
+
+/**
+ * Given: Biblio has an excerpt of this material. Answered for anyone, signed
+ * in or not - which is what the teaser buttons are offered on.
+ */
+export const givenMaterialHasBiblioSample = (
+  materialId: string,
+  format: "epub" | "mp3" = "epub"
+) => {
+  cy.intercept("GET", `**/v1/samples/${materialId}*`, {
+    statusCode: 200,
+    body: biblioSampleFactory.build({ material_id: materialId, format })
+  }).as(`biblioSample_${materialId}`);
+};
+
+/**
+ * Given: Biblio has no excerpt of this material. A 404 is a normal answer -
+ * not every material has one. Pass "*" for every material at once, which is
+ * the default the material-page stub starts from.
+ */
+export const givenMaterialHasNoBiblioSample = (materialId: string) => {
+  cy.intercept("GET", `**/v1/samples/${materialId}*`, {
+    statusCode: 404,
+    body: { message: "Sample not available" }
+  }).as(
+    materialId === "*"
+      ? "biblioSampleMissing"
+      : `biblioSampleMissing_${materialId}`
+  );
 };
 
 /** Given: the user holds no loans in Biblio. */

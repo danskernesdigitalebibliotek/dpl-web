@@ -4,6 +4,7 @@ import type {
   DigitalMaterial,
   DigitalReservation,
   DigitalReservationLimits,
+  DigitalSample,
   LoanDecision,
   LoanRequestResult,
   ReaderSignInToken,
@@ -19,6 +20,7 @@ import {
   getGetMetadataByMaterialIdUrl,
   getGetOrganizationConfigsUrl,
   getGetReservationsForAuthenticatedUserUrl,
+  getGetSampleUrl,
   getGetSupportIdForAuthenticatedUserUrl,
   getRequestLoanForAuthenticatedUserUrl,
 } from "./generated/biblio"
@@ -35,6 +37,7 @@ import {
   parseAndMapReservations,
   parseDeleteReservation,
 } from "./mappers/reservation.mapper"
+import { parseAndMapSample } from "./mappers/sample.mapper"
 import { parseAndMapSignInToken, parseAndMapSupportId } from "./mappers/user.mapper"
 import type { BiblioConfig } from "./types"
 
@@ -94,6 +97,30 @@ export function createBiblioClient(config: BiblioConfig) {
         return undefined
       }
       return parseAndMapMetadata(raw)
+    },
+
+    // A promotional excerpt, for anyone - the adapter takes a
+    // client_credentials token here, so a sample needs no patron.
+    //
+    // `format` is deliberately left out: the adapter derives it from the
+    // material type Biblio has registered, which is a better source than
+    // anything the catalogue can tell us, and it comes back on the answer.
+    //
+    // Only the 404 is tolerated. The adapter also answers 403 where Biblio
+    // has not switched samples on yet, but 403 is its identity and licence
+    // failure too - swallowing it would hide a token the adapter no longer
+    // accepts behind "this material has no excerpt", on every site at once.
+    getSample: async (materialId: string): Promise<DigitalSample | undefined> => {
+      const raw = await request({
+        method: "GET",
+        // The generated helpers do not encode path parameters.
+        path: getGetSampleUrl(encodeURIComponent(materialId)),
+        allowNotFound: true,
+      })
+      if (raw === undefined) {
+        return undefined
+      }
+      return parseAndMapSample(raw)
     },
 
     getLoans: async (

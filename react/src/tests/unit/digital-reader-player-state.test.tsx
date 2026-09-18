@@ -3,13 +3,15 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   type LoanDecision,
   type DigitalLoan,
-  type DigitalReservation
+  type DigitalReservation,
+  type DigitalSample
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useDigitalReaderPlayerState from "../../core/utils/useDigitalReaderPlayerState";
 import {
   useDigitalLoanDecision,
   useDigitalLoans,
-  useDigitalReservations
+  useDigitalReservations,
+  useDigitalSample
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { isAnonymous } from "../../core/utils/helpers/user";
 
@@ -23,7 +25,8 @@ vi.mock(
     >()),
     useDigitalLoanDecision: vi.fn(),
     useDigitalLoans: vi.fn(),
-    useDigitalReservations: vi.fn()
+    useDigitalReservations: vi.fn(),
+    useDigitalSample: vi.fn()
   })
 );
 
@@ -58,6 +61,11 @@ const loan: DigitalLoan = {
   loanProvider: "selection"
 };
 
+const sample: DigitalSample = {
+  format: "epub",
+  url: "https://samples.example/9788727319346.epub?signature=abc"
+};
+
 const reservation: DigitalReservation = {
   reservationId: RESERVATION_ID,
   materialId: IDENTIFIER,
@@ -70,12 +78,14 @@ const givenAdapterSays = ({
   status,
   loans = [],
   reservations = [],
+  hasSample = true,
   anonymous = false,
   stillAnswering = false
 }: {
   status?: LoanDecision["status"];
   loans?: DigitalLoan[];
   reservations?: DigitalReservation[];
+  hasSample?: boolean;
   anonymous?: boolean;
   stillAnswering?: boolean;
 }) => {
@@ -92,6 +102,10 @@ const givenAdapterSays = ({
     data: { reservations },
     isLoading: false
   } as unknown as ReturnType<typeof useDigitalReservations>);
+  vi.mocked(useDigitalSample).mockReturnValue({
+    data: hasSample ? sample : null,
+    isLoading: stillAnswering
+  } as unknown as ReturnType<typeof useDigitalSample>);
 };
 
 const render = (identifier: string | null = IDENTIFIER, enabled = true) =>
@@ -207,23 +221,28 @@ describe("useDigitalReaderPlayerState", () => {
   });
 
   describe("whether a sample can be offered", () => {
-    it("Offers a sample for a material the adapter knows", () => {
+    it("Offers a sample when the adapter has one", () => {
       givenAdapterSays({ status: "reservable" });
 
       // Not an availability question: a reserved-out material still has its
-      // sample.
+      // excerpt.
       expect(render().canBeSampled).toBe(true);
     });
 
-    it("Offers no sample for a material the adapter does not know", () => {
-      // The tolerated 404, as the service layer answers it.
-      vi.mocked(useDigitalLoanDecision).mockReturnValue({
-        data: { status: "unavailable", unavailableReason: "unknown_material" },
-        isLoading: false
-      } as unknown as ReturnType<typeof useDigitalLoanDecision>);
+    it("Offers no sample for a material the adapter has none for", () => {
+      givenAdapterSays({ status: "loanable", hasSample: false });
 
-      // No material, no sample - offering one would open an empty player.
+      // A loanable material need not have an excerpt, and offering one would
+      // open an empty reader or player.
       expect(render().canBeSampled).toBe(false);
+    });
+
+    it("Offers a sample to an anonymous visitor", () => {
+      // The whole point of sampling through the adapter: it answers samples
+      // for a library token, so trying a material takes no login.
+      givenAdapterSays({ anonymous: true });
+
+      expect(render().canBeSampled).toBe(true);
     });
   });
 
@@ -231,8 +250,9 @@ describe("useDigitalReaderPlayerState", () => {
     it("Offers the loan to an anonymous user so the login guard takes over", () => {
       givenAdapterSays({ status: "unavailable", anonymous: true });
 
-      // Every endpoint behind this hook needs an end-user token, so nothing is
-      // known about the user yet - the same deal Publizon gets.
+      // Borrowing, holding and queuing all need an end-user token, so nothing
+      // is known about the user yet - the same deal Publizon gets. Only the
+      // sample is answered for them.
       expect(render()).toMatchObject({
         canBeLoaned: true,
         isAlreadyLoaned: false,
