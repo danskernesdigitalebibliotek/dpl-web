@@ -149,6 +149,7 @@ export async function GET(request: NextRequest) {
       uniid: introspect.uniid,
       institutionIds:
         // A04441 (legacy) and R00263 are testinstitutions for DDF test users.
+        // TODO: Remove A04441 after the STIL cutoff date 2026-09-22.
         // If the user is a DDF test user, we set the institutionIds to a hardcoded value.
         // The hardcoded value happens to be: "Christianshavns skole".
         // Otherwise the testusers wont be able to loan/reserve e-materials.
