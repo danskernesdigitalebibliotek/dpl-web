@@ -7,6 +7,7 @@ use Drupal\Core\Url;
 use Drupal\dpl_fees\DplFeesSettings;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function Safe\preg_match;
 
 /**
  * Gets fees and payment info for the app.
@@ -66,31 +67,34 @@ class AppFeesAndPaymentInfoProducer extends DataProducerPluginBase implements Co
    *   The fees and payment info.
    */
   public function resolve(): array {
-    // This is basically a thin wrapper around a text input, so no guarantees
-    // about it's format. We'll support internal paths starting with slash and
-    // assume any other non-empty value is a valid URL (which is not guaranteed,
-    // but what can we do?).
-    $feesUrl = NULL;
-
-    $url = $this->feesSettings->getFeesAndReplacementCostsUrl();
-    if (!empty($url)) {
-      try {
-        if (str_starts_with($url, '/')) {
-          $feesUrl = Url::fromUserInput($url)->setAbsolute()->toString();
-        }
-
-        $feesUrl = $url;
-      }
-      catch (\Exception $e) {
-        // Do nothing.
-      }
-    }
-
     return [
-      'feesAndReplacementCostsUrl' => $feesUrl,
-      'paymentSiteUrl' => $this->feesSettings->getPaymentSiteUrl(),
+      'feesAndReplacementCostsUrl' => $this->ensureAbsoluteUrl($this->feesSettings->getFeesAndReplacementCostsUrl()),
+      'paymentSiteUrl' => $this->ensureAbsoluteUrl($this->feesSettings->getPaymentSiteUrl()),
       'paymentSiteButtonLabel' => $this->feesSettings->getFeeListConfig()['paymentSiteButtonLabel'] ?? '',
     ];
+  }
+
+  /**
+   * Ensure string is an absolute URL.
+   */
+  protected function ensureAbsoluteUrl(?string $url): ?string {
+    if (empty($url)) {
+      return NULL;
+    }
+
+    try {
+      if (preg_match('/^https?:/', $url)) {
+        return $url;
+      }
+      elseif (str_starts_with($url, '/')) {
+        return Url::fromUserInput($url)->setAbsolute()->toString();
+      }
+    }
+    catch (\Exception $e) {
+      // Do nothing.
+    }
+
+    return NULL;
   }
 
 }
