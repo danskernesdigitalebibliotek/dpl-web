@@ -25,6 +25,7 @@ import RelatedWorks from "./RelatedWorks";
 import SeriesCard from "./SeriesCard";
 import SeriesSkeleton, { headerCoverCount } from "./SeriesSkeleton";
 import { useAddFavorite } from "../../components/button-favourite/useAddFavorite";
+import { cleanCreatorName } from "../../core/utils/helpers/material";
 
 export type SeriesProps = {
   seriesId: string;
@@ -215,7 +216,7 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
 
       {author && (
         <RelatedWorks
-          author={author}
+          author={cleanCreatorName(author)}
           currentSeries={{
             seriesId,
             title: series.title,
