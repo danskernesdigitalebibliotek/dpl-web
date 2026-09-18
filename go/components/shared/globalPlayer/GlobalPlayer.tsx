@@ -1,5 +1,9 @@
 "use client"
 
+import {
+  useDigitalMaterial,
+  useDigitalSample,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useSelector } from "@xstate/react"
 import dynamic from "next/dynamic"
 import React from "react"
@@ -31,12 +35,29 @@ function LoanPlayer({ loanId }: { loanId: string }) {
   return <SdkPlayer sdk={sdk} checkout={checkout} onClose={closePlayer} />
 }
 
+// Samples open from a url rather than a material id, so the SDK needs no
+// session and anyone can listen — see DigitalSampleReader.
 function SamplePlayer({ materialId }: { materialId: string }) {
   const { data: sdk } = useReaderSdk()
+  const { data: sample } = useDigitalSample(materialId, { throwOnError: true })
+  // A url-opened sample bypasses WeDoBooks' catalogue entirely, so the fields
+  // it shows have to come from ours.
+  const { data: material } = useDigitalMaterial(materialId)
 
-  if (!sdk) return null
+  if (!sdk || !sample || !material) return null
 
-  return <SdkSamplePlayer sdk={sdk} materialId={materialId} onClose={closePlayer} />
+  return (
+    <SdkSamplePlayer
+      sdk={sdk}
+      sampleUrl={sample.url}
+      material={{
+        material_id: material.isbn,
+        title: material.title,
+        author: material.authors,
+      }}
+      onClose={closePlayer}
+    />
+  )
 }
 
 /**
