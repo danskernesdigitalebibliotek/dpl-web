@@ -403,11 +403,18 @@ describe("Material page - a material only Biblio provides", () => {
     material.visit([]);
     cy.getBySel("availability-label").contains("e-bog").first().click();
 
-    // Publizon's answer is the signal that the page finished asking around;
-    // the disabled Loading button alone is also what the page shows before
-    // anything has been asked at all.
+    // Publizon answers that it cannot lend this material, and the button
+    // settles on its verdict: disabled, not a spinner. Waiting for the
+    // settled button rather than for the spinner matters - the spinner is
+    // also what the page shows before anything has been asked, so asserting
+    // it races the render that replaces it.
     cy.wait("@publizonLoanStatus");
-    cy.contains("button", "Loading").should("be.disabled");
+    cy.getBySel("material-header-buttons-online-internal-reader")
+      .first()
+      .should("be.disabled")
+      .and("contain", "Loan e-bog");
+
+    // And the adapter was never consulted, which is the point of the flag.
     cy.get("@biblioCanLoan.all").should("have.length", 0);
   });
 });

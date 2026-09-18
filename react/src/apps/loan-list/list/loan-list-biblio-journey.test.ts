@@ -18,6 +18,10 @@ import {
   publizonLoanListFactory,
   publizonProductFactory
 } from "../../../../cypress/factories/publizon/publizon.factory";
+import {
+  givenCatalogueDescribes,
+  givenCatalogueKnowsNothing
+} from "../../../../cypress/intercepts/fbi/catalogueDetails";
 
 /**
  * A user journey through the loan list during the Publizon → Biblio
@@ -25,8 +29,11 @@ import {
  * loans and two made through Biblio, in one list.
  *
  * The central assertion follows from the contract. `title`, `author` and
- * `publish_date` are required on a Biblio loan, so it describes itself and is
- * never looked up - where a Publizon loan needs `GET /v1/products/{isbn}`.
+ * `publish_date` are required on a Biblio loan, so the provider is never
+ * asked to describe it - where a Publizon loan needs
+ * `GET /v1/products/{isbn}`. The catalogue is a separate matter: FBI decides
+ * what a material is called, so it is searched for every digital loan, and
+ * the provider's own title is what survives when it answers nothing.
  */
 
 /**
@@ -191,6 +198,10 @@ const stubBackends = () => {
     operationName: "GetBestRepresentationPidByIsbn",
     fixtureFilePath: "cover/cover-get-best-representation-by-isbn.json"
   });
+
+  // Most of this journey is about what each provider contributes, so every
+  // row keeps its provider's title.
+  givenCatalogueKnowsNothing();
 };
 
 describe("Loan list journey - Publizon and Biblio side by side", () => {
@@ -321,6 +332,38 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
       .authors()
       .should("contain", MATERIAL.digitalEbookQuota.author);
     modal.elements.authors().should("contain", "2022");
+  });
+
+  it("Names a Biblio loan from the catalogue, not from the provider", () => {
+    // Given: FBI knows the e-book, under a title and creators of its own -
+    // the provider lends "Din for en sommer" by "Sherman, L." alone.
+    givenCatalogueDescribes([
+      {
+        isbn: MATERIAL.digitalEbookQuota.isbn,
+        title: "Din for en sommer - sommeren der forsvandt",
+        authors: ["Lucinda Sherman", "Tove Illustrator"]
+      }
+    ]);
+
+    // When: the user reopens the list, now that the catalogue answers
+    loanList.visit([]);
+    cy.wait("@biblioLoans");
+
+    loanList.components.DigitalLoanRow((row) => {
+      // Then: the row reads as the material's work page does
+      row.elements
+        .title()
+        .should("have.text", "Din for en sommer - sommeren der forsvandt");
+      // And: every creator the catalogue credits, not only the provider's one
+      row.elements.author().should("contain", "Lucinda Sherman");
+      row.elements.author().should("contain", "Tove Illustrator");
+    }, MATERIAL.digitalEbookQuota.row);
+
+    // And: the audiobook, which the catalogue has no record of, keeps the
+    // title the provider lent it under.
+    loanList.components.DigitalLoanRow((row) => {
+      row.elements.title().should("have.text", MATERIAL.biblioAudiobook.title);
+    }, MATERIAL.biblioAudiobook.row);
   });
 
   it("Asks no provider more than it has to when describing the list", () => {

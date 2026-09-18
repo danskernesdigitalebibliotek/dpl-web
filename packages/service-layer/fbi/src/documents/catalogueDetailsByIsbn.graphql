@@ -1,0 +1,26 @@
+# How the catalogue describes the works behind a set of ISBNs, as one search.
+# `manifestations.all` comes back so a caller can key the answer by every ISBN
+# the matching work carries, not only the one that matched.
+query catalogueDetailsByIsbn($cql: String!, $limit: PaginationLimitScalar!) {
+  complexSearch(cql: $cql) {
+    # FBI answers a rejected CQL with HTTP 200 and this field rather than an
+    # error, which would otherwise read as "the catalogue knows nothing".
+    errorMessage
+    works(offset: 0, limit: $limit) {
+      titles {
+        full
+      }
+      creators {
+        display
+      }
+      manifestations {
+        all {
+          identifiers {
+            type
+            value
+          }
+        }
+      }
+    }
+  }
+}
