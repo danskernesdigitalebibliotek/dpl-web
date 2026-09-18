@@ -32,13 +32,13 @@ const FETCH_LIMIT = DISPLAY_LIMIT * 5;
 // Wildwitch).
 const buildCql = ({ author, currentSeries }: UseRelatedWorksArgs): string => {
   const anded = [
-    `term.creator=${cqlString(author)}`,
+    `(phrase.creator="${cqlString(author)}" or phrase.creator="${cqlString(author)} (*)")`,
     ...(currentSeries.mainLanguage
-      ? [`phrase.mainlanguage=${cqlString(currentSeries.mainLanguage)}`]
+      ? [`phrase.mainlanguage="${cqlString(currentSeries.mainLanguage)}"`]
       : [])
   ].join(" AND ");
 
-  return `${anded} NOT term.series=${cqlString(currentSeries.title)}`;
+  return `${anded} NOT term.series="${cqlString(currentSeries.title)}"`;
 };
 
 const useRelatedWorks = ({
