@@ -4,6 +4,9 @@ import { catalogueSearchResponse, catalogueWork, mockJsonResponse } from "../../
 import { createFbiClient } from "./client"
 
 const baseUrl = "https://fbi.example/graphql"
+// The client tags the url with the operation name so the request is
+// identifiable in a network log - see `taggedUrl`.
+const taggedUrl = `${baseUrl}?catalogueDetailsByIsbn`
 
 const buildClient = (getAuthHeader: () => Promise<string> | string = () => "Bearer abc") =>
   createFbiClient({ baseUrl, getAuthHeader })
@@ -35,7 +38,7 @@ describe("createFbiClient.getCatalogueDetails", () => {
     const result = await buildClient().getCatalogueDetails(["9788711234567", "9788771076950"])
 
     expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith(baseUrl, expect.objectContaining({ method: "POST" }))
+    expect(fetch).toHaveBeenCalledWith(taggedUrl, expect.objectContaining({ method: "POST" }))
     expect(bodyOf(0).variables).toEqual({
       cql: "term.isbn=9788711234567 OR term.isbn=9788771076950",
       // Paged by works, not by search terms: an ISBN can match more than one
@@ -88,7 +91,7 @@ describe("createFbiClient.getCatalogueDetails", () => {
     await buildClient(async () => "Bearer xyz").getCatalogueDetails(["9788711234567"])
 
     expect(fetch).toHaveBeenCalledWith(
-      baseUrl,
+      taggedUrl,
       expect.objectContaining({
         headers: { authorization: "Bearer xyz", "content-type": "application/json" },
       })
@@ -109,6 +112,22 @@ describe("createFbiClient.getCatalogueDetails", () => {
 
     await expect(buildClient().getCatalogueDetails(["9788711234567"])).rejects.toThrow(
       /Invalid CQL/
+    )
+  })
+
+  // Without the tag every FBI request in a network log is the same anonymous
+  // POST to /graphql, which is what made this search hard to find at all.
+  it("keeps a base url's own query parameters when tagging it", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(catalogueSearchResponse([])))
+
+    await createFbiClient({
+      baseUrl: `${baseUrl}?profile=local`,
+      getAuthHeader: () => "Bearer abc",
+    }).getCatalogueDetails(["9788711234567"])
+
+    expect(fetch).toHaveBeenCalledWith(
+      `${baseUrl}?profile=local&catalogueDetailsByIsbn`,
+      expect.anything()
     )
   })
 })

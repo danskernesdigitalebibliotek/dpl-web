@@ -27,10 +27,26 @@ type GraphQlResponse = {
   errors?: { message?: string }[]
 }
 
+// Every operation is posted to the same /graphql endpoint, so a network log
+// shows nothing but a row of identical requests. Appending the operation name
+// as a valueless query parameter labels ours without changing it - the gateway
+// ignores the parameter, and the consuming apps tag their own calls the same
+// way.
+const operationNamePattern = /\b(?:query|mutation|subscription)\s+(\w+)/
+
+const taggedUrl = (baseUrl: string, document: string) => {
+  const operationName = operationNamePattern.exec(document)?.[1]
+  if (!operationName) {
+    return baseUrl
+  }
+
+  return `${baseUrl}${baseUrl.includes("?") ? "&" : "?"}${operationName}`
+}
+
 export function createFbiClient(config: FbiConfig) {
   const request = async (document: string, variables: unknown): Promise<unknown> => {
     const authHeader = await config.getAuthHeader()
-    const response = await fetch(config.baseUrl, {
+    const response = await fetch(taggedUrl(config.baseUrl, document), {
       method: "POST",
       headers: {
         authorization: authHeader,
