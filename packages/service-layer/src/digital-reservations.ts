@@ -1,4 +1,5 @@
 import { createBiblioClient } from "../biblio/src"
+import { withCatalogueDetailsForRequest } from "./catalogue"
 import { resolveBiblioConfig } from "./internal/resolveBiblioConfig"
 import type { DigitalReservation, LoanRequestResult, ServiceLayerConfig } from "./types"
 
@@ -17,7 +18,7 @@ export async function createDigitalReservation(
   materialId: string
 ): Promise<LoanRequestResult> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  return biblio.createReservation(materialId)
+  return withCatalogueDetailsForRequest(config, biblio.createReservation(materialId), materialId)
 }
 
 // Accept a reservation offer as a loan - the Biblio equivalent of redeeming a

@@ -1,0 +1,28 @@
+# Generates the typed reference for the FBI contract - see the package
+# README for what it is and is not used for.
+#
+# The schema is the prod host's, which /schemas/README.md names the canonical
+# one. This package is host-agnostic, so it generates from the contract rather
+# than from whichever profile a given consumer happens to query.
+#
+# Paths are relative to packages/service-layer, where `pnpm codegen:fbi` runs.
+overwrite: true
+schema: "../../schemas/graphql/dbc-fbi.fbcms-go.graphql"
+documents: "fbi/src/documents/*.graphql"
+generates:
+  fbi/src/generated/:
+    preset: "client"
+    config:
+      defaultScalarType: unknown
+      # The package queries one operation and is not a general FBI client, so
+      # only what that operation needs is generated. The whole schema is 2000
+      # lines of types nothing imports, and every one of them would have to be
+      # re-reviewed on each regeneration.
+      onlyOperationTypes: true
+      useTypeImports: true
+      documentMode: string
+    presetConfig:
+      fragmentMasking: false
+    hooks:
+      afterOneFileWrite:
+        - pnpm exec prettier --write

@@ -1,4 +1,5 @@
 import { createBiblioClient } from "../biblio/src"
+import { withCatalogueDetails, withCatalogueDetailsForRequest } from "./catalogue"
 import { resolveBiblioConfig } from "./internal/resolveBiblioConfig"
 import type { DigitalLoan, LoanProvider, LoanRequestResult, ServiceLayerConfig } from "./types"
 
@@ -8,7 +9,35 @@ export async function getDigitalLoans(
   config: ServiceLayerConfig
 ): Promise<{ loans: DigitalLoan[]; nextCursor?: string }> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  return biblio.getLoans()
+  const { loans, nextCursor } = await biblio.getLoans()
+
+  // A material id is the ISBN-13 the provider lends the material under, the
+  // same key its metadata route takes.
+  const described = await withCatalogueDetails(config, loans, loan => loan.materialId)
+
+  return { loans: described, nextCursor }
+}
+
+/**
+ * The loan the patron already holds on this material, if any.
+ *
+ * Deliberately not `getDigitalLoans().find(...)`: the caller is looking at the
+ * material and needs the loan's id and its existence, not its description, so
+ * the catalogue is not searched. Correcting a title here would put a second,
+ * sequential round trip in front of the borrow button on every material page.
+ * See ADR-004.
+ *
+ * Null rather than undefined for "no such loan": react-query rejects a query
+ * that resolves to undefined, and this is a query function.
+ */
+export async function getDigitalMaterialHolding(
+  config: ServiceLayerConfig,
+  materialId: string
+): Promise<DigitalLoan | null> {
+  const biblio = createBiblioClient(resolveBiblioConfig(config))
+  const { loans } = await biblio.getLoans()
+
+  return loans.find(loan => loan.materialId === materialId) ?? null
 }
 
 // Create a digital loan. The adapter can accept the request without creating a
@@ -19,7 +48,7 @@ export async function createDigitalLoan(
   materialId: string
 ): Promise<LoanRequestResult> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  return biblio.createLoan(materialId)
+  return withCatalogueDetailsForRequest(config, biblio.createLoan(materialId), materialId)
 }
 
 /**

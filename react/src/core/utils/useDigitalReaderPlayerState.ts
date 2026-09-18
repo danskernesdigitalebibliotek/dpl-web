@@ -1,10 +1,10 @@
 import {
   isMaterialLoanable,
   isMaterialReservable,
-  isUnknownMaterial,
   useDigitalLoanDecision,
-  useDigitalLoans,
-  useDigitalReservations
+  useDigitalMaterialHolding,
+  useDigitalReservations,
+  useDigitalSample
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { mapDigitalReservationToReservationType } from "./helpers/list-mapper";
 import { isAnonymous } from "./helpers/user";
@@ -31,9 +31,9 @@ const useDigitalReaderPlayerState = ({
 }): ReaderPlayerState => {
   const isUserAnonymous = isAnonymous();
   const isActive = enabled && Boolean(identifier);
-  // Every endpoint below is user-scoped and needs an end-user token, so an
-  // anonymous user is offered the loan and the login guard takes over - the
-  // same deal Publizon gets.
+  // Borrowing, holding and queuing are all user-scoped and need an end-user
+  // token, so an anonymous user is offered the loan and the login guard takes
+  // over - the same deal Publizon gets. Sampling is the exception below.
   const isActiveForUser = isActive && !isUserAnonymous;
 
   const { data: loanDecision, isLoading: isLoadingLoanDecision } =
@@ -41,12 +41,22 @@ const useDigitalReaderPlayerState = ({
       enabled: isActiveForUser
     });
 
-  const { data: loansData, isLoading: isLoadingLoans } = useDigitalLoans({
-    enabled: isActiveForUser
-  });
+  // The loan is asked for by material rather than filtered out of the loan
+  // list: only its existence and its id are used here, and the list waits on
+  // the catalogue to describe every loan in it.
+  const { data: loan, isLoading: isLoadingLoan } = useDigitalMaterialHolding(
+    identifier,
+    { enabled: isActiveForUser }
+  );
 
   const { data: reservationsData, isLoading: isLoadingReservations } =
     useDigitalReservations({ enabled: isActiveForUser });
+
+  // Gated on `isActive` rather than on a patron: the adapter answers samples
+  // for a library token, so this is the one question a visitor gets an answer
+  // to. Asking it here is also what makes the teaser honest - a material with
+  // no excerpt is never offered one.
+  const { data: sample } = useDigitalSample(identifier, { enabled: isActive });
 
   if (!isActive) {
     return unknownReaderPlayerState;
@@ -55,13 +65,10 @@ const useDigitalReaderPlayerState = ({
   if (isUserAnonymous) {
     return {
       ...unknownReaderPlayerState,
-      canBeLoaned: true
+      canBeLoaned: true,
+      canBeSampled: Boolean(sample)
     };
   }
-
-  const loan = loansData?.loans.find(
-    ({ materialId }) => materialId === identifier
-  );
 
   const digitalReservation = reservationsData?.reservations.find(
     ({ materialId }) => materialId === identifier
@@ -93,10 +100,18 @@ const useDigitalReaderPlayerState = ({
       ? mapDigitalReservationToReservationType([queuedReservation])[0]
       : null,
     offerId,
-    canBeSampled: !isUnknownMaterial(loanDecision),
+    // The excerpt itself answers this, not the lending decision: a material
+    // that is on loan to someone else still has one, and a material the
+    // provider knows may have none.
+    canBeSampled: Boolean(sample),
+    // Deliberately not counting the excerpt lookup: `isLoading` holds back
+    // the loan and reserve buttons, and a secondary teaser must not delay
+    // the primary action. The teaser simply stays hidden until its own
+    // answer arrives, which is what `canBeSampled` being false already does.
+    //
     // Disabled queries never report loading, so this only counts the
     // questions actually asked.
-    isLoading: isLoadingLoanDecision || isLoadingLoans || isLoadingReservations
+    isLoading: isLoadingLoanDecision || isLoadingLoan || isLoadingReservations
   };
 };
 
