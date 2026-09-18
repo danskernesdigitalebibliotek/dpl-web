@@ -12,9 +12,8 @@ import {
   getReadUrlForLoan,
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
-import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
-import { uniloginDigitalLoanErrorText, useBiblioAdapter } from "@/hooks/useBiblioAdapter"
+import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
 import usePatronShelf from "@/hooks/usePatronShelf"
 import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
@@ -130,24 +129,11 @@ const WorkPageButtonsLoggedIn = ({
           onClick={() => open("LoanMaterialModal")}>
           Lån {label}
         </WorkPageButton>
-        {/* Unilogin cannot sample through WeDoBooks either (the SDK sign-in
-            needs an Adgangsplatformen session) — the attempt is answered with
-            the same message as a loan attempt instead of a blank reader. */}
-        {viaBiblioAdapter && isUnilogin ? (
-          <WorkPageButton
-            ariaLabel={`Prøv ${label}`}
-            dataCy={dataCy}
-            disabled={isDisabled}
-            onClick={() => toast.error(uniloginDigitalLoanErrorText)}>
+        <WorkPageButton ariaLabel={`Prøv ${label}`} dataCy={dataCy} asChild disabled={isDisabled}>
+          <SmartLink href={getEbookPreviewUrl(workId, identifier || "")} reload>
             Prøv {label}
-          </WorkPageButton>
-        ) : (
-          <WorkPageButton ariaLabel={`Prøv ${label}`} dataCy={dataCy} asChild disabled={isDisabled}>
-            <SmartLink href={getEbookPreviewUrl(workId, identifier || "")} reload>
-              Prøv {label}
-            </SmartLink>
-          </WorkPageButton>
-        )}
+          </SmartLink>
+        </WorkPageButton>
       </WorkPageButtons>
     )
   }
@@ -202,11 +188,6 @@ const WorkPageButtonsLoggedIn = ({
           onClick={() => {
             if (!viaBiblioAdapter) {
               openModal("PlayerPreviewModal", { manifestation: selectedManifestation })
-              return
-            }
-            // See the ebook branch: Unilogin cannot sample through WeDoBooks.
-            if (isUnilogin) {
-              toast.error(uniloginDigitalLoanErrorText)
               return
             }
             playSample(identifier || "")

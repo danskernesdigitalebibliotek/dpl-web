@@ -3,7 +3,7 @@
 import type { WedoBooksCheckout, WedoBooksSdk } from "@danskernesdigitalebibliotek/dpl-wedobooks"
 import { useQuery } from "@tanstack/react-query"
 
-import { useReaderSdk } from "@/hooks/useReaderSdk"
+import { useReaderSdkSession } from "@/hooks/useReaderSdkSession"
 
 /**
  * The signed-in SDK and the checkout the reader or player opens.
@@ -16,7 +16,7 @@ import { useReaderSdk } from "@/hooks/useReaderSdk"
 export const useReaderCheckout = (
   loanId: string | null
 ): { sdk: WedoBooksSdk | undefined; checkout: WedoBooksCheckout | null } => {
-  const { data: sdk } = useReaderSdk()
+  const { data: sdk } = useReaderSdkSession()
 
   const { data: checkout } = useQuery<WedoBooksCheckout | null>({
     queryKey: ["reader", "checkout", loanId],
@@ -24,8 +24,8 @@ export const useReaderCheckout = (
     // The reader and the player bind to the entitlement once and key on its
     // id, so a refetched copy would never reach the mounted component.
     staleTime: Infinity,
-    // As in useReaderSdk: a loan the SDK cannot fetch has to say so rather
-    // than leave the reader blank.
+    // As in useReaderSdkSession: a loan the SDK cannot fetch has to say so
+    // rather than leave the reader blank.
     throwOnError: true,
     queryFn: async () => {
       // Both are guaranteed by `enabled`.

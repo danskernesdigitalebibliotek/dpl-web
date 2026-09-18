@@ -53,11 +53,12 @@ const setSessionType = (type: "unilogin" | "adgangsplatformen") => {
 }
 
 // With the Biblio adapter switched on, new digital loans belong to the
-// adapter alone: anonymous preview is gone (WeDoBooks answers samples for
-// signed-in patrons only, no Publizon fallback) and Unilogin — which the
-// adapter cannot authenticate — gets a friendly error instead of a request
-// that cannot succeed. The flag arrives through goConfiguration.public.biblio
-// and is only active when flag, base url and SDK keys are all present.
+// adapter alone. Sampling is different: it opens from a url without an SDK
+// session, so the preview works for anonymous and Unilogin visitors alike —
+// only loan attempts from Unilogin, which the adapter cannot authenticate,
+// get a friendly error instead of a request that cannot succeed. The flag
+// arrives through goConfiguration.public.biblio and is only active when
+// flag, base url and SDK keys are all present.
 describe("Work page with the Biblio adapter switched on", () => {
   beforeEach(() => {
     // The global beforeEach (support/e2e.ts) has already registered the
@@ -77,16 +78,19 @@ describe("Work page with the Biblio adapter switched on", () => {
   })
 
   describe("Anonymous", () => {
-    it("E-book → no preview button; the loan button still leads to login", () => {
+    it("E-book → the preview leads to the read page; the loan button still leads to login", () => {
       visitWork("EBOOK")
       cy.contains("button, a", "Lån e-bog").should("be.visible")
-      cy.contains("button, a", "Prøv e-bog").should("not.exist")
+      cy.contains("a", "Prøv e-bog")
+        .should("be.visible")
+        .should("have.attr", "href")
+        .and("include", "/read")
     })
 
-    it("Audiobook → no preview button", () => {
+    it("Audiobook → the preview button is available", () => {
       visitWork("AUDIO_BOOK_ONLINE")
       cy.contains("button, a", "Lån lydbog").should("be.visible")
-      cy.contains("button, a", "Prøv lydbog").should("not.exist")
+      cy.contains("button", "Prøv lydbog").should("be.visible").should("be.enabled")
     })
   })
 
@@ -104,18 +108,23 @@ describe("Work page with the Biblio adapter switched on", () => {
       cy.contains("logget ind med Unilogin").should("be.visible")
     })
 
-    it("E-book → preview attempt is answered with the same error", () => {
+    it("E-book → the preview leads to the read page, no error", () => {
       visitWork("EBOOK")
-      cy.dataCy("work-page-button-logged-in").contains("Prøv e-bog").click()
-      cy.contains("logget ind med Unilogin").should("be.visible")
-      // No navigation to the read page happened.
-      cy.url().should("not.include", "/read")
+      cy.dataCy("work-page-button-logged-in")
+        .contains("Prøv e-bog")
+        .should("be.visible")
+        .should("have.attr", "href")
+        .and("include", "/read")
+      cy.contains("logget ind med Unilogin").should("not.exist")
     })
 
-    it("Audiobook → preview attempt is answered with the same error", () => {
+    it("Audiobook → the preview button is available, no error", () => {
       visitWork("AUDIO_BOOK_ONLINE")
-      cy.dataCy("work-page-button-logged-in").contains("Prøv lydbog").click()
-      cy.contains("logget ind med Unilogin").should("be.visible")
+      cy.dataCy("work-page-button-logged-in")
+        .contains("Prøv lydbog")
+        .should("be.visible")
+        .should("be.enabled")
+      cy.contains("logget ind med Unilogin").should("not.exist")
     })
   })
 })

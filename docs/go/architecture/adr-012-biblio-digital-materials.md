@@ -24,10 +24,12 @@ old track, `loanId` the new — `getReadUrlForLoan` is that rule as code.
 The coexistence window closes by itself as the old loans run out.
 
 **Sessions.** The adapter authenticates Adgangsplatformen patrons only.
-Unilogin users see all buttons but get a child-friendly error on loan and
-sample attempts; the adapter queries never fire for them (patron-gated in
-the service layer). Anonymous preview is gone — WeDoBooks answers samples
-for signed-in patrons only, and there is no Publizon fallback.
+Unilogin users see all buttons but get a child-friendly error on loan
+attempts; the patron-scoped adapter queries never fire for them
+(patron-gated in the service layer). Sampling is open to everyone —
+anonymous and Unilogin included: the adapter answers samples for a library
+token and hands back the file itself, which the SDK opens from the url
+without a session of its own.
 
 **The reader renders in flow on a chrome-less route.** The WeDoBooks SDK
 sizes its UI against the viewport and measures its surroundings at mount,
@@ -44,13 +46,15 @@ root layout — deliberately outside `DynamicModal`, which closes on route
 changes — mounts `WedoBooksPlayer`, and the bar itself owns minimised,
 expanded, chapters and speed. Playback survives navigation.
 
-**Per-app reader hooks.** GO's `useReaderSdk`/`useReaderCheckout` live in
-`go/hooks/`, siblings of the react apps' hooks rather than a shared
-implementation: each app binds the SDK to its own config source (the CMS
-GraphQL configuration here, data attributes there) and its own session
-model. Both build on the service layer's existing exports
-(`readerSignInTokenQuery`, `useServiceLayerConfig`, the digital hooks —
-see ADR-010); the service-layer and wedobooks packages are unchanged.
+**Per-app reader hooks.** GO's `useReaderSdk` (the constructed client,
+enough for samples), `useReaderSdkSession` (the client with the patron
+signed in) and `useReaderCheckout` live in `go/hooks/`, siblings of the
+react apps' hooks rather than a shared implementation: each app binds the
+SDK to its own config source (the CMS GraphQL configuration here, data
+attributes there) and its own session model. All build on the service
+layer's existing exports (`readerSignInTokenQuery`, `useServiceLayerConfig`,
+the digital hooks — see ADR-010); the service-layer and wedobooks packages
+are unchanged.
 
 ## Rejected
 
