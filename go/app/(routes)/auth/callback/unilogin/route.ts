@@ -148,11 +148,13 @@ export async function GET(request: NextRequest) {
       sub: userinfo.sub,
       uniid: introspect.uniid,
       institutionIds:
-        // R00263 is a testinstitution for DDF test users.
+        // A04441 (legacy) and R00263 are testinstitutions for DDF test users.
         // If the user is a DDF test user, we set the institutionIds to a hardcoded value.
         // The hardcoded value happens to be: "Christianshavns skole".
         // Otherwise the testusers wont be able to loan/reserve e-materials.
-        institutionId === "R00263" ? ["101047"] : getInstitutionIds(introspect.institution_ids),
+        institutionId && ["A04441", "R00263"].includes(institutionId)
+          ? ["101047"]
+          : getInstitutionIds(introspect.institution_ids),
     }
     session.user = {
       // Unilogin does not provide a name, so we set it to undefined.
