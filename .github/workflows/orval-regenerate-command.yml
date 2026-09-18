@@ -1,0 +1,188 @@
+---
+# Regenerate the committed Orval clients on a pull request, on demand.
+#
+# Why this exists
+# ---------------
+# Three CI jobs verify that the generated REST clients still match what the
+# current Orval produces, by regenerating them and running `git diff
+# --exit-code`:
+#
+#   * React / Generated clients       (react-ci.yml)
+#   * Go / Generated clients          (go-ci.yml)
+#   * Service Layer / Codegen up to date (service-layer-ci.yml)
+#
+# An Orval release routinely changes its emitted output, so every Dependabot
+# Orval bump fails those jobs — which in turn blocks Dependabot auto-merge.
+# The fix is purely mechanical (re-run codegen, commit the result), but it
+# previously required checking the branch out locally. Commenting
+# `/orval:regenerate` on the PR does it on a runner instead.
+#
+# Scope
+# -----
+# This regenerates exactly the Orval-backed steps of the three drift jobs -
+# no more. GraphQL codegen and the WSDL/SOAP generators are deliberately left
+# out: they are not affected by an Orval bump, and keeping the scope equal to
+# "what an Orval bump can break" means the command has one predictable effect.
+#
+# Security
+# --------
+# `issue_comment` always runs the workflow definition from the default branch,
+# so a pull request cannot alter what this does - but the job still runs
+# `pnpm install` and the codegen binaries *from the pull request*, on a runner
+# that holds a push token. For a Dependabot bump that is, by construction,
+# freshly released third-party code that nobody has reviewed yet.
+#
+# What bounds that:
+#   * The command only runs for OWNER / MEMBER / COLLABORATOR comments, so a
+#     human with write access decides when untrusted code gets executed here.
+#   * Fork pull requests are refused outright.
+#   * Dependabot's 3-day cooldown (.github/dependabot.yml) means a bumped
+#     version has been public for a while before a PR exists to run this on.
+#
+# What does NOT bound it: the token is present while the dependency's install
+# scripts run. Removing that exposure entirely would need the privilege split
+# - generate in an unprivileged job, commit from a `workflow_run` job that
+# never executes dependency code. If this command ever becomes automatic
+# rather than human-triggered, make that change at the same time.
+
+name: Orval / Regenerate command
+
+on:
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+# Pushing uses AUTOCOMMIT_GITHUB_TOKEN (see the checkout step), not this token.
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  regenerate:
+    name: Orval / Regenerate clients
+    # Note the guards are all on event metadata, never on the comment body
+    # beyond a prefix match - no untrusted text is interpolated into a shell.
+    if: >-
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/orval:regenerate') &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Acknowledge the command
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh api --silent -X POST \
+            "/repos/${REPO}/issues/comments/${COMMENT_ID}/reactions" \
+            -f content=eyes
+
+      - name: Resolve the pull request head
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          json=$(gh pr view "$PR" --repo "$REPO" \
+            --json headRefName,isCrossRepository,state)
+
+          if [ "$(jq -r .state <<<"$json")" != "OPEN" ]; then
+            echo "::error::Pull request #${PR} is not open."
+            exit 1
+          fi
+
+          # A fork's branch is not ours to push to, and running its code here
+          # would hand a push token to an arbitrary contributor.
+          if [ "$(jq -r .isCrossRepository <<<"$json")" != "false" ]; then
+            echo "::error::Refusing to regenerate on a fork pull request."
+            exit 1
+          fi
+
+          echo "head-ref=$(jq -r .headRefName <<<"$json")" >>"$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.pr.outputs.head-ref }}
+          # go/'s Taskfile derives vars from git history, so it needs the full
+          # history - the same reason go-ci.yml's codegen job does this.
+          fetch-depth: 0
+          # A PAT, not GITHUB_TOKEN: branch protection rejects the latter, and
+          # a commit pushed with it would not retrigger CI - which is the
+          # entire point of committing here.
+          token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN }}
+
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+
+      - name: Install go-task
+        uses: arduino/setup-task@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Regenerate react/ clients
+        working-directory: react
+        run: |
+          task codegen:rest-services
+          task codegen:client:fbs
+          task codegen:client:publizon
+          task codegen:client:dpl-cms
+
+      - name: Regenerate go/ clients
+        working-directory: go
+        run: |
+          task codegen:rest-services
+          task codegen:publizon
+
+      - name: Regenerate packages/service-layer client
+        working-directory: packages/service-layer
+        run: pnpm run codegen:fbs
+
+      - name: Commit the regenerated clients
+        id: commit
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          # Restricted to the generators' own output directories, so a
+          # misbehaving install script cannot smuggle a change to
+          # hand-written code into the commit.
+          file_pattern: >-
+            react/src/core/material-list-api
+            react/src/core/fbs
+            react/src/core/publizon
+            react/src/core/dpl-cms
+            go/lib/rest/publizon
+            packages/service-layer/fbs/src/generated
+          commit_message: "chore: regenerate Orval clients"
+
+      - name: Report the result
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+          CHANGED: ${{ steps.commit.outputs.changes_detected }}
+        run: |
+          if [ "$CHANGED" = "true" ]; then
+            body="Regenerated the Orval clients and pushed the result."
+          else
+            body="The Orval clients were already up to date - nothing to commit."
+          fi
+          gh pr comment "$PR" --repo "$REPO" --body "$body"
+
+      - name: Report failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh pr comment "$PR" --repo "$REPO" \
+            --body "\`/orval:regenerate\` failed. See [the run log](${RUN_URL})."
