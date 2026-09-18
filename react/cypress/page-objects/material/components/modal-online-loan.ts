@@ -18,6 +18,10 @@ export class OnlineLoanModalComponent extends ComponentObject {
         this.container().find(
           "[data-cy='material-button-online-internal-reader']"
         ),
+      approvePlayerButton: () =>
+        this.container().find(
+          "[data-cy='material-button-online-internal-player']"
+        ),
       // Rendered in place of the form once the loan went through.
       responseStatus: () =>
         this.container().find("[data-cy='open-oprder-response-status-text']")
