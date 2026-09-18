@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import {
+  fixtureBiblioLoans,
+  fixtureMergedWorks,
   fixtureWorks,
   loanListResult,
   seedClient,
@@ -49,6 +51,19 @@ export const ExpiringBlueTitle: Story = {
   args: {
     works: fixtureWorks.slice(4, 5),
     loanData: { loans: loanListResult.loans.slice(4, 5) },
+  },
+}
+
+// With the Biblio adapter switched on, the slider shows both providers'
+// loans side by side — Publizon loans keep their cards until they expire.
+// TODO(publizon-sunset): remove when the Publizon API is phased out — see
+// the matching story in DigitalLoansModal.stories.tsx.
+export const MergedWithBiblioLoans: Story = {
+  decorators: [withQueryClient(seedClient())],
+  args: {
+    works: fixtureMergedWorks,
+    loanData: loanListResult,
+    biblioLoans: fixtureBiblioLoans,
   },
 }
 

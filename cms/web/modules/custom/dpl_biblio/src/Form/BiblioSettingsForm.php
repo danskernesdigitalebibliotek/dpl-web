@@ -41,6 +41,13 @@ class BiblioSettingsForm extends ConfigFormBase {
       '#config_target' => self::CONFIG_NAME . ':enabled',
     ];
 
+    $form['settings']['enabled_go'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use the Biblio adapter for digital materials on GO', [], ['context' => 'Dpl Biblio']),
+      '#description' => $this->t('When enabled new digital loans on GO can only be made through the Biblio adapter. Existing Publizon loans remain visible and playable until they expire. Independent of the flag for the web apps above.', [], ['context' => 'Dpl Biblio']),
+      '#config_target' => self::CONFIG_NAME . ':enabled_go',
+    ];
+
     // TEMPORARY - remove once Biblio has taken over the reservation queue.
     $form['settings']['publizon_reservations_closed'] = [
       '#type' => 'checkbox',

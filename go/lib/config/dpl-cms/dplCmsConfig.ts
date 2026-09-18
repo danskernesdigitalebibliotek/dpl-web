@@ -1,5 +1,6 @@
 "use server"
 
+import { cacheTag } from "next/cache"
 import { connection } from "next/server"
 
 import {
@@ -22,8 +23,11 @@ const queryDplCmsPublicConfig = async () => {
 
 const getDplCmsPrivateConfigData = async () => {
   "use cache"
-  // @todo: We should handle triggered revalidation or having a longer caching time.
-  // Right now the default cache time should be 15 minutes.
+  // Tagged so /cache/revalidate?tags=dpl-cms-config can drop the entry —
+  // used by the e2e tests when a spec changes the mocked configuration, and
+  // available to Drupal-triggered revalidation. Default cache time is 15
+  // minutes otherwise.
+  cacheTag("dpl-cms-config")
 
   try {
     const data = await queryDplCmsPrivateConfig()
@@ -67,8 +71,8 @@ export const getDplCmsPrivateConfig = async () => {
 
 const getDplCmsPublicConfigData = async () => {
   "use cache"
-  // @todo: We should handle triggered revalidation or having a longer caching time.
-  // Right now the default cache time should be 15 minutes.
+  // See getDplCmsPrivateConfigData for the tag.
+  cacheTag("dpl-cms-config")
 
   try {
     const data = await queryDplCmsPublicConfig()
@@ -91,6 +95,11 @@ const getDplCmsPublicConfigData = async () => {
         municipalityId: null,
       },
       blacklistedAvailabilityBranches: [],
+      biblio: {
+        enabled: false,
+        baseUrl: null,
+        sdk: null,
+      },
     }
   }
 }

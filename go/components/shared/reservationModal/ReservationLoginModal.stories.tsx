@@ -13,6 +13,7 @@ const dplCmsConfig: TDplCmsPublicConfig = {
   mapp: null,
   unilogin: { municipalityId: "0000" },
   blacklistedAvailabilityBranches: [],
+  biblio: { enabled: false, baseUrl: null, sdk: null },
 }
 
 const withDplCmsConfig =

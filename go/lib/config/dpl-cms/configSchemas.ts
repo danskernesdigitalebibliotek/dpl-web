@@ -25,6 +25,25 @@ export const publicConfigSchema = z.object({
     .nullable()
     .optional()
     .transform(value => value ?? []),
+  // Safe fallback while the CMS release without the biblio field is still
+  // around: a missing field parses as "disabled".
+  biblio: z
+    .object({
+      enabled: z.boolean(),
+      baseUrl: z.string().nullable(),
+      sdk: z
+        .object({
+          applicationId: z.string(),
+          firebaseApiKey: z.string(),
+          firebaseProjectId: z.string(),
+          firebaseAppId: z.string(),
+          readerApiKey: z.string(),
+        })
+        .nullable(),
+    })
+    .nullable()
+    .optional()
+    .transform(value => value ?? { enabled: false, baseUrl: null, sdk: null }),
 })
 
 export const privateConfigSchema = z.object({

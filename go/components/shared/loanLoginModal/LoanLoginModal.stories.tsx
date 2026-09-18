@@ -43,6 +43,7 @@ const stubConfig: TDplCmsPublicConfig = {
   mapp: null,
   unilogin: { municipalityId: null },
   blacklistedAvailabilityBranches: [],
+  biblio: { enabled: false, baseUrl: null, sdk: null },
 }
 
 const seedClient = () => {

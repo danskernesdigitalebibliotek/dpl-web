@@ -11,6 +11,9 @@ importers:
       '@danskernesdigitalebibliotek/dpl-service-layer':
         specifier: file:../packages/service-layer
         version: file:../packages/service-layer(@tanstack/react-query@5.102.8(react@19.2.8))(react@19.2.8)
+      '@danskernesdigitalebibliotek/dpl-wedobooks':
+        specifier: file:../packages/wedobooks
+        version: file:../packages/wedobooks(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@next/env':
         specifier: 16.3.4
         version: 16.3.4
@@ -1159,6 +1162,12 @@ packages:
     peerDependencies:
       '@tanstack/react-query': ^5.101.0
       react: ^18 || ^19
+
+  '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks':
+    resolution: {directory: ../packages/wedobooks, type: directory}
+    peerDependencies:
+      react: ^18 || ^19
+      react-dom: ^18 || ^19
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -6808,7 +6817,7 @@ packages:
     engines: {node: '>= 0.10'}
 
   iron-session@https://codeload.github.com/danskernesdigitalebibliotek/iron-session/tar.gz/5cc60ca1a3bd27508ee9c8bb76b0100fb650df5f:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/danskernesdigitalebibliotek/iron-session/tar.gz/5cc60ca1a3bd27508ee9c8bb76b0100fb650df5f}
+    resolution: {gitHosted: true, integrity: sha512-LG+tm3n1AyrXQuvvTqOG9mQZKkA9vYqiX5AO2/wyytHv7s6pWRPdODSrrVwjYtlDxWmSXliIUeLaFozSKyPgCg==, tarball: https://codeload.github.com/danskernesdigitalebibliotek/iron-session/tar.gz/5cc60ca1a3bd27508ee9c8bb76b0100fb650df5f}
     version: 8.0.4
 
   iron-webcrypto@1.2.1:
@@ -11279,6 +11288,11 @@ snapshots:
       '@tanstack/react-query': 5.102.8(react@19.2.8)
       react: 19.2.8
       zod: 4.6.4
+
+  '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
 
   '@emnapi/core@1.10.0':
     dependencies:

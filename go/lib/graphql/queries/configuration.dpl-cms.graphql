@@ -29,6 +29,17 @@ query getDplCmsPublicConfiguration {
         municipalityId
       }
       blacklistedAvailabilityBranches
+      biblio {
+        enabled
+        baseUrl
+        sdk {
+          applicationId
+          firebaseApiKey
+          firebaseProjectId
+          firebaseAppId
+          readerApiKey
+        }
+      }
     }
   }
 }
