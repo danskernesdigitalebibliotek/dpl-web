@@ -1,5 +1,6 @@
 "use server"
 
+import { isPast } from "date-fns"
 import { z } from "zod"
 
 import { useGetAdgangsplatformenUserTokenQuery } from "../graphql/generated/dpl-cms/graphql"
@@ -29,6 +30,13 @@ export const loadUserToken = async () => {
 
     if (validateUserToken.error) {
       console.error("loadUserToken error", validateUserToken.error.flatten())
+      return null
+    }
+
+    // The CMS returns the token stored at login verbatim — it never renews it.
+    // The Drupal session outlives the token by weeks, so without this check an
+    // expired token would resurrect the session on every request.
+    if (isPast(new Date(validateUserToken.data.expire.timestamp * 1000))) {
       return null
     }
 

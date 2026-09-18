@@ -100,7 +100,7 @@ const getFakeSessions = () => {
     expires: add(new Date(), { days: 1 }),
   }
 
-  const adgangsPlatformenSessionThatShouldBeRefreshed = {
+  const adgangsplatformenSessionCloseToExpiry = {
     isLoggedIn: true,
     type: "adgangsplatformen",
     expires: add(new Date(), { seconds: 59 }),
@@ -114,7 +114,7 @@ const getFakeSessions = () => {
   }
 
   return {
-    adgangsPlatformenSessionThatShouldBeRefreshed,
+    adgangsplatformenSessionCloseToExpiry,
     uniloginSessionThatShouldBeRefreshed,
     uniloginSessionWithExpiredRefreshToken,
     adgangsplatformenSessionThatDoesNotNeedToBeRefreshed,
@@ -222,9 +222,11 @@ describe("Middleware", () => {
     expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(1)
   })
 
-  it("can refresh an Adgangsplatform session if it is expired", async () => {
+  // The GO session lives exactly as long as the user token — the CMS cannot
+  // renew it, so there is no refresh path for Adgangsplatformen sessions.
+  it("does NOT extend an Adgangsplatformen session that is close to expiry", async () => {
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
-      Promise.resolve(sessions.adgangsPlatformenSessionThatShouldBeRefreshed)
+      Promise.resolve(sessions.adgangsplatformenSessionCloseToExpiry)
     )
 
     const saveAdgangsplatformenSessionSpy = vi
@@ -246,7 +248,7 @@ describe("Middleware", () => {
 
     await middleware(getNextRequestWithLibraryTokenCookie())
 
-    expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(1)
+    expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(0)
   })
 
   it("does NOT refresh an Adgangsplatform session if it isn't expired yet", async () => {
@@ -383,6 +385,41 @@ describe("Middleware", () => {
     await middleware(getNextRequestWithLibraryTokenCookie())
 
     expect(destroySessionSpy).toHaveResolvedTimes(1)
+  })
+
+  it("redirects an expired Adgangsplatformen session through the logout flow on document navigations", async () => {
+    vi.spyOn(sessionFunctions, "getDplCmsSessionCookie").mockResolvedValue(
+      Promise.resolve({
+        name: "SSESSccaeb066c444b6dbb954590b1a54d7c4",
+        value: "some-drupal-session-cookie-value",
+      })
+    )
+
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
+      Promise.resolve(sessions.adgangsPlatformenSessionThatIsTooOld)
+    )
+
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
+
+    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
+      Promise.resolve({
+        getAll: vi.fn(() => [fakeDrupalSessionRequestCookie]),
+        get: vi.fn(() => fakeDrupalSessionRequestCookie),
+      })
+    )
+
+    const request = getNextRequestWithLibraryTokenCookie()
+    request.headers.set("sec-fetch-dest", "document")
+
+    const response = await middleware(request)
+
+    // The logout route tears down both the GO session and the CMS session —
+    // the middleware must not destroy the session locally first, or the
+    // logout route cannot tell that it was an Adgangsplatformen session.
+    expect(response.headers.get("location")).toContain("/auth/logout")
+    expect(destroySessionSpy).toHaveBeenCalledTimes(0)
   })
 
   it("removes PKCE code verifier from session if it exists", async () => {
