@@ -61,14 +61,18 @@ $_recommended-material-max-width: 378px;
   aspect-ratio: unset;
 
   grid-template-rows: min-content auto 1fr;
+
+  // Size the cover from its width, not from a percentage height. The middle
+  // row is auto-sized, and Safari resolves a percentage height against an
+  // auto row as 0, which collapses the cover entirely.
   > .cover {
-    height: 100%;
-    max-height: $cover_height_small;
+    height: auto;
+    width: 100%;
+    max-width: calc(#{$cover_height_small} * #{$cover_aspect_ratio});
   }
   @include media-query__small {
-    grid-template-rows: min-content auto 1fr;
     > .cover {
-      max-height: $cover_height_large;
+      max-width: calc(#{$cover_height_large} * #{$cover_aspect_ratio});
     }
   }
 }
