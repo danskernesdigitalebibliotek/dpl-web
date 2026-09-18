@@ -1,0 +1,11 @@
+uuid: c79e38c3-4804-43cb-8be2-e90943871f5d
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.service_message
+id: node.service_message
+target_entity_type_id: node
+target_bundle: service_message
+default_langcode: da
+language_alterable: false

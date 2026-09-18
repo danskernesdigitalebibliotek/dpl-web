@@ -11,16 +11,19 @@ use Drupal\bnf_client\SubscriptionHelper;
  * config_ignore as library administrators can add their own modules.
  */
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_update\Services\ConfigIgnore;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringDatabaseStorage;
 use Drupal\next\Entity\NextSite;
@@ -1324,4 +1327,80 @@ function dpl_update_update_10081(): string {
   return $had_stale_config
     ? 'Removed the current_events resource configuration, and moved its permission to happening_events.'
     : 'Moved the current_events permission to happening_events; there was no resource configuration to remove.';
+}
+
+/**
+ * Enable dpl_service_message module.
+ */
+function dpl_update_update_10082(): string {
+  return _dpl_update_install_modules(['dpl_service_message']);
+}
+
+/**
+ * Create the service message field storages ahead of the configuration import.
+ *
+ * `drush deploy` runs the updates, then imports configuration. Left to the
+ * import alone, the six storages and the six field instances that reference
+ * them are created in one pass of one process - and the instance asks the
+ * entity field manager for its storage, which answers from a cached map of
+ * the storages that `node` had. That map is rebuilt when a storage is saved,
+ * but the cache is a fast, per-process one in front of the shared backend,
+ * and when the two creations fall close enough together the instance is told
+ * its storage does not exist. It fails one CI job in ten while the rest of
+ * the run imports the same configuration successfully (DDF-592).
+ *
+ * Creating the storages here closes the window. They are written in the
+ * update process and read in the import process, which starts afterwards
+ * with nothing of its own cached, so the instances find them. The import
+ * still carries the storages - it sees them unchanged and moves on - and
+ * this is a no-op on every site that has them already.
+ *
+ * The definitions are read from the sync directory rather than written out
+ * here, UUIDs included, so that the two cannot drift apart and the import
+ * recognises what it finds.
+ */
+function dpl_update_update_10083(): string {
+  $directory = Settings::get('config_sync_directory');
+
+  if (!is_string($directory) || $directory === '') {
+    return 'No configuration sync directory to read the service message field storages from.';
+  }
+
+  $sync = new FileStorage($directory);
+  $storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+  $created = [];
+
+  foreach ([
+    'field_svcmsg_body',
+    'field_svcmsg_branches',
+    'field_svcmsg_frontpage',
+    'field_svcmsg_heading',
+    'field_svcmsg_link',
+    'field_svcmsg_placement',
+  ] as $field_name) {
+    if (FieldStorageConfig::loadByName('node', $field_name) instanceof FieldStorageConfig) {
+      continue;
+    }
+
+    $values = $sync->read("field.storage.node.{$field_name}");
+
+    if (!is_array($values)) {
+      continue;
+    }
+
+    // Through the storage handler, not FieldStorageConfig::create(): what the
+    // file holds is configuration data, and for some field types that is not
+    // the shape the entity keeps its settings in. A `list_string` holds its
+    // allowed values as a map and writes them as a list of value/label pairs,
+    // so an entity built straight from the file saves the pairs back through
+    // the same conversion and turns each label into a list of its own. The
+    // storage handler converts on the way in, which is how the configuration
+    // import gets it right.
+    $storage->createFromStorageRecord($values)->save();
+    $created[] = $field_name;
+  }
+
+  return $created
+    ? 'Created service message field storages: ' . implode(', ', $created)
+    : 'Service message field storages are already in place.';
 }

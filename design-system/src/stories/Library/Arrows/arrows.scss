@@ -7,15 +7,25 @@
       overflow: visible;
     }
 
-    &:hover {
-      .arrow__head {
-        transition: 0.3s;
-        transform: translateX($translatePx);
-      }
+    // Only where a pointer can actually hover. On a touch screen there is no
+    // hover, so Safari and Chrome fire :hover on tap instead - which played
+    // the stretch animation every time a card or link was tapped, and let the
+    // arrow animate past the edge of the element it belongs to (KB-66).
 
-      .arrow__body {
-        transition: 0.3s;
-        transform: scaleX($scaleX);
+    // Keyed on input capability rather than viewport width on purpose: a
+    // narrow desktop window keeps the animation, a tablet does not, and a
+    // touch laptop with a mouse attached reports `hover: hover` and keeps it.
+    @media (hover: hover) {
+      &:hover {
+        .arrow__head {
+          transition: 0.3s;
+          transform: translateX($translatePx);
+        }
+
+        .arrow__body {
+          transition: 0.3s;
+          transform: scaleX($scaleX);
+        }
       }
     }
 
