@@ -30,6 +30,7 @@ module:
   datetime_range: 0
   decoupled_router: 0
   default_content: 0
+  dk_address: 0
   dpl_admin: 0
   dpl_app: 0
   dpl_article: 0
@@ -118,7 +119,6 @@ module:
   graphql_compose_preview: 0
   graphql_compose_routes: 0
   graphql_compose_views: 0
-  gsearch: 0
   handy_cache_tags: 0
   health_check: 0
   honeypot: 0

@@ -5,6 +5,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_update\Services\ConfigIgnore;
@@ -800,4 +801,18 @@ function _dpl_update_zero_hits_node_id_from_url(string $url): ?string {
   $node_id = $resolved->getRouteParameters()['node'] ?? NULL;
 
   return is_scalar($node_id) ? (string) $node_id : NULL;
+}
+
+/**
+ * Uninstall gsearch and the one-shot migration module that replaced it.
+ *
+ * This is a deploy hook on purpose: dpl_update_update_10082() converts the
+ * address fields to dk_address, config import then brings the rest of the
+ * configuration in line, and only after that are the old modules removed.
+ */
+function dpl_update_deploy_uninstall_gsearch(): string {
+  DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer')
+    ->uninstall(['gsearch', 'dk_address_gsearch_migrate']);
+
+  return 'Uninstalled modules: gsearch, dk_address_gsearch_migrate.';
 }

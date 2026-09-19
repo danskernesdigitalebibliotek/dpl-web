@@ -157,9 +157,10 @@ class BranchService {
       return [];
     }
 
+    // The React apps expect coordinates as strings.
     return [
-      'lat' => $lat,
-      'lng' => $lng,
+      'lat' => (string) $lat,
+      'lng' => (string) $lng,
     ];
   }
 
