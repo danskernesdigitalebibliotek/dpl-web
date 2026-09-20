@@ -173,7 +173,7 @@
     "react-use": "^17.6.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
-    "temporal-polyfill": "^1.0.4",
+    "temporal-polyfill": "^1.0.5",
     "unfetch": "^5.0.0"
   },
   "peerDependencies": {
