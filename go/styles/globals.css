@@ -203,9 +203,9 @@
     --typo-body-sm-line-height: 18px;
     --typo-body-sm-letter-spacing: 0;
 
-    --typo-button-lg-size: 12px;
+    --typo-button-lg-size: 14px;
     --typo-button-lg-weight: 600;
-    --typo-button-lg-line-height: 12px;
+    --typo-button-lg-line-height: 14px;
     --typo-button-lg-letter-spacing: 0;
 
     --typo-button-sm-size: 10px;
@@ -227,6 +227,11 @@
     --typo-tag-sm-weight: 500;
     --typo-tag-sm-line-height: 12px;
     --typo-tag-sm-letter-spacing: 5%;
+
+    --typo-label-sm-size: 12px;
+    --typo-label-sm-weight: 400;
+    --typo-label-sm-line-height: 12px;
+    --typo-label-sm-letter-spacing: 0;
 
     --typo-caption-size: 10px;
     --typo-caption-weight: 400;
@@ -340,6 +345,11 @@
       --typo-tag-sm-weight: 600;
       --typo-tag-sm-line-height: 10px;
       --typo-tag-sm-letter-spacing: 5%;
+
+      --typo-label-sm-size: 14px;
+      --typo-label-sm-weight: 400;
+      --typo-label-sm-line-height: 14px;
+      --typo-label-sm-letter-spacing: 0;
 
       --typo-caption-size: 12px;
       --typo-caption-weight: 400;

@@ -8,6 +8,7 @@ import {
   biblioLoanFactory
 } from "../../../cypress/factories/biblio/biblio.factory";
 import { givenUserHasBiblioLoans } from "../../../cypress/intercepts/biblio/biblio";
+import { givenCatalogueKnowsNothing } from "../../../cypress/intercepts/fbi/catalogueDetails";
 import { publizonLoanListFactory } from "../../../cypress/factories/publizon/publizon.factory";
 
 /**
@@ -49,6 +50,8 @@ const stubBackends = () => {
     biblioLoanFactory.build(),
     biblioAudiobookLoanFactory.build()
   ]);
+
+  givenCatalogueKnowsNothing();
 };
 
 describe("Dashboard - Biblio adapter feature flag", () => {

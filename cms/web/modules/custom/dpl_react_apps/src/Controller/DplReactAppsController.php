@@ -832,6 +832,7 @@ class DplReactAppsController extends ControllerBase {
       // Texts.
       'series-read-this-first-text' => $this->t('Start with this one', [], ['context' => 'Series Page']),
       'series-by-author-text' => $this->t('Series by', [], ['context' => 'Series Page']),
+      'series-related-works-heading-text' => $this->t('More by @author', [], ['context' => 'Series Page']),
 
       // Add external API base urls.
     ] + self::externalApiBaseUrls();

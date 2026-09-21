@@ -2,7 +2,7 @@
 # Source: https://biblio-adapter.dbc.dk/docs — use the "Download OpenAPI
 # specification" button and convert the JSON to YAML (see schemas/README.md).
 # Consumed by react/ (src/core/biblio, generated via orval).
-# Last re-synced against live: 2026-08-13.
+# Last re-synced against live: 2026-09-16.
 openapi: 3.0.3
 info:
   title: Biblio API Adapter
@@ -22,19 +22,19 @@ info:
     \nObtain an OAuth2 access token from [login.bib.dk](https://login.bib.dk) and send it as `Authorization:\
     \ Bearer <token>`.\n\n**Endpoint access**\n\nEndpoints that read or change a user's loans, reservations,\
     \ or user data require a token representing the end user, issued via the OAuth2 `authorization_code`\
-    \ grant.\n\nMetadata endpoints can be accessed with either an end-user token or a server-to-server\
+    \ grant.\n\nMetadata and sample endpoints can be accessed with either an end-user token or a server-to-server\
     \ token.\n\nServer-to-server access requires a token issued via the OAuth2 `client_credentials` grant.\
     \ The OAuth client must be configured with access to the endpoint.\n\n**Identity resolution**\n\n\
     User-scoped endpoints do not accept client-supplied `user_id` or organization ids. Resolve them from\
-    \ login.bib.dk userinfo `attributes` as follows:\n\n1. If both `uniqueId` and `municipalityAgencyId`\
-    \ are present:\n   - `user_id` = `uniqueId`\n   - `organization_third_party_id` = `municipalityAgencyId`\n\
-    2. Otherwise, use the Unilogin fallback:\n   - `user_id` = `uniloginUniIdHash`\n   - `organization_third_party_id`\
-    \ = `uniloginAgencyId`\n\n\nUnilogin fallback requires an active Unilogin license; otherwise the adapter\
-    \ returns 403 with `User is missing license`.\n\nIf identity cannot be resolved, the adapter returns\
-    \ 403 Forbidden.\n## Unsupported endpoints in adapter\n\nThese endpoints are available in the `Biblio\
-    \ API`, but not in this adapter.\n\n- `POST /v1/auth/sign-in` (used internally)\n- `POST /v1/auth/create-user`\n\
-    - `Webhooks` (Biblio API outbound webhook events)\n- `GET /v1/inventory`\n- `GET /v1/shelves`\n- `GET\
-    \ /v1/onix/{material_id}`\n- `GET /v1/onix/pull/alpha`\n- `GET /v1/onix/pull/delta/{from_utc_timestamp}`\n"
+    \ login.bib.dk userinfo `attributes` as follows:\n\n1. If both `uniqueId` and `municipality` are present:\n\
+    \   - `user_id` = `uniqueId`\n   - `organization_third_party_id` = `municipality`\n2. Otherwise, use\
+    \ the Unilogin fallback:\n   - `user_id` = `uniloginUniIdHash`\n   - `organization_third_party_id`\
+    \ = `uniloginMunicipality`\n\n\nUnilogin fallback requires an active Unilogin license; otherwise the\
+    \ adapter returns 403 with `User is missing license`.\n\nIf identity cannot be resolved, the adapter\
+    \ returns 403 Forbidden.\n## Unsupported endpoints in adapter\n\nThese endpoints are available in\
+    \ the `Biblio API`, but not in this adapter.\n\n- `POST /v1/auth/sign-in` (used internally)\n- `POST\
+    \ /v1/auth/create-user`\n- `Webhooks` (Biblio API outbound webhook events)\n- `GET /v1/inventory`\n\
+    - `GET /v1/shelves`\n- `GET /v1/onix/{material_id}`\n- `GET /v1/onix/pull/alpha`\n- `GET /v1/onix/pull/delta/{from_utc_timestamp}`\n"
 servers:
 - url: http://localhost:3000
   description: Local development
@@ -1454,6 +1454,123 @@ paths:
               $ref: '#/components/headers/ResponseSourceHeader'
             x-request-id:
               $ref: '#/components/headers/RequestIdHeader'
+  /v1/samples/{material_id}:
+    get:
+      operationId: getSample
+      summary: Get sample download link
+      description: 'Returns a time-limited link to download the promotional sample of a material.
+
+        The sample is an excerpt of the material itself — an `epub` file for ebooks and an `mp3` file
+        for audiobooks — intended for playback or download on a book page. The returned `sample_url` is
+        a signed URL that is valid for 7 days and can be handed straight to a player or download link.
+
+        `format` is optional. When it is omitted the format is derived from the material type registered
+        in Biblio API, so a client that only knows the ISBN-13 does not need to look up the material first.
+        Pass it explicitly to skip that lookup.
+
+        The endpoint is being rolled out per environment, so it is not enabled everywhere yet; where it
+        is not, Biblio API returns `403`.
+
+        Not every material has a sample; those return `404`. When `format` is omitted the material is
+        looked up in order to derive it, so an unknown `material_id` returns `404` with a distinct `Material
+        not found` message. When `format` is supplied there is no lookup, so an unknown material and a
+        material without a sample both return `404` `Sample not available`.
+
+
+        > **Adapter specifics**
+
+        >
+
+        > Requires a valid bearer token with end-user or server-to-server access.
+
+        '
+      tags:
+      - samples
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/TraceparentHeader'
+      - name: material_id
+        in: path
+        required: true
+        description: ISBN-13 of the material whose sample is requested.
+        schema:
+          type: string
+        example: '9788711623671'
+      - name: format
+        in: query
+        required: false
+        description: 'File format of the requested sample. Omit to let the format follow the material
+          type: `epub` for ebooks, `mp3` for audiobooks.
+
+          '
+        schema:
+          $ref: '#/components/schemas/SampleFormat'
+        example: epub
+      responses:
+        '200':
+          description: Sample download link from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSampleApiResponse'
+        '401':
+          description: Invalid or expired bearer token
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '403':
+          description: 'User not authorized, credentials unavailable, or sample endpoint disabled in Biblio
+            API
+
+            '
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '404':
+          description: Material or sample not found
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '422':
+          description: Validation failed in Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '429':
+          description: Too many requests
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '500':
+          description: Biblio API or internal server error
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
+        '502':
+          description: Failed to get sample download link from Biblio API
+          headers:
+            x-response-source:
+              $ref: '#/components/headers/ResponseSourceHeader'
+            x-request-id:
+              $ref: '#/components/headers/RequestIdHeader'
 components:
   schemas:
     GetMetadataApiResponse:
@@ -1466,6 +1583,28 @@ components:
             $ref: '#/components/schemas/MaterialInformationDto'
       required:
       - materials
+      additionalProperties: false
+    SampleFormat:
+      type: string
+      enum:
+      - epub
+      - mp3
+    GetSampleApiResponse:
+      type: object
+      properties:
+        material_id:
+          type: string
+          description: ISBN-13 of the material the sample belongs to.
+        format:
+          $ref: '#/components/schemas/SampleFormat'
+          description: File format of the returned sample.
+        sample_url:
+          type: string
+          description: Time-limited signed URL to download the sample. Valid for 7 days.
+      required:
+      - material_id
+      - format
+      - sample_url
       additionalProperties: false
     ImportMaterialType:
       anyOf:

@@ -5,9 +5,17 @@
 FROM uselagoon/node-24-builder:latest
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
-# Workspace packages are referenced from go/package.json via file: deps,
-# so they must be copied into the image before pnpm install can resolve them.
-COPY packages /app/packages
+# Workspace packages are referenced from go/package.json via file: deps, so
+# they must be copied into the image before pnpm install can resolve them.
+#
+# Only the ones Go uses. pnpm works on every workspace package it finds, and
+# the filter below is what keeps that in check during the install - but
+# `pnpm prune` in stage 2 takes no filter, so it walks them all and, since
+# pnpm 11, resolves each lockfile against its registry. packages/wedobooks
+# resolves against WeDoBooks' private one, which this image deliberately
+# holds no credential for (see the install below), and the prune fails on a
+# 401 for a package Go never imports.
+COPY packages/service-layer /app/packages/service-layer
 # .npmrc carries the registry mapping for the @wedobooks scope. Only the
 # mapping - nothing from that registry is installed here (see below), and the
 # credential never enters this image.

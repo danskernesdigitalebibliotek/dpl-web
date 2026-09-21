@@ -3,7 +3,7 @@ import type {
   WedoBooksCheckout,
   WedoBooksSdk
 } from "@danskernesdigitalebibliotek/dpl-wedobooks";
-import useReaderSdk from "./useReaderSdk";
+import useDigitalSdkSession from "./useDigitalSdkSession";
 
 /**
  * The signed-in SDK and the checkout the reader or player opens.
@@ -13,10 +13,10 @@ import useReaderSdk from "./useReaderSdk";
  * the two disagree on how dates and authors are shaped. `checkout` is null
  * when the SDK does not recognise the loan - the signal it cannot be opened.
  */
-const useReaderCheckout = (
+const useDigitalCheckout = (
   loanId: string | null
 ): { sdk: WedoBooksSdk | undefined; checkout: WedoBooksCheckout | null } => {
-  const { data: sdk } = useReaderSdk();
+  const { data: sdk } = useDigitalSdkSession();
 
   const { data: checkout } = useQuery<WedoBooksCheckout | null>({
     queryKey: ["reader", "checkout", loanId],
@@ -24,7 +24,7 @@ const useReaderCheckout = (
     // The reader and the player bind to the entitlement once and key on its
     // id, so a refetched copy would never reach the mounted component.
     staleTime: Infinity,
-    // As in useReaderSdk: a loan the SDK cannot fetch has to say so rather
+    // As in useDigitalSdkSession: a loan the SDK cannot fetch has to say so rather
     // than leave the reader blank.
     throwOnError: true,
     queryFn: async () => {
@@ -37,4 +37,4 @@ const useReaderCheckout = (
   return { sdk, checkout: checkout ?? null };
 };
 
-export default useReaderCheckout;
+export default useDigitalCheckout;
