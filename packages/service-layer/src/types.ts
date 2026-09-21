@@ -24,6 +24,7 @@ export type Patron = {
   pickupBranchId: string
   emailAddress: string | undefined
   phoneNumber: string | undefined
+  receiveSms: boolean | undefined
 }
 
 export type MaterialAvailability = {
