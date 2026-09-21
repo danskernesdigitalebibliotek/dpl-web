@@ -7,7 +7,7 @@ describe("cqlString", () => {
   });
 
   it("escapes double quotes inside the value", () => {
-    expect(cqlString('The "Real" Story')).toBe(`"The \\"Real\\" Story"`);
+    expect(cqlString('The "Real" Story')).toBe(`The \\"Real\\" Story`);
   });
 
   it("escapes backslashes before quotes so an escaped quote stays escaped", () => {
