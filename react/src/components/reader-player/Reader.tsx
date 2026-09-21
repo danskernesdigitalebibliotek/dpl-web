@@ -1,7 +1,7 @@
 import React from "react";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import DigitalReaderPlayer from "./DigitalReaderPlayer";
-import DigitalSampleReader from "./DigitalSampleReader";
+import DigitalSample from "./DigitalSample";
 import PublizonReader from "./PublizonReader";
 
 export type ReaderProps = {
@@ -37,11 +37,11 @@ const Reader: React.FC<ReaderProps> = ({
     return <DigitalReaderPlayer loanId={loanid} onClose={onClose} />;
   }
 
-  // An identifier with no order behind it is an e-book sample (audiobooks
-  // sample on the player page). With the flag on it goes through the service
-  // layer, never Publizon; DigitalSampleReader explains the sign-in rule.
+  // An identifier with no order behind it is a sample. With the flag on it
+  // goes through the service layer, never Publizon, and no sign-in is needed
+  // - see DigitalSample, which also decides whether it reads or plays.
   if (identifier && !orderid && viaBiblioAdapter) {
-    return <DigitalSampleReader identifier={identifier} onClose={onClose} />;
+    return <DigitalSample identifier={identifier} onClose={onClose} />;
   }
 
   return <PublizonReader identifier={identifier} orderid={orderid} />;

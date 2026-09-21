@@ -3,7 +3,7 @@ import { useGetReviewManifestationsQuery } from "../../core/dbc-gateway/generate
 import { ReviewManifestation } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
 import ReviewExternal from "./ReviewExternal";
-import ReviewInfomedia from "./ReviewInfomedia";
+import ReviewRetriever from "./ReviewRetriever";
 import ReviewLibrarian from "./ReviewLibrarian";
 import ReviewSkeleton from "./ReviewSkeleton";
 
@@ -32,9 +32,9 @@ export const MaterialReviews: React.FC<MaterialReviewsProps> = ({
 
   const getReviewType = (review: ReviewManifestation) => {
     if (
-      review?.access.some((access) => access.__typename === "InfomediaService")
+      review?.access.some((access) => access.__typename === "RetrieverService")
     ) {
-      return "infomedia";
+      return "retriever";
     }
     if (review?.access.some((access) => access.__typename === "AccessUrl")) {
       return "external";
@@ -53,15 +53,15 @@ export const MaterialReviews: React.FC<MaterialReviewsProps> = ({
   };
 
   const chooseReview = (
-    reviewType: "infomedia" | "external" | "librarian" | null,
+    reviewType: "retriever" | "external" | "librarian" | null,
     review: ReviewManifestation
   ) => {
     switch (reviewType) {
       case null:
         return null;
-      case "infomedia":
+      case "retriever":
         return (
-          <ReviewInfomedia review={review} dataCy={`${dataCy}-infomedia`} />
+          <ReviewRetriever review={review} dataCy={`${dataCy}-retriever`} />
         );
       case "external":
         return <ReviewExternal review={review} dataCy={`${dataCy}-external`} />;

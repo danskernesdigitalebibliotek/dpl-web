@@ -35,6 +35,13 @@ class BnfImporter {
   ];
 
   /**
+   * Node uuids that was imported in this request.
+   *
+   * @var bool[]
+   */
+  protected array $importedNodes = [];
+
+  /**
    * Constructor.
    */
   public function __construct(
@@ -43,6 +50,18 @@ class BnfImporter {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected ImportContextStack $importContext,
   ) {}
+
+  /**
+   * Whether the given node/uuid was imported in this request.
+   */
+  public function wasJustImported(NodeInterface|string $node) : bool {
+    if ($node instanceof NodeInterface) {
+      /** @var string $node */
+      $node = $node->uuid();
+    }
+
+    return array_key_exists($node, $this->importedNodes);
+  }
 
   /**
    * Get node title from BNF.
@@ -91,14 +110,15 @@ class BnfImporter {
         return NULL;
       }
 
-      // If the node we're looking to import is unpublished, we want to see
-      // if it already exists. If not, we want to ignore it.
+      // Don't create nodes that haven't been published on BNF yet.
       if (!$nodeData->status) {
         if (!$existingNode instanceof NodeInterface) {
           $this->logger->info("Skipped BNF import of unpublished node {$uuid}.");
           return NULL;
         }
       }
+
+      $this->importedNodes[$uuid] = TRUE;
 
       $newSourceChanged = (string) $nodeData->changed->timestamp;
 

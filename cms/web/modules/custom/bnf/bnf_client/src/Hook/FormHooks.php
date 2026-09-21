@@ -104,6 +104,7 @@ class FormHooks implements LoggerAwareInterface {
     $exportable = ($state == BnfStateEnum::None);
 
     $form['bnf_export'] = [
+      '#access' => $exportable,
       '#type' => 'checkbox',
       '#title' => $this->t('Publish and submit to BNF', [], ['context' => 'BNF']),
       '#default_value' => FALSE,
