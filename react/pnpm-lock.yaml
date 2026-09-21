@@ -223,8 +223,8 @@ importers:
         specifier: ^8.70.0
         version: 8.70.0(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3)
       '@vitest/coverage-istanbul':
-        specifier: ^5.0.0
-        version: 5.0.0(vitest@2.1.9(@types/node@24.13.5)(happy-dom@20.14.5)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2))
+        specifier: ^5.0.1
+        version: 5.0.1(vitest@2.1.9(@types/node@24.13.5)(happy-dom@20.14.5)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2))
       autoprefixer:
         specifier: ^10.6.1
         version: 10.6.1(postcss@8.5.28)
@@ -3364,10 +3364,10 @@ packages:
     resolution: {integrity: sha512-BoC8PiO4Hkdo0TVJh9Ntxr5MxPDI7/oFsrygN5ADelFSeXG/qgNuucIGA+L5Z6JpPTE/uRfcTWtscjbUaufepQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@vitest/coverage-istanbul@5.0.0':
-    resolution: {integrity: sha512-L0Rh+O61F2FV3+Xc3iGqeW5Tp0fs41VXy0hth84UCcMZGqlTjM1n5PUDqdaJD2xmQ/jZY3SJ9k7A2IKpKZRT8A==}
+  '@vitest/coverage-istanbul@5.0.1':
+    resolution: {integrity: sha512-JROeZ7Yy4xOMXQALW6CHT3O165LlUCB55F0aQ1LBRuFOCPCnSM1vDx8YxZTs8uPIBW9lcEftfNfOvIj4IJ1i9g==}
     peerDependencies:
-      vitest: 5.0.0
+      vitest: 5.0.1
 
   '@vitest/expect@2.1.9':
     resolution: {integrity: sha512-UJCIkTBenHeKT1TTlKMJWy1laZewsRIzYighyYiJKZreqtdxSos/S1t+ktRMQWu2CKqaarrkeszJx1cgC5tGZw==}
@@ -8400,7 +8400,7 @@ snapshots:
 
   '@babel/helper-annotate-as-pure@8.0.0':
     dependencies:
-      '@babel/types': 8.0.6
+      '@babel/types': 8.0.5
 
   '@babel/helper-compilation-targets@7.29.7':
     dependencies:
@@ -8481,12 +8481,12 @@ snapshots:
   '@babel/helper-member-expression-to-functions@8.0.0':
     dependencies:
       '@babel/traverse': 8.0.6
-      '@babel/types': 8.0.6
+      '@babel/types': 8.0.5
 
   '@babel/helper-member-expression-to-functions@8.0.5':
     dependencies:
       '@babel/traverse': 8.0.6
-      '@babel/types': 8.0.6
+      '@babel/types': 8.0.5
 
   '@babel/helper-module-imports@7.29.7(supports-color@8.1.1)':
     dependencies:
@@ -8522,7 +8522,7 @@ snapshots:
 
   '@babel/helper-optimise-call-expression@8.0.0':
     dependencies:
-      '@babel/types': 8.0.6
+      '@babel/types': 8.0.5
 
   '@babel/helper-plugin-utils@7.29.7': {}
 
@@ -8563,7 +8563,7 @@ snapshots:
   '@babel/helper-skip-transparent-expression-wrappers@8.0.0':
     dependencies:
       '@babel/traverse': 8.0.6
-      '@babel/types': 8.0.6
+      '@babel/types': 8.0.5
 
   '@babel/helper-string-parser@7.29.7': {}
 
@@ -8585,7 +8585,7 @@ snapshots:
     dependencies:
       '@babel/template': 8.0.0
       '@babel/traverse': 8.0.6
-      '@babel/types': 8.0.6
+      '@babel/types': 8.0.5
 
   '@babel/helpers@7.29.7':
     dependencies:
@@ -11532,7 +11532,7 @@ snapshots:
       '@typescript-eslint/types': 8.70.0
       eslint-visitor-keys: 5.0.1
 
-  '@vitest/coverage-istanbul@5.0.0(vitest@2.1.9(@types/node@24.13.5)(happy-dom@20.14.5)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2))':
+  '@vitest/coverage-istanbul@5.0.1(vitest@2.1.9(@types/node@24.13.5)(happy-dom@20.14.5)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2))':
     dependencies:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
