@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
 import configReducer from "../../core/config.slice";
-import useReaderSdkConfig from "../../components/reader-player/useReaderSdkConfig";
+import useDigitalSdkConfig from "../../components/reader-player/useDigitalSdkConfig";
 
 /**
  * The WeDoBooks SDK cannot start on a partial configuration, so the CMS ships
@@ -36,7 +36,7 @@ const givenConfig = (configData: Record<string, string>) => {
     <Provider store={store}>{children}</Provider>
   );
 
-  return renderHook(() => useReaderSdkConfig(), { wrapper }).result.current;
+  return renderHook(() => useDigitalSdkConfig(), { wrapper }).result.current;
 };
 
 describe("WeDoBooks SDK configuration", () => {

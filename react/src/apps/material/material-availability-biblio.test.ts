@@ -1,4 +1,3 @@
-import { TOKEN_USER_KEY } from "../../core/token";
 import {
   MaterialPage,
   materialStory
@@ -8,7 +7,10 @@ import {
   givenBiblioCanLoan,
   givenBiblioCannotAnswerCanLoan
 } from "../../../cypress/intercepts/biblio/biblio";
-import { stubMaterialPageBackends } from "../../../cypress/intercepts/material-page";
+import {
+  givenTheVisitorIsNotSignedIn,
+  stubMaterialPageBackends
+} from "../../../cypress/intercepts/material-page";
 import { ContentLoanStatusEnum } from "../../core/publizon/model";
 
 /**
@@ -56,7 +58,7 @@ describe("Material page - online availability through the Biblio adapter", () =>
     // Given: both providers would call it unavailable if they were asked
     stubBackends(ContentLoanStatusEnum.NUMBER_5);
     givenBiblioCanLoan(CanLoanResponseType.reservable);
-    cy.window().then((win) => win.sessionStorage.removeItem(TOKEN_USER_KEY));
+    givenTheVisitorIsNotSignedIn();
 
     // When: the flag is on, but there is no user to ask on behalf of
     const material = new MaterialPage(materialStory.withBiblioAdapter);
