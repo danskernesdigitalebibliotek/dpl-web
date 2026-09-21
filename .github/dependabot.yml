@@ -258,6 +258,16 @@ updates:
       # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
       - dependency-name: "orval"
         update-types: ["version-update:semver-major"]
+      # DDFNEXT-1609
+      - dependency-name: "jsdom"
+        versions: [">=30.1.0"]
+      # DDFNEXT-1616
+      - dependency-name: "@graphql-codegen/typescript"
+        versions: [">=6.1.0"]
+      # DDFNEXT-1616
+      - dependency-name: "@graphql-codegen/typescript-operations"
+        versions: [">=6.1.6"]
+
 
   # React - npm dependencies
   - package-ecosystem: npm
@@ -374,6 +384,9 @@ updates:
         versions: [">=6.0.0"]
       - dependency-name: "@graphql-codegen/typescript-operations"
         versions: [">=6.0.0"]
+      # DDFNEXT-1615
+      - dependency-name: "@testing-library/dom"
+        versions: [">=10.4.2"]
 
   # Shared workspace packages - npm dependencies.
   # `directories` (plural) is the only form that supports globbing, so this
