@@ -128,10 +128,10 @@ importers:
         version: 5.1.1(postcss@8.5.28)
       '@cypress/code-coverage':
         specifier: ^4.0.3
-        version: 4.0.3(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.110.3))(cypress@15.18.0)(supports-color@8.1.1)(webpack@5.110.3)
+        version: 4.0.3(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.111.0))(cypress@15.18.0)(supports-color@8.1.1)(webpack@5.111.0)
       '@cypress/webpack-preprocessor':
         specifier: ^8.0.0
-        version: 8.0.0(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.110.3))(supports-color@8.1.1)(webpack@5.110.3)
+        version: 8.0.0(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.111.0))(supports-color@8.1.1)(webpack@5.111.0)
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.4
@@ -176,7 +176,7 @@ importers:
         version: 7.0.1(@storybook/manager-api@8.6.18(storybook@8.6.18(prettier@3.9.6)(supports-color@8.1.1)))(@storybook/preview-api@8.6.18(storybook@8.6.18(prettier@3.9.6)(supports-color@8.1.1)))
       '@storybook/addon-webpack5-compiler-babel':
         specifier: ^4.0.1
-        version: 4.0.1(supports-color@8.1.1)(webpack@5.110.3)
+        version: 4.0.1(supports-color@8.1.1)(webpack@5.111.0)
       '@storybook/react':
         specifier: ^8.6.18
         version: 8.6.18(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@8.6.18(prettier@3.9.6)(supports-color@8.1.1))(typescript@5.9.3)
@@ -230,7 +230,7 @@ importers:
         version: 10.5.6(postcss@8.5.28)
       babel-loader:
         specifier: ^10.1.1
-        version: 10.1.1(@babel/core@8.0.5)(webpack@5.110.3)
+        version: 10.1.1(@babel/core@8.0.5)(webpack@5.111.0)
       babel-plugin-istanbul:
         specifier: ^8.0.0
         version: 8.0.0(supports-color@8.1.1)
@@ -260,7 +260,7 @@ importers:
         version: 3.50.0
       css-loader:
         specifier: ^7.1.5
-        version: 7.1.5(webpack@5.110.3)
+        version: 7.1.5(webpack@5.111.0)
       cssnano:
         specifier: ^9.0.2
         version: 9.0.2(postcss@8.5.28)
@@ -281,10 +281,10 @@ importers:
         version: 10.1.8(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))
       eslint-import-resolver-webpack:
         specifier: ^0.13.11
-        version: 0.13.11(eslint-plugin-import@2.32.0)(supports-color@8.1.1)(webpack@5.110.3)
+        version: 0.13.11(eslint-plugin-import@2.32.0)(supports-color@8.1.1)(webpack@5.111.0)
       eslint-loader:
         specifier: ^4.0.2
-        version: 4.0.2(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(webpack@5.110.3)
+        version: 4.0.2(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(webpack@5.111.0)
       eslint-plugin-cypress:
         specifier: ^4.1.0
         version: 4.3.0(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))
@@ -308,7 +308,7 @@ importers:
         version: 5.2.0(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))
       eslint-webpack-plugin:
         specifier: ^6.0.0
-        version: 6.0.0(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(webpack@5.110.3)
+        version: 6.0.0(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(webpack@5.111.0)
       glob:
         specifier: 11.1.0
         version: 11.1.0
@@ -341,7 +341,7 @@ importers:
         version: 12.0.0(jiti@2.7.0)(postcss@8.5.28)(yaml@2.9.0)
       postcss-loader:
         specifier: ^8.2.1
-        version: 8.2.1(postcss@8.5.28)(typescript@5.9.3)(webpack@5.110.3)
+        version: 8.2.1(postcss@8.5.28)(typescript@5.9.3)(webpack@5.111.0)
       postcss-scss:
         specifier: ^4.0.9
         version: 4.0.9(postcss@8.5.28)
@@ -362,7 +362,7 @@ importers:
         version: 8.6.18(prettier@3.9.6)(supports-color@8.1.1)
       style-loader:
         specifier: ^4.0.0
-        version: 4.0.0(webpack@5.110.3)
+        version: 4.0.0(webpack@5.111.0)
       stylelint:
         specifier: ^17.15.0
         version: 17.15.0(supports-color@8.1.1)(typescript@5.9.3)
@@ -380,13 +380,13 @@ importers:
         version: 7.3.0(stylelint@17.15.0(supports-color@8.1.1)(typescript@5.9.3))
       stylelint-webpack-plugin:
         specifier: ^5.1.0
-        version: 5.1.0(stylelint@17.15.0(supports-color@8.1.1)(typescript@5.9.3))(webpack@5.110.3)
+        version: 5.1.0(stylelint@17.15.0(supports-color@8.1.1)(typescript@5.9.3))(webpack@5.111.0)
       svg-url-loader:
         specifier: ^8.1.0
-        version: 8.1.0(webpack@5.110.3)
+        version: 8.1.0(webpack@5.111.0)
       ts-loader:
         specifier: ^9.6.2
-        version: 9.6.2(loader-utils@2.0.4)(typescript@5.9.3)(webpack@5.110.3)
+        version: 9.6.2(loader-utils@2.0.4)(typescript@5.9.3)(webpack@5.111.0)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@24.13.5)(typescript@5.9.3)
@@ -397,14 +397,14 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@24.13.5)(happy-dom@20.14.3)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2)
       webpack:
-        specifier: ^5.110.3
-        version: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+        specifier: ^5.111.0
+        version: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
       webpack-cli:
         specifier: ^7.2.3
-        version: 7.2.3(js-yaml@5.2.2)(json5@2.2.3)(webpack@5.110.3)
+        version: 7.2.3(js-yaml@5.2.2)(json5@2.2.3)(webpack@5.111.0)
       webpack-version-file-plugin:
         specifier: 0.6.0
-        version: 0.6.0(webpack@5.110.3)
+        version: 0.6.0(webpack@5.111.0)
 
 packages:
 
@@ -4496,8 +4496,8 @@ packages:
     resolution: {integrity: sha512-kxpoMgrdtkXZ5h0SeraBS1iRntpTpQ3R8ussdb38+UAFnMGX5DDyJXePm+OCHOcoXvHDw7mc2erbJBpDnl7TPw==}
     engines: {node: '>=0.6'}
 
-  enhanced-resolve@5.24.5:
-    resolution: {integrity: sha512-L1l8TNvomm6UVW5B253AGxQagSQr+vGwhMlrrfRS2qmhx46AMpMVJKQYLvWYbysTMY8VoicOvzHzoHMbyzB+4A==}
+  enhanced-resolve@5.25.1:
+    resolution: {integrity: sha512-nGXts5znJzmWPu+mIE9izCOzdg63oJca2mDzGWWTth7sr4aCToKcoyFVBQwN75Ij5Pf6p510EwkTqViTRzDV+w==}
     engines: {node: '>=10.13.0'}
 
   entities@2.2.0:
@@ -6193,9 +6193,6 @@ packages:
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
-  neo-async@2.6.2:
-    resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
-
   no-case@3.0.4:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
 
@@ -7190,8 +7187,8 @@ packages:
     resolution: {integrity: sha512-eflK8wEtyOE6+hsaRVPxvUKYCpRgzLqDTb8krvAsRIwOGlHoSgYLgBXoubGgLd2fT41/OUYdb48v4k4WWHQurA==}
     engines: {node: '>= 10.13.0'}
 
-  schema-utils@4.4.0:
-    resolution: {integrity: sha512-ZzWFVzFgyRHi/T2Ecxm37lL6J9+hZO0P9L7LCuLxAbC6XWxkvxcaQBCXhQxMGn/Tdt9nD7zIBk0ELwhMQ3UEDg==}
+  schema-utils@4.5.0:
+    resolution: {integrity: sha512-zJlMCZ0cAR5p/Y4oVpRoqioDMJcGxaXRrQ/4rP4WyR84vc5z/DolXdbvXeDpTwbtocDFr2rhPqHPErDCUtz2kA==}
     engines: {node: '>= 10.13.0'}
 
   screenfull@5.2.0:
@@ -8110,8 +8107,8 @@ packages:
   webpack-virtual-modules@0.6.2:
     resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
 
-  webpack@5.110.3:
-    resolution: {integrity: sha512-GuizBzRvo9YPpyoNMf3ag7AzxbaW85qrRSqTha345KyJbAFPt3/cMzBM0h+RWg7SK/7DdzRLINP3LvQ0hvr4hg==}
+  webpack@5.111.0:
+    resolution: {integrity: sha512-A2R74kfE6b3eLKS91iZiol03Ebx7avmJJBOyiP+4LePW9NNeNJGQkKeSQos4dk6R4H0YAMYlv+aOrs1CyWT3eA==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -9413,12 +9410,12 @@ snapshots:
     dependencies:
       postcss-selector-parser: 7.1.6
 
-  '@cypress/code-coverage@4.0.3(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.110.3))(cypress@15.18.0)(supports-color@8.1.1)(webpack@5.110.3)':
+  '@cypress/code-coverage@4.0.3(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.111.0))(cypress@15.18.0)(supports-color@8.1.1)(webpack@5.111.0)':
     dependencies:
       '@babel/core': 8.0.5
       '@babel/preset-env': 8.0.5(@babel/core@8.0.5)
-      '@cypress/webpack-preprocessor': 6.0.4(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.110.3))(supports-color@8.1.1)(webpack@5.110.3)
-      babel-loader: 10.1.1(@babel/core@8.0.5)(webpack@5.110.3)
+      '@cypress/webpack-preprocessor': 6.0.4(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.111.0))(supports-color@8.1.1)(webpack@5.111.0)
+      babel-loader: 10.1.1(@babel/core@8.0.5)(webpack@5.111.0)
       chalk: 4.1.2
       cypress: 15.18.0
       dayjs: 1.11.20
@@ -9428,7 +9425,7 @@ snapshots:
       js-yaml: 4.3.0
       nyc: 18.0.0(supports-color@8.1.1)
       tinyglobby: 0.2.17
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -9452,29 +9449,29 @@ snapshots:
       tough-cookie: 5.1.2
       tunnel-agent: 0.6.0
 
-  '@cypress/webpack-preprocessor@6.0.4(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.110.3))(supports-color@8.1.1)(webpack@5.110.3)':
+  '@cypress/webpack-preprocessor@6.0.4(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.111.0))(supports-color@8.1.1)(webpack@5.111.0)':
     dependencies:
       '@babel/core': 8.0.5
       '@babel/preset-env': 8.0.5(@babel/core@8.0.5)
-      babel-loader: 10.1.1(@babel/core@8.0.5)(webpack@5.110.3)
+      babel-loader: 10.1.1(@babel/core@8.0.5)(webpack@5.111.0)
       bluebird: 3.7.1
       debug: 4.4.3(supports-color@8.1.1)
       lodash: 4.18.1
       semver: 7.8.5
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - supports-color
 
-  '@cypress/webpack-preprocessor@8.0.0(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.110.3))(supports-color@8.1.1)(webpack@5.110.3)':
+  '@cypress/webpack-preprocessor@8.0.0(@babel/core@8.0.5)(@babel/preset-env@8.0.5(@babel/core@8.0.5))(babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.111.0))(supports-color@8.1.1)(webpack@5.111.0)':
     dependencies:
       '@babel/core': 8.0.5
       '@babel/preset-env': 8.0.5(@babel/core@8.0.5)
-      babel-loader: 10.1.1(@babel/core@8.0.5)(webpack@5.110.3)
+      babel-loader: 10.1.1(@babel/core@8.0.5)(webpack@5.111.0)
       bluebird: 3.7.1
       debug: 4.4.3(supports-color@8.1.1)
       lodash: 4.18.1
       semver: 7.8.5
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -11023,10 +11020,10 @@ snapshots:
       memoizerific: 1.11.3
       storybook: 8.6.18(prettier@3.9.6)(supports-color@8.1.1)
 
-  '@storybook/addon-webpack5-compiler-babel@4.0.1(supports-color@8.1.1)(webpack@5.110.3)':
+  '@storybook/addon-webpack5-compiler-babel@4.0.1(supports-color@8.1.1)(webpack@5.111.0)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
-      babel-loader: 10.1.1(@babel/core@7.29.7(supports-color@8.1.1))(webpack@5.110.3)
+      babel-loader: 10.1.1(@babel/core@7.29.7(supports-color@8.1.1))(webpack@5.111.0)
     transitivePeerDependencies:
       - '@rspack/core'
       - supports-color
@@ -11049,23 +11046,23 @@ snapshots:
       case-sensitive-paths-webpack-plugin: 2.4.0
       cjs-module-lexer: 1.4.3
       constants-browserify: 1.0.0
-      css-loader: 6.11.0(webpack@5.110.3)
+      css-loader: 6.11.0(webpack@5.111.0)
       es-module-lexer: 1.7.0
-      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.9.3)(webpack@5.110.3)
-      html-webpack-plugin: 5.6.7(webpack@5.110.3)
+      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.9.3)(webpack@5.111.0)
+      html-webpack-plugin: 5.6.7(webpack@5.111.0)
       magic-string: 0.30.21
       path-browserify: 1.0.1
       process: 0.11.10
       semver: 7.8.5
       storybook: 8.6.18(prettier@3.9.6)(supports-color@8.1.1)
-      style-loader: 3.3.4(webpack@5.110.3)
-      terser-webpack-plugin: 5.6.1(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(webpack@5.110.3)
+      style-loader: 3.3.4(webpack@5.111.0)
+      terser-webpack-plugin: 5.6.1(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(webpack@5.111.0)
       ts-dedent: 2.3.0
       url: 0.11.4
       util: 0.12.5
       util-deprecate: 1.0.2
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
-      webpack-dev-middleware: 6.1.3(webpack@5.110.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack-dev-middleware: 6.1.3(webpack@5.111.0)
       webpack-hot-middleware: 2.26.1
       webpack-virtual-modules: 0.6.2
     optionalDependencies:
@@ -11140,7 +11137,7 @@ snapshots:
     dependencies:
       '@storybook/core-webpack': 8.6.18(storybook@8.6.18(prettier@3.9.6)(supports-color@8.1.1))
       '@storybook/react': 8.6.18(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@8.6.18(prettier@3.9.6)(supports-color@8.1.1))(typescript@5.9.3)
-      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(supports-color@8.1.1)(typescript@5.9.3)(webpack@5.110.3)
+      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(supports-color@8.1.1)(typescript@5.9.3)(webpack@5.111.0)
       '@types/semver': 7.7.1
       find-up: 5.0.0
       magic-string: 0.30.21
@@ -11151,7 +11148,7 @@ snapshots:
       semver: 7.8.5
       storybook: 8.6.18(prettier@3.9.6)(supports-color@8.1.1)
       tsconfig-paths: 4.2.0
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -11179,7 +11176,7 @@ snapshots:
     dependencies:
       storybook: 8.6.18(prettier@3.9.6)(supports-color@8.1.1)
 
-  '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(supports-color@8.1.1)(typescript@5.9.3)(webpack@5.110.3)':
+  '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(supports-color@8.1.1)(typescript@5.9.3)(webpack@5.111.0)':
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
       endent: 2.1.0
@@ -11189,7 +11186,7 @@ snapshots:
       react-docgen-typescript: 2.4.0(typescript@5.9.3)
       tslib: 2.8.1
       typescript: 5.9.3
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -11977,19 +11974,19 @@ snapshots:
 
   axobject-query@4.1.0: {}
 
-  babel-loader@10.1.1(@babel/core@7.29.7(supports-color@8.1.1))(webpack@5.110.3):
+  babel-loader@10.1.1(@babel/core@7.29.7(supports-color@8.1.1))(webpack@5.111.0):
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       find-up: 5.0.0
     optionalDependencies:
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
-  babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.110.3):
+  babel-loader@10.1.1(@babel/core@8.0.5)(webpack@5.111.0):
     dependencies:
       '@babel/core': 8.0.5
       find-up: 5.0.0
     optionalDependencies:
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   babel-plugin-istanbul@8.0.0(supports-color@8.1.1):
     dependencies:
@@ -12470,7 +12467,7 @@ snapshots:
     dependencies:
       hyphenate-style-name: 1.1.0
 
-  css-loader@6.11.0(webpack@5.110.3):
+  css-loader@6.11.0(webpack@5.111.0):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.28)
       postcss: 8.5.28
@@ -12481,9 +12478,9 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.8.5
     optionalDependencies:
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
-  css-loader@7.1.5(webpack@5.110.3):
+  css-loader@7.1.5(webpack@5.111.0):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.28)
       postcss: 8.5.28
@@ -12494,7 +12491,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.8.5
     optionalDependencies:
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   css-select@4.3.0:
     dependencies:
@@ -12842,7 +12839,7 @@ snapshots:
       memory-fs: 0.2.0
       tapable: 0.1.10
 
-  enhanced-resolve@5.24.5:
+  enhanced-resolve@5.25.1:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.3
@@ -13091,7 +13088,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-webpack@0.13.11(eslint-plugin-import@2.32.0)(supports-color@8.1.1)(webpack@5.110.3):
+  eslint-import-resolver-webpack@0.13.11(eslint-plugin-import@2.32.0)(supports-color@8.1.1)(webpack@5.111.0):
     dependencies:
       debug: 3.2.7(supports-color@8.1.1)
       enhanced-resolve: 0.9.1
@@ -13104,11 +13101,11 @@ snapshots:
       lodash: 4.18.1
       resolve: 2.0.0-next.7
       semver: 5.7.2
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-loader@4.0.2(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(webpack@5.110.3):
+  eslint-loader@4.0.2(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(webpack@5.111.0):
     dependencies:
       eslint: 9.39.5(jiti@2.7.0)(supports-color@8.1.1)
       find-cache-dir: 3.3.2
@@ -13116,7 +13113,7 @@ snapshots:
       loader-utils: 2.0.4
       object-hash: 2.2.0
       schema-utils: 2.7.1
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   eslint-module-utils@2.13.0(@typescript-eslint/parser@8.70.0(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.10(supports-color@8.1.1))(eslint-import-resolver-webpack@0.13.11)(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
@@ -13125,7 +13122,7 @@ snapshots:
       '@typescript-eslint/parser': 8.70.0(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3)
       eslint: 9.39.5(jiti@2.7.0)(supports-color@8.1.1)
       eslint-import-resolver-node: 0.3.10(supports-color@8.1.1)
-      eslint-import-resolver-webpack: 0.13.11(eslint-plugin-import@2.32.0)(supports-color@8.1.1)(webpack@5.110.3)
+      eslint-import-resolver-webpack: 0.13.11(eslint-plugin-import@2.32.0)(supports-color@8.1.1)(webpack@5.111.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -13231,14 +13228,14 @@ snapshots:
 
   eslint-visitor-keys@5.0.1: {}
 
-  eslint-webpack-plugin@6.0.0(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(webpack@5.110.3):
+  eslint-webpack-plugin@6.0.0(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(webpack@5.111.0):
     dependencies:
       '@types/eslint': 9.6.1
       eslint: 9.39.5(jiti@2.7.0)(supports-color@8.1.1)
       micromatch: 4.0.8
       normalize-path: 3.0.0
       schema-utils: 4.3.3
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1):
     dependencies:
@@ -13417,11 +13414,11 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  file-loader@6.2.0(webpack@5.110.3):
+  file-loader@6.2.0(webpack@5.111.0):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   filesize@10.1.6: {}
 
@@ -13516,7 +13513,7 @@ snapshots:
 
   forever-agent@0.6.1: {}
 
-  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.9.3)(webpack@5.110.3):
+  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.9.3)(webpack@5.111.0):
     dependencies:
       '@babel/code-frame': 7.29.7
       chalk: 4.1.2
@@ -13531,7 +13528,7 @@ snapshots:
       semver: 7.8.5
       tapable: 2.3.3
       typescript: 5.9.3
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   form-data@4.0.6:
     dependencies:
@@ -13860,7 +13857,7 @@ snapshots:
 
   html-tags@5.1.0: {}
 
-  html-webpack-plugin@5.6.7(webpack@5.110.3):
+  html-webpack-plugin@5.6.7(webpack@5.111.0):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -13868,7 +13865,7 @@ snapshots:
       pretty-error: 4.0.0
       tapable: 2.3.3
     optionalDependencies:
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   htmlparser2@6.1.0:
     dependencies:
@@ -14789,13 +14786,13 @@ snapshots:
 
   minimist@1.2.8: {}
 
-  minimizer-webpack-plugin@5.10.1(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack@5.110.3):
+  minimizer-webpack-plugin@5.10.1(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack@5.111.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
-      schema-utils: 4.4.0
+      schema-utils: 4.5.0
       terser: 5.51.2
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
     optionalDependencies:
       clean-css: 5.3.3
       cssnano: 9.0.2(postcss@8.5.28)
@@ -14829,8 +14826,6 @@ snapshots:
   nanoid@3.3.19: {}
 
   natural-compare@1.4.0: {}
-
-  neo-async@2.6.2: {}
 
   no-case@3.0.4:
     dependencies:
@@ -15269,14 +15264,14 @@ snapshots:
       postcss: 8.5.28
       yaml: 2.9.0
 
-  postcss-loader@8.2.1(postcss@8.5.28)(typescript@5.9.3)(webpack@5.110.3):
+  postcss-loader@8.2.1(postcss@8.5.28)(typescript@5.9.3)(webpack@5.111.0):
     dependencies:
       cosmiconfig: 9.0.2(typescript@5.9.3)
       jiti: 2.7.0
       postcss: 8.5.28
       semver: 7.8.5
     optionalDependencies:
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - typescript
 
@@ -15906,7 +15901,7 @@ snapshots:
       ajv-formats: 2.1.1(ajv@8.20.0)
       ajv-keywords: 5.1.0(ajv@8.20.0)
 
-  schema-utils@4.4.0:
+  schema-utils@4.5.0:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.20.0
@@ -16222,13 +16217,13 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  style-loader@3.3.4(webpack@5.110.3):
+  style-loader@3.3.4(webpack@5.111.0):
     dependencies:
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
-  style-loader@4.0.0(webpack@5.110.3):
+  style-loader@4.0.0(webpack@5.111.0):
     dependencies:
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   stylehacks@9.0.3(postcss@8.5.28):
     dependencies:
@@ -16286,7 +16281,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       stylelint: 17.15.0(supports-color@8.1.1)(typescript@5.9.3)
 
-  stylelint-webpack-plugin@5.1.0(stylelint@17.15.0(supports-color@8.1.1)(typescript@5.9.3))(webpack@5.110.3):
+  stylelint-webpack-plugin@5.1.0(stylelint@17.15.0(supports-color@8.1.1)(typescript@5.9.3))(webpack@5.111.0):
     dependencies:
       globby: 11.1.0
       jest-worker: 29.7.0
@@ -16294,7 +16289,7 @@ snapshots:
       normalize-path: 3.0.0
       schema-utils: 4.3.3
       stylelint: 17.15.0(supports-color@8.1.1)(typescript@5.9.3)
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   stylelint@17.15.0(supports-color@8.1.1)(typescript@5.9.3):
     dependencies:
@@ -16360,10 +16355,10 @@ snapshots:
 
   svg-tags@1.0.0: {}
 
-  svg-url-loader@8.1.0(webpack@5.110.3):
+  svg-url-loader@8.1.0(webpack@5.111.0):
     dependencies:
-      file-loader: 6.2.0(webpack@5.110.3)
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      file-loader: 6.2.0(webpack@5.111.0)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   svgo@4.1.0:
     dependencies:
@@ -16416,13 +16411,13 @@ snapshots:
 
   temporal-utils@1.0.3: {}
 
-  terser-webpack-plugin@5.6.1(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(webpack@5.110.3):
+  terser-webpack-plugin@5.6.1(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(webpack@5.111.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
-      schema-utils: 4.4.0
+      schema-utils: 4.5.0
       terser: 5.51.2
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
     optionalDependencies:
       clean-css: 5.3.3
       cssnano: 9.0.2(postcss@8.5.28)
@@ -16511,13 +16506,13 @@ snapshots:
 
   ts-easing@0.2.0: {}
 
-  ts-loader@9.6.2(loader-utils@2.0.4)(typescript@5.9.3)(webpack@5.110.3):
+  ts-loader@9.6.2(loader-utils@2.0.4)(typescript@5.9.3)(webpack@5.111.0):
     dependencies:
       chalk: 4.1.2
       picomatch: 4.0.4
       source-map: 0.7.6
       typescript: 5.9.3
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
     optionalDependencies:
       loader-utils: 2.0.4
 
@@ -16803,7 +16798,7 @@ snapshots:
 
   webidl-conversions@3.0.1: {}
 
-  webpack-cli@7.2.3(js-yaml@5.2.2)(json5@2.2.3)(webpack@5.110.3):
+  webpack-cli@7.2.3(js-yaml@5.2.2)(json5@2.2.3)(webpack@5.111.0):
     dependencies:
       '@discoveryjs/json-ext': 1.1.0
       commander: 14.0.3
@@ -16812,21 +16807,21 @@ snapshots:
       import-local: 3.2.0
       interpret: 3.1.1
       rechoir: 0.8.0
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
       webpack-merge: 6.0.1
     optionalDependencies:
       js-yaml: 5.2.2
       json5: 2.2.3
 
-  webpack-dev-middleware@6.1.3(webpack@5.110.3):
+  webpack-dev-middleware@6.1.3(webpack@5.111.0):
     dependencies:
       colorette: 2.0.20
       memfs: 3.5.3
       mime-types: 2.1.35
       range-parser: 1.3.0
-      schema-utils: 4.4.0
+      schema-utils: 4.5.0
     optionalDependencies:
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   webpack-hot-middleware@2.26.1:
     dependencies:
@@ -16842,36 +16837,34 @@ snapshots:
 
   webpack-sources@3.5.1: {}
 
-  webpack-version-file-plugin@0.6.0(webpack@5.110.3):
+  webpack-version-file-plugin@0.6.0(webpack@5.111.0):
     dependencies:
       ejs: 6.0.1
-      webpack: 5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   webpack-virtual-modules@0.6.2: {}
 
-  webpack@5.110.3(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3):
+  webpack@5.111.0(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3):
     dependencies:
       '@types/estree': 1.0.9
       '@types/json-schema': 7.0.15
       '@webassemblyjs/ast': 1.14.1
       '@webassemblyjs/wasm-edit': 1.14.1
       '@webassemblyjs/wasm-parser': 1.14.1
-      acorn: 8.18.0
       browserslist: 4.28.9
       chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.24.5
+      enhanced-resolve: 5.25.1
       es-module-lexer: 2.3.2
       events: 3.3.0
       graceful-fs: 4.2.11
       mime-db: 1.54.0
-      minimizer-webpack-plugin: 5.10.1(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack@5.110.3)
-      neo-async: 2.6.2
-      schema-utils: 4.4.0
+      minimizer-webpack-plugin: 5.10.1(clean-css@5.3.3)(cssnano@9.0.2(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack@5.111.0)
+      schema-utils: 4.5.0
       tapable: 2.3.3
       watchpack: 2.5.2
       webpack-sources: 3.5.1
     optionalDependencies:
-      webpack-cli: 7.2.3(js-yaml@5.2.2)(json5@2.2.3)(webpack@5.110.3)
+      webpack-cli: 7.2.3(js-yaml@5.2.2)(json5@2.2.3)(webpack@5.111.0)
     transitivePeerDependencies:
       - '@minify-html/node'
       - '@napi-rs/image'
