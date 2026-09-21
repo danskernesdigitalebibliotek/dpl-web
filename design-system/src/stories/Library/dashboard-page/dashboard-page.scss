@@ -4,6 +4,6 @@
   position: relative;
 
   @include media-query__medium {
-    padding: $s-6xl;
+    padding: $s-6xl $s-6xl calc($s-4xl + $s-md);
   }
 }
