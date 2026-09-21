@@ -224,7 +224,7 @@ importers:
         version: 8.70.0(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3)
       '@vitest/coverage-istanbul':
         specifier: ^5.0.0
-        version: 5.0.0(vitest@2.1.9(@types/node@24.13.5)(happy-dom@20.14.3)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2))
+        version: 5.0.0(vitest@2.1.9(@types/node@24.13.5)(happy-dom@20.14.5)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2))
       autoprefixer:
         specifier: ^10.6.1
         version: 10.6.1(postcss@8.5.28)
@@ -316,8 +316,8 @@ importers:
         specifier: ^17.12.0
         version: 17.12.0
       happy-dom:
-        specifier: ^20.14.3
-        version: 20.14.3
+        specifier: ^20.14.5
+        version: 20.14.5
       istanbul-lib-coverage:
         specifier: ^3.2.2
         version: 3.2.2
@@ -395,7 +395,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@24.13.5)(happy-dom@20.14.3)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2)
+        version: 2.1.9(@types/node@24.13.5)(happy-dom@20.14.5)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2)
       webpack:
         specifier: ^5.111.0
         version: 5.111.0(clean-css@5.3.3)(cssnano@9.0.5(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
@@ -5164,8 +5164,8 @@ packages:
     resolution: {integrity: sha512-Chq1s4CY7jmh8gO2qvLIJyfCDIN+EHLFW/9iShnp1z8FjBQMoodWP1kDC36VAMXXIvAjj4ARa7ntfAV2BrjsbA==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
-  happy-dom@20.14.3:
-    resolution: {integrity: sha512-0KMb/Eh8rsd+aMNkOk5h8LkAjo9Na1aksnEGmsuZf+GXl6UkAdIi0VbUHU7d59lXhNmawODgwwuCMiZpCxwwCw==}
+  happy-dom@20.14.5:
+    resolution: {integrity: sha512-x/RzkpWO40bTjIoT30iQtt64FLLmH/iRcUCN2X//bLx7H3ifkdfPXyqsro/OYtqzIAhiLMMA7mmiOR9C3NOKjQ==}
     engines: {node: '>=20.0.0'}
 
   has-bigints@1.1.0:
@@ -11532,7 +11532,7 @@ snapshots:
       '@typescript-eslint/types': 8.70.0
       eslint-visitor-keys: 5.0.1
 
-  '@vitest/coverage-istanbul@5.0.0(vitest@2.1.9(@types/node@24.13.5)(happy-dom@20.14.3)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2))':
+  '@vitest/coverage-istanbul@5.0.0(vitest@2.1.9(@types/node@24.13.5)(happy-dom@20.14.5)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2))':
     dependencies:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
@@ -11543,7 +11543,7 @@ snapshots:
       magicast: 0.5.4
       obug: 2.2.1
       tinyrainbow: 3.1.1
-      vitest: 2.1.9(@types/node@24.13.5)(happy-dom@20.14.3)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2)
+      vitest: 2.1.9(@types/node@24.13.5)(happy-dom@20.14.5)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2)
 
   '@vitest/expect@2.1.9':
     dependencies:
@@ -13749,7 +13749,7 @@ snapshots:
 
   graphql@16.14.2: {}
 
-  happy-dom@20.14.3:
+  happy-dom@20.14.5:
     dependencies:
       '@types/node': 24.13.5
       '@types/whatwg-mimetype': 3.0.2
@@ -16730,7 +16730,7 @@ snapshots:
       sass: 1.104.1
       terser: 5.51.2
 
-  vitest@2.1.9(@types/node@24.13.5)(happy-dom@20.14.3)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2):
+  vitest@2.1.9(@types/node@24.13.5)(happy-dom@20.14.5)(sass@1.104.1)(supports-color@8.1.1)(terser@5.51.2):
     dependencies:
       '@vitest/expect': 2.1.9
       '@vitest/mocker': 2.1.9(vite@5.4.21(@types/node@24.13.5)(sass@1.104.1)(terser@5.51.2))
@@ -16754,7 +16754,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 24.13.5
-      happy-dom: 20.14.3
+      happy-dom: 20.14.5
     transitivePeerDependencies:
       - less
       - lightningcss
