@@ -29,6 +29,9 @@ type ReservationFormContentProps = {
 const ReservationFormContent = ({ work, manifestation, patron }: ReservationFormContentProps) => {
   const dplCmsConfig = useContext(DplCmsConfigContext)
   const profileUrl = adultSiteUrl(dplCmsConfig?.libraryInfo?.baseURL, USER_PROFILE_PATH) ?? "#"
+  // To become true the library must have must have SMS notifications enabled, the patron must have a number and want SMS notifications.
+  const showSmsNotice =
+    (dplCmsConfig?.smsNotificationsEnabled ?? true) && !!patron?.phoneNumber && !!patron?.receiveSms
   const creators = work?.creators ?? manifestation.contributors ?? []
   const authorLabel = creators.length > 0 ? `Af ${displayCreators(creators, 3)}` : null
   const materialIcon = getManifestationMaterialTypeIcon(manifestation) || "book"
@@ -51,13 +54,13 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
 
       <div className="space-y-4">
         <InfoCard icon="pin" title="Afhentningssted" value={pickupBranchName} />
-        <InfoCard
-          icon="chat"
-          title={
-            patron?.phoneNumber ? "Du får en sms, når du kan hente bogen" : "Du får ikke en sms"
-          }
-          value={patron?.phoneNumber ?? "Der er ikke registreret et telefonnummer."}
-        />
+        {showSmsNotice && (
+          <InfoCard
+            icon="chat"
+            title="Du får en sms, når du kan hente bogen"
+            value={patron?.phoneNumber ?? ""}
+          />
+        )}
         <InfoCard
           icon="envelope"
           title={

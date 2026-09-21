@@ -114,6 +114,9 @@ const ReservationDetailsContent = ({ item }: { item: ReservationItem }) => {
   )
   const dplCmsConfig = useContext(DplCmsConfigContext)
   const profileUrl = adultSiteUrl(dplCmsConfig?.libraryInfo?.baseURL, USER_PROFILE_PATH) ?? "#"
+  // To become true the library must have must have SMS notifications enabled, the patron must have a number and want SMS notifications.
+  const showSmsNotice =
+    (dplCmsConfig?.smsNotificationsEnabled ?? true) && !!patron?.phoneNumber && !!patron?.receiveSms
 
   return (
     <div data-cy={cyKeys["reservation-details"]} className="space-y-8">
@@ -141,18 +144,17 @@ const ReservationDetailsContent = ({ item }: { item: ReservationItem }) => {
           <>
             <InfoCardSkeleton />
             <InfoCardSkeleton />
-            <InfoCardSkeleton />
           </>
         ) : (
           <>
             {branchTitle && <InfoCard icon="pin" title="Afhentningssted" value={branchTitle} />}
-            <InfoCard
-              icon="chat"
-              title={
-                patron?.phoneNumber ? "Du får en sms, når du kan hente bogen" : "Du får ikke en sms"
-              }
-              value={patron?.phoneNumber ?? "Der er ikke registreret et telefonnummer."}
-            />
+            {showSmsNotice && (
+              <InfoCard
+                icon="chat"
+                title="Du får en sms, når du kan hente bogen"
+                value={patron?.phoneNumber ?? ""}
+              />
+            )}
             <InfoCard
               icon="envelope"
               title={
