@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93bd20ebd4328fcf5a52a7cdb18a3601",
+    "content-hash": "ebbf0419a4ba2755387f01a47bf53b21",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -4016,17 +4016,17 @@
         },
         {
             "name": "drupal/dk_address",
-            "version": "1.0.1",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/dk_address.git",
-                "reference": "1.0.1"
+                "reference": "1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/dk_address-1.0.1.zip",
-                "reference": "1.0.1",
-                "shasum": "d24ed0c7561752eebb2ad9f63a60d1779edba2b8"
+                "url": "https://ftp.drupal.org/files/projects/dk_address-1.1.0.zip",
+                "reference": "1.1.0",
+                "shasum": "e68506f9815d75b859f5756bec9acfc9f57170ff"
             },
             "require": {
                 "drupal/core": "^10.5 || ^11",
@@ -4037,8 +4037,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.1",
-                    "datestamp": "1789651220",
+                    "version": "1.1.0",
+                    "datestamp": "1789984379",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
