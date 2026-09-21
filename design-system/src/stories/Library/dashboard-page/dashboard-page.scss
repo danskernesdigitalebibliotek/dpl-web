@@ -4,6 +4,13 @@
   position: relative;
 
   @include media-query__medium {
-    padding: $s-6xl $s-6xl calc($s-4xl + $s-md);
+    padding: $s-6xl $s-6xl ($s-4xl + $s-md);
   }
+}
+
+.dashboard-page-recommendations {
+  margin-bottom: ($s-xl + $s-md);
+  padding: $s-2xl 0;
+
+  background: $color__global-secondary;
 }

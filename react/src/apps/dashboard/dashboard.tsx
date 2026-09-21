@@ -106,7 +106,7 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   }
 
   return (
-    <section className="related-works">
+    <section className="dashboard-page-recommendations">
       <MaterialSlider
         heading={t("dashboardRecommendationsHeadingText")}
         items={works.map((work) => ({
