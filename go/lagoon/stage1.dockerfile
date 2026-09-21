@@ -8,17 +8,14 @@ RUN apk add --no-cache libc6-compat
 # Workspace packages are referenced from go/package.json via file: deps, so
 # they must be copied into the image before pnpm install can resolve them.
 #
-# Only the ones Go uses. pnpm works on every workspace package it finds, and
-# the filter below is what keeps that in check during the install - but
-# `pnpm prune` in stage 2 takes no filter, so it walks them all and, since
-# pnpm 11, resolves each lockfile against its registry. packages/wedobooks
-# resolves against WeDoBooks' private one, which this image deliberately
-# holds no credential for (see the install below), and the prune fails on a
-# 401 for a package Go never imports.
-COPY packages/service-layer /app/packages/service-layer
-# .npmrc carries the registry mapping for the @wedobooks scope. Only the
-# mapping - nothing from that registry is installed here (see below), and the
-# credential never enters this image.
+# All of them, not just the ones Go names. The filter below keeps the install
+# itself to Go's slice, but `pnpm prune` in stage 2 takes no filter and walks
+# every workspace package it finds - so one missing here fails the prune
+# rather than the install, a long way from the cause.
+COPY packages /app/packages
+# .npmrc carries the registry mapping for the @wedobooks and @colibrio scopes.
+# Only the mapping - the credential stays out of the repository and reaches
+# pnpm through the secret mount below.
 COPY package.json pnpm-* .npmrc /app/
 COPY go /app/go
 WORKDIR /app
@@ -35,17 +32,26 @@ ENV CI=true
 
 # Corepack to install pnpm.
 RUN corepack enable
-# Only Go's slice of the workspace is installed. That is what keeps
-# WeDoBooks' SDK out of this image: the image is publicly pullable, and Go
-# does not consume the SDK yet - so neither the proprietary package nor the
-# token for their private registry has any business in it. Go is expected to
-# reach WeDoBooks through the service layer eventually; the day that
-# dependency lands, this install fails loudly, and two things must be
-# settled together: the token has to arrive as a BuildKit secret - never a
-# build argument, since unlike the CMS images the installing stage here is
-# the published one - and the image's public visibility has to be
-# reconsidered, because it would then redistribute the SDK.
-RUN pnpm install --frozen-lockfile --filter @danskernesdigitalebibliotek/dpl-go...
+# Only Go's slice of the workspace is installed - the filter widens by itself
+# as Go takes on more workspace packages, including packages/wedobooks and
+# with it WeDoBooks' SDK.
+#
+# The credential for WeDoBooks' private registry arrives as a BuildKit secret,
+# never as a build argument. Unlike the CMS images, this stage is the one that
+# gets published: a build argument would surface in `docker history`, and an
+# `npm config set` would leave the token in the user npmrc (/home/.npmrc in
+# these images) in a shipped layer. A
+# secret mount is readable only for the duration of this RUN and lands in no
+# layer at all. stage2.dockerfile has to use a build argument instead, because
+# Lagoon builds with `docker build --build-arg` and cannot pass secrets - it
+# gets away with it by keeping the credential in a stage that is discarded.
+#
+# `env` sets the config key because its name contains `/` and `:`, which no
+# shell will accept as a variable name. Same trick as `init:pnpm` in the root
+# Taskfile.
+RUN --mount=type=secret,id=WEDOBOOKS_NPM_TOKEN \
+    env "npm_config_//npm.pkg.wedobooks.io/:_authToken=$(cat /run/secrets/WEDOBOOKS_NPM_TOKEN)" \
+    pnpm install --frozen-lockfile --filter @danskernesdigitalebibliotek/dpl-go...
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
