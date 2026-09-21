@@ -1,8 +1,10 @@
+"use client"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
-import React from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
 import {
+  getEditionsForMaterialType,
   getManifestationLanguageCode,
   slideSelectOptionsFromMaterialTypes,
   sortManifestationsBySortPriority,
@@ -10,6 +12,11 @@ import {
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
+import {
+  DEFAULT_EDITION_CHOICE,
+  type TEditionChoice,
+  getEditionChoiceLabel,
+} from "@/components/shared/editionsSelectModal/EditionsSelectModal"
 import MaterialTypeSelect, {
   MaterialTypeSelectOption,
 } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
@@ -17,11 +24,14 @@ import useSession from "@/hooks/useSession"
 import {
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
+  useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
+import { openModal } from "@/store/modal.store"
 
+import WorkPageButton from "./WorkPageButton"
 import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"
 import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
 
@@ -33,6 +43,7 @@ type WorkPageHeaderProps = {
 
 const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
+  const [editionChoice, setEditionChoice] = useState<TEditionChoice>(DEFAULT_EDITION_CHOICE)
   const selectedManifestationIsbns = selectedManifestation
     ? getIsbnsFromManifestation(selectedManifestation)
     : []
@@ -84,6 +95,38 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const { session } = useSession()
   const isLoggedIn = session?.isLoggedIn || false
+
+  // Same cached query EditionsSelectModal reads, so the trigger button can label the
+  // pinned edition without the picker being open.
+  const { data: materialData } = useGetMaterialQuery(
+    { wid: work.workId },
+    { enabled: !!work.workId }
+  )
+  const editions = useMemo(
+    () =>
+      getEditionsForMaterialType(
+        (materialData?.work?.manifestations?.all ?? []) as ManifestationWorkPageFragment[],
+        selectedManifestationMaterialTypeCode
+      ),
+    [materialData, selectedManifestationMaterialTypeCode]
+  )
+
+  //Reset the edition choice to the default when the selected manifestation material type changes
+  useEffect(() => {
+    setEditionChoice(DEFAULT_EDITION_CHOICE)
+  }, [selectedManifestationMaterialTypeCode])
+
+  const editionChoiceLabel = getEditionChoiceLabel(editionChoice, editions)
+
+  // The modal is rendered by the DynamicModal host, so the current choice is
+  // handed over as the initial selection and comes back on confirm.
+  const openEditionsSelect = () =>
+    openModal("EditionsSelectModal", {
+      wid: work.workId,
+      materialTypeCode: selectedManifestationMaterialTypeCode,
+      choice: editionChoice,
+      onChoiceConfirm: setEditionChoice,
+    })
 
   return (
     <>
@@ -139,6 +182,11 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
         </div>
         <div className="col-span-4 mt-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
+          <div className="mb-3 flex w-full lg:items-end">
+            <WorkPageButton ariaLabel="Vælg udgave" onClick={openEditionsSelect}>
+              {`Udgave: ${editionChoiceLabel}`}
+            </WorkPageButton>
+          </div>
           {isLoggedIn ? (
             <WorkPageButtonsLoggedIn
               workId={work.workId}

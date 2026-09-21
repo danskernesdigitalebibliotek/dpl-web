@@ -359,3 +359,25 @@ export const canUserLoanMoreCostFreeMaterials = (dataLoans: LoanListResult | und
 
   return costFreeLoans < 30
 }
+
+//Find the editions for the selected type and sort them by publication year, newest first
+export const getEditionsForMaterialType = (
+  manifestations: ManifestationWorkPageFragment[],
+  materialTypeCode: string
+): ManifestationWorkPageFragment[] => {
+  const selectedLabel = translateMaterialTypesStringForRender(materialTypeCode)
+
+  return (filterMaterialTypes(manifestations) as ManifestationWorkPageFragment[])
+    .filter(manifestation =>
+      manifestation.materialTypes.some(
+        materialType =>
+          translateMaterialTypesStringForRender(materialType.materialTypeSpecific.code) ===
+          selectedLabel
+      )
+    )
+    .sort(
+      (a, b) =>
+        (b.edition?.publicationYear?.year ?? -Infinity) -
+        (a.edition?.publicationYear?.year ?? -Infinity)
+    )
+}

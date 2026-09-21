@@ -7,6 +7,7 @@ import React, { useEffect, useRef, useState } from "react"
 
 import CompensationModal from "@/components/shared/compensationModal/CompensationModal"
 import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import EditionsSelectModal from "@/components/shared/editionsSelectModal/EditionsSelectModal"
 import FeesModal from "@/components/shared/feesModal/FeesModal"
 import PhysicalLoansModal from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
 import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
@@ -38,6 +39,7 @@ const ModalComponents: {
   PlayerPreviewModal,
   CompensationModal,
   DigitalLoansModal,
+  EditionsSelectModal,
   FeesModal,
   LoanDetailsModal,
   PhysicalLoansModal,
