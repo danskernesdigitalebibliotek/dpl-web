@@ -6550,6 +6550,7 @@ export type GetRelatedWorksQuery = {
     works: Array<{
       __typename?: "Work";
       workId: string;
+      workTypes: Array<WorkTypeEnum>;
       titles: { __typename?: "WorkTitles"; full: Array<string> };
       series: Array<{
         __typename?: "Series";
@@ -10446,6 +10447,7 @@ export const GetRelatedWorksDocument = `
   complexSearch(cql: $cql, filters: $filters) {
     works(offset: $offset, limit: $limit, sort: $sort) {
       workId
+      workTypes
       titles {
         full
       }
