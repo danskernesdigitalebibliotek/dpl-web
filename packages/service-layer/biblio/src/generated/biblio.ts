@@ -29,7 +29,7 @@ Obtain an OAuth2 access token from [login.bib.dk](https://login.bib.dk) and send
 
 Endpoints that read or change a user's loans, reservations, or user data require a token representing the end user, issued via the OAuth2 `authorization_code` grant.
 
-Metadata endpoints can be accessed with either an end-user token or a server-to-server token.
+Metadata and sample endpoints can be accessed with either an end-user token or a server-to-server token.
 
 Server-to-server access requires a token issued via the OAuth2 `client_credentials` grant. The OAuth client must be configured with access to the endpoint.
 
@@ -37,12 +37,12 @@ Server-to-server access requires a token issued via the OAuth2 `client_credentia
 
 User-scoped endpoints do not accept client-supplied `user_id` or organization ids. Resolve them from login.bib.dk userinfo `attributes` as follows:
 
-1. If both `uniqueId` and `municipalityAgencyId` are present:
+1. If both `uniqueId` and `municipality` are present:
    - `user_id` = `uniqueId`
-   - `organization_third_party_id` = `municipalityAgencyId`
+   - `organization_third_party_id` = `municipality`
 2. Otherwise, use the Unilogin fallback:
    - `user_id` = `uniloginUniIdHash`
-   - `organization_third_party_id` = `uniloginAgencyId`
+   - `organization_third_party_id` = `uniloginMunicipality`
 
 
 Unilogin fallback requires an active Unilogin license; otherwise the adapter returns 403 with `User is missing license`.
@@ -87,6 +87,8 @@ import type {
   GetReservationOffersForAuthenticatedUserParams,
   GetReservationsApiResponse,
   GetReservationsForAuthenticatedUserParams,
+  GetSampleApiResponse,
+  GetSampleParams,
   GetSupportIdForAuthenticatedUser200,
   RequestLoanForAuthenticatedUser201,
   RequestLoanForAuthenticatedUserBody,
@@ -1520,4 +1522,106 @@ export const getMetadataByMaterialId = async (
 
   const data: getMetadataByMaterialIdResponse["data"] = body ? JSON.parse(body) : {}
   return { data, status: res.status, headers: res.headers } as getMetadataByMaterialIdResponse
+}
+
+/**
+ * Returns a time-limited link to download the promotional sample of a material.
+The sample is an excerpt of the material itself — an `epub` file for ebooks and an `mp3` file for audiobooks — intended for playback or download on a book page. The returned `sample_url` is a signed URL that is valid for 7 days and can be handed straight to a player or download link.
+`format` is optional. When it is omitted the format is derived from the material type registered in Biblio API, so a client that only knows the ISBN-13 does not need to look up the material first. Pass it explicitly to skip that lookup.
+The endpoint is being rolled out per environment, so it is not enabled everywhere yet; where it is not, Biblio API returns `403`.
+Not every material has a sample; those return `404`. When `format` is omitted the material is looked up in order to derive it, so an unknown `material_id` returns `404` with a distinct `Material not found` message. When `format` is supplied there is no lookup, so an unknown material and a material without a sample both return `404` `Sample not available`.
+
+> **Adapter specifics**
+>
+> Requires a valid bearer token with end-user or server-to-server access.
+
+ * @summary Get sample download link
+ */
+export type getSampleResponse200 = {
+  data: GetSampleApiResponse
+  status: 200
+}
+
+export type getSampleResponse401 = {
+  data: void
+  status: 401
+}
+
+export type getSampleResponse403 = {
+  data: void
+  status: 403
+}
+
+export type getSampleResponse404 = {
+  data: void
+  status: 404
+}
+
+export type getSampleResponse422 = {
+  data: void
+  status: 422
+}
+
+export type getSampleResponse429 = {
+  data: void
+  status: 429
+}
+
+export type getSampleResponse500 = {
+  data: void
+  status: 500
+}
+
+export type getSampleResponse502 = {
+  data: void
+  status: 502
+}
+
+export type getSampleResponseSuccess = getSampleResponse200 & {
+  headers: Headers
+}
+export type getSampleResponseError = (
+  | getSampleResponse401
+  | getSampleResponse403
+  | getSampleResponse404
+  | getSampleResponse422
+  | getSampleResponse429
+  | getSampleResponse500
+  | getSampleResponse502
+) & {
+  headers: Headers
+}
+
+export type getSampleResponse = getSampleResponseSuccess | getSampleResponseError
+
+export const getGetSampleUrl = (materialId: string, params?: GetSampleParams) => {
+  const normalizedParams = new URLSearchParams()
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString())
+    }
+  })
+
+  const stringifiedParams = normalizedParams.toString()
+
+  return stringifiedParams.length > 0
+    ? `/v1/samples/${materialId}?${stringifiedParams}`
+    : `/v1/samples/${materialId}`
+}
+
+export const getSample = async (
+  materialId: string,
+  params?: GetSampleParams,
+  options?: RequestInit
+): Promise<getSampleResponse> => {
+  const res = await fetch(getGetSampleUrl(materialId, params), {
+    ...options,
+    method: "GET",
+  })
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
+
+  const data: getSampleResponse["data"] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getSampleResponse
 }

@@ -13,7 +13,6 @@ import {
   sampleUrl
 } from "../../../reader-player/helper";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
-import { isAnonymous } from "../../../../core/utils/helpers/user";
 import LinkButton from "../../../Buttons/LinkButton";
 import { Button } from "../../../Buttons/Button";
 import { getMaterialType } from "../../../../core/utils/helpers/general";
@@ -33,6 +32,7 @@ import PlayerButton from "../../../reader-player/PlayerButton";
 import MaterialButtonLoading from "../generic/MaterialButtonLoading";
 import MaterialButtonDisabled from "../generic/MaterialButtonDisabled";
 import { useModalIdsToCloseForReservation } from "../../../../core/utils/useModalIdsToCloseForReservation";
+import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
 
 type MaterialButtonsOnlineInternalType = {
   size?: ButtonSize;
@@ -62,12 +62,8 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const { track } = useEventStatistics();
   const t = useText();
   const viaBiblioAdapter = useBiblioAdapter();
-  // With the flag on, samples go through the service layer and Publizon must
-  // not stand in. It answers samples for signed-in sessions only, so an
-  // anonymous visitor gets a disabled button until an anonymous sample exists.
-  const samplesThroughServiceLayer = viaBiblioAdapter && !isAnonymous();
-  const samplingUnavailable = viaBiblioAdapter && isAnonymous();
   const { open } = useModalButtonHandler();
+  const canCancelReservation = useCanCancelReservation();
   const modalsToClose = useModalIdsToCloseForReservation();
   const modalCloseOptions = isEditionPicker ? { modalsToClose } : undefined;
 
@@ -80,6 +76,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     isAlreadyLoaned,
     canBeLoaned,
     canBeReserved,
+    publizonReservationsClosed,
     canBeSampled,
     reservation,
     isLoading
@@ -117,6 +114,20 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
 
   const renderReaderButton = () => {
     if (!identifier || isLoading) return <MaterialButtonLoading />;
+
+    // TEMPORARY: the queue this reservation lives in is frozen while Biblio
+    // migrates it, so it cannot be given up yet. Delete this guard once the
+    // freeze is lifted - see usePublizonReservationsClosed.
+    if (reservation && !canCancelReservation(reservation)) {
+      return (
+        <MaterialButtonDisabled
+          label={t("reservationDetailsRemoveDigitalReservationText")}
+          reason={t("digitalReservationCancelClosedInfoText")}
+          size={size}
+          dataCy="remove-digital-reservation-button"
+        />
+      );
+    }
 
     if (isAlreadyReserved && reservation) {
       return (
@@ -161,6 +172,23 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
+    // TEMPORARY: the material would have been reservable, but the queue is
+    // closed while Biblio migrates it. Answered before the acquire branch
+    // below, which offers a not-signed-in visitor the loan so the login guard
+    // can take over - that would promise an action this material cannot
+    // honour. Delete this guard once the freeze is lifted - see
+    // usePublizonReservationsClosed.
+    if (publizonReservationsClosed) {
+      return (
+        <MaterialButtonDisabled
+          label={reseveLabel}
+          reason={t("digitalReservationsClosedInfoText")}
+          size={size}
+          dataCy={`${dataCy}-reader`}
+        />
+      );
+    }
+
     if (canBeReserved || canBeLoaned) {
       return (
         <Button
@@ -186,39 +214,19 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     );
   };
 
-  const renderDisabledTeaserButton = (teaserDataCy: string) => (
-    <Button
-      dataCy={teaserDataCy}
-      label={tryLabel}
-      buttonType="none"
-      variant="outline"
-      size={size || "large"}
-      onClick={() => {}}
-      disabled
-      collapsible={false}
-    />
-  );
-
-  const renderReaderTeaserButton = () => {
-    if (!openModal) return null;
-    // Wait for the providers before deciding: a teaser that shows while the
-    // loan is still being looked up would flash and vanish.
-    if (!identifier || isLoading) return <MaterialButtonLoading />;
-    if (isAlreadyLoaned) return null;
-    // A material the lending provider does not know has no sample to offer -
-    // hiding the teaser beats opening an empty reader or player.
-    if (!canBeSampled) return null;
-
-    if (samplingUnavailable) {
-      return renderDisabledTeaserButton(`${dataCy}-reader-teaser`);
-    }
+  // Both teasers link to the sample page; only the route and the test handle
+  // differ. The url carries the material type because the page it opens is
+  // chosen before the adapter has said what the excerpt is.
+  const renderSampleLink = (kind: "ebook" | "audiobook") => {
+    // Guaranteed by the callers, which return early without one.
+    if (!identifier) return null;
 
     return (
       <MaterialSecondaryLink
         label={tryLabel}
         size={size || "large"}
-        url={sampleUrl(identifier, "ebook")}
-        dataCy={`${dataCy}-reader-teaser`}
+        url={sampleUrl(identifier, kind)}
+        dataCy={`${dataCy}-${kind === "audiobook" ? "player" : "reader"}-teaser`}
         trackClick={() =>
           track("click", {
             id: statistics.publizonTry.id,
@@ -230,8 +238,43 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     );
   };
 
+  // Whether a teaser can be shown at all, before deciding which one. Waits for
+  // the providers: a teaser that shows while the loan is still being looked up
+  // would flash and vanish.
+  const sampleTeaserState = () => {
+    if (!openModal) return "none";
+    if (!identifier || isLoading) return "loading";
+    if (isAlreadyLoaned) return "none";
+    // Not every material has an excerpt - hiding the teaser beats opening an
+    // empty reader or player.
+    if (!canBeSampled) return "none";
+    return "offer";
+  };
+
+  const renderReaderTeaserButton = () => {
+    const state = sampleTeaserState();
+    if (state === "loading") return <MaterialButtonLoading />;
+    if (state !== "offer") return null;
+
+    return renderSampleLink("ebook");
+  };
+
   const renderPlayerButton = () => {
     if (!identifier || isLoading) return <MaterialButtonLoading />;
+
+    // TEMPORARY: the queue this reservation lives in is frozen while Biblio
+    // migrates it, so it cannot be given up yet. Delete this guard once the
+    // freeze is lifted - see usePublizonReservationsClosed.
+    if (reservation && !canCancelReservation(reservation)) {
+      return (
+        <MaterialButtonDisabled
+          label={t("reservationDetailsRemoveDigitalReservationText")}
+          reason={t("digitalReservationCancelClosedInfoText")}
+          size={size}
+          dataCy="remove-digital-reservation-button"
+        />
+      );
+    }
 
     if (isAlreadyReserved && reservation) {
       return (
@@ -280,6 +323,23 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       );
     }
 
+    // TEMPORARY: the material would have been reservable, but the queue is
+    // closed while Biblio migrates it. Answered before the acquire branch
+    // below, which offers a not-signed-in visitor the loan so the login guard
+    // can take over - that would promise an action this material cannot
+    // honour. Delete this guard once the freeze is lifted - see
+    // usePublizonReservationsClosed.
+    if (publizonReservationsClosed) {
+      return (
+        <MaterialButtonDisabled
+          label={reseveLabel}
+          reason={t("digitalReservationsClosedInfoText")}
+          size={size}
+          dataCy={`${dataCy}-player`}
+        />
+      );
+    }
+
     if (canBeReserved || canBeLoaned) {
       return (
         <Button
@@ -306,37 +366,17 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   };
 
   const renderPlayerTeaserButton = () => {
-    if (!openModal) return null;
-    // Wait for the providers before deciding: a teaser that shows while the
-    // loan is still being looked up would flash and vanish.
-    if (!identifier || isLoading) return <MaterialButtonLoading />;
-    if (isAlreadyLoaned) return null;
-    // A material the lending provider does not know has no sample to offer -
-    // hiding the teaser beats opening an empty reader or player.
-    if (!canBeSampled) return null;
+    const state = sampleTeaserState();
+    if (state === "loading") return <MaterialButtonLoading />;
+    // The identifier is guaranteed by "offer" - the state reports "loading"
+    // without one - but only the check narrows it for the Publizon branch.
+    if (state !== "offer" || !identifier) return null;
 
-    if (samplingUnavailable) {
-      return renderDisabledTeaserButton(`${dataCy}-player-teaser`);
-    }
-
-    // Audiobook samples play on the player page, like digital loans - see
-    // DigitalReaderPlayer for why not a modal.
-    if (samplesThroughServiceLayer) {
-      return (
-        <MaterialSecondaryLink
-          label={tryLabel}
-          size={size || "large"}
-          url={sampleUrl(identifier, "audiobook")}
-          dataCy={`${dataCy}-player-teaser`}
-          trackClick={() =>
-            track("click", {
-              id: statistics.publizonTry.id,
-              name: statistics.publizonTry.name,
-              trackedData: workId
-            })
-          }
-        />
-      );
+    // With the flag on the service layer answers samples and Publizon must not
+    // stand in. Audiobook samples play on the player page, like digital loans
+    // - see DigitalReaderPlayer for why not a modal.
+    if (viaBiblioAdapter) {
+      return renderSampleLink("audiobook");
     }
 
     return (

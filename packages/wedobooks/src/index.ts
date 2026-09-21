@@ -5,7 +5,7 @@ export {
   type WedoBooksSdkConfig,
   type WedoBooksSignInResult,
 } from "./sdk"
-export type { WedoBooksCheckout, WedoBooksReaderMaterial } from "./sdk"
+export type { WedoBooksCheckout, WedoBooksReaderMaterial, WedoBooksSampleMaterial } from "./sdk"
 export { WedoBooksReader } from "./WedoBooksReader"
 export type { WedoBooksReaderProps } from "./WedoBooksReader"
 export { WedoBooksPlayer } from "./WedoBooksPlayer"
