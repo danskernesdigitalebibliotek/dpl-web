@@ -12,7 +12,7 @@ export type UseRecommendationsResult = {
   isLoading: boolean;
 };
 
-const FETCH_LIMIT = 10;
+const FETCH_LIMIT = 16;
 
 /**
  * Fetches recommendations for a source. The recommender only understands
