@@ -14,6 +14,7 @@ import MaterialButtonsFindOnShelf from "./physical/MaterialButtonsFindOnShelf";
 import MaterialButtonsPhysical from "./physical/MaterialButtonsPhysical";
 import MaterialButtonReservableFromAnotherLibrary from "./physical/MaterialButtonReservableFromAnotherLibrary";
 import useReservableFromAnotherLibrary from "../../../core/utils/useReservableFromAnotherLibrary";
+import { resolveOnlineButtonKind } from "./online/resolveOnlineButtonKind";
 
 export interface MaterialButtonsProps {
   isSpecificManifestation?: boolean;
@@ -64,13 +65,20 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
       />
     );
   }
-  // Show online material buttons if, either the material has an online access type or it has
-  // a DigitalArticleService access & at the same time is an article. This way
-  // we avoid showing both physical and online action buttons at one, which shouldn't happen
-  const showOnlineButtons =
+  // Online buttons are considered if either the material has an online access
+  // type or it has a DigitalArticleService access and is an article. This way
+  // we avoid showing both physical and online action buttons at once.
+  const hasOnlineAccess =
     hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) ||
     (hasCorrectAccess("DigitalArticleService", manifestations) &&
       isArticle(manifestations));
+  // Resolving the concrete button here, rather than only checking access,
+  // keeps this decision in sync with what MaterialButtonsOnline can render, so
+  // we never end up with neither buttons nor a fallback.
+  const onlineButtonKind = hasOnlineAccess
+    ? resolveOnlineButtonKind(manifestations)
+    : null;
+  const showOnlineButtons = onlineButtonKind !== null;
 
   const showFallback = !showPhysicalButtons && !showOnlineButtons && fallback;
 
@@ -99,8 +107,9 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
           )}
         </>
       )}
-      {showOnlineButtons && (
+      {onlineButtonKind && (
         <MaterialButtonsOnline
+          buttonKind={onlineButtonKind}
           manifestations={manifestations}
           size={size}
           workId={workId}
