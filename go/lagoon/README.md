@@ -19,3 +19,27 @@ scripts in `go/package.json` that they each run:
   `docker-compose.lagoon.yml`.
 
 `start.sh` sets runtime environment variables and starts the Next.js server.
+
+## The WeDoBooks credential
+
+Both stages need a token for WeDoBooks' private npm registry — stage 1 for the
+`pnpm install`, stage 2 for the `pnpm prune` passes, which resolve every
+workspace lockfile against its registry. They get it two different ways, and
+the difference is not incidental:
+
+- **Stage 1 takes a BuildKit secret** (`--mount=type=secret`). This Dockerfile
+  has a single stage, and that stage is what gets published, so a build
+  argument would be readable from `docker history` and an `npm config set`
+  would leave the token in a shipped layer. `.github/workflows/go-build-base-image.yml`
+  passes it through `docker/build-push-action`'s `secrets:` input.
+- **Stage 2 takes a build argument**, which it hands to pnpm as an
+  `npm_config_*` environment variable rather than writing an `.npmrc`. Lagoon
+  builds with `docker build --build-arg` and cannot pass secrets. That is safe
+  here because the credential stays in the `builder` stage — the runner copies
+  `/app` and nothing else — and keeping it in the environment means it is
+  never written to a layer at all. It reaches the build from a Lagoon project
+  variable of the same name, wired up in `docker-compose.lagoon.yml`.
+
+`task -d go lagoon:stage1:build` builds stage 1 locally with the token from
+the central `.env`, which is the quickest way to check that neither the
+install nor the leak-proofing has regressed.

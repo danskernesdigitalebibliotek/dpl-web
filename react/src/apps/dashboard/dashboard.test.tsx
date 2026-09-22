@@ -1,3 +1,33 @@
+import { givenUserHasPhysicalLoan } from "../../../cypress/intercepts/fbs/fbs";
+import { givenUserHasLoanedEbook } from "../../../cypress/intercepts/publizon/publizon";
+import { interceptPublizonCalls } from "../../../cypress/intercepts/publizon/interceptPublizonCalls";
+
+const recommendedWorks = [
+  {
+    work: {
+      workId: "work-of:870970-basis:28822332",
+      titles: { full: ["Alle vi børn i Snullerby"] },
+      creators: [{ display: "Astrid Lindgren" }],
+      manifestations: { bestRepresentation: { cover: { large: null } } }
+    }
+  },
+  {
+    work: {
+      workId: "work-of:870970-basis:29048363",
+      titles: { full: ["Pippi Langstrømpe"] },
+      creators: [{ display: "Astrid Lindgren" }],
+      manifestations: { bestRepresentation: { cover: { large: null } } }
+    }
+  }
+];
+
+const interceptRecommendations = () => {
+  cy.interceptGraphql({
+    operationName: "getDashboardRecommendations",
+    body: { data: { recommend: { result: recommendedWorks } } }
+  });
+};
+
 describe("Dashboard", () => {
   beforeEach(() => {
     cy.createFakeAuthenticatedSession();
@@ -1345,7 +1375,31 @@ describe("Dashboard", () => {
       }
     ).as("renew");
 
+    // The recommendations section bases itself on a random loan, reservation
+    // or favorite. The loans above carry fausts, so the recommend query is
+    // asked by faust and the ISBN lookup never fires. The favorites list is
+    // still fetched, so it needs an answer too.
+    cy.intercept("GET", "**/list/default**", {
+      statusCode: 200,
+      body: { id: "default", collections: [] }
+    }).as("favorites");
+
+    interceptRecommendations();
+
     cy.visit("/iframe.html?id=apps-dashboard--primary&viewMode=story");
+  });
+
+  it("shows recommendations based on one of the patron's materials", () => {
+    cy.wait("@getDashboardRecommendations GraphQL operation");
+
+    cy.getBySel("material-slider-heading").should(
+      "have.text",
+      "Inspiration for you"
+    );
+    cy.getBySel("recommended-description")
+      .should("have.length", 2)
+      .first()
+      .should("have.text", "Alle vi børn i Snullerby");
   });
 
   it.skip("Dashboard general", () => {
@@ -1487,6 +1541,120 @@ describe("Dashboard", () => {
     cy.getBySel("67804976").click();
     cy.getBySel("67805006").click();
     validateReservationsRemovalButtonWithCount(2);
+  });
+});
+
+// The recommendations section is based on one of the patron's own materials.
+// Which query the recommender is asked with depends on the kind of material:
+// physical items are identified by faust, favorites by work id, and digital
+// items by ISBN, which first has to be resolved to a work id.
+describe("dashboard recommendations", () => {
+  const visitDashboard = () =>
+    cy.visit("/iframe.html?id=apps-dashboard--primary&viewMode=story");
+
+  beforeEach(() => {
+    cy.createFakeAuthenticatedSession();
+    cy.createFakeLibrarySession();
+
+    // Every list starts out empty so each test can supply exactly one source.
+    cy.intercept("GET", "**/external/agencyid/patron/patronid/fees/v2**", {
+      statusCode: 200,
+      body: []
+    });
+
+    // FBS: physical loans.
+    cy.intercept("GET", "**/external/agencyid/patrons/patronid/loans/v2**", {
+      statusCode: 200,
+      body: []
+    });
+
+    // FBS: physical reservations.
+    cy.intercept(
+      "GET",
+      "**/external/v1/agencyid/patrons/patronid/reservations/v2**",
+      { statusCode: 200, body: [] }
+    );
+
+    // Publizon: digital loans and reservations, both empty by default.
+    interceptPublizonCalls();
+
+    // Material list: the patron's favorites.
+    cy.intercept("GET", "**/list/default**", {
+      statusCode: 200,
+      body: { id: "default", collections: [] }
+    });
+
+    // The fetcher tags every GraphQL request URL with its operation name, so
+    // each operation can be intercepted and aliased precisely. The shared
+    // interceptGraphql helper matches every GraphQL request, which makes its
+    // alias ambiguous when two operations fire in one page load.
+    cy.intercept("POST", "**/graphql?GetBestRepresentationPidByIsbn", {
+      statusCode: 200,
+      body: {
+        data: {
+          complexSearch: {
+            works: [
+              {
+                workId: "work-of:870970-basis:12345678",
+                manifestations: {
+                  bestRepresentation: { pid: "870970-basis:12345678" }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }).as("isbnLookup");
+
+    cy.intercept("POST", "**/graphql?getDashboardRecommendations", {
+      statusCode: 200,
+      body: { data: { recommend: { result: recommendedWorks } } }
+    }).as("recommend");
+  });
+
+  it("asks the recommender by faust for a physical loan", () => {
+    // FBS: one physical loan, faust 28847238 by the factory's default.
+    givenUserHasPhysicalLoan();
+    visitDashboard();
+
+    cy.wait("@recommend")
+      .its("request.body.variables")
+      .should("deep.include", { faust: "28847238" })
+      .and("not.have.property", "id");
+    cy.getBySel("recommended-description").should("have.length", 2);
+  });
+
+  it("resolves a digital loan's ISBN to a work id before asking the recommender", () => {
+    // Publizon: one digital loan, identified by ISBN.
+    givenUserHasLoanedEbook({ identifier: "9788700000000" });
+    visitDashboard();
+
+    cy.wait("@isbnLookup")
+      .its("request.body.variables.cql")
+      .should("contain", "term.isbn=9788700000000");
+
+    cy.wait("@recommend")
+      .its("request.body.variables")
+      .should("deep.include", { id: "work-of:870970-basis:12345678" })
+      .and("not.have.property", "faust");
+
+    cy.getBySel("recommended-description").should("have.length", 2);
+  });
+
+  it("asks the recommender by work id for a favorite", () => {
+    // Material list: the patron's favorites.
+    cy.intercept("GET", "**/list/default**", {
+      statusCode: 200,
+      body: { id: "default", collections: ["work-of:870970-basis:22629344"] }
+    });
+    visitDashboard();
+
+    cy.wait("@recommend")
+      .its("request.body.variables")
+      .should("deep.include", { id: "work-of:870970-basis:22629344" })
+      .and("not.have.property", "faust");
+    cy.get("@isbnLookup.all").should("have.length", 0);
+    cy.getBySel("recommended-description").should("have.length", 2);
   });
 });
 
