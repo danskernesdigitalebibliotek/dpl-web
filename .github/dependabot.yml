@@ -129,8 +129,25 @@ updates:
         versions: [">=16"]
       - dependency-name: "storybook"
         versions: [">=10"]
-      - dependency-name: "@storybook/*"
+      # Listed per package because Dependabot cannot exclude one package from a
+      # wildcard, and @storybook/addon-designs does not follow Storybook's
+      # version line.
+      - dependency-name: "@storybook/addon-a11y"
         versions: [">=10"]
+      - dependency-name: "@storybook/addon-docs"
+        versions: [">=10"]
+      - dependency-name: "@storybook/addon-links"
+        versions: [">=10"]
+      - dependency-name: "@storybook/preset-create-react-app"
+        versions: [">=10"]
+      - dependency-name: "@storybook/react"
+        versions: [">=10"]
+      - dependency-name: "@storybook/react-webpack5"
+        versions: [">=10"]
+      # addon-designs 11 requires Storybook 10; 10.0.2 is its newest release
+      # for Storybook 9.
+      - dependency-name: "@storybook/addon-designs"
+        versions: [">=11"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
 
