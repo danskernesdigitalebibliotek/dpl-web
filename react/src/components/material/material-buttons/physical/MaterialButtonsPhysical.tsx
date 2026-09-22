@@ -48,7 +48,7 @@ const MaterialButtonsPhysical: React.FC<MaterialButtonsPhysicalProps> = ({
     manifestations
   });
   const { data: userData, isLoading } = usePatronData();
-  const isUserBlocked = !!(userData?.patron && isBlocked(userData?.patron));
+  const isUserBlocked = userData?.patron ? isBlocked(userData.patron) : false;
 
   if (isLoading || isLoadingAvailability) {
     return <MaterialButtonLoading classNames="reserve-button" />;
@@ -68,24 +68,18 @@ const MaterialButtonsPhysical: React.FC<MaterialButtonsPhysicalProps> = ({
     return <MaterialButtonUserBlocked size={size} dataCy={dataCy} />;
   }
 
-  // We show the reservation button if the user isn't logged in or isn't blocked.
-  // In the former case there there's no way to see if they're blocked, so we
-  // redirect anonymous user to the login page.
-
-  if (!userData || !isUserBlocked) {
-    return (
-      <MaterialButtonReservePhysical
-        dataCy={dataCy}
-        manifestationMaterialType={getMaterialType(manifestations)}
-        size={size}
-        isSpecificManifestation={isSpecificManifestation}
-        pids={pids}
-        isEditionPicker={isEditionPicker}
-      />
-    );
-  }
-
-  return null;
+  // Anonymous users get the reservation button too. There is no way to see if
+  // they are blocked, so the button redirects them to the login page instead.
+  return (
+    <MaterialButtonReservePhysical
+      dataCy={dataCy}
+      manifestationMaterialType={getMaterialType(manifestations)}
+      size={size}
+      isSpecificManifestation={isSpecificManifestation}
+      pids={pids}
+      isEditionPicker={isEditionPicker}
+    />
+  );
 };
 
 export default MaterialButtonsPhysical;
