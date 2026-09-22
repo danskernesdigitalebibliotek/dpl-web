@@ -2451,6 +2451,44 @@ export type ComplexSuggestQuery = {
   };
 };
 
+export type GetDashboardRecommendationsQueryVariables = Exact<{
+  faust?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  limit: Scalars["Int"]["input"];
+}>;
+
+export type GetDashboardRecommendationsQuery = {
+  __typename?: "Query";
+  recommend: {
+    __typename?: "RecommendationResponse";
+    result: Array<{
+      __typename?: "Recommendation";
+      work: {
+        __typename?: "Work";
+        workId: string;
+        titles: { __typename?: "WorkTitles"; full: Array<string> };
+        creators: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Person"; display: string }
+        >;
+        manifestations: {
+          __typename?: "Manifestations";
+          bestRepresentation: {
+            __typename?: "Manifestation";
+            cover: {
+              __typename?: "Cover";
+              large?: {
+                __typename?: "CoverDetails";
+                url?: string | null;
+              } | null;
+            };
+          };
+        };
+      };
+    }>;
+  };
+};
+
 export type GetSmallWorkQueryVariables = Exact<{
   id: Scalars["String"]["input"];
 }>;
@@ -6497,6 +6535,44 @@ export type ComplexSearchWithPaginationQuery = {
   };
 };
 
+export type GetRelatedWorksQueryVariables = Exact<{
+  cql: Scalars["String"]["input"];
+  offset: Scalars["Int"]["input"];
+  limit: Scalars["PaginationLimitScalar"]["input"];
+  filters: ComplexSearchFiltersInput;
+  sort?: InputMaybe<Array<SortInput> | SortInput>;
+}>;
+
+export type GetRelatedWorksQuery = {
+  __typename?: "Query";
+  complexSearch: {
+    __typename?: "ComplexSearchResponse";
+    works: Array<{
+      __typename?: "Work";
+      workId: string;
+      workTypes: Array<WorkTypeEnum>;
+      titles: { __typename?: "WorkTitles"; full: Array<string> };
+      series: Array<{
+        __typename?: "Series";
+        seriesId?: string | null;
+        title: string;
+        numberInSeries?: string | null;
+        readThisFirst?: boolean | null;
+      }>;
+      manifestations: {
+        __typename?: "Manifestations";
+        bestRepresentation: {
+          __typename?: "Manifestation";
+          cover: {
+            __typename?: "Cover";
+            large?: { __typename?: "CoverDetails"; url?: string | null } | null;
+          };
+        };
+      };
+    }>;
+  };
+};
+
 export type GetSeriesQueryVariables = Exact<{
   seriesId: Scalars["String"]["input"];
   limit: Scalars["Int"]["input"];
@@ -6509,6 +6585,7 @@ export type GetSeriesQuery = {
     __typename?: "Series";
     title: string;
     description?: string | null;
+    mainLanguages: Array<string>;
     hitcount: number;
     members: Array<{
       __typename?: "SerieWork";
@@ -9849,6 +9926,59 @@ export const useComplexSuggestQuery = <
   });
 };
 
+export const GetDashboardRecommendationsDocument = `
+    query getDashboardRecommendations($faust: String, $id: String, $limit: Int!) {
+  recommend(faust: $faust, id: $id, limit: $limit) {
+    result {
+      work {
+        workId
+        titles {
+          full
+        }
+        creators {
+          display
+        }
+        manifestations {
+          bestRepresentation {
+            cover {
+              large {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetDashboardRecommendationsQuery = <
+  TData = GetDashboardRecommendationsQuery,
+  TError = unknown
+>(
+  variables: GetDashboardRecommendationsQueryVariables,
+  options?: Omit<
+    UseQueryOptions<GetDashboardRecommendationsQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      GetDashboardRecommendationsQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
+) => {
+  return useQuery<GetDashboardRecommendationsQuery, TError, TData>({
+    queryKey: ["getDashboardRecommendations", variables],
+    queryFn: fetcher<
+      GetDashboardRecommendationsQuery,
+      GetDashboardRecommendationsQueryVariables
+    >(GetDashboardRecommendationsDocument, variables),
+    ...options
+  });
+};
+
 export const GetSmallWorkDocument = `
     query getSmallWork($id: String!) {
   work(id: $id) {
@@ -10312,11 +10442,63 @@ export const useComplexSearchWithPaginationQuery = <
   });
 };
 
+export const GetRelatedWorksDocument = `
+    query getRelatedWorks($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: ComplexSearchFiltersInput!, $sort: [SortInput!]) {
+  complexSearch(cql: $cql, filters: $filters) {
+    works(offset: $offset, limit: $limit, sort: $sort) {
+      workId
+      workTypes
+      titles {
+        full
+      }
+      series {
+        seriesId
+        title
+        numberInSeries
+        readThisFirst
+      }
+      manifestations {
+        bestRepresentation {
+          cover {
+            large {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetRelatedWorksQuery = <
+  TData = GetRelatedWorksQuery,
+  TError = unknown
+>(
+  variables: GetRelatedWorksQueryVariables,
+  options?: Omit<
+    UseQueryOptions<GetRelatedWorksQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<GetRelatedWorksQuery, TError, TData>["queryKey"];
+  }
+) => {
+  return useQuery<GetRelatedWorksQuery, TError, TData>({
+    queryKey: ["getRelatedWorks", variables],
+    queryFn: fetcher<GetRelatedWorksQuery, GetRelatedWorksQueryVariables>(
+      GetRelatedWorksDocument,
+      variables
+    ),
+    ...options
+  });
+};
+
 export const GetSeriesDocument = `
     query getSeries($seriesId: String!, $limit: Int!, $offset: Int!) {
   series(seriesId: $seriesId) {
     title
     description
+    mainLanguages
     hitcount
     members(limit: $limit, offset: $offset) {
       numberInSeries
@@ -10625,6 +10807,7 @@ export const operationNames = {
   Query: {
     complexFacetSearch: "complexFacetSearch" as const,
     complexSuggest: "complexSuggest" as const,
+    getDashboardRecommendations: "getDashboardRecommendations" as const,
     getSmallWork: "getSmallWork" as const,
     getManifestationViaMaterialByFaust:
       "getManifestationViaMaterialByFaust" as const,
@@ -10640,6 +10823,7 @@ export const operationNames = {
     complexSearchWithPaginationWorkAccess:
       "complexSearchWithPaginationWorkAccess" as const,
     complexSearchWithPagination: "complexSearchWithPagination" as const,
+    getRelatedWorks: "getRelatedWorks" as const,
     getSeries: "getSeries" as const,
     suggestionsFromQueryString: "suggestionsFromQueryString" as const,
     GetCoversByPids: "GetCoversByPids" as const,

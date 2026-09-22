@@ -49,7 +49,9 @@ export function mapLoan(loan: z.infer<typeof LoanSchema>): DigitalLoan {
     endDate: loan.end,
     active: loan.active,
     title: loan.title,
-    author: loan.author,
+    // The provider names one creator; the catalogue replaces this with every
+    // creator it credits.
+    authors: loan.author ? [loan.author] : [],
     publisher: loan.publisher,
     publishDate: loan.publish_date,
     loanProvider: loan.license.type,

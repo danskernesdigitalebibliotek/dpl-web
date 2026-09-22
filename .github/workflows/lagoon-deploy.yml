@@ -43,6 +43,9 @@ jobs:
     name: Go / Build Go base image
     needs: [BranchNameLength]
     uses: ./.github/workflows/go-build-base-image.yml
+    # A reusable workflow is handed nothing but GITHUB_TOKEN unless the caller
+    # says otherwise, and the base image build needs WEDOBOOKS_NPM_TOKEN.
+    secrets: inherit
 
   # Creating the deployment that Lagoon will look for, and add status to.
   CreateDeployment:

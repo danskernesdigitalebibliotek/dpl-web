@@ -26,7 +26,7 @@ const digitalLoan: DigitalLoan = {
   endDate: "2022-11-16T08:15:00.000Z",
   active: true,
   title: "Din for en sommer",
-  author: "Sherman, L.",
+  authors: ["Sherman, L."],
   publisher: "Lindhardt og Ringhof",
   publishDate: "2022-06-18T00:00:00.000Z",
   loanProvider: "selection"
@@ -90,7 +90,6 @@ describe("Biblio list mappers", () => {
       expect(loan.details?.year).toBe(2022);
       expect(loan.details?.materialType).toBe("E-book");
       expect(loan.details?.externalProductId).toBe(digitalLoan.materialId);
-      // A loan states its author as one string; the formatter still applies.
       expect(loan.details?.authors).toContain("Sherman, L.");
     });
 
