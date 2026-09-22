@@ -6,4 +6,4 @@
  * quoted string and produce a malformed query.
  */
 export const cqlString = (value: string): string =>
-  `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+  `${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}`;

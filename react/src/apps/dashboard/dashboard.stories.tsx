@@ -155,6 +155,9 @@ const meta: Meta<typeof DashBoard> = {
     },
     dashboardReservationsLinkText: {
       control: { type: "text" }
+    },
+    dashboardRecommendationsHeadingText: {
+      control: { type: "text" }
     }
   }
 };
@@ -210,6 +213,7 @@ export const Primary: Story = {
     expirationWarningDaysBeforeConfig: "6",
     dashboardLoansLinkText: "All loans",
     dashboardReservationsLinkText: "All reservations",
+    dashboardRecommendationsHeadingText: "Inspiration for you",
     materialDetailsOverdueText: "Overdue"
   }
 };
