@@ -1,0 +1,59 @@
+# A miniature repository for the audit's own tests. Every block here exists to
+# reach one branch of resolving directories and finding lockfiles; what the
+# audit concludes from the versions it reads is tested in evaluate.ts, without
+# files. Keep this minimal - a case that needs no filesystem does not belong.
+version: 2
+updates:
+  # A plain directory, and the pnpm lockfile beside it.
+  - package-ecosystem: npm
+    directory: "/pnpm"
+    schedule: { interval: weekly }
+    ignore:
+      - dependency-name: "alpha"
+        versions: [">=1"]               # stale: pnpm-lock.yaml was read
+  # The other npm lockfile, which a different parser handles.
+  - package-ecosystem: npm
+    directory: "/npm"
+    schedule: { interval: weekly }
+    ignore:
+      - dependency-name: "beta"
+        versions: [">=2"]               # stale: package-lock.json was read
+  - package-ecosystem: composer
+    directory: "/composer"
+    schedule: { interval: weekly }
+    ignore:
+      - dependency-name: "acme/gamma"
+        versions: [">=3"]               # stale: composer.lock and composer.json were read
+  # A glob, resolved to a directory that then turns out to have no lockfile.
+  - package-ecosystem: npm
+    directories: ["/no-lock*"]
+    schedule: { interval: weekly }
+    ignore:
+      - dependency-name: "absent"
+        versions: [">=1"]               # skipped: nothing to read there
+  # Walking up finds pnpm's lockfile, which does not describe this directory.
+  - package-ecosystem: npm
+    directory: "/pnpm/nested"
+    schedule: { interval: weekly }
+    ignore:
+      - dependency-name: "absent"
+        versions: [">=1"]               # skipped: no importer for it
+  - package-ecosystem: npm
+    directory: "/missing"
+    schedule: { interval: weekly }
+    ignore:
+      - dependency-name: "absent"
+        versions: [">=1"]               # skipped: no such directory
+  - package-ecosystem: npm
+    directories: ["/nothing*"]
+    schedule: { interval: weekly }
+    ignore:
+      - dependency-name: "absent"
+        versions: [">=1"]               # skipped: the glob matched nothing
+  # An ecosystem with no lockfile we know how to read.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule: { interval: weekly }
+    ignore:
+      - dependency-name: "actions/checkout"
+        versions: [">=5"]               # skipped: no candidate lockfile at all
