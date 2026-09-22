@@ -100,6 +100,9 @@ services:
       # The parent image is tagged with the branch name, so to avoid building with
       # a stale image, we always fetch the latest version.
       pull: true
+      args:
+        # Same as for cli above: Lagoon does not resolve "extends".
+        WEDOBOOKS_NPM_TOKEN: ${WEDOBOOKS_NPM_TOKEN:-}
     labels:
       lagoon.type: node
 

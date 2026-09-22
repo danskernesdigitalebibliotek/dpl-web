@@ -27,7 +27,7 @@ describe("Pubhub local API", () => {
       Promise.resolve({
         isLoggedIn: true,
         type: "unilogin",
-        uniLoginUserInfo: { uniid: "100006cbab", institutionIds: ["A04441"] },
+        uniLoginUserInfo: { uniid: "100006cbab", institutionIds: ["R00263"] },
       })
     )
     vi.spyOn(clientFunctions, "createClientAsync").mockResolvedValue(
@@ -55,7 +55,7 @@ describe("Pubhub local API", () => {
       Promise.resolve({
         isLoggedIn: true,
         type: "unilogin",
-        uniLoginUserInfo: { uniid: "100006cbab", institutionIds: ["A04441"] },
+        uniLoginUserInfo: { uniid: "100006cbab", institutionIds: ["R00263"] },
       })
     )
     vi.spyOn(clientFunctions, "createClientAsync").mockResolvedValue(

@@ -25,6 +25,25 @@ ARG NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD
 ARG UNLILOGIN_PUBHUB_RETAILER_ID=""
 ARG UNLILOGIN_PUBHUB_RETAILER_KEY_CODE=""
 
+# Credential for WeDoBooks' private npm registry, which serves the SDK behind
+# the reader and the player. The prunes below take no filter and so resolve
+# every workspace lockfile against its registry; packages/wedobooks needs this
+# to come back with anything but a 401.
+#
+# A build argument rather than the BuildKit secret stage1.dockerfile uses:
+# Lagoon builds with `docker build --build-arg` and has no way to pass a
+# secret. Safe here, where it is not in stage 1, because this is the builder
+# stage - the runner below copies /app and nothing else, so neither the
+# argument nor the environment variable reaches the published image.
+#
+# Handed to pnpm as a config key in the environment rather than written with
+# `npm config set`, which would leave the token in an .npmrc in this layer -
+# safe only for as long as nobody widens that COPY. pnpm takes any config key
+# from the environment as npm_config_<key>; same mechanism as `init:pnpm` in
+# the root Taskfile and the secret mount in stage 1.
+ARG WEDOBOOKS_NPM_TOKEN
+ENV npm_config_//npm.pkg.wedobooks.io/:_authToken=$WEDOBOOKS_NPM_TOKEN
+
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
@@ -54,6 +73,11 @@ RUN corepack pnpm prune --prod
 # Under pnpm 10 it did not; under pnpm 11 it does, and `require("sharp")`
 # below is what catches it.
 WORKDIR /app/packages/service-layer
+RUN corepack pnpm prune --prod
+
+# The WeDoBooks wrapper ships in the image for the same reason, and carries
+# esbuild and the SDK's own build-time tree.
+WORKDIR /app/packages/wedobooks
 RUN corepack pnpm prune --prod
 
 WORKDIR /app/go
