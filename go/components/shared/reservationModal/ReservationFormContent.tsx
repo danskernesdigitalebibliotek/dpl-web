@@ -10,6 +10,7 @@ import {
 import InfoCard from "@/components/shared/infoCard/InfoCard"
 import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
+import { useShowSmsNotice } from "@/hooks/useShowSmsNotice"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { adultSiteUrl } from "@/lib/helpers/helper.adult-site"
 import { displayCreators } from "@/lib/helpers/helper.creators"
@@ -29,9 +30,7 @@ type ReservationFormContentProps = {
 const ReservationFormContent = ({ work, manifestation, patron }: ReservationFormContentProps) => {
   const dplCmsConfig = useContext(DplCmsConfigContext)
   const profileUrl = adultSiteUrl(dplCmsConfig?.libraryInfo?.baseURL, USER_PROFILE_PATH) ?? "#"
-  // To become true the library must have must have SMS notifications enabled, the patron must have a number and want SMS notifications.
-  const showSmsNotice =
-    (dplCmsConfig?.smsNotificationsEnabled ?? true) && !!patron?.phoneNumber && !!patron?.receiveSms
+  const showSmsNotice = useShowSmsNotice()
   const creators = work?.creators ?? manifestation.contributors ?? []
   const authorLabel = creators.length > 0 ? `Af ${displayCreators(creators, 3)}` : null
   const materialIcon = getManifestationMaterialTypeIcon(manifestation) || "book"

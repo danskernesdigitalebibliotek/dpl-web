@@ -16,6 +16,7 @@ import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBlacklistedAvailabilityBranches } from "@/hooks/useBlacklistedAvailabilityBranches"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
+import { useShowSmsNotice } from "@/hooks/useShowSmsNotice"
 import { adultSiteUrl } from "@/lib/helpers/helper.adult-site"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { type ReservationItem } from "@/lib/helpers/helper.patron"
@@ -114,9 +115,7 @@ const ReservationDetailsContent = ({ item }: { item: ReservationItem }) => {
   )
   const dplCmsConfig = useContext(DplCmsConfigContext)
   const profileUrl = adultSiteUrl(dplCmsConfig?.libraryInfo?.baseURL, USER_PROFILE_PATH) ?? "#"
-  // To become true the library must have must have SMS notifications enabled, the patron must have a number and want SMS notifications.
-  const showSmsNotice =
-    (dplCmsConfig?.smsNotificationsEnabled ?? true) && !!patron?.phoneNumber && !!patron?.receiveSms
+  const showSmsNotice = useShowSmsNotice()
 
   return (
     <div data-cy={cyKeys["reservation-details"]} className="space-y-8">
