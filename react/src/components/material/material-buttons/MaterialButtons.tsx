@@ -7,7 +7,7 @@ import {
 } from "../../../core/utils/helpers/general";
 import { ButtonSize } from "../../../core/utils/types/button";
 import { Manifestation } from "../../../core/utils/types/entities";
-import { hasCorrectAccess, hasCorrectAccessType, isArticle } from "./helper";
+import { hasCorrectAccessType, isArticle } from "./helper";
 import { WorkId } from "../../../core/utils/types/ids";
 import MaterialButtonsOnline from "./online/MaterialButtonsOnline";
 import MaterialButtonsFindOnShelf from "./physical/MaterialButtonsFindOnShelf";
@@ -65,22 +65,9 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
       />
     );
   }
-  // Online buttons are considered if either the material has an online access
-  // type or it has a DigitalArticleService access and is an article. This way
-  // we avoid showing both physical and online action buttons at once.
-  const hasOnlineAccess =
-    hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) ||
-    (hasCorrectAccess("DigitalArticleService", manifestations) &&
-      isArticle(manifestations));
-  // Resolving the concrete button here, rather than only checking access,
-  // keeps this decision in sync with what MaterialButtonsOnline can render, so
-  // we never end up with neither buttons nor a fallback.
-  const onlineButtonKind = hasOnlineAccess
-    ? resolveOnlineButtonKind(manifestations)
-    : null;
-  const showOnlineButtons = onlineButtonKind !== null;
+  const onlineButtonKind = resolveOnlineButtonKind(manifestations);
 
-  const showFallback = !showPhysicalButtons && !showOnlineButtons && fallback;
+  const showFallback = !showPhysicalButtons && !onlineButtonKind && fallback;
 
   if (showFallback) {
     return fallback;

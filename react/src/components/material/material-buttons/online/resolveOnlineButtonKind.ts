@@ -1,9 +1,18 @@
 import { first } from "lodash";
+import {
+  AccessTypeCodeEnum,
+  LinkStatusEnum
+} from "../../../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../../../core/utils/types/entities";
 import { ManifestationMaterialType } from "../../../../core/utils/types/material-type";
 import { getLoanableManifestation } from "../../../../apps/material/helper";
 import { getReaderPlayerType } from "../../../reader-player/helper";
-import { hasCorrectAccess, hasCorrectMaterialType } from "../helper";
+import {
+  hasCorrectAccess,
+  hasCorrectAccessType,
+  hasCorrectMaterialType,
+  isArticle
+} from "../helper";
 
 type ManifestationAccess = Manifestation["access"][number];
 type ManifestationAccessUrl = Extract<
@@ -20,7 +29,7 @@ export type OnlineButtonKind =
 const isActiveAccessUrl = (
   access: ManifestationAccess
 ): access is ManifestationAccessUrl =>
-  access.__typename === "AccessUrl" && access.status === "OK";
+  access.__typename === "AccessUrl" && access.status === LinkStatusEnum.Ok;
 
 /**
  * Picks the access url to link to, preferring DBC Webarkiv over other origins.
@@ -36,6 +45,16 @@ const findActiveAccessUrl = (manifestations: Manifestation[]) => {
 };
 
 /**
+ * Online buttons are only considered if the material has an online access type,
+ * or it has a DigitalArticleService access and is an article. This way we avoid
+ * showing both physical and online action buttons at once.
+ */
+const hasOnlineAccess = (manifestations: Manifestation[]) =>
+  hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) ||
+  (hasCorrectAccess("DigitalArticleService", manifestations) &&
+    isArticle(manifestations));
+
+/**
  * Decides which online button, if any, the given manifestations support.
  *
  * This is the single source of truth shared by MaterialButtons (to know
@@ -45,6 +64,10 @@ const findActiveAccessUrl = (manifestations: Manifestation[]) => {
 export const resolveOnlineButtonKind = (
   manifestations: Manifestation[]
 ): OnlineButtonKind | null => {
+  if (!hasOnlineAccess(manifestations)) {
+    return null;
+  }
+
   const readerPlayerType = getReaderPlayerType(
     getLoanableManifestation(manifestations)
   );

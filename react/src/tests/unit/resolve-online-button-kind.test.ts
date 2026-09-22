@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { LinkStatusEnum } from "../../core/dbc-gateway/generated/graphql";
+import {
+  AccessTypeCodeEnum,
+  LinkStatusEnum
+} from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { resolveOnlineButtonKind } from "../../components/material/material-buttons/online/resolveOnlineButtonKind";
 
@@ -10,7 +13,7 @@ const manifestationWith = (
   ({
     pid: "870970-basis:12345678",
     access,
-    accessTypes: [],
+    accessTypes: [{ code: AccessTypeCodeEnum.Online }],
     materialTypes: [
       { materialTypeSpecific: { display: materialType, code: "BOOK" } }
     ],
@@ -78,6 +81,15 @@ describe("resolveOnlineButtonKind", () => {
     ]);
 
     expect(result).toEqual({ kind: "retriever-article" });
+  });
+
+  it("resolves to nothing for a physical material", () => {
+    const physicalManifestation = {
+      ...manifestationWith([{ __typename: "RetrieverService", id: "1" }]),
+      accessTypes: [{ code: AccessTypeCodeEnum.Physical }]
+    } as Manifestation;
+
+    expect(resolveOnlineButtonKind([physicalManifestation])).toBeNull();
   });
 
   it("resolves to nothing for an access kind without a button", () => {
