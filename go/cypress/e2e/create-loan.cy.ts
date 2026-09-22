@@ -138,7 +138,13 @@ describe("Create loan UI Tests", () => {
     cy.get("[data-cy='approve-loan-button']").click()
 
     // Find the loan ebook button using its text
-    cy.contains("Læs e-bog")
+    cy.contains("Læs e-bog").click()
+
+    // The reader only recognises Publizon's internal order number, so that is
+    // the orderId the read page must be handed. The factory gives the two
+    // order numbers distinct values so a mix-up cannot pass unnoticed.
+    cy.url().should("include", "/read")
+    cy.url().should("include", "orderId=757a22ed-cbc4-4659-a5a9-be39bfc2ba6c")
 
     // Mock GraphQL response for complex search
     const identifiers = ["9788711668016"]
