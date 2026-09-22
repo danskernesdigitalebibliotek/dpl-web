@@ -10,6 +10,7 @@ function SmartLink({
   onClick,
   className,
   "aria-label": ariaLabel,
+  "data-cy": dataCy,
 }: {
   href: string
   target?: string
@@ -22,6 +23,7 @@ function SmartLink({
   className?: string
   // Forwarded to the anchor — arrives via Slot when wrapped in Button asChild.
   "aria-label"?: string
+  "data-cy"?: string
 }) {
   // Internal link
   if (linkType === "internal") {
@@ -32,7 +34,9 @@ function SmartLink({
           className={className}
           href={href}
           target={target}
-          aria-label={ariaLabel}>
+          aria-label={ariaLabel}
+          // eslint-disable-next-line no-restricted-syntax
+          data-cy={dataCy}>
           {children}
         </a>
       )
@@ -44,7 +48,9 @@ function SmartLink({
         href={href}
         target={target}
         prefetch={false}
-        aria-label={ariaLabel}>
+        aria-label={ariaLabel}
+        // eslint-disable-next-line no-restricted-syntax
+        data-cy={dataCy}>
         {children}
       </Link>
     )
@@ -59,7 +65,9 @@ function SmartLink({
         className={className}
         href={validHref}
         target={target}
-        aria-label={ariaLabel}>
+        aria-label={ariaLabel}
+        // eslint-disable-next-line no-restricted-syntax
+        data-cy={dataCy}>
         {children}
       </a>
     )
