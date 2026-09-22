@@ -23,6 +23,7 @@ const fixturePatron: Patron = {
   pickupBranchId: fixtureBranch.isilId,
   emailAddress: "test@example.com",
   phoneNumber: "+4512345678",
+  receiveSms: true,
 }
 
 // Branch titles and patron data come from server actions the Storybook
