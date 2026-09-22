@@ -1,29 +1,29 @@
 import { describe, expect, it } from "vitest"
 
-import { getDigitalLoanQuota } from "./digital-quotas"
+import { getDigitalLoanQuota, getDigitalQuotaOrganizationId } from "./digital-quotas"
 import { type DigitalLoanQuota } from "./types"
 
+const splitQuota: DigitalLoanQuota = {
+  splitOnFormat: true,
+  orgId: "org-1",
+  orgName: "Eksempel Biblioteket",
+  maxLoans: { ebook: 7, audiobook: 5 },
+  maxConcurrentLoans: { ebook: 3, audiobook: 2 },
+  currentConcurrentLoans: { ebook: 1, audiobook: 0 },
+  currentMonthlyLoans: { ebook: 4, audiobook: 2 },
+}
+
+const combinedQuota: DigitalLoanQuota = {
+  splitOnFormat: false,
+  orgId: "org-2",
+  orgName: "Eksempel Biblioteket",
+  maxLoans: 10,
+  maxConcurrentLoans: 4,
+  currentConcurrentLoans: 2,
+  currentMonthlyLoans: 6,
+}
+
 describe("getDigitalLoanQuota", () => {
-  const splitQuota: DigitalLoanQuota = {
-    splitOnFormat: true,
-    orgId: "org-1",
-    orgName: "Eksempel Biblioteket",
-    maxLoans: { ebook: 7, audiobook: 5 },
-    maxConcurrentLoans: { ebook: 3, audiobook: 2 },
-    currentConcurrentLoans: { ebook: 1, audiobook: 0 },
-    currentMonthlyLoans: { ebook: 4, audiobook: 2 },
-  }
-
-  const combinedQuota: DigitalLoanQuota = {
-    splitOnFormat: false,
-    orgId: "org-2",
-    orgName: "Eksempel Biblioteket",
-    maxLoans: 10,
-    maxConcurrentLoans: 4,
-    currentConcurrentLoans: 2,
-    currentMonthlyLoans: 6,
-  }
-
   it("Reads the monthly counters per format when the organization splits on format", () => {
     expect(getDigitalLoanQuota({ quotas: [splitQuota], format: "ebook" })).toEqual({
       current: 4,
@@ -76,5 +76,16 @@ describe("getDigitalLoanQuota", () => {
       current: 0,
       limit: undefined,
     })
+  })
+})
+
+describe("getDigitalQuotaOrganizationId", () => {
+  it("Names the organization the patron's quota was issued for", () => {
+    expect(getDigitalQuotaOrganizationId([splitQuota, combinedQuota])).toBe(splitQuota.orgId)
+  })
+
+  it("Names none before the quotas have arrived", () => {
+    expect(getDigitalQuotaOrganizationId(undefined)).toBeNull()
+    expect(getDigitalQuotaOrganizationId([])).toBeNull()
   })
 })

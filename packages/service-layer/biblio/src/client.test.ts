@@ -100,6 +100,56 @@ describe("createBiblioClient.getMetadata", () => {
   })
 })
 
+describe("createBiblioClient.getSample", () => {
+  const sampleUrl = (isbn: string) => `${baseUrl}/v1/samples/${isbn}`
+
+  const sampleBody = {
+    material_id: "9788711234567",
+    format: "epub",
+    sample_url: "https://storage.example/samples/9788711234567.epub?signature=abc",
+  }
+
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("returns the mapped sample, with no format asked for", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse(sampleBody))
+
+    const result = await buildClient().getSample("9788711234567")
+
+    // No query string: the adapter derives the format from the material type
+    // it has registered, which beats anything the caller could guess.
+    expect(fetch).toHaveBeenCalledWith(sampleUrl("9788711234567"), {
+      method: "GET",
+      headers: { authorization: "Bearer abc" },
+    })
+    expect(result).toEqual({
+      format: "epub",
+      url: "https://storage.example/samples/9788711234567.epub?signature=abc",
+    })
+  })
+
+  it("treats a material without a sample as an absence, not a failure", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 404))
+
+    await expect(buildClient().getSample("9788711234567")).resolves.toBeUndefined()
+  })
+
+  it("fails on a refusal rather than reporting no sample", async () => {
+    // The adapter answers 403 both where Biblio has not enabled samples yet
+    // and where it will not accept our token. Reporting the second as "no
+    // excerpt" would hide a broken client behind an empty teaser slot.
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 403))
+
+    await expect(buildClient().getSample("9788711234567")).rejects.toThrow()
+  })
+})
+
 const loanBody = {
   id: "loan-1",
   material_id: "9788711234567",
@@ -126,7 +176,7 @@ const mappedLoan = {
   endDate: "2026-08-31T10:00:00Z",
   active: true,
   title: "En bog",
-  author: "Christie, Agatha",
+  authors: ["Christie, Agatha"],
   publisher: "Forlag",
   publishDate: "2014-11-07T00:00:00Z",
   loanProvider: "selection",
@@ -394,6 +444,32 @@ describe("createBiblioClient user endpoints", () => {
         currentMonthlyLoans: { ebook: 1, audiobook: 1 },
       },
     ])
+  })
+
+  it("asks the organization it is given for its reservation ceiling", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      mockJsonResponse({
+        organization_configurations: {
+          split_on_format: true,
+          loan_config: { max_concurrent_user_reservations: { ebook: 3, audiobook: 2 } },
+          combined_loan_config: {},
+        },
+      })
+    )
+
+    await expect(buildClient().getReservationLimits("org-2")).resolves.toEqual({
+      ebook: 3,
+      audiobook: 2,
+    })
+    // The endpoint resolves no organization from the token, so the id has to
+    // reach it as a query parameter.
+    expect(fetch).toHaveBeenCalledWith(
+      `${baseUrl}/v1/organizations/configs?organization_id=org-2`,
+      {
+        method: "GET",
+        headers: { authorization: "Bearer abc" },
+      }
+    )
   })
 
   it("returns the support id", async () => {

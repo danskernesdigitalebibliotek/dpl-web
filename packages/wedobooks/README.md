@@ -53,8 +53,21 @@ pnpm config set "//npm.pkg.wedobooks.io/:_authToken" "$WEDOBOOKS_NPM_TOKEN"
 ```
 
 In CI the same line runs from `.github/actions/common-setup-js`, fed by the
-`WEDOBOOKS_NPM_TOKEN` repository secret. The Lagoon images take it as a build
-argument of the same name, used only in the throwaway build stage.
+`WEDOBOOKS_NPM_TOKEN` repository secret.
+
+The images take it one of two ways, depending on whether the stage that needs
+it is published:
+
+- **A build argument of the same name**, used only in a stage that is thrown
+  away once its output has been copied out. That covers the CMS images
+  (`cms/lagoon/{cli,nginx,php}.dockerfile`) and Go's stage 2
+  (`go/lagoon/stage2.dockerfile`), and it is what Lagoon can pass — its build
+  script only ever calls `docker build --build-arg`.
+- **A BuildKit secret**, for `go/lagoon/stage1.dockerfile`. That file has a
+  single stage and it is the one pushed to GHCR, so there is nowhere to hide a
+  build argument: it would show up in `docker history`. The secret is mounted
+  for the one `RUN` and lands in no layer.
+  `.github/workflows/go-build-base-image.yml` supplies it.
 
 Dependabot needs that token registered a second time, as a *Dependabot* secret
 of the same name: workflow runs on its pull requests are not given the Actions

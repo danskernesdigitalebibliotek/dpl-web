@@ -17,10 +17,10 @@ import wedobooksArgs, {
  * audiobooks play in a modal on the material page, so no Publizon key ever
  * links here - see `ReaderPlayer / Player / Publizon` for that player.
  *
- * Same three requirements as the WeDoBooks reader - the five SDK values from
- * `STORYBOOK_WEDOBOOKS_*`, a signed-in patron from `STORYBOOK_USER_TOKEN`,
- * and an audiobook WeDoBooks knows. The page renders empty if any is missing,
- * and the console says which.
+ * Same requirements as the WeDoBooks reader - the five SDK values from
+ * `STORYBOOK_WEDOBOOKS_*`, an audiobook WeDoBooks knows, and a signed-in
+ * patron from `STORYBOOK_USER_TOKEN` for the Loan story only. The page
+ * renders empty if any is missing, and the console says which.
  */
 const meta: Meta<typeof PlayerEntry> = {
   title: "ReaderPlayer / Player / WeDoBooks",
@@ -61,7 +61,7 @@ export const Loan: Story = {
   }
 };
 
-/** An audiobook sample. Signed-in only, which is WeDoBooks' own restriction. */
+/** An audiobook sample. Needs no session - see the reader's Sample story. */
 export const Sample: Story = {
   args: {
     identifier: ""

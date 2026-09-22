@@ -10,6 +10,7 @@ import StatusCircleModalHeader from "../../../components/GroupModal/StatusCircle
 import StatusCircle from "../../loan-list/materials/utils/status-circle";
 import useReservations from "../../../core/utils/useReservations";
 import { getModalIds } from "../../../core/utils/helpers/modal-helpers";
+import useCanCancelReservation from "../../../core/utils/useCanCancelReservation";
 
 interface ReservationGroupModalProps {
   pageSize: number;
@@ -26,6 +27,7 @@ const ReservationGroupModal: FC<ReservationGroupModalProps> = ({
 }) => {
   const { fbs, digital } = useReservations();
   const t = useText();
+  const canCancelReservation = useCanCancelReservation();
   const { reservationsReady, reservationsQueued } = getModalIds();
   const [materialsToDelete, setMaterialsToDelete] = useState<ReservationType[]>(
     []
@@ -48,10 +50,14 @@ const ReservationGroupModal: FC<ReservationGroupModalProps> = ({
     setMaterialsToDelete([]);
   }, [modalId]);
 
+  // TEMPORARY: the reason is given per reservation in its details rather than
+  // over the whole list, because this group mixes providers and a list-wide
+  // note would speak for rows it does not apply to - see
+  // usePublizonReservationsClosed.
   const selectableReservations = [
     ...physicalReservations,
     ...digitalReservations
-  ];
+  ].filter(canCancelReservation);
 
   const selectMaterials = (materials: ReservationType[]) => {
     setMaterialsToDelete(materials);

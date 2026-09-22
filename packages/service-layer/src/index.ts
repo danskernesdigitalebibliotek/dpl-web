@@ -64,7 +64,6 @@ export {
   isMaterialLoanable,
   isMaterialReservable,
   isRequestGranted,
-  isUnknownMaterial,
 } from "./digital-loan-decision"
 export { isCostFreeLoan } from "./digital-loans"
 export { getDigitalLoanQuota } from "./digital-quotas"
@@ -78,10 +77,13 @@ export { useDigitalCreateLoan } from "./hooks/useDigitalCreateLoan"
 export { useDigitalCreateReservation } from "./hooks/useDigitalCreateReservation"
 export { useDigitalDeleteReservation } from "./hooks/useDigitalDeleteReservation"
 export { useDigitalLoanDecision } from "./hooks/useDigitalLoanDecision"
+export { useDigitalMaterialHolding } from "./hooks/useDigitalMaterialHolding"
 export { useDigitalLoanQuotas } from "./hooks/useDigitalLoanQuotas"
 export { useDigitalLoans } from "./hooks/useDigitalLoans"
+export { useDigitalQuotas } from "./hooks/useDigitalQuotas"
 export { useDigitalMaterial } from "./hooks/useDigitalMaterial"
 export { useDigitalReservations } from "./hooks/useDigitalReservations"
+export { useDigitalSample } from "./hooks/useDigitalSample"
 export { useDigitalSupportId } from "./hooks/useDigitalSupportId"
 export type { QuotaUsage } from "./digital-quotas"
 export type {
@@ -95,5 +97,8 @@ export type {
   LoanDecisionStatus,
   LoanRequestResult,
   DigitalLoanQuota,
+  DigitalReservationLimits,
+  DigitalSample,
+  DigitalSampleFormat,
   ReaderSignInToken,
 } from "./types"

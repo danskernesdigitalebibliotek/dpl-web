@@ -15,6 +15,7 @@ describe("Front Page Tests", () => {
   it("Should navigate video bundle", () => {
     cy.dataCy("video-bundle")
       .first()
+      .should("be.visible")
       .scrollIntoView()
       .within(() => {
         cy.dataCy("video-bundle-slider").first().then(testMaterialNavigation)
@@ -45,9 +46,12 @@ describe("Front Page Tests", () => {
   }
 
   it("Should navigate materials in material slider", () => {
-    // Since we are swapping between skeleton and real content with lazy loading,
-    // we need to ensure the skeleton is visible first because that triggers the loading of the real content.
-    cy.dataCy("material-slider-skeleton").first().scrollIntoView()
+    // The page content is streamed inside a Suspense boundary. Until React reveals
+    // it, the SSR markup sits in a hidden placeholder div at the end of <body>, and
+    // scrolling to an element in there scrolls to position 0. Asserting visibility
+    // first makes Cypress retry until the content is revealed and laid out.
+    // Scrolling the skeleton into view is what triggers lazy loading of the real slider.
+    cy.dataCy("material-slider-skeleton").first().should("be.visible").scrollIntoView()
 
     cy.dataCy("material-slider")
       .first()

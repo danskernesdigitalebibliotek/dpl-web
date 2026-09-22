@@ -2,15 +2,18 @@ version: '3'
 
 output: prefixed
 
+includes:
+  branch-tag-cleanup: ./taskfiles/Taskfile.branch-tag-cleanup.yml
+
 vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
   CMS_REACT_LIBRARY: ./cms/web/libraries/dpl-react
   DESIGN_SYSTEM_BUILD: ./design-system/build
-  # The valueless -e forwards the WeDoBooks registry credential when the
-  # caller has it, and is inert for everyone else: docker drops a valueless -e
-  # whose variable is not in its own environment. See init:pnpm.
+  # We're using the -alpine variant as the regular version does not
+  # forward the spunky named npm_config variable, which we need in
+  # order to fetch the Biblio SDK.
   CLI_PREFIX:
-    sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI -e 'npm_config_//npm.pkg.wedobooks.io/:_authToken' --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.15"; fi
+    sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI -e 'npm_config_//npm.pkg.wedobooks.io/:_authToken' --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.21-alpine"; fi
 
 tasks:
   init:

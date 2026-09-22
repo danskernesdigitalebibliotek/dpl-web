@@ -1,6 +1,6 @@
 // Backends this package knows how to talk to. Apps never name these in
 // hook calls — only in the resolvers they implement on ServiceLayerConfig.
-export type ApiId = "fbs" | "biblio"
+export type ApiId = "fbs" | "biblio" | "fbi"
 
 export type ServiceLayerConfig = {
   getBaseUrl: (api: ApiId) => string
@@ -165,7 +165,8 @@ export type DigitalMaterialType = "ebook" | "audiobook"
 // DigitalMaterialType.
 export type MaterialType = DigitalMaterialType | "paper_book"
 
-// Catalogue fields for a digital material.
+// Catalogue fields for a digital material. Title and authors are FBI's where
+// it knows the ISBN — see withCatalogueDetails.
 export type DigitalMaterial = {
   isbn: string
   materialType: DigitalMaterialType
@@ -184,10 +185,10 @@ export type DigitalLoan = {
   startDate: string
   endDate: string
   active: boolean
-  // A loan carries its own catalogue fields, so presenting it needs no
-  // metadata lookup. `author` is one string here, a list on DigitalMaterial.
+  // Title and authors are the catalogue's, publisher and publishDate the
+  // provider's — see ADR-004 for why the correction stops there.
   title: string
-  author: string
+  authors: string[]
   publisher: string
   publishDate: string
   // Which licence the loan was made under - see LoanProvider, and
@@ -266,6 +267,26 @@ export type DigitalLoanQuota =
       currentConcurrentLoans: { ebook: number; audiobook: number }
       currentMonthlyLoans: { ebook: number; audiobook: number }
     }
+
+// How many reservations the organization lets a patron hold at once. Null for
+// an organization that counts the two formats together: a combined ceiling of
+// 5 means five in total, which no consumer has wording for.
+export type DigitalReservationLimits = { ebook: number; audiobook: number }
+
+// A promotional excerpt of a digital material: the file itself, not a loan.
+// `url` is signed and short-lived - measured at roughly six hours, though the
+// contract claims a week - so a page opens the one it was given rather than
+// holding on to it across sessions. `format` is the adapter's
+// own answer for what the material is, so it decides whether the excerpt
+// opens in the reader or in the player.
+export type DigitalSample = {
+  format: DigitalSampleFormat
+  url: string
+}
+
+// The file a sample arrives as - an excerpt of an e-book is an EPUB, of an
+// audiobook an MP3.
+export type DigitalSampleFormat = "epub" | "mp3"
 
 // Short-lived token that signs the patron in to the reader and player.
 export type ReaderSignInToken = {

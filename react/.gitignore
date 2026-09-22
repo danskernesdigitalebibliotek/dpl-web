@@ -1,4 +1,6 @@
-node_modules
+# Only React specifics. Dependencies, .env files, OS cruft and editor state
+# are ignored repo-wide by the root .gitignore.
+
 dist
 dev
 cypress/videos/apps
@@ -7,8 +9,5 @@ coverage
 .nyc_output
 index.html
 .tokens.json
-.vscode
-.env
 .cache
 .docker/wiremock/**/*.log
-dist.zip
