@@ -1402,6 +1402,13 @@ describe("Dashboard", () => {
       .should("have.text", "Alle vi børn i Snullerby");
   });
 
+  it("links to the patron profile page below the header", () => {
+    cy.getBySel("dashboard-user-profile-link")
+      .should("have.text", "User profile")
+      .should("have.attr", "href")
+      .and("match", /\/user\/me$/);
+  });
+
   it.skip("Dashboard general", () => {
     // System shows header "your profile"
     cy.getBySel("dashboard-header").should("have.text", "Your profile");

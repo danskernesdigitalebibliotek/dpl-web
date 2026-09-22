@@ -7885,6 +7885,10 @@ msgctxt "Patron menu"
 msgid "Dashboard"
 msgstr "Dit overblik"
 
+msgctxt "Patron page"
+msgid "Dashboard"
+msgstr "Dit overblik"
+
 msgctxt "List size (settings)"
 msgid "Dashboard list size on desktop"
 msgstr "Antal elementer der vises i en liste på desktop"
@@ -28415,6 +28419,10 @@ msgstr "Brugergrænseflade"
 msgctxt "Open order"
 msgid "User not found"
 msgstr ""
+
+msgctxt "Dashboard"
+msgid "User profile"
+msgstr "Brugerprofil"
 
 msgctxt "paragraphs.paragraphs_type.user_registration_item:label"
 msgid "User registration item"
