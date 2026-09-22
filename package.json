@@ -5,8 +5,8 @@
   "devEngines": {
     "runtime": {
       "name": "node",
-      "onFail": "error",
-      "version": "^24.15.0"
+      "onFail": "warn",
+      "version": "^24.21.0"
     }
   },
   "private": true,
