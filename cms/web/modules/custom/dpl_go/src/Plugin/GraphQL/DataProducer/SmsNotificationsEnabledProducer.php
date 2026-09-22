@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @DataProducer(
  *   id = "sms_notifications_enabled_producer",
  *   name = "SMS Notifications Enabled Producer",
- *   description = "Provides whether SMS notifications for reservations are enabled.",
+ *   description = "Provides whether SMS notifications are enabled.",
  *   produces = @ContextDefinition("any",
  *     label = "Request Response"
  *   )
