@@ -16,6 +16,7 @@ import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBlacklistedAvailabilityBranches } from "@/hooks/useBlacklistedAvailabilityBranches"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
+import { useShowSmsNotice } from "@/hooks/useShowSmsNotice"
 import { adultSiteUrl } from "@/lib/helpers/helper.adult-site"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { type ReservationItem } from "@/lib/helpers/helper.patron"
@@ -114,6 +115,7 @@ const ReservationDetailsContent = ({ item }: { item: ReservationItem }) => {
   )
   const dplCmsConfig = useContext(DplCmsConfigContext)
   const profileUrl = adultSiteUrl(dplCmsConfig?.libraryInfo?.baseURL, USER_PROFILE_PATH) ?? "#"
+  const showSmsNotice = useShowSmsNotice()
 
   return (
     <div data-cy={cyKeys["reservation-details"]} className="space-y-8">
@@ -141,18 +143,17 @@ const ReservationDetailsContent = ({ item }: { item: ReservationItem }) => {
           <>
             <InfoCardSkeleton />
             <InfoCardSkeleton />
-            <InfoCardSkeleton />
           </>
         ) : (
           <>
             {branchTitle && <InfoCard icon="pin" title="Afhentningssted" value={branchTitle} />}
-            <InfoCard
-              icon="chat"
-              title={
-                patron?.phoneNumber ? "Du får en sms, når du kan hente bogen" : "Du får ikke en sms"
-              }
-              value={patron?.phoneNumber ?? "Der er ikke registreret et telefonnummer."}
-            />
+            {showSmsNotice && (
+              <InfoCard
+                icon="chat"
+                title="Du får en sms, når du kan hente bogen"
+                value={patron?.phoneNumber ?? ""}
+              />
+            )}
             <InfoCard
               icon="envelope"
               title={
