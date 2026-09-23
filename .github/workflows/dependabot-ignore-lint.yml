@@ -1,0 +1,57 @@
+---
+name: Dependabot / Ignore lint
+
+# Fails when an ignore rule in .github/dependabot.yml is already satisfied by
+# the version installed in a lockfile. Such a rule holds nothing back any more;
+# it only hides patch and minor updates within the ignored range.
+#
+# It runs on every change that can make a rule stale: editing the rules, or
+# upgrading a package past the range a rule holds it to. The PR that makes a
+# rule obsolete is the one that removes it. Dependabot's own PRs cannot trip
+# this - it never installs a version it has been told to ignore - so it does
+# not interfere with dependabot-auto-merge.yml.
+
+on:
+  pull_request:
+    paths:
+      - ".github/dependabot.yml"
+      - ".github/workflows/dependabot-ignore-lint.yml"
+      - "packages/dependabot-ignore-lint/**"
+      - "**/pnpm-lock.yaml"
+      - "cms/composer.lock"
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - ".github/dependabot.yml"
+      - "**/pnpm-lock.yaml"
+      - "cms/composer.lock"
+
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  IgnoreAudit:
+    name: Dependabot / Lint ignore rules
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      - name: Install go-task
+        uses: arduino/setup-task@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: task ci:dependabot-ignore-lint
+        env:
+          # A finding only becomes an annotation when ::warning starts the line,
+          # and this repo's Taskfile sets output: prefixed. Set here rather than
+          # with --output because the environment reaches the nested dev:cli
+          # task too, where a flag would not. Needs Task 3.53+.
+          TASK_OUTPUT: interleaved

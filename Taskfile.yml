@@ -88,6 +88,13 @@ tasks:
     cmds:
       - docker run --rm --volume "{{.TASKFILE_DIR}}:/repo:ro" --workdir /repo rhysd/actionlint:latest -color
 
+  ci:dependabot-ignore-lint:
+    desc: "Fail if an ignore rule in .github/dependabot.yml is already satisfied by the installed version"
+    # No init:pnpm dependency: CI has already installed the workspace by the
+    # time it runs this, and repeating it costs more than the check itself.
+    cmds:
+      - task dev:cli -- node packages/dependabot-ignore-lint/src/cli.ts .
+
   # ---------------------------------------------------------------------------
   # Tokens
   # ---------------------------------------------------------------------------
@@ -208,6 +215,8 @@ tasks:
       - go/pnpm-lock.yaml
       - react/package.json
       - react/pnpm-lock.yaml
+      - packages/dependabot-ignore-lint/package.json
+      - packages/dependabot-ignore-lint/pnpm-lock.yaml
       - packages/service-layer/package.json
       - packages/service-layer/pnpm-lock.yaml
       - packages/wedobooks/package.json
