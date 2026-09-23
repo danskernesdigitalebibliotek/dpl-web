@@ -13,6 +13,7 @@ import { Cover } from "../cover/cover";
 import MaterialAvailabilityText from "./MaterialAvailabilityText/MaterialAvailabilityText";
 import MaterialHeaderText from "./MaterialHeaderText";
 import MaterialButtons from "./material-buttons/MaterialButtons";
+import { resolveMaterialButtonsType } from "./material-buttons/resolveMaterialButtonsType";
 import MaterialUnavailableNotice from "./MaterialUnavailableNotice/MaterialUnavailableNotice";
 import MaterialPeriodical from "./periodical/MaterialPeriodical";
 import { Manifestation, Work } from "../../core/utils/types/entities";
@@ -91,6 +92,13 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [manifestationMaterialTypes]);
 
+  // Global works are not in the library's own catalogue, so they can neither be
+  // reserved nor loaned here. They get the unavailable notice regardless of
+  // what the manifestations would otherwise support.
+  const buttonsType = isGlobalMaterial
+    ? null
+    : resolveMaterialButtonsType(selectedManifestations);
+
   return (
     <header className="border-bottom">
       <div className="material-header">
@@ -130,45 +138,41 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
               />
             )}
           </div>
-          {/* The CTA buttons apparently only make sense on a global work */}
-          {!isGlobalMaterial && (
-            <>
-              {isPeriodical(selectedManifestations) && (
-                <MaterialPeriodical
-                  faustId={convertPostIdToFaustId(pid)}
-                  selectedPeriodical={selectedPeriodical}
-                  selectPeriodicalHandler={selectPeriodicalHandler}
-                  isYearbook={isYearbook}
-                />
-              )}
-              {selectedManifestations && (
-                <>
-                  <div className="material-header__button">
-                    <MaterialButtons
-                      manifestations={selectedManifestations}
-                      workId={wid}
-                      dataCy="material-header-buttons"
-                      materialTitleId={materialTitleId}
-                      fallback={<MaterialUnavailableNotice />}
-                    />
-                  </div>
-                  {/* MaterialAvailabilityText is only shown for:
-                    - Online manifestations
-                    - physical manifestations
-                    - that are not periodical or articles
-                    - that are available in at least one local library branch
-                */}
-                  {shouldShowMaterialAvailabilityText(selectedManifestations) &&
-                    isAvailable && (
-                      <MaterialAvailabilityText
-                        manifestations={selectedManifestations}
-                      />
-                    )}
-                </>
-              )}
-              {children}
-            </>
+          {!isGlobalMaterial && isPeriodical(selectedManifestations) && (
+            <MaterialPeriodical
+              faustId={convertPostIdToFaustId(pid)}
+              selectedPeriodical={selectedPeriodical}
+              selectPeriodicalHandler={selectPeriodicalHandler}
+              isYearbook={isYearbook}
+            />
           )}
+          <div className="material-header__button">
+            {buttonsType ? (
+              <MaterialButtons
+                type={buttonsType}
+                manifestations={selectedManifestations}
+                workId={wid}
+                dataCy="material-header-buttons"
+                materialTitleId={materialTitleId}
+              />
+            ) : (
+              <MaterialUnavailableNotice />
+            )}
+          </div>
+          {/* MaterialAvailabilityText is only shown for:
+            - Online manifestations
+            - physical manifestations
+            - that are not periodical or articles
+            - that are available in at least one local library branch
+          */}
+          {!isGlobalMaterial &&
+            shouldShowMaterialAvailabilityText(selectedManifestations) &&
+            isAvailable && (
+              <MaterialAvailabilityText
+                manifestations={selectedManifestations}
+              />
+            )}
+          {!isGlobalMaterial && children}
         </div>
       </div>
     </header>

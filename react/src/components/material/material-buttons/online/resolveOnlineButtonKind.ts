@@ -20,6 +20,17 @@ type ManifestationAccessUrl = Extract<
   { __typename: "AccessUrl" }
 >;
 
+/**
+ * The online button a set of manifestations resolves to.
+ *
+ * - `internal`: an e-book or audiobook loaned through eReolen. Opens the
+ *   in-app reader or player rather than leaving the site.
+ * - `external`: a link out to another service, e.g. Filmstriben or
+ *   eReolen Global. Carries the access url to link to.
+ * - `digital-article`: an article ordered through the Digital Article
+ *   Service and delivered by email.
+ * - `retriever-article`: an article read in the Retriever archive.
+ */
 export type OnlineButtonKind =
   | { kind: "internal" }
   | { kind: "external"; access: ManifestationAccessUrl }
