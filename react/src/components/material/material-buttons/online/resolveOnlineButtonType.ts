@@ -67,10 +67,6 @@ const hasOnlineAccess = (manifestations: Manifestation[]) =>
 
 /**
  * Decides which online button, if any, the given manifestations support.
- *
- * This is the single source of truth shared by MaterialButtons (to know
- * whether to render online buttons or a fallback) and MaterialButtonsOnline
- * (to know which button to render), so the two can never disagree.
  */
 export const resolveOnlineButtonType = (
   manifestations: Manifestation[]
