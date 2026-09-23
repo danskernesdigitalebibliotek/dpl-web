@@ -11,21 +11,34 @@ import {
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
-// A pid is a pin to one specific edition.
-export type TEditionChoice = "newest" | "first-available" | { pid: string }
+// A pid is a pin to one specific edition. "newest" is the default and so is
+// the absence of a choice — it is never written to the url.
+export type TEditionChoice = "newest" | { pid: string }
 
 export const DEFAULT_EDITION_CHOICE: TEditionChoice = "newest"
 
-// Label for the trigger button that opens the modal. The label is based on the current choice
+// The url carries the choice as a single `edition` param: a pid, or nothing at
+// all for the default.
+export const parseEditionChoice = (param: string | null): TEditionChoice => {
+  if (!param) return DEFAULT_EDITION_CHOICE
+
+  return { pid: param }
+}
+
+export const serializeEditionChoice = (choice: TEditionChoice): string | null => {
+  if (choice === "newest") return null
+
+  return choice.pid
+}
+
+// Label for the trigger button that opens the modal.
 export const getEditionChoiceLabel = (
   choice: TEditionChoice,
-  editions: ManifestationWorkPageFragment[]
+  selectedManifestation: ManifestationWorkPageFragment
 ): string => {
   if (choice === "newest") return "Nyeste"
-  if (choice === "first-available") return "Først tilgængelige"
 
-  const pinned = editions.find(edition => edition.pid === choice.pid)
-  return pinned?.edition?.publicationYear?.year?.toString() ?? "Valgt udgave"
+  return selectedManifestation.edition?.publicationYear?.year?.toString() ?? "Valgt udgave"
 }
 
 // Data props — `open`/`onClose` come from the DynamicModal host.
@@ -54,8 +67,9 @@ const GeneralOption = ({
 }) => (
   <label
     className="border-foreground/10 has-checked:border-foreground has-checked:bg-background-overlay
-      has-focus-visible:ring-foreground flex flex-1 cursor-pointer items-start gap-3 rounded-lg
-      border-2 p-4 transition-colors has-focus-visible:ring-2 has-focus-visible:ring-offset-2">
+      has-focus-visible:ring-foreground flex w-full max-w-[335px] cursor-pointer items-start gap-3
+      rounded-lg border-2 p-4 transition-colors has-focus-visible:ring-2
+      has-focus-visible:ring-offset-2 sm:w-1/2">
     <input
       type="radio"
       name={GENERAL_CHOICE_GROUP}
@@ -103,7 +117,10 @@ const EditionsSelectModal = ({
   )
 
   // Editions are newest first.
-  const newestDescription = [editions[0]?.edition?.publicationYear?.year, editions[0]?.publisher?.[0]]
+  const newestDescription = [
+    editions[0]?.edition?.publicationYear?.year,
+    editions[0]?.publisher?.[0],
+  ]
     .filter(Boolean)
     .join(", ")
 
@@ -117,22 +134,14 @@ const EditionsSelectModal = ({
   return (
     <ResponsiveDialog title="Vælg udgave" open={open} onClose={onClose}>
       <fieldset className="border-0 p-0">
-        <div className="flex flex-col gap-4 lg:flex-row">
-          <GeneralOption
-            label="Nyeste udgave"
-            description={`Du får altid den senest udgivne udgave${
-              newestDescription ? ` — lige nu ${newestDescription}` : ""
-            }`}
-            checked={draftChoice === "newest"}
-            onSelect={() => setDraftChoice("newest")}
-          />
-          <GeneralOption
-            label="Først tilgængelige"
-            description="Du får den udgave med kortest ventetid — hurtigst i hænderne"
-            checked={draftChoice === "first-available"}
-            onSelect={() => setDraftChoice("first-available")}
-          />
-        </div>
+        <GeneralOption
+          label="Nyeste udgave"
+          description={`Du får altid den senest udgivne udgave${
+            newestDescription ? ` — lige nu ${newestDescription}` : ""
+          }`}
+          checked={draftChoice === "newest"}
+          onSelect={() => setDraftChoice("newest")}
+        />
 
         {editions.length > 0 && (
           <>
@@ -164,8 +173,6 @@ const EditionsSelectModal = ({
       </fieldset>
 
       <ResponsiveDialog.Actions>
-        {/* TODO: the confirmed choice labels the trigger but is not yet
-            applied to the displayed manifestation. */}
         <Button theme="primary" size="lg" ariaLabel="Vælg udgave" onClick={handleConfirm}>
           Vælg udgave
         </Button>

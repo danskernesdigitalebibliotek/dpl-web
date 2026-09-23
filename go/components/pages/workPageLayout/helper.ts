@@ -381,3 +381,19 @@ export const getEditionsForMaterialType = (
         (a.edition?.publicationYear?.year ?? -Infinity)
     )
 }
+
+// Get the manifestation for a pinned edition. The pid is only honoured when it
+// belongs to the material type currently selected — a pid from a shared link
+// can be stale or point at another type, and then the caller falls back to the
+// default (newest) pick.
+export const getPinnedEditionManifestation = (
+  manifestations: ManifestationWorkPageFragment[],
+  materialTypeCode: string,
+  pid: string | null
+): ManifestationWorkPageFragment | undefined => {
+  if (!pid) return undefined
+
+  return getEditionsForMaterialType(manifestations, materialTypeCode).find(
+    manifestation => manifestation.pid === pid
+  )
+}

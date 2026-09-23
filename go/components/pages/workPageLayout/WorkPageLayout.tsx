@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from "react"
 
 import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
 import WorkPageLoading from "@/components/pages/workPageLayout/WorkPageLoading"
+import { parseEditionChoice } from "@/components/shared/editionsSelectModal/EditionsSelectModal"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
 import {
@@ -18,6 +19,7 @@ import {
   filterManifestationsByMaterialType,
   filterMaterialTypes,
   getEbookManifestationOrFallbackManifestation,
+  getPinnedEditionManifestation,
 } from "./helper"
 
 function WorkPageLayout({ workId }: { workId: string }) {
@@ -65,15 +67,24 @@ function WorkPageLayout({ workId }: { workId: string }) {
     }
 
     // Filter out manifestations that don't match the search params material type
-    const selectedManifestation = manifestations.find(manifestation => {
+    const defaultManifestation = manifestations.find(manifestation => {
       return !!manifestation?.materialTypes.find(
         materialType => materialType.materialTypeSpecific.code === searchParamsMaterialType
       )
     }) as ManifestationWorkPageFragment
 
-    setSelectedManifestation(selectedManifestation)
+    // The edition choice is serialized in the url query params, so the correct
+    // edition is shown for the selected manifestation.
+    const editionChoice = parseEditionChoice(searchParams.get("edition"))
+    const pinnedManifestation = getPinnedEditionManifestation(
+      (allManifestations ?? []) as ManifestationWorkPageFragment[],
+      searchParamsMaterialType ?? "",
+      typeof editionChoice === "object" ? editionChoice.pid : null
+    )
+
+    setSelectedManifestation(pinnedManifestation ?? defaultManifestation)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, manifestations])
+  }, [searchParams, manifestations, allManifestations])
 
   if (isLoading && !data) {
     return <WorkPageLoading />

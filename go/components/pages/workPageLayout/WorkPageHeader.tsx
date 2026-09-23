@@ -1,10 +1,9 @@
 "use client"
 import { motion } from "framer-motion"
-import { useRouter } from "next/navigation"
-import React, { useEffect, useMemo, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import React from "react"
 
 import {
-  getEditionsForMaterialType,
   getManifestationLanguageCode,
   slideSelectOptionsFromMaterialTypes,
   sortManifestationsBySortPriority,
@@ -16,6 +15,8 @@ import {
   DEFAULT_EDITION_CHOICE,
   type TEditionChoice,
   getEditionChoiceLabel,
+  parseEditionChoice,
+  serializeEditionChoice,
 } from "@/components/shared/editionsSelectModal/EditionsSelectModal"
 import MaterialTypeSelect, {
   MaterialTypeSelectOption,
@@ -24,8 +25,8 @@ import useSession from "@/hooks/useSession"
 import {
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
-  useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
+import { hasCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
@@ -43,7 +44,7 @@ type WorkPageHeaderProps = {
 
 const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
-  const [editionChoice, setEditionChoice] = useState<TEditionChoice>(DEFAULT_EDITION_CHOICE)
+  const searchParams = useSearchParams()
   const selectedManifestationIsbns = selectedManifestation
     ? getIsbnsFromManifestation(selectedManifestation)
     : []
@@ -75,6 +76,8 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const covers = selectedManifestation.cover
 
   const onOptionSelect = (optionSelected: MaterialTypeSelectOption) => {
+    // when a new material type is selected: resolveUrl builds a new URL,
+    // which drops any pinned edition from the previously selected type
     const url = resolveUrl({
       routeParams: { work: "work", wid: work.workId },
       queryParams: { type: optionSelected.code },
@@ -96,36 +99,37 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const { session } = useSession()
   const isLoggedIn = session?.isLoggedIn || false
 
-  // Same cached query EditionsSelectModal reads, so the trigger button can label the
-  // pinned edition without the picker being open.
-  const { data: materialData } = useGetMaterialQuery(
-    { wid: work.workId },
-    { enabled: !!work.workId }
-  )
-  const editions = useMemo(
-    () =>
-      getEditionsForMaterialType(
-        (materialData?.work?.manifestations?.all ?? []) as ManifestationWorkPageFragment[],
-        selectedManifestationMaterialTypeCode
-      ),
-    [materialData, selectedManifestationMaterialTypeCode]
-  )
+  // The choice lives in the url, so the button label follows the chosen manifestation
+  const urlEditionChoice = parseEditionChoice(searchParams.get("edition"))
 
-  //Reset the edition choice to the default when the selected manifestation material type changes
-  useEffect(() => {
-    setEditionChoice(DEFAULT_EDITION_CHOICE)
-  }, [selectedManifestationMaterialTypeCode])
+  // Fallback to the default edition choice if the url edition choice is for a different manifestation than the selected one.
+  const editionChoice =
+    typeof urlEditionChoice === "object" && urlEditionChoice.pid !== selectedManifestation.pid
+      ? DEFAULT_EDITION_CHOICE
+      : urlEditionChoice
 
-  const editionChoiceLabel = getEditionChoiceLabel(editionChoice, editions)
+  const editionChoiceLabel = getEditionChoiceLabel(editionChoice, selectedManifestation)
 
-  // The modal is rendered by the DynamicModal host, so the current choice is
-  // handed over as the initial selection and comes back on confirm.
+  // When opening the modal, the edition choice is pinned to the selected manifestation, so
+  // the modal can show the correct edition for the selected manifestation.
+  // on confirm, the edition choice is serialized and added to the url query params, so the correct edition is shown for the selected manifestation.
   const openEditionsSelect = () =>
     openModal("EditionsSelectModal", {
       wid: work.workId,
       materialTypeCode: selectedManifestationMaterialTypeCode,
       choice: editionChoice,
-      onChoiceConfirm: setEditionChoice,
+      onChoiceConfirm: (choice: TEditionChoice) => {
+        const editionParam = serializeEditionChoice(choice)
+        const url = resolveUrl({
+          routeParams: { work: "work", wid: work.workId },
+          queryParams: {
+            type: selectedManifestationMaterialTypeCode,
+            // "newest" is the default pick, so it needs no param of its own.
+            ...(editionParam ? { edition: editionParam } : {}),
+          },
+        })
+        router.push(url, { scroll: false })
+      },
     })
 
   return (
