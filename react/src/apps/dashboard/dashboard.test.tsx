@@ -1,4 +1,7 @@
-import { givenUserHasPhysicalLoan } from "../../../cypress/intercepts/fbs/fbs";
+import {
+  givenUserHasPhysicalLoan,
+  givenUserHasPhysicalReservation
+} from "../../../cypress/intercepts/fbs/fbs";
 import { givenUserHasLoanedEbook } from "../../../cypress/intercepts/publizon/publizon";
 import { interceptPublizonCalls } from "../../../cypress/intercepts/publizon/interceptPublizonCalls";
 
@@ -21,10 +24,17 @@ const recommendedWorks = [
   }
 ];
 
+// The work the recommendations were based on, returned alongside them.
+const sourceWork = { titles: { full: ["Ronja Røverdatter"] } };
+
+const recommendationsResponse = {
+  data: { recommend: { result: recommendedWorks }, work: sourceWork }
+};
+
 const interceptRecommendations = () => {
   cy.interceptGraphql({
     operationName: "getDashboardRecommendations",
-    body: { data: { recommend: { result: recommendedWorks } } }
+    body: recommendationsResponse
   });
 };
 
@@ -1394,7 +1404,7 @@ describe("Dashboard", () => {
 
     cy.getBySel("material-slider-heading").should(
       "have.text",
-      "Inspiration for you"
+      "Because you borrowed Ronja Røverdatter…"
     );
     cy.getBySel("recommended-description")
       .should("have.length", 2)
@@ -1608,7 +1618,7 @@ describe("dashboard recommendations", () => {
 
     cy.intercept("POST", "**/graphql?getDashboardRecommendations", {
       statusCode: 200,
-      body: { data: { recommend: { result: recommendedWorks } } }
+      body: recommendationsResponse
     }).as("recommend");
   });
 
@@ -1621,7 +1631,25 @@ describe("dashboard recommendations", () => {
       .its("request.body.variables")
       .should("deep.include", { faust: "28847238" })
       .and("not.have.property", "id");
+    cy.getBySel("material-slider-heading").should(
+      "have.text",
+      "Because you borrowed Ronja Røverdatter…"
+    );
     cy.getBySel("recommended-description").should("have.length", 2);
+  });
+
+  it("phrases the heading after a reservation", () => {
+    // FBS: one physical reservation.
+    givenUserHasPhysicalReservation({ recordId: "28847238" });
+    visitDashboard();
+
+    cy.wait("@recommend")
+      .its("request.body.variables")
+      .should("deep.include", { faust: "28847238" });
+    cy.getBySel("material-slider-heading").should(
+      "have.text",
+      "Because you reserved Ronja Røverdatter…"
+    );
   });
 
   it("resolves a digital loan's ISBN to a work id before asking the recommender", () => {
@@ -1654,7 +1682,26 @@ describe("dashboard recommendations", () => {
       .should("deep.include", { id: "work-of:870970-basis:22629344" })
       .and("not.have.property", "faust");
     cy.get("@isbnLookup.all").should("have.length", 0);
+    cy.getBySel("material-slider-heading").should(
+      "have.text",
+      "Because you have Ronja Røverdatter on your favorites list"
+    );
     cy.getBySel("recommended-description").should("have.length", 2);
+  });
+
+  it("falls back to the generic heading when the source work has no title", () => {
+    cy.intercept("POST", "**/graphql?getDashboardRecommendations", {
+      statusCode: 200,
+      body: { data: { recommend: { result: recommendedWorks }, work: null } }
+    }).as("recommend");
+    givenUserHasPhysicalLoan();
+    visitDashboard();
+
+    cy.wait("@recommend");
+    cy.getBySel("material-slider-heading").should(
+      "have.text",
+      "Inspiration for you"
+    );
   });
 });
 

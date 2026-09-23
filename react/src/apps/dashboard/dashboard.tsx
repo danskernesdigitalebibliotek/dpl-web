@@ -14,6 +14,7 @@ import { LoanType } from "../../core/utils/types/loan-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { hasValue } from "../../core/utils/helpers/has-value";
 import {
+  RecommendationSource,
   listItemToRecommendationSource,
   pickRecommendationSource,
   workIdToRecommendationSource
@@ -76,7 +77,6 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   reservations,
   favorites
 }) => {
-  const t = useText();
   const u = useUrls();
   const materialUrl = u("materialUrl");
   const addToListRequest = useAddFavorite({ app: "dashboard" });
@@ -108,7 +108,9 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
     });
   });
 
-  const { works, isLoading } = useRecommendations(source);
+  const { works, sourceTitle, isLoading } = useRecommendations(source);
+
+  const heading = useRecommendationsHeading(source, sourceTitle);
 
   if (isLoading || works.length === 0) {
     return null;
@@ -117,7 +119,7 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   return (
     <section className="dashboard-page-recommendations">
       <MaterialSlider
-        heading={t("dashboardRecommendationsHeadingText")}
+        heading={heading}
         items={works.map((work) => ({
           id: work.workId,
           title: work.title,
@@ -129,6 +131,34 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
       />
     </section>
   );
+};
+
+/**
+ * The heading names the material the recommendations are based on, phrased
+ * after where it came from. Without a source title the generic heading is used.
+ */
+const useRecommendationsHeading = (
+  source: RecommendationSource | null,
+  sourceTitle: string | null
+): string => {
+  const t = useText();
+
+  if (!source || !sourceTitle) {
+    return t("dashboardRecommendationsHeadingText");
+  }
+
+  const placeholders = { "@title": sourceTitle };
+
+  switch (source.origin) {
+    case "loan":
+      return t("dashboardRecommendationsLoanHeadingText", { placeholders });
+    case "reservation":
+      return t("dashboardRecommendationsReservationHeadingText", {
+        placeholders
+      });
+    case "favorite":
+      return t("dashboardRecommendationsFavoriteHeadingText", { placeholders });
+  }
 };
 
 export default DashBoard;
