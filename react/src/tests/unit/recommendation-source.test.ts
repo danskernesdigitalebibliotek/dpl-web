@@ -5,11 +5,18 @@ import {
   pickRecommendationSource
 } from "../../apps/dashboard/recommendationSource";
 
-const faustSource = (faust: string): RecommendationSource => ({
+const loanSource = (faust: string): RecommendationSource => ({
+  origin: "loan",
   type: "faust",
   faust
 });
-const workIdSource: RecommendationSource = {
+const reservationSource = (faust: string): RecommendationSource => ({
+  origin: "reservation",
+  type: "faust",
+  faust
+});
+const favoriteSource: RecommendationSource = {
+  origin: "favorite",
   type: "work-id",
   workId: "work-of:870970-basis:12345678"
 };
@@ -18,52 +25,57 @@ describe("listItemToRecommendationSource", () => {
   it("uses the ISBN of a digital item rather than its faust", () => {
     expect(
       listItemToRecommendationSource({
-        identifier: "9788700000000",
-        faust: "11111111"
+        item: { identifier: "9788700000000", faust: "11111111" },
+        origin: "loan"
       })
-    ).toEqual({ type: "isbn", isbn: "9788700000000" });
+    ).toEqual({ origin: "loan", type: "isbn", isbn: "9788700000000" });
   });
 
   it("uses the faust of a physical item", () => {
-    expect(listItemToRecommendationSource({ faust: "11111111" })).toEqual(
-      faustSource("11111111")
-    );
+    expect(
+      listItemToRecommendationSource({
+        item: { faust: "11111111" },
+        origin: "reservation"
+      })
+    ).toEqual(reservationSource("11111111"));
   });
 
   it("returns null for an item without a usable identifier", () => {
-    expect(listItemToRecommendationSource({})).toBeNull();
+    expect(
+      listItemToRecommendationSource({ item: {}, origin: "loan" })
+    ).toBeNull();
   });
 });
 
 describe("pickRecommendationSource", () => {
   it("prefers a loan over reservations and favorites", () => {
     const source = pickRecommendationSource({
-      loans: [faustSource("11111111")],
-      reservations: [faustSource("22222222")],
-      favorites: [workIdSource]
+      loans: [loanSource("11111111")],
+      reservations: [reservationSource("22222222")],
+      favorites: [favoriteSource]
     });
 
-    expect(source).toEqual(faustSource("11111111"));
+    expect(source).toEqual(loanSource("11111111"));
   });
 
   it("falls back to a reservation when there are no loans", () => {
     const source = pickRecommendationSource({
       loans: [],
-      reservations: [faustSource("22222222")],
-      favorites: [workIdSource]
+      reservations: [reservationSource("22222222")],
+      favorites: [favoriteSource]
     });
 
-    expect(source).toEqual(faustSource("22222222"));
+    expect(source).toEqual(reservationSource("22222222"));
   });
 
   it("falls back to a favorite when there are no loans or reservations", () => {
     const source = pickRecommendationSource({
       loans: [],
       reservations: [],
-      favorites: [workIdSource]
+      favorites: [favoriteSource]
     });
 
-    expect(source).toEqual(workIdSource);
+    expect(source).toEqual(favoriteSource);
   });
 
   it("returns null when every list is empty", () => {

@@ -83,14 +83,23 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
 
   const [source] = useState(() => {
     const loanSources = loans
-      .map(listItemToRecommendationSource)
+      .map((loan) =>
+        listItemToRecommendationSource({ item: loan, origin: "loan" })
+      )
       .filter(hasValue);
 
     const reservationSources = reservations
-      .map(listItemToRecommendationSource)
+      .map((reservation) =>
+        listItemToRecommendationSource({
+          item: reservation,
+          origin: "reservation"
+        })
+      )
       .filter(hasValue);
 
-    const favoriteSources = favorites.map(workIdToRecommendationSource);
+    const favoriteSources = favorites.map((workId) =>
+      workIdToRecommendationSource({ workId, origin: "favorite" })
+    );
 
     return pickRecommendationSource({
       loans: loanSources,
