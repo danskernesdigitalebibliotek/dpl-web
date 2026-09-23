@@ -31,11 +31,11 @@ type ManifestationAccessUrl = Extract<
  *   Service and delivered by email.
  * - `retriever-article`: an article read in the Retriever archive.
  */
-export type OnlineButtonKind =
-  | { kind: "internal" }
-  | { kind: "external"; access: ManifestationAccessUrl }
-  | { kind: "digital-article" }
-  | { kind: "retriever-article" };
+export type OnlineButtonType =
+  | { type: "internal" }
+  | { type: "external"; access: ManifestationAccessUrl }
+  | { type: "digital-article" }
+  | { type: "retriever-article" };
 
 const isActiveAccessUrl = (
   access: ManifestationAccess
@@ -72,9 +72,9 @@ const hasOnlineAccess = (manifestations: Manifestation[]) =>
  * whether to render online buttons or a fallback) and MaterialButtonsOnline
  * (to know which button to render), so the two can never disagree.
  */
-export const resolveOnlineButtonKind = (
+export const resolveOnlineButtonType = (
   manifestations: Manifestation[]
-): OnlineButtonKind | null => {
+): OnlineButtonType | null => {
   if (!hasOnlineAccess(manifestations)) {
     return null;
   }
@@ -84,25 +84,25 @@ export const resolveOnlineButtonKind = (
   );
 
   if (readerPlayerType === "player" || readerPlayerType === "reader") {
-    return { kind: "internal" };
+    return { type: "internal" };
   }
 
   // External access, e.g. Filmstriben or eReolen Global.
   if (hasCorrectAccess("AccessUrl", manifestations)) {
     const access = findActiveAccessUrl(manifestations);
 
-    return access ? { kind: "external", access } : null;
+    return access ? { type: "external", access } : null;
   }
 
   if (
     hasCorrectAccess("DigitalArticleService", manifestations) &&
     hasCorrectMaterialType(ManifestationMaterialType.article, manifestations)
   ) {
-    return { kind: "digital-article" };
+    return { type: "digital-article" };
   }
 
   if (hasCorrectAccess("RetrieverService", manifestations)) {
-    return { kind: "retriever-article" };
+    return { type: "retriever-article" };
   }
 
   return null;

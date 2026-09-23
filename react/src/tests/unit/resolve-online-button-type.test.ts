@@ -4,7 +4,7 @@ import {
   LinkStatusEnum
 } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
-import { resolveOnlineButtonKind } from "../../components/material/material-buttons/online/resolveOnlineButtonKind";
+import { resolveOnlineButtonType } from "../../components/material/material-buttons/online/resolveOnlineButtonType";
 
 const manifestationWith = (
   access: Manifestation["access"],
@@ -30,20 +30,20 @@ const accessUrl = (status: LinkStatusEnum, origin = "Filmstriben") =>
     loginRequired: false
   }) as const;
 
-describe("resolveOnlineButtonKind", () => {
+describe("resolveOnlineButtonType", () => {
   it("resolves an external button for an active access url", () => {
-    const result = resolveOnlineButtonKind([
+    const result = resolveOnlineButtonType([
       manifestationWith([accessUrl(LinkStatusEnum.Ok)])
     ]);
 
     expect(result).toMatchObject({
-      kind: "external",
+      type: "external",
       access: { origin: "Filmstriben" }
     });
   });
 
   it("prefers DBC Webarkiv over other active access urls", () => {
-    const result = resolveOnlineButtonKind([
+    const result = resolveOnlineButtonType([
       manifestationWith([
         accessUrl(LinkStatusEnum.Ok),
         accessUrl(LinkStatusEnum.Ok, "DBC Webarkiv")
@@ -51,13 +51,13 @@ describe("resolveOnlineButtonKind", () => {
     ]);
 
     expect(result).toMatchObject({
-      kind: "external",
+      type: "external",
       access: { origin: "DBC Webarkiv" }
     });
   });
 
   it("resolves to nothing when every access url is broken", () => {
-    const result = resolveOnlineButtonKind([
+    const result = resolveOnlineButtonType([
       manifestationWith([accessUrl(LinkStatusEnum.Broken)])
     ]);
 
@@ -65,22 +65,22 @@ describe("resolveOnlineButtonKind", () => {
   });
 
   it("resolves a digital article button for article manifestations", () => {
-    const result = resolveOnlineButtonKind([
+    const result = resolveOnlineButtonType([
       manifestationWith(
         [{ __typename: "DigitalArticleService", issn: "1234-5678" }],
         "artikel"
       )
     ]);
 
-    expect(result).toEqual({ kind: "digital-article" });
+    expect(result).toEqual({ type: "digital-article" });
   });
 
   it("resolves a retriever article button", () => {
-    const result = resolveOnlineButtonKind([
+    const result = resolveOnlineButtonType([
       manifestationWith([{ __typename: "RetrieverService", id: "1" }])
     ]);
 
-    expect(result).toEqual({ kind: "retriever-article" });
+    expect(result).toEqual({ type: "retriever-article" });
   });
 
   it("resolves to nothing for a physical material", () => {
@@ -89,11 +89,11 @@ describe("resolveOnlineButtonKind", () => {
       accessTypes: [{ code: AccessTypeCodeEnum.Physical }]
     } as Manifestation;
 
-    expect(resolveOnlineButtonKind([physicalManifestation])).toBeNull();
+    expect(resolveOnlineButtonType([physicalManifestation])).toBeNull();
   });
 
   it("resolves to nothing for an access kind without a button", () => {
-    const result = resolveOnlineButtonKind([
+    const result = resolveOnlineButtonType([
       manifestationWith([
         { __typename: "InterLibraryLoan", loanIsPossible: true }
       ])

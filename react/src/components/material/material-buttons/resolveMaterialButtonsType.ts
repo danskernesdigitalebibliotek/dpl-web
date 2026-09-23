@@ -2,12 +2,12 @@ import { AccessTypeCodeEnum } from "../../../core/dbc-gateway/generated/graphql"
 import { Manifestation } from "../../../core/utils/types/entities";
 import { hasCorrectAccessType, isArticle } from "./helper";
 import {
-  OnlineButtonKind,
-  resolveOnlineButtonKind
-} from "./online/resolveOnlineButtonKind";
+  OnlineButtonType,
+  resolveOnlineButtonType
+} from "./online/resolveOnlineButtonType";
 
 export type MaterialButtonsType =
-  { type: "physical" } | { type: "online"; online: OnlineButtonKind };
+  { type: "physical" } | { type: "online"; online: OnlineButtonType };
 
 /**
  * Decides which family of material buttons, if any, the given manifestations
@@ -28,7 +28,7 @@ export const resolveMaterialButtonsType = (
     return { type: "physical" };
   }
 
-  const online = resolveOnlineButtonKind(manifestations);
+  const online = resolveOnlineButtonType(manifestations);
 
   return online ? { type: "online", online } : null;
 };

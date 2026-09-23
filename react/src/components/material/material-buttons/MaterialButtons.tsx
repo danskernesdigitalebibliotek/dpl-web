@@ -77,7 +77,7 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
     case "online":
       return (
         <MaterialButtonsOnline
-          buttonKind={type.online}
+          type={type.online}
           manifestations={manifestations}
           size={size}
           workId={workId}

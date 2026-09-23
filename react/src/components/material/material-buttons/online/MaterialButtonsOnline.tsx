@@ -14,10 +14,10 @@ import MaterialButtonsOnlineInternal from "./MaterialButtonsOnlineInternal";
 import { isBlocked } from "../../../../core/utils/helpers/user";
 import { usePatronData } from "../../../../core/utils/helpers/usePatronData";
 import MaterialButtonUserBlocked from "../generic/MaterialButtonUserBlocked";
-import { OnlineButtonKind } from "./resolveOnlineButtonKind";
+import { OnlineButtonType } from "./resolveOnlineButtonType";
 
 export interface MaterialButtonsOnlineProps {
-  buttonKind: OnlineButtonKind;
+  type: OnlineButtonType;
   manifestations: Manifestation[];
   size?: ButtonSize;
   workId: WorkId;
@@ -27,7 +27,7 @@ export interface MaterialButtonsOnlineProps {
 }
 
 const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
-  buttonKind,
+  type,
   manifestations,
   size,
   workId,
@@ -48,7 +48,7 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
     });
   };
 
-  switch (buttonKind.kind) {
+  switch (type.type) {
     case "internal":
       return (
         <MaterialButtonsOnlineInternal
@@ -62,7 +62,7 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
       );
 
     case "external": {
-      const { origin, url: externalUrl } = buttonKind.access;
+      const { origin, url: externalUrl } = type.access;
 
       //  We have experienced that externalUrl is not always valid.
       if (!isUrlValid(externalUrl)) {

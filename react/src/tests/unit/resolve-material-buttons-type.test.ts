@@ -49,7 +49,7 @@ describe("resolveMaterialButtonsType", () => {
 
     expect(result).toMatchObject({
       type: "online",
-      online: { kind: "external" }
+      online: { type: "external" }
     });
   });
 
@@ -75,7 +75,7 @@ describe("resolveMaterialButtonsType", () => {
 
     expect(result).toEqual({
       type: "online",
-      online: { kind: "digital-article" }
+      online: { type: "digital-article" }
     });
   });
 
