@@ -1,5 +1,6 @@
 import {
   reservationResponseFactory,
+  reservationDetailsFactory,
   fbsLoanFactory
 } from "../../factories/fbs/fbs.factory";
 import { availabilityFactory } from "../../factories/fbs/availability.factory";
@@ -130,4 +131,20 @@ export const givenUserHasPhysicalLoan = (
     statusCode: 200,
     body: [fbsLoanFactory.build(options)]
   }).as("fbsUserLoansPhysical");
+};
+
+/**
+ * Given: User has a single physical reservation from FBS.
+ */
+export const givenUserHasPhysicalReservation = (
+  options: Parameters<typeof reservationDetailsFactory.build>[0] = {}
+) => {
+  cy.intercept(
+    "GET",
+    "**/external/v1/agencyid/patrons/patronid/reservations/v2**",
+    {
+      statusCode: 200,
+      body: [reservationDetailsFactory.build(options)]
+    }
+  ).as("fbsUserReservationsPhysical");
 };
