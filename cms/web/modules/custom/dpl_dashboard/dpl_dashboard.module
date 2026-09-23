@@ -6,18 +6,6 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
-
-/**
- * Implements hook_dpl_react_apps_data().
- */
-function dpl_dashboard_dpl_react_apps_data(array &$data): void {
-  $data['urls'] += [
-    'dashboard' => dpl_react_apps_ensure_url_is_string(
-      Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
-    ),
-  ];
-}
 
 /**
  * Implements hook_form_FORM_ID_alter().
