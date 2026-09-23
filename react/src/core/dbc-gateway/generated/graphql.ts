@@ -2487,6 +2487,10 @@ export type GetDashboardRecommendationsQuery = {
       };
     }>;
   };
+  work?: {
+    __typename?: "Work";
+    titles: { __typename?: "WorkTitles"; full: Array<string> };
+  } | null;
 };
 
 export type GetSmallWorkQueryVariables = Exact<{
@@ -9948,6 +9952,11 @@ export const GetDashboardRecommendationsDocument = `
           }
         }
       }
+    }
+  }
+  work(faust: $faust, id: $id) {
+    titles {
+      full
     }
   }
 }

@@ -21,4 +21,9 @@ query getDashboardRecommendations($faust: String, $id: String, $limit: Int!) {
       }
     }
   }
+  work(faust: $faust, id: $id) {
+    titles {
+      full
+    }
+  }
 }

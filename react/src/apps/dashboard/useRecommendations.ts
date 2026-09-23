@@ -9,15 +9,18 @@ import { RecommendedWork } from "./recommendations.types";
 
 export type UseRecommendationsResult = {
   works: RecommendedWork[];
+  /** Title of the material the recommendations are based on. */
+  sourceTitle: string | null;
   isLoading: boolean;
 };
 
 const FETCH_LIMIT = 16;
 
 /**
- * Fetches recommendations for a source. The recommender only understands
- * fausts and work ids, so an ISBN source first goes through a lookup that
- * resolves it to a work id. A null source fetches nothing.
+ * Fetches recommendations for a source along with the source's own title. The
+ * recommender only understands fausts and work ids, so an ISBN source first
+ * goes through a lookup that resolves it to a work id. A null source fetches
+ * nothing.
  */
 const useRecommendations = (
   source: RecommendationSource | null
@@ -67,12 +70,16 @@ const useRecommendations = (
       coverSrc: work.manifestations.bestRepresentation.cover.large?.url ?? null
     })) ?? [];
 
+  const sourceTitles = data?.work?.titles.full ?? [];
+  const sourceTitle = sourceTitles.length > 0 ? sourceTitles.join(", ") : null;
+
   // A disabled query reports isLoading as false, so during the ISBN lookup
   // only the lookup's flag is set. Once resolved the recommend query takes
   // over. An ISBN that resolves to nothing ends up neither loading nor with
   // data, which reads as "no recommendations" to the caller.
   return {
     works,
+    sourceTitle,
     isLoading: isLoadingIsbnLookup || isLoadingRecommendations
   };
 };
