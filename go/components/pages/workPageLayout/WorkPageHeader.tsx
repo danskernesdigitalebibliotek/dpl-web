@@ -179,7 +179,13 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           <h1 lang={languageCode} className="text-typo-heading-3 break-words hyphens-auto lg:mt-0">
             {selectedManifestation?.titles?.full || ""}
           </h1>
-          <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
+          {/* A work without named creators falls back to the edition's
+              contributors — an anthology, say, credited to its editor. */}
+          <WorkAuthors
+            creators={
+              hasCreators(work.creators) ? work.creators : selectedManifestation.contributors
+            }
+          />
         </div>
         <div className="col-span-4 mt-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
           <div className="mb-3 flex w-full lg:items-end">
