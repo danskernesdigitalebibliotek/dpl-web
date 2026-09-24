@@ -2451,9 +2451,38 @@ export type ComplexSuggestQuery = {
   };
 };
 
-export type GetDashboardRecommendationsQueryVariables = Exact<{
+export type GetDashboardRecommendationSourceQueryVariables = Exact<{
   faust?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
+}>;
+
+export type GetDashboardRecommendationSourceQuery = {
+  __typename?: "Query";
+  work?: {
+    __typename?: "Work";
+    workId: string;
+    titles: { __typename?: "WorkTitles"; full: Array<string> };
+  } | null;
+};
+
+export type GetDashboardRecommendationSourceByIsbnQueryVariables = Exact<{
+  cql: Scalars["String"]["input"];
+}>;
+
+export type GetDashboardRecommendationSourceByIsbnQuery = {
+  __typename?: "Query";
+  complexSearch: {
+    __typename?: "ComplexSearchResponse";
+    works: Array<{
+      __typename?: "Work";
+      workId: string;
+      titles: { __typename?: "WorkTitles"; full: Array<string> };
+    }>;
+  };
+};
+
+export type GetDashboardRecommendationsQueryVariables = Exact<{
+  id: Scalars["String"]["input"];
   limit: Scalars["Int"]["input"];
 }>;
 
@@ -2487,10 +2516,6 @@ export type GetDashboardRecommendationsQuery = {
       };
     }>;
   };
-  work?: {
-    __typename?: "Work";
-    titles: { __typename?: "WorkTitles"; full: Array<string> };
-  } | null;
 };
 
 export type GetSmallWorkQueryVariables = Exact<{
@@ -9930,9 +9955,88 @@ export const useComplexSuggestQuery = <
   });
 };
 
+export const GetDashboardRecommendationSourceDocument = `
+    query getDashboardRecommendationSource($faust: String, $id: String) {
+  work(faust: $faust, id: $id) {
+    workId
+    titles {
+      full
+    }
+  }
+}
+    `;
+
+export const useGetDashboardRecommendationSourceQuery = <
+  TData = GetDashboardRecommendationSourceQuery,
+  TError = unknown
+>(
+  variables?: GetDashboardRecommendationSourceQueryVariables,
+  options?: Omit<
+    UseQueryOptions<GetDashboardRecommendationSourceQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      GetDashboardRecommendationSourceQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
+) => {
+  return useQuery<GetDashboardRecommendationSourceQuery, TError, TData>({
+    queryKey:
+      variables === undefined
+        ? ["getDashboardRecommendationSource"]
+        : ["getDashboardRecommendationSource", variables],
+    queryFn: fetcher<
+      GetDashboardRecommendationSourceQuery,
+      GetDashboardRecommendationSourceQueryVariables
+    >(GetDashboardRecommendationSourceDocument, variables),
+    ...options
+  });
+};
+
+export const GetDashboardRecommendationSourceByIsbnDocument = `
+    query getDashboardRecommendationSourceByIsbn($cql: String!) {
+  complexSearch(cql: $cql, filters: {}) {
+    works(offset: 0, limit: 1) {
+      workId
+      titles {
+        full
+      }
+    }
+  }
+}
+    `;
+
+export const useGetDashboardRecommendationSourceByIsbnQuery = <
+  TData = GetDashboardRecommendationSourceByIsbnQuery,
+  TError = unknown
+>(
+  variables: GetDashboardRecommendationSourceByIsbnQueryVariables,
+  options?: Omit<
+    UseQueryOptions<GetDashboardRecommendationSourceByIsbnQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      GetDashboardRecommendationSourceByIsbnQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
+) => {
+  return useQuery<GetDashboardRecommendationSourceByIsbnQuery, TError, TData>({
+    queryKey: ["getDashboardRecommendationSourceByIsbn", variables],
+    queryFn: fetcher<
+      GetDashboardRecommendationSourceByIsbnQuery,
+      GetDashboardRecommendationSourceByIsbnQueryVariables
+    >(GetDashboardRecommendationSourceByIsbnDocument, variables),
+    ...options
+  });
+};
+
 export const GetDashboardRecommendationsDocument = `
-    query getDashboardRecommendations($faust: String, $id: String, $limit: Int!) {
-  recommend(faust: $faust, id: $id, limit: $limit) {
+    query getDashboardRecommendations($id: String!, $limit: Int!) {
+  recommend(id: $id, limit: $limit) {
     result {
       work {
         workId
@@ -9952,11 +10056,6 @@ export const GetDashboardRecommendationsDocument = `
           }
         }
       }
-    }
-  }
-  work(faust: $faust, id: $id) {
-    titles {
-      full
     }
   }
 }
@@ -10816,6 +10915,10 @@ export const operationNames = {
   Query: {
     complexFacetSearch: "complexFacetSearch" as const,
     complexSuggest: "complexSuggest" as const,
+    getDashboardRecommendationSource:
+      "getDashboardRecommendationSource" as const,
+    getDashboardRecommendationSourceByIsbn:
+      "getDashboardRecommendationSourceByIsbn" as const,
     getDashboardRecommendations: "getDashboardRecommendations" as const,
     getSmallWork: "getSmallWork" as const,
     getManifestationViaMaterialByFaust:

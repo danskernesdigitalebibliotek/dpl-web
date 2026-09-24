@@ -19,6 +19,7 @@ import {
   workIdToRecommendationSeed
 } from "./recommendationSeed";
 import useRecommendations from "./useRecommendations";
+import { getRecommendationsHeading } from "./recommendationsHeading";
 
 interface DashboardProps {
   pageSize: number;
@@ -108,17 +109,17 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
     });
   });
 
-  const { works, isLoading } = useRecommendations(seed);
+  const { result, isLoading } = useRecommendations(seed);
 
-  if (isLoading || works.length === 0) {
+  if (isLoading || !result || result.recommendations.length === 0) {
     return null;
   }
 
   return (
     <section className="dashboard-page-recommendations">
       <MaterialSlider
-        heading={t("dashboardRecommendationsHeadingText")}
-        items={works.map((work) => ({
+        heading={getRecommendationsHeading(result.source, t)}
+        items={result.recommendations.map((work) => ({
           id: work.workId,
           title: work.title,
           subtitle: work.author,
