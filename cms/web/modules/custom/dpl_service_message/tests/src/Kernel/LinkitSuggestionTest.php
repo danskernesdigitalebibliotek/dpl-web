@@ -22,8 +22,8 @@ use Drupal\Tests\user\Traits\UserCreationTrait;
  * could link to one, which is what KB-59 reported.
  *
  * The exclusion is a condition added to Linkit's tagged suggestion query
- * (DplServiceMessageHooks::excludeFromLinkitSuggestions). This test drives
- * the real matcher rather than asserting on the query, so that it also fails
+ * (EntityHooks::excludeFromLinkitSuggestions). This test drives the real
+ * matcher rather than asserting on the query, so that it also fails
  * if Linkit ever renames the tag the hook is bound to - the failure mode a
  * hand-built query could not catch.
  */

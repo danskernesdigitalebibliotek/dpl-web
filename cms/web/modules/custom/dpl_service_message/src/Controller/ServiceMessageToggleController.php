@@ -28,7 +28,7 @@ class ServiceMessageToggleController extends ControllerBase {
     $node->save();
 
     // Publishing a global message retires any other one - see
-    // DplServiceMessageHooks::retireOtherGlobalMessages().
+    // EntityHooks::retireOtherGlobalMessages().
     $this->messenger()->addStatus($publish
       ? $this->t('%label is now published.', ['%label' => $node->label()], ['context' => 'dpl_service_message'])
       : $this->t('%label is now unpublished.', ['%label' => $node->label()], ['context' => 'dpl_service_message'])
