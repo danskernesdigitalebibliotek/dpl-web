@@ -203,14 +203,14 @@
     --typo-body-sm-line-height: 18px;
     --typo-body-sm-letter-spacing: 0;
 
-    --typo-button-lg-size: 14px;
+    --typo-button-lg-size: 16px;
     --typo-button-lg-weight: 600;
-    --typo-button-lg-line-height: 14px;
+    --typo-button-lg-line-height: 16px;
     --typo-button-lg-letter-spacing: 0;
 
-    --typo-button-sm-size: 10px;
+    --typo-button-sm-size: 14px;
     --typo-button-sm-weight: 600;
-    --typo-button-sm-line-height: 10px;
+    --typo-button-sm-line-height: 14px;
     --typo-button-sm-letter-spacing: 0;
 
     --typo-link-size: 12px;
