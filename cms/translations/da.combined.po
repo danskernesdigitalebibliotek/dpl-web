@@ -412,16 +412,6 @@ msgstr "I samme serie"
 
 #: 
 msgctxt "Work Page"
-msgid "Close infomedia modal"
-msgstr "Luk pop-up"
-
-#: 
-msgctxt "Work Page"
-msgid "Infomedia modal screen reader description"
-msgstr "Retriever pop-up beskrivelse til skærmlæser"
-
-#: 
-msgctxt "Work Page"
 msgid "ISBN"
 msgstr "ISBN"
 
@@ -26270,18 +26260,6 @@ msgid "Edited by BNR"
 msgstr "Redigeret af BNR"
 
 #: 
-msgctxt "views.view.importable_content:display:default:display_options:fields:changed_1:label"
-msgid "Updated"
-msgstr "Opdateret"
-
-#: 
-msgctxt "views.view.importable_content:display:default:display_options:fields:changed_1:alter:text"
-msgid "{{ changed_1 }}<br>\n"
-"<small>({{ changed }})</small>"
-msgstr "{{ changed_1 }}<br>\n"
-"<small>({{ changed }})</small>"
-
-#: 
 msgctxt "views.view.importable_content:display:default:display_options:fields:uuid:alter:text"
 msgid "{{ uuid__value }}"
 msgstr "{{ uuid__value }}"
@@ -27328,11 +27306,6 @@ msgid "Library assessment"
 msgstr "Bibliotekernes vurdering"
 
 #: 
-msgctxt "Work Page"
-msgid "All material in Infomedia is covered by copyright law and may not be copied without special permission."
-msgstr "Alt materiale i Retriever er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse."
-
-#: 
 msgctxt "Patron page"
 msgid "Card number"
 msgstr "Support-ID til eReolen"
@@ -27792,22 +27765,6 @@ msgstr "Den URL, som link-knappen i hjælpebåndet skal linke videre til. <br />
 "                                         Du kan tilføje en relativ url (fx /advanced-search). <br />\n"
 "                                         Du kan søge efter en intern url. <br />\n"
 "                                         Du kan tilføje en ekstern url (der starter med with \"http://\" or \"https://\"), fx https://bibliotek.dk."
-
-#: 
-msgctxt "Library Agency Configuration"
-msgid "URL til 0-hits søgninger"
-msgstr "URL til 0-hits søgninger"
-
-#: 
-msgctxt "Library Agency Configuration"
-msgid "URL to the page that should be shown when a search returns zero results. <br />\n"
-"                                         You can add a relative url (e.g. /no-results). <br />\n"
-"                                         You can search for an internal url. <br />\n"
-"                                         You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr "URL til den side, der bliver vist, når en søgning har 0 resultater. <br />\n"
-"                                         Du kan tilføje en relativ url (fx /din-sogning-har-0-resultater). <br />\n"
-"                                         Du kan søge efter en intern url. <br />\n"
-"                                         Du kan tilføje en ekstern url (der starter med with \"http://\" or \"https://\")."
 
 #: 
 msgctxt "Work Page"
@@ -29779,12 +29736,12 @@ msgstr "Arrangementslokation"
 #: 
 msgctxt "field.field.eventinstance.default.field_event_location:label"
 msgid "Location name"
-msgstr "Lokation"
+msgstr "Lokationsnavn"
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_location:label"
 msgid "Location name"
-msgstr "Lokation"
+msgstr "Lokationsnavn"
 
 #: 
 msgid "This content translation is being edited by the user %name and is therefore locked to prevent changes by other users. This lock has been active for @age."
@@ -30263,10 +30220,6 @@ msgid "Sublocation filter."
 msgstr ""
 
 #: 
-msgid "Retrieve current events"
-msgstr ""
-
-#: 
 msgctxt "Dpl Biblio"
 msgid "Basic settings"
 msgstr "Grundlæggende indstillinger"
@@ -30290,7 +30243,7 @@ msgstr ""
 #: 
 msgctxt "Dpl Biblio"
 msgid "Use the Biblio adapter for digital materials"
-msgstr ""
+msgstr "Brug Biblio adapteren til digitale materialer"
 
 #: 
 msgctxt "Dpl Biblio"
@@ -34565,141 +34518,6 @@ msgid "››"
 msgstr "››"
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
-msgid "- All -"
-msgstr "- Alle -"
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
-msgid "Asc"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
-msgid "Date"
-msgstr "Dato"
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_title"
-msgid "Default"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
-msgid "Desc"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
-msgid "Filter"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
-msgid "Icon"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
-msgid "Items per page"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
-msgid "Message"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
-msgid "No log messages available."
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:empty:area:content"
-msgid "No log messages available."
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
-msgid "Offset"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
-msgid "Operations"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:page:display_title"
-msgid "Page"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:description"
-msgid "Recent log messages"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:title"
-msgid "Recent log messages"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
-msgid "Reset"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
-msgid "Severity"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
-msgid "Severity"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:exposed_sorts_label"
-msgid "Sort by"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
-msgid "Type"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:filters:type:expose:label"
-msgid "Type"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
-msgid "User"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
-msgid "WID"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:label"
-msgid "Watchdog"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
-msgid "admin/reports/dblog/event/{{ wid }}"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
-msgid "{{ message }}"
-msgstr ""
-
-#: 
 msgid "Access the Prometheus metrics endpoint"
 msgstr ""
 
@@ -35194,5 +35012,244 @@ msgstr ""
 #: 
 msgctxt "Dpl Biblio"
 msgid "Temporary. The catalogue lists digital materials that are not yet provisioned in WeDoBooks, and the adapter answers \"Material not found\" for those. With this enabled such a material is shown as unavailable; without it the material page fails. Publizon is never asked either way."
+msgstr ""
+
+#: 
+msgid "Retrieve happening events"
+msgstr ""
+
+#: 
+msgctxt "Library Agency Configuration"
+msgid "Select the page that visitors are redirected to when a search returns zero results."
+msgstr ""
+
+#: 
+msgctxt "Library Agency Configuration"
+msgid "Side til 0-hits søgninger"
+msgstr ""
+
+#: 
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:settings:past_format"
+msgid "@interval ago"
+msgstr ""
+
+#: 
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:settings:future_format"
+msgid "@interval hence"
+msgstr ""
+
+#: 
+msgctxt "views.view.importable_content:display:default:display_options:sorts:field_publication_date_value:expose:label"
+msgid "Publication date"
+msgstr ""
+
+#: 
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:admin_label"
+msgid "Publication date (since)"
+msgstr ""
+
+#: 
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date:label"
+msgid "Published"
+msgstr ""
+
+#: 
+msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date:alter:text"
+msgid "{{ field_publication_date }}<br>\n"
+"<small>({{ field_publication_date_1 }})</small>"
+msgstr ""
+
+#: 
+msgctxt "Work Page"
+msgid "All material in Retriever is covered by copyright law and may not be copied without special permission."
+msgstr ""
+
+#: 
+msgctxt "Work Page"
+msgid "Close Retriever modal"
+msgstr ""
+
+#: 
+msgctxt "Work Page"
+msgid "Retriever modal screen reader description"
+msgstr ""
+
+#: 
+msgctxt "Dpl Biblio"
+msgid "Close Publizon reservations on the website"
+msgstr ""
+
+#: 
+msgid "Close Publizon reservations while the queue is migrated"
+msgstr ""
+
+#: 
+msgctxt "Global"
+msgid "Reservations of digital materials are closed while we are moving to a new service. Please try again later."
+msgstr ""
+
+#: 
+msgctxt "Dpl Biblio"
+msgid "Temporary. While Biblio migrates the reservation queue away from Publizon it has to stand still: with this enabled patrons can neither reserve a digital material through Publizon nor cancel a reservation they already have, and the website tells them why. Loans are unaffected."
+msgstr ""
+
+#: 
+msgctxt "Global"
+msgid "You cannot cancel this reservation while we are moving to a new service. Your place in the queue is kept."
+msgstr ""
+
+#: 
+msgctxt "Series Page"
+msgid "More by @author"
+msgstr ""
+
+#: 
+msgctxt "Global"
+msgid "Show next"
+msgstr ""
+
+#: 
+msgctxt "Global"
+msgid "Show previous"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
+msgid "- All -"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
+msgid "Date"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
+msgid "Filter"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
+msgid "Icon"
+msgstr ""
+
+#: 
+msgctxt "Dashboard"
+msgid "Inspiration for you"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
+msgid "Items per page"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
+msgid "Message"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
+msgid "No log messages available."
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:empty:area:content"
+msgid "No log messages available."
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
+msgid "Offset"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
+msgid "Operations"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:page:display_title"
+msgid "Page"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:description"
+msgid "Recent log messages"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:title"
+msgid "Recent log messages"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
+msgid "Severity"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
+msgid "Severity"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
+msgid "Type"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:filters:type:expose:label"
+msgid "Type"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
+msgid "User"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
+msgid "WID"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:label"
+msgid "Watchdog"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
+msgid "admin/reports/dblog/event/{{ wid }}"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
+msgid "{{ message }}"
 msgstr ""
 
