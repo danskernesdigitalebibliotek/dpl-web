@@ -14,11 +14,10 @@ import { LoanType } from "../../core/utils/types/loan-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { hasValue } from "../../core/utils/helpers/has-value";
 import {
-  RecommendationSource,
-  listItemToRecommendationSource,
-  pickRecommendationSource,
-  workIdToRecommendationSource
-} from "./recommendationSource";
+  listItemToRecommendationSeed,
+  pickRecommendationSeed,
+  workIdToRecommendationSeed
+} from "./recommendationSeed";
 import useRecommendations from "./useRecommendations";
 
 interface DashboardProps {
@@ -34,7 +33,7 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
     useGetList("default");
 
   // The lists arrive from separate services at different speeds. The
-  // recommendations pick their source on mount, so they are only mounted once
+  // recommendations pick their seed on mount, so they are only mounted once
   // every list has settled - otherwise a reservation could win over a loan
   // that simply had not arrived yet. A failed request is not loading and has
   // no data, so it counts as an empty list.
@@ -77,40 +76,39 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   reservations,
   favorites
 }) => {
+  const t = useText();
   const u = useUrls();
   const materialUrl = u("materialUrl");
   const addToListRequest = useAddFavorite({ app: "dashboard" });
 
-  const [source] = useState(() => {
-    const loanSources = loans
+  const [seed] = useState(() => {
+    const loanSeeds = loans
       .map((loan) =>
-        listItemToRecommendationSource({ item: loan, origin: "loan" })
+        listItemToRecommendationSeed({ item: loan, origin: "loan" })
       )
       .filter(hasValue);
 
-    const reservationSources = reservations
+    const reservationSeeds = reservations
       .map((reservation) =>
-        listItemToRecommendationSource({
+        listItemToRecommendationSeed({
           item: reservation,
           origin: "reservation"
         })
       )
       .filter(hasValue);
 
-    const favoriteSources = favorites.map((workId) =>
-      workIdToRecommendationSource({ workId, origin: "favorite" })
+    const favoriteSeeds = favorites.map((workId) =>
+      workIdToRecommendationSeed({ workId, origin: "favorite" })
     );
 
-    return pickRecommendationSource({
-      loans: loanSources,
-      reservations: reservationSources,
-      favorites: favoriteSources
+    return pickRecommendationSeed({
+      loans: loanSeeds,
+      reservations: reservationSeeds,
+      favorites: favoriteSeeds
     });
   });
 
-  const { works, sourceTitle, isLoading } = useRecommendations(source);
-
-  const heading = useRecommendationsHeading(source, sourceTitle);
+  const { works, isLoading } = useRecommendations(seed);
 
   if (isLoading || works.length === 0) {
     return null;
@@ -119,7 +117,7 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   return (
     <section className="dashboard-page-recommendations">
       <MaterialSlider
-        heading={heading}
+        heading={t("dashboardRecommendationsHeadingText")}
         items={works.map((work) => ({
           id: work.workId,
           title: work.title,
@@ -131,34 +129,6 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
       />
     </section>
   );
-};
-
-/**
- * The heading names the material the recommendations are based on, phrased
- * after where it came from. Without a source title the generic heading is used.
- */
-const useRecommendationsHeading = (
-  source: RecommendationSource | null,
-  sourceTitle: string | null
-): string => {
-  const t = useText();
-
-  if (!source || !sourceTitle) {
-    return t("dashboardRecommendationsHeadingText");
-  }
-
-  const placeholders = { "@title": sourceTitle };
-
-  switch (source.origin) {
-    case "loan":
-      return t("dashboardRecommendationsLoanHeadingText", { placeholders });
-    case "reservation":
-      return t("dashboardRecommendationsReservationHeadingText", {
-        placeholders
-      });
-    case "favorite":
-      return t("dashboardRecommendationsFavoriteHeadingText", { placeholders });
-  }
 };
 
 export default DashBoard;

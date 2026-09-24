@@ -4,28 +4,28 @@ import {
 } from "../../core/dbc-gateway/generated/graphql";
 import { createIsbnCql } from "../../components/cover/helper";
 import { WorkId } from "../../core/utils/types/ids";
-import { RecommendationSource } from "./recommendationSource";
+import { RecommendationSeed } from "./recommendationSeed";
 import { RecommendedWork } from "./recommendations.types";
 
 export type UseRecommendationsResult = {
   works: RecommendedWork[];
   /** Title of the material the recommendations are based on. */
-  sourceTitle: string | null;
+  seedTitle: string | null;
   isLoading: boolean;
 };
 
 const FETCH_LIMIT = 16;
 
 /**
- * Fetches recommendations for a source along with the source's own title. The
- * recommender only understands fausts and work ids, so an ISBN source first
- * goes through a lookup that resolves it to a work id. A null source fetches
+ * Fetches recommendations for a seed along with the seed's own title. The
+ * recommender only understands fausts and work ids, so an ISBN seed first
+ * goes through a lookup that resolves it to a work id. A null seed fetches
  * nothing.
  */
 const useRecommendations = (
-  source: RecommendationSource | null
+  seed: RecommendationSeed | null
 ): UseRecommendationsResult => {
-  const isbn = source?.type === "isbn" ? source.isbn : null;
+  const isbn = seed?.type === "isbn" ? seed.isbn : null;
 
   const { data: isbnLookup, isLoading: isLoadingIsbnLookup } =
     useGetBestRepresentationPidByIsbnQuery(
@@ -42,10 +42,10 @@ const useRecommendations = (
     WorkId | undefined;
 
   const recommendArguments =
-    source?.type === "faust"
-      ? { faust: source.faust }
-      : source?.type === "work-id"
-        ? { id: source.workId }
+    seed?.type === "faust"
+      ? { faust: seed.faust }
+      : seed?.type === "work-id"
+        ? { id: seed.workId }
         : workIdFromIsbn
           ? { id: workIdFromIsbn }
           : null;
@@ -70,8 +70,8 @@ const useRecommendations = (
       coverSrc: work.manifestations.bestRepresentation.cover.large?.url ?? null
     })) ?? [];
 
-  const sourceTitles = data?.work?.titles.full ?? [];
-  const sourceTitle = sourceTitles.length > 0 ? sourceTitles.join(", ") : null;
+  const seedTitles = data?.work?.titles.full ?? [];
+  const seedTitle = seedTitles.length > 0 ? seedTitles.join(", ") : null;
 
   // A disabled query reports isLoading as false, so during the ISBN lookup
   // only the lookup's flag is set. Once resolved the recommend query takes
@@ -79,7 +79,7 @@ const useRecommendations = (
   // data, which reads as "no recommendations" to the caller.
   return {
     works,
-    sourceTitle,
+    seedTitle,
     isLoading: isLoadingIsbnLookup || isLoadingRecommendations
   };
 };

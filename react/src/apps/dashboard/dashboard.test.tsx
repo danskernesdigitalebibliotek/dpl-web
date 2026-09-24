@@ -24,11 +24,11 @@ const recommendedWorks = [
   }
 ];
 
-// The work the recommendations were based on, returned alongside them.
-const sourceWork = { titles: { full: ["Ronja Røverdatter"] } };
+// The seed: the work the recommendations were based on, returned alongside them.
+const seedWork = { titles: { full: ["Ronja Røverdatter"] } };
 
 const recommendationsResponse = {
-  data: { recommend: { result: recommendedWorks }, work: sourceWork }
+  data: { recommend: { result: recommendedWorks }, work: seedWork }
 };
 
 const interceptRecommendations = () => {
@@ -1566,7 +1566,7 @@ describe("dashboard recommendations", () => {
     cy.createFakeAuthenticatedSession();
     cy.createFakeLibrarySession();
 
-    // Every list starts out empty so each test can supply exactly one source.
+    // Every list starts out empty so each test can supply exactly one seed.
     cy.intercept("GET", "**/external/agencyid/patron/patronid/fees/v2**", {
       statusCode: 200,
       body: []
@@ -1689,7 +1689,7 @@ describe("dashboard recommendations", () => {
     cy.getBySel("recommended-description").should("have.length", 2);
   });
 
-  it("falls back to the generic heading when the source work has no title", () => {
+  it("falls back to the generic heading when the seed work has no title", () => {
     cy.intercept("POST", "**/graphql?getDashboardRecommendations", {
       statusCode: 200,
       body: { data: { recommend: { result: recommendedWorks }, work: null } }
