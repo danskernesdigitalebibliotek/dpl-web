@@ -54,6 +54,33 @@ Here are the various scenarios:
 - The user navigates to the Primary Library
 - The user identifies that is logged in at the Primary Library too
 
+#### Logging out of the Primary Library also logs out the Go Site
+
+- A user is logged in with Adgangsplatformen and has visited the Go Site
+- The user clicks logout on the Primary Library
+- On the way through the logout flow the Go session is cleared too
+  (the browser passes `/go-session-logout` → Go's `/auth/logout/cms`)
+- The user identifies that it is logged out on both sites
+
+A Unilogin session at the Go Site is not affected by a Primary Library
+logout — it lives independently of the CMS.
+
+#### The Adgangsplatformen user token expires
+
+The user token cannot be renewed, so the Go session lives exactly as long as
+the token (see ADR-012). The Drupal session cookie lives much longer.
+
+- A user logs into the Go Site with Adgangsplatformen
+- The user returns after the token has expired (e.g. after a weekend)
+- On the next page navigation the user is sent through the full logout flow:
+  the Go session, the Drupal session and the Adgangsplatformen SSO session
+  are all torn down, and the user lands on the Go front page as logged out
+- Data requests fired with the dead token (e.g. an already-open profile
+  page) destroy the Go session as well when the upstream answers 401/403
+
+Expected: the user is never shown as logged in while data calls fail — a
+dead token means a new login.
+
 ### Logging into Go site with either Adgangsplatformen or Unilogin
 
 This works similar for both of the Adgangsplatformen and Unilogin session types:
