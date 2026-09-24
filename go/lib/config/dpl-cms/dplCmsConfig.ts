@@ -91,6 +91,7 @@ const getDplCmsPublicConfigData = async () => {
         municipalityId: null,
       },
       blacklistedAvailabilityBranches: [],
+      smsNotificationsEnabled: true,
     }
   }
 }

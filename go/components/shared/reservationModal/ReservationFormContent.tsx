@@ -10,6 +10,7 @@ import {
 import InfoCard from "@/components/shared/infoCard/InfoCard"
 import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
+import { useShowSmsNotice } from "@/hooks/useShowSmsNotice"
 import type { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { adultSiteUrl } from "@/lib/helpers/helper.adult-site"
 import { displayCreators } from "@/lib/helpers/helper.creators"
@@ -29,6 +30,7 @@ type ReservationFormContentProps = {
 const ReservationFormContent = ({ work, manifestation, patron }: ReservationFormContentProps) => {
   const dplCmsConfig = useContext(DplCmsConfigContext)
   const profileUrl = adultSiteUrl(dplCmsConfig?.libraryInfo?.baseURL, USER_PROFILE_PATH) ?? "#"
+  const showSmsNotice = useShowSmsNotice()
   const creators = work?.creators ?? manifestation.contributors ?? []
   const authorLabel = creators.length > 0 ? `Af ${displayCreators(creators, 3)}` : null
   const materialIcon = getManifestationMaterialTypeIcon(manifestation) || "book"
@@ -51,13 +53,13 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
 
       <div className="space-y-4">
         <InfoCard icon="pin" title="Afhentningssted" value={pickupBranchName} />
-        <InfoCard
-          icon="chat"
-          title={
-            patron?.phoneNumber ? "Du får en sms, når du kan hente bogen" : "Du får ikke en sms"
-          }
-          value={patron?.phoneNumber ?? "Der er ikke registreret et telefonnummer."}
-        />
+        {showSmsNotice && (
+          <InfoCard
+            icon="chat"
+            title="Du får en sms, når du kan hente bogen"
+            value={patron?.phoneNumber ?? ""}
+          />
+        )}
         <InfoCard
           icon="envelope"
           title={
