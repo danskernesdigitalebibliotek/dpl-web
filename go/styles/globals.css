@@ -71,13 +71,13 @@
     --space-y: 2.5rem; /* 40px */
 
     /* COLORS */
-    --black: hsla(0, 0%, 10.2%, 1);
+    --black: hsla(148, 56%, 10%, 1);
     --white: hsla(255, 100%, 100%, 1);
 
     --backdrop: hsla(0, 0%, 10.2%, 0.5);
 
     --beige: hsla(36, 45%, 98%, 1);
-    --beige-overlay: hsla(42, 25%, 35%, 0.05);
+    --beige-overlay: hsla(41, 14%, 62%, 0.102);
     --beige-overlay-solid: hsl(26, 28%, 95%);
     --beige-skeleton: hsla(42, 25%, 35%, 0.1);
 
