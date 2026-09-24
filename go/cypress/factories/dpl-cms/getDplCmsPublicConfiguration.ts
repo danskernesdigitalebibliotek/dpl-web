@@ -28,6 +28,7 @@ export default Factory.define<GetDplCmsPublicConfigurationQuery>(() => {
           municipalityId: "101",
         },
         blacklistedAvailabilityBranches: [],
+        smsNotificationsEnabled: true,
       } satisfies TDplCmsPublicConfig,
     },
   }
