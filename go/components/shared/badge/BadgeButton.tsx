@@ -41,9 +41,7 @@ const BadgeButton = forwardRef<HTMLButtonElement, BadgeButtonProps>(
         aria-label={ariaLabel}
         aria-pressed={isActive}
         {...restProps}>
-          <span className={cn("flex flex-row items-center gap-2")}>
-            {children}
-          </span>
+        <span className={cn("flex flex-row items-center gap-2")}>{children}</span>
       </button>
     )
   }
