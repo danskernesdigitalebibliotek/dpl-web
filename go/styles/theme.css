@@ -48,8 +48,7 @@
   --aspect-16\/9: var(--aspect-16-9);
 
   --font-*: initial;
-  --font-headline: var(--font-headline);
-  --font-body: var(--font-body);
+  --font-sans: var(--font-sans);
 
   --text-*: initial;
   --text-typo-huge: var(--typo-huge-size);
@@ -120,6 +119,10 @@
   --text-typo-tag-sm--line-height: var(--typo-tag-sm-line-height);
   --text-typo-tag-sm--font-weight: var(--typo-tag-sm-weight);
   --text-typo-tag-sm--letter-spacing: var(--typo-tag-sm-letter-spacing);
+  --text-typo-label-sm: var(--typo-label-sm-size);
+  --text-typo-label-sm--line-height: var(--typo-label-sm-line-height);
+  --text-typo-label-sm--font-weight: var(--typo-label-sm-weight);
+  --text-typo-label-sm--letter-spacing: var(--typo-label-sm-letter-spacing);
   --text-typo-caption: var(--typo-caption-size);
   --text-typo-caption--line-height: var(--typo-caption-line-height);
   --text-typo-caption--font-weight: var(--typo-caption-weight);

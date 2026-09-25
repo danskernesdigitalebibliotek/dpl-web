@@ -34,7 +34,7 @@ const Toaster = ({ toastOptions, style, ...props }: ToasterProps) => (
       classNames: {
         // pointer-events-auto keeps toasts swipeable while a Radix modal
         // locks pointer events on <body>.
-        toast: `bg-background text-foreground text-typo-link rounded-base pointer-events-auto flex
+        toast: `bg-background text-foreground text-typo-body-sm rounded-base pointer-events-auto flex
           w-[var(--width)] items-center gap-4 px-6 py-5 shadow-lg
           data-[type=error]:bg-error-red-100 data-[type=error]:text-error-red-400
           data-[type=success]:bg-success-green-100 data-[type=success]:text-success-green-500
