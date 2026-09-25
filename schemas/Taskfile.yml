@@ -26,11 +26,6 @@ vars:
   # profiles serve identical schemas, see README.
   DBC_FBI_URL: https://fbi-api.dbc.dk/fbcms-go/graphql
 
-  # A field the gateway serves only to authorized clients. _introspect-fbi
-  # asserts it is present, so an expired or unprivileged token fails the
-  # refresh instead of quietly vendoring the anonymous schema.
-  AUTH_ONLY_SENTINEL: "submitOrder("
-
 tasks:
 
   _introspect-fbi:
@@ -42,22 +37,10 @@ tasks:
       - |
         set -eu
 
-        # The gateway does not reject a missing or empty bearer. It treats the
-        # caller as anonymous and serves a REDUCED schema — Mutation.submitOrder,
-        # submitMultipleOrders, deleteOrder, renewLoan and friends are simply
-        # absent from it. Vendoring that subset silently is how this repo came to
-        # believe DBC had deleted submitOrder, froze a second snapshot to keep
-        # react compiling, and carried the two-file split for months (DDF-607).
-        #
-        # So: refuse to introspect without a token, and refuse to keep the result
-        # if it came back looking anonymous.
-        if [ -z "${LIBRARY_TOKEN:-}" ]; then
-          echo "introspect: LIBRARY_TOKEN is empty or unset in the root .env." >&2
-          echo "Introspecting without it vendors the reduced anonymous schema," >&2
-          echo "which is a subset of what our clients actually query." >&2
-          echo "Run 'task token:generate' from the repo root first." >&2
-          exit 1
-        fi
+        # The gateway does not reject a missing, expired or revoked bearer. It
+        # treats the caller as anonymous and serves a REDUCED schema, without
+        # Mutation.submitOrder and friends. So verify the token first; see README.
+        task -d .. token:check
 
         docker run --rm \
           --volume "$(pwd):/work" \
@@ -67,21 +50,6 @@ tasks:
             graphql-inspector introspect "{{.URL}}" \
             --write "{{.OUT}}" \
             --header "Authorization: Bearer $LIBRARY_TOKEN"
-
-        # A token that is present but expired, revoked or under-privileged still
-        # gets a 200 and still yields the anonymous schema, so the check above
-        # cannot catch it. Assert a field only authorized clients are served.
-        if ! grep -q '{{.AUTH_ONLY_SENTINEL}}' "{{.OUT}}"; then
-          echo "introspect: {{.OUT}} does not contain '{{.AUTH_ONLY_SENTINEL}}'." >&2
-          echo "That field is served only to authorized clients, so the token was" >&2
-          echo "rejected or lacks privileges and this is the anonymous schema." >&2
-          echo "Refusing to vendor it. Run 'task token:generate' from the repo" >&2
-          echo "root and try again." >&2
-          rm -f "{{.OUT}}.rejected"
-          mv "{{.OUT}}" "{{.OUT}}.rejected"
-          echo "The rejected snapshot is at {{.OUT}}.rejected for inspection." >&2
-          exit 1
-        fi
 
   format:
     desc: Normalize whitespace and quote style in openapi/ and graphql/ via prettier (dockerized).

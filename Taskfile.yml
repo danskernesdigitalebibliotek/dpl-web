@@ -157,6 +157,28 @@ tasks:
         echo "Token:"
         echo "$token"
 
+  token:check:
+    desc: "Verify that LIBRARY_TOKEN in the central root .env is accepted by Adgangsplatformen"
+    dotenv: ['.env']
+    silent: true
+    cmds:
+      - |
+        set -eu
+        if [ -z "${LIBRARY_TOKEN:-}" ]; then
+          echo "LIBRARY_TOKEN is empty or unset in the root .env." >&2
+          echo "Run 'task token:generate' from the repo root." >&2
+          exit 1
+        fi
+
+        status=$(curl -sS -o /dev/null -w '%{http_code}' \
+          -H "Authorization: Bearer $LIBRARY_TOKEN" \
+          "https://login.bib.dk/userinfo")
+        if [ "$status" != "200" ]; then
+          echo "LIBRARY_TOKEN was rejected by login.bib.dk (HTTP $status)." >&2
+          echo "It has likely expired. Run 'task token:generate' from the repo root." >&2
+          exit 1
+        fi
+
   # ---------------------------------------------------------------------------
   # Sub-project starters (delegates to each project's own Taskfile)
   # ---------------------------------------------------------------------------

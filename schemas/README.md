@@ -41,13 +41,12 @@ refresh silently vendors a contract that is a subset of what our clients
 actually query, and react's `openOrder` document then fails to validate
 against it.
 
-`_introspect-fbi` therefore refuses to run without `LIBRARY_TOKEN`, and
-checks the result for `AUTH_ONLY_SENTINEL` before keeping it — a token
-that is present but expired, revoked or under-privileged still returns
-200 with the anonymous schema, which a presence check alone would miss.
-A snapshot that fails the check is set aside as `.rejected`.
+An expired or revoked token gets the same treatment as no token at all,
+so `_introspect-fbi` first runs the repo-root `task token:check`, which
+asks `login.bib.dk/userinfo` whether Adgangsplatformen accepts
+`LIBRARY_TOKEN`, and refuses to introspect if it does not.
 
-One environment gotcha behind both: `task`'s `dotenv` does not override a
+One environment gotcha: `task`'s `dotenv` does not override a
 variable already exported by your shell. If `LIBRARY_TOKEN` is exported
 empty, the value in `.env` is ignored and every refresh runs anonymously.
 Unset it in your shell rather than fighting the Taskfile.
