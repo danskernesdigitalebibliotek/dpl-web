@@ -101,6 +101,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'dashboard-reservations-link-text' => $this->t('All reservations', [], ['context' => 'Dashboard']),
       'dashboard-see-more-fees-text' => $this->t('See more', [], ['context' => 'Dashboard']),
       'dashboard-see-more-fees-aria-label-text' => $this->t('See your fees and how to pay', [], ['context' => 'Dashboard']),
+      'dashboard-user-profile-link-text' => $this->t('User profile', [], ['context' => 'Dashboard']),
       'digital-text' => $this->t('Digital', [], ['context' => 'Dashboard']),
       'fees-text' => $this->t('Fees', [], ['context' => 'Dashboard']),
       'group-modal-aria-description-text' => $this->t('This modal makes it possible to renew materials', [], ['context' => 'Dashboard (Aria)']),

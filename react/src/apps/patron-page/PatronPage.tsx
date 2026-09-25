@@ -116,7 +116,14 @@ const PatronPage: FC = () => {
 
   return (
     <form className="dpl-patron-page" onSubmit={(e) => handleSubmit(e)}>
-      <h1 className="text-header-h1 my-32">{t("patronPageHeaderText")}</h1>
+      <h1 className="text-header-h1 mt-32 mb-8">{t("patronPageHeaderText")}</h1>
+      <Link
+        href={u("dashboardUrl")}
+        className="link-tag text-body-medium-regular mb-32"
+        dataCy="patron-page-dashboard-link"
+      >
+        {t("patronPageDashboardLinkText")}
+      </Link>
       <NotificationComponent />
       {patron && (
         <BasicDetailsSection

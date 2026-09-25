@@ -20,6 +20,7 @@ interface PatronPageConfigProps {
 }
 
 export interface PatronPageUrlProps {
+  dashboardUrl: string;
   deletePatronUrl: string;
   pauseReservationInfoUrl: string;
 }
@@ -39,6 +40,7 @@ interface PatronPageTextProps {
   patronPageChangePincodeBodyText: string;
   patronPageChangePincodeHeaderText: string;
   patronPageConfirmPincodeLabelText: string;
+  patronPageDashboardLinkText: string;
   patronPageDeleteProfileLinkText: string;
   patronPageDeleteProfileText: string;
   patronPageHandleResponseInformationText: string;
