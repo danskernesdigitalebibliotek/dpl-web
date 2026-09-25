@@ -120,8 +120,8 @@ importers:
         specifier: ^0.35.4
         version: 0.35.4(@types/node@24.13.2)
       soap:
-        specifier: ^1.12.0
-        version: 1.12.0(supports-color@8.1.1)
+        specifier: ^1.13.0
+        version: 1.13.0(supports-color@8.1.1)
       sonner:
         specifier: ^2.0.8
         version: 2.0.8(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -9165,8 +9165,8 @@ packages:
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
-  soap@1.12.0:
-    resolution: {integrity: sha512-qLIIHX8ZOwF1nfsJrsxt1RajX5EvnVK7DLHtZmiJPjq3b4msu7MjPpUneWmnzDVjkaFN4Np4HAInTULgFlDeRw==}
+  soap@1.13.0:
+    resolution: {integrity: sha512-3czoM63ZC2X5AbeZwo69cO36C5wB2Jl56hu+Dv0omj64zqxbl0YHeTgYbf6gdXnm4G5HKVeouum3dQEOh6omDg==}
     engines: {node: '>=20.19.0'}
 
   socks-proxy-agent@8.0.5:
@@ -13456,7 +13456,7 @@ snapshots:
       camelcase: 9.0.0
       chalk: 6.0.0
       sanitize-filename: 1.6.4
-      soap: 1.12.0(supports-color@11.0.0)
+      soap: 1.13.0(supports-color@11.0.0)
       supports-color: 11.0.0
       ts-morph: 28.0.0
       yargs: 18.1.0
@@ -20351,7 +20351,7 @@ snapshots:
       dot-case: 3.0.4
       tslib: 2.8.1
 
-  soap@1.12.0(supports-color@11.0.0):
+  soap@1.13.0(supports-color@11.0.0):
     dependencies:
       axios: 1.20.0(debug@4.4.3(supports-color@8.1.1))(supports-color@11.0.0)
       axios-ntlm: 1.4.6(debug@4.4.3(supports-color@8.1.1))(supports-color@11.0.0)
@@ -20364,7 +20364,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  soap@1.12.0(supports-color@8.1.1):
+  soap@1.13.0(supports-color@8.1.1):
     dependencies:
       axios: 1.20.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       axios-ntlm: 1.4.6(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
