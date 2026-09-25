@@ -1,5 +1,28 @@
-query getDashboardRecommendations($faust: String, $id: String, $limit: Int!) {
-  recommend(faust: $faust, id: $id, limit: $limit) {
+# Resolves a seed identified by faust or work id to the work it belongs to.
+query getDashboardRecommendationSource($faust: String, $id: String) {
+  work(faust: $faust, id: $id) {
+    workId
+    titles {
+      full
+    }
+  }
+}
+
+# Resolves a seed identified by ISBN to the work it belongs to. The work field
+# has no ISBN argument, so this goes through complex search instead.
+query getDashboardRecommendationSourceByIsbn($cql: String!) {
+  complexSearch(cql: $cql, filters: {}) {
+    works(offset: 0, limit: 1) {
+      workId
+      titles {
+        full
+      }
+    }
+  }
+}
+
+query getDashboardRecommendations($id: String!, $limit: Int!) {
+  recommend(id: $id, limit: $limit) {
     result {
       work {
         workId

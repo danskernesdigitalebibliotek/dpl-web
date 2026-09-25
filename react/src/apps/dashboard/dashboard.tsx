@@ -14,11 +14,12 @@ import { LoanType } from "../../core/utils/types/loan-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { hasValue } from "../../core/utils/helpers/has-value";
 import {
-  listItemToRecommendationSource,
-  pickRecommendationSource,
-  workIdToRecommendationSource
-} from "./recommendationSource";
+  listItemToRecommendationSeed,
+  pickRecommendationSeed,
+  workIdToRecommendationSeed
+} from "./recommendationSeed";
 import useRecommendations from "./useRecommendations";
+import { getRecommendationsHeading } from "./recommendationsHeading";
 
 interface DashboardProps {
   pageSize: number;
@@ -33,7 +34,7 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
     useGetList("default");
 
   // The lists arrive from separate services at different speeds. The
-  // recommendations pick their source on mount, so they are only mounted once
+  // recommendations pick their seed on mount, so they are only mounted once
   // every list has settled - otherwise a reservation could win over a loan
   // that simply had not arrived yet. A failed request is not loading and has
   // no data, so it counts as an empty list.
@@ -81,35 +82,44 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   const materialUrl = u("materialUrl");
   const addToListRequest = useAddFavorite({ app: "dashboard" });
 
-  const [source] = useState(() => {
-    const loanSources = loans
-      .map(listItemToRecommendationSource)
+  const [seed] = useState(() => {
+    const loanSeeds = loans
+      .map((loan) =>
+        listItemToRecommendationSeed({ item: loan, origin: "loan" })
+      )
       .filter(hasValue);
 
-    const reservationSources = reservations
-      .map(listItemToRecommendationSource)
+    const reservationSeeds = reservations
+      .map((reservation) =>
+        listItemToRecommendationSeed({
+          item: reservation,
+          origin: "reservation"
+        })
+      )
       .filter(hasValue);
 
-    const favoriteSources = favorites.map(workIdToRecommendationSource);
+    const favoriteSeeds = favorites.map((workId) =>
+      workIdToRecommendationSeed({ workId, origin: "favorite" })
+    );
 
-    return pickRecommendationSource({
-      loans: loanSources,
-      reservations: reservationSources,
-      favorites: favoriteSources
+    return pickRecommendationSeed({
+      loans: loanSeeds,
+      reservations: reservationSeeds,
+      favorites: favoriteSeeds
     });
   });
 
-  const { works, isLoading } = useRecommendations(source);
+  const { result, isLoading } = useRecommendations(seed);
 
-  if (isLoading || works.length === 0) {
+  if (isLoading || !result || result.recommendations.length === 0) {
     return null;
   }
 
   return (
     <section className="dashboard-page-recommendations">
       <MaterialSlider
-        heading={t("dashboardRecommendationsHeadingText")}
-        items={works.map((work) => ({
+        heading={getRecommendationsHeading(result.source, t)}
+        items={result.recommendations.map((work) => ({
           id: work.workId,
           title: work.title,
           subtitle: work.author,
