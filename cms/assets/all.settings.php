@@ -21,8 +21,10 @@ $config['system.site']['uuid'] = '13ef1a53-dfb4-4c82-9b64-44586a366729';
 // The email needs to match what is setup in Azure Communication Services.
 $config['system.site']['mail'] = 'mail@folkebibliotekernescms.dk';
 
-// Configure GSearch to use our supplied Dataforsyningen token.
-$config['gsearch.settings']['token'] = getenv('DATAFORSYNINGEN_TOKEN');
+// Adressevælgeren currently accepts a shared token, which dk_address ships
+// with. Keep our Dataforsyningen token as the site's own credential, which the
+// module falls back to if the shared token is ever refused.
+$config['dk_address.settings']['site_token'] = getenv('DATAFORSYNINGEN_TOKEN');
 
 $config['media_videotool.settings']['public_key'] = getenv('VIDEOTOOL_PUBLIC_KEY');
 $config['media_videotool.settings']['private_key'] = getenv('VIDEOTOOL_PRIVATE_KEY');
@@ -120,9 +122,10 @@ if (getenv('CI')) {
   $config['dpl_fbi.settings'] = ['base_url' => 'http://fbi.dpl-cms.local/[profile]/graphql'];
   $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs.dpl-cms.local'];
   $config['dpl_publizon.settings'] = ['base_url' => 'https://pubhub-openplatform.dbc.dk'];
-  // GSearch / Dataforsyningen address API
-  // (requires a token we don't have in CI).
-  $config['gsearch.settings']['api_url'] = 'http://gsearch.dpl-cms.local';
+  // Adressevælgeren, the Danish address API used by dk_address, is not
+  // mocked: it currently accepts the shared token the module ships with, so
+  // CI calls the real API. That also makes CI notice the day
+  // Klimadatastyrelsen retire the shared token.
   // Adgangsplatformen OpenID Connect client.
   $config['openid_connect.client.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://adgangsplatformen.dpl-cms.local/oauth/authorize';
   $config['openid_connect.client.adgangsplatformen']['settings']['token_endpoint'] = 'http://adgangsplatformen.dpl-cms.local/oauth/token/';

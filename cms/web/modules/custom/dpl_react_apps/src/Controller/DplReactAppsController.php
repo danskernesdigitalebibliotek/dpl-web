@@ -80,12 +80,16 @@ class DplReactAppsController extends ControllerBase {
         $location = $branch->getAddressData();
 
         if (!empty($location)) {
+          $lat = $location->getLatitude();
+          $lng = $location->getLongitude();
+
           $branch_output['location'] = [
             'city' => $location->getPostalName(),
             'value' => $location->getString(),
             'address' => $location->getString(),
-            'lat' => $location->getLatitude(),
-            'lng' => $location->getLongitude(),
+            // The React apps expect coordinates as strings.
+            'lat' => $lat !== NULL ? (string) $lat : NULL,
+            'lng' => $lng !== NULL ? (string) $lng : NULL,
           ];
         }
       }
@@ -747,7 +751,7 @@ class DplReactAppsController extends ControllerBase {
     $data = [
       'branches-config' => json_encode($this->branchService->getBranchListData()),
       'branch-address-search-enabled-config' => (int) $this->config('dpl_library_agency.general_settings')->get('enable_address_search_branch'),
-      'dataforsyningen-token-config' => $this->config('gsearch.settings')->get('token') ?: '',
+      'dataforsyningen-token-config' => getenv('DATAFORSYNINGEN_TOKEN') ?: '',
       'branch-list-title-text' => $this->t('Branches', [], ['context' => 'Branch List']),
       'address-search-label-text' => $this->t('See libraries near an address', [], ['context' => 'Branch List']),
       'address-search-placeholder-text' => $this->t('Enter an address e.g. Torvegade 1, 1401 København K', [], ['context' => 'Branch List']),

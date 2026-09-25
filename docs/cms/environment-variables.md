@@ -145,9 +145,11 @@ library site and BNF site. Set via update hook. Read in
 
 - `DATAFORSYNINGEN_TOKEN`
 
-Token for Dataforsyningen, the Danish address lookup API. Applied to
-`gsearch.settings` in `all.settings.php` and passed to the patron
-registration block (`PatronRegistrationBlock`).
+Token for Dataforsyningen, the Danish address lookup API used by the React
+apps (`PatronRegistrationBlock`, the branch list). Also applied as the site
+credential of `dk_address.settings` in `all.settings.php`, which the
+`dk_address` module falls back to if Adressevælgeren stops accepting its
+shared token.
 
 - `DRUPAL_PREVIEW_SECRET`
 
