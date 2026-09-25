@@ -78,7 +78,7 @@
     "globals": "^17",
     "json": "^11.0.0",
     "keen-slider": "6.8.6",
-    "markdownlint-cli2": "^0.23.2",
+    "markdownlint-cli2": "^0.23.3",
     "playwright": "^1.63.0",
     "postcss": "^8.5.28",
     "prettier": "^3.9.8",
