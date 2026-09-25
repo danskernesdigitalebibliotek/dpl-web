@@ -1325,3 +1325,10 @@ function dpl_update_update_10081(): string {
     ? 'Removed the current_events resource configuration, and moved its permission to happening_events.'
     : 'Moved the current_events permission to happening_events; there was no resource configuration to remove.';
 }
+
+/**
+ * Enable dpl_service_message module.
+ */
+function dpl_update_update_10082(): string {
+  return _dpl_update_install_modules(['dpl_service_message']);
+}

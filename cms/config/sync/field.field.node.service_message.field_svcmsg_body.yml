@@ -1,0 +1,19 @@
+uuid: 17bcc215-3d0b-4628-9f5e-501b9d2a9cf6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_svcmsg_body
+    - node.type.service_message
+id: node.service_message.field_svcmsg_body
+field_name: field_svcmsg_body
+entity_type: node
+bundle: service_message
+label: 'Body text'
+description: 'Optional if the title is filled in. Line breaks are not shown: the message is printed as one run of text.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

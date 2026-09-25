@@ -113,7 +113,8 @@ function novel_preprocess_dpl_react_app__loan_list(array &$variables): void {
 /**
  * Implements hook_preprocess_HOOK().
  *
- * Add the base icon path to the variables array.
+ * Add the icon paths to the variables array: the design system's shipped
+ * icons, and the ones this theme carries itself.
  *
  * @param mixed[] $variables
  *   The variables for the theme hook.
@@ -121,6 +122,7 @@ function novel_preprocess_dpl_react_app__loan_list(array &$variables): void {
 function novel_preprocess(array &$variables): void {
   $directory = $variables['directory'] ?? 'web/themes/custom/novel';
   $variables['baseIconPath'] = "/{$directory}/assets/dpl-design-system/icons";
+  $variables['themeIconPath'] = "/{$directory}/images/icons";
 }
 
 /**
