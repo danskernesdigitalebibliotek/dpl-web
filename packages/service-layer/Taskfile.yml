@@ -11,6 +11,6 @@ tasks:
       - pnpm run codegen:fbs
 
   codegen:fbi:
-    desc: Regenerate the internal FBI adapter from /schemas/graphql/dbc-fbi.fbcms-go.graphql
+    desc: Regenerate the internal FBI adapter from /schemas/graphql/dbc-fbi.graphql
     cmds:
       - pnpm run codegen:fbi
