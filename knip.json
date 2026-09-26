@@ -70,7 +70,8 @@
     "react": {
       "entry": [
         "src/apps/**/*.mount.ts",
-        "src/components/design-system/_system.scss"
+        "src/components/design-system/_system.scss",
+        ".storybook/webpack.config.js"
       ],
       "ignore": [
         "src/core/fbs/fbs.ts",
@@ -83,7 +84,8 @@
         "core-js",
         "caniuse-lite",
         "ts-loader",
-        "postcss-scss"
+        "postcss-scss",
+        "postcss-loader"
       ]
     }
   }

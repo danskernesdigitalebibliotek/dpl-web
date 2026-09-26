@@ -300,6 +300,9 @@ importers:
       postcss-cli:
         specifier: ^12.0.0
         version: 12.0.0(jiti@2.7.0)(postcss@8.5.28)(yaml@2.9.0)
+      postcss-loader:
+        specifier: ^8.2.1
+        version: 8.2.1(postcss@8.5.28)(typescript@5.9.3)(webpack@5.111.1)
       postcss-scss:
         specifier: ^4.0.9
         version: 4.0.9(postcss@8.5.28)
@@ -6413,6 +6416,19 @@ packages:
       tsx:
         optional: true
       yaml:
+        optional: true
+
+  postcss-loader@8.2.1:
+    resolution: {integrity: sha512-k98jtRzthjj3f76MYTs9JTpRqV1RaaMhEU0Lpw9OTmQZQdppg4B30VZ74BojuBHt3F4KyubHJoXCMUeM8Bqeow==}
+    engines: {node: '>= 18.12.0'}
+    peerDependencies:
+      '@rspack/core': 0.x || ^1.0.0 || ^2.0.0-0
+      postcss: ^7.0.0 || ^8.0.1
+      webpack: ^5.0.0
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
+      webpack:
         optional: true
 
   postcss-media-query-parser@0.2.3:
@@ -14896,6 +14912,17 @@ snapshots:
       jiti: 2.7.0
       postcss: 8.5.28
       yaml: 2.9.0
+
+  postcss-loader@8.2.1(postcss@8.5.28)(typescript@5.9.3)(webpack@5.111.1):
+    dependencies:
+      cosmiconfig: 9.0.2(typescript@5.9.3)
+      jiti: 2.7.0
+      postcss: 8.5.28
+      semver: 7.8.5
+    optionalDependencies:
+      webpack: 5.111.1(clean-css@5.3.3)(cssnano@9.0.5(postcss@8.5.28))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(postcss@8.5.28)(svgo@4.1.0)(webpack-cli@7.2.3)
+    transitivePeerDependencies:
+      - typescript
 
   postcss-media-query-parser@0.2.3: {}
 
