@@ -50,15 +50,12 @@
     "@cypress/code-coverage": "^4.0.3",
     "@cypress/webpack-preprocessor": "^8.0.0",
     "@eslint/js": "^9.39.2",
-    "@graphql-codegen/add": "^6.0.1",
     "@graphql-codegen/cli": "^6.3.1",
     "@graphql-codegen/introspection": "^5.0.2",
     "@graphql-codegen/named-operations-object": "^4.0.1",
     "@graphql-codegen/typescript": "^5.0.10",
-    "@graphql-codegen/typescript-graphql-files-modules": "^4.0.1",
     "@graphql-codegen/typescript-operations": "^5.1.0",
     "@graphql-codegen/typescript-react-query": "^6.1.1",
-    "@graphql-typed-document-node/core": "^3.1.1",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@namics/stylelint-bem": "^11.1.0",
     "@storybook/addon-essentials": "^8.6.18",
@@ -68,10 +65,8 @@
     "@storybook/react-webpack5": "^8.6.18",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/react": "^16.3.3",
-    "@testing-library/react-hooks": "^8.0.1",
     "@tsconfig/create-react-app": "^2.0.5",
     "@types/node": "^24",
-    "@types/proj4": "^2.19.0",
     "@types/prop-types": "^15.7.15",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
@@ -173,8 +168,7 @@
     "react-use": "^17.6.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
-    "temporal-polyfill": "^1.0.5",
-    "unfetch": "^5.0.0"
+    "temporal-polyfill": "^1.0.5"
   },
   "peerDependencies": {
     "postcss": "^8.5.28"

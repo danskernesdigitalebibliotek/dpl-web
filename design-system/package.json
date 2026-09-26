@@ -27,7 +27,7 @@
     "markdown:format": "markdownlint-cli2 --fix",
     "watch": "concurrently 'pnpm run js:lint:watch' 'pnpm run css:lint:watch'",
     "dev": "DISABLE_ESLINT_PLUGIN=true concurrently --raw 'pnpm run storybook' 'pnpm run css:watch' 'pnpm run watch'",
-    "chromatic": "pnpm exec chromatic --exit-zero-on-changes",
+    "chromatic": "pnpm dlx chromatic --exit-zero-on-changes",
     "lint": "concurrently 'pnpm run js:lint' 'pnpm run css:lint' 'pnpm run markdown:lint'",
     "format": "concurrently 'pnpm run js:format' 'pnpm run css:format' 'pnpm run markdown:format'"
   },

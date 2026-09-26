@@ -203,40 +203,6 @@ export const givenUserHasDigitalPodcastLoan = (
   });
 
 /**
- * Given: User has a reserved e-book
- * Sets up intercepts to simulate an e-book that's reserved by the user
- */
-export const givenUserHasReservedEbook = (options?: {
-  identifier?: string;
-}) => {
-  const identifier = options?.identifier || "9788702441000";
-
-  cy.intercept("GET", "**/v1/loanstatus/**", {
-    statusCode: 200,
-    body: publizonLoanStatusFactory.build({
-      loanStatus: ContentLoanStatusEnum.NUMBER_2, // Reserved
-      identifier
-    })
-  }).as("publizonLoanStatusReserved");
-};
-
-/**
- * Given: E-book is available to loan
- * Sets up intercepts to simulate an e-book that can be loaned
- */
-export const givenEbookIsAvailable = (options?: { identifier?: string }) => {
-  const identifier = options?.identifier || "9788702441000";
-
-  cy.intercept("GET", "**/v1/loanstatus/**", {
-    statusCode: 200,
-    body: publizonLoanStatusFactory.build({
-      loanStatus: ContentLoanStatusEnum.NUMBER_4, // Available
-      identifier
-    })
-  }).as("publizonLoanStatusAvailable");
-};
-
-/**
  * Given: E-book is unavailable
  * Sets up intercepts to simulate an e-book that cannot be loaned
  */
