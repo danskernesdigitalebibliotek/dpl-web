@@ -101,6 +101,22 @@ jobs:
       - name: Run typescript compile check
         run: pnpm exec tsc --noEmit
 
+  knip:
+    name: React / Knip
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      # Knip runs from the root config (knip.json), scoped to this workspace.
+      # False positives are handled there (entries/ignores) — never by
+      # deleting code the analysis cannot see.
+      - name: Find unused files, exports and dependencies
+        run: pnpm knip --workspace react
+
   eslint:
     name: React / Lint .js and .jsx
     # Needs the design-system build so import/no-unresolved can resolve React's
