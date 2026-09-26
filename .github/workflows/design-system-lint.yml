@@ -56,3 +56,18 @@ jobs:
       - name: Run markdown:lint
         run: pnpm run markdown:lint
         working-directory: design-system
+
+  knip:
+    name: Design / Knip
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      # Knip runs from the root config (knip.json), scoped to this workspace.
+      # False positives are handled there (entries/ignores) — never by
+      # deleting code the analysis cannot see.
+      - name: Find unused files, exports and dependencies
+        run: pnpm knip --workspace design-system

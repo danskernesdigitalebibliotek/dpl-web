@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { first, orderBy, uniq } from "lodash";
 import { vi } from "vitest";
 import { CoverProps } from "../../../components/cover/cover";
@@ -81,14 +80,6 @@ export const flattenCreators = (creators: WorkSmall["creators"]) =>
     return creator.display;
   });
 
-const getCreatorsFromManifestations = (manifestations: Manifestation[]) => {
-  const creators = manifestations.reduce<string[]>((acc: string[], curr) => {
-    return [...acc, ...flattenCreators(curr.creators)];
-  }, [] as string[]);
-
-  return Array.from(new Set(creators)) as string[];
-};
-
 export const creatorsToString = (
   creators: string[],
   t: UseTextFunction
@@ -103,18 +94,10 @@ export const creatorsToString = (
   return "";
 };
 
-export const getCreatorTextFromManifestations = (
-  manifestations: Manifestation[],
-  t: UseTextFunction
-) => {
-  const creators = getCreatorsFromManifestations(manifestations);
-
-  return creatorsToString(creators, t);
-};
-
 // We deliberately left this function here although we don't use it anywhere in the
 // project. It can be used if ever needed to retrieve a chronologically oldest edition,
 // provided a manifestation object.
+/** @lintignore */
 export const getFirstPublishedManifestation = (
   manifestations: Manifestation[]
 ) => {
@@ -125,14 +108,6 @@ export const getFirstPublishedManifestation = (
 export const getLatestManifestation = (manifestations: Manifestation[]) => {
   const ordered = orderManifestationsByYear(manifestations, "desc");
   return ordered[0];
-};
-
-export const getFirstPublishedYear = (manifestations: Manifestation[]) => {
-  return String(
-    getManifestationPublicationYear(
-      getFirstPublishedManifestation(manifestations)
-    )
-  );
 };
 
 // This function is used to find the most representative pid of a work.
@@ -156,14 +131,6 @@ export const getColors = () => {
 
 export const getRecommenderMaterialLimits = () => {
   return getConf("recommenderMaterialLimits", configuration);
-};
-
-export const usePrevious = <Type>(value: Type) => {
-  const ref = useRef<Type>(null);
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
 };
 
 export const convertPostIdToFaustId = (postId: Pid) => {
@@ -241,16 +208,6 @@ export const getDueDatesLoan = (list: LoanType[]) => {
         .sort()
     )
   ) as string[];
-};
-
-export const getDueDatesForModal = (list: LoanType[], date: string) => {
-  return list.filter(({ dueDate }) => dueDate === date);
-};
-
-// If modalids are longer than 0, a modal is open.
-// If a modal is open, the list should not be displayed.
-export const isAModalDisplayed = (modalIds: string[]) => {
-  return modalIds.length > 0;
 };
 
 export const getPageSizeFromConfiguration = (pageSizeConf: ConfScope) => {
@@ -354,14 +311,6 @@ export const pageSizeGlobal = (
 
 export const materialIsOverdue = (date: string | undefined | null) =>
   date ? dateHasPassed(date) : false;
-
-export const loansOverdue = (loans: LoanType[]): boolean => {
-  return loans.every((loan) => materialIsOverdue(loan.dueDate));
-};
-
-export const sameLoanDate = (loans: string[]): boolean => {
-  return loans.every((loanDate, i, arr) => loanDate === arr[0]);
-};
 
 export const tallyUpFees = (fees: FeeV2[]) => {
   return formatCurrency(fees.reduce((total, { amount }) => total + amount, 0));
@@ -577,8 +526,6 @@ export const parseBoolean = (value?: string): boolean =>
 export const isEnterOrSpacePressed = (key: string): boolean => {
   return key === "Enter" || key === " ";
 };
-
-export default {};
 
 /* ********************************* Vitest Section  ********************************* */
 if (import.meta.vitest) {

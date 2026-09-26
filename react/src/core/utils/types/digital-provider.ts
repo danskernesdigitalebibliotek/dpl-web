@@ -5,5 +5,3 @@
  * Goes away with the Publizon integration.
  */
 export type DigitalProvider = "publizon" | "serviceLayer";
-
-export default {};

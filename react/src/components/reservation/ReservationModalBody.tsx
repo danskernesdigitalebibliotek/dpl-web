@@ -466,5 +466,3 @@ const Recommendations = (props: { work: Work }) => {
     </div>
   );
 };
-
-export default ReservationModalBody;

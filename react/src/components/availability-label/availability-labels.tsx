@@ -96,5 +96,3 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
     </>
   );
 };
-
-export default {};

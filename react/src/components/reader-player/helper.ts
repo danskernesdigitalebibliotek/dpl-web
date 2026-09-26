@@ -187,5 +187,3 @@ export const findReservedReservation = (
     (reservation) =>
       reservation.identifier === identifier && reservation.state === "reserved"
   );
-
-export default {};

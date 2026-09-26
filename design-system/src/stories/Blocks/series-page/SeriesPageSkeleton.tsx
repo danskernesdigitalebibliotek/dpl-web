@@ -1,4 +1,4 @@
-import SeriesCardSkeleton from "../../Library/series-card/SeriesCardSkeleton";
+import { SeriesCardSkeleton } from "../../Library/series-card/SeriesCardSkeleton";
 
 export type SeriesPageSkeletonProps = {
   members?: number;
@@ -16,9 +16,7 @@ const headerCoverCount = 3;
 // The member count is a guess at what fills a screen, the same guess the search
 // result list makes while loading - the real count is not known until the query
 // returns.
-export const SeriesPageSkeleton = ({
-  members = 5,
-}: SeriesPageSkeletonProps) => {
+const SeriesPageSkeleton = ({ members = 5 }: SeriesPageSkeletonProps) => {
   return (
     <div className="series-page ssc">
       <div className="series-page__header">

@@ -37,8 +37,6 @@ export const fetcher = async <ResponseType>(url: string, init?: RequestInit) => 
   return null as ResponseType
 }
 
-export default fetcher
-
 export type ErrorType<ErrorData> = ErrorData
 
 export type BodyType<BodyData> = BodyData

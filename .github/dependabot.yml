@@ -265,7 +265,6 @@ updates:
       - dependency-name: "@graphql-codegen/typescript-operations"
         versions: [">=6.1.6"]
 
-
   # React - npm dependencies
   - package-ecosystem: npm
     directory: "/react"
@@ -371,8 +370,6 @@ updates:
       # plugins peer-require graphql ^16), so codegen crashes on it.
       - dependency-name: "graphql"
         versions: [">=17.0.0"]
-      - dependency-name: "@graphql-codegen/add"
-        versions: [">=7.0.0"]
       - dependency-name: "@graphql-codegen/cli"
         versions: [">=7.0.0"]
       - dependency-name: "@graphql-codegen/introspection"

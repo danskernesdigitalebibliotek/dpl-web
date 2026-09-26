@@ -90,3 +90,20 @@ jobs:
             echo "::error::Generated FBS files are out of date with fbs-adapter.yaml. Run 'pnpm run codegen:fbs' inside packages/service-layer and commit the result."
             exit 1
           fi
+
+  Knip:
+    name: Service Layer / Knip
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      # Knip runs from the root config (knip.json), scoped to this workspace.
+      # False positives are handled there (entries/ignores) — never by
+      # deleting code the analysis cannot see.
+      - name: Find unused files, exports and dependencies
+        run: pnpm knip --workspace packages/service-layer

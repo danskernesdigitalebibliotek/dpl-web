@@ -85,8 +85,4 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
   )
 }
 
-export const SlideSelectSkeleton = () => {
-  return <div className="bg-background-skeleton h-[40px] w-60 animate-pulse rounded-full" />
-}
-
 export default SlideSelect

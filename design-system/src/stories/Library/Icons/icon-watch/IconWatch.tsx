@@ -10,5 +10,3 @@ export const IconWatch = () => {
     </div>
   );
 };
-
-export default IconWatch;

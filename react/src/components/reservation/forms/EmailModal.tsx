@@ -7,8 +7,6 @@ export interface EmailModalProps {
   patron: PatronV5;
 }
 
-export const EmailModalId = "reservation-form-email";
-
 const EmailModal = ({ patron, patron: { emailAddress } }: EmailModalProps) => {
   const t = useText();
   return (

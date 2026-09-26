@@ -38,13 +38,6 @@ export const dateHasPassed = (date: string) => {
   return dayjs().isAfter(date, "day");
 };
 
-export const calculateDateDayDifference = (
-  startDate: string,
-  endDate: string
-) => {
-  return dayjs(startDate).diff(dayjs(endDate), "day");
-};
-
 export const calculateDateYearsDifference = (date: string | Date) => {
   return dayjs().diff(dayjs(date), "year");
 };

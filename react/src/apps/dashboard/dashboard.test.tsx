@@ -1384,6 +1384,13 @@ describe("Dashboard", () => {
       body: { id: "default", collections: [] }
     }).as("favorites");
 
+    cy.intercept("GET", "**/external/agencyid/patrons/patronid/v4**", {
+      statusCode: 200,
+      body: { patron: { blockStatus: null } }
+    }).as("patron");
+
+    interceptPublizonCalls();
+
     interceptRecommendations();
 
     cy.visit("/iframe.html?id=apps-dashboard--primary&viewMode=story");

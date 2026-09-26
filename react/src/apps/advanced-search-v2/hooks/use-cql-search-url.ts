@@ -17,5 +17,3 @@ export const useCqlSearchUrl = (): { customCqlUrl: URL | null } => {
 
   return { customCqlUrl };
 };
-
-export default useCqlSearchUrl;

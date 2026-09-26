@@ -1,5 +1,5 @@
 import { Options } from "wiremock-rest-client/dist/model/options.model";
-import wiremock, { matchGraphqlQuery, matchWidVariable } from "../../lib/general";
+import { wiremock, matchGraphqlQuery, matchWidVariable } from "../../lib/general";
 
 export default async (baseUri?: string, options?: Options) => {
   // Get Work.

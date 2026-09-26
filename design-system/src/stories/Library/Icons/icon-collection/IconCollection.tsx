@@ -12,5 +12,3 @@ export const IconCollection = () => {
     </div>
   );
 };
-
-export default IconCollection;

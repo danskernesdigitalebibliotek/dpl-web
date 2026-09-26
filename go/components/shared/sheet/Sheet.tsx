@@ -23,10 +23,6 @@ const SheetTrigger = React.forwardRef<
 ))
 SheetTrigger.displayName = SheetPrimitive.Trigger.displayName
 
-const SheetClose = SheetPrimitive.Close
-
-const SheetPortal = SheetPrimitive.Portal
-
 const SheetOverlay = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
@@ -116,13 +112,11 @@ SheetDescription.displayName = SheetPrimitive.Description.displayName
 
 export {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetOverlay,
-  SheetPortal,
   SheetTitle,
   SheetTrigger,
 }

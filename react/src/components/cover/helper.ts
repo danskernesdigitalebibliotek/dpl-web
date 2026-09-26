@@ -127,19 +127,7 @@ export function resolveCoverPidValues({
   return Array.isArray(ids) ? (ids as Pid[]) : [];
 }
 
-export default {};
-
 // ************** VITEST ***************
-export const coverImageUrls = {
-  xSmall:
-    "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/120px!AIw2BkPOLypFEqL1vHy1yBKouHF-HNcXWWoIyBuG00fdtw",
-  small:
-    "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/240px!AIw-TQ9oCb7zdDSJjkBiw6jkSDQS8nTg5n_uSZweQTK12Q",
-  medium:
-    "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/480px!AIyr0djl0iG3rFEf29ecuiCXPXmHQPBheE83TYngKX_OHQ",
-  large:
-    "https://fbiinfo-present.dbc.dk/images/OFkgpMOxSKmmt25AzzxAVw/960px!AIwcwpzg_AMmUzDNPm_6frtTRgiUYiSpIQY0GBRgMjTI0A"
-};
 if (import.meta.vitest) {
   const { describe, expect, it } = import.meta.vitest;
 

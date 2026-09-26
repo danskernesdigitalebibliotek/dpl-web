@@ -27,8 +27,8 @@
   "devDependencies": {
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "esbuild": "^0.28.2",
     "@wedobooks/sdk": "0.5.1",
+    "esbuild": "^0.28.2",
     "esbuild-plugin-polyfill-node": "^0.3.0",
     "lodash": "^4.17.23",
     "typescript": "^5.9.3"

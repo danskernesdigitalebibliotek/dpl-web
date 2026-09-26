@@ -17,6 +17,7 @@ sharedWorkspaceLockfile: false
 # reviewed and added deliberately. pnpm appends unreviewed packages here with a
 # placeholder value during install — replace it with true or false.
 allowBuilds:
+  '@firebase/util': set this to true or false
   '@parcel/watcher': true
   '@playwright/browser-chromium': true
   '@swc/core': true
@@ -24,6 +25,7 @@ allowBuilds:
   core-js-pure: true
   cypress: true
   esbuild: true
+  protobufjs: set this to true or false
   puppeteer: true
   sharp: true
   # Optional native dep of mockttp (dev-only HTTP mocking in go). It ships

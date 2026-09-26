@@ -45,5 +45,3 @@ export const TagButton = ({
     </button>
   );
 };
-
-export default TagButton;

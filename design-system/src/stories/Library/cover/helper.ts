@@ -20,5 +20,3 @@ export const getCoverTint = (
   const tintKey = index % coverTints.length;
   return coverTints[tintKey];
 };
-
-export default {};

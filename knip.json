@@ -1,0 +1,92 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": [
+    "-lintignore"
+  ],
+  "ignoreExportsUsedInFile": true,
+  "ignoreBinaries": [
+    "eslint",
+    "playwright",
+    "magenta,blue"
+  ],
+  "workspaces": {
+    ".": {},
+    "cms": {
+      "entry": [
+        ".lighthouserc.js",
+        "cypress/eslint.config.mjs",
+        "dev-scripts/*.js",
+        "wiremock/src/createMappings.ts",
+        "web/modules/custom/**/*.js",
+        "web/themes/custom/**/*.js"
+      ],
+      "ignore": [
+        "web/libraries/**"
+      ]
+    },
+    "design-system": {
+      "entry": [
+        "base.scss",
+        "wysiwyg.scss",
+        "admin-base.scss",
+        "src/**/*.js"
+      ],
+      "ignoreDependencies": [
+        "@babel/preset-env",
+        "playwright",
+        "react-docgen-typescript"
+      ]
+    },
+    "go": {
+      "entry": [
+        ".storybook/mocks/**"
+      ],
+      "ignore": [
+        "lib/soap/**/generated/**",
+        "lib/rest/**/generated/**"
+      ],
+      "ignoreDependencies": [
+        "@babel/core",
+        "@babel/preset-env",
+        "@babel/preset-react",
+        "@babel/preset-typescript",
+        "babel-loader",
+        "@types/jwt-simple"
+      ]
+    },
+    "packages/wedobooks": {
+      "ignoreDependencies": [
+        "lodash"
+      ]
+    },
+    "packages/service-layer": {
+      "entry": [
+        "*/orval.config.ts"
+      ],
+      "ignore": [
+        "*/src/generated/**"
+      ]
+    },
+    "react": {
+      "entry": [
+        "src/apps/**/*.mount.ts",
+        "src/components/design-system/_system.scss",
+        ".storybook/webpack.config.js"
+      ],
+      "ignore": [
+        "src/core/fbs/fbs.ts",
+        "src/core/fbs/model/**",
+        "src/core/publizon/publizon.ts",
+        "src/core/dpl-cms/dpl-cms.ts",
+        "src/core/material-list-api/material-list.ts"
+      ],
+      "ignoreDependencies": [
+        "core-js",
+        "caniuse-lite",
+        "ts-loader",
+        "postcss-scss",
+        "postcss-loader"
+      ]
+    }
+  }
+}

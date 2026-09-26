@@ -83,5 +83,3 @@ export const unknownReaderPlayerState: ReaderPlayerState = {
   canBeSampled: false,
   isLoading: false
 };
-
-export default {};

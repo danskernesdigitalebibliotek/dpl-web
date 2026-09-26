@@ -5,10 +5,8 @@ import goConfig from "@/lib/config/goConfig"
 import {
   ManifestationSearchPageTeaserFragment,
   ManifestationWorkPageFragment,
-  WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
-import { LibraryProfile, LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 import { MaterialTypeIconNamesType } from "@/lib/types/icons"
 
 export const getManifestationMaterialType = (
@@ -230,15 +228,6 @@ export const getManifestationLabel = (
 const toDanishDefinite = (label: string): string =>
   label.endsWith("e") ? `${label}n` : `${label}en`
 
-export const getManifestationByMaterialType = (
-  work: WorkFullWorkPageFragment,
-  materialType: string
-): ManifestationWorkPageFragment | undefined => {
-  return work.manifestations.all.find(manifestation =>
-    manifestation.materialTypes.some(type => type.materialTypeSpecific.display === materialType)
-  )
-}
-
 export const getManifestationLanguageCode = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return undefined
 
@@ -301,61 +290,4 @@ export const getManifestationMaterialTypeIcon = (
 ): MaterialTypeIconNamesType | undefined => {
   const materialType = getManifestationMaterialType(manifestation)
   return getIconNameFromMaterialType(materialType.code)
-}
-
-export const canUserLoanMoreMaterials = (
-  dataLoans: LoanListResult | null | undefined,
-  dataLibraryProfile: LibraryProfile | null | undefined,
-  manifestation: ManifestationWorkPageFragment
-) => {
-  if (!manifestation) {
-    return false
-  }
-
-  const code = manifestation.materialTypes[0]?.materialTypeSpecific.code
-  const icons = goConfig("materialtypes.icons")
-
-  // Check if material is an audiobook
-  if ((icons.audioBookOnline as string[]).includes(code)) {
-    return !!(
-      dataLibraryProfile?.maxConcurrentAudioLoansPerBorrower &&
-      dataLoans?.userData?.totalAudioLoans !== undefined &&
-      dataLibraryProfile.maxConcurrentAudioLoansPerBorrower > dataLoans.userData.totalAudioLoans
-    )
-  }
-
-  // Check if material is an ebook
-  if ((icons.ebook as string[]).includes(code)) {
-    return !!(
-      dataLibraryProfile?.maxConcurrentEbookLoansPerBorrower &&
-      dataLoans?.userData?.totalEbookLoans !== undefined &&
-      dataLibraryProfile.maxConcurrentEbookLoansPerBorrower > dataLoans.userData.totalEbookLoans
-    )
-  }
-
-  // Podcasts are always loanable, unless user has reached the limit of 30 costFree loans
-  if ((icons.podcast as string[]).includes(code)) {
-    return canUserLoanMoreCostFreeMaterials(dataLoans)
-  }
-
-  // Physical materials and unknown types are not loanable online
-  return false
-}
-
-export const canUserLoanMoreCostFreeMaterials = (dataLoans: LoanListResult | undefined | null) => {
-  // If we can't determine the total costFree loans, we can't determine if the user can loan more
-  if (
-    dataLoans?.userData?.totalAudioLoans === undefined ||
-    dataLoans?.userData?.totalEbookLoans === undefined ||
-    dataLoans?.loans === undefined ||
-    dataLoans?.loans === null
-  ) {
-    return false
-  }
-  // Check if the user has reached a total of 30 costFree loans - if so, no more can be loaned
-  const costFreeLoans =
-    dataLoans.loans.length -
-    (dataLoans.userData.totalAudioLoans + dataLoans.userData.totalEbookLoans)
-
-  return costFreeLoans < 30
 }

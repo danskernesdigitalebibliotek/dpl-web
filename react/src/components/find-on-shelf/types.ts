@@ -7,8 +7,3 @@ export type ManifestationHoldings = {
   manifestation: Manifestation;
   holding: HoldingsLogisticsV1;
 }[];
-
-export type SelectedPeriodicalEdition = {
-  selectedYear: string;
-  selectedEdition: string;
-};

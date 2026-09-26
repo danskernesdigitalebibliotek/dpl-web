@@ -16,5 +16,3 @@
  */
 export const readEnv = (key: string): string | undefined =>
   typeof process !== "undefined" && process.env ? process.env[key] : undefined;
-
-export default readEnv;

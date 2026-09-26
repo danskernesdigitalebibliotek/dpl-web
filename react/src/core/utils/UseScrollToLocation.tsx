@@ -24,5 +24,3 @@ export const useScrollToLocation = (dependencies: Array<unknown>) => {
     }
   }, [hash, stableDependencies]);
 };
-
-export default {};

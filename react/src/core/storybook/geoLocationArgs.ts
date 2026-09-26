@@ -38,12 +38,3 @@ export default {
     "An error occurred while fetching your location.",
   reverseGeocodeErrorDefaultText: "Could not find address for your location."
 };
-
-export interface GeoLocationArgs {
-  geoLocationErrorNotSupportedText: string;
-  geoLocationErrorPermissionDeniedText: string;
-  geoLocationErrorPositionUnavailableText: string;
-  geoLocationErrorTimeoutText: string;
-  geoLocationErrorDefaultText: string;
-  reverseGeocodeErrorDefaultText: string;
-}
