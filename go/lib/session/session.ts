@@ -264,11 +264,6 @@ export const getUniloginIdToken = async () => {
   return (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
 }
 
-export const getSessionTypeToken = async () => {
-  const { cookies } = await import("next/headers")
-  return (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
-}
-
 const deleteGoSessionCookies = async () => {
   const { cookies } = await import("next/headers")
   const cookieStore = await cookies()

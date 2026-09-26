@@ -5,7 +5,7 @@ import {
   MaterialType,
   DigitalReservation
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import { LoanV2, ReservationDetailsV2 } from "../../fbs/model";
+import { LoanV2 } from "../../fbs/model";
 import { FaustId } from "../types/ids";
 import { ManifestationBasicDetailsFragment } from "../../dbc-gateway/generated/graphql";
 import { BasicDetailsType } from "../types/basic-details-type";
@@ -348,44 +348,6 @@ export const mapDigitalReservationToReservationType = (
   );
 };
 
-// ReservationDetailsV2 is a reservation from FBS, and is the equivalent
-// to the Reservation type in Publizon. These are mapped to the same
-// so digital/physical loans/reservations can use the same components,
-// as their UI is often quite similar
-export const mapFBSReservationToReservationType = (
-  list: ReservationDetailsV2[]
-): ReservationType[] => {
-  return list.map(
-    ({
-      recordId,
-      dateOfReservation,
-      expiryDate,
-      numberInQueue,
-      state,
-      pickupBranch,
-      pickupDeadline,
-      pickupNumber,
-      reservationId,
-      periodical,
-      reservationType
-    }) => {
-      return {
-        periodical: periodical?.displayText || "",
-        faust: recordId as FaustId,
-        dateOfReservation,
-        expiryDate,
-        numberInQueue,
-        state: state === "readyForPickup" ? "readyForPickup" : "reserved",
-        pickupBranch,
-        pickupDeadline,
-        pickupNumber,
-        reservationIds: [reservationId],
-        reservationType
-      };
-    }
-  );
-};
-
 export const mapFBSReservationGroupToReservationType = (
   list: ReservationGroupDetails[]
 ): ReservationType[] => {
@@ -427,5 +389,3 @@ export const mapFBSReservationGroupToReservationType = (
     }
   );
 };
-
-export default {};

@@ -167,5 +167,3 @@ export const useUrlStatistics = () => {
 
   return { redirectWithUrlTracking };
 };
-
-export default {};

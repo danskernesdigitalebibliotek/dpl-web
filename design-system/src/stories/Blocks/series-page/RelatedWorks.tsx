@@ -12,7 +12,7 @@ export type RelatedWorksProps = {
 // MaterialSlider of the author's other works. Works that open one of the
 // author's other series carry the series label ("Del 1 i Vildheks") as their
 // subtitle.
-export const RelatedWorks = ({ heading, items }: RelatedWorksProps) => (
+const RelatedWorks = ({ heading, items }: RelatedWorksProps) => (
   <section className="related-works">
     <MaterialSlider
       heading={heading}

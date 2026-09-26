@@ -10,5 +10,3 @@ export const matchWidVariable = (id: string) =>
 export const wiremock = (baseUri?: string, options?: Options) => {
   return new WireMockRestClient('http://wiremock', options);
 };
-
-export default wiremock;

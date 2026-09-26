@@ -35,5 +35,3 @@ export const InputWithDropdown: React.FC<InputWithDropdownProps> = ({
     </div>
   );
 };
-
-export default {};

@@ -72,5 +72,3 @@ export const ModalProfile: React.FC<ModalProfileProps> = ({
     </div>
   </Modal>
 );
-
-export default ModalProfile;

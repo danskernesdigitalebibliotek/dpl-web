@@ -201,19 +201,3 @@ export const givenUserHasDigitalPodcastLoan = (
     totalEbookLoans: 0,
     totalAudioLoans: 1
   });
-
-/**
- * Given: E-book is unavailable
- * Sets up intercepts to simulate an e-book that cannot be loaned
- */
-export const givenEbookIsUnavailable = (options?: { identifier?: string }) => {
-  const identifier = options?.identifier || "9788702441000";
-
-  cy.intercept("GET", "**/v1/loanstatus/**", {
-    statusCode: 200,
-    body: publizonLoanStatusFactory.build({
-      loanStatus: ContentLoanStatusEnum.NUMBER_3, // Unavailable
-      identifier
-    })
-  }).as("publizonLoanStatusUnavailable");
-};

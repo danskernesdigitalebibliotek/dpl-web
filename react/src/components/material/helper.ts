@@ -51,5 +51,3 @@ export const shouldShowMaterialAvailabilityText = (
 
   return shouldShowOnlineAvailability || shouldShowPhysicalAvailability;
 };
-
-export default {};

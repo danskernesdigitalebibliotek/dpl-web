@@ -186,5 +186,3 @@ export const statistics: Statistics = {
     parameterName: ""
   }
 };
-
-export default {};

@@ -177,5 +177,3 @@ export const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
     </div>
   );
 };
-
-export default {};

@@ -327,5 +327,3 @@ export const getInputType = (type: ModalReservationFormTextType) => {
       return "text";
   }
 };
-
-export default {};

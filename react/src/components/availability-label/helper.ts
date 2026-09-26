@@ -28,5 +28,3 @@ export const getParentAvailabilityLabelClass = ({
     "text-label",
     "availability-label"
   );
-
-export default {};

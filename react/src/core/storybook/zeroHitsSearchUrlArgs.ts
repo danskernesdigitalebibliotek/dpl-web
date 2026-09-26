@@ -8,7 +8,3 @@ export const argTypes = {
 export default {
   zeroHitsSearchUrl: "/din-sogning-har-0-resultater"
 };
-
-export interface ZeroHitsSearchUrlArgs {
-  zeroHitsSearchUrl: string;
-}

@@ -1,10 +1,6 @@
 import { ButtonUI } from "../Buttons/button-ui/ButtonUI";
 import { Button } from "../Buttons/button/Button";
 
-export function InvalidProps() {
-  return <h1>Invalid props</h1>;
-}
-
 export function ModalFallbackButton({
   toggleModal,
 }: {

@@ -38,5 +38,3 @@ export const getAvailabilityText = ({
 
   return null;
 };
-
-export default {};

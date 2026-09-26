@@ -12,5 +12,3 @@ export const PromoTitle = (props: PromoTitleProps) => {
     <h1 className={clsx("promo-title", `promo-title--${variant}`)}>{text}</h1>
   );
 };
-
-export default PromoTitle;
