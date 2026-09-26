@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knip-oprydning — overblik over PR #1769</title>
+<style>
+  :root {
+    --ink: #1a1d21;
+    --muted: #5b6470;
+    --accent: #0b5fff;
+    --ok: #1a7f37;
+    --warn: #9a6700;
+    --risk: #c4432b;
+    --line: #e3e6ea;
+    --bg-soft: #f6f8fa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink); margin: 0; line-height: 1.55; background: #fff;
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+  h1 { font-size: 1.7rem; margin: 0 0 .25rem; }
+  h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+  h3 { font-size: 1rem; margin: 1.25rem 0 .5rem; }
+  p, li { max-width: 75ch; }
+  .meta { color: var(--muted); margin-bottom: 1.5rem; }
+  .meta a { color: var(--accent); }
+  code { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 4px; padding: .05rem .35rem; font-size: .875em; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .75rem; margin: 1.25rem 0; }
+  .card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; }
+  .card b { display: block; font-size: 1.45rem; }
+  .card span { color: var(--muted); font-size: .85rem; }
+  table { border-collapse: collapse; width: 100%; margin: .75rem 0 1.25rem; font-size: .92rem; }
+  th, td { border: 1px solid var(--line); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+  th { background: var(--bg-soft); }
+  .tag { display: inline-block; border-radius: 999px; padding: .05rem .6rem; font-size: .75rem; font-weight: 600; white-space: nowrap; }
+  .tag.ok { background: #dafbe1; color: var(--ok); }
+  .tag.warn { background: #fff8c5; color: var(--warn); }
+  .tag.risk { background: #ffebe9; color: var(--risk); }
+  details { border: 1px solid var(--line); border-radius: 8px; padding: .6rem .9rem; margin: .6rem 0; background: #fff; }
+  summary { cursor: pointer; font-weight: 600; }
+  details ul { margin: .5rem 0 .25rem; }
+  ul.files { columns: 2; font-size: .85rem; list-style: none; padding-left: 0; }
+  ul.files li { break-inside: avoid; padding: .1rem 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .check { list-style: none; padding-left: 0; }
+  .check li { padding-left: 1.6rem; position: relative; margin-bottom: .35rem; }
+  .check li::before { content: "✓"; color: var(--ok); font-weight: 700; position: absolute; left: .25rem; }
+  footer { color: var(--muted); font-size: .85rem; margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Knip-oprydning — overblik</h1>
+<p class="meta">
+  <a href="https://github.com/danskernesdigitalebibliotek/dpl-web/pull/1769">PR #1769</a> ·
+  branch <code>knip-cleanup</code> → <code>develop</code> · 4 commits · 26. september 2026
+</p>
+
+<p>PR'en introducerer <a href="https://knip.dev/">knip</a> som værktøj til at finde ubrugt kode og
+ubrugte afhængigheder i monorepoet, konfigurerer det så det forstår projekternes særheder, og
+implementerer samtlige fund. <strong><code>pnpm knip</code> kører nu helt rent (exit 0, nul fund).</strong>
+Alle 193 ændrede filer har en inline-kommentar på PR'en, der forklarer hvorfor ændringen er lavet.</p>
+
+<div class="cards">
+  <div class="card"><b>193</b><span>filer ændret</span></div>
+  <div class="card"><b>−6.799</b><span>linjer fjernet (+1.131)</span></div>
+  <div class="card"><b>45</b><span>døde filer slettet</span></div>
+  <div class="card"><b>52</b><span>dependencies fjernet</span></div>
+  <div class="card"><b>~150</b><span>døde exports/typer</span></div>
+  <div class="card"><b>0</b><span>knip-fund tilbage</span></div>
+</div>
+
+<h2>Hvad indeholder PR'en</h2>
+<table>
+  <tr><th>Commit</th><th>Indhold</th></tr>
+  <tr>
+    <td><code>94b835a4f</code></td>
+    <td>Første runde: 11 ubrugte dependencies fjernet (bl.a. <code>next-drupal</code>, <code>next-themes</code>,
+    <code>unfetch</code>, <code>@types/proj4</code> — proj4 ≥ 2.19 leverer selv typer), døde cypress-hjælpere,
+    ubrugt default-export i <code>token.js</code>, og reparation af to defekte scripts
+    (<code>chromatic</code> og <code>shadcn:add</code> brugte <code>pnpm exec</code> på pakker, der ikke er installeret — nu <code>pnpm dlx</code>).</td>
+  </tr>
+  <tr>
+    <td><code>2a04789ad</code></td>
+    <td>Reparation af to artefakter fra markdown-formatteringen af <code>code_guidelines.md</code>
+    (en sammenklappet liste og et kodeeksempel, der var blevet omformateret til 4-space indrykning).</td>
+  </tr>
+  <tr>
+    <td><code>3de15e44b</code></td>
+    <td>Fuld <code>knip.json</code>-konfiguration — se afsnittet om falske positiver nedenfor.</td>
+  </tr>
+  <tr>
+    <td><code>66f3f432d</code></td>
+    <td>Den store fejning: 43 døde filer, 41 ubrugte devDependencies på tværs af fem workspaces
+    (lockfiles synkroniseret), ~150 døde exports/typer og alle 34 dublet-exports afgjort ved at
+    beholde den form, som importørerne faktisk bruger.</td>
+  </tr>
+</table>
+
+<h2>Falske positiver — håndteret i konfigurationen</h2>
+<p>Knip kan ikke se referencer, der kun findes som strenge eller i værktøjskæden. Disse er
+<em>ikke</em> slettet, men deklareret i <code>knip.json</code>:</p>
+<ul>
+  <li><strong>Webpack-entries via glob:</strong> react-appsene bygges fra <code>src/apps/**/*.mount.ts</code> —
+  uden denne entry troede knip, at næsten hele <code>react/src</code> var dødt (332 "ubrugte filer" i første kørsel).</li>
+  <li><strong><code>_system.scss</code>:</strong> injiceres via en <code>@import</code>-streng i
+  <code>postcss.config.js</code> — var millimeter fra at blive slettet. Samme fil refererer
+  <code>postcss-scss</code> som parser (beholdt, ignoreret).</li>
+  <li><strong>SCSS-entries:</strong> design-systemets tre buildindgange (<code>base.scss</code>,
+  <code>wysiwyg.scss</code>, <code>admin-base.scss</code>) — knip følger selv <code>@import</code>-grafen derfra.</li>
+  <li><strong>Drupal-biblioteker:</strong> JS under <code>cms/web/modules|themes/custom/**</code> indlæses
+  via <code>*.libraries.yml</code>, som knip ikke parser.</li>
+  <li><strong>Genereret kode:</strong> orval-/graphql-/SOAP-output eksporterer alt per design og er undtaget.</li>
+  <li><strong>Workflow-binaries:</strong> knip forstår ikke <code>defaults.run.working-directory</code> i
+  GitHub Actions (eslint/playwright), og <code>magenta,blue</code> er en fejllæst farveparameter til <code>concurrently</code>.</li>
+  <li><strong>Bevidst beholdt kode:</strong> tagges <code>/** @lintignore */</code>, som konfigurationen
+  udelukker — brugt på <code>RenewStatus</code>-medlemmerne (dokumenterer FBS-API'ets statusværdier) og
+  <code>getFirstPublishedManifestation</code> (har en "deliberately kept"-kommentar).</li>
+</ul>
+
+<h2>Verifikation (kørt inden commit)</h2>
+<ul class="check">
+  <li><code>pnpm knip</code> — exit 0, nul fund.</li>
+  <li>Typecheck rent i go, design-system og cms/wiremock.</li>
+  <li>ESLint rent i go og react.</li>
+  <li>Design-systemets Storybook-build går grønt — vigtigt, fordi CRA-skelettet (<code>src/index.tsx</code>/<code>App.tsx</code>) er slettet.</li>
+  <li>Symbolscanning: intet slettet symbol har levende referencer — navnesammenfald
+  (fx reacts egne <code>Pid</code>/<code>GuardedAppId</code> over for go's slettede, <code>usePrevious</code> fra
+  <code>react-use</code>) er verificeret som separate deklarationer.</li>
+</ul>
+
+<h2>⚠ Overvej inden PR'en lukkes</h2>
+<table>
+  <tr><th>Punkt</th><th>Vurdering</th><th></th></tr>
+  <tr>
+    <td><strong>Pre-eksisterende tsc-fejl i react</strong></td>
+    <td>Reacts typecheck har én fejl: <code>@tanstack/query-core</code> findes i to versioner
+    (5.103.1 i react, 5.103.2 i service-layer-snapshottet), og deres private klassefelter er
+    inkompatible (<code>useDigitalSdkSession.ts</code>). Fejlen fandtes <em>før</em> denne PR
+    (verificeret med stash), men hvis CI kører <code>tsc</code> på react, blokerer den.
+    Fix: bump <code>@tanstack/react-query</code> i react eller dedupe — evt. som opfølgnings-PR.</td>
+    <td><span class="tag risk">skal afklares</span></td>
+  </tr>
+  <tr>
+    <td><strong>Kør hele CI-suiten</strong></td>
+    <td>Typecheck/lint/builds er kørt lokalt, men cypress-suiterne (react + go + cms) og
+    accessibility-tests er <em>ikke</em> kørt. Cypress-hjælpere blev kun slettet, hvis ingen spec
+    importerer dem, men CI er den endelige dom.</td>
+    <td><span class="tag warn">afvent CI</span></td>
+  </tr>
+  <tr>
+    <td><strong>Chromatic på design-system</strong></td>
+    <td>Der er slettet komponenter uden stories (<code>FacetLine</code>, <code>DropdownWithLabel</code>,
+    <code>MissingStory</code> m.fl.) og fjernet default-exports i ~25 story-komponenter. Ingen stories
+    er ændret, så Chromatic bør vise nul visuelle diffs — men tjek kørslen. Bemærk: al SCSS, der
+    skibes (undtagen to aldrig-importerede filer), er urørt, så markup-kontrakten til CMS'et er intakt.</td>
+    <td><span class="tag warn">tjek diff</span></td>
+  </tr>
+  <tr>
+    <td><strong>Slettet kode kan være "fremtidig brug"</strong></td>
+    <td>Alt slettet er verificeret uden referencer, men nogle ting kan være lagt klar til kommende
+    arbejde — fx go's <code>lib/fetchers/*</code>, <code>loadUserToken.ts</code> (adgangsplatform-callback)
+    og <code>canUserLoanMore*</code>-hjælperne (lånekvoter). Git har det hele, men en reviewer med
+    domæneviden bør skimme fil-listen nederst. Alternativet til sletning er <code>@lintignore</code>-tagget.</td>
+    <td><span class="tag warn">domæne-review</span></td>
+  </tr>
+  <tr>
+    <td><strong>Service-layer API ændret</strong></td>
+    <td><code>FbsConfig</code> re-eksporteres ikke længere fra pakkens rod (<code>fbs/src/index.ts</code>).
+    Ingen consumers bruger den derfra i dag, men det er en API-indsnævring af en pakke, der er på vej
+    til at vokse (FBI-data flytter ind senere). Go's <code>file:</code>-snapshot er opdateret.</td>
+    <td><span class="tag warn">bemærk</span></td>
+  </tr>
+  <tr>
+    <td><strong><code>pnpm dlx</code> henter u-pinnede versioner</strong></td>
+    <td>De reparerede scripts (<code>chromatic</code>, <code>shadcn@canary</code>) og cms'ens eksisterende
+    dlx-kald henter nyeste version ved hver kørsel. Det matcher den eksisterende praksis i repoet,
+    men overvej pinning, hvis reproducerbarhed ønskes.</td>
+    <td><span class="tag warn">valgfrit</span></td>
+  </tr>
+  <tr>
+    <td><strong>Knip er ikke i CI endnu</strong></td>
+    <td>Uden en CI-gate ruster det grønne resultat hurtigt. Overvej et workflow-step, der kører
+    <code>pnpm knip</code> (evt. som opfølgnings-PR, så denne ikke vokser).</td>
+    <td><span class="tag warn">opfølgning</span></td>
+  </tr>
+  <tr>
+    <td><strong>Codegen kan genskabe fund</strong></td>
+    <td>Genererede <em>filer</em> er undtaget, men fx <code>dbc-gateway/generated</code> blev taget ud af
+    ignore-listen, fordi alt dér aktuelt bruges. Næste <code>codegen</code>-kørsel kan tilføje ubrugte
+    exports og gøre knip rød — løsningen er da at genindsætte stien i ignore, ikke at redigere output.</td>
+    <td><span class="tag warn">kendt adfærd</span></td>
+  </tr>
+  <tr>
+    <td><strong>Dependabot-oprydning</strong></td>
+    <td>52 fjernede dependencies kan have åbne Dependabot-PR'er, som bliver overflødige, når denne
+    merges. Dependabot-ignorereglen for <code>@graphql-codegen/add</code> er allerede fjernet i PR'en.</td>
+    <td><span class="tag ok">lav friktion</span></td>
+  </tr>
+  <tr>
+    <td><strong>Kosmetik på PR'en</strong></td>
+    <td>Én review-boks viser "(Duplicate posting …)" — GitHub returnerede 502 på et kald, der reelt
+    lykkedes, så en batch blev dobbelt-postet. Dubletterne (65 kommentarer) er slettet; kun den tomme
+    boks står tilbage.</td>
+    <td><span class="tag ok">kun kosmetisk</span></td>
+  </tr>
+</table>
+
+<h2>Detaljer</h2>
+
+<details>
+<summary>45 slettede filer</summary>
+<ul class="files">
+  <li>cms/tsconfig.json <em>(tom fil)</em></li>
+  <li>design-system/src/App.tsx</li>
+  <li>design-system/src/index.tsx</li>
+  <li>design-system/…/dawa-input/dawa-input.scss</li>
+  <li>design-system/…/card-list-page/FacetLineSelectedTerms.tsx</li>
+  <li>design-system/…/dropdown/DropdownWithLabel.tsx</li>
+  <li>design-system/…/footer-accordions/footer-accordions.js</li>
+  <li>design-system/…/missing-story/MissingStory.tsx</li>
+  <li>design-system/…/missing-story/tools.tsx</li>
+  <li>design-system/…/multiselect/multiselect.scss</li>
+  <li>design-system/…/utils/content-list-month-separator.js</li>
+  <li>go/app/…/auth/callback/adgangsplatformen/loadUserToken.ts</li>
+  <li>go/app/…/auth/callback/unilogin/types.ts</li>
+  <li>go/app/…/cache/revalidate/helper.ts</li>
+  <li>go/components/shared/image/helper.ts</li>
+  <li>go/components/shared/workCard/helper.ts</li>
+  <li>go/lib/fetchers/debug-fetch.ts</li>
+  <li>go/lib/fetchers/helper.ts</li>
+  <li>go/lib/fetchers/orval/fetcherFactory.ts</li>
+  <li>go/lib/fetchers/types.ts</li>
+  <li>go/lib/helpers/colors.ts</li>
+  <li>go/lib/machines/search/debug.ts</li>
+  <li>react/.storybook/webpack.config.js</li>
+  <li>react/cypress/…/RadioButtonGroup.ts</li>
+  <li>react/src/apps/fee-list/…/AcceptTermsCheckbox.tsx</li>
+  <li>react/src/apps/fee-list/utils/fee-status-circle.tsx</li>
+  <li>react/src/components/Buttons/ButtonSmallFilled.tsx</li>
+  <li>react/src/components/Buttons/ButtonTag.tsx</li>
+  <li>react/src/components/GroupModal/ReservationCircleModalHeader.tsx</li>
+  <li>react/src/components/accept-fees-modal/AcceptFeesModal.tsx</li>
+  <li>react/src/components/alert/alert.scss</li>
+  <li>react/src/components/atoms/icons/arrow/arrow-white.tsx</li>
+  <li>react/src/components/availability-label/availability-label.test.js <em>(kørtes aldrig af nogen runner)</em></li>
+  <li>react/src/components/facet-line/FacetLine.tsx</li>
+  <li>react/src/components/facet-line/FacetLineFilters.tsx</li>
+  <li>react/src/components/facet-line/FacetLineFiltersSkeleton.tsx</li>
+  <li>react/src/components/facet-line/FacetLineSelected.tsx</li>
+  <li>react/src/core/configuration/identifier-lengths.ts</li>
+  <li>react/src/core/fetchers/helpers.ts</li>
+  <li>react/src/core/fetchers/orval/fetcherFactory.ts</li>
+  <li>react/src/core/fetchers/orval/fetchers.ts</li>
+  <li>react/src/core/fetchers/types.ts</li>
+  <li>react/src/core/utils/featureFlag.ts</li>
+  <li>react/src/core/utils/helpers/vitest.ts</li>
+  <li>react/src/core/utils/types/recommender-view.ts</li>
+</ul>
+</details>
+
+<details>
+<summary>52 fjernede dependencies (per workspace)</summary>
+<h3>cms (5)</h3>
+<p><code>@apidevtools/swagger-cli</code>, <code>@lhci/cli</code>, <code>jsome</code>,
+<code>markdownlint-cli2</code> — alle kaldes via <code>pnpm dlx</code> i Taskfile/CI, så devDependency-posterne
+var overflødige — samt <code>chrome-launcher</code> (ingen referencer).</p>
+<h3>design-system (9)</h3>
+<p><code>@babel/preset-env</code>, <code>@testing-library/jest-dom</code>, <code>@testing-library/react</code>,
+<code>@testing-library/user-event</code>, <code>eslint-webpack-plugin</code>, <code>json</code>,
+<code>react-syntax-highlighter</code>, <code>stylelint-scss</code> <em>(transitiv via recommended-scss)</em>, <code>web-vitals</code>.</p>
+<h3>go (17)</h3>
+<p>Første runde: <code>@redux-devtools/extension</code>, <code>lucide-react</code>, <code>next-drupal</code>,
+<code>next-themes</code>, <code>ts-node</code>. Fejning: <code>@eslint/js</code>,
+<code>@graphql-codegen/client-preset</code>, <code>@graphql-codegen/introspection</code>,
+<code>@graphql-codegen/schema-ast</code>, <code>@next/eslint-plugin-next</code>,
+<code>@storybook/addon-onboarding</code>, <code>@storybook/blocks</code>, <code>@storybook/react</code>,
+<code>@typescript-eslint/eslint-plugin</code>, <code>eslint-plugin-jsx-a11y</code>,
+<code>eslint-plugin-no-only-tests</code> <em>(eslint-plugins leveres via eslint-config-next)</em>,
+<code>fetch-to-curl</code>, <code>node-mocks-http</code>, <code>prepend-file</code>.</p>
+<h3>react (20)</h3>
+<p>Første runde: <code>unfetch</code>, <code>@graphql-codegen/add</code>,
+<code>@graphql-codegen/typescript-graphql-files-modules</code>, <code>@graphql-typed-document-node/core</code>,
+<code>@testing-library/react-hooks</code>, <code>@types/proj4</code>. Fejning: <code>@types/react-flatpickr</code>,
+<code>@types/react-redux</code>, <code>babel-plugin-transform-react-remove-prop-types</code>,
+<code>change-case-all</code>, <code>eslint-loader</code>, <code>istanbul-lib-coverage</code>,
+<code>mutationobserver-shim</code>, <code>postcss-loader</code>, <code>source-map-support</code>,
+<code>stylelint-config-prettier</code>, <code>stylelint-scss</code>, <code>stylelint-webpack-plugin</code>.
+<em>Beholdt trods knip-fund: <code>postcss-scss</code> (parser-streng i postcss.config.js).</em></p>
+<h3>packages/wedobooks (1)</h3>
+<p><code>lodash</code>.</p>
+</details>
+
+<details>
+<summary>Adfærdsnære ændringer, der er værd at kende</summary>
+<ul>
+  <li><code>go/lib/session/session.ts</code>: <code>getSessionTypeToken</code> slettet — ordret dublet af <code>getUniloginIdToken</code>.</li>
+  <li><code>react …/availability-label.tsx</code>: den <em>memoiserede</em> default-export er fjernet;
+  alle forbrugere importerede i forvejen den ikke-memoiserede navngivne export, så runtime-adfærden er uændret.</li>
+  <li>go's dialog/drawer/sheet (shadcn): ubrugte underkomponenter (<code>*Trigger</code>, <code>*Close</code>,
+  <code>SheetPortal</code>) fjernet fra export-listerne inkl. deklarationer.</li>
+  <li><code>cms/wiremock</code>: dublet-exporten af <code>wiremock</code> samlet på navngiven form;
+  fem mapping-filer konverteret fra default- til navngiven import.</li>
+  <li><code>ReviewMetadata.tsx</code>: død <code>usDateStringToDateObj</code> fjernet inkl. dayjs-imports.</li>
+</ul>
+</details>
+
+<footer>
+Genereret 26. september 2026 i forbindelse med knip-oprydningen på branchen <code>knip-cleanup</code>.
+Filen er utracket og indgår ikke i PR'en.
+</footer>
+
+</main>
+</body>
+</html>
