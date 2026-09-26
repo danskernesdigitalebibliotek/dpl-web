@@ -236,7 +236,10 @@ The following tools pay a key part here:
     2. [Airbnb React/JSX Style Guide](https://github.com/airbnb/javascript/tree/master/react)
     3. [Prettier](https://prettier.io/)
     4. [Cypress](https://github.com/cypress-io/eslint-plugin-cypress)
-2. [Stylelint](https://stylelint.io/) with the following rulesets and plugins 5. [Recommended SCSS](https://github.com/kristerkari/stylelint-config-recommended-scss) 6. [Prettier](https://github.com/prettier/stylelint-prettier) 7. [BEM support](https://www.npmjs.com/package/@namics/stylelint-bem)
+2. [Stylelint](https://stylelint.io/) with the following rulesets and plugins
+    1. [Recommended SCSS](https://github.com/kristerkari/stylelint-config-recommended-scss)
+    2. [Prettier](https://github.com/prettier/stylelint-prettier)
+    3. [BEM support](https://www.npmjs.com/package/@namics/stylelint-bem)
 
 In general all tools must be able to run locally. This allows developers to get
 quick feedback on their work.
@@ -308,16 +311,16 @@ Or they can also be placed next to the code at the end of a file as described
 
 ```typescript
 export const sum = (...numbers: number[]) =>
-    numbers.reduce((total, number) => total + number, 0);
+  numbers.reduce((total, number) => total + number, 0);
 
 if (import.meta.vitest) {
-    const { describe, expect, it } = import.meta.vitest;
+  const { describe, expect, it } = import.meta.vitest;
 
-    describe("sum", () => {
-        it("should sum numbers", () => {
-            expect(sum(1, 2, 3)).toBe(6);
-        });
+  describe("sum", () => {
+    it("should sum numbers", () => {
+      expect(sum(1, 2, 3)).toBe(6);
     });
+  });
 }
 ```
 
