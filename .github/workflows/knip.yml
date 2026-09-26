@@ -1,0 +1,45 @@
+name: Knip
+
+on:
+  pull_request:
+    paths:
+      - "react/**"
+      - "go/**"
+      - "design-system/**"
+      - "packages/**"
+      - "knip.json"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/knip.yml"
+      - ".github/actions/**"
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "react/**"
+      - "go/**"
+      - "design-system/**"
+      - "packages/**"
+      - "knip.json"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/knip.yml"
+      - ".github/actions/**"
+
+jobs:
+  knip:
+    name: Knip / Unused files, exports and dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      # Knip analyses the whole monorepo from the root config (knip.json).
+      # False positives must be handled there (entries/ignores), never by
+      # deleting code the analysis cannot see — see the config for examples
+      # of string-referenced and build-collected consumption.
+      - name: Run knip
+        run: pnpm knip
