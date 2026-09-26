@@ -28,7 +28,8 @@
       "entry": [
         "base.scss",
         "wysiwyg.scss",
-        "admin-base.scss"
+        "admin-base.scss",
+        "src/**/*.js"
       ],
       "ignoreDependencies": [
         "@babel/preset-env",
