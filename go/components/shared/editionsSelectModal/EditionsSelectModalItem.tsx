@@ -11,7 +11,10 @@ type EditionsSelectModalItemProps = {
   name: string
   checked: boolean
   onSelect: () => void
-  lentOut?: boolean
+  // Shown under the caption when the edition cannot be borrowed right now.
+  // Physical and digital editions word this differently, so the caller
+  // supplies the text.
+  unavailableLabel?: string
 }
 
 const EditionsSelectModalItem = ({
@@ -19,7 +22,7 @@ const EditionsSelectModalItem = ({
   name,
   checked,
   onSelect,
-  lentOut = false,
+  unavailableLabel,
 }: EditionsSelectModalItemProps) => {
   const year = manifestation.edition?.publicationYear?.year
   const title = manifestation.titles?.identifyingAddition || manifestation.titles?.full
@@ -46,10 +49,8 @@ const EditionsSelectModalItem = ({
           {[year ?? title, language].filter(Boolean).join(" - ")}
         </p>
         {publisher && <p className="text-typo-caption opacity-70">{publisher}</p>}
-        {lentOut && (
-          <p className="text-typo-caption text-error-red-300">
-            Udlånt lige nu, men du kan stadig reservere bogen
-          </p>
+        {unavailableLabel && (
+          <p className="text-typo-caption text-error-red-300">{unavailableLabel}</p>
         )}
       </div>
     </label>

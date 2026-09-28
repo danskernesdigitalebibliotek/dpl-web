@@ -6,6 +6,7 @@ import {
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
+import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import { TModalType } from "@/lib/helpers/modal-url"
@@ -49,13 +50,13 @@ const WorkPageButtonsLoggedOut = ({
   if (category === "ebook") {
     return (
       <WorkPageButtons>
-        <WorkPageButton
-          ariaLabel={`Lån ${label}`}
-          theme="primary"
-          disabled={isDisabled}
-          onClick={() => open("LoanLoginModal")}>
-          Lån {label}
-        </WorkPageButton>
+        <DigitalLoanButton
+          workId={workId}
+          selectedManifestation={selectedManifestation}
+          label={label}
+          isDisabled={isDisabled}
+          onLoan={() => open("LoanLoginModal")}
+        />
         <WorkPageButton ariaLabel={`Prøv ${label}`} asChild disabled={isDisabled}>
           <SmartLink href={getEbookPreviewUrl(workId, identifier || "")} reload>
             Prøv {label}
@@ -68,13 +69,13 @@ const WorkPageButtonsLoggedOut = ({
   if (category === "audio") {
     return (
       <WorkPageButtons>
-        <WorkPageButton
-          ariaLabel={`Lån ${label}`}
-          theme="primary"
-          disabled={isDisabled}
-          onClick={() => open("LoanLoginModal")}>
-          Lån {label}
-        </WorkPageButton>
+        <DigitalLoanButton
+          workId={workId}
+          selectedManifestation={selectedManifestation}
+          label={label}
+          isDisabled={isDisabled}
+          onLoan={() => open("LoanLoginModal")}
+        />
         <WorkPageButton
           ariaLabel={`Prøv ${label}`}
           disabled={isDisabled}
@@ -86,6 +87,43 @@ const WorkPageButtonsLoggedOut = ({
   }
 
   return null
+}
+
+// The loan button for a digital edition. A material in a Publizon reservation
+// queue cannot be borrowed, so the button says so rather than sending the
+// reader through a login to find out.
+const DigitalLoanButton = ({
+  workId,
+  selectedManifestation,
+  label,
+  isDisabled,
+  onLoan,
+}: {
+  workId: string
+  selectedManifestation: ManifestationWorkPageFragment
+  label: string
+  isDisabled: boolean
+  onLoan: () => void
+}) => {
+  const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
+
+  if (isDigitalEditionOnLoan(selectedManifestation)) {
+    return (
+      <WorkPageButton ariaLabel={`${label} er udlånt lige nu`} theme="primary" disabled>
+        Udlånt lige nu
+      </WorkPageButton>
+    )
+  }
+
+  return (
+    <WorkPageButton
+      ariaLabel={`Lån ${label}`}
+      theme="primary"
+      disabled={isDisabled}
+      onClick={onLoan}>
+      Lån {label}
+    </WorkPageButton>
+  )
 }
 
 export default WorkPageButtonsLoggedOut

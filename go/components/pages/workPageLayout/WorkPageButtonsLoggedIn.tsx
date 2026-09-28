@@ -9,6 +9,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
+import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
 import { useEditionAvailability } from "@/hooks/useEditionAvailability"
 import usePatronShelf from "@/hooks/usePatronShelf"
 import useSession from "@/hooks/useSession"
@@ -86,21 +87,19 @@ const WorkPageButtonsLoggedIn = ({
       )
     }
     return (
-      <WorkPageButtons>
-        <WorkPageButton
-          ariaLabel={`Lån ${label}`}
-          theme="primary"
-          dataCy={dataCy}
-          disabled={isDisabled}
-          onClick={() => open("LoanMaterialModal")}>
-          Lån {label}
-        </WorkPageButton>
+      <DigitalLoanButtons
+        workId={workId}
+        selectedManifestation={selectedManifestation}
+        label={label}
+        dataCy={dataCy}
+        isDisabled={isDisabled}
+        onLoan={() => open("LoanMaterialModal")}>
         <WorkPageButton ariaLabel={`Prøv ${label}`} dataCy={dataCy} asChild disabled={isDisabled}>
           <SmartLink href={getEbookPreviewUrl(workId, identifier || "")} reload>
             Prøv {label}
           </SmartLink>
         </WorkPageButton>
-      </WorkPageButtons>
+      </DigitalLoanButtons>
     )
   }
 
@@ -125,15 +124,13 @@ const WorkPageButtonsLoggedIn = ({
       )
     }
     return (
-      <WorkPageButtons>
-        <WorkPageButton
-          ariaLabel={`Lån ${label}`}
-          theme="primary"
-          dataCy={dataCy}
-          disabled={isDisabled}
-          onClick={() => open("LoanMaterialModal")}>
-          Lån {label}
-        </WorkPageButton>
+      <DigitalLoanButtons
+        workId={workId}
+        selectedManifestation={selectedManifestation}
+        label={label}
+        dataCy={dataCy}
+        isDisabled={isDisabled}
+        onLoan={() => open("LoanMaterialModal")}>
         <WorkPageButton
           ariaLabel={`Prøv ${label}`}
           dataCy={dataCy}
@@ -141,11 +138,60 @@ const WorkPageButtonsLoggedIn = ({
           onClick={() => openModal("PlayerPreviewModal", { manifestation: selectedManifestation })}>
           Prøv {label}
         </WorkPageButton>
-      </WorkPageButtons>
+      </DigitalLoanButtons>
     )
   }
 
   return null
+}
+
+// The loan button for a digital edition, with the try button beside it. A
+// material in a Publizon reservation queue cannot be borrowed, so the button
+// says so instead of opening a modal that would fail. Trying a sample stays
+// available.
+const DigitalLoanButtons = ({
+  workId,
+  selectedManifestation,
+  label,
+  dataCy,
+  isDisabled,
+  onLoan,
+  children,
+}: {
+  workId: string
+  selectedManifestation: ManifestationWorkPageFragment
+  label: string
+  dataCy: string
+  isDisabled: boolean
+  onLoan: () => void
+  children: React.ReactNode
+}) => {
+  const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
+  const isOnLoan = isDigitalEditionOnLoan(selectedManifestation)
+
+  return (
+    <WorkPageButtons>
+      {isOnLoan ? (
+        <WorkPageButton
+          ariaLabel={`${label} er udlånt lige nu`}
+          theme="primary"
+          dataCy={dataCy}
+          disabled>
+          Udlånt lige nu
+        </WorkPageButton>
+      ) : (
+        <WorkPageButton
+          ariaLabel={`Lån ${label}`}
+          theme="primary"
+          dataCy={dataCy}
+          disabled={isDisabled}
+          onClick={onLoan}>
+          Lån {label}
+        </WorkPageButton>
+      )}
+      {children}
+    </WorkPageButtons>
+  )
 }
 
 // Reads the patron's loans and reservations and renders the matching state:

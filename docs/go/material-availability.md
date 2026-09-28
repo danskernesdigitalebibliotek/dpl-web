@@ -112,6 +112,8 @@ rejects what it cannot supply, so the fallback is safe.
 | `packages/service-layer/src/types.ts` | `MaterialAvailability`, `RecordAvailability` |
 | `go/lib/helpers/helper.availability.ts` | The obtainable / on-loan rules |
 | `go/hooks/useEditionAvailability.ts` | React hook; also exports `useWorkRecordIds` |
+| `go/lib/helpers/helper.digitalAvailability.ts` | The Publizon status rule |
+| `go/hooks/useDigitalEditionAvailability.ts` | React hook for digital editions |
 | `go/hooks/useBlacklistedAvailabilityBranches.ts` | Branches the library excludes |
 
 `useWorkRecordIds` derives the full set of physical record ids for a work.
@@ -121,16 +123,65 @@ requests.
 
 ## Digital availability
 
-Digital editions can be unavailable too — the kommune may hold no licence,
-have turned availability off, or have hit its availability limit. FB CMS
-surfaces this today.
+Digital editions are answered by **Publizon**, through the batch endpoint
+`POST /v1/loanstatus`. One request covers every digital identifier of a
+work, keyed by the identifier the manifestation carries (`PUBLIZON`, or its
+ISBN as a fallback).
 
-The mechanism is Publizon's `loanStatus` (0–5, where 5 means a reservation
-queue). GO has generated clients for `GET /v1/loanstatus/{identifier}` and
-the batch `POST /v1/loanstatus`, but does not call them yet.
+### Only 3 and 4 can be borrowed
 
-**Not implemented.** Until it is, digital editions are never marked
-unavailable in the picker.
+`loanStatus` is documented as 0–5 but the generated type allows 0–7, and
+`react` carries two tables for it that **disagree about what 5 means**:
+
+| Table | Used for | Says about 5 |
+|---|---|---|
+| `getLoanStatus` | loan and reserve buttons | `reservable` — the material *can* be obtained |
+| `publizonProductStatuses` | availability labels | `isAvailable: false` |
+
+The button table is the one to mirror here, since this drives a button.
+`usePublizonReaderPlayerState` reads it as an **allowlist**: only 3
+(redeemable) and 4 (loanable) can be borrowed, and 5 is what opens the
+reserve flow.
+
+GO uses the same allowlist. Status 5 still ends as a dead end here, but for
+its own reason — GO cannot reserve digital material — and statuses 1
+(already loaned) and 2 (reserved, not redeemable) are caught with it, which
+a "everything but 5" rule would have let through to a loan that fails.
+
+An identifier Publizon did not answer for, or answered for without a status,
+stays borrowable: silence is not a verdict.
+
+### The loan button carries it, not the picker
+
+Digital editions cannot be reserved in GO — the work page offers "Lån" and
+"Prøv", never "Reserver". An edition in a queue is a dead end, so the loan
+button is disabled and reads "Udlånt lige nu", logged in or out. Trying a
+sample stays available, and an edition already on loan to the reader still
+opens.
+
+The edition stays selectable in the picker, captioned "Udlånt lige nu"
+against the physical wording "Udlånt lige nu, men du kan stadig reservere
+bogen". Disabling it there would not be enough on its own — a reader also
+arrives through a shared link, through "nyeste", or because it is the only
+edition of its type — and filtering it out would leave an empty picker for a
+type with one edition.
+
+### Two providers, and a migration
+
+`react` asks the **Biblio adapter** (via the service layer's
+`useDigitalLoanDecision`) for libraries that have switched, and Publizon for
+those that have not — never both, since falling back would offer a loan the
+library has decided not to make.
+
+GO has no Biblio adapter yet, so only the Publizon path applies. The switch
+is expected around late October 2026. `useDigitalEditionAvailability` is the
+single place that will need to change.
+
+### Not covered
+
+The kommune having no licence, having turned availability off, or having hit
+its own availability limit are **not** distinguishable in `loanstatus`.
+Those are Biblio-adapter answers, and are out of reach until GO talks to it.
 
 ## Related
 

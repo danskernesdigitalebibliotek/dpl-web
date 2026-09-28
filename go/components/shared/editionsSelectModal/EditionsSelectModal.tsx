@@ -7,8 +7,12 @@ import { Button } from "@/components/shared/button/Button"
 import EditionsSelectModalItem from "@/components/shared/editionsSelectModal/EditionsSelectModalItem"
 import { type TEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
+import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
 import { useEditionAvailability } from "@/hooks/useEditionAvailability"
-import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  ManifestationWorkPageFragment,
+  useGetMaterialQuery,
+} from "@/lib/graphql/generated/fbi/graphql"
 
 // Data props — `open`/`onClose` come from the DynamicModal host.
 export type EditionsSelectModalProps = {
@@ -91,6 +95,22 @@ const EditionsSelectModal = ({
 
   const { isLoadingAvailability, isAvailabilityUnknown, isEditionHidden, isEditionLentOut } =
     useEditionAvailability(wid)
+  const { isLoadingDigitalAvailability, isDigitalEditionOnLoan } =
+    useDigitalEditionAvailability(wid)
+
+  // Physical editions can be reserved, so being lent out is not a dead end.
+  // Digital ones cannot, so the wording stops at the fact. Each predicate
+  // answers false for the other provider's material type, so at most one of
+  // them is ever true.
+  const getUnavailableLabel = (manifestation: ManifestationWorkPageFragment) => {
+    if (isEditionLentOut(manifestation)) {
+      return "Udlånt lige nu, men du kan stadig reservere bogen"
+    }
+    if (isDigitalEditionOnLoan(manifestation)) {
+      return "Udlånt lige nu"
+    }
+    return undefined
+  }
 
   // Editions the kommune cannot supply are left out; lent-out ones stay.
   // Ordering is untouched, so what remains keeps its position.
@@ -104,6 +124,10 @@ const EditionsSelectModal = ({
   ]
     .filter(Boolean)
     .join(", ")
+
+  // The grid waits for both providers, so an edition never renders live and
+  // then picks up a status a moment later.
+  const isLoadingEditions = isLoadingAvailability || isLoadingDigitalAvailability
 
   const selectedPid = typeof draftChoice === "object" ? draftChoice.pid : null
 
@@ -124,7 +148,7 @@ const EditionsSelectModal = ({
           onSelect={() => setDraftChoice("newest")}
         />
 
-        {(isLoadingAvailability || shownEditions.length > 0) && (
+        {(isLoadingEditions || shownEditions.length > 0) && (
           <>
             <div className="my-8 flex items-center gap-4">
               <hr className="border-foreground/10 flex-1" />
@@ -136,7 +160,7 @@ const EditionsSelectModal = ({
             </div>
 
             <div className="grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4 lg:grid-cols-5">
-              {isLoadingAvailability
+              {isLoadingEditions
                 ? editions.map(manifestation => (
                     <EditionsSelectModalItem.Skeleton key={manifestation.pid} />
                   ))
@@ -146,7 +170,7 @@ const EditionsSelectModal = ({
                       manifestation={manifestation}
                       name={EDITION_CHOICE_GROUP}
                       checked={selectedPid === manifestation.pid}
-                      lentOut={isEditionLentOut(manifestation)}
+                      unavailableLabel={getUnavailableLabel(manifestation)}
                       onSelect={() => setDraftChoice({ pid: manifestation.pid })}
                     />
                   ))}
@@ -164,7 +188,7 @@ const EditionsSelectModal = ({
 
         {/* Two different empty states: the work has no editions of this type
             at all, or the kommune has none of the ones it does have. */}
-        {!isLoadingAvailability && shownEditions.length === 0 && (
+        {!isLoadingEditions && shownEditions.length === 0 && (
           <p className="text-typo-caption mt-8">
             {editions.length === 0
               ? "Ingen udgaver for denne materialetype."
