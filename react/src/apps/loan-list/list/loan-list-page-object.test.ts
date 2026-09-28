@@ -4,7 +4,10 @@ import {
   givenUserHasDigitalAudiobookLoan,
   givenUserHasDigitalPodcastLoan
 } from "../../../../cypress/intercepts/publizon/publizon";
-import { givenUserHasPhysicalLoan } from "../../../../cypress/intercepts/fbs/fbs";
+import {
+  givenUserHasPhysicalLoan,
+  givenUserHasPhysicalLoans
+} from "../../../../cypress/intercepts/fbs/fbs";
 import { givenManifestationByFaust } from "../../../../cypress/intercepts/fbi/manifestation";
 import { TOKEN_LIBRARY_KEY } from "../../../core/token";
 
@@ -124,6 +127,57 @@ describe("Loan list page", () => {
       cy.wait("@readerNavigation")
         .its("request.url")
         .should("include", `/reader?orderid=${encodeURIComponent(orderId)}`);
+    });
+  });
+
+  describe("Returning from the reader", () => {
+    beforeEach(() => {
+      stubLoanListBackends({ emptyPhysical: false });
+      givenManifestationByFaust();
+    });
+
+    it("Brings the user back to the digital loan they opened", () => {
+      // Given: enough physical loans to push the digital ones below the
+      // fold, and physical loans that arrive after the digital ones
+      givenUserHasPhysicalLoans(8, { delay: 1500 });
+      givenUserHasDigitalEbookLoan();
+      cy.intercept("GET", "**/reader?orderid=*", {
+        statusCode: 200,
+        body: "<html><body>reader</body></html>",
+        headers: { "content-type": "text/html" }
+      }).as("readerNavigation");
+
+      // When: opening the reader from the digital loan and closing it again
+      loanList.visit([]);
+      loanList.components.PhysicalLoanRow((row) =>
+        row.elements.title().should("be.visible")
+      );
+      loanList
+        .digitalLoanRow()
+        .elements.title()
+        .should(($title) => {
+          const { innerHeight } = $title[0].ownerDocument.defaultView!;
+          expect($title[0].getBoundingClientRect().top).to.be.above(
+            innerHeight
+          );
+        });
+      loanList.digitalLoanRow().elements.readerButton().click();
+      cy.wait("@readerNavigation");
+      cy.go("back");
+
+      // Then: the digital loan is on screen once all loans are in
+      loanList.components.PhysicalLoanRow((row) =>
+        row.elements.title().should("exist")
+      );
+      loanList
+        .digitalLoanRow()
+        .elements.title()
+        .should(($title) => {
+          const { top, bottom } = $title[0].getBoundingClientRect();
+          const { innerHeight } = $title[0].ownerDocument.defaultView!;
+          expect(top).to.be.at.least(0);
+          expect(bottom).to.be.at.most(innerHeight);
+        });
     });
   });
 

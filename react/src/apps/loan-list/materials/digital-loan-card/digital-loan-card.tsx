@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import fetchMaterial, { MaterialProps } from "../utils/material-fetch-hoc";
 import fetchDigitalMaterial from "../utils/digital-material-fetch-hoc";
 import ListMaterialSkeleton from "../../../reservation-list/reservation-material/list-material-skeleton";
@@ -15,6 +15,10 @@ import { formatDateTimeUtc } from "../../../../core/utils/helpers/date";
 import { readerUrl } from "../../../../components/reader-player/helper";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
+import {
+  rememberReturnTarget,
+  scrollToReturnTarget
+} from "../../utils/return-target";
 
 export interface DigitalLoanCardProps {
   loan: LoanType;
@@ -56,6 +60,10 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
   } = material || {};
   const coverId = pid || identifier || "";
 
+  useEffect(() => {
+    if (material) scrollToReturnTarget(titleId);
+  }, [material, titleId]);
+
   const renderPrimaryAction = () => {
     if (!orderId || !readerPlayerType) return null;
     if (readerPlayerType === "reader") {
@@ -73,6 +81,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
               trackedData: orderId
             })
           }
+          onClick={() => rememberReturnTarget(titleId)}
         >
           {t("onlineMaterialReaderText", {
             placeholders: { "@materialType": material?.materialType || "" }
@@ -96,6 +105,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
             trackedData: orderId
           })
         }
+        onNavigate={() => rememberReturnTarget(titleId)}
         // The list mounts the Publizon modal itself, one per open player.
         onPlayInModal={() => onPlayDigital(loan)}
       />

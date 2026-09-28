@@ -55,8 +55,9 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
   const [dueDate, setDueDate] = useState<string | null>(null);
   const [modalLoan, setModalLoan] = useState<LoanType | null>(null);
   const {
-    fbs: { loans: fbsLoans, isLoading: isLoadingFbs },
-    digital: { loans: digitalLoans, isLoading: isLoadingDigital }
+    all: { isLoading },
+    fbs: { loans: fbsLoans },
+    digital: { loans: digitalLoans }
   } = useLoans();
   const loansPhysical = sortByDueDate(fbsLoans);
   const loansDigital = sortByDueDate(digitalLoans);
@@ -110,19 +111,15 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
     }
   }, [loansPhysical, loansDigital, loanDetails, openDueDateModal]);
 
-  const shouldShowSkeletons =
-    isLoadingFbs &&
-    isLoadingDigital &&
-    loansPhysical.length === 0 &&
-    loansDigital.length === 0;
-
   return (
     <>
       <div className={`loan-list-page ${getScrollClass(modalIds)}`}>
         <h1 className="text-header-h1 my-32">{t("loanListTitleText")}</h1>
-        {shouldShowSkeletons && <LoanListSkeleton />}
+        {/* Wait for both lists: physical loans render above the digital ones,
+        and arriving last they would push a digital loan away from where it was. */}
+        {isLoading && <LoanListSkeleton />}
 
-        {!shouldShowSkeletons &&
+        {!isLoading &&
           (!loansAreEmpty(loansPhysical) || !loansAreEmpty(loansDigital)) && (
             <>
               {loansPhysical && (
@@ -170,8 +167,7 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
             </>
           )}
 
-        {!isLoadingFbs &&
-          !isLoadingDigital &&
+        {!isLoading &&
           loansAreEmpty(loansPhysical) &&
           loansAreEmpty(loansDigital) && (
             <EmptyList
