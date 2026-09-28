@@ -179,6 +179,37 @@ describe("Loan list page", () => {
           expect(bottom).to.be.at.most(innerHeight);
         });
     });
+
+    it("Ignores a loan left behind when the list is not reached by going back", () => {
+      // Given: a loan was remembered on a visit that never came back
+      givenUserHasPhysicalLoans(8);
+      givenUserHasDigitalEbookLoan();
+      cy.window().then((win) =>
+        win.sessionStorage.setItem(
+          "loanListReturnTarget",
+          "9788740065411-title"
+        )
+      );
+
+      // When: visiting the loan list directly
+      loanList.visit([]);
+
+      // Then: the remembered loan is cleared, and the list stays at the top
+      loanList.digitalLoanRow().elements.title().should("exist");
+      cy.window()
+        .its("sessionStorage")
+        .invoke("getItem", "loanListReturnTarget")
+        .should("be.null");
+      loanList
+        .digitalLoanRow()
+        .elements.title()
+        .should(($title) => {
+          const { innerHeight } = $title[0].ownerDocument.defaultView!;
+          expect($title[0].getBoundingClientRect().top).to.be.above(
+            innerHeight
+          );
+        });
+    });
   });
 
   describe("Player modal", () => {
