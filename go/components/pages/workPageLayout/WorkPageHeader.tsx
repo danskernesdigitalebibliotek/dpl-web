@@ -33,6 +33,7 @@ import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/g
 import { openModal } from "@/store/modal.store"
 
 import WorkPageButton from "./WorkPageButton"
+import WorkPageButtons from "./WorkPageButtons"
 import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"
 import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
 
@@ -214,20 +215,22 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           />
         </div>
         <div className="col-span-4 mt-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
-          <div className="mb-3 flex w-full lg:items-end">
-            {/* Mid-switch the label would still name the previous type's
-                edition, so the button is replaced by a skeleton until the
-                page has resolved the new one. */}
-            {isSwitchingMaterialType ? (
-              <div
-                className="bg-background-skeleton h-12 w-full animate-pulse rounded-full lg:max-w-80
-                  lg:min-w-72"
-              />
-            ) : (
-              <WorkPageButton ariaLabel="Vælg udgave" onClick={openEditionsSelect}>
-                {`Udgave: ${editionChoiceLabel}`}
-              </WorkPageButton>
-            )}
+          <div className="mb-3 w-full">
+            <WorkPageButtons>
+              {/* Mid-switch the label would still name the previous type's
+                  edition, so the button is replaced by a skeleton until the
+                  page has resolved the new one. */}
+              {isSwitchingMaterialType ? (
+                <div
+                  className="bg-background-skeleton h-12 w-full animate-pulse rounded-full
+                    lg:max-w-80 lg:min-w-72"
+                />
+              ) : (
+                <WorkPageButton ariaLabel="Vælg udgave" onClick={openEditionsSelect}>
+                  {`Udgave: ${editionChoiceLabel}`}
+                </WorkPageButton>
+              )}
+            </WorkPageButtons>
           </div>
           {isLoggedIn ? (
             <WorkPageButtonsLoggedIn
