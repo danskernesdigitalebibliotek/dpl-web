@@ -4,7 +4,7 @@ import {
 } from "../../core/dbc-gateway/generated/graphql";
 import { createIsbnCql } from "../../components/cover/helper";
 import { WorkId } from "../../core/utils/types/ids";
-import { RecommendationSource } from "./recommendationSource";
+import { RecommendationSeed } from "./recommendationSeed";
 import { RecommendedWork } from "./recommendations.types";
 
 export type UseRecommendationsResult = {
@@ -15,14 +15,14 @@ export type UseRecommendationsResult = {
 const FETCH_LIMIT = 16;
 
 /**
- * Fetches recommendations for a source. The recommender only understands
- * fausts and work ids, so an ISBN source first goes through a lookup that
- * resolves it to a work id. A null source fetches nothing.
+ * Fetches recommendations for a seed. The recommender only understands
+ * fausts and work ids, so an ISBN seed first goes through a lookup that
+ * resolves it to a work id. A null seed fetches nothing.
  */
 const useRecommendations = (
-  source: RecommendationSource | null
+  seed: RecommendationSeed | null
 ): UseRecommendationsResult => {
-  const isbn = source?.type === "isbn" ? source.isbn : null;
+  const isbn = seed?.type === "isbn" ? seed.isbn : null;
 
   const { data: isbnLookup, isLoading: isLoadingIsbnLookup } =
     useGetBestRepresentationPidByIsbnQuery(
@@ -39,10 +39,10 @@ const useRecommendations = (
     WorkId | undefined;
 
   const recommendArguments =
-    source?.type === "faust"
-      ? { faust: source.faust }
-      : source?.type === "work-id"
-        ? { id: source.workId }
+    seed?.type === "faust"
+      ? { faust: seed.faust }
+      : seed?.type === "work-id"
+        ? { id: seed.workId }
         : workIdFromIsbn
           ? { id: workIdFromIsbn }
           : null;

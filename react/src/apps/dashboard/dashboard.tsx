@@ -14,10 +14,10 @@ import { LoanType } from "../../core/utils/types/loan-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { hasValue } from "../../core/utils/helpers/has-value";
 import {
-  listItemToRecommendationSource,
-  pickRecommendationSource,
-  workIdToRecommendationSource
-} from "./recommendationSource";
+  listItemToRecommendationSeed,
+  pickRecommendationSeed,
+  workIdToRecommendationSeed
+} from "./recommendationSeed";
 import useRecommendations from "./useRecommendations";
 
 interface DashboardProps {
@@ -33,7 +33,7 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
     useGetList("default");
 
   // The lists arrive from separate services at different speeds. The
-  // recommendations pick their source on mount, so they are only mounted once
+  // recommendations pick their seed on mount, so they are only mounted once
   // every list has settled - otherwise a reservation could win over a loan
   // that simply had not arrived yet. A failed request is not loading and has
   // no data, so it counts as an empty list.
@@ -81,25 +81,23 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   const materialUrl = u("materialUrl");
   const addToListRequest = useAddFavorite({ app: "dashboard" });
 
-  const [source] = useState(() => {
-    const loanSources = loans
-      .map(listItemToRecommendationSource)
+  const [seed] = useState(() => {
+    const loanSeeds = loans.map(listItemToRecommendationSeed).filter(hasValue);
+
+    const reservationSeeds = reservations
+      .map(listItemToRecommendationSeed)
       .filter(hasValue);
 
-    const reservationSources = reservations
-      .map(listItemToRecommendationSource)
-      .filter(hasValue);
+    const favoriteSeeds = favorites.map(workIdToRecommendationSeed);
 
-    const favoriteSources = favorites.map(workIdToRecommendationSource);
-
-    return pickRecommendationSource({
-      loans: loanSources,
-      reservations: reservationSources,
-      favorites: favoriteSources
+    return pickRecommendationSeed({
+      loans: loanSeeds,
+      reservations: reservationSeeds,
+      favorites: favoriteSeeds
     });
   });
 
-  const { works, isLoading } = useRecommendations(source);
+  const { works, isLoading } = useRecommendations(seed);
 
   if (isLoading || works.length === 0) {
     return null;
