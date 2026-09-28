@@ -5,42 +5,10 @@ import React, { useEffect, useMemo, useState } from "react"
 import { getEditionsForMaterialType } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import EditionsSelectModalItem from "@/components/shared/editionsSelectModal/EditionsSelectModalItem"
+import { type TEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { useEditionAvailability } from "@/hooks/useEditionAvailability"
-import {
-  ManifestationWorkPageFragment,
-  useGetMaterialQuery,
-} from "@/lib/graphql/generated/fbi/graphql"
-
-// A pid is a pin to one specific edition. "newest" is the default and so is
-// the absence of a choice — it is never written to the url.
-export type TEditionChoice = "newest" | { pid: string }
-
-export const DEFAULT_EDITION_CHOICE: TEditionChoice = "newest"
-
-// The url carries the choice as a single `edition` param: a pid, or nothing at
-// all for the default.
-export const parseEditionChoice = (param: string | null): TEditionChoice => {
-  if (!param) return DEFAULT_EDITION_CHOICE
-
-  return { pid: param }
-}
-
-export const serializeEditionChoice = (choice: TEditionChoice): string | null => {
-  if (choice === "newest") return null
-
-  return choice.pid
-}
-
-// Label for the trigger button that opens the modal.
-export const getEditionChoiceLabel = (
-  choice: TEditionChoice,
-  selectedManifestation: ManifestationWorkPageFragment
-): string => {
-  if (choice === "newest") return "Nyeste"
-
-  return selectedManifestation.edition?.publicationYear?.year?.toString() ?? "Valgt udgave"
-}
+import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 
 // Data props — `open`/`onClose` come from the DynamicModal host.
 export type EditionsSelectModalProps = {

@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from "react"
 
 import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
 import WorkPageLoading from "@/components/pages/workPageLayout/WorkPageLoading"
-import { parseEditionChoice } from "@/components/shared/editionsSelectModal/EditionsSelectModal"
+import { parseEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
 import { useEditionAvailability } from "@/hooks/useEditionAvailability"

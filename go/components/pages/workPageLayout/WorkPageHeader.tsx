@@ -17,7 +17,7 @@ import {
   getEditionChoiceLabel,
   parseEditionChoice,
   serializeEditionChoice,
-} from "@/components/shared/editionsSelectModal/EditionsSelectModal"
+} from "@/components/shared/editionsSelectModal/editionChoice"
 import MaterialTypeSelect, {
   MaterialTypeSelectOption,
 } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
