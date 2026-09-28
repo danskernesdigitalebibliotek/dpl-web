@@ -1438,9 +1438,13 @@ describe("Dashboard", () => {
   it("shows recommendations based on one of the patron's materials", () => {
     cy.wait("@recommend");
 
-    cy.getBySel("material-slider-heading").should(
+    cy.getBySel("material-slider-caption").should(
       "have.text",
-      "Because you borrowed Ronja Røverdatter…"
+      "Because you borrowed"
+    );
+    cy.getBySel("material-slider-title").should(
+      "have.text",
+      "Ronja Røverdatter"
     );
     cy.getBySel("recommended-description")
       .should("have.length", 2)
@@ -1649,9 +1653,13 @@ describe("dashboard recommendations", () => {
     cy.wait("@recommend")
       .its("request.body.variables")
       .should("deep.include", { id: sourceWork.workId });
-    cy.getBySel("material-slider-heading").should(
+    cy.getBySel("material-slider-caption").should(
       "have.text",
-      "Because you borrowed Ronja Røverdatter…"
+      "Because you borrowed"
+    );
+    cy.getBySel("material-slider-title").should(
+      "have.text",
+      "Ronja Røverdatter"
     );
     cy.getBySel("recommended-description").should("have.length", 2);
   });
@@ -1665,9 +1673,13 @@ describe("dashboard recommendations", () => {
       .its("request.body.variables")
       .should("deep.include", { faust: "28847238" });
     cy.wait("@recommend");
-    cy.getBySel("material-slider-heading").should(
+    cy.getBySel("material-slider-caption").should(
       "have.text",
-      "Because you reserved Ronja Røverdatter…"
+      "Because you reserved"
+    );
+    cy.getBySel("material-slider-title").should(
+      "have.text",
+      "Ronja Røverdatter"
     );
   });
 
@@ -1704,9 +1716,13 @@ describe("dashboard recommendations", () => {
     cy.wait("@recommend")
       .its("request.body.variables")
       .should("deep.include", { id: sourceWork.workId });
-    cy.getBySel("material-slider-heading").should(
+    cy.getBySel("material-slider-caption").should(
       "have.text",
-      "Because you have Ronja Røverdatter on your favorites list"
+      "Because your favorites list contains"
+    );
+    cy.getBySel("material-slider-title").should(
+      "have.text",
+      "Ronja Røverdatter"
     );
     cy.getBySel("recommended-description").should("have.length", 2);
   });

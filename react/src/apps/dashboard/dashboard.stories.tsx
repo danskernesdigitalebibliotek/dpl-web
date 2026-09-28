@@ -159,13 +159,13 @@ const meta: Meta<typeof DashBoard> = {
     dashboardRecommendationsHeadingText: {
       control: { type: "text" }
     },
-    dashboardRecommendationsLoanHeadingText: {
+    dashboardRecommendationsLoanCaptionText: {
       control: { type: "text" }
     },
-    dashboardRecommendationsReservationHeadingText: {
+    dashboardRecommendationsReservationCaptionText: {
       control: { type: "text" }
     },
-    dashboardRecommendationsFavoriteHeadingText: {
+    dashboardRecommendationsFavoriteCaptionText: {
       control: { type: "text" }
     }
   }
@@ -223,11 +223,10 @@ export const Primary: Story = {
     dashboardLoansLinkText: "All loans",
     dashboardReservationsLinkText: "All reservations",
     dashboardRecommendationsHeadingText: "Inspiration for you",
-    dashboardRecommendationsLoanHeadingText: "Because you borrowed @title…",
-    dashboardRecommendationsReservationHeadingText:
-      "Because you reserved @title…",
-    dashboardRecommendationsFavoriteHeadingText:
-      "Because you have @title on your favorites list",
+    dashboardRecommendationsLoanCaptionText: "Because you borrowed",
+    dashboardRecommendationsReservationCaptionText: "Because you reserved",
+    dashboardRecommendationsFavoriteCaptionText:
+      "Because your favorites list contains",
     materialDetailsOverdueText: "Overdue"
   }
 };
