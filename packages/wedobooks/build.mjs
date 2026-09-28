@@ -1,5 +1,4 @@
 import * as esbuild from "esbuild"
-import { polyfillNode } from "esbuild-plugin-polyfill-node"
 
 const isWatch = process.argv.includes("--watch")
 
@@ -18,7 +17,6 @@ const buildOptions = {
   minify: true,
   sourcemap: false,
   external: ["react", "react-dom"],
-  plugins: [polyfillNode({})],
   // `@colibrio/colibrio-reader-framework` (transitive dep of the SDK) ships
   // UMD modules whose AMD `define([...], factory)` branches survive bundling,
   // and webpack then tries to resolve their dependency strings as modules.

@@ -29,8 +29,6 @@
     "@types/react-dom": "^19",
     "esbuild": "^0.28.2",
     "@wedobooks/sdk": "0.6.0",
-    "esbuild-plugin-polyfill-node": "^0.3.0",
-    "lodash": "^4.17.23",
     "typescript": "^5.9.3"
   },
   "sideEffects": false
