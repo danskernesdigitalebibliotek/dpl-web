@@ -59,6 +59,7 @@ type GoConfigurationPublic {
   Branch ids whose materials should be excluded when computing availability.
   """
   blacklistedAvailabilityBranches: [String!]
+  smsNotificationsEnabled: Boolean
 }
 
 type GoConfiguration {

@@ -49,6 +49,7 @@ const fixturePatron: Patron = {
   pickupBranchId: "DK-761500",
   emailAddress: "test@example.com",
   phoneNumber: "+4512345678",
+  receiveSms: true,
 }
 
 const fixtureAvailability: MaterialAvailability = {

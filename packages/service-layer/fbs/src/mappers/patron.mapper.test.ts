@@ -9,6 +9,7 @@ const fullPatronBody = {
     preferredPickupBranch: "DK-761500",
     emailAddress: "user@example.com",
     phoneNumber: "+4512345678",
+    receiveSms: true,
   },
 }
 
@@ -20,6 +21,7 @@ describe("parseAndMapPatron", () => {
       pickupBranchId: "DK-761500",
       emailAddress: "user@example.com",
       phoneNumber: "+4512345678",
+      receiveSms: true,
     })
   })
 
@@ -35,6 +37,7 @@ describe("parseAndMapPatron", () => {
       pickupBranchId: "DK-761500",
       emailAddress: "user@example.com",
       phoneNumber: "+4512345678",
+      receiveSms: true,
     })
   })
 
@@ -59,6 +62,23 @@ describe("parseAndMapPatron", () => {
       pickupBranchId: "DK-761500",
       emailAddress: undefined,
       phoneNumber: undefined,
+      receiveSms: undefined,
+    })
+  })
+
+  it("maps receiveSms=false through rather than coercing it to undefined", () => {
+    expect(
+      parseAndMapPatron({
+        ...fullPatronBody,
+        patron: { ...fullPatronBody.patron, receiveSms: false },
+      })
+    ).toEqual({
+      name: "Test User",
+      isLocked: false,
+      pickupBranchId: "DK-761500",
+      emailAddress: "user@example.com",
+      phoneNumber: "+4512345678",
+      receiveSms: false,
     })
   })
 
@@ -69,7 +89,6 @@ describe("parseAndMapPatron", () => {
         patron: {
           ...fullPatronBody.patron,
           patronId: 123,
-          receiveSms: true,
           defaultInterestPeriod: 180,
         },
       })
@@ -79,6 +98,7 @@ describe("parseAndMapPatron", () => {
       pickupBranchId: "DK-761500",
       emailAddress: "user@example.com",
       phoneNumber: "+4512345678",
+      receiveSms: true,
     })
   })
 
@@ -101,7 +121,7 @@ describe("parseAndMapPatron", () => {
     ).toThrow()
   })
 
-  it("coerces null name/email/phone to undefined (FBS sends null for missing)", () => {
+  it("coerces null email/phone/receiveSms to undefined (FBS sends null for missing)", () => {
     expect(
       parseAndMapPatron({
         authenticateStatus: "VALID",
@@ -110,6 +130,7 @@ describe("parseAndMapPatron", () => {
           preferredPickupBranch: "DK-710117",
           emailAddress: null,
           phoneNumber: null,
+          receiveSms: null,
         },
       })
     ).toEqual({
@@ -118,6 +139,7 @@ describe("parseAndMapPatron", () => {
       pickupBranchId: "DK-710117",
       emailAddress: undefined,
       phoneNumber: undefined,
+      receiveSms: undefined,
     })
   })
 

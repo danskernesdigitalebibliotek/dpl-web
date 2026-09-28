@@ -56,3 +56,29 @@ tasks:
     cmds:
       - task dev:nvm:use
       - pnpm run codegen:unilogin
+
+  lagoon:stage1:build:
+    desc: Build the Go base image (lagoon/stage1.dockerfile) locally.
+    summary: |
+      CI is what publishes this image; this task is for trying the build
+      itself - most usefully the pnpm install, which needs a credential for
+      WeDoBooks' private registry and gets it as a BuildKit secret rather
+      than a build argument, because this stage is the one that ships.
+
+      The token comes from the central .env (task dev:dotenv:generate). Check
+      afterwards that it did not follow the image:
+
+        docker history --no-trunc dpl-web-go:local | grep -i wedobooks
+        docker run --rm dpl-web-go:local sh -c 'cat "$HOME/.npmrc"'
+    dotenv: ["../.env"]
+    cmds:
+      # env= reads the value from the environment rather than a file, so the
+      # token never lands on disk on the way in either.
+      - docker build
+        --file lagoon/stage1.dockerfile
+        --secret id=WEDOBOOKS_NPM_TOKEN,env=WEDOBOOKS_NPM_TOKEN
+        --tag dpl-web-go:local
+        ..
+    preconditions:
+      - sh: '[ -n "$WEDOBOOKS_NPM_TOKEN" ]'
+        msg: "WEDOBOOKS_NPM_TOKEN is missing from the central .env - run 'task dev:dotenv:generate'. See packages/wedobooks/README.md."
