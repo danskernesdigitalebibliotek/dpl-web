@@ -1,0 +1,29 @@
+uuid: 5bd24774-1067-48f9-89bf-21efd01d7509
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_svcmsg_branches
+    - node.type.branch
+    - node.type.service_message
+id: node.service_message.field_svcmsg_branches
+field_name: field_svcmsg_branches
+entity_type: node
+bundle: service_message
+label: 'Show on these branch pages'
+description: 'The message appears at the top of each branch page you pick.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      branch: branch
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

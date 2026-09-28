@@ -1,0 +1,23 @@
+uuid: 20d33c9e-167d-4b20-91bc-4fcf036048be
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_svcmsg_placement
+    - node.type.service_message
+  module:
+    - options
+id: node.service_message.field_svcmsg_placement
+field_name: field_svcmsg_placement
+entity_type: node
+bundle: service_message
+label: Placement
+description: 'The whole site: a red bar above the menu on every page, for something urgent. Front page and branch pages: a message in the page itself.'
+required: true
+translatable: false
+default_value:
+  -
+    value: in_page
+default_value_callback: ''
+settings: {  }
+field_type: list_string
