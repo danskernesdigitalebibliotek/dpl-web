@@ -119,9 +119,9 @@ module.exports = (_env, argv) => {
           test: /\.(js|jsx|ts|tsx)$/,
           // The WeDoBooks wrapper is the one workspace package that ships a
           // build rather than sources: esbuild has already bundled the SDK into
-          // browser-ready output. Running it through Babel
-          // again makes preset-env inject core-js imports it cannot resolve
-          // from that package's own directory.
+          // browser-ready output. Running it through Babel again makes
+          // preset-env inject core-js imports it cannot resolve from that
+          // package's own directory.
           exclude: [/node_modules/, /packages[\\/]wedobooks[\\/]dist/],
           use: [
             {

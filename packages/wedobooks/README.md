@@ -96,6 +96,10 @@ The CMS serves them from the `WEDOBOOKS_*` environment variables and leaves
 them out entirely unless all five are set, so React can tell an unconfigured
 site from a misconfigured one.
 
+The SDK decrypts books with the Web Crypto API, which browsers only expose in a
+secure context. A page served over plain http - a phone reaching a dev build
+through a LAN IP, say - loads fine and then fails once a book is opened.
+
 ## Signing in
 
 The SDK keeps its own session against WeDoBooks rather than going through the
@@ -123,9 +127,10 @@ through `next/dynamic` with `ssr: false`, never a static import.
 
 Two more things a GO integration will need, neither of which exists yet:
 
-- **The orchestration lives in `react/`, not here.** `useReaderSdk`,
-  `useReaderCheckout` and `useReaderSdkConfig` sit in
-  `react/src/core/digital/`, and the config hook reads React's Redux store. Only
+- **The orchestration lives in `react/`, not here.** `useDigitalSdkConfig`,
+  `useDigitalSdk`, `useDigitalSdkSession` and `useDigitalCheckout` sit in
+  `react/src/components/reader-player/`, and the config hook reads React's
+  Redux store. Only
   that last part is host-specific; the chain from config to signed-in session to
   entitlement is generic. Moving it here - taking the config and the token
   getter as inputs, the way `ServiceLayerConfig` already does for the adapter -
@@ -138,3 +143,8 @@ Two more things a GO integration will need, neither of which exists yet:
   entitlement when a book is finished, leaving it to the integration — but
   neither the SDK nor the Biblio adapter exposes a way to return a
   loan, so it runs to its expiry either way. Open with DBC.
+- **React 19 is in the SDK's peer range, but not proven for its dependencies.**
+  It still bundles MUI 6, `styled-components` 5, `react-router-dom` 5 and
+  `react-transition-group`, whose fallback without a `nodeRef` calls
+  `findDOMNode` - removed in React 19. Watch for it when exercising the reader,
+  and raise it with WeDoBooks if it shows up.
