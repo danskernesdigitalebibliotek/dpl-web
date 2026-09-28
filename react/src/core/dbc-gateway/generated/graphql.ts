@@ -2451,6 +2451,44 @@ export type ComplexSuggestQuery = {
   };
 };
 
+export type GetDashboardRecommendationsQueryVariables = Exact<{
+  faust?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  limit: Scalars["Int"]["input"];
+}>;
+
+export type GetDashboardRecommendationsQuery = {
+  __typename?: "Query";
+  recommend: {
+    __typename?: "RecommendationResponse";
+    result: Array<{
+      __typename?: "Recommendation";
+      work: {
+        __typename?: "Work";
+        workId: string;
+        titles: { __typename?: "WorkTitles"; full: Array<string> };
+        creators: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Person"; display: string }
+        >;
+        manifestations: {
+          __typename?: "Manifestations";
+          bestRepresentation: {
+            __typename?: "Manifestation";
+            cover: {
+              __typename?: "Cover";
+              large?: {
+                __typename?: "CoverDetails";
+                url?: string | null;
+              } | null;
+            };
+          };
+        };
+      };
+    }>;
+  };
+};
+
 export type GetSmallWorkQueryVariables = Exact<{
   id: Scalars["String"]["input"];
 }>;
@@ -6512,6 +6550,7 @@ export type GetRelatedWorksQuery = {
     works: Array<{
       __typename?: "Work";
       workId: string;
+      workTypes: Array<WorkTypeEnum>;
       titles: { __typename?: "WorkTitles"; full: Array<string> };
       series: Array<{
         __typename?: "Series";
@@ -9887,6 +9926,59 @@ export const useComplexSuggestQuery = <
   });
 };
 
+export const GetDashboardRecommendationsDocument = `
+    query getDashboardRecommendations($faust: String, $id: String, $limit: Int!) {
+  recommend(faust: $faust, id: $id, limit: $limit) {
+    result {
+      work {
+        workId
+        titles {
+          full
+        }
+        creators {
+          display
+        }
+        manifestations {
+          bestRepresentation {
+            cover {
+              large {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetDashboardRecommendationsQuery = <
+  TData = GetDashboardRecommendationsQuery,
+  TError = unknown
+>(
+  variables: GetDashboardRecommendationsQueryVariables,
+  options?: Omit<
+    UseQueryOptions<GetDashboardRecommendationsQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      GetDashboardRecommendationsQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
+) => {
+  return useQuery<GetDashboardRecommendationsQuery, TError, TData>({
+    queryKey: ["getDashboardRecommendations", variables],
+    queryFn: fetcher<
+      GetDashboardRecommendationsQuery,
+      GetDashboardRecommendationsQueryVariables
+    >(GetDashboardRecommendationsDocument, variables),
+    ...options
+  });
+};
+
 export const GetSmallWorkDocument = `
     query getSmallWork($id: String!) {
   work(id: $id) {
@@ -10355,6 +10447,7 @@ export const GetRelatedWorksDocument = `
   complexSearch(cql: $cql, filters: $filters) {
     works(offset: $offset, limit: $limit, sort: $sort) {
       workId
+      workTypes
       titles {
         full
       }
@@ -10714,6 +10807,7 @@ export const operationNames = {
   Query: {
     complexFacetSearch: "complexFacetSearch" as const,
     complexSuggest: "complexSuggest" as const,
+    getDashboardRecommendations: "getDashboardRecommendations" as const,
     getSmallWork: "getSmallWork" as const,
     getManifestationViaMaterialByFaust:
       "getManifestationViaMaterialByFaust" as const,

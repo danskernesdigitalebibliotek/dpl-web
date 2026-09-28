@@ -25,6 +25,7 @@ import RelatedWorks from "./RelatedWorks";
 import SeriesCard from "./SeriesCard";
 import SeriesSkeleton, { headerCoverCount } from "./SeriesSkeleton";
 import { useAddFavorite } from "../../components/button-favourite/useAddFavorite";
+import { cleanCreatorName } from "../../core/utils/helpers/material";
 
 export type SeriesProps = {
   seriesId: string;
@@ -127,6 +128,7 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
   const members = sortSeriesMembers(series.members);
 
   const author = getSeriesAuthor(members);
+
   // Decoration, so a handful is plenty. The design fans out three, but a
   // series that cannot supply that many real covers gets a shorter fan.
   const coverPids = getHeaderCoverPids(members, headerCoverCount);
@@ -140,7 +142,10 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
               {t("seriesByAuthorText")}{" "}
               <Link
                 className="series-page__byline-link"
-                href={constructCreatorSearchUrl(searchUrl, author)}
+                href={constructCreatorSearchUrl(
+                  searchUrl,
+                  cleanCreatorName(author)
+                )}
               >
                 {author}
               </Link>
@@ -215,7 +220,7 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
 
       {author && (
         <RelatedWorks
-          author={author}
+          author={cleanCreatorName(author)}
           currentSeries={{
             seriesId,
             title: series.title,

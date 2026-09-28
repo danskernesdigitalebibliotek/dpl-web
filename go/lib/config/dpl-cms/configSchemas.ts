@@ -44,6 +44,13 @@ export const publicConfigSchema = z.object({
     .nullable()
     .optional()
     .transform(value => value ?? { enabled: false, baseUrl: null, sdk: null }),
+  // Mirrors the CMS default: SMS notifications are considered enabled unless a
+  // library has explicitly turned them off.
+  smsNotificationsEnabled: z
+    .boolean()
+    .nullable()
+    .optional()
+    .transform(value => value ?? true),
 })
 
 export const privateConfigSchema = z.object({

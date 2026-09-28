@@ -10,6 +10,7 @@ const FbsPatronResponseSchema = z.object({
       preferredPickupBranch: z.string(),
       emailAddress: z.string().nullish(),
       phoneNumber: z.string().nullish(),
+      receiveSms: z.boolean().nullish(),
     })
     .optional(),
 })
@@ -23,5 +24,6 @@ export function parseAndMapPatron(raw: unknown): Patron | undefined {
     pickupBranchId: parsed.patron.preferredPickupBranch,
     emailAddress: parsed.patron.emailAddress ?? undefined,
     phoneNumber: parsed.patron.phoneNumber ?? undefined,
+    receiveSms: parsed.patron.receiveSms ?? undefined,
   }
 }

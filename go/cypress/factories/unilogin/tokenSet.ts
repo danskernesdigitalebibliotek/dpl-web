@@ -4,7 +4,7 @@ import type { TokenEndpointResponse } from "openid-client"
 
 export const sub = "ea18ecf3-17db-42a6-8726-286796b22a9b"
 export const session_state = "60cda845-402f-4085-b41d-3e4e773e04d4"
-export const institution_ids = "[A04441]"
+export const institution_ids = "[R00263]"
 export const uniid = "Mocked User"
 
 export default Factory.define<TokenEndpointResponse>(() => {

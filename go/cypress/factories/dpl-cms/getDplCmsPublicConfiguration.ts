@@ -46,6 +46,7 @@ export default Factory.define<
         },
         blacklistedAvailabilityBranches: [],
         biblio: transientParams.biblio ?? { enabled: false, baseUrl: null, sdk: null },
+        smsNotificationsEnabled: true,
       } satisfies TDplCmsPublicConfig,
     },
   }

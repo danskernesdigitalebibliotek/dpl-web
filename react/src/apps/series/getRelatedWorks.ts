@@ -1,3 +1,4 @@
+import { WorkTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { parseNumberInSeries } from "./helper";
 import { RelatedWork, RelatedWorkSeries } from "./relatedWorks.types";
 
@@ -24,42 +25,53 @@ const isFirstInSeries = (series: RelatedWorkSeries): boolean =>
 
 const isStandalone = (work: RelatedWork): boolean => work.series.length === 0;
 
+const isArticle = (work: RelatedWork): boolean =>
+  work.workTypes.includes(WorkTypeEnum.Article);
+
 const isInCurrentSeries = (
   work: RelatedWork,
   currentSeries: CurrentSeries
 ): boolean => work.series.some((series) => isSameSeries(series, currentSeries));
+
+export const DISPLAY_LIMIT = 20;
 
 /**
  * Selects which of the author's works the related-works slider shows, and in
  * what order. `works` is expected newest-first (the query sorts by first
  * edition descending); order within each tier is preserved from it.
  *
- * Three tiers, concatenated and cut at `limit`:
+ * Four tiers, concatenated and cut at `limit`:
  *
  *   1. Works that open one of the author's other series ("Del 1") - the
  *      slider's reason to exist.
  *   2. Standalone works - padding that competes with nothing already shown.
- *   3. Anything left, i.e. later volumes and unnumbered series members -
- *      only when the slider would otherwise run short.
+ *   3. Later volumes and unnumbered members of the author's other series.
+ *   4. Articles - a columnist's output would otherwise swamp the slider, so
+ *      they trail the books.
  */
 export const getRelatedWorks = (
   works: readonly RelatedWork[],
   currentSeries: CurrentSeries,
-  limit = 20
+  limit = DISPLAY_LIMIT
 ): RelatedWork[] => {
-  const candidates = works.filter(
+  const notInSeries = works.filter(
     (work) => !isInCurrentSeries(work, currentSeries)
   );
+  const articles = notInSeries.filter(isArticle);
+  const nonArticles = notInSeries.filter((work) => !isArticle(work));
 
-  const seriesFirsts = candidates.filter((work) =>
+  const seriesFirsts = nonArticles.filter((work) =>
     work.series.some(isFirstInSeries)
   );
-  const standalones = candidates.filter(isStandalone);
-  const rest = candidates.filter(
+  const standalones = nonArticles.filter(isStandalone);
+  const rest = nonArticles.filter(
     (work) => !seriesFirsts.includes(work) && !standalones.includes(work)
   );
 
-  return [...seriesFirsts, ...standalones, ...rest].slice(0, limit);
+  return [...seriesFirsts, ...standalones, ...rest, ...articles].slice(
+    0,
+    limit
+  );
 };
 
 /* ********************************* Vitest Section  ********************************* */
@@ -71,7 +83,8 @@ if (import.meta.vitest) {
   let nextId = 0;
   const work = ({
     title,
-    series = []
+    series = [],
+    workTypes = [WorkTypeEnum.Literature]
   }: {
     title: string;
     series?: {
@@ -79,6 +92,7 @@ if (import.meta.vitest) {
       title: string;
       number?: string | null;
     }[];
+    workTypes?: WorkTypeEnum[];
   }): RelatedWork => ({
     workId: `work-of:test:${nextId++}` as RelatedWork["workId"],
     title,
@@ -88,6 +102,7 @@ if (import.meta.vitest) {
       numberInSeries: s.number ?? null,
       readThisFirst: null
     })),
+    workTypes,
     coverSrc: null
   });
 
@@ -214,6 +229,22 @@ if (import.meta.vitest) {
 
       expect(titles(withRoom)).toEqual(["Bind 1", "Bind 2"]);
       expect(titles(withoutRoom)).toEqual(["Bind 1", "Alene"]);
+    });
+
+    it("puts articles after everything else, even later volumes", () => {
+      const result = getRelatedWorks(
+        [
+          work({ title: "Klumme", workTypes: [WorkTypeEnum.Article] }),
+          work({
+            title: "Bind 2",
+            series: [{ title: "Serie A", number: "Del 2" }]
+          }),
+          work({ title: "Alene" })
+        ],
+        CURRENT
+      );
+
+      expect(titles(result)).toEqual(["Alene", "Bind 2", "Klumme"]);
     });
 
     it("caps the result", () => {

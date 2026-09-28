@@ -1,0 +1,23 @@
+uuid: e30f07cf-64f8-4bb4-a4db-903b72d73eef
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_svcmsg_frontpage
+    - node.type.service_message
+id: node.service_message.field_svcmsg_frontpage
+field_name: field_svcmsg_frontpage
+entity_type: node
+bundle: service_message
+label: 'Show on the front page'
+description: 'The message appears at the top of the front page. Pick the front page, one or more branch pages, or both.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

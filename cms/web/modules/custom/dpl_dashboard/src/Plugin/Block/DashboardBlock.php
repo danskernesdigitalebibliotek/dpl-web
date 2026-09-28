@@ -97,6 +97,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       // Texts.
       'choose-all-text' => $this->t('Select all', [], ['context' => 'Dashboard']),
       'dashboard-loans-link-text' => $this->t('All loans', [], ['context' => 'Dashboard']),
+      'dashboard-recommendations-heading-text' => $this->t('Inspiration for you', [], ['context' => 'Dashboard']),
       'dashboard-reservations-link-text' => $this->t('All reservations', [], ['context' => 'Dashboard']),
       'dashboard-see-more-fees-text' => $this->t('See more', [], ['context' => 'Dashboard']),
       'dashboard-see-more-fees-aria-label-text' => $this->t('See your fees and how to pay', [], ['context' => 'Dashboard']),

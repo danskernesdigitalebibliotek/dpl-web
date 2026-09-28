@@ -100,6 +100,7 @@ const getDplCmsPublicConfigData = async () => {
         baseUrl: null,
         sdk: null,
       },
+      smsNotificationsEnabled: true,
     }
   }
 }

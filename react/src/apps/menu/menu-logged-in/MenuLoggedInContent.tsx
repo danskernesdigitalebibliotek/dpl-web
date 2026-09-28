@@ -30,12 +30,9 @@ const MenuLoggedInContent: FC<MenuLoggedInContentProps> = ({ pageSize }) => {
   const config = useConfig();
   const queryClient = useQueryClient();
 
-  const {
-    all: { reservations }
-  } = useReservations();
-  const {
-    all: { loans, overdue: loansOverdue, soonOverdue: loansSoonOverdue }
-  } = useLoans();
+  const reservations = useReservations();
+  const loans = useLoans();
+
   const { data: patronData } = usePatronData();
   const { data: fbsFees = [] } = useGetFeesV2<FeeV2[]>({
     includepaid: false,
@@ -67,9 +64,9 @@ const MenuLoggedInContent: FC<MenuLoggedInContentProps> = ({ pageSize }) => {
   }, [fbsFees]);
 
   const showNotifications =
-    loansOverdue.length !== 0 ||
-    loansSoonOverdue.length !== 0 ||
-    reservations.length !== 0;
+    loans.all.overdue.length !== 0 ||
+    loans.all.soonOverdue.length !== 0 ||
+    reservations.all.reservations.length !== 0;
 
   const handleOnClick = () => performLogout(logoutUrl, queryClient);
 
@@ -97,7 +94,12 @@ const MenuLoggedInContent: FC<MenuLoggedInContentProps> = ({ pageSize }) => {
         </div>
         {showNotifications && (
           <div className="modal-profile__container">
-            <DashboardNotificationList pageSize={pageSize} columns={false} />
+            <DashboardNotificationList
+              pageSize={pageSize}
+              columns={false}
+              loans={loans}
+              reservations={reservations}
+            />
           </div>
         )}
         <nav
@@ -109,8 +111,8 @@ const MenuLoggedInContent: FC<MenuLoggedInContentProps> = ({ pageSize }) => {
               <MenuNavigationItem
                 key={menuNavigationItem.dataId}
                 menuNavigationItem={menuNavigationItem}
-                loansCount={loans.length}
-                reservationCount={reservations.length}
+                loansCount={loans.all.loans.length}
+                reservationCount={reservations.all.reservations.length}
                 feeCount={feeCount}
               />
             ))}

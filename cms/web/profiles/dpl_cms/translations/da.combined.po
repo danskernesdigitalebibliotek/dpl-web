@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-16 09:15+0200\n"
-"PO-Revision-Date: 2026-09-16 09:15+0200\n"
+"POT-Creation-Date: 2026-09-25 11:23+0200\n"
+"PO-Revision-Date: 2026-09-25 11:23+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-16 09:15+0200\n"
-"PO-Revision-Date: 2026-09-16 09:15+0200\n"
+"POT-Creation-Date: 2026-09-25 11:23+0200\n"
+"PO-Revision-Date: 2026-09-25 11:23+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -191,6 +191,14 @@ msgstr "%label iCalendar-egenskabstilknytning er blevet slettet."
 
 msgid "%label iCalendar property mapping saved."
 msgstr "%label iCalendar-egenskabstilknytning gemt."
+
+msgctxt "dpl_service_message"
+msgid "%label is now published."
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "%label is now unpublished."
+msgstr ""
 
 msgid "%name is connected to an external authentication system."
 msgstr "%name er forbundet til et eksternt autentifikationssystem"
@@ -398,6 +406,10 @@ msgctxt "views.view.scheduled_jobs:display:default:display_options:pager:options
 msgid "- All -"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
+msgid "- All -"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
 msgstr ""
@@ -527,6 +539,12 @@ msgstr ""
 msgctxt "views.view.files:display:page_2:display_options:fields:count:format_plural_string"
 msgid "1@count"
 msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "1 branch"
+msgid_plural "@count branches"
+msgstr[0] ""
+msgstr[1] ""
 
 msgctxt "Work Page"
 msgid "1 copy has been reserved"
@@ -2096,6 +2114,10 @@ msgstr "En tilfældig hash. Tilgængelige hash-algoritmer: @hash-algos."
 msgid "A random number from 0 to @max."
 msgstr "Et tilfældigt tal mellem 0 og @max."
 
+msgctxt "dpl_service_message"
+msgid "A readable summary of the pages a service message appears on."
+msgstr ""
+
 msgid ""
 "A rebuild of node access permissions is necessary. Rebuilding may take some "
 "time if there is a lot of content or complex permission settings. After "
@@ -2278,6 +2300,9 @@ msgstr ""
 msgid "A serialized array of order options."
 msgstr ""
 
+msgid "A service message needs a heading, a body text, or both."
+msgstr ""
+
 msgid ""
 "A set of meta tags specially for controlling advanced functionality with <a "
 "href=':fb'>Facebook</a>.<br><br>The Facebook <a href='https://"
@@ -2312,6 +2337,12 @@ msgid ""
 msgstr ""
 "Et sæt meta-tags der styrer, hvordan sitets indhold bruges på <a "
 "href='https://pinterest.com/'>Pinterest</a>."
+
+msgctxt "node.type.service_message:description"
+msgid ""
+"A short, time-limited notice about an outage, a closure or a degraded "
+"service."
+msgstr ""
 
 msgid ""
 "A statement of any changes in ownership and custody of the resource since "
@@ -2938,6 +2969,9 @@ msgstr "Tilføj vælg alle/ingen links"
 msgid "Add select all/none links to hierarchical lists"
 msgstr ""
 
+msgid "Add service message"
+msgstr ""
+
 msgid "Add territory"
 msgstr "Tilføj territorium"
 
@@ -3230,6 +3264,9 @@ msgid "Administer eventseries entity"
 msgstr ""
 
 msgid "Administer eventseries types"
+msgstr ""
+
+msgid "Administer global service messages"
 msgstr ""
 
 msgid "Administer instant loan configuration"
@@ -3564,6 +3601,11 @@ msgstr "Tillad for bundt-niveau tilladelser for node (og media) enhedstyper"
 
 msgctxt "field.field.paragraph.filtered_event_list.field_allow_multiple_per_series:label"
 msgid "Allow multiple instances per series"
+msgstr ""
+
+msgid ""
+"Allow placing a service message in the global bar, shown on every page of "
+"the site."
 msgstr ""
 
 msgctxt "Library Agency Configuration"
@@ -4436,6 +4478,10 @@ msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:
 msgid "Asc"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
 msgstr ""
@@ -5209,6 +5255,10 @@ msgctxt "field.field.paragraph.user_registration_item.field_body:label"
 msgid "Body"
 msgstr ""
 
+msgctxt "field.field.node.service_message.field_svcmsg_body:label"
+msgid "Body text"
+msgstr ""
+
 msgctxt "field.storage.paragraph.field_priority_material_type:settings:allowed_values:0:label"
 msgid "Bog"
 msgstr ""
@@ -5852,7 +5902,7 @@ msgstr ""
 
 msgctxt "Patron page"
 msgid "Card number"
-msgstr "Kortnummer"
+msgstr "Support-ID til eReolen"
 
 msgid "Casual name"
 msgstr "Kaldenavn"
@@ -7293,7 +7343,7 @@ msgstr "Landekode"
 
 msgctxt "Address label"
 msgid "County"
-msgstr "Land"
+msgstr "Amt"
 
 msgid "Coverage"
 msgstr "Dækning"
@@ -7484,6 +7534,10 @@ msgstr ""
 msgctxt "Work Page"
 msgid "Creators are missing"
 msgstr "Ophav mangler"
+
+msgctxt "dpl_service_message"
+msgid "Critical"
+msgstr ""
 
 msgid "Cron access key now stored in state."
 msgstr "Cron-adgangsnøgle nu gemt i state."
@@ -7844,6 +7898,9 @@ msgstr "DPL relateret indhold"
 
 msgid "DPL related content - test suite"
 msgstr "DPL relateret indhold - test suite"
+
+msgid "DPL service message"
+msgstr ""
 
 msgid "DPL something similar"
 msgstr "DPL noget der ligner"
@@ -8227,6 +8284,10 @@ msgid "Default"
 msgstr ""
 
 msgctxt "views.view.scheduled_jobs:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_title"
 msgid "Default"
 msgstr ""
 
@@ -8774,6 +8835,10 @@ msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:
 msgid "Desc"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
 msgstr ""
@@ -8923,7 +8988,7 @@ msgstr "Digitale reserveringer"
 
 msgctxt "Work Page"
 msgid "Dimensions"
-msgstr "Dimensioner"
+msgstr "Omfang"
 
 msgid "Direct File URL"
 msgstr "Direkte fil URL"
@@ -11268,7 +11333,7 @@ msgstr ""
 
 msgctxt "translation handling"
 msgid "Failed to fetch file due to error \"%error\""
-msgstr "Kunne ikke hente filen på grund af fejlen \"%error\""
+msgstr "Kunne ikke hente fil pga fejl \"%error\""
 
 msgid "Failed to fetch picture from @url: @message"
 msgstr ""
@@ -11691,6 +11756,10 @@ msgid "Filter"
 msgstr ""
 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:exposed_form:options:submit_button"
+msgid "Filter"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
 msgstr ""
 
@@ -12210,8 +12279,16 @@ msgstr ""
 msgid "Front page"
 msgstr "Forside"
 
+msgctxt "dpl_service_message"
+msgid "Front page"
+msgstr "Forside"
+
 msgctxt "metatag.metatag_defaults.front:label"
 msgid "Front page"
+msgstr ""
+
+msgctxt "field.storage.node.field_svcmsg_placement:settings:allowed_values:1:label"
+msgid "Front page and branch pages"
 msgstr ""
 
 msgctxt "core.entity_view_mode.media.full:label"
@@ -13621,6 +13698,9 @@ msgctxt "views.view.importable_content:label"
 msgid "Importable content"
 msgstr ""
 
+msgid "Important service message"
+msgstr ""
+
 msgid ""
 "Importing entities from files serialized with hal_json is deprecated in "
 "default_content:2.0.0-alpha2 and is removed from default_content:3.0.0. The "
@@ -13787,6 +13867,10 @@ msgstr "Indstillinger for infinite scroll"
 msgid "Infinite Scroll Pager"
 msgstr ""
 
+msgctxt "dpl_service_message"
+msgid "Information"
+msgstr "Information"
+
 msgid ""
 "Information about rights held in and over the resource. Typically, rights "
 "information includes a statement about various property rights associated "
@@ -13889,6 +13973,10 @@ msgstr "Indsæt værdier fra serier"
 msgctxt "dpl_event"
 msgid "Insert values to instance"
 msgstr "Indsæt værdier i forekomst"
+
+msgctxt "Dashboard"
+msgid "Inspiration for you"
+msgstr ""
 
 msgid "Instagram"
 msgstr "Instagram"
@@ -14222,6 +14310,10 @@ msgctxt "views.view.scheduled_jobs:display:default:display_options:pager:options
 msgid "Items per page"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:expose:items_per_page_label"
+msgid "Items per page"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
 msgstr ""
@@ -14490,6 +14582,10 @@ msgctxt "views.view.media_library:display:default:display_options:pager:options:
 msgid "Last »"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:tags:last"
+msgid "Last »"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:tags:last"
 msgid "Last »"
 msgstr ""
@@ -14554,6 +14650,10 @@ msgstr "Let"
 msgctxt "advanced search 2"
 msgid "Level"
 msgstr "Fagligt niveau"
+
+msgctxt "views.view.service_messages:display:default:display_options:fields:svcmsg_level:label"
+msgid "Level"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Libraries have the material"
@@ -14648,6 +14748,10 @@ msgid "Link"
 msgstr "Link"
 
 msgctxt "field.field.node.campaign.field_campaign_link:label"
+msgid "Link"
+msgstr ""
+
+msgctxt "field.field.node.service_message.field_svcmsg_link:label"
 msgid "Link"
 msgstr ""
 
@@ -15357,6 +15461,12 @@ msgstr "Gør filterindstillinger sammenklappelige"
 
 msgid "Make sort options collapsible"
 msgstr "Gør sorteringsindstillinger sammenklappelige"
+
+msgctxt "field.field.node.service_message.field_svcmsg_link:description"
+msgid ""
+"Makes the whole message clickable. Point it at a page with more detail about "
+"what the message concerns."
+msgstr ""
 
 msgid "Manage Administer Users by Role settings."
 msgstr "Administrer indstillinger for brugeradministration efter rolle."
@@ -16493,6 +16603,10 @@ msgctxt "views.view.media:display:default:display_options:pager:options:tags:nex
 msgid "Next ›"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:tags:next"
+msgid "Next ›"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:tags:next"
 msgid "Next ›"
 msgstr ""
@@ -16982,6 +17096,10 @@ msgctxt "core.base_field_override.node.page.promote:settings:off_label"
 msgid "Off"
 msgstr ""
 
+msgctxt "core.base_field_override.node.service_message.status:settings:off_label"
+msgid "Off"
+msgstr ""
+
 msgctxt "field.field.eventinstance.default.field_event_all_day:settings:off_label"
 msgid "Off"
 msgstr ""
@@ -17019,6 +17137,10 @@ msgid "Off"
 msgstr ""
 
 msgctxt "field.field.node.page.field_display_titles:settings:off_label"
+msgid "Off"
+msgstr ""
+
+msgctxt "field.field.node.service_message.field_svcmsg_frontpage:settings:off_label"
 msgid "Off"
 msgstr ""
 
@@ -17133,6 +17255,10 @@ msgctxt "views.view.scheduled_jobs:display:default:display_options:pager:options
 msgid "Offset"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:expose:offset_label"
+msgid "Offset"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
 msgstr ""
@@ -17206,6 +17332,10 @@ msgctxt "core.base_field_override.node.page.promote:settings:on_label"
 msgid "On"
 msgstr ""
 
+msgctxt "core.base_field_override.node.service_message.status:settings:on_label"
+msgid "On"
+msgstr ""
+
 msgctxt "field.field.eventinstance.default.field_event_all_day:settings:on_label"
 msgid "On"
 msgstr ""
@@ -17243,6 +17373,10 @@ msgid "On"
 msgstr ""
 
 msgctxt "field.field.node.page.field_display_titles:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt "field.field.node.service_message.field_svcmsg_frontpage:settings:on_label"
 msgid "On"
 msgstr ""
 
@@ -17682,6 +17816,16 @@ msgstr ""
 msgid "Optional"
 msgstr "Valgfrit"
 
+msgctxt "field.field.node.service_message.field_svcmsg_heading:description"
+msgid "Optional if the body text is filled in."
+msgstr ""
+
+msgctxt "field.field.node.service_message.field_svcmsg_body:description"
+msgid ""
+"Optional if the title is filled in. Line breaks are not shown: the message "
+"is printed as one run of text."
+msgstr ""
+
 msgid "Optional suffix to add"
 msgstr "Valgfrit suffiks, der tilføjes"
 
@@ -17949,6 +18093,10 @@ msgid "Page"
 msgstr ""
 
 msgctxt "views.view.scheduled_jobs:display:page_1:display_title"
+msgid "Page"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:page_1:display_title"
 msgid "Page"
 msgstr ""
 
@@ -18551,6 +18699,14 @@ msgstr "Fyldtekst"
 msgid "Placeholder text for the filter"
 msgstr ""
 
+msgctxt "field.field.node.service_message.field_svcmsg_placement:label"
+msgid "Placement"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:fields:svcmsg_placement_summary:label"
+msgid "Placement"
+msgstr ""
+
 msgid "Placement Location"
 msgstr ""
 
@@ -18568,6 +18724,9 @@ msgstr "Enkel"
 
 msgctxt "filter.format.plain_text:name"
 msgid "Plain text"
+msgstr ""
+
+msgid "Plain text area widget settings"
 msgstr ""
 
 msgctxt "Work Page"
@@ -18883,11 +19042,11 @@ msgstr ""
 
 msgctxt "Global"
 msgid "Processing..."
-msgstr "Behandler..."
+msgstr "Indlæser..."
 
 msgctxt "Renew loan"
 msgid "Processing..."
-msgstr "Behandler..."
+msgstr "Indlæser..."
 
 msgid "Product availability"
 msgstr "Produkttilgængelighed"
@@ -19263,6 +19422,10 @@ msgctxt "Material search"
 msgid "Publication year"
 msgstr "Udgivelsesår"
 
+msgctxt "dpl_service_message"
+msgid "Publish"
+msgstr "Udgiv"
+
 msgid "Publish On field displayed for: @list"
 msgstr "Udgiv feltet vist for: @list"
 
@@ -19301,6 +19464,10 @@ msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:
 msgid "Publish on"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:fields:publish_on:label"
+msgid "Publish on"
+msgstr ""
+
 msgid "Publish on date"
 msgstr "Udgivelsesdato"
 
@@ -19318,6 +19485,10 @@ msgid "Published"
 msgstr "Udgivet"
 
 msgctxt "core.base_field_override.media.image.status:label"
+msgid "Published"
+msgstr ""
+
+msgctxt "core.base_field_override.node.service_message.status:label"
 msgid "Published"
 msgstr ""
 
@@ -19405,6 +19576,26 @@ msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:
 msgid "Published"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:fields:status:label"
+msgid "Published"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:fields:status:settings:format_custom_true"
+msgid "Published"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:filters:status:expose:label"
+msgid "Published"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:group_items:1:title"
+msgid "Published"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:label"
+msgid "Published"
+msgstr ""
+
 msgid "Published by Scheduler. The scheduled publishing date was @publish_on."
 msgstr "Udgivet af Scheduler. Den planlagte udgivelsesdato var @publish_on."
 
@@ -19445,6 +19636,10 @@ msgctxt "advanced search 2"
 msgid "Publisher"
 msgstr "Udgiver"
 
+msgctxt "dpl_service_message"
+msgid "Publishes or unpublishes a service message from the overview."
+msgstr ""
+
 msgid "Publishing"
 msgstr "Udgivelse"
 
@@ -19459,6 +19654,12 @@ msgstr ""
 
 msgid "Publishing options"
 msgstr "Udgivelse"
+
+msgctxt "dpl_service_message"
+msgid ""
+"Publishing this as a site-wide message will unpublish %label, which is site-"
+"wide and published now."
+msgstr ""
 
 msgctxt "Dpl Publizon"
 msgid "Publizon service url"
@@ -20402,6 +20603,10 @@ msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:
 msgid "Reset"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:reset_button_label"
 msgid "Reset"
 msgstr ""
@@ -20416,7 +20621,7 @@ msgstr ""
 
 msgctxt "DPL admin"
 msgid "Reset password"
-msgstr "Nulstil adgangskode"
+msgstr "Gendan adgangskode"
 
 msgid "Reset sort label"
 msgstr ""
@@ -21118,7 +21323,7 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Search results"
-msgstr "Søgeresultater"
+msgstr "Søgning"
 
 msgctxt "Recommender (settings)"
 msgid "Search text"
@@ -21234,7 +21439,7 @@ msgstr "Vælg konto"
 
 msgctxt "Dashboard"
 msgid "Select all"
-msgstr "Markér alt"
+msgstr "Vælg alle"
 
 msgid "Select all categories the paragraph applies to."
 msgstr "Vælg alle kategorier som paragraphen gælder for"
@@ -21331,6 +21536,11 @@ msgstr "Vælg feltet på kildenoden, hvorfra data skal arves."
 msgid ""
 "Select the field(s) that will be searched when using the autocomplete widget."
 msgstr "Vælg de felter som autocomplete widget skal søge i."
+
+msgid ""
+"Select the front page, one or more branches, or both. Otherwise the message "
+"has nowhere to appear."
+msgstr ""
 
 msgid "Select the material type."
 msgstr "Vælg materialetype"
@@ -21627,6 +21837,45 @@ msgctxt "Open order"
 msgid "Service is currently unavailable"
 msgstr ""
 
+msgctxt "dpl_service_message"
+msgid "Service message"
+msgstr ""
+
+msgctxt "node.type.service_message:name"
+msgid "Service message"
+msgstr ""
+
+msgctxt "Validation"
+msgid "Service message content"
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Service message level"
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Service message placement"
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Service message publish toggle"
+msgstr ""
+
+msgid "Service messages"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:title"
+msgid "Service messages"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:page_1:display_options:menu:title"
+msgid "Service messages"
+msgstr ""
+
+msgctxt "views.view.service_messages:label"
+msgid "Service messages"
+msgstr ""
+
 msgctxt "Open order"
 msgid "Service requester is missing"
 msgstr ""
@@ -21826,6 +22075,10 @@ msgstr "Skift"
 msgid "Short summary or subject for the event."
 msgstr "Kort resumé eller emne for arrangementet."
 
+msgid ""
+"Short, time-limited notices about outages, closures and degraded services."
+msgstr ""
+
 msgid "Shorthand name by which the End-User wishes to be referred to"
 msgstr "Kort navn, som slutbrugeren ønsker at blive omtalt med"
 
@@ -22008,6 +22261,14 @@ msgstr ""
 
 msgctxt "Global"
 msgid "Show next"
+msgstr ""
+
+msgctxt "field.field.node.service_message.field_svcmsg_frontpage:label"
+msgid "Show on the front page"
+msgstr ""
+
+msgctxt "field.field.node.service_message.field_svcmsg_branches:label"
+msgid "Show on these branch pages"
 msgstr ""
 
 msgid "Show only used items"
@@ -22436,6 +22697,10 @@ msgid "Sort by"
 msgstr ""
 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:exposed_form:options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:exposed_sorts_label"
 msgid "Sort by"
 msgstr ""
 
@@ -23368,6 +23633,9 @@ msgstr "Tekst"
 msgctxt "field.field.node.campaign.field_campaign_text:label"
 msgid "Text"
 msgstr ""
+
+msgid "Text area (multiple rows)"
+msgstr "Tekstområde (flere rækker)"
 
 msgctxt "paragraphs.paragraphs_type.text_body:label"
 msgid "Text body"
@@ -24391,6 +24659,12 @@ msgstr "Arrangementernes varighed forenes"
 msgid "The earliest an event can start"
 msgstr ""
 
+msgctxt "views.view.service_messages:description"
+msgid ""
+"The editorial overview of service messages. Used on admin/content/service-"
+"messages"
+msgstr ""
+
 msgid "The email address is already taken: @email"
 msgstr "Denne email adresse er allerede i brug: @email"
 
@@ -24905,6 +25179,16 @@ msgstr "Menu-linkets rod."
 
 msgid "The menu of the menu link."
 msgstr "Menu-linkets menu."
+
+msgctxt "field.field.node.service_message.field_svcmsg_branches:description"
+msgid "The message appears at the top of each branch page you pick."
+msgstr ""
+
+msgctxt "field.field.node.service_message.field_svcmsg_frontpage:description"
+msgid ""
+"The message appears at the top of the front page. Pick the front page, one "
+"or more branch pages, or both."
+msgstr ""
 
 msgid "The message for the email to send to the registrant"
 msgstr "Beskeden i e-mailen, der skal sendes til deltageren"
@@ -25448,6 +25732,10 @@ msgstr ""
 msgid "The settings below are common to all entity types."
 msgstr "Indstillingerne nedenfor er fælles for alle enhedstyper."
 
+msgctxt "dpl_service_message"
+msgid "The severity of a service message, which follows its placement."
+msgstr ""
+
 msgctxt "BNF"
 msgid "The site name of the source of this content"
 msgstr "Navnet på sitet, som dette indhold stammer fra"
@@ -25900,6 +26188,20 @@ msgstr ""
 msgid "The weight of the group"
 msgstr ""
 
+msgctxt "dpl_service_message"
+msgid "The whole site"
+msgstr ""
+
+msgctxt "field.storage.node.field_svcmsg_placement:settings:allowed_values:0:label"
+msgid "The whole site"
+msgstr ""
+
+msgctxt "field.field.node.service_message.field_svcmsg_placement:description"
+msgid ""
+"The whole site: a red bar above the menu on every page, for something "
+"urgent. Front page and branch pages: a message in the page itself."
+msgstr ""
+
 msgid ""
 "The widget for field %field is incorrectly set to %wrong. This should be "
 "changed to %correct by an admin user via the <a href=\"@link\">Field UI form "
@@ -25973,6 +26275,10 @@ msgstr ""
 
 msgid "There are no menu links yet."
 msgstr "Der er ingen menulinks endnu."
+
+msgctxt "views.view.service_messages:display:default:display_options:empty:area_text_custom:content"
+msgid "There are no service messages yet."
+msgstr ""
 
 msgctxt "Patron page"
 msgid ""
@@ -26949,6 +27255,10 @@ msgctxt "field.field.eventinstance.default.field_event_title:label"
 msgid "Title"
 msgstr ""
 
+msgctxt "field.field.node.service_message.field_svcmsg_heading:label"
+msgid "Title"
+msgstr ""
+
 msgctxt "field.field.paragraph.breadcrumb_children.field_title:label"
 msgid "Title"
 msgstr ""
@@ -27054,6 +27364,14 @@ msgid "Title"
 msgstr ""
 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:filters:title:expose:label"
+msgid "Title"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:fields:title:label"
+msgid "Title"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:filters:title:expose:label"
 msgid "Title"
 msgstr ""
 
@@ -27596,6 +27914,14 @@ msgctxt "views.view.scheduled_jobs:display:default:display_options:fields:type:l
 msgid "Type"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:fields:field_svcmsg_placement:label"
+msgid "Type"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:filters:field_svcmsg_placement_value:expose:label"
+msgid "Type"
+msgstr ""
+
 msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
 msgid "Type"
 msgstr ""
@@ -27808,7 +28134,7 @@ msgstr "Ikke-installerede moduler: %modules_list"
 msgid "Uninstalled theme"
 msgid_plural "Uninstalled themes"
 msgstr[0] ""
-msgstr[1] "Afinstallerede temaer"
+msgstr[1] ""
 
 msgid "Unknown"
 msgstr "Ukendt"
@@ -27859,6 +28185,10 @@ msgctxt "Fees list"
 msgid "Unpaid fees post 27/10 2020"
 msgstr "Ubetalte gebyrer efter 27/10 2020"
 
+msgctxt "dpl_service_message"
+msgid "Unpublish"
+msgstr "Træk tilbage"
+
 msgid "Unpublish On field displayed for: @list"
 msgstr ""
 "\n"
@@ -27892,6 +28222,10 @@ msgid "Unpublish on"
 msgstr "Afpublicér den"
 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:unpublish_on:label"
+msgid "Unpublish on"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:fields:unpublish_on:label"
 msgid "Unpublish on"
 msgstr ""
 
@@ -27968,6 +28302,14 @@ msgid "Unpublished"
 msgstr ""
 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:filters:status:group_info:group_items:2:title"
+msgid "Unpublished"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:fields:status:settings:format_custom_false"
+msgid "Unpublished"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:group_items:2:title"
 msgid "Unpublished"
 msgstr ""
 
@@ -28898,6 +29240,10 @@ msgctxt "Material search"
 msgid "Warning"
 msgstr "Advarsel"
 
+msgid "Warning message"
+msgstr "Advarsel"
+
+msgctxt "dpl_service_message"
 msgid "Warning message"
 msgstr "Advarsel"
 
@@ -30845,7 +31191,7 @@ msgstr ""
 
 msgctxt "advanced search"
 msgid "language"
-msgstr "sprog"
+msgstr "Sprog"
 
 msgid "last »"
 msgstr "sidste »"
@@ -31126,7 +31472,7 @@ msgstr "Klar til lån"
 
 msgctxt "advanced search"
 msgid "reset"
-msgstr "gendan"
+msgstr "Nulstil"
 
 msgctxt "Search Result"
 msgid "results"
@@ -31183,7 +31529,7 @@ msgstr "Viser materialer"
 
 msgctxt "advanced search"
 msgid "source"
-msgstr "kilde"
+msgstr "Kilde"
 
 msgid "speed of the effect"
 msgstr ""
@@ -31317,6 +31663,10 @@ msgctxt "views.view.media_library:display:default:display_options:pager:options:
 msgid "« First"
 msgstr ""
 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:tags:first"
+msgid "« First"
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:tags:first"
 msgid "« First"
 msgstr ""
@@ -31368,6 +31718,10 @@ msgid "‹ Previous"
 msgstr ""
 
 msgctxt "views.view.media:display:default:display_options:pager:options:tags:previous"
+msgid "‹ Previous"
+msgstr ""
+
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:tags:previous"
 msgid "‹ Previous"
 msgstr ""
 

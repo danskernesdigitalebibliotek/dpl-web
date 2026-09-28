@@ -1,3 +1,4 @@
+import { WorkTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { WorkId } from "../../core/utils/types/ids";
 
 // One series membership of a work, as the FBI API reports it when a series is
@@ -17,5 +18,6 @@ export type RelatedWork = {
   workId: WorkId;
   title: string;
   series: RelatedWorkSeries[];
+  workTypes: WorkTypeEnum[];
   coverSrc: string | null;
 };

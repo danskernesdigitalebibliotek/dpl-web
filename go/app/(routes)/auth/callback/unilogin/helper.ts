@@ -18,8 +18,10 @@ export const isUniloginUserAuthorizedToLogIn = async (
   }
   const institution = await getInstitutionRequest(institutionId)
   const municipalityId = await getLibraryMunicipalityId()
-  // If the institution is DDF we are using a test user and therefore allow access
-  if (institution.instnr === "A04441") {
+  // If the institution is DDF we are using a test user and therefore allow access.
+  // A04441 is the legacy DDF provider number, R00263 the new DDF test institution.
+  // TODO: Remove A04441 after the STIL cutoff date 2026-09-22.
+  if (["A04441", "R00263"].includes(institution.instnr)) {
     return true
   }
 

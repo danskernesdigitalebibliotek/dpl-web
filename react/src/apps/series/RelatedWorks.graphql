@@ -8,6 +8,7 @@ query getRelatedWorks(
   complexSearch(cql: $cql, filters: $filters) {
     works(offset: $offset, limit: $limit, sort: $sort) {
       workId
+      workTypes
       titles {
         full
       }

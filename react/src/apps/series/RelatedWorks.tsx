@@ -36,7 +36,10 @@ const RelatedWorks: React.FC<RelatedWorksProps> = ({
   const t = useText();
   const u = useUrls();
   const materialUrl = u("materialUrl");
-  const { works, isLoading } = useRelatedWorks({ author, currentSeries });
+  const { works, isLoading } = useRelatedWorks({
+    author,
+    currentSeries
+  });
 
   const addToListRequest = useAddFavorite({ app: "series" });
 
