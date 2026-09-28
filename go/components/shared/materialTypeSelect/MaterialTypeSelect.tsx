@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import React, { useOptimistic, useTransition } from "react"
+import React from "react"
 
 import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
 import { cyKeys } from "@/cypress/support/constants"
@@ -18,14 +18,14 @@ export type MaterialTypeSelectProps = {
   onOptionSelect: (option: MaterialTypeSelectOption) => void
 }
 
+// `selected` is expected to react to a tap immediately - the caller owns the
+// optimistic value, because the same value decides what the edition picker
+// lists and a second copy here would let the two disagree.
 const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeSelectProps) => {
-  const [optimisticSelected, setOptimisticSelected] = useOptimistic(selected)
-  const [, startTransition] = useTransition()
-
   return (
     <div className="flex flex-row flex-wrap items-center justify-center gap-2">
       {options.map(option => {
-        const isSelected = option.code === optimisticSelected
+        const isSelected = option.code === selected
         const iconName = getIconNameFromMaterialType(option.code)
 
         return (
@@ -37,12 +37,7 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
                 ? `Nu viser materialet som ${option.display}`
                 : `Skift til visning af ${option.display}`
             }
-            onClick={() => {
-              startTransition(() => {
-                onOptionSelect(option)
-                setOptimisticSelected(option.code)
-              })
-            }}
+            onClick={() => onOptionSelect(option)}
             whileTap={{ scale: 0.92 }}
             whileHover={{ scale: 1.06 }}
             className={cn(

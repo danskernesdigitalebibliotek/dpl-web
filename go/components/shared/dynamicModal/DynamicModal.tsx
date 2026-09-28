@@ -83,7 +83,11 @@ export function StoreModal() {
   const [active, setActive] = useState<{
     modalType: TModalStoreType
     props: TModalRegistry[TModalStoreType]
+    // Distinguishes one opening from the next. See the key on the rendered
+    // component below.
+    key: number
   } | null>(null)
+  const openCount = useRef(0)
   // The modal mounts closed and opens on the next frame, so the enter
   // animation plays from a fully committed tree instead of the dialog
   // painting empty (a blank full-size flash) on mount.
@@ -91,14 +95,18 @@ export function StoreModal() {
 
   useEffect(() => {
     if (open && modalType && props) {
-      setActive({ modalType, props })
+      setActive(current =>
+        current && current.modalType === modalType && current.props === props
+          ? current
+          : { modalType, props, key: ++openCount.current }
+      )
       const frame = requestAnimationFrame(() => setVisible(true))
       return () => cancelAnimationFrame(frame)
-    } else {
-      setVisible(false)
-      const timer = setTimeout(() => setActive(null), 500)
-      return () => clearTimeout(timer)
     }
+
+    setVisible(false)
+    const timer = setTimeout(() => setActive(null), 500)
+    return () => clearTimeout(timer)
   }, [open, modalType, props])
 
   const pathname = usePathname()
@@ -115,7 +123,21 @@ export function StoreModal() {
   const ModalComponent = ModalComponents[active.modalType] as React.ComponentType<
     TModalRegistry[TModalStoreType] & { open: boolean; onClose: () => void }
   >
-  return <ModalComponent open={open && visible} onClose={closeModal} {...active.props} />
+  // Keyed per opening, so every open mounts a fresh component. Modals take
+  // their data as props, captured when they open, and a reused instance would
+  // keep serving the props it was opened with the first time - the edition
+  // picker would list the material type of whichever opening mounted it. The
+  // closing modal also stays mounted here for half a second so its exit
+  // animation can play, so reopening inside that window would otherwise reuse
+  // the instance still on screen.
+  return (
+    <ModalComponent
+      key={active.key}
+      open={open && visible}
+      onClose={closeModal}
+      {...active.props}
+    />
+  )
 }
 
 export function DynamicModal() {

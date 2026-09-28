@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import { useRouter, useSearchParams } from "next/navigation"
-import React from "react"
+import React, { useOptimistic, useTransition } from "react"
 
 import {
   getManifestationLanguageCode,
@@ -82,13 +82,27 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
       routeParams: { work: "work", wid: work.workId },
       queryParams: { type: optionSelected.code },
     })
-    router.push(url, { scroll: false })
+    startTransition(() => {
+      setPickedMaterialTypeCode(optionSelected.code)
+      router.push(url, { scroll: false })
+    })
   }
 
   const materialTypeOptions = workMaterialTypesWithDisplayName
 
   const selectedManifestationMaterialTypeCode =
     selectedManifestation?.materialTypes[0].materialTypeSpecific.code
+
+  // The tapped type, available immediately. A material-type tap navigates
+  // inside a transition, so both the url and the selected manifestation keep
+  // naming the previous type until that navigation commits - long enough for a
+  // reader to tap a type and open the picker on the one they just left. This
+  // is the only value that is right during that window, so the skeleton and
+  // the modal both read it.
+  const [pickedMaterialTypeCode, setPickedMaterialTypeCode] = useOptimistic(
+    selectedManifestationMaterialTypeCode
+  )
+  const [, startTransition] = useTransition()
 
   const manifestationKey = selectedManifestation?.pid
 
@@ -98,6 +112,21 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const { session } = useSession()
   const isLoggedIn = session?.isLoggedIn || false
+
+  // The url is the source of truth for the material type, and the page resolves
+  // selectedManifestation from it a render later. While those disagree the page
+  // is mid-switch, and anything derived from the selected manifestation is
+  // still describing the type the user just navigated away from.
+  const urlMaterialTypeCode = searchParams.get("type")
+  // Only a type the work actually has counts as a switch in progress. A url
+  // carrying an unknown type never resolves to a manifestation, and comparing
+  // against it would disable the picker for good.
+  const isUrlMaterialTypeKnown = materialTypeOptions.some(
+    option => option.code === urlMaterialTypeCode
+  )
+  const isSwitchingMaterialType =
+    (isUrlMaterialTypeKnown && urlMaterialTypeCode !== selectedManifestationMaterialTypeCode) ||
+    pickedMaterialTypeCode !== selectedManifestationMaterialTypeCode
 
   // The choice lives in the url, so the button label follows the chosen manifestation
   const urlEditionChoice = parseEditionChoice(searchParams.get("edition"))
@@ -116,14 +145,18 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const openEditionsSelect = () =>
     openModal("EditionsSelectModal", {
       wid: work.workId,
-      materialTypeCode: selectedManifestationMaterialTypeCode,
+      materialTypeCode: pickedMaterialTypeCode,
       choice: editionChoice,
-      onChoiceConfirm: (choice: TEditionChoice) => {
+      // The type comes back from the modal rather than from this closure: the
+      // closure is captured when the modal opens and would still hold the
+      // previous type if the page had not finished switching yet, which sent
+      // the new edition to the old type's url.
+      onChoiceConfirm: (choice: TEditionChoice, materialTypeCode: string) => {
         const editionParam = serializeEditionChoice(choice)
         const url = resolveUrl({
           routeParams: { work: "work", wid: work.workId },
           queryParams: {
-            type: selectedManifestationMaterialTypeCode,
+            type: materialTypeCode,
             // "newest" is the default pick, so it needs no param of its own.
             ...(editionParam ? { edition: editionParam } : {}),
           },
@@ -168,7 +201,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
             <div className="flex w-full justify-center pt-6">
               <MaterialTypeSelect
                 options={materialTypeOptions}
-                selected={selectedManifestationMaterialTypeCode}
+                selected={pickedMaterialTypeCode}
                 onOptionSelect={onOptionSelect}
               />
             </div>
@@ -193,9 +226,19 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
         </div>
         <div className="col-span-4 mt-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
           <div className="mb-3 flex w-full lg:items-end">
-            <WorkPageButton ariaLabel="Vælg udgave" onClick={openEditionsSelect}>
-              {`Udgave: ${editionChoiceLabel}`}
-            </WorkPageButton>
+            {/* Mid-switch the label would still name the previous type's
+                edition, so the button is replaced by a skeleton until the
+                page has resolved the new one. */}
+            {isSwitchingMaterialType ? (
+              <div
+                className="bg-background-skeleton h-12 w-full animate-pulse rounded-full lg:max-w-80
+                  lg:min-w-72"
+              />
+            ) : (
+              <WorkPageButton ariaLabel="Vælg udgave" onClick={openEditionsSelect}>
+                {`Udgave: ${editionChoiceLabel}`}
+              </WorkPageButton>
+            )}
           </div>
           {isLoggedIn ? (
             <WorkPageButtonsLoggedIn
