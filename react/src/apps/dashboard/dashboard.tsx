@@ -88,9 +88,9 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
     })
   );
 
-  const { works, isLoading } = useRecommendations(seed);
+  const { result, isLoading } = useRecommendations(seed);
 
-  if (isLoading || works.length === 0) {
+  if (isLoading || !result || result.recommendations.length === 0) {
     return null;
   }
 
@@ -98,7 +98,7 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
     <section className="dashboard-page-recommendations">
       <MaterialSlider
         heading={t("dashboardRecommendationsHeadingText")}
-        items={works.map((work) => ({
+        items={result.recommendations.map((work) => ({
           id: work.workId,
           title: work.title,
           subtitle: work.author,
