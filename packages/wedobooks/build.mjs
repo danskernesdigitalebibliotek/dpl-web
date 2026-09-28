@@ -19,11 +19,6 @@ const buildOptions = {
   sourcemap: false,
   external: ["react", "react-dom"],
   plugins: [polyfillNode({})],
-  // The SDK ships main.css (a highlight animation the reader uses) but does
-  // not import it, leaving it to the consumer. Pulling it in as text lets the
-  // wrapper inject it itself, so it stays sourced from the package rather than
-  // copied into ours where it would drift.
-  loader: { ".css": "text" },
   // `@colibrio/colibrio-reader-framework` (transitive dep of the SDK) ships
   // UMD modules whose AMD `define([...], factory)` branches survive bundling,
   // and webpack then tries to resolve their dependency strings as modules.
