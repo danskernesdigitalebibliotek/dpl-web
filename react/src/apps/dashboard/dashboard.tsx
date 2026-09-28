@@ -12,11 +12,10 @@ import { useGetList } from "../../core/material-list-api/material-list";
 import { WorkId } from "../../core/utils/types/ids";
 import { LoanType } from "../../core/utils/types/loan-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
-import { hasValue } from "../../core/utils/helpers/has-value";
 import {
-  listItemToRecommendationSeed,
+  listItemsToRecommendationSeeds,
   pickRecommendationSeed,
-  workIdToRecommendationSeed
+  workIdsToRecommendationSeeds
 } from "./recommendationSeed";
 import useRecommendations from "./useRecommendations";
 
@@ -81,21 +80,13 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   const materialUrl = u("materialUrl");
   const addToListRequest = useAddFavorite({ app: "dashboard" });
 
-  const [seed] = useState(() => {
-    const loanSeeds = loans.map(listItemToRecommendationSeed).filter(hasValue);
-
-    const reservationSeeds = reservations
-      .map(listItemToRecommendationSeed)
-      .filter(hasValue);
-
-    const favoriteSeeds = favorites.map(workIdToRecommendationSeed);
-
-    return pickRecommendationSeed({
-      loans: loanSeeds,
-      reservations: reservationSeeds,
-      favorites: favoriteSeeds
-    });
-  });
+  const [seed] = useState(() =>
+    pickRecommendationSeed({
+      loans: listItemsToRecommendationSeeds(loans, "loan"),
+      reservations: listItemsToRecommendationSeeds(reservations, "reservation"),
+      favorites: workIdsToRecommendationSeeds(favorites)
+    })
+  );
 
   const { works, isLoading } = useRecommendations(seed);
 
