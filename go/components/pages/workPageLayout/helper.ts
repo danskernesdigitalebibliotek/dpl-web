@@ -105,7 +105,10 @@ export const sortManifestationsBySortPriority = (
   manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]
 ): ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[] => {
   const sortPriority = goConfig("materialtypes.sortpriority")
-  return manifestations.sort((manifestationA, manifestationB) => {
+  // Sort a copy: callers pass memoized arrays, and sorting in place reorders
+  // the caller's own array on every render, which makes anything reading it by
+  // position drift out of sync with what it stands for.
+  return [...manifestations].sort((manifestationA, manifestationB) => {
     const priorityA = sortPriority.indexOf(
       manifestationA.materialTypes[0].materialTypeSpecific.code
     )

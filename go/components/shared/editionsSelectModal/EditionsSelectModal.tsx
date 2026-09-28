@@ -6,6 +6,7 @@ import { getEditionsForMaterialType } from "@/components/pages/workPageLayout/he
 import { Button } from "@/components/shared/button/Button"
 import EditionsSelectModalItem from "@/components/shared/editionsSelectModal/EditionsSelectModalItem"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
+import { useEditionAvailability } from "@/hooks/useEditionAvailability"
 import {
   ManifestationWorkPageFragment,
   useGetMaterialQuery,
@@ -44,10 +45,18 @@ export const getEditionChoiceLabel = (
 // Data props — `open`/`onClose` come from the DynamicModal host.
 export type EditionsSelectModalProps = {
   wid: string
-  // The material type code currently selected in MaterialTypeSelect.
+  // The type to list editions for, captured when the modal opens. The url is
+  // not read here: a material-type tap navigates inside a transition, so
+  // `useSearchParams` keeps returning the previous type until that navigation
+  // commits, and a modal opened in between would list the type the reader just
+  // left. The host mounts a fresh modal per opening, so this cannot go stale
+  // while open.
   materialTypeCode: string
   choice: TEditionChoice
-  onChoiceConfirm: (choice: TEditionChoice) => void
+  // The material type is handed back with the choice: it is the type the modal
+  // actually listed editions for, so the caller never has to guess which type
+  // a pid belongs to.
+  onChoiceConfirm: (choice: TEditionChoice, materialTypeCode: string) => void
 }
 
 // The group names are used for the native radios, which are hidden but keep the accessibility tree semantics of a radio group.
@@ -116,10 +125,21 @@ const EditionsSelectModal = ({
     [allManifestations, materialTypeCode]
   )
 
-  // Editions are newest first.
+  const { isLoadingAvailability, isAvailabilityUnknown, isEditionHidden, isEditionLentOut } =
+    useEditionAvailability(wid)
+
+  // An edition the kommune can neither lend nor order is noise here, so it is
+  // left out entirely rather than shown as a dead end. Editions that are only
+  // lent out stay: reserving one is what a reader should do. Ordering is
+  // untouched, so what remains keeps the position it had.
+  const shownEditions = editions.filter(manifestation => !isEditionHidden(manifestation))
+
+  // Editions are newest first, so the first one the kommune can actually
+  // supply is what "nyeste" resolves to. Describing the unfiltered newest
+  // would advertise an edition that is not even in the grid below.
   const newestDescription = [
-    editions[0]?.edition?.publicationYear?.year,
-    editions[0]?.publisher?.[0],
+    shownEditions[0]?.edition?.publicationYear?.year,
+    shownEditions[0]?.publisher?.[0],
   ]
     .filter(Boolean)
     .join(", ")
@@ -127,7 +147,7 @@ const EditionsSelectModal = ({
   const selectedPid = typeof draftChoice === "object" ? draftChoice.pid : null
 
   const handleConfirm = () => {
-    onChoiceConfirm(draftChoice)
+    onChoiceConfirm(draftChoice, materialTypeCode)
     onClose()
   }
 
@@ -143,32 +163,53 @@ const EditionsSelectModal = ({
           onSelect={() => setDraftChoice("newest")}
         />
 
-        {editions.length > 0 && (
+        {(isLoadingAvailability || shownEditions.length > 0) && (
           <>
             <div className="my-8 flex items-center gap-4">
               <hr className="border-foreground/10 flex-1" />
               <span className="text-typo-caption shrink-0 opacity-70">
-                Eller vælg en bestemt udgave · {editions.length}
+                {/* Counts what is on screen, so the number matches the grid. */}
+                Eller vælg en bestemt udgave · {shownEditions.length}
               </span>
               <hr className="border-foreground/10 flex-1" />
             </div>
 
             <div className="grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4 lg:grid-cols-5">
-              {editions.map(manifestation => (
-                <EditionsSelectModalItem
-                  key={manifestation.pid}
-                  manifestation={manifestation}
-                  name={EDITION_CHOICE_GROUP}
-                  checked={selectedPid === manifestation.pid}
-                  onSelect={() => setDraftChoice({ pid: manifestation.pid })}
-                />
-              ))}
+              {isLoadingAvailability
+                ? editions.map(manifestation => (
+                    <EditionsSelectModalItem.Skeleton key={manifestation.pid} />
+                  ))
+                : shownEditions.map(manifestation => (
+                    <EditionsSelectModalItem
+                      key={manifestation.pid}
+                      manifestation={manifestation}
+                      name={EDITION_CHOICE_GROUP}
+                      checked={selectedPid === manifestation.pid}
+                      lentOut={isEditionLentOut(manifestation)}
+                      onSelect={() => setDraftChoice({ pid: manifestation.pid })}
+                    />
+                  ))}
             </div>
           </>
         )}
 
-        {editions.length === 0 && (
-          <p className="text-typo-caption mt-8">Ingen udgaver for denne materialetype.</p>
+        {/* Availability could not be read, so every edition is shown and none
+            is marked. Says what is missing without implying the picker is
+            broken — there is nothing here for a reader to retry. */}
+        {isAvailabilityUnknown && (
+          <p className="text-typo-caption mt-8 opacity-70">
+            Vi kan ikke se hvilke bøger der er hjemme lige nu.
+          </p>
+        )}
+
+        {/* Two different empty states: the work has no editions of this type
+            at all, or the kommune has none of the ones it does have. */}
+        {!isLoadingAvailability && shownEditions.length === 0 && (
+          <p className="text-typo-caption mt-8">
+            {editions.length === 0
+              ? "Ingen udgaver for denne materialetype."
+              : "Der er ingen udgaver af denne bog på dit bibliotek."}
+          </p>
         )}
       </fieldset>
 

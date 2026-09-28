@@ -9,6 +9,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
+import { useEditionAvailability } from "@/hooks/useEditionAvailability"
 import usePatronShelf from "@/hooks/usePatronShelf"
 import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
@@ -63,6 +64,7 @@ const WorkPageButtonsLoggedIn = ({
         <PhysicalReservationButton
           dataCy={dataCy}
           label={label}
+          workId={workId}
           selectedManifestation={selectedManifestation}
           reservationModal={reservationModal}
           onOpen={open}
@@ -155,12 +157,14 @@ const WorkPageButtonsLoggedIn = ({
 const PhysicalReservationButton = ({
   dataCy,
   label,
+  workId,
   selectedManifestation,
   reservationModal,
   onOpen,
 }: {
   dataCy: string
   label: string
+  workId: string
   selectedManifestation: ManifestationWorkPageFragment
   reservationModal: TModalType
   onOpen: (modal: TModalType) => void
@@ -170,6 +174,17 @@ const PhysicalReservationButton = ({
   const recordId = pidToFaust(selectedManifestation.pid)
   const existing = findReservationByRecordId(reservations, recordId)
   const existingLoan = loans?.find(loan => loan.recordId === recordId)
+
+  // The picker only offers editions the kommune can supply, so this normally
+  // does not trigger. It still can: a pinned pid in a shared link can name an
+  // edition this kommune has nothing of. The pin is kept and the dead end
+  // shown here, rather than swapping the reader's choice behind their back or
+  // letting the reservation fail after they commit to it.
+  //
+  // A lent-out edition is not a dead end — reserving it is how the reader
+  // joins the queue — so it keeps the ordinary button.
+  const { isEditionHidden } = useEditionAvailability(workId)
+  const isUnobtainable = isEditionHidden(selectedManifestation)
 
   if (existingLoan) {
     return (
@@ -204,6 +219,18 @@ const PhysicalReservationButton = ({
           Se reservering
         </WorkPageButton>
       </>
+    )
+  }
+
+  if (isUnobtainable) {
+    return (
+      <WorkPageButton
+        ariaLabel="Udgaven findes ikke på dit bibliotek — vælg en anden udgave"
+        theme="primary"
+        dataCy={dataCy}
+        disabled>
+        Vælg en anden udgave
+      </WorkPageButton>
     )
   }
 
