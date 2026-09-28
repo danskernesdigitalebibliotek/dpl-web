@@ -18,9 +18,8 @@ export type MaterialTypeSelectProps = {
   onOptionSelect: (option: MaterialTypeSelectOption) => void
 }
 
-// Highlights whichever option `selected` names. Keeping no state of its own
-// is deliberate: the caller decides what is selected, and the edition picker
-// reads that same value.
+// Highlights whichever option `selected` names.∏
+
 const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeSelectProps) => {
   return (
     <div className="flex flex-row flex-wrap items-center justify-center gap-2">

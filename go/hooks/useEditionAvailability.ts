@@ -12,8 +12,7 @@ import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
 
 import { useBlacklistedAvailabilityBranches } from "./useBlacklistedAvailabilityBranches"
 
-// Every physical record of a work. recordIds are part of the react-query
-// key, so all callers must ask about the same set to share one request.
+// Every physical record of a work.
 export const useWorkRecordIds = (wid: string) => {
   const { data, isLoading } = useGetMaterialQuery({ wid }, { enabled: !!wid })
 
