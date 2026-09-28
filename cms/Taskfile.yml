@@ -411,9 +411,12 @@ tasks:
       # dangling link.
       - task -d {{.TASKFILE_DIR}}/.. dev:dotenv:template
       - task dev:reset
+      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       SKIP_LANGUAGE_IMPORT: "true"
+      CYPRESS_DRUPAL_USERNAME: admin
+      CYPRESS_DRUPAL_PASSWORD: admin
 
   ci:reset:clean:
     desc: Create CI setup with a clean database
@@ -447,7 +450,6 @@ tasks:
 
   ci:cypress:run:
     cmds:
-      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
       - task dev:cli -- drush pm:enable -y dpl_webmaster
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "$SPEC_PATH"
     env:
@@ -456,6 +458,15 @@ tasks:
       CYPRESS_DRUPAL_PASSWORD: admin
       # To be overriden by the tasks that use this task.
       SPEC_PATH: ""
+
+  dev:cypress:run:
+    desc: Run Cypress test in docker. Assumes ci:reset has already run.
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "{{ .CLI_ARGS }}"
+    env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+      CYPRESS_DRUPAL_USERNAME: admin
+      CYPRESS_DRUPAL_PASSWORD: admin
 
   ci:cypress:unmapped:
     desc: Run Cypress functional tests
@@ -529,14 +540,11 @@ tasks:
     deps: [ci:wiremock:create-mappings, ci:local]
     cmds:
       - pnpm install --frozen-lockfile
-      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
       - pnpm exec cypress open
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
       CYPRESS_WIREMOCK_URL: "{{ .CYPRESS_WIREMOCK_LOCAL }}"
-      CYPRESS_DRUPAL_USERNAME: admin
-      CYPRESS_DRUPAL_PASSWORD: admin
 
   ci:pa11y:
     desc: Run Pa11y to test accessiblity
