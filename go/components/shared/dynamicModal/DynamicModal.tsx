@@ -83,8 +83,6 @@ export function StoreModal() {
   const [active, setActive] = useState<{
     modalType: TModalStoreType
     props: TModalRegistry[TModalStoreType]
-    // Distinguishes one opening from the next. See the key on the rendered
-    // component below.
     key: number
   } | null>(null)
   const openCount = useRef(0)
@@ -123,13 +121,8 @@ export function StoreModal() {
   const ModalComponent = ModalComponents[active.modalType] as React.ComponentType<
     TModalRegistry[TModalStoreType] & { open: boolean; onClose: () => void }
   >
-  // Keyed per opening, so every open mounts a fresh component. Modals take
-  // their data as props, captured when they open, and a reused instance would
-  // keep serving the props it was opened with the first time - the edition
-  // picker would list the material type of whichever opening mounted it. The
-  // closing modal also stays mounted here for half a second so its exit
-  // animation can play, so reopening inside that window would otherwise reuse
-  // the instance still on screen.
+  // Keyed per opening: modals capture their props on mount, so each open
+  // gets a fresh component.
   return (
     <ModalComponent
       key={active.key}

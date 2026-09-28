@@ -93,12 +93,8 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const selectedManifestationMaterialTypeCode =
     selectedManifestation?.materialTypes[0].materialTypeSpecific.code
 
-  // The tapped type, available immediately. A material-type tap navigates
-  // inside a transition, so both the url and the selected manifestation keep
-  // naming the previous type until that navigation commits - long enough for a
-  // reader to tap a type and open the picker on the one they just left. This
-  // is the only value that is right during that window, so the skeleton and
-  // the modal both read it.
+  // The tapped type, correct immediately. The url and the selected
+  // manifestation both lag until the transition below commits.
   const [pickedMaterialTypeCode, setPickedMaterialTypeCode] = useOptimistic(
     selectedManifestationMaterialTypeCode
   )
@@ -113,14 +109,9 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const { session } = useSession()
   const isLoggedIn = session?.isLoggedIn || false
 
-  // The url is the source of truth for the material type, and the page resolves
-  // selectedManifestation from it a render later. While those disagree the page
-  // is mid-switch, and anything derived from the selected manifestation is
-  // still describing the type the user just navigated away from.
   const urlMaterialTypeCode = searchParams.get("type")
-  // Only a type the work actually has counts as a switch in progress. A url
-  // carrying an unknown type never resolves to a manifestation, and comparing
-  // against it would disable the picker for good.
+  // A url type the work does not have never resolves to a manifestation, so
+  // it does not count as a switch in progress.
   const isUrlMaterialTypeKnown = materialTypeOptions.some(
     option => option.code === urlMaterialTypeCode
   )
@@ -147,10 +138,8 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
       wid: work.workId,
       materialTypeCode: pickedMaterialTypeCode,
       choice: editionChoice,
-      // The type comes back from the modal rather than from this closure: the
-      // closure is captured when the modal opens and would still hold the
-      // previous type if the page had not finished switching yet, which sent
-      // the new edition to the old type's url.
+      // The modal hands back the type it listed, so the pid and the type
+      // always belong together.
       onChoiceConfirm: (choice: TEditionChoice, materialTypeCode: string) => {
         const editionParam = serializeEditionChoice(choice)
         const url = resolveUrl({

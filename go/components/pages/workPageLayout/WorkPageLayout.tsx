@@ -86,32 +86,23 @@ function WorkPageLayout({ workId }: { workId: string }) {
       typeof editionChoice === "object" ? editionChoice.pid : null
     )
 
-    // "Nyeste" has to mean the newest edition the kommune can actually supply,
-    // or the page would show an edition the picker leaves out of its grid and
-    // does not describe. Editions come back newest first, so the first one
-    // that is not hidden is the pick. Falls back to the default when
-    // availability says nothing yet, which is also what it says while loading.
+    // "Nyeste" means the newest edition the kommune can supply, matching the
+    // picker. Editions come back newest first.
     const newestObtainable = getEditionsForMaterialType(
       (allManifestations ?? []) as ManifestationWorkPageFragment[],
       searchParamsMaterialType ?? ""
     ).find(manifestation => !isEditionHidden(manifestation))
 
-    // `manifestations.find` is cast to a non-nullable type above, so it can
-    // hand back undefined for a material type that has no manifestation. Keep
-    // the last good pick rather than clearing the page in that case.
+    // defaultManifestation is cast non-nullable above but can be undefined,
+    // so keep the last good pick rather than clearing the page.
     const nextManifestation = pinnedManifestation ?? newestObtainable ?? defaultManifestation
     if (nextManifestation) {
       setSelectedManifestation(nextManifestation)
     }
-    // isEditionHidden is rebuilt every render, so the effect depends on the
-    // flags behind it instead. Both are one-shots rather than per-refetch
-    // signals: the pick is made once and not revised if holdings change later
-    // in the session, since re-running on every background refetch would swap
-    // the displayed edition under the reader. isAvailabilityUnknown covers the
-    // one case the loading flag cannot - a request that failed and then
-    // succeeded on retry. There the first pick was made knowing nothing, so
-    // the retry is the first real answer and has to be acted on, or the page
-    // can sit on an edition the picker leaves out.
+    // isEditionHidden is rebuilt every render, so the flags behind it stand
+    // in for it. Both settle once, so a background refetch does not swap the
+    // edition under the reader; isAvailabilityUnknown catches an error that
+    // later succeeds, which is the first real answer.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     searchParams,

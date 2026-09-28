@@ -13,12 +13,8 @@ import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 // Data props — `open`/`onClose` come from the DynamicModal host.
 export type EditionsSelectModalProps = {
   wid: string
-  // The type to list editions for, captured when the modal opens. The url is
-  // not read here: a material-type tap navigates inside a transition, so
-  // `useSearchParams` keeps returning the previous type until that navigation
-  // commits, and a modal opened in between would list the type the reader just
-  // left. The host mounts a fresh modal per opening, so this cannot go stale
-  // while open.
+  // The type to list editions for, captured when the modal opens. Not read
+  // from the url, which lags behind a material-type tap.
   materialTypeCode: string
   choice: TEditionChoice
   // The material type is handed back with the choice: it is the type the modal
@@ -96,15 +92,12 @@ const EditionsSelectModal = ({
   const { isLoadingAvailability, isAvailabilityUnknown, isEditionHidden, isEditionLentOut } =
     useEditionAvailability(wid)
 
-  // An edition the kommune can neither lend nor order is noise here, so it is
-  // left out entirely rather than shown as a dead end. Editions that are only
-  // lent out stay: reserving one is what a reader should do. Ordering is
-  // untouched, so what remains keeps the position it had.
+  // Editions the kommune cannot supply are left out; lent-out ones stay.
+  // Ordering is untouched, so what remains keeps its position.
+  // See docs/go/material-availability.md
   const shownEditions = editions.filter(manifestation => !isEditionHidden(manifestation))
 
-  // Editions are newest first, so the first one the kommune can actually
-  // supply is what "nyeste" resolves to. Describing the unfiltered newest
-  // would advertise an edition that is not even in the grid below.
+  // Editions are newest first, so the first shown one is what "nyeste" means.
   const newestDescription = [
     shownEditions[0]?.edition?.publicationYear?.year,
     shownEditions[0]?.publisher?.[0],
@@ -161,9 +154,8 @@ const EditionsSelectModal = ({
           </>
         )}
 
-        {/* Availability could not be read, so every edition is shown and none
-            is marked. Says what is missing without implying the picker is
-            broken — there is nothing here for a reader to retry. */}
+        {/* Availability could not be read, so every edition is shown
+            unmarked. */}
         {isAvailabilityUnknown && (
           <p className="text-typo-caption mt-8 opacity-70">
             Vi kan ikke se hvilke bøger der er hjemme lige nu.

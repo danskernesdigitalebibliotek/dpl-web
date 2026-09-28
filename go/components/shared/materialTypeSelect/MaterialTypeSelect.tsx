@@ -18,9 +18,9 @@ export type MaterialTypeSelectProps = {
   onOptionSelect: (option: MaterialTypeSelectOption) => void
 }
 
-// `selected` is expected to react to a tap immediately - the caller owns the
-// optimistic value, because the same value decides what the edition picker
-// lists and a second copy here would let the two disagree.
+// Highlights whichever option `selected` names. Keeping no state of its own
+// is deliberate: the caller decides what is selected, and the edition picker
+// reads that same value.
 const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeSelectProps) => {
   return (
     <div className="flex flex-row flex-wrap items-center justify-center gap-2">

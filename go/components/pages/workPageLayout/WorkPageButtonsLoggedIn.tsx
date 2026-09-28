@@ -175,14 +175,8 @@ const PhysicalReservationButton = ({
   const existing = findReservationByRecordId(reservations, recordId)
   const existingLoan = loans?.find(loan => loan.recordId === recordId)
 
-  // The picker only offers editions the kommune can supply, so this normally
-  // does not trigger. It still can: a pinned pid in a shared link can name an
-  // edition this kommune has nothing of. The pin is kept and the dead end
-  // shown here, rather than swapping the reader's choice behind their back or
-  // letting the reservation fail after they commit to it.
-  //
-  // A lent-out edition is not a dead end — reserving it is how the reader
-  // joins the queue — so it keeps the ordinary button.
+  // Only reachable through a pinned pid in a shared link, since the picker
+  // offers nothing unobtainable. Lent-out editions keep the normal button.
   const { isEditionHidden } = useEditionAvailability(workId)
   const isUnobtainable = isEditionHidden(selectedManifestation)
 

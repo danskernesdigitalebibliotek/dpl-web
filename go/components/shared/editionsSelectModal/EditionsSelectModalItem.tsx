@@ -11,8 +11,6 @@ type EditionsSelectModalItemProps = {
   name: string
   checked: boolean
   onSelect: () => void
-  // Every copy is out on loan. The edition stays pickable — reserving it is
-  // how a reader joins the queue — and is only marked, not disabled.
   lentOut?: boolean
 }
 
@@ -33,8 +31,6 @@ const EditionsSelectModalItem = ({
       className="group has-focus-visible:ring-foreground flex cursor-pointer flex-col gap-2
         rounded-sm has-focus-visible:ring-2 has-focus-visible:ring-offset-2">
       <input type="radio" name={name} className="sr-only" checked={checked} onChange={onSelect} />
-      {/* No dimming: a lent-out edition is still pickable, so it should not
-          read as unavailable. The caption carries the status instead. */}
       <div
         className="border-foreground/10 group-has-checked:border-foreground aspect-[2/3] w-full
           overflow-hidden rounded-sm border-2 transition-colors">
@@ -60,8 +56,7 @@ const EditionsSelectModalItem = ({
   )
 }
 
-// Mirrors the item's cover box and caption lines so the grid keeps its
-// geometry while availability is still loading.
+// Mirrors the item's geometry so the grid does not shift while loading.
 const Skeleton = () => (
   <div className="flex flex-col gap-2">
     <div className="bg-background-skeleton aspect-[2/3] w-full animate-pulse rounded-sm" />
