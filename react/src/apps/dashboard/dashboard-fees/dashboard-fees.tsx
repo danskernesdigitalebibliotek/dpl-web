@@ -3,7 +3,7 @@ import { useGetFeesV2 } from "../../../core/fbs/fbs";
 import { tallyUpFees } from "../../../core/utils/helpers/general";
 import { useText } from "../../../core/utils/text";
 import { useUrls } from "../../../core/utils/url";
-import WarningBar from "../../loan-list/materials/utils/warning-bar";
+import WarningBar from "../../../components/warning-bar/warning-bar";
 import { FeeV2 } from "../../../core/fbs/model/feeV2";
 
 const DashboardFees: FC = () => {

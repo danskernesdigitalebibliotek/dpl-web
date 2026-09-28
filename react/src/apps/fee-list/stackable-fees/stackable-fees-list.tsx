@@ -3,7 +3,7 @@ import { useText } from "../../../core/utils/text";
 import { MaterialProps } from "../../loan-list/materials/utils/material-fetch-hoc";
 import { FeeMaterialV2 } from "../../../core/fbs/model";
 import SelectableMaterial from "../../loan-list/materials/selectable-material/selectable-material";
-import StatusBadge from "../../loan-list/materials/utils/status-badge";
+import StatusBadge from "../../../components/status-badge/status-badge";
 import { FaustId } from "../../../core/utils/types/ids";
 
 interface StackableFeeListProps {

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { calculateRoundedUpDaysUntil } from "../../../../core/utils/helpers/date";
-import useLoanThresholds from "../../../../core/utils/useLoanThresholds";
+import { calculateRoundedUpDaysUntil } from "../../core/utils/helpers/date";
+import useLoanThresholds from "../../core/utils/useLoanThresholds";
 import StatusBadgeContent from "./status-badge-content";
 
 interface StatusBadgeProps {

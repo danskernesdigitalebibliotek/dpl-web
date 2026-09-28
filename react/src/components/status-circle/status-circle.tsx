@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import check from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-check.svg";
 import StatusCircleIcon from "./status-circle-icon";
-import { getColors } from "../../../../core/utils/helpers/general";
+import { getColors } from "../../core/utils/helpers/general";
 import {
   calculateRoundedUpDaysDifference,
   calculateRoundedUpDaysUntil
-} from "../../../../core/utils/helpers/date";
-import { useText } from "../../../../core/utils/text";
-import useLoanThresholds from "../../../../core/utils/useLoanThresholds";
+} from "../../core/utils/helpers/date";
+import { useText } from "../../core/utils/text";
+import useLoanThresholds from "../../core/utils/useLoanThresholds";
 
 interface StatusCircleProps {
   dueDate?: string | null;

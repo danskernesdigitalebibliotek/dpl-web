@@ -5,8 +5,8 @@ import EbookIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icon
 import { useText } from "../../../core/utils/text";
 import { isDigital } from "../utils/helpers";
 import { materialIsOverdue } from "../../../core/utils/helpers/general";
-import StatusBadge from "../materials/utils/status-badge";
-import WarningBar from "../materials/utils/warning-bar";
+import StatusBadge from "../../../components/status-badge/status-badge";
+import WarningBar from "../../../components/warning-bar/warning-bar";
 import { LoanType } from "../../../core/utils/types/loan-type";
 import fetchMaterial, {
   MaterialProps

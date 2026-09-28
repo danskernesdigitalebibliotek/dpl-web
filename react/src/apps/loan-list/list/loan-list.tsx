@@ -37,7 +37,7 @@ import {
 import LoansGroupModal from "../../../components/GroupModal/LoansGroupModal";
 import SimpleModalHeader from "../../../components/GroupModal/SimpleModalHeader";
 import StatusCircleModalHeader from "../../../components/GroupModal/StatusCircleModalHeader";
-import StatusCircle from "../materials/utils/status-circle";
+import StatusCircle from "../../../components/status-circle/status-circle";
 import { formatDate, getMonthAgoDate } from "../../../core/utils/helpers/date";
 import useLoans from "../../../core/utils/useLoans";
 import LoanListSkeleton from "./loan-list-skeleton";
