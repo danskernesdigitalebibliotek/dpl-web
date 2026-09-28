@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-24 09:37+0200\n"
-"PO-Revision-Date: 2026-09-24 09:37+0200\n"
+"POT-Creation-Date: 2026-09-28 14:01+0200\n"
+"PO-Revision-Date: 2026-09-28 14:01+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -24363,4 +24363,125 @@ msgstr ""
 msgctxt "Dashboard"
 msgid "Inspiration for you"
 msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "%label is now published."
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "%label is now unpublished."
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "1 branch"
+msgid_plural "@count branches"
+msgstr[0] "1 bibliotek"
+msgstr[1] "@count biblioteker"
+
+msgctxt "dpl_service_message"
+msgid "A readable summary of the pages a service message appears on."
+msgstr ""
+
+msgid "A service message needs a heading, a body text, or both."
+msgstr ""
+
+msgid "Add service message"
+msgstr ""
+
+msgid "Administer global service messages"
+msgstr ""
+
+msgid ""
+"Allow placing a service message in the global bar, shown on every page "
+"of the site."
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Critical"
+msgstr ""
+
+msgid "DPL service message"
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Front page"
+msgstr "Forside"
+
+msgid "Important service message"
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Information"
+msgstr "Information"
+
+msgid "Plain text area widget settings"
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Publish"
+msgstr "Udgiv"
+
+msgctxt "dpl_service_message"
+msgid "Publishes or unpublishes a service message from the overview."
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid ""
+"Publishing this as a site-wide message will unpublish %label, which is "
+"site-wide and published now."
+msgstr ""
+
+msgid ""
+"Select the front page, one or more branches, or both. Otherwise the "
+"message has nowhere to appear."
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Service message"
+msgstr "Servicebesked"
+
+msgctxt "Validation"
+msgid "Service message content"
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Service message level"
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Service message placement"
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "Service message publish toggle"
+msgstr ""
+
+msgid "Service messages"
+msgstr "Servicebeskeder"
+
+msgid ""
+"Short, time-limited notices about outages, closures and degraded "
+"services."
+msgstr ""
+"En kort besked om fx nedbrud, nedlukning eller lukket tilbud og "
+"tjenester."
+
+msgid "Text area (multiple rows)"
+msgstr "Tekstområde (flere rækker)"
+
+msgctxt "dpl_service_message"
+msgid "The severity of a service message, which follows its placement."
+msgstr ""
+
+msgctxt "dpl_service_message"
+msgid "The whole site"
+msgstr "Hele hjemmesiden"
+
+msgctxt "dpl_service_message"
+msgid "Unpublish"
+msgstr "Træk tilbage"
+
+msgctxt "dpl_service_message"
+msgid "Warning message"
+msgstr "Advarsel"
 
