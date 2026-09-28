@@ -2,12 +2,13 @@
 
 namespace Drupal\dpl_fbi\GraphQL\Types;
 
-class LinkCheckStatusEnum
+class BookmarksOverallStatusEnum
 {
-    public const BROKEN = 'BROKEN';
-    public const GONE = 'GONE';
-    public const INVALID = 'INVALID';
+    public const ERROR_MISSING_CLIENT_CONFIGURATION = 'ERROR_MISSING_CLIENT_CONFIGURATION';
+    public const ERROR_UNAUTHENTICATED_TOKEN = 'ERROR_UNAUTHENTICATED_TOKEN';
+    public const FAILED = 'FAILED';
     public const OK = 'OK';
+    public const PARTIALLY_FAILED = 'PARTIALLY_FAILED';
 
     public static function endpoint(): string
     {

@@ -2,10 +2,10 @@
 
 namespace Drupal\dpl_fbi\GraphQL\Types;
 
-class ChildOrAdultCodeEnum
+class PatronLoanStatusEnum
 {
-    public const FOR_ADULTS = 'FOR_ADULTS';
-    public const FOR_CHILDREN = 'FOR_CHILDREN';
+    public const ACTIVE = 'ACTIVE';
+    public const OVERDUE = 'OVERDUE';
 
     public static function endpoint(): string
     {

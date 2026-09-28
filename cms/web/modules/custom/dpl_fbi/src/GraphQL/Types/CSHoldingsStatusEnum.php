@@ -2,10 +2,14 @@
 
 namespace Drupal\dpl_fbi\GraphQL\Types;
 
-class ChildOrAdultCodeEnum
+class CSHoldingsStatusEnum
 {
-    public const FOR_ADULTS = 'FOR_ADULTS';
-    public const FOR_CHILDREN = 'FOR_CHILDREN';
+    public const DISCARDED = 'DISCARDED';
+    public const LOST = 'LOST';
+    public const NOTFORLOAN = 'NOTFORLOAN';
+    public const ONLOAN = 'ONLOAN';
+    public const ONORDER = 'ONORDER';
+    public const ONSHELF = 'ONSHELF';
 
     public static function endpoint(): string
     {
