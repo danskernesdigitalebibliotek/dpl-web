@@ -51,8 +51,13 @@ const UserLoans = ({ className }: UserLoansProps) => {
   return (
     <div className={cn("col-span-full", className)}>
       {isLoading && <LoanSliderSkeleton />}
-      {!isLoading && loanWorks && dataLoans && (
-        <LoanSlider works={loanWorks} loanData={dataLoans} biblioLoans={biblioLoans} />
+      {/* With the adapter on, the Biblio loans must show even if the Publizon call fails. */}
+      {!isLoading && (dataLoans || viaBiblioAdapter) && (
+        <LoanSlider
+          works={loanWorks}
+          loanData={dataLoans ?? { loans: [] }}
+          biblioLoans={biblioLoans}
+        />
       )}
     </div>
   )
