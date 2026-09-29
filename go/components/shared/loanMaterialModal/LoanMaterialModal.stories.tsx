@@ -1,3 +1,4 @@
+import { ServiceLayerProvider } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
@@ -55,13 +56,23 @@ const seedClient = ({ alreadyLoaned = false } = {}) => {
   return client
 }
 
+// The digital-loan hooks resolve their config from the provider even when
+// the Biblio adapter is off (as it is in stories, where no DplCmsConfig
+// exists) — the modal exercises the Publizon path.
+const storyServiceLayerConfig = {
+  getBaseUrl: () => "https://fbs.example",
+  getAuthHeader: () => "Bearer story-token",
+}
+
 const withQueryClient =
   (client: QueryClient) =>
   (Story: React.ComponentType): React.ReactElement => (
     <QueryClientProvider client={client}>
-      <Story />
-      {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
-      <Toaster duration={Infinity} />
+      <ServiceLayerProvider config={storyServiceLayerConfig}>
+        <Story />
+        {/* Non-dismissing so error toasts stay visible for review/snapshots. */}
+        <Toaster duration={Infinity} />
+      </ServiceLayerProvider>
     </QueryClientProvider>
   )
 
