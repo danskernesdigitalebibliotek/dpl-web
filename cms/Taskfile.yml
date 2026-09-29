@@ -373,7 +373,7 @@ tasks:
       - task dev:bnfcli -- node dev-scripts/normalizeGraphqlSchema.js dpl-cms.bnf.graphql
 
   dev:codegen:fbi-graphql:
-    desc: Generate dpl_fbi graphQL classes (reads /schemas/graphql/dbc-fbi.fbcms-go.graphql).
+    desc: Generate dpl_fbi graphQL classes (reads /schemas/graphql/dbc-fbi.graphql).
     cmds:
       - task dev:cli -- drush sailor:codegen dpl_fbi
 
