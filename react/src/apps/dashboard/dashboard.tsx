@@ -8,6 +8,7 @@ import MaterialSlider, {
   MaterialSliderTitle
 } from "../../components/material-slider/MaterialSlider";
 import { constructMaterialUrl } from "../../core/utils/helpers/url";
+import invalidSwitchCase from "../../core/utils/helpers/invalid-switch-case";
 import { useUrls } from "../../core/utils/url";
 import useLoans from "../../core/utils/useLoans";
 import useReservations from "../../core/utils/useReservations";
@@ -107,13 +108,17 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
 };
 
 const Recommendations: FC<{ seed: RecommendationSeed }> = ({ seed }) => {
-  const { result, isLoading } = useRecommendations(seed);
+  const recommendationResult = useRecommendations(seed);
 
-  if (isLoading || !result || result.recommendations.length === 0) {
-    return null;
+  switch (recommendationResult.status) {
+    case "loading":
+    case "miss":
+      return null;
+    case "found":
+      return <RecommendationsSlider result={recommendationResult.result} />;
+    default:
+      return invalidSwitchCase(recommendationResult);
   }
-
-  return <RecommendationsSlider result={result} />;
 };
 
 const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
