@@ -3,6 +3,7 @@
 import {
   type CreateReservationResult,
   type CreateReservationSuccess,
+  type RecordAvailability,
   useCreateReservation,
   useMaterialAvailability,
   usePatron,
@@ -25,6 +26,17 @@ import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
 import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
 import { pidToFaust } from "@/lib/helpers/ids"
+
+// Copies on the shelf and the queue are separate facts: an edition can be
+// lent out with nobody waiting for it. Saying only the queue reads as
+// "available today" for a book that is not there.
+const getQueueText = (edition: RecordAvailability): string => {
+  if (edition.availableCopies > 0) return "Du er ved at reservere den."
+  if (edition.reservationCount === 0) return "Du er den næste i køen."
+
+  const borrowers = edition.reservationCount === 1 ? "låner" : "lånere"
+  return `Der er ${edition.reservationCount} ${borrowers} i kø foran dig.`
+}
 
 type ReservationModalProps = {
   open: boolean
@@ -141,17 +153,11 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
           <div className="flex w-full flex-col items-center gap-3">
             {/* Both numbers are for the chosen edition, not the whole work:
                 the reader reserves one edition, so the queue they join is that
-                edition's. `records` is keyed by FAUST, which is what recordId
-                holds. A record the response did not cover says nothing, and
-                then no claim is made at all. */}
+                edition's.*/}
             {editionAvailability && (
               <p className="text-typo-caption text-foreground-muted text-center">
                 Biblioteket har {editionAvailability.totalCopies} stk. af denne bog.{" "}
-                {editionAvailability.reservationCount === 0
-                  ? "Du er den næste i kø til den."
-                  : `Der er ${editionAvailability.reservationCount} ${
-                      editionAvailability.reservationCount === 1 ? "låner" : "lånere"
-                    } i kø til den.`}
+                {getQueueText(editionAvailability)}
               </p>
             )}
             <Button
