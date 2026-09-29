@@ -262,6 +262,7 @@ type GoConfigurationPublic {
   logoutUrls: GoLogoutUrls
   mapp: MappTracking
   searchProfiles: SearchProfiles
+  smsNotificationsEnabled: Boolean
   unilogin: UniloginConfigurationPublic
 }
 

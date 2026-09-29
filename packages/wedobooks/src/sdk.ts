@@ -1,5 +1,5 @@
 import { WdbLibrarySdk } from "@wedobooks/sdk"
-import type { Checkout, ReaderMaterialData } from "@wedobooks/sdk"
+import type { Checkout, ReaderMaterialData, SampleMaterialData } from "@wedobooks/sdk"
 
 /**
  * The reader and the player, wrapped so the rest of the platform never imports
@@ -20,6 +20,15 @@ export type WedoBooksCheckout = Checkout
 
 /** The subset of a checkout the reader needs: no dates, only identity. */
 export type WedoBooksReaderMaterial = ReaderMaterialData
+
+/**
+ * What a sample shows about the material it excerpts.
+ *
+ * A url-opened sample never reaches WeDoBooks' catalogue, so these have to
+ * come from ours. The material type is left out: each sample component mounts
+ * one type and states it itself, so a caller cannot pair them wrongly.
+ */
+export type WedoBooksSampleMaterial = Omit<SampleMaterialData, "material_type">
 
 /** What the SDK needs to start. Provisioned by WeDoBooks, served by the CMS. */
 export interface WedoBooksSdkConfig {

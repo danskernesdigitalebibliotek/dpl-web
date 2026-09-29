@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   ButtonSize,
   ButtonType,
@@ -36,6 +36,26 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   ariaLabelledBy,
   id
 }) => {
+  // Tracking holds the navigation back for a moment, and a second click in
+  // that window would send the event twice. The guard spans only that wait:
+  // a lock that never lets go outlives the click when the page comes back
+  // from the back/forward cache, leaving a dead button.
+  const isNavigating = useRef(false);
+  const navigate = () => {
+    if (!trackClick) {
+      redirectTo(url, isNewTab);
+      return;
+    }
+    if (isNavigating.current) return;
+    isNavigating.current = true;
+    const release = () => {
+      isNavigating.current = false;
+    };
+    trackClick()
+      .then(() => redirectTo(url, isNewTab))
+      .then(release, release);
+  };
+
   return (
     <Button
       variant={variant}
@@ -43,14 +63,10 @@ const LinkButton: React.FC<LinkButtonProps> = ({
       buttonType={buttonType || "none"}
       classNames={classNames}
       iconClassNames={iconClassNames}
-      onClick={() => {
-        if (trackClick) trackClick?.().then(() => redirectTo(url, isNewTab));
-        if (!trackClick) redirectTo(url, isNewTab);
-      }}
+      onClick={navigate}
       dataCy={dataCy}
       ariaDescribedBy={ariaLabelledBy}
       id={id}
-      canOnlyBeClickedOnce
       label={children}
       collapsible={false}
     />

@@ -3,7 +3,7 @@ import { ButtonFavourite } from "../Buttons/button-favourite/ButtonFavourite";
 import Cover from "../cover/Cover";
 
 export type RecommendedMaterialProps = {
-  author: string;
+  subtitle?: string;
   description: string;
   src: string;
   alt: string;
@@ -13,7 +13,7 @@ export type RecommendedMaterialProps = {
 };
 
 export const RecommendedMaterial: React.FC<RecommendedMaterialProps> = ({
-  author,
+  subtitle,
   description,
   src,
   alt,
@@ -43,9 +43,11 @@ export const RecommendedMaterial: React.FC<RecommendedMaterialProps> = ({
         <a href={materialUrl} className="recommended-material__description">
           {description}
         </a>
-        <a href={materialUrl} className="recommended-material__author">
-          {author}
-        </a>
+        {subtitle && (
+          <a href={materialUrl} className="recommended-material__subtitle">
+            {subtitle}
+          </a>
+        )}
       </div>
     </div>
   );

@@ -66,7 +66,13 @@ const meta: Meta<typeof DashBoard> = {
     reservationsUrl: {
       control: { type: "text" }
     },
+    userProfileUrl: {
+      control: { type: "text" }
+    },
     yourProfileText: {
+      control: { type: "text" }
+    },
+    dashboardUserProfileLinkText: {
       control: { type: "text" }
     },
     // Config
@@ -155,6 +161,9 @@ const meta: Meta<typeof DashBoard> = {
     },
     dashboardReservationsLinkText: {
       control: { type: "text" }
+    },
+    dashboardRecommendationsHeadingText: {
+      control: { type: "text" }
     }
   }
 };
@@ -182,7 +191,9 @@ export const Primary: Story = {
       "FBS-751032,FBS-751031,FBS-751009,FBS-751027,FBS-751024,DK-775164",
     physicalLoansUrl: "/user/me/loans",
     reservationsUrl: "/user/me/reservations",
+    userProfileUrl: "/user/me",
     yourProfileText: "Your profile",
+    dashboardUserProfileLinkText: "User profile",
     feesText: "Fees",
     totalOwedText: "You owe in total",
     dashboardSeeMoreFeesText: "See more",
@@ -210,6 +221,7 @@ export const Primary: Story = {
     expirationWarningDaysBeforeConfig: "6",
     dashboardLoansLinkText: "All loans",
     dashboardReservationsLinkText: "All reservations",
+    dashboardRecommendationsHeadingText: "Inspiration for you",
     materialDetailsOverdueText: "Overdue"
   }
 };

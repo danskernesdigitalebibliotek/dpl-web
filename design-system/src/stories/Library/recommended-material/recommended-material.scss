@@ -39,7 +39,7 @@ $_recommended-material-max-width: 378px;
 }
 
 .recommended-material__description,
-.recommended-material__author {
+.recommended-material__subtitle {
   @include typography($typo__body-small);
   @include text-ellipsis-truncation(1);
   text-decoration: none;
@@ -48,7 +48,7 @@ $_recommended-material-max-width: 378px;
   font-weight: $font__weight--semi-bold;
   line-height: 2;
 }
-.recommended-material__author {
+.recommended-material__subtitle {
   color: $color__global-grey;
 }
 

@@ -1,10 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-import {
-  getDigitalLoanDecision,
-  isMaterialAvailable,
-  isUnknownMaterial,
-} from "./digital-loan-decision"
+import { getDigitalLoanDecision, isMaterialAvailable } from "./digital-loan-decision"
 import { mockJsonResponse } from "./test-utils"
 import type { ServiceLayerConfig } from "./types"
 
@@ -36,8 +32,6 @@ describe("getDigitalLoanDecision for a material the adapter does not know", () =
 
     // An ordinary decision: nothing downstream has to know about the 404.
     expect(isMaterialAvailable(decision.status)).toBe(false)
-    // Only the sample offer needs to tell it apart from a reserved-out one.
-    expect(isUnknownMaterial(decision)).toBe(true)
   })
 
   it("Fails when the host does not tolerate it", async () => {
@@ -55,17 +49,6 @@ describe("getDigitalLoanDecision for a material the adapter does not know", () =
     vi.mocked(fetch).mockResolvedValueOnce(notFound())
 
     await expect(getDigitalLoanDecision(configThat(), "9788758855752")).rejects.toThrow("404")
-  })
-})
-
-describe("isUnknownMaterial", () => {
-  it("Does not mistake a material the adapter knows for an unknown one", () => {
-    expect(isUnknownMaterial({ status: "unavailable" })).toBe(false)
-    expect(isUnknownMaterial({ status: "reservable" })).toBe(false)
-  })
-
-  it("Holds off while there is no answer yet", () => {
-    expect(isUnknownMaterial(undefined)).toBe(false)
   })
 })
 

@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import GuardedApp from "../../components/guarded-app";
 import withIsPatronBlockedHoc from "../../core/utils/withIsPatronBlockedHoc";
 import { withConfig } from "../../core/utils/config";
 import { pageSizeGlobal } from "../../core/utils/helpers/general";
@@ -22,6 +23,7 @@ export interface DashBoardProps {
   physicalLoansUrl: string;
   feesPageUrl: string;
   reservationsUrl: string;
+  userProfileUrl: string;
   // Config
   blacklistedPickupBranchesConfig: string;
   blacklistedAvailabilityBranchesConfig: string;
@@ -29,6 +31,7 @@ export interface DashBoardProps {
   expirationWarningDaysBeforeConfig: string;
   // Texts
   dashboardNumberInLineText: string;
+  dashboardRecommendationsHeadingText: string;
   deleteReservationModalDeleteButtonText: string;
   deleteReservationModalDeleteProcessingText: string;
   deleteReservationModalErrorsStatusText: string;
@@ -61,6 +64,7 @@ export interface DashBoardProps {
   yourProfileText: string;
   dashboardLoansLinkText: string;
   dashboardReservationsLinkText: string;
+  dashboardUserProfileLinkText: string;
   reservationListLoanBeforeText: string;
 }
 
@@ -85,7 +89,14 @@ const DashboardEntry: FC<
     "pageSizeLoanList"
   );
 
-  return <DashBoard pageSize={pageSize} />;
+  // GuardedApp replays the favourite request the recommendations persist when
+  // the heart is clicked before login. It matches on the app id, so the id
+  // here and the one in RecommendedMaterials have to agree.
+  return (
+    <GuardedApp app="dashboard">
+      <DashBoard pageSize={pageSize} />
+    </GuardedApp>
+  );
 };
 
 export default withConfig(

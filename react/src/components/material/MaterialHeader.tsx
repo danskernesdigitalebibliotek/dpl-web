@@ -1,8 +1,5 @@
 import React, { useId } from "react";
-import { useDispatch } from "react-redux";
 import { useDeepCompareEffect } from "react-use";
-import { guardedRequest } from "../../core/guardedRequests.slice";
-import { TypedDispatch } from "../../core/store";
 import {
   convertPostIdToFaustId,
   getManifestationsPids,
@@ -11,13 +8,12 @@ import {
 } from "../../core/utils/helpers/general";
 import { WorkId } from "../../core/utils/types/ids";
 import { AvailabilityLabels } from "../availability-label/availability-labels";
-import ButtonFavourite, {
-  ButtonFavouriteId
-} from "../button-favourite/button-favourite";
+import ButtonFavourite from "../button-favourite/button-favourite";
 import { Cover } from "../cover/cover";
 import MaterialAvailabilityText from "./MaterialAvailabilityText/MaterialAvailabilityText";
 import MaterialHeaderText from "./MaterialHeaderText";
 import MaterialButtons from "./material-buttons/MaterialButtons";
+import { resolveMaterialButtonsType } from "./material-buttons/resolveMaterialButtonsType";
 import MaterialUnavailableNotice from "./MaterialUnavailableNotice/MaterialUnavailableNotice";
 import MaterialPeriodical from "./periodical/MaterialPeriodical";
 import { Manifestation, Work } from "../../core/utils/types/entities";
@@ -32,6 +28,7 @@ import { isPeriodical, shouldShowMaterialAvailabilityText } from "./helper";
 import { first } from "lodash";
 import { hasCorrectMaterialType } from "./material-buttons/helper";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
+import { useAddFavorite } from "../button-favourite/useAddFavorite";
 
 interface MaterialHeaderProps {
   wid: WorkId;
@@ -61,16 +58,7 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
   isAvailable
 }) => {
   const materialTitleId = useId();
-  const dispatch = useDispatch<TypedDispatch>();
-  const addToListRequest = (id: ButtonFavouriteId) => {
-    dispatch(
-      guardedRequest({
-        type: "addFavorite",
-        args: { id },
-        app: "material"
-      })
-    );
-  };
+  const addToListRequest = useAddFavorite({ app: "material" });
   const title = getWorkTitle(work);
   const pid = getWorkPid(work);
   const coverPids = getManifestationsPids(selectedManifestations);
@@ -103,6 +91,14 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
     // and when the currently selected manifestation's material type changes - on availability button click.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [manifestationMaterialTypes]);
+
+  const buttonsType = resolveMaterialButtonsType(selectedManifestations);
+
+  const materialUnavailableNotice = (
+    <div className="material-header__button">
+      <MaterialUnavailableNotice />
+    </div>
+  );
 
   return (
     <header className="border-bottom">
@@ -143,7 +139,9 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
               />
             )}
           </div>
-          {/* The CTA buttons apparently only make sense on a global work */}
+          {/* Global works are not in the library's own catalogue, so they can
+              neither be reserved nor loaned here. They only get the notice. */}
+          {isGlobalMaterial && materialUnavailableNotice}
           {!isGlobalMaterial && (
             <>
               {isPeriodical(selectedManifestations) && (
@@ -154,31 +152,31 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
                   isYearbook={isYearbook}
                 />
               )}
-              {selectedManifestations && (
-                <>
-                  <div className="material-header__button">
-                    <MaterialButtons
-                      manifestations={selectedManifestations}
-                      workId={wid}
-                      dataCy="material-header-buttons"
-                      materialTitleId={materialTitleId}
-                      fallback={<MaterialUnavailableNotice />}
-                    />
-                  </div>
-                  {/* MaterialAvailabilityText is only shown for:
-                    - Online manifestations
-                    - physical manifestations
-                    - that are not periodical or articles
-                    - that are available in at least one local library branch
-                */}
-                  {shouldShowMaterialAvailabilityText(selectedManifestations) &&
-                    isAvailable && (
-                      <MaterialAvailabilityText
-                        manifestations={selectedManifestations}
-                      />
-                    )}
-                </>
+              {buttonsType ? (
+                <div className="material-header__button">
+                  <MaterialButtons
+                    type={buttonsType}
+                    manifestations={selectedManifestations}
+                    workId={wid}
+                    dataCy="material-header-buttons"
+                    materialTitleId={materialTitleId}
+                  />
+                </div>
+              ) : (
+                materialUnavailableNotice
               )}
+              {/* MaterialAvailabilityText is only shown for:
+                - Online manifestations
+                - physical manifestations
+                - that are not periodical or articles
+                - that are available in at least one local library branch
+              */}
+              {shouldShowMaterialAvailabilityText(selectedManifestations) &&
+                isAvailable && (
+                  <MaterialAvailabilityText
+                    manifestations={selectedManifestations}
+                  />
+                )}
               {children}
             </>
           )}

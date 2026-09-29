@@ -50,7 +50,7 @@ export const ArticleParagraphs = () => {
           description="Naturen er fyldt med alle mulige ting fx blade, blomster, sten osv., der kan bruges til at lave en forskellige kreative ting af. Her er inspiration at hente til små og store hobbyprojekter."
           href="#"
           recommendedMaterialProps={{
-            author: "Pia Deges (2019)",
+            subtitle: "Pia Deges (2019)",
             description: "Børnenes Naturhobbybog",
             src: "images/book_cover_6.jpg",
             alt: "book cover",
@@ -67,7 +67,7 @@ export const ArticleParagraphs = () => {
           description="Naturen er fyldt med alle mulige ting fx blade, blomster, sten osv., der kan bruges til at lave en forskellige kreative ting af. Her er inspiration at hente til små og store hobbyprojekter."
           href="#"
           recommendedMaterialProps={{
-            author: "Pia Deges (2019)",
+            subtitle: "Pia Deges (2019)",
             description: "Børnenes Naturhobbybog",
             src: "images/book_cover_6.jpg",
             alt: "book cover",

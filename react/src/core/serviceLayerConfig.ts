@@ -14,8 +14,20 @@ import { store } from "./store";
  * the app's data attributes and land in Redux during render, and the tokens
  * are set by the host before mount.
  */
+/**
+ * ADR-004 has the service layer describe a digital material from the
+ * catalogue, so its search has to read the same FBI profile the work page is
+ * built from — `queryMap` routes every local `complexSearch` and `getMaterial`
+ * to `fbiLocal`. Resolving the service layer's `fbi` to the default profile
+ * instead would reintroduce the mismatch the ADR exists to remove.
+ */
+const serviceLayerUrlKeys = {
+  ...serviceUrlKeys,
+  fbi: serviceUrlKeys.fbiLocal
+} as const;
+
 const getServiceLayerConfig = (): ServiceLayerConfig => ({
-  getBaseUrl: (api) => getServiceBaseUrl(serviceUrlKeys[api]),
+  getBaseUrl: (api) => getServiceBaseUrl(serviceLayerUrlKeys[api]),
   getAuthHeader: () => {
     const token = getToken(TOKEN_USER_KEY) ?? getToken(TOKEN_LIBRARY_KEY);
     if (!token) {

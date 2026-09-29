@@ -1,0 +1,11 @@
+dpl_service_message.toggle:
+  path: '/admin/content/service-messages/{node}/toggle'
+  defaults:
+    _controller: '\Drupal\dpl_service_message\Controller\ServiceMessageToggleController::toggle'
+  options:
+    parameters:
+      node:
+        type: 'entity:node'
+  requirements:
+    _entity_access: 'node.update'
+    _csrf_token: 'TRUE'

@@ -3,8 +3,10 @@ import {
   materialStory
 } from "../../../cypress/page-objects/material/MaterialPage";
 import { ContentLoanStatusEnum } from "../../core/publizon/model";
-import { stubMaterialPageBackends } from "../../../cypress/intercepts/material-page";
-import { TOKEN_USER_KEY } from "../../core/token";
+import {
+  givenTheVisitorIsNotSignedIn,
+  stubMaterialPageBackends
+} from "../../../cypress/intercepts/material-page";
 
 /**
  * TEMPORARY: the material page while the Publizon reservation queue stands
@@ -30,9 +32,6 @@ const RESERVATIONS_CLOSED_TEXT =
 
 // The backends sign a patron in, so dropping the token has to happen after
 // they are stubbed - that is what makes the visit anonymous.
-const givenTheVisitorIsNotSignedIn = () =>
-  cy.window().then((win) => win.sessionStorage.removeItem(TOKEN_USER_KEY));
-
 const openEbook = (
   story: string,
   loanStatus: ContentLoanStatusEnum,

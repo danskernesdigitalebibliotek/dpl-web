@@ -142,7 +142,7 @@ In the project, you'll see the following folders and files:
 | File                      | Description                                                                                                                                                                                                       |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | go-ci.yml                 | Everything that gates a change to `go/` or `packages/`: ESLint, Prettier, type check, Vitest unit tests, a check that the committed generated clients are up to date, a Storybook build shared by the accessibility (Axe/Playwright) and Chromatic jobs, and Cypress E2E. |
-| go-build-base-image.yml   | Builds `go/lagoon/stage1.dockerfile` and pushes it to `ghcr.io/danskernesdigitalebibliotek/dpl-web-go`. Called by `lagoon-deploy.yml`, and runs on its own for semver tags.                                          |
+| go-build-base-image.yml   | Builds `go/lagoon/stage1.dockerfile` and pushes it to `ghcr.io/danskernesdigitalebibliotek/dpl-web-go`. Called by `lagoon-deploy.yml` with `secrets: inherit`, and runs on its own for semver tags.                                          |
 | lagoon-deploy.yml         | Builds the Go base image, then sends a deploy webhook to Lagoon for pull requests and pushes to `develop`, `main`, `go-demo` and `go-playground`.                                                                  |
 | lagoon-close.yml          | Tears down the Lagoon environment when a pull request is closed.                                                                                                                                                  |
 
@@ -175,7 +175,7 @@ task codegen:pubhub           # SOAP — PubHub
 task codegen:unilogin         # SOAP — Unilogin
 ```
 
-Generated output lives in `lib/rest/` (REST), `lib/graphql/generated/` (GraphQL), and `lib/soap/` (SOAP). To pick up upstream schema changes, refresh the relevant contract in `/schemas` first (`task -d ../schemas refresh:dpl-cms-graphql`, `:dbc-fbi:fbcms-go`, `:material-list`, …) and then re-run codegen here.
+Generated output lives in `lib/rest/` (REST), `lib/graphql/generated/` (GraphQL), and `lib/soap/` (SOAP). To pick up upstream schema changes, refresh the relevant contract in `/schemas` first (`task -d ../schemas refresh:dbc-fbi`, `:material-list`, …) and then re-run codegen here.
 
 ### Custom types
 

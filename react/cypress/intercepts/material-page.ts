@@ -1,8 +1,16 @@
 import { TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../../src/core/token";
 import { ContentLoanStatusEnum } from "../../src/core/publizon/model";
 import { givenAMaterial } from "./fbi/material";
+import { givenMaterialHasNoBiblioSample } from "./biblio/biblio";
 import { interceptFbsCalls } from "./fbs/fbs";
 import { interceptPublizonCalls } from "./publizon/interceptPublizonCalls";
+
+/**
+ * Given: nobody is signed in. The library token stays - a visitor's page still
+ * talks to the backends, it just does so as the library rather than as them.
+ */
+export const givenTheVisitorIsNotSignedIn = () =>
+  cy.window().then((win) => win.sessionStorage.removeItem(TOKEN_USER_KEY));
 
 /**
  * The backends every material-page test starts from: a signed-in session and
@@ -39,6 +47,11 @@ export const stubMaterialPageBackends = (
 
   // Registered after the catch-all above so the work query wins.
   givenAMaterial();
+
+  // No material has an excerpt unless a test says so, so a material page
+  // never reaches the real adapter for one. givenMaterialHasBiblioSample
+  // overrides this per material.
+  givenMaterialHasNoBiblioSample("*");
 
   cy.intercept("HEAD", "**/materiallist.dandigbib.org/list/**", {
     statusCode: 200

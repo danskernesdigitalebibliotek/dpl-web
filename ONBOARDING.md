@@ -13,7 +13,7 @@ projects you work on.
 
 ## Prerequisites
 
-- [go-task](https://taskfile.dev) (`task`), [pnpm](https://pnpm.io/) (`corepack enable`), Node 24.15 (via [nvm](https://github.com/nvm-sh/nvm) — pinned in `.nvmrc`)
+- [go-task](https://taskfile.dev) (`task`), [pnpm](https://pnpm.io/) (`corepack enable`), Node 24.21 (via [nvm](https://github.com/nvm-sh/nvm) — pinned in `.nvmrc`)
 - [Docker](https://www.docker.com/) — [OrbStack](https://orbstack.dev/) recommended (auto-resolves the `*.local` dev domains)
 - `mkcert` for local HTTPS (cms + go): `brew install mkcert && mkcert -install`
 - 1Password CLI (`op`) — only for the `.env` generation flow below

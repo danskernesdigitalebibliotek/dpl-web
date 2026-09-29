@@ -625,7 +625,11 @@ if (import.meta.vitest) {
     it("should fill in with url params if property value is undefined", () => {
       // We'll fake the url param getter to return a value.
       // So when we request the url param, we'll get the value: "some-url-param-value"
-      vi.mock("./url", () => ({
+      // Only the getter is faked. A whole-module mock would hoist out of this
+      // block and leave every test that touches general.ts - which is every
+      // test that renders a Button - without the rest of url.ts.
+      vi.mock("./url", async (importOriginal) => ({
+        ...(await importOriginal<typeof import("./url")>()),
         getUrlQueryParam: vi
           .fn()
           .mockImplementation(() => "some-url-param-value")

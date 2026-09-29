@@ -1,39 +1,41 @@
+import { MaterialType } from "@wedobooks/sdk"
 import * as React from "react"
 
-import type { WedoBooksSdk } from "./sdk"
+import type { WedoBooksSampleMaterial, WedoBooksSdk } from "./sdk"
 import { useSdkMount } from "./useSdkMount"
 
 export interface WedoBooksSamplePlayerProps {
   sdk: WedoBooksSdk
-  /** The material to sample, by the id the catalogue knows it under. */
-  materialId: string
+  /** Direct url of the sample MP3, from the adapter's sample endpoint. */
+  sampleUrl: string
+  /** What to show alongside the excerpt; the SDK looks nothing up itself. */
+  material: WedoBooksSampleMaterial
   /** The player's own close control was used. */
   onClose: () => void
 }
 
 /**
- * The WeDoBooks audiobook player bar in sample mode: a taste of the
- * audiobook with no loan behind it, so it opens from a material id rather
- * than an entitlement.
+ * The WeDoBooks audiobook player bar in sample mode: a taste of the audiobook
+ * with no loan behind it.
  *
- * Sampling still requires a signed-in SDK - WeDoBooks answers the sample URL
- * only for an authenticated session. Same mounting contract as
- * `WedoBooksPlayer`: the SDK owns everything inside the element once it has
- * been handed over.
+ * See `WedoBooksSampleReader` for why this opens from a url and therefore
+ * needs no signed-in session.
  */
 export function WedoBooksSamplePlayer({
   sdk,
-  materialId,
+  sampleUrl,
+  material,
   onClose,
 }: WedoBooksSamplePlayerProps): React.ReactElement {
   const elementRef = useSdkMount(
     element =>
-      sdk.books.openSamplePlayerBar({
+      sdk.books.openSamplePlayerBarFromUrl({
         element,
-        materialId,
+        sampleUrl,
+        material: { ...material, material_type: MaterialType.Audiobook },
         callbacks: { onClose },
       }),
-    [sdk, materialId]
+    [sdk, sampleUrl, material.material_id]
   )
 
   return <div ref={elementRef} className="wedobooks-player" />

@@ -29,7 +29,7 @@ Obtain an OAuth2 access token from [login.bib.dk](https://login.bib.dk) and send
 
 Endpoints that read or change a user's loans, reservations, or user data require a token representing the end user, issued via the OAuth2 `authorization_code` grant.
 
-Metadata endpoints can be accessed with either an end-user token or a server-to-server token.
+Metadata and sample endpoints can be accessed with either an end-user token or a server-to-server token.
 
 Server-to-server access requires a token issued via the OAuth2 `client_credentials` grant. The OAuth client must be configured with access to the endpoint.
 
@@ -37,12 +37,12 @@ Server-to-server access requires a token issued via the OAuth2 `client_credentia
 
 User-scoped endpoints do not accept client-supplied `user_id` or organization ids. Resolve them from login.bib.dk userinfo `attributes` as follows:
 
-1. If both `uniqueId` and `municipalityAgencyId` are present:
+1. If both `uniqueId` and `municipality` are present:
    - `user_id` = `uniqueId`
-   - `organization_third_party_id` = `municipalityAgencyId`
+   - `organization_third_party_id` = `municipality`
 2. Otherwise, use the Unilogin fallback:
    - `user_id` = `uniloginUniIdHash`
-   - `organization_third_party_id` = `uniloginAgencyId`
+   - `organization_third_party_id` = `uniloginMunicipality`
 
 
 Unilogin fallback requires an active Unilogin license; otherwise the adapter returns 403 with `User is missing license`.

@@ -88,10 +88,6 @@ const digitalMaterialTypeText = (materialType: MaterialType) => {
 };
 
 const mapDigitalLoanToBasicDetailsType = (loan: DigitalLoan) => {
-  // A loan states its author as one string, where the metadata endpoints use
-  // a list.
-  const authors = loan.author ? [loan.author] : [];
-
   return {
     title: loan.title,
     periodical: null,
@@ -99,8 +95,8 @@ const mapDigitalLoanToBasicDetailsType = (loan: DigitalLoan) => {
     materialType: digitalMaterialTypeText(loan.materialType),
     publizonProductType: publizonProductTypeFor(loan.materialType),
     externalProductId: loan.materialId,
-    authors: getContributors(false, authors),
-    authorsShort: getContributors(true, authors)
+    authors: getContributors(false, loan.authors),
+    authorsShort: getContributors(true, loan.authors)
   } as BasicDetailsType;
 };
 

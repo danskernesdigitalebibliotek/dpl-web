@@ -109,7 +109,6 @@ fragment ManifestationDetails on Manifestation {
       display
       year
     }
-    contributors
     edition
     summary
   }

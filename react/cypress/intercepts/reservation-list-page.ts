@@ -10,6 +10,7 @@ import {
   givenMaterialIsNotInBiblio,
   givenUserHasBiblioReservations
 } from "./biblio/biblio";
+import { givenCatalogueKnowsNothing } from "./fbi/catalogueDetails";
 import { publizonProductFactory } from "../factories/publizon/publizon.factory";
 
 /**
@@ -100,6 +101,8 @@ export const stubReservationListBackends = () => {
     title: BIBLIO_OFFERED_TITLE,
     materialType: "audiobook"
   });
+
+  givenCatalogueKnowsNothing();
 
   cy.intercept("GET", `**/v1/products/${PUBLIZON_ISBN}*`, {
     statusCode: 200,

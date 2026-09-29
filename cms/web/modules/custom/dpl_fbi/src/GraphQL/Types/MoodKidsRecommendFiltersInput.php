@@ -4,31 +4,34 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
 
 /**
  * @property array<int>|null $difficulty
+ * @property string|null $fictionNonfiction
  * @property array<int>|null $illustrationsLevel
  * @property array<int>|null $length
  * @property array<int>|null $realisticVsFictional
- * @property string|null $fictionNonfiction
  */
 class MoodKidsRecommendFiltersInput extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param array<int>|null $difficulty
+     * @param string|null $fictionNonfiction
      * @param array<int>|null $illustrationsLevel
      * @param array<int>|null $length
      * @param array<int>|null $realisticVsFictional
-     * @param string|null $fictionNonfiction
      */
     public static function make(
         $difficulty = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
+        $fictionNonfiction = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $illustrationsLevel = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $length = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
         $realisticVsFictional = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $fictionNonfiction = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
     ): self {
         $instance = new self;
 
         if ($difficulty !== self::UNDEFINED) {
             $instance->__set('difficulty', $difficulty);
+        }
+        if ($fictionNonfiction !== self::UNDEFINED) {
+            $instance->__set('fictionNonfiction', $fictionNonfiction);
         }
         if ($illustrationsLevel !== self::UNDEFINED) {
             $instance->__set('illustrationsLevel', $illustrationsLevel);
@@ -38,9 +41,6 @@ class MoodKidsRecommendFiltersInput extends \Spawnia\Sailor\ObjectLike
         }
         if ($realisticVsFictional !== self::UNDEFINED) {
             $instance->__set('realisticVsFictional', $realisticVsFictional);
-        }
-        if ($fictionNonfiction !== self::UNDEFINED) {
-            $instance->__set('fictionNonfiction', $fictionNonfiction);
         }
 
         return $instance;
@@ -53,10 +53,10 @@ class MoodKidsRecommendFiltersInput extends \Spawnia\Sailor\ObjectLike
 
         return $converters ??= [
             'difficulty' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter))),
+            'fictionNonfiction' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\EnumConverter),
             'illustrationsLevel' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter))),
             'length' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter))),
             'realisticVsFictional' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter))),
-            'fictionNonfiction' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\EnumConverter),
         ];
     }
 

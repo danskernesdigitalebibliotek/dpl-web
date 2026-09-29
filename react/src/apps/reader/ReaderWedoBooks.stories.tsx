@@ -22,8 +22,9 @@ import wedobooksArgs, {
  *  1. The five SDK values, from `STORYBOOK_WEDOBOOKS_*` in the root .env
  *     (`task dev:dotenv:generate`). Storybook reads the environment at
  *     startup, so restart it after regenerating.
- *  2. A signed-in patron, from `STORYBOOK_USER_TOKEN`. Every step is
- *     patron-scoped - the SDK session is minted for a person.
+ *  2. A signed-in patron, from `STORYBOOK_USER_TOKEN` - for the Loan story
+ *     only. Opening a loan is patron-scoped, since the SDK session is minted
+ *     for a person; a sample is not, and the Sample story runs without one.
  *  3. A loan id or material id WeDoBooks actually knows.
  */
 const meta: Meta<typeof ReaderEntry> = {
@@ -65,9 +66,9 @@ export const Loan: Story = {
 };
 
 /**
- * An e-book sample. Signed-in only: WeDoBooks answers sample urls solely for
- * an authenticated session, which is why the teaser buttons are disabled for
- * anonymous visitors.
+ * An e-book sample. Needs no session: the adapter hands out the excerpt file
+ * itself and the SDK opens it from the url, so a visitor who is not signed in
+ * can try the material.
  */
 export const Sample: Story = {
   args: {

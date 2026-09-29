@@ -1,5 +1,5 @@
 import React from "react";
-import useReaderCheckout from "./useReaderCheckout";
+import useDigitalCheckout from "./useDigitalCheckout";
 import DigitalReader from "./DigitalReader";
 import DigitalPlayer from "./DigitalPlayer";
 
@@ -22,7 +22,7 @@ const DigitalReaderPlayer: React.FC<DigitalReaderPlayerProps> = ({
   loanId,
   onClose
 }) => {
-  const { sdk, checkout } = useReaderCheckout(loanId);
+  const { sdk, checkout } = useDigitalCheckout(loanId);
 
   // No spinner: the reader and player render nothing during their own load
   // anyway, so returning null here adds no visible wait.

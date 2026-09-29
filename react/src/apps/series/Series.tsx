@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { ButtonFavouriteId } from "../../components/button-favourite/button-favourite";
 import Link from "../../components/atoms/links/Link";
 import { Cover } from "../../components/cover/cover";
 import usePager from "../../components/result-pager/use-pager";
 import { useGetSeriesQuery } from "../../core/dbc-gateway/generated/graphql";
-import { guardedRequest } from "../../core/guardedRequests.slice";
-import { TypedDispatch } from "../../core/store";
 import {
   creatorsToString,
   flattenCreators,
@@ -25,8 +21,11 @@ import {
   MemberWithCoverOrigin,
   sortSeriesMembers
 } from "./helper";
+import RelatedWorks from "./RelatedWorks";
 import SeriesCard from "./SeriesCard";
 import SeriesSkeleton, { headerCoverCount } from "./SeriesSkeleton";
+import { useAddFavorite } from "../../components/button-favourite/useAddFavorite";
+import { cleanCreatorName } from "../../core/utils/helpers/material";
 
 export type SeriesProps = {
   seriesId: string;
@@ -48,10 +47,11 @@ type SeriesMember = {
 };
 
 // The pages loaded so far. Members accumulate across "show more" clicks;
-// title and description are the same on every page.
+// title, description and languages are the same on every page.
 type LoadedSeries = {
   title: string;
   description?: string | null;
+  mainLanguages: string[];
   members: SeriesMember[];
 };
 
@@ -60,7 +60,6 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
   const u = useUrls();
   const materialUrl = u("materialUrl");
   const searchUrl = u("searchUrl");
-  const dispatch = useDispatch<TypedDispatch>();
 
   const [series, setSeries] = useState<LoadedSeries | null>(null);
   const [hitcount, setHitcount] = useState(0);
@@ -95,26 +94,18 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
       return;
     }
 
-    const { title, description } = data.series;
+    const { title, description, mainLanguages } = data.series;
     const pageMembers = data.series.members as SeriesMember[];
 
     setHitcount(data.series.hitcount);
     setSeries((previous) =>
       page > 0 && previous
         ? { ...previous, members: [...previous.members, ...pageMembers] }
-        : { title, description, members: pageMembers }
+        : { title, description, mainLanguages, members: pageMembers }
     );
   }, [data, page]);
 
-  const addToListRequest = (id: ButtonFavouriteId) => {
-    dispatch(
-      guardedRequest({
-        type: "addFavorite",
-        args: { id },
-        app: "series"
-      })
-    );
-  };
+  const addToListRequest = useAddFavorite({ app: "series" });
 
   // The id matched nothing - the schema returns a nullable Series, so a miss
   // is a success carrying null.
@@ -137,6 +128,7 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
   const members = sortSeriesMembers(series.members);
 
   const author = getSeriesAuthor(members);
+
   // Decoration, so a handful is plenty. The design fans out three, but a
   // series that cannot supply that many real covers gets a shorter fan.
   const coverPids = getHeaderCoverPids(members, headerCoverCount);
@@ -150,7 +142,10 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
               {t("seriesByAuthorText")}{" "}
               <Link
                 className="series-page__byline-link"
-                href={constructCreatorSearchUrl(searchUrl, author)}
+                href={constructCreatorSearchUrl(
+                  searchUrl,
+                  cleanCreatorName(author)
+                )}
               >
                 {author}
               </Link>
@@ -222,6 +217,17 @@ const Series: React.FC<SeriesProps> = ({ seriesId }) => {
       </ul>
 
       <PagerComponent isLoading={isLoading} />
+
+      {author && (
+        <RelatedWorks
+          author={cleanCreatorName(author)}
+          currentSeries={{
+            seriesId,
+            title: series.title,
+            mainLanguage: series.mainLanguages[0] ?? null
+          }}
+        />
+      )}
     </div>
   );
 };

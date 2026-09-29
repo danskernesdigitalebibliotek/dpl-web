@@ -1,18 +1,14 @@
 import * as React from "react";
 import { FC } from "react";
-import { useDispatch } from "react-redux";
-import ButtonFavourite, {
-  ButtonFavouriteId
-} from "../button-favourite/button-favourite";
+import ButtonFavourite from "../button-favourite/button-favourite";
 import { Cover } from "../cover/cover";
 import { getContributors, getWorkPid } from "../../core/utils/helpers/general";
-import { TypedDispatch } from "../../core/store";
-import { guardedRequest } from "../../core/guardedRequests.slice";
 import { constructMaterialUrl } from "../../core/utils/helpers/url";
 import Link from "../atoms/links/Link";
 import { useUrls } from "../../core/utils/url";
 import { GuardedAppId } from "../../core/utils/types/ids";
 import { WorkSmall } from "../../core/utils/types/entities";
+import { useAddFavorite } from "../button-favourite/useAddFavorite";
 
 export interface SimpleMaterialProps {
   work: WorkSmall;
@@ -33,7 +29,6 @@ const SimpleMaterial: FC<SimpleMaterialProps> = ({
   const u = useUrls();
   const materialUrl = u("materialUrl");
 
-  const dispatch = useDispatch<TypedDispatch>();
   const materialFullUrl = constructMaterialUrl(materialUrl, workId);
 
   // Create authors string
@@ -46,15 +41,7 @@ const SimpleMaterial: FC<SimpleMaterialProps> = ({
   // For retrieving cover
   const manifestationPid = getWorkPid(work);
 
-  const addToListRequest = (id: ButtonFavouriteId) => {
-    dispatch(
-      guardedRequest({
-        type: "addFavorite",
-        args: { id },
-        app
-      })
-    );
-  };
+  const addToListRequest = useAddFavorite({ app });
 
   const title = fullTitle[0];
 

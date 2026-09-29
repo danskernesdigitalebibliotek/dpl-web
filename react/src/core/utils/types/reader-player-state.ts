@@ -49,10 +49,11 @@ export type ReaderPlayerState = {
    */
   offerId: string | null;
   /**
-   * Acquiring: whether the provider can offer a sample of the material at
-   * all. Not an availability question - a reserved-out material still has its
-   * sample - but a material the lending provider does not know has no sample
-   * to play, and offering one would open an empty reader or player.
+   * Acquiring: whether an excerpt of the material exists to try. Not an
+   * availability question - a reserved-out material still has its sample -
+   * and not a question about the user either: it is the one thing a visitor
+   * who is not signed in can be offered. A provider that serves excerpts for
+   * its whole catalogue answers true throughout.
    */
   canBeSampled: boolean;
   /**

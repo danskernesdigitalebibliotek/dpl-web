@@ -15,6 +15,7 @@ interface SeriesEntryOwnProps {
 interface SeriesEntryTextProps {
   seriesReadThisFirstText: string;
   seriesByAuthorText: string;
+  seriesRelatedWorksHeadingText: string;
   // Global CMS texts, but not part of GlobalEntryTextProps, so they have to be
   // declared per app - as the other apps using them do.
   byAuthorText: string;

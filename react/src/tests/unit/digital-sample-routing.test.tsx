@@ -10,9 +10,10 @@ import { isAnonymous } from "../../core/utils/helpers/user";
  * The reader and player pages' routing for samples. An identifier link with
  * no loan behind it is a sample: with the adapter flag on it goes through
  * WeDoBooks and Publizon is never asked to stand in; only flag-off libraries
- * keep Publizon's sample. The route carries the material type, because a
- * sample has no loan to read it from - e-books on /reader, audiobooks on
- * /player.
+ * keep Publizon's sample. Sampling takes no session, so the routing does not
+ * turn an anonymous visitor away. Both pages open the same component: the
+ * excerpt itself says whether it reads or plays, so neither page has to be
+ * the right one.
  */
 
 // What the page routes to is the decision under test, so every destination is
@@ -23,11 +24,8 @@ vi.mock("../../components/reader-player/PublizonReader", () => ({
 vi.mock("../../components/reader-player/DigitalReaderPlayer", () => ({
   default: () => <div data-testid="biblio-loan" />
 }));
-vi.mock("../../components/reader-player/DigitalSampleReader", () => ({
-  default: () => <div data-testid="biblio-sample-ebook" />
-}));
-vi.mock("../../components/reader-player/DigitalSamplePlayer", () => ({
-  default: () => <div data-testid="biblio-sample-audiobook" />
+vi.mock("../../components/reader-player/DigitalSample", () => ({
+  default: () => <div data-testid="biblio-sample" />
 }));
 
 // The entry's HOCs dispatch mount data into Redux; the routing needs none of
@@ -54,24 +52,25 @@ describe("Reader page sample routing", () => {
     vi.mocked(isAnonymous).mockReturnValue(false);
   });
 
-  it("Samples an e-book through WeDoBooks for a signed-in patron", () => {
+  it("Samples through WeDoBooks", () => {
     const { queryByTestId } = render(
       <ReaderEntry identifier="9788711623497" />
     );
 
-    expect(queryByTestId("biblio-sample-ebook")).not.toBeNull();
+    expect(queryByTestId("biblio-sample")).not.toBeNull();
   });
 
-  it("Never falls back to Publizon's sample while the flag is on", () => {
-    // With the flag on, Biblio is the lending provider - an anonymous visitor
-    // reaches this page only through a hand-made link, since the teaser
-    // buttons are disabled for them, and even then Publizon is not asked.
+  it("Samples for a visitor who is not signed in", () => {
+    // The adapter answers samples for a library token, so an anonymous
+    // visitor gets the same reader rather than being turned away - and
+    // Publizon is still never asked to stand in while the flag is on.
     vi.mocked(isAnonymous).mockReturnValue(true);
 
     const { queryByTestId } = render(
       <ReaderEntry identifier="9788711623497" />
     );
 
+    expect(queryByTestId("biblio-sample")).not.toBeNull();
     expect(queryByTestId("publizon-reader")).toBeNull();
   });
 
@@ -91,7 +90,7 @@ describe("Reader page sample routing", () => {
     );
 
     expect(queryByTestId("publizon-reader")).not.toBeNull();
-    expect(queryByTestId("biblio-sample-ebook")).toBeNull();
+    expect(queryByTestId("biblio-sample")).toBeNull();
   });
 
   it("Opens a Biblio loan in the loan reader, never as a sample", () => {
@@ -108,12 +107,12 @@ describe("Player page sample routing", () => {
     vi.mocked(isAnonymous).mockReturnValue(false);
   });
 
-  it("Samples an audiobook through WeDoBooks for a signed-in patron", () => {
+  it("Samples through WeDoBooks", () => {
     const { queryByTestId } = render(
       <PlayerEntry identifier="9788711823453" />
     );
 
-    expect(queryByTestId("biblio-sample-audiobook")).not.toBeNull();
+    expect(queryByTestId("biblio-sample")).not.toBeNull();
   });
 
   it("Answers nothing while the flag is off - no Publizon fallback exists here", () => {

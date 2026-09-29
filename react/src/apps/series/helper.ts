@@ -12,7 +12,9 @@ export type SortableSeriesMember = {
 // indistinguishable from a real part 0.
 const FIRST_NUMBER_PATTERN = /\d+(?:[.,]\d+)?/;
 
-const parseNumberInSeries = (numberInSeries?: string | null): number | null => {
+export const parseNumberInSeries = (
+  numberInSeries?: string | null
+): number | null => {
   if (!numberInSeries) {
     return null;
   }

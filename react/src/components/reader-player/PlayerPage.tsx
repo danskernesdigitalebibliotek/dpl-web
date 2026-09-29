@@ -1,7 +1,7 @@
 import React from "react";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import DigitalReaderPlayer from "./DigitalReaderPlayer";
-import DigitalSamplePlayer from "./DigitalSamplePlayer";
+import DigitalSample from "./DigitalSample";
 
 export type PlayerPageProps = {
   // Lowercase because these come from the url via Drupal.
@@ -32,7 +32,7 @@ const PlayerPage: React.FC<PlayerPageProps> = ({
 
   // Same guard as the reader page's samples - see Reader.
   if (identifier && viaBiblioAdapter) {
-    return <DigitalSamplePlayer identifier={identifier} onClose={onClose} />;
+    return <DigitalSample identifier={identifier} onClose={onClose} />;
   }
 
   return null;

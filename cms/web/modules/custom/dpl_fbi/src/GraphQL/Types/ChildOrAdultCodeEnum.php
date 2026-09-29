@@ -4,8 +4,8 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
 
 class ChildOrAdultCodeEnum
 {
-    public const FOR_CHILDREN = 'FOR_CHILDREN';
     public const FOR_ADULTS = 'FOR_ADULTS';
+    public const FOR_CHILDREN = 'FOR_CHILDREN';
 
     public static function endpoint(): string
     {
