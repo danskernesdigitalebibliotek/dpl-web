@@ -45,11 +45,30 @@ const sourceWork = {
 
 // The fetcher tags every GraphQL request URL with its operation name, so each
 // operation can be intercepted and aliased precisely.
-const interceptRecommendationSource = (work = sourceWork) => {
-  cy.intercept("POST", "**/graphql?getDashboardRecommendationSource", {
-    statusCode: 200,
-    body: { data: { work } }
-  }).as("recommendationSource");
+// The work is either fixed or derived from the lookup's variables.
+const interceptRecommendationSource = (
+  work:
+    | typeof sourceWork
+    | ((variables: {
+        faust?: string;
+        id?: string;
+      }) => typeof sourceWork) = sourceWork
+) => {
+  cy.intercept(
+    "POST",
+    "**/graphql?getDashboardRecommendationSource",
+    (request) => {
+      request.reply({
+        statusCode: 200,
+        body: {
+          data: {
+            work:
+              typeof work === "function" ? work(request.body.variables) : work
+          }
+        }
+      });
+    }
+  ).as("recommendationSource");
 };
 
 const interceptRecommendationSourceByIsbn = () => {
@@ -59,10 +78,22 @@ const interceptRecommendationSourceByIsbn = () => {
   }).as("recommendationSourceByIsbn");
 };
 
-const interceptRecommendations = () => {
-  cy.intercept("POST", "**/graphql?getDashboardRecommendations", {
-    statusCode: 200,
-    body: { data: { recommend: { result: recommendedWorks } } }
+// The first emptyResponses requests come back with nothing, the rest with the
+// recommended works.
+const interceptRecommendations = ({ emptyResponses = 0 } = {}) => {
+  let requests = 0;
+  cy.intercept("POST", "**/graphql?getDashboardRecommendations", (request) => {
+    requests += 1;
+    request.reply({
+      statusCode: 200,
+      body: {
+        data: {
+          recommend: {
+            result: requests <= emptyResponses ? [] : recommendedWorks
+          }
+        }
+      }
+    });
   }).as("recommend");
 };
 
