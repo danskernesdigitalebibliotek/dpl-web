@@ -9,6 +9,10 @@ import MaterialSlider, {
 } from "../../components/material-slider/MaterialSlider";
 import { constructMaterialUrl } from "../../core/utils/helpers/url";
 import invalidSwitchCase from "../../core/utils/helpers/invalid-switch-case";
+import {
+  NonEmptyArray,
+  isNonEmpty
+} from "../../core/utils/helpers/non-empty-array";
 import { useUrls } from "../../core/utils/url";
 import useLoans from "../../core/utils/useLoans";
 import useReservations from "../../core/utils/useReservations";
@@ -41,10 +45,10 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
     useGetList("default");
 
   // The lists arrive from separate services at different speeds. The
-  // recommendations pick their seed on mount, so they are only mounted once
-  // every list has settled - otherwise a reservation could win over a loan
-  // that simply had not arrived yet. A failed request is not loading and has
-  // no data, so it counts as an empty list.
+  // recommendations order their seeds once, on mount, so they are only
+  // mounted once every list has settled - otherwise a reservation could be
+  // tried before a loan that simply had not arrived yet. A failed request is
+  // not loading and has no data, so it counts as an empty list.
   const hasSettledLists =
     !loans.all.isLoading && !reservations.all.isLoading && !isLoadingFavorites;
 
@@ -81,6 +85,9 @@ const captionTextKeyByOrigin: Record<RecommendationOrigin, string> = {
   favorite: "dashboardRecommendationsFavoriteCaptionText"
 };
 
+// How many seeds to try before giving up on the section.
+const MAX_ATTEMPTS = 5;
+
 type RecommendedMaterialsProps = {
   loans: LoanType[];
   reservations: ReservationType[];
@@ -92,30 +99,41 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   reservations,
   favorites
 }) => {
-  const [seed] = useState(
-    () =>
-      orderRecommendationSeeds({
-        loans: listItemsToRecommendationSeeds(loans, "loan"),
-        reservations: listItemsToRecommendationSeeds(
-          reservations,
-          "reservation"
-        ),
-        favorites: workIdsToRecommendationSeeds(favorites)
-      })[0] ?? null
+  // The order is drawn once: a re-render must not reshuffle the seeds under
+  // the attempts below.
+  const [seeds] = useState(() =>
+    orderRecommendationSeeds({
+      loans: listItemsToRecommendationSeeds(loans, "loan"),
+      reservations: listItemsToRecommendationSeeds(reservations, "reservation"),
+      favorites: workIdsToRecommendationSeeds(favorites)
+    }).slice(0, MAX_ATTEMPTS)
   );
 
-  return seed ? <Recommendations seed={seed} /> : null;
+  return isNonEmpty(seeds) ? <RecommendationsAttempt seeds={seeds} /> : null;
 };
 
-const Recommendations: FC<{ seed: RecommendationSeed }> = ({ seed }) => {
+/**
+ * Tries one seed. A hit renders the slider. A miss renders the attempt for the
+ * next seed as a child, so every seed gets its own hook call and no state or
+ * effect has to step between them. The depth is bounded by the number of
+ * seeds.
+ */
+const RecommendationsAttempt: FC<{
+  seeds: NonEmptyArray<RecommendationSeed>;
+}> = ({ seeds }) => {
+  const [seed, ...remainingSeeds] = seeds;
+
   const recommendationResult = useRecommendations(seed);
 
   switch (recommendationResult.status) {
     case "loading":
-    case "miss":
       return null;
     case "found":
       return <RecommendationsSlider result={recommendationResult.result} />;
+    case "miss":
+      return isNonEmpty(remainingSeeds) ? (
+        <RecommendationsAttempt seeds={remainingSeeds} />
+      ) : null;
     default:
       return invalidSwitchCase(recommendationResult);
   }

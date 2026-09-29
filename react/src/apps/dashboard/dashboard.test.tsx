@@ -1,5 +1,7 @@
+import type { Interception } from "cypress/types/net-stubbing";
 import {
   givenUserHasPhysicalLoan,
+  givenUserHasPhysicalLoans,
   givenUserHasPhysicalReservation
 } from "../../../cypress/intercepts/fbs/fbs";
 import { givenUserHasLoanedEbook } from "../../../cypress/intercepts/publizon/publizon";
@@ -1766,6 +1768,64 @@ describe("dashboard recommendations", () => {
     cy.wait("@recommendationSource");
     cy.get("@recommend.all").should("have.length", 0);
     cy.get(".dashboard-page-recommendations").should("not.exist");
+  });
+
+  // The seeds are tried in turn. A seed the recommender has nothing for is
+  // skipped for the next one, up to a cap.
+  describe("retries", () => {
+    const loanWithFaust = (recordId: string) => ({ loanDetails: { recordId } });
+
+    // Every faust resolves to a work of its own.
+    const workOfFaust = ({ faust }: { faust?: string }) => ({
+      workId: `work-of:870970-basis:${faust}`,
+      titles: { full: [`Title ${faust}`] }
+    });
+
+    // Which seed comes first is random, so the recommender's misses are keyed
+    // on request order rather than on a work id.
+
+    it("tries the next seed when the recommender has nothing for the first", () => {
+      givenUserHasPhysicalLoans(["11111111", "22222222"].map(loanWithFaust));
+      interceptRecommendationSource(workOfFaust);
+      interceptRecommendations({ emptyResponses: 1 });
+      visitDashboard();
+
+      cy.getBySel("recommended-description").should("have.length", 2);
+      cy.get<Interception[]>("@recommend.all").should((calls) => {
+        expect(calls).to.have.length(2);
+        const [firstId, secondId] = calls.map(
+          (call) => call.request.body.variables.id
+        );
+        expect(firstId).not.to.equal(secondId);
+      });
+    });
+
+    it("gives up after five seeds", () => {
+      givenUserHasPhysicalLoans(
+        [
+          "11111111",
+          "22222222",
+          "33333333",
+          "44444444",
+          "55555555",
+          "66666666",
+          "77777777"
+        ].map(loanWithFaust)
+      );
+      interceptRecommendationSource(workOfFaust);
+      interceptRecommendations({ emptyResponses: Infinity });
+      visitDashboard();
+
+      cy.wait([
+        "@recommend",
+        "@recommend",
+        "@recommend",
+        "@recommend",
+        "@recommend"
+      ]);
+      cy.get(".dashboard-page-recommendations").should("not.exist");
+      cy.get("@recommend.all").should("have.length", 5);
+    });
   });
 });
 
