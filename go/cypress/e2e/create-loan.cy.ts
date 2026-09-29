@@ -137,8 +137,15 @@ describe("Create loan UI Tests", () => {
     // Approve the loan in the approve loan modal
     cy.get("[data-cy='approve-loan-button']").click()
 
-    // Find the loan ebook button using its text
-    cy.contains("Læs e-bog")
+    // The read button in the "Dit lån" view of the open drawer — not the one
+    // on the work page behind it, which the drawer overlay covers.
+    cy.dataCy("read-loan-button").click()
+
+    // The reader only recognises Publizon's internal order number, so that is
+    // the orderId the read page must be handed. The factory gives the two
+    // order numbers distinct values so a mix-up cannot pass unnoticed.
+    cy.url().should("include", "/read")
+    cy.url().should("include", "orderId=757a22ed-cbc4-4659-a5a9-be39bfc2ba6c")
 
     // Mock GraphQL response for complex search
     const identifiers = ["9788711668016"]
