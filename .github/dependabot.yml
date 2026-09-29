@@ -260,11 +260,10 @@ updates:
         versions: [">=30.1.0"]
       # DDFNEXT-1616
       - dependency-name: "@graphql-codegen/typescript"
-        versions: [">=6.1.0"]
+        versions: [">=6.0.0"]
       # DDFNEXT-1616
       - dependency-name: "@graphql-codegen/typescript-operations"
-        versions: [">=6.1.6"]
-
+        versions: [">=6.0.0"]
 
   # React - npm dependencies
   - package-ecosystem: npm
