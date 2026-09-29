@@ -56,9 +56,10 @@ class SailorEndpointConfig extends EndpointConfig {
    * {@inheritdoc}
    */
   public function schemaPath(): string {
-    // Codegen profile (fbcms-go) ≠ runtime profile (next, see
-    // Fbi::FBI_PROFILE); they overlap on every field we currently query.
-    return '/schemas/graphql/dbc-fbi.fbcms-go.graphql';
+    // Introspected from the fbcms-go profile, while the runtime profile is
+    // next (see Fbi::FBI_PROFILE). The profiles serve identical schemas —
+    // see schemas/README.md.
+    return '/schemas/graphql/dbc-fbi.graphql';
   }
 
   /**

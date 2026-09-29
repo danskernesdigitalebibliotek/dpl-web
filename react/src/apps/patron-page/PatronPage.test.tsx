@@ -103,6 +103,13 @@ describe("Patron page", { testIsolation: false }, () => {
     cy.wait(["@LibraryProfile", "@Loans", "@User"]);
   });
 
+  it("links to the dashboard below the header", () => {
+    cy.getBySel("patron-page-dashboard-link")
+      .should("have.text", "Dashboard")
+      .should("have.attr", "href")
+      .and("match", /\/user\/me\/dashboard$/);
+  });
+
   // TODO: Add fixture to make the test pass. Since ErrorBoundary handling was added,
   // the test fails because it is now visible that the service is failing.
   it.skip("Patron page", () => {

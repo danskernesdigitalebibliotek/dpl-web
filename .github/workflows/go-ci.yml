@@ -18,7 +18,7 @@ on:
       - '.github/workflows/go-ci.yml'
       - '.github/actions/**'
       - 'schemas/openapi/publizon-adapter.yaml'
-      - 'schemas/graphql/dbc-fbi.fbcms-go.graphql'
+      - 'schemas/graphql/dbc-fbi.graphql'
       - 'cms/dpl-cms.bnf.graphql'
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -28,7 +28,7 @@ on:
       - '.github/workflows/go-ci.yml'
       - '.github/actions/**'
       - 'schemas/openapi/publizon-adapter.yaml'
-      - 'schemas/graphql/dbc-fbi.fbcms-go.graphql'
+      - 'schemas/graphql/dbc-fbi.graphql'
       - 'cms/dpl-cms.bnf.graphql'
 
 jobs:

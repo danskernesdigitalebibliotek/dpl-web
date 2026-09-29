@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import DashboardFees from "./dashboard-fees/dashboard-fees";
 import DashboardNotificationList from "./dashboard-notification-list/dashboard-notification-list";
 import { useText } from "../../core/utils/text";
+import Link from "../../components/atoms/links/Link";
 import { useAddFavorite } from "../../components/button-favourite/useAddFavorite";
 import MaterialSlider from "../../components/material-slider/MaterialSlider";
 import { constructMaterialUrl } from "../../core/utils/helpers/url";
@@ -26,6 +27,7 @@ interface DashboardProps {
 
 const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
   const t = useText();
+  const u = useUrls();
 
   const loans = useLoans();
   const reservations = useReservations();
@@ -43,9 +45,16 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
   return (
     <>
       <div className="dashboard-page">
-        <h1 className="text-header-h1 mt-32 mb-64" data-cy="dashboard-header">
+        <h1 className="text-header-h1 mt-32 mb-8" data-cy="dashboard-header">
           {t("yourProfileText")}
         </h1>
+        <Link
+          href={u("userProfileUrl")}
+          className="link-tag text-body-medium-regular mb-64"
+          dataCy="dashboard-user-profile-link"
+        >
+          {t("dashboardUserProfileLinkText")}
+        </Link>
         <DashboardFees />
         <DashboardNotificationList
           columns

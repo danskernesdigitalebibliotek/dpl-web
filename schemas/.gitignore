@@ -1,2 +1,5 @@
 # Local working directory for refresh:fbs (clone of itk-dev/dpl-fbs-adapter-tool)
 .cache/
+
+# Snapshots rejected by _introspect-fbi's auth check, kept for inspection only.
+*.rejected
