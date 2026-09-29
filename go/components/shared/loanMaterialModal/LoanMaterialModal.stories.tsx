@@ -80,6 +80,28 @@ const meta = {
   title: "modals/LoanMaterialModal",
   component: LoanMaterialModal,
   parameters: { layout: "centered" },
+  // The modal's useSession fetches /auth/session on mount. Nothing serves it
+  // in Storybook, and the rejected fetch fails the test-runner's smoke test —
+  // answer with the anonymous session instead. The session only matters on
+  // the Biblio path, which stories leave off.
+  beforeEach: () => {
+    const original = window.fetch
+    window.fetch = ((input: RequestInfo | URL, init?: RequestInit) => {
+      const url = typeof input === "string" ? input : input.toString()
+      if (url.includes("/auth/session")) {
+        return Promise.resolve(
+          new Response(JSON.stringify({ isLoggedIn: false, type: "anonymous" }), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          })
+        )
+      }
+      return original(input, init)
+    }) as typeof fetch
+    return () => {
+      window.fetch = original
+    }
+  },
 } satisfies Meta<typeof LoanMaterialModal>
 
 export default meta
