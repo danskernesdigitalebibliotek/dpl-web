@@ -1,42 +1,83 @@
 import { NextRequest, NextResponse } from "next/server"
 
 import { TServiceType, getApServiceSettings, getApServiceUrl } from "@/lib/helpers/ap-service"
-import { getSession } from "@/lib/session/session"
+import { userIsAnonymous } from "@/lib/helpers/user"
+import {
+  adgangsplatformenAccessTokenHasExpired,
+  destroySession,
+  getSession,
+} from "@/lib/session/session"
 
 type TContext = { params: Promise<{ slug: string[] }> }
 
-const getAuthHeader = async (request: NextRequest, serviceType: TServiceType) => {
-  // If the request has an Authorization header, use it.
-  const authHeader = request.headers.get("Authorization")
-  if (authHeader) {
-    return authHeader
-  }
+// What getAuthHeader choose to send. Only a rejection of the session's
+// own user token may tear down the session — library-token calls and
+// passed-through Authorization headers say nothing about the session's
+// health.
+type TResolvedAuth =
+  | { header: string; source: "request-header" | "user-token" | "library-token" }
+  | { header: null; source: "none" }
 
-  // Otherwise, get the bearer token from the session.
+const getAuthHeader = async (
+  request: NextRequest,
+  serviceType: TServiceType
+): Promise<TResolvedAuth> => {
   const useLibraryToken = getApServiceSettings(serviceType)?.useLibraryTokenAlways ?? true
   const session = await getSession()
   const userToken = session?.adgangsplatformenUserToken
   const libraryToken = session?.adgangsplatformenLibraryToken
 
+  // The middleware does not run on this route, so we check for an expired
+  // session here as well. If it has expired we destroy it and skip the user
+  // token — the service would reject it anyway.
+  const sessionHasExpired = adgangsplatformenAccessTokenHasExpired(session)
+  if (sessionHasExpired) {
+    await destroySession(session)
+  }
+
+  // A client that was handed a bearer token by us sends it back on every
+  // call, so most requests arrive with an Authorization header. When it is
+  // the session's own user token we must recognise it as such: it is the
+  // token whose rejection tells us the session is over, and passing it
+  // through as an opaque header would hide exactly the signal we are after.
+  const authHeader = request.headers.get("Authorization")
+  if (authHeader) {
+    if (!userToken || authHeader !== `Bearer ${userToken}`) {
+      // Someone else's token, or a library token. Not ours to judge.
+      return { header: authHeader, source: "request-header" }
+    }
+
+    if (!sessionHasExpired) {
+      return { header: authHeader, source: "user-token" }
+    }
+    // The session's user token, but already expired. Fall through and resolve
+    // as if the caller had sent nothing, so we never spend a call on a token
+    // we know is dead.
+  }
+
+  // Otherwise, get the bearer token from the session.
+  // The default is the library token, so a user token is never sent to a
+  // service that has not explicitly opted into user context.
+
   // If the settings (apServiceSettings) indicate that we should always use the library token,
   // we will use the library token if it exists.
-  // Eg. the cover service always uses the library token because it does not need the user context.
+  // For services that do not need the user context.
   if (useLibraryToken && libraryToken) {
-    return `Bearer ${libraryToken}`
+    return { header: `Bearer ${libraryToken}`, source: "library-token" }
   }
 
   // If we can load a user token we have an authenticated session,
   // and the user token has precedence over the library token.
-  if (userToken) {
-    return `Bearer ${userToken}`
+  if (userToken && !sessionHasExpired) {
+    return { header: `Bearer ${userToken}`, source: "user-token" }
   }
 
   // At last, if we have a library token (which we should always have) we will use that.
   if (libraryToken) {
-    return `Bearer ${libraryToken}`
+    return { header: `Bearer ${libraryToken}`, source: "library-token" }
   }
 
-  return null
+  return { header: null, source: "none" }
 }
 
 async function proxyRequest(
@@ -46,8 +87,11 @@ async function proxyRequest(
   body?: string
 ) {
   const proxiedHeaders: Record<string, string> = {}
-  // No need to send along the cookies.
-  const headersToIgnore = ["cookie"]
+  // No need to send along the cookies. Authorization is dropped because this
+  // route decides which token to send — see getAuthHeader. Passing the
+  // incoming one through would override that decision, since proxiedHeaders
+  // is spread last.
+  const headersToIgnore = ["cookie", "authorization"]
   request.headers.forEach((value, key) => {
     if (headersToIgnore.includes(key.toLowerCase())) {
       return
@@ -67,17 +111,30 @@ async function proxyRequest(
   const urlParams = request.nextUrl.search ?? ""
   const url = [baseUrl, ...slug.slice(1)].join("/")
   const serviceUrl = `${url}${urlParams}`
-  const authHeader = await getAuthHeader(request, serviceType)
+  const auth = await getAuthHeader(request, serviceType)
 
   try {
     const result = await fetch(serviceUrl, {
       method,
       headers: {
-        ...(authHeader ? { authorization: authHeader } : {}),
+        ...(auth.header ? { authorization: auth.header } : {}),
         ...proxiedHeaders,
       },
       body,
     })
+
+    // The upstream rejected the session's own user token — expired on the
+    // clock or revoked with a future expire (the middleware can only catch
+    // the former). Destroy the GO session so /auth/session reports logged
+    // out instead of letting clients retry with the same dead token forever.
+    // Only Adgangsplatformen sessions carry a user token here; Unilogin
+    // sessions are untouched.
+    if (auth.source === "user-token" && (result.status === 401 || result.status === 403)) {
+      const session = await getSession()
+      if (!userIsAnonymous(session) && session.type === "adgangsplatformen") {
+        await destroySession(session)
+      }
+    }
 
     // Some FBS endpoints return 204 No Content (e.g. DELETE) — calling .json()
     // on an empty body throws. Pass the raw text through; clients that expect
