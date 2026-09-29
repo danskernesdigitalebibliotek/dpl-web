@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import fetchMaterial, { MaterialProps } from "../utils/material-fetch-hoc";
 import fetchDigitalMaterial from "../utils/digital-material-fetch-hoc";
 import ListMaterialSkeleton from "../../../reservation-list/reservation-material/list-material-skeleton";
@@ -16,9 +16,10 @@ import { readerUrl } from "../../../../components/reader-player/helper";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 import {
-  rememberReturnTarget,
-  scrollToReturnTarget
-} from "../../utils/return-target";
+  getCurrentUrlWithHash,
+  replaceCurrentLocation
+} from "../../../../core/utils/helpers/url";
+import { useScrollToLocation } from "../../../../core/utils/UseScrollToLocation";
 
 export interface DigitalLoanCardProps {
   loan: LoanType;
@@ -60,9 +61,11 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
   } = material || {};
   const coverId = pid || identifier || "";
 
-  useEffect(() => {
-    if (material) scrollToReturnTarget(titleId);
-  }, [material, titleId]);
+  // Coming back from the reader or player reloads the list too late for the
+  // browser to restore the scroll position, so the url hash marks the loan.
+  useScrollToLocation([material]);
+  const rememberLoanInUrl = () =>
+    replaceCurrentLocation(new URL(getCurrentUrlWithHash(titleId)));
 
   const renderPrimaryAction = () => {
     if (!orderId || !readerPlayerType) return null;
@@ -81,7 +84,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
               trackedData: orderId
             })
           }
-          onClick={() => rememberReturnTarget(titleId)}
+          onClick={rememberLoanInUrl}
         >
           {t("onlineMaterialReaderText", {
             placeholders: { "@materialType": material?.materialType || "" }
@@ -105,7 +108,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
             trackedData: orderId
           })
         }
-        onNavigate={() => rememberReturnTarget(titleId)}
+        onNavigate={rememberLoanInUrl}
         // The list mounts the Publizon modal itself, one per open player.
         onPlayInModal={() => onPlayDigital(loan)}
       />
@@ -137,7 +140,11 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
               lang={lang || ""}
               className="list-reservation__title color-secondary-gray"
             >
-              <span id={titleId} className="list-reservation__title__text">
+              <span
+                id={titleId}
+                data-scroll-target={titleId}
+                className="list-reservation__title__text"
+              >
                 {title}
               </span>
             </h3>

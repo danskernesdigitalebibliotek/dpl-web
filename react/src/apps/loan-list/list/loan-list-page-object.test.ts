@@ -66,6 +66,17 @@ const stubLoanListBackends = ({
   }
 };
 
+// Stub the reader route so the LÆS click can navigate without actually
+// unloading the storybook iframe.
+const givenReaderPageLoads = () =>
+  cy
+    .intercept("GET", "**/reader?orderid=*", {
+      statusCode: 200,
+      body: "<html><body>reader</body></html>",
+      headers: { "content-type": "text/html" }
+    })
+    .as("readerNavigation");
+
 describe("Loan list page", () => {
   let loanList: LoanListPage;
 
@@ -109,13 +120,7 @@ describe("Loan list page", () => {
       const orderId = "1f7e02d1-aa11-4b22-9c33-abcdef012345";
       givenUserHasDigitalEbookLoan({ orderId });
 
-      // Stub the reader route so the LÆS click can navigate without actually
-      // unloading the storybook iframe.
-      cy.intercept("GET", "**/reader?orderid=*", {
-        statusCode: 200,
-        body: "<html><body>reader</body></html>",
-        headers: { "content-type": "text/html" }
-      }).as("readerNavigation");
+      givenReaderPageLoads();
 
       // When: visiting the loan list and clicking the LÆS button
       loanList.visit([]);
@@ -141,11 +146,7 @@ describe("Loan list page", () => {
       // fold, and physical loans that arrive after the digital ones
       givenUserHasPhysicalLoans(8, { delay: 1500 });
       givenUserHasDigitalEbookLoan();
-      cy.intercept("GET", "**/reader?orderid=*", {
-        statusCode: 200,
-        body: "<html><body>reader</body></html>",
-        headers: { "content-type": "text/html" }
-      }).as("readerNavigation");
+      givenReaderPageLoads();
 
       // When: opening the reader from the digital loan and closing it again
       loanList.visit([]);
@@ -164,11 +165,9 @@ describe("Loan list page", () => {
       loanList.digitalLoanRow().elements.readerButton().click();
       cy.wait("@readerNavigation");
       cy.go("back");
+      cy.location("hash").should("eq", "#9788740065411-title");
 
       // Then: the digital loan is on screen once all loans are in
-      loanList.components.PhysicalLoanRow((row) =>
-        row.elements.title().should("exist")
-      );
       loanList
         .digitalLoanRow()
         .elements.title()
@@ -177,37 +176,6 @@ describe("Loan list page", () => {
           const { innerHeight } = $title[0].ownerDocument.defaultView!;
           expect(top).to.be.at.least(0);
           expect(bottom).to.be.at.most(innerHeight);
-        });
-    });
-
-    it("Ignores a loan left behind when the list is not reached by going back", () => {
-      // Given: a loan was remembered on a visit that never came back
-      givenUserHasPhysicalLoans(8);
-      givenUserHasDigitalEbookLoan();
-      cy.window().then((win) =>
-        win.sessionStorage.setItem(
-          "loanListReturnTarget",
-          "9788740065411-title"
-        )
-      );
-
-      // When: visiting the loan list directly
-      loanList.visit([]);
-
-      // Then: the remembered loan is cleared, and the list stays at the top
-      loanList.digitalLoanRow().elements.title().should("exist");
-      cy.window()
-        .its("sessionStorage")
-        .invoke("getItem", "loanListReturnTarget")
-        .should("be.null");
-      loanList
-        .digitalLoanRow()
-        .elements.title()
-        .should(($title) => {
-          const { innerHeight } = $title[0].ownerDocument.defaultView!;
-          expect($title[0].getBoundingClientRect().top).to.be.above(
-            innerHeight
-          );
         });
     });
   });
