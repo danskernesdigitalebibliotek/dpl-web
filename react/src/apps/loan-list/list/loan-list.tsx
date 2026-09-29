@@ -6,7 +6,10 @@ import {
   getScrollClass,
   sortByDueDate
 } from "../../../core/utils/helpers/general";
-import { getUrlQueryParam } from "../../../core/utils/helpers/url";
+import {
+  getFromUrlHash,
+  getUrlQueryParam
+} from "../../../core/utils/helpers/url";
 import { useText } from "../../../core/utils/text";
 import {
   useModalButtonHandler,
@@ -56,8 +59,8 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
   const [modalLoan, setModalLoan] = useState<LoanType | null>(null);
   const {
     all: { isLoading },
-    fbs: { loans: fbsLoans },
-    digital: { loans: digitalLoans }
+    fbs: { loans: fbsLoans, isLoading: isLoadingFbs },
+    digital: { loans: digitalLoans, isLoading: isLoadingDigital }
   } = useLoans();
   const loansPhysical = sortByDueDate(fbsLoans);
   const loansDigital = sortByDueDate(digitalLoans);
@@ -111,15 +114,22 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
     }
   }, [loansPhysical, loansDigital, loanDetails, openDueDateModal]);
 
+  // Coming back to a loan (see DigitalLoanCard) waits for both lists: physical
+  // loans render above the digital ones and would push the loan away.
+  const shouldShowSkeletons = getFromUrlHash()
+    ? isLoading
+    : isLoadingFbs &&
+      isLoadingDigital &&
+      loansPhysical.length === 0 &&
+      loansDigital.length === 0;
+
   return (
     <>
       <div className={`loan-list-page ${getScrollClass(modalIds)}`}>
         <h1 className="text-header-h1 my-32">{t("loanListTitleText")}</h1>
-        {/* Wait for both lists: physical loans render above the digital ones,
-        and arriving last they would push a digital loan away from where it was. */}
-        {isLoading && <LoanListSkeleton />}
+        {shouldShowSkeletons && <LoanListSkeleton />}
 
-        {!isLoading &&
+        {!shouldShowSkeletons &&
           (!loansAreEmpty(loansPhysical) || !loansAreEmpty(loansDigital)) && (
             <>
               {loansPhysical && (

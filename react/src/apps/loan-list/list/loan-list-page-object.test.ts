@@ -180,6 +180,25 @@ describe("Loan list page", () => {
     });
   });
 
+  describe("Loading", () => {
+    beforeEach(() => {
+      stubLoanListBackends({ emptyPhysical: false });
+      givenManifestationByFaust();
+    });
+
+    it("Shows the digital loans before the physical ones arrive", () => {
+      // Given: physical loans that take long to arrive
+      givenUserHasPhysicalLoans(1, { delay: 30000 });
+      givenUserHasDigitalEbookLoan();
+
+      // When: visiting the loan list
+      loanList.visit([]);
+
+      // Then: the digital loan shows without waiting for them
+      loanList.digitalLoanRow().elements.title().should("be.visible");
+    });
+  });
+
   describe("Player modal", () => {
     beforeEach(() => stubLoanListBackends());
 
