@@ -1,6 +1,7 @@
+"use client"
 import { motion } from "framer-motion"
-import { useRouter } from "next/navigation"
-import React from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import React, { useOptimistic, useTransition } from "react"
 
 import {
   getManifestationLanguageCode,
@@ -10,6 +11,13 @@ import {
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
+import {
+  DEFAULT_EDITION_CHOICE,
+  type TEditionChoice,
+  getEditionChoiceLabel,
+  parseEditionChoice,
+  serializeEditionChoice,
+} from "@/components/shared/editionsSelectModal/editionChoice"
 import MaterialTypeSelect, {
   MaterialTypeSelectOption,
 } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
@@ -18,10 +26,14 @@ import {
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
+import { hasCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
+import { openModal } from "@/store/modal.store"
 
+import WorkPageButton from "./WorkPageButton"
+import WorkPageButtons from "./WorkPageButtons"
 import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"
 import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
 
@@ -33,6 +45,7 @@ type WorkPageHeaderProps = {
 
 const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const selectedManifestationIsbns = selectedManifestation
     ? getIsbnsFromManifestation(selectedManifestation)
     : []
@@ -64,17 +77,29 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const covers = selectedManifestation.cover
 
   const onOptionSelect = (optionSelected: MaterialTypeSelectOption) => {
+    // when a new material type is selected: resolveUrl builds a new URL,
+    // which drops any pinned edition from the previously selected type
     const url = resolveUrl({
       routeParams: { work: "work", wid: work.workId },
       queryParams: { type: optionSelected.code },
     })
-    router.push(url, { scroll: false })
+    startTransition(() => {
+      setPickedMaterialTypeCode(optionSelected.code)
+      router.push(url, { scroll: false })
+    })
   }
 
   const materialTypeOptions = workMaterialTypesWithDisplayName
 
   const selectedManifestationMaterialTypeCode =
     selectedManifestation?.materialTypes[0].materialTypeSpecific.code
+
+  // The tapped type, correct immediately. The url and the selected
+  // manifestation both lag until the transition below commits.
+  const [pickedMaterialTypeCode, setPickedMaterialTypeCode] = useOptimistic(
+    selectedManifestationMaterialTypeCode
+  )
+  const [, startTransition] = useTransition()
 
   const manifestationKey = selectedManifestation?.pid
 
@@ -84,6 +109,51 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const { session } = useSession()
   const isLoggedIn = session?.isLoggedIn || false
+
+  const urlMaterialTypeCode = searchParams.get("type")
+  // A url type the work does not have never resolves to a manifestation, so
+  // it does not count as a switch in progress.
+  const isUrlMaterialTypeKnown = materialTypeOptions.some(
+    option => option.code === urlMaterialTypeCode
+  )
+  const isSwitchingMaterialType =
+    (isUrlMaterialTypeKnown && urlMaterialTypeCode !== selectedManifestationMaterialTypeCode) ||
+    pickedMaterialTypeCode !== selectedManifestationMaterialTypeCode
+
+  // The choice lives in the url, so the button label follows the chosen manifestation
+  const urlEditionChoice = parseEditionChoice(searchParams.get("edition"))
+
+  // Fallback to the default edition choice if the url edition choice is for a different manifestation than the selected one.
+  const editionChoice =
+    typeof urlEditionChoice === "object" && urlEditionChoice.pid !== selectedManifestation.pid
+      ? DEFAULT_EDITION_CHOICE
+      : urlEditionChoice
+
+  const editionChoiceLabel = getEditionChoiceLabel(editionChoice, selectedManifestation)
+
+  // When opening the modal, the edition choice is pinned to the selected manifestation, so
+  // the modal can show the correct edition for the selected manifestation.
+  // on confirm, the edition choice is serialized and added to the url query params, so the correct edition is shown for the selected manifestation.
+  const openEditionsSelect = () =>
+    openModal("EditionsSelectModal", {
+      wid: work.workId,
+      materialTypeCode: pickedMaterialTypeCode,
+      choice: editionChoice,
+      // The modal hands back the type it listed, so the pid and the type
+      // always belong together.
+      onChoiceConfirm: (choice: TEditionChoice, materialTypeCode: string) => {
+        const editionParam = serializeEditionChoice(choice)
+        const url = resolveUrl({
+          routeParams: { work: "work", wid: work.workId },
+          queryParams: {
+            type: materialTypeCode,
+            // "newest" is the default pick, so it needs no param of its own.
+            ...(editionParam ? { edition: editionParam } : {}),
+          },
+        })
+        router.push(url, { scroll: false })
+      },
+    })
 
   return (
     <>
@@ -121,7 +191,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
             <div className="flex w-full justify-center pt-6">
               <MaterialTypeSelect
                 options={materialTypeOptions}
-                selected={selectedManifestationMaterialTypeCode}
+                selected={pickedMaterialTypeCode}
                 onOptionSelect={onOptionSelect}
               />
             </div>
@@ -136,9 +206,32 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           <h1 lang={languageCode} className="text-typo-heading-3 break-words hyphens-auto lg:mt-0">
             {selectedManifestation?.titles?.full || ""}
           </h1>
-          <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
+          {/* A work without named creators falls back to the edition's
+              contributors — an anthology, say, credited to its editor. */}
+          <WorkAuthors
+            creators={
+              hasCreators(work.creators) ? work.creators : selectedManifestation.contributors
+            }
+          />
         </div>
         <div className="col-span-4 mt-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
+          <div className="mb-3 w-full">
+            <WorkPageButtons>
+              {/* Mid-switch the label would still name the previous type's
+                  edition, so the button is replaced by a skeleton until the
+                  page has resolved the new one. */}
+              {isSwitchingMaterialType ? (
+                <div
+                  className="bg-background-skeleton h-12 w-full animate-pulse rounded-full
+                    lg:max-w-80 lg:min-w-72"
+                />
+              ) : (
+                <WorkPageButton ariaLabel="Vælg udgave" onClick={openEditionsSelect}>
+                  {`Udgave: ${editionChoiceLabel}`}
+                </WorkPageButton>
+              )}
+            </WorkPageButtons>
+          </div>
           {isLoggedIn ? (
             <WorkPageButtonsLoggedIn
               workId={work.workId}

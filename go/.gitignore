@@ -29,3 +29,5 @@ cypress/screenshots
 # Storybook
 storybook-static/
 *storybook.log
+
+toolbox/

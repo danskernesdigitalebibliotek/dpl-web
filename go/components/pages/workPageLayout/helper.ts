@@ -105,7 +105,8 @@ export const sortManifestationsBySortPriority = (
   manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]
 ): ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[] => {
   const sortPriority = goConfig("materialtypes.sortpriority")
-  return manifestations.sort((manifestationA, manifestationB) => {
+  // Spread to sort a copy and leave the caller's array as it was.
+  return [...manifestations].sort((manifestationA, manifestationB) => {
     const priorityA = sortPriority.indexOf(
       manifestationA.materialTypes[0].materialTypeSpecific.code
     )
@@ -376,4 +377,42 @@ export const canUserLoanMoreCostFreeMaterials = (dataLoans: LoanListResult | und
     (dataLoans.userData.totalAudioLoans + dataLoans.userData.totalEbookLoans)
 
   return costFreeLoans < 30
+}
+
+//Find the editions for the selected type and sort them by publication year, newest first
+export const getEditionsForMaterialType = (
+  manifestations: ManifestationWorkPageFragment[],
+  materialTypeCode: string
+): ManifestationWorkPageFragment[] => {
+  const selectedLabel = translateMaterialTypesStringForRender(materialTypeCode)
+
+  return (filterMaterialTypes(manifestations) as ManifestationWorkPageFragment[])
+    .filter(manifestation =>
+      manifestation.materialTypes.some(
+        materialType =>
+          translateMaterialTypesStringForRender(materialType.materialTypeSpecific.code) ===
+          selectedLabel
+      )
+    )
+    .sort(
+      (a, b) =>
+        (b.edition?.publicationYear?.year ?? -Infinity) -
+        (a.edition?.publicationYear?.year ?? -Infinity)
+    )
+}
+
+// Get the manifestation for a pinned edition. The pid is only honoured when it
+// belongs to the material type currently selected — a pid from a shared link
+// can be stale or point at another type, and then the caller falls back to the
+// default (newest) pick.
+export const getPinnedEditionManifestation = (
+  manifestations: ManifestationWorkPageFragment[],
+  materialTypeCode: string,
+  pid: string | null
+): ManifestationWorkPageFragment | undefined => {
+  if (!pid) return undefined
+
+  return getEditionsForMaterialType(manifestations, materialTypeCode).find(
+    manifestation => manifestation.pid === pid
+  )
 }

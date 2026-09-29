@@ -10,10 +10,7 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React, { useEffect, useState } from "react"
 
-import {
-  getManifestationLabel,
-  isPhysicalMaterialType,
-} from "@/components/pages/workPageLayout/helper"
+import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import { ModalFlowBody } from "@/components/shared/modalFlow/ModalFlowBody"
 import ReservationFormContent from "@/components/shared/reservationModal/ReservationFormContent"
@@ -23,10 +20,11 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBlacklistedAvailabilityBranches } from "@/hooks/useBlacklistedAvailabilityBranches"
+import { useWorkRecordIds } from "@/hooks/useEditionAvailability"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
 import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
-import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
+import { pidToFaust } from "@/lib/helpers/ids"
 
 type ReservationModalProps = {
   open: boolean
@@ -41,17 +39,18 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const manifestation = findManifestationByPid(work, pid)
   const recordId = manifestation ? pidToFaust(manifestation.pid) : null
 
-  const physicalManifestations =
-    work?.manifestations?.all.filter(m =>
-      isPhysicalMaterialType(m.materialTypes[0]?.materialTypeSpecific.code)
-    ) ?? []
-  const recordIds = getFaustIdsFromManifestations(physicalManifestations)
+  // Shared with the edition picker so both land on the same query key.
+  const { recordIds } = useWorkRecordIds(wid)
 
   const { data: patron } = usePatron()
   const blacklistedBranches = useBlacklistedAvailabilityBranches()
   const { data: availability } = useMaterialAvailability(wid, recordIds, blacklistedBranches, {
     enabled: recordIds.length > 0,
   })
+  // The copy below speaks about the edition being reserved, so it reads that
+  // record rather than the work-wide totals the query also carries.
+  const editionAvailability = recordId ? availability?.records[recordId] : undefined
+
   const { data: reservations } = useReservations()
 
   const { mutate: createReservation, isPending: isSubmitting } = useCreateReservation()
@@ -140,13 +139,19 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
           </Button>
         ) : (
           <div className="flex w-full flex-col items-center gap-3">
-            {availability && (
+            {/* Both numbers are for the chosen edition, not the whole work:
+                the reader reserves one edition, so the queue they join is that
+                edition's. `records` is keyed by FAUST, which is what recordId
+                holds. A record the response did not cover says nothing, and
+                then no claim is made at all. */}
+            {editionAvailability && (
               <p className="text-typo-caption text-foreground-muted text-center">
-                Biblioteket har {availability.totalCopies}{" "}
-                {availability.totalCopies === 1 ? "eksemplar" : "eksemplarer"}. Der er{" "}
-                {availability.reservationCount}{" "}
-                {availability.reservationCount === 1 ? "reservering" : "reserveringer"} til dette
-                materiale.
+                Biblioteket har {editionAvailability.totalCopies} stk. af denne bog.{" "}
+                {editionAvailability.reservationCount === 0
+                  ? "Du er den næste i kø til den."
+                  : `Der er ${editionAvailability.reservationCount} ${
+                      editionAvailability.reservationCount === 1 ? "låner" : "lånere"
+                    } i kø til den.`}
               </p>
             )}
             <Button
