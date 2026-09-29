@@ -7,7 +7,7 @@
 #
 # Paths are relative to packages/service-layer, where `pnpm codegen:fbi` runs.
 overwrite: true
-schema: "../../schemas/graphql/dbc-fbi.fbcms-go.graphql"
+schema: "../../schemas/graphql/dbc-fbi.graphql"
 documents: "fbi/src/documents/*.graphql"
 generates:
   fbi/src/generated/:
