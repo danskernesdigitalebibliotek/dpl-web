@@ -1,4 +1,4 @@
-import { sample } from "lodash";
+import { shuffle } from "lodash";
 import { hasValue } from "../../core/utils/helpers/has-value";
 import { FaustId, WorkId } from "../../core/utils/types/ids";
 import { ListType } from "../../core/utils/types/list-type";
@@ -49,10 +49,11 @@ export const workIdsToRecommendationSeeds = (
   workIds.map((workId) => ({ origin: "favorite", type: "work-id", workId }));
 
 /**
- * Picks the material to base recommendations on: a random loan, else a random
- * reservation, else a random favorite. Null when every list is empty.
+ * Orders the materials to base recommendations on: the loans in random order,
+ * then the reservations, then the favorites. The first is the preferred seed
+ * and the rest are the ones to fall back to.
  */
-export const pickRecommendationSeed = ({
+export const orderRecommendationSeeds = ({
   loans,
   reservations,
   favorites
@@ -60,5 +61,8 @@ export const pickRecommendationSeed = ({
   loans: RecommendationSeed[];
   reservations: RecommendationSeed[];
   favorites: RecommendationSeed[];
-}): RecommendationSeed | null =>
-  sample(loans) ?? sample(reservations) ?? sample(favorites) ?? null;
+}): RecommendationSeed[] => [
+  ...shuffle(loans),
+  ...shuffle(reservations),
+  ...shuffle(favorites)
+];

@@ -1,9 +1,10 @@
+import { sortBy } from "lodash";
 import { describe, expect, it } from "vitest";
 import {
   RecommendationSeed,
   listItemToRecommendationSeed,
   listItemsToRecommendationSeeds,
-  pickRecommendationSeed,
+  orderRecommendationSeeds,
   workIdsToRecommendationSeeds
 } from "../../apps/dashboard/recommendationSeed";
 
@@ -63,40 +64,22 @@ describe("workIdsToRecommendationSeeds", () => {
   });
 });
 
-describe("pickRecommendationSeed", () => {
-  it("prefers a loan over reservations and favorites", () => {
-    const seed = pickRecommendationSeed({
-      loans: [loanSeed("11111111")],
-      reservations: [reservationSeed("22222222")],
+describe("orderRecommendationSeeds", () => {
+  it("puts every loan, in any order, before the reservations and favorites", () => {
+    const loans = [loanSeed("11111111"), loanSeed("22222222")];
+    const seeds = orderRecommendationSeeds({
+      loans,
+      reservations: [reservationSeed("33333333")],
       favorites: [favoriteSeed]
     });
 
-    expect(seed).toEqual(loanSeed("11111111"));
+    expect(sortBy(seeds.slice(0, 2), "faust")).toEqual(loans);
+    expect(seeds.slice(2)).toEqual([reservationSeed("33333333"), favoriteSeed]);
   });
 
-  it("falls back to a reservation when there are no loans", () => {
-    const seed = pickRecommendationSeed({
-      loans: [],
-      reservations: [reservationSeed("22222222")],
-      favorites: [favoriteSeed]
-    });
-
-    expect(seed).toEqual(reservationSeed("22222222"));
-  });
-
-  it("falls back to a favorite when there are no loans or reservations", () => {
-    const seed = pickRecommendationSeed({
-      loans: [],
-      reservations: [],
-      favorites: [favoriteSeed]
-    });
-
-    expect(seed).toEqual(favoriteSeed);
-  });
-
-  it("returns null when every list is empty", () => {
+  it("is empty when every list is empty", () => {
     expect(
-      pickRecommendationSeed({ loans: [], reservations: [], favorites: [] })
-    ).toBeNull();
+      orderRecommendationSeeds({ loans: [], reservations: [], favorites: [] })
+    ).toEqual([]);
   });
 });

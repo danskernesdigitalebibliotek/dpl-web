@@ -17,7 +17,7 @@ import { LoanType } from "../../core/utils/types/loan-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import {
   listItemsToRecommendationSeeds,
-  pickRecommendationSeed,
+  orderRecommendationSeeds,
   workIdsToRecommendationSeeds
 } from "./recommendationSeed";
 import { RecommendationOrigin } from "./recommendations.types";
@@ -92,12 +92,16 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   const materialUrl = u("materialUrl");
   const addToListRequest = useAddFavorite({ app: "dashboard" });
 
-  const [seed] = useState(() =>
-    pickRecommendationSeed({
-      loans: listItemsToRecommendationSeeds(loans, "loan"),
-      reservations: listItemsToRecommendationSeeds(reservations, "reservation"),
-      favorites: workIdsToRecommendationSeeds(favorites)
-    })
+  const [seed] = useState(
+    () =>
+      orderRecommendationSeeds({
+        loans: listItemsToRecommendationSeeds(loans, "loan"),
+        reservations: listItemsToRecommendationSeeds(
+          reservations,
+          "reservation"
+        ),
+        favorites: workIdsToRecommendationSeeds(favorites)
+      })[0] ?? null
   );
 
   const { result, isLoading } = useRecommendations(seed);
