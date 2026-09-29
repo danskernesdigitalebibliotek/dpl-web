@@ -7,7 +7,19 @@
  * Display patron page (user information page).
  */
 
+use Drupal\Core\Url;
 use Drupal\dpl_patron_page\Form\PatronPageSettingsForm;
+
+/**
+ * Implements hook_dpl_react_apps_data().
+ */
+function dpl_patron_page_dpl_react_apps_data(array &$data): void {
+  $data['urls'] += [
+    'user-profile' => dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString()
+    ),
+  ];
+}
 
 /**
  * Implements hook_dpl_protected_nodes_get_protected_nodes().

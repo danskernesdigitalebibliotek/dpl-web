@@ -162,7 +162,6 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       ),
       "menu-sign-up-url" => $patronRegSettings->getPatronRegistrationPageUrl(),
       'menu-view-your-profile-text-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
-      'user-profile-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
       'menu-authenticated-close-button-text' => $this->t('Close user menu', [], ['context' => 'Patron menu']),
