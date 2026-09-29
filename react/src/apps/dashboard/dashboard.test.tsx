@@ -21,6 +21,18 @@ const recommendedWorks = [
   }
 ];
 
+/**
+ * The blocked-patron HOC around the dashboard fetches the patron record.
+ * Unmocked it answers 403, which throws to the ErrorBoundary and unmounts the
+ * whole story once the query retries run out.
+ */
+const interceptPatronNotBlocked = () => {
+  cy.intercept("GET", "**/external/agencyid/patrons/patronid/v4**", {
+    statusCode: 200,
+    body: { patron: { blockStatus: null } }
+  });
+};
+
 const interceptRecommendations = () => {
   cy.interceptGraphql({
     operationName: "getDashboardRecommendations",
@@ -1375,6 +1387,13 @@ describe("Dashboard", () => {
       }
     ).as("renew");
 
+    interceptPatronNotBlocked();
+
+    // Publizon: digital loans and reservations, both empty. Unmocked they
+    // answer 403 and the lists only settle after the retries, at the same
+    // moment the patron request fails.
+    interceptPublizonCalls();
+
     // The recommendations section bases itself on a random loan, reservation
     // or favorite. The loans above carry fausts, so the recommend query is
     // asked by faust and the ISBN lookup never fires. The favorites list is
@@ -1561,6 +1580,8 @@ describe("dashboard recommendations", () => {
       statusCode: 200,
       body: []
     });
+
+    interceptPatronNotBlocked();
 
     // FBS: physical loans.
     cy.intercept("GET", "**/external/agencyid/patrons/patronid/loans/v2**", {

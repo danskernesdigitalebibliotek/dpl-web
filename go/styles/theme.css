@@ -20,14 +20,31 @@
   --radius-xs: 4px;
   --radius-none: 0;
 
+  /*
+   * Z-INDEX — the stacking hierarchy in one place; anything positioned must
+   * use a token from this scale, never a raw z-value:
+   *
+   *   10  content accents   badge, floating icon, slide select
+   *   20  navigation        the header
+   *   30  player            the global audiobook player bar — above the
+   *                         navigation, below every overlay
+   *   50  dialog/drawer/    modals and sheets cover everything, including
+   *       sheet             a playing player bar
+   *
+   * The WeDoBooks reader needs no token: it renders in normal flow on the
+   * chrome-less reader route.
+   */
   --z-index-*: initial;
   --z-index--1: -1;
 
+  --z-index-badge: 10;
+  --z-index-slide-select: 10;
+  --z-index-floating-icon: 10;
+  --z-index-navigation: 20;
+  --z-index-player: 30;
   --z-index-dialog: 50;
   --z-index-drawer: 50;
   --z-index-sheet: 50;
-  --z-index-slide-select: 10;
-  --z-index-floating-icon: 10;
 
   --aspect-*: initial;
   --aspect-1\/1: var(--aspect-1-1);

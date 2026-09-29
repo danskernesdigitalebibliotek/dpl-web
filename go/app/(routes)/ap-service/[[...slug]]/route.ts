@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 
+import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { TServiceType, getApServiceSettings, getApServiceUrl } from "@/lib/helpers/ap-service"
 import { getSession } from "@/lib/session/session"
 
@@ -58,7 +59,12 @@ async function proxyRequest(
 
   const { slug } = await params
   const serviceType = slug[0] as TServiceType
-  const baseUrl = await getApServiceUrl(serviceType)
+  // The Biblio adapter base url lives in the CMS configuration — per
+  // environment, not static like the other services.
+  const baseUrl =
+    serviceType === "biblio"
+      ? (await getDplCmsPublicConfig()).biblio.baseUrl
+      : await getApServiceUrl(serviceType)
 
   if (!baseUrl) {
     return new Response("Not found", { status: 404 })

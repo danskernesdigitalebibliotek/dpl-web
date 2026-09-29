@@ -10,7 +10,9 @@ import ComplexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTea
 import { identifierFactory } from "../factories/fbi/factory-parts/identifier"
 import { worksWithIdentifiersFactory } from "../factories/fbi/factory-parts/works"
 
-export const mockConfig = () => {
+export const mockConfig = (options?: {
+  biblio?: Parameters<typeof GetDplCmsPublicConfiguration.transient>[0]["biblio"]
+}) => {
   cy.mockServerGraphQLQuery({
     operationName: "getAdgangsplatformenLibraryToken",
     data: GetAdgangsplatformenLibraryToken.build(),
@@ -20,6 +22,7 @@ export const mockConfig = () => {
     operationName: "getDplCmsPublicConfiguration",
     data: GetDplCmsPublicConfiguration.transient({
       appUrl: Cypress.env("DPL_GO_BASE_URL"),
+      ...(options?.biblio ? { biblio: options.biblio } : {}),
     }).build(),
   })
 

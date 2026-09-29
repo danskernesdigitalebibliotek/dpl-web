@@ -13,6 +13,13 @@ const services = {
       url: getEnv("FBS_BASE_URL") ?? "https://fbs-openplatform.dbc.dk",
       useLibraryTokenAlways: false,
     },
+    // The Biblio adapter base url is per-environment Drupal config, not a
+    // static url — the ap-service proxy route resolves it from the CMS
+    // configuration instead of from this entry.
+    biblio: {
+      url: null,
+      useLibraryTokenAlways: false,
+    },
   },
 }
 

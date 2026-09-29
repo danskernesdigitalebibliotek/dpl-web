@@ -1,3 +1,5 @@
+import Footer from "@/components/global/footer/Footer"
+import Header from "@/components/global/header/Header"
 import CategorySlider from "@/components/shared/categorySlider/CategorySlider"
 import "@/styles/globals.css"
 
@@ -7,17 +9,21 @@ export default function Layout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="min-h-screen-minus-navigation-height flex flex-col">
-      <div className="overflow-hidden">
-        <div className="content-container w-full">
-          <div
-            className="lg:w-[calc(100%+48px) w-[calc(100%+24px) relative -mx-[24px]
-              !overflow-visible px-[12px] lg:-mx-[48px] lg:px-[24px]">
-            <CategorySlider />
+    <>
+      <Header />
+      <div className="min-h-screen-minus-navigation-height flex flex-col">
+        <div className="overflow-hidden">
+          <div className="content-container w-full">
+            <div
+              className="lg:w-[calc(100%+48px) w-[calc(100%+24px) relative -mx-[24px]
+                !overflow-visible px-[12px] lg:-mx-[48px] lg:px-[24px]">
+              <CategorySlider />
+            </div>
           </div>
         </div>
+        <div className="py-space-y">{children}</div>
       </div>
-      <div className="py-space-y">{children}</div>
-    </div>
+      <Footer />
+    </>
   )
 }
