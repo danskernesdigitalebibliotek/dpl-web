@@ -4,6 +4,7 @@ import {
 } from "../../core/dbc-gateway/generated/graphql";
 import { createIsbnCql } from "../../components/cover/helper";
 import { WorkId } from "../../core/utils/types/ids";
+import { recommendationQueryOptions } from "./recommendationQueryOptions";
 import { RecommendationSeed } from "./recommendationSeed";
 import { RecommendationSource } from "./recommendations.types";
 
@@ -30,18 +31,16 @@ const useRecommendationSource = (
         ? { id: seed.workId }
         : null;
 
-  // Both queries have throwOnError off: the section is decorative, so a
-  // failed lookup hides it instead of taking the whole dashboard down.
   const { data: workLookup, isLoading: isLoadingWork } =
     useGetDashboardRecommendationSourceQuery(workArguments ?? {}, {
-      enabled: workArguments !== null,
-      throwOnError: false
+      ...recommendationQueryOptions,
+      enabled: workArguments !== null
     });
 
   const { data: isbnLookup, isLoading: isLoadingIsbn } =
     useGetDashboardRecommendationSourceByIsbnQuery(
       { cql: createIsbnCql(isbn ? [isbn] : []) },
-      { enabled: isbn !== null, throwOnError: false }
+      { ...recommendationQueryOptions, enabled: isbn !== null }
     );
 
   const resolvedWork = workLookup?.work ?? isbnLookup?.complexSearch.works[0];

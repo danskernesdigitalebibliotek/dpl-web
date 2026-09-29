@@ -1,5 +1,6 @@
 import { useGetDashboardRecommendationsQuery } from "../../core/dbc-gateway/generated/graphql";
 import { WorkId } from "../../core/utils/types/ids";
+import { recommendationQueryOptions } from "./recommendationQueryOptions";
 import { RecommendationSeed } from "./recommendationSeed";
 import { RecommendationResult, RecommendedWork } from "./recommendations.types";
 import useRecommendationSource from "./useRecommendationSource";
@@ -26,12 +27,7 @@ const useRecommendations = (
   const { data, isLoading: isLoadingRecommendations } =
     useGetDashboardRecommendationsQuery(
       { id: source?.workId ?? "", limit: FETCH_LIMIT },
-      {
-        enabled: source !== null,
-        // The section is decorative: a failed request hides it instead of
-        // throwing to the ErrorBoundary and taking the whole dashboard down.
-        throwOnError: false
-      }
+      { ...recommendationQueryOptions, enabled: source !== null }
     );
 
   const recommendations: RecommendedWork[] | null =
