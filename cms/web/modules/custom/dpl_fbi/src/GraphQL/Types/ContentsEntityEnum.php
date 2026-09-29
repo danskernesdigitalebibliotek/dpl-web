@@ -8,8 +8,8 @@ class ContentsEntityEnum
     public const CHAPTERS = 'CHAPTERS';
     public const FICTION = 'FICTION';
     public const MUSIC_TRACKS = 'MUSIC_TRACKS';
-    public const SHEET_MUSIC = 'SHEET_MUSIC';
     public const NOT_SPECIFIED = 'NOT_SPECIFIED';
+    public const SHEET_MUSIC = 'SHEET_MUSIC';
 
     public static function endpoint(): string
     {

@@ -4,9 +4,9 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
 
 class MoodSuggestEnum
 {
-    public const TITLE = 'TITLE';
     public const CREATOR = 'CREATOR';
     public const TAG = 'TAG';
+    public const TITLE = 'TITLE';
 
     public static function endpoint(): string
     {

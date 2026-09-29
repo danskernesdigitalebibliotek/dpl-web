@@ -32,6 +32,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
+  Date: { input: unknown; output: unknown };
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: { input: unknown; output: unknown };
   /** An integer in the range from 1 to 100 */
@@ -67,6 +69,8 @@ export type AccessUrl = {
   note?: Maybe<Scalars["String"]["output"]>;
   /** The origin, e.g. "DBC Webarkiv" */
   origin: Scalars["String"]["output"];
+  /** Proxy/login url for the resource when relevant. */
+  proxyUrl?: Maybe<Scalars["String"]["output"]>;
   /** Status from linkcheck */
   status: LinkStatusEnum;
   /** The type of content that can be found at this URL */
@@ -85,6 +89,20 @@ export enum AccessUrlTypeEnum {
   TableOfContents = "TABLE_OF_CONTENTS",
   Thumbnail = "THUMBNAIL"
 }
+
+export type AddBookmarksResponse = {
+  __typename?: "AddBookmarksResponse";
+  /** A list of materials for which bookmark addition failed. */
+  items: Array<BookmarksStatusItem>;
+  /** The overall status of the bookmark addition operation. */
+  status: BookmarksOverallStatusEnum;
+};
+
+export type AddHistoricalLoansResponse = {
+  __typename?: "AddHistoricalLoansResponse";
+  items: Array<PatronHistoricalLoanStatusItem>;
+  status: PatronLoansOverallStatusEnum;
+};
 
 export type Audience = {
   __typename?: "Audience";
@@ -131,6 +149,118 @@ export type BibliographicCategory = {
   code?: Maybe<Scalars["String"]["output"]>;
   /** The code as displayable text */
   display?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type BookmarkItem = {
+  __typename?: "BookmarkItem";
+  /** The application the bookmark belongs to */
+  application: Scalars["String"]["output"];
+  /** creation date of the bookmark */
+  createdAt: Scalars["DateTime"]["output"];
+  /** The unique identifier for the bookmark */
+  id: Scalars["String"]["output"];
+  /** The bibliographic record associated with the bookmark, if it can still be resolved. */
+  material: BookmarkMaterial;
+  /** The unique identifier for the material this bookmark points to. */
+  materialId: Scalars["String"]["output"];
+  /** The selection applied to the bookmarked work. */
+  selection?: Maybe<BookmarkSelection>;
+  /** Stored metadata captured when the bookmark was created. */
+  snapshot: BookmarkSnapshot;
+};
+
+export type BookmarkMaterial = {
+  __typename?: "BookmarkMaterial";
+  manifestation?: Maybe<Manifestation>;
+  /**
+   * Manifestations matching the bookmark selection. This is not necessarily
+   * every manifestation in the work.
+   */
+  manifestations?: Maybe<Array<Manifestation>>;
+  work?: Maybe<Work>;
+};
+
+export type BookmarkMaterialTypesSelection = {
+  __typename?: "BookmarkMaterialTypesSelection";
+  general?: Maybe<Array<GeneralMaterialTypeCodeEnum>>;
+  specific?: Maybe<Array<Scalars["String"]["output"]>>;
+};
+
+export type BookmarkMaterialTypesSelectionInput = {
+  general?: InputMaybe<Array<GeneralMaterialTypeCodeEnum>>;
+  specific?: InputMaybe<Array<Scalars["String"]["input"]>>;
+};
+
+export type BookmarkSelection = {
+  __typename?: "BookmarkSelection";
+  materialTypes: BookmarkMaterialTypesSelection;
+};
+
+export type BookmarkSelectionInput = {
+  materialTypes: BookmarkMaterialTypesSelectionInput;
+};
+
+export type BookmarkSnapshot = {
+  __typename?: "BookmarkSnapshot";
+  creator?: Maybe<Scalars["String"]["output"]>;
+  /**
+   * Stored material types for a manifestation or a work selection. This is
+   * null for a bookmark of an entire work.
+   */
+  materialTypes?: Maybe<Array<PatronMaterialTypeSnapshot>>;
+  periodical?: Maybe<PeriodicalSnapshot>;
+  pid?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  version?: Maybe<Scalars["Int"]["output"]>;
+  workId?: Maybe<Scalars["String"]["output"]>;
+  workType?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type Bookmarks = {
+  __typename?: "Bookmarks";
+  /** The total number of bookmarks for the patron */
+  hitcount: Scalars["Int"]["output"];
+  /** The list of bookmarks for the patron */
+  items: Array<BookmarkItem>;
+  /** The overall status of the bookmarks */
+  status: BookmarksOverallStatusEnum;
+};
+
+export type BookmarksInput = {
+  materialId: Scalars["String"]["input"];
+  selection?: InputMaybe<BookmarkSelectionInput>;
+};
+
+export enum BookmarksOverallStatusEnum {
+  ErrorMissingClientConfiguration = "ERROR_MISSING_CLIENT_CONFIGURATION",
+  ErrorUnauthenticatedToken = "ERROR_UNAUTHENTICATED_TOKEN",
+  Failed = "FAILED",
+  Ok = "OK",
+  PartiallyFailed = "PARTIALLY_FAILED"
+}
+
+export enum BookmarksStatusEnum {
+  AlreadyExists = "ALREADY_EXISTS",
+  Failed = "FAILED",
+  InvalidId = "INVALID_ID",
+  InvalidMaterialId = "INVALID_MATERIAL_ID",
+  NotFound = "NOT_FOUND",
+  Ok = "OK",
+  UnknownError = "UNKNOWN_ERROR"
+}
+
+export type BookmarksStatusItem = {
+  __typename?: "BookmarksStatusItem";
+  /** The unique identifier for the bookmark that was attempted to be added or deleted. */
+  id?: Maybe<Scalars["String"]["output"]>;
+  /** The material for which bookmark addition failed. */
+  material?: Maybe<BookmarkMaterial>;
+  /** The unique identifier for the material for which bookmark addition failed (e.g., a PID or work ID). */
+  materialId?: Maybe<Scalars["String"]["output"]>;
+  /** The normalized selection for the bookmark operation. */
+  selection?: Maybe<BookmarkSelection>;
+  /** Status of the bookmark addition or deletion attempt for a specific material. */
+  status: BookmarksStatusEnum;
 };
 
 export enum CsHoldingsStatusEnum {
@@ -197,6 +327,12 @@ export type Classification = {
   entryType?: Maybe<EntryTypeEnum>;
   /** Name of the classification system */
   system: Scalars["String"]["output"];
+};
+
+/** CQL based filters. Mutually exclusive with ComplexSearchFiltersInput. */
+export type ComplexSearchCqlFiltersInput = {
+  /** A CQL expression used to filter the search result. */
+  cqlfilterquery?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 /** The complete facet in response */
@@ -281,12 +417,20 @@ export type ComplexSearchFiltersInput = {
   department?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Date of first accession */
   firstAccessionDate?: InputMaybe<Scalars["String"]["input"]>;
+  /** The floatgroup of the item */
+  floatGroup?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Id of publishing issue. */
   issueId?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Local id of the item. */
   itemId?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  /** The last loan date of the item */
+  lastloandate?: InputMaybe<Scalars["String"]["input"]>;
+  /** The loan restriction of the item, g, a or nothing */
+  loanrestriction?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Where is the book physically located  (eg. skønlitteratur). */
   location?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  /** The section which the item belongs to */
+  section?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Onloan or OnShelf. */
   status?: InputMaybe<Array<CsHoldingsStatusEnum>>;
   /** More specific location (eg. Fantasy). */
@@ -485,6 +629,11 @@ export enum CopyRequestStatusEnum {
 export type Corporation = CreatorInterface &
   SubjectInterface & {
     __typename?: "Corporation";
+    /**
+     * True when the corporation is followed by 'm.fl.' (and others) in the publication,
+     * meaning that additional unnamed corporations contributed to this creation
+     */
+    andOthers?: Maybe<Scalars["Boolean"]["output"]>;
     /** Added information about the corporation, like M. Folmer Andersen (firma) */
     attributeToName?: Maybe<Scalars["String"]["output"]>;
     /** The full corporation or conference name */
@@ -534,6 +683,11 @@ export type CoverDetails = {
 };
 
 export type CreatorInterface = {
+  /**
+   * True when the creator is followed by 'm.fl.' (and others) in the publication,
+   * meaning that additional unnamed creators contributed to this creation
+   */
+  andOthers?: Maybe<Scalars["Boolean"]["output"]>;
   /** Name of the creator */
   display: Scalars["String"]["output"];
   /** Name of the creator which can be used to sort after */
@@ -542,6 +696,24 @@ export type CreatorInterface = {
   roles: Array<Role>;
   /** VIAF identifier of the creator */
   viafid?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type CurrentLoan = {
+  __typename?: "CurrentLoan";
+  /** Account information for the patron who owns the loan. */
+  account?: Maybe<PatronAccount>;
+  /** Branch information for the agency where the loan belongs. */
+  agency?: Maybe<PatronAgency>;
+  /** Due date reported by OpenUserStatus. */
+  dueDate: Scalars["DateTime"]["output"];
+  /** Identifier assigned to the loan by the library system. */
+  id: Scalars["String"]["output"];
+  /** The manifestation associated with the loan, when it can be resolved. */
+  manifestation?: Maybe<Manifestation>;
+  /** Fallback metadata reported by OpenUserStatus. */
+  snapshot?: Maybe<PatronMaterialSnapshot>;
+  /** Status computed from the due date in the Europe/Copenhagen timezone. */
+  status: PatronLoanStatusEnum;
 };
 
 export type Dk5MainEntry = {
@@ -558,6 +730,20 @@ export type Debug = {
   __typename?: "Debug";
   complexity: Complexity;
   depth: Depth;
+};
+
+export type DeleteBookmarksResponse = {
+  __typename?: "DeleteBookmarksResponse";
+  /** Number of failed bookmark deletions (e.g., due to non-existent bookmark IDs). */
+  items: Array<BookmarksStatusItem>;
+  /** The overall status of the bookmark deletion operation. */
+  status: BookmarksOverallStatusEnum;
+};
+
+export type DeleteHistoricalLoansResponse = {
+  __typename?: "DeleteHistoricalLoansResponse";
+  items: Array<PatronHistoricalLoanStatusItem>;
+  status: PatronLoansOverallStatusEnum;
 };
 
 export type Depth = {
@@ -588,7 +774,10 @@ export type DigitalArticleService = {
 
 export type Edition = {
   __typename?: "Edition";
-  /** Quotation of contributor statements related to the edition */
+  /**
+   * Quotation of contributor statements related to the edition
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   contributors: Array<Scalars["String"]["output"]>;
   /** The edition number and name */
   edition?: Maybe<Scalars["String"]["output"]>;
@@ -732,6 +921,27 @@ export type GenreForm = {
   display?: Maybe<Scalars["String"]["output"]>;
   /** Language of the genre/form term, if applicable */
   language?: Maybe<Language>;
+};
+
+export type HistoricalLoan = {
+  __typename?: "HistoricalLoan";
+  /**
+   * The patron's current account for the loan agency, when that account still exists.
+   * This is not a snapshot of the account at the time of the historical loan.
+   */
+  account?: Maybe<PatronAccount>;
+  /** Branch information for the agency where the loan belonged. */
+  agency?: Maybe<PatronAgency>;
+  /** Stable public UserData identifier used when deleting the historical loan. */
+  id: Scalars["String"]["output"];
+  /** Date on which the material was borrowed, when known. */
+  loanedAt?: Maybe<Scalars["Date"]["output"]>;
+  /** The manifestation associated with the historical loan, when it can still be resolved. */
+  manifestation?: Maybe<Manifestation>;
+  /** Date on which the material was returned, when known. */
+  returnedAt?: Maybe<Scalars["Date"]["output"]>;
+  /** Stored fallback metadata captured when the historical loan was ingested. */
+  snapshot?: Maybe<PatronMaterialSnapshot>;
 };
 
 export enum HoldingsStatusEnum {
@@ -950,7 +1160,10 @@ export type Manifestation = {
   bibliographicCategory?: Maybe<BibliographicCategory>;
   /** CatalogueCodes divided in codes from the national bibliography and other codes */
   catalogueCodes: CatalogueCodes;
-  /** The publication status of a catalogued manifestation. */
+  /**
+   * The publication status of a catalogued manifestation.
+   * @deprecated Use 'Manifestation.materialSelection.cataloguedPublicationStatus' instead expires: 05/12-2026
+   */
   cataloguedPublicationStatus?: Maybe<CataloguedPublicationStatus>;
   /** Classification codes for this manifestation from any classification system */
   classifications: Array<Classification>;
@@ -988,6 +1201,11 @@ export type Manifestation = {
   latestPrinting?: Maybe<Printing>;
   /** Identification of the local id of this manifestation */
   localId?: Maybe<Scalars["String"]["output"]>;
+  /**
+   * Metadata related to material selection, including publication status,
+   * selection group, and librarian assessment.
+   */
+  materialSelection?: Maybe<MaterialSelection>;
   /** The type of material of the manifestation based on bibliotek.dk types */
   materialTypes: Array<MaterialType>;
   /** Information on music shelving */
@@ -1008,12 +1226,21 @@ export type Manifestation = {
   publisher: Array<Scalars["String"]["output"]>;
   /** The creation date of the record describing this manifestation in the format YYYYMMDD */
   recordCreationDate: Scalars["String"]["output"];
-  /** Notes about relations to this book/periodical/journal, - like previous names or related journals */
+  /**
+   * Notes about relations to this book/periodical/journal, - like previous names or related journals
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   relatedPublications: Array<RelatedPublication>;
   /** Relations to other manifestations */
   relations: Relations;
   /** Some review data, if this manifestation is a review */
   review?: Maybe<ManifestationReview>;
+  /**
+   * Bibliographic reference data for this manifestation formatted as RIS.
+   * When fetching RIS for multiple manifestations, each record is returned on the
+   * manifestation. To combine them into a single RIS file, join the records with a newline.
+   */
+  ris?: Maybe<Scalars["String"]["output"]>;
   /** Series for this manifestation */
   series: Array<Series>;
   /** Material that can be identified as sheet music */
@@ -1072,11 +1299,17 @@ export type ManifestationTitles = {
   parallel: Array<Scalars["String"]["output"]>;
   /** The sorted title of the entity */
   sort: Scalars["String"]["output"];
-  /** The standard title of the entity, used for music and movies */
+  /**
+   * The standard title of the entity, used for music and movies
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   standard?: Maybe<Scalars["String"]["output"]>;
   /** The title of the entity with the language of the entity in parenthesis after. This field is only generated for non-danish titles. */
   titlePlusLanguage?: Maybe<Scalars["String"]["output"]>;
-  /** Danish translation of the main title */
+  /**
+   * Danish translation of the main title
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   translated?: Maybe<Array<Scalars["String"]["output"]>>;
   /** detailed title for tv series */
   tvSeries?: Maybe<TvSeries>;
@@ -1100,6 +1333,95 @@ export type Manifestations = {
    * Only one manifestation per unit is returned.
    */
   searchHits?: Maybe<Array<SearchHit>>;
+};
+
+/**
+ * Metadata related to material selection, including publication status,
+ * selection group, and librarian assessment.
+ */
+export type MaterialSelection = {
+  __typename?: "MaterialSelection";
+  /** Publication status of the manifestation (e.g. new title, new edition, new print run). */
+  cataloguedPublicationStatus: Array<MaterialSelectionCataloguedPublicationStatus>;
+  /**
+   * The type of library assessment associated with the manifestation:
+   * literature, movie, or multimedia.
+   */
+  librarianAssessment: Array<MaterialSelectionLibrarianAssessment>;
+  /** Recommended selection group for the manifestation: adult, children, or school libraries. */
+  selectionGroup: Array<MaterialSelectionSelectionGroup>;
+};
+
+/** Publication status entry within material selection. */
+export type MaterialSelectionCataloguedPublicationStatus = {
+  __typename?: "MaterialSelectionCataloguedPublicationStatus";
+  /** Danish display label for the publication status, e.g. "Ny titel". */
+  display?: Maybe<Scalars["String"]["output"]>;
+  /**
+   * Values that can be used for Complex Search filtering, e.g. ["nt", "ny titel"].
+   * Use these values with term.cataloguedPublicationStatus in Complex Search.
+   */
+  searchValues: Array<Scalars["String"]["output"]>;
+  /** The publication status enum value. */
+  type: MaterialSelectionPublicationStatusEnum;
+};
+
+export enum MaterialSelectionGroupEnum {
+  /** Adult. Display label example: "Voksenafdelinger". */
+  Adult = "ADULT",
+  /** Children. Display label example: "Børnebiblioteker". */
+  Children = "CHILDREN",
+  /** School. Display label example: "Skolebiblioteker". */
+  School = "SCHOOL"
+}
+
+/** Librarian assessment entry within material selection. */
+export type MaterialSelectionLibrarianAssessment = {
+  __typename?: "MaterialSelectionLibrarianAssessment";
+  /** Danish display label for the assessment, e.g. "Har lektørudtalelse (materialevurdering)". */
+  display?: Maybe<Scalars["String"]["output"]>;
+  /**
+   * Values that can be used for Complex Search filtering, e.g. ["l", "lektørudtalelse"].
+   * Use these values with term.librarianAssessment in Complex Search.
+   */
+  searchValues: Array<Scalars["String"]["output"]>;
+  /** The librarian assessment enum value. */
+  type: MaterialSelectionLibrarianAssessmentEnum;
+};
+
+export enum MaterialSelectionLibrarianAssessmentEnum {
+  /**
+   * Literature assessment.
+   * Display label example: "Har lektørudtalelse (materialevurdering)".
+   */
+  Literature = "LITERATURE",
+  /** Has a film review. Display label example: "Har filmvurdering". */
+  Movie = "MOVIE",
+  /** Has a multimedia review. Display label example: "Har multimedievurdering". */
+  Multimedia = "MULTIMEDIA"
+}
+
+export enum MaterialSelectionPublicationStatusEnum {
+  /** New edition. Display label example: "Ny udgave". */
+  NewEdition = "NEW_EDITION",
+  /** New print run. Display label example: "Nyt oplag". */
+  NewPrint = "NEW_PRINT",
+  /** New title. Display label example: "Ny titel". */
+  NewTitle = "NEW_TITLE"
+}
+
+/** Selection group entry within material selection. */
+export type MaterialSelectionSelectionGroup = {
+  __typename?: "MaterialSelectionSelectionGroup";
+  /** Danish display label for the selection group, e.g. "Voksenafdelinger". */
+  display?: Maybe<Scalars["String"]["output"]>;
+  /**
+   * Values that can be used for Complex Search filtering, e.g. ["v", "voksen"].
+   * Use these values with term.selectionGroup in Complex Search.
+   */
+  searchValues: Array<Scalars["String"]["output"]>;
+  /** The selection group enum value. */
+  type: MaterialSelectionGroupEnum;
 };
 
 export type MaterialType = {
@@ -1285,6 +1607,11 @@ export type MusicShelf = {
 export type Mutation = {
   __typename?: "Mutation";
   elba: ElbaServices;
+  /**
+   * Updates patron information, such as adding or removing bookmarks.
+   * @deprecated @draft
+   */
+  patron?: Maybe<PatronMutation>;
   submitOrder?: Maybe<SubmitOrder>;
 };
 
@@ -1305,7 +1632,10 @@ export type Note = {
   __typename?: "Note";
   /** The actual notes */
   display: Array<Scalars["String"]["output"]>;
-  /** Heading before note */
+  /**
+   * Heading before note
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   heading?: Maybe<Scalars["String"]["output"]>;
   /** The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known. */
   type: NoteTypeEnum;
@@ -1334,6 +1664,21 @@ export enum NoteTypeEnum {
   WithdrawnPublication = "WITHDRAWN_PUBLICATION"
 }
 
+/** Enum for sorting bookmarks */
+export enum OrderBookmarksByEnum {
+  CreatedatAsc = "CREATEDAT_ASC",
+  CreatedatDesc = "CREATEDAT_DESC",
+  TitleAsc = "TITLE_ASC",
+  TitleDesc = "TITLE_DESC"
+}
+
+export enum OrderLoansByEnum {
+  DuedateAsc = "DUEDATE_ASC",
+  DuedateDesc = "DUEDATE_DESC",
+  TitleAsc = "TITLE_ASC",
+  TitleDesc = "TITLE_DESC"
+}
+
 export enum OrderTypeEnum {
   Estimate = "ESTIMATE",
   Hold = "HOLD",
@@ -1351,6 +1696,337 @@ export type Pegi = {
   minimumAge?: Maybe<Scalars["Int"]["output"]>;
 };
 
+/** Information about the patron associated with the current access token. */
+export type Patron = {
+  __typename?: "Patron";
+  /** Retrieves the list of accounts for the patron, including pagination and sorting options. */
+  accounts: Array<Maybe<PatronAccount>>;
+  /** Address of the current patron. */
+  address?: Maybe<Scalars["String"]["output"]>;
+  /** Indicates whether the current patron is blocked. */
+  blocked: Scalars["Boolean"]["output"];
+  /** Retrieves the list of bookmarks for the patron, including pagination and sorting options. */
+  bookmarks: Bookmarks;
+  /** Country of the current patron. */
+  country?: Maybe<Scalars["String"]["output"]>;
+  /** Retrieves current loans live from OpenUserStatus. */
+  currentLoans: PatronCurrentLoans;
+  /** Email address of the current patron. */
+  email?: Maybe<Scalars["String"]["output"]>;
+  /** Retrieves consent for storing historical loans and whether the patron is old enough to change it. */
+  historicalLoanConsent: PatronHistoricalLoanConsent;
+  /** Retrieves historical loans stored in UserData. */
+  historicalLoans: PatronHistoricalLoans;
+  /** Agency ID where the current patron is logged in. */
+  loggedInAgencyId?: Maybe<Scalars["String"]["output"]>;
+  /** Branch ID where the current patron is logged in. */
+  loggedInBranchId?: Maybe<Scalars["String"]["output"]>;
+  /** Municipality agency ID of the current patron. */
+  municipalityAgencyId?: Maybe<Scalars["String"]["output"]>;
+  /** Municipality number of the current patron. */
+  municipalityNumber?: Maybe<Scalars["String"]["output"]>;
+  /** Name of the current patron. */
+  name?: Maybe<Scalars["String"]["output"]>;
+  /** Postal code of the current patron. */
+  postalCode?: Maybe<Scalars["String"]["output"]>;
+};
+
+/** Information about the patron associated with the current access token. */
+export type PatronBookmarksArgs = {
+  applications?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  limit?: InputMaybe<Scalars["PaginationLimitScalar"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  orderBy?: InputMaybe<OrderBookmarksByEnum>;
+};
+
+/** Information about the patron associated with the current access token. */
+export type PatronCurrentLoansArgs = {
+  limit?: InputMaybe<Scalars["PaginationLimitScalar"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  orderBy?: InputMaybe<OrderLoansByEnum>;
+  status?: InputMaybe<PatronLoanStatusEnum>;
+};
+
+/** Information about the patron associated with the current access token. */
+export type PatronHistoricalLoansArgs = {
+  limit?: InputMaybe<Scalars["PaginationLimitScalar"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+};
+
+export type PatronAccount = {
+  __typename?: "PatronAccount";
+  /** The address of the patron. */
+  address?: Maybe<Scalars["String"]["output"]>;
+  /** The library agency associated with the patron account. */
+  agency?: Maybe<PatronAgency>;
+  /** Indicates whether the patron is blocked or not. */
+  blocked: Scalars["Boolean"]["output"];
+  /** The country of the patron. */
+  country?: Maybe<Scalars["String"]["output"]>;
+  /** The email address of the patron. */
+  email?: Maybe<Scalars["String"]["output"]>;
+  /** The agency ID of the patron. */
+  municipalityAgencyId?: Maybe<Scalars["String"]["output"]>;
+  /** The municipality number of the patron. */
+  municipalityNumber?: Maybe<Scalars["String"]["output"]>;
+  /** Name of the patron. */
+  name?: Maybe<Scalars["String"]["output"]>;
+  /** The postal code of the patron. */
+  postalCode?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type PatronAgency = {
+  __typename?: "PatronAgency";
+  /** The postal address of the agency's main branch. */
+  address?: Maybe<Scalars["String"]["output"]>;
+  /** The branches belonging to the agency. */
+  branches: Array<PatronBranch>;
+  /** The catalogue URL of the agency's main branch. */
+  catalogueUrl?: Maybe<Scalars["String"]["output"]>;
+  /** The city in which the agency's main branch is located. */
+  city?: Maybe<Scalars["String"]["output"]>;
+  /** The email address of the agency's main branch. */
+  email?: Maybe<Scalars["String"]["output"]>;
+  /** The unique identifier of the agency. */
+  id: Scalars["String"]["output"];
+  /** The lookup URL of the agency's main branch. */
+  lookupUrl?: Maybe<Scalars["String"]["output"]>;
+  /** The primary name of the agency. */
+  name?: Maybe<Scalars["String"]["output"]>;
+  /** Alternative names associated with the agency. */
+  names?: Maybe<Array<Scalars["String"]["output"]>>;
+  /** The total number of branches belonging to the agency. */
+  numberOfBranches: Scalars["Int"]["output"];
+  /** The opening hours of the agency's main branch. */
+  openingHours?: Maybe<Scalars["String"]["output"]>;
+  /** The phone number of the agency's main branch. */
+  phone?: Maybe<Scalars["String"]["output"]>;
+  /** Indicates whether pickup is allowed at the agency's main branch. */
+  pickupAllowed: Scalars["Boolean"]["output"];
+  /** The postal code of the agency's main branch. */
+  postalCode?: Maybe<Scalars["String"]["output"]>;
+  /** The current status of the agency. */
+  status?: Maybe<Scalars["String"]["output"]>;
+  /** Indicates whether the agency's main branch is temporarily closed. */
+  temporarilyClosed: Scalars["Boolean"]["output"];
+  /** The type of library agency. */
+  type?: Maybe<Scalars["String"]["output"]>;
+  /** The website URL of the agency's main branch. */
+  websiteUrl?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type PatronBranch = {
+  __typename?: "PatronBranch";
+  /** The postal address of the branch. */
+  address?: Maybe<Scalars["String"]["output"]>;
+  /** The agency to which the branch belongs. */
+  agency?: Maybe<PatronAgency>;
+  /** The catalogue URL of the branch. */
+  catalogueUrl?: Maybe<Scalars["String"]["output"]>;
+  /** The city in which the branch is located. */
+  city?: Maybe<Scalars["String"]["output"]>;
+  /** The email address of the branch. */
+  email?: Maybe<Scalars["String"]["output"]>;
+  /** The unique identifier of the branch. */
+  id: Scalars["String"]["output"];
+  /** The lookup URL of the branch. */
+  lookupUrl?: Maybe<Scalars["String"]["output"]>;
+  /** The name of the branch. */
+  name?: Maybe<Scalars["String"]["output"]>;
+  /** The opening hours of the branch. */
+  openingHours?: Maybe<Scalars["String"]["output"]>;
+  /** The phone number of the branch. */
+  phone?: Maybe<Scalars["String"]["output"]>;
+  /** Indicates whether pickup is allowed at the branch. */
+  pickupAllowed: Scalars["Boolean"]["output"];
+  /** The postal code of the branch. */
+  postalCode?: Maybe<Scalars["String"]["output"]>;
+  /** The current status of the branch. */
+  status?: Maybe<Scalars["String"]["output"]>;
+  /** Indicates whether the branch is temporarily closed. */
+  temporarilyClosed: Scalars["Boolean"]["output"];
+  /** The type of library branch. */
+  type?: Maybe<Scalars["String"]["output"]>;
+  /** The website URL of the branch. */
+  websiteUrl?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type PatronCurrentLoans = {
+  __typename?: "PatronCurrentLoans";
+  /** The total number of current loans before filtering and pagination. */
+  hitcount: Scalars["Int"]["output"];
+  /** Current loans for the requested page. */
+  items: Array<CurrentLoan>;
+  /** The overall status of the current-loan lookup. */
+  status: PatronLoansOverallStatusEnum;
+};
+
+export type PatronHistoricalLoanConsent = {
+  __typename?: "PatronHistoricalLoanConsent";
+  /** Whether the patron's age can be verified as at least 15 years. */
+  canBeChanged: Scalars["Boolean"]["output"];
+  /** Whether the patron has given consent. Null when the status could not be retrieved. */
+  isGranted?: Maybe<Scalars["Boolean"]["output"]>;
+  /** The result of retrieving or changing consent, including age eligibility. */
+  status: PatronHistoricalLoanConsentStatusEnum;
+};
+
+export enum PatronHistoricalLoanConsentStatusEnum {
+  AgeNotVerifiable = "AGE_NOT_VERIFIABLE",
+  ErrorUnauthenticatedToken = "ERROR_UNAUTHENTICATED_TOKEN",
+  Failed = "FAILED",
+  Granted = "GRANTED",
+  NotGranted = "NOT_GRANTED",
+  UnderAge = "UNDER_AGE"
+}
+
+export type PatronHistoricalLoanInput = {
+  /** Agency ID for the library where the material was borrowed, when known. */
+  agencyId?: InputMaybe<Scalars["String"]["input"]>;
+  /**
+   * Borrowing date in YYYY-MM-DD format, when known.
+   * When both dates are supplied, this date cannot be after returnedAt.
+   */
+  loanedAt?: InputMaybe<Scalars["Date"]["input"]>;
+  /** PID or numeric faust number. The identifier type is detected by the gateway. */
+  materialId: Scalars["String"]["input"];
+  /**
+   * Return date in YYYY-MM-DD format, when known.
+   * When both dates are supplied, this date cannot be before loanedAt.
+   */
+  returnedAt?: InputMaybe<Scalars["Date"]["input"]>;
+};
+
+export type PatronHistoricalLoanStatusItem = {
+  __typename?: "PatronHistoricalLoanStatusItem";
+  id?: Maybe<Scalars["String"]["output"]>;
+  materialId?: Maybe<Scalars["String"]["output"]>;
+  status: PatronLoanMutationStatusEnum;
+};
+
+export type PatronHistoricalLoans = {
+  __typename?: "PatronHistoricalLoans";
+  /** The total number of historical loans before pagination. */
+  hitcount: Scalars["Int"]["output"];
+  /** Historical loans in UserData service order. */
+  items: Array<HistoricalLoan>;
+  /** The overall status of the historical-loan lookup. */
+  status: PatronLoansOverallStatusEnum;
+};
+
+export enum PatronLoanMutationStatusEnum {
+  AlreadyExists = "ALREADY_EXISTS",
+  Failed = "FAILED",
+  InvalidDateRange = "INVALID_DATE_RANGE",
+  InvalidId = "INVALID_ID",
+  InvalidMaterialId = "INVALID_MATERIAL_ID",
+  NotFound = "NOT_FOUND",
+  Ok = "OK",
+  UnknownError = "UNKNOWN_ERROR"
+}
+
+export enum PatronLoanStatusEnum {
+  Active = "ACTIVE",
+  Overdue = "OVERDUE"
+}
+
+export enum PatronLoansOverallStatusEnum {
+  ConsentRequired = "CONSENT_REQUIRED",
+  ErrorManualAddsDisabled = "ERROR_MANUAL_ADDS_DISABLED",
+  ErrorUnauthenticatedToken = "ERROR_UNAUTHENTICATED_TOKEN",
+  Failed = "FAILED",
+  Ok = "OK",
+  PartiallyFailed = "PARTIALLY_FAILED"
+}
+
+export type PatronMaterialSnapshot = {
+  __typename?: "PatronMaterialSnapshot";
+  /** Stored creator for the material. */
+  creator?: Maybe<Scalars["String"]["output"]>;
+  /** Stored material type for the material. */
+  materialType?: Maybe<Scalars["String"]["output"]>;
+  /** Stored general and specific material types. */
+  materialTypes: Array<PatronMaterialTypeSnapshot>;
+  /** Stored metadata about the periodical host publication, when relevant. */
+  periodical?: Maybe<PeriodicalSnapshot>;
+  /** Stored pid for the material, if known. */
+  pid?: Maybe<Scalars["String"]["output"]>;
+  /** Stored title for the material. */
+  title?: Maybe<Scalars["String"]["output"]>;
+  /** Version of the stored snapshot format. */
+  version?: Maybe<Scalars["Int"]["output"]>;
+  /** Stored work id for the material, if known. */
+  workId?: Maybe<Scalars["String"]["output"]>;
+  /** Stored work type for the material. */
+  workType?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type PatronMaterialTypeSnapshot = {
+  __typename?: "PatronMaterialTypeSnapshot";
+  materialTypeGeneral: PatronMaterialTypeValueSnapshot;
+  materialTypeSpecific: PatronMaterialTypeValueSnapshot;
+};
+
+export type PatronMaterialTypeValueSnapshot = {
+  __typename?: "PatronMaterialTypeValueSnapshot";
+  code?: Maybe<Scalars["String"]["output"]>;
+  display?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type PatronMutation = {
+  __typename?: "PatronMutation";
+  /** Adds one or more bookmarks for the patron. If a bookmark already exists, it will be ignored. */
+  addBookmarks: AddBookmarksResponse;
+  /**
+   * Adds one or more manual historical loans for integration testing.
+   * Snapshot data is resolved by the gateway and cannot be supplied by the client.
+   */
+  addHistoricalLoans: AddHistoricalLoansResponse;
+  /** Deletes one or more bookmarks for the patron. If a bookmark does not exist, it will be ignored. */
+  deleteBookmarks: DeleteBookmarksResponse;
+  /** Deletes one or more historical loans by their public UserData IDs. */
+  deleteHistoricalLoans: DeleteHistoricalLoansResponse;
+  /** Changes consent for storing historical loans. */
+  setHistoricalLoanConsent: SetHistoricalLoanConsentResponse;
+};
+
+export type PatronMutationAddBookmarksArgs = {
+  bookmarks: Array<BookmarksInput>;
+  dryRun?: InputMaybe<Scalars["Boolean"]["input"]>;
+};
+
+export type PatronMutationAddHistoricalLoansArgs = {
+  dryRun?: InputMaybe<Scalars["Boolean"]["input"]>;
+  loans: Array<PatronHistoricalLoanInput>;
+};
+
+export type PatronMutationDeleteBookmarksArgs = {
+  dryRun?: InputMaybe<Scalars["Boolean"]["input"]>;
+  ids: Array<Scalars["String"]["input"]>;
+};
+
+export type PatronMutationDeleteHistoricalLoansArgs = {
+  dryRun?: InputMaybe<Scalars["Boolean"]["input"]>;
+  ids: Array<Scalars["String"]["input"]>;
+};
+
+export type PatronMutationSetHistoricalLoanConsentArgs = {
+  consent: Scalars["Boolean"]["input"];
+  dryRun?: InputMaybe<Scalars["Boolean"]["input"]>;
+};
+
+export type PeriodicalSnapshot = {
+  __typename?: "PeriodicalSnapshot";
+  /** Stored edition statement for the host publication. */
+  edition?: Maybe<Scalars["String"]["output"]>;
+  /** Stored language of the periodical material. */
+  language?: Maybe<Scalars["String"]["output"]>;
+  /** Stored pages within the host publication. */
+  pages?: Maybe<Scalars["String"]["output"]>;
+  /** Stored publisher of the host publication. */
+  publisher?: Maybe<Scalars["String"]["output"]>;
+};
+
 export type PeriodicalType = {
   __typename?: "PeriodicalType";
   /** A code for the type of periodical */
@@ -1364,6 +2040,11 @@ export type Person = CreatorInterface &
     __typename?: "Person";
     /** Creator aliases, creators behind used pseudonym */
     aliases: Array<Person>;
+    /**
+     * True when the person is followed by 'm.fl.' (and others) in the publication,
+     * meaning that additional unnamed persons contributed to this creation
+     */
+    andOthers?: Maybe<Scalars["Boolean"]["output"]>;
     /** Added information about the person, like Henri, konge af Frankrig */
     attributeToName?: Maybe<Scalars["String"]["output"]>;
     /** Birth year of the person */
@@ -1457,12 +2138,18 @@ export type Query = {
   complexSearchIndexes?: Maybe<Array<ComplexSearchIndex>>;
   complexSuggest: ComplexSuggestResponse;
   debug?: Maybe<Debug>;
+  /** @deprecated Use 'retriever' instead expires: 18/12-2026 */
   infomedia: InfomediaResponse;
   linkCheck: LinkCheckService;
   localSuggest: LocalSuggestResponse;
   manifestation?: Maybe<Manifestation>;
   manifestations: Array<Maybe<Manifestation>>;
   mood: MoodQueries;
+  /**
+   * Retrieves information about the patron, such as bookmarks, reservations, and loans.
+   * @deprecated @draft
+   */
+  patron?: Maybe<Patron>;
   /** Get recommendations */
   recommend: RecommendationResponse;
   /** Access to various types of recommendations. */
@@ -1478,6 +2165,12 @@ export type Query = {
    * Check `error` on the response for access or lookup failures.
    */
   retriever: RetrieverResponse;
+  /**
+   * Returns bibliographic records formatted as RIS reference data for one or more manifestation pids.
+   * When multiple pids are provided, each RIS record is separated by a newline.
+   * Records are returned in the same order as the provided pids.
+   * If a pid is not found, it is omitted from the response.
+   */
   ris: Scalars["String"]["output"];
   search: SearchResponse;
   series?: Maybe<Series>;
@@ -1489,6 +2182,7 @@ export type Query = {
 
 export type QueryComplexSearchArgs = {
   cql: Scalars["String"]["input"];
+  cqlfilter?: InputMaybe<ComplexSearchCqlFiltersInput>;
   facets?: InputMaybe<ComplexSearchFacetsInput>;
   filters?: InputMaybe<ComplexSearchFiltersInput>;
 };
@@ -1952,6 +2646,22 @@ export type SeriesMembersArgs = {
   offset?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
+export type SetHistoricalLoanConsentResponse = {
+  __typename?: "SetHistoricalLoanConsentResponse";
+  /** The updated consent state. Null when the operation was not performed or failed. */
+  historicalLoanConsent?: Maybe<PatronHistoricalLoanConsent>;
+  /** Whether the consent update operation succeeded. */
+  status: SetHistoricalLoanConsentStatusEnum;
+};
+
+export enum SetHistoricalLoanConsentStatusEnum {
+  AgeNotVerifiable = "AGE_NOT_VERIFIABLE",
+  ErrorUnauthenticatedToken = "ERROR_UNAUTHENTICATED_TOKEN",
+  Failed = "FAILED",
+  Ok = "OK",
+  UnderAge = "UNDER_AGE"
+}
+
 export type Setting = SubjectInterface & {
   __typename?: "Setting";
   display: Scalars["String"]["output"];
@@ -2231,7 +2941,10 @@ export type Translation = {
 
 export type TvSeries = {
   __typename?: "TvSeries";
-  /** Dansih translated title of the tv serie */
+  /**
+   * Dansih translated title of the tv serie
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   danishLaunchTitle?: Maybe<Scalars["String"]["output"]>;
   /** Detailed information about the disc */
   disc?: Maybe<TvSeriesDetails>;
@@ -2384,11 +3097,17 @@ export type WorkTitles = {
   parallel: Array<Scalars["String"]["output"]>;
   /** The sorted title of the entity */
   sort: Scalars["String"]["output"];
-  /** The standard title of the entity, used for music and movies */
+  /**
+   * The standard title of the entity, used for music and movies
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   standard?: Maybe<Scalars["String"]["output"]>;
   /** The title of the entity with the language of the entity in parenthesis after. This field is only generated for non-danish titles. */
   titlePlusLanguage?: Maybe<Scalars["String"]["output"]>;
-  /** Danish translation of the main title */
+  /**
+   * Danish translation of the main title
+   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   */
   translated?: Maybe<Array<Scalars["String"]["output"]>>;
   /** detailed title for tv series */
   tvSeries?: Maybe<TvSeries>;

@@ -126,8 +126,8 @@ tasks:
           updated=0
           for envfile in .env; do
             [ -f "$envfile" ] || continue
-            if grep -qE '^[A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN=' "$envfile"; then
-              TOKEN="$token" perl -i -pe 's/^([A-Za-z_][A-Za-z0-9_]*LIBRARY_TOKEN)=.*$/$1=$ENV{TOKEN}/' "$envfile"
+            if grep -qE '^[A-Za-z0-9_]*LIBRARY_TOKEN=' "$envfile"; then
+              TOKEN="$token" perl -i -pe 's/^([A-Za-z0-9_]*LIBRARY_TOKEN)=.*$/$1=$ENV{TOKEN}/' "$envfile"
               echo "  updated $envfile"
               updated=$((updated + 1))
             fi
@@ -138,11 +138,46 @@ tasks:
           else
             echo "Done. Updated $updated file(s)."
           fi
+
+          # Report only what actually happened. A substitution that matches no
+          # line still leaves the loop above reporting success, and a
+          # LIBRARY_TOKEN that is empty afterwards is exactly what makes
+          # schemas/ introspect anonymously and vendor a reduced schema.
+          for envfile in .env; do
+            [ -f "$envfile" ] || continue
+            if ! grep -qE '^[A-Za-z0-9_]*LIBRARY_TOKEN=.+' "$envfile"; then
+              echo "Every *LIBRARY_TOKEN entry in $envfile is still empty." >&2
+              echo "The token was obtained but not written to the file." >&2
+              exit 1
+            fi
+          done
         fi
 
         echo
         echo "Token:"
         echo "$token"
+
+  token:check:
+    desc: "Verify that LIBRARY_TOKEN in the central root .env is accepted by Adgangsplatformen"
+    dotenv: ['.env']
+    silent: true
+    cmds:
+      - |
+        set -eu
+        if [ -z "${LIBRARY_TOKEN:-}" ]; then
+          echo "LIBRARY_TOKEN is empty or unset in the root .env." >&2
+          echo "Run 'task token:generate' from the repo root." >&2
+          exit 1
+        fi
+
+        status=$(curl -sS -o /dev/null -w '%{http_code}' \
+          -H "Authorization: Bearer $LIBRARY_TOKEN" \
+          "https://login.bib.dk/userinfo")
+        if [ "$status" != "200" ]; then
+          echo "LIBRARY_TOKEN was rejected by login.bib.dk (HTTP $status)." >&2
+          echo "It has likely expired. Run 'task token:generate' from the repo root." >&2
+          exit 1
+        fi
 
   # ---------------------------------------------------------------------------
   # Sub-project starters (delegates to each project's own Taskfile)
