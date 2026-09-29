@@ -167,13 +167,13 @@ describe("Loan list page", () => {
       cy.go("back");
       cy.location("hash").should("eq", "#9788740065411-title");
 
-      // Then: the digital loan is on screen once all loans are in
+      // Then: the whole digital loan is on screen once all loans are in
       loanList
         .digitalLoanRow()
-        .elements.title()
-        .should(($title) => {
-          const { top, bottom } = $title[0].getBoundingClientRect();
-          const { innerHeight } = $title[0].ownerDocument.defaultView!;
+        .container()
+        .should(($row) => {
+          const { top, bottom } = $row[0].getBoundingClientRect();
+          const { innerHeight } = $row[0].ownerDocument.defaultView!;
           expect(top).to.be.at.least(0);
           expect(bottom).to.be.at.most(innerHeight);
         });

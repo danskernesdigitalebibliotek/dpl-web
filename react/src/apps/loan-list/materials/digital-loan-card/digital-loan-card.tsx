@@ -118,7 +118,10 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
   if (!material) return null;
 
   return (
-    <div className="list-reservation list-reservation--no-hover my-32">
+    <div
+      className="list-reservation list-reservation--no-hover my-32"
+      data-scroll-target={titleId}
+    >
       <div className="list-reservation__material">
         <Cover
           ids={[coverId]}
@@ -140,11 +143,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
               lang={lang || ""}
               className="list-reservation__title color-secondary-gray"
             >
-              <span
-                id={titleId}
-                data-scroll-target={titleId}
-                className="list-reservation__title__text"
-              >
+              <span id={titleId} className="list-reservation__title__text">
                 {title}
               </span>
             </h3>
