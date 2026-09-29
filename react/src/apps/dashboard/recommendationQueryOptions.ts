@@ -7,5 +7,9 @@
  */
 export const recommendationQueryOptions = {
   throwOnError: false,
-  retry: false
+  retry: false,
+  // A missed attempt stays mounted under the one that hit. Were its data to go
+  // stale, a window focus or reconnect would refetch it, and a miss that now
+  // hits would swap its slider in under the patron.
+  staleTime: Infinity
 } as const;
