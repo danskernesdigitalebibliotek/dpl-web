@@ -16,11 +16,15 @@ import { WorkId } from "../../core/utils/types/ids";
 import { LoanType } from "../../core/utils/types/loan-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import {
+  RecommendationSeed,
   listItemsToRecommendationSeeds,
   orderRecommendationSeeds,
   workIdsToRecommendationSeeds
 } from "./recommendationSeed";
-import { RecommendationOrigin } from "./recommendations.types";
+import {
+  RecommendationOrigin,
+  RecommendationResult
+} from "./recommendations.types";
 import useRecommendations from "./useRecommendations";
 
 interface DashboardProps {
@@ -87,11 +91,6 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   reservations,
   favorites
 }) => {
-  const t = useText();
-  const u = useUrls();
-  const materialUrl = u("materialUrl");
-  const addToListRequest = useAddFavorite({ app: "dashboard" });
-
   const [seed] = useState(
     () =>
       orderRecommendationSeeds({
@@ -104,11 +103,26 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
       })[0] ?? null
   );
 
+  return seed ? <Recommendations seed={seed} /> : null;
+};
+
+const Recommendations: FC<{ seed: RecommendationSeed }> = ({ seed }) => {
   const { result, isLoading } = useRecommendations(seed);
 
   if (isLoading || !result || result.recommendations.length === 0) {
     return null;
   }
+
+  return <RecommendationsSlider result={result} />;
+};
+
+const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
+  result
+}) => {
+  const t = useText();
+  const u = useUrls();
+  const materialUrl = u("materialUrl");
+  const addToListRequest = useAddFavorite({ app: "dashboard" });
 
   return (
     <section className="dashboard-page-recommendations">

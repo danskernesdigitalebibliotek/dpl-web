@@ -14,11 +14,10 @@ const FETCH_LIMIT = 16;
 /**
  * Fetches recommendations for a seed. The seed is first resolved to the work
  * it identifies, and that work is what the recommender is asked about. The
- * result carries the resolved source along with the recommendations. A null
- * seed fetches nothing.
+ * result carries the resolved source along with the recommendations.
  */
 const useRecommendations = (
-  seed: RecommendationSeed | null
+  seed: RecommendationSeed
 ): UseRecommendationsResult => {
   const { source, isLoading: isLoadingSource } = useRecommendationSource(seed);
 
