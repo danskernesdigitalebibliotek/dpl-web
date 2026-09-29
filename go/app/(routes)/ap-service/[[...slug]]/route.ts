@@ -10,8 +10,8 @@ import {
 
 type TContext = { params: Promise<{ slug: string[] }> }
 
-// What getAuthHeader chose to send. Only a rejection of the session's own
-// user token may tear down the session — library-token calls and
+// What getAuthHeader choose to send. Only a rejection of the session's
+// own user token may tear down the session — library-token calls and
 // passed-through Authorization headers say nothing about the session's
 // health.
 type TResolvedAuth =
