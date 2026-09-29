@@ -6,14 +6,16 @@ import { getBaseURL } from "@/lib/config/getBaseURL"
 import goConfig from "./lib/config/goConfig"
 import { refreshUniloginTokens } from "./lib/helpers/bearer-token"
 import { ensureLibraryTokenExist } from "./lib/helpers/middleware"
-import { hasDplCmsSessionCookie, userIsAnonymous } from "./lib/helpers/user"
+import { userIsAnonymous } from "./lib/helpers/user"
 import { loadUserToken } from "./lib/helpers/user-token"
 import { getUniloginClientConfig } from "./lib/session/oauth/uniloginClient"
 import {
   adgangsplatformenAccessTokenHasExpired,
+  adgangsplatformenSessionShouldBeValidated,
   destroySession,
   getDplCmsSessionCookie,
   getSession,
+  markAdgangsplatformenSessionValidated,
   removePCKECodeVerifierFromSession,
   saveAdgangsplatformenSession,
   sessionHasPKCECodeVerifier,
@@ -58,37 +60,48 @@ export async function proxy(request: NextRequest) {
   if (!userIsAnonymous(session) && session.type === "adgangsplatformen") {
     const sessionCookie = await getDplCmsSessionCookie()
     if (!sessionCookie) {
-      destroySession(session)
+      await destroySession(session)
+      return response
     }
   }
 
   if (adgangsplatformenAccessTokenHasExpired(session)) {
-    // The Drupal session outlives the user token by weeks. Send the browser
-    // through the full logout flow so the CMS (and Adgangsplatformen SSO)
-    // session is torn down too — otherwise the CMS keeps serving the same
-    // dead token and the session resurrects on the next request.
-    // Only top-level navigations can be redirected through an external logout
-    // flow; other requests (RSC, prefetch, fetch) fall back to local teardown.
-    if (request.headers.get("sec-fetch-dest") === "document") {
-      return NextResponse.redirect(`${getBaseURL()}/auth/logout`)
-    }
-    destroySession(session)
+    // Drupal logs out patrons whose token has expired, so the CMS stops
+    // answering for this session and cannot hand the dead token back. Tearing
+    // down the GO session is therefore enough: the next request is anonymous
+    // and stays that way.
+    await destroySession(session)
     return response
   }
 
-  // If the session is not logged in but the browser carries a Drupal session
-  // cookie, we will try to load the user token from dpl-cms. loadUserToken()
-  // settles whether the cookie still represents a logged-in user with a live
-  // token — a lingering cookie for a dead session yields null.
-  // There is no refresh path: the CMS returns the token stored at login
-  // verbatim and cannot renew it, so the GO session lives exactly as long as
-  // the user token — a dead token means a new login.
-  if (userIsAnonymous(session) && (await hasDplCmsSessionCookie())) {
+  // If the session is not logged in, ask dpl-cms whether the browser's Drupal
+  // session cookie still represents a logged-in user with a live token.
+  // loadUserToken() settles that, and answers without calling the CMS when
+  // there is no cookie to go on. There is no refresh path: the CMS cannot
+  // renew the token, so the GO session lives exactly as long as the user
+  // token — a dead token means a new login.
+  if (userIsAnonymous(session)) {
     const tokenData = await loadUserToken()
-    if (tokenData) {
-      await saveAdgangsplatformenSession(session, tokenData)
+    if (tokenData.status === "token") {
+      await saveAdgangsplatformenSession(session, tokenData.data)
       return response
     }
+  }
+
+  // Drupal can retire the session before the token's own expiry runs out: it
+  // logs out patrons with an expired token, and a patron can log out on the
+  // library site. Neither is visible to GO's copy of the expiry, and the
+  // services keep accepting the token, so the CMS is the only party that
+  // knows. Ask it, at most every 30 seconds per session. An error leaves the
+  // session alone: it says nothing about the patron, and logging people out
+  // because the CMS blinked would be worse than showing them a stale page.
+  if (adgangsplatformenSessionShouldBeValidated(session)) {
+    const tokenData = await loadUserToken()
+    if (tokenData.status === "no-token") {
+      await destroySession(session)
+      return response
+    }
+    await markAdgangsplatformenSessionValidated(session)
   }
 
   if (uniloginAccessTokenHasExpired(session)) {

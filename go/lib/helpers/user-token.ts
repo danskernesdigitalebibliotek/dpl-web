@@ -1,15 +1,30 @@
 "use server"
 
-import { isPast } from "date-fns"
 import { z } from "zod"
 
+import AccessForbiddenError from "../graphql/fetchers/AccessForbiddenError"
+import UnauthenticatedError from "../graphql/fetchers/UnauthenticatedError"
 import { useGetAdgangsplatformenUserTokenQuery } from "../graphql/generated/dpl-cms/graphql"
 import { getDplCmsSessionCookie } from "../session/session"
 
-export const loadUserToken = async () => {
+export type TUserTokenResult =
+  // The CMS handed out a token the session can use.
+  | { status: "token"; data: { token: string; expire: { timestamp: number } } }
+  // The CMS answered, and this browser has no usable token: the Drupal
+  // session is gone, or this is a CMS user who is not a patron.
+  | { status: "no-token" }
+  // The CMS could not be reached or answered something we cannot read. This
+  // says nothing about the session, so callers must leave it alone.
+  | { status: "error" }
+
+// The CMS decides whether a usable token exists. It cannot renew one, and
+// Drupal logs out patrons whose token has expired, so the answer for a dead
+// session is a refused request rather than a token. Either way "no-token"
+// means the session is over — see ADR-012.
+export const loadUserToken = async (): Promise<TUserTokenResult> => {
   const sessionCookie = await getDplCmsSessionCookie()
   if (!sessionCookie) {
-    return null
+    return { status: "no-token" }
   }
 
   try {
@@ -19,6 +34,11 @@ export const loadUserToken = async () => {
       },
     })()
 
+    const user = data?.dplTokens?.adgangsplatformen?.user
+    if (!user) {
+      return { status: "no-token" }
+    }
+
     const validateUserToken = z
       .object({
         token: z.string(),
@@ -26,23 +46,23 @@ export const loadUserToken = async () => {
           timestamp: z.number(),
         }),
       })
-      .safeParse(data?.dplTokens?.adgangsplatformen?.user)
+      .safeParse(user)
 
     if (validateUserToken.error) {
       console.error("loadUserToken error", validateUserToken.error.flatten())
-      return null
+      return { status: "error" }
     }
 
-    // The CMS returns the token stored at login verbatim — it never renews it.
-    // The Drupal session outlives the token by weeks, so without this check an
-    // expired token would resurrect the session on every request.
-    if (isPast(new Date(validateUserToken.data.expire.timestamp * 1000))) {
-      return null
+    return { status: "token", data: validateUserToken.data }
+  } catch (error) {
+    // The CMS refused the session cookie (401/403). Drupal logs out patrons
+    // whose token has expired, so the cookie no longer represents a logged-in
+    // user — that is an answer, not a failure.
+    if (error instanceof UnauthenticatedError || error instanceof AccessForbiddenError) {
+      return { status: "no-token" }
     }
 
-    return validateUserToken.data
-  } catch {
     console.error("Could not load user token.")
-    return null
+    return { status: "error" }
   }
 }

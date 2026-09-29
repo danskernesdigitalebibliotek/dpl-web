@@ -217,16 +217,24 @@ Whenever a fetch is fired and service requested needs an Adgangsplatformen acces
 token as bearer token, the access token is fetched from the internal
 `/auth/session` route.
 
-The Adgangsplatformen access token cannot be renewed — the CMS returns the
-token stored at login verbatim — so the Go session lives exactly as long as
-the token (see ADR-012). When it expires:
+The Adgangsplatformen access token cannot be renewed, so the Go session lives
+exactly as long as the token (see ADR-012). Drupal logs out patrons whose
+token has expired, on the first request that reaches it — including the one
+Go makes to read the token. When it expires:
 
-- The middleware sends document navigations through the full logout flow
-  (`/auth/logout`), which also tears down the Drupal session and the
-  Adgangsplatformen SSO session. Other request types destroy the session
-  locally.
-- `loadUserToken()` rejects tokens with a past expire timestamp, so a
-  lingering Drupal session cookie cannot recreate a dead session.
+- `loadUserToken()` gets nothing back, so a lingering Drupal session cookie
+  cannot recreate a dead session. Go does not check the expiry itself — no
+  token from the CMS means no session. A 401 or 403 counts as "no token";
+  only a transport failure counts as an error, and an error never ends a
+  session.
+- The middleware re-asks the CMS even for a session that still looks live,
+  since Drupal may have retired it while the services keep accepting the
+  token. The answer is trusted for 30 seconds
+  (`auth.session-validation-ttl-seconds`), so this costs at most one CMS call
+  per session per window rather than one per request.
+- The middleware destroys the expired Go session and lets the request
+  continue as anonymous. The Adgangsplatformen SSO session is left alone, so
+  logging in again is a round trip the user barely notices.
 - The `/ap-service` proxy checks expiry itself and destroys the session when
   the upstream rejects the session's user token with 401/403 — this also
   catches tokens revoked before their expire timestamp.

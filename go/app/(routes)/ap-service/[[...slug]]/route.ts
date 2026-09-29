@@ -22,15 +22,6 @@ const getAuthHeader = async (
   request: NextRequest,
   serviceType: TServiceType
 ): Promise<TResolvedAuth> => {
-  // If the request has an Authorization header, use it.
-  const authHeader = request.headers.get("Authorization")
-  if (authHeader) {
-    return { header: authHeader, source: "request-header" }
-  }
-
-  // Otherwise, get the bearer token from the session.
-  // The default is the library token, so a user token is never sent to a
-  // service that has not explicitly opted into user context.
   const useLibraryToken = getApServiceSettings(serviceType)?.useLibraryTokenAlways ?? true
   const session = await getSession()
   const userToken = session?.adgangsplatformenUserToken
@@ -43,6 +34,30 @@ const getAuthHeader = async (
   if (sessionHasExpired) {
     await destroySession(session)
   }
+
+  // A client that was handed a bearer token by us sends it back on every
+  // call, so most requests arrive with an Authorization header. When it is
+  // the session's own user token we must recognise it as such: it is the
+  // token whose rejection tells us the session is over, and passing it
+  // through as an opaque header would hide exactly the signal we are after.
+  const authHeader = request.headers.get("Authorization")
+  if (authHeader) {
+    if (!userToken || authHeader !== `Bearer ${userToken}`) {
+      // Someone else's token, or a library token. Not ours to judge.
+      return { header: authHeader, source: "request-header" }
+    }
+
+    if (!sessionHasExpired) {
+      return { header: authHeader, source: "user-token" }
+    }
+    // The session's user token, but already expired. Fall through and resolve
+    // as if the caller had sent nothing, so we never spend a call on a token
+    // we know is dead.
+  }
+
+  // Otherwise, get the bearer token from the session.
+  // The default is the library token, so a user token is never sent to a
+  // service that has not explicitly opted into user context.
 
   // If the settings (apServiceSettings) indicate that we should always use the library token,
   // we will use the library token if it exists.
@@ -72,8 +87,11 @@ async function proxyRequest(
   body?: string
 ) {
   const proxiedHeaders: Record<string, string> = {}
-  // No need to send along the cookies.
-  const headersToIgnore = ["cookie"]
+  // No need to send along the cookies. Authorization is dropped because this
+  // route decides which token to send — see getAuthHeader. Passing the
+  // incoming one through would override that decision, since proxiedHeaders
+  // is spread last.
+  const headersToIgnore = ["cookie", "authorization"]
   request.headers.forEach((value, key) => {
     if (headersToIgnore.includes(key.toLowerCase())) {
       return
