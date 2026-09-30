@@ -16,8 +16,11 @@ const createLoan = createLoanSchema.transform(loanData => {
   // Only add the variable if it exists in the response
   return {
     ...(expirationdateutc && { expirationDateUtc: transformTimeToUtcString(expirationdateutc) }),
-    ...(internalordernumber && { orderNumber: internalordernumber }),
-    ...(retailerordernumber && { orderId: retailerordernumber }),
+    ...(retailerordernumber && { orderNumber: retailerordernumber }),
+    // The reader and player only recognise Publizon's internal order number,
+    // so that is what must travel as orderId — the same mapping as the loan
+    // list route.
+    ...(internalordernumber && { orderId: internalordernumber }),
     code,
     message: `${message} (#${code})`,
   }
