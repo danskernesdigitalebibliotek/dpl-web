@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\bnf_client;
 
+use Drupal\bnf_client\Entity\Subscription;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\taxonomy\Entity\Term;
 
@@ -38,14 +39,7 @@ class SubscriptionHelper {
     string $label,
     ?string $tagName = NULL,
   ): bool {
-    $subscriptionStorage = $this->entityTypeManager->getStorage('bnf_subscription');
-
-    /** @var \Drupal\bnf_client\Entity\Subscription[] $existing */
-    $existing = $subscriptionStorage->loadByProperties([
-      'subscription_uuid' => $subscriptionUuid,
-    ]);
-
-    if ($existing) {
+    if ($this->getBySubscriptionUuid($subscriptionUuid)) {
       return FALSE;
     }
 
@@ -81,10 +75,29 @@ class SubscriptionHelper {
       $subscriptionData['tags'] = [['target_id' => $tagTerm->id()]];
     }
 
+    $subscriptionStorage = $this->entityTypeManager->getStorage('bnf_subscription');
     $subscription = $subscriptionStorage->create($subscriptionData);
     $subscription->save();
 
     return TRUE;
+  }
+
+  /**
+   * Get subscription by subscription UUID.
+   */
+  public function getBySubscriptionUuid(string $subscriptionUuid): ?Subscription {
+    $subscriptionStorage = $this->entityTypeManager->getStorage('bnf_subscription');
+
+    /** @var \Drupal\bnf_client\Entity\Subscription[] $subscriptions */
+    $subscriptions = $subscriptionStorage->loadByProperties([
+      'subscription_uuid' => $subscriptionUuid,
+    ]);
+
+    if (!$subscriptions) {
+      return NULL;
+    }
+
+    return reset($subscriptions);
   }
 
 }
