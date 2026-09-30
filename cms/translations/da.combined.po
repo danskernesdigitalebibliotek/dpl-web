@@ -27707,10 +27707,6 @@ msgid "A scalable vector graphic (SVG) file."
 msgstr "En skalerbar vektorgrafik (SVG-fil)."
 
 #: 
-msgid "Could not find token for user."
-msgstr "Kunne ikke finde token for bruger."
-
-#: 
 msgctxt "Library Agency Configuration"
 msgid "Search"
 msgstr "Søgning"
@@ -35062,12 +35058,12 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "All material in Retriever is covered by copyright law and may not be copied without special permission."
-msgstr ""
+msgstr "Alt materiale i Retriever er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse."
 
 #: 
 msgctxt "Work Page"
 msgid "Close Retriever modal"
-msgstr ""
+msgstr "Luk Retriever modalen"
 
 #: 
 msgctxt "Work Page"
@@ -35101,7 +35097,7 @@ msgstr ""
 #: 
 msgctxt "Series Page"
 msgid "More by @author"
-msgstr ""
+msgstr "Mere af @author"
 
 #: 
 msgctxt "Global"
@@ -35114,143 +35110,8 @@ msgid "Show previous"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
-msgid "- All -"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
-msgid "Asc"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
-msgid "Date"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_title"
-msgid "Default"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
-msgid "Desc"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
-msgid "Filter"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
-msgid "Icon"
-msgstr ""
-
-#: 
 msgctxt "Dashboard"
 msgid "Inspiration for you"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
-msgid "Items per page"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
-msgid "Message"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
-msgid "No log messages available."
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:empty:area:content"
-msgid "No log messages available."
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
-msgid "Offset"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
-msgid "Operations"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:page:display_title"
-msgid "Page"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:description"
-msgid "Recent log messages"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:title"
-msgid "Recent log messages"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
-msgid "Reset"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
-msgid "Severity"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
-msgid "Severity"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:exposed_sorts_label"
-msgid "Sort by"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
-msgid "Type"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:filters:type:expose:label"
-msgid "Type"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
-msgid "User"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
-msgid "WID"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:label"
-msgid "Watchdog"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
-msgid "admin/reports/dblog/event/{{ wid }}"
-msgstr ""
-
-#: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
-msgid "{{ message }}"
 msgstr ""
 
 #: 
@@ -35486,7 +35347,7 @@ msgstr ""
 #: 
 msgctxt "dpl_service_message"
 msgid "Publishing this as a site-wide message will unpublish %label, which is site-wide and published now."
-msgstr ""
+msgstr "Publicering af denne på hele hjemmesiden vil afpublicere %label, da der kun kan være én publiceret servicebesked på hele hjemmesiden."
 
 #: 
 msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:reset_button_label"
@@ -35563,7 +35424,7 @@ msgstr "Vis på disse bibliotekssider"
 #: 
 msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:exposed_sorts_label"
 msgid "Sort by"
-msgstr ""
+msgstr "Sorter efter"
 
 #: 
 msgid "Text area (multiple rows)"
@@ -35607,7 +35468,7 @@ msgstr "Hele hjemmesiden: En rød bjælke vises over menuen på alle sider. Til 
 #: 
 msgctxt "views.view.service_messages:display:default:display_options:empty:area_text_custom:content"
 msgid "There are no service messages yet."
-msgstr ""
+msgstr "Der er ingen servicebeskeder endnu."
 
 #: 
 msgctxt "field.field.node.service_message.field_svcmsg_heading:label"
@@ -35668,4 +35529,36 @@ msgstr ""
 msgctxt "views.view.service_messages:display:default:display_options:pager:options:tags:previous"
 msgid "‹ Previous"
 msgstr ""
+
+#: 
+msgctxt "Patron page"
+msgid "Dashboard"
+msgstr "Dit overblik"
+
+#: 
+msgctxt "Dashboard"
+msgid "User profile"
+msgstr "Brugerprofil"
+
+#: 
+msgid "Could not find any tokens for user."
+msgstr ""
+
+#: 
+msgid "Post CMS Logout Go Session Cleanup Route"
+msgstr ""
+
+#: 
+msgid "Use the Biblio adapter for digital materials on GO"
+msgstr "Brug Biblio adapteren til digitale materialer på GO"
+
+#: 
+msgctxt "Dpl Biblio"
+msgid "Use the Biblio adapter for digital materials on GO"
+msgstr "Brug Biblio adapteren til digitale materialer på GO"
+
+#: 
+msgctxt "Dpl Biblio"
+msgid "When enabled new digital loans on GO can only be made through the Biblio adapter. Existing Publizon loans remain visible and playable until they expire. Independent of the flag for the web apps above."
+msgstr "Når denne er valgt, vil nye digitale lån på GO kun foretages gennem Biblio adapteren. Eksisterende digitale lån fra Publizon vil stadig kunne ses og læses/lyttes inden afleveringsfristen. Dette er uafhængigt af valget for web apps ovenfor."
 
