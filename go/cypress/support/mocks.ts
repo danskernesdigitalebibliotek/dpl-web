@@ -10,6 +10,32 @@ import ComplexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTea
 import { identifierFactory } from "../factories/fbi/factory-parts/identifier"
 import { worksWithIdentifiersFactory } from "../factories/fbi/factory-parts/works"
 
+// The CMS configuration is cached server-side for 15 minutes, and the root
+// layout reads it on every page. A render that happened before these mocks
+// were registered caches a config without the Adgangsplatformen login url,
+// which leaves the login button disabled for the rest of the run.
+// Dropping the tag here means each test starts from a config built on its
+// own mocks.
+export const revalidateConfigCache = () => {
+  const secret = Cypress.env("DRUPAL_REVALIDATE_SECRET")
+  if (!secret) {
+    throw new Error(
+      "DRUPAL_REVALIDATE_SECRET is missing, so the config cache cannot be revalidated " +
+        "and every test would inherit whatever config was cached first."
+    )
+  }
+
+  // Not failOnStatusCode: false - a 401 or 400 means the cache was not
+  // cleared, which is the flakiness this exists to prevent.
+  cy.request({
+    url: "/cache/revalidate",
+    qs: {
+      tags: "dpl-cms-public-config,dpl-cms-private-config",
+      secret,
+    },
+  })
+}
+
 export const mockConfig = () => {
   cy.mockServerGraphQLQuery({
     operationName: "getAdgangsplatformenLibraryToken",
