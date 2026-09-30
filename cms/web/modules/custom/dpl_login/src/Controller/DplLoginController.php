@@ -11,6 +11,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\dpl_login\Unilogin;
 use Drupal\dpl_login\User;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
@@ -145,6 +146,12 @@ class DplLoginController extends ControllerBase {
     // distinguish between login and registration.
     $this->dplLoginSession->setAuthenticationType(AuthenticationType::Login);
 
+    // Only allow-listed identity providers can be forced. Unilogin logins are
+    // recognised by their claims later on, the flag is a fallback.
+    $unilogin = $request->query->get('idp') === Unilogin::IDP;
+    $this->dplLoginSession->setUniloginLogin($unilogin);
+    $additional_params = $unilogin ? ['idp' => Unilogin::ADGANGSPLATFORMEN_IDP] : [];
+
     $client_name = 'adgangsplatformen';
     /** @var null|\Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
     $client = $this->entityTypeManager()->getStorage('openid_connect_client')->load($client_name);
@@ -155,7 +162,7 @@ class DplLoginController extends ControllerBase {
 
     $plugin = $client->getPlugin();
     $scopes = $this->claims->getScopes($plugin);
-    return $plugin->authorize($scopes);
+    return $plugin->authorize($scopes, $additional_params);
   }
 
 }
