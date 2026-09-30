@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import DashboardFees from "./dashboard-fees/dashboard-fees";
 import DashboardNotificationList from "./dashboard-notification-list/dashboard-notification-list";
-import { useText } from "../../core/utils/text";
+import { useText, UseTextFunction } from "../../core/utils/text";
 import { useAddFavorite } from "../../components/button-favourite/useAddFavorite";
 import MaterialSlider, {
   MaterialSliderCaption,
@@ -44,11 +44,8 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
   const { data: favoritesList, isLoading: isLoadingFavorites } =
     useGetList("default");
 
-  // The lists arrive from separate services at different speeds. The
-  // recommendations order their seeds once, on mount, so they are only
-  // mounted once every list has settled - otherwise a reservation could be
-  // tried before a loan that simply had not arrived yet. A failed request is
-  // not loading and has no data, so it counts as an empty list.
+  // We must wait for all lists to settle before rendering recommendations,
+  // as we need to prioritize: loans -> reservations -> favorites.
   const hasSettledLists =
     !loans.all.isLoading && !reservations.all.isLoading && !isLoadingFavorites;
 
@@ -77,14 +74,6 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
   );
 };
 
-// The caption above the recommendations title, phrased after where the
-// material the recommendations are based on came from.
-const captionTextKeyByOrigin: Record<RecommendationOrigin, string> = {
-  loan: "dashboardRecommendationsLoanCaptionText",
-  reservation: "dashboardRecommendationsReservationCaptionText",
-  favorite: "dashboardRecommendationsFavoriteCaptionText"
-};
-
 // How many seeds to try before giving up on the section.
 const MAX_ATTEMPTS = 5;
 
@@ -99,8 +88,9 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   reservations,
   favorites
 }) => {
-  // The order is drawn once: a re-render must not reshuffle the seeds under
-  // the attempts below.
+  // The state variable is used to keep the seeds stable across renders.
+  // Internally, the `orderRecommendationSeeds` shuffles the seeds, so
+  // without this rerenders would reorder the seeds.
   const [seeds] = useState(() =>
     orderRecommendationSeeds({
       loans: listItemsToRecommendationSeeds(loans, "loan"),
@@ -113,10 +103,11 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
 };
 
 /**
- * Tries one seed. A hit renders the slider. A miss renders the attempt for the
- * next seed as a child, so every seed gets its own hook call and no state or
- * effect has to step between them. The depth is bounded by the number of
- * seeds.
+ * Attempts to fetch recommendations based on the first seed in `seeds`
+ *
+ * If successful, it renders the recommendations as a slider.
+ * If not, it renders another RecommendationsAttempt component
+ * which retries with the next seed from the list.
  */
 const RecommendationsAttempt: FC<{
   seeds: NonEmptyArray<RecommendationSeed>;
@@ -153,7 +144,7 @@ const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
         heading={
           <>
             <MaterialSliderCaption>
-              {t(captionTextKeyByOrigin[result.source.origin])}
+              {getCaptionByOrigin(t, result.source.origin)}
             </MaterialSliderCaption>
             <MaterialSliderTitle>{result.source.title}</MaterialSliderTitle>
           </>
@@ -169,6 +160,22 @@ const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
       />
     </section>
   );
+};
+
+const getCaptionByOrigin = (
+  t: UseTextFunction,
+  origin: RecommendationOrigin
+) => {
+  switch (origin) {
+    case "loan":
+      return t("dashboardRecommendationsLoanCaptionText");
+    case "reservation":
+      return t("dashboardRecommendationsReservationCaptionText");
+    case "favorite":
+      return t("dashboardRecommendationsFavoriteCaptionText");
+    default:
+      invalidSwitchCase(origin);
+  }
 };
 
 export default DashBoard;
