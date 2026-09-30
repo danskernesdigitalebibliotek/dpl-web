@@ -5,6 +5,10 @@ type GoLibraryInfo {
 
 type GoLoginUrls {
   adgangsplatformen: String
+  """
+  Adgangsplatformen login with Unilogin as identity provider.
+  """
+  unilogin: String
 }
 
 type GoLogoutUrls {
@@ -36,7 +40,6 @@ type MappTracking {
 }
 
 type UniloginConfigurationPrivate {
-  clientSecret: String
   pubHubRetailerKeyCode: String
 }
 

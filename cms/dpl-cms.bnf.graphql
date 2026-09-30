@@ -32,6 +32,7 @@ type AdgangsplatformenTokens {
 type AdgangsplatformenUserToken {
   expire: DateTime
   token: String
+  type: String
 }
 
 type AppCategory {
@@ -288,6 +289,7 @@ type GoLibraryInfo {
 
 type GoLoginUrls {
   adgangsplatformen: String
+  unilogin: String
 }
 
 type GoLogoutUrls {
@@ -1182,7 +1184,6 @@ type Translation {
 }
 
 type UniloginConfigurationPrivate {
-  clientSecret: String
   pubHubRetailerKeyCode: String
 }
 

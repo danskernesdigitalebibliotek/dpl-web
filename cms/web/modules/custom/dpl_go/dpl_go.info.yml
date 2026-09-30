@@ -9,3 +9,4 @@ dependencies:
   - dpl_unilogin:dpl_unilogin
   - dpl_lagoon:dpl_lagoon
   - dpl_library_agency:dpl_library_agency
+  - dpl_login:dpl_login

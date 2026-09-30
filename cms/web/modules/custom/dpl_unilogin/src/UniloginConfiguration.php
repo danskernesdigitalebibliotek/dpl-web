@@ -29,16 +29,6 @@ class UniloginConfiguration extends DplReactConfigBase {
   }
 
   /**
-   * Get the Unilogin API client secret.
-   *
-   * @return string|null
-   *   The Unilogin API client secret.
-   */
-  public function getUniloginApiClientSecret(): ?string {
-    return $this->loadConfig()->get('unilogin_api_client_secret');
-  }
-
-  /**
    * Get the Unilogin API municipality ID.
    *
    * @return string|null
