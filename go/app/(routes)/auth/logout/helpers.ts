@@ -2,12 +2,14 @@ import { IronSession } from "iron-session"
 import { NextResponse } from "next/server"
 import * as client from "openid-client"
 
-import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
+import {
+  getUniloginClientConfig,
+  getUniloginLogoutEndpoint,
+} from "@/lib/session/oauth/uniloginClient"
 import {
   TSessionData,
   destroySession,
   destroySessionAndRedirectToFrontPage,
-  getUniloginIdToken,
   redirectToFrontPageAndReloadSession,
 } from "@/lib/session/session"
 
@@ -18,37 +20,40 @@ export const handleUniloginLogout = async (session: IronSession<TSessionData>) =
   return destroySessionAndRedirectToFrontPage(session)
 }
 
-export const logoutUniloginSSO = async (session: IronSession<TSessionData>) => {
+// Revoke an access token at the adapter so it cannot be used after logout.
+export const revokeUniloginTokens = async (accessToken: string) => {
   const config = await getUniloginClientConfig()
-  const id_token = await getUniloginIdToken()
-
-  // If we don't have a client config, we can't do anything.
   if (!config) {
     console.error("No client config found for Unilogin.")
-    return destroySessionAndRedirectToFrontPage(session)
+    return
+  }
+  try {
+    await client.tokenRevocation(config, accessToken)
+  } catch (error) {
+    console.error("Could not revoke Unilogin access token.", error)
+  }
+}
+
+export const logoutUniloginSSO = async (session: IronSession<TSessionData>) => {
+  const accessToken = session.access_token
+  if (!accessToken) {
+    console.error("Could not end session in Unilogin. No access token found.")
+    return
   }
 
-  // Call the Unilogin end session endpoint.
-  // TODO: Is this where we want to redirect to if id token cannot be resolved?
-  if (!id_token) {
-    console.error("Could not end session in Unilogin. No id token found.")
-    // Without an id token, we can't logout in the SSO.
-    // So we destroy the session and redirect to the frontpage.
-    return destroySessionAndRedirectToFrontPage(session)
+  await revokeUniloginTokens(accessToken)
+
+  // Best effort ending of the adapter SSO session. The SSO cookie lives in the
+  // browser and cannot be cleared by a server side request; the login route
+  // sends force_login=1, so a lingering SSO session never logs anyone in
+  // silently.
+  try {
+    const logoutUrl = new URL(getUniloginLogoutEndpoint())
+    logoutUrl.searchParams.set("access_token", accessToken)
+    await fetch(logoutUrl)
+  } catch (error) {
+    console.error("Could not end SSO session in Unilogin.", error)
   }
-  // Resolve the end session SSO endpoint.
-  const endSessionEndpoint = config.serverMetadata().end_session_endpoint
-  if (!endSessionEndpoint) {
-    console.error("Could not resolve Unlogin end session endpoint.")
-    // We can't do anything without an end session endpoint.
-    // So we destroy the session and redirect to the frontpage.
-    return destroySessionAndRedirectToFrontPage(session)
-  }
-  // End session in Unilogin SSO.
-  const endSessionUrl = client.buildEndSessionUrl(config, {
-    id_token_hint: id_token,
-  })
-  await fetch(endSessionUrl)
 }
 
 export const handleAdgangsplatformenLogout = async (session: IronSession<TSessionData>) => {

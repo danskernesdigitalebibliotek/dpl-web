@@ -47,9 +47,6 @@ export const getDplCmsPrivateConfig = async () => {
   const data = await getDplCmsPrivateConfigData()
 
   const uniLoginConfigEnv = {
-    ...(getServerEnv("UNILOGIN_CLIENT_SECRET")
-      ? { clientSecret: getServerEnv("UNILOGIN_CLIENT_SECRET") }
-      : {}),
     ...(getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE")
       ? { pubHubRetailerKeyCode: getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE") }
       : {}),
@@ -99,11 +96,6 @@ const getDplCmsPublicConfigData = async () => {
 export const getDplCmsPublicConfig = async () => {
   await connection()
   const data = await getDplCmsPublicConfigData()
-  // If environment variables are set, they will override the values from DPL CMS.
-  const envMunicipalityId = getServerEnv("UNILOGIN_MUNICIPALITY_ID")
-  if (envMunicipalityId) {
-    data.unilogin.municipalityId = envMunicipalityId
-  }
 
   data.libraryInfo.baseURL = getEnv("DPL_CMS_BASE_URL")
 

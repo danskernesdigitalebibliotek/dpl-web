@@ -1,43 +1,29 @@
 import { z } from "zod"
 
-const regexInt = /^\d+$/
 const schemas = {
   tokenSet: z.object({
     access_token: z.string(),
-    refresh_token: z.string(),
-    id_token: z.string(),
     expires_in: z.number(),
-    refresh_expires_in: z.number(),
+    refresh_token: z.string().optional(),
+    refresh_expires_in: z.number().optional(),
+    id_token: z.string().optional(),
   }),
-  introspect: z.object({
-    uniid: z.string(),
-    institution_ids: z.string(),
-  }),
-  uniLoginUserInfo: z.object({
-    sub: z.string(),
-  }),
-  institution: z.object({
-    instnr: z.string().regex(/^[A-Z0-9]+$/),
-    instnavn: z.string(),
-    type: z.string().regex(/^[A-Z0-9]+$/),
-    typenavn: z.string().optional(),
-    type3: z.string().optional(),
-    type3navn: z.string().optional(),
-    adresse: z.string().optional(),
-    bynavn: z.string().optional(),
-    postnr: z.string().regex(regexInt).optional(),
-    telefonnr: z.string().optional(),
-    mailadresse: z.string().optional(),
-    www: z.string().optional(),
-    // @todo: We would like to have komunnenr to be required.
-    // Go is investigating if we can get a municipality attached to the fake institution .
-    kommunenr: z.string().optional(),
-    kommune: z.string().optional(),
-    admkommunenr: z.string().regex(regexInt).optional(),
-    admkommune: z.string().optional(),
-    regionsnr: z.string().regex(regexInt).optional(),
-    region: z.string().optional(),
+  // Userinfo response from the Adgangsplatformen adapter for unilogin_oidc logins.
+  userinfo: z.object({
+    attributes: z.object({
+      uniloginUniId: z.string(),
+      uniloginHasLicense: z
+        .union([z.boolean(), z.enum(["true", "false"])])
+        .transform(value => value === true || value === "true"),
+      uniloginInstitutionIds: z.array(z.string()),
+      municipalityAgencyId: z.string().nullish(),
+      uniloginAgencyId: z.string().nullish(),
+      uniloginUserType: z.string().nullish(),
+      uniloginUniIdHash: z.string().nullish(),
+    }),
   }),
 }
+
+export type TUniloginUserinfoAttributes = z.output<typeof schemas.userinfo>["attributes"]
 
 export default schemas

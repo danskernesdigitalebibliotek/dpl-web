@@ -1,6 +1,7 @@
 import { connection } from "next/server"
 import * as client from "openid-client"
 
+import { getServerEnv } from "@/lib/config/env"
 import { getBaseURL } from "@/lib/config/getBaseURL"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession } from "@/lib/session/session"
@@ -20,19 +21,21 @@ export async function GET() {
   }
 
   const redirect_uri = `${appUrl}/auth/callback/unilogin`
-  const code_verifier = client.randomPKCECodeVerifier()
-  const code_challenge = await client.calculatePKCECodeChallenge(code_verifier)
-  const code_challenge_method = "S256"
+  // The adapter does not support PKCE, so a state parameter guards the callback.
+  const state = client.randomState()
+  const agencyId = getServerEnv("UNILOGIN_AGENCY_ID")
 
-  session.code_verifier = code_verifier
+  session.state = state
   await session.save()
 
   const redirectTo = client.buildAuthorizationUrl(config, {
     redirect_uri,
-    scope: "openid",
-    code_challenge,
-    code_challenge_method,
-    prompt: "login",
+    state,
+    // Skip the identity provider picker and go straight to Unilogin.
+    idp: "unilogin_oidc",
+    ...(agencyId ? { agency: agencyId } : {}),
+    // Always show the login form instead of silently reusing the SSO session.
+    force_login: "1",
   })
 
   console.info("unilogin authorization flow started", session)

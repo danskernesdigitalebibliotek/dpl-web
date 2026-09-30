@@ -1,35 +1,37 @@
-import { getInstitutionRequest } from "@/app/(routes)/auth/callback/unilogin/requests"
-import { getLibraryMunicipalityId } from "@/lib/helpers/unilogin"
+import { getServerEnv } from "@/lib/config/env"
 import { zodParseWithContext } from "@/lib/helpers/zod-validation"
 
-export const isUniloginUserAuthorizedToLogIn = async (
-  institutionId: string | null,
-  claims: { has_license: string }
-) => {
-  // If the user do not have a license through STIL we do not allow access
-  if (claims?.has_license === "false") {
+import { TUniloginUserinfoAttributes } from "./schemas"
+
+// R00263 is the DDF test institution. Users belonging to it are test users
+// and bypass the municipality check.
+export const TEST_INSTITUTION_IDS = ["R00263"]
+
+export const isUniloginUserAuthorizedToLogIn = (attributes: TUniloginUserinfoAttributes) => {
+  // If the user does not have a license through STIL we do not allow access.
+  if (!attributes.uniloginHasLicense) {
     console.error("unilogin error: User does not have a STIL license")
     return false
   }
 
-  if (!institutionId) {
-    console.error("unilogin error: InstitutionId was not provided")
-    return false
-  }
-  const institution = await getInstitutionRequest(institutionId)
-  const municipalityId = await getLibraryMunicipalityId()
-  // If the institution is DDF we are using a test user and therefore allow access.
-  // A04441 is the legacy DDF provider number, R00263 the new DDF test institution.
-  // TODO: Remove A04441 after the STIL cutoff date 2026-09-22.
-  if (["A04441", "R00263"].includes(institution.instnr)) {
+  // If the user belongs to the DDF test institution we allow access.
+  if (attributes.uniloginInstitutionIds.some(id => TEST_INSTITUTION_IDS.includes(id))) {
     return true
   }
 
-  const municipalityMatch = institution.kommunenr === municipalityId
+  const agencyId = getServerEnv("UNILOGIN_AGENCY_ID")
+  if (!agencyId) {
+    console.error("unilogin error: UNILOGIN_AGENCY_ID is not configured")
+    return false
+  }
+
+  // The adapter derives municipalityAgencyId from the user's institution,
+  // so this is the same municipality gate as before - just based on
+  // agency ids instead of municipality numbers.
+  const municipalityMatch = attributes.municipalityAgencyId === agencyId
   if (!municipalityMatch) {
     console.error(
-      `unilogin error: User institution does not match expected municipality ${municipalityId}`,
-      institution
+      `unilogin error: User municipality ${attributes.municipalityAgencyId} does not match expected agency ${agencyId}`
     )
   }
   return municipalityMatch
@@ -41,7 +43,7 @@ export const parseUniloginServiceResponse = <T>({
   step,
 }: {
   parsingFunction: () => T
-  step: "introspect" | "userinfo"
+  step: "tokenSet" | "userinfo"
   uniid?: string
 }) =>
   zodParseWithContext(
