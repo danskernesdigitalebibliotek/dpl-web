@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\bnf_client;
 
 use Drupal\bnf_client\Entity\Subscription;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\taxonomy\Entity\Term;
 
@@ -75,8 +76,7 @@ class SubscriptionHelper {
       $subscriptionData['tags'] = [['target_id' => $tagTerm->id()]];
     }
 
-    $subscriptionStorage = $this->entityTypeManager->getStorage('bnf_subscription');
-    $subscription = $subscriptionStorage->create($subscriptionData);
+    $subscription = $this->storage()->create($subscriptionData);
     $subscription->save();
 
     return TRUE;
@@ -86,10 +86,8 @@ class SubscriptionHelper {
    * Get subscription by subscription UUID.
    */
   public function getBySubscriptionUuid(string $subscriptionUuid): ?Subscription {
-    $subscriptionStorage = $this->entityTypeManager->getStorage('bnf_subscription');
-
     /** @var \Drupal\bnf_client\Entity\Subscription[] $subscriptions */
-    $subscriptions = $subscriptionStorage->loadByProperties([
+    $subscriptions = $this->storage()->loadByProperties([
       'subscription_uuid' => $subscriptionUuid,
     ]);
 
@@ -98,6 +96,24 @@ class SubscriptionHelper {
     }
 
     return reset($subscriptions);
+  }
+
+  /**
+   * Delete a subscription.
+   *
+   * Only deletes the subscription, not any imported content on the
+   * subscription.
+   */
+  public function delete(Subscription $subsciption): void {
+    $this->storage()->delete([$subsciption]);
+
+  }
+
+  /**
+   * Get the subscription storage.
+   */
+  protected function storage(): EntityStorageInterface {
+    return $this->entityTypeManager->getStorage('bnf_subscription');
   }
 
 }
