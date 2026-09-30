@@ -61,7 +61,7 @@ vi.mock("@/lib/session/session", async importOriginal => {
       access_token: undefined,
       refresh_token: undefined,
       id_token: undefined,
-      code_verifier: undefined,
+      state: undefined,
       userInfo: undefined,
       adgangsplatformenUserToken: undefined,
     },
@@ -70,8 +70,8 @@ vi.mock("@/lib/session/session", async importOriginal => {
     markAdgangsplatformenSessionValidated: vi.fn(),
     getSession: vi.fn(),
     saveAdgangsplatformenSession: vi.fn(),
-    removePCKECodeVerifierFromSession: vi.fn(),
-    sessionHasPKCECodeVerifier: vi.fn(),
+    removeLoginStateFromSession: vi.fn(),
+    sessionHasLoginState: vi.fn(),
   }
 })
 
@@ -478,61 +478,55 @@ describe("Middleware", () => {
     expect(destroySessionSpy).toHaveResolvedTimes(1)
   })
 
-  it("removes PKCE code verifier from session if it exists", async () => {
+  it("removes login state from session if it exists", async () => {
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
       Promise.resolve({
         getAll: vi.fn(() => []),
       })
     )
 
-    // Create a session with a code_verifier
-    const sessionWithCodeVerifier = {
+    // Create a session with a login state
+    const sessionWithLoginState = {
       ...sessions.anonymousSession,
-      code_verifier: "test-pkce-code-verifier",
+      state: "test-login-state",
       save: vi.fn(),
     }
 
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
-      Promise.resolve(sessionWithCodeVerifier)
+      Promise.resolve(sessionWithLoginState)
     )
 
-    const removePCKECodeVerifierSpy = vi.spyOn(
-      sessionFunctions,
-      "removePCKECodeVerifierFromSession"
-    )
+    const removeLoginStateSpy = vi.spyOn(sessionFunctions, "removeLoginStateFromSession")
 
     await middleware(getNextRequestWithLibraryTokenCookie())
 
     // Verify that the function was called with the session
-    expect(removePCKECodeVerifierSpy).toHaveBeenCalledTimes(1)
-    expect(removePCKECodeVerifierSpy).toHaveBeenCalledWith(sessionWithCodeVerifier)
+    expect(removeLoginStateSpy).toHaveBeenCalledTimes(1)
+    expect(removeLoginStateSpy).toHaveBeenCalledWith(sessionWithLoginState)
   })
 
-  it("does not attempt to remove PKCE code verifier if it doesn't exist in session", async () => {
+  it("does not attempt to remove login state if it doesn't exist in session", async () => {
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
       Promise.resolve({
         getAll: vi.fn(() => []),
       })
     )
 
-    // Create a session without a code_verifier
-    const sessionWithoutCodeVerifier = {
+    // Create a session without a login state
+    const sessionWithoutLoginState = {
       ...sessions.anonymousSession,
       save: vi.fn(),
     }
 
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
-      Promise.resolve(sessionWithoutCodeVerifier)
+      Promise.resolve(sessionWithoutLoginState)
     )
 
-    const removePCKECodeVerifierSpy = vi.spyOn(
-      sessionFunctions,
-      "removePCKECodeVerifierFromSession"
-    )
+    const removeLoginStateSpy = vi.spyOn(sessionFunctions, "removeLoginStateFromSession")
 
     await middleware(getNextRequestWithLibraryTokenCookie())
 
-    // Verify that the removal function was NOT called since there's no code_verifier
-    expect(removePCKECodeVerifierSpy).toHaveBeenCalledTimes(0)
+    // Verify that the removal function was NOT called since there's no login state
+    expect(removeLoginStateSpy).toHaveBeenCalledTimes(0)
   })
 })

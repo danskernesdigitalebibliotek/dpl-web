@@ -2,9 +2,6 @@ import routes from "@/lib/config/resolvers/routes"
 
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import getMaterial from "../factories/fbi/getMaterial"
-import configuration from "../factories/unilogin/configuration"
-import institution from "../factories/unilogin/institution"
-import introspection from "../factories/unilogin/introspection"
 import tokenSet from "../factories/unilogin/tokenSet"
 import userinfo from "../factories/unilogin/userinfo"
 import { mockConfig, mockFrontpage } from "../support/mocks"
@@ -61,35 +58,18 @@ describe("Login redirect after loan attempt", () => {
 
     // Mock Unilogin OAuth endpoints
     const mockedCallbackUrl =
-      "/auth/callback/unilogin?session_state=60cda845-402f-4085-b41d-3e4e773e04d4&code=3a6c3675-8ec8-472f-bcd5-9425be472d6d.60cda845-402f-4085-b41d-3e4e773e04d4.135f0ca5-6083-4b5c-9de6-d4a1b3f8d60c"
-
-    cy.mockServerRest({
-      method: "GET",
-      path: "/.well-known/openid-configuration",
-      data: configuration.build(),
-    })
+      "/auth/callback/unilogin?code=3a6c3675-8ec8-472f-bcd5-9425be472d6d.60cda845-402f-4085-b41d-3e4e773e04d4.135f0ca5-6083-4b5c-9de6-d4a1b3f8d60c"
 
     cy.mockServerRest({
       method: "POST",
-      path: "/token",
+      path: "/oauth/token/",
       data: tokenSet.build(),
     })
 
     cy.mockServerRest({
-      method: "POST",
-      path: "/introspect",
-      data: introspection.build(),
-    })
-
-    cy.mockServerRest({
       method: "GET",
-      path: "/userinfo",
+      path: "/userinfo/",
       data: userinfo.build(),
-    })
-
-    cy.mockServerSoap({
-      path: "/institution",
-      data: institution,
     })
 
     // Visit the callback URL — server reads the redirect cookie and redirects
