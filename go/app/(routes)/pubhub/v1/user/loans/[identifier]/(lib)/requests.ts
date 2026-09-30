@@ -6,7 +6,7 @@ import { getPublizonServiceParameters } from "@/lib/helpers/publizon"
 import { createClientAsync as createClientAsyncCreateLoan } from "@/lib/soap/publizon/v2_7/generated/createloan"
 
 // Set client to mocked endpoint in test mode
-const clientEndpoint = isTest() ? `${getServerEnv("UNILOGIN_WELLKNOWN_URL")}/createloan` : undefined
+const clientEndpoint = isTest() ? `${getServerEnv("UNILOGIN_ADAPTER_URL")}/createloan` : undefined
 
 export const createLoanRequest = async (uniLoginUserInfo: TUserInfo, ebookId: string) => {
   const client = await createClientAsyncCreateLoan(

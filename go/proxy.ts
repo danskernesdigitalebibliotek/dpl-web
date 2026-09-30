@@ -16,9 +16,9 @@ import {
   getDplCmsSessionCookie,
   getSession,
   markAdgangsplatformenSessionValidated,
-  removePCKECodeVerifierFromSession,
+  removeLoginStateFromSession,
   saveAdgangsplatformenSession,
-  sessionHasPKCECodeVerifier,
+  sessionHasLoginState,
   uniloginAccessTokenHasExpired,
   uniloginAccessTokenShouldBeRefreshed,
 } from "./lib/session/session"
@@ -41,11 +41,11 @@ export async function proxy(request: NextRequest) {
 
   const session = await getSession()
 
-  // Since we do not need the PKCE code verifier on non-auth routes,
+  // Since we do not need the login state on non-auth routes,
   // we will remove it from the session if it exists.
   // It is safe because the middleware only runs on non-auth routes.
-  if (sessionHasPKCECodeVerifier(session)) {
-    await removePCKECodeVerifierFromSession(session)
+  if (sessionHasLoginState(session)) {
+    await removeLoginStateFromSession(session)
   }
 
   if (protectedPages.includes(currentPath)) {

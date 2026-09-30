@@ -38,9 +38,8 @@ export interface TSessionData {
   id_token?: string
   expires?: Date
   refresh_expires?: Date
-  code_verifier?: string
+  state?: string
   uniLoginUserInfo?: {
-    sub: string
     uniid: string
     institutionIds: string[]
   }
@@ -62,7 +61,7 @@ export const defaultSession: TSessionData = {
   id_token: undefined,
   expires: undefined,
   refresh_expires: undefined,
-  code_verifier: undefined,
+  state: undefined,
   uniLoginUserInfo: undefined,
   user: undefined,
   adgangsplatformenUserToken: undefined,
@@ -87,11 +86,11 @@ export async function getSession(): Promise<IronSession<TSessionData>> {
 
     if (!session?.isLoggedIn) {
       // Return the default session if the session is not logged in.
-      // But if the session has a code_verifier, we will keep that.
-      // The code_verifier is used for verifying the PKCE challenge
-      // when coming back from Unilogin.
+      // But if the session has a login state, we will keep that.
+      // The state is used for verifying the authenticity of the redirect
+      // coming back from the Unilogin login flow.
       return Object.assign(session, defaultSession, {
-        ...(session.code_verifier ? { code_verifier: session.code_verifier } : {}),
+        ...(session.state ? { state: session.state } : {}),
         ...(libraryToken ? { adgangsplatformenLibraryToken: libraryToken } : {}),
       }) as IronSession<TSessionData>
     }
@@ -122,13 +121,16 @@ export const setUniloginTokensOnSession = async (
   session.expires = add(new Date(), {
     seconds: tokenSet.expires_in || 0,
   })
-  session.refresh_expires = add(new Date(), {
-    seconds: Number(tokenSet?.refresh_expires_in),
-  })
-  // Since we have a limitation in how big cookies can be,
-  // we will have to store the user id in a separate cookie.
+  // The adapter only issues refresh tokens if the client is configured for it.
+  session.refresh_expires = tokenSet.refresh_expires_in
+    ? add(new Date(), { seconds: tokenSet.refresh_expires_in })
+    : undefined
   const cookieStore = await cookies()
-  cookieStore.set(goConfig("auth.cookie-name.id-token"), tokenSet.id_token)
+  // Since we have a limitation in how big cookies can be,
+  // we will have to store the id token in a separate cookie.
+  if (tokenSet.id_token) {
+    cookieStore.set(goConfig("auth.cookie-name.id-token"), tokenSet.id_token)
+  }
   cookieStore.set(goConfig("auth.cookie-names.session-type"), "unilogin")
 }
 
@@ -188,9 +190,13 @@ export const uniloginAccessTokenHasExpired = (session: IronSession<TSessionData>
     return false
   }
 
-  // When the session was created we saved when the Unilogin system consider the refresh token to be expired.
-  // If we are past that time, we consider the access token to be expired.
+  // With a refresh token the session lives until the refresh token expires;
+  // without one it lives exactly as long as the access token.
   if (session.refresh_expires && isPast(session.refresh_expires)) {
+    return true
+  }
+
+  if (!session.refresh_expires && session.expires && isPast(session.expires)) {
     return true
   }
 
@@ -265,16 +271,6 @@ export const markAdgangsplatformenSessionValidated = async (session: IronSession
   await session.save()
 }
 
-export const getUniloginIdToken = async () => {
-  const { cookies } = await import("next/headers")
-  return (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
-}
-
-export const getSessionTypeToken = async () => {
-  const { cookies } = await import("next/headers")
-  return (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
-}
-
 const deleteGoSessionCookies = async () => {
   const { cookies } = await import("next/headers")
   const cookieStore = await cookies()
@@ -319,11 +315,11 @@ export const redirectToFrontPageAndReloadSession = async () => {
   return NextResponse.redirect(`${getBaseURL()}?reload-session=true`)
 }
 
-export const sessionHasPKCECodeVerifier = (session: IronSession<TSessionData>) => {
-  return !!session.code_verifier
+export const sessionHasLoginState = (session: IronSession<TSessionData>) => {
+  return !!session.state
 }
 
-export const removePCKECodeVerifierFromSession = async (session: IronSession<TSessionData>) => {
-  delete session.code_verifier
+export const removeLoginStateFromSession = async (session: IronSession<TSessionData>) => {
+  delete session.state
   await session.save()
 }

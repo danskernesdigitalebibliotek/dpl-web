@@ -23,16 +23,13 @@ function getEnvs() {
     DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
     GO_SESSION_SECRET: process.env.GO_SESSION_SECRET,
     NEXT_PHASE: process.env.NEXT_PHASE,
-    UNILOGIN_CLIENT_ID: process.env.UNILOGIN_CLIENT_ID,
-    UNILOGIN_CLIENT_SECRET: process.env.UNILOGIN_CLIENT_SECRET,
-    UNILOGIN_MUNICIPALITY_ID: process.env.UNILOGIN_MUNICIPALITY_ID,
-    UNILOGIN_WELLKNOWN_URL: process.env.UNILOGIN_WELLKNOWN_URL,
+    ADGANGSPLATFORMEN_CLIENT_ID: process.env.ADGANGSPLATFORMEN_CLIENT_ID,
+    ADGANGSPLATFORMEN_CLIENT_SECRET: process.env.ADGANGSPLATFORMEN_CLIENT_SECRET,
+    UNILOGIN_ADAPTER_URL: process.env.UNILOGIN_ADAPTER_URL,
+    UNILOGIN_AGENCY_ID: process.env.UNILOGIN_AGENCY_ID,
     UNLILOGIN_PUBHUB_CLIENT_ID: process.env.UNLILOGIN_PUBHUB_CLIENT_ID,
     UNLILOGIN_PUBHUB_RETAILER_ID: process.env.UNLILOGIN_PUBHUB_RETAILER_ID,
     UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: process.env.UNLILOGIN_PUBHUB_RETAILER_KEY_CODE,
-    UNILOGIN_WS_PRIVATE_KEY: process.env.UNILOGIN_WS_PRIVATE_KEY,
-    UNILOGIN_WS_PUBLIC_CERT: process.env.UNILOGIN_WS_PUBLIC_CERT,
-    UNILOGIN_WS_UDBYDERSYSTEM_ID: process.env.UNILOGIN_WS_UDBYDERSYSTEM_ID,
   }
 }
 
@@ -60,17 +57,18 @@ const EnvServerSchema = z.object({
       z.literal(PHASE_TEST),
     ])
     .optional(),
-  UNILOGIN_MUNICIPALITY_ID: z.string().optional(),
+  // The library's agency id (e.g. "710100"). Sent as the `agency` parameter on
+  // the authorize request and compared against the municipalityAgencyId claim
+  // when authorizing Unilogin logins.
+  UNILOGIN_AGENCY_ID: z.string().optional(),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: z.string().optional(),
-  UNILOGIN_WS_PRIVATE_KEY: z.string().optional(),
-  UNILOGIN_WS_PUBLIC_CERT: z.string().optional(),
-  UNILOGIN_WS_UDBYDERSYSTEM_ID: z.string().optional(),
-  // Is fetched from dpl-cms, but can be overridden by env vars
-  UNILOGIN_CLIENT_ID: z.string().optional(),
-  UNILOGIN_CLIENT_SECRET: z.string().optional(),
-  UNILOGIN_WELLKNOWN_URL: z.url().optional(),
+  // The library's Adgangsplatformen client (smaug) - shared with the CMS.
+  ADGANGSPLATFORMEN_CLIENT_ID: z.string().optional(),
+  ADGANGSPLATFORMEN_CLIENT_SECRET: z.string().optional(),
+  // Base url for the Adgangsplatformen adapter that brokers the Unilogin flow.
+  UNILOGIN_ADAPTER_URL: z.url().default("https://login.bib.dk"),
 })
 
 type EnvPublicSchemaResult = z.infer<typeof EnvPublicSchema>
