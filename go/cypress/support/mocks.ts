@@ -30,7 +30,7 @@ export const revalidateConfigCache = () => {
   cy.request({
     url: "/cache/revalidate",
     qs: {
-      tags: "dpl-cms-public-config,dpl-cms-private-config",
+      tags: "dpl-cms-config",
       secret,
     },
   })
