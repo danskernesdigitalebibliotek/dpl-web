@@ -170,6 +170,17 @@ describe("What a page opens a Biblio loan in", () => {
     expect(container.querySelector("[data-testid='player']")).toBeNull();
   });
 
+  it("opens nothing for a type it cannot open", () => {
+    givenCheckout("audiobook_club");
+
+    const { container } = render(
+      <DigitalReaderPlayer loanId="loan-1" onClose={() => {}} />
+    );
+
+    expect(container.querySelector("[data-testid='reader']")).toBeNull();
+    expect(container.querySelector("[data-testid='player']")).toBeNull();
+  });
+
   it("opens nothing until the entitlement has answered", () => {
     givenCheckout(null);
 

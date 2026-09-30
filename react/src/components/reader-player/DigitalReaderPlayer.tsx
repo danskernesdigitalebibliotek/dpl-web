@@ -29,11 +29,15 @@ const DigitalReaderPlayer: React.FC<DigitalReaderPlayerProps> = ({
   // anyway, so returning null here adds no visible wait.
   if (!sdk || !checkout) return null;
 
-  if (opensIn(checkout.material_type) === "player") {
-    return <DigitalPlayer sdk={sdk} checkout={checkout} onClose={onClose} />;
+  switch (opensIn(checkout.material_type)) {
+    case "player":
+      return <DigitalPlayer sdk={sdk} checkout={checkout} onClose={onClose} />;
+    case "reader":
+      return <DigitalReader sdk={sdk} checkout={checkout} onClose={onClose} />;
+    // A type nothing can open gets no button in the loan list either.
+    default:
+      return null;
   }
-
-  return <DigitalReader sdk={sdk} checkout={checkout} onClose={onClose} />;
 };
 
 export default DigitalReaderPlayer;
