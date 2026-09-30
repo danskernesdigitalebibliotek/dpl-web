@@ -50,6 +50,8 @@ export interface TSessionData {
   }
   adgangsplatformenUserToken?: string
   adgangsplatformenLibraryToken?: string
+  // When the CMS last confirmed that this session is still a live one.
+  validatedAt?: Date
   type: TSessionType
 }
 
@@ -65,6 +67,7 @@ export const defaultSession: TSessionData = {
   user: undefined,
   adgangsplatformenUserToken: undefined,
   adgangsplatformenLibraryToken: undefined,
+  validatedAt: undefined,
   type: "anonymous",
 }
 
@@ -236,27 +239,30 @@ export const adgangsplatformenAccessTokenHasExpired = (session: IronSession<TSes
   return false
 }
 
-export const adgangsplatformenAccessTokenShouldBeRefreshed = (
-  session: IronSession<TSessionData>
+// Drupal can retire a session while the services still accept its token - on
+// expiry, or when the patron logs out on the library site - and nothing in GO
+// can see that. So the CMS gets asked, but not on every single request.
+export const adgangsplatformenSessionShouldBeValidated = (
+  session: IronSession<TSessionData> | TSessionData
 ) => {
-  // If the session is not logged in, or it is not a adgangsplatformen session
-  // we don't need to refresh the access token.
   if (userIsAnonymous(session) || session.type !== "adgangsplatformen") {
     return false
   }
 
-  const bufferedExp = { expires: new Date() }
-
-  // Create a buffer of 1 minute on expire times to make sure we don't run into any timing issues.
-  if (session.expires) {
-    bufferedExp.expires = sub(session.expires, { minutes: 1 })
-  }
-
-  if (session.expires && isPast(bufferedExp.expires)) {
+  if (!session.validatedAt) {
     return true
   }
 
-  return false
+  return isPast(
+    add(session.validatedAt, { seconds: goConfig("auth.session-validation-ttl-seconds") })
+  )
+}
+
+// Records that we asked, not that the answer was yes: an unreachable CMS must
+// not turn into a request per page load.
+export const markAdgangsplatformenSessionValidated = async (session: IronSession<TSessionData>) => {
+  session.validatedAt = new Date()
+  await session.save()
 }
 
 export const getUniloginIdToken = async () => {
@@ -281,6 +287,11 @@ const deleteGoSessionCookies = async () => {
   })
 }
 
+// Note: finding this cookie only proves the browser HAS a Drupal session
+// cookie — not that the session behind it is still valid. Drupal may have
+// destroyed the session server-side (logout, expired token) while the cookie
+// lingers in the browser. Whether the user is actually logged in is settled by
+// what the CMS answers when the cookie is used (e.g. loadUserToken()).
 export const getDplCmsSessionCookie = async () => {
   const { cookies } = await import("next/headers")
   const cookieStore = await cookies()
