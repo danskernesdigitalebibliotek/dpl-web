@@ -33,7 +33,9 @@ export const listItemToRecommendationSeed = (
   return null;
 };
 
-/** Turns a list of loans or reservations into seeds, dropping unusable items. */
+/**
+ * Turns a list of loans or reservations into seeds, dropping unusable items.
+ */
 export const listItemsToRecommendationSeeds = (
   listItems: ListType[],
   origin: RecommendationOrigin
@@ -49,9 +51,9 @@ export const workIdsToRecommendationSeeds = (
   workIds.map((workId) => ({ origin: "favorite", type: "work-id", workId }));
 
 /**
- * Orders the materials to base recommendations on: the loans in random order,
- * then the reservations, then the favorites. The first is the preferred seed
- * and the rest are the ones to fall back to.
+ * Orders the materials to base recommendations on.
+ *
+ * The loans in random order, then the reservations, then the favorites.
  */
 export const orderRecommendationSeeds = ({
   loans,
