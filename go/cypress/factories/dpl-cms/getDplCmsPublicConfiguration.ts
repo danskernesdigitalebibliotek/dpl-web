@@ -29,6 +29,7 @@ export default Factory.define<
       public: {
         loginUrls: {
           adgangsplatformen: "/mocked/login",
+          unilogin: "/mocked/login?idp=unilogin",
         },
         logoutUrls: {
           adgangsplatformen: "/mocked/logout",

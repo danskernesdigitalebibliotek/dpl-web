@@ -63,6 +63,7 @@ export type AdgangsplatformenUserToken = {
   __typename?: 'AdgangsplatformenUserToken';
   expire?: Maybe<DateTime>;
   token?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
 };
 
 export type AppCategory = {
@@ -349,6 +350,7 @@ export type GoLibraryInfo = {
 export type GoLoginUrls = {
   __typename?: 'GoLoginUrls';
   adgangsplatformen?: Maybe<Scalars['String']['output']>;
+  unilogin?: Maybe<Scalars['String']['output']>;
 };
 
 export type GoLogoutUrls = {
@@ -1377,7 +1379,6 @@ export type Translation = {
 
 export type UniloginConfigurationPrivate = {
   __typename?: 'UniloginConfigurationPrivate';
-  clientSecret?: Maybe<Scalars['String']['output']>;
   pubHubRetailerKeyCode?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2312,12 +2313,12 @@ export type GetCategoryPageByPathQuery = { go: { cacheTags: string[] } } & { __t
 export type GetDplCmsPrivateConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPrivateConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', private?: { __typename?: 'GoConfigurationPrivate', unilogin?: { __typename?: 'UniloginConfigurationPrivate', clientSecret?: string | null, pubHubRetailerKeyCode?: string | null } | null } | null } | null };
+export type GetDplCmsPrivateConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', private?: { __typename?: 'GoConfigurationPrivate', unilogin?: { __typename?: 'UniloginConfigurationPrivate', pubHubRetailerKeyCode?: string | null } | null } | null } | null };
 
 export type GetDplCmsPublicConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', blacklistedAvailabilityBranches?: Array<string> | null, smsNotificationsEnabled?: boolean | null, libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, mapp?: { __typename?: 'MappTracking', domain?: string | null, id?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null, biblio?: { __typename?: 'GoBiblioConfiguration', enabled: boolean, baseUrl?: string | null, sdk?: { __typename?: 'GoBiblioSdkConfiguration', applicationId: string, firebaseApiKey: string, firebaseProjectId: string, firebaseAppId: string, readerApiKey: string } | null } | null } | null } | null };
+export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', blacklistedAvailabilityBranches?: Array<string> | null, smsNotificationsEnabled?: boolean | null, libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null, unilogin?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, mapp?: { __typename?: 'MappTracking', domain?: string | null, id?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null, biblio?: { __typename?: 'GoBiblioConfiguration', enabled: boolean, baseUrl?: string | null, sdk?: { __typename?: 'GoBiblioSdkConfiguration', applicationId: string, firebaseApiKey: string, firebaseProjectId: string, firebaseAppId: string, readerApiKey: string } | null } | null } | null } | null };
 
 export type GetPageByPathQueryVariables = Exact<{
   path: Scalars['String']['input'];
@@ -2896,7 +2897,7 @@ export type GetAdgangsplatformenLibraryTokenQuery = { go: { cacheTags: string[] 
 export type GetAdgangsplatformenUserTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAdgangsplatformenUserTokenQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', user?: { __typename?: 'AdgangsplatformenUserToken', token?: string | null, expire?: { __typename?: 'DateTime', timestamp: unknown } | null } | null } | null } | null };
+export type GetAdgangsplatformenUserTokenQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', user?: { __typename?: 'AdgangsplatformenUserToken', token?: string | null, type?: string | null, expire?: { __typename?: 'DateTime', timestamp: unknown } | null } | null } | null } | null };
 
 export type GetLoginUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3464,7 +3465,6 @@ export const GetDplCmsPrivateConfigurationDocument = `
   goConfiguration {
     private {
       unilogin {
-        clientSecret
         pubHubRetailerKeyCode
       }
     }
@@ -3520,6 +3520,7 @@ export const GetDplCmsPublicConfigurationDocument = `
       }
       loginUrls {
         adgangsplatformen
+        unilogin
       }
       logoutUrls {
         adgangsplatformen
@@ -3798,6 +3799,7 @@ export const GetAdgangsplatformenUserTokenDocument = `
           timestamp
         }
         token
+        type
       }
     }
   }

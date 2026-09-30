@@ -6,19 +6,19 @@ import React, { useContext } from "react"
 import LoginPanel from "@/components/shared/loginPanel/LoginPanel"
 import ResponsiveSheet from "@/components/shared/responsiveSheet/ResponsiveSheet"
 import { cyKeys } from "@/cypress/support/constants"
-import routes from "@/lib/config/resolvers/routes"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 import { sheetStore } from "@/store/sheet.store"
 
 function LoginSheet({ open, onLogin }: { open: boolean; onLogin?: () => void }) {
   const dplCmsConfig = useContext(DplCmsConfigContext)
   const loginUrlAdgangsplatformen = dplCmsConfig?.loginUrls?.adgangsplatformen
+  const loginUrlUnilogin = dplCmsConfig?.loginUrls?.unilogin
   const { closeSheet } = sheetStore.trigger
   const router = useRouter()
 
   const handleUniLogin = () => {
     if (onLogin) onLogin()
-    router.push(routes["routes.login.unilogin"])
+    router.push(loginUrlUnilogin ?? "/")
   }
 
   const handleAdgangsplatformenLogin = () => {
@@ -33,6 +33,7 @@ function LoginSheet({ open, onLogin }: { open: boolean; onLogin?: () => void }) 
           heading="Log ind med Unilogin"
           ariaLabel="Log ind med Unilogin"
           onLogin={handleUniLogin}
+          disabled={!loginUrlUnilogin}
           dataCy={cyKeys["login-sheet-unilogin-button"]}
           description="Med Unilogin kan du låne e-bøger, lydbøger og podcasts."
         />

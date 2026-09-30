@@ -34,8 +34,8 @@ testSilently("That the env variable GO_SESSION_SECRET validates the length", asy
 
 // test that optional env variables can be undefined
 test("That optional env variables can be undefined", async () => {
-  vi.stubEnv("UNILOGIN_CLIENT_SECRET", undefined)
-  const uniLoginClientId = getServerEnv("UNILOGIN_CLIENT_SECRET")
+  vi.stubEnv("ADGANGSPLATFORMEN_USERINFO_URL", undefined)
+  const userinfoUrl = getServerEnv("ADGANGSPLATFORMEN_USERINFO_URL")
 
-  expect(uniLoginClientId).toBeUndefined()
+  expect(userinfoUrl).toBeUndefined()
 })

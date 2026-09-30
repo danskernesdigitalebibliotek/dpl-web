@@ -7,10 +7,8 @@ import { NextRequest } from "next/server"
 import { describe, it, vi } from "vitest"
 
 import goConfig from "@/lib/config/goConfig"
-import * as bearerTokenFunctions from "@/lib/helpers/bearer-token"
 import * as libraryTokenFunctions from "@/lib/helpers/library-token"
 import * as userTokenFunctions from "@/lib/helpers/user-token"
-import * as uniloginClientConfigFunctions from "@/lib/session/oauth/uniloginClient"
 import * as sessionFunctions from "@/lib/session/session"
 import { proxy as middleware } from "@/proxy"
 
@@ -25,16 +23,9 @@ vi.mock("next/headers", () => ({
   },
 }))
 
-vi.mock("@/lib/session/oauth/uniloginClient", () => ({
-  getUniloginClientConfig: vi.fn(),
-}))
 vi.mock("iron-session", () => ({
   getIronSession: vi.fn(),
 }))
-vi.mock("openid-client", () => ({
-  discovery: vi.fn(),
-}))
-
 vi.mock("@lib/helpers/library-token", () => ({
   loadLibraryToken: vi.fn(),
 }))
@@ -45,10 +36,6 @@ vi.mock("@lib/helpers/user-token", () => ({
 vi.mock("@lib/session/fetchSession", () => ({
   getSession: vi.fn(),
 }))
-vi.mock("openid-client", () => ({
-  refreshTokenGrant: vi.fn(),
-}))
-
 vi.mock("@/lib/session/session", async importOriginal => {
   const actual = await importOriginal()
   return {
@@ -57,42 +44,29 @@ vi.mock("@/lib/session/session", async importOriginal => {
       isLoggedIn: false,
       type: "anonymous",
       expires: undefined,
-      refresh_expires: undefined,
-      access_token: undefined,
-      refresh_token: undefined,
-      id_token: undefined,
-      code_verifier: undefined,
       userInfo: undefined,
       adgangsplatformenUserToken: undefined,
     },
     destroySession: vi.fn(),
     getDplCmsSessionCookie: vi.fn(),
-    markAdgangsplatformenSessionValidated: vi.fn(),
+    markSessionValidated: vi.fn(),
     getSession: vi.fn(),
-    saveAdgangsplatformenSession: vi.fn(),
-    removePCKECodeVerifierFromSession: vi.fn(),
-    sessionHasPKCECodeVerifier: vi.fn(),
+    saveSessionFromUserToken: vi.fn(),
   }
 })
 
 const getFakeSessions = () => {
-  const uniloginSessionThatShouldBeRefreshed = {
+  const liveUniloginSession = {
     isLoggedIn: true,
     type: "unilogin",
-    expires: add(new Date(), { seconds: 59 }),
-    refresh_expires: add(new Date(), { seconds: 59 }),
-    access_token: "access_token",
-    refresh_token: "refresh",
-    id_token: "id",
+    expires: add(new Date(), { days: 1 }),
+    uniLoginUserInfo: { uniid: "uniid", institutionIds: ["101047"] },
+    save: vi.fn(),
   }
-  const uniloginSessionWithExpiredRefreshToken = {
-    isLoggedIn: true,
-    type: "unilogin",
-    expires: sub(new Date(), { minute: 2 }),
-    refresh_expires: sub(new Date(), { minute: 1 }),
-    access_token: "access_token",
-    refresh_token: "refresh",
-    id_token: "id",
+
+  const expiredUniloginSession = {
+    ...liveUniloginSession,
+    expires: sub(new Date(), { minutes: 1 }),
   }
 
   const adgangsplatformenSessionThatDoesNotNeedToBeRefreshed = {
@@ -113,13 +87,12 @@ const getFakeSessions = () => {
     isLoggedIn: true,
     type: "adgangsplatformen",
     expires: sub(new Date(), { minutes: 1 }),
-    refresh_expires: sub(new Date(), { minutes: 1 }),
   }
 
   return {
     adgangsplatformenSessionCloseToExpiry,
-    uniloginSessionThatShouldBeRefreshed,
-    uniloginSessionWithExpiredRefreshToken,
+    liveUniloginSession,
+    expiredUniloginSession,
     adgangsplatformenSessionThatDoesNotNeedToBeRefreshed,
     adgangsPlatformenSessionThatIsTooOld,
     anonymousSession: sessionFunctions.defaultSession,
@@ -202,8 +175,8 @@ describe("Middleware", () => {
       })
     )
 
-    const saveAdgangsplatformenSessionSpy = vi
-      .spyOn(sessionFunctions, "saveAdgangsplatformenSession")
+    const saveSessionFromUserTokenSpy = vi
+      .spyOn(sessionFunctions, "saveSessionFromUserToken")
       .mockResolvedValue(Promise.resolve())
 
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
@@ -218,13 +191,14 @@ describe("Middleware", () => {
         data: {
           token: "hi-I-am-a-dpl-cms-user-token",
           expire: { timestamp: 363663636 },
+          type: "adgangsplatformen",
         },
       })
     )
 
     await middleware(getNextRequestWithLibraryTokenCookie())
 
-    expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(1)
+    expect(saveSessionFromUserTokenSpy).toHaveResolvedTimes(1)
   })
 
   // The GO session lives exactly as long as the user token — the CMS cannot
@@ -234,8 +208,8 @@ describe("Middleware", () => {
       Promise.resolve(sessions.adgangsplatformenSessionCloseToExpiry)
     )
 
-    const saveAdgangsplatformenSessionSpy = vi
-      .spyOn(sessionFunctions, "saveAdgangsplatformenSession")
+    const saveSessionFromUserTokenSpy = vi
+      .spyOn(sessionFunctions, "saveSessionFromUserToken")
       .mockResolvedValue(Promise.resolve())
 
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
@@ -250,13 +224,14 @@ describe("Middleware", () => {
         data: {
           token: "hi-I-am-a-dpl-cms-user-token",
           expire: { timestamp: 363663636 },
+          type: "adgangsplatformen",
         },
       })
     )
 
     await middleware(getNextRequestWithLibraryTokenCookie())
 
-    expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(0)
+    expect(saveSessionFromUserTokenSpy).toHaveResolvedTimes(0)
   })
 
   it("does NOT refresh an Adgangsplatform session if it isn't expired yet", async () => {
@@ -264,8 +239,8 @@ describe("Middleware", () => {
       Promise.resolve(sessions.adgangsplatformenSessionThatDoesNotNeedToBeRefreshed)
     )
 
-    const saveAdgangsplatformenSessionSpy = vi
-      .spyOn(sessionFunctions, "saveAdgangsplatformenSession")
+    const saveSessionFromUserTokenSpy = vi
+      .spyOn(sessionFunctions, "saveSessionFromUserToken")
       .mockResolvedValue(Promise.resolve())
 
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
@@ -280,91 +255,14 @@ describe("Middleware", () => {
         data: {
           token: "hi-I-am-a-dpl-cms-user-token",
           expire: { timestamp: 363663636 },
+          type: "adgangsplatformen",
         },
       })
     )
 
     await middleware(getNextRequestWithLibraryTokenCookie())
 
-    expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(0)
-  })
-
-  it("can refresh a Unilogin session if it is expired", async () => {
-    vi.spyOn(uniloginClientConfigFunctions, "getUniloginClientConfig").mockResolvedValue(
-      Promise.resolve({
-        wellknownUrl: "https://unilogin.example.com",
-        clientId: "client-id",
-      })
-    )
-
-    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
-      Promise.resolve(sessions.uniloginSessionThatShouldBeRefreshed)
-    )
-
-    const refreshUniloginTokensSpy = vi
-      .spyOn(bearerTokenFunctions, "refreshUniloginTokens")
-      .mockResolvedValue(Promise.resolve())
-
-    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
-      Promise.resolve({
-        getAll: vi.fn(() => [fakeDrupalSessionRequestCookie]),
-        get: vi.fn(() => fakeDrupalSessionRequestCookie),
-      })
-    )
-    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
-      await Promise.resolve({
-        status: "token" as const,
-        data: {
-          token: "hi-I-am-a-dpl-cms-user-token",
-          expire: { timestamp: 363663636 },
-        },
-      })
-    )
-
-    await middleware(getNextRequestWithLibraryTokenCookie())
-
-    expect(refreshUniloginTokensSpy).toHaveResolvedTimes(1)
-  })
-
-  // @todo Would be nice to have this test as well.
-  // Ran intro problems with that it only fails when it is running together with the other tests.
-  it("can destroy a Unilogin session if the refresh time is overdue", async () => {
-    // Note: The refresh endpoint is typically failing because the refresh lifespan has run out.
-    // But it can also fail for abritraty reasons - eg. server down.
-    vi.unmock("@/lib/session/session")
-    vi.doMock("@/lib/session/session", async importOriginal => {
-      const actual = await importOriginal()
-      return {
-        ...actual,
-        destroySession: vi.fn(),
-        getSession: vi.fn(),
-      }
-    })
-
-    vi.spyOn(uniloginClientConfigFunctions, "getUniloginClientConfig").mockResolvedValue(
-      Promise.resolve({
-        wellknownUrl: "https://unilogin.example.com",
-        clientId: "client-id",
-      })
-    )
-
-    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
-      Promise.resolve({ ...sessions.uniloginSessionWithExpiredRefreshToken, destroy: vi.fn() })
-    )
-
-    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
-      Promise.resolve({
-        getAll: vi.fn(() => [fakeDrupalSessionRequestCookie]),
-        get: vi.fn(() => fakeDrupalSessionRequestCookie),
-      })
-    )
-    const destroySessionSpy = vi
-      .spyOn(sessionFunctions, "destroySession")
-      .mockResolvedValue(Promise.resolve())
-
-    await middleware(getNextRequestWithLibraryTokenCookie())
-
-    expect(destroySessionSpy).toHaveBeenCalledTimes(1)
+    expect(saveSessionFromUserTokenSpy).toHaveResolvedTimes(0)
   })
 
   it("can destroy an Adgangsplatformen session if the access token lifetime has run out", async () => {
@@ -395,6 +293,7 @@ describe("Middleware", () => {
         data: {
           token: "hi-I-am-a-dpl-cms-user-token",
           expire: { timestamp: 363663636 },
+          type: "adgangsplatformen",
         },
       })
     )
@@ -406,10 +305,14 @@ describe("Middleware", () => {
 
   // Drupal can retire the session while the token is still accepted by the
   // services, so the CMS is the only party that knows it is over.
-  const setUpLoggedInRevalidation = (tokenResult: unknown, validatedAt?: Date) => {
+  const setUpLoggedInRevalidation = (
+    tokenResult: unknown,
+    validatedAt?: Date,
+    session = sessions.adgangsplatformenSessionThatDoesNotNeedToBeRefreshed
+  ) => {
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
       Promise.resolve({
-        ...sessions.adgangsplatformenSessionThatDoesNotNeedToBeRefreshed,
+        ...session,
         validatedAt,
         save: vi.fn(),
       })
@@ -478,61 +381,149 @@ describe("Middleware", () => {
     expect(destroySessionSpy).toHaveResolvedTimes(1)
   })
 
-  it("removes PKCE code verifier from session if it exists", async () => {
+  const tokenOfType = (type: string) => ({
+    status: "token" as const,
+    data: {
+      token: "hi-I-am-a-dpl-cms-user-token",
+      expire: { timestamp: 363663636 },
+      type,
+    },
+  })
+
+  // A Unilogin login runs through the CMS as well, so the anonymous
+  // auto-login must pick the session type from the token, not assume a patron.
+  it("creates a session from a Unilogin token handed out by the CMS", async () => {
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
+      Promise.resolve(sessions.anonymousSession)
+    )
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
       Promise.resolve({
-        getAll: vi.fn(() => []),
+        getAll: vi.fn(() => [fakeDrupalSessionRequestCookie]),
+        get: vi.fn(() => fakeDrupalSessionRequestCookie),
       })
     )
-
-    // Create a session with a code_verifier
-    const sessionWithCodeVerifier = {
-      ...sessions.anonymousSession,
-      code_verifier: "test-pkce-code-verifier",
-      save: vi.fn(),
-    }
-
-    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
-      Promise.resolve(sessionWithCodeVerifier)
-    )
-
-    const removePCKECodeVerifierSpy = vi.spyOn(
-      sessionFunctions,
-      "removePCKECodeVerifierFromSession"
-    )
+    const token = tokenOfType("unilogin")
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(Promise.resolve(token))
+    const saveSessionFromUserTokenSpy = vi
+      .spyOn(sessionFunctions, "saveSessionFromUserToken")
+      .mockResolvedValue(Promise.resolve(true))
 
     await middleware(getNextRequestWithLibraryTokenCookie())
 
-    // Verify that the function was called with the session
-    expect(removePCKECodeVerifierSpy).toHaveBeenCalledTimes(1)
-    expect(removePCKECodeVerifierSpy).toHaveBeenCalledWith(sessionWithCodeVerifier)
+    expect(saveSessionFromUserTokenSpy).toHaveBeenCalledWith(sessions.anonymousSession, token.data)
   })
 
-  it("does not attempt to remove PKCE code verifier if it doesn't exist in session", async () => {
+  // The userinfo lookup can fail. The visitor then simply stays anonymous.
+  it("lets the request continue anonymously when no session could be created", async () => {
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
+      Promise.resolve(sessions.anonymousSession)
+    )
     vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
       Promise.resolve({
-        getAll: vi.fn(() => []),
+        getAll: vi.fn(() => [fakeDrupalSessionRequestCookie]),
+        get: vi.fn(() => fakeDrupalSessionRequestCookie),
       })
     )
-
-    // Create a session without a code_verifier
-    const sessionWithoutCodeVerifier = {
-      ...sessions.anonymousSession,
-      save: vi.fn(),
-    }
-
-    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
-      Promise.resolve(sessionWithoutCodeVerifier)
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
+      Promise.resolve(tokenOfType("unilogin"))
     )
+    vi.spyOn(sessionFunctions, "saveSessionFromUserToken").mockResolvedValue(Promise.resolve(false))
+    const destroySessionSpy = vi.spyOn(sessionFunctions, "destroySession")
 
-    const removePCKECodeVerifierSpy = vi.spyOn(
-      sessionFunctions,
-      "removePCKECodeVerifierFromSession"
+    const response = await middleware(getNextRequestWithLibraryTokenCookie())
+
+    expect(response.status).toBe(200)
+    expect(destroySessionSpy).toHaveBeenCalledTimes(0)
+  })
+
+  // Unilogin sessions are tied to the Drupal session just like
+  // Adgangsplatformen sessions (ADR-013).
+  it("can destroy a Unilogin session if it is active and a Drupal session does not exist", async () => {
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValueOnce(
+      Promise.resolve(sessions.liveUniloginSession)
     )
+    vi.spyOn(sessionFunctions, "getDplCmsSessionCookie").mockResolvedValue(Promise.resolve())
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
 
     await middleware(getNextRequestWithLibraryTokenCookie())
 
-    // Verify that the removal function was NOT called since there's no code_verifier
-    expect(removePCKECodeVerifierSpy).toHaveBeenCalledTimes(0)
+    expect(destroySessionSpy).toHaveResolvedTimes(1)
   })
+
+  it("can destroy a Unilogin session if the token lifetime has run out", async () => {
+    vi.spyOn(sessionFunctions, "getDplCmsSessionCookie").mockResolvedValue(
+      Promise.resolve(fakeDrupalSessionRequestCookie)
+    )
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
+      Promise.resolve(sessions.expiredUniloginSession)
+    )
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
+
+    await middleware(getNextRequestWithLibraryTokenCookie())
+
+    expect(destroySessionSpy).toHaveResolvedTimes(1)
+  })
+
+  it("destroys a logged in Unilogin session when the CMS has no token for it", async () => {
+    const request = setUpLoggedInRevalidation(
+      { status: "no-token" },
+      undefined,
+      sessions.liveUniloginSession
+    )
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
+
+    await middleware(request)
+
+    expect(destroySessionSpy).toHaveResolvedTimes(1)
+  })
+
+  it.each([
+    ["unilogin", "adgangsplatformen"],
+    ["adgangsplatformen", "unilogin"],
+  ])(
+    "keeps a logged in %s session when the CMS hands out a token of the same type",
+    async sessionType => {
+      const session =
+        sessionType === "unilogin"
+          ? sessions.liveUniloginSession
+          : sessions.adgangsplatformenSessionThatDoesNotNeedToBeRefreshed
+      const request = setUpLoggedInRevalidation(tokenOfType(sessionType), undefined, session)
+      const destroySessionSpy = vi.spyOn(sessionFunctions, "destroySession")
+      const markSessionValidatedSpy = vi.spyOn(sessionFunctions, "markSessionValidated")
+
+      await middleware(request)
+
+      expect(destroySessionSpy).toHaveBeenCalledTimes(0)
+      expect(markSessionValidatedSpy).toHaveBeenCalledTimes(1)
+    }
+  )
+
+  // Somebody else logged in on the CMS in the same browser, e.g. a parent
+  // after a student. The GO session must not live on with the new token.
+  it.each([
+    ["unilogin", "adgangsplatformen"],
+    ["adgangsplatformen", "unilogin"],
+  ])(
+    "destroys a logged in %s session when the CMS hands out a %s token",
+    async (sessionType, tokenType) => {
+      const session =
+        sessionType === "unilogin"
+          ? sessions.liveUniloginSession
+          : sessions.adgangsplatformenSessionThatDoesNotNeedToBeRefreshed
+      const request = setUpLoggedInRevalidation(tokenOfType(tokenType), undefined, session)
+      const destroySessionSpy = vi
+        .spyOn(sessionFunctions, "destroySession")
+        .mockResolvedValue(Promise.resolve())
+
+      await middleware(request)
+
+      expect(destroySessionSpy).toHaveResolvedTimes(1)
+    }
+  )
 })

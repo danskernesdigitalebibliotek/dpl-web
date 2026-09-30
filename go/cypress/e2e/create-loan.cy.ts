@@ -2,13 +2,8 @@ import getV1UserLoansAdapterFactory, { loanFactory } from "../factories/ap/getV1
 import complexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
 import { worksWithIdentifiersFactory } from "../factories/fbi/factory-parts/works"
 import getMaterial from "../factories/fbi/getMaterial"
-import configuration from "../factories/unilogin/configuration"
 import createloan from "../factories/unilogin/createloan"
-import institution from "../factories/unilogin/institution"
-import introspection from "../factories/unilogin/introspection"
-import tokenSet from "../factories/unilogin/tokenSet"
-import userinfo from "../factories/unilogin/userinfo"
-import { mockFrontpage, mockUniloginProfilePage } from "../support/mocks"
+import { mockFrontpage, mockUniloginLoginCallback, mockUniloginProfilePage } from "../support/mocks"
 
 describe("Create loan UI Tests", () => {
   beforeEach(() => {
@@ -58,39 +53,9 @@ describe("Create loan UI Tests", () => {
     // Find the loan audiobook button using its text
     cy.contains("Lån lydbog").click()
 
-    const mockedCallbackUrl =
-      "/auth/callback/unilogin?session_state=60cda845-402f-4085-b41d-3e4e773e04d4&code=3a6c3675-8ec8-472f-bcd5-9425be472d6d.60cda845-402f-4085-b41d-3e4e773e04d4.135f0ca5-6083-4b5c-9de6-d4a1b3f8d60c"
+    mockUniloginLoginCallback()
 
-    cy.mockServerRest({
-      method: "GET",
-      path: "/.well-known/openid-configuration",
-      data: configuration.build(),
-    })
-
-    cy.mockServerRest({
-      method: "POST",
-      path: "/token",
-      data: tokenSet.build(),
-    })
-
-    cy.mockServerRest({
-      method: "POST",
-      path: "/introspect",
-      data: introspection.build(),
-    })
-
-    cy.mockServerRest({
-      method: "GET",
-      path: "/userinfo",
-      data: userinfo.build(),
-    })
-
-    cy.mockServerSoap({
-      path: "/institution",
-      data: institution,
-    })
-
-    cy.visit(mockedCallbackUrl)
+    cy.visit("/auth/callback/adgangsplatformen")
 
     cy.intercept("GET", "/pubhub/v1/user/loans", {
       statusCode: 200,

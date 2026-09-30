@@ -3,6 +3,7 @@ import { z } from "zod"
 export const publicConfigSchema = z.object({
   loginUrls: z.object({
     adgangsplatformen: z.string().nullable(),
+    unilogin: z.string().nullable(),
   }),
   logoutUrls: z.object({
     adgangsplatformen: z.string().nullable(),
@@ -55,7 +56,6 @@ export const publicConfigSchema = z.object({
 
 export const privateConfigSchema = z.object({
   unilogin: z.object({
-    clientSecret: z.string().nullable(),
     pubHubRetailerKeyCode: z.string().nullable(),
   }),
 })
