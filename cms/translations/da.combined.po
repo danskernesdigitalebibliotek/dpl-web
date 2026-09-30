@@ -35022,7 +35022,7 @@ msgstr ""
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Side til 0-hits søgninger"
-msgstr ""
+msgstr "Side til 0-hits søgninger"
 
 #: 
 msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:settings:past_format"
@@ -35082,7 +35082,7 @@ msgstr ""
 #: 
 msgctxt "Global"
 msgid "Reservations of digital materials are closed while we are moving to a new service. Please try again later."
-msgstr ""
+msgstr "Reserveringer på digitale materialer er ude af drift, mens vi skifter til en ny service for digitale lån. Prøv igen senere."
 
 #: 
 msgctxt "Dpl Biblio"
@@ -35092,7 +35092,7 @@ msgstr ""
 #: 
 msgctxt "Global"
 msgid "You cannot cancel this reservation while we are moving to a new service. Your place in the queue is kept."
-msgstr ""
+msgstr "Du kan ikke slette din digitale reservering, mens vi skifter til en ny service for digitale lån. Din plads i køen flyttes med til den nye service."
 
 #: 
 msgctxt "Series Page"
@@ -35112,7 +35112,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Inspiration for you"
-msgstr ""
+msgstr "Inspiration til dig"
 
 #: 
 msgctxt "dpl_service_message"
@@ -35208,7 +35208,7 @@ msgstr "Forsiden og bibliotekssider"
 
 #: 
 msgid "Important service message"
-msgstr ""
+msgstr "Vigtig servicebesked"
 
 #: 
 msgctxt "dpl_service_message"
@@ -35312,32 +35312,32 @@ msgstr ""
 #: 
 msgctxt "core.base_field_override.node.service_message.status:label"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.service_messages:display:default:display_options:fields:status:label"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.service_messages:display:default:display_options:fields:status:settings:format_custom_true"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.service_messages:display:default:display_options:filters:status:expose:label"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:group_items:1:title"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:label"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "dpl_service_message"
@@ -35508,12 +35508,12 @@ msgstr ""
 #: 
 msgctxt "views.view.service_messages:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:group_items:2:title"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "dpl_service_message"

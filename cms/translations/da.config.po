@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-30 11:12+0200\n"
-"PO-Revision-Date: 2026-09-30 11:12+0200\n"
+"POT-Creation-Date: 2026-09-30 11:52+0200\n"
+"PO-Revision-Date: 2026-09-30 11:52+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8144,27 +8144,27 @@ msgstr ""
 
 msgctxt "core.base_field_override.node.service_message.status:label"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 msgctxt "views.view.service_messages:display:default:display_options:fields:status:label"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 msgctxt "views.view.service_messages:display:default:display_options:fields:status:settings:format_custom_true"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 msgctxt "views.view.service_messages:display:default:display_options:filters:status:expose:label"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:group_items:1:title"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:label"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:reset_button_label"
 msgid "Reset"
@@ -8257,11 +8257,11 @@ msgstr ""
 
 msgctxt "views.view.service_messages:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:group_items:2:title"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 msgctxt "views.view.service_messages:display:default:display_options:pager:options:tags:first"
 msgid "« First"
