@@ -88,7 +88,6 @@ export { useDigitalSupportId } from "./hooks/useDigitalSupportId"
 export type { QuotaUsage } from "./digital-quotas"
 export type {
   DigitalMaterial,
-  DigitalMaterialType,
   MaterialType,
   LoanProvider,
   DigitalLoan,

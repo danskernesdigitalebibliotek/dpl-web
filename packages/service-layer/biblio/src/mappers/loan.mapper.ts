@@ -1,24 +1,14 @@
 import { z } from "zod"
 
 import type { DigitalLoan } from "../../../src/types"
+import { LoanProvider, MaterialType } from "../generated/model"
+import { openEnum } from "./open-enum"
 
-// Loans and reservations use the broad material type where metadata is
-// restricted to ebook | audiobook.
-export const MaterialTypeSchema = z.enum(["ebook", "audiobook", "paper_book"])
-
-// The licence types a loan can be made under - see LoanProvider in src/types
-// for what each of them means.
-export const LoanProviderSchema = z.enum([
-  "free",
-  "k-fond",
-  "click",
-  "package",
-  "premium",
-  "selection",
-])
+export const MaterialTypeSchema = openEnum("material_type", Object.values(MaterialType))
 
 // zod strips unknown keys, so new adapter fields do not break parsing. Every
-// field below is required by the contract, so a missing one throws.
+// field below is required by the contract, so a missing one throws; the enum
+// fields are open - see openEnum.
 export const LoanSchema = z.object({
   id: z.string(),
   material_id: z.string(),
@@ -30,7 +20,7 @@ export const LoanSchema = z.object({
   author: z.string(),
   publisher: z.string(),
   publish_date: z.string(),
-  license: z.object({ type: LoanProviderSchema }),
+  license: z.object({ type: openEnum("license.type", Object.values(LoanProvider)) }),
 })
 
 const GetLoansResponseSchema = z.object({
