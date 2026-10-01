@@ -1,10 +1,9 @@
 import * as React from "react"
 
-import type {
-  WedoBooksReaderMaterial,
-  WedoBooksSdk,
-  WedoBooksOpenFailure,
-  WedoBooksSessionInterruption,
+import {
+  type WedoBooksReaderMaterial,
+  type WedoBooksSdk,
+  type WedoBooksStopReason,
 } from "./sdk"
 import { useSdkMount } from "./useSdkMount"
 
@@ -15,13 +14,14 @@ export interface WedoBooksReaderProps {
    * adapter can be handed over without converting any dates.
    */
   checkout: WedoBooksReaderMaterial
+  /** The reader's own close control was used. */
+  onClose: () => void
   /**
-   * The reader has left the page. Without an interruption its own close
-   * control was used; with one the SDK ended it because the session moved.
+   * The SDK will not show the book: it closed the reader because the session
+   * moved, or refused to open it and mounted nothing. Either way the page is
+   * empty, and only the caller can say why.
    */
-  onClose: (interruption?: WedoBooksSessionInterruption) => void
-  /** The SDK refused to open the book and mounted nothing. */
-  onOpenError?: (failure: WedoBooksOpenFailure) => void
+  onStop: (reason: WedoBooksStopReason) => void
   /**
    * The reader asked to finish the book.
    *
@@ -44,7 +44,7 @@ export function WedoBooksReader({
   sdk,
   checkout,
   onClose,
-  onOpenError,
+  onStop,
   onFinishBook,
 }: WedoBooksReaderProps): React.ReactElement {
   const elementRef = useSdkMount(
@@ -52,10 +52,13 @@ export function WedoBooksReader({
       sdk.books.openReader({
         element,
         checkout,
-        callbacks: { onClose, onFinishBookClick: onFinishBook },
+        callbacks: {
+          onClose: interruption => (interruption ? onStop(interruption) : onClose()),
+          onFinishBookClick: onFinishBook,
+        },
       }),
     [sdk, checkout.id],
-    onOpenError
+    onStop
   )
 
   return <div ref={elementRef} className="wedobooks-reader" />

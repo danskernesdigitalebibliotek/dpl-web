@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 import type { WedoBooksSdk } from "@danskernesdigitalebibliotek/dpl-wedobooks";
 import { useText } from "../../core/utils/text";
 import { formatDate } from "../../core/utils/helpers/date";
@@ -32,14 +32,11 @@ const DeviceLimitReached: React.FC<DeviceLimitReachedProps> = ({
   onClose
 }) => {
   const t = useText();
-  // One removal at a time: it takes a moment, and a second click meanwhile
-  // would give up a device the patron did not mean to.
-  const [removing, setRemoving] = useState(false);
 
   return (
     <Suspense fallback={null}>
       <SdkDeviceSession sdk={sdk}>
-        {(devices, removeDevice) =>
+        {(devices, removeDevice, removing) =>
           // Nothing to say until the list is in: the message names the limit.
           devices && (
             <DigitalSessionMessage
@@ -72,13 +69,11 @@ const DeviceLimitReached: React.FC<DeviceLimitReachedProps> = ({
                           size="small"
                           variant="outline"
                           disabled={removing}
-                          onClick={() => {
-                            setRemoving(true);
+                          onClick={() =>
                             removeDevice(device.id).then((removed) => {
-                              setRemoving(false);
                               if (removed) onDeviceRemoved();
-                            });
-                          }}
+                            })
+                          }
                         />
                       </div>
                     </div>

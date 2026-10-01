@@ -1,10 +1,9 @@
 import * as React from "react"
 
-import type {
-  WedoBooksCheckout,
-  WedoBooksSdk,
-  WedoBooksOpenFailure,
-  WedoBooksSessionInterruption,
+import {
+  type WedoBooksCheckout,
+  type WedoBooksSdk,
+  type WedoBooksStopReason,
 } from "./sdk"
 import { useSdkMount } from "./useSdkMount"
 
@@ -15,13 +14,14 @@ export interface WedoBooksPlayerProps {
    * identity the way the reader does.
    */
   checkout: WedoBooksCheckout
+  /** The player's own close control was used. */
+  onClose: () => void
   /**
-   * The player has left the page. Without an interruption its own close
-   * control was used; with one the SDK ended it because the session moved.
+   * The SDK will not show the book: it closed the player because the session
+   * moved, or refused to open it and mounted nothing. Either way the page is
+   * empty, and only the caller can say why.
    */
-  onClose: (interruption?: WedoBooksSessionInterruption) => void
-  /** The SDK refused to open the book and mounted nothing. */
-  onOpenError?: (failure: WedoBooksOpenFailure) => void
+  onStop: (reason: WedoBooksStopReason) => void
 }
 
 /**
@@ -38,13 +38,19 @@ export function WedoBooksPlayer({
   sdk,
   checkout,
   onClose,
-  onOpenError,
+  onStop,
 }: WedoBooksPlayerProps): React.ReactElement {
   const elementRef = useSdkMount(
     element =>
-      sdk.books.openPlayerBar({ element, checkout, callbacks: { onClose } }),
+      sdk.books.openPlayerBar({
+        element,
+        checkout,
+        callbacks: {
+          onClose: interruption => (interruption ? onStop(interruption) : onClose()),
+        },
+      }),
     [sdk, checkout.id],
-    onOpenError
+    onStop
   )
 
   return <div ref={elementRef} className="wedobooks-player" />

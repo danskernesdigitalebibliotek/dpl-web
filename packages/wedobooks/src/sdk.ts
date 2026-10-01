@@ -45,11 +45,11 @@ export type WedoBooksSampleMaterial = Omit<SampleMaterialData, "material_type">
 export type WedoBooksSessionInterruption = WdbSessionInterruption
 
 /**
- * Why the SDK refused to open a book, mounting nothing. A patron may have only
- * so many devices registered, and a browser outside that list cannot open
- * anything until one is removed - see `WedoBooksDeviceSession`. The SDK's
- * codes are a growing set, so only the one acted on is named and the rest
- * fall together.
+ * Why the SDK refused to open a book, mounting nothing, where the refusal is
+ * not one of the interruptions above. A patron may have only so many devices
+ * registered, and a browser outside that list cannot open anything until one
+ * is removed - see `WedoBooksDeviceSession`. The SDK's codes are a growing
+ * set, so only the one acted on is named and the rest fall together.
  */
 export type WedoBooksOpenFailure = { reason: "device_limit_reached" } | { reason: "open_failed" }
 
@@ -60,7 +60,8 @@ export type WedoBooksOpenFailure = { reason: "device_limit_reached" } | { reason
  */
 export type WedoBooksStopReason = WedoBooksSessionInterruption | WedoBooksOpenFailure
 
-export function openFailureOf(error: unknown): WedoBooksOpenFailure {
+/** Why an open was refused, as the page should explain it. */
+export function stopReasonOf(error: unknown): WedoBooksStopReason {
   const code =
     typeof error === "object" && error !== null && "code" in error
       ? (error as { code: unknown }).code
@@ -116,46 +117,34 @@ const DEVICE_LIST_SETTLE_MS = 5000
  * Resolves once the SDK's own list no longer holds the device, not when the
  * backend has answered: the SDK judges an open against the list it holds, and
  * that lags the answer by a moment, so an open on the answer alone is refused
- * again for want of room. Resolves to whether the device was removed; a
- * refusal leaves it in the list, which the list already shows.
+ * again for want of room. The wait is bounded from the answer, since the lag
+ * is what it waits out. (The SDK's `removeDevice` should wait for its own list
+ * the way its session claim does; this goes when it does.) Resolves to whether
+ * the device was removed; a refusal leaves it in the list, which the list
+ * already shows.
  */
 export async function removeWedoBooksDevice(
   sdk: WedoBooksSdk,
   deviceId: string
 ): Promise<boolean> {
-  // On an object rather than two lets: the callbacks below write them, and the
-  // compiler would otherwise narrow `settled` to false for the check after
-  // subscribing.
-  const removal = { settled: false, unwatch: null as (() => void) | null }
-  const settle = () => {
-    if (removal.settled) return
-    removal.settled = true
-    removal.unwatch?.()
-  }
-  const gone = new Promise<void>(resolve => {
-    // The stream replays its current value to a new subscriber, possibly
-    // before `unwatch` is assigned, so settling only flags it and the
-    // subscription is closed right after in that case.
-    removal.unwatch = watchWedoBooksDevices(sdk, devices => {
-      if (!devices.devices.some(device => device.id === deviceId)) {
-        settle()
-        resolve()
-      }
-    })
-    if (removal.settled) removal.unwatch()
-    setTimeout(() => {
-      settle()
-      resolve()
-    }, DEVICE_LIST_SETTLE_MS)
-  })
-
   try {
     await sdk.deviceSession.removeDevice(deviceId)
   } catch {
-    settle()
     return false
   }
-  await gone
+
+  // The stream replays its current value, so a list that has already dropped
+  // the device resolves at once.
+  let unwatch = () => {}
+  let timer: ReturnType<typeof setTimeout> | undefined
+  await new Promise<void>(resolve => {
+    timer = setTimeout(resolve, DEVICE_LIST_SETTLE_MS)
+    unwatch = watchWedoBooksDevices(sdk, ({ devices }) => {
+      if (!devices.some(device => device.id === deviceId)) resolve()
+    })
+  })
+  clearTimeout(timer)
+  unwatch()
   return true
 }
 

@@ -2,7 +2,7 @@
 
 import type { WedoBooksSdk, WedoBooksStopReason } from "@danskernesdigitalebibliotek/dpl-wedobooks"
 import dynamic from "next/dynamic"
-import React, { useState } from "react"
+import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
@@ -60,13 +60,9 @@ const messageFor = (reason: WedoBooksStopReason) => {
  * they can free a place, after which the loan is opened again.
  */
 function DeviceLimitReached({ sdk, onRetry }: { sdk: WedoBooksSdk; onRetry: () => void }) {
-  // One removal at a time: it takes a moment, and a second click meanwhile
-  // would give up a device the patron did not mean to.
-  const [removing, setRemoving] = useState(false)
-
   return (
     <SdkDeviceSession sdk={sdk}>
-      {(devices, removeDevice) =>
+      {(devices, removeDevice, removing) =>
         devices && (
           <>
             <p className="text-typo-subtitle-md text-foreground-muted">
@@ -87,13 +83,11 @@ function DeviceLimitReached({ sdk, onRetry }: { sdk: WedoBooksSdk; onRetry: () =
                     theme="secondary"
                     size="sm"
                     disabled={removing}
-                    onClick={() => {
-                      setRemoving(true)
+                    onClick={() =>
                       removeDevice(device.id).then(removed => {
-                        setRemoving(false)
                         if (removed) onRetry()
                       })
-                    }}>
+                    }>
                     Fjern
                   </Button>
                 </li>

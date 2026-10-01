@@ -4,10 +4,7 @@ import {
   useDigitalMaterial,
   useDigitalSample,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
-import type {
-  WedoBooksSessionInterruption,
-  WedoBooksStopReason,
-} from "@danskernesdigitalebibliotek/dpl-wedobooks"
+import type { WedoBooksStopReason } from "@danskernesdigitalebibliotek/dpl-wedobooks"
 import { useSelector } from "@xstate/react"
 import dynamic from "next/dynamic"
 import React from "react"
@@ -48,15 +45,10 @@ function LoanPlayer({ loanId }: { loanId: string }) {
     })
   }
 
-  const handleClose = (interruption?: WedoBooksSessionInterruption) => {
-    if (interruption) stop(interruption)
-    else closePlayer()
-  }
-
   // The player draws its own loading state once mounted.
   if (!sdk || !checkout) return null
 
-  return <SdkPlayer sdk={sdk} checkout={checkout} onClose={handleClose} onOpenError={stop} />
+  return <SdkPlayer sdk={sdk} checkout={checkout} onClose={closePlayer} onStop={stop} />
 }
 
 // Samples open from a url rather than a material id, so the SDK needs no

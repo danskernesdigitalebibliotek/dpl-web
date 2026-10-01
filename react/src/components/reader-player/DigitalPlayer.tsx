@@ -1,9 +1,8 @@
 import React, { Suspense } from "react";
 import type {
   WedoBooksCheckout,
-  WedoBooksOpenFailure,
   WedoBooksSdk,
-  WedoBooksSessionInterruption
+  WedoBooksStopReason
 } from "@danskernesdigitalebibliotek/dpl-wedobooks";
 
 const SdkPlayer = React.lazy(() =>
@@ -17,8 +16,8 @@ export type DigitalPlayerProps = {
   sdk: WedoBooksSdk;
   /** The entitlement to play - fetched once by DigitalReaderPlayer. */
   checkout: WedoBooksCheckout;
-  onClose: (interruption?: WedoBooksSessionInterruption) => void;
-  onOpenError: (failure: WedoBooksOpenFailure) => void;
+  onClose: () => void;
+  onStop: (reason: WedoBooksStopReason) => void;
 };
 
 /**
@@ -32,7 +31,7 @@ const DigitalPlayer: React.FC<DigitalPlayerProps> = ({
   sdk,
   checkout,
   onClose,
-  onOpenError
+  onStop
 }) => {
   return (
     <Suspense fallback={null}>
@@ -40,7 +39,7 @@ const DigitalPlayer: React.FC<DigitalPlayerProps> = ({
         sdk={sdk}
         checkout={checkout}
         onClose={onClose}
-        onOpenError={onOpenError}
+        onStop={onStop}
       />
     </Suspense>
   );

@@ -14,22 +14,20 @@ import { useReaderCheckout } from "@/hooks/useReaderCheckout"
  */
 
 type ReaderProps = {
-  onClose: (interruption?: unknown) => void
-  onOpenError: (failure: unknown) => void
+  onStop: (reason: unknown) => void
 }
 
-// The reader is reduced to what it reports back: whatever `scripted` says on
+// The reader is reduced to what it reports back: whatever `stopWith` says on
 // each mount, so a second mount with nothing scripted is a successful retry.
-const scripted = vi.fn<() => { refuse?: unknown; interrupt?: unknown } | undefined>()
+const stopWith = vi.fn<() => unknown>()
 const readerMounts = vi.fn()
 
-const ReaderStub = ({ onClose, onOpenError }: ReaderProps) => {
+const ReaderStub = ({ onStop }: ReaderProps) => {
   useEffect(() => {
     readerMounts()
-    const script = scripted()
-    if (script?.refuse) onOpenError(script.refuse)
-    if (script?.interrupt) onClose(script.interrupt)
-  }, [onClose, onOpenError])
+    const reason = stopWith()
+    if (reason) onStop(reason)
+  }, [onStop])
   return <div data-testid="reader" />
 }
 
@@ -67,7 +65,7 @@ describe("DigitalReaderPlayer when the SDK will not show the loan", () => {
   }
 
   it("explains a refusal for want of room instead of leaving the page blank", () => {
-    scripted.mockReturnValueOnce({ refuse: { reason: "device_limit_reached" } })
+    stopWith.mockReturnValueOnce({ reason: "device_limit_reached" })
 
     const { onClose, getByTestId, queryByTestId } = renderReader()
 
@@ -77,7 +75,7 @@ describe("DigitalReaderPlayer when the SDK will not show the loan", () => {
   })
 
   it("opens the loan again when the dialog retries", () => {
-    scripted.mockReturnValueOnce({ refuse: { reason: "device_limit_reached" } })
+    stopWith.mockReturnValueOnce({ reason: "device_limit_reached" })
 
     const { getByText, getByTestId } = renderReader()
     fireEvent.click(getByText("retry"))
@@ -87,7 +85,7 @@ describe("DigitalReaderPlayer when the SDK will not show the loan", () => {
   })
 
   it("leaves the page only when the patron closes the dialog", () => {
-    scripted.mockReturnValueOnce({ refuse: { reason: "open_failed" } })
+    stopWith.mockReturnValueOnce({ reason: "open_failed" })
 
     const { onClose, getByText } = renderReader()
     expect(onClose).not.toHaveBeenCalled()
@@ -97,9 +95,7 @@ describe("DigitalReaderPlayer when the SDK will not show the loan", () => {
   })
 
   it("explains a session that moved elsewhere", () => {
-    scripted.mockReturnValueOnce({
-      interrupt: { reason: "taken_over", scope: "device", activeDeviceId: "other" },
-    })
+    stopWith.mockReturnValueOnce({ reason: "taken_over", scope: "device", activeDeviceId: "other" })
 
     const { onClose, getByTestId } = renderReader()
 
