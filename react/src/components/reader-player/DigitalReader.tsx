@@ -1,7 +1,9 @@
 import React, { Suspense } from "react";
 import type {
   WedoBooksCheckout,
-  WedoBooksSdk
+  WedoBooksOpenFailure,
+  WedoBooksSdk,
+  WedoBooksSessionInterruption
 } from "@danskernesdigitalebibliotek/dpl-wedobooks";
 
 // Loaded on demand: the SDK carries a reading framework, Firebase and a
@@ -17,7 +19,8 @@ export type DigitalReaderProps = {
   sdk: WedoBooksSdk;
   /** The entitlement to open - fetched once by DigitalReaderPlayer. */
   checkout: WedoBooksCheckout;
-  onClose: () => void;
+  onClose: (interruption?: WedoBooksSessionInterruption) => void;
+  onOpenError: (failure: WedoBooksOpenFailure) => void;
 };
 
 /**
@@ -31,7 +34,8 @@ export type DigitalReaderProps = {
 const DigitalReader: React.FC<DigitalReaderProps> = ({
   sdk,
   checkout,
-  onClose
+  onClose,
+  onOpenError
 }) => {
   return (
     <Suspense fallback={null}>
@@ -39,10 +43,11 @@ const DigitalReader: React.FC<DigitalReaderProps> = ({
         sdk={sdk}
         checkout={checkout}
         onClose={onClose}
+        onOpenError={onOpenError}
         // Finishing a book ends nothing yet: neither the adapter nor the SDK's
         // library flow exposes a way to hand a loan back early, so it runs to
         // its expiry. Closing is the honest response until one of them does.
-        onFinishBook={onClose}
+        onFinishBook={() => onClose()}
       />
     </Suspense>
   );
