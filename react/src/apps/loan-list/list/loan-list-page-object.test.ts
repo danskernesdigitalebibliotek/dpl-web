@@ -4,7 +4,10 @@ import {
   givenUserHasDigitalAudiobookLoan,
   givenUserHasDigitalPodcastLoan
 } from "../../../../cypress/intercepts/publizon/publizon";
-import { givenUserHasPhysicalLoan } from "../../../../cypress/intercepts/fbs/fbs";
+import {
+  givenUserHasPhysicalLoan,
+  givenUserHasPhysicalLoans
+} from "../../../../cypress/intercepts/fbs/fbs";
 import { givenManifestationByFaust } from "../../../../cypress/intercepts/fbi/manifestation";
 import { TOKEN_LIBRARY_KEY } from "../../../core/token";
 
@@ -63,6 +66,17 @@ const stubLoanListBackends = ({
   }
 };
 
+// Stub the reader route so the LÆS click can navigate without actually
+// unloading the storybook iframe.
+const givenReaderPageLoads = () =>
+  cy
+    .intercept("GET", "**/reader?orderid=*", {
+      statusCode: 200,
+      body: "<html><body>reader</body></html>",
+      headers: { "content-type": "text/html" }
+    })
+    .as("readerNavigation");
+
 describe("Loan list page", () => {
   let loanList: LoanListPage;
 
@@ -106,13 +120,7 @@ describe("Loan list page", () => {
       const orderId = "1f7e02d1-aa11-4b22-9c33-abcdef012345";
       givenUserHasDigitalEbookLoan({ orderId });
 
-      // Stub the reader route so the LÆS click can navigate without actually
-      // unloading the storybook iframe.
-      cy.intercept("GET", "**/reader?orderid=*", {
-        statusCode: 200,
-        body: "<html><body>reader</body></html>",
-        headers: { "content-type": "text/html" }
-      }).as("readerNavigation");
+      givenReaderPageLoads();
 
       // When: visiting the loan list and clicking the LÆS button
       loanList.visit([]);
@@ -124,6 +132,70 @@ describe("Loan list page", () => {
       cy.wait("@readerNavigation")
         .its("request.url")
         .should("include", `/reader?orderid=${encodeURIComponent(orderId)}`);
+    });
+  });
+
+  describe("Returning from the reader", () => {
+    beforeEach(() => {
+      stubLoanListBackends({ emptyPhysical: false });
+      givenManifestationByFaust();
+    });
+
+    it("Brings the user back to the digital loan they opened", () => {
+      // Given: enough physical loans to push the digital ones below the
+      // fold, and physical loans that arrive after the digital ones
+      givenUserHasPhysicalLoans(8, { delay: 1500 });
+      givenUserHasDigitalEbookLoan();
+      givenReaderPageLoads();
+
+      // When: opening the reader from the digital loan and closing it again
+      loanList.visit([]);
+      loanList.components.PhysicalLoanRow((row) =>
+        row.elements.title().should("be.visible")
+      );
+      loanList
+        .digitalLoanRow()
+        .elements.title()
+        .should(($title) => {
+          const { innerHeight } = $title[0].ownerDocument.defaultView!;
+          expect($title[0].getBoundingClientRect().top).to.be.above(
+            innerHeight
+          );
+        });
+      loanList.digitalLoanRow().elements.readerButton().click();
+      cy.wait("@readerNavigation");
+      cy.go("back");
+      cy.location("hash").should("eq", "#9788740065411-title");
+
+      // Then: the whole digital loan is on screen once all loans are in
+      loanList
+        .digitalLoanRow()
+        .container()
+        .should(($row) => {
+          const { top, bottom } = $row[0].getBoundingClientRect();
+          const { innerHeight } = $row[0].ownerDocument.defaultView!;
+          expect(top).to.be.at.least(0);
+          expect(bottom).to.be.at.most(innerHeight);
+        });
+    });
+  });
+
+  describe("Loading", () => {
+    beforeEach(() => {
+      stubLoanListBackends({ emptyPhysical: false });
+      givenManifestationByFaust();
+    });
+
+    it("Shows the digital loans before the physical ones arrive", () => {
+      // Given: physical loans that take long to arrive
+      givenUserHasPhysicalLoans(1, { delay: 30000 });
+      givenUserHasDigitalEbookLoan();
+
+      // When: visiting the loan list
+      loanList.visit([]);
+
+      // Then: the digital loan shows without waiting for them
+      loanList.digitalLoanRow().elements.title().should("be.visible");
     });
   });
 

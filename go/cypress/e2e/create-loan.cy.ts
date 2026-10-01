@@ -34,8 +34,11 @@ describe("Create loan UI Tests", () => {
 
     cy.visit("/work/work-of%3A870970-basis%3A136817027")
 
-    // Click the second slide select option
-    cy.get("[data-cy='slide-select-option']").eq(1).click()
+    // Selected by label: the tab order follows the work's material types.
+    cy.get("[data-cy='slide-select-option']").contains("E-bog").click()
+
+    // Names the selected type, so a wrong tab is reported as such.
+    cy.url().should("include", "type=EBOOK")
 
     // Find the try ebook button using its text
     cy.contains("Prøv e-bog").click()
@@ -52,8 +55,7 @@ describe("Create loan UI Tests", () => {
 
     cy.visit("/work/work-of%3A870970-basis%3A136817027")
 
-    // Click the second slide select option
-    cy.get("[data-cy='slide-select-option']").eq(1).click()
+    cy.get("[data-cy='slide-select-option']").contains("Lydbog").click()
 
     // Find the loan audiobook button using its text
     cy.contains("Lån lydbog").click()
