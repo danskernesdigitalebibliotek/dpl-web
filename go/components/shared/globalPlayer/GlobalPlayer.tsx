@@ -4,13 +4,18 @@ import {
   useDigitalMaterial,
   useDigitalSample,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import type {
+  WedoBooksSessionInterruption,
+  WedoBooksStopReason,
+} from "@danskernesdigitalebibliotek/dpl-wedobooks"
 import { useSelector } from "@xstate/react"
 import dynamic from "next/dynamic"
 import React from "react"
 
 import { useReaderCheckout } from "@/hooks/useReaderCheckout"
 import { useReaderSdk } from "@/hooks/useReaderSdk"
-import { closePlayer, playerStore } from "@/store/player.store"
+import { closeModal, openModal } from "@/store/modal.store"
+import { closePlayer, playLoan, playerStore } from "@/store/player.store"
 
 // Loaded on demand - see DigitalReader.
 const SdkPlayer = dynamic(
@@ -29,10 +34,29 @@ const SdkSamplePlayer = dynamic(
 function LoanPlayer({ loanId }: { loanId: string }) {
   const { sdk, checkout } = useReaderCheckout(loanId)
 
+  // The bar is gone either way, and this component with it, so the reason
+  // goes to the global modal rather than local state. A freed device plays
+  // the loan again.
+  const stop = (reason: WedoBooksStopReason) => {
+    closePlayer()
+    openModal("DigitalSessionModal", {
+      reason,
+      onRetry: () => {
+        closeModal()
+        playLoan(loanId)
+      },
+    })
+  }
+
+  const handleClose = (interruption?: WedoBooksSessionInterruption) => {
+    if (interruption) stop(interruption)
+    else closePlayer()
+  }
+
   // The player draws its own loading state once mounted.
   if (!sdk || !checkout) return null
 
-  return <SdkPlayer sdk={sdk} checkout={checkout} onClose={closePlayer} />
+  return <SdkPlayer sdk={sdk} checkout={checkout} onClose={handleClose} onOpenError={stop} />
 }
 
 // Samples open from a url rather than a material id, so the SDK needs no
