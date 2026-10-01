@@ -54,6 +54,14 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
   public bool $noCheck = FALSE;
 
   /**
+   * When deleting this subscription, also delete its content.
+   *
+   * This will remove content that's not associated with any other
+   * subscription, or is locally claimed and not published.
+   */
+  public bool $pruneContent = FALSE;
+
+  /**
    * {@inheritDoc}
    *
    * @param array<string, mixed> $values

@@ -14,7 +14,10 @@ use Drupal\taxonomy\Entity\Term;
  */
 class SubscriptionHelper {
 
-  public function __construct(protected EntityTypeManagerInterface $entityTypeManager) {}
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected BnfScheduler $scheduler,
+  ) {}
 
   /**
    * Ensure subscription with term exists.
@@ -107,6 +110,18 @@ class SubscriptionHelper {
   public function delete(Subscription $subsciption): void {
     $this->storage()->delete([$subsciption]);
 
+  }
+
+  /**
+   * Delete a subscription and it's content.
+   *
+   * Deletes content associated with the subscription if it's not part of any
+   * other subscription, and it's either not locally claimed or it's
+   * unpublished.
+   */
+  public function deleteWithContent(Subscription $subscription): void {
+    $subscription->pruneContent = TRUE;
+    $this->delete($subscription);
   }
 
   /**
