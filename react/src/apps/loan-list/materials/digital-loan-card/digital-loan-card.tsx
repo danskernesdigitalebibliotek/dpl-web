@@ -12,10 +12,7 @@ import { Cover } from "../../../../components/cover/cover";
 import AuthorYear from "../../../../components/author-year/authorYear";
 import { useText } from "../../../../core/utils/text";
 import { formatDateTimeUtc } from "../../../../core/utils/helpers/date";
-import {
-  getReaderPlayerTypeFromPublizonProductType,
-  readerUrl
-} from "../../../../components/reader-player/helper";
+import { readerUrl } from "../../../../components/reader-player/helper";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
 
@@ -44,9 +41,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
   const t = useText();
   const { track } = useEventStatistics();
 
-  const readerPlayerType = getReaderPlayerTypeFromPublizonProductType(
-    material?.publizonProductType
-  );
+  const readerPlayerType = material?.opensIn ?? null;
   const titleId = `${loanId || identifier}-title`;
   const openDetails = () => openLoanDetailsModal(loan);
   const {
