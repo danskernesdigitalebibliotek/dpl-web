@@ -3,13 +3,13 @@ import { z } from "zod"
 import type { LoanDecision, LoanRequestResult } from "../../../src/types"
 import { CanLoanResponseType, LoanProvider } from "../generated/model"
 import { LoanSchema, mapLoan } from "./loan.mapper"
-import { openEnum } from "./open-enum"
+import { openStringUnion } from "./open-string-union"
 
 const LoanDecisionSchema = z.object({
-  status: openEnum("status", Object.values(CanLoanResponseType)),
+  status: openStringUnion("status", Object.values(CanLoanResponseType)),
   // Optional by contract: "the provider selected for the attempted loan, when
   // available" - absent when no provider could be picked at all.
-  loan_provider: openEnum("loan_provider", Object.values(LoanProvider)).optional(),
+  loan_provider: openStringUnion("loan_provider", Object.values(LoanProvider)).optional(),
   unavailable_reason: z.string().optional(),
   lending_block_reason: z.string().optional(),
 })

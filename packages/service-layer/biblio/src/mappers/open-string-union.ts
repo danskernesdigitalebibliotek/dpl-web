@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import type { OpenType } from "../../../src/types"
+import type { OpenStringUnion } from "../../../src/types"
 
 const warned = new Set<string>()
 
@@ -9,8 +9,8 @@ const warned = new Set<string>()
 // such value must not fail the whole response and take every material in it
 // down with it. An unknown value is passed through as-is and logged once, not
 // on every refetch.
-export const openEnum = <const T extends readonly string[]>(field: string, known: T) =>
-  z.string().transform((value): OpenType<T[number]> => {
+export const openStringUnion = <const T extends readonly string[]>(field: string, known: T) =>
+  z.string().transform((value): OpenStringUnion<T[number]> => {
     if (known.includes(value)) return value
 
     const key = `${field}:${value}`

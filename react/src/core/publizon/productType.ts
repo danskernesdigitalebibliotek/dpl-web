@@ -1,3 +1,5 @@
+import { OpensInType } from "@danskernesdigitalebibliotek/dpl-service-layer";
+
 // Publizon's `Product.productType` is an opaque integer in the OpenAPI spec
 // (see publizon-adapter.yaml). These named constants document the mapping
 // we have to maintain by hand.
@@ -14,7 +16,7 @@ export type PublizonProductType =
 // null for a type it does not know.
 export const publizonOpensIn = (
   productType: number | null | undefined
-): "reader" | "player" | null => {
+): OpensInType | null => {
   switch (productType) {
     case PUBLIZON_PRODUCT_TYPE.EBOOK:
       return "reader";

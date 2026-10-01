@@ -2,14 +2,14 @@ import { z } from "zod"
 
 import type { DigitalMaterial } from "../../../src/types"
 import { ImportMaterialType } from "../generated/model"
-import { openEnum } from "./open-enum"
+import { openStringUnion } from "./open-string-union"
 
 // Both metadata routes answer `{ materials: [...] }`; unknown ids are omitted,
 // so the array can be empty. The metadata routes only describe WeDoBooks' own
-// e-materials, so anything but ebook | audiobook is logged - see openEnum.
+// e-materials, so anything but ebook | audiobook is logged - see openStringUnion.
 const MaterialInformationSchema = z.object({
   isbn: z.string(),
-  material_type: openEnum("material_type", Object.values(ImportMaterialType)),
+  material_type: openStringUnion("material_type", Object.values(ImportMaterialType)),
   title: z.string(),
   author: z.array(z.string()).optional(),
   description: z.string(),

@@ -2,13 +2,13 @@ import { z } from "zod"
 
 import type { DigitalLoan } from "../../../src/types"
 import { LoanProvider, MaterialType } from "../generated/model"
-import { openEnum } from "./open-enum"
+import { openStringUnion } from "./open-string-union"
 
-export const MaterialTypeSchema = openEnum("material_type", Object.values(MaterialType))
+export const MaterialTypeSchema = openStringUnion("material_type", Object.values(MaterialType))
 
 // zod strips unknown keys, so new adapter fields do not break parsing. Every
 // field below is required by the contract, so a missing one throws; the enum
-// fields are open - see openEnum.
+// fields are open - see openStringUnion.
 export const LoanSchema = z.object({
   id: z.string(),
   material_id: z.string(),
@@ -20,7 +20,7 @@ export const LoanSchema = z.object({
   author: z.string(),
   publisher: z.string(),
   publish_date: z.string(),
-  license: z.object({ type: openEnum("license.type", Object.values(LoanProvider)) }),
+  license: z.object({ type: openStringUnion("license.type", Object.values(LoanProvider)) }),
 })
 
 const GetLoansResponseSchema = z.object({

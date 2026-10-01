@@ -165,13 +165,13 @@ export type RenewedLoan = RenewedLoanSuccess | RenewedLoanFailed
 // lends out.
 
 // A value the adapter's spec closes but the adapter has been seen to break, so
-// any other string is passed through - see openEnum. The known values come
+// any other string is passed through - see openStringUnion. The known values come
 // from the generated models of the spec and keep their autocomplete.
-export type OpenType<T extends string> = T | (string & {})
+export type OpenStringUnion<T extends string> = T | (string & {})
 
 // The material type the adapter reports. It has sent types outside its own
 // spec (a podcast) - see opensIn for what can be done with each of them.
-export type MaterialType = OpenType<BiblioMaterialType>
+export type MaterialType = OpenStringUnion<BiblioMaterialType>
 
 // Catalogue fields for a digital material. Title and authors are FBI's where
 // it knows the ISBN — see withCatalogueDetails.
@@ -220,7 +220,7 @@ export type DigitalReservation = {
 
 // Whether and how a material can be had. A status the adapter adds since is
 // passed through and counts as neither available, loanable nor reservable.
-export type LoanDecisionStatus = OpenType<CanLoanResponseType>
+export type LoanDecisionStatus = OpenStringUnion<CanLoanResponseType>
 
 // Which licence the loan would be made under: the organization configures a
 // prioritized list of providers and the backend reports the one it picked.
@@ -230,7 +230,7 @@ export type LoanDecisionStatus = OpenType<CanLoanResponseType>
 // a loan that still counts against the patron's quota. "free" is not in use
 // yet and confirmed only to be quota-exempt, not free to the patron. Any
 // licence the adapter adds since is simply not included.
-export type LoanProvider = OpenType<BiblioLoanProvider>
+export type LoanProvider = OpenStringUnion<BiblioLoanProvider>
 
 // Whether a loan can be made right now, and if not, why. Covers both the
 // material and the patron (quota, lending blocks) - see isMaterialAvailable.
