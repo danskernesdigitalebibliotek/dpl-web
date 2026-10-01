@@ -21,17 +21,15 @@ const refuseWith = vi.fn<() => { reason: string } | null>();
 const readerMounts = vi.fn();
 
 type ReaderProps = {
-  onClose: (interruption?: unknown) => void;
-  onOpenError: (failure: unknown) => void;
+  onStop: (reason: unknown) => void;
 };
 
-const ReaderStub = ({ onClose, onOpenError }: ReaderProps) => {
+const ReaderStub = ({ onStop }: ReaderProps) => {
   useEffect(() => {
     readerMounts();
     const refusal = refuseWith();
-    if (refusal?.reason === "device_revoked") onClose(refusal);
-    else if (refusal) onOpenError(refusal);
-  }, [onClose, onOpenError]);
+    if (refusal) onStop(refusal);
+  }, [onStop]);
   return <div data-testid="reader" />;
 };
 
@@ -52,7 +50,8 @@ vi.mock("@danskernesdigitalebibliotek/dpl-wedobooks", () => ({
   }: {
     children: (
       devices: unknown,
-      remove: (id: string) => Promise<boolean>
+      remove: (id: string) => Promise<boolean>,
+      removing: boolean
     ) => React.ReactNode;
   }) =>
     children(
@@ -66,7 +65,8 @@ vi.mock("@danskernesdigitalebibliotek/dpl-wedobooks", () => ({
         ],
         limit: 1
       },
-      removeDevice
+      removeDevice,
+      false
     )
 }));
 

@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { opensIn } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import type {
-  WedoBooksSessionInterruption,
-  WedoBooksStopReason
-} from "@danskernesdigitalebibliotek/dpl-wedobooks";
+import type { WedoBooksStopReason } from "@danskernesdigitalebibliotek/dpl-wedobooks";
 import useDigitalCheckout from "./useDigitalCheckout";
 import DigitalReader from "./DigitalReader";
 import DigitalPlayer from "./DigitalPlayer";
@@ -36,23 +33,10 @@ const DigitalReaderPlayer: React.FC<DigitalReaderPlayerProps> = ({
   onClose
 }) => {
   const { sdk, checkout } = useDigitalCheckout(loanId);
-  // Why the SDK is not showing the loan, while it is not.
+  // Why the SDK is not showing the loan, while it is not. Clearing it mounts
+  // the reader or player anew.
   const [stop, setStop] = useState<WedoBooksStopReason | null>(null);
-  // Counts the attempts to open, so a retry mounts the reader or player anew.
-  const [attempt, setAttempt] = useState(0);
-
-  const handleClose = (interruption?: WedoBooksSessionInterruption) => {
-    if (interruption) {
-      setStop(interruption);
-      return;
-    }
-    onClose();
-  };
-
-  const retry = () => {
-    setStop(null);
-    setAttempt((count) => count + 1);
-  };
+  const retry = () => setStop(null);
 
   // No spinner: the reader and player render nothing during their own load
   // anyway, so returning null here adds no visible wait.
@@ -74,21 +58,19 @@ const DigitalReaderPlayer: React.FC<DigitalReaderPlayerProps> = ({
     case "player":
       return (
         <DigitalPlayer
-          key={attempt}
           sdk={sdk}
           checkout={checkout}
-          onClose={handleClose}
-          onOpenError={setStop}
+          onClose={onClose}
+          onStop={setStop}
         />
       );
     case "reader":
       return (
         <DigitalReader
-          key={attempt}
           sdk={sdk}
           checkout={checkout}
-          onClose={handleClose}
-          onOpenError={setStop}
+          onClose={onClose}
+          onStop={setStop}
         />
       );
     // A type nothing can open gets no button in the loan list either.

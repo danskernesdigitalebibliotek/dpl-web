@@ -1,9 +1,6 @@
 "use client"
 
-import type {
-  WedoBooksSessionInterruption,
-  WedoBooksStopReason,
-} from "@danskernesdigitalebibliotek/dpl-wedobooks"
+import type { WedoBooksStopReason } from "@danskernesdigitalebibliotek/dpl-wedobooks"
 import React, { useEffect, useState } from "react"
 
 import DigitalSessionModal from "@/components/shared/digitalSessionModal/DigitalSessionModal"
@@ -36,23 +33,10 @@ type DigitalReaderPlayerProps = {
  */
 function DigitalReaderPlayer({ loanId, onClose }: DigitalReaderPlayerProps) {
   const { sdk, checkout } = useReaderCheckout(loanId)
-  // Why the SDK is not showing the loan, while it is not.
+  // Why the SDK is not showing the loan, while it is not. Clearing it mounts
+  // the reader anew.
   const [stop, setStop] = useState<WedoBooksStopReason | null>(null)
-  // Counts the attempts to open, so a retry mounts the reader anew.
-  const [attempt, setAttempt] = useState(0)
-
-  const handleClose = (interruption?: WedoBooksSessionInterruption) => {
-    if (interruption) {
-      setStop(interruption)
-      return
-    }
-    onClose()
-  }
-
-  const retry = () => {
-    setStop(null)
-    setAttempt(count => count + 1)
-  }
+  const retry = () => setStop(null)
 
   // String() rather than importing the SDK's MaterialType enum: a value
   // import would statically link the multi-megabyte SDK chunk into the page
@@ -76,15 +60,7 @@ function DigitalReaderPlayer({ loanId, onClose }: DigitalReaderPlayerProps) {
     return <DigitalSessionModal open onClose={onClose} reason={stop} onRetry={retry} />
   }
 
-  return (
-    <DigitalReader
-      key={attempt}
-      sdk={sdk}
-      checkout={checkout}
-      onClose={handleClose}
-      onOpenError={setStop}
-    />
-  )
+  return <DigitalReader sdk={sdk} checkout={checkout} onClose={onClose} onStop={setStop} />
 }
 
 export default DigitalReaderPlayer

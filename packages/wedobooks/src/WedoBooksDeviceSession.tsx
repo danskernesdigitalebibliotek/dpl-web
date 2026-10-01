@@ -15,7 +15,8 @@ export interface WedoBooksDeviceSessionProps {
    */
   children: (
     devices: WedoBooksDevices | null,
-    removeDevice: (deviceId: string) => Promise<boolean>
+    removeDevice: (deviceId: string) => Promise<boolean>,
+    removing: boolean
   ) => React.ReactNode
 }
 
@@ -31,13 +32,20 @@ export function WedoBooksDeviceSession({
   children,
 }: WedoBooksDeviceSessionProps): React.ReactElement {
   const [devices, setDevices] = React.useState<WedoBooksDevices | null>(null)
+  // One removal at a time: it takes a moment, and a second one meanwhile
+  // would give up a device the patron did not mean to.
+  const [removing, setRemoving] = React.useState(false)
 
   React.useEffect(() => watchWedoBooksDevices(sdk, setDevices), [sdk])
 
-  const removeDevice = React.useCallback(
-    (deviceId: string) => removeWedoBooksDevice(sdk, deviceId),
-    [sdk]
-  )
+  const removeDevice = async (deviceId: string) => {
+    setRemoving(true)
+    try {
+      return await removeWedoBooksDevice(sdk, deviceId)
+    } finally {
+      setRemoving(false)
+    }
+  }
 
-  return <>{children(devices, removeDevice)}</>
+  return <>{children(devices, removeDevice, removing)}</>
 }
