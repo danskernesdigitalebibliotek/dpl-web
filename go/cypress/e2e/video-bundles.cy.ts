@@ -9,10 +9,12 @@ describe("Video Bundle Tests", () => {
   })
 
   // Lazy-loaded paragraphs use a 1200px IntersectionObserver margin and their
-  // skeletons don't render the <h2>. Scrolling to the bottom with a finite
-  // duration ensures every bundle crosses the margin before we assert on titles.
+  // Stepping down the page lands every paragraph
+  // in view long enough to be seen.
   const activateAllParagraphs = () => {
-    cy.scrollTo("bottom", { duration: 2000 })
+    ;["25%", "50%", "75%", "100%"].forEach(position => {
+      cy.scrollTo("0%", position, { duration: 300 })
+    })
     cy.scrollTo("top")
   }
 
@@ -124,8 +126,7 @@ describe("Video Bundle Tests", () => {
       mockFrontpage()
       cy.intercept("POST", /(ap-service|graphql)/).as("graphqlRequests")
       cy.visit("/")
-      cy.scrollTo("bottom", { duration: 1500 })
-      cy.scrollTo("top")
+      activateAllParagraphs()
       scopeToBundle("Vertical auto bundle").find("iframe").should("exist")
       cy.get<Interception[]>("@graphqlRequests.all").then(requests => {
         const matched = requests.find(r =>
