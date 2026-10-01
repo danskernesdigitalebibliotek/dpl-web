@@ -11,3 +11,5 @@ Permanent file — do NOT remove before merging.
 
 1. Run the CMS Adgangsplatformen Cypress suite after the Babel 8 upgrade
    (PR #1271).
+2. Spin up a Lagoon PR environment for manual testing of the biblio
+   adapter (PR #1564).
