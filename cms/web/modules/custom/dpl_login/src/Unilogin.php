@@ -28,11 +28,9 @@ final class Unilogin {
   const CLAIM_HAS_LICENSE = 'uniloginHasLicense';
   // A comma separated string in brackets, "[ABC111,CDA222]", or "" for none.
   const CLAIM_INSTITUTION_IDS = 'uniloginInstitutionIds';
-  // Assumed. Null in the only response seen so far, so which claim carries
-  // the municipality of a student with an institution, and in what format,
-  // is unverified. uniloginAgencyId and municipalityAgencyId are the
-  // alternatives.
-  const CLAIM_MUNICIPALITY = 'uniloginMunicipality';
+  // The agency id of the main library in the municipality of the user's
+  // institution, e.g. "710100" for a school in Copenhagen.
+  const CLAIM_AGENCY_ID = 'uniloginAgencyId';
 
   /**
    * Institutions of DDF test users, allowed regardless of municipality.
@@ -100,13 +98,13 @@ final class Unilogin {
    *
    * @param mixed[] $userinfo
    *   The userinfo from the Adgangsplatformen userinfo endpoint.
-   * @param string|null $municipality_id
-   *   The municipality id configured for the library.
+   * @param string|null $agency_id
+   *   The agency id of the library.
    *
    * @return string|null
    *   The reason for denying the user, or NULL if the user may log in.
    */
-  public static function getDenialReason(array $userinfo, ?string $municipality_id): ?string {
+  public static function getDenialReason(array $userinfo, ?string $agency_id): ?string {
     if (!self::isUniloginUser($userinfo)) {
       return self::DENIED_NOT_UNILOGIN;
     }
@@ -127,8 +125,8 @@ final class Unilogin {
       return NULL;
     }
 
-    $municipality = $userinfo['attributes'][self::CLAIM_MUNICIPALITY] ?? NULL;
-    if (empty($municipality_id) || (string) $municipality !== $municipality_id) {
+    $user_agency_id = $userinfo['attributes'][self::CLAIM_AGENCY_ID] ?? NULL;
+    if (empty($agency_id) || (string) $user_agency_id !== $agency_id) {
       return self::DENIED_MUNICIPALITY;
     }
 

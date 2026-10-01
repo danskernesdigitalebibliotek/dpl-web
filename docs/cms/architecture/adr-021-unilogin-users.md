@@ -30,7 +30,10 @@ stored by `UniloginUserTokensProvider` in its own temp store collection.
   sign-on is recognised too.
 * Students are authorized before their Drupal user is created. They need a
   license and an institution, and their first institution must belong to the
-  library's municipality or be a DDF test institution. FBS is not called.
+  library's municipality or be a DDF test institution. The municipality is
+  matched by comparing the `uniloginAgencyId` claim (the agency id of the main
+  library in the institution's municipality, e.g. `710100`) with the agency id
+  of the library's Adgangsplatformen client. FBS is not called.
 * Their token is stored with the Unilogin type, and the FBS lookups and the
   registration flow are skipped. `/dpl-react/user-tokens` only hands out
   `User` and `UnregisteredUser` tokens, so to the React apps a student is

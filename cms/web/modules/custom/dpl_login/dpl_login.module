@@ -246,16 +246,12 @@ function _dpl_login_is_unilogin_login(array $context): bool {
  *   Logger for denied logins.
  */
 function _dpl_login_is_unilogin_user_authorized(array $context, LoggerInterface $logger): bool {
-  // The municipality of the library is part of the Unilogin configuration.
-  $municipality_id = NULL;
-  if (\Drupal::moduleHandler()->moduleExists('dpl_unilogin')) {
-    /** @var \Drupal\dpl_unilogin\UniloginConfiguration $unilogin_configuration */
-    $unilogin_configuration = \Drupal::service('dpl_unilogin.settings');
-    $municipality_id = $unilogin_configuration->getUniloginApiMunicipalityId();
-  }
+  /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
+  $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
+  $agency_id = (string) $adgangsplatformen_config->getAgencyId();
   $userinfo = $context['userinfo'] ?? [];
 
-  $reason = Unilogin::getDenialReason($userinfo, $municipality_id);
+  $reason = Unilogin::getDenialReason($userinfo, $agency_id);
   if (!$reason) {
     return TRUE;
   }
@@ -265,12 +261,12 @@ function _dpl_login_is_unilogin_user_authorized(array $context, LoggerInterface 
   $dpl_login_session = \Drupal::service('dpl_login.session');
   $dpl_login_session->deleteUniloginLogin();
 
-  $logger->warning('Authorization blocked. Unilogin user denied: @reason. User type: @user_type, institutions: @institutions, municipality: @municipality, expected municipality: @expected', [
+  $logger->warning('Authorization blocked. Unilogin user denied: @reason. User type: @user_type, institutions: @institutions, agency: @agency, expected agency: @expected', [
     '@reason' => $reason,
     '@user_type' => $userinfo['attributes']['uniloginUserType'] ?? 'none',
     '@institutions' => implode(', ', Unilogin::getInstitutionIds($userinfo)) ?: 'none',
-    '@municipality' => $userinfo['attributes'][Unilogin::CLAIM_MUNICIPALITY] ?? 'none',
-    '@expected' => $municipality_id ?: 'none',
+    '@agency' => $userinfo['attributes'][Unilogin::CLAIM_AGENCY_ID] ?? 'none',
+    '@expected' => $agency_id,
   ]);
   return FALSE;
 }
