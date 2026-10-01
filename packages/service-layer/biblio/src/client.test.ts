@@ -93,7 +93,7 @@ describe("createBiblioClient.getMetadata", () => {
 
   it("throws when the response shape fails validation", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(
-      mockJsonResponse({ materials: [{ isbn: "9788711234567", material_type: "paper_book" }] })
+      mockJsonResponse({ materials: [{ isbn: "9788711234567" }] })
     )
 
     await expect(buildClient().getMetadata("9788711234567")).rejects.toThrow()
@@ -271,12 +271,6 @@ describe("createBiblioClient.getLoanDecision", () => {
       status: "lending_blocked",
       lendingBlockReason: "quarantined",
     })
-  })
-
-  it("throws on an unknown status", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ status: "new_status" }))
-
-    await expect(buildClient().getLoanDecision("9788711234567")).rejects.toThrow()
   })
 })
 

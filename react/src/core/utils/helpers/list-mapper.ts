@@ -3,7 +3,8 @@ import {
   DigitalLoan,
   DigitalMaterial,
   MaterialType,
-  DigitalReservation
+  DigitalReservation,
+  opensIn
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { LoanV2, ReservationDetailsV2 } from "../../fbs/model";
 import { FaustId } from "../types/ids";
@@ -12,7 +13,7 @@ import { BasicDetailsType } from "../types/basic-details-type";
 import { Product, Loan, Reservation } from "../../publizon/model";
 import {
   PUBLIZON_PRODUCT_TYPE,
-  isPublizonProductType
+  publizonOpensIn
 } from "../../publizon/productType";
 import { LoanType } from "../types/loan-type";
 import { store } from "../../store";
@@ -69,22 +70,21 @@ export const mapPublizonLoanToLoanType = (list: Loan[]): LoanType[] => {
   );
 };
 
-// digital-loan-card keys the reader/player button on Publizon's integer enum,
-// so a service layer material type is expressed in those numbers too. Goes
-// away with the Publizon integration.
-const publizonProductTypeFor = (materialType: MaterialType) =>
-  materialType === "audiobook"
-    ? PUBLIZON_PRODUCT_TYPE.AUDIOBOOK
-    : PUBLIZON_PRODUCT_TYPE.EBOOK;
-
-const digitalMaterialTypeText = (materialType: MaterialType) => {
+// The label a digital material is listed under; empty for a type nothing can
+// open. The text keys are Publizon's by name only - they predate Biblio.
+const digitalMaterialLabel = (materialType: MaterialType) => {
   const {
     text: { data: texts }
   } = store.getState();
 
-  return materialType === "audiobook"
-    ? texts.publizonAudioBookText
-    : texts.publizonEbookText;
+  const labels = {
+    ebook: texts.publizonEbookText,
+    audiobook: texts.publizonAudioBookText,
+    podcast: texts.publizonPodcastText
+  };
+  return Object.hasOwn(labels, materialType)
+    ? labels[materialType as keyof typeof labels]
+    : "";
 };
 
 const mapDigitalLoanToBasicDetailsType = (loan: DigitalLoan) => {
@@ -92,8 +92,11 @@ const mapDigitalLoanToBasicDetailsType = (loan: DigitalLoan) => {
     title: loan.title,
     periodical: null,
     year: loan.publishDate ? getYearFromDataString(loan.publishDate) : "",
-    materialType: digitalMaterialTypeText(loan.materialType),
-    publizonProductType: publizonProductTypeFor(loan.materialType),
+    materialType: digitalMaterialLabel(loan.materialType),
+    // Each provider answers where its loan opens from the field its own API
+    // carries: a Biblio loan has the adapter's material type, a Publizon
+    // product has its numeric product type - see mapProductToBasicDetailsType.
+    opensIn: opensIn(loan.materialType),
     externalProductId: loan.materialId,
     authors: getContributors(false, loan.authors),
     authorsShort: getContributors(true, loan.authors)
@@ -196,9 +199,8 @@ export const mapProductToBasicDetailsType = (material: Product) => {
     year: publicationDate ? getYearFromDataString(publicationDate) : "",
     description,
     materialType: productType ? publizonProductTypeTexts[productType] : "",
-    publizonProductType: isPublizonProductType(productType)
-      ? productType
-      : null,
+    // Publizon's counterpart to opensIn in mapDigitalLoanToBasicDetailsType.
+    opensIn: publizonOpensIn(productType),
     externalProductId: externalProductId?.id,
     authors: contributors ? getContributors(false, authors) : "",
     authorsShort: contributors ? getContributors(true, authors) : ""
@@ -216,8 +218,7 @@ export const mapDigitalMaterialToBasicDetailsType = (
       ? getYearFromDataString(material.publishDate)
       : "",
     description: material.description,
-    materialType: digitalMaterialTypeText(material.materialType),
-    publizonProductType: publizonProductTypeFor(material.materialType),
+    materialType: digitalMaterialLabel(material.materialType),
     externalProductId: material.isbn,
     authors: getContributors(false, material.authors),
     authorsShort: getContributors(true, material.authors)
