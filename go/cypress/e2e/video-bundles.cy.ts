@@ -8,9 +8,9 @@ describe("Video Bundle Tests", () => {
     cy.expectError("Failed to fetch data from DPL CMS")
   })
 
-  // Lazy-loaded paragraphs use a 1200px IntersectionObserver margin and their
-  // Stepping down the page lands every paragraph
-  // in view long enough to be seen.
+  // Paragraphs load lazily when they come within 1200px of the viewport, and
+  // their skeletons render no <h2>. Stepping down the page holds every
+  // paragraph in view long enough for the observer to report it.
   const activateAllParagraphs = () => {
     ;["25%", "50%", "75%", "100%"].forEach(position => {
       cy.scrollTo("0%", position, { duration: 300 })

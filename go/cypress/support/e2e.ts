@@ -3,8 +3,7 @@ import { mockConfig, revalidateConfigCache } from "./mocks"
 
 beforeEach(() => {
   mockConfig()
-  // Last, so the cache is dropped once every mock this test relies on is
-  // registered: the next render then builds its config from them.
+  // After the mocks, so the next render reads the config from them.
   revalidateConfigCache()
 })
 

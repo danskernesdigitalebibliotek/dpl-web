@@ -10,23 +10,19 @@ import ComplexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTea
 import { identifierFactory } from "../factories/fbi/factory-parts/identifier"
 import { worksWithIdentifiersFactory } from "../factories/fbi/factory-parts/works"
 
-// The CMS configuration is cached server-side for 15 minutes, and the root
-// layout reads it on every page. A render that happened before these mocks
-// were registered caches a config without the Adgangsplatformen login url,
-// which leaves the login button disabled for the rest of the run.
-// Dropping the tag here means each test starts from a config built on its
-// own mocks.
+// Drops the server-side CMS configuration cache, which the root layout reads
+// on every page and which otherwise lives for 15 minutes. Each test then
+// renders against a config built from its own mocks.
 export const revalidateConfigCache = () => {
   const secret = Cypress.env("DRUPAL_REVALIDATE_SECRET")
   if (!secret) {
     throw new Error(
-      "DRUPAL_REVALIDATE_SECRET is missing, so the config cache cannot be revalidated " +
-        "and every test would inherit whatever config was cached first."
+      "DRUPAL_REVALIDATE_SECRET is missing, so the config cache cannot be revalidated."
     )
   }
 
-  // Not failOnStatusCode: false - a 401 or 400 means the cache was not
-  // cleared, which is the flakiness this exists to prevent.
+  // A non-2xx response means the cache still holds the old config, so the
+  // request is left to fail the test.
   cy.request({
     url: "/cache/revalidate",
     qs: {

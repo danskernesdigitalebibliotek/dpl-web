@@ -95,9 +95,8 @@ const publicConfigFallback = () => ({
   smsNotificationsEnabled: true,
 })
 
-// Throws rather than returning the fallback, so a failed read is not what
-// gets cached: the caller substitutes the fallback outside the cache scope
-// and the next request asks the CMS again.
+// Throws when the CMS cannot be read, so only a successful read is cached.
+// The caller supplies the fallback outside the cache scope.
 const getDplCmsPublicConfigData = async () => {
   "use cache"
   // See getDplCmsPrivateConfigData for the tag.
@@ -114,8 +113,8 @@ export const getDplCmsPublicConfig = async () => {
     return publicConfigFallback()
   })
 
-  // Copied rather than assigned into: `data` can be the cached object, and
-  // writing to it would edit what every later caller reads.
+  // `data` is the cached object in the normal path, so the env overrides go
+  // into a copy that every caller gets its own of.
   const envMunicipalityId = getServerEnv("UNILOGIN_MUNICIPALITY_ID")
   return {
     ...data,

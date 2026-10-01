@@ -292,9 +292,8 @@ jobs:
           install: false
           build: pnpm run build
           start: pnpm run start
-          # Cypress starts as soon as `start` is spawned, so without this the
-          # first cy.visit() can hit a server that is not listening yet and
-          # every spec fails with "socket hang up".
+          # Holds the suite until the server answers: Cypress otherwise starts
+          # as soon as `start` is spawned.
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
           command: pnpm run cypress:run
