@@ -145,16 +145,19 @@ describe("What a page opens a Biblio loan in", () => {
   // id, so the loan's own material type is the only thing that can pick
   // reader vs player - a deep link opens the right thing no matter which
   // page it names.
-  it("plays an audiobook in the player", () => {
-    givenCheckout("audiobook");
+  it.each(["audiobook", "podcast"])(
+    "plays %s in the player",
+    (materialType) => {
+      givenCheckout(materialType);
 
-    const { container } = render(
-      <DigitalReaderPlayer loanId="loan-1" onClose={() => {}} />
-    );
+      const { container } = render(
+        <DigitalReaderPlayer loanId="loan-1" onClose={() => {}} />
+      );
 
-    expect(container.querySelector("[data-testid='player']")).not.toBeNull();
-    expect(container.querySelector("[data-testid='reader']")).toBeNull();
-  });
+      expect(container.querySelector("[data-testid='player']")).not.toBeNull();
+      expect(container.querySelector("[data-testid='reader']")).toBeNull();
+    }
+  );
 
   it("reads an e-book in the reader", () => {
     givenCheckout("ebook");

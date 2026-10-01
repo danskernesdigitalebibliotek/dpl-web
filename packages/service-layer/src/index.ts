@@ -66,6 +66,8 @@ export {
   isRequestGranted,
 } from "./digital-loan-decision"
 export { isCostFreeLoan } from "./digital-loans"
+export { opensIn } from "./material-type"
+export type { OpensInType } from "./material-type"
 export { getDigitalLoanQuota } from "./digital-quotas"
 export { digitalLoanDecisionQueryKey } from "./queries/digital-loan-decision"
 export { digitalLoansQueryKey } from "./queries/digital-loans"
