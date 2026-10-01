@@ -15,6 +15,11 @@ import { formatDateTimeUtc } from "../../../../core/utils/helpers/date";
 import { readerUrl } from "../../../../components/reader-player/helper";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
+import {
+  getCurrentUrlWithHash,
+  replaceCurrentLocation
+} from "../../../../core/utils/helpers/url";
+import { useScrollToLocation } from "../../../../core/utils/UseScrollToLocation";
 
 export interface DigitalLoanCardProps {
   loan: LoanType;
@@ -56,6 +61,12 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
   } = material || {};
   const coverId = pid || identifier || "";
 
+  // Coming back from the reader or player reloads the list too late for the
+  // browser to restore the scroll position, so the url hash marks the loan.
+  useScrollToLocation([material]);
+  const rememberLoanInUrl = () =>
+    replaceCurrentLocation(new URL(getCurrentUrlWithHash(titleId)));
+
   const renderPrimaryAction = () => {
     if (!orderId || !readerPlayerType) return null;
     if (readerPlayerType === "reader") {
@@ -73,6 +84,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
               trackedData: orderId
             })
           }
+          onClick={rememberLoanInUrl}
         >
           {t("onlineMaterialReaderText", {
             placeholders: { "@materialType": material?.materialType || "" }
@@ -96,6 +108,7 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
             trackedData: orderId
           })
         }
+        onNavigate={rememberLoanInUrl}
         // The list mounts the Publizon modal itself, one per open player.
         onPlayInModal={() => onPlayDigital(loan)}
       />
@@ -105,7 +118,10 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
   if (!material) return null;
 
   return (
-    <div className="list-reservation list-reservation--no-hover my-32">
+    <div
+      className="list-reservation list-reservation--no-hover my-32"
+      data-scroll-target={titleId}
+    >
       <div className="list-reservation__material">
         <Cover
           ids={[coverId]}
