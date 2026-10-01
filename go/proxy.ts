@@ -6,15 +6,16 @@ import { getBaseURL } from "@/lib/config/getBaseURL"
 import goConfig from "./lib/config/goConfig"
 import { refreshUniloginTokens } from "./lib/helpers/bearer-token"
 import { ensureLibraryTokenExist } from "./lib/helpers/middleware"
-import { userIsAnonymous, userIsLoggedInAtDplCms } from "./lib/helpers/user"
+import { userIsAnonymous } from "./lib/helpers/user"
 import { loadUserToken } from "./lib/helpers/user-token"
 import { getUniloginClientConfig } from "./lib/session/oauth/uniloginClient"
 import {
   adgangsplatformenAccessTokenHasExpired,
-  adgangsplatformenAccessTokenShouldBeRefreshed,
+  adgangsplatformenSessionShouldBeValidated,
   destroySession,
   getDplCmsSessionCookie,
   getSession,
+  markAdgangsplatformenSessionValidated,
   removePCKECodeVerifierFromSession,
   saveAdgangsplatformenSession,
   sessionHasPKCECodeVerifier,
@@ -59,29 +60,48 @@ export async function proxy(request: NextRequest) {
   if (!userIsAnonymous(session) && session.type === "adgangsplatformen") {
     const sessionCookie = await getDplCmsSessionCookie()
     if (!sessionCookie) {
-      destroySession(session)
+      await destroySession(session)
+      return response
     }
   }
 
   if (adgangsplatformenAccessTokenHasExpired(session)) {
-    destroySession(session)
+    // Drupal logs out patrons whose token has expired, so the CMS stops
+    // answering for this session and cannot hand the dead token back. Tearing
+    // down the GO session is therefore enough: the next request is anonymous
+    // and stays that way.
+    await destroySession(session)
     return response
   }
 
-  // If the session is not logged in we will try to see if we have an ongoing Adgangsplatformen Drupal session.
-  // If we have an active Drupal session we will try to load the user token from dpl-cms.
-  // OR:
-  // If the Adgangsplatformen user token is about to expire we will reload it from dpl-cms.
-  const userIsLoggedInAtCms = await userIsLoggedInAtDplCms()
-  if (
-    (userIsAnonymous(session) && userIsLoggedInAtCms) ||
-    adgangsplatformenAccessTokenShouldBeRefreshed(session)
-  ) {
+  // If the session is not logged in, ask dpl-cms whether the browser's Drupal
+  // session cookie still represents a logged-in user with a live token.
+  // loadUserToken() settles that, and answers without calling the CMS when
+  // there is no cookie to go on. There is no refresh path: the CMS cannot
+  // renew the token, so the GO session lives exactly as long as the user
+  // token — a dead token means a new login.
+  if (userIsAnonymous(session)) {
     const tokenData = await loadUserToken()
-    if (tokenData) {
-      await saveAdgangsplatformenSession(session, tokenData)
+    if (tokenData.status === "token") {
+      await saveAdgangsplatformenSession(session, tokenData.data)
       return response
     }
+  }
+
+  // Drupal can retire the session before the token's own expiry runs out: it
+  // logs out patrons with an expired token, and a patron can log out on the
+  // library site. Neither is visible to GO's copy of the expiry, and the
+  // services keep accepting the token, so the CMS is the only party that
+  // knows. Ask it, at most every 30 seconds per session. An error leaves the
+  // session alone: it says nothing about the patron, and logging people out
+  // because the CMS blinked would be worse than showing them a stale page.
+  if (adgangsplatformenSessionShouldBeValidated(session)) {
+    const tokenData = await loadUserToken()
+    if (tokenData.status === "no-token") {
+      await destroySession(session)
+      return response
+    }
+    await markAdgangsplatformenSessionValidated(session)
   }
 
   if (uniloginAccessTokenHasExpired(session)) {
