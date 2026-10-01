@@ -43,10 +43,6 @@ type UniloginConfigurationPrivate {
   pubHubRetailerKeyCode: String
 }
 
-type UniloginConfigurationPublic {
-  municipalityId: String
-}
-
 type GoConfigurationPrivate {
   unilogin: UniloginConfigurationPrivate
 }
@@ -90,7 +86,6 @@ type GoConfigurationPublic {
   logoutUrls: GoLogoutUrls
   mapp: MappTracking
   searchProfiles: SearchProfiles
-  unilogin: UniloginConfigurationPublic
   """
   Branch ids whose materials should be excluded when computing availability.
   """

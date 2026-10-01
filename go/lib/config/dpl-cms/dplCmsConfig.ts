@@ -80,9 +80,6 @@ const publicConfigFallback = () => ({
     baseURL: null,
   },
   mapp: null,
-  unilogin: {
-    municipalityId: null,
-  },
   blacklistedAvailabilityBranches: [],
   biblio: {
     enabled: false,

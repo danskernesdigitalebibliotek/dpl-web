@@ -279,7 +279,6 @@ type GoConfigurationPublic {
   mapp: MappTracking
   searchProfiles: SearchProfiles
   smsNotificationsEnabled: Boolean
-  unilogin: UniloginConfigurationPublic
 }
 
 type GoLibraryInfo {
@@ -1185,10 +1184,6 @@ type Translation {
 
 type UniloginConfigurationPrivate {
   pubHubRetailerKeyCode: String
-}
-
-type UniloginConfigurationPublic {
-  municipalityId: String
 }
 
 type UnsupportedType {

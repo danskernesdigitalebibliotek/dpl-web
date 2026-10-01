@@ -29,16 +29,6 @@ class UniloginConfiguration extends DplReactConfigBase {
   }
 
   /**
-   * Get the Unilogin API municipality ID.
-   *
-   * @return string|null
-   *   The Unilogin API municipality ID.
-   */
-  public function getUniloginApiMunicipalityId(): ?string {
-    return $this->loadConfig()->get('unilogin_api_municipality_id');
-  }
-
-  /**
    * Get the Unilogin API Pubhub retailer key code.
    *
    * @return string|null

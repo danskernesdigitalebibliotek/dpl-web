@@ -44,7 +44,6 @@ const stubConfig: TDplCmsPublicConfig = {
   logoutUrls: { adgangsplatformen: null },
   libraryInfo: { name: "Storybook Bibliotek", baseURL: "https://example.test" },
   mapp: null,
-  unilogin: { municipalityId: null },
   blacklistedAvailabilityBranches: [],
   biblio: { enabled: false, baseUrl: null, sdk: null },
   smsNotificationsEnabled: true,

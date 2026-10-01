@@ -42,9 +42,6 @@ export default Factory.define<
           domain: "responder.wt-safetag.com",
           id: "476651662471322",
         },
-        unilogin: {
-          municipalityId: "101",
-        },
         blacklistedAvailabilityBranches: [],
         biblio: transientParams.biblio ?? { enabled: false, baseUrl: null, sdk: null },
         smsNotificationsEnabled: true,

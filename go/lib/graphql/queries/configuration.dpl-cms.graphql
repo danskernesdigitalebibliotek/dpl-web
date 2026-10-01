@@ -25,9 +25,6 @@ query getDplCmsPublicConfiguration {
         domain
         id
       }
-      unilogin {
-        municipalityId
-      }
       blacklistedAvailabilityBranches
       biblio {
         enabled

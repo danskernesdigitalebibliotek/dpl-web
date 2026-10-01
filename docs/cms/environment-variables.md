@@ -211,8 +211,6 @@ And if you need these, grab someone that's worked in the area before
 and ask them.
 
 - `UNILOGIN_PUBHUB_RETAILER_KEY_CODE`: Retailer key for PubHub.
-- `UNILOGIN_MUNICIPALITY_ID`: Municipality ID for UniLogin. The CMS only
-  lets Unilogin users from this municipality log in.
 
 CMS reads `UNILOGIN_PUBHUB_RETAILER_KEY_CODE`, while Go reads the
 misspelled `UNLILOGIN_PUBHUB_RETAILER_KEY_CODE` (a long-standing typo).

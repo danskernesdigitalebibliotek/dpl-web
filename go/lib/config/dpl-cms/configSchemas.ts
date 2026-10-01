@@ -18,9 +18,6 @@ export const publicConfigSchema = z.object({
       id: z.string().nullable(),
     })
     .nullable(),
-  unilogin: z.object({
-    municipalityId: z.string().nullable(),
-  }),
   blacklistedAvailabilityBranches: z
     .array(z.string())
     .nullable()
