@@ -11,8 +11,10 @@ describe("Video Bundle Tests", () => {
   // Paragraphs load lazily when they come within 1200px of the viewport, and
   // their skeletons render no <h2>. Stepping down the page holds every
   // paragraph in view long enough for the observer to report it.
+  const SCROLL_STOPS = ["25%", "50%", "75%", "100%"]
+
   const activateAllParagraphs = () => {
-    ;["25%", "50%", "75%", "100%"].forEach(position => {
+    SCROLL_STOPS.forEach(position => {
       cy.scrollTo("0%", position, { duration: 300 })
     })
     cy.scrollTo("top")
