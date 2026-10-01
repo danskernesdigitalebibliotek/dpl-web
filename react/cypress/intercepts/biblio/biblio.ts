@@ -71,6 +71,38 @@ export const givenMaterialHasNoBiblioSample = (materialId: string) => {
 /** Given: the user holds no loans in Biblio. */
 export const givenUserHasNoBiblioLoans = () => givenUserHasBiblioLoans([]);
 
+/**
+ * Given: a loan the user makes now only shows up on the next answer, which
+ * takes `delay` ms - the window where a freshly borrowed material still reads
+ * as unborrowed everywhere it is looked up.
+ */
+const givenTheBiblioLoanListAnswers = (loan: LoanDto, delay: number) => {
+  cy.intercept("GET", "**/v1/loans*", {
+    statusCode: 200,
+    delay,
+    body: biblioLoansFactory.build({ loans: [loan] })
+  }).as("biblioLoansAfterLoan");
+
+  // Registered last so it answers first, and only once: the page's own
+  // look-up, from before the loan existed.
+  cy.intercept(
+    { method: "GET", url: "**/v1/loans*", times: 1 },
+    { statusCode: 200, body: biblioLoansFactory.build({ loans: [] }) }
+  ).as("biblioLoansBeforeLoan");
+};
+
+/** Given: the read-back is slow, but lands well inside the grace period. */
+export const givenTheBiblioLoanListLags = (loan: LoanDto) =>
+  givenTheBiblioLoanListAnswers(loan, 500);
+
+/**
+ * Given: the read-back never lands - a refetch still retrying, or one whose
+ * connection went away after it was sent. The receipt is for something the
+ * server has already done, so it may not wait on this forever.
+ */
+export const givenTheBiblioLoanListNeverAnswers = (loan: LoanDto) =>
+  givenTheBiblioLoanListAnswers(loan, 120_000);
+
 /** Given: Biblio does not know this material. A 404 is a normal answer. */
 export const givenMaterialIsNotInBiblio = (materialId: string) => {
   cy.intercept("GET", `**/v1/metadata/${materialId}*`, {

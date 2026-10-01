@@ -131,3 +131,20 @@ export const givenUserHasPhysicalLoan = (
     body: [fbsLoanFactory.build(options)]
   }).as("fbsUserLoansPhysical");
 };
+
+/**
+ * Given: User has `count` physical loans, answered after `delay` ms. Same
+ * pairing with `givenManifestationByFaust(...)` as `givenUserHasPhysicalLoan`.
+ */
+export const givenUserHasPhysicalLoans = (
+  count: number,
+  { delay }: { delay?: number } = {}
+) => {
+  cy.intercept("GET", "**/external/agencyid/patrons/patronid/loans/v2**", {
+    statusCode: 200,
+    delay,
+    body: Array.from({ length: count }, (_, i) =>
+      fbsLoanFactory.build({ loanDetails: { loanId: 956250508 + i } })
+    )
+  }).as("fbsUserLoansPhysical");
+};

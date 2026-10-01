@@ -36,7 +36,7 @@
     "typecheck": "tsc --noEmit",
     "cypress:open": "DEBUG_MOCK_SERVER=true NODE_ENV=test cypress open --e2e",
     "cypress:open:mobile": "DEBUG_MOCK_SERVER=true NODE_ENV=test cypress open --e2e --env viewport=mobile",
-    "cypress:run": "pnpm run cypress:run:mobile; pnpm run cypress:run:desktop",
+    "cypress:run": "pnpm run cypress:run:mobile; m=$?; pnpm run cypress:run:desktop; d=$?; exit $((m || d))",
     "cypress:run:mobile": "NODE_ENV=test cypress run --env viewport=mobile",
     "cypress:run:desktop": "NODE_ENV=test cypress run --env viewport=desktop",
     "shadcn:add": "pnpm exec shadcn@canary add $MODULE",

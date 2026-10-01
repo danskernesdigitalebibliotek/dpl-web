@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\bnf_client\Drush\Commands;
 
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
+use Drupal\bnf_client\SubscriptionHelper;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drush\Attributes\Argument;
 use Drush\Attributes\Command;
@@ -27,6 +28,7 @@ class SubscriptionCommands extends DrushCommands {
    */
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
+    protected SubscriptionHelper $helper,
   ) {
     parent::__construct();
   }
@@ -61,8 +63,13 @@ class SubscriptionCommands extends DrushCommands {
   )]
   public function deleteSubscription(string $uuid = ''): void {
     $entities = $this->entityTypeManager->getStorage('bnf_subscription')->loadMultiple(['uuid' => $uuid]);
+    if (!$entities) {
+      throw new \Exception("Subscription with UUID {$uuid} not found.");
+    }
 
-    $this->entityTypeManager->getStorage('bnf_subscription')->delete($entities);
+    /** @var \Drupal\bnf_client\Entity\Subscription $subscription */
+    $subscription = reset($entities);
+    $this->helper->delete($subscription);
   }
 
   /**

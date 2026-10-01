@@ -65,47 +65,58 @@ export const getDplCmsPrivateConfig = async () => {
   }
 }
 
+// What the app runs on when the CMS cannot be read. Adgangsplatformen login
+// is disabled without its url, so this is a degraded state.
+const publicConfigFallback = () => ({
+  loginUrls: {
+    adgangsplatformen: null,
+    unilogin: null,
+  },
+  logoutUrls: {
+    adgangsplatformen: null,
+  },
+  libraryInfo: {
+    name: null,
+    baseURL: null,
+  },
+  mapp: null,
+  unilogin: {
+    municipalityId: null,
+  },
+  blacklistedAvailabilityBranches: [],
+  biblio: {
+    enabled: false,
+    baseUrl: null,
+    sdk: null,
+  },
+  smsNotificationsEnabled: true,
+})
+
+// Throws when the CMS cannot be read, so only a successful read is cached.
+// The caller supplies the fallback outside the cache scope.
 const getDplCmsPublicConfigData = async () => {
   "use cache"
   // See getDplCmsPrivateConfigData for the tag.
   cacheTag("dpl-cms-config")
 
-  try {
-    const data = await queryDplCmsPublicConfig()
-    return publicConfigSchema.parse(data)
-  } catch {
-    console.error("Failed to parse DPL CMS public config")
-    return {
-      loginUrls: {
-        adgangsplatformen: null,
-        unilogin: null,
-      },
-      logoutUrls: {
-        adgangsplatformen: null,
-      },
-      libraryInfo: {
-        name: null,
-        baseURL: null,
-      },
-      mapp: null,
-      unilogin: {
-        municipalityId: null,
-      },
-      blacklistedAvailabilityBranches: [],
-      biblio: {
-        enabled: false,
-        baseUrl: null,
-        sdk: null,
-      },
-      smsNotificationsEnabled: true,
-    }
-  }
+  const data = await queryDplCmsPublicConfig()
+  return publicConfigSchema.parse(data)
 }
 
 export const getDplCmsPublicConfig = async () => {
   await connection()
-  const data = await getDplCmsPublicConfigData()
-  data.libraryInfo.baseURL = getEnv("DPL_CMS_BASE_URL")
+  const data = await getDplCmsPublicConfigData().catch(() => {
+    console.error("Failed to parse DPL CMS public config")
+    return publicConfigFallback()
+  })
 
-  return data
+  // `data` is the cached object in the normal path, so the env overrides go
+  // into a copy that every caller gets its own of.
+  return {
+    ...data,
+    libraryInfo: {
+      ...data.libraryInfo,
+      baseURL: getEnv("DPL_CMS_BASE_URL"),
+    },
+  }
 }

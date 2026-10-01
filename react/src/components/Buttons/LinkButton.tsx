@@ -14,6 +14,7 @@ export interface LinkButtonProps {
   dataCy?: string;
   iconClassNames?: string;
   isNewTab?: boolean;
+  onClick?: () => void;
   size: ButtonSize;
   trackClick?: () => Promise<unknown>;
   url: URL;
@@ -29,6 +30,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   dataCy = "link-button",
   iconClassNames,
   isNewTab = false,
+  onClick,
   size = "medium",
   trackClick,
   url,
@@ -42,6 +44,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   // from the back/forward cache, leaving a dead button.
   const isNavigating = useRef(false);
   const navigate = () => {
+    onClick?.();
     if (!trackClick) {
       redirectTo(url, isNewTab);
       return;

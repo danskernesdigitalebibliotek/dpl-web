@@ -290,6 +290,10 @@ jobs:
           install: false
           build: pnpm run build
           start: pnpm run start
+          # Holds the suite until the server answers: Cypress otherwise starts
+          # as soon as `start` is spawned.
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
           command: pnpm run cypress:run
           browser: chrome
           working-directory: go
