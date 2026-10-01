@@ -79,6 +79,17 @@ class DplLoginController extends ControllerBase {
         ->toString(TRUE)
         ->getGeneratedUrl();
     }
+    elseif ($this->moduleHandler()->moduleExists('dpl_go')) {
+      // The Adgangsplatformen session is shared with the Go site, but the Go
+      // session cookie lives on the Go host where the CMS cannot clear it.
+      // Logouts initiated on the CMS site (no current-path) detour through
+      // Go so it can destroy its own session before landing the user on the
+      // front page. Go-initiated logouts pass current-path and have already
+      // destroyed the Go session.
+      $redirect_uri = Url::fromRoute('dpl_go.post_cms_logout', [], ['absolute' => TRUE])
+        ->toString(TRUE)
+        ->getGeneratedUrl();
+    }
 
     // Remote logout service url.
     $url = Url::fromUri($logout_endpoint, [

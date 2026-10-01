@@ -96,6 +96,10 @@
     --blue-title: hsla(202, 100%, 76%, 1);
     --blue-title-dark: hsla(202, 60%, 30%, 1);
 
+    /* TODO: when we redesign the color palette in 2027, this should be updated to
+    primary/call to action color. Right now it is only used in linkbox (content-colors) */
+    --go-green: #66ff55;
+
     /* CONTENT COLORS */
     --content-pink-100: hsla(286, 100%, 87%, 1);
     --content-pink-300: hsla(317, 100%, 73%, 1);
@@ -570,6 +574,17 @@
     --sidebar-border: oklch(0.269 0 0);
     --sidebar-ring: oklch(0.439 0 0);
   }
+}
+
+/* Tailwind's `container` utility collides with the class names the WeDoBooks
+   SDK renders in light DOM (`section.container`, `div.container`, ...) and
+   clamps the reader to Tailwind's breakpoint widths — 1024px on a 1183px
+   viewport, say. Neutralized inside the SDK's elements; its own stylesheet
+   already sizes them (width/height 100%). Unlayered on purpose: layered
+   utilities would otherwise win over a @layer components rule. */
+wdb-reader .container,
+wdb-player-bar .container {
+  max-width: none;
 }
 
 /* Honor the OS-level "reduce motion" preference for CSS-driven animation

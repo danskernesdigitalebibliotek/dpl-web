@@ -1,0 +1,19 @@
+uuid: 0583fd76-6519-4786-b48f-43ac110d3419
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_svcmsg_heading
+    - node.type.service_message
+id: node.service_message.field_svcmsg_heading
+field_name: field_svcmsg_heading
+entity_type: node
+bundle: service_message
+label: Title
+description: 'Optional if the body text is filled in.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

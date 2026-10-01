@@ -1,0 +1,4 @@
+'administer global service messages':
+  title: 'Administer global service messages'
+  description: 'Allow placing a service message in the global bar, shown on every page of the site.'
+  restrict access: true

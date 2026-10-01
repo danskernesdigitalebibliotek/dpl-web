@@ -27707,10 +27707,6 @@ msgid "A scalable vector graphic (SVG) file."
 msgstr "En skalerbar vektorgrafik (SVG-fil)."
 
 #: 
-msgid "Could not find token for user."
-msgstr "Kunne ikke finde token for bruger."
-
-#: 
 msgctxt "Library Agency Configuration"
 msgid "Search"
 msgstr "Søgning"
@@ -35026,7 +35022,7 @@ msgstr ""
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Side til 0-hits søgninger"
-msgstr ""
+msgstr "Side til 0-hits søgninger"
 
 #: 
 msgctxt "views.view.importable_content:display:default:display_options:fields:field_publication_date_1:settings:past_format"
@@ -35062,12 +35058,12 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "All material in Retriever is covered by copyright law and may not be copied without special permission."
-msgstr ""
+msgstr "Alt materiale i Retriever er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse."
 
 #: 
 msgctxt "Work Page"
 msgid "Close Retriever modal"
-msgstr ""
+msgstr "Luk Retriever modalen"
 
 #: 
 msgctxt "Work Page"
@@ -35086,7 +35082,7 @@ msgstr ""
 #: 
 msgctxt "Global"
 msgid "Reservations of digital materials are closed while we are moving to a new service. Please try again later."
-msgstr ""
+msgstr "Reserveringer på digitale materialer er ude af drift, mens vi skifter til en ny service for digitale lån. Prøv igen senere."
 
 #: 
 msgctxt "Dpl Biblio"
@@ -35096,12 +35092,12 @@ msgstr ""
 #: 
 msgctxt "Global"
 msgid "You cannot cancel this reservation while we are moving to a new service. Your place in the queue is kept."
-msgstr ""
+msgstr "Du kan ikke slette din digitale reservering, mens vi skifter til en ny service for digitale lån. Din plads i køen flyttes med til den nye service."
 
 #: 
 msgctxt "Series Page"
 msgid "More by @author"
-msgstr ""
+msgstr "Mere af @author"
 
 #: 
 msgctxt "Global"
@@ -35114,142 +35110,455 @@ msgid "Show previous"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
+msgctxt "Dashboard"
+msgid "Inspiration for you"
+msgstr "Inspiration til dig"
+
+#: 
+msgctxt "dpl_service_message"
+msgid "%label is now published."
+msgstr ""
+
+#: 
+msgctxt "dpl_service_message"
+msgid "%label is now unpublished."
+msgstr ""
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
+msgctxt "dpl_service_message"
+msgid "1 branch"
+msgid_plural "@count branches"
+msgstr[0] "1 bibliotek"
+msgstr[1] "@count biblioteker"
+
+#: 
+msgctxt "dpl_service_message"
+msgid "A readable summary of the pages a service message appears on."
+msgstr ""
+
+#: 
+msgid "A service message needs a heading, a body text, or both."
+msgstr ""
+
+#: 
+msgctxt "node.type.service_message:description"
+msgid "A short, time-limited notice about an outage, a closure or a degraded service."
+msgstr ""
+
+#: 
+msgid "Add service message"
+msgstr ""
+
+#: 
+msgid "Administer global service messages"
+msgstr ""
+
+#: 
+msgid "Allow placing a service message in the global bar, shown on every page of the site."
+msgstr ""
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
-msgid "Date"
+msgctxt "field.field.node.service_message.field_svcmsg_body:label"
+msgid "Body text"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_title"
+msgctxt "dpl_service_message"
+msgid "Critical"
+msgstr ""
+
+#: 
+msgid "DPL service message"
+msgstr ""
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_title"
 msgid "Default"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
+msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
+msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
-msgid "Icon"
-msgstr ""
+msgctxt "dpl_service_message"
+msgid "Front page"
+msgstr "Forside"
 
 #: 
-msgctxt "Dashboard"
-msgid "Inspiration for you"
-msgstr ""
+msgctxt "field.storage.node.field_svcmsg_placement:settings:allowed_values:1:label"
+msgid "Front page and branch pages"
+msgstr "Forsiden og bibliotekssider"
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
+msgid "Important service message"
+msgstr "Vigtig servicebesked"
+
+#: 
+msgctxt "dpl_service_message"
+msgid "Information"
+msgstr "Information"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
-msgid "Message"
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:tags:last"
+msgid "Last »"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
-msgid "No log messages available."
+msgctxt "views.view.service_messages:display:default:display_options:fields:svcmsg_level:label"
+msgid "Level"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:empty:area:content"
-msgid "No log messages available."
+msgctxt "field.field.node.service_message.field_svcmsg_link:label"
+msgid "Link"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
+msgctxt "field.field.node.service_message.field_svcmsg_link:description"
+msgid "Makes the whole message clickable. Point it at a page with more detail about what the message concerns."
+msgstr ""
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:tags:next"
+msgid "Next ›"
+msgstr ""
+
+#: 
+msgctxt "core.base_field_override.node.service_message.status:settings:off_label"
+msgid "Off"
+msgstr ""
+
+#: 
+msgctxt "field.field.node.service_message.field_svcmsg_frontpage:settings:off_label"
+msgid "Off"
+msgstr ""
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
-msgid "Operations"
+msgctxt "core.base_field_override.node.service_message.status:settings:on_label"
+msgid "On"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:page:display_title"
+msgctxt "field.field.node.service_message.field_svcmsg_frontpage:settings:on_label"
+msgid "On"
+msgstr ""
+
+#: 
+msgctxt "field.field.node.service_message.field_svcmsg_heading:description"
+msgid "Optional if the body text is filled in."
+msgstr "Valgfrit hvis brødteksten udfyldes."
+
+#: 
+msgctxt "field.field.node.service_message.field_svcmsg_body:description"
+msgid "Optional if the title is filled in. Line breaks are not shown: the message is printed as one run of text."
+msgstr "Valgfrit hvis titel er udfyldt. Lineskift vises ikke. Beskeden vises som en lang streng."
+
+#: 
+msgctxt "views.view.service_messages:display:page_1:display_title"
 msgid "Page"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:description"
-msgid "Recent log messages"
+msgctxt "field.field.node.service_message.field_svcmsg_placement:label"
+msgid "Placement"
+msgstr "Placering"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:fields:svcmsg_placement_summary:label"
+msgid "Placement"
+msgstr "Placering"
+
+#: 
+msgid "Plain text area widget settings"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:title"
-msgid "Recent log messages"
+msgctxt "dpl_service_message"
+msgid "Publish"
+msgstr "Udgiv"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:fields:publish_on:label"
+msgid "Publish on"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
+msgctxt "core.base_field_override.node.service_message.status:label"
+msgid "Published"
+msgstr "Publiceret"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:fields:status:label"
+msgid "Published"
+msgstr "Publiceret"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:fields:status:settings:format_custom_true"
+msgid "Published"
+msgstr "Publiceret"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:filters:status:expose:label"
+msgid "Published"
+msgstr "Publiceret"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:group_items:1:title"
+msgid "Published"
+msgstr "Publiceret"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:label"
+msgid "Published"
+msgstr "Publiceret"
+
+#: 
+msgctxt "dpl_service_message"
+msgid "Publishes or unpublishes a service message from the overview."
+msgstr ""
+
+#: 
+msgctxt "dpl_service_message"
+msgid "Publishing this as a site-wide message will unpublish %label, which is site-wide and published now."
+msgstr "Publicering af denne på hele hjemmesiden vil afpublicere %label, da der kun kan være én publiceret servicebesked på hele hjemmesiden."
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:reset_button_label"
 msgid "Reset"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
-msgid "Severity"
+msgid "Select the front page, one or more branches, or both. Otherwise the message has nowhere to appear."
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
-msgid "Severity"
+msgctxt "dpl_service_message"
+msgid "Service message"
+msgstr "Servicebesked"
+
+#: 
+msgctxt "node.type.service_message:name"
+msgid "Service message"
+msgstr "Servicebesked"
+
+#: 
+msgctxt "Validation"
+msgid "Service message content"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:exposed_sorts_label"
+msgctxt "dpl_service_message"
+msgid "Service message level"
+msgstr ""
+
+#: 
+msgctxt "dpl_service_message"
+msgid "Service message placement"
+msgstr ""
+
+#: 
+msgctxt "dpl_service_message"
+msgid "Service message publish toggle"
+msgstr ""
+
+#: 
+msgid "Service messages"
+msgstr "Servicebeskeder"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:title"
+msgid "Service messages"
+msgstr "Servicebeskeder"
+
+#: 
+msgctxt "views.view.service_messages:display:page_1:display_options:menu:title"
+msgid "Service messages"
+msgstr "Servicebeskeder"
+
+#: 
+msgctxt "views.view.service_messages:label"
+msgid "Service messages"
+msgstr "Servicebeskeder"
+
+#: 
+msgid "Short, time-limited notices about outages, closures and degraded services."
+msgstr "En kort besked om fx nedbrud, nedlukning eller lukket tilbud og tjenester."
+
+#: 
+msgctxt "field.field.node.service_message.field_svcmsg_frontpage:label"
+msgid "Show on the front page"
+msgstr "Vis på forsiden"
+
+#: 
+msgctxt "field.field.node.service_message.field_svcmsg_branches:label"
+msgid "Show on these branch pages"
+msgstr "Vis på disse bibliotekssider"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:exposed_form:options:exposed_sorts_label"
 msgid "Sort by"
+msgstr "Sorter efter"
+
+#: 
+msgid "Text area (multiple rows)"
+msgstr "Tekstområde (flere rækker)"
+
+#: 
+msgctxt "views.view.service_messages:description"
+msgid "The editorial overview of service messages. Used on admin/content/service-messages"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
+msgctxt "field.field.node.service_message.field_svcmsg_branches:description"
+msgid "The message appears at the top of each branch page you pick."
+msgstr "Beskeden vises på toppen af de bibliotekssider som vælges."
+
+#: 
+msgctxt "field.field.node.service_message.field_svcmsg_frontpage:description"
+msgid "The message appears at the top of the front page. Pick the front page, one or more branch pages, or both."
+msgstr ""
+
+#: 
+msgctxt "dpl_service_message"
+msgid "The severity of a service message, which follows its placement."
+msgstr ""
+
+#: 
+msgctxt "dpl_service_message"
+msgid "The whole site"
+msgstr "Hele hjemmesiden"
+
+#: 
+msgctxt "field.storage.node.field_svcmsg_placement:settings:allowed_values:0:label"
+msgid "The whole site"
+msgstr "Hele hjemmesiden"
+
+#: 
+msgctxt "field.field.node.service_message.field_svcmsg_placement:description"
+msgid "The whole site: a red bar above the menu on every page, for something urgent. Front page and branch pages: a message in the page itself."
+msgstr "Hele hjemmesiden: En rød bjælke vises over menuen på alle sider. Til kritisk information. Forsiden og bibliotekssider vises på de valgte sider."
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:empty:area_text_custom:content"
+msgid "There are no service messages yet."
+msgstr "Der er ingen servicebeskeder endnu."
+
+#: 
+msgctxt "field.field.node.service_message.field_svcmsg_heading:label"
+msgid "Title"
+msgstr "Titel"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:fields:title:label"
+msgid "Title"
+msgstr "Titel"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:filters:title:expose:label"
+msgid "Title"
+msgstr "Titel"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:fields:field_svcmsg_placement:label"
 msgid "Type"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:filters:type:expose:label"
+msgctxt "views.view.service_messages:display:default:display_options:filters:field_svcmsg_placement_value:expose:label"
 msgid "Type"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
-msgid "User"
+msgctxt "dpl_service_message"
+msgid "Unpublish"
+msgstr "Træk tilbage"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:fields:unpublish_on:label"
+msgid "Unpublish on"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
-msgid "WID"
+msgctxt "views.view.service_messages:display:default:display_options:fields:status:settings:format_custom_false"
+msgid "Unpublished"
+msgstr "Afpubliceret"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:filters:status:group_info:group_items:2:title"
+msgid "Unpublished"
+msgstr "Afpubliceret"
+
+#: 
+msgctxt "dpl_service_message"
+msgid "Warning message"
+msgstr "Advarsel"
+
+#: 
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:tags:first"
+msgid "« First"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:label"
-msgid "Watchdog"
+msgctxt "views.view.service_messages:display:default:display_options:pager:options:tags:previous"
+msgid "‹ Previous"
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
-msgid "admin/reports/dblog/event/{{ wid }}"
+msgctxt "Patron page"
+msgid "Dashboard"
+msgstr "Dit overblik"
+
+#: 
+msgctxt "Dashboard"
+msgid "User profile"
+msgstr "Brugerprofil"
+
+#: 
+msgid "Could not find any tokens for user."
 msgstr ""
 
 #: 
-msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
-msgid "{{ message }}"
+msgid "Post CMS Logout Go Session Cleanup Route"
 msgstr ""
+
+#: 
+msgid "Use the Biblio adapter for digital materials on GO"
+msgstr "Brug Biblio adapteren til digitale materialer på GO"
+
+#: 
+msgctxt "Dpl Biblio"
+msgid "Use the Biblio adapter for digital materials on GO"
+msgstr "Brug Biblio adapteren til digitale materialer på GO"
+
+#: 
+msgctxt "Dpl Biblio"
+msgid "When enabled new digital loans on GO can only be made through the Biblio adapter. Existing Publizon loans remain visible and playable until they expire. Independent of the flag for the web apps above."
+msgstr "Når denne er valgt, vil nye digitale lån på GO kun foretages gennem Biblio adapteren. Eksisterende digitale lån fra Publizon vil stadig kunne ses og læses/lyttes inden afleveringsfristen. Dette er uafhængigt af valget for web apps ovenfor."
 

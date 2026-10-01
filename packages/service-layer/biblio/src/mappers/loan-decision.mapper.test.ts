@@ -1,6 +1,10 @@
-import { describe, expect, it } from "vitest"
+import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { parseAndMapLoanDecision, parseAndMapLoanRequestResult } from "./loan-decision.mapper"
+
+afterEach(() => {
+  vi.restoreAllMocks()
+})
 
 describe("parseAndMapLoanDecision", () => {
   it("maps the can-loan answer", () => {
@@ -36,12 +40,13 @@ describe("parseAndMapLoanDecision", () => {
       expect(parseAndMapLoanDecision({ status: "loanable" }).loanProvider).toBeUndefined()
     })
 
-    it("throws on a licence the contract does not list", () => {
-      // A new WeDoBooks licence must fail loudly here: a quiet undefined would
-      // read as "not included" and charge the patron's quota for a free title.
-      expect(() =>
+    it("passes a licence the contract does not list through", () => {
+      // It is simply not "selection", so the UI never promises it as included.
+      vi.spyOn(console, "warn").mockImplementation(() => undefined)
+
+      expect(
         parseAndMapLoanDecision({ status: "loanable", loan_provider: "brand-new-licence" })
-      ).toThrow(/loan_provider/)
+      ).toMatchObject({ loanProvider: "brand-new-licence" })
     })
   })
 
@@ -67,8 +72,17 @@ describe("parseAndMapLoanDecision", () => {
     )
   })
 
+  it("passes a status the contract does not list through and logs it", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined)
+
+    expect(parseAndMapLoanDecision({ status: "brand-new-status" })).toMatchObject({
+      status: "brand-new-status",
+    })
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('status: "brand-new-status"'))
+  })
+
   it("throws the validation error when the body is neither answer nor error envelope", () => {
-    expect(() => parseAndMapLoanDecision({ status: "not-a-status" })).toThrow(/status/)
+    expect(() => parseAndMapLoanDecision({ unrelated: true })).toThrow(/status/)
   })
 })
 
@@ -86,11 +100,5 @@ describe("parseAndMapLoanRequestResult", () => {
     expect(
       parseAndMapLoanRequestResult({ status: "loanable", loan_provider: "selection" })
     ).toMatchObject({ loanProvider: "selection" })
-  })
-
-  it("throws on a licence the contract does not list", () => {
-    expect(() =>
-      parseAndMapLoanRequestResult({ status: "loanable", loan_provider: "brand-new-licence" })
-    ).toThrow(/loan_provider/)
   })
 })

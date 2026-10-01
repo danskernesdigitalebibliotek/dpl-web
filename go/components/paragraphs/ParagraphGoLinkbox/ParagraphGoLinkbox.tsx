@@ -23,6 +23,7 @@ const colorMap = {
   content_color_2: "bg-content-2",
   content_color_3: "bg-content-3",
   content_color_4: "bg-content-4",
+  content_color_5: "bg-content-5",
 }
 
 function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxProps) {
