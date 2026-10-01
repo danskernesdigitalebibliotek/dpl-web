@@ -288,6 +288,22 @@ export type File = {
   url: Scalars['String']['output'];
 };
 
+export type GoBiblioConfiguration = {
+  __typename?: 'GoBiblioConfiguration';
+  baseUrl?: Maybe<Scalars['String']['output']>;
+  enabled: Scalars['Boolean']['output'];
+  sdk?: Maybe<GoBiblioSdkConfiguration>;
+};
+
+export type GoBiblioSdkConfiguration = {
+  __typename?: 'GoBiblioSdkConfiguration';
+  applicationId: Scalars['String']['output'];
+  firebaseApiKey: Scalars['String']['output'];
+  firebaseAppId: Scalars['String']['output'];
+  firebaseProjectId: Scalars['String']['output'];
+  readerApiKey: Scalars['String']['output'];
+};
+
 export type GoCategoriesResult = View & {
   __typename?: 'GoCategoriesResult';
   description?: Maybe<Scalars['String']['output']>;
@@ -313,12 +329,14 @@ export type GoConfigurationPrivate = {
 
 export type GoConfigurationPublic = {
   __typename?: 'GoConfigurationPublic';
+  biblio?: Maybe<GoBiblioConfiguration>;
   blacklistedAvailabilityBranches?: Maybe<Array<Scalars['String']['output']>>;
   libraryInfo?: Maybe<GoLibraryInfo>;
   loginUrls?: Maybe<GoLoginUrls>;
   logoutUrls?: Maybe<GoLogoutUrls>;
   mapp?: Maybe<MappTracking>;
   searchProfiles?: Maybe<SearchProfiles>;
+  smsNotificationsEnabled?: Maybe<Scalars['Boolean']['output']>;
   unilogin?: Maybe<UniloginConfigurationPublic>;
 };
 
@@ -2299,7 +2317,7 @@ export type GetDplCmsPrivateConfigurationQuery = { go: { cacheTags: string[] } }
 export type GetDplCmsPublicConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', blacklistedAvailabilityBranches?: Array<string> | null, libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, mapp?: { __typename?: 'MappTracking', domain?: string | null, id?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null } | null } | null };
+export type GetDplCmsPublicConfigurationQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', blacklistedAvailabilityBranches?: Array<string> | null, smsNotificationsEnabled?: boolean | null, libraryInfo?: { __typename?: 'GoLibraryInfo', name?: string | null } | null, loginUrls?: { __typename?: 'GoLoginUrls', adgangsplatformen?: string | null } | null, logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null, mapp?: { __typename?: 'MappTracking', domain?: string | null, id?: string | null } | null, unilogin?: { __typename?: 'UniloginConfigurationPublic', municipalityId?: string | null } | null, biblio?: { __typename?: 'GoBiblioConfiguration', enabled: boolean, baseUrl?: string | null, sdk?: { __typename?: 'GoBiblioSdkConfiguration', applicationId: string, firebaseApiKey: string, firebaseProjectId: string, firebaseAppId: string, readerApiKey: string } | null } | null } | null } | null };
 
 export type GetPageByPathQueryVariables = Exact<{
   path: Scalars['String']['input'];
@@ -3514,6 +3532,18 @@ export const GetDplCmsPublicConfigurationDocument = `
         municipalityId
       }
       blacklistedAvailabilityBranches
+      biblio {
+        enabled
+        baseUrl
+        sdk {
+          applicationId
+          firebaseApiKey
+          firebaseProjectId
+          firebaseAppId
+          readerApiKey
+        }
+      }
+      smsNotificationsEnabled
     }
   }
 }

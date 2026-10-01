@@ -67,6 +67,7 @@ vi.mock("@/lib/session/session", async importOriginal => {
     },
     destroySession: vi.fn(),
     getDplCmsSessionCookie: vi.fn(),
+    markAdgangsplatformenSessionValidated: vi.fn(),
     getSession: vi.fn(),
     saveAdgangsplatformenSession: vi.fn(),
     removePCKECodeVerifierFromSession: vi.fn(),
@@ -98,12 +99,14 @@ const getFakeSessions = () => {
     isLoggedIn: true,
     type: "adgangsplatformen",
     expires: add(new Date(), { days: 1 }),
+    save: vi.fn(),
   }
 
-  const adgangsPlatformenSessionThatShouldBeRefreshed = {
+  const adgangsplatformenSessionCloseToExpiry = {
     isLoggedIn: true,
     type: "adgangsplatformen",
     expires: add(new Date(), { seconds: 59 }),
+    save: vi.fn(),
   }
 
   const adgangsPlatformenSessionThatIsTooOld = {
@@ -114,7 +117,7 @@ const getFakeSessions = () => {
   }
 
   return {
-    adgangsPlatformenSessionThatShouldBeRefreshed,
+    adgangsplatformenSessionCloseToExpiry,
     uniloginSessionThatShouldBeRefreshed,
     uniloginSessionWithExpiredRefreshToken,
     adgangsplatformenSessionThatDoesNotNeedToBeRefreshed,
@@ -142,11 +145,10 @@ describe("Middleware", () => {
   const sessions = getFakeSessions()
 
   it("can ensure that a library token is present if it is not already", async () => {
+    // No Drupal session cookie in this scenario, so the CMS has no token for
+    // us — the same answer loadUserToken gives without calling out at all.
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
-      await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
-      })
+      await Promise.resolve({ status: "no-token" as const })
     )
     vi.spyOn(libraryTokenFunctions, "loadLibraryToken").mockResolvedValueOnce(
       await Promise.resolve({
@@ -212,8 +214,11 @@ describe("Middleware", () => {
     )
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
 
@@ -222,9 +227,11 @@ describe("Middleware", () => {
     expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(1)
   })
 
-  it("can refresh an Adgangsplatform session if it is expired", async () => {
+  // The GO session lives exactly as long as the user token — the CMS cannot
+  // renew it, so there is no refresh path for Adgangsplatformen sessions.
+  it("does NOT extend an Adgangsplatformen session that is close to expiry", async () => {
     vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
-      Promise.resolve(sessions.adgangsPlatformenSessionThatShouldBeRefreshed)
+      Promise.resolve(sessions.adgangsplatformenSessionCloseToExpiry)
     )
 
     const saveAdgangsplatformenSessionSpy = vi
@@ -239,14 +246,17 @@ describe("Middleware", () => {
     )
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
 
     await middleware(getNextRequestWithLibraryTokenCookie())
 
-    expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(1)
+    expect(saveAdgangsplatformenSessionSpy).toHaveResolvedTimes(0)
   })
 
   it("does NOT refresh an Adgangsplatform session if it isn't expired yet", async () => {
@@ -266,8 +276,11 @@ describe("Middleware", () => {
     )
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
 
@@ -300,8 +313,11 @@ describe("Middleware", () => {
     )
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
 
@@ -375,12 +391,89 @@ describe("Middleware", () => {
     )
     vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(
       await Promise.resolve({
-        token: "hi-I-am-a-dpl-cms-user-token",
-        expire: 363663636,
+        status: "token" as const,
+        data: {
+          token: "hi-I-am-a-dpl-cms-user-token",
+          expire: { timestamp: 363663636 },
+        },
       })
     )
 
     await middleware(getNextRequestWithLibraryTokenCookie())
+
+    expect(destroySessionSpy).toHaveResolvedTimes(1)
+  })
+
+  // Drupal can retire the session while the token is still accepted by the
+  // services, so the CMS is the only party that knows it is over.
+  const setUpLoggedInRevalidation = (tokenResult: unknown, validatedAt?: Date) => {
+    vi.spyOn(sessionFunctions, "getSession").mockResolvedValue(
+      Promise.resolve({
+        ...sessions.adgangsplatformenSessionThatDoesNotNeedToBeRefreshed,
+        validatedAt,
+        save: vi.fn(),
+      })
+    )
+    vi.spyOn(sessionFunctions, "getDplCmsSessionCookie").mockResolvedValue(
+      Promise.resolve(fakeDrupalSessionRequestCookie)
+    )
+    vi.spyOn(headersFunctions, "cookies").mockResolvedValue(
+      Promise.resolve({
+        getAll: vi.fn(() => [fakeDrupalSessionRequestCookie]),
+        get: vi.fn(() => fakeDrupalSessionRequestCookie),
+      })
+    )
+    vi.spyOn(userTokenFunctions, "loadUserToken").mockResolvedValue(Promise.resolve(tokenResult))
+
+    return getNextRequestWithLibraryTokenCookie()
+  }
+
+  it("destroys a logged in Adgangsplatformen session when the CMS has no token for it", async () => {
+    const request = setUpLoggedInRevalidation({ status: "no-token" })
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
+
+    await middleware(request)
+
+    expect(destroySessionSpy).toHaveResolvedTimes(1)
+  })
+
+  it("keeps a logged in Adgangsplatformen session when the CMS cannot be reached", async () => {
+    const request = setUpLoggedInRevalidation({ status: "error" })
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
+
+    await middleware(request)
+
+    expect(destroySessionSpy).toHaveBeenCalledTimes(0)
+  })
+
+  // Asking on every request would put a CMS round trip in front of every page
+  // load and every prefetch.
+  it("does not ask the CMS again within the validation window", async () => {
+    const request = setUpLoggedInRevalidation(
+      { status: "no-token" },
+      sub(new Date(), { seconds: 5 })
+    )
+    const loadUserTokenSpy = vi.spyOn(userTokenFunctions, "loadUserToken")
+
+    await middleware(request)
+
+    expect(loadUserTokenSpy).toHaveBeenCalledTimes(0)
+  })
+
+  it("asks the CMS again once the validation window has passed", async () => {
+    const request = setUpLoggedInRevalidation(
+      { status: "no-token" },
+      sub(new Date(), { seconds: 31 })
+    )
+    const destroySessionSpy = vi
+      .spyOn(sessionFunctions, "destroySession")
+      .mockResolvedValue(Promise.resolve())
+
+    await middleware(request)
 
     expect(destroySessionSpy).toHaveResolvedTimes(1)
   })

@@ -18,7 +18,7 @@ on:
       - '.github/workflows/go-ci.yml'
       - '.github/actions/**'
       - 'schemas/openapi/publizon-adapter.yaml'
-      - 'schemas/graphql/dbc-fbi.fbcms-go.graphql'
+      - 'schemas/graphql/dbc-fbi.graphql'
       - 'cms/dpl-cms.bnf.graphql'
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -28,7 +28,7 @@ on:
       - '.github/workflows/go-ci.yml'
       - '.github/actions/**'
       - 'schemas/openapi/publizon-adapter.yaml'
-      - 'schemas/graphql/dbc-fbi.fbcms-go.graphql'
+      - 'schemas/graphql/dbc-fbi.graphql'
       - 'cms/dpl-cms.bnf.graphql'
 
 jobs:
@@ -50,6 +50,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Run linter
         run: pnpm run lint
 
@@ -86,6 +87,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Run typescript compile check
         run: pnpm exec tsc --noEmit
 
@@ -104,6 +106,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Run unit tests
         run: pnpm run test:unit:once
 
@@ -127,6 +130,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Install go-task
         uses: arduino/setup-task@v3
         with:
@@ -166,6 +170,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Build Storybook
         run: pnpm run build-storybook --quiet
       - name: Upload Storybook build
@@ -268,6 +273,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Load environment variables
         uses: cardinalby/export-env-action@v2
         with:
@@ -286,6 +292,10 @@ jobs:
           install: false
           build: pnpm run build
           start: pnpm run start
+          # Holds the suite until the server answers: Cypress otherwise starts
+          # as soon as `start` is spawned.
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
           command: pnpm run cypress:run
           browser: chrome
           working-directory: go

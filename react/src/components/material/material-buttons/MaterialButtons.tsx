@@ -1,21 +1,21 @@
 import * as React from "react";
 import { FC } from "react";
-import { AccessTypeCodeEnum } from "../../../core/dbc-gateway/generated/graphql";
 import {
   getAllFaustIds,
   getMaterialType
 } from "../../../core/utils/helpers/general";
 import { ButtonSize } from "../../../core/utils/types/button";
 import { Manifestation } from "../../../core/utils/types/entities";
-import { hasCorrectAccess, hasCorrectAccessType, isArticle } from "./helper";
 import { WorkId } from "../../../core/utils/types/ids";
 import MaterialButtonsOnline from "./online/MaterialButtonsOnline";
 import MaterialButtonsFindOnShelf from "./physical/MaterialButtonsFindOnShelf";
 import MaterialButtonsPhysical from "./physical/MaterialButtonsPhysical";
 import MaterialButtonReservableFromAnotherLibrary from "./physical/MaterialButtonReservableFromAnotherLibrary";
 import useReservableFromAnotherLibrary from "../../../core/utils/useReservableFromAnotherLibrary";
+import { MaterialButtonsType } from "./resolveMaterialButtonsType";
 
 export interface MaterialButtonsProps {
+  type: MaterialButtonsType;
   isSpecificManifestation?: boolean;
   manifestations: Manifestation[];
   size?: ButtonSize;
@@ -23,64 +23,38 @@ export interface MaterialButtonsProps {
   dataCy?: string;
   materialTitleId: string;
   isEditionPicker?: boolean;
-
-  /**
-   * If no buttons are available, this fallback will be rendered instead.
-   */
-  fallback?: React.ReactNode;
 }
 
 const MaterialButtons: FC<MaterialButtonsProps> = ({
+  type,
   isSpecificManifestation = false,
   manifestations,
   size,
   workId,
   dataCy = "material-buttons",
   materialTitleId,
-  isEditionPicker = false,
-  fallback
+  isEditionPicker = false
 }) => {
   const faustIds = getAllFaustIds(manifestations);
-  // We don't want to show physical buttons/find on shelf for articles because
-  // articles appear as a part of journal/periodical publications and can't be
-  // physically loaned for themseleves.
-
   const { materialIsReservableFromAnotherLibrary } =
     useReservableFromAnotherLibrary(manifestations);
 
-  const showPhysicalButtons =
-    hasCorrectAccessType(AccessTypeCodeEnum.Physical, manifestations) &&
-    !isArticle(manifestations);
+  switch (type.type) {
+    case "physical":
+      // Reserving from another library is a physical reservation, and it opens
+      // the same modal the ordinary reserve button does.
+      if (materialIsReservableFromAnotherLibrary) {
+        return (
+          <MaterialButtonReservableFromAnotherLibrary
+            workId={workId}
+            size={size}
+            manifestationMaterialType={getMaterialType(manifestations)}
+            faustIds={faustIds}
+          />
+        );
+      }
 
-  // Reserving from another library is a physical reservation, and it opens the
-  // same modal the ordinary reserve button does.
-  if (materialIsReservableFromAnotherLibrary && showPhysicalButtons) {
-    return (
-      <MaterialButtonReservableFromAnotherLibrary
-        workId={workId}
-        size={size}
-        manifestationMaterialType={getMaterialType(manifestations)}
-        faustIds={faustIds}
-      />
-    );
-  }
-  // Show online material buttons if, either the material has an online access type or it has
-  // a DigitalArticleService access & at the same time is an article. This way
-  // we avoid showing both physical and online action buttons at one, which shouldn't happen
-  const showOnlineButtons =
-    hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) ||
-    (hasCorrectAccess("DigitalArticleService", manifestations) &&
-      isArticle(manifestations));
-
-  const showFallback = !showPhysicalButtons && !showOnlineButtons && fallback;
-
-  if (showFallback) {
-    return fallback;
-  }
-
-  return (
-    <>
-      {showPhysicalButtons && (
+      return (
         <>
           <MaterialButtonsPhysical
             manifestations={manifestations}
@@ -98,9 +72,12 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
             />
           )}
         </>
-      )}
-      {showOnlineButtons && (
+      );
+
+    case "online":
+      return (
         <MaterialButtonsOnline
+          type={type.online}
           manifestations={manifestations}
           size={size}
           workId={workId}
@@ -108,9 +85,8 @@ const MaterialButtons: FC<MaterialButtonsProps> = ({
           ariaLabelledBy={materialTitleId}
           isEditionPicker={isEditionPicker}
         />
-      )}
-    </>
-  );
+      );
+  }
 };
 
 export default MaterialButtons;

@@ -1,0 +1,50 @@
+{% extends '@dpl_service_message/dpl-service-messages.html.twig' %}
+
+{% block content %}
+  {{ attach_library('novel/service-message') }}
+
+  <section class="service-messages"
+    aria-label="{{ 'Service messages'|t({}, {context: 'dpl_service_message'}) }}">
+    <div class="service-messages__container">
+      {# One icon for the whole group, not one per message. #}
+      <span class="service-messages__icon" aria-hidden="true">
+        {{ source(themeIconPath ~ '/icon-bell.svg') }}
+      </span>
+
+      <ul class="service-messages__list">
+        {% for message in messages %}
+          {% set tag = message.url ? 'a' : 'div' %}
+
+          <li class="service-messages__item">
+            <{{ tag }}
+              {% if message.url %}href="{{ message.url }}"{% endif %}
+              class="service-messages__message{{ message.url ? ' arrow arrow__hover--right-small' : '' }}">
+
+              <div class="service-messages__text">
+                {# A real heading, unlike the global bar's `strong`. Here the
+                   heading is drawn as one - Lora, 24px - so not marking it up as
+                   one is itself the 1.3.1 failure (KB-64). h2 is the level: the
+                   page's h1 is present but visually hidden, and this container
+                   renders before it, so h2 is the only level that does not skip
+                   one. The bar keeps `strong` because its heading reads as
+                   emphasised text rather than a heading. #}
+                {% if message.heading %}
+                  <h2 class="service-messages__heading">{{ message.heading }}</h2>
+                {% endif %}
+                {% if message.body %}
+                  <div class="service-messages__body">{{ message.body }}</div>
+                {% endif %}
+              </div>
+
+              {% if message.url %}
+                <span class="service-messages__arrow" aria-hidden="true">
+                  {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
+                </span>
+              {% endif %}
+            </{{ tag }}>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endblock %}

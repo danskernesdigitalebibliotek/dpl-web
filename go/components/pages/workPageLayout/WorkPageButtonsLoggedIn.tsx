@@ -1,23 +1,30 @@
-import { useLoans, useReservations } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import {
+  useDigitalLoans,
+  useLoans,
+  useReservations,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React from "react"
 
 import {
   getEbookPreviewUrl,
-  getEbookReadUrl,
   getManifestationLabel,
   getMaterialCategory,
+  getReadUrlForLoan,
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
+import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
 import usePatronShelf from "@/hooks/usePatronShelf"
 import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
+import { findBiblioLoan, findPublizonLoan } from "@/lib/helpers/helper.patron"
 import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
 import { getPublizonIdentifierFromManifestation, pidToFaust } from "@/lib/helpers/ids"
 import { TModalType } from "@/lib/helpers/modal-url"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import { openModal } from "@/store/modal.store"
+import { playLoan, playSample } from "@/store/player.store"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
@@ -32,9 +39,16 @@ const WorkPageButtonsLoggedIn = ({
   selectedManifestation,
 }: WorkPageButtonsLoggedInProps) => {
   const { session } = useSession()
+  const viaBiblioAdapter = useBiblioAdapter()
+  const isUnilogin = session?.type === "unilogin"
   const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
+  // Patron-gated in the service layer, so it never fires for Unilogin
+  // sessions — the adapter only authenticates Adgangsplatformen patrons.
+  const { data: biblioLoansData, isLoading: isLoadingBiblioLoans } = useDigitalLoans({
+    enabled: viaBiblioAdapter,
+  })
 
-  if (isLoadingLoans) {
+  if (isLoadingLoans || (viaBiblioAdapter && !isUnilogin && isLoadingBiblioLoans)) {
     return <WorkPageButtons.Skeleton />
   }
 
@@ -43,8 +57,17 @@ const WorkPageButtonsLoggedIn = ({
   const category = getMaterialCategory(
     selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
   )
-  const loan = dataLoans?.loans?.find(l => l.libraryBook?.identifier === identifier)
+  // An existing Publizon loan keeps its own reader/player until it expires -
+  // read-only: with the adapter switched on, no new Publizon loans are made.
+  // TODO(publizon-sunset): remove when the Publizon API is phased out —
+  // useGetV1UserLoans, this lookup, the isLoaned branches (Læs via orderId,
+  // Lyt via PlayerModal) and the flag-off preview paths all go; only the
+  // biblio branches remain.
+  const loan = findPublizonLoan(dataLoans, identifier)
   const isLoaned = !!loan
+  const biblioLoan = viaBiblioAdapter
+    ? findBiblioLoan(biblioLoansData?.loans, identifier)
+    : undefined
   const isDisabled = isErrorLoans || !identifier
 
   const open = (modal: TModalType) =>
@@ -76,7 +99,20 @@ const WorkPageButtonsLoggedIn = ({
       return (
         <WorkPageButtons>
           <WorkPageButton ariaLabel={`Læs ${label}`} theme="primary" dataCy={dataCy} asChild>
-            <SmartLink href={getEbookReadUrl(workId, loan.orderId || "")} reload>
+            <SmartLink
+              href={getReadUrlForLoan(workId, { orderId: loan.orderId ?? undefined })}
+              reload>
+              Læs {label}
+            </SmartLink>
+          </WorkPageButton>
+        </WorkPageButtons>
+      )
+    }
+    if (biblioLoan) {
+      return (
+        <WorkPageButtons>
+          <WorkPageButton ariaLabel={`Læs ${label}`} theme="primary" dataCy={dataCy} asChild>
+            <SmartLink href={getReadUrlForLoan(workId, { loanId: biblioLoan.loanId })} reload>
               Læs {label}
             </SmartLink>
           </WorkPageButton>
@@ -122,6 +158,19 @@ const WorkPageButtonsLoggedIn = ({
         </WorkPageButtons>
       )
     }
+    if (biblioLoan) {
+      return (
+        <WorkPageButtons>
+          <WorkPageButton
+            ariaLabel={`Lyt til ${label}`}
+            theme="primary"
+            dataCy={dataCy}
+            onClick={() => playLoan(biblioLoan.loanId)}>
+            Lyt til {label}
+          </WorkPageButton>
+        </WorkPageButtons>
+      )
+    }
     return (
       <WorkPageButtons>
         <WorkPageButton
@@ -136,7 +185,13 @@ const WorkPageButtonsLoggedIn = ({
           ariaLabel={`Prøv ${label}`}
           dataCy={dataCy}
           disabled={isDisabled}
-          onClick={() => openModal("PlayerPreviewModal", { manifestation: selectedManifestation })}>
+          onClick={() => {
+            if (!viaBiblioAdapter) {
+              openModal("PlayerPreviewModal", { manifestation: selectedManifestation })
+              return
+            }
+            playSample(identifier || "")
+          }}>
           Prøv {label}
         </WorkPageButton>
       </WorkPageButtons>

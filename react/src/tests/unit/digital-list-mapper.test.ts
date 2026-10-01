@@ -48,6 +48,7 @@ describe("Biblio list mappers", () => {
         entries: {
           publizonEbookText: "E-book",
           publizonAudioBookText: "Audiobook",
+          publizonPodcastText: "Podcast",
           materialByAuthorText: "By",
           materialAndAuthorText: "and"
         }
@@ -99,6 +100,24 @@ describe("Biblio list mappers", () => {
       ]);
 
       expect(loan.details?.materialType).toBe("Audiobook");
+    });
+
+    it("Labels and plays a podcast as a podcast", () => {
+      const [loan] = mapDigitalLoanToLoanType([
+        { ...digitalLoan, materialType: "podcast" }
+      ]);
+
+      expect(loan.details?.materialType).toBe("Podcast");
+      expect(loan.details?.opensIn).toBe("player");
+    });
+
+    it("Shows a type it cannot open without label or button", () => {
+      const [loan] = mapDigitalLoanToLoanType([
+        { ...digitalLoan, materialType: "audiobook_club" }
+      ]);
+
+      expect(loan.details?.materialType).toBe("");
+      expect(loan.details?.opensIn).toBeNull();
     });
   });
 

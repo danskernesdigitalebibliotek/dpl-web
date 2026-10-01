@@ -4,8 +4,8 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
 
 class AccessTypeCodeEnum
 {
-    public const PHYSICAL = 'PHYSICAL';
     public const ONLINE = 'ONLINE';
+    public const PHYSICAL = 'PHYSICAL';
     public const UNKNOWN = 'UNKNOWN';
 
     public static function endpoint(): string

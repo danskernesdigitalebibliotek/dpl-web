@@ -4,10 +4,10 @@ namespace Drupal\dpl_fbi\GraphQL\Types;
 
 class SuggestionTypeEnum
 {
+    public const COMPOSIT = 'COMPOSIT';
+    public const CREATOR = 'CREATOR';
     public const SUBJECT = 'SUBJECT';
     public const TITLE = 'TITLE';
-    public const CREATOR = 'CREATOR';
-    public const COMPOSIT = 'COMPOSIT';
 
     public static function endpoint(): string
     {

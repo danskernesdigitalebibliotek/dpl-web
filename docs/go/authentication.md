@@ -170,6 +170,31 @@ flowchart TD
     SessionExist -->|No| RedirectToFrontpage
 ```
 
+### Logout initiated on the CMS site
+
+The Adgangsplatformen session is shared with the CMS site, but the
+`go-session` cookie is host-only on the Go host — the CMS cannot clear it in
+its own responses. Logouts initiated on the CMS site (the logout button on
+the library site) therefore detour through Go:
+
+```mermaid
+sequenceDiagram
+    actor Patron
+    participant CMS
+    participant Adgangsplatformen
+    participant Go
+    Patron->>CMS: Clicks logout on the CMS site (/logout)
+    CMS->>CMS: Logs the user out of Drupal
+    CMS->>Adgangsplatformen: Redirects to single logout
+    Adgangsplatformen->>CMS: Redirects back to /go-session-logout
+    CMS->>Go: Redirects to /auth/logout/cms
+    Note over Go: Destroys the Go session if it is an Adgangsplatformen session.<br/>Unilogin sessions live independently of the CMS and survive.
+    Go->>CMS: Redirects to the CMS front page
+```
+
+Go-initiated logouts pass `current-path=/go-logout` to the CMS and skip the
+detour — the Go session is already destroyed before the redirect.
+
 ## Token handling
 
 ### Token types
@@ -191,6 +216,28 @@ The Adgangsplatformen access token is a part of the `go-session` iron-session co
 Whenever a fetch is fired and service requested needs an Adgangsplatformen access
 token as bearer token, the access token is fetched from the internal
 `/auth/session` route.
+
+The Adgangsplatformen access token cannot be renewed, so the Go session lives
+exactly as long as the token (see ADR-012). Drupal logs out patrons whose
+token has expired, on the first request that reaches it — including the one
+Go makes to read the token. When it expires:
+
+- `loadUserToken()` gets nothing back, so a lingering Drupal session cookie
+  cannot recreate a dead session. Go does not check the expiry itself — no
+  token from the CMS means no session. A 401 or 403 counts as "no token";
+  only a transport failure counts as an error, and an error never ends a
+  session.
+- The middleware re-asks the CMS even for a session that still looks live,
+  since Drupal may have retired it while the services keep accepting the
+  token. The answer is trusted for 30 seconds
+  (`auth.session-validation-ttl-seconds`), so this costs at most one CMS call
+  per session per window rather than one per request.
+- The middleware destroys the expired Go session and lets the request
+  continue as anonymous. The Adgangsplatformen SSO session is left alone, so
+  logging in again is a round trip the user barely notices.
+- The `/ap-service` proxy checks expiry itself and destroys the session when
+  the upstream rejects the session's user token with 401/403 — this also
+  catches tokens revoked before their expire timestamp.
 
 #### Refresh token
 
