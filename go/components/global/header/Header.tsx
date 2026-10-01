@@ -15,8 +15,7 @@ function Header() {
     // z-navigation: above content accents, below the player bar and overlays
     // (see the z-index system in globals.css).
     <header className="z-navigation relative">
-      <div
-        className="h-navigation-top-height flex items-center justify-center">
+      <div className="h-navigation-top-height flex items-center justify-center">
         <LinkToParentLibrary />
       </div>
       <div className="content-container h-navigation-height grid grid-cols-3 items-center">
