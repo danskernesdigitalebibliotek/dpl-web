@@ -96,6 +96,10 @@
     --blue-title: hsla(202, 100%, 76%, 1);
     --blue-title-dark: hsla(202, 60%, 30%, 1);
 
+    /* TODO: when we redesign the color palette in 2027, this should be updated to
+    primary/call to action color. Right now it is only used in linkbox (content-colors) */
+    --go-green: #66ff55;
+
     /* CONTENT COLORS */
     --content-pink-100: hsla(320, 100%, 91%, 1);
     --content-pink-200: hsla(317, 100%, 73%, 1);
