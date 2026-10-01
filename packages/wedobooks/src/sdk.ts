@@ -60,13 +60,26 @@ export type WedoBooksOpenFailure = { reason: "device_limit_reached" } | { reason
  */
 export type WedoBooksStopReason = WedoBooksSessionInterruption | WedoBooksOpenFailure
 
-/** Why an open was refused, as the page should explain it. */
+/**
+ * Why an open was refused, as the page should explain it. A device revoked
+ * while opening is the same event as one revoked after, so it is reported as
+ * that interruption rather than as a fault. A session taken while opening is
+ * not told apart: the SDK answers `failed_precondition` for that and for other
+ * preconditions alike, and its own `interruptedBy` may be left over from an
+ * earlier loan, so it falls together with the rest.
+ */
 export function stopReasonOf(error: unknown): WedoBooksStopReason {
   const code =
     typeof error === "object" && error !== null && "code" in error
       ? (error as { code: unknown }).code
       : null
-  return { reason: code === "device_limit_reached" ? "device_limit_reached" : "open_failed" }
+  switch (code) {
+    case "device_limit_reached":
+    case "device_revoked":
+      return { reason: code }
+    default:
+      return { reason: "open_failed" }
+  }
 }
 
 /** A device registered to the patron, as the SDK lists it. */

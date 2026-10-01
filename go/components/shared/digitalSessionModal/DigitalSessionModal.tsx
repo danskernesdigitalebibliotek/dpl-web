@@ -35,6 +35,10 @@ const titleFor = (reason: WedoBooksStopReason) => {
       return "Ikke plads til denne enhed"
     case "open_failed":
       return "Titlen kunne ikke åbnes"
+    // Reaches here both for a reader that was closed and for one refused to
+    // open, so neither "closed" nor "could not open" fits.
+    case "device_revoked":
+      return "Enheden er ikke længere registreret"
     default:
       return "Titlen blev lukket"
   }
