@@ -9,6 +9,11 @@ import MaterialSlider, {
   MaterialSliderTitle
 } from "../../components/material-slider/MaterialSlider";
 import { constructMaterialUrl } from "../../core/utils/helpers/url";
+import invalidSwitchCase from "../../core/utils/helpers/invalid-switch-case";
+import {
+  NonEmptyArray,
+  isNonEmpty
+} from "../../core/utils/helpers/non-empty-array";
 import { useUrls } from "../../core/utils/url";
 import useLoans from "../../core/utils/useLoans";
 import useReservations from "../../core/utils/useReservations";
@@ -17,11 +22,15 @@ import { WorkId } from "../../core/utils/types/ids";
 import { LoanType } from "../../core/utils/types/loan-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import {
+  RecommendationSeed,
   listItemsToRecommendationSeeds,
-  pickRecommendationSeed,
+  orderRecommendationSeeds,
   workIdsToRecommendationSeeds
 } from "./recommendationSeed";
-import { RecommendationOrigin } from "./recommendations.types";
+import {
+  RecommendationOrigin,
+  RecommendationResult
+} from "./recommendations.types";
 import useRecommendations from "./useRecommendations";
 
 interface DashboardProps {
@@ -37,11 +46,8 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
   const { data: favoritesList, isLoading: isLoadingFavorites } =
     useGetList("default");
 
-  // The lists arrive from separate services at different speeds. The
-  // recommendations pick their seed on mount, so they are only mounted once
-  // every list has settled - otherwise a reservation could win over a loan
-  // that simply had not arrived yet. A failed request is not loading and has
-  // no data, so it counts as an empty list.
+  // We must wait for all lists to settle before rendering recommendations,
+  // as we need to prioritize: loans -> reservations -> favorites.
   const hasSettledLists =
     !loans.all.isLoading && !reservations.all.isLoading && !isLoadingFavorites;
 
@@ -77,13 +83,8 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
   );
 };
 
-// The caption above the recommendations title, phrased after where the
-// material the recommendations are based on came from.
-const captionTextKeyByOrigin: Record<RecommendationOrigin, string> = {
-  loan: "dashboardRecommendationsLoanCaptionText",
-  reservation: "dashboardRecommendationsReservationCaptionText",
-  favorite: "dashboardRecommendationsFavoriteCaptionText"
-};
+// How many seeds to try before giving up on the section.
+const MAX_ATTEMPTS = 5;
 
 type RecommendedMaterialsProps = {
   loans: LoanType[];
@@ -96,24 +97,55 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   reservations,
   favorites
 }) => {
+  // The state variable is used to keep the seeds stable across renders.
+  // Internally, the `orderRecommendationSeeds` shuffles the seeds, so
+  // without this rerenders would reorder the seeds.
+  const [seeds] = useState(() =>
+    orderRecommendationSeeds({
+      loans: listItemsToRecommendationSeeds(loans, "loan"),
+      reservations: listItemsToRecommendationSeeds(reservations, "reservation"),
+      favorites: workIdsToRecommendationSeeds(favorites)
+    }).slice(0, MAX_ATTEMPTS)
+  );
+
+  return isNonEmpty(seeds) ? <RecommendationsAttempt seeds={seeds} /> : null;
+};
+
+/**
+ * Attempts to fetch recommendations based on the first seed in `seeds`
+ *
+ * If successful, it renders the recommendations as a slider.
+ * If not, it renders another RecommendationsAttempt component
+ * which retries with the next seed from the list.
+ */
+const RecommendationsAttempt: FC<{
+  seeds: NonEmptyArray<RecommendationSeed>;
+}> = ({ seeds }) => {
+  const [seed, ...remainingSeeds] = seeds;
+
+  const recommendationResult = useRecommendations(seed);
+
+  switch (recommendationResult.status) {
+    case "loading":
+      return null;
+    case "found":
+      return <RecommendationsSlider result={recommendationResult.result} />;
+    case "miss":
+      return isNonEmpty(remainingSeeds) ? (
+        <RecommendationsAttempt seeds={remainingSeeds} />
+      ) : null;
+    default:
+      return invalidSwitchCase(recommendationResult);
+  }
+};
+
+const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
+  result
+}) => {
   const t = useText();
   const u = useUrls();
   const materialUrl = u("materialUrl");
   const addToListRequest = useAddFavorite({ app: "dashboard" });
-
-  const [seed] = useState(() =>
-    pickRecommendationSeed({
-      loans: listItemsToRecommendationSeeds(loans, "loan"),
-      reservations: listItemsToRecommendationSeeds(reservations, "reservation"),
-      favorites: workIdsToRecommendationSeeds(favorites)
-    })
-  );
-
-  const { result, isLoading } = useRecommendations(seed);
-
-  if (isLoading || !result || result.recommendations.length === 0) {
-    return null;
-  }
 
   return (
     <section className="dashboard-page-recommendations">
@@ -121,7 +153,7 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
         heading={
           <>
             <MaterialSliderCaption>
-              {t(captionTextKeyByOrigin[result.source.origin])}
+              {getCaptionByOrigin(t, result.source.origin)}
             </MaterialSliderCaption>
             <MaterialSliderTitle>{result.source.title}</MaterialSliderTitle>
           </>
@@ -137,6 +169,22 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
       />
     </section>
   );
+};
+
+const getCaptionByOrigin = (
+  t: UseTextFunction,
+  origin: RecommendationOrigin
+) => {
+  switch (origin) {
+    case "loan":
+      return t("dashboardRecommendationsLoanCaptionText");
+    case "reservation":
+      return t("dashboardRecommendationsReservationCaptionText");
+    case "favorite":
+      return t("dashboardRecommendationsFavoriteCaptionText");
+    default:
+      invalidSwitchCase(origin);
+  }
 };
 
 export default DashBoard;
