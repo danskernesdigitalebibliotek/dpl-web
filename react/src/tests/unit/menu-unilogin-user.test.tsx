@@ -42,6 +42,12 @@ vi.mock(
 vi.mock("../../apps/menu/menu-not-logged-in/menu-not-logged-in", () => ({
   default: () => null
 }));
+vi.mock(
+  "../../apps/menu/menu-unilogin-patron-login/menu-unilogin-patron-login",
+  () => ({
+    default: () => null
+  })
+);
 
 // Module state lives in the token and Unilogin stores, so every test starts
 // from a fresh copy - as a fresh page load does.

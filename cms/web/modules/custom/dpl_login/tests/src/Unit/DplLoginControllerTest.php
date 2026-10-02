@@ -10,6 +10,8 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Routing\LocalRedirectResponse;
+use Drupal\Core\Routing\RequestContext;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Routing\UrlGenerator;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -249,6 +251,93 @@ class DplLoginControllerTest extends UnitTestCase {
     $this->assertSame($response, $controller->login(new Request($query)));
 
     $dpl_login_session->setUniloginLogin($is_unilogin)->shouldHaveBeenCalled();
+  }
+
+  /**
+   * A logged-in user who hits /login is logged out before logging in again.
+   *
+   * A Unilogin student starting a patron login is also logged out of
+   * Adgangsplatformen, and then sent back to /login. Otherwise a cancelled
+   * patron login would leave the student logged out of the CMS only.
+   *
+   * @dataProvider provideLoggedInUsers
+   */
+  public function testThatLoggedInUsersAreLoggedOutOnLogin(?AccessTokenType $token_type, array $query, ?string $expected_location): void {
+    $current_user = $this->prophesize(AccountProxyInterface::class);
+    $current_user->isAuthenticated()->willReturn(TRUE);
+
+    $token = NULL;
+    if ($token_type) {
+      $token = new AccessToken();
+      $token->token = 'student-token';
+      $token->expire = 9999;
+      $token->type = $token_type;
+    }
+    $user_tokens = $this->prophesize(UserTokens::class);
+    $user_tokens->getCurrent()->willReturn($token);
+
+    $config = $this->prophesize(ImmutableConfig::class);
+    $config->get('settings')->willReturn(['logout_endpoint' => 'https://login.example/logout']);
+    $config_factory = $this->prophesize(ConfigFactoryInterface::class);
+    $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
+    $config_manager = $this->prophesize(ConfigManagerInterface::class);
+    $config_manager->getConfigFactory()->willReturn($config_factory->reveal());
+
+    $logger = $this->prophesize(LoggerInterface::class);
+    $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);
+    $logger_factory->get(Argument::any())->willReturn($logger->reveal());
+
+    $user_service = $this->prophesize(User::class);
+
+    $container = \Drupal::getContainer();
+    $container->set('current_user', $current_user->reveal());
+    $container->set('dpl_login.user_tokens', $user_tokens->reveal());
+    $container->set('dpl_login.adgangsplatformen.config', new Config($config_manager->reveal()));
+    $container->setAlias(Config::class, 'dpl_login.adgangsplatformen.config');
+    $container->set('logger.factory', $logger_factory->reveal());
+    $container->set('dpl_login.user', $user_service->reveal());
+    $request = Request::create('https://library.example/login', 'GET', $query);
+    $request_context = new RequestContext();
+    $request_context->fromRequest($request);
+    $request_context->setCompleteBaseUrl('https://library.example');
+    $container->set('router.request_context', $request_context);
+    \Drupal::setContainer($container);
+
+    $controller = DplLoginController::create($container);
+    $response = $controller->login($request);
+
+    $user_service->logout()->shouldHaveBeenCalled();
+    if ($expected_location) {
+      $this->assertInstanceOf(TrustedRedirectResponse::class, $response);
+      $this->assertSame($expected_location, $response->headers->get('location'));
+    }
+    else {
+      $this->assertInstanceOf(LocalRedirectResponse::class, $response);
+      $this->assertSame($request->getUri(), $response->headers->get('location'));
+    }
+  }
+
+  /**
+   * Test cases for testThatLoggedInUsersAreLoggedOutOnLogin.
+   *
+   * @return array<string, array{?\Drupal\dpl_login\AccessTokenType, array<string, string>, ?string}>
+   *   Token type, query and the expected external redirect, if any.
+   */
+  public static function provideLoggedInUsers(): array {
+    return [
+      'Unilogin student starting a patron login' => [
+        AccessTokenType::UniloginUser,
+        ['current-path' => '/work/123'],
+        'https://login.example/logout?singlelogout=true&access_token=student-token&redirect_uri=https%3A//library.example/login%3Fcurrent-path%3D%252Fwork%252F123',
+      ],
+      'Unilogin student starting a Unilogin login' => [
+        AccessTokenType::UniloginUser,
+        ['current-path' => '/go-login', 'idp' => 'unilogin'],
+        NULL,
+      ],
+      'Patron' => [AccessTokenType::User, ['current-path' => '/work/123'], NULL],
+      'Editor without a token' => [NULL, [], NULL],
+    ];
   }
 
   /**

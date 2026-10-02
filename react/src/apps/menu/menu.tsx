@@ -11,6 +11,7 @@ import MenuUserUnregistered from "./menu-user-unregistered/menu-user-unregistere
 import { usePatronData } from "../../core/utils/helpers/usePatronData";
 import { isEnterOrSpacePressed } from "../../core/utils/helpers/general";
 import { getUniloginUserId } from "../../core/unilogin-user";
+import MenuUniloginPatronLogin from "./menu-unilogin-patron-login/menu-unilogin-patron-login";
 
 interface MenuProps {
   pageSize: number;
@@ -82,6 +83,7 @@ const Menu: FC<MenuProps> = ({ pageSize }) => {
       <MenuLoggedIn pageSize={pageSize} />
       <MenuUserUnregistered />
       <MenuNotLoggedInContent />
+      <MenuUniloginPatronLogin />
     </>
   );
 };

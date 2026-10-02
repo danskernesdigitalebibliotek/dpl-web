@@ -181,6 +181,11 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'menu-user-icon-aria-label-text' => $this->t('Open login menu', [], ['context' => 'Patron menu (aria)']),
       'menu-view-your-profile-text' => $this->t('Dashboard', [], ['context' => 'Patron menu']),
       'reservations-ready-for-pickup-text' => $this->t('Reservations ready for pickup', [], ['context' => 'Patron menu']),
+      'unilogin-patron-login-cancel-text' => $this->t('Stay logged in with Unilogin', [], ['context' => 'Patron menu']),
+      'unilogin-patron-login-confirm-text' => $this->t('Log out and log in as a patron', [], ['context' => 'Patron menu']),
+      'unilogin-patron-login-description-text' => $this->t('This requires logging in as a library patron.', [], ['context' => 'Patron menu']),
+      'unilogin-patron-login-heading-text' => $this->t('You are logged in with Unilogin', [], ['context' => 'Patron menu']),
+      'unilogin-patron-login-logout-text' => $this->t('If you continue, you will be logged out of Unilogin.', [], ['context' => 'Patron menu']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

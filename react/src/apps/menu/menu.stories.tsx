@@ -79,6 +79,21 @@ const meta: Meta<typeof WrappedMenu> = {
     menuUserIconAriaLabelLoggedOutText: {
       control: { type: "text" }
     },
+    uniloginPatronLoginHeadingText: {
+      control: { type: "text" }
+    },
+    uniloginPatronLoginDescriptionText: {
+      control: { type: "text" }
+    },
+    uniloginPatronLoginLogoutText: {
+      control: { type: "text" }
+    },
+    uniloginPatronLoginConfirmText: {
+      control: { type: "text" }
+    },
+    uniloginPatronLoginCancelText: {
+      control: { type: "text" }
+    },
     menuNotificationLoansExpiredUrl: {
       control: { type: "text" }
     },
@@ -185,6 +200,13 @@ export const UserMenu: Story = {
     menuNotificationLoansExpiredText: "loans expired",
     menuUserIconAriaLabelText: "Open user menu",
     menuUserIconAriaLabelLoggedOutText: "Open login menu",
+    uniloginPatronLoginHeadingText: "You are logged in with Unilogin",
+    uniloginPatronLoginDescriptionText:
+      "This requires logging in as a library patron.",
+    uniloginPatronLoginLogoutText:
+      "If you continue, you will be logged out of Unilogin.",
+    uniloginPatronLoginConfirmText: "Log out and log in as a patron",
+    uniloginPatronLoginCancelText: "Stay logged in with Unilogin",
     menuNotificationLoansExpiredUrl: "/LoansExpired",
     menuNotificationLoansExpiringSoonText: "loans expiring soon",
     menuNotificationLoansExpiringSoonUrl: "/LoansExpiringSoon",
