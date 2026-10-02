@@ -103,14 +103,18 @@ const setSessionTypeCookie = async (type: TUserToken["type"]) => {
   cookieStore.set(goConfig("auth.cookie-names.session-type"), type, CLIENT_COOKIE_OPTIONS)
 }
 
+const setSessionDefaults = (session: IronSession<TSessionData>, userToken: TUserToken) => {
+  session.isLoggedIn = true
+  session.expires = new Date(userToken.expire.timestamp * 1000)
+}
+
 const saveAdgangsplatformenSession = async (
   session: IronSession<TSessionData>,
   userToken: TUserToken
 ) => {
-  session.isLoggedIn = true
+  setSessionDefaults(session, userToken)
   session.type = "adgangsplatformen"
   session.adgangsplatformenUserToken = userToken.token
-  session.expires = new Date(userToken.expire.timestamp * 1000)
   await setSessionTypeCookie("adgangsplatformen")
   // Get name of user/patron from FBS. FBS may be unavailable or refuse the
   // call (test mocks, locked-out patrons, etc.); we don't want that to break
@@ -143,9 +147,8 @@ const saveUniloginSession = async (session: IronSession<TSessionData>, userToken
     return false
   }
 
-  session.isLoggedIn = true
+  setSessionDefaults(session, userToken)
   session.type = "unilogin"
-  session.expires = new Date(userToken.expire.timestamp * 1000)
   session.uniLoginUserInfo = uniLoginUserInfo
   session.user = {
     // Unilogin does not provide a name.
