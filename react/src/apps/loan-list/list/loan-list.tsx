@@ -6,7 +6,10 @@ import {
   getScrollClass,
   sortByDueDate
 } from "../../../core/utils/helpers/general";
-import { getUrlQueryParam } from "../../../core/utils/helpers/url";
+import {
+  getFromUrlHash,
+  getUrlQueryParam
+} from "../../../core/utils/helpers/url";
 import { useText } from "../../../core/utils/text";
 import {
   useModalButtonHandler,
@@ -55,6 +58,7 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
   const [dueDate, setDueDate] = useState<string | null>(null);
   const [modalLoan, setModalLoan] = useState<LoanType | null>(null);
   const {
+    all: { isLoading },
     fbs: { loans: fbsLoans, isLoading: isLoadingFbs },
     digital: { loans: digitalLoans, isLoading: isLoadingDigital }
   } = useLoans();
@@ -110,11 +114,14 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
     }
   }, [loansPhysical, loansDigital, loanDetails, openDueDateModal]);
 
-  const shouldShowSkeletons =
-    isLoadingFbs &&
-    isLoadingDigital &&
-    loansPhysical.length === 0 &&
-    loansDigital.length === 0;
+  // Coming back to a loan (see DigitalLoanCard) waits for both lists: physical
+  // loans render above the digital ones and would push the loan away.
+  const shouldShowSkeletons = getFromUrlHash()
+    ? isLoading
+    : isLoadingFbs &&
+      isLoadingDigital &&
+      loansPhysical.length === 0 &&
+      loansDigital.length === 0;
 
   return (
     <>
@@ -170,8 +177,7 @@ const LoanList: FC<LoanListProps> = ({ pageSize }) => {
             </>
           )}
 
-        {!isLoadingFbs &&
-          !isLoadingDigital &&
+        {!isLoading &&
           loansAreEmpty(loansPhysical) &&
           loansAreEmpty(loansDigital) && (
             <EmptyList

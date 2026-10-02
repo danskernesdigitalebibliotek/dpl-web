@@ -4,10 +4,6 @@ import { LoanType } from "../../core/utils/types/loan-type";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { hasCorrectAccess } from "../material/material-buttons/helper";
-import {
-  PUBLIZON_PRODUCT_TYPE,
-  PublizonProductType
-} from "../../core/publizon/productType";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
 
 type AssetType = {
@@ -161,21 +157,6 @@ export const getReaderPlayerType = (
   if (readerTypes.some((type) => materialTypes.includes(type))) return "reader";
   if (playerTypes.some((type) => materialTypes.includes(type))) return "player";
 
-  return null;
-};
-
-// Decide reader vs. player directly from a digital loan, where the FBI
-// Manifestation isn't available — only Publizon's product type is.
-export const getReaderPlayerTypeFromPublizonProductType = (
-  productType: PublizonProductType | null | undefined
-): "reader" | "player" | null => {
-  if (productType == null) return null;
-  if (productType === PUBLIZON_PRODUCT_TYPE.EBOOK) return "reader";
-  if (
-    productType === PUBLIZON_PRODUCT_TYPE.AUDIOBOOK ||
-    productType === PUBLIZON_PRODUCT_TYPE.PODCAST
-  )
-    return "player";
   return null;
 };
 

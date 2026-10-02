@@ -6,6 +6,7 @@ namespace Drupal\bnf_client\Hook;
 
 use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\BnfStateEnum;
+use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_client\Entity\Subscription;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -57,29 +58,34 @@ class SubscriptionHooks {
     $nids =
       $query
         ->condition($field_key, [$entity->id()], 'IN')
-        // We want all nodes, even if the user does not have access.
         ->accessCheck(FALSE)
         ->execute();
 
     /** @var \Drupal\node\NodeInterface[] $nodes */
     $nodes = $nodeStorage->loadMultiple($nids);
 
-    // Looping through the nodes, and remove the reference to this subscription.
     foreach ($nodes as $node) {
       $subscriptionIds = $node->get($field_key)->getValue();
 
       $subscriptionIds = array_unique(array_column($subscriptionIds, 'target_id'));
 
-      // Removing any references to our subscription (even if duplicates).
+      // Removing any references to the deleted subscription.
       $subscriptionIds = array_diff($subscriptionIds, [$entity->id()]);
       $node->set($field_key, $subscriptionIds);
 
-      // If there are no other active subscriptions on the node, we'll claim it
-      // locally to avoid any further updates.
-      if (empty($subscriptionIds)) {
-        $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::LocallyClaimed);
+      $stillInSubscription = !empty($subscriptionIds);
+      $claimedAndPublished = BnfImporter::isLocallyClaimed($node) && $node->isPublished();
+      if ($stillInSubscription || $claimedAndPublished) {
+        $node->save();
+        continue;
       }
 
+      if ($entity->pruneContent) {
+        $node->delete();
+        continue;
+      }
+
+      $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::LocallyClaimed);
       $node->save();
     }
   }

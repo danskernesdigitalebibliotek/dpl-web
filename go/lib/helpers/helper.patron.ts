@@ -6,7 +6,6 @@ import {
 
 import {
   type TMaterialCategory,
-  filterManifestationsByEdition,
   filterManifestationsByMaterialType,
   filterMaterialTypes,
   getManifestationLabel,
@@ -195,6 +194,10 @@ export const biblioLoanForWork = (
 
 // Pair each loan ISBN with its work, narrowed to the loaned manifestation —
 // one work per loan, in loan order.
+//
+// The loan names its own edition, so the manifestations are only filtered by
+// material type. Narrowing to the newest edition per type would drop a loan
+// on any older edition.
 export const pairDigitalLoanWorks = (
   loanData: LoanListResult | null | undefined,
   works: WorkTeaserSearchPageFragment[] | undefined,
@@ -207,8 +210,8 @@ export const pairDigitalLoanWorks = (
       )
     )
     if (!work) return acc
-    const allowedManifestations = filterManifestationsByEdition(
-      filterManifestationsByMaterialType(filterMaterialTypes(work.manifestations.all))
+    const allowedManifestations = filterManifestationsByMaterialType(
+      filterMaterialTypes(work.manifestations.all)
     )
     const manifestation = allowedManifestations.find(manifestation =>
       manifestation.identifiers.some(identifier => identifier.value === isbn)
