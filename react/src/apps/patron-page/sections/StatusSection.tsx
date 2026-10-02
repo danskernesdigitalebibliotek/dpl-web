@@ -107,30 +107,28 @@ const StatusSection: FC = () => {
           <h2 className="text-header-h4 mt-64 mb-16">
             {t("patronPageStatusSectionHeaderText")}
           </h2>
-          <div className="dpl-status-loans__column">
-            <div className="dpl-status mt-32">
-              <h3 className="text-small-caption">
-                {t("patronPageStatusSectionLoanHeaderText")}
-              </h3>
-              <QuotaBar
-                id="patron-page-status-section-out-of-text"
-                labelTextKey="patronPageStatusSectionLoansEbooksText"
-                ariaLabelTextKey="patronPageStatusSectionOutOfAriaLabelEbooksText"
-                current={patronEbookLoans}
-                limit={maxConcurrentEbookLoansPerBorrower}
-              />
-              <QuotaBar
-                id="max-concurrent-audio-loans-per-borrower"
-                labelTextKey="patronPageStatusSectionLoansAudioBooksText"
-                ariaLabelTextKey="patronPageStatusSectionOutOfAriaLabelAudioBooksText"
-                current={patronAudioBookLoans}
-                limit={maxConcurrentAudioLoansPerBorrower}
-              />
-            </div>
+          <p className="text-body-small-regular">
+            {t("patronPageStatusSectionLoanHeaderText")}
+          </p>
+          <div className="dpl-status-loans__progress-bars">
+            <QuotaBar
+              id="patron-page-status-section-out-of-text"
+              labelTextKey="patronPageStatusSectionLoansEbooksText"
+              ariaLabelTextKey="patronPageStatusSectionOutOfAriaLabelEbooksText"
+              current={patronEbookLoans}
+              limit={maxConcurrentEbookLoansPerBorrower}
+            />
+            <QuotaBar
+              id="max-concurrent-audio-loans-per-borrower"
+              labelTextKey="patronPageStatusSectionLoansAudioBooksText"
+              ariaLabelTextKey="patronPageStatusSectionOutOfAriaLabelAudioBooksText"
+              current={patronAudioBookLoans}
+              limit={maxConcurrentAudioLoansPerBorrower}
+            />
           </div>
           <Link
             href={alwaysLoanableDigitalTitlesUrl}
-            className="link-tag text-body-small-regular"
+            className="link-tag text-body-small-regular dpl-status-loans__link"
             dataCy="patron-page-always-loanable-link"
           >
             {t("patronPageStatusSectionLinkText")}
