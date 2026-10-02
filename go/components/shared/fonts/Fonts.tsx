@@ -20,6 +20,7 @@ const Fonts = () => {
       <p className="text-typo-link text-foreground">text-typo-link</p>
       <p className="text-typo-tag-lg text-foreground">text-typo-tag-lg</p>
       <p className="text-typo-tag-sm text-foreground">text-typo-tag-sm</p>
+      <p className="text-typo-label-sm text-foreground">text-typo-label-sm</p>
       <p className="text-typo-caption text-foreground">text-typo-caption</p>
     </div>
   )
