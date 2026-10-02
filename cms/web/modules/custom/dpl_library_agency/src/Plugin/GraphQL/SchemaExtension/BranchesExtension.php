@@ -2,7 +2,7 @@
 
 namespace Drupal\dpl_library_agency\Plugin\GraphQL\SchemaExtension;
 
-use Drupal\gsearch\AddressGsearchItemInterface;
+use Drupal\dk_address\DkAddressItemInterface;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\graphql\GraphQL\ResolverBuilder;
@@ -137,7 +137,7 @@ class BranchesExtension extends SdlSchemaExtensionPluginBase {
    *   country: string
    *   }
    */
-  protected function constructBranchAddress(AddressGsearchItemInterface $item): array {
+  protected function constructBranchAddress(DkAddressItemInterface $item): array {
     return [
       'postal_code' => $item->getPostalCode(),
       'city' => $item->getPostalName(),
