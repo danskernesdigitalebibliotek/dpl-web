@@ -26,6 +26,7 @@ vi.mock(
 vi.mock("../../core/utils/text", () => {
   const TRANSLATIONS: Record<string, string> = {
     patronPageStatusSectionHeaderText: "Status",
+    patronPageStatusSectionLinkText: "Se titler du altid kan låne",
     patronPageStatusSectionLoanHeaderText: "Dine lån",
     patronPageStatusSectionLoansEbooksText: "E-bøger",
     patronPageStatusSectionOutOfText: "@this ud af @that",
@@ -69,6 +70,11 @@ const givenDigitalQuotas = (loanQuotas?: unknown) =>
 // The feature flag reads app config through Redux, which has no provider here.
 vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
+}));
+
+// URLs are read from Redux too.
+vi.mock("../../core/utils/url", () => ({
+  useUrls: () => () => new URL("https://example.com/advancedsearch")
 }));
 
 describe("StatusSection component tests", () => {
@@ -115,6 +121,13 @@ describe("StatusSection component tests", () => {
     const { getByText, getByLabelText } = render(<StatusSection />);
 
     expect(getByText("Status")).not.toBeNull();
+
+    // The link lands on advanced search
+    const alwaysLoanableLink = getByText("Se titler du altid kan låne");
+    const alwaysLoanableUrl = new URL(
+      alwaysLoanableLink.getAttribute("href") ?? ""
+    );
+    expect(alwaysLoanableUrl.pathname).toBe("/advancedsearch");
 
     // Check Ebook section: 4 active loans out of 10 limit -> 40%
     expect(getByText("4 ud af 10")).not.toBeNull();
