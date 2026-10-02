@@ -8,7 +8,7 @@ import {
 } from "../../core/publizon/publizon";
 import { FileExtensionType } from "../../core/publizon/model";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
-import { useDigitalQuotas } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalLoanQuotas } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 // Only the hooks under test are stubbed; the rest of the package stays
 // real, so pure helpers keep behaving as they do in production.
@@ -18,7 +18,7 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useDigitalQuotas: vi.fn()
+    useDigitalLoanQuotas: vi.fn()
   })
 );
 
@@ -26,10 +26,10 @@ vi.mock(
 vi.mock("../../core/utils/text", () => {
   const TRANSLATIONS: Record<string, string> = {
     patronPageStatusSectionHeaderText: "Status",
-    patronPageStatusSectionBodyText: "Her kan du se din status...",
-    patronPageStatusSectionReservationsText:
-      "Du kan reservere op til @countEbooks e-bøger og @countAudiobooks lydbøger.",
-    patronPageStatusSectionLoanHeaderText: "Dine lån",
+    patronPageStatusSectionLinkText:
+      "Se titler som ikke tæller med i din kvote.",
+    patronPageStatusSectionDescriptionText:
+      "Her kan du se din kvote for månedlige digitale lån",
     patronPageStatusSectionLoansEbooksText: "E-bøger",
     patronPageStatusSectionOutOfText: "@this ud af @that",
     patronPageStatusSectionOutOfAriaLabelEbooksText:
@@ -64,30 +64,26 @@ vi.mock("../../core/publizon/publizon", () => ({
   useGetV1UserLoans: vi.fn()
 }));
 
-// The service layer hands the two apart so nothing about the loans waits for
-// the ceiling; the tests set whichever half they are about.
-const givenDigitalQuotas = ({
-  loanQuotas,
-  reservationLimits
-}: {
-  loanQuotas?: unknown;
-  reservationLimits?: unknown;
-}) =>
-  vi.mocked(useDigitalQuotas).mockReturnValue({
-    loanQuotas: { data: loanQuotas },
-    reservationLimits: { data: reservationLimits }
-  } as unknown as ReturnType<typeof useDigitalQuotas>);
+const givenDigitalQuotas = (loanQuotas?: unknown) =>
+  vi.mocked(useDigitalLoanQuotas).mockReturnValue({
+    data: loanQuotas
+  } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
 
 // The feature flag reads app config through Redux, which has no provider here.
 vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));
 
+// URLs are read from Redux too.
+vi.mock("../../core/utils/url", () => ({
+  useUrls: () => () => new URL("https://example.com/advancedsearch")
+}));
+
 describe("StatusSection component tests", () => {
   beforeEach(() => {
     // Default to the flag being off: Publizon answers, as before.
     vi.mocked(useBiblioAdapter).mockReturnValue(false);
-    givenDigitalQuotas({});
+    givenDigitalQuotas();
   });
   it("should render nothing if library profile is not loaded", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
@@ -109,9 +105,7 @@ describe("StatusSection component tests", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
       data: {
         maxConcurrentEbookLoansPerBorrower: 10,
-        maxConcurrentAudioLoansPerBorrower: 8,
-        maxConcurrentEbookReservationsPerBorrower: 5,
-        maxConcurrentAudioReservationsPerBorrower: 4
+        maxConcurrentAudioLoansPerBorrower: 8
       }
     } as unknown as ReturnType<typeof useGetV1LibraryProfile>);
 
@@ -128,12 +122,16 @@ describe("StatusSection component tests", () => {
 
     const { getByText, getByLabelText } = render(<StatusSection />);
 
-    // Check header and reservations texts
     expect(getByText("Status")).not.toBeNull();
-    expect(getByText("Her kan du se din status...")).not.toBeNull();
-    expect(
-      getByText("Du kan reservere op til 5 e-bøger og 4 lydbøger.")
-    ).not.toBeNull();
+
+    // The link lands on advanced search
+    const alwaysLoanableLink = getByText(
+      "Se titler som ikke tæller med i din kvote."
+    );
+    const alwaysLoanableUrl = new URL(
+      alwaysLoanableLink.getAttribute("href") ?? ""
+    );
+    expect(alwaysLoanableUrl.pathname).toBe("/advancedsearch");
 
     // Check Ebook section: 4 active loans out of 10 limit -> 40%
     expect(getByText("4 ud af 10")).not.toBeNull();
@@ -152,9 +150,7 @@ describe("StatusSection component tests", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
       data: {
         maxConcurrentEbookLoansPerBorrower: 5,
-        maxConcurrentAudioLoansPerBorrower: 5,
-        maxConcurrentEbookReservationsPerBorrower: 2,
-        maxConcurrentAudioReservationsPerBorrower: 2
+        maxConcurrentAudioLoansPerBorrower: 5
       }
     } as unknown as ReturnType<typeof useGetV1LibraryProfile>);
 
@@ -215,9 +211,7 @@ describe("StatusSection component tests", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
       data: {
         maxConcurrentEbookLoansPerBorrower: 0,
-        maxConcurrentAudioLoansPerBorrower: 0,
-        maxConcurrentEbookReservationsPerBorrower: 0,
-        maxConcurrentAudioReservationsPerBorrower: 0
+        maxConcurrentAudioLoansPerBorrower: 0
       }
     } as unknown as ReturnType<typeof useGetV1LibraryProfile>);
 
@@ -268,7 +262,7 @@ describe("StatusSection component tests", () => {
     });
 
     it("Renders the quotas from Biblio, counting the loans held right now", () => {
-      givenDigitalQuotas({ loanQuotas: [splitQuota] });
+      givenDigitalQuotas([splitQuota]);
 
       const { container } = render(<StatusSection />);
 
@@ -284,55 +278,33 @@ describe("StatusSection component tests", () => {
       expect(progressBars[1].getAttribute("style")).toBe("width: 50%;");
     });
 
-    it("Renders the reservation limits the patron's organization allows", () => {
-      givenDigitalQuotas({
-        loanQuotas: [splitQuota],
-        reservationLimits: { ebook: 5, audiobook: 4 }
-      });
+    it("Applies a combined quota to both formats", () => {
+      givenDigitalQuotas([
+        {
+          splitOnFormat: false,
+          orgId: "org-2",
+          orgName: "Eksempel Biblioteket",
+          maxLoans: 10,
+          maxConcurrentLoans: 4,
+          currentConcurrentLoans: 2,
+          currentMonthlyLoans: 6
+        }
+      ]);
 
       const { container } = render(<StatusSection />);
 
-      expect(container.textContent).toContain(
-        "Du kan reservere op til 5 e-bøger og 4 lydbøger."
-      );
-    });
-
-    it("Leaves out the reservation line when there is no ceiling to show", () => {
-      givenDigitalQuotas({
-        loanQuotas: [
-          {
-            splitOnFormat: false,
-            orgId: "org-2",
-            orgName: "Eksempel Biblioteket",
-            maxLoans: 10,
-            maxConcurrentLoans: 4,
-            currentConcurrentLoans: 2,
-            currentMonthlyLoans: 6
-          }
-        ],
-        // Which organizations have none is the service layer's call - an
-        // organization that counts the formats together is one of them.
-        reservationLimits: null
-      });
-
-      const { container } = render(<StatusSection />);
-
-      expect(container.textContent).not.toContain("Du kan reservere op til");
-      // A combined quota applies the same numbers to both formats.
       expect(container.textContent).toContain("2 ud af 4");
     });
 
     it("Shows a spent quota as full rather than hiding it", () => {
-      givenDigitalQuotas({
-        loanQuotas: [
-          {
-            ...splitQuota,
-            // The audiobook quota is spent: one allowed, one held.
-            maxConcurrentLoans: { ebook: 4, audiobook: 1 },
-            currentMonthlyLoans: { ebook: 1, audiobook: 1 }
-          }
-        ]
-      });
+      givenDigitalQuotas([
+        {
+          ...splitQuota,
+          // The audiobook quota is spent: one allowed, one held.
+          maxConcurrentLoans: { ebook: 4, audiobook: 1 },
+          currentMonthlyLoans: { ebook: 1, audiobook: 1 }
+        }
+      ]);
 
       const { container } = render(<StatusSection />);
 
@@ -347,7 +319,7 @@ describe("StatusSection component tests", () => {
     });
 
     it("Renders nothing until the quotas have loaded", () => {
-      givenDigitalQuotas({});
+      givenDigitalQuotas();
 
       const { container } = render(<StatusSection />);
 

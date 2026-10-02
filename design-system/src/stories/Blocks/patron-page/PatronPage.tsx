@@ -14,14 +14,9 @@ export interface PatronPageProps {
 const PatronPage: React.FC<PatronPageProps> = ({ skeletonVersion = false }) => {
   if (skeletonVersion) return <PatronPageSkeleton />;
 
-  const statusBarsData = [
-    {
-      title: "Loans per month",
-      statusBars: [
-        { amount: 1, fullAmount: 4, title: "Ebooks", outOf: "out of" },
-        { amount: 2, fullAmount: 10, title: "Audiobooks", outOf: "out of" },
-      ],
-    },
+  const statusBars = [
+    { amount: 1, fullAmount: 4, title: "Ebooks", outOf: "out of" },
+    { amount: 2, fullAmount: 10, title: "Audiobooks", outOf: "out of" },
   ];
 
   const branches = [
@@ -60,18 +55,15 @@ const PatronPage: React.FC<PatronPageProps> = ({ skeletonVersion = false }) => {
         <ContactInfoSection />
 
         {/* Digital loans section */}
-        <section className="dpl-status-loans">
-          <StatusLoans
-            statusBarsData={statusBarsData}
-            title="Digital loans (eReolen)"
-            link={{
-              link: "https://www.figma.com/file/xouARmJCONbzbZhpD8XpcM/Brugerprofil?node-id=1239%3A66855",
-              text: "Click here, to see titles always eligible to be loaned",
-            }}
-            bread="There is a number of materials without limitation to amounts of loans per month."
-            reservationsText="You can reserve 4 ebooks and 10 audiobooks"
-          />
-        </section>
+        <StatusLoans
+          title="Digital loans"
+          description="Here you can see your quota for monthly digital loans"
+          statusBars={statusBars}
+          link={{
+            link: "https://www.figma.com/file/xouARmJCONbzbZhpD8XpcM/Brugerprofil?node-id=1239%3A66855",
+            text: "See titles that don't count towards your quota",
+          }}
+        />
 
         {/* Pickup branch section */}
         <section>

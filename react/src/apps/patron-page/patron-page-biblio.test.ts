@@ -12,10 +12,7 @@ import {
   publizonLibraryProfileFactory,
   publizonLoanListFactory
 } from "../../../cypress/factories/publizon/publizon.factory";
-import {
-  BIBLIO_ORG_ID,
-  biblioSplitLoanQuotaFactory
-} from "../../../cypress/factories/biblio/biblio.factory";
+import { biblioSplitLoanQuotaFactory } from "../../../cypress/factories/biblio/biblio.factory";
 
 /**
  * The patron page during the Publizon → Biblio transition.
@@ -24,7 +21,7 @@ import {
  * to the user rather than to a single material, so the feature flag alone
  * decides where the support identifier and the loan quotas come from.
  *
- * The quota rendering itself (no reservation line, combined quotas, a spent
+ * The quota rendering itself (combined quotas, a spent
  * quota reading as full) is pinned by StatusSection's unit tests. This spec
  * covers what only the real page shows: the flag moving the whole section,
  * and residency no longer hiding it.
@@ -141,12 +138,8 @@ describe("Patron page - Biblio adapter feature flag", () => {
     // The monthly figures from the same response must not surface here.
     cy.contains("3 out of").should("not.exist");
 
-    // And: the reservation ceilings come from the organization the quotas
-    // were issued for.
-    cy.wait("@biblioOrganizationConfigs")
-      .its("request.query.organization_id")
-      .should("eq", BIBLIO_ORG_ID);
-    cy.contains("You can reserve 5 ebooks and 6 audiobooks").should("exist");
+    // And: no reservation ceiling is fetched, as the section no longer shows one.
+    cy.get("@biblioOrganizationConfigs.all").should("have.length", 0);
   });
 });
 
