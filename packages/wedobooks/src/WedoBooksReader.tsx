@@ -1,6 +1,11 @@
 import * as React from "react"
 
-import type { WedoBooksReaderMaterial, WedoBooksSdk } from "./sdk"
+import type {
+  WedoBooksReaderMaterial,
+  WedoBooksSdk,
+  WedoBooksOpenFailure,
+  WedoBooksSessionInterruption,
+} from "./sdk"
 import { useSdkMount } from "./useSdkMount"
 
 export interface WedoBooksReaderProps {
@@ -10,8 +15,13 @@ export interface WedoBooksReaderProps {
    * adapter can be handed over without converting any dates.
    */
   checkout: WedoBooksReaderMaterial
-  /** The reader's own close control was used. */
-  onClose: () => void
+  /**
+   * The reader has left the page. Without an interruption its own close
+   * control was used; with one the SDK ended it because the session moved.
+   */
+  onClose: (interruption?: WedoBooksSessionInterruption) => void
+  /** The SDK refused to open the book and mounted nothing. */
+  onOpenError?: (failure: WedoBooksOpenFailure) => void
   /**
    * The reader asked to finish the book.
    *
@@ -34,6 +44,7 @@ export function WedoBooksReader({
   sdk,
   checkout,
   onClose,
+  onOpenError,
   onFinishBook,
 }: WedoBooksReaderProps): React.ReactElement {
   const elementRef = useSdkMount(
@@ -43,7 +54,8 @@ export function WedoBooksReader({
         checkout,
         callbacks: { onClose, onFinishBookClick: onFinishBook },
       }),
-    [sdk, checkout.id]
+    [sdk, checkout.id],
+    onOpenError
   )
 
   return <div ref={elementRef} className="wedobooks-reader" />
