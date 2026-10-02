@@ -174,14 +174,6 @@ export const constructSearchUrlWithFacets = (args: {
   return processedUrl;
 };
 
-export const constructAdvancedSearchSubjectUrl = (
-  advancedSearchUrl: URL,
-  subject: string
-) => {
-  const filters = JSON.stringify([{ term: "term.subject", query: subject }]);
-  return new URL(`${advancedSearchUrl}?filters=${filters}&view=results`);
-};
-
 /**
  * @deprecated Use constructSearchUrlWithFacets instead for search-result-v2 compatibility
  */

@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { constructAdvancedSearchUrl } from "../../core/advanced-search/url";
+import {
+  constructAdvancedSearchSubjectUrl,
+  constructAdvancedSearchUrl
+} from "../../core/advanced-search/url";
 import { ComplexSearchFacetsEnum } from "../../core/dbc-gateway/generated/graphql";
 import { SortOption } from "../../core/advanced-search/types";
 import {
@@ -78,5 +81,22 @@ describe("constructAdvancedSearchUrl", () => {
     constructAdvancedSearchUrl({ advancedSearchUrl, view: "results" });
 
     expect(advancedSearchUrl.search).toBe("");
+  });
+});
+
+describe("constructAdvancedSearchSubjectUrl", () => {
+  it("links to the results view filtered on the subject", () => {
+    const url = constructAdvancedSearchSubjectUrl(
+      new URL("https://example.com/advancedsearch"),
+      "heste & ponyer"
+    );
+
+    const filters = JSON.parse(url.searchParams.get("filters") ?? "");
+
+    expect(isValidFilterState(filters)).toBe(true);
+    expect(filters).toEqual([
+      { term: "term.subject", query: "heste & ponyer" }
+    ]);
+    expect(url.searchParams.get("view")).toBe("results");
   });
 });
