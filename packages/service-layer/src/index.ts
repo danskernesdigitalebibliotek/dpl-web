@@ -3,6 +3,7 @@ export type {
   ApiId,
   Patron,
   MaterialAvailability,
+  RecordAvailability,
   ServiceLayerConfig,
   CreateReservationInput,
   CreateReservationResult,
