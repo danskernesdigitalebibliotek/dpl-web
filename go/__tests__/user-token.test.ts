@@ -35,14 +35,28 @@ const mockCmsRejection = (error: Error) => {
 }
 
 describe("loadUserToken", () => {
-  it("returns the token when the CMS hands one out", async () => {
+  // The CMS types every token it hands out. Unregistered patrons log in to
+  // GO as Adgangsplatformen users, just like registered ones.
+  it.each([
+    ["user", "adgangsplatformen"],
+    ["unregistered_user", "adgangsplatformen"],
+    ["unilogin_user", "unilogin"],
+  ])("returns a %s token as a %s token", async (cmsType, sessionType) => {
     const timestamp = Math.floor(Date.now() / 1000) + 3600
-    mockCmsResponse({ token: "user-token", expire: { timestamp } })
+    mockCmsResponse({ token: "user-token", expire: { timestamp }, type: cmsType })
 
     expect(await loadUserToken()).toEqual({
       status: "token",
-      data: { token: "user-token", expire: { timestamp } },
+      data: { token: "user-token", expire: { timestamp }, type: sessionType },
     })
+  })
+
+  // Guessing would risk a patron session for a student, or the reverse.
+  it.each([["unknown"], [null]])("reports an error when the token type is %s", async type => {
+    const timestamp = Math.floor(Date.now() / 1000) + 3600
+    mockCmsResponse({ token: "user-token", expire: { timestamp }, type })
+
+    expect(await loadUserToken()).toEqual({ status: "error" })
   })
 
   // Expiry is the CMS's call: its token producer returns nothing once the
@@ -79,7 +93,11 @@ describe("loadUserToken", () => {
   })
 
   it("reports an error when the token is malformed", async () => {
-    mockCmsResponse({ token: "user-token", expire: { timestamp: "not-a-number" } })
+    mockCmsResponse({
+      token: "user-token",
+      expire: { timestamp: "not-a-number" },
+      type: "user",
+    })
 
     expect(await loadUserToken()).toEqual({ status: "error" })
   })

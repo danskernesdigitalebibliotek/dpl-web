@@ -79,6 +79,11 @@ class DplReactController extends ControllerBase {
       elseif ($access_token->type === AccessTokenType::User) {
         $this->setAccessTokenContentLine('user', $access_token, $content_lines);
       }
+      // A Unilogin student is not a patron and never gets the token, but the
+      // header shows the uni-id so the student can see who is logged in.
+      elseif ($access_token->type === AccessTokenType::UniloginUser && $access_token->uniId) {
+        $content_lines[] = sprintf('window.dplReact.setUniloginUserId(%s)', json_encode($access_token->uniId, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_THROW_ON_ERROR));
+      }
     }
 
     $content = implode("\n", $content_lines);

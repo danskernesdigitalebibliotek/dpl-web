@@ -9,8 +9,10 @@ use Drupal\Core\Routing\LocalRedirectResponse;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\dpl_login\AccessTokenType;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\dpl_login\Unilogin;
 use Drupal\dpl_login\User;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
@@ -128,7 +130,25 @@ class DplLoginController extends ControllerBase {
         'referer' => $request->headers->get('referer') ?? "unknown",
       ]);
 
+      $access_token = $this->userTokens->getCurrent();
       $this->user->logout();
+
+      // A Unilogin student is logged in without being a patron, and gets here
+      // when starting a patron login, e.g. to make a reservation. Log the
+      // student out of Adgangsplatformen as well and come back here, so a
+      // cancelled patron login does not leave the student half logged in.
+      if ($access_token?->type === AccessTokenType::UniloginUser
+        && $request->query->get('idp') !== Unilogin::IDP
+        && ($logout_endpoint = $this->config->getLogoutEndpoint())) {
+        $url = Url::fromUri($logout_endpoint, [
+          'query' => [
+            'singlelogout' => 'true',
+            'access_token' => $access_token->token,
+            'redirect_uri' => $request->getUri(),
+          ],
+        ]);
+        return new TrustedRedirectResponse($url->toUriString());
+      }
 
       // As we just nuked the session above, trying to save `current-path` in
       // session isn't going to work, so redirect to ourselves to get a fresh
@@ -145,6 +165,12 @@ class DplLoginController extends ControllerBase {
     // distinguish between login and registration.
     $this->dplLoginSession->setAuthenticationType(AuthenticationType::Login);
 
+    // Only allow-listed identity providers can be forced. Unilogin logins are
+    // recognised by their claims later on, the flag is a fallback.
+    $unilogin = $request->query->get('idp') === Unilogin::IDP;
+    $this->dplLoginSession->setUniloginLogin($unilogin);
+    $additional_params = $unilogin ? ['idp' => Unilogin::ADGANGSPLATFORMEN_IDP] : [];
+
     $client_name = 'adgangsplatformen';
     /** @var null|\Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
     $client = $this->entityTypeManager()->getStorage('openid_connect_client')->load($client_name);
@@ -155,7 +181,7 @@ class DplLoginController extends ControllerBase {
 
     $plugin = $client->getPlugin();
     $scopes = $this->claims->getScopes($plugin);
-    return $plugin->authorize($scopes);
+    return $plugin->authorize($scopes, $additional_params);
   }
 
 }

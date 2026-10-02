@@ -18,6 +18,7 @@ use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\AuthenticationType;
 use Drupal\dpl_login\DplLoginInterface;
 use Drupal\dpl_login\Exception\AccessTokenCreationException;
+use Drupal\dpl_login\Unilogin;
 use Drupal\dpl_login\UserTokensProviderInterface;
 use Drupal\user\UserInterface;
 use Psr\Log\LoggerInterface;
@@ -69,6 +70,11 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
       '@message' => $e->getMessage(),
     ]);
     return FALSE;
+  }
+
+  // Unilogin users are not patrons, so they are authorized without FBS.
+  if (_dpl_login_is_unilogin_login($context)) {
+    return _dpl_login_is_unilogin_user_authorized($context, $logger);
   }
 
   // Check if the user is previously associated with an agency (library).
@@ -140,8 +146,25 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
   $dpl_login_session = \Drupal::service('dpl_login.session');
   /** @var \Drupal\openid_connect\OpenIDConnectSessionInterface */
   $openid_session = \Drupal::service('openid_connect.session');
-  $authentication_type = $dpl_login_session->getAuthenticationType();
   $access_token = AccessToken::createFromOpenidConnectContext($context);
+
+  // Unilogin users are not patrons. Store their token with its own type,
+  // which is never handed to the React apps, and skip the FBS lookups and the
+  // registration flow for patrons.
+  if (_dpl_login_is_unilogin_login($context)) {
+    if (_dpl_login_delete_previous_user_tokens()) {
+      $access_token->uniId = Unilogin::getUniId($context['userinfo'] ?? []);
+      \Drupal::service('dpl_login.unilogin_user_tokens')->setAccessToken($access_token);
+    }
+    else {
+      _dpl_login_get_authorization_logger()->error('Post authorize hook - Unable to delete previous user tokens.');
+    }
+    $dpl_login_session->deletetAuthenticationType();
+    $dpl_login_session->deleteUniloginLogin();
+    return;
+  }
+
+  $authentication_type = $dpl_login_session->getAuthenticationType();
   $token_provider = _dpl_login_get_access_token_provider($access_token);
   $logger = _dpl_login_get_authorization_logger($access_token);
 
@@ -170,6 +193,7 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
 
   // Tidy up to not leave stale authentication type in session.
   $dpl_login_session->deletetAuthenticationType();
+  $dpl_login_session->deleteUniloginLogin();
 }
 
 /**
@@ -187,9 +211,65 @@ function dpl_login_openid_connect_userinfo_save(UserInterface $account, array $c
 
   // If the user is new we attach a role to the user.
   if (!_dpl_login_user_has_been_processed($context)) {
-    $account->addRole(DplLoginInterface::ROLE_PATRON);
+    $account->addRole(_dpl_login_is_unilogin_login($context)
+      ? DplLoginInterface::ROLE_UNILOGIN_PATRON
+      : DplLoginInterface::ROLE_PATRON);
     $account->save();
   }
+}
+
+/**
+ * Is this a login with Unilogin?
+ *
+ * Decided by the Unilogin claims in the userinfo, so a Unilogin identity
+ * coming back from a plain login (Adgangsplatformen single sign-on) is
+ * recognised too. The flag set by a Unilogin login is a fallback.
+ *
+ * @param mixed[] $context
+ *   Various openid_connect context.
+ */
+function _dpl_login_is_unilogin_login(array $context): bool {
+  if (Unilogin::isUniloginUser($context['userinfo'] ?? [])) {
+    return TRUE;
+  }
+
+  /** @var \Drupal\dpl_login\DplLoginSession $dpl_login_session */
+  $dpl_login_session = \Drupal::service('dpl_login.session');
+  return $dpl_login_session->isUniloginLogin();
+}
+
+/**
+ * May the Unilogin user log in at this library?
+ *
+ * @param mixed[] $context
+ *   Various openid_connect context.
+ * @param \Psr\Log\LoggerInterface $logger
+ *   Logger for denied logins.
+ */
+function _dpl_login_is_unilogin_user_authorized(array $context, LoggerInterface $logger): bool {
+  /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
+  $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
+  $agency_id = (string) $adgangsplatformen_config->getAgencyId();
+  $userinfo = $context['userinfo'] ?? [];
+
+  $reason = Unilogin::getDenialReason($userinfo, $agency_id);
+  if (!$reason) {
+    return TRUE;
+  }
+
+  // The login ends here, so do not leave the flag for the next one.
+  /** @var \Drupal\dpl_login\DplLoginSession $dpl_login_session */
+  $dpl_login_session = \Drupal::service('dpl_login.session');
+  $dpl_login_session->deleteUniloginLogin();
+
+  $logger->warning('Authorization blocked. Unilogin user denied: @reason. User type: @user_type, institutions: @institutions, agency: @agency, expected agency: @expected', [
+    '@reason' => $reason,
+    '@user_type' => $userinfo['attributes']['uniloginUserType'] ?? 'none',
+    '@institutions' => implode(', ', Unilogin::getInstitutionIds($userinfo)) ?: 'none',
+    '@agency' => $userinfo['attributes'][Unilogin::CLAIM_AGENCY_ID] ?? 'none',
+    '@expected' => $agency_id,
+  ]);
+  return FALSE;
 }
 
 /**
@@ -280,6 +360,7 @@ function _dpl_login_delete_previous_user_tokens(): bool {
   $user_access_token_services = [
     'dpl_login.registered_user_tokens',
     'dpl_login.unregistered_user_tokens',
+    'dpl_login.unilogin_user_tokens',
   ];
   $statuses = [];
   foreach ($user_access_token_services as $service) {

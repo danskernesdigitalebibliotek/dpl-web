@@ -4,23 +4,17 @@ import type { NextRequest } from "next/server"
 import { getBaseURL } from "@/lib/config/getBaseURL"
 
 import goConfig from "./lib/config/goConfig"
-import { refreshUniloginTokens } from "./lib/helpers/bearer-token"
 import { ensureLibraryTokenExist } from "./lib/helpers/middleware"
 import { userIsAnonymous } from "./lib/helpers/user"
 import { loadUserToken } from "./lib/helpers/user-token"
-import { getUniloginClientConfig } from "./lib/session/oauth/uniloginClient"
 import {
-  adgangsplatformenAccessTokenHasExpired,
-  adgangsplatformenSessionShouldBeValidated,
   destroySession,
   getDplCmsSessionCookie,
   getSession,
-  markAdgangsplatformenSessionValidated,
-  removePCKECodeVerifierFromSession,
-  saveAdgangsplatformenSession,
-  sessionHasPKCECodeVerifier,
-  uniloginAccessTokenHasExpired,
-  uniloginAccessTokenShouldBeRefreshed,
+  markSessionValidated,
+  saveSessionFromUserToken,
+  sessionShouldBeValidated,
+  userTokenHasExpired,
 } from "./lib/session/session"
 
 // These pages require a logged-in user.
@@ -41,13 +35,6 @@ export async function proxy(request: NextRequest) {
 
   const session = await getSession()
 
-  // Since we do not need the PKCE code verifier on non-auth routes,
-  // we will remove it from the session if it exists.
-  // It is safe because the middleware only runs on non-auth routes.
-  if (sessionHasPKCECodeVerifier(session)) {
-    await removePCKECodeVerifierFromSession(session)
-  }
-
   if (protectedPages.includes(currentPath)) {
     // If the user is anonymous, we will redirect to the front page.
     // @todo Write a test in the middleware test suite to ensure this works.
@@ -57,7 +44,8 @@ export async function proxy(request: NextRequest) {
   }
 
   // Destroy the session if we have an active session but no dpl cms session cookie.
-  if (!userIsAnonymous(session) && session.type === "adgangsplatformen") {
+  // Both Adgangsplatformen and Unilogin sessions live on the Drupal session.
+  if (!userIsAnonymous(session)) {
     const sessionCookie = await getDplCmsSessionCookie()
     if (!sessionCookie) {
       await destroySession(session)
@@ -65,7 +53,7 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  if (adgangsplatformenAccessTokenHasExpired(session)) {
+  if (userTokenHasExpired(session)) {
     // Drupal logs out patrons whose token has expired, so the CMS stops
     // answering for this session and cannot hand the dead token back. Tearing
     // down the GO session is therefore enough: the next request is anonymous
@@ -79,11 +67,13 @@ export async function proxy(request: NextRequest) {
   // loadUserToken() settles that, and answers without calling the CMS when
   // there is no cookie to go on. There is no refresh path: the CMS cannot
   // renew the token, so the GO session lives exactly as long as the user
-  // token — a dead token means a new login.
+  // token — a dead token means a new login. The token type decides the
+  // session type. If no session could be created (the Unilogin userinfo could
+  // not be read), the visitor stays anonymous and the next request tries again.
   if (userIsAnonymous(session)) {
     const tokenData = await loadUserToken()
     if (tokenData.status === "token") {
-      await saveAdgangsplatformenSession(session, tokenData.data)
+      await saveSessionFromUserToken(session, tokenData.data)
       return response
     }
   }
@@ -95,25 +85,18 @@ export async function proxy(request: NextRequest) {
   // knows. Ask it, at most every 30 seconds per session. An error leaves the
   // session alone: it says nothing about the patron, and logging people out
   // because the CMS blinked would be worse than showing them a stale page.
-  if (adgangsplatformenSessionShouldBeValidated(session)) {
+  // A token of another type means somebody else has logged in on the CMS in
+  // this browser, e.g. a parent after a student. That ends this session too.
+  if (sessionShouldBeValidated(session)) {
     const tokenData = await loadUserToken()
-    if (tokenData.status === "no-token") {
+    if (
+      tokenData.status === "no-token" ||
+      (tokenData.status === "token" && tokenData.data.type !== session.type)
+    ) {
       await destroySession(session)
       return response
     }
-    await markAdgangsplatformenSessionValidated(session)
-  }
-
-  if (uniloginAccessTokenHasExpired(session)) {
-    destroySession(session)
-    return response
-  }
-
-  if (uniloginAccessTokenShouldBeRefreshed(session)) {
-    const config = await getUniloginClientConfig()
-    if (config) {
-      refreshUniloginTokens(session, config)
-    }
+    await markSessionValidated(session)
   }
 
   return response

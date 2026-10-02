@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import { createElement } from "react";
 import { withErrorBoundary } from "react-error-boundary";
 import { setToken } from "./token";
+import { setUniloginUserId } from "./unilogin-user";
 import Store from "../components/store";
 import { persistor, store } from "./store";
 import ErrorBoundaryAlert from "../components/error-boundary-alert/ErrorBoundaryAlert";
@@ -107,6 +108,7 @@ function init() {
   const initial = {
     apps: {},
     setToken,
+    setUniloginUserId,
     mount,
     unmount,
     reset

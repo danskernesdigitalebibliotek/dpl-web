@@ -10,4 +10,5 @@ namespace Drupal\dpl_login;
 enum AuthorizationIdType: string {
   case Cpr = 'cpr';
   case UniqueId = 'unique_id';
+  case UniId = 'uni_id';
 }

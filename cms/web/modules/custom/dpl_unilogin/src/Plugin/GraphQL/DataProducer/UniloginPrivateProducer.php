@@ -56,7 +56,6 @@ class UniloginPrivateProducer extends DataProducerPluginBase implements Containe
   public function resolve(FieldContext $field_context): array {
     $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
     return [
-      'clientSecret' => $this->uniloginConfiguration->getUniloginApiClientSecret() ?: NULL,
       'pubHubRetailerKeyCode' => $this->uniloginConfiguration->getUniloginApiPubhubRetailerKeyCode() ?: NULL,
     ];
   }

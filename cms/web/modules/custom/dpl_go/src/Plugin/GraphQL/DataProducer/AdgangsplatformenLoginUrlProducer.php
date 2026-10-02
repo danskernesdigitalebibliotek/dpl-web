@@ -52,16 +52,26 @@ class AdgangsplatformenLoginUrlProducer extends DataProducerPluginBase implement
   public function resolve(): GeneratedUrl | string {
     return $this->urlGenerator->generateFromRoute(
         'dpl_login.login',
-        [
-          'current-path' => $this->urlGenerator->generateFromRoute(
-            'dpl_go.post_adgangsplatformen_login',
-            [],
-            // Skip OutboundPathProcessor here.
-            ['path_processing' => FALSE],
-          ),
-        ],
+        $this->getLoginQuery(),
         ['absolute' => TRUE]
       );
+  }
+
+  /**
+   * Get the query of the login url.
+   *
+   * @return array<string, mixed>
+   *   The query.
+   */
+  protected function getLoginQuery(): array {
+    return [
+      'current-path' => $this->urlGenerator->generateFromRoute(
+        'dpl_go.post_adgangsplatformen_login',
+        [],
+        // Skip OutboundPathProcessor here.
+        ['path_processing' => FALSE],
+      ),
+    ];
   }
 
 }
