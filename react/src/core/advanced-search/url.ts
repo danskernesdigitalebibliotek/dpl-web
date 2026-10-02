@@ -36,3 +36,16 @@ export const constructAdvancedSearchUrl = (args: {
 
   return processedUrl;
 };
+
+/**
+ * Constructs a link to advanced-search-v2 results for a single subject.
+ */
+export const constructAdvancedSearchSubjectUrl = (
+  advancedSearchUrl: URL,
+  subject: string
+) =>
+  constructAdvancedSearchUrl({
+    advancedSearchUrl,
+    filters: [{ term: "term.subject", query: subject }],
+    view: "results"
+  });
