@@ -4,7 +4,10 @@ import DashboardNotificationList from "./dashboard-notification-list/dashboard-n
 import { useText } from "../../core/utils/text";
 import Link from "../../components/atoms/links/Link";
 import { useAddFavorite } from "../../components/button-favourite/useAddFavorite";
-import MaterialSlider from "../../components/material-slider/MaterialSlider";
+import MaterialSlider, {
+  MaterialSliderCaption,
+  MaterialSliderTitle
+} from "../../components/material-slider/MaterialSlider";
 import { constructMaterialUrl } from "../../core/utils/helpers/url";
 import { useUrls } from "../../core/utils/url";
 import useLoans from "../../core/utils/useLoans";
@@ -13,12 +16,12 @@ import { useGetList } from "../../core/material-list-api/material-list";
 import { WorkId } from "../../core/utils/types/ids";
 import { LoanType } from "../../core/utils/types/loan-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
-import { hasValue } from "../../core/utils/helpers/has-value";
 import {
-  listItemToRecommendationSource,
-  pickRecommendationSource,
-  workIdToRecommendationSource
-} from "./recommendationSource";
+  listItemsToRecommendationSeeds,
+  pickRecommendationSeed,
+  workIdsToRecommendationSeeds
+} from "./recommendationSeed";
+import { RecommendationOrigin } from "./recommendations.types";
 import useRecommendations from "./useRecommendations";
 
 interface DashboardProps {
@@ -35,7 +38,7 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
     useGetList("default");
 
   // The lists arrive from separate services at different speeds. The
-  // recommendations pick their source on mount, so they are only mounted once
+  // recommendations pick their seed on mount, so they are only mounted once
   // every list has settled - otherwise a reservation could win over a loan
   // that simply had not arrived yet. A failed request is not loading and has
   // no data, so it counts as an empty list.
@@ -74,6 +77,14 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
   );
 };
 
+// The caption above the recommendations title, phrased after where the
+// material the recommendations are based on came from.
+const captionTextKeyByOrigin: Record<RecommendationOrigin, string> = {
+  loan: "dashboardRecommendationsLoanCaptionText",
+  reservation: "dashboardRecommendationsReservationCaptionText",
+  favorite: "dashboardRecommendationsFavoriteCaptionText"
+};
+
 type RecommendedMaterialsProps = {
   loans: LoanType[];
   reservations: ReservationType[];
@@ -90,35 +101,32 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
   const materialUrl = u("materialUrl");
   const addToListRequest = useAddFavorite({ app: "dashboard" });
 
-  const [source] = useState(() => {
-    const loanSources = loans
-      .map(listItemToRecommendationSource)
-      .filter(hasValue);
+  const [seed] = useState(() =>
+    pickRecommendationSeed({
+      loans: listItemsToRecommendationSeeds(loans, "loan"),
+      reservations: listItemsToRecommendationSeeds(reservations, "reservation"),
+      favorites: workIdsToRecommendationSeeds(favorites)
+    })
+  );
 
-    const reservationSources = reservations
-      .map(listItemToRecommendationSource)
-      .filter(hasValue);
+  const { result, isLoading } = useRecommendations(seed);
 
-    const favoriteSources = favorites.map(workIdToRecommendationSource);
-
-    return pickRecommendationSource({
-      loans: loanSources,
-      reservations: reservationSources,
-      favorites: favoriteSources
-    });
-  });
-
-  const { works, isLoading } = useRecommendations(source);
-
-  if (isLoading || works.length === 0) {
+  if (isLoading || !result || result.recommendations.length === 0) {
     return null;
   }
 
   return (
     <section className="dashboard-page-recommendations">
       <MaterialSlider
-        heading={t("dashboardRecommendationsHeadingText")}
-        items={works.map((work) => ({
+        heading={
+          <>
+            <MaterialSliderCaption>
+              {t(captionTextKeyByOrigin[result.source.origin])}
+            </MaterialSliderCaption>
+            <MaterialSliderTitle>{result.source.title}</MaterialSliderTitle>
+          </>
+        }
+        items={result.recommendations.map((work) => ({
           id: work.workId,
           title: work.title,
           subtitle: work.author,
