@@ -2,7 +2,6 @@ import { createStore } from "@xstate/store"
 
 import type { CompensationModalProps } from "@/components/shared/compensationModal/CompensationModal"
 import type { DigitalLoansModalProps } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
-import type { DigitalSessionModalProps } from "@/components/shared/digitalSessionModal/DigitalSessionModal"
 import type { FeesModalProps } from "@/components/shared/feesModal/FeesModal"
 import type { LoanDetailsModalProps } from "@/components/shared/loanDetailsModal/LoanDetailsModal"
 import type { PhysicalLoansModalProps } from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
@@ -21,9 +20,6 @@ export type TModalRegistry = {
   PlayerPreviewModal: PlayerPreviewModalProps
   CompensationModal: CompensationModalProps
   DigitalLoansModal: DigitalLoansModalProps
-  // Carries a callback on purpose: the player bar that opens it is unmounted
-  // by then, so "play the loan again" has to travel with the modal.
-  DigitalSessionModal: DigitalSessionModalProps
   FeesModal: FeesModalProps
   LoanDetailsModal: LoanDetailsModalProps
   PhysicalLoansModal: PhysicalLoansModalProps

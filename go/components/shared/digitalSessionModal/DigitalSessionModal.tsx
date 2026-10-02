@@ -23,8 +23,7 @@ export type DigitalSessionModalProps = {
   reason: WedoBooksStopReason
   /**
    * Open the loan again, where the reason allows it. The caller also takes
-   * the dialog down: on the read page it is replaced by the reader, from the
-   * player bar it is closed through the modal store.
+   * the dialog down by mounting the reader or player in its place.
    */
   onRetry: () => void
 }
