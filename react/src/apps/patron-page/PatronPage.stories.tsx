@@ -114,9 +114,6 @@ const meta: Meta<typeof PatronPage> = {
     patronPageStatusSectionHeaderText: {
       control: { type: "text" }
     },
-    patronPageStatusSectionBodyText: {
-      control: { type: "text" }
-    },
     patronPageStatusSectionLoanHeaderText: {
       control: { type: "text" }
     },
@@ -178,9 +175,6 @@ const meta: Meta<typeof PatronPage> = {
       control: { type: "text" }
     },
     patronPageDeleteProfileLinkText: {
-      control: { type: "text" }
-    },
-    patronPageStatusSectionReservationsText: {
       control: { type: "text" }
     },
     patronPageStatusSectionOutOfText: {
@@ -248,8 +242,6 @@ const meta: Meta<typeof PatronPage> = {
     patronContactEmailCheckboxText:
       "Receive emails about your loans, reservations, and so forth",
     patronPageStatusSectionHeaderText: "Digital loans",
-    patronPageStatusSectionBodyText:
-      "There is a number of materials without limitation to amounts of loans per month.",
     patronPageStatusSectionLoanHeaderText: "Loans per month",
     patronPageStatusSectionLoansEbooksText: "E-books",
     patronPageStatusSectionLoansAudioBooksText: "Audiobooks",
@@ -275,8 +267,6 @@ const meta: Meta<typeof PatronPage> = {
     patronPageSaveButtonText: "Save",
     patronPageDeleteProfileText: "Do you wish to delete your library profile?",
     patronPageDeleteProfileLinkText: "Delete your profile",
-    patronPageStatusSectionReservationsText:
-      "You can reserve @countEbooks ebooks and @countAudiobooks audiobooks",
     patronPageStatusSectionOutOfText: "@this out of @that",
     patronPageStatusSectionOutOfAriaLabelAudioBooksText:
       "You used @this audiobooks out of you quota of @that audiobooks",

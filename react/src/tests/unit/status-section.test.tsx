@@ -26,9 +26,6 @@ vi.mock(
 vi.mock("../../core/utils/text", () => {
   const TRANSLATIONS: Record<string, string> = {
     patronPageStatusSectionHeaderText: "Status",
-    patronPageStatusSectionBodyText: "Her kan du se din status...",
-    patronPageStatusSectionReservationsText:
-      "Du kan reservere op til @countEbooks e-bøger og @countAudiobooks lydbøger.",
     patronPageStatusSectionLoanHeaderText: "Dine lån",
     patronPageStatusSectionLoansEbooksText: "E-bøger",
     patronPageStatusSectionOutOfText: "@this ud af @that",
@@ -64,18 +61,9 @@ vi.mock("../../core/publizon/publizon", () => ({
   useGetV1UserLoans: vi.fn()
 }));
 
-// The service layer hands the two apart so nothing about the loans waits for
-// the ceiling; the tests set whichever half they are about.
-const givenDigitalQuotas = ({
-  loanQuotas,
-  reservationLimits
-}: {
-  loanQuotas?: unknown;
-  reservationLimits?: unknown;
-}) =>
+const givenDigitalQuotas = ({ loanQuotas }: { loanQuotas?: unknown }) =>
   vi.mocked(useDigitalQuotas).mockReturnValue({
-    loanQuotas: { data: loanQuotas },
-    reservationLimits: { data: reservationLimits }
+    loanQuotas: { data: loanQuotas }
   } as unknown as ReturnType<typeof useDigitalQuotas>);
 
 // The feature flag reads app config through Redux, which has no provider here.
@@ -109,9 +97,7 @@ describe("StatusSection component tests", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
       data: {
         maxConcurrentEbookLoansPerBorrower: 10,
-        maxConcurrentAudioLoansPerBorrower: 8,
-        maxConcurrentEbookReservationsPerBorrower: 5,
-        maxConcurrentAudioReservationsPerBorrower: 4
+        maxConcurrentAudioLoansPerBorrower: 8
       }
     } as unknown as ReturnType<typeof useGetV1LibraryProfile>);
 
@@ -128,12 +114,7 @@ describe("StatusSection component tests", () => {
 
     const { getByText, getByLabelText } = render(<StatusSection />);
 
-    // Check header and reservations texts
     expect(getByText("Status")).not.toBeNull();
-    expect(getByText("Her kan du se din status...")).not.toBeNull();
-    expect(
-      getByText("Du kan reservere op til 5 e-bøger og 4 lydbøger.")
-    ).not.toBeNull();
 
     // Check Ebook section: 4 active loans out of 10 limit -> 40%
     expect(getByText("4 ud af 10")).not.toBeNull();
@@ -152,9 +133,7 @@ describe("StatusSection component tests", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
       data: {
         maxConcurrentEbookLoansPerBorrower: 5,
-        maxConcurrentAudioLoansPerBorrower: 5,
-        maxConcurrentEbookReservationsPerBorrower: 2,
-        maxConcurrentAudioReservationsPerBorrower: 2
+        maxConcurrentAudioLoansPerBorrower: 5
       }
     } as unknown as ReturnType<typeof useGetV1LibraryProfile>);
 
@@ -215,9 +194,7 @@ describe("StatusSection component tests", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
       data: {
         maxConcurrentEbookLoansPerBorrower: 0,
-        maxConcurrentAudioLoansPerBorrower: 0,
-        maxConcurrentEbookReservationsPerBorrower: 0,
-        maxConcurrentAudioReservationsPerBorrower: 0
+        maxConcurrentAudioLoansPerBorrower: 0
       }
     } as unknown as ReturnType<typeof useGetV1LibraryProfile>);
 
@@ -284,20 +261,7 @@ describe("StatusSection component tests", () => {
       expect(progressBars[1].getAttribute("style")).toBe("width: 50%;");
     });
 
-    it("Renders the reservation limits the patron's organization allows", () => {
-      givenDigitalQuotas({
-        loanQuotas: [splitQuota],
-        reservationLimits: { ebook: 5, audiobook: 4 }
-      });
-
-      const { container } = render(<StatusSection />);
-
-      expect(container.textContent).toContain(
-        "Du kan reservere op til 5 e-bøger og 4 lydbøger."
-      );
-    });
-
-    it("Leaves out the reservation line when there is no ceiling to show", () => {
+    it("Applies a combined quota to both formats", () => {
       givenDigitalQuotas({
         loanQuotas: [
           {
@@ -309,16 +273,11 @@ describe("StatusSection component tests", () => {
             currentConcurrentLoans: 2,
             currentMonthlyLoans: 6
           }
-        ],
-        // Which organizations have none is the service layer's call - an
-        // organization that counts the formats together is one of them.
-        reservationLimits: null
+        ]
       });
 
       const { container } = render(<StatusSection />);
 
-      expect(container.textContent).not.toContain("Du kan reservere op til");
-      // A combined quota applies the same numbers to both formats.
       expect(container.textContent).toContain("2 ud af 4");
     });
 

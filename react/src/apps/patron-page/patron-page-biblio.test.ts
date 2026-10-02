@@ -24,7 +24,7 @@ import {
  * to the user rather than to a single material, so the feature flag alone
  * decides where the support identifier and the loan quotas come from.
  *
- * The quota rendering itself (no reservation line, combined quotas, a spent
+ * The quota rendering itself (combined quotas, a spent
  * quota reading as full) is pinned by StatusSection's unit tests. This spec
  * covers what only the real page shows: the flag moving the whole section,
  * and residency no longer hiding it.

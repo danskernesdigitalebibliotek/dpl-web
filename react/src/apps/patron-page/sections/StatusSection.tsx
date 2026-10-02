@@ -23,8 +23,7 @@ const StatusSection: FC = () => {
     { query: { enabled: !viaBiblioAdapter } }
   );
   const {
-    loanQuotas: { data: digitalLoanQuotas },
-    reservationLimits: { data: digitalReservationLimits }
+    loanQuotas: { data: digitalLoanQuotas }
   } = useDigitalQuotas({ enabled: viaBiblioAdapter });
 
   const publizonQuotas = getPatronLoanQuotas({
@@ -54,7 +53,6 @@ const StatusSection: FC = () => {
     patronAudioBookLoans,
     maxConcurrentEbookLoansPerBorrower,
     maxConcurrentAudioLoansPerBorrower,
-    reservationCeilings,
     hasQuotas
   } = viaBiblioAdapter
     ? {
@@ -62,7 +60,6 @@ const StatusSection: FC = () => {
         patronAudioBookLoans: digitalAudioQuota.current,
         maxConcurrentEbookLoansPerBorrower: digitalEbookQuota.limit,
         maxConcurrentAudioLoansPerBorrower: digitalAudioQuota.limit,
-        reservationCeilings: digitalReservationLimits, // { ebook, audiobook } or null.
         hasQuotas: Boolean(digitalLoanQuotas?.length)
       }
     : {
@@ -72,11 +69,6 @@ const StatusSection: FC = () => {
           libraryProfile?.maxConcurrentEbookLoansPerBorrower,
         maxConcurrentAudioLoansPerBorrower:
           libraryProfile?.maxConcurrentAudioLoansPerBorrower,
-        reservationCeilings: {
-          ebook: libraryProfile?.maxConcurrentEbookReservationsPerBorrower ?? 0,
-          audiobook:
-            libraryProfile?.maxConcurrentAudioReservationsPerBorrower ?? 0
-        },
         hasQuotas: Boolean(libraryProfile)
       };
 
@@ -103,19 +95,6 @@ const StatusSection: FC = () => {
           <h2 className="text-header-h4 mt-64 mb-16">
             {t("patronPageStatusSectionHeaderText")}
           </h2>
-          <div className="text-body-small-regular mb-8">
-            {t("patronPageStatusSectionBodyText")}
-          </div>
-          {reservationCeilings && (
-            <div className="text-body-small-regular mt-8 mb-8">
-              {t("patronPageStatusSectionReservationsText", {
-                placeholders: {
-                  "@countEbooks": reservationCeilings.ebook,
-                  "@countAudiobooks": reservationCeilings.audiobook
-                }
-              })}
-            </div>
-          )}
           <div className="dpl-status-loans__column">
             <div className="dpl-status mt-32">
               <h3 className="text-small-caption">
