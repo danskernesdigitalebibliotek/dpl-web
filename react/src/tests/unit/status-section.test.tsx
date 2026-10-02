@@ -8,7 +8,7 @@ import {
 } from "../../core/publizon/publizon";
 import { FileExtensionType } from "../../core/publizon/model";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
-import { useDigitalQuotas } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { useDigitalLoanQuotas } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 // Only the hooks under test are stubbed; the rest of the package stays
 // real, so pure helpers keep behaving as they do in production.
@@ -18,7 +18,7 @@ vi.mock(
     ...(await importOriginal<
       typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
     >()),
-    useDigitalQuotas: vi.fn()
+    useDigitalLoanQuotas: vi.fn()
   })
 );
 
@@ -61,10 +61,10 @@ vi.mock("../../core/publizon/publizon", () => ({
   useGetV1UserLoans: vi.fn()
 }));
 
-const givenDigitalQuotas = ({ loanQuotas }: { loanQuotas?: unknown }) =>
-  vi.mocked(useDigitalQuotas).mockReturnValue({
-    loanQuotas: { data: loanQuotas }
-  } as unknown as ReturnType<typeof useDigitalQuotas>);
+const givenDigitalQuotas = (loanQuotas?: unknown) =>
+  vi.mocked(useDigitalLoanQuotas).mockReturnValue({
+    data: loanQuotas
+  } as unknown as ReturnType<typeof useDigitalLoanQuotas>);
 
 // The feature flag reads app config through Redux, which has no provider here.
 vi.mock("../../core/utils/useBiblioAdapter", () => ({
@@ -75,7 +75,7 @@ describe("StatusSection component tests", () => {
   beforeEach(() => {
     // Default to the flag being off: Publizon answers, as before.
     vi.mocked(useBiblioAdapter).mockReturnValue(false);
-    givenDigitalQuotas({});
+    givenDigitalQuotas();
   });
   it("should render nothing if library profile is not loaded", () => {
     vi.mocked(useGetV1LibraryProfile).mockReturnValue({
@@ -245,7 +245,7 @@ describe("StatusSection component tests", () => {
     });
 
     it("Renders the quotas from Biblio, counting the loans held right now", () => {
-      givenDigitalQuotas({ loanQuotas: [splitQuota] });
+      givenDigitalQuotas([splitQuota]);
 
       const { container } = render(<StatusSection />);
 
@@ -262,19 +262,17 @@ describe("StatusSection component tests", () => {
     });
 
     it("Applies a combined quota to both formats", () => {
-      givenDigitalQuotas({
-        loanQuotas: [
-          {
-            splitOnFormat: false,
-            orgId: "org-2",
-            orgName: "Eksempel Biblioteket",
-            maxLoans: 10,
-            maxConcurrentLoans: 4,
-            currentConcurrentLoans: 2,
-            currentMonthlyLoans: 6
-          }
-        ]
-      });
+      givenDigitalQuotas([
+        {
+          splitOnFormat: false,
+          orgId: "org-2",
+          orgName: "Eksempel Biblioteket",
+          maxLoans: 10,
+          maxConcurrentLoans: 4,
+          currentConcurrentLoans: 2,
+          currentMonthlyLoans: 6
+        }
+      ]);
 
       const { container } = render(<StatusSection />);
 
@@ -282,16 +280,14 @@ describe("StatusSection component tests", () => {
     });
 
     it("Shows a spent quota as full rather than hiding it", () => {
-      givenDigitalQuotas({
-        loanQuotas: [
-          {
-            ...splitQuota,
-            // The audiobook quota is spent: one allowed, one held.
-            maxConcurrentLoans: { ebook: 4, audiobook: 1 },
-            currentMonthlyLoans: { ebook: 1, audiobook: 1 }
-          }
-        ]
-      });
+      givenDigitalQuotas([
+        {
+          ...splitQuota,
+          // The audiobook quota is spent: one allowed, one held.
+          maxConcurrentLoans: { ebook: 4, audiobook: 1 },
+          currentMonthlyLoans: { ebook: 1, audiobook: 1 }
+        }
+      ]);
 
       const { container } = render(<StatusSection />);
 
@@ -306,7 +302,7 @@ describe("StatusSection component tests", () => {
     });
 
     it("Renders nothing until the quotas have loaded", () => {
-      givenDigitalQuotas({});
+      givenDigitalQuotas();
 
       const { container } = render(<StatusSection />);
 

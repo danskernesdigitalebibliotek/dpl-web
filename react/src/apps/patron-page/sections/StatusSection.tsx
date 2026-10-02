@@ -7,7 +7,7 @@ import { useText } from "../../../core/utils/text";
 import { getPatronLoanQuotas } from "../../../core/utils/helpers/publizon";
 import {
   getDigitalLoanQuota,
-  useDigitalQuotas
+  useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
 
@@ -22,9 +22,9 @@ const StatusSection: FC = () => {
     {},
     { query: { enabled: !viaBiblioAdapter } }
   );
-  const {
-    loanQuotas: { data: digitalLoanQuotas }
-  } = useDigitalQuotas({ enabled: viaBiblioAdapter });
+  const { data: digitalLoanQuotas } = useDigitalLoanQuotas({
+    enabled: viaBiblioAdapter
+  });
 
   const publizonQuotas = getPatronLoanQuotas({
     userData: data?.userData,
