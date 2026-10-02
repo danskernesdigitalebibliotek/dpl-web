@@ -71,6 +71,7 @@
         "drupal/date_range_formatter": "^4",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
+        "drupal/dk_address": "^1",
         "drupal/dynamic_entity_reference": "^3.1",
         "drupal/editor_advanced_link": "^2",
         "drupal/entity_clone_template": "^2.0",
@@ -362,7 +363,8 @@
                 "3468300: Update EventSeriesSettings to use datetime form element.": "patches/vendor/recurring_events-5d9bc3b1cf7c00972f053f3d14873012b1ad7140.patch",
                 "3504806: Clean up orphaned eventinstances automatically": "patches/vendor/reccuring_events_auto_delete_orphaned.patch",
                 "3515976: EventUserTrait may return NULL if owner has been deleted": "patches/vendor/recurring_events-4bf78bde6378b01367c4f57b0d5c40b51e8dc53f.patch",
-                "3615281: Same-day occurrences of different lengths collapse into one instance (MR !216)": "patches/vendor/recurring_events-cf51cd61d967fcb5a87613204de4fe875bef8a4b.patch"
+                "3615281: Same-day occurrences of different lengths collapse into one instance (MR !216)": "patches/vendor/recurring_events-cf51cd61d967fcb5a87613204de4fe875bef8a4b.patch",
+                "Fix event validation": "patches/recurring_events-fix_event_validation.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "patches/vendor/theme-permission-edit-install-uninstall-3105637-7.patch"

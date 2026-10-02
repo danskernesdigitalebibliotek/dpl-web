@@ -1,4 +1,5 @@
 import React from "react";
+import { opensIn } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useDigitalCheckout from "./useDigitalCheckout";
 import DigitalReader from "./DigitalReader";
 import DigitalPlayer from "./DigitalPlayer";
@@ -14,7 +15,7 @@ export type DigitalReaderPlayerProps = {
  * itself: the SDK's checkout carries the material type, so a pasted url opens
  * the right thing no matter which page it names.
  *
- * Audiobooks get a page rather than a modal: the SDK's player bar pins itself
+ * The player gets a page rather than a modal: the SDK's player bar pins itself
  * to the bottom of the viewport, which leaves a wrapping modal empty, and a
  * bar over the material page would promise playback across full page loads.
  */
@@ -28,14 +29,15 @@ const DigitalReaderPlayer: React.FC<DigitalReaderPlayerProps> = ({
   // anyway, so returning null here adds no visible wait.
   if (!sdk || !checkout) return null;
 
-  // String() rather than importing the SDK's MaterialType enum: a value
-  // import would statically link the multi-megabyte SDK chunk into the page
-  // bundle that this component exists to keep it out of.
-  if (String(checkout.material_type) === "audiobook") {
-    return <DigitalPlayer sdk={sdk} checkout={checkout} onClose={onClose} />;
+  switch (opensIn(checkout.material_type)) {
+    case "player":
+      return <DigitalPlayer sdk={sdk} checkout={checkout} onClose={onClose} />;
+    case "reader":
+      return <DigitalReader sdk={sdk} checkout={checkout} onClose={onClose} />;
+    // A type nothing can open gets no button in the loan list either.
+    default:
+      return null;
   }
-
-  return <DigitalReader sdk={sdk} checkout={checkout} onClose={onClose} />;
 };
 
 export default DigitalReaderPlayer;

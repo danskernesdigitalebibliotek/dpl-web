@@ -48,7 +48,40 @@ type GoConfigurationPrivate {
   unilogin: UniloginConfigurationPrivate
 }
 
+"""
+Configuration the WeDoBooks SDK needs to run the reader and the player.
+These are client keys, provisioned once per environment - never per library.
+"""
+type GoBiblioSdkConfiguration {
+  applicationId: String!
+  firebaseApiKey: String!
+  firebaseProjectId: String!
+  firebaseAppId: String!
+  readerApiKey: String!
+}
+
+"""
+Biblio adapter configuration for GO.
+"""
+type GoBiblioConfiguration {
+  """
+  Whether digital materials on GO go through the Biblio adapter.
+  Independent of the flag governing the CMS web apps.
+  """
+  enabled: Boolean!
+  """
+  Base url of the Biblio adapter.
+  """
+  baseUrl: String
+  """
+  Null unless every SDK value is provisioned - the SDK cannot start on a
+  partial configuration.
+  """
+  sdk: GoBiblioSdkConfiguration
+}
+
 type GoConfigurationPublic {
+  biblio: GoBiblioConfiguration
   libraryInfo: GoLibraryInfo
   loginUrls: GoLoginUrls
   logoutUrls: GoLogoutUrls

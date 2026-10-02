@@ -1,7 +1,5 @@
 import * as React from "react"
 
-import { ensureWedoBooksStyles } from "./readerStyles"
-
 /**
  * Mount an SDK web component into an element React owns but does not manage.
  *
@@ -32,8 +30,6 @@ export function useSdkMount(
   React.useEffect(() => {
     const container = containerRef.current
     if (!container) return undefined
-
-    ensureWedoBooksStyles(container.ownerDocument)
 
     const mountPoint = container.ownerDocument.createElement("div")
     mountPoint.style.height = "100%"

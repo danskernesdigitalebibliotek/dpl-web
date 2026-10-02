@@ -2,6 +2,7 @@ import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
 
 import AccessForbiddenError from "./AccessForbiddenError"
+import UnauthenticatedError from "./UnauthenticatedError"
 
 const getDplcmsGraphqlBasicAuthToken = () =>
   Buffer.from(
@@ -46,7 +47,9 @@ export function fetcher<TData, TVariables>(
 
       if (res.status !== 200) {
         const { message } = json
-        if (res.status === 403) {
+        if (res.status === 401) {
+          throw new UnauthenticatedError(message)
+        } else if (res.status === 403) {
           throw new AccessForbiddenError(message)
         } else {
           throw new Error(message)
@@ -62,6 +65,13 @@ export function fetcher<TData, TVariables>(
       return { ...json.data, go: { cacheTags: cacheTagsRaw ? cacheTagsRaw.split(" ") : null } }
     } catch (error) {
       console.error("Failed to fetch data from DPL CMS", error)
+      // Keep the authentication signals intact. Callers need to tell "the CMS
+      // refused this caller" — which for a cookie-authenticated request means
+      // the Drupal session is gone — apart from "the CMS could not be
+      // reached", which says nothing about the session.
+      if (error instanceof UnauthenticatedError || error instanceof AccessForbiddenError) {
+        throw error
+      }
       throw new Error("Failed to fetch data from DPL CMS")
     }
   }

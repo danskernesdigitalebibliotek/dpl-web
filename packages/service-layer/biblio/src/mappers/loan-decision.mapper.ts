@@ -1,22 +1,15 @@
 import { z } from "zod"
 
 import type { LoanDecision, LoanRequestResult } from "../../../src/types"
-import { LoanProviderSchema, LoanSchema, mapLoan } from "./loan.mapper"
+import { CanLoanResponseType, LoanProvider } from "../generated/model"
+import { LoanSchema, mapLoan } from "./loan.mapper"
+import { openStringUnion } from "./open-string-union"
 
 const LoanDecisionSchema = z.object({
-  status: z.enum([
-    "loanable",
-    "reservable",
-    "wishable",
-    "unavailable",
-    "monthly_limit_exceeded",
-    "concurrent_limit_exceeded",
-    "no_valid_credentials",
-    "lending_blocked",
-  ]),
+  status: openStringUnion("status", Object.values(CanLoanResponseType)),
   // Optional by contract: "the provider selected for the attempted loan, when
   // available" - absent when no provider could be picked at all.
-  loan_provider: LoanProviderSchema.optional(),
+  loan_provider: openStringUnion("loan_provider", Object.values(LoanProvider)).optional(),
   unavailable_reason: z.string().optional(),
   lending_block_reason: z.string().optional(),
 })

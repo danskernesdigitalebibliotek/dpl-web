@@ -3,14 +3,14 @@ langcode: en
 status: true
 dependencies:
   module:
-    - gsearch
+    - dk_address
     - recurring_events
 id: eventinstance.field_event_address_gsearch
 field_name: field_event_address_gsearch
 entity_type: eventinstance
-type: address_gsearch
+type: dk_address
 settings: {  }
-module: gsearch
+module: dk_address
 locked: false
 cardinality: 1
 translatable: true

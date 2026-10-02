@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-28 15:22+0200\n"
-"PO-Revision-Date: 2026-09-28 15:22+0200\n"
+"POT-Creation-Date: 2026-10-01 19:39+0200\n"
+"PO-Revision-Date: 2026-10-01 19:39+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-09-28 15:22+0200\n"
-"PO-Revision-Date: 2026-09-28 15:22+0200\n"
+"POT-Creation-Date: 2026-10-01 19:39+0200\n"
+"PO-Revision-Date: 2026-10-01 19:39+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -7244,15 +7244,15 @@ msgctxt "Branch List"
 msgid "Could not find address for your location."
 msgstr "Der kunne ikke findes en adresse, der matcher din lokation."
 
+msgid "Could not find any tokens for user."
+msgstr ""
+
 msgctxt "dpl_event"
 msgid "Could not find event-instance"
 msgstr "Kunne ikke finde hændelsesforekomst"
 
 msgid "Could not find submit button - cannot show BNF export flow."
 msgstr ""
-
-msgid "Could not find token for user."
-msgstr "Kunne ikke finde token for bruger."
 
 msgid "Could not get node title for @uuid from BNF. @message"
 msgstr ""
@@ -7343,7 +7343,7 @@ msgstr "Landekode"
 
 msgctxt "Address label"
 msgid "County"
-msgstr "Amt"
+msgstr "Land"
 
 msgid "Coverage"
 msgstr "Dækning"
@@ -7947,6 +7947,10 @@ msgid "Dashboard"
 msgstr "Dit overblik"
 
 msgctxt "Patron menu"
+msgid "Dashboard"
+msgstr "Dit overblik"
+
+msgctxt "Patron page"
 msgid "Dashboard"
 msgstr "Dit overblik"
 
@@ -18883,6 +18887,9 @@ msgstr "Podcast"
 msgid "Port"
 msgstr "Port"
 
+msgid "Post CMS Logout Go Session Cleanup Route"
+msgstr ""
+
 msgid "Post Go Adgangsplatformen Login Route"
 msgstr "Post GO Adgangsplatformen login-rute"
 
@@ -21839,7 +21846,7 @@ msgstr ""
 
 msgctxt "dpl_service_message"
 msgid "Service message"
-msgstr ""
+msgstr "Servicebesked"
 
 msgctxt "node.type.service_message:name"
 msgid "Service message"
@@ -21862,7 +21869,7 @@ msgid "Service message publish toggle"
 msgstr ""
 
 msgid "Service messages"
-msgstr ""
+msgstr "Servicebeskeder"
 
 msgctxt "views.view.service_messages:display:default:display_options:title"
 msgid "Service messages"
@@ -22078,6 +22085,7 @@ msgstr "Kort resumé eller emne for arrangementet."
 msgid ""
 "Short, time-limited notices about outages, closures and degraded services."
 msgstr ""
+"En kort besked om fx nedbrud, nedlukning eller lukket tilbud og tjenester."
 
 msgid "Shorthand name by which the End-User wishes to be referred to"
 msgstr "Kort navn, som slutbrugeren ønsker at blive omtalt med"
@@ -26190,7 +26198,7 @@ msgstr ""
 
 msgctxt "dpl_service_message"
 msgid "The whole site"
-msgstr ""
+msgstr "Hele hjemmesiden"
 
 msgctxt "field.storage.node.field_svcmsg_placement:settings:allowed_values:0:label"
 msgid "The whole site"
@@ -28636,6 +28644,13 @@ msgctxt "Dpl Biblio"
 msgid "Use the Biblio adapter for digital materials"
 msgstr "Brug Biblio adapteren til digitale materialer"
 
+msgid "Use the Biblio adapter for digital materials on GO"
+msgstr ""
+
+msgctxt "Dpl Biblio"
+msgid "Use the Biblio adapter for digital materials on GO"
+msgstr ""
+
 msgctxt "DPL Event"
 msgid "Use the address from associated branch as fallback."
 msgstr "Brug adressen fra det tilknyttede bibliotek som fallback."
@@ -28848,6 +28863,10 @@ msgstr "Brugergrænseflade"
 
 msgctxt "Open order"
 msgid "User not found"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "User profile"
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.user_registration_item:label"
@@ -29418,6 +29437,13 @@ msgid ""
 "When checked, this page is eligible to be a template when cloning content."
 msgstr ""
 "Når markeret, kan denne side bruges som skabelon ved kloning af indhold."
+
+msgctxt "Dpl Biblio"
+msgid ""
+"When enabled new digital loans on GO can only be made through the Biblio "
+"adapter. Existing Publizon loans remain visible and playable until they "
+"expire. Independent of the flag for the web apps above."
+msgstr ""
 
 msgctxt "Dpl Biblio"
 msgid ""
@@ -30796,7 +30822,7 @@ msgstr "d. M Y"
 
 msgctxt "advanced search"
 msgid "date"
-msgstr "dato"
+msgstr "Dato"
 
 msgctxt "Global"
 msgid "day"

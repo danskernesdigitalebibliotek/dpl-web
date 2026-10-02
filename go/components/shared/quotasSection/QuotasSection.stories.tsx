@@ -1,3 +1,4 @@
+import { ServiceLayerProvider } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
@@ -17,9 +18,18 @@ const seedClient = () => {
   return client
 }
 
+// The quota hooks resolve their config from the provider even when the
+// Biblio adapter is off (as it is in stories, where no DplCmsConfig exists).
+const storyServiceLayerConfig = {
+  getBaseUrl: () => "https://fbs.example",
+  getAuthHeader: () => "Bearer story-token",
+}
+
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
   <QueryClientProvider client={seedClient()}>
-    <Story />
+    <ServiceLayerProvider config={storyServiceLayerConfig}>
+      <Story />
+    </ServiceLayerProvider>
   </QueryClientProvider>
 )
 

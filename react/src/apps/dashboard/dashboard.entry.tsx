@@ -23,6 +23,7 @@ export interface DashBoardProps {
   physicalLoansUrl: string;
   feesPageUrl: string;
   reservationsUrl: string;
+  userProfileUrl: string;
   // Config
   blacklistedPickupBranchesConfig: string;
   blacklistedAvailabilityBranchesConfig: string;
@@ -66,6 +67,7 @@ export interface DashBoardProps {
   yourProfileText: string;
   dashboardLoansLinkText: string;
   dashboardReservationsLinkText: string;
+  dashboardUserProfileLinkText: string;
   reservationListLoanBeforeText: string;
 }
 

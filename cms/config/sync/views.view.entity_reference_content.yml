@@ -6,7 +6,7 @@ dependencies:
     - field.storage.node.field_address_gsearch
     - node.type.branch
   module:
-    - gsearch
+    - dk_address
     - node
     - user
 id: entity_reference_content
@@ -475,7 +475,7 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: address_gsearch
+          type: dk_address
           settings: {  }
           group_column: value
           group_columns: {  }
