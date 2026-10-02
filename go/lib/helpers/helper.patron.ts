@@ -25,6 +25,9 @@ import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 // must derive sort orders and query variables from here — the variables are
 // part of the react-query cache keys, so two copies that drift produce
 // silent cache misses.
+// The shelf is the only place that knows about the FBI search index's
+// limitations: it is the only place that can reliably pair a loan/reservation
+// with its work and manifestation.
 
 export type PhysicalLoanItem = {
   loan: Loan
