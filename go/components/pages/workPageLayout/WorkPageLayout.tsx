@@ -5,8 +5,10 @@ import React, { useEffect, useMemo, useState } from "react"
 
 import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
 import WorkPageLoading from "@/components/pages/workPageLayout/WorkPageLoading"
+import { parseEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
+import { useEditionAvailability } from "@/hooks/useEditionAvailability"
 import {
   ManifestationWorkPageFragment,
   useGetMaterialQuery,
@@ -18,6 +20,8 @@ import {
   filterManifestationsByMaterialType,
   filterMaterialTypes,
   getEbookManifestationOrFallbackManifestation,
+  getEditionsForMaterialType,
+  getPinnedEditionManifestation,
 } from "./helper"
 
 function WorkPageLayout({ workId }: { workId: string }) {
@@ -28,6 +32,8 @@ function WorkPageLayout({ workId }: { workId: string }) {
   const [selectedManifestation, setSelectedManifestation] =
     useState<ManifestationWorkPageFragment>()
   const searchParams = useSearchParams()
+  const { isEditionHidden, isLoadingAvailability, isAvailabilityUnknown } =
+    useEditionAvailability(workId)
 
   if (!isLoading && (!data || !data.work)) {
     notFound()
@@ -65,15 +71,46 @@ function WorkPageLayout({ workId }: { workId: string }) {
     }
 
     // Filter out manifestations that don't match the search params material type
-    const selectedManifestation = manifestations.find(manifestation => {
+    const defaultManifestation = manifestations.find(manifestation => {
       return !!manifestation?.materialTypes.find(
         materialType => materialType.materialTypeSpecific.code === searchParamsMaterialType
       )
     }) as ManifestationWorkPageFragment
 
-    setSelectedManifestation(selectedManifestation)
+    // The edition choice is serialized in the url query params, so the correct
+    // edition is shown for the selected manifestation.
+    const editionChoice = parseEditionChoice(searchParams.get("edition"))
+    const pinnedManifestation = getPinnedEditionManifestation(
+      (allManifestations ?? []) as ManifestationWorkPageFragment[],
+      searchParamsMaterialType ?? "",
+      typeof editionChoice === "object" ? editionChoice.pid : null
+    )
+
+    // "Nyeste" means the newest edition the kommune can supply, matching the
+    // picker. Editions come back newest first.
+    const newestObtainable = getEditionsForMaterialType(
+      (allManifestations ?? []) as ManifestationWorkPageFragment[],
+      searchParamsMaterialType ?? ""
+    ).find(manifestation => !isEditionHidden(manifestation))
+
+    // defaultManifestation is cast non-nullable above but can be undefined,
+    // so keep the last good pick rather than clearing the page.
+    const nextManifestation = pinnedManifestation ?? newestObtainable ?? defaultManifestation
+    if (nextManifestation) {
+      setSelectedManifestation(nextManifestation)
+    }
+    // isEditionHidden is rebuilt every render, so the flags behind it stand
+    // in for it. Both settle once, so a background refetch does not swap the
+    // edition under the reader; isAvailabilityUnknown catches an error that
+    // later succeeds, which is the first real answer.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, manifestations])
+  }, [
+    searchParams,
+    manifestations,
+    allManifestations,
+    isLoadingAvailability,
+    isAvailabilityUnknown,
+  ])
 
   if (isLoading && !data) {
     return <WorkPageLoading />
