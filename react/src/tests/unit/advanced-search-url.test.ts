@@ -3,6 +3,10 @@ import {
   constructAdvancedSearchSubjectUrl,
   constructAdvancedSearchUrl
 } from "../../core/advanced-search/url";
+import {
+  MATERIAL_TYPE_AUDIOBOOKS,
+  MATERIAL_TYPE_EBOOKS
+} from "../../apps/advanced-search-v2/lib/advanced-search-select-options";
 import { ComplexSearchFacetsEnum } from "../../core/dbc-gateway/generated/graphql";
 import { SortOption } from "../../core/advanced-search/types";
 import {
@@ -26,7 +30,7 @@ describe("constructAdvancedSearchUrl", () => {
       preSearchFacets: [
         {
           facetField: ComplexSearchFacetsEnum.Generalmaterialtype,
-          selectedValues: ["e-bøger", "lydbøger"]
+          selectedValues: [MATERIAL_TYPE_EBOOKS, MATERIAL_TYPE_AUDIOBOOKS]
         }
       ],
       onlyExtraTitles: true,
