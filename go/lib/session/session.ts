@@ -15,6 +15,11 @@ import { loadUniloginUserInfo } from "../helpers/unilogin"
 import { userIsAnonymous } from "../helpers/user"
 import { TSessionType, TUserToken } from "../types/session"
 
+/**
+ * Get the iron-session options for the encrypted go-session cookie.
+ *
+ * @returns The session options, sealed with the GO_SESSION_SECRET.
+ */
 export const getSessionOptions = (): SessionOptions => {
   const sessionSecret = getServerEnv("GO_SESSION_SECRET")
 
@@ -61,6 +66,15 @@ export const defaultSession: TSessionData = {
   type: "anonymous",
 }
 
+/**
+ * Get the current GO session.
+ *
+ * A session that is not logged in is reset to the anonymous default session.
+ * The library token cookie, if present, is copied onto the session either way.
+ *
+ * @returns The current session, or the default session while building the app
+ *   or if the session cannot be read.
+ */
 export async function getSession(): Promise<IronSession<TSessionData>> {
   // If we are building the go app, we will use the default session to simulate an anonymous user.
   if (isBuildingGoApp()) {
@@ -97,17 +111,40 @@ export async function getSession(): Promise<IronSession<TSessionData>> {
   }
 }
 
+/**
+ * Set the session type cookie, which client code can read.
+ *
+ * @param type - The session type: "adgangsplatformen" or "unilogin".
+ */
 const setSessionTypeCookie = async (type: TUserToken["type"]) => {
   const { cookies } = await import("next/headers")
   const cookieStore = await cookies()
   cookieStore.set(goConfig("auth.cookie-names.session-type"), type, CLIENT_COOKIE_OPTIONS)
 }
 
+/**
+ * Set what every logged-in session has, whatever its type.
+ *
+ * The session lives exactly as long as the user token (ADR-012, ADR-013).
+ *
+ * @param session - The session to log in.
+ * @param userToken - The user token from the CMS.
+ */
 const setSessionDefaults = (session: IronSession<TSessionData>, userToken: TUserToken) => {
   session.isLoggedIn = true
   session.expires = new Date(userToken.expire.timestamp * 1000)
 }
 
+/**
+ * Save a logged-in session for a library patron.
+ *
+ * The user token is kept on the session, so it can be used towards FBS and the
+ * other services. The patron's name is read from FBS if it is available.
+ *
+ * @param session - The session to log in.
+ * @param userToken - The patron's user token from the CMS.
+ * @returns Always true: a patron session is created even if FBS fails.
+ */
 const saveAdgangsplatformenSession = async (
   session: IronSession<TSessionData>,
   userToken: TUserToken
@@ -138,9 +175,18 @@ const saveAdgangsplatformenSession = async (
   return true
 }
 
-// The student is not a patron, so the token is deliberately kept out of the
-// session: it must never be sent to FBS or FBI as a user token. It is only
-// used to read the Unilogin attributes the Pubhub adapter needs.
+/**
+ * Save a logged-in session for a Unilogin student.
+ *
+ * The student is not a patron, so the token is deliberately kept out of the
+ * session: it must never be sent to FBS or FBI as a user token. It is only
+ * used to read the Unilogin attributes the Pubhub adapter needs.
+ *
+ * @param session - The session to log in.
+ * @param userToken - The student's user token from the CMS.
+ * @returns False if the Unilogin attributes could not be read, so no session
+ *   was created.
+ */
 const saveUniloginSession = async (session: IronSession<TSessionData>, userToken: TUserToken) => {
   const uniLoginUserInfo = await loadUniloginUserInfo(userToken.token)
   if (!uniLoginUserInfo) {
@@ -160,8 +206,13 @@ const saveUniloginSession = async (session: IronSession<TSessionData>, userToken
   return true
 }
 
-// Turns a user token from the CMS into a GO session of the token's type.
-// Returns false when no session could be created.
+/**
+ * Turn a user token from the CMS into a GO session of the token's type.
+ *
+ * @param session - The session to log in.
+ * @param userToken - The user token from the CMS.
+ * @returns False when no session could be created.
+ */
 export const saveSessionFromUserToken = async (
   session: IronSession<TSessionData>,
   userToken: TUserToken
@@ -170,8 +221,15 @@ export const saveSessionFromUserToken = async (
     ? saveUniloginSession(session, userToken)
     : saveAdgangsplatformenSession(session, userToken)
 
-// Every logged in session lives on a user token from the CMS, whatever its
-// type, and lives exactly as long as that token (ADR-012, ADR-013).
+/**
+ * Check whether the user token behind a logged-in session has expired.
+ *
+ * Every logged in session lives on a user token from the CMS, whatever its
+ * type, and lives exactly as long as that token (ADR-012, ADR-013).
+ *
+ * @param session - The session to check.
+ * @returns True if the session is logged in and its token has expired.
+ */
 export const userTokenHasExpired = (session: IronSession<TSessionData>) => {
   if (userIsAnonymous(session)) {
     return false
@@ -185,9 +243,17 @@ export const userTokenHasExpired = (session: IronSession<TSessionData>) => {
   return false
 }
 
-// Drupal can retire a session while the services still accept its token - on
-// expiry, or when the patron logs out on the library site - and nothing in GO
-// can see that. So the CMS gets asked, but not on every single request.
+/**
+ * Check whether it is time to ask the CMS if the session is still alive.
+ *
+ * Drupal can retire a session while the services still accept its token - on
+ * expiry, or when the patron logs out on the library site - and nothing in GO
+ * can see that. So the CMS gets asked, but not on every single request.
+ *
+ * @param session - The session to check.
+ * @returns True if the session is logged in and was not validated within the
+ *   configured time.
+ */
 export const sessionShouldBeValidated = (session: IronSession<TSessionData> | TSessionData) => {
   if (userIsAnonymous(session)) {
     return false
@@ -202,13 +268,22 @@ export const sessionShouldBeValidated = (session: IronSession<TSessionData> | TS
   )
 }
 
-// Records that we asked, not that the answer was yes: an unreachable CMS must
-// not turn into a request per page load.
+/**
+ * Record that the CMS was asked whether the session is still alive.
+ *
+ * Records that we asked, not that the answer was yes: an unreachable CMS must
+ * not turn into a request per page load.
+ *
+ * @param session - The session that was validated.
+ */
 export const markSessionValidated = async (session: IronSession<TSessionData>) => {
   session.validatedAt = new Date()
   await session.save()
 }
 
+/**
+ * Delete the cookies that belong with the GO session, e.g. the session type.
+ */
 const deleteGoSessionCookies = async () => {
   const { cookies } = await import("next/headers")
   const cookieStore = await cookies()
@@ -221,11 +296,17 @@ const deleteGoSessionCookies = async () => {
   })
 }
 
-// Note: finding this cookie only proves the browser HAS a Drupal session
-// cookie — not that the session behind it is still valid. Drupal may have
-// destroyed the session server-side (logout, expired token) while the cookie
-// lingers in the browser. Whether the user is actually logged in is settled by
-// what the CMS answers when the cookie is used (e.g. loadUserToken()).
+/**
+ * Get the Drupal session cookie of the browser, if any.
+ *
+ * Note: finding this cookie only proves the browser HAS a Drupal session
+ * cookie — not that the session behind it is still valid. Drupal may have
+ * destroyed the session server-side (logout, expired token) while the cookie
+ * lingers in the browser. Whether the user is actually logged in is settled by
+ * what the CMS answers when the cookie is used (e.g. loadUserToken()).
+ *
+ * @returns The Drupal session cookie, or null if there is none.
+ */
 export const getDplCmsSessionCookie = async () => {
   const { cookies } = await import("next/headers")
   const cookieStore = await cookies()
@@ -235,6 +316,11 @@ export const getDplCmsSessionCookie = async () => {
   return sessionCookie ?? null
 }
 
+/**
+ * Destroy the GO session and the cookies that belong with it.
+ *
+ * @param session - The session to destroy.
+ */
 export const destroySession = async (session: IronSession<TSessionData>) => {
   // ⁠await connection() is used to ensure that this function dynamically renders correctly, as ⁠session.destroy() only operates on the client.
   // https://nextjs.org/docs/app/api-reference/functions/connection
@@ -244,11 +330,22 @@ export const destroySession = async (session: IronSession<TSessionData>) => {
   await deleteGoSessionCookies()
 }
 
+/**
+ * Destroy the GO session and send the user to the front page.
+ *
+ * @param session - The session to destroy.
+ * @returns A redirect to the front page that reloads the session.
+ */
 export const destroySessionAndRedirectToFrontPage = async (session: IronSession<TSessionData>) => {
   await destroySession(session)
   return redirectToFrontPageAndReloadSession()
 }
 
+/**
+ * Send the user to the front page, telling the client to reload the session.
+ *
+ * @returns A redirect to the front page with the reload-session parameter.
+ */
 export const redirectToFrontPageAndReloadSession = async () => {
   return NextResponse.redirect(`${getBaseURL()}?reload-session=true`)
 }
