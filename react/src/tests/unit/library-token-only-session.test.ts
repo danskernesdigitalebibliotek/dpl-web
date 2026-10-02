@@ -118,6 +118,10 @@ describe("a session with only a library token", () => {
         authUrl: new URL("https://library.example/login")
       })
     );
+    // The request is only replayed after login, never sent without a patron.
+    const { addItem } =
+      await import("../../core/material-list-api/material-list");
+    expect(vi.mocked(addItem)).not.toHaveBeenCalled();
   });
 
   // Guards against the tests above passing for the wrong reason.
