@@ -22,6 +22,14 @@ export async function GET() {
       return NextResponse.redirect(`${getBaseURL()}/user/profile`)
     }
 
+    // Only a Unilogin session can fail to be created: a patron session is
+    // always saved. GO reads the student's uni-id and institutions from the
+    // Adgangsplatformen userinfo endpoint (loadUniloginUserInfo()), and gets
+    // here when that fails - the endpoint refuses the token or does not answer,
+    // the request throws, or the response lacks a uni-id or has institution
+    // ids in an unexpected shape. The student is logged in to the CMS, but has
+    // no GO session; the middleware tries again on later requests while the
+    // Drupal session lives.
     if (userTokenData.data.type === "unilogin") {
       console.error("Could not create a Unilogin session from the user token.")
       return NextResponse.redirect(`${getBaseURL()}/${goConfig("routes.login-failed-unilogin")}`)
