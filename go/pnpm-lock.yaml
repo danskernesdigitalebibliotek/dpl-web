@@ -11,6 +11,9 @@ importers:
       '@danskernesdigitalebibliotek/dpl-service-layer':
         specifier: file:../packages/service-layer
         version: file:../packages/service-layer(@tanstack/react-query@5.102.8(react@19.2.8))(react@19.2.8)
+      '@danskernesdigitalebibliotek/dpl-wedobooks':
+        specifier: file:../packages/wedobooks
+        version: file:../packages/wedobooks(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@next/env':
         specifier: 16.3.6
         version: 16.3.6
@@ -111,8 +114,8 @@ importers:
         specifier: ^6.1.6
         version: 6.1.6(@types/react@19.2.18)(react@19.2.8)
       react-parallax-tilt:
-        specifier: ^1.7.344
-        version: 1.7.344(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: ^1.7.345
+        version: 1.7.345(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       replace-in-file:
         specifier: ^9.0.0
         version: 9.0.0
@@ -226,8 +229,8 @@ importers:
         specifier: ^4.3.3
         version: 4.3.3
       '@tanstack/react-query-devtools':
-        specifier: ^5.103.2
-        version: 5.103.2(@tanstack/react-query@5.102.8(react@19.2.8))(@types/react@19.2.18)(csstype@3.2.3)(react@19.2.8)
+        specifier: ^5.104.0
+        version: 5.104.0(@tanstack/react-query@5.102.8(react@19.2.8))(@types/react@19.2.18)(csstype@3.2.3)(react@19.2.8)
       '@testing-library/react':
         specifier: ^16.3.3
         version: 16.3.3(@testing-library/dom@10.4.1)(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -1164,6 +1167,12 @@ packages:
     peerDependencies:
       '@tanstack/react-query': ^5.101.0
       react: ^18 || ^19
+
+  '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks':
+    resolution: {directory: ../packages/wedobooks, type: directory}
+    peerDependencies:
+      react: ^18 || ^19
+      react-dom: ^18 || ^19
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -3904,23 +3913,23 @@ packages:
   '@tailwindcss/postcss@4.3.3':
     resolution: {integrity: sha512-JTSZZGQi1AyKirbLN3azmjVzef92tcX7h+iSqPdaeStyFpGpDlKvvpxeOE8njhbUanbRwr3z8DyzhICWnMtQeg==}
 
-  '@tanstack/match-sorter-utils@8.19.4':
-    resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
-    engines: {node: '>=12'}
+  '@tanstack/match-sorter-utils@9.1.2':
+    resolution: {integrity: sha512-aPkUQctDzpXLSWhlx7jUDi3mInsI18xcnrK1hvIyIa88ab1ax88cACr7xU+BKMCGB4NZYNwh4SoNSEbv3RY2NA==}
+    engines: {node: '>=20'}
 
   '@tanstack/query-core@5.102.8':
     resolution: {integrity: sha512-ZNjkJ33CqvPNec/6lZBnHqLc3EVGPZ9ySLhYahU9TcuRFdmwXewuj0c4hwSWcGHqEUwcSrKeZ+oGcvPBqXcQcg==}
 
-  '@tanstack/query-core@5.103.2':
-    resolution: {integrity: sha512-I8DkFXls5jXLqtm8+QpOhEmG07hIblhSZFzafg9wHsMSEvMzULy9hK17wU1T/ahfhMbtITJhbxutwwCoihkR7A==}
+  '@tanstack/query-core@5.104.0':
+    resolution: {integrity: sha512-JrC2r/JQlXt7khBSdUpsgxNvybzOg+aITa+ARRMlP2AFo93Y8vIqz077rp+e61mJetSZ0T6AJbwW1JHer1vrPQ==}
 
-  '@tanstack/query-devtools@5.103.2':
-    resolution: {integrity: sha512-QW+uVtT7dZcc9KMmKQ846Yw25h7WPhM1cfCYYaSkkmPqkK39g+Cj1tcAt+Ege+6rBVFQvNyYln0FgAAHcYGSdA==}
+  '@tanstack/query-devtools@5.104.0':
+    resolution: {integrity: sha512-snKyFLVFC5LuNoyUTpyqCD2Z8cRlCWrAeO3xub0nGi81IMz8YAUWq2Z+XdpGSGT7bCxqVdOHUjyiA3CtDuBjfQ==}
 
-  '@tanstack/react-query-devtools@5.103.2':
-    resolution: {integrity: sha512-NV2AwKeS4UoyAJFcU0CNsoABKVf3A9KMX2InuII2LPUW7z6U296mbQITURAoMwDAxC2AMFCbXlMEPCgRGveQhw==}
+  '@tanstack/react-query-devtools@5.104.0':
+    resolution: {integrity: sha512-E3AfuGqrdyaamuRV3u8RFWQlkZxk7OQa9MJ3XLF9SEHFRHyTUnlHcAQ0hEpDYxNsNFKYrheiRpDKlYaG4vkt7g==}
     peerDependencies:
-      '@tanstack/react-query': ^5.103.2
+      '@tanstack/react-query': ^5.104.0
       '@types/react': ^18 || ^19
       react: ^18 || ^19
 
@@ -8713,8 +8722,8 @@ packages:
   react-is@19.3.0:
     resolution: {integrity: sha512-UpMYezM4v5/18F28aC66AEsjXIgE02kyEMH6yLdgLXu/UTfa1Ntwck/nNLrbqJsEXW7gPb0coNO9FQse9WTovA==}
 
-  react-parallax-tilt@1.7.344:
-    resolution: {integrity: sha512-HsPZdvdO3ORllt8f2xqhkfWduO0uudOCrzZc41p85IKccPo5roFRoo91uA5JEm3rSgSCPirKqgs4t+Wy1eAOgw==}
+  react-parallax-tilt@1.7.345:
+    resolution: {integrity: sha512-UULp4m+YfHuxs3PiwJbaTFnV3QVhZrJ9AsjCzcQSz/3qFMBWSLVwqkkLzQWcN1B1LkbkMV/2RgXbZXDbyLcQLQ==}
     peerDependencies:
       react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -11385,6 +11394,11 @@ snapshots:
       '@tanstack/react-query': 5.102.8(react@19.2.8)
       react: 19.2.8
       zod: 4.6.5
+
+  '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
 
   '@emnapi/core@1.10.0':
     dependencies:
@@ -14202,22 +14216,22 @@ snapshots:
       postcss: 8.5.28
       tailwindcss: 4.3.3
 
-  '@tanstack/match-sorter-utils@8.19.4':
+  '@tanstack/match-sorter-utils@9.1.2':
     dependencies:
       remove-accents: 0.5.0
 
   '@tanstack/query-core@5.102.8': {}
 
-  '@tanstack/query-core@5.103.2': {}
+  '@tanstack/query-core@5.104.0': {}
 
-  '@tanstack/query-devtools@5.103.2(csstype@3.2.3)':
+  '@tanstack/query-devtools@5.104.0(csstype@3.2.3)':
     dependencies:
       '@kobalte/core': 0.13.14(solid-js@1.9.15)
       '@solid-primitives/keyed': 1.5.3(solid-js@1.9.15)
       '@solid-primitives/resize-observer': 2.2.0(solid-js@1.9.15)
       '@solid-primitives/storage': 1.3.11(solid-js@1.9.15)
-      '@tanstack/match-sorter-utils': 8.19.4
-      '@tanstack/query-core': 5.103.2
+      '@tanstack/match-sorter-utils': 9.1.2
+      '@tanstack/query-core': 5.104.0
       clsx: 2.1.1
       goober: 2.1.19(csstype@3.2.3)
       solid-js: 1.9.15
@@ -14226,9 +14240,9 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  '@tanstack/react-query-devtools@5.103.2(@tanstack/react-query@5.102.8(react@19.2.8))(@types/react@19.2.18)(csstype@3.2.3)(react@19.2.8)':
+  '@tanstack/react-query-devtools@5.104.0(@tanstack/react-query@5.102.8(react@19.2.8))(@types/react@19.2.18)(csstype@3.2.3)(react@19.2.8)':
     dependencies:
-      '@tanstack/query-devtools': 5.103.2(csstype@3.2.3)
+      '@tanstack/query-devtools': 5.104.0(csstype@3.2.3)
       '@tanstack/react-query': 5.102.8(react@19.2.8)
       '@types/react': 19.2.18
       react: 19.2.8
@@ -19805,7 +19819,7 @@ snapshots:
 
   react-is@19.3.0: {}
 
-  react-parallax-tilt@1.7.344(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  react-parallax-tilt@1.7.345(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
