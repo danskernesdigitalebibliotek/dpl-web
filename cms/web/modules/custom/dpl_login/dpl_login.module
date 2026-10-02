@@ -153,6 +153,7 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
   // registration flow for patrons.
   if (_dpl_login_is_unilogin_login($context)) {
     if (_dpl_login_delete_previous_user_tokens()) {
+      $access_token->uniId = Unilogin::getUniId($context['userinfo'] ?? []);
       \Drupal::service('dpl_login.unilogin_user_tokens')->setAccessToken($access_token);
     }
     else {

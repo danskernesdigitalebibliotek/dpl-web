@@ -47,6 +47,30 @@ class DplReactControllerTest extends UnitTestCase {
   }
 
   /**
+   * A Unilogin student's uni-id is handed to the React apps, never the token.
+   *
+   * The header shows it, so the student can see who is logged in.
+   */
+  public function testUniloginUserId(): void {
+    $library_token_handler = $this->prophesize(LibraryTokenHandler::class);
+    $library_token_handler->getToken()->willReturn((object) ['token' => 'library-token']);
+
+    $access_token = new AccessToken();
+    $access_token->token = 'user-token';
+    $access_token->expire = 9999;
+    $access_token->type = AccessTokenType::UniloginUser;
+    $access_token->uniId = 'elev4821';
+    $user_tokens = $this->prophesize(UserTokens::class);
+    $user_tokens->getCurrent()->willReturn($access_token);
+
+    $controller = new DplReactController($library_token_handler->reveal(), $user_tokens->reveal());
+    $content = (string) $controller->user()->getContent();
+
+    $this->assertStringContainsString('window.dplReact.setUniloginUserId("elev4821")', $content);
+    $this->assertStringNotContainsString('user-token', $content);
+  }
+
+  /**
    * Test cases for testUserTokens.
    *
    * @return array<string, array{AccessTokenType, ?string}>

@@ -10,6 +10,7 @@ import { getModalIds } from "../../core/utils/helpers/modal-helpers";
 import MenuUserUnregistered from "./menu-user-unregistered/menu-user-unregistered";
 import { usePatronData } from "../../core/utils/helpers/usePatronData";
 import { isEnterOrSpacePressed } from "../../core/utils/helpers/general";
+import { getUniloginUserId } from "../../core/unilogin-user";
 
 interface MenuProps {
   pageSize: number;
@@ -24,9 +25,12 @@ const Menu: FC<MenuProps> = ({ pageSize }) => {
     userMenuUnregistered: userMenuUnregisteredModalId
   } = getModalIds();
   const { isLoading, data: userData } = usePatronData();
+  // A Unilogin student is logged in without being a patron.
+  const uniloginUserId = getUniloginUserId();
   const openMenuOptions = { updateUrl: false };
   const openMenu = () => {
-    if (isUnregistered()) {
+    // Without a patron the menu only offers to log out.
+    if (isUnregistered() || uniloginUserId) {
       open(userMenuUnregisteredModalId as string, openMenuOptions);
       return;
     }
@@ -40,7 +44,7 @@ const Menu: FC<MenuProps> = ({ pageSize }) => {
     if (isLoading) {
       return t("searchHeaderLoginText");
     }
-    return userData?.patron
+    return userData?.patron || uniloginUserId
       ? t("menuUserIconAriaLabelText")
       : t("menuUserIconAriaLabelLoggedOutText");
   };
@@ -69,7 +73,9 @@ const Menu: FC<MenuProps> = ({ pageSize }) => {
           {isLoading ? (
             <TextLineSkeleton width={50} />
           ) : (
-            userData?.patron?.name || t("searchHeaderLoginText")
+            userData?.patron?.name ||
+            uniloginUserId ||
+            t("searchHeaderLoginText")
           )}
         </span>
       </button>
