@@ -57,11 +57,11 @@ const PatronPage: React.FC<PatronPageProps> = ({ skeletonVersion = false }) => {
         {/* Digital loans section */}
         <StatusLoans
           title="Digital loans"
-          description="Loans per month"
+          description="Here you can see your quota for monthly digital loans"
           statusBars={statusBars}
           link={{
             link: "https://www.figma.com/file/xouARmJCONbzbZhpD8XpcM/Brugerprofil?node-id=1239%3A66855",
-            text: "Click here, to see titles always eligible to be loaned",
+            text: "See titles that don't count towards your quota",
           }}
         />
 

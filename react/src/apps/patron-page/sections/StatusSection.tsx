@@ -46,6 +46,7 @@ const StatusSection: FC = () => {
     {},
     { query: { enabled: !viaBiblioAdapter } }
   );
+
   const { data: digitalLoanQuotas } = useDigitalLoanQuotas({
     enabled: viaBiblioAdapter
   });
@@ -108,7 +109,7 @@ const StatusSection: FC = () => {
             {t("patronPageStatusSectionHeaderText")}
           </h2>
           <p className="text-body-small-regular">
-            {t("patronPageStatusSectionLoanHeaderText")}
+            {t("patronPageStatusSectionDescriptionText")}
           </p>
           <div className="dpl-status-loans__progress-bars">
             <QuotaBar

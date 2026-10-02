@@ -120,7 +120,7 @@ const meta: Meta<typeof PatronPage> = {
     patronPageStatusSectionLinkText: {
       control: { type: "text" }
     },
-    patronPageStatusSectionLoanHeaderText: {
+    patronPageStatusSectionDescriptionText: {
       control: { type: "text" }
     },
     patronPageStatusSectionLoansEbooksText: {
@@ -250,8 +250,9 @@ const meta: Meta<typeof PatronPage> = {
       "Receive emails about your loans, reservations, and so forth",
     patronPageStatusSectionHeaderText: "Digital loans",
     patronPageStatusSectionLinkText:
-      "Click here, to see titles always eligible to be loaned",
-    patronPageStatusSectionLoanHeaderText: "Loans per month",
+      "See titles that don't count towards your quota",
+    patronPageStatusSectionDescriptionText:
+      "Here you can see your quota for monthly digital loans",
     patronPageStatusSectionLoansEbooksText: "E-books",
     patronPageStatusSectionLoansAudioBooksText: "Audiobooks",
     patronPageChangePickupHeaderText: "Reservations",

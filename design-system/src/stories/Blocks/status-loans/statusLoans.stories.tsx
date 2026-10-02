@@ -18,13 +18,13 @@ export default {
   },
   args: {
     title: "Digitale lån",
-    description: "Lån pr. måned",
+    description: "Her kan du se din kvote for månedlige digitale lån",
     statusBars: [
       { amount: 3, fullAmount: 7, title: "E-bøger", outOf: "ud af" },
       { amount: 3, fullAmount: 7, title: "Lydbøger", outOf: "ud af" },
     ],
     link: {
-      text: "Se titler du altid kan låne",
+      text: "Se titler som ikke tæller med i din kvote.",
       link: "https://www.figma.com/file/xouARmJCONbzbZhpD8XpcM/Brugerprofil?node-id=1239%3A66855",
     },
   },
