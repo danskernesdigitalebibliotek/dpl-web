@@ -45,8 +45,8 @@ importers:
         specifier: ^2.12.3
         version: 2.12.3(cypress@15.21.1)(typescript@6.0.3)
       cypress-terminal-report:
-        specifier: ^7.3.3
-        version: 7.3.3(cypress@15.21.1)
+        specifier: ^7.4.0
+        version: 7.4.0(cypress@15.21.1)
       dayjs:
         specifier: ^1.11.23
         version: 1.11.23
@@ -990,8 +990,8 @@ packages:
     peerDependencies:
       cypress: '>=15.10.0'
 
-  cypress-terminal-report@7.3.3:
-    resolution: {integrity: sha512-fj543YnOrA3B7gTQEOLvcnvxzmYDNpdO2IOgoY518o+x8Z3foknE4nnZLTa4kOHWD6aOMdOvGSls8moAUglMOA==}
+  cypress-terminal-report@7.4.0:
+    resolution: {integrity: sha512-5A2eHWvukGSotW2+BtPsmXLEyDoOZAALXDGGSPdCtYubrtNQW47hDS5NkLGrwzKrVuSKsTBppuJRiG+G+5RyUQ==}
     engines: {node: '>= 12'}
     peerDependencies:
       cypress: '>=10.0.0'
@@ -4664,7 +4664,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  cypress-terminal-report@7.3.3(cypress@15.21.1):
+  cypress-terminal-report@7.4.0(cypress@15.21.1):
     dependencies:
       chalk: 4.1.2
       compare-versions: 6.1.1
