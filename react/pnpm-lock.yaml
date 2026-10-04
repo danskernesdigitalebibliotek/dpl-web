@@ -223,8 +223,8 @@ importers:
         specifier: ^8.70.1
         version: 8.70.1(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3)
       '@vitest/coverage-istanbul':
-        specifier: ^5.0.2
-        version: 5.0.2(vitest@2.1.9(@types/node@24.19.0)(happy-dom@20.14.5)(sass@1.105.0)(supports-color@8.1.1)(terser@5.51.2))
+        specifier: ^5.0.3
+        version: 5.0.3(vitest@2.1.9(@types/node@24.19.0)(happy-dom@20.14.5)(sass@1.105.0)(supports-color@8.1.1)(terser@5.51.2))
       autoprefixer:
         specifier: ^10.6.1
         version: 10.6.1(postcss@8.5.28)
@@ -3329,10 +3329,10 @@ packages:
     resolution: {integrity: sha512-Vwj9lUIW5Xq3wQ9w6gv3R86g1hMK8f2zNOdGTAgeXUMMXFK78G9ruCjjqutHMNJc0+CH7LYRnHeUB9IT8wFmcw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@vitest/coverage-istanbul@5.0.2':
-    resolution: {integrity: sha512-YHA67+r9tAUDwVUcIJgc5u2sLwO8hHbC1Lcv5XmgMFjNk0HNl/0sJmADY474c7zP9r1bQDacQgN9Ix7MlBb4dA==}
+  '@vitest/coverage-istanbul@5.0.3':
+    resolution: {integrity: sha512-ffvonoWX3hcHTBEBjbXcbLgr2nj4ZpBhK3t05HlIcIuZjd4iwVsswAYpB8TTAcqPTsofeTj2Ywva1STUUjpgRw==}
     peerDependencies:
-      vitest: 5.0.2
+      vitest: 5.0.3
 
   '@vitest/expect@2.1.9':
     resolution: {integrity: sha512-UJCIkTBenHeKT1TTlKMJWy1laZewsRIzYighyYiJKZreqtdxSos/S1t+ktRMQWu2CKqaarrkeszJx1cgC5tGZw==}
@@ -11482,7 +11482,7 @@ snapshots:
       '@typescript-eslint/types': 8.70.1
       eslint-visitor-keys: 5.0.1
 
-  '@vitest/coverage-istanbul@5.0.2(vitest@2.1.9(@types/node@24.19.0)(happy-dom@20.14.5)(sass@1.105.0)(supports-color@8.1.1)(terser@5.51.2))':
+  '@vitest/coverage-istanbul@5.0.3(vitest@2.1.9(@types/node@24.19.0)(happy-dom@20.14.5)(sass@1.105.0)(supports-color@8.1.1)(terser@5.51.2))':
     dependencies:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
