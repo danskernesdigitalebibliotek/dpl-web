@@ -10,25 +10,25 @@ import {
   useDigitalQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
-import { isAnonymous } from "../../../core/utils/helpers/user";
+import { isPatron } from "../../../core/utils/helpers/user";
 
 const StatusSection: FC = () => {
   const t = useText();
   const viaBiblioAdapter = useBiblioAdapter();
   // Loan quotas belong to a patron, so they are only fetched with a user token.
-  const isPatron = !isAnonymous();
+  const userIsPatron = isPatron();
 
   const { data: libraryProfile } = useGetV1LibraryProfile({
     query: { enabled: !viaBiblioAdapter }
   });
   const { data } = useGetV1UserLoans(
     {},
-    { query: { enabled: !viaBiblioAdapter && isPatron } }
+    { query: { enabled: !viaBiblioAdapter && userIsPatron } }
   );
   const {
     loanQuotas: { data: digitalLoanQuotas },
     reservationLimits: { data: digitalReservationLimits }
-  } = useDigitalQuotas({ enabled: viaBiblioAdapter && isPatron });
+  } = useDigitalQuotas({ enabled: viaBiblioAdapter && userIsPatron });
 
   const publizonQuotas = getPatronLoanQuotas({
     userData: data?.userData,

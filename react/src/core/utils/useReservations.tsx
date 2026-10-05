@@ -15,7 +15,7 @@ import {
 import { ReservationType } from "./types/reservation-type";
 import { dashboardReservedApiValueText } from "../configuration/api-strings";
 import useGetReservationGroups from "./useGetReservationGroups";
-import { isAnonymous } from "./helpers/user";
+import { isPatron } from "./helpers/user";
 
 const getQueuedReservations = (list: ReservationType[]) => {
   return [...list].filter(
@@ -46,7 +46,7 @@ const useReservations: UseReservations = () => {
   const viaBiblioAdapter = useBiblioAdapter();
   // Reservations belong to a patron, so they are only fetched with a user
   // token.
-  const isPatron = !isAnonymous();
+  const userIsPatron = isPatron();
   const {
     data: reservationsFbs,
     isLoading: isLoadingFbs,
@@ -56,12 +56,12 @@ const useReservations: UseReservations = () => {
     data: reservationsPublizon,
     isLoading: isLoadingPublizonData,
     isError: isErrorPublizonData
-  } = useGetV1UserReservations({ query: { enabled: isPatron } });
+  } = useGetV1UserReservations({ query: { enabled: userIsPatron } });
   const {
     data: reservationsServiceLayer,
     isLoading: isLoadingServiceLayer,
     isError: isErrorServiceLayer
-  } = useDigitalReservations({ enabled: viaBiblioAdapter && isPatron });
+  } = useDigitalReservations({ enabled: viaBiblioAdapter && userIsPatron });
 
   // A disabled query is never loading or in error so the service layer states
   // only count when the feature flag has enabled the query.

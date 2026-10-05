@@ -1,7 +1,7 @@
 import { groupBy, map, min, reduce } from "lodash";
 import { useGetReservationsV2 } from "../fbs/fbs";
 import { ReservationDetailsV2 } from "../fbs/model";
-import { isAnonymous } from "./helpers/user";
+import { isPatron } from "./helpers/user";
 
 /**
  * Custom reservation details type which covers parallel reservations.
@@ -72,7 +72,7 @@ type UseGetReservationGroupsResult = Omit<
 const useGetReservationGroups = (): UseGetReservationGroupsResult => {
   // Reservations belong to a patron, so they are only fetched with a user
   // token.
-  const result = useGetReservationsV2({ query: { enabled: !isAnonymous() } });
+  const result = useGetReservationsV2({ query: { enabled: isPatron() } });
   const resultWithGroups = {
     ...result,
     data:

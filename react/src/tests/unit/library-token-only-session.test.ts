@@ -66,6 +66,7 @@ describe("a session with only a library token", () => {
     setLibraryTokenOnly(modules);
 
     expect(modules.user.isAnonymous()).toBe(true);
+    expect(modules.user.isPatron()).toBe(false);
     // Unregistered would send the visitor into patron sign-up.
     expect(modules.user.isUnregistered()).toBe(false);
     expect(modules.user.getUserToken()).toBeNull();
@@ -129,6 +130,7 @@ describe("a session with only a library token", () => {
     setPatronTokens(modules);
 
     expect(modules.user.isAnonymous()).toBe(false);
+    expect(modules.user.isPatron()).toBe(true);
     expect(modules.user.getUserToken()).toBe("user-token");
     expect(modules.getServiceLayerConfig().isPatronAuthenticated).toBe(true);
     modules.usePatronData();
