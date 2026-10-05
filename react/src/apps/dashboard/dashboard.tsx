@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import DashboardFees from "./dashboard-fees/dashboard-fees";
 import DashboardNotificationList from "./dashboard-notification-list/dashboard-notification-list";
-import { useText } from "../../core/utils/text";
+import { useText, UseTextFunction } from "../../core/utils/text";
 import Link from "../../components/atoms/links/Link";
 import { useAddFavorite } from "../../components/button-favourite/useAddFavorite";
 import MaterialSlider, {
