@@ -1,4 +1,9 @@
-import { givenUserHasPhysicalLoan } from "../../../cypress/intercepts/fbs/fbs";
+import type { Interception } from "cypress/types/net-stubbing";
+import {
+  givenUserHasPhysicalLoan,
+  givenUserHasPhysicalLoans,
+  givenUserHasPhysicalReservation
+} from "../../../cypress/intercepts/fbs/fbs";
 import { givenUserHasLoanedEbook } from "../../../cypress/intercepts/publizon/publizon";
 import { interceptPublizonCalls } from "../../../cypress/intercepts/publizon/interceptPublizonCalls";
 
@@ -33,11 +38,65 @@ const interceptPatronNotBlocked = () => {
   });
 };
 
-const interceptRecommendations = () => {
-  cy.interceptGraphql({
-    operationName: "getDashboardRecommendations",
-    body: { data: { recommend: { result: recommendedWorks } } }
-  });
+// The source: the work the recommendations are based on. The seed is resolved
+// to it before the recommender is asked.
+const sourceWork = {
+  workId: "work-of:870970-basis:12345678",
+  titles: { full: ["Ronja Røverdatter"] }
+};
+
+// The fetcher tags every GraphQL request URL with its operation name, so each
+// operation can be intercepted and aliased precisely.
+// The work is either fixed or derived from the lookup's variables.
+const interceptRecommendationSource = (
+  work:
+    | typeof sourceWork
+    | ((variables: {
+        faust?: string;
+        id?: string;
+      }) => typeof sourceWork) = sourceWork
+) => {
+  cy.intercept(
+    "POST",
+    "**/graphql?getDashboardRecommendationSource",
+    (request) => {
+      request.reply({
+        statusCode: 200,
+        body: {
+          data: {
+            work:
+              typeof work === "function" ? work(request.body.variables) : work
+          }
+        }
+      });
+    }
+  ).as("recommendationSource");
+};
+
+const interceptRecommendationSourceByIsbn = () => {
+  cy.intercept("POST", "**/graphql?getDashboardRecommendationSourceByIsbn", {
+    statusCode: 200,
+    body: { data: { complexSearch: { works: [sourceWork] } } }
+  }).as("recommendationSourceByIsbn");
+};
+
+// The first emptyResponses requests come back with nothing, the rest with the
+// recommended works.
+const interceptRecommendations = ({ emptyResponses = 0 } = {}) => {
+  let requests = 0;
+  cy.intercept("POST", "**/graphql?getDashboardRecommendations", (request) => {
+    requests += 1;
+    request.reply({
+      statusCode: 200,
+      body: {
+        data: {
+          recommend: {
+            result: requests <= emptyResponses ? [] : recommendedWorks
+          }
+        }
+      }
+    });
+  }).as("recommend");
 };
 
 describe("Dashboard", () => {
@@ -1395,25 +1454,30 @@ describe("Dashboard", () => {
     interceptPublizonCalls();
 
     // The recommendations section bases itself on a random loan, reservation
-    // or favorite. The loans above carry fausts, so the recommend query is
-    // asked by faust and the ISBN lookup never fires. The favorites list is
-    // still fetched, so it needs an answer too.
+    // or favorite. The loans above carry fausts, so the source is resolved by
+    // faust and the ISBN lookup never fires. The favorites list is still
+    // fetched, so it needs an answer too.
     cy.intercept("GET", "**/list/default**", {
       statusCode: 200,
       body: { id: "default", collections: [] }
     }).as("favorites");
 
+    interceptRecommendationSource();
     interceptRecommendations();
 
     cy.visit("/iframe.html?id=apps-dashboard--primary&viewMode=story");
   });
 
   it("shows recommendations based on one of the patron's materials", () => {
-    cy.wait("@getDashboardRecommendations GraphQL operation");
+    cy.wait("@recommend");
 
-    cy.getBySel("material-slider-heading").should(
+    cy.getBySel("material-slider-caption").should(
       "have.text",
-      "Inspiration for you"
+      "Because you borrowed"
+    );
+    cy.getBySel("material-slider-title").should(
+      "have.text",
+      "Ronja Røverdatter"
     );
     cy.getBySel("recommended-description")
       .should("have.length", 2)
@@ -1571,9 +1635,9 @@ describe("Dashboard", () => {
 });
 
 // The recommendations section is based on one of the patron's own materials.
-// Which query the recommender is asked with depends on the kind of material:
-// physical items are identified by faust, favorites by work id, and digital
-// items by ISBN, which first has to be resolved to a work id.
+// Every seed is first resolved to the work it identifies, by faust for physical
+// items, by work id for favorites, and through complex search for digital
+// items identified by ISBN. The recommender is then asked by that work id.
 describe("dashboard recommendations", () => {
   const visitDashboard = () =>
     cy.visit("/iframe.html?id=apps-dashboard--primary&viewMode=story");
@@ -1582,7 +1646,7 @@ describe("dashboard recommendations", () => {
     cy.createFakeAuthenticatedSession();
     cy.createFakeLibrarySession();
 
-    // Every list starts out empty so each test can supply exactly one source.
+    // Every list starts out empty so each test can supply exactly one seed.
     cy.intercept("GET", "**/external/agencyid/patron/patronid/fees/v2**", {
       statusCode: 200,
       body: []
@@ -1612,44 +1676,51 @@ describe("dashboard recommendations", () => {
       body: { id: "default", collections: [] }
     });
 
-    // The fetcher tags every GraphQL request URL with its operation name, so
-    // each operation can be intercepted and aliased precisely. The shared
-    // interceptGraphql helper matches every GraphQL request, which makes its
-    // alias ambiguous when two operations fire in one page load.
-    cy.intercept("POST", "**/graphql?GetBestRepresentationPidByIsbn", {
-      statusCode: 200,
-      body: {
-        data: {
-          complexSearch: {
-            works: [
-              {
-                workId: "work-of:870970-basis:12345678",
-                manifestations: {
-                  bestRepresentation: { pid: "870970-basis:12345678" }
-                }
-              }
-            ]
-          }
-        }
-      }
-    }).as("isbnLookup");
-
-    cy.intercept("POST", "**/graphql?getDashboardRecommendations", {
-      statusCode: 200,
-      body: { data: { recommend: { result: recommendedWorks } } }
-    }).as("recommend");
+    interceptRecommendationSource();
+    interceptRecommendationSourceByIsbn();
+    interceptRecommendations();
   });
 
-  it("asks the recommender by faust for a physical loan", () => {
+  it("resolves a physical loan by faust before asking the recommender", () => {
     // FBS: one physical loan, faust 28847238 by the factory's default.
     givenUserHasPhysicalLoan();
     visitDashboard();
 
-    cy.wait("@recommend")
+    cy.wait("@recommendationSource")
       .its("request.body.variables")
       .should("deep.include", { faust: "28847238" })
       .and("not.have.property", "id");
+    cy.wait("@recommend")
+      .its("request.body.variables")
+      .should("deep.include", { id: sourceWork.workId });
+    cy.getBySel("material-slider-caption").should(
+      "have.text",
+      "Because you borrowed"
+    );
+    cy.getBySel("material-slider-title").should(
+      "have.text",
+      "Ronja Røverdatter"
+    );
     cy.getBySel("recommended-description").should("have.length", 2);
+  });
+
+  it("phrases the heading after a reservation", () => {
+    // FBS: one physical reservation.
+    givenUserHasPhysicalReservation({ recordId: "28847238" });
+    visitDashboard();
+
+    cy.wait("@recommendationSource")
+      .its("request.body.variables")
+      .should("deep.include", { faust: "28847238" });
+    cy.wait("@recommend");
+    cy.getBySel("material-slider-caption").should(
+      "have.text",
+      "Because you reserved"
+    );
+    cy.getBySel("material-slider-title").should(
+      "have.text",
+      "Ronja Røverdatter"
+    );
   });
 
   it("resolves a digital loan's ISBN to a work id before asking the recommender", () => {
@@ -1657,19 +1728,19 @@ describe("dashboard recommendations", () => {
     givenUserHasLoanedEbook({ identifier: "9788700000000" });
     visitDashboard();
 
-    cy.wait("@isbnLookup")
+    cy.wait("@recommendationSourceByIsbn")
       .its("request.body.variables.cql")
       .should("contain", "term.isbn=9788700000000");
+    cy.get("@recommendationSource.all").should("have.length", 0);
 
     cy.wait("@recommend")
       .its("request.body.variables")
-      .should("deep.include", { id: "work-of:870970-basis:12345678" })
-      .and("not.have.property", "faust");
+      .should("deep.include", { id: sourceWork.workId });
 
     cy.getBySel("recommended-description").should("have.length", 2);
   });
 
-  it("asks the recommender by work id for a favorite", () => {
+  it("resolves a favorite by work id before asking the recommender", () => {
     // Material list: the patron's favorites.
     cy.intercept("GET", "**/list/default**", {
       statusCode: 200,
@@ -1677,12 +1748,91 @@ describe("dashboard recommendations", () => {
     });
     visitDashboard();
 
-    cy.wait("@recommend")
+    cy.wait("@recommendationSource")
       .its("request.body.variables")
       .should("deep.include", { id: "work-of:870970-basis:22629344" })
       .and("not.have.property", "faust");
-    cy.get("@isbnLookup.all").should("have.length", 0);
+    cy.get("@recommendationSourceByIsbn.all").should("have.length", 0);
+    cy.wait("@recommend")
+      .its("request.body.variables")
+      .should("deep.include", { id: sourceWork.workId });
+    cy.getBySel("material-slider-caption").should(
+      "have.text",
+      "Because your favorites list contains"
+    );
+    cy.getBySel("material-slider-title").should(
+      "have.text",
+      "Ronja Røverdatter"
+    );
     cy.getBySel("recommended-description").should("have.length", 2);
+  });
+
+  it("hides the section when the source work has no title", () => {
+    interceptRecommendationSource({ ...sourceWork, titles: { full: [] } });
+    givenUserHasPhysicalLoan();
+    visitDashboard();
+
+    cy.wait("@recommendationSource");
+    cy.get("@recommend.all").should("have.length", 0);
+    cy.get(".dashboard-page-recommendations").should("not.exist");
+  });
+
+  // The seeds are tried in turn. A seed the recommender has nothing for is
+  // skipped for the next one, up to a cap.
+  describe("retries", () => {
+    const loanWithFaust = (recordId: string) => ({ loanDetails: { recordId } });
+
+    // Every faust resolves to a work of its own.
+    const workOfFaust = ({ faust }: { faust?: string }) => ({
+      workId: `work-of:870970-basis:${faust}`,
+      titles: { full: [`Title ${faust}`] }
+    });
+
+    // Which seed comes first is random, so the recommender's misses are keyed
+    // on request order rather than on a work id.
+
+    it("tries the next seed when the recommender has nothing for the first", () => {
+      givenUserHasPhysicalLoans(["11111111", "22222222"].map(loanWithFaust));
+      interceptRecommendationSource(workOfFaust);
+      interceptRecommendations({ emptyResponses: 1 });
+      visitDashboard();
+
+      cy.getBySel("recommended-description").should("have.length", 2);
+      cy.get<Interception[]>("@recommend.all").should((calls) => {
+        expect(calls).to.have.length(2);
+        const [firstId, secondId] = calls.map(
+          (call) => call.request.body.variables.id
+        );
+        expect(firstId).not.to.equal(secondId);
+      });
+    });
+
+    it("gives up after five seeds", () => {
+      givenUserHasPhysicalLoans(
+        [
+          "11111111",
+          "22222222",
+          "33333333",
+          "44444444",
+          "55555555",
+          "66666666",
+          "77777777"
+        ].map(loanWithFaust)
+      );
+      interceptRecommendationSource(workOfFaust);
+      interceptRecommendations({ emptyResponses: Infinity });
+      visitDashboard();
+
+      cy.wait([
+        "@recommend",
+        "@recommend",
+        "@recommend",
+        "@recommend",
+        "@recommend"
+      ]);
+      cy.get(".dashboard-page-recommendations").should("not.exist");
+      cy.get("@recommend.all").should("have.length", 5);
+    });
   });
 });
 

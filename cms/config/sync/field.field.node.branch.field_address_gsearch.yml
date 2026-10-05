@@ -6,7 +6,7 @@ dependencies:
     - field.storage.node.field_address_gsearch
     - node.type.branch
   module:
-    - gsearch
+    - dk_address
 id: node.branch.field_address_gsearch
 field_name: field_address_gsearch
 entity_type: node
@@ -19,4 +19,4 @@ default_value: {  }
 default_value_callback: ''
 settings:
   allow_freetext: true
-field_type: address_gsearch
+field_type: dk_address

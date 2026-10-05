@@ -164,6 +164,15 @@ const meta: Meta<typeof DashBoard> = {
     },
     dashboardRecommendationsHeadingText: {
       control: { type: "text" }
+    },
+    dashboardRecommendationsLoanCaptionText: {
+      control: { type: "text" }
+    },
+    dashboardRecommendationsReservationCaptionText: {
+      control: { type: "text" }
+    },
+    dashboardRecommendationsFavoriteCaptionText: {
+      control: { type: "text" }
     }
   }
 };
@@ -222,6 +231,10 @@ export const Primary: Story = {
     dashboardLoansLinkText: "All loans",
     dashboardReservationsLinkText: "All reservations",
     dashboardRecommendationsHeadingText: "Inspiration for you",
+    dashboardRecommendationsLoanCaptionText: "Because you borrowed",
+    dashboardRecommendationsReservationCaptionText: "Because you reserved",
+    dashboardRecommendationsFavoriteCaptionText:
+      "Because your favorites list contains",
     materialDetailsOverdueText: "Overdue"
   }
 };

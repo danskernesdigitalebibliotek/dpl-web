@@ -16,13 +16,39 @@
   }
 }
 
-// keen-slider is configured with perView "auto" and takes each slide's width
-// from CSS; both bounds are needed or the flex track stretches/shrinks the
-// slides.
+// The controls float over the header's right edge (see .material-slider__controls),
+// so the heading keeps that strip clear and wraps before reaching them. The
+// padding is mirrored on the left to keep the heading centered. Both numbers
+// are shared with the controls so they cannot drift apart.
+$slider-controls-width: 115px;
+$slider-controls-offset: 48px;
+$slider-heading-inset: $slider-controls-width + $slider-controls-offset + $s-md;
+
 .material-slider__heading {
   margin: 0;
   text-align: center;
+
+  @include media-query__medium {
+    padding: 0 $slider-heading-inset;
+  }
 }
+
+// An optional lead-in above the title, for instance "Because you borrowed"
+// over the title of the material the slider is based on. It sits inside the
+// heading so the two read as one heading to assistive technology.
+.material-slider__caption {
+  display: block;
+  margin-bottom: $s-sm;
+  @include typography($typo__tags-large);
+}
+
+.material-slider__title {
+  display: block;
+}
+
+// keen-slider is configured with perView "auto" and takes each slide's width
+// from CSS; both bounds are needed or the flex track stretches/shrinks the
+// slides.
 
 .material-slider .keen-slider__slide {
   min-width: 250px;
@@ -60,7 +86,7 @@
 
 .material-slider__controls {
   position: absolute;
-  right: 48px;
+  right: $slider-controls-offset;
   flex-direction: column;
   gap: $s-sm;
 
@@ -76,7 +102,7 @@
 .material-slider__button {
   display: flex;
   align-items: center;
-  width: 115px;
+  width: $slider-controls-width;
   max-width: 100%;
   padding: 0;
   border: 0;

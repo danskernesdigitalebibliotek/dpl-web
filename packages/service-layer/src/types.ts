@@ -34,9 +34,23 @@ export type Patron = {
   receiveSms: boolean | undefined
 }
 
+// Availability for one edition, summed across the kommune's branches.
+// `reservable` is FBS's own verdict and is independent of the counts: a
+// lent-out edition stays reservable, and so can one the kommune holds no
+// copies of.
+export type RecordAvailability = {
+  recordId: string
+  totalCopies: number
+  availableCopies: number
+  reservationCount: number
+  reservable: boolean
+}
+
 export type MaterialAvailability = {
   totalCopies: number
   reservationCount: number
+  // Per edition, keyed by FAUST. The totals above stay work-wide.
+  records: Record<string, RecordAvailability>
 }
 
 export type CreateReservationInput = {

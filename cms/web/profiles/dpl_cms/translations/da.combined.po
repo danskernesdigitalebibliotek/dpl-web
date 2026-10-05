@@ -28890,7 +28890,7 @@ msgstr "Der kunne ikke findes en adresse, der matcher din lokation."
 msgctxt "Library Agency Configuration"
 msgid "If enabled, the user will be able to find their nearest library branch, using an address field. <br />\n"
 "                                         <strong>For the best experience, make sure to <a href=\"@edit_url\">edit all branches and assign an agency ID and address.</a></strong>"
-msgstr "Hvis funktionen tilvælges, vil brugerne have mulighed for at finde deres nærmeste biblioteksfilial med en adressesøgning. <strong>For at funktionen virker korrekt, er det vigtigt, at man <a href=\"@edit_url\">redigerer alle filialer og kobler et agency ID fra FBS sammen med filialen samt ajourfører adressefeltet.</a></strong>"
+msgstr "Hvis funktionen tilvælges, vil brugerne have mulighed for at finde deres nærmeste biblioteksfilial med en adressesøgning. <strong>For at funktionen virker korrekt, er det vigtigt, at man <a href=\"@edit_url\">redigerer alle filialer og kobler et branch ID fra FBS sammen med filialen samt ajourfører adressefeltet.</a></strong>"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -34048,7 +34048,7 @@ msgstr ""
 #: 
 msgctxt "Novel settings"
 msgid "Upload the logo in PNG or SVG. You will get the best results with 11:5 format (e.g. width: 220px height: 100px), but any size will work."
-msgstr ""
+msgstr "Upload billedet i PNG. Du får det bedste resultat med et 11:5 format. Du får bedste resultat med formatet 11:5 (f.eks. 220 px bred og 100 px høj)."
 
 #: 
 msgid "Use Linkit"
@@ -35561,4 +35561,154 @@ msgstr "Brug Biblio adapteren til digitale materialer på GO"
 msgctxt "Dpl Biblio"
 msgid "When enabled new digital loans on GO can only be made through the Biblio adapter. Existing Publizon loans remain visible and playable until they expire. Independent of the flag for the web apps above."
 msgstr "Når denne er valgt, vil nye digitale lån på GO kun foretages gennem Biblio adapteren. Eksisterende digitale lån fra Publizon vil stadig kunne ses og læses/lyttes inden afleveringsfristen. Dette er uafhængigt af valget for web apps ovenfor."
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
+msgid "- All -"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
+msgid "Date"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
+msgid "Filter"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
+msgid "Icon"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
+msgid "Items per page"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
+msgid "Message"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
+msgid "No log messages available."
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:empty:area:content"
+msgid "No log messages available."
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
+msgid "Offset"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
+msgid "Operations"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:page:display_title"
+msgid "Page"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:description"
+msgid "Recent log messages"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:title"
+msgid "Recent log messages"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
+msgid "Severity"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
+msgid "Severity"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
+msgid "Type"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:filters:type:expose:label"
+msgid "Type"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
+msgid "User"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
+msgid "WID"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:label"
+msgid "Watchdog"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
+msgid "admin/reports/dblog/event/{{ wid }}"
+msgstr ""
+
+#: 
+msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
+msgid "{{ message }}"
+msgstr ""
+
+#: 
+msgctxt "Dashboard"
+msgid "Because you borrowed"
+msgstr ""
+
+#: 
+msgctxt "Dashboard"
+msgid "Because you reserved"
+msgstr ""
+
+#: 
+msgctxt "Dashboard"
+msgid "Because your favorites list contains"
+msgstr ""
 

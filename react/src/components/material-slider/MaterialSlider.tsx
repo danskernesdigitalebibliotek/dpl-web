@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, ReactNode, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import type { KeenSliderInstance } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
@@ -65,11 +65,34 @@ const getSliderState = (slider: KeenSliderInstance): SliderState => {
 };
 
 type MaterialSliderProps = {
-  heading: string;
+  /**
+   * Content of the heading above the track. A string is rendered as a
+   * MaterialSliderTitle. Pass a node to compose the heading yourself, for
+   * instance a MaterialSliderCaption above a MaterialSliderTitle.
+   */
+  heading: string | ReactNode;
   items: MaterialSliderItem[];
   /** Called with the item's id when its favourite button is clicked. */
   onFavorite: (id: ButtonFavouriteId) => void;
 };
+
+/** A small lead-in above the slider's title, e.g. "Because you borrowed". */
+export const MaterialSliderCaption: FC<{ children: ReactNode }> = ({
+  children
+}) => (
+  <span className="material-slider__caption" data-cy="material-slider-caption">
+    {children}
+  </span>
+);
+
+/** The slider's title, in the heading's own type size. */
+export const MaterialSliderTitle: FC<{ children: ReactNode }> = ({
+  children
+}) => (
+  <span className="material-slider__title" data-cy="material-slider-title">
+    {children}
+  </span>
+);
 
 /**
  * A horizontal slider of material cards with a heading and prev/next
@@ -106,7 +129,11 @@ const MaterialSlider: React.FC<MaterialSliderProps> = ({
           className="material-slider__heading text-header-h2"
           data-cy="material-slider-heading"
         >
-          {heading}
+          {typeof heading === "string" ? (
+            <MaterialSliderTitle>{heading}</MaterialSliderTitle>
+          ) : (
+            heading
+          )}
         </h2>
         <div className="material-slider__controls">
           <button
