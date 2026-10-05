@@ -268,8 +268,8 @@ importers:
         specifier: 15.18.0
         version: 15.18.0
       cypress-terminal-report:
-        specifier: ^7.3.3
-        version: 7.3.3(cypress@15.18.0)
+        specifier: ^7.4.0
+        version: 7.4.0(cypress@15.18.0)
       dotenv:
         specifier: ^16.5.0
         version: 16.6.1
@@ -4271,8 +4271,8 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
-  cypress-terminal-report@7.3.3:
-    resolution: {integrity: sha512-fj543YnOrA3B7gTQEOLvcnvxzmYDNpdO2IOgoY518o+x8Z3foknE4nnZLTa4kOHWD6aOMdOvGSls8moAUglMOA==}
+  cypress-terminal-report@7.4.0:
+    resolution: {integrity: sha512-5A2eHWvukGSotW2+BtPsmXLEyDoOZAALXDGGSPdCtYubrtNQW47hDS5NkLGrwzKrVuSKsTBppuJRiG+G+5RyUQ==}
     engines: {node: '>= 12'}
     peerDependencies:
       cypress: '>=10.0.0'
@@ -12590,7 +12590,7 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  cypress-terminal-report@7.3.3(cypress@15.18.0):
+  cypress-terminal-report@7.4.0(cypress@15.18.0):
     dependencies:
       chalk: 4.1.2
       compare-versions: 6.1.1
