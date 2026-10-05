@@ -33,8 +33,8 @@ importers:
         specifier: ^8.71.0
         version: 8.71.0(eslint@9.39.4(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3)
       chrome-launcher:
-        specifier: 1.2.1
-        version: 1.2.1(supports-color@8.1.1)
+        specifier: 1.2.2
+        version: 1.2.2(supports-color@8.1.1)
       cypress:
         specifier: ^15.21.1
         version: 15.21.1
@@ -824,8 +824,8 @@ packages:
   chrome-launcher@0.13.4:
     resolution: {integrity: sha512-nnzXiDbGKjDSK6t2I+35OAPBy5Pw/39bgkb/ZAFwMhwJbdYBp6aH+vW28ZgtjdU890Q7D+3wN/tB8N66q5Gi2A==}
 
-  chrome-launcher@1.2.1:
-    resolution: {integrity: sha512-qmFR5PLMzHyuNJHwOloHPAHhbaNglkfeV/xDtt5b7xiFFyU1I+AZZX0PYseMuhenJSSirgxELYIbswcoc+5H4A==}
+  chrome-launcher@1.2.2:
+    resolution: {integrity: sha512-sI90u5qf3854bTrWsQMMdsQfSjjMbeSn7QtxVb9zrikf+QgMfHQ71KepHW7ZfixQKrDlAFKb+qnVlSR+xepBzw==}
     engines: {node: '>=12.13.0'}
     hasBin: true
 
@@ -4475,7 +4475,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  chrome-launcher@1.2.1(supports-color@8.1.1):
+  chrome-launcher@1.2.2(supports-color@8.1.1):
     dependencies:
       '@types/node': 24.19.0
       escape-string-regexp: 4.0.0
@@ -6064,7 +6064,7 @@ snapshots:
       '@paulirish/trace_engine': 0.0.53
       '@sentry/node': 7.120.4
       axe-core: 4.12.1
-      chrome-launcher: 1.2.1(supports-color@8.1.1)
+      chrome-launcher: 1.2.2(supports-color@8.1.1)
       configstore: 5.0.1
       csp_evaluator: 1.1.5
       devtools-protocol: 0.0.1467305
