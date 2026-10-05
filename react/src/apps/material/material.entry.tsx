@@ -73,6 +73,7 @@ interface MaterialEntryTextProps {
   findOnShelfModalScreenReaderModalDescriptionText: string;
   findOnShelfTableDescriptionText: string;
   firstAvailableEditionText: string;
+  genreAndFormText: string;
   getOnlineText: string;
   goToText: string;
   reservationDetailsNoInterestAfterTitleText: string;

@@ -151,6 +151,11 @@ export const constructSubjectSearchUrl = (searchUrl: URL, subject: string) =>
 export const constructDK5SearchUrl = (searchUrl: URL, dk5: string) =>
   constructFacetSearchUrl(searchUrl, "dk5", dk5);
 
+export const constructGenreAndFormSearchUrl = (
+  searchUrl: URL,
+  genreAndForm: string
+) => constructFacetSearchUrl(searchUrl, "genreAndForm", genreAndForm);
+
 // Type for facet state in URL (matches search-result-v2 format)
 type FacetUrlState = {
   facetName: string;
