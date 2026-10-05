@@ -1,5 +1,7 @@
+import type { Interception } from "cypress/types/net-stubbing";
 import {
   givenUserHasPhysicalLoan,
+  givenUserHasPhysicalLoans,
   givenUserHasPhysicalReservation
 } from "../../../cypress/intercepts/fbs/fbs";
 import { givenUserHasLoanedEbook } from "../../../cypress/intercepts/publizon/publizon";
@@ -45,11 +47,30 @@ const sourceWork = {
 
 // The fetcher tags every GraphQL request URL with its operation name, so each
 // operation can be intercepted and aliased precisely.
-const interceptRecommendationSource = (work = sourceWork) => {
-  cy.intercept("POST", "**/graphql?getDashboardRecommendationSource", {
-    statusCode: 200,
-    body: { data: { work } }
-  }).as("recommendationSource");
+// The work is either fixed or derived from the lookup's variables.
+const interceptRecommendationSource = (
+  work:
+    | typeof sourceWork
+    | ((variables: {
+        faust?: string;
+        id?: string;
+      }) => typeof sourceWork) = sourceWork
+) => {
+  cy.intercept(
+    "POST",
+    "**/graphql?getDashboardRecommendationSource",
+    (request) => {
+      request.reply({
+        statusCode: 200,
+        body: {
+          data: {
+            work:
+              typeof work === "function" ? work(request.body.variables) : work
+          }
+        }
+      });
+    }
+  ).as("recommendationSource");
 };
 
 const interceptRecommendationSourceByIsbn = () => {
@@ -59,10 +80,22 @@ const interceptRecommendationSourceByIsbn = () => {
   }).as("recommendationSourceByIsbn");
 };
 
-const interceptRecommendations = () => {
-  cy.intercept("POST", "**/graphql?getDashboardRecommendations", {
-    statusCode: 200,
-    body: { data: { recommend: { result: recommendedWorks } } }
+// The first emptyResponses requests come back with nothing, the rest with the
+// recommended works.
+const interceptRecommendations = ({ emptyResponses = 0 } = {}) => {
+  let requests = 0;
+  cy.intercept("POST", "**/graphql?getDashboardRecommendations", (request) => {
+    requests += 1;
+    request.reply({
+      statusCode: 200,
+      body: {
+        data: {
+          recommend: {
+            result: requests <= emptyResponses ? [] : recommendedWorks
+          }
+        }
+      }
+    });
   }).as("recommend");
 };
 
@@ -1742,6 +1775,64 @@ describe("dashboard recommendations", () => {
     cy.wait("@recommendationSource");
     cy.get("@recommend.all").should("have.length", 0);
     cy.get(".dashboard-page-recommendations").should("not.exist");
+  });
+
+  // The seeds are tried in turn. A seed the recommender has nothing for is
+  // skipped for the next one, up to a cap.
+  describe("retries", () => {
+    const loanWithFaust = (recordId: string) => ({ loanDetails: { recordId } });
+
+    // Every faust resolves to a work of its own.
+    const workOfFaust = ({ faust }: { faust?: string }) => ({
+      workId: `work-of:870970-basis:${faust}`,
+      titles: { full: [`Title ${faust}`] }
+    });
+
+    // Which seed comes first is random, so the recommender's misses are keyed
+    // on request order rather than on a work id.
+
+    it("tries the next seed when the recommender has nothing for the first", () => {
+      givenUserHasPhysicalLoans(["11111111", "22222222"].map(loanWithFaust));
+      interceptRecommendationSource(workOfFaust);
+      interceptRecommendations({ emptyResponses: 1 });
+      visitDashboard();
+
+      cy.getBySel("recommended-description").should("have.length", 2);
+      cy.get<Interception[]>("@recommend.all").should((calls) => {
+        expect(calls).to.have.length(2);
+        const [firstId, secondId] = calls.map(
+          (call) => call.request.body.variables.id
+        );
+        expect(firstId).not.to.equal(secondId);
+      });
+    });
+
+    it("gives up after five seeds", () => {
+      givenUserHasPhysicalLoans(
+        [
+          "11111111",
+          "22222222",
+          "33333333",
+          "44444444",
+          "55555555",
+          "66666666",
+          "77777777"
+        ].map(loanWithFaust)
+      );
+      interceptRecommendationSource(workOfFaust);
+      interceptRecommendations({ emptyResponses: Infinity });
+      visitDashboard();
+
+      cy.wait([
+        "@recommend",
+        "@recommend",
+        "@recommend",
+        "@recommend",
+        "@recommend"
+      ]);
+      cy.get(".dashboard-page-recommendations").should("not.exist");
+      cy.get("@recommend.all").should("have.length", 5);
+    });
   });
 });
 
