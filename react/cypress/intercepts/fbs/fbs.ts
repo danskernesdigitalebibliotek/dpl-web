@@ -135,28 +135,15 @@ export const givenUserHasPhysicalLoan = (
  * Pair with manifestation data as for `givenUserHasPhysicalLoan`.
  */
 export const givenUserHasPhysicalLoans = (
-  loans: Parameters<typeof fbsLoanFactory.build>[0][]
+  loans: Parameters<typeof fbsLoanFactory.build>[0][],
+  options: { delay?: number } = {}
 ) => {
-  cy.intercept("GET", "**/external/agencyid/patrons/patronid/loans/v2**", {
-    statusCode: 200,
-    body: loans.map((options) => fbsLoanFactory.build(options))
-  }).as("fbsUserLoansPhysical");
-};
+  const { delay } = options;
 
-/**
- * Given: User has `count` physical loans, answered after `delay` ms. Same
- * pairing with `givenManifestationByFaust(...)` as `givenUserHasPhysicalLoan`.
- */
-export const givenUserHasPhysicalLoans = (
-  count: number,
-  { delay }: { delay?: number } = {}
-) => {
   cy.intercept("GET", "**/external/agencyid/patrons/patronid/loans/v2**", {
     statusCode: 200,
     delay,
-    body: Array.from({ length: count }, (_, i) =>
-      fbsLoanFactory.build({ loanDetails: { loanId: 956250508 + i } })
-    )
+    body: loans.map((options) => fbsLoanFactory.build(options))
   }).as("fbsUserLoansPhysical");
 };
 
