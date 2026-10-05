@@ -13,13 +13,7 @@ export async function GET() {
 
     const {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      access_token,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      refresh_token,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      id_token,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      adgangsplatformenUserToken,
+      userToken,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       adgangsplatformenLibraryToken,
       ...nonSensitiveSessionProps

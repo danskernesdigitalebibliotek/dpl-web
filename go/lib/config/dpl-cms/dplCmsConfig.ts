@@ -35,7 +35,6 @@ const getDplCmsPrivateConfigData = async () => {
   } catch {
     return {
       unilogin: {
-        clientSecret: null,
         pubHubRetailerKeyCode: null,
       },
     }
@@ -51,9 +50,6 @@ export const getDplCmsPrivateConfig = async () => {
   const data = await getDplCmsPrivateConfigData()
 
   const uniLoginConfigEnv = {
-    ...(getServerEnv("UNILOGIN_CLIENT_SECRET")
-      ? { clientSecret: getServerEnv("UNILOGIN_CLIENT_SECRET") }
-      : {}),
     ...(getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE")
       ? { pubHubRetailerKeyCode: getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE") }
       : {}),
@@ -74,6 +70,7 @@ export const getDplCmsPrivateConfig = async () => {
 const publicConfigFallback = () => ({
   loginUrls: {
     adgangsplatformen: null,
+    unilogin: null,
   },
   logoutUrls: {
     adgangsplatformen: null,
@@ -83,9 +80,6 @@ const publicConfigFallback = () => ({
     baseURL: null,
   },
   mapp: null,
-  unilogin: {
-    municipalityId: null,
-  },
   blacklistedAvailabilityBranches: [],
   biblio: {
     enabled: false,
@@ -115,13 +109,8 @@ export const getDplCmsPublicConfig = async () => {
 
   // `data` is the cached object in the normal path, so the env overrides go
   // into a copy that every caller gets its own of.
-  const envMunicipalityId = getServerEnv("UNILOGIN_MUNICIPALITY_ID")
   return {
     ...data,
-    unilogin: {
-      ...data.unilogin,
-      ...(envMunicipalityId ? { municipalityId: envMunicipalityId } : {}),
-    },
     libraryInfo: {
       ...data.libraryInfo,
       baseURL: getEnv("DPL_CMS_BASE_URL"),

@@ -19,13 +19,23 @@ const liveAdgangsplatformenSession = () => ({
   isLoggedIn: true,
   type: "adgangsplatformen",
   expires: add(new Date(), { hours: 1 }),
-  adgangsplatformenUserToken: "user-token",
+  userToken: "user-token",
   adgangsplatformenLibraryToken: "library-token",
 })
 
 const expiredAdgangsplatformenSession = () => ({
   ...liveAdgangsplatformenSession(),
   expires: sub(new Date(), { minutes: 1 }),
+})
+
+// A student is not a patron: the token is kept, but never sent to the
+// services as a user token.
+const liveUniloginSession = () => ({
+  isLoggedIn: true,
+  type: "unilogin",
+  expires: add(new Date(), { hours: 1 }),
+  userToken: "student-token",
+  adgangsplatformenLibraryToken: "library-token",
 })
 
 const anonymousSessionWithLibraryToken = () => ({
@@ -81,6 +91,21 @@ describe("ap-service proxy session teardown", () => {
 
     await requestFbs()
 
+    expect(sessionFunctions.destroySession).not.toHaveBeenCalled()
+  })
+
+  it("sends the library token, not a student's token, for a Unilogin session", async () => {
+    vi.mocked(sessionFunctions.getSession).mockResolvedValue(liveUniloginSession())
+    const fetchMock = mockUpstream(403)
+
+    await requestFbs()
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        headers: expect.objectContaining({ authorization: "Bearer library-token" }),
+      })
+    )
     expect(sessionFunctions.destroySession).not.toHaveBeenCalled()
   })
 

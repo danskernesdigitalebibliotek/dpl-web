@@ -2,7 +2,6 @@ query getDplCmsPrivateConfiguration {
   goConfiguration {
     private {
       unilogin {
-        clientSecret
         pubHubRetailerKeyCode
       }
     }
@@ -17,6 +16,7 @@ query getDplCmsPublicConfiguration {
       }
       loginUrls {
         adgangsplatformen
+        unilogin
       }
       logoutUrls {
         adgangsplatformen
@@ -24,9 +24,6 @@ query getDplCmsPublicConfiguration {
       mapp {
         domain
         id
-      }
-      unilogin {
-        municipalityId
       }
       blacklistedAvailabilityBranches
       biblio {
