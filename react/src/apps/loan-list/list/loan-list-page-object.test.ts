@@ -10,6 +10,7 @@ import {
 } from "../../../../cypress/intercepts/fbs/fbs";
 import { givenManifestationByFaust } from "../../../../cypress/intercepts/fbi/manifestation";
 import { TOKEN_LIBRARY_KEY } from "../../../core/token";
+import { range } from "lodash";
 
 type StubOptions = {
   emptyDigital?: boolean;
@@ -144,7 +145,12 @@ describe("Loan list page", () => {
     it("Brings the user back to the digital loan they opened", () => {
       // Given: enough physical loans to push the digital ones below the
       // fold, and physical loans that arrive after the digital ones
-      givenUserHasPhysicalLoans(8, { delay: 1500 });
+      givenUserHasPhysicalLoans(
+        range(0, 8).map((_, i) => ({
+          loanDetails: { loanId: 956250508 + i }
+        })),
+        { delay: 1500 }
+      );
       givenUserHasDigitalEbookLoan();
       givenReaderPageLoads();
 
@@ -188,7 +194,9 @@ describe("Loan list page", () => {
 
     it("Shows the digital loans before the physical ones arrive", () => {
       // Given: physical loans that take long to arrive
-      givenUserHasPhysicalLoans(1, { delay: 30000 });
+      givenUserHasPhysicalLoans([{ loanDetails: { loanId: 956250508 } }], {
+        delay: 30000
+      });
       givenUserHasDigitalEbookLoan();
 
       // When: visiting the loan list
