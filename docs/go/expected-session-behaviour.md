@@ -28,9 +28,13 @@ header.
 
 - At the Go Site it is NOT possible to be logged in with an Adgangsplatformen
   and a Unilogin session at the same time.
-- The Unilogin session type only exists at the Go Site
+- Both session types run through the Primary Library's login, so a browser
+  has one Drupal session, and the Go session follows it.
 - The Adgangsplatformen session type can be used on both sites and is shared
   between the sites.
+- A Unilogin user is logged in on the Primary Library too, but is shown as
+  anonymous in its patron features. The Unilogin session type only exists at
+  the Go Site.
 
 ## User stories
 
@@ -62,15 +66,16 @@ Here are the various scenarios:
   (the browser passes `/go-session-logout` → Go's `/auth/logout/cms`)
 - The user identifies that it is logged out on both sites
 
-A Unilogin session at the Go Site is not affected by a Primary Library
-logout — it lives independently of the CMS.
+The same goes for a Unilogin session at the Go Site: it lives on the Drupal
+session and ends with it.
 
-#### The Adgangsplatformen user token expires
+#### The user token expires
 
 The user token cannot be renewed, so the Go session lives exactly as long as
-the token (see ADR-012). The Drupal session cookie lives much longer.
+the token, for both session types (see ADR-012 and ADR-013). The Drupal
+session cookie lives much longer.
 
-- A user logs into the Go Site with Adgangsplatformen
+- A user logs into the Go Site with Adgangsplatformen or Unilogin
 - The user returns after the token has expired (e.g. after a weekend)
 - On the next page navigation the Go session is destroyed and the page is
   shown to an anonymous visitor, offering login
@@ -94,19 +99,27 @@ This works similar for both of the Adgangsplatformen and Unilogin session types:
 - The user is not able to switch to the Unilogin session before the use logs out
   by clicking at the "Log out" button on the user profile page
 
-### Two different sessions between Go Site and the Primary Library
+### Logging into the Primary Library ends a Unilogin session
 
-In one scenario it is possible to have two different sessions between the two sites:
+There is one Drupal session per browser, so a login on the Primary Library
+replaces the Unilogin session:
 
 - A user logs into to the Go Site with Unilogin
 - The user identifies that it is logged in
 - The user navigates to the Primary Library
-- The user logs in to the Primary Library with Adgansgplatformen
-- The user identifies that it is logged in
+- The user logs in to the Primary Library with Adgangsplatformen
 - The user navigates back to the Go Site
-- The user identifies that it is logged in with Unilogin (?)
-- The user navigates back to the Primary Library
+- The Unilogin session is destroyed, because the Primary Library now hands
+  out a token of another type
 - The user identifies that it is logged in with Adgangsplatformen
 
-(?) Unless the user waited too long with going back to the Go Site and the
-Unilogin session ran out.
+The same happens the other way round. If the new login is of the same type,
+e.g. one student after another, the old Go session lives on until its own
+token expires.
+
+### Unilogin sessions on shared computers
+
+A Unilogin session lives as long as its Adgangsplatformen token, typically
+until the next morning. Logging out ends the single sign-on session at
+Adgangsplatformen, so the next user on a shared school computer has to log
+in again.

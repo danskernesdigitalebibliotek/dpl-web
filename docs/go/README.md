@@ -172,7 +172,6 @@ task codegen:rest-services    # orval — REST clients
 task codegen:graphql          # graphql-codegen — dpl-cms + FBI from /schemas SDL
 task codegen:publizon         # orval — Publizon adapter
 task codegen:pubhub           # SOAP — PubHub
-task codegen:unilogin         # SOAP — Unilogin
 ```
 
 Generated output lives in `lib/rest/` (REST), `lib/graphql/generated/` (GraphQL), and `lib/soap/` (SOAP). To pick up upstream schema changes, refresh the relevant contract in `/schemas` first (`task -d ../schemas refresh:dbc-fbi`, `:material-list`, …) and then re-run codegen here.
