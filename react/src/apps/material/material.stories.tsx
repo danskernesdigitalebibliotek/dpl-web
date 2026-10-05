@@ -405,6 +405,10 @@ const meta: Meta<typeof MaterialEntry> = {
       description: "Online limit info text",
       control: { type: "text" }
     },
+    onlineLimitMonthAlwaysLoanableLinkText: {
+      description: "Link to titles that don't count towards the quota",
+      control: { type: "text" }
+    },
     onlineMaterialPlayerText: {
       description: "Material button online player text",
       control: { type: "text" }
@@ -935,6 +939,8 @@ const meta: Meta<typeof MaterialEntry> = {
       "You have borrowed @count out of @limit possible e-books this month",
     onlineLimitMonthAudiobookInfoText:
       "You have borrowed @count out of @limit possible audio-books this month",
+    onlineLimitMonthAlwaysLoanableLinkText:
+      "See titles that don't count towards your quota",
     onlineMaterialPlayerText: "Listen to @materialType",
     onlineMaterialReaderText: "Read @materialType",
     onlineMaterialTeaserText: "Try @materialType",

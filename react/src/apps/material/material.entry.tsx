@@ -129,6 +129,7 @@ interface MaterialEntryTextProps {
   onlineInternalSuccessLoanedText: string;
   onlineInternalSuccessManualBorrowingNoticeText: string;
   onlineInternalSuccessReservedText: string;
+  onlineLimitMonthAlwaysLoanableLinkText: string;
   onlineLimitMonthAudiobookInfoText: string;
   onlineLimitMonthEbookInfoText: string;
   onlineMaterialPlayerText: string;

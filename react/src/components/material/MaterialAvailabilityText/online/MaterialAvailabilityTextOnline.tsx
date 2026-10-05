@@ -18,6 +18,15 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
 import { hasValue } from "../../../../core/utils/helpers/has-value";
+import { constructAdvancedSearchUrl } from "../../../../core/advanced-search/url";
+import { ComplexSearchFacetsEnum } from "../../../../core/dbc-gateway/generated/graphql";
+import {
+  MATERIAL_TYPE_AUDIOBOOKS,
+  MATERIAL_TYPE_EBOOKS
+} from "../../../../core/advanced-search/material-types";
+import { useUrls } from "../../../../core/utils/url";
+import { SortOption } from "../../../../core/advanced-search/types";
+import Link from "../../../atoms/links/Link";
 
 interface MaterialAvailabilityTextOnlineProps {
   /** The digital identifier the material is lent by - see
@@ -30,6 +39,24 @@ interface MaterialAvailabilityTextOnlineProps {
 const MaterialAvailabilityTextOnline: React.FC<
   MaterialAvailabilityTextOnlineProps
 > = ({ identifier, materialType }) => {
+  const u = useUrls();
+
+  const getAlwaysLoanableDigitalTitlesUrl = (
+    type: typeof MATERIAL_TYPE_EBOOKS | typeof MATERIAL_TYPE_AUDIOBOOKS
+  ) =>
+    constructAdvancedSearchUrl({
+      advancedSearchUrl: u("advancedSearchUrl"),
+      preSearchFacets: [
+        {
+          facetField: ComplexSearchFacetsEnum.Generalmaterialtype,
+          selectedValues: [type]
+        }
+      ],
+      onlyExtraTitles: true,
+      sort: SortOption.LatestPubDateDesc,
+      view: "results"
+    });
+
   const isUserAnonymous = isAnonymous();
   const t = useText();
   // With the adapter enabled it is the lending provider, so its quotas are the
@@ -127,6 +154,17 @@ const MaterialAvailabilityTextOnline: React.FC<
             "@limit": audioQuota.limit
           }
         })}
+        {audioQuota.current >= audioQuota.limit && (
+          <>
+            {". "}
+            <Link
+              href={getAlwaysLoanableDigitalTitlesUrl(MATERIAL_TYPE_AUDIOBOOKS)}
+              dataCy="material-always-loanable-link"
+            >
+              {t("onlineLimitMonthAlwaysLoanableLinkText")}
+            </Link>
+          </>
+        )}
       </MaterialAvailabilityTextParagraph>
     );
   }
@@ -144,6 +182,17 @@ const MaterialAvailabilityTextOnline: React.FC<
             "@limit": ebookQuota.limit
           }
         })}
+        {ebookQuota.current >= ebookQuota.limit && (
+          <>
+            {". "}
+            <Link
+              href={getAlwaysLoanableDigitalTitlesUrl(MATERIAL_TYPE_EBOOKS)}
+              dataCy="material-always-loanable-link"
+            >
+              {t("onlineLimitMonthAlwaysLoanableLinkText")}
+            </Link>
+          </>
+        )}
       </MaterialAvailabilityTextParagraph>
     );
   }
