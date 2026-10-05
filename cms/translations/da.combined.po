@@ -34048,7 +34048,7 @@ msgstr ""
 #: 
 msgctxt "Novel settings"
 msgid "Upload the logo in PNG or SVG. You will get the best results with 11:5 format (e.g. width: 220px height: 100px), but any size will work."
-msgstr ""
+msgstr "Upload billedet i PNG. Du får det bedste resultat med et 11:5 format. Du får bedste resultat med formatet 11:5 (f.eks. 220 px bred og 100 px høj)."
 
 #: 
 msgid "Use Linkit"
