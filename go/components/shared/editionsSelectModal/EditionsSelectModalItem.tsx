@@ -3,7 +3,8 @@
 import React from "react"
 
 import BlueTitleBadge from "@/components/shared/badge/BlueTitleBadge"
-import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
+import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
+import Icon from "@/components/shared/icon/Icon"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 type EditionsSelectModalItemProps = {
@@ -25,32 +26,53 @@ const EditionsSelectModalItem = ({
   unavailableLabel,
 }: EditionsSelectModalItemProps) => {
   const year = manifestation.edition?.publicationYear?.year
+  // `edition` is the plain edition number/name with no year or contributors
+  // mixed in, but can come wrapped in parens (e.g. "(1. udgave)").
+  const editionLabel = manifestation.edition?.edition?.replace(/^\(|\)$/g, "")
   const title = manifestation.titles?.identifyingAddition || manifestation.titles?.full
   const publisher = manifestation.publisher?.join(", ")
-  const language = manifestation.languages?.main?.map(l => l.display).join(", ")
+  const pages = manifestation.physicalDescription?.numberOfPages
+  const contributors = manifestation.contributors
+    .map(contributor => {
+      const role = contributor.roles[0]?.function.singular
+      return role ? `${contributor.display} (${role})` : contributor.display
+    })
+    .join(" · ")
+  const publisherLine = [publisher, pages ? `${pages} sider` : undefined]
+    .filter(Boolean)
+    .join(" · ")
 
   return (
     <label
-      className="group has-focus-visible:ring-foreground flex cursor-pointer flex-col gap-2
-        rounded-sm has-focus-visible:ring-2 has-focus-visible:ring-offset-2">
+      className="has-focus-visible:ring-foreground bg-background-overlay
+        has-checked:border-foreground rounded-base relative flex cursor-pointer flex-col gap-2
+        border-2 border-transparent p-4 transition-[border-color] has-focus-visible:ring-2
+        has-focus-visible:ring-offset-2">
       <input type="radio" name={name} className="sr-only" checked={checked} onChange={onSelect} />
-      <div
-        className="border-foreground/10 group-has-checked:border-foreground aspect-[2/3] w-full
-          overflow-hidden rounded-sm border-2 transition-colors">
+      {checked && (
+        <span
+          aria-hidden="true"
+          className="bg-foreground text-background absolute top-3 right-3 flex h-6 w-6 items-center
+            justify-center rounded-full">
+          <Icon name="check" className="h-4 w-4" />
+        </span>
+      )}
+      <BlueTitleBadge manifestation={manifestation} />
+      <div className="relative mx-auto aspect-[2/3] w-[85%]">
         <CoverPicture
           alt={`Forsidebillede på ${title ?? "udgaven"}`}
           covers={manifestation.cover}
           sizes="(max-width: 1024px) 120px, 160px"
+          withTilt
         />
       </div>
-      <div className="min-w-0">
-        <BlueTitleBadge manifestation={manifestation} className="mb-1" />
-        <p className="text-typo-caption break-words">
-          {[year ?? title, language].filter(Boolean).join(" - ")}
-        </p>
-        {publisher && <p className="text-typo-caption opacity-70">{publisher}</p>}
+      <div className="min-w-0 space-y-1">
+        <p className="text-typo-subtitle-md font-semibold break-words">{year ?? title}</p>
+        {editionLabel && <p className="text-typo-body-sm break-words">{editionLabel}</p>}
+        {contributors && <p className="text-typo-body-sm break-words">{contributors}</p>}
+        {publisherLine && <p className="text-typo-body-sm opacity-70">{publisherLine}</p>}
         {unavailableLabel && (
-          <p className="text-typo-caption text-error-red-300">{unavailableLabel}</p>
+          <p className="text-typo-body-sm text-error-red-300">{unavailableLabel}</p>
         )}
       </div>
     </label>
@@ -59,8 +81,10 @@ const EditionsSelectModalItem = ({
 
 // Mirrors the item's geometry so the grid does not shift while loading.
 const Skeleton = () => (
-  <div className="flex flex-col gap-2">
-    <div className="bg-background-skeleton aspect-[2/3] w-full animate-pulse rounded-sm" />
+  <div className="bg-background-overlay rounded-base flex flex-col gap-2 p-4">
+    <div className="relative mx-auto aspect-[2/3] w-[85%]">
+      <CoverPictureSkeleton />
+    </div>
     <div className="bg-background-skeleton h-3 w-2/3 animate-pulse rounded-sm" />
     <div className="bg-background-skeleton h-3 w-1/2 animate-pulse rounded-sm" />
   </div>

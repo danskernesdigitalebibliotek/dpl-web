@@ -32,7 +32,6 @@ import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
 import { openModal } from "@/store/modal.store"
 
-import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
 import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"
 import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
@@ -77,8 +76,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const covers = selectedManifestation.cover
 
   const onOptionSelect = (optionSelected: MaterialTypeSelectOption) => {
-    // when a new material type is selected: resolveUrl builds a new URL,
-    // which drops any pinned edition from the previously selected type
+    // The url carries only the new type, with no edition param.
     const url = resolveUrl({
       routeParams: { work: "work", wid: work.workId },
       queryParams: { type: optionSelected.code },
@@ -131,9 +129,8 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const editionChoiceLabel = getEditionChoiceLabel(editionChoice, selectedManifestation)
 
-  // When opening the modal, the edition choice is pinned to the selected manifestation, so
-  // the modal can show the correct edition for the selected manifestation.
-  // on confirm, the edition choice is serialized and added to the url query params, so the correct edition is shown for the selected manifestation.
+  // The modal receives the choice pinned to the selected manifestation; on
+  // confirm, the choice is serialized back into the url's edition param.
   const openEditionsSelect = () =>
     openModal("EditionsSelectModal", {
       wid: work.workId,
@@ -226,9 +223,19 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
                     lg:max-w-80 lg:min-w-72"
                 />
               ) : (
-                <WorkPageButton ariaLabel="Vælg udgave" onClick={openEditionsSelect}>
-                  {`Udgave: ${editionChoiceLabel}`}
-                </WorkPageButton>
+                <button
+                  type="button"
+                  onClick={openEditionsSelect}
+                  className="border-foreground/10 focus-visible text-typo-body-sm
+                    hover:bg-background-overlay flex w-full items-center justify-between gap-3
+                    rounded-full border px-5 py-3 text-left transition-colors lg:max-w-80
+                    lg:min-w-72">
+                  <span className="min-w-0 truncate">
+                    {"Udgave: "}
+                    <span className="font-semibold">{editionChoiceLabel}</span>
+                  </span>
+                  <span className="animate-text-underline shrink-0">Skift</span>
+                </button>
               )}
             </WorkPageButtons>
           </div>

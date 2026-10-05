@@ -91,6 +91,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Thit Thyrring",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -153,6 +154,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Thit Thyrring",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -210,6 +212,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         contributors: [
           {
             display: "Thit Thyrring",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],
@@ -507,6 +510,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Thit Thyrring",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -622,6 +626,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         contributors: [
           {
             display: "Thit Thyrring",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],
@@ -739,9 +744,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Camilla Qvistgaard Dyssel",
+              roles: [],
             },
             {
               display: "Emilie Harild Gaardboe",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -802,6 +809,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Emilie Harild Gaardboe",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -858,6 +866,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Emilie Harild Gaardboe",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -915,6 +924,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         contributors: [
           {
             display: "Emilie Harild Gaardboe",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],
@@ -1004,12 +1014,15 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Emilie Søndergaard",
+              roles: [],
             },
             {
               display: "Jesper Frederiksen",
+              roles: [],
             },
             {
               display: "Jens Sørensen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -1067,12 +1080,15 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         contributors: [
           {
             display: "Emilie Søndergaard",
+            roles: [],
           },
           {
             display: "Jesper Frederiksen",
+            roles: [],
           },
           {
             display: "Jens Sørensen",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],

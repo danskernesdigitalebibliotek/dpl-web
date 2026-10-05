@@ -1,9 +1,8 @@
 "use client"
 
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useMemo } from "react"
 
 import { getEditionsForMaterialType } from "@/components/pages/workPageLayout/helper"
-import { Button } from "@/components/shared/button/Button"
 import EditionsSelectModalItem from "@/components/shared/editionsSelectModal/EditionsSelectModalItem"
 import { type TEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
@@ -36,22 +35,27 @@ const GeneralOption = ({
   description,
   checked,
   onSelect,
+  disabled,
 }: {
   label: string
   description: string
   checked: boolean
   onSelect: () => void
+  // "Først tilgængelige" has no backing logic yet — it renders as a visual
+  // placeholder the reader can't actually select.
+  disabled?: boolean
 }) => (
   <label
     className="border-foreground/10 has-checked:border-foreground has-checked:bg-background-overlay
-      has-focus-visible:ring-foreground flex w-full max-w-[335px] cursor-pointer items-start gap-3
-      rounded-lg border-2 p-4 transition-colors has-focus-visible:ring-2
-      has-focus-visible:ring-offset-2 sm:w-1/2">
+      has-focus-visible:ring-foreground flex w-full cursor-pointer items-start gap-3 rounded-lg
+      border-2 p-4 transition-colors has-focus-visible:ring-2 has-focus-visible:ring-offset-2
+      has-disabled:cursor-not-allowed has-disabled:opacity-50">
     <input
       type="radio"
       name={GENERAL_CHOICE_GROUP}
       className="sr-only"
       checked={checked}
+      disabled={disabled}
       onChange={onSelect}
     />
     {/* The radio is drawn rather than native so it matches the design; the
@@ -63,8 +67,8 @@ const GeneralOption = ({
       {checked && <span className="bg-foreground h-2.5 w-2.5 rounded-full" />}
     </span>
     <span className="min-w-0">
-      <span className="text-typo-subtitle-sm block">{label}</span>
-      <span className="text-typo-caption block opacity-70">{description}</span>
+      <span className="text-typo-subtitle-md block">{label}</span>
+      <span className="text-typo-body-sm block opacity-70">{description}</span>
     </span>
   </label>
 )
@@ -79,14 +83,6 @@ const EditionsSelectModal = ({
 }: EditionsSelectModalProps & { open: boolean; onClose: () => void }) => {
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const allManifestations = data?.work?.manifestations?.all
-
-  // The draft is reset to the current choice whenever the modal opens.
-  const [draftChoice, setDraftChoice] = useState<TEditionChoice>(choice)
-  useEffect(() => {
-    if (open) {
-      setDraftChoice(choice)
-    }
-  }, [open, choice])
 
   const editions = useMemo(
     () => getEditionsForMaterialType(allManifestations ?? [], materialTypeCode),
@@ -129,37 +125,52 @@ const EditionsSelectModal = ({
   // then picks up a status a moment later.
   const isLoadingEditions = isLoadingAvailability || isLoadingDigitalAvailability
 
-  const selectedPid = typeof draftChoice === "object" ? draftChoice.pid : null
+  const selectedPid = typeof choice === "object" ? choice.pid : null
 
-  const handleConfirm = () => {
-    onChoiceConfirm(draftChoice, materialTypeCode)
+  // Confirms the choice and closes the modal immediately.
+  const handleChoice = (next: TEditionChoice) => {
+    onChoiceConfirm(next, materialTypeCode)
     onClose()
   }
 
   return (
     <ResponsiveDialog title="Vælg udgave" open={open} onClose={onClose}>
       <fieldset className="border-0 p-0">
-        <GeneralOption
-          label="Nyeste udgave"
-          description={`Du får altid den senest udgivne udgave${
-            newestDescription ? ` — lige nu ${newestDescription}` : ""
-          }`}
-          checked={draftChoice === "newest"}
-          onSelect={() => setDraftChoice("newest")}
-        />
+        <div className="xs:grid-cols-2 grid grid-cols-1 gap-4">
+          <GeneralOption
+            label="Nyeste udgave"
+            description={`Du får altid den senest udgivne udgave${
+              newestDescription ? ` — lige nu ${newestDescription}` : ""
+            }`}
+            checked={choice === "newest"}
+            onSelect={() => handleChoice("newest")}
+          />
+          <GeneralOption
+            label="Først tilgængelige"
+            description="Du får den udgave med kortest ventetid — hurtigst i hænderne"
+            checked={false}
+            onSelect={() => {}}
+            disabled
+          />
+        </div>
 
         {(isLoadingEditions || shownEditions.length > 0) && (
           <>
             <div className="my-8 flex items-center gap-4">
               <hr className="border-foreground/10 flex-1" />
-              <span className="text-typo-caption shrink-0 opacity-70">
+              <span className="text-typo-label-sm shrink-0 font-semibold opacity-70">
                 {/* Counts what is on screen, so the number matches the grid. */}
                 Eller vælg en bestemt udgave · {shownEditions.length}
               </span>
               <hr className="border-foreground/10 flex-1" />
             </div>
 
-            <div className="grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4 lg:grid-cols-5">
+            {/* Drops from 4 columns at md back to 3 at lg: the dialog's own
+                max-width caps there, so each card gets more room instead of
+                more columns. */}
+            <div
+              className="xs:grid-cols-2 grid grid-cols-1 gap-x-6 gap-y-7 sm:grid-cols-3
+                md:grid-cols-4 lg:grid-cols-3">
               {isLoadingEditions
                 ? editions.map(manifestation => (
                     <EditionsSelectModalItem.Skeleton key={manifestation.pid} />
@@ -171,7 +182,7 @@ const EditionsSelectModal = ({
                       name={EDITION_CHOICE_GROUP}
                       checked={selectedPid === manifestation.pid}
                       unavailableLabel={getUnavailableLabel(manifestation)}
-                      onSelect={() => setDraftChoice({ pid: manifestation.pid })}
+                      onSelect={() => handleChoice({ pid: manifestation.pid })}
                     />
                   ))}
             </div>
@@ -196,12 +207,6 @@ const EditionsSelectModal = ({
           </p>
         )}
       </fieldset>
-
-      <ResponsiveDialog.Actions>
-        <Button theme="primary" size="lg" ariaLabel="Vælg udgave" onClick={handleConfirm}>
-          Vælg udgave
-        </Button>
-      </ResponsiveDialog.Actions>
     </ResponsiveDialog>
   )
 }

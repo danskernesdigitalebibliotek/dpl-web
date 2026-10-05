@@ -346,6 +346,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
             contributors: [
               {
                 display: "Iben Haaest",
+                roles: [],
               },
             ],
             contributorsFromDescription: [],
