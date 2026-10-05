@@ -10,6 +10,7 @@ services:
         '@current_user',
         '@page_cache_kill_switch',
         '@openid_connect.session',
+        '@dpl_login.user_tokens',
       ]
     tags:
       - { name: event_subscriber }

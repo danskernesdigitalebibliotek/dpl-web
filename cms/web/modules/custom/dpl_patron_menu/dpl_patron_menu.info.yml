@@ -7,6 +7,7 @@ dependencies:
   - dpl_favorites_list:dpl_favorites_list
   - dpl_fees:dpl_fees
   - dpl_library_agency:dpl_library_agency
+  - dpl_login:dpl_login
   - dpl_loans:dpl_loans
   - dpl_patron_reg:dpl_patron_reg
   - dpl_reservations:dpl_reservations
