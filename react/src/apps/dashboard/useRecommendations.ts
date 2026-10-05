@@ -1,79 +1,49 @@
-import {
-  useGetBestRepresentationPidByIsbnQuery,
-  useGetDashboardRecommendationsQuery
-} from "../../core/dbc-gateway/generated/graphql";
-import { createIsbnCql } from "../../components/cover/helper";
+import { useGetDashboardRecommendationsQuery } from "../../core/dbc-gateway/generated/graphql";
 import { WorkId } from "../../core/utils/types/ids";
-import { RecommendationSource } from "./recommendationSource";
-import { RecommendedWork } from "./recommendations.types";
+import { RecommendationSeed } from "./recommendationSeed";
+import { RecommendationResult, RecommendedWork } from "./recommendations.types";
+import useRecommendationSource from "./useRecommendationSource";
 
 export type UseRecommendationsResult = {
-  works: RecommendedWork[];
+  result: RecommendationResult | null;
   isLoading: boolean;
 };
 
 const FETCH_LIMIT = 16;
 
 /**
- * Fetches recommendations for a source. The recommender only understands
- * fausts and work ids, so an ISBN source first goes through a lookup that
- * resolves it to a work id. A null source fetches nothing.
+ * Fetches recommendations for a seed. The seed is first resolved to the work
+ * it identifies, and that work is what the recommender is asked about. The
+ * result carries the resolved source along with the recommendations. A null
+ * seed fetches nothing.
  */
 const useRecommendations = (
-  source: RecommendationSource | null
+  seed: RecommendationSeed | null
 ): UseRecommendationsResult => {
-  const isbn = source?.type === "isbn" ? source.isbn : null;
-
-  const { data: isbnLookup, isLoading: isLoadingIsbnLookup } =
-    useGetBestRepresentationPidByIsbnQuery(
-      {
-        cql: createIsbnCql(isbn ? [isbn] : []),
-        offset: 0,
-        limit: 1,
-        filters: {}
-      },
-      { enabled: isbn !== null, throwOnError: false }
-    );
-
-  const workIdFromIsbn = isbnLookup?.complexSearch.works[0]?.workId as
-    WorkId | undefined;
-
-  const recommendArguments =
-    source?.type === "faust"
-      ? { faust: source.faust }
-      : source?.type === "work-id"
-        ? { id: source.workId }
-        : workIdFromIsbn
-          ? { id: workIdFromIsbn }
-          : null;
+  const { source, isLoading: isLoadingSource } = useRecommendationSource(seed);
 
   const { data, isLoading: isLoadingRecommendations } =
     useGetDashboardRecommendationsQuery(
-      { ...recommendArguments, limit: FETCH_LIMIT },
+      { id: source?.workId ?? "", limit: FETCH_LIMIT },
       {
-        enabled: recommendArguments !== null,
-        // The section is decorative: a failed request hides it (works stays
-        // empty) instead of throwing to the ErrorBoundary and taking the whole
-        // dashboard down with it.
+        enabled: source !== null,
+        // The section is decorative: a failed request hides it instead of
+        // throwing to the ErrorBoundary and taking the whole dashboard down.
         throwOnError: false
       }
     );
 
-  const works: RecommendedWork[] =
+  const recommendations: RecommendedWork[] | null =
     data?.recommend.result.map(({ work }) => ({
       workId: work.workId as WorkId,
       title: work.titles.full.join(", "),
       author: work.creators.map((creator) => creator.display).join(", "),
       coverSrc: work.manifestations.bestRepresentation.cover.large?.url ?? null
-    })) ?? [];
+    })) ?? null;
 
-  // A disabled query reports isLoading as false, so during the ISBN lookup
-  // only the lookup's flag is set. Once resolved the recommend query takes
-  // over. An ISBN that resolves to nothing ends up neither loading nor with
-  // data, which reads as "no recommendations" to the caller.
   return {
-    works,
-    isLoading: isLoadingIsbnLookup || isLoadingRecommendations
+    result: source && recommendations ? { recommendations, source } : null,
+    isLoading: isLoadingSource || isLoadingRecommendations
   };
 };
 
