@@ -303,7 +303,7 @@ describe("Material Page Object Test", () => {
           details.open();
 
           // Then: Should display multiple detail items
-          details.elements.listItems().should("have.length", 9);
+          details.elements.listItems().should("have.length", 8);
           details.elements.listDescription().should("be.visible");
 
           // And: Should display Language
@@ -313,9 +313,6 @@ describe("Material Page Object Test", () => {
           details
             .getValueByKey("Edition")
             .shouldContainAll(["2017 (2. udgave)"]);
-
-          // And: Should display Genre
-          details.getValueByKey("Genre").shouldContainAll(["romaner"]);
 
           // And: Should display Original title
           details

@@ -546,7 +546,7 @@ class DplReactAppsController extends ControllerBase {
       'find-on-shelf-modal-periodical-year-dropdown-text' => $this->t('Choose periodical year', [], ['context' => 'Work Page']),
       'find-on-shelf-modal-screen-reader-modal-description-text' => $this->t('Reservation modal screen reader description', [], ['context' => 'Work Page']),
       'first-available-edition-text' => $this->t('First available edition', [], ['context' => 'Work Page']),
-      'genre-and-form-text' => $this->t('Genre', [], ['context' => 'Work Page']),
+      'genre-and-form-text' => $this->t('Genre and form', [], ['context' => 'Work Page']),
       'get-online-text' => $this->t('Get online', [], ['context' => 'Work Page']),
       'go-to-text' => $this->t('Go to @source', [], ['context' => 'Work Page']),
       'have-no-interest-after-text' => $this->t('Have no interest after', [], ['context' => 'Work Page']),
