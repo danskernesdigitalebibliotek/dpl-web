@@ -32,6 +32,7 @@ type AdgangsplatformenTokens {
 type AdgangsplatformenUserToken {
   expire: DateTime
   token: String
+  type: String
 }
 
 type AppCategory {
@@ -278,7 +279,6 @@ type GoConfigurationPublic {
   mapp: MappTracking
   searchProfiles: SearchProfiles
   smsNotificationsEnabled: Boolean
-  unilogin: UniloginConfigurationPublic
 }
 
 type GoLibraryInfo {
@@ -288,6 +288,7 @@ type GoLibraryInfo {
 
 type GoLoginUrls {
   adgangsplatformen: String
+  unilogin: String
 }
 
 type GoLogoutUrls {
@@ -1182,12 +1183,7 @@ type Translation {
 }
 
 type UniloginConfigurationPrivate {
-  clientSecret: String
   pubHubRetailerKeyCode: String
-}
-
-type UniloginConfigurationPublic {
-  municipalityId: String
 }
 
 type UnsupportedType {

@@ -1,6 +1,10 @@
 type AdgangsplatformenUserToken {
   token: String
   expire: DateTime
+  """
+  The type of the token: user, unregistered_user or unilogin_user.
+  """
+  type: String
 }
 
 type AdgangsplatformenTokens {

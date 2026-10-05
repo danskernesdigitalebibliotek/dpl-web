@@ -79,7 +79,7 @@ class AdgangsplatformenUserTokenProducer extends DataProducerPluginBase implemen
    * Resolves the access token based on the token type.
    *
    * @return mixed[] | null
-   *   Token and expiration date.
+   *   Token, expiration date and token type.
    */
   public function resolve(FieldContext $field_context): array | null {
     $field_context->addCacheableDependency((new CacheableMetadata())->setCacheMaxAge(0));
@@ -90,6 +90,7 @@ class AdgangsplatformenUserTokenProducer extends DataProducerPluginBase implemen
     return [
       'token' => $token->token,
       'expire' => $this->formatExpireDate($token->expire),
+      'type' => $token->type->value,
     ];
   }
 
