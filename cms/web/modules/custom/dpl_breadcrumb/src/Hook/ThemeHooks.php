@@ -56,8 +56,8 @@ class ThemeHooks {
       $variables['show_subtitles'] = (bool) $paragraph->get('field_show_subtitles')->value;
     }
     // Drupal will cache the whole paragraph, as it does not know that it is
-    // embedding a dynamic list. We'll add a simple cache tag,
-    // so it be invalidated if any nodes have been updated - e.g. the same kind of
+    // embedding a dynamic list. We'll add a simple cache tag, so it be
+    // invalidated if any nodes have been updated - e.g. the same kind of
     // cache tag that a view has.
     $variables['#cache']['tags'][] = 'node_list';
   }
@@ -86,9 +86,9 @@ class ThemeHooks {
     // Building the breadcrumb, displayed at the top of the page.
     $variables['breadcrumb'] = $this->helper->getBreadcrumb($entity);
 
-    // If this entity is part of the structure tree, we might display an automatic
-    // list of the related children.
-    // This is seperate from the breadcrumb that is dispalyed on the page.
+    // If this entity is part of the structure tree, we might display an
+    // automatic list of the related children.
+    // This is separate from the breadcrumb that is displayed on the page.
     $breadcrumb_item = $this->helper->getBreadcrumbItem($entity);
 
     if ($breadcrumb_item instanceof TermInterface &&
@@ -113,9 +113,9 @@ class ThemeHooks {
       ];
 
       // Drupal will cache the whole page, as it does not know that it is
-      // embedding a dynamic list. We'll add a simple cache tag,
-      // so it be invalidated if any nodes have been updated - e.g. the same kind
-      // of cache tag that a view has.
+      // embedding a dynamic list. We'll add a simple cache tag, so it be
+      // invalidated if any nodes have been updated - e.g. the same kind of
+      // cache tag that a view has.
       // You could expand this to be a more specific cache tag, but it will only
       // affect this one page, so node_list should be sufficient.
       $variables['#cache']['tags'][] = 'node_list';
