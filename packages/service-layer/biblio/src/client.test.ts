@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { mockJsonResponse } from "../../src/test-utils"
 import { createBiblioClient } from "./client"
+import { BiblioHttpError } from "./errors"
 
 const baseUrl = "https://biblio.example"
 const metadataUrl = (isbn: string) => `${baseUrl}/v1/metadata/${isbn}`
@@ -242,24 +243,21 @@ describe("createBiblioClient.getLoanDecision", () => {
     })
   })
 
-  it("throws on a material the adapter does not know", async () => {
-    // The default: a 404 from can-loan is an error - asking about an unknown
-    // material is normally a routing mistake worth hearing about.
+  it("returns undefined for a material the adapter does not know", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(
       mockJsonResponse({ message: "Material not found: 9788758855752" }, 404)
     )
 
-    await expect(buildClient().getLoanDecision("9788758855752")).rejects.toThrow("404")
+    await expect(buildClient().getLoanDecision("9788758855752")).resolves.toBeUndefined()
   })
 
-  it("resolves an unknown material to undefined when told to tolerate it", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(
-      mockJsonResponse({ message: "Material not found: 9788758855752" }, 404)
-    )
+  it("throws a typed error carrying the status on any other failure", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 401))
 
-    await expect(
-      buildClient().getLoanDecision("9788758855752", { allowNotFound: true })
-    ).resolves.toBeUndefined()
+    const failure = buildClient().getLoanDecision("9788711234567")
+
+    await expect(failure).rejects.toBeInstanceOf(BiblioHttpError)
+    await expect(failure).rejects.toMatchObject({ status: 401 })
   })
 
   it("maps the block reason when lending is blocked", async () => {

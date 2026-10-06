@@ -2,31 +2,19 @@ import { createBiblioClient } from "../biblio/src"
 import { resolveBiblioConfig } from "./internal/resolveBiblioConfig"
 import type { LoanDecision, LoanDecisionStatus, ServiceLayerConfig } from "./types"
 
-// TEMPORARY, with the toleration setting it serves. The adapter answers 404
-// for a material it does not know; with the setting on that becomes this
-// decision instead, so callers see an ordinary unavailable material and
-// nothing downstream has to know about the 404. Without the setting the 404
-// stays an error - asking about an unknown material is normally a routing
-// mistake worth hearing about.
-const UNKNOWN_MATERIAL_REASON = "unknown_material"
-
-const unknownMaterialDecision: LoanDecision = {
-  status: "unavailable",
-  unavailableReason: UNKNOWN_MATERIAL_REASON,
-}
-
 // Whether the user can borrow a material right now. The answer covers both the
 // material (is it available?) and the user (quota, lending blocks), so callers
 // must pick the part they care about - see isMaterialAvailable.
+//
+// Null when the adapter does not know the material: it cannot be borrowed
+// through Biblio at all. Null rather than undefined for the reason given at
+// getDigitalSample.
 export async function getDigitalLoanDecision(
   config: ServiceLayerConfig,
   materialId: string
-): Promise<LoanDecision> {
+): Promise<LoanDecision | null> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  const decision = await biblio.getLoanDecision(materialId, {
-    allowNotFound: config.tolerateUnknownMaterials?.() ?? false,
-  })
-  return decision ?? unknownMaterialDecision
+  return (await biblio.getLoanDecision(materialId)) ?? null
 }
 
 /**

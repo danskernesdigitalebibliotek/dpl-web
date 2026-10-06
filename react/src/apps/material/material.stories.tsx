@@ -1317,15 +1317,3 @@ export const MaterialWithClosedPublizonReservations: Story = {
     publizonReservationsClosedConfig: "1"
   }
 };
-
-// TEMPORARY, with the toleration flag it exercises: the adapter answers 404
-// for materials the catalogue lists but WeDoBooks has not provisioned yet,
-// and this story lets the tests cover that they render as unavailable
-// rather than fail the page.
-export const MaterialWithTolerantBiblioAdapter: Story = {
-  args: {
-    ...Default.args,
-    useBiblioAdapterConfig: "1",
-    biblioTolerateUnknownMaterialsConfig: "1"
-  }
-};

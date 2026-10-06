@@ -577,26 +577,45 @@ describe("useOnlineAvailabilityData tests", () => {
       });
     });
 
-    describe("TEMPORARY: materials the adapter does not know", () => {
-      // Remove with ServiceLayerConfig.tolerateUnknownMaterials. The service
-      // layer turns the tolerated 404 into an ordinary unavailable decision;
-      // this hook reads it like any other.
-      it("Counts a tolerated unknown material as unavailable", () => {
-        mockedLoanDecision.mockReturnValue({
-          data: {
-            status: "unavailable",
-            unavailableReason: "unknown_material"
-          },
-          isLoading: false
-        } as unknown as ReturnType<typeof useDigitalLoanDecision>);
+    it("Counts a material the adapter does not know as unavailable", () => {
+      // A 404 for a material the catalogue lists but WeDoBooks has not
+      // provisioned.
+      mockedLoanDecision.mockReturnValue({
+        data: null,
+        isLoading: false,
+        isError: false
+      } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
-        const { result } = render();
+      const { result } = render();
 
-        // Unavailable rather than an error - and never a fallback to
-        // Publizon: with the flag on, a material Biblio cannot lend is not
-        // on offer.
-        expect(result.current.isAvailable).toBe(false);
-      });
+      expect(result.current.isAvailable).toBe(false);
+    });
+
+    it("Counts a decision the adapter failed to give as unavailable", () => {
+      // The query keeps the failure off the error boundary, so the label must
+      // not fall back to "available".
+      mockedLoanDecision.mockReturnValue({
+        data: undefined,
+        isLoading: false,
+        isError: true
+      } as unknown as ReturnType<typeof useDigitalLoanDecision>);
+
+      const { result } = render();
+
+      expect(result.current.isAvailable).toBe(false);
+      expect(result.current.isLoading).toBe(false);
+    });
+
+    it("Keeps the earlier answer when only a background refetch failed", () => {
+      mockedLoanDecision.mockReturnValue({
+        data: { status: "loanable" },
+        isLoading: false,
+        isError: true
+      } as unknown as ReturnType<typeof useDigitalLoanDecision>);
+
+      const { result } = render();
+
+      expect(result.current.isAvailable).toBe(true);
     });
   });
 });

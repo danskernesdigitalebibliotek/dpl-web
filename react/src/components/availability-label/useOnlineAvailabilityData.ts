@@ -38,8 +38,11 @@ const useOnlineAvailabilityData = ({
     viaBiblioAdapter && enabled && isEreolMaterial && !!isbn && !isAnonymous();
   const askPublizon = !viaBiblioAdapter && enabled && isEreolMaterial && !!isbn;
 
-  const { data: loanDecision, isLoading: isLoadingServiceLayer } =
-    useDigitalLoanDecision(isbn, { enabled: askServiceLayer });
+  const {
+    data: loanDecision,
+    isLoading: isLoadingServiceLayer,
+    isError: isServiceLayerError
+  } = useDigitalLoanDecision(isbn, { enabled: askServiceLayer });
 
   // Find out if the material is cost free.
   const { isLoading: isLoadingIdentifier, data: dataIdentifier } =
@@ -73,6 +76,11 @@ const useOnlineAvailabilityData = ({
   // Both derivations are gated on who was asked, not just on the query: an
   // answer sitting in the cache from a provider that may no longer answer
   // must be ignored. Within a gate, null means "not answered yet".
+  // Null (unknown to the adapter) or a failure without an earlier answer means
+  // the material cannot be borrowed.
+  const isUnanswered =
+    askServiceLayer &&
+    (loanDecision === null || (isServiceLayerError && !loanDecision));
   const isAvailableViaServiceLayer =
     askServiceLayer && loanDecision
       ? isMaterialAvailable(loanDecision.status)
@@ -83,8 +91,6 @@ const useOnlineAvailabilityData = ({
       ? publizonProductStatuses[dataPublizon.loanStatus].isAvailable
       : null;
 
-  const isAvailable = isAvailableViaServiceLayer ?? isAvailableViaPublizon;
-
   return {
     // Disabled queries never report loading, so this only counts the
     // questions actually asked.
@@ -92,7 +98,9 @@ const useOnlineAvailabilityData = ({
       isLoadingServiceLayer || isLoadingIdentifier || isLoadingPublizonData,
     // An online material neither service answers for is always available -
     // cost-free Publizon materials and other online materials alike.
-    isAvailable: isAvailable ?? true
+    isAvailable:
+      !isUnanswered &&
+      (isAvailableViaServiceLayer ?? isAvailableViaPublizon ?? true)
   };
 };
 
