@@ -36,6 +36,10 @@ class FacetPhraseTest extends UnitTestCase {
         '[{"facetName":"dk5","selectedValues":["99.4"]}]',
         '99.4',
       ],
+      'a genre and form link from a material page' => [
+        '[{"facetName":"genreAndForm","selectedValues":["rejseguides"]}]',
+        'rejseguides',
+      ],
       'the first phrase facet wins when other facets come first' => [
         '[{"facetName":"materialTypesGeneral","selectedValues":["bog"]},{"facetName":"subjects","selectedValues":["krimi"]}]',
         'krimi',
