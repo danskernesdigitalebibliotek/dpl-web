@@ -61,7 +61,7 @@ const useReservations: UseReservations = () => {
     data: reservationsServiceLayer,
     isLoading: isLoadingServiceLayer,
     isError: isErrorServiceLayer
-  } = useDigitalReservations({ enabled: viaBiblioAdapter && userIsPatron });
+  } = useDigitalReservations({ enabled: viaBiblioAdapter });
 
   // A disabled query is never loading or in error so the service layer states
   // only count when the feature flag has enabled the query.

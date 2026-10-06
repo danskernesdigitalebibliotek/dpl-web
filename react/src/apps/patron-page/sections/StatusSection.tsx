@@ -28,7 +28,7 @@ const StatusSection: FC = () => {
   const {
     loanQuotas: { data: digitalLoanQuotas },
     reservationLimits: { data: digitalReservationLimits }
-  } = useDigitalQuotas({ enabled: viaBiblioAdapter && userIsPatron });
+  } = useDigitalQuotas({ enabled: viaBiblioAdapter });
 
   const publizonQuotas = getPatronLoanQuotas({
     userData: data?.userData,

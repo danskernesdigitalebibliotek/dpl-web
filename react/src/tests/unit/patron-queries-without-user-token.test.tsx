@@ -3,7 +3,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 /**
  * Loans, reservations and loan quotas belong to a patron. Without a `user`
  * token - an anonymous visitor, or a Unilogin student logged in to Drupal -
- * none of them may be requested from FBS, Publizon or the service layer.
+ * none of them may be requested from FBS or Publizon. The service layer gates
+ * its patron queries itself (isPatronAuthenticated).
  */
 
 vi.mock("../../core/fbs/fbs", () => ({
@@ -45,7 +46,6 @@ const loadModules = async () => ({
   token: await import("../../core/token"),
   fbs: await import("../../core/fbs/fbs"),
   publizon: await import("../../core/publizon/publizon"),
-  serviceLayer: await import("@danskernesdigitalebibliotek/dpl-service-layer"),
   useLoans: (await import("../../core/utils/useLoans")).default,
   useReservations: (await import("../../core/utils/useReservations")).default,
   StatusSection: (await import("../../apps/patron-page/sections/StatusSection"))
@@ -55,18 +55,14 @@ const loadModules = async () => ({
 type Modules = Awaited<ReturnType<typeof loadModules>>;
 
 // Every patron query the hooks make, with the `enabled` flag it was given.
-const enabledFlags = ({ fbs, publizon, serviceLayer }: Modules) => ({
+const enabledFlags = ({ fbs, publizon }: Modules) => ({
   fbsLoans: vi.mocked(fbs.useGetLoansV2).mock.lastCall?.[0]?.query?.enabled,
   fbsReservations: vi.mocked(fbs.useGetReservationsV2).mock.lastCall?.[0]?.query
     ?.enabled,
   publizonLoans: vi.mocked(publizon.useGetV1UserLoans).mock.lastCall?.[1]?.query
     ?.enabled,
   publizonReservations: vi.mocked(publizon.useGetV1UserReservations).mock
-    .lastCall?.[0]?.query?.enabled,
-  digitalLoans: vi.mocked(serviceLayer.useDigitalLoans).mock.lastCall?.[0]
-    ?.enabled,
-  digitalReservations: vi.mocked(serviceLayer.useDigitalReservations).mock
-    .lastCall?.[0]?.enabled
+    .lastCall?.[0]?.query?.enabled
 });
 
 describe("patron queries", () => {
@@ -87,9 +83,7 @@ describe("patron queries", () => {
       fbsLoans: false,
       fbsReservations: false,
       publizonLoans: false,
-      publizonReservations: false,
-      digitalLoans: false,
-      digitalReservations: false
+      publizonReservations: false
     });
   });
 
@@ -98,10 +92,6 @@ describe("patron queries", () => {
 
     expect(
       vi.mocked(modules.publizon.useGetV1UserLoans).mock.lastCall?.[1]?.query
-        ?.enabled
-    ).toBe(false);
-    expect(
-      vi.mocked(modules.serviceLayer.useDigitalQuotas).mock.lastCall?.[0]
         ?.enabled
     ).toBe(false);
   });
@@ -118,11 +108,7 @@ describe("patron queries", () => {
       fbsLoans: true,
       fbsReservations: true,
       publizonLoans: true,
-      publizonReservations: true,
-      // The service layer only serves digital loans via the Biblio adapter,
-      // which is switched off here.
-      digitalLoans: false,
-      digitalReservations: false
+      publizonReservations: true
     });
   });
 });
