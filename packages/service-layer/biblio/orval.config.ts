@@ -7,13 +7,10 @@ export default defineConfig({
       target: "src/generated/biblio.ts",
       schemas: "src/generated/model",
       client: "fetch",
-      prettier: true,
+      formatter: "prettier",
     },
     input: {
       target: "../../../schemas/openapi/biblio-adapter.yaml",
-      converterOptions: {
-        indent: 2,
-      },
     },
   },
 })

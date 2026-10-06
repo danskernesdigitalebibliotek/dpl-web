@@ -7,13 +7,10 @@ export default defineConfig({
       target: "src/generated/fbs.ts",
       schemas: "src/generated/model",
       client: "fetch",
-      prettier: true,
+      formatter: "prettier",
     },
     input: {
       target: "../../../schemas/openapi/fbs-adapter.yaml",
-      converterOptions: {
-        indent: 2,
-      },
     },
   },
 })
