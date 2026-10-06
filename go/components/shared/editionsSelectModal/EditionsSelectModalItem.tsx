@@ -58,7 +58,7 @@ const EditionsSelectModalItem = ({
         </span>
       )}
       <BlueTitleBadge manifestation={manifestation} />
-      <div className="relative mx-auto aspect-[2/3] w-[85%]">
+      <div className="relative mx-auto aspect-[2/3] w-[85%] max-w-[150px] sm:max-w-none">
         <CoverPicture
           alt={`Forsidebillede på ${title ?? "udgaven"}`}
           covers={manifestation.cover}
@@ -67,7 +67,7 @@ const EditionsSelectModalItem = ({
         />
       </div>
       <div className="min-w-0 space-y-1">
-        <p className="text-typo-subtitle-md font-semibold break-words">{year ?? title}</p>
+        <p className="text-typo-subtitle-md mt-2 font-semibold break-words">{year ?? title}</p>
         {editionLabel && <p className="text-typo-body-sm break-words">{editionLabel}</p>}
         {contributors && <p className="text-typo-body-sm break-words">{contributors}</p>}
         {publisherLine && <p className="text-typo-body-sm opacity-70">{publisherLine}</p>}

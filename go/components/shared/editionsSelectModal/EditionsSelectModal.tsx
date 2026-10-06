@@ -169,8 +169,8 @@ const EditionsSelectModal = ({
                 max-width caps there, so each card gets more room instead of
                 more columns. */}
             <div
-              className="xs:grid-cols-2 grid grid-cols-1 gap-x-6 gap-y-7 sm:grid-cols-3
-                md:grid-cols-4 lg:grid-cols-3">
+              className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 md:grid-cols-4
+                lg:grid-cols-3">
               {isLoadingEditions
                 ? editions.map(manifestation => (
                     <EditionsSelectModalItem.Skeleton key={manifestation.pid} />
