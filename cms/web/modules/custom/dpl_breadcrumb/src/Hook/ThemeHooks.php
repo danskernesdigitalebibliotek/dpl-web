@@ -6,8 +6,10 @@ namespace Drupal\dpl_breadcrumb\Hook;
 
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\dpl_breadcrumb\Services\BreadcrumbHelper;
-use Drupal\drupal_typed\DrupalTyped;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\taxonomy\TermInterface;
 
@@ -15,6 +17,16 @@ use Drupal\taxonomy\TermInterface;
  * Theme hooks for dpl_breadcrumb module.
  */
 class ThemeHooks {
+
+  use StringTranslationTrait;
+
+  public function __construct(
+    protected RouteMatchInterface $routeMatch,
+    protected BreadcrumbHelper $helper,
+    TranslationInterface $stringTranslation,
+  ) {
+    $this->setStringTranslation($stringTranslation);
+  }
 
   /**
    * Prepares dynamic items for automatically displaying breadcrumb children.
@@ -38,9 +50,7 @@ class ThemeHooks {
       return;
     }
 
-    $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
-
-    $variables['items'] = $service->getRenderedReferencingNodes($breadcrumb_item);
+    $variables['items'] = $this->helper->getRenderedReferencingNodes($breadcrumb_item);
 
     if ($paragraph->hasField('field_show_subtitles')) {
       $variables['show_subtitles'] = (bool) $paragraph->get('field_show_subtitles')->value;
@@ -60,11 +70,11 @@ class ThemeHooks {
    */
   #[Hook('preprocess_page')]
   public function preparePageBreadcrumb(array &$variables): void {
-    $entity = \Drupal::routeMatch()->getParameter('node');
+    $entity = $this->routeMatch->getParameter('node');
 
     if (empty($entity)) {
-      $event_series = \Drupal::routeMatch()->getParameter('eventseries');
-      $event_instance = \Drupal::routeMatch()->getParameter('eventinstance');
+      $event_series = $this->routeMatch->getParameter('eventseries');
+      $event_instance = $this->routeMatch->getParameter('eventinstance');
 
       $entity = $event_series ?? $event_instance;
     }
@@ -73,15 +83,13 @@ class ThemeHooks {
       return;
     }
 
-    $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
-
     // Building the breadcrumb, displayed at the top of the page.
-    $variables['breadcrumb'] = $service->getBreadcrumb($entity);
+    $variables['breadcrumb'] = $this->helper->getBreadcrumb($entity);
 
     // If this entity is part of the structure tree, we might display an automatic
     // list of the related children.
     // This is seperate from the breadcrumb that is dispalyed on the page.
-    $breadcrumb_item = $service->getBreadcrumbItem($entity);
+    $breadcrumb_item = $this->helper->getBreadcrumbItem($entity);
 
     if ($breadcrumb_item instanceof TermInterface &&
         $breadcrumb_item->get('field_show_children')->getString() == '1') {
@@ -92,14 +100,14 @@ class ThemeHooks {
       $custom_title = $breadcrumb_item->hasField('field_children_title') ?
         $breadcrumb_item->get('field_children_title')->getString() : NULL;
 
-      $default_title = t(
+      $default_title = $this->t(
         'Related content for "@title"',
         ['@title' => $breadcrumb_item->getName()],
         ['context' => 'DPL breadcrumb']
       );
 
       $variables['related_children'] = [
-        'items' => $service->getRenderedReferencingNodes($breadcrumb_item),
+        'items' => $this->helper->getRenderedReferencingNodes($breadcrumb_item),
         'title' => !empty($custom_title) ? $custom_title : $default_title,
         'show_subtitles' => $show_subtitles,
       ];
