@@ -28,6 +28,7 @@ vi.mock("../../core/utils/text", () => {
     patronPageStatusSectionHeaderText: "Status",
     patronPageStatusSectionReservationsText:
       "Du kan reservere op til @countEbooks e-bøger og @countAudiobooks lydbøger.",
+    patronPageStatusSectionLinkText: "Se titler du altid kan låne",
     patronPageStatusSectionLoanHeaderText: "Dine lån",
     patronPageStatusSectionLoansEbooksText: "E-bøger",
     patronPageStatusSectionOutOfText: "@this ud af @that",
@@ -82,6 +83,11 @@ vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));
 
+// URLs are read from Redux too.
+vi.mock("../../core/utils/url", () => ({
+  useUrls: () => () => new URL("https://example.com/advancedsearch")
+}));
+
 describe("StatusSection component tests", () => {
   beforeEach(() => {
     // Default to the flag being off: Publizon answers, as before.
@@ -129,6 +135,13 @@ describe("StatusSection component tests", () => {
 
     // Check header and reservations texts
     expect(getByText("Status")).not.toBeNull();
+
+    // The link lands on advanced search
+    const alwaysLoanableLink = getByText("Se titler du altid kan låne");
+    const alwaysLoanableUrl = new URL(
+      alwaysLoanableLink.getAttribute("href") ?? ""
+    );
+    expect(alwaysLoanableUrl.pathname).toBe("/advancedsearch");
     expect(
       getByText("Du kan reservere op til 5 e-bøger og 4 lydbøger.")
     ).not.toBeNull();

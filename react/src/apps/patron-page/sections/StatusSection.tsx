@@ -10,11 +10,34 @@ import {
   useDigitalQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
+import { useUrls } from "../../../core/utils/url";
+import { constructAdvancedSearchUrl } from "../../../core/advanced-search/url";
+import {
+  MATERIAL_TYPE_AUDIOBOOKS,
+  MATERIAL_TYPE_EBOOKS
+} from "../../advanced-search-v2/lib/advanced-search-select-options";
+import Link from "../../../components/atoms/links/Link";
 import { QuotaBar } from "./QuotaBar";
+import { ComplexSearchFacetsEnum } from "../../../core/dbc-gateway/generated/graphql";
+import { SortOption } from "../../../core/advanced-search/types";
 
 const StatusSection: FC = () => {
   const t = useText();
+  const u = useUrls();
   const viaBiblioAdapter = useBiblioAdapter();
+
+  const alwaysLoanableDigitalTitlesUrl = constructAdvancedSearchUrl({
+    advancedSearchUrl: u("advancedSearchUrl"),
+    preSearchFacets: [
+      {
+        facetField: ComplexSearchFacetsEnum.Generalmaterialtype,
+        selectedValues: [MATERIAL_TYPE_EBOOKS, MATERIAL_TYPE_AUDIOBOOKS]
+      }
+    ],
+    onlyExtraTitles: true,
+    sort: SortOption.LatestPubDateDesc,
+    view: "results"
+  });
 
   const { data: libraryProfile } = useGetV1LibraryProfile({
     query: { enabled: !viaBiblioAdapter }
@@ -123,6 +146,13 @@ const StatusSection: FC = () => {
               />
             </div>
           </div>
+          <Link
+            href={alwaysLoanableDigitalTitlesUrl}
+            className="link-tag text-body-small-regular"
+            dataCy="patron-page-always-loanable-link"
+          >
+            {t("patronPageStatusSectionLinkText")}
+          </Link>
         </>
       )}
     </section>
