@@ -43,7 +43,7 @@ export const AvailabilityLabel: React.FC<AvailabilityLabelProps> = ({
   const { collectPageStatistics } = useCollectPageStatistics();
   const t = useText();
 
-  const { isLoading, isAvailable } = useAvailabilityData({
+  const { isLoading, isAvailable, cannotBeBorrowed } = useAvailabilityData({
     accessTypes,
     access,
     faustIds,
@@ -51,9 +51,13 @@ export const AvailabilityLabel: React.FC<AvailabilityLabelProps> = ({
     manifestText
   });
 
-  const availabilityText = isAvailable
-    ? t("availabilityAvailableText")
-    : t("availabilityUnavailableText");
+  const getAvailabilityText = () => {
+    if (cannotBeBorrowed) return t("availabilityCannotBeBorrowedText");
+    return isAvailable
+      ? t("availabilityAvailableText")
+      : t("availabilityUnavailableText");
+  };
+  const availabilityText = getAvailabilityText();
 
   useDeepCompareEffect(() => {
     // Track material availability (status) if the button is active - also meaning

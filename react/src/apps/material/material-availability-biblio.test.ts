@@ -85,7 +85,7 @@ describe("Material page - online availability through the Biblio adapter", () =>
 describe("Material page - a material the adapter does not know", () => {
   beforeEach(() => stubBackends());
 
-  it("Shows it as unavailable instead of failing the page", () => {
+  it("Shows it cannot be borrowed instead of failing the page", () => {
     // Given: the adapter has never heard of the e-book
     givenBiblioDoesNotKnowMaterial("9788702441000");
 
@@ -94,9 +94,10 @@ describe("Material page - a material the adapter does not know", () => {
     material.visit([]);
     cy.wait("@biblioCanLoanUnknown");
 
-    // Then: the page is alive and the label says unavailable, and Publizon,
-    // which calls it loanable, was not asked to stand in.
-    ebookLabel(material).should("contain", "Unavailable");
+    // Then: the page is alive and the label says the material cannot be
+    // borrowed - not that it is out on loan - and Publizon, which calls it
+    // loanable, was not asked to stand in.
+    ebookLabel(material).should("contain", "Cannot be borrowed");
     cy.get("@publizonLoanStatus.all").should("have.length", 0);
   });
 });

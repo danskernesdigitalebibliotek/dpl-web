@@ -36,7 +36,7 @@ const useAvailabilityData = ({
     return availabilityOnline;
   }
 
-  return availabilityPhysical;
+  return { ...availabilityPhysical, cannotBeBorrowed: false };
 };
 
 export default useAvailabilityData;

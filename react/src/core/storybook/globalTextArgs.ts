@@ -40,6 +40,14 @@ export const argTypes = {
     },
     control: { type: "text" }
   },
+  availabilityCannotBeBorrowedText: {
+    description:
+      "Availability: the lending service could not answer for the material",
+    table: {
+      defaultValue: { summary: "Cannot be borrowed" }
+    },
+    control: { type: "text" }
+  },
   loansNotOverdueText: {
     table: {
       defaultValue: { summary: "Longer return time" }
@@ -339,6 +347,7 @@ export default {
   groupModalGoToMaterialAriaLabelText: "Go to @label material details",
   availabilityAvailableText: "Available",
   availabilityUnavailableText: "Unavailable",
+  availabilityCannotBeBorrowedText: "Cannot be borrowed",
   loansNotOverdueText: "Longer return time",
   patronContactInfoBodyText: "Patron contact info body text",
   pauseReservationModalBelowInputsText:
@@ -402,6 +411,7 @@ export interface GlobalEntryTextProps {
   groupModalGoToMaterialAriaLabelText: string;
   availabilityAvailableText: string;
   availabilityUnavailableText: string;
+  availabilityCannotBeBorrowedText: string;
   loansNotOverdueText: string;
   patronContactInfoBodyText: string;
   pauseReservationModalBelowInputsText: string;

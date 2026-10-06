@@ -69,7 +69,8 @@ const useOnlineAvailabilityData = ({
   if (!enabled) {
     return {
       isLoading: null,
-      isAvailable: null
+      isAvailable: null,
+      cannotBeBorrowed: false
     };
   }
 
@@ -77,8 +78,8 @@ const useOnlineAvailabilityData = ({
   // answer sitting in the cache from a provider that may no longer answer
   // must be ignored. Within a gate, null means "not answered yet".
   // Null (unknown to the adapter) or a failure without an earlier answer means
-  // the material cannot be borrowed.
-  const isUnanswered =
+  // the material cannot be borrowed - which says nothing about loans.
+  const cannotBeBorrowed =
     askServiceLayer &&
     (loanDecision === null || (isServiceLayerError && !loanDecision));
   const isAvailableViaServiceLayer =
@@ -99,8 +100,9 @@ const useOnlineAvailabilityData = ({
     // An online material neither service answers for is always available -
     // cost-free Publizon materials and other online materials alike.
     isAvailable:
-      !isUnanswered &&
-      (isAvailableViaServiceLayer ?? isAvailableViaPublizon ?? true)
+      !cannotBeBorrowed &&
+      (isAvailableViaServiceLayer ?? isAvailableViaPublizon ?? true),
+    cannotBeBorrowed
   };
 };
 

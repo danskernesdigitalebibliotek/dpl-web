@@ -27,7 +27,7 @@ const shouldRefetch = (query: { state: { error: Error | null } }) =>
 export const digitalLoanDecisionQuery = (config: ServiceLayerConfig, materialId: string | null) =>
   queryOptions({
     queryKey: digitalLoanDecisionQueryKey(materialId),
-    // Callers treat a failure kept off the boundary as unavailable.
+    // Callers treat a failure kept off the boundary as "cannot be borrowed".
     throwOnError: error => !staysOffBoundary(error),
     retry: (failureCount, error) => {
       const tryAgain = isTransient(error) && failureCount < 3

@@ -359,7 +359,8 @@ describe("useOnlineAvailabilityData tests", () => {
     act(() => {
       expect(firstResult.current).toEqual({
         isLoading: false,
-        isAvailable: true
+        isAvailable: true,
+        cannotBeBorrowed: false
       });
     });
     /**
@@ -383,7 +384,8 @@ describe("useOnlineAvailabilityData tests", () => {
     act(() => {
       expect(secondResult.current).toEqual({
         isLoading: false,
-        isAvailable: false
+        isAvailable: false,
+        cannotBeBorrowed: false
       });
     });
     /**
@@ -407,7 +409,8 @@ describe("useOnlineAvailabilityData tests", () => {
     act(() => {
       expect(thirdResult.current).toEqual({
         isLoading: false,
-        isAvailable: true
+        isAvailable: true,
+        cannotBeBorrowed: false
       });
     });
     /**
@@ -432,7 +435,8 @@ describe("useOnlineAvailabilityData tests", () => {
     act(() => {
       expect(result.current).toEqual({
         isLoading: false,
-        isAvailable: true
+        isAvailable: true,
+        cannotBeBorrowed: false
       });
     });
   });
@@ -443,7 +447,8 @@ describe("useOnlineAvailabilityData tests", () => {
     act(() => {
       expect(result.current).toEqual({
         isLoading: null,
-        isAvailable: null
+        isAvailable: null,
+        cannotBeBorrowed: false
       });
     });
   });
@@ -589,6 +594,7 @@ describe("useOnlineAvailabilityData tests", () => {
       const { result } = render();
 
       expect(result.current.isAvailable).toBe(false);
+      expect(result.current.cannotBeBorrowed).toBe(true);
     });
 
     it("Counts a decision the adapter failed to give as unavailable", () => {
@@ -604,6 +610,8 @@ describe("useOnlineAvailabilityData tests", () => {
 
       expect(result.current.isAvailable).toBe(false);
       expect(result.current.isLoading).toBe(false);
+      // Not "out on loan": the failure says nothing about loans.
+      expect(result.current.cannotBeBorrowed).toBe(true);
     });
 
     it("Keeps the earlier answer when only a background refetch failed", () => {
@@ -615,6 +623,7 @@ describe("useOnlineAvailabilityData tests", () => {
 
       const { result } = render();
 
+      expect(result.current.cannotBeBorrowed).toBe(false);
       expect(result.current.isAvailable).toBe(true);
     });
   });

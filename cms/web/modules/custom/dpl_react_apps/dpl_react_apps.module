@@ -65,6 +65,7 @@ function dpl_react_apps_texts(): array {
     'autosuggest-game-category' => t('Games', [], ['context' => 'Global']),
     'autosuggest-music-category' => t('Music', [], ['context' => 'Global']),
     'availability-available' => t('Available', [], ['context' => 'Global']),
+    'availability-cannot-be-borrowed' => t('Cannot be borrowed', [], ['context' => 'Global']),
     'availability-unavailable' => t('Unavailable', [], ['context' => 'Global']),
     'by-author' => t('by', [], ['context' => 'Global']),
     'change-interest-period' => t('Change interest period', [], ['context' => 'Global']),
