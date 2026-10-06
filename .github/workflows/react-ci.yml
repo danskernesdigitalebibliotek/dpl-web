@@ -14,6 +14,7 @@ on:
       - release/*
     paths:
       - "react/**"
+      - "packages/**"
       - ".github/workflows/react-ci.yml"
       - ".github/actions/**"
       - "schemas/openapi/**"
@@ -22,6 +23,7 @@ on:
   pull_request:
     paths:
       - "react/**"
+      - "packages/**"
       - ".github/workflows/react-ci.yml"
       - ".github/actions/**"
       - "schemas/openapi/**"
