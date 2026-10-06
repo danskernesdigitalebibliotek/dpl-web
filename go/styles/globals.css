@@ -39,7 +39,7 @@
 
     /* NAVIGATION */
     --navigation-top-height: 1.375rem; /* 22px */
-    --navigation-height: 3.5rem; /* 56px */
+    --navigation-height: 5.5rem; /* 80px */
     --navigation-search-height: 4rem; /* 64px */
     --navigation-combined-height: calc(
       var(--navigation-height) + var(--navigation-search-height) + var(--navigation-top-height)
@@ -95,6 +95,10 @@
     /* These two blues provide JUST enough color contrast to pass wcag2.1aa */
     --blue-title: hsla(202, 100%, 76%, 1);
     --blue-title-dark: hsla(202, 60%, 30%, 1);
+
+    /* TODO: when we redesign the color palette in 2027, this should be updated to
+    primary/call to action color. Right now it is only used in linkbox (content-colors) */
+    --go-green: #66ff55;
 
     /* CONTENT COLORS */
     --content-pink-100: hsla(286, 100%, 87%, 1);
@@ -252,7 +256,7 @@
 
       /* NAVIGATION */
       --navigation-top-height: 2rem; /* 32px */
-      --navigation-height: 5rem; /* 80px */
+      --navigation-height: 6.5rem; /* 100px */
       --navigation-search-height: 5rem; /* 100px */
 
       /* SPACING */
