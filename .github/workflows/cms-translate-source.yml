@@ -21,6 +21,13 @@ jobs:
     # Commits from POEditor are in the format: "Update [file] (POEditor.com)"
     # Commits from the this job says: "New translations were found"
     if: ${{ !contains(github.event.head_commit.message, 'POEditor.com') && !contains(github.event.head_commit.message, 'New translations were found') }}
+    # A newer run scans a newer tree, so it supersedes one in progress. This
+    # is set on the job rather than the workflow: a job skipped by the
+    # condition above never joins the group, so the push from this job can't
+    # cancel the run that made it.
+    concurrency:
+      group: cms-translate-source
+      cancel-in-progress: true
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the
       # added or changed files to the repository.
@@ -62,10 +69,35 @@ jobs:
           FILE_A: web/profiles/dpl_cms/translations/da.po
           FILE_B: web/profiles/dpl_cms/translations/da.config.po
       - name: Commit all combined translations
+        id: commit
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           file_pattern: "./cms/web/profiles/dpl_cms/translations/*.combined.po"
           commit_message: New translations were found
+          # The action's shallow fetch cuts the history a rebase needs, and
+          # its push fails if develop moved while this job ran. Push below.
+          skip_fetch: true
+          skip_push: true
+      - name: Push translations
+        if: steps.commit.outputs.changes_detected == 'true'
+        # Rebase onto whatever landed on develop while this job ran. The rebase
+        # needs a committer identity; this is the commit action's default, so
+        # both commits carry the same one. Autostash covers files the setup
+        # steps left modified, which are never pushed.
+        # Develop can still move between pull and push, so retry a rejected
+        # push. A rebase conflict fails the step straight away.
+        run: |
+          for attempt in 1 2 3; do
+            git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              pull --rebase --autostash origin develop
+            if git push origin HEAD:develop; then
+              exit 0
+            fi
+            echo "Push rejected, retrying ($attempt/3)"
+            sleep 10
+          done
+          exit 1
       - name: Make Poeditor look for changes in translation strings
         uses: distributhor/workflow-webhook@v3
         with:
