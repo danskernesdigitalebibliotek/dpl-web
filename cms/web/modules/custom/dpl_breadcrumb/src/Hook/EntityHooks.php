@@ -19,6 +19,10 @@ class EntityHooks {
   /**
    * Overrides structure data for nodes saved in breadcrumb tree.
    *
+   * When saving a node, check if it belongs to the breadcrumb tree. If it
+   * does, override any manual settings with a reference to the breadcrumb's
+   * parent.
+   *
    * @param \Drupal\node\Entity\Node $node
    *   The node entity.
    */
