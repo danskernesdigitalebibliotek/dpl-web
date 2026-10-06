@@ -32,11 +32,14 @@ vi.mock("../../core/utils/config", () => ({
 // page can close it, e.g. Escape, so the tests change it directly too.
 const modal = vi.hoisted(() => {
   let isOpen = false;
+  let isTop = false;
   const listeners = new Set<() => void>();
   return {
     isOpen: () => isOpen,
-    set: (value: boolean) => {
-      isOpen = value;
+    isTop: () => isTop,
+    set: (open: boolean, top = open) => {
+      isOpen = open;
+      isTop = top;
       listeners.forEach((listener) => listener());
     },
     subscribe: (listener: () => void) => {
@@ -51,6 +54,7 @@ vi.mock("../../core/utils/modal", () => ({
     <div>{children}</div>
   ),
   useIsModalOpen: () => useSyncExternalStore(modal.subscribe, modal.isOpen),
+  useIsTopModal: () => useSyncExternalStore(modal.subscribe, modal.isTop),
   useModalButtonHandler: () => ({
     open: (...args: unknown[]) => {
       open(...args);
@@ -162,5 +166,46 @@ describe("starting a patron login", () => {
 
     expect(proceed).not.toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(guardedRequests.removeRequest());
+  });
+
+  it("closes a question reopened from the URL, with no login to go on with", async () => {
+    const { guardedRequests, MenuUniloginPatronLogin } = await loadModules();
+    const { closeModal } = await import("../../core/modal.slice");
+    config.values.uniloginUserIdConfig = "elev4821";
+    modal.set(true);
+
+    render(<MenuUniloginPatronLogin />);
+
+    expect(dispatch).toHaveBeenCalledWith(
+      closeModal({ modalId: "unilogin-patron-login" })
+    );
+    expect(dispatch).toHaveBeenCalledWith(guardedRequests.removeRequest());
+  });
+
+  it("closes a question reopened from the URL for any visitor", async () => {
+    const { MenuUniloginPatronLogin } = await loadModules();
+    const { closeModal } = await import("../../core/modal.slice");
+    modal.set(true);
+
+    render(<MenuUniloginPatronLogin />);
+
+    expect(dispatch).toHaveBeenCalledWith(
+      closeModal({ modalId: "unilogin-patron-login" })
+    );
+  });
+
+  it("leaves a modal on top of a reopened question alone", async () => {
+    const { MenuUniloginPatronLogin } = await loadModules();
+    const { closeModal } = await import("../../core/modal.slice");
+    config.values.uniloginUserIdConfig = "elev4821";
+    modal.set(true, false);
+
+    render(<MenuUniloginPatronLogin />);
+    expect(dispatch).not.toHaveBeenCalled();
+
+    act(() => modal.set(true, true));
+    expect(dispatch).toHaveBeenCalledWith(
+      closeModal({ modalId: "unilogin-patron-login" })
+    );
   });
 });

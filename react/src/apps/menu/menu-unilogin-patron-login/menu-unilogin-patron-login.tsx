@@ -4,11 +4,13 @@ import { useText } from "../../../core/utils/text";
 import { useConfig } from "../../../core/utils/config";
 import Modal, {
   useIsModalOpen,
+  useIsTopModal,
   useModalButtonHandler
 } from "../../../core/utils/modal";
 import { Button } from "../../../components/Buttons/Button";
 import { setAskStudentBeforePatronLogin } from "../../../core/unilogin-user";
 import { removeRequest } from "../../../core/guardedRequests.slice";
+import { closeModal } from "../../../core/modal.slice";
 
 export const uniloginPatronLoginModalId = "unilogin-patron-login";
 
@@ -19,6 +21,7 @@ const MenuUniloginPatronLogin: FC = () => {
   const { open, close } = useModalButtonHandler();
   const proceedRef = useRef<(() => void) | null>(null);
   const isOpen = useIsModalOpen(uniloginPatronLoginModalId);
+  const isTopModal = useIsTopModal(uniloginPatronLoginModalId);
   const config = useConfig();
   const isUniloginUser = Boolean(config("uniloginUserIdConfig"));
 
@@ -44,6 +47,17 @@ const MenuUniloginPatronLogin: FC = () => {
       dispatch(removeRequest());
     }
   }, [isOpen, dispatch]);
+
+  // Reopened from the URL, e.g. after a reload, the question has no patron
+  // login to go on with, so it is closed and the action stored for after that
+  // login is dropped. closeModal() also closes the top modal, so this waits
+  // until the question is on top.
+  useEffect(() => {
+    if (isTopModal && !proceedRef.current) {
+      dispatch(closeModal({ modalId: uniloginPatronLoginModalId }));
+      dispatch(removeRequest());
+    }
+  }, [isTopModal, dispatch]);
 
   const onConfirm = () => {
     const proceed = proceedRef.current;
