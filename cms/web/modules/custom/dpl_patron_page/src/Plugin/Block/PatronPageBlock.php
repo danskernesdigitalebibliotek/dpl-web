@@ -109,7 +109,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'patron-page-pause-reservations-body-text' => $this->t('patron page pause reservations body text', [], ['context' => 'Patron page']),
       'patron-page-pause-reservations-header-text' => $this->t('Pause physical reservations', [], ['context' => 'Patron page']),
       'patron-page-save-button-text' => $this->t('Save', [], ['context' => 'Patron page']),
-      'patron-page-status-section-body-text' => $this->t('There is a number of materials without limitation to amounts of loans per month.', [], ['context' => 'Patron page']),
       'patron-page-status-section-header-text' => $this->t('DIGITAL LOANS', [], ['context' => 'Patron page']),
       'patron-page-status-section-link-text' => $this->t('Click here, to see titles always eligible to be loaned', [], ['context' => 'Patron page']),
       'patron-page-status-section-loan-header-text' => $this->t('Loans per month', [], ['context' => 'Patron page']),

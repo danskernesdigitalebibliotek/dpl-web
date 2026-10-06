@@ -103,9 +103,6 @@ const StatusSection: FC = () => {
           <h2 className="text-header-h4 mt-64 mb-16">
             {t("patronPageStatusSectionHeaderText")}
           </h2>
-          <div className="text-body-small-regular mb-8">
-            {t("patronPageStatusSectionBodyText")}
-          </div>
           {reservationCeilings && (
             <div className="text-body-small-regular mt-8 mb-8">
               {t("patronPageStatusSectionReservationsText", {

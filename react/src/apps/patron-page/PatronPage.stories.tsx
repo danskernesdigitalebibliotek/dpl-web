@@ -114,9 +114,6 @@ const meta: Meta<typeof PatronPage> = {
     patronPageStatusSectionHeaderText: {
       control: { type: "text" }
     },
-    patronPageStatusSectionBodyText: {
-      control: { type: "text" }
-    },
     patronPageStatusSectionLoanHeaderText: {
       control: { type: "text" }
     },
@@ -248,8 +245,6 @@ const meta: Meta<typeof PatronPage> = {
     patronContactEmailCheckboxText:
       "Receive emails about your loans, reservations, and so forth",
     patronPageStatusSectionHeaderText: "Digital loans",
-    patronPageStatusSectionBodyText:
-      "There is a number of materials without limitation to amounts of loans per month.",
     patronPageStatusSectionLoanHeaderText: "Loans per month",
     patronPageStatusSectionLoansEbooksText: "E-books",
     patronPageStatusSectionLoansAudioBooksText: "Audiobooks",

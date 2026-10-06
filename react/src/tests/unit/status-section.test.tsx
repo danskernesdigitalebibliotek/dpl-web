@@ -26,7 +26,6 @@ vi.mock(
 vi.mock("../../core/utils/text", () => {
   const TRANSLATIONS: Record<string, string> = {
     patronPageStatusSectionHeaderText: "Status",
-    patronPageStatusSectionBodyText: "Her kan du se din status...",
     patronPageStatusSectionReservationsText:
       "Du kan reservere op til @countEbooks e-bøger og @countAudiobooks lydbøger.",
     patronPageStatusSectionLoanHeaderText: "Dine lån",
@@ -130,7 +129,6 @@ describe("StatusSection component tests", () => {
 
     // Check header and reservations texts
     expect(getByText("Status")).not.toBeNull();
-    expect(getByText("Her kan du se din status...")).not.toBeNull();
     expect(
       getByText("Du kan reservere op til 5 e-bøger og 4 lydbøger.")
     ).not.toBeNull();
