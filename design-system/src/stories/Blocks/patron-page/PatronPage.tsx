@@ -60,7 +60,7 @@ const PatronPage: React.FC<PatronPageProps> = ({ skeletonVersion = false }) => {
           statusBars={statusBars}
           link={{
             link: "https://www.figma.com/file/xouARmJCONbzbZhpD8XpcM/Brugerprofil?node-id=1239%3A66855",
-            text: "Click here, to see titles always eligible to be loaned",
+            text: "See titles that don't count towards your quota",
           }}
           reservationsText="You can reserve 4 ebooks and 10 audiobooks"
         />

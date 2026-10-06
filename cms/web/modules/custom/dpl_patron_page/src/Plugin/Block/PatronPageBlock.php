@@ -110,7 +110,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'patron-page-pause-reservations-header-text' => $this->t('Pause physical reservations', [], ['context' => 'Patron page']),
       'patron-page-save-button-text' => $this->t('Save', [], ['context' => 'Patron page']),
       'patron-page-status-section-header-text' => $this->t('DIGITAL LOANS', [], ['context' => 'Patron page']),
-      'patron-page-status-section-link-text' => $this->t('Click here, to see titles always eligible to be loaned', [], ['context' => 'Patron page']),
+      'patron-page-status-section-link-text' => $this->t("See titles that don't count towards your quota", [], ['context' => 'Patron page']),
       'patron-page-status-section-loans-audio-books-text' => $this->t('Audiobooks', [], ['context' => 'Patron page']),
       'patron-page-status-section-loans-ebooks-text' => $this->t('E-books', [], ['context' => 'Patron page']),
       'patron-page-status-section-out-of-aria-label-audio-books-text' => $this->t('You used @this audiobooks out of you quota of @that audiobooks', [], ['context' => 'Patron page (aria)']),

@@ -28,7 +28,8 @@ vi.mock("../../core/utils/text", () => {
     patronPageStatusSectionHeaderText: "Status",
     patronPageStatusSectionReservationsText:
       "Du kan reservere op til @countEbooks e-bøger og @countAudiobooks lydbøger.",
-    patronPageStatusSectionLinkText: "Se titler du altid kan låne",
+    patronPageStatusSectionLinkText:
+      "Se titler som ikke tæller med i din kvote.",
     patronPageStatusSectionLoansEbooksText: "E-bøger",
     patronPageStatusSectionOutOfText: "@this ud af @that",
     patronPageStatusSectionOutOfAriaLabelEbooksText:
@@ -136,7 +137,9 @@ describe("StatusSection component tests", () => {
     expect(getByText("Status")).not.toBeNull();
 
     // The link lands on advanced search
-    const alwaysLoanableLink = getByText("Se titler du altid kan låne");
+    const alwaysLoanableLink = getByText(
+      "Se titler som ikke tæller med i din kvote."
+    );
     const alwaysLoanableUrl = new URL(
       alwaysLoanableLink.getAttribute("href") ?? ""
     );

@@ -23,7 +23,7 @@ export default {
       { amount: 3, fullAmount: 7, title: "Lydbøger", outOf: "ud af" },
     ],
     link: {
-      text: "Se titler du altid kan låne",
+      text: "Se titler som ikke tæller med i din kvote.",
       link: "https://www.figma.com/file/xouARmJCONbzbZhpD8XpcM/Brugerprofil?node-id=1239%3A66855",
     },
     reservationsText: "Du kan reservere 3 e-bøger og 3 lydbøger",

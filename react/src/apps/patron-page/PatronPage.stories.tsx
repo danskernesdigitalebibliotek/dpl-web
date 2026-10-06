@@ -250,7 +250,7 @@ const meta: Meta<typeof PatronPage> = {
       "Receive emails about your loans, reservations, and so forth",
     patronPageStatusSectionHeaderText: "Digital loans",
     patronPageStatusSectionLinkText:
-      "Click here, to see titles always eligible to be loaned",
+      "See titles that don't count towards your quota",
     patronPageStatusSectionLoansEbooksText: "E-books",
     patronPageStatusSectionLoansAudioBooksText: "Audiobooks",
     patronPageChangePickupHeaderText: "Reservations",
