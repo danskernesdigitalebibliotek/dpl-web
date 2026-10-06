@@ -7,7 +7,6 @@ namespace Drupal\dpl_breadcrumb\Hook;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\dpl_breadcrumb\Services\BreadcrumbHelper;
-use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\TermInterface;
 
@@ -15,6 +14,8 @@ use Drupal\taxonomy\TermInterface;
  * Entity hooks for dpl_breadcrumb module.
  */
 class EntityHooks {
+
+  public function __construct(protected BreadcrumbHelper $helper) {}
 
   /**
    * Overrides structure data for nodes saved in breadcrumb tree.
@@ -28,15 +29,13 @@ class EntityHooks {
    */
   #[Hook('node_presave')]
   public function overrideNodeBreadcrumbParentOnPresave(Node $node): void {
-    $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
-
-    $field_name = $service->getStructureFieldName();
+    $field_name = $this->helper->getStructureFieldName();
 
     if (!$node->hasField($field_name)) {
       return;
     }
 
-    $breadcrumb_item = $service->getBreadcrumbItem($node);
+    $breadcrumb_item = $this->helper->getBreadcrumbItem($node);
 
     // We did not find the node in the tree - quit out.
     if (!($breadcrumb_item instanceof TermInterface)) {
@@ -48,7 +47,7 @@ class EntityHooks {
     // The reason we want to set it to the parent, is that it is the correct
     // logic, for making sure this node shows up in the correct automatic
     // breadcrumb lists.
-    $breadcrumb_parent = $service->getStructureParent($breadcrumb_item);
+    $breadcrumb_parent = $this->helper->getStructureParent($breadcrumb_item);
 
     $node->set($field_name, [$breadcrumb_parent?->id()]);
   }
@@ -62,9 +61,7 @@ class EntityHooks {
   #[Hook('taxonomy_term_insert')]
   #[Hook('taxonomy_term_update')]
   public function resaveNodesOnBreadcrumbTermUpdate(TermInterface $term): void {
-    $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
-
-    if ($term->bundle() !== $service->getStructureVid() || !$term->hasField('field_content')) {
+    if ($term->bundle() !== $this->helper->getStructureVid() || !$term->hasField('field_content')) {
       return;
     }
 

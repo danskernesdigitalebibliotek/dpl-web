@@ -7,12 +7,13 @@ namespace Drupal\dpl_breadcrumb\Hook;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\dpl_breadcrumb\Services\BreadcrumbHelper;
-use Drupal\drupal_typed\DrupalTyped;
 
 /**
  * Token hooks for dpl_breadcrumb module.
  */
 class TokenHooks {
+
+  public function __construct(protected BreadcrumbHelper $helper) {}
 
   /**
    * Provides custom tokens used to build pretty breadcrumb URLs.
@@ -72,7 +73,7 @@ class TokenHooks {
       return [];
     }
 
-    $token_value = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper')->getBreadcrumbUrlString($entity);
+    $token_value = $this->helper->getBreadcrumbUrlString($entity);
     // Pathauto 1.15.0 automatically adds a / prefix when patterns are saved.
     // Strip leading / from the url string to avoid duplication.
     $token_value = $token_value ? ltrim($token_value, '/') : NULL;
