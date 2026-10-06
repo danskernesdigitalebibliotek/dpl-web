@@ -14,11 +14,11 @@ importers:
   .:
     dependencies:
       '@danskernesdigitalebibliotek/dpl-service-layer':
-        specifier: file:../packages/service-layer
-        version: file:../packages/service-layer(@tanstack/react-query@5.102.8(react@19.2.8))(react@19.2.8)
+        specifier: workspace:*
+        version: link:../packages/service-layer
       '@danskernesdigitalebibliotek/dpl-wedobooks':
-        specifier: file:../packages/wedobooks
-        version: file:../packages/wedobooks(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: workspace:*
+        version: link:../packages/wedobooks
       '@next/env':
         specifier: 16.3.8
         version: 16.3.8
@@ -1166,18 +1166,6 @@ packages:
 
   '@cypress/xvfb@1.2.4':
     resolution: {integrity: sha512-skbBzPggOVYCbnGgV+0dmBdW/s77ZkAOXIC1knS8NagwDjBrNC1LuXtQJeiN6l+m7lzmHtaoUw/ctJKdqkG57Q==}
-
-  '@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/service-layer':
-    resolution: {directory: ../packages/service-layer, type: directory}
-    peerDependencies:
-      '@tanstack/react-query': ^5.101.0
-      react: ^18 || ^19
-
-  '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks':
-    resolution: {directory: ../packages/wedobooks, type: directory}
-    peerDependencies:
-      react: ^18 || ^19
-      react-dom: ^18 || ^19
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -11388,17 +11376,6 @@ snapshots:
       lodash.once: 4.1.1
     transitivePeerDependencies:
       - supports-color
-
-  '@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/service-layer(@tanstack/react-query@5.102.8(react@19.2.8))(react@19.2.8)':
-    dependencies:
-      '@tanstack/react-query': 5.102.8(react@19.2.8)
-      react: 19.2.8
-      zod: 4.6.5
-
-  '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
-    dependencies:
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
 
   '@emnapi/core@1.10.0':
     dependencies:
