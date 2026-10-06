@@ -74,16 +74,14 @@ const useOnlineAvailabilityData = ({
   // answer sitting in the cache from a provider that may no longer answer
   // must be ignored. Within a gate, null means "not answered yet".
   const isAvailableViaServiceLayer =
-    askServiceLayer && loanDecision
-      ? isMaterialAvailable(loanDecision.status)
+    askServiceLayer && loanDecision !== undefined
+      ? isMaterialAvailable(loanDecision)
       : null;
 
   const isAvailableViaPublizon =
     askPublizon && dataPublizon?.loanStatus
       ? publizonProductStatuses[dataPublizon.loanStatus].isAvailable
       : null;
-
-  const isAvailable = isAvailableViaServiceLayer ?? isAvailableViaPublizon;
 
   return {
     // Disabled queries never report loading, so this only counts the
@@ -92,7 +90,7 @@ const useOnlineAvailabilityData = ({
       isLoadingServiceLayer || isLoadingIdentifier || isLoadingPublizonData,
     // An online material neither service answers for is always available -
     // cost-free Publizon materials and other online materials alike.
-    isAvailable: isAvailable ?? true
+    isAvailable: isAvailableViaServiceLayer ?? isAvailableViaPublizon ?? true
   };
 };
 
