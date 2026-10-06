@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeAll } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import React, { ReactNode, act } from "react";
@@ -39,13 +39,11 @@ const Wrapper = ({ children }: { children: ReactNode }) => (
   </QueryClientProvider>
 );
 
-describe("useReservableFromAnotherLibrary", () => {
-  beforeAll(() => {
-    vi.mock("../../apps/material/helper", () => ({
-      useGetHoldings: vi.fn()
-    }));
-  });
+vi.mock("../../apps/material/helper", () => ({
+  useGetHoldings: vi.fn()
+}));
 
+describe("useReservableFromAnotherLibrary", () => {
   it("should return reservable pids from another library", async () => {
     // Typescript does not understand our mocked hook.
     // So we gracefully ignore the error :).
