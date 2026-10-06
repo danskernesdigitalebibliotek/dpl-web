@@ -79,7 +79,10 @@ export { useDigitalAcceptOffer } from "./hooks/useDigitalAcceptOffer"
 export { useDigitalCreateLoan } from "./hooks/useDigitalCreateLoan"
 export { useDigitalCreateReservation } from "./hooks/useDigitalCreateReservation"
 export { useDigitalDeleteReservation } from "./hooks/useDigitalDeleteReservation"
-export { useDigitalLoanDecision } from "./hooks/useDigitalLoanDecision"
+export {
+  type DigitalLoanDecisionResult,
+  useDigitalLoanDecision,
+} from "./hooks/useDigitalLoanDecision"
 export { useDigitalMaterialHolding } from "./hooks/useDigitalMaterialHolding"
 export { useDigitalLoanQuotas } from "./hooks/useDigitalLoanQuotas"
 export { useDigitalLoans } from "./hooks/useDigitalLoans"

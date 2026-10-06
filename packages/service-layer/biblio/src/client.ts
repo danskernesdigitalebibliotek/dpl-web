@@ -139,16 +139,13 @@ export function createBiblioClient(config: BiblioConfig) {
 
     // Whether the user can loan the material right now - the equivalent of
     // Publizon's loan status for an identifier. The adapter answers 404 for a
-    // material it does not know; with allowNotFound that is `undefined`, as
-    // for getMetadata.
-    getLoanDecision: async (
-      materialId: string,
-      options?: { allowNotFound?: boolean }
-    ): Promise<LoanDecision | undefined> => {
+    // material the catalogue lists but WeDoBooks has not provisioned; that is
+    // an answer, not a failure, so it is `undefined` as for getMetadata.
+    getLoanDecision: async (materialId: string): Promise<LoanDecision | undefined> => {
       const raw = await request({
         method: "GET",
         path: getCanLoanForAuthenticatedUserUrl({ material_id: materialId }),
-        allowNotFound: options?.allowNotFound,
+        allowNotFound: true,
       })
       if (raw === undefined) {
         return undefined

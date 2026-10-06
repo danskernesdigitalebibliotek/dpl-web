@@ -196,9 +196,9 @@ export const givenBiblioCreatesLoan = (loan?: LoanDto) => {
   }).as("biblioCreateLoan");
 };
 
-// TEMPORARY, with the toleration flag it exists for: the adapter answers
-// 404 for a material the catalogue lists but WeDoBooks has not provisioned.
-export const givenBiblioCannotAnswerCanLoan = (materialId: string) => {
+// The adapter answers 404 for a material the catalogue lists but WeDoBooks
+// has not provisioned.
+export const givenBiblioDoesNotKnowMaterial = (materialId: string) => {
   cy.intercept("GET", "**/v1/loans/can-loan*", {
     statusCode: 404,
     body: { message: `Material not found: ${materialId}` }

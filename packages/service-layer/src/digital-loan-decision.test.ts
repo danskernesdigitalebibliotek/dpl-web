@@ -1,66 +1,16 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { describe, expect, it } from "vitest"
 
-import { getDigitalLoanDecision, isMaterialAvailable } from "./digital-loan-decision"
-import { mockJsonResponse } from "./test-utils"
-import type { ServiceLayerConfig } from "./types"
-
-const configThat = (tolerateUnknownMaterials?: () => boolean): ServiceLayerConfig => ({
-  getBaseUrl: () => "https://biblio.example",
-  getAuthHeader: () => "Bearer abc",
-  tolerateUnknownMaterials,
-})
-
-const notFound = () => mockJsonResponse({ message: "Material not found: 9788758855752" }, 404)
-
-// TEMPORARY, with the toleration setting it covers.
-describe("getDigitalLoanDecision for a material the adapter does not know", () => {
-  beforeEach(() => {
-    vi.stubGlobal("fetch", vi.fn())
-  })
-
-  afterEach(() => {
-    vi.unstubAllGlobals()
-  })
-
-  it("Answers an unavailable material when the host tolerates it", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(notFound())
-
-    const decision = await getDigitalLoanDecision(
-      configThat(() => true),
-      "9788758855752"
-    )
-
-    // An ordinary decision: nothing downstream has to know about the 404.
-    expect(isMaterialAvailable(decision.status)).toBe(false)
-  })
-
-  it("Fails when the host does not tolerate it", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(notFound())
-
-    await expect(
-      getDigitalLoanDecision(
-        configThat(() => false),
-        "9788758855752"
-      )
-    ).rejects.toThrow("404")
-  })
-
-  it("Fails when the host has no say on it", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(notFound())
-
-    await expect(getDigitalLoanDecision(configThat(), "9788758855752")).rejects.toThrow("404")
-  })
-})
+import { isMaterialAvailable } from "./digital-loan-decision"
 
 describe("isMaterialAvailable", () => {
   it("Treats a loanable material as available", () => {
-    expect(isMaterialAvailable("loanable")).toBe(true)
+    expect(isMaterialAvailable({ status: "loanable" })).toBe(true)
   })
 
   it.each(["reservable", "wishable", "unavailable"] as const)(
     "Treats a material that can only be %s as unavailable",
     status => {
-      expect(isMaterialAvailable(status)).toBe(false)
+      expect(isMaterialAvailable({ status })).toBe(false)
     }
   )
 
@@ -72,11 +22,15 @@ describe("isMaterialAvailable", () => {
   ] as const)(
     "Keeps the material available when %s describes the user, not the material",
     status => {
-      expect(isMaterialAvailable(status)).toBe(true)
+      expect(isMaterialAvailable({ status })).toBe(true)
     }
   )
 
   it("Does not promise a material available on a status it does not know", () => {
-    expect(isMaterialAvailable("brand-new-status")).toBe(false)
+    expect(isMaterialAvailable({ status: "brand-new-status" })).toBe(false)
+  })
+
+  it.each([null, undefined])("Treats a missing decision (%s) as unavailable", decision => {
+    expect(isMaterialAvailable(decision)).toBe(false)
   })
 })
