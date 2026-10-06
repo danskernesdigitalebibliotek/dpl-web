@@ -2,7 +2,10 @@ import React, { FC, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useText } from "../../../core/utils/text";
 import { useConfig } from "../../../core/utils/config";
-import Modal, { useModalButtonHandler } from "../../../core/utils/modal";
+import Modal, {
+  useIsModalOpen,
+  useModalButtonHandler
+} from "../../../core/utils/modal";
 import { Button } from "../../../components/Buttons/Button";
 import { setAskStudentBeforePatronLogin } from "../../../core/unilogin-user";
 import { removeRequest } from "../../../core/guardedRequests.slice";
@@ -15,6 +18,7 @@ const MenuUniloginPatronLogin: FC = () => {
   const dispatch = useDispatch();
   const { open, close } = useModalButtonHandler();
   const proceedRef = useRef<(() => void) | null>(null);
+  const isOpen = useIsModalOpen(uniloginPatronLoginModalId);
   const config = useConfig();
   const isUniloginUser = Boolean(config("uniloginUserIdConfig"));
 
@@ -29,11 +33,17 @@ const MenuUniloginPatronLogin: FC = () => {
     return () => setAskStudentBeforePatronLogin(null);
   }, [isUniloginUser, open]);
 
-  const cancel = () => {
-    proceedRef.current = null;
-    // A guarded request stored for after login must not run at a later login.
-    dispatch(removeRequest());
-  };
+  // However the question is closed without confirming - its cancel button,
+  // the close button, the backdrop or Escape - the patron login is dropped,
+  // and a guarded request stored for after it must not run at a later login.
+  // The login only waits while the question is open: it is set before the
+  // question opens, and a confirm clears it before closing.
+  useEffect(() => {
+    if (!isOpen && proceedRef.current) {
+      proceedRef.current = null;
+      dispatch(removeRequest());
+    }
+  }, [isOpen, dispatch]);
 
   const onConfirm = () => {
     const proceed = proceedRef.current;
@@ -42,10 +52,7 @@ const MenuUniloginPatronLogin: FC = () => {
     proceed?.();
   };
 
-  const onCancel = () => {
-    cancel();
-    close(uniloginPatronLoginModalId);
-  };
+  const onCancel = () => close(uniloginPatronLoginModalId);
 
   // Modals also open from the URL, so a visitor who is not a Unilogin student
   // must not have this one at all.
@@ -59,7 +66,6 @@ const MenuUniloginPatronLogin: FC = () => {
       classNames="modal-right modal--no-padding"
       closeModalAriaLabelText={t("uniloginPatronLoginCancelText")}
       screenReaderModalDescriptionText={t("uniloginPatronLoginHeadingText")}
-      eventCallbacks={{ close: cancel }}
       isSlider
     >
       <div className="modal-login modal-login--anonymous modal-padding">
