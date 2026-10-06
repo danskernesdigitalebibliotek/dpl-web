@@ -6,6 +6,7 @@ import { getEditionsForMaterialType } from "@/components/pages/workPageLayout/he
 import EditionsSelectModalItem from "@/components/shared/editionsSelectModal/EditionsSelectModalItem"
 import { type TEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
+import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
 import { useEditionAvailability } from "@/hooks/useEditionAvailability"
 import {
@@ -100,10 +101,18 @@ const EditionsSelectModal = ({
   // them is ever true.
   const getUnavailableLabel = (manifestation: ManifestationWorkPageFragment) => {
     if (isEditionLentOut(manifestation)) {
-      return "Udlånt lige nu, men du kan stadig reservere bogen"
+      return (
+        <StatusLabel variant="warning" subline="Du kan stadig reservere bogen">
+          Udlånt lige nu
+        </StatusLabel>
+      )
     }
     if (isDigitalEditionOnLoan(manifestation)) {
-      return "Udlånt lige nu"
+      return (
+        <StatusLabel variant="warning" subline="">
+          Udlånt lige nu
+        </StatusLabel>
+      )
     }
     return undefined
   }
