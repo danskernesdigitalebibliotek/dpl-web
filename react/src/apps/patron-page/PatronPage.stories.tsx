@@ -120,9 +120,6 @@ const meta: Meta<typeof PatronPage> = {
     patronPageStatusSectionLinkText: {
       control: { type: "text" }
     },
-    patronPageStatusSectionLoanHeaderText: {
-      control: { type: "text" }
-    },
     patronPageStatusSectionLoansEbooksText: {
       control: { type: "text" }
     },
@@ -254,7 +251,6 @@ const meta: Meta<typeof PatronPage> = {
     patronPageStatusSectionHeaderText: "Digital loans",
     patronPageStatusSectionLinkText:
       "Click here, to see titles always eligible to be loaned",
-    patronPageStatusSectionLoanHeaderText: "Loans per month",
     patronPageStatusSectionLoansEbooksText: "E-books",
     patronPageStatusSectionLoansAudioBooksText: "Audiobooks",
     patronPageChangePickupHeaderText: "Reservations",

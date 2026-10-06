@@ -57,7 +57,6 @@ interface PatronPageTextProps {
   patronPageSaveButtonText: string;
   patronPageStatusSectionHeaderText: string;
   patronPageStatusSectionLinkText: string;
-  patronPageStatusSectionLoanHeaderText: string;
   patronPageStatusSectionLoansAudioBooksText: string;
   patronPageStatusSectionLoansEbooksText: string;
   patronPageStatusSectionOutOfAriaLabelAudioBooksText: string;

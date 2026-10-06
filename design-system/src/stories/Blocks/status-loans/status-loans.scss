@@ -5,4 +5,15 @@
   @include media-query__small {
     width: 50%;
   }
+
+  &__progress-bars {
+    display: flex;
+    flex-direction: column;
+    row-gap: $s-md;
+    margin-top: $s-md;
+  }
+
+  &__reservations {
+    margin-bottom: $s-md;
+  }
 }

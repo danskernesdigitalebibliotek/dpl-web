@@ -29,7 +29,6 @@ vi.mock("../../core/utils/text", () => {
     patronPageStatusSectionReservationsText:
       "Du kan reservere op til @countEbooks e-bøger og @countAudiobooks lydbøger.",
     patronPageStatusSectionLinkText: "Se titler du altid kan låne",
-    patronPageStatusSectionLoanHeaderText: "Dine lån",
     patronPageStatusSectionLoansEbooksText: "E-bøger",
     patronPageStatusSectionOutOfText: "@this ud af @that",
     patronPageStatusSectionOutOfAriaLabelEbooksText:
