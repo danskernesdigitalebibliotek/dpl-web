@@ -79,6 +79,13 @@ describe("starting a patron login", () => {
     expect(open).not.toHaveBeenCalled();
   });
 
+  it("is not there for a visitor who is not a Unilogin student", async () => {
+    const { MenuUniloginPatronLogin } = await loadModules();
+    render(<MenuUniloginPatronLogin />);
+
+    expect(screen.queryByText("uniloginPatronLoginHeadingText")).toBeNull();
+  });
+
   it("asks a Unilogin student first, and goes on when the student agrees", async () => {
     const { uniloginUser, MenuUniloginPatronLogin } = await loadModules();
     config.values.uniloginUserIdConfig = "elev4821";

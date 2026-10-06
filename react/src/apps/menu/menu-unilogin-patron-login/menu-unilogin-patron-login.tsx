@@ -47,6 +47,12 @@ const MenuUniloginPatronLogin: FC = () => {
     close(uniloginPatronLoginModalId);
   };
 
+  // Modals also open from the URL, so a visitor who is not a Unilogin student
+  // must not have this one at all.
+  if (!isUniloginUser) {
+    return null;
+  }
+
   return (
     <Modal
       modalId={uniloginPatronLoginModalId}
