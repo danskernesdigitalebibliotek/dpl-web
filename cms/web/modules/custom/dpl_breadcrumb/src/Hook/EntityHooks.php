@@ -54,34 +54,14 @@ class EntityHooks {
   }
 
   /**
-   * Resaves nodes linked to the term upon insertion.
+   * Resaves nodes linked to the term upon insertion/deletion.
    *
    * @param \Drupal\taxonomy\TermInterface $term
    *   The term entity.
    */
   #[Hook('taxonomy_term_insert')]
-  public function resaveNodesOnBreadcrumbTermInsert(TermInterface $term): void {
-    $this->resaveNodesLinkedToTerm($term);
-  }
-
-  /**
-   * Resaves nodes linked to the term upon update.
-   *
-   * @param \Drupal\taxonomy\TermInterface $term
-   *   The term entity.
-   */
   #[Hook('taxonomy_term_update')]
   public function resaveNodesOnBreadcrumbTermUpdate(TermInterface $term): void {
-    $this->resaveNodesLinkedToTerm($term);
-  }
-
-  /**
-   * Make sure nodes are re-saved when placed in the breadcrumb tree.
-   *
-   * @param \Drupal\taxonomy\TermInterface $term
-   *   The term entity.
-   */
-  protected function resaveNodesLinkedToTerm(TermInterface $term): void {
     $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
 
     if ($term->bundle() !== $service->getStructureVid() || !$term->hasField('field_content')) {
