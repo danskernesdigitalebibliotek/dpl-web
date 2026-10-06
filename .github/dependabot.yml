@@ -364,11 +364,10 @@ updates:
       - dependency-name: "stylelint-config-recommended-scss"
         update-types: ["version-update:semver-major"]
       # codegen breaks with these versions. DDFNEXT-1455
-      # typescript-operations v6 emits the enums and inputs it uses itself, so
-      # it collides with the typescript plugin in the same file, and it changes
-      # the generated shapes (nullable fields stop being optional, __typename is
-      # only emitted when selected). Moving needs a split output and code
-      # changes.
+      # typescript-operations v6 emits the enums and inputs it uses itself and
+      # collides with the typescript plugin in the same file, so the output has
+      # to be split in two files. It also makes nullable fields required
+      # (`field: T | null`), which a handful of Cypress factories must follow.
       # graphql 17 is also unsupported by the pinned codegen toolchain (all
       # plugins peer-require graphql ^16), so codegen crashes on it.
       - dependency-name: "graphql"
