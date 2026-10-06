@@ -1,5 +1,13 @@
 import React, { useSyncExternalStore } from "react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  onTestFinished,
+  vi
+} from "vitest";
 import {
   act,
   cleanup,
@@ -206,6 +214,35 @@ describe("starting a patron login", () => {
     act(() => modal.set(true, true));
     expect(dispatch).toHaveBeenCalledWith(
       closeModal({ modalId: "unilogin-patron-login" })
+    );
+  });
+
+  it("is asked before every redirect to the patron login", async () => {
+    const { uniloginUser } = await loadModules();
+    const { redirectToLoginAndBack } =
+      await import("../../core/utils/helpers/url");
+    const assign = vi
+      .spyOn(window.location, "assign")
+      .mockImplementation(() => {});
+    onTestFinished(() => assign.mockRestore());
+    const ask = vi.fn();
+    uniloginUser.setAskStudentBeforePatronLogin(ask);
+
+    redirectToLoginAndBack({
+      authUrl: new URL("https://bibliotek.example/login"),
+      returnUrl: new URL(
+        "https://bibliotek.example/work/work-of:870970-basis:00000001"
+      )
+    });
+
+    expect(ask).toHaveBeenCalledTimes(1);
+    expect(assign).not.toHaveBeenCalled();
+
+    ask.mock.calls[0][0]();
+    expect(assign).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /^https:\/\/bibliotek\.example\/login\?current-path=/
+      )
     );
   });
 });
