@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  brace-expansion@1: ^1.1.21
+  brace-expansion@2: ^2.1.7
+  brace-expansion@5: ^5.0.12
+
 importers:
 
   .:
@@ -25,8 +30,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(graphql@16.14.2)
       '@tanstack/react-query':
-        specifier: ^5.104.0
-        version: 5.104.0(react@19.3.0)
+        specifier: ^5.104.1
+        version: 5.104.1(react@19.3.0)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^6.0.2
         version: 6.0.2(prettier@3.9.9)(supports-color@7.2.0)
@@ -47,7 +52,7 @@ importers:
         version: 16.14.2
       orval:
         specifier: ^8.40.0
-        version: 8.40.0(@tanstack/react-query@5.104.0(react@19.3.0))(prettier@3.9.9)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(typescript@5.9.3)(zod@4.6.5)
+        version: 8.40.0(@tanstack/react-query@5.104.1(react@19.3.0))(prettier@3.9.9)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(typescript@5.9.3)(zod@4.6.5)
       prettier:
         specifier: ^3.9.9
         version: 3.9.9
@@ -1050,11 +1055,11 @@ packages:
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
 
-  '@tanstack/query-core@5.104.0':
-    resolution: {integrity: sha512-JrC2r/JQlXt7khBSdUpsgxNvybzOg+aITa+ARRMlP2AFo93Y8vIqz077rp+e61mJetSZ0T6AJbwW1JHer1vrPQ==}
+  '@tanstack/query-core@5.104.1':
+    resolution: {integrity: sha512-TiRghcrGkUTE+M4JBxvpPSpBhxvIzQairw+cksrHYGr+2uwC77yW1SY9nYxnYRYOppvucf8rEg6b5byoz4rTpw==}
 
-  '@tanstack/react-query@5.104.0':
-    resolution: {integrity: sha512-e1TZmDCQnWIfiDVryIHeA6Idj+Lfx1hORLOhXS/l5wcgvtVD4yYqbTDl378sGQKIi2cSgb0TEMC9cKK8GGoJEw==}
+  '@tanstack/react-query@5.104.1':
+    resolution: {integrity: sha512-Zz70EgjahNI7aCz8BZxM3vUGU44ycxEAzMuCUjLeA7SVhhOkg3ZgPjPJPvHjs6Rmky/dtmnu1WzjGHNHmhCoZQ==}
     peerDependencies:
       react: ^18 || ^19
 
@@ -1267,15 +1272,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  brace-expansion@2.1.1:
-    resolution: {integrity: sha512-WR1cURNjuvBLMZBMbqM0UoE+WAfdUcEV1ccD8PVBVOI+Z3ND4+SZbN8RsfT2bMuG1qwz5RFvPukSZm5fF2D5eA==}
+  brace-expansion@2.1.7:
+    resolution: {integrity: sha512-uZbew1NqdmPDTMJ8ah1y+b+9QEJrfkXFk3RcTQw3X0jW/xRUvFKsg1CfQdSYGdTbXZWExtU3J3ccxtnfw1Fi0g==}
 
-  brace-expansion@5.0.7:
-    resolution: {integrity: sha512-7oFy703dxfY3/NLxC1fh2SUCQ0H9rmAY+5EpDVfXjUTTs+HEwR2nYaqLv+GWcTsumwxPfiz6CzCNkwXwBUwqCA==}
-    engines: {node: 18 || 20 || >=22}
-
-  brace-expansion@5.0.9:
-    resolution: {integrity: sha512-ScQ4IuvIEF1TMlP7Zt+vjJ//9zlPb2SDcxWxM3bk8s6t6GGdJ7KO1dCcTidOPJKePW30LE/2cT7wCyPho9/Wxg==}
+  brace-expansion@5.0.12:
+    resolution: {integrity: sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ==}
     engines: {node: 20 || >=22}
 
   braces@3.0.3:
@@ -3413,12 +3414,12 @@ snapshots:
     transitivePeerDependencies:
       - '@faker-js/faker'
 
-  '@orval/query@8.40.0(@tanstack/react-query@5.104.0(react@19.3.0))':
+  '@orval/query@8.40.0(@tanstack/react-query@5.104.1(react@19.3.0))':
     dependencies:
       '@orval/core': 8.40.0
       '@orval/fetch': 8.40.0
     optionalDependencies:
-      '@tanstack/react-query': 5.104.0(react@19.3.0)
+      '@tanstack/react-query': 5.104.1(react@19.3.0)
     transitivePeerDependencies:
       - '@faker-js/faker'
 
@@ -3573,11 +3574,11 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@tanstack/query-core@5.104.0': {}
+  '@tanstack/query-core@5.104.1': {}
 
-  '@tanstack/react-query@5.104.0(react@19.3.0)':
+  '@tanstack/react-query@5.104.1(react@19.3.0)':
     dependencies:
-      '@tanstack/query-core': 5.104.0
+      '@tanstack/query-core': 5.104.1
       react: 19.3.0
 
   '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.9.9)(supports-color@7.2.0)':
@@ -3800,15 +3801,11 @@ snapshots:
 
   baseline-browser-mapping@2.11.22: {}
 
-  brace-expansion@2.1.1:
+  brace-expansion@2.1.7:
     dependencies:
       balanced-match: 1.0.2
 
-  brace-expansion@5.0.7:
-    dependencies:
-      balanced-match: 4.0.4
-
-  brace-expansion@5.0.9:
+  brace-expansion@5.0.12:
     dependencies:
       balanced-match: 4.0.4
 
@@ -4447,15 +4444,15 @@ snapshots:
 
   minimatch@10.2.5:
     dependencies:
-      brace-expansion: 5.0.7
+      brace-expansion: 5.0.12
 
   minimatch@10.2.6:
     dependencies:
-      brace-expansion: 5.0.9
+      brace-expansion: 5.0.12
 
   minimatch@9.0.9:
     dependencies:
-      brace-expansion: 2.1.1
+      brace-expansion: 2.1.7
 
   ms@2.1.3: {}
 
@@ -4501,7 +4498,7 @@ snapshots:
       type-check: 0.4.0
       word-wrap: 1.2.5
 
-  orval@8.40.0(@tanstack/react-query@5.104.0(react@19.3.0))(prettier@3.9.9)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(typescript@5.9.3)(zod@4.6.5):
+  orval@8.40.0(@tanstack/react-query@5.104.1(react@19.3.0))(prettier@3.9.9)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(typescript@5.9.3)(zod@4.6.5):
     dependencies:
       '@commander-js/extra-typings': 15.0.0(commander@15.0.0)
       '@orval/angular': 8.40.0
@@ -4513,7 +4510,7 @@ snapshots:
       '@orval/mcp': 8.40.0(zod@4.6.5)
       '@orval/mock': 8.40.0
       '@orval/pinia-colada': 8.40.0
-      '@orval/query': 8.40.0(@tanstack/react-query@5.104.0(react@19.3.0))
+      '@orval/query': 8.40.0(@tanstack/react-query@5.104.1(react@19.3.0))
       '@orval/solid-start': 8.40.0
       '@orval/swr': 8.40.0
       '@orval/zod': 8.40.0(zod@4.6.5)
