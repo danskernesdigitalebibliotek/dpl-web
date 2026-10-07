@@ -15,15 +15,14 @@ Three reasons, none of them cosmetic:
 - **The SDK cannot be consumed by webpack as published.** Colibrio, the reading
   framework underneath it, ships UMD modules whose AMD branches webpack picks
   up through static analysis and then fails to resolve. `build.mjs` pre-bundles
-  everything with esbuild and neutralises those branches. The AMD half of that
-  could in principle be handled in webpack instead (`module.parser.javascript.amd:
-  false`, or `noParse`), but the node polyfills the SDK needs would still have to
-  be configured per consumer - and pre-bundling covers Storybook and any future
-  GO consumer for free.
+  everything with esbuild and neutralises those branches. That could in
+  principle be handled in webpack instead (`module.parser.javascript.amd: false`,
+  or `noParse`), but it would have to be configured per consumer - and
+  pre-bundling covers Storybook and any future GO consumer for free.
 - **It only exists in the browser.** Constructing the client initialises
   Firebase and touches `window`. Keeping that behind one factory means one
   guard rather than one per caller.
-- **It is big** — roughly 4.6 MB minified. Consumers must import it lazily so
+- **It is big** — roughly 3.8 MB minified. Consumers must import it lazily so
   it stays out of bundles that no one reading a book will load. `react/`
   does this with `React.lazy` plus a webpack cache group; see
   `react/webpack.config.js`.
@@ -97,6 +96,10 @@ The CMS serves them from the `WEDOBOOKS_*` environment variables and leaves
 them out entirely unless all five are set, so React can tell an unconfigured
 site from a misconfigured one.
 
+The SDK decrypts books with the Web Crypto API, which browsers only expose in a
+secure context. A page served over plain http - a phone reaching a dev build
+through a LAN IP, say - loads fine and then fails once a book is opened.
+
 ## Signing in
 
 The SDK keeps its own session against WeDoBooks rather than going through the
@@ -124,9 +127,10 @@ through `next/dynamic` with `ssr: false`, never a static import.
 
 Two more things a GO integration will need, neither of which exists yet:
 
-- **The orchestration lives in `react/`, not here.** `useReaderSdk`,
-  `useReaderCheckout` and `useReaderSdkConfig` sit in
-  `react/src/core/digital/`, and the config hook reads React's Redux store. Only
+- **The orchestration lives in `react/`, not here.** `useDigitalSdkConfig`,
+  `useDigitalSdk`, `useDigitalSdkSession` and `useDigitalCheckout` sit in
+  `react/src/components/reader-player/`, and the config hook reads React's
+  Redux store. Only
   that last part is host-specific; the chain from config to signed-in session to
   entitlement is generic. Moving it here - taking the config and the token
   getter as inputs, the way `ServiceLayerConfig` already does for the adapter -
@@ -139,13 +143,8 @@ Two more things a GO integration will need, neither of which exists yet:
   entitlement when a book is finished, leaving it to the integration — but
   neither the SDK nor the Biblio adapter exposes a way to return a
   loan, so it runs to its expiry either way. Open with DBC.
-- **The SDK declares `lodash-es` but imports `lodash`.** A packaging bug on
-  their side; `lodash` is pinned here so esbuild can resolve it. Drop it once
-  they fix theirs.
-- **Its React peer range stops below 19, and we run 19.** The manifest here
-  widens it deliberately. What has been checked is that there is only one React
-  instance - the SDK bundles none of its own - so the failure mode is not two
-  Reacts. What has *not* been ruled out is the SDK's own dependencies (MUI 6,
-  `styled-components` 5, `react-router-dom` 5) relying on APIs React 19 removed,
-  such as `findDOMNode` or string refs. Watch for it when exercising the reader,
-  and raise it with WeDoBooks if their range does not move.
+- **React 19 is in the SDK's peer range, but not proven for its dependencies.**
+  It still bundles MUI 6, `styled-components` 5, `react-router-dom` 5 and
+  `react-transition-group`, whose fallback without a `nodeRef` calls
+  `findDOMNode` - removed in React 19. Watch for it when exercising the reader,
+  and raise it with WeDoBooks if it shows up.

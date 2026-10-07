@@ -20,14 +20,31 @@
   --radius-xs: 4px;
   --radius-none: 0;
 
+  /*
+   * Z-INDEX — the stacking hierarchy in one place; anything positioned must
+   * use a token from this scale, never a raw z-value:
+   *
+   *   10  content accents   badge, floating icon, slide select
+   *   20  navigation        the header
+   *   30  player            the global audiobook player bar — above the
+   *                         navigation, below every overlay
+   *   50  dialog/drawer/    modals and sheets cover everything, including
+   *       sheet             a playing player bar
+   *
+   * The WeDoBooks reader needs no token: it renders in normal flow on the
+   * chrome-less reader route.
+   */
   --z-index-*: initial;
   --z-index--1: -1;
 
+  --z-index-badge: 10;
+  --z-index-slide-select: 10;
+  --z-index-floating-icon: 10;
+  --z-index-navigation: 20;
+  --z-index-player: 30;
   --z-index-dialog: 50;
   --z-index-drawer: 50;
   --z-index-sheet: 50;
-  --z-index-slide-select: 10;
-  --z-index-floating-icon: 10;
 
   --aspect-*: initial;
   --aspect-1\/1: var(--aspect-1-1);
@@ -48,8 +65,7 @@
   --aspect-16\/9: var(--aspect-16-9);
 
   --font-*: initial;
-  --font-headline: var(--font-headline);
-  --font-body: var(--font-body);
+  --font-sans: var(--font-sans);
 
   --text-*: initial;
   --text-typo-huge: var(--typo-huge-size);
@@ -120,6 +136,10 @@
   --text-typo-tag-sm--line-height: var(--typo-tag-sm-line-height);
   --text-typo-tag-sm--font-weight: var(--typo-tag-sm-weight);
   --text-typo-tag-sm--letter-spacing: var(--typo-tag-sm-letter-spacing);
+  --text-typo-label-sm: var(--typo-label-sm-size);
+  --text-typo-label-sm--line-height: var(--typo-label-sm-line-height);
+  --text-typo-label-sm--font-weight: var(--typo-label-sm-weight);
+  --text-typo-label-sm--letter-spacing: var(--typo-label-sm-letter-spacing);
   --text-typo-caption: var(--typo-caption-size);
   --text-typo-caption--line-height: var(--typo-caption-line-height);
   --text-typo-caption--font-weight: var(--typo-caption-weight);
@@ -157,7 +177,8 @@
   --color-content-1: var(--content-pink-100);
   --color-content-2: var(--content-blue-100);
   --color-content-3: var(--content-orange-100);
-  --color-content-4: var(--content-purple-100);
+  --color-content-4: var(--success-green-100);
+  --color-content-5: var(--go-green);
 
   --color-blue-title: var(--blue-title);
   --color-blue-title-dark: var(--blue-title-dark);

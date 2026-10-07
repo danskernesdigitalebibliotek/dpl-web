@@ -1,8 +1,9 @@
 "use client"
 
+import type { DigitalLoan } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React, { useEffect, useState } from "react"
 
-import { getEbookReadUrl } from "@/components/pages/workPageLayout/helper"
+import { getReadUrlForLoan } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import DigitalExpiryStatusLabel from "@/components/shared/loanCard/DigitalExpiryStatusLabel"
 import LoanDetailsContent from "@/components/shared/loanDetailsModal/LoanDetailsContent"
@@ -17,17 +18,25 @@ import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphq
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import {
   type SelectedLoan,
+  biblioLoanForWork,
   buildSelectedLoan,
   digitalLoanForWork,
   sortWorksBySoonestExpiry,
 } from "@/lib/helpers/helper.patron"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
+import { playLoan } from "@/store/player.store"
 
 // Data props — `open`/`onClose` come from the DynamicModal host.
+// TODO(publizon-sunset): remove when the Publizon API is phased out —
+// loanData goes, biblioLoans becomes the only loan source, and the in-modal
+// player view (selectedLoan.orderId) dies with pubhub's player.
 export type DigitalLoansModalProps = {
   works: WorkTeaserSearchPageFragment[]
   loanData: LoanListResult
+  // Loans made through the Biblio adapter, shown alongside the Publizon ones
+  // while the two providers coexist.
+  biblioLoans?: DigitalLoan[]
   // Opens directly on this loan's details (e.g. from a slider card);
   // there is then no back navigation to the list.
   initialLoan?: SelectedLoan | null
@@ -40,6 +49,7 @@ const DigitalLoansModal = ({
   onClose,
   works,
   loanData,
+  biblioLoans,
   initialLoan,
 }: DigitalLoansModalProps & { open: boolean; onClose: () => void }) => {
   const [selectedLoan, setSelectedLoan] = useState<SelectedLoan | null>(null)
@@ -55,7 +65,7 @@ const DigitalLoansModal = ({
   }, [open])
 
   // Soonest-expiring loans first; works without a matching loan go last.
-  const sortedWorks = sortWorksBySoonestExpiry(works, loanData)
+  const sortedWorks = sortWorksBySoonestExpiry(works, loanData, biblioLoans)
 
   const goBack = () => {
     const target = flow.back()
@@ -104,6 +114,8 @@ const DigitalLoansModal = ({
             {sortedWorks.map(work => {
               const manifestation = work.manifestations.all[0]
               const loan = digitalLoanForWork(work, loanData)
+              const expiry =
+                loan?.loanExpireDateUtc ?? biblioLoanForWork(work, biblioLoans)?.endDate
               const creators = displayCreators(work.creators, 1)
               const title = work.titles.full[0]
 
@@ -115,12 +127,12 @@ const DigitalLoansModal = ({
                   creators={creators}
                   blueTitle
                   onSelect={() => {
-                    const selection = buildSelectedLoan(work, loanData)
+                    const selection = buildSelectedLoan(work, loanData, biblioLoans)
                     if (!selection) return
                     setSelectedLoan(selection)
                     flow.goTo("detail")
                   }}
-                  status={<DigitalExpiryStatusLabel dueDate={loan?.loanExpireDateUtc} />}
+                  status={<DigitalExpiryStatusLabel dueDate={expiry} />}
                 />
               )
             })}
@@ -128,7 +140,7 @@ const DigitalLoansModal = ({
         )
       )}
 
-      {flow.view === "detail" && selectedLoan?.orderId && (
+      {flow.view === "detail" && (selectedLoan?.orderId || selectedLoan?.loanId) && (
         <ResponsiveDialog.Actions>
           {selectedLoan.category === "ebook" ? (
             <Button
@@ -137,7 +149,7 @@ const DigitalLoansModal = ({
               ariaLabel={`Læs ${selectedLoan.label}`}
               data-cy={cyKeys["read-loan-button"]}
               asChild>
-              <SmartLink href={getEbookReadUrl(selectedLoan.workId, selectedLoan.orderId)} reload>
+              <SmartLink href={getReadUrlForLoan(selectedLoan.workId, selectedLoan)} reload>
                 Læs {selectedLoan.label}
               </SmartLink>
             </Button>
@@ -147,7 +159,17 @@ const DigitalLoansModal = ({
               size="lg"
               ariaLabel={`Lyt til ${selectedLoan.label}`}
               data-cy={cyKeys["listen-loan-button"]}
-              onClick={() => flow.goTo("player")}>
+              onClick={() => {
+                // A Biblio loan plays in the global player bar, which
+                // survives navigation - the modal's embedded player view is
+                // Publizon only.
+                if (selectedLoan.loanId) {
+                  playLoan(selectedLoan.loanId)
+                  onClose()
+                } else {
+                  flow.goTo("player")
+                }
+              }}>
               Lyt til {selectedLoan.label}
             </Button>
           ) : null}

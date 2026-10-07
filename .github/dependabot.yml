@@ -13,6 +13,13 @@ registries:
   # Dependabot secret rather than an Actions secret - Dependabot cannot read
   # the latter, which is also why workflow runs on its pull requests need the
   # same secret registered separately.
+  #
+  # Every npm entry needs it, even though only packages/wedobooks' lockfile
+  # contains the SDK. Dependabot runs `pnpm update <dep> -r` across the whole
+  # workspace, so bumping a dependency packages/wedobooks also declares (e.g.
+  # @types/react, typescript) makes pnpm fetch the SDK's metadata from any
+  # entry. This only lets Dependabot reach the registry; it changes nothing in
+  # the other packages' dependencies or lockfiles.
   wedobooks:
     type: npm-registry
     url: https://npm.pkg.wedobooks.io
@@ -87,6 +94,8 @@ updates:
   # CMS - npm dependencies
   - package-ecosystem: npm
     directory: "/cms"
+    registries:
+      - wedobooks
     cooldown:
       default-days: 3
     open-pull-requests-limit: 20
@@ -114,6 +123,8 @@ updates:
   # Design System - npm dependencies
   - package-ecosystem: npm
     directory: "/design-system"
+    registries:
+      - wedobooks
     cooldown:
       default-days: 3
     open-pull-requests-limit: 20
@@ -160,6 +171,8 @@ updates:
   # Go (Next.js) - npm dependencies
   - package-ecosystem: npm
     directory: "/go"
+    registries:
+      - wedobooks
     cooldown:
       default-days: 3
     open-pull-requests-limit: 20
@@ -268,6 +281,8 @@ updates:
   # React - npm dependencies
   - package-ecosystem: npm
     directory: "/react"
+    registries:
+      - wedobooks
     cooldown:
       default-days: 3
     open-pull-requests-limit: 20
@@ -340,9 +355,6 @@ updates:
         versions: [">=4.0.0"]
       - dependency-name: "dotenv"
         update-types: ["version-update:semver-major"]
-      # Vitest 3 changes unit-test asset rendering and timer behavior in the React snapshot suite.
-      - dependency-name: "vitest"
-        versions: [">=3.0.0"]
       # The current React lint stack still depends on plugins that are not ESLint 10 compatible.
       - dependency-name: "eslint"
         versions: [">=10.0.0"]
@@ -392,8 +404,6 @@ updates:
   - package-ecosystem: npm
     directories:
       - "/packages/*"
-    # packages/wedobooks resolves the SDK and Colibrio from WeDoBooks'
-    # registry, which no other directory here reaches.
     registries:
       - wedobooks
     cooldown:

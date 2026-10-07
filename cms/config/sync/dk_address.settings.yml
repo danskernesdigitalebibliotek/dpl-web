@@ -1,0 +1,8 @@
+_core:
+  default_config_hash: vw-M872Ys2EWpMHXA-3Q_6uidoT7sUnrhS4djQTRCR0
+api_url: 'https://adressevaelger.dk'
+token: adressevaelger123
+site_token: ''
+sources:
+  - husnumre
+  - adresser

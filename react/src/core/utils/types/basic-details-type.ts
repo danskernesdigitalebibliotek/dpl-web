@@ -1,6 +1,6 @@
 import { Pid } from "./ids";
 import { Nullable } from "./nullable";
-import { PublizonProductType } from "../../publizon/productType";
+import { OpensInType } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 interface BasicDetails {
   authors: string;
@@ -14,9 +14,9 @@ interface BasicDetails {
   title: string;
   series: string;
   lang?: string;
-  // Publizon's product type enum (1 = ebook, 2 = audiobook, 4 = podcast).
-  // Set only for digital materials, used to launch reader/player directly.
-  publizonProductType: PublizonProductType;
+  // Where a digital material opens. Set only for digital materials, used to
+  // launch the reader or player directly; null for one nothing can open.
+  opensIn: OpensInType;
 }
 
 export type BasicDetailsType = Nullable<Partial<BasicDetails>>;

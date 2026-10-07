@@ -9,6 +9,7 @@ services:
     class: Drupal\bnf_client\Services\BnfExporter
     arguments:
       $logger: '@logger.channel.bnf'
+  Drupal\bnf_client\Services\BnfExporter: '@bnf_client.exporter'
 
   Drupal\bnf_client\BnfScheduler:
     class: Drupal\bnf_client\BnfScheduler

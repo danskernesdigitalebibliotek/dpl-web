@@ -235,6 +235,20 @@ type File {
   url: String!
 }
 
+type GoBiblioConfiguration {
+  baseUrl: String
+  enabled: Boolean!
+  sdk: GoBiblioSdkConfiguration
+}
+
+type GoBiblioSdkConfiguration {
+  applicationId: String!
+  firebaseApiKey: String!
+  firebaseAppId: String!
+  firebaseProjectId: String!
+  readerApiKey: String!
+}
+
 type GoCategoriesResult implements View {
   description: String
   display: String!
@@ -256,6 +270,7 @@ type GoConfigurationPrivate {
 }
 
 type GoConfigurationPublic {
+  biblio: GoBiblioConfiguration
   blacklistedAvailabilityBranches: [String!]
   libraryInfo: GoLibraryInfo
   loginUrls: GoLoginUrls
