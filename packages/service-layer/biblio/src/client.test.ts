@@ -196,24 +196,28 @@ describe("createBiblioClient.getLoans", () => {
       mockJsonResponse({ loans: [loanBody], pagination: { limit: 50, cursor: "next" } })
     )
 
-    const result = await buildClient().getLoans({ active: true })
+    const result = await buildClient().getLoans({ active: true, limit: 50, cursor: "prev" })
 
     expect(fetch).toHaveBeenCalledWith(
-      `${baseUrl}/v1/loans?active=true`,
+      `${baseUrl}/v1/loans?active=true&limit=50&cursor=prev`,
       expect.objectContaining({ method: "GET" })
     )
     expect(result).toEqual({ loans: [mappedLoan], nextCursor: "next" })
   })
 
-  it("omits the cursor on the final page", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(
-      mockJsonResponse({ loans: [], pagination: { limit: 50 } })
-    )
+  // Left to its default the adapter sends 25 loans a page, and a patron past
+  // that would lose the rest from both the loan list and the material page.
+  it("asks for a page large enough to hold every loan", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ loans: [], pagination: {} }))
 
     await expect(buildClient().getLoans()).resolves.toEqual({
       loans: [],
       nextCursor: undefined,
     })
+    expect(fetch).toHaveBeenCalledWith(
+      `${baseUrl}/v1/loans?limit=250`,
+      expect.objectContaining({ method: "GET" })
+    )
   })
 })
 

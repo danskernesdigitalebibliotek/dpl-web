@@ -41,6 +41,10 @@ import { parseAndMapSample } from "./mappers/sample.mapper"
 import { parseAndMapSignInToken, parseAndMapSupportId } from "./mappers/user.mapper"
 import type { BiblioConfig } from "./types"
 
+// The adapter pages loans at 25 unless asked for more. To fetch all of a
+// patron's loans, we ask for a page size nobody is ever likely to exceed.
+const LOANS_PAGE_SIZE = 250
+
 type PageParams = {
   limit?: number
   cursor?: string
@@ -130,7 +134,7 @@ export function createBiblioClient(config: BiblioConfig) {
         method: "GET",
         path: getGetLoansForAuthenticatedUserUrl({
           active: params?.active,
-          limit: params?.limit,
+          limit: params?.limit ?? LOANS_PAGE_SIZE,
           cursor: params?.cursor,
         }),
       })
