@@ -65,9 +65,10 @@ need it, and whether it is filed upstream - that is where to look, rather than
 here, so the two cannot drift apart.
 
 Where the problem is instead about the shape of the file we produce, the
-command deals with it. A file gettext cannot read still stops the workflow: the
-next step merges the scan output with the configuration translations using
-`msgcat`, which names the offending file and line and writes nothing.
+command deals with it. An unreadable file still stops the workflow: the next
+step, `dpl_po:combine`, reads the scan output and the configuration
+translations into the combined file, names the offending file and line when it
+cannot, and writes nothing.
 
 ### Why the 2.x alpha and not the 1.x stable release
 

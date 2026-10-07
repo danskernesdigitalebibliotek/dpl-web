@@ -22,3 +22,10 @@ services:
       - '@dpl_po.po_file_builder'
     tags:
       - { name: drush.command }
+  dpl_po.combine_commands:
+    class: \Drupal\dpl_po\Commands\CombineCommands
+    arguments:
+      - '%app.root%'
+      - '@dpl_po.po_combiner'
+    tags:
+      - { name: drush.command }

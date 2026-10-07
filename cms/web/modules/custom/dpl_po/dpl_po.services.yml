@@ -6,6 +6,10 @@ services:
     class: Drupal\dpl_po\PoFileBuilder
     arguments:
       - '@logger.channel.dpl_po'
+  dpl_po.po_combiner:
+    class: Drupal\dpl_po\Gettext\PoCombiner
+    arguments:
+      - '@logger.channel.dpl_po'
   dpl_po.config_manager:
     class: Drupal\dpl_po\Services\CtpConfigManager
     arguments:

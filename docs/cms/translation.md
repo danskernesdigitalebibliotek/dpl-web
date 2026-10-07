@@ -27,7 +27,11 @@ To make the "translation traffic" work following components are being used:
     themes and profile, plus every contrib module Drupal has installed. Core is
     left out, as its translations come from localize.drupal.org
   * Exports translatable configuration strings into a separate `*.config.po` file
-  * Merges the two files: `*.po` and `*.config.po` into a `*.combined.po` file
+  * Brings the committed `*.combined.po` file up to date with the two files,
+    using the `dpl_po:combine` Drush command. The file keeps the order and
+    layout POEditor exports it in: strings that are still in the code stay
+    where they are, new ones are appended, and removed ones are dropped. A
+    run that finds nothing new leaves the file untouched.
   * Notifies POEditor that new translatable strings are available
   * When a project is exported from POEditor:
     * The `*.combined.po` is split into two files: `*.po` and `*.config.po`
@@ -61,7 +65,7 @@ sequenceDiagram
 %% <!-- markdownlint-disable-next-line MD013 -->
   GitHubActions ->> GitHubActions: Exports configuration translations into a .config.po file
 %% <!-- markdownlint-disable-next-line MD013 -->
-  GitHubActions ->> GitHubActions: The two .po files are merged together into a .combined.po file
+  GitHubActions ->> GitHubActions: The committed .combined.po file is updated with the two .po files
   GitHubActions ->> GitHub: Commit combined.po file with updated strings
   GitHubActions ->> POEditor: Call webhook
   POEditor ->> GitHub: Fetch updated combined.po file
