@@ -126,6 +126,18 @@ describe("A loan the SDK refuses to open", () => {
     expect(queryByTestId("reader")).toBeNull();
   });
 
+  it("says the loan expired when the SDK closed the title for that", async () => {
+    refuseWith.mockReturnValueOnce({ reason: "access_expired" });
+
+    const { findByText, queryByText, queryByTestId } = renderReaderPage();
+
+    expect(
+      await findByText("Your loan of this title has expired, so it was closed.")
+    ).not.toBeNull();
+    expect(queryByText("Open again")).toBeNull();
+    expect(queryByTestId("reader")).toBeNull();
+  });
+
   it("offers to open again when this device was removed from the account", async () => {
     refuseWith.mockReturnValueOnce({ reason: "device_revoked" });
 

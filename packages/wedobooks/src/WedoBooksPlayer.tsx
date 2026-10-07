@@ -1,6 +1,7 @@
 import * as React from "react"
 
 import {
+  reportSdkError,
   type WedoBooksCheckout,
   type WedoBooksSdk,
   type WedoBooksStopReason,
@@ -47,6 +48,7 @@ export function WedoBooksPlayer({
         checkout,
         callbacks: {
           onClose: interruption => (interruption ? onStop(interruption) : onClose()),
+          onError: reportSdkError,
         },
       }),
     [sdk, checkout.id],

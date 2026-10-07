@@ -40,9 +40,18 @@ export type WedoBooksSampleMaterial = Omit<SampleMaterialData, "material_type">
  * Why the SDK closed a reader or player on its own. A patron reads or listens
  * in one place at a time: opening the loan elsewhere - another device, or
  * another tab of this browser - takes the session, and a device WeDoBooks no
- * longer recognises loses it. Samples are never interrupted.
+ * longer recognises loses it. A loan that expires while open is closed too.
+ * Samples are never interrupted.
  */
 export type WedoBooksSessionInterruption = WdbSessionInterruption
+
+/**
+ * For the SDK's `onError`. The reader and player keep their own error screen
+ * on the page, so there is nothing for a caller to show - but the error itself
+ * is what support needs to see.
+ */
+export const reportSdkError = (error: unknown): void =>
+  console.warn("WeDoBooks could not show the content", error)
 
 /**
  * Why the SDK refused to open a book, mounting nothing, where the refusal is

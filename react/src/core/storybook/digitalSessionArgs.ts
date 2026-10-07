@@ -1,7 +1,7 @@
 /**
  * The texts the reader and player pages show when the WeDoBooks SDK will not
- * show the loan - a session that moved, a full device list, or a refusal we
- * cannot name. In a mounted app they arrive from the CMS as data attributes;
+ * show the loan - a session that moved, a loan that expired, a full device
+ * list, or a refusal we cannot name. In a mounted app they arrive from the CMS as data attributes;
  * see DigitalSessionTexts there for the defaults these mirror.
  */
 export const argTypes = {
@@ -16,6 +16,10 @@ export const argTypes = {
   },
   digitalSessionDeviceRevokedText: {
     description: "Shown when this device was removed from the patron's account",
+    control: { type: "text" } as const
+  },
+  digitalSessionAccessExpiredText: {
+    description: "Shown when the loan expired while the title was open",
     control: { type: "text" } as const
   },
   digitalSessionDeviceLimitText: {
@@ -51,6 +55,7 @@ export interface DigitalSessionArgs {
   digitalSessionTakenOverDeviceText: string;
   digitalSessionTakenOverTabText: string;
   digitalSessionDeviceRevokedText: string;
+  digitalSessionAccessExpiredText: string;
   digitalSessionDeviceLimitText: string;
   digitalSessionDeviceLastUsedText: string;
   digitalSessionRemoveDeviceButtonText: string;
@@ -66,6 +71,8 @@ const digitalSessionArgs: DigitalSessionArgs = {
     "You opened this title in another tab of this browser.",
   digitalSessionDeviceRevokedText:
     "This device is no longer registered to your account.",
+  digitalSessionAccessExpiredText:
+    "Your loan of this title has expired, so it was closed.",
   digitalSessionDeviceLimitText:
     "You can read and listen on up to @limit devices, and they are all in use. Remove one to continue here.",
   digitalSessionDeviceLastUsedText: "Last used @date",

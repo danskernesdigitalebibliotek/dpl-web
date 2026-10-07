@@ -1,6 +1,7 @@
 import * as React from "react"
 
 import {
+  reportSdkError,
   type WedoBooksReaderMaterial,
   type WedoBooksSdk,
   type WedoBooksStopReason,
@@ -55,6 +56,7 @@ export function WedoBooksReader({
         callbacks: {
           onClose: interruption => (interruption ? onStop(interruption) : onClose()),
           onFinishBookClick: onFinishBook,
+          onError: reportSdkError,
         },
       }),
     [sdk, checkout.id],

@@ -20,6 +20,8 @@ const textKeyFor = (reason: WedoBooksStopReason): string => {
         : "digitalSessionTakenOverDeviceText";
     case "device_revoked":
       return "digitalSessionDeviceRevokedText";
+    case "access_expired":
+      return "digitalSessionAccessExpiredText";
     default:
       return "digitalSessionOpenFailedText";
   }
@@ -27,9 +29,10 @@ const textKeyFor = (reason: WedoBooksStopReason): string => {
 
 /**
  * What the patron sees in place of a reader or player the SDK will not show:
- * the session moved elsewhere, or the SDK refused to open for a reason this
- * page cannot act on. A browser removed from the patron's devices is not a
- * fault - opening again registers it anew - so that one offers to.
+ * the session moved elsewhere, the loan expired while open, or the SDK refused
+ * to open for a reason this page cannot act on. A browser removed from the
+ * patron's devices is not a fault - opening again registers it anew - so that
+ * one offers to.
  *
  * A full device list is the one stop the patron can do something about, and
  * has its own view - see DeviceLimitReached.

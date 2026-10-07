@@ -38,6 +38,8 @@ const titleFor = (reason: WedoBooksStopReason) => {
     // open, so neither "closed" nor "could not open" fits.
     case "device_revoked":
       return "Enheden er ikke længere registreret"
+    case "access_expired":
+      return "Lånet er udløbet"
     default:
       return "Titlen blev lukket"
   }
@@ -52,6 +54,8 @@ const messageFor = (reason: WedoBooksStopReason) => {
         : "Du har åbnet denne titel på en anden enhed. Du kan læse eller lytte på én enhed ad gangen."
     case "device_revoked":
       return "Denne enhed er ikke længere registreret på din konto."
+    case "access_expired":
+      return "Dit lån af denne titel er udløbet, så den blev lukket."
     default:
       return "Titlen kunne ikke åbnes. Prøv igen senere."
   }

@@ -94,6 +94,16 @@ describe("DigitalReaderPlayer when the SDK will not show the loan", () => {
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 
+  it("explains a loan that expired while open", () => {
+    stopWith.mockReturnValueOnce({ reason: "access_expired" })
+
+    const { onClose, getByTestId, queryByTestId } = renderReader()
+
+    expect(getByTestId("session-dialog").dataset.reason).toBe("access_expired")
+    expect(queryByTestId("reader")).toBeNull()
+    expect(onClose).not.toHaveBeenCalled()
+  })
+
   it("explains a session that moved elsewhere", () => {
     stopWith.mockReturnValueOnce({ reason: "taken_over", scope: "device", activeDeviceId: "other" })
 
