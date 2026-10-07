@@ -1,10 +1,20 @@
+import { appendQueryParametersToUrl } from "../utils/helpers/url";
 import { FacetState, FilterState, FormView, SortOption } from "./types";
+
+const shouldBeSerialized = (value: unknown) =>
+  Array.isArray(value) ? value.length > 0 : value !== undefined;
+
+const serializeParameter = (value: unknown) =>
+  Array.isArray(value) ? JSON.stringify(value) : String(value);
 
 /**
  * Constructs a link into advanced-search-v2 with its URL state pre-filled.
  * Params are written in the formats the app's nuqs parsers read them back in.
  */
-export const constructAdvancedSearchUrl = (args: {
+export const constructAdvancedSearchUrl = ({
+  advancedSearchUrl,
+  ...parameters
+}: {
   advancedSearchUrl: URL;
   filters?: FilterState[];
   preSearchFacets?: FacetState[];
@@ -13,28 +23,18 @@ export const constructAdvancedSearchUrl = (args: {
   sort?: SortOption;
   view?: FormView;
 }) => {
-  const {
+  const serializableParameters = Object.entries(parameters).filter(
+    ([, value]) => shouldBeSerialized(value)
+  );
+
+  const serializedParameters = serializableParameters.map(
+    ([name, value]): [string, string] => [name, serializeParameter(value)]
+  );
+
+  return appendQueryParametersToUrl(
     advancedSearchUrl,
-    filters,
-    preSearchFacets,
-    facets,
-    ...scalarParameters
-  } = args;
-  const processedUrl = new URL(advancedSearchUrl);
-  const jsonParameters = { filters, preSearchFacets, facets };
-
-  Object.entries(jsonParameters).forEach(([name, value]) => {
-    if (value?.length) {
-      processedUrl.searchParams.set(name, JSON.stringify(value));
-    }
-  });
-  Object.entries(scalarParameters).forEach(([name, value]) => {
-    if (value !== undefined) {
-      processedUrl.searchParams.set(name, String(value));
-    }
-  });
-
-  return processedUrl;
+    Object.fromEntries(serializedParameters)
+  );
 };
 
 /**
