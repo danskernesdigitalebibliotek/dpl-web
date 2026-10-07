@@ -14,6 +14,7 @@ use Drupal\Core\Path\PathMatcherInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\dpl_go\GoSiteInterface;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\AccessTokenType;
 use Drupal\dpl_login\UserTokens;
@@ -34,6 +35,10 @@ class RedirectPatronSubscriberTest extends UnitTestCase {
   const PATRON_PAGE = '/user/me/loans';
 
   const OTHER_PAGE = '/search';
+
+  const GO_BASE_URL = 'https://go.example.dk';
+
+  const GO_PROFILE = self::GO_BASE_URL . '/user/profile';
 
   /**
    * {@inheritdoc}
@@ -57,7 +62,7 @@ class RedirectPatronSubscriberTest extends UnitTestCase {
    * Anonymous visitors are sent to login. Unilogin students are logged in to
    * Drupal but are not patrons: sending them to login would log them out and,
    * through single sign-on, straight back in again, so they are sent to the
-   * front page instead.
+   * their profile on Go instead.
    *
    * @param bool $anonymous
    *   Whether the visitor is anonymous.
@@ -100,6 +105,8 @@ class RedirectPatronSubscriberTest extends UnitTestCase {
 
     $session = $this->prophesize(OpenIDConnectSession::class);
     $killSwitch = $this->prophesize(KillSwitch::class);
+    $goSite = $this->prophesize(GoSiteInterface::class);
+    $goSite->getGoBaseUrl()->willReturn(self::GO_BASE_URL);
 
     $subscriber = new RedirectPatronSubscriber(
       $aliasManager->reveal(),
@@ -110,6 +117,7 @@ class RedirectPatronSubscriberTest extends UnitTestCase {
       $killSwitch->reveal(),
       $session->reveal(),
       $userTokens->reveal(),
+      $goSite->reveal(),
     );
 
     $event = new RequestEvent(
@@ -139,7 +147,7 @@ class RedirectPatronSubscriberTest extends UnitTestCase {
     return [
       'Anonymous visitor on a patron page' => [TRUE, NULL, self::PATRON_PAGE, 'route:dpl_login.login'],
       'Anonymous visitor on another page' => [TRUE, NULL, self::OTHER_PAGE, NULL],
-      'Unilogin student on a patron page' => [FALSE, AccessTokenType::UniloginUser, self::PATRON_PAGE, 'route:<front>'],
+      'Unilogin student on a patron page' => [FALSE, AccessTokenType::UniloginUser, self::PATRON_PAGE, self::GO_PROFILE],
       'Unilogin student on another page' => [FALSE, AccessTokenType::UniloginUser, self::OTHER_PAGE, NULL],
       'Patron on a patron page' => [FALSE, AccessTokenType::User, self::PATRON_PAGE, NULL],
       'Unregistered patron on a patron page' => [FALSE, AccessTokenType::UnregisteredUser, self::PATRON_PAGE, NULL],

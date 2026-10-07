@@ -29,7 +29,7 @@ class AccessToken {
   public AccessTokenType $type;
 
   /**
-   * The uni-id of a Unilogin user, so the student can see who is logged in.
+   * The uni-id of a Unilogin user, so the user can see who is logged in.
    *
    * @var string|null
    */

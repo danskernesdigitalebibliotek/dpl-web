@@ -10,6 +10,7 @@ use Drupal\Core\Path\PathMatcherInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_go\GoSiteInterface;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectSession;
 use Drupal\path_alias\AliasManagerInterface;
@@ -48,6 +49,8 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
    *   OpenID Connect session.
    * @param \Drupal\dpl_login\UserTokens $userTokens
    *   The user tokens of the current user.
+   * @param \Drupal\dpl_go\GoSiteInterface $goSite
+   *   The Go site, where Unilogin students have their profile.
    */
   public function __construct(
     private AliasManagerInterface $aliasManager,
@@ -58,6 +61,7 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
     private KillSwitch $killSwitch,
     private OpenIDConnectSession $session,
     private UserTokens $userTokens,
+    private GoSiteInterface $goSite,
   ) {
     $this->configuration = $configFactory->get('dpl_patron_redirect.settings');
   }
@@ -93,9 +97,9 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
     // Unilogin students are logged in to Drupal, but they are not patrons, so
     // the patron pages are of no use to them. Sending them to login would log
     // them out and, through single sign-on, straight back in, so send them to
-    // the front page instead.
+    // their profile on Go instead.
     if ($this->getPatronPagePath() !== NULL && $this->userTokens->isUniloginUser()) {
-      $this->redirectTo($event, '<front>');
+      $event->setResponse(new TrustedRedirectResponse($this->goSite->getGoBaseUrl() . '/user/profile', 307));
     }
   }
 

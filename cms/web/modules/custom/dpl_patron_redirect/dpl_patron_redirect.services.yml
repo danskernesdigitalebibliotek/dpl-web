@@ -11,6 +11,7 @@ services:
         '@page_cache_kill_switch',
         '@openid_connect.session',
         '@dpl_login.user_tokens',
+        '@dpl_go.go_site',
       ]
     tags:
       - { name: event_subscriber }
