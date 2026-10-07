@@ -1,9 +1,10 @@
+import {
+  MATERIAL_TYPE_AUDIOBOOKS,
+  MATERIAL_TYPE_EBOOKS
+} from "../../../core/advanced-search/material-types";
 import type { Option, RangePreset } from "../types";
 
 const currentYear = new Date().getFullYear();
-
-export const MATERIAL_TYPE_EBOOKS = "e-bøger";
-export const MATERIAL_TYPE_AUDIOBOOKS = "lydbøger";
 
 export const MATERIAL_TYPE_OPTIONS: Option[] = [
   { label: "Bøger", value: "bøger" },

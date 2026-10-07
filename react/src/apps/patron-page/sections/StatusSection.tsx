@@ -15,7 +15,7 @@ import { constructAdvancedSearchUrl } from "../../../core/advanced-search/url";
 import {
   MATERIAL_TYPE_AUDIOBOOKS,
   MATERIAL_TYPE_EBOOKS
-} from "../../advanced-search-v2/lib/advanced-search-select-options";
+} from "../../../core/advanced-search/material-types";
 import Link from "../../../components/atoms/links/Link";
 import { QuotaBar } from "./QuotaBar";
 import { ComplexSearchFacetsEnum } from "../../../core/dbc-gateway/generated/graphql";

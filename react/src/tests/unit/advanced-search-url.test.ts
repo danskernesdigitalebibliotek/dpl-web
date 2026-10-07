@@ -6,7 +6,7 @@ import {
 import {
   MATERIAL_TYPE_AUDIOBOOKS,
   MATERIAL_TYPE_EBOOKS
-} from "../../apps/advanced-search-v2/lib/advanced-search-select-options";
+} from "../../core/advanced-search/material-types";
 import { ComplexSearchFacetsEnum } from "../../core/dbc-gateway/generated/graphql";
 import { SortOption } from "../../core/advanced-search/types";
 import {
