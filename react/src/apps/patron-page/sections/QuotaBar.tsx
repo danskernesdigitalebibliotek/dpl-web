@@ -26,7 +26,7 @@ export const QuotaBar: FC<QuotaBarProps> = ({
   return (
     <div className="dpl-progress-bar text-small-caption color-secondary-gray">
       <div className="dpl-progress-bar__header">
-        <label className="text-label" htmlFor={id}>
+        <label className="text-label" htmlFor={limit ? id : undefined}>
           {t(labelTextKey)}
         </label>
         {limit !== undefined && (
