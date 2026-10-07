@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import { useRouter, useSearchParams } from "next/navigation"
-import React, { useOptimistic, useTransition } from "react"
+import React, { useEffect, useOptimistic, useRef, useState, useTransition } from "react"
 
 import {
   getManifestationLanguageCode,
@@ -21,7 +21,9 @@ import {
 import MaterialTypeSelect, {
   MaterialTypeSelectOption,
 } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
+import { useRestoreFocusAfterDialog } from "@/hooks/useRestoreFocusAfterDialog"
 import useSession from "@/hooks/useSession"
+import { useShownEditions } from "@/hooks/useShownEditions"
 import {
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
@@ -129,6 +131,46 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const editionChoiceLabel = getEditionChoiceLabel(editionChoice, selectedManifestation)
 
+  // The picker lists the editions of the picked type that the kommune can
+  // supply, so the same set decides whether there is anything to pick between.
+  const { shownEditions, isLoadingAvailability } = useShownEditions(
+    work.workId,
+    pickedMaterialTypeCode
+  )
+  const hasEditionsToChooseFrom = shownEditions.length > 1
+  const isEditionPickerLoading = isSwitchingMaterialType || isLoadingAvailability
+
+  const editionButtonRef = useRef<HTMLButtonElement>(null)
+  // Set whenever focus is owed back to the edition button: the picker closed,
+  // or a material-type switch replaced the button with a skeleton and dropped
+  // focus onto <body>. `useRestoreFocusAfterDialog` pays it once no dialog
+  // holds the focus trap and the button is mounted again.
+  const shouldRestoreEditionFocus = useRef(false)
+  // The nonce makes every choice a new value even when the sentence repeats,
+  // which is what the live region below needs to announce it again.
+  const [choiceAnnouncement, setChoiceAnnouncement] = useState({ text: "", nonce: 0 })
+  const announceChoice = (text: string) =>
+    setChoiceAnnouncement(current => ({ text, nonce: current.nonce + 1 }))
+
+  // A material-type switch replaces the button with a skeleton, dropping
+  // focus onto <body>. Only a switch that took the focus away owes it back;
+  // one the reader started elsewhere leaves their focus alone. The hook below
+  // pays the debt.
+  useEffect(() => {
+    if (!isEditionPickerLoading) return
+    shouldRestoreEditionFocus.current ||= document.activeElement === document.body
+  }, [isEditionPickerLoading])
+
+  // The picker renders outside this tree, so it cannot return focus itself.
+  // Only records the debt: the dialog's focus trap holds the focus until it
+  // unmounts, so `useRestoreFocusAfterDialog` waits for that before moving
+  // it.
+  const restoreEditionFocus = () => {
+    shouldRestoreEditionFocus.current = true
+  }
+
+  useRestoreFocusAfterDialog(shouldRestoreEditionFocus, editionButtonRef)
+
   // The modal receives the choice pinned to the selected manifestation; on
   // confirm, the choice is serialized back into the url's edition param.
   const openEditionsSelect = () =>
@@ -149,7 +191,19 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           },
         })
         router.push(url, { scroll: false })
+        // The modal closes on confirm and the buttons behind it change state,
+        // none of which a screen reader would otherwise report.
+        if (choice === "newest") {
+          announceChoice("Nyeste udgave valgt")
+          return
+        }
+        // Named from the picked manifestation, not the selected one: the page
+        // has not swapped it yet at this point.
+        const picked = manifestations.find(manifestation => manifestation.pid === choice.pid)
+        const pickedYear = picked?.edition?.publicationYear?.year
+        announceChoice(pickedYear ? `Udgave valgt: ${pickedYear}` : "Udgave valgt")
       },
+      onClosed: restoreEditionFocus,
     })
 
   return (
@@ -212,33 +266,48 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           />
         </div>
         <div className="col-span-4 mt-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
-          <div className="mb-3 w-full">
-            <WorkPageButtons>
-              {/* Mid-switch the label would still name the previous type's
-                  edition, so the button is replaced by a skeleton until the
-                  page has resolved the new one. */}
-              {isSwitchingMaterialType ? (
-                <div
-                  className="bg-background-skeleton h-12 w-full animate-pulse rounded-full
-                    lg:max-w-80 lg:min-w-72"
-                />
-              ) : (
-                <button
-                  type="button"
-                  onClick={openEditionsSelect}
-                  className="border-foreground/10 focus-visible text-typo-body-sm
-                    hover:bg-background-overlay flex w-full items-center justify-between gap-3
-                    rounded-full border px-5 py-3 text-left transition-colors lg:max-w-80
-                    lg:min-w-72">
-                  <span className="min-w-0 truncate">
-                    {"Udgave: "}
-                    <span className="font-semibold">{editionChoiceLabel}</span>
-                  </span>
-                  <span className="animate-text-underline shrink-0">Skift</span>
-                </button>
-              )}
-            </WorkPageButtons>
-          </div>
+          {/* The edition picker closes on confirm, so the choice it made is
+              announced here instead. Keyed by the nonce, so a repeated
+              sentence still replaces the node and counts as a change. */}
+          <p key={choiceAnnouncement.nonce} role="status" className="sr-only">
+            {choiceAnnouncement.text}
+          </p>
+          {/* Fewer than two obtainable editions is no choice, so the picker
+              is left out entirely for such a material type. */}
+          {(isEditionPickerLoading || hasEditionsToChooseFrom) && (
+            <div className="mb-3 w-full">
+              <WorkPageButtons>
+                {/* Mid-switch the label would name the previous type's
+                    edition, so a skeleton stands in until the page resolves
+                    the new one — and until availability says whether the
+                    button belongs here at all. */}
+                {isEditionPickerLoading ? (
+                  <div
+                    role="status"
+                    aria-label="Henter udgaver"
+                    className="bg-background-skeleton h-12 w-full animate-pulse rounded-full
+                      lg:max-w-80 lg:min-w-72"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    ref={editionButtonRef}
+                    onClick={openEditionsSelect}
+                    aria-label={`Udgave: ${editionChoiceLabel}. Skift udgave`}
+                    className="border-foreground/10 focus-visible text-typo-body-sm
+                      hover:bg-background-overlay flex w-full items-center justify-between gap-3
+                      rounded-full border px-5 py-3 text-left transition-colors lg:max-w-80
+                      lg:min-w-72">
+                    <span className="min-w-0 truncate">
+                      {"Udgave: "}
+                      <span className="font-semibold">{editionChoiceLabel}</span>
+                    </span>
+                    <span className="animate-text-underline shrink-0">Skift</span>
+                  </button>
+                )}
+              </WorkPageButtons>
+            </div>
+          )}
           {isLoggedIn ? (
             <WorkPageButtonsLoggedIn
               workId={work.workId}

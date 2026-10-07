@@ -14,8 +14,9 @@ type EditionsSelectModalItemProps = {
   onSelect: () => void
   // Shown under the caption when the edition cannot be borrowed right now.
   // Physical and digital editions word this differently, so the caller
-  // supplies the text.
-  unavailableLabel?: string
+  // supplies the status.
+  unavailableLabel?: React.ReactNode
+  unavailableText?: string
 }
 
 const EditionsSelectModalItem = ({
@@ -24,6 +25,7 @@ const EditionsSelectModalItem = ({
   checked,
   onSelect,
   unavailableLabel,
+  unavailableText,
 }: EditionsSelectModalItemProps) => {
   const year = manifestation.edition?.publicationYear?.year
   // `edition` is the plain edition number/name with no year or contributors

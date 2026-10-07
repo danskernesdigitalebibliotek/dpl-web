@@ -83,6 +83,16 @@ holdings), so silence means the edition cannot be vouched for.
 An edition that is only lent out keeps its position in the list and stays
 selectable, undimmed. The caption carries the status.
 
+What survives this filter is also what decides whether the picker is offered
+at all: `useShownEditions` is read by both the modal and the work page's
+"Udgave" button, and a material type left with fewer than two obtainable
+editions presents no choice, so the button is not rendered for it. That
+covers the empty case too — a type the kommune holds nothing of gets no
+button, and the reserve button carries the dead end on its own.
+
+The modal's own "no editions" copy therefore covers one case: availability
+resolving after the dialog has opened and taking the last edition away.
+
 ## No login gate
 
 Availability is **agency-scoped, not patron-scoped**: whether the kommune
@@ -112,6 +122,7 @@ rejects what it cannot supply, so the fallback is safe.
 | `packages/service-layer/src/types.ts` | `MaterialAvailability`, `RecordAvailability` |
 | `go/lib/helpers/helper.availability.ts` | The obtainable / on-loan rules |
 | `go/hooks/useEditionAvailability.ts` | React hook; also exports `useWorkRecordIds` |
+| `go/hooks/useShownEditions.ts` | The editions of one material type that survive the filter |
 | `go/lib/helpers/helper.digitalAvailability.ts` | The Publizon status rule |
 | `go/hooks/useDigitalEditionAvailability.ts` | React hook for digital editions |
 | `go/hooks/useBlacklistedAvailabilityBranches.ts` | Branches the library excludes |
