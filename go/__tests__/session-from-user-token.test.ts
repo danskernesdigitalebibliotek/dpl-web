@@ -134,16 +134,19 @@ describe("saveSessionFromUserToken", () => {
     )
   })
 
-  // Publizon does not know DDF's test institution, so test users loan
+  // Publizon does not know DDF's test institutions, so test users loan
   // through "Christianshavns skole".
-  it("maps the DDF test institution to an institution known by Publizon", async () => {
-    mockUserinfo({ ok: true, body: uniloginUserinfo("[R00263,ABC111]") })
-    const session = newSession()
+  it.each([["[R00263,ABC111]"], ["[ABC111,R00263]"], ["[A04441,R00263]"], ["[A04441]"]])(
+    "maps the DDF test institutions in %s to an institution known by Publizon",
+    async institutionIds => {
+      mockUserinfo({ ok: true, body: uniloginUserinfo(institutionIds) })
+      const session = newSession()
 
-    await saveSessionFromUserToken(session, userToken("unilogin"))
+      await saveSessionFromUserToken(session, userToken("unilogin"))
 
-    expect(session.uniLoginUserInfo.institutionIds).toEqual(["101047"])
-  })
+      expect(session.uniLoginUserInfo.institutionIds).toEqual(["101047"])
+    }
+  )
 
   it.each([
     ["a bracketed list", "[ABC111,CDA222,B4333]", ["ABC111", "CDA222", "B4333"]],

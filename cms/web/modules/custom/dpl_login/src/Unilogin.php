@@ -34,8 +34,10 @@ final class Unilogin {
 
   /**
    * Institutions of DDF test users, allowed regardless of municipality.
+   *
+   * A user with any of these among their institutions is a test user.
    */
-  const TEST_INSTITUTION_IDS = ['R00263'];
+  const TEST_INSTITUTION_IDS = ['R00263', 'A04441'];
 
   // Reasons for denying a Unilogin user.
   const DENIED_NOT_UNILOGIN = 'not a Unilogin user';
@@ -94,10 +96,11 @@ final class Unilogin {
   /**
    * Why may the Unilogin user not log in at this library?
    *
-   * The user must have a license and an institution, and the first
-   * institution of the user must either be a test institution or belong to
-   * the municipality of the library. Loans are made through the first
-   * institution, so only that one counts.
+   * The user must have a license and an institution. Test users, with a test
+   * institution anywhere among their institutions, may always log in. For
+   * anyone else the first institution must belong to the municipality of the
+   * library: loans are made through the first institution, so only that one
+   * counts.
    *
    * @param mixed[] $userinfo
    *   The userinfo from the Adgangsplatformen userinfo endpoint.
@@ -124,7 +127,7 @@ final class Unilogin {
       return self::DENIED_NO_INSTITUTION;
     }
 
-    if (in_array($institution_ids[0], self::TEST_INSTITUTION_IDS, TRUE)) {
+    if (array_intersect($institution_ids, self::TEST_INSTITUTION_IDS)) {
       return NULL;
     }
 

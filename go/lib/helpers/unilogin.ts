@@ -24,9 +24,10 @@ const uniloginUserInfoSchema = z.object({
   }),
 })
 
-// R00263 is DDF's Unilogin test institution. Publizon does not know it, so
-// test users loan through "Christianshavns skole" instead.
-const testInstitutionId = "R00263"
+// DDF's Unilogin test institutions. A user with any of them is a test user,
+// as in the CMS (Unilogin::TEST_INSTITUTION_IDS). Publizon does not know them,
+// so test users loan through "Christianshavns skole" instead.
+const testInstitutionIds = ["R00263", "A04441"]
 const testInstitutionReplacementIds = ["101047"]
 
 // Reads what the local Pubhub adapter needs about a Unilogin user: the uni-id
@@ -60,8 +61,9 @@ export const loadUniloginUserInfo = async (
     const { uniloginUniId: uniid, uniloginInstitutionIds: institutionIds } = result.data.attributes
     return {
       uniid,
-      institutionIds:
-        institutionIds[0] === testInstitutionId ? testInstitutionReplacementIds : institutionIds,
+      institutionIds: institutionIds.some(id => testInstitutionIds.includes(id))
+        ? testInstitutionReplacementIds
+        : institutionIds,
     }
   } catch (error) {
     console.error("Could not load Unilogin userinfo", error)

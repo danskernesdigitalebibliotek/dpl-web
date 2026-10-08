@@ -265,16 +265,31 @@ class UniloginTest extends UnitTestCase {
           Unilogin::CLAIM_AGENCY_ID => '715100',
         ]),
         self::AGENCY_ID,
-        $municipality,
+        NULL,
       ],
-      // Loans go through the first institution, so only that one counts.
       'Test institution that is not the first institution' => [
         self::userinfo([
           Unilogin::CLAIM_INSTITUTION_IDS => 'A12345,R00263',
           Unilogin::CLAIM_AGENCY_ID => '715100',
         ]),
         self::AGENCY_ID,
-        $municipality,
+        NULL,
+      ],
+      'Both test institutions, without agency id' => [
+        self::userinfo([
+          Unilogin::CLAIM_INSTITUTION_IDS => '[A04441,R00263]',
+          Unilogin::CLAIM_AGENCY_ID => NULL,
+        ]),
+        self::AGENCY_ID,
+        NULL,
+      ],
+      'Test institution A04441 from another municipality' => [
+        self::userinfo([
+          Unilogin::CLAIM_INSTITUTION_IDS => 'A04441',
+          Unilogin::CLAIM_AGENCY_ID => '715100',
+        ]),
+        self::AGENCY_ID,
+        NULL,
       ],
       'Test institution without agency id of the library' => [
         self::userinfo([Unilogin::CLAIM_INSTITUTION_IDS => '[R00263]']),
