@@ -315,6 +315,17 @@ These all run as jobs in `go-ci.yml` on every pull request touching `go/` or
 
 7. **Generated code drift**: the `codegen` job re-runs the client generators and fails if the committed output differs, so the checked-in clients cannot silently fall out of sync with the schemas.
 
+
+### Argos screenshots locally
+
+To check that stories can be screenshotted, run:
+
+```shell
+task argos:capture -- components/shared/button
+```
+
+It builds the static Storybook and screenshots the given story files, or every story without arguments, into `screenshots/`. The browser runs in the Playwright image matching the installed Playwright, as in CI, so screenshots render the same. The task needs Docker with host networking: OrbStack, Linux, or Docker Desktop with host networking enabled in its settings. It uses ports 3100 and 6106 on `127.0.0.1`.
+
 ## Developers
 
 - Adam Antal - <adam@reload.dk>
