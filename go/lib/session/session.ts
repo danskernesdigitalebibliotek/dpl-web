@@ -247,9 +247,13 @@ const saveAdgangsplatformenSession = async (
  * Save a logged-in session for a Unilogin student.
  *
  * The student is not a patron, so the token must never be sent to FBS or FBI
- * as a user token; getPatronUserToken() does not return it. It is used to read
- * the Unilogin attributes the Pubhub adapter needs, and kept for digital
- * loans — towards Publizon and the Biblio adapter (getDigitalLoanUserToken()).
+ * as a user token; getPatronUserToken() does not return it. It reads the
+ * Unilogin attributes the local Pubhub adapter needs, and is kept for digital
+ * loans through the Biblio adapter (getDigitalLoanUserToken()).
+ *
+ * TODO(publizon-sunset): the Unilogin attributes serve the local Pubhub
+ * adapter only; when the Publizon API is phased out the Biblio adapter
+ * authenticates with the token alone.
  *
  * @param session - The session to log in.
  * @param userToken - The student's user token from the CMS.

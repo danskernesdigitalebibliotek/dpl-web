@@ -189,6 +189,8 @@ const LoanMaterialModal = ({
   // New loans go through exactly one provider: the Biblio adapter once the
   // library has switched, Publizon until then. Both authenticate a Unilogin
   // user as well as a patron (ADR-013).
+  // TODO(publizon-sunset): collapses to handleBiblioLoan() when the Publizon
+  // API is phased out — the else branch and handlePublizonLoan go.
   const handleLoanMaterial = () => {
     if (!manifestation) return
     if (viaBiblioAdapter) {
