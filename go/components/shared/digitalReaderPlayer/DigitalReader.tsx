@@ -1,6 +1,10 @@
 "use client"
 
-import type { WedoBooksCheckout, WedoBooksSdk } from "@danskernesdigitalebibliotek/dpl-wedobooks"
+import type {
+  WedoBooksCheckout,
+  WedoBooksSdk,
+  WedoBooksStopReason,
+} from "@danskernesdigitalebibliotek/dpl-wedobooks"
 import dynamic from "next/dynamic"
 import React from "react"
 
@@ -17,6 +21,7 @@ type DigitalReaderProps = {
   /** The entitlement to open - fetched once by DigitalReaderPlayer. */
   checkout: WedoBooksCheckout
   onClose: () => void
+  onStop: (reason: WedoBooksStopReason) => void
 }
 
 /**
@@ -31,12 +36,13 @@ type DigitalReaderProps = {
  * footing the reader has in the CMS. The SDK's viewport sizing (100dvh tall,
  * capped at 1600px and centered) does the rest; no wrapper, no positioning.
  */
-function DigitalReader({ sdk, checkout, onClose }: DigitalReaderProps) {
+function DigitalReader({ sdk, checkout, onClose, onStop }: DigitalReaderProps) {
   return (
     <SdkReader
       sdk={sdk}
       checkout={checkout}
       onClose={onClose}
+      onStop={onStop}
       // Finishing a book ends nothing yet: neither the adapter nor the SDK's
       // library flow exposes a way to hand a loan back early, so it runs to
       // its expiry. Closing is the honest response until one of them does.
