@@ -138,6 +138,32 @@ stories that cannot be screenshotted reliably at all: an untagged story with
 content that breaks the capture, like the YouTube embed, should rather have
 that content blocked or masked so the rest of the story is still covered.
 
+### Comparing local work with Argos
+
+Upload screenshots of commits you have not pushed yet:
+
+```shell
+task dev:argos
+```
+
+They are compared with `develop`. Set `BASE` to compare with another branch,
+e.g. `BASE=main task dev:argos`. The task needs dependencies installed and
+`ARGOS_TOKEN` in the root `.env` (`task dev:dotenv:generate`). Like the other
+tasks here, it runs in Docker: a `node` container builds the static Storybook,
+captures it and uploads the screenshots, and the browser runs in the
+`playwright` service, in the Playwright image, so screenshots render like they
+do in CI. pnpm in the container installs the dependencies' Linux binaries, so
+run `pnpm install` again before using them outside Docker.
+
+To screenshot only some stories, pass their story files, e.g.
+`task dev:argos -- src/stories/Blocks/header`. `task argos:capture` takes the
+same arguments and only writes the screenshots to `screenshots/`, without
+uploading them, to check that stories can be captured.
+
+Local uploads never become baselines. The task refuses to run on `develop`,
+`main` and `release/*`, with uncommitted changes, as Argos files the build
+under `HEAD`, and once `HEAD` is pushed, as CI then compares it.
+
 ## Chromatic
 
 We are using Chromatic for visual test. You can access the dashboard

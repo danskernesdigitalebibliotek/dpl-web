@@ -84,6 +84,44 @@ tasks:
     cmds:
       - task dev:cli -- pnpm run chromatic
 
+  dev:argos:
+    summary: |
+      Upload screenshots of unpushed work to Argos, compared against the CI
+      baseline of BASE (default develop). Needs ARGOS_TOKEN in the root .env.
+    vars:
+      BASE: '{{.BASE | default "develop"}}'
+      BRANCH:
+        sh: git rev-parse --abbrev-ref HEAD
+    env:
+      # Only the token: the root .env also sets COMPOSE_PROJECT_NAME.
+      ARGOS_TOKEN:
+        sh: sed -n 's/^ARGOS_TOKEN=//p' ../.env 2>/dev/null | tr -d '"'
+    preconditions:
+      - sh: test -n "$ARGOS_TOKEN"
+        msg: ARGOS_TOKEN is missing from the root .env. Run `task dev:dotenv:generate` in the repository root.
+      - sh: test "{{.BRANCH}}" != HEAD
+        msg: Check out a branch first.
+      - sh: 'case "{{.BRANCH}}" in develop|main|release/*) exit 1;; esac'
+        msg: Baselines for {{.BRANCH}} come from CI only.
+      # Argos files the build under HEAD, so it must show HEAD's code.
+      - sh: test -z "$(git status --porcelain)"
+        msg: Commit your change locally first.
+      # Fetched first, as HEAD may have been pushed from another clone.
+      - sh: git fetch --quiet origin && test -z "$(git branch -r --contains HEAD)"
+        msg: HEAD is already pushed, so CI compares it.
+    cmds:
+      - task: argos:capture
+      # In a node container, where the dependencies' binaries match after the
+      # capture. It has no git for the worktree, so the commits come from here.
+      # A subset build compares against the baseline but never becomes one.
+      - >-
+        docker compose {{.DOCKER_COMPOSE_FILES}} run --rm --no-deps
+        --user "$(id -u):$(id -g)" --env HOME=/tmp --env ARGOS_TOKEN
+        --env ARGOS_COMMIT=$(git rev-parse HEAD) --env ARGOS_BRANCH={{.BRANCH}}
+        --env ARGOS_REFERENCE_COMMIT=$(git merge-base HEAD origin/{{.BASE}})
+        --env ARGOS_REFERENCE_BRANCH={{.BASE}}
+        node corepack pnpm exec argos upload --build-name design-system --subset ./screenshots
+
   argos:capture:
     summary: |
       Screenshot every story into ./screenshots for Argos. A node container
