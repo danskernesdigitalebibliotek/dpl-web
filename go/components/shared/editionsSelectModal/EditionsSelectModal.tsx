@@ -1,7 +1,8 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 
+import { Button } from "@/components/shared/button/Button"
 import EditionsSelectModalItem from "@/components/shared/editionsSelectModal/EditionsSelectModalItem"
 import { type TEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
@@ -133,19 +134,23 @@ const EditionsSelectModal = ({
   // then picks up a status a moment later.
   const isLoadingEditions = isLoadingAvailability || isLoadingDigitalAvailability
 
-  const selectedPid = typeof choice === "object" ? choice.pid : null
+  // The pick the reader is considering. Arrow keys move the selection within a
+  // radio group, so selecting cannot be what confirms — a keyboard user would
+  // never reach past the first edition the arrow lands on. The footer button
+  // confirms instead, and nothing leaves the modal until then.
+  const [draftChoice, setDraftChoice] = useState<TEditionChoice>(choice)
+  const draftPid = typeof draftChoice === "object" ? draftChoice.pid : null
 
   // Every close runs through here, so the caller gets `onClosed` whether the
-  // reader picked an edition, used the close button, pressed Escape or
+  // reader confirmed a choice, used the close button, pressed Escape or
   // clicked outside.
   const handleClose = () => {
     onClose()
     onClosed?.()
   }
 
-  // Confirms the choice and closes the modal immediately.
-  const handleChoice = (next: TEditionChoice) => {
-    onChoiceConfirm(next, materialTypeCode)
+  const handleConfirm = () => {
+    onChoiceConfirm(draftChoice, materialTypeCode)
     handleClose()
   }
 
@@ -161,15 +166,8 @@ const EditionsSelectModal = ({
             description={`Du får altid den senest udgivne udgave${
               newestDescription ? ` — lige nu ${newestDescription}` : ""
             }`}
-            checked={choice === "newest"}
-            onSelect={() => handleChoice("newest")}
-          />
-          <GeneralOption
-            label="Først tilgængelige"
-            description="Du får den udgave med kortest ventetid — hurtigst i hænderne"
-            checked={false}
-            onSelect={() => {}}
-            disabled
+            checked={draftChoice === "newest"}
+            onSelect={() => setDraftChoice("newest")}
           />
         </div>
       </fieldset>
@@ -202,10 +200,10 @@ const EditionsSelectModal = ({
                       key={manifestation.pid}
                       manifestation={manifestation}
                       name={EDITION_CHOICE_GROUP}
-                      checked={selectedPid === manifestation.pid}
+                      checked={draftPid === manifestation.pid}
                       unavailableLabel={unavailable?.label}
                       unavailableText={unavailable?.text}
-                      onSelect={() => handleChoice({ pid: manifestation.pid })}
+                      onSelect={() => setDraftChoice({ pid: manifestation.pid })}
                     />
                   )
                 })}
@@ -234,6 +232,12 @@ const EditionsSelectModal = ({
           </p>
         )}
       </div>
+
+      <ResponsiveDialog.Actions>
+        <Button theme="primary" size="lg" onClick={handleConfirm}>
+          Vælg udgave
+        </Button>
+      </ResponsiveDialog.Actions>
     </ResponsiveDialog>
   )
 }
