@@ -3725,6 +3725,7 @@ fragment ManifestationAccess on Manifestation {
 fragment ManifestationDetails on Manifestation {
   physicalDescription {
     summaryFull
+    numberOfPages
   }
   dateFirstEdition {
     display
@@ -3741,6 +3742,11 @@ fragment ManifestationDetails on Manifestation {
   publisher
   contributors {
     display
+    roles {
+      function {
+        singular
+      }
+    }
   }
   contributorsFromDescription
 }
@@ -3836,6 +3842,7 @@ fragment ManifestationAccess on Manifestation {
 fragment ManifestationDetails on Manifestation {
   physicalDescription {
     summaryFull
+    numberOfPages
   }
   dateFirstEdition {
     display
@@ -3852,6 +3859,11 @@ fragment ManifestationDetails on Manifestation {
   publisher
   contributors {
     display
+    roles {
+      function {
+        singular
+      }
+    }
   }
   contributorsFromDescription
 }
@@ -4049,6 +4061,7 @@ fragment ManifestationDescription on Manifestation {
 fragment ManifestationDetails on Manifestation {
   physicalDescription {
     summaryFull
+    numberOfPages
   }
   dateFirstEdition {
     display
@@ -4065,6 +4078,11 @@ fragment ManifestationDetails on Manifestation {
   publisher
   contributors {
     display
+    roles {
+      function {
+        singular
+      }
+    }
   }
   contributorsFromDescription
 }
@@ -4191,6 +4209,7 @@ fragment ManifestationDescription on Manifestation {
 fragment ManifestationDetails on Manifestation {
   physicalDescription {
     summaryFull
+    numberOfPages
   }
   dateFirstEdition {
     display
@@ -4207,6 +4226,11 @@ fragment ManifestationDetails on Manifestation {
   publisher
   contributors {
     display
+    roles {
+      function {
+        singular
+      }
+    }
   }
   contributorsFromDescription
 }
@@ -4337,6 +4361,7 @@ fragment ManifestationAccess on Manifestation {
 fragment ManifestationDetails on Manifestation {
   physicalDescription {
     summaryFull
+    numberOfPages
   }
   dateFirstEdition {
     display
@@ -4353,6 +4378,11 @@ fragment ManifestationDetails on Manifestation {
   publisher
   contributors {
     display
+    roles {
+      function {
+        singular
+      }
+    }
   }
   contributorsFromDescription
 }
@@ -4588,6 +4618,7 @@ fragment ManifestationAccess on Manifestation {
 fragment ManifestationDetails on Manifestation {
   physicalDescription {
     summaryFull
+    numberOfPages
   }
   dateFirstEdition {
     display
@@ -4604,6 +4635,11 @@ fragment ManifestationDetails on Manifestation {
   publisher
   contributors {
     display
+    roles {
+      function {
+        singular
+      }
+    }
   }
   contributorsFromDescription
 }
@@ -4788,6 +4824,7 @@ fragment ManifestationAccess on Manifestation {
 fragment ManifestationDetails on Manifestation {
   physicalDescription {
     summaryFull
+    numberOfPages
   }
   dateFirstEdition {
     display
@@ -4804,6 +4841,11 @@ fragment ManifestationDetails on Manifestation {
   publisher
   contributors {
     display
+    roles {
+      function {
+        singular
+      }
+    }
   }
   contributorsFromDescription
 }
@@ -5010,6 +5052,7 @@ fragment ManifestationDescription on Manifestation {
 fragment ManifestationDetails on Manifestation {
   physicalDescription {
     summaryFull
+    numberOfPages
   }
   dateFirstEdition {
     display
@@ -5026,6 +5069,11 @@ fragment ManifestationDetails on Manifestation {
   publisher
   contributors {
     display
+    roles {
+      function {
+        singular
+      }
+    }
   }
   contributorsFromDescription
 }
