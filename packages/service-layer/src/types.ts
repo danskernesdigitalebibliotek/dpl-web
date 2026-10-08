@@ -252,6 +252,11 @@ export type LoanDecision = {
   lendingBlockReason?: string
 }
 
+// The adapter's decision, or that the material cannot be borrowed through
+// Biblio at all because the adapter does not know it.
+export type LoanDecisionResult =
+  { type: "success"; loanDecision: LoanDecision } | { type: "failure"; error: "cannot-be-borrowed" }
+
 // The outcome of asking for a loan or a reservation: the decision, plus the
 // loan when the request actually produced one.
 export type LoanRequestResult = LoanDecision & {

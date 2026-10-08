@@ -61,7 +61,9 @@ export { getFees } from "./fees"
 // answers, the query keys they invalidate, and the reader's query. The raw
 // functions stay internal until something server-side needs them.
 export {
+  cannotBeBorrowed,
   isMaterialAvailable,
+  isMaterialCostFree,
   isMaterialLoanable,
   isMaterialReservable,
   isRequestGranted,
@@ -99,6 +101,7 @@ export type {
   DigitalLoan,
   DigitalReservation,
   LoanDecision,
+  LoanDecisionResult,
   LoanDecisionStatus,
   LoanRequestResult,
   DigitalLoanQuota,

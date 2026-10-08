@@ -13,7 +13,7 @@ import { isAnonymous } from "../../../../core/utils/helpers/user";
 import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
 import {
   getDigitalLoanQuota,
-  isCostFreeLoan,
+  isMaterialCostFree,
   useDigitalLoanDecision,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
@@ -125,9 +125,9 @@ const MaterialAvailabilityTextOnline: React.FC<
 
   // Publizon states cost-free outright on the product. The service layer
   // reports the licence can-loan picked; which licences are cost-free is its
-  // rule to know - see isCostFreeLoan.
+  // rule to know - see isMaterialCostFree.
   const isCostFree = viaBiblioAdapter
-    ? isCostFreeLoan(loanDecision?.loanProvider)
+    ? isMaterialCostFree(loanDecision)
     : Boolean(productsData?.product?.costFree);
 
   const availabilityTextType = isCostFree ? "materialIsIncluded" : materialType;

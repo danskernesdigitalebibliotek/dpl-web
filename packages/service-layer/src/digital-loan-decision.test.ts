@@ -1,16 +1,20 @@
 import { describe, expect, it } from "vitest"
 
-import { isMaterialAvailable } from "./digital-loan-decision"
+import { cannotBeBorrowed, isMaterialAvailable } from "./digital-loan-decision"
+import type { LoanDecisionStatus } from "./types"
+
+const answered = (status: LoanDecisionStatus) =>
+  ({ type: "success", loanDecision: { status } }) as const
 
 describe("isMaterialAvailable", () => {
   it("Treats a loanable material as available", () => {
-    expect(isMaterialAvailable({ status: "loanable" })).toBe(true)
+    expect(isMaterialAvailable(answered("loanable"))).toBe(true)
   })
 
   it.each(["reservable", "wishable", "unavailable"] as const)(
     "Treats a material that can only be %s as unavailable",
     status => {
-      expect(isMaterialAvailable({ status })).toBe(false)
+      expect(isMaterialAvailable(answered(status))).toBe(false)
     }
   )
 
@@ -22,15 +26,19 @@ describe("isMaterialAvailable", () => {
   ] as const)(
     "Keeps the material available when %s describes the user, not the material",
     status => {
-      expect(isMaterialAvailable({ status })).toBe(true)
+      expect(isMaterialAvailable(answered(status))).toBe(true)
     }
   )
 
   it("Does not promise a material available on a status it does not know", () => {
-    expect(isMaterialAvailable({ status: "brand-new-status" })).toBe(false)
+    expect(isMaterialAvailable(answered("brand-new-status"))).toBe(false)
   })
 
-  it.each([null, undefined])("Treats a missing decision (%s) as unavailable", decision => {
-    expect(isMaterialAvailable(decision)).toBe(false)
+  it("Treats a material that cannot be borrowed as unavailable", () => {
+    expect(isMaterialAvailable(cannotBeBorrowed)).toBe(false)
+  })
+
+  it("Treats an unanswered decision as unavailable", () => {
+    expect(isMaterialAvailable(undefined)).toBe(false)
   })
 })
