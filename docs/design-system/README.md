@@ -113,6 +113,26 @@ pnpm run storybook
 When storybook is ready it automatically opens up in a browser with the
 interface ready to use.
 
+## Argos
+
+Argos runs visual tests alongside Chromatic while we evaluate it. Pushes to
+`main`, `develop` and `release/*`, and pull requests changing the design
+system, screenshot every story at 400px and 1200px. The screenshots are
+uploaded to the `dpl-web` project in Argos under the build name
+`design-system`.
+
+Argos compares them with the build of the base branch and reports the result
+as the `argos/design-system` status. Follow its link to review changes;
+reviewing requires membership of the Argos team. Approve the changes your pull
+request explains, and **Ignore** the ones it cannot explain: Argos then hides
+that change on later builds, and the ignored changes show how much noise Argos
+produces. Share causes worth knowing, such as a remote image failing to load,
+in Zulip. The Storybook build is published as a preview, linked from Argos'
+comment on the pull request.
+
+Pull requests from forks get no Argos build, as they cannot access the token.
+To get one, push the branch to this repository.
+
 ## Chromatic
 
 We are using Chromatic for visual test. You can access the dashboard
