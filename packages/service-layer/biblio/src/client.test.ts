@@ -358,6 +358,20 @@ describe("createBiblioClient reservations", () => {
     })
   })
 
+  // Left to its default the adapter sends 25 reservations a page, and a patron
+  // past that would lose the rest from both the reservation list and the
+  // material page.
+  it("asks for a page large enough to hold every reservation", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ reservations: [], pagination: {} }))
+
+    await buildClient().getReservations()
+
+    expect(fetch).toHaveBeenCalledWith(
+      `${baseUrl}/v1/reservations?limit=250`,
+      expect.objectContaining({ method: "GET" })
+    )
+  })
+
   it("deletes a reservation and returns the success flag", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({ success: true }))
 
