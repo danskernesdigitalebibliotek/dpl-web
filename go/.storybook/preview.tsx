@@ -20,6 +20,16 @@ const dmSans = DM_Sans({
   display: "swap",
 })
 
+// Shared, so Chromatic and Argos capture the same widths during the pilot.
+const visualTestModes = {
+  mobile: {
+    viewport: "sm",
+  },
+  desktop: {
+    viewport: "xl",
+  },
+}
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -57,14 +67,14 @@ const preview: Preview = {
     },
     chromatic: {
       // Test each story in different viewport modes
-      modes: {
-        mobile: {
-          viewport: "sm",
-        },
-        desktop: {
-          viewport: "xl",
-        },
-      },
+      modes: visualTestModes,
+    },
+    // Argos ignores the chromatic parameters once these exist.
+    argos: {
+      modes: visualTestModes,
+      // Default crops to the component at 2x zoom, collapsing fullscreen
+      // layouts. Capture the full page like Chromatic does.
+      fitToContent: false,
     },
     a11y: {
       config: {

@@ -31,6 +31,7 @@
     "storybook": "storybook dev -p 6006",
     "test:accessibility": "test-storybook",
     "test:storybook": "test-storybook",
+    "test:storybook:visual": "test-storybook --config-dir .storybook/test-runners/visual",
     "test:unit:once": "vitest run",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit",
@@ -90,6 +91,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@argos-ci/cli": "^6.9.6",
+    "@argos-ci/storybook": "^6.4.2",
     "@babel/core": "7.29.7",
     "@babel/preset-env": "7.29.7",
     "@babel/preset-react": "7.29.7",
