@@ -17,6 +17,11 @@ const playwrightServer = process.env.PLAYWRIGHT_SERVER;
  */
 module.exports = {
   ...testRunnerConfig,
+  // A file's first story also boots the preview and loads remote images.
+  testTimeout: 60000,
+  // Workers grow with every story file they screenshot; replace them before
+  // they run out of heap, as on GitHub's 4-core runners.
+  workerIdleMemoryLimit: "1GB",
   testEnvironmentOptions: {
     ...testRunnerConfig.testEnvironmentOptions,
     "jest-playwright": {
