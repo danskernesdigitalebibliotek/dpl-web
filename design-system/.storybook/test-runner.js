@@ -4,6 +4,10 @@ import { argosScreenshot } from "@argos-ci/storybook/test-runner";
 const routedPages = new WeakSet();
 
 export default {
+  tags: {
+    // For stories that cannot be screenshotted reliably at all.
+    exclude: ["skip-ui-tests"],
+  },
   async preVisit(page) {
     if (routedPages.has(page)) {
       return;
@@ -19,6 +23,11 @@ export default {
     );
   },
   async postVisit(page, context) {
+    // Leave the render error as the story's failure.
+    if (context.hasFailure) {
+      return;
+    }
+
     await argosScreenshot(page, context);
   },
 };

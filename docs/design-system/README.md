@@ -133,6 +133,11 @@ comment on the pull request.
 Pull requests from forks get no Argos build, as they cannot access the token.
 To get one, push the branch to this repository.
 
+Tag a story `skip-ui-tests` to leave it out of the screenshots. Use it only for
+stories that cannot be screenshotted reliably at all: an untagged story with
+content that breaks the capture, like the YouTube embed, should rather have
+that content blocked or masked so the rest of the story is still covered.
+
 ## Chromatic
 
 We are using Chromatic for visual test. You can access the dashboard
