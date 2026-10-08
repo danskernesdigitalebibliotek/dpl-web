@@ -223,16 +223,17 @@ const DigitalLoanButtons = ({
 }) => {
   const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
   const isOnLoan = isDigitalEditionOnLoan(selectedManifestation)
+  const labelCapitalized = label.charAt(0).toUpperCase() + label.slice(1)
 
   return (
     <WorkPageButtons>
       {isOnLoan ? (
         <WorkPageButton
-          ariaLabel={`${label} er udlånt lige nu`}
+          ariaLabel={`Udlånt lige nu — ${label} kan ikke lånes i øjeblikket`}
           theme="primary"
           dataCy={dataCy}
-          disabled>
-          Udlånt lige nu
+          ariaDisabled>
+          {labelCapitalized} udlånt lige nu
         </WorkPageButton>
       ) : (
         <WorkPageButton
@@ -320,10 +321,10 @@ const PhysicalReservationButton = ({
   if (isUnobtainable) {
     return (
       <WorkPageButton
-        ariaLabel="Udgaven findes ikke på dit bibliotek — vælg en anden udgave"
+        ariaLabel="Vælg en anden udgave — denne udgave findes ikke på dit bibliotek"
         theme="primary"
         dataCy={dataCy}
-        disabled>
+        ariaDisabled>
         Vælg en anden udgave
       </WorkPageButton>
     )

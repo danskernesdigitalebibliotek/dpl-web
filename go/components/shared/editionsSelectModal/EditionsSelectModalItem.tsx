@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import BlueTitleBadge from "@/components/shared/badge/BlueTitleBadge"
+import BlueTitleBadge, { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
 import { CoverPicture, CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
@@ -44,13 +44,33 @@ const EditionsSelectModalItem = ({
     .filter(Boolean)
     .join(" · ")
 
+  const isBlueTitle = useIsBlueTitle(manifestation)
+
+  const accessibleName = [
+    year ? `${year}` : title,
+    editionLabel,
+    isBlueTitle ? "Blå titel, gratis at låne" : undefined,
+    publisherLine,
+    contributors,
+    unavailableText,
+  ]
+    .filter(Boolean)
+    .join(", ")
+
   return (
     <label
       className="has-focus-visible:ring-foreground bg-background-overlay
         has-checked:border-foreground rounded-base relative flex cursor-pointer flex-col gap-2
         border-2 border-transparent p-4 transition-[border-color] has-focus-visible:ring-2
         has-focus-visible:ring-offset-2">
-      <input type="radio" name={name} className="sr-only" checked={checked} onChange={onSelect} />
+      <input
+        type="radio"
+        name={name}
+        className="sr-only"
+        checked={checked}
+        onChange={onSelect}
+        aria-label={accessibleName}
+      />
       {checked && (
         <span
           aria-hidden="true"
@@ -59,23 +79,26 @@ const EditionsSelectModalItem = ({
           <Icon name="check" className="h-4 w-4" />
         </span>
       )}
-      <BlueTitleBadge manifestation={manifestation} />
+      {/* The badge sets its own aria-hidden from the lookup; this wrapper's wins
+          over it, which is what the card wants — accessibleName already says
+          "Blå titel". */}
+      <div aria-hidden="true" className="contents">
+        <BlueTitleBadge manifestation={manifestation} isBlueOverride={isBlueTitle} />
+      </div>
       <div className="relative mx-auto aspect-[2/3] w-[85%] max-w-[150px] sm:max-w-none">
         <CoverPicture
-          alt={`Forsidebillede på ${title ?? "udgaven"}`}
+          alt=""
           covers={manifestation.cover}
           sizes="(max-width: 1024px) 120px, 160px"
           withTilt
         />
       </div>
-      <div className="min-w-0 space-y-1">
+      <div aria-hidden="true" className="min-w-0 space-y-1">
         <p className="text-typo-subtitle-md mt-2 font-semibold break-words">{year ?? title}</p>
         {editionLabel && <p className="text-typo-body-sm break-words">{editionLabel}</p>}
         {contributors && <p className="text-typo-body-sm break-words">{contributors}</p>}
         {publisherLine && <p className="text-typo-body-sm opacity-70">{publisherLine}</p>}
-        {unavailableLabel && (
-          <p className="text-typo-body-sm text-error-red-300">{unavailableLabel}</p>
-        )}
+        {unavailableLabel}
       </div>
     </label>
   )

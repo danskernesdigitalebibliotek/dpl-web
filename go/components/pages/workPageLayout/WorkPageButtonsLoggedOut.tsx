@@ -118,11 +118,15 @@ const DigitalLoanButton = ({
   onLoan: () => void
 }) => {
   const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
+  const labelCapitalized = label.charAt(0).toUpperCase() + label.slice(1)
 
   if (isDigitalEditionOnLoan(selectedManifestation)) {
     return (
-      <WorkPageButton ariaLabel={`${label} er udlånt lige nu`} theme="primary" disabled>
-        Udlånt lige nu
+      <WorkPageButton
+        ariaLabel={`Udlånt lige nu — ${label} kan ikke lånes i øjeblikket`}
+        theme="primary"
+        ariaDisabled>
+        {labelCapitalized} udlånt lige nu
       </WorkPageButton>
     )
   }
