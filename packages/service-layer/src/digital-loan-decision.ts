@@ -1,25 +1,35 @@
 import { createBiblioClient } from "../biblio/src"
+import { isCostFreeLoan } from "./digital-loans"
 import { resolveBiblioConfig } from "./internal/resolveBiblioConfig"
-import type { LoanDecision, LoanDecisionStatus, ServiceLayerConfig } from "./types"
+import type {
+  LoanDecision,
+  LoanDecisionResult,
+  LoanDecisionStatus,
+  ServiceLayerConfig,
+} from "./types"
+
+export const cannotBeBorrowed: LoanDecisionResult = {
+  type: "failure",
+  error: "cannot-be-borrowed",
+}
 
 // Whether the user can borrow a material right now. The answer covers both the
 // material (is it available?) and the user (quota, lending blocks), so callers
-// must pick the part they care about - see isMaterialAvailable.
-//
-// Null when the adapter does not know the material: it cannot be borrowed
-// through Biblio at all. Null rather than undefined for the reason given at
-// getDigitalSample.
+// must pick the part they care about - see isMaterialAvailable. A material
+// the adapter does not know cannot be borrowed through Biblio at all.
 export async function getDigitalLoanDecision(
   config: ServiceLayerConfig,
   materialId: string
-): Promise<LoanDecision | null> {
+): Promise<LoanDecisionResult> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  return (await biblio.getLoanDecision(materialId)) ?? null
+  const loanDecision = await biblio.getLoanDecision(materialId)
+  return loanDecision ? { type: "success", loanDecision } : cannotBeBorrowed
 }
 
-// The predicates below take the decision as useDigitalLoanDecision hands it
-// out. A missing one - unanswered, unknown to the adapter or failed - never
-// promises anything.
+// The predicates below take the result as useDigitalLoanDecision hands it out.
+// An unanswered or failed one never promises anything.
+const decisionOf = (result: LoanDecisionResult | undefined): LoanDecision | undefined =>
+  result?.type === "success" ? result.loanDecision : undefined
 
 /**
  * Whether the MATERIAL itself can be borrowed right now.
@@ -29,8 +39,8 @@ export async function getDigitalLoanDecision(
  * available. This mirrors Publizon, where status 0 ("not loanable, max loans
  * reached") is also counted as available.
  */
-export const isMaterialAvailable = (decision: LoanDecision | null | undefined): boolean => {
-  switch (decision?.status) {
+export const isMaterialAvailable = (result: LoanDecisionResult | undefined): boolean => {
+  switch (decisionOf(result)?.status) {
     case "loanable":
     case "monthly_limit_exceeded":
     case "concurrent_limit_exceeded":
@@ -48,8 +58,8 @@ export const isMaterialAvailable = (decision: LoanDecision | null | undefined): 
  * Whether the user can borrow the material right now - the loan button's
  * answer, so a spent quota counts as "no", as with Publizon's status 0.
  */
-export const isMaterialLoanable = (decision: LoanDecision | null | undefined): boolean =>
-  decision?.status === "loanable"
+export const isMaterialLoanable = (result: LoanDecisionResult | undefined): boolean =>
+  decisionOf(result)?.status === "loanable"
 
 /**
  * Whether the user can join the queue for the material.
@@ -57,8 +67,15 @@ export const isMaterialLoanable = (decision: LoanDecision | null | undefined): b
  * A wishable material is deliberately excluded: wishing is not reserving, and
  * there is no Publizon equivalent to render it with.
  */
-export const isMaterialReservable = (decision: LoanDecision | null | undefined): boolean =>
-  decision?.status === "reservable"
+export const isMaterialReservable = (result: LoanDecisionResult | undefined): boolean =>
+  decisionOf(result)?.status === "reservable"
+
+/**
+ * Whether a loan of the material costs the user nothing, judged by the licence
+ * the adapter picked - see isCostFreeLoan.
+ */
+export const isMaterialCostFree = (result: LoanDecisionResult | undefined): boolean =>
+  isCostFreeLoan(decisionOf(result)?.loanProvider)
 
 /**
  * Whether the adapter acted on a loan or reservation request.

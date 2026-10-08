@@ -11,7 +11,7 @@ export const digitalLoanDecisionQuery = (config: ServiceLayerConfig, materialId:
   queryOptions({
     queryKey: digitalLoanDecisionQueryKey(materialId),
     // The decision only shapes how a material is shown, so a failure must not
-    // take the page down. Callers read `isError` and show it as unavailable.
+    // take the page down. useDigitalLoanDecision answers it as unavailable.
     throwOnError: false,
     queryFn: () => {
       if (materialId === null) {

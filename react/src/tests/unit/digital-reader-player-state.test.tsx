@@ -93,7 +93,7 @@ const givenAdapterSays = ({
 }) => {
   vi.mocked(isAnonymous).mockReturnValue(anonymous);
   vi.mocked(useDigitalLoanDecision).mockReturnValue({
-    data: status ? { status } : undefined,
+    data: status ? { type: "success", loanDecision: { status } } : undefined,
     isLoading: stillAnswering
   } as unknown as ReturnType<typeof useDigitalLoanDecision>);
   vi.mocked(useDigitalMaterialHolding).mockReturnValue({

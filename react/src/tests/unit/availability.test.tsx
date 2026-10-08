@@ -18,7 +18,10 @@ import {
   useGetV1ProductsIdentifier
 } from "../../core/publizon/publizon";
 import useOnlineAvailabilityData from "../../components/availability-label/useOnlineAvailabilityData";
-import { useDigitalLoanDecision } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import {
+  cannotBeBorrowed,
+  useDigitalLoanDecision
+} from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../core/utils/helpers/user";
 
@@ -272,7 +275,7 @@ describe("useOnlineAvailabilityData tests", () => {
 
   const givenBiblioAnswers = (status: string) =>
     mockedLoanDecision.mockReturnValue({
-      data: { status },
+      data: { type: "success", loanDecision: { status } },
       isLoading: false
     } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
@@ -570,7 +573,7 @@ describe("useOnlineAvailabilityData tests", () => {
       // A 404 for a material the catalogue lists but WeDoBooks has not
       // provisioned.
       mockedLoanDecision.mockReturnValue({
-        data: null,
+        data: cannotBeBorrowed,
         isLoading: false
       } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
@@ -580,10 +583,10 @@ describe("useOnlineAvailabilityData tests", () => {
     });
 
     it("Counts a decision the adapter failed to give as unavailable", () => {
-      // The hook answers a failure as null, so the label must not fall back
-      // to "available".
+      // The hook answers a failure as one that cannot be borrowed, so the
+      // label must not fall back to "available".
       mockedLoanDecision.mockReturnValue({
-        data: null,
+        data: cannotBeBorrowed,
         isLoading: false
       } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
