@@ -84,6 +84,39 @@ tasks:
     cmds:
       - task dev:cli -- pnpm run chromatic
 
+  argos:capture:
+    summary: |
+      Screenshot every story into ./screenshots for Argos. A node container
+      builds and serves the static Storybook and runs the tests, with the
+      browser in the playwright service, in the image matching the installed
+      Playwright, so screenshots render the same on every machine.
+    vars:
+      PLAYWRIGHT_VERSION:
+        sh: >-
+          sed -n 's/^  "version": "\([^"]*\)".*/\1/p' node_modules/playwright/package.json
+      # The browser reaches the static Storybook by this name.
+      CONTAINER: design-system-argos
+      COMPOSE: 'docker compose {{.DOCKER_COMPOSE_FILES}} --profile argos'
+    cmds:
+      - rm -rf screenshots
+      - >-
+        PLAYWRIGHT_IMAGE_TAG=v{{.PLAYWRIGHT_VERSION}}-noble
+        {{.COMPOSE}} up --detach --wait --quiet-pull playwright
+      # Removes only the capture's own container: the project is also the
+      # developer's running dev setup.
+      - defer: '{{.COMPOSE}} rm --stop --force playwright 2> /dev/null'
+      # As the calling user, who owns the checkoutD it writes to.
+      - >-
+        {{.COMPOSE}} run --rm --no-deps --name {{.CONTAINER}}
+        --user "$(id -u):$(id -g)" --env HOME=/tmp
+        --env PLAYWRIGHT_SERVER=ws://playwright:3000/
+        --env NODE_OPTIONS=--experimental-vm-modules
+        node sh -c '
+        corepack pnpm run css:build && corepack pnpm run build-storybook --quiet &&
+        { node_modules/.bin/http-server storybook-static -p 6006 --silent & } &&
+        corepack pnpm exec wait-on --timeout 60000 http-get://localhost:6006/index.json &&
+        corepack pnpm exec test-storybook --url http://{{.CONTAINER}}:6006 {{.CLI_ARGS}}'
+
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
     cmds:

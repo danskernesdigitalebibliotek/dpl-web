@@ -45,6 +45,8 @@
     ]
   },
   "devDependencies": {
+    "@argos-ci/cli": "^6.9.6",
+    "@argos-ci/storybook": "^6.4.2",
     "@babel/preset-env": "7.29.7",
     "@chanzuckerberg/axe-storybook-testing": "^9.0.0",
     "@eslint/js": "^10",
@@ -55,6 +57,7 @@
     "@storybook/preset-create-react-app": "^9.1.20",
     "@storybook/react": "^9.0.16",
     "@storybook/react-webpack5": "^9.1.20",
+    "@storybook/test-runner": "^0.23.0",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.7",
@@ -76,6 +79,7 @@
     "eslint-webpack-plugin": "^6.0.0",
     "flatpickr": "^4.6.13",
     "globals": "^17",
+    "http-server": "^14.1.1",
     "json": "^11.0.0",
     "keen-slider": "6.8.6",
     "markdownlint-cli2": "^0.23.3",
@@ -97,6 +101,7 @@
     "stylelint-scss": "^7.3.0",
     "typescript": "^5.6.0",
     "typescript-eslint": "^8",
+    "wait-on": "^9.5.1",
     "web-vitals": "^6.2.2"
   }
 }

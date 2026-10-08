@@ -165,6 +165,9 @@ updates:
         versions: [">=10"]
       - dependency-name: "@storybook/*"
         versions: [">=10"]
+      # 0.24 and later require Storybook 10.
+      - dependency-name: "@storybook/test-runner"
+        versions: [">=0.24"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
 
