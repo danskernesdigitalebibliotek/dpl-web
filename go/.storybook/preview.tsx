@@ -71,7 +71,13 @@ const preview: Preview = {
     },
     // Argos ignores the chromatic parameters once these exist.
     argos: {
-      modes: visualTestModes,
+      // Without the accessibility check after each mode's render. Argos does
+      // not wait for it, and Storybook reloads the page when the next story
+      // starts while it runs, as it does for 500 ms with a cross-origin iframe.
+      modes: {
+        mobile: { ...visualTestModes.mobile, a11y: { manual: true } },
+        desktop: { ...visualTestModes.desktop, a11y: { manual: true } },
+      },
       // Default crops to the component at 2x zoom, collapsing fullscreen
       // layouts. Capture the full page like Chromatic does.
       fitToContent: false,
