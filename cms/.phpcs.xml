@@ -48,7 +48,6 @@
 
   <!-- Ignore existing procedual hooks until they're migrated. -->
   <rule ref="Dpl.Hooks.NoProceduralHooks">
-    <exclude-pattern>*/web/modules/custom/dpl_breadcrumb/dpl_breadcrumb.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_cookies/dpl_cookies.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_dashboard/dpl_dashboard.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_event/dpl_event.module</exclude-pattern>

@@ -9,6 +9,9 @@ import biblioAdapterArgs, {
 import wedobooksArgs, {
   argTypes as wedobooksArgTypes
 } from "../../core/storybook/wedobooksArgs";
+import digitalSessionArgs, {
+  argTypes as digitalSessionArgTypes
+} from "../../core/storybook/digitalSessionArgs";
 
 /**
  * The player page, which is WeDoBooks-only.
@@ -29,6 +32,7 @@ const meta: Meta<typeof PlayerEntry> = {
     ...serviceUrlArgTypes,
     ...biblioAdapterArgTypes,
     ...wedobooksArgTypes,
+    ...digitalSessionArgTypes,
     identifier: {
       description: "The audiobook to sample, by its WeDoBooks material id.",
       control: { type: "text" }
@@ -46,7 +50,8 @@ const meta: Meta<typeof PlayerEntry> = {
     ...wedobooksArgs,
     // Without the flag this page renders nothing at all, which is the whole
     // of its behaviour for a library that has not switched.
-    useBiblioAdapterConfig: "1"
+    useBiblioAdapterConfig: "1",
+    ...digitalSessionArgs
   }
 };
 

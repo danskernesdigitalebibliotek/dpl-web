@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_fbi\Fbi;
 use Drupal\dpl_react_apps\Services\BranchService;
+use Drupal\dpl_react_apps\SharedTranslations\DigitalSessionTexts;
 use Drupal\dpl_react_apps\SharedTranslations\OnlineMaterialTexts;
 use Drupal\dpl_react_apps\SharedTranslations\OpenOrderTexts;
 use Drupal\dpl_react_apps\SharedTranslations\PlayerModalTexts;
@@ -914,7 +915,8 @@ class DplReactAppsController extends ControllerBase {
       'loanid' => $loanid,
       // Publizon's reader talks to no API of ours; the WeDoBooks one needs the
       // adapter to vouch for the patron before it can open anything.
-    ] + self::externalApiBaseUrls();
+    ] + self::externalApiBaseUrls()
+      + DigitalSessionTexts::texts();
 
     $app = [
       '#theme' => 'dpl_react_app',
@@ -957,7 +959,8 @@ class DplReactAppsController extends ControllerBase {
       'loanid' => $loanid,
       // The WeDoBooks player needs the adapter to vouch for the patron
       // before it can play anything.
-    ] + self::externalApiBaseUrls();
+    ] + self::externalApiBaseUrls()
+      + DigitalSessionTexts::texts();
 
     return [
       '#theme' => 'dpl_react_app',
