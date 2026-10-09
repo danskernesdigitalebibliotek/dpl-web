@@ -1,10 +1,14 @@
+import type { TypedDocumentString } from "@/lib/graphql/generated/fbi/graphql"
 import { getAPServiceFetcherBaseUrl } from "@/lib/helpers/ap-service"
 
 export const fetchData = <TData, TVariables>(
-  query: string,
+  // typescript-react-query emits documents as TypedDocumentString without
+  // type arguments, so the untyped form is what the generated hooks pass in.
+  document: string | TypedDocumentString<unknown, unknown>,
   variables?: TVariables,
   options?: RequestInit["headers"]
 ): (() => Promise<TData>) => {
+  const query = document.toString()
   return async () => {
     const url = getAPServiceFetcherBaseUrl("fbi")
     try {

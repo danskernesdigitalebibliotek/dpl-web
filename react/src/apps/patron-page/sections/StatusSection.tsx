@@ -11,12 +11,36 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
 import { isPatron } from "../../../core/utils/helpers/user";
+import { useUrls } from "../../../core/utils/url";
+import { constructAdvancedSearchUrl } from "../../../core/advanced-search/url";
+import {
+  MATERIAL_TYPE_AUDIOBOOKS,
+  MATERIAL_TYPE_EBOOKS
+} from "../../../core/advanced-search/material-types";
+import Link from "../../../components/atoms/links/Link";
+import { QuotaBar } from "./QuotaBar";
+import { ComplexSearchFacetsEnum } from "../../../core/dbc-gateway/generated/graphql";
+import { SortOption } from "../../../core/advanced-search/types";
 
 const StatusSection: FC = () => {
   const t = useText();
+  const u = useUrls();
   const viaBiblioAdapter = useBiblioAdapter();
   // Loan quotas belong to a patron, so they are only fetched with a user token.
   const userIsPatron = isPatron();
+
+  const alwaysLoanableDigitalTitlesUrl = constructAdvancedSearchUrl({
+    advancedSearchUrl: u("advancedSearchUrl"),
+    preSearchFacets: [
+      {
+        facetField: ComplexSearchFacetsEnum.Generalmaterialtype,
+        selectedValues: [MATERIAL_TYPE_EBOOKS, MATERIAL_TYPE_AUDIOBOOKS]
+      }
+    ],
+    onlyExtraTitles: true,
+    sort: SortOption.LatestPubDateDesc,
+    view: "results"
+  });
 
   const { data: libraryProfile } = useGetV1LibraryProfile({
     query: { enabled: !viaBiblioAdapter }
@@ -30,6 +54,10 @@ const StatusSection: FC = () => {
     reservationLimits: { data: digitalReservationLimits }
   } = useDigitalQuotas({ enabled: viaBiblioAdapter && userIsPatron });
 
+  // Publizon doesn't account for "subscription" (aka, "blue", aka
+  // "non-quota") loans, so we have to figure out how many of the
+  // loans are outside quota and subtract them. This will move to the
+  // service layer when that's implemented.
   const publizonQuotas = getPatronLoanQuotas({
     userData: data?.userData,
     loans: data?.loans
@@ -83,22 +111,6 @@ const StatusSection: FC = () => {
         hasQuotas: Boolean(libraryProfile)
       };
 
-  // Publizon doesn't account for "subscription" (aka, "blue", aka
-  // "non-quota") loans, so we have to figure out how many of the
-  // loans are outside quota and subtract them. This will move to the
-  // service layer when that's implemented.
-  let eBookLoanPercent = 100;
-  if (maxConcurrentEbookLoansPerBorrower) {
-    eBookLoanPercent =
-      (patronEbookLoans / maxConcurrentEbookLoansPerBorrower) * 100;
-  }
-
-  let audioBookLoanPercent = 100;
-  if (maxConcurrentAudioLoansPerBorrower) {
-    audioBookLoanPercent =
-      (patronAudioBookLoans / maxConcurrentAudioLoansPerBorrower) * 100;
-  }
-
   return (
     <section className="dpl-status-loans">
       {hasQuotas && (
@@ -106,107 +118,38 @@ const StatusSection: FC = () => {
           <h2 className="text-header-h4 mt-64 mb-16">
             {t("patronPageStatusSectionHeaderText")}
           </h2>
-          <div className="text-body-small-regular mb-8">
-            {t("patronPageStatusSectionBodyText")}
-          </div>
           {reservationCeilings && (
-            <div className="text-body-small-regular mt-8 mb-8">
+            <p className="text-body-small-regular dpl-status-loans__reservations">
               {t("patronPageStatusSectionReservationsText", {
                 placeholders: {
                   "@countEbooks": reservationCeilings.ebook,
                   "@countAudiobooks": reservationCeilings.audiobook
                 }
               })}
-            </div>
+            </p>
           )}
-          <div className="dpl-status-loans__column">
-            <div className="dpl-status mt-32">
-              <h3 className="text-small-caption">
-                {t("patronPageStatusSectionLoanHeaderText")}
-              </h3>
-              <div className="dpl-progress-bar text-small-caption color-secondary-gray">
-                <div className="dpl-progress-bar__header">
-                  <label
-                    className="text-label text-body-medium-medium"
-                    htmlFor="patron-page-status-section-out-of-text"
-                  >
-                    {t("patronPageStatusSectionLoansEbooksText")}
-                  </label>
-                  {maxConcurrentEbookLoansPerBorrower !== undefined && (
-                    <div
-                      className="text-label"
-                      id="patron-page-status-section-out-of-text"
-                    >
-                      {t("patronPageStatusSectionOutOfText", {
-                        placeholders: {
-                          "@this": patronEbookLoans,
-                          "@that": maxConcurrentEbookLoansPerBorrower
-                        }
-                      })}
-                    </div>
-                  )}
-                </div>
-                <div className="dpl-progress-bar__progress-bar bg-global-secondary">
-                  {maxConcurrentEbookLoansPerBorrower !== undefined && (
-                    <div
-                      className="bg-identity-primary"
-                      role="figure"
-                      aria-label={t(
-                        "patronPageStatusSectionOutOfAriaLabelEbooksText",
-                        {
-                          placeholders: {
-                            "@this": patronEbookLoans,
-                            "@that": maxConcurrentEbookLoansPerBorrower
-                          }
-                        }
-                      )}
-                      style={{ width: `${eBookLoanPercent}%` }}
-                    />
-                  )}
-                </div>
-              </div>
-              <div className="dpl-progress-bar text-small-caption color-secondary-gray">
-                <div className="dpl-progress-bar__header">
-                  <label
-                    className="text-label"
-                    htmlFor="max-concurrent-audio-loans-per-borrower"
-                  >
-                    {t("patronPageStatusSectionLoansAudioBooksText")}
-                  </label>
-                  {maxConcurrentAudioLoansPerBorrower !== undefined && (
-                    <div
-                      className="text-label"
-                      id="max-concurrent-audio-loans-per-borrower"
-                    >
-                      {t("patronPageStatusSectionOutOfText", {
-                        placeholders: {
-                          "@this": patronAudioBookLoans,
-                          "@that": maxConcurrentAudioLoansPerBorrower
-                        }
-                      })}
-                    </div>
-                  )}
-                </div>
-                <div className="dpl-progress-bar__progress-bar bg-global-secondary">
-                  {maxConcurrentAudioLoansPerBorrower !== undefined && (
-                    <div
-                      role="figure"
-                      aria-label={t(
-                        "patronPageStatusSectionOutOfAriaLabelAudioBooksText",
-                        {
-                          placeholders: {
-                            "@this": patronAudioBookLoans,
-                            "@that": maxConcurrentAudioLoansPerBorrower
-                          }
-                        }
-                      )}
-                      className="bg-identity-primary"
-                      style={{ width: `${audioBookLoanPercent}%` }}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
+          <Link
+            href={alwaysLoanableDigitalTitlesUrl}
+            className="link-tag text-body-small-regular"
+            dataCy="patron-page-always-loanable-link"
+          >
+            {t("patronPageStatusSectionLinkText")}
+          </Link>
+          <div className="dpl-status-loans__progress-bars">
+            <QuotaBar
+              id="patron-page-status-section-out-of-text"
+              labelTextKey="patronPageStatusSectionLoansEbooksText"
+              ariaLabelTextKey="patronPageStatusSectionOutOfAriaLabelEbooksText"
+              current={patronEbookLoans}
+              limit={maxConcurrentEbookLoansPerBorrower}
+            />
+            <QuotaBar
+              id="max-concurrent-audio-loans-per-borrower"
+              labelTextKey="patronPageStatusSectionLoansAudioBooksText"
+              ariaLabelTextKey="patronPageStatusSectionOutOfAriaLabelAudioBooksText"
+              current={patronAudioBookLoans}
+              limit={maxConcurrentAudioLoansPerBorrower}
+            />
           </div>
         </>
       )}

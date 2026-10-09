@@ -55,9 +55,8 @@ interface PatronPageTextProps {
   patronPagePincodesNotTheSameText: string;
   patronPagePincodeTooShortValidationText: string;
   patronPageSaveButtonText: string;
-  patronPageStatusSectionBodyText: string;
   patronPageStatusSectionHeaderText: string;
-  patronPageStatusSectionLoanHeaderText: string;
+  patronPageStatusSectionLinkText: string;
   patronPageStatusSectionLoansAudioBooksText: string;
   patronPageStatusSectionLoansEbooksText: string;
   patronPageStatusSectionOutOfAriaLabelAudioBooksText: string;

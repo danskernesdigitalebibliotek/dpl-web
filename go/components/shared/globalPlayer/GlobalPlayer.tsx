@@ -4,10 +4,12 @@ import {
   useDigitalMaterial,
   useDigitalSample,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import type { WedoBooksStopReason } from "@danskernesdigitalebibliotek/dpl-wedobooks"
 import { useSelector } from "@xstate/react"
 import dynamic from "next/dynamic"
-import React from "react"
+import React, { useState } from "react"
 
+import DigitalSessionModal from "@/components/shared/digitalSessionModal/DigitalSessionModal"
 import { useReaderCheckout } from "@/hooks/useReaderCheckout"
 import { useReaderSdk } from "@/hooks/useReaderSdk"
 import { closePlayer, playerStore } from "@/store/player.store"
@@ -28,11 +30,21 @@ const SdkSamplePlayer = dynamic(
 
 function LoanPlayer({ loanId }: { loanId: string }) {
   const { sdk, checkout } = useReaderCheckout(loanId)
+  // Why the SDK is not showing the loan, while it is not. Clearing it mounts
+  // the player anew - see DigitalReaderPlayer. Closing the dialog is the
+  // patron's own close of the bar.
+  const [stop, setStop] = useState<WedoBooksStopReason | null>(null)
 
   // The player draws its own loading state once mounted.
   if (!sdk || !checkout) return null
 
-  return <SdkPlayer sdk={sdk} checkout={checkout} onClose={closePlayer} />
+  if (stop) {
+    return (
+      <DigitalSessionModal open onClose={closePlayer} reason={stop} onRetry={() => setStop(null)} />
+    )
+  }
+
+  return <SdkPlayer sdk={sdk} checkout={checkout} onClose={closePlayer} onStop={setStop} />
 }
 
 // Samples open from a url rather than a material id, so the SDK needs no
@@ -80,7 +92,8 @@ function GlobalPlayer() {
     // the stacking context. z-player: above navigation and content, below
     // dialogs/drawers/sheets (see the z-index system in globals.css).
     <div className="z-player relative">
-      {loanId && <LoanPlayer loanId={loanId} />}
+      {/* Keyed so a new loan does not inherit the dialog of the one before. */}
+      {loanId && <LoanPlayer key={loanId} loanId={loanId} />}
       {materialId && <SamplePlayer materialId={materialId} />}
     </div>
   )
