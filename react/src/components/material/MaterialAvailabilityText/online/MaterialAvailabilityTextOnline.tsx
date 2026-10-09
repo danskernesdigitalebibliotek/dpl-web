@@ -7,7 +7,6 @@ import {
 import { useText } from "../../../../core/utils/text";
 import MaterialAvailabilityTextParagraph from "../generic/MaterialAvailabilityTextParagraph";
 import { ManifestationMaterialType } from "../../../../core/utils/types/material-type";
-import { AvailabilityTextMap, getAvailabilityText } from "./helper";
 import { playerTypes, readerTypes } from "../../../reader-player/helper";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
 import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
@@ -18,6 +17,16 @@ import {
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
+import { hasValue } from "../../../../core/utils/helpers/has-value";
+import { constructAdvancedSearchUrl } from "../../../../core/advanced-search/url";
+import { ComplexSearchFacetsEnum } from "../../../../core/dbc-gateway/generated/graphql";
+import {
+  MATERIAL_TYPE_AUDIOBOOKS,
+  MATERIAL_TYPE_EBOOKS
+} from "../../../../core/advanced-search/material-types";
+import { useUrls } from "../../../../core/utils/url";
+import { SortOption } from "../../../../core/advanced-search/types";
+import Link from "../../../atoms/links/Link";
 
 interface MaterialAvailabilityTextOnlineProps {
   /** The digital identifier the material is lent by - see
@@ -30,6 +39,24 @@ interface MaterialAvailabilityTextOnlineProps {
 const MaterialAvailabilityTextOnline: React.FC<
   MaterialAvailabilityTextOnlineProps
 > = ({ identifier, materialType }) => {
+  const u = useUrls();
+
+  const getAlwaysLoanableDigitalTitlesUrl = (
+    type: typeof MATERIAL_TYPE_EBOOKS | typeof MATERIAL_TYPE_AUDIOBOOKS
+  ) =>
+    constructAdvancedSearchUrl({
+      advancedSearchUrl: u("advancedSearchUrl"),
+      preSearchFacets: [
+        {
+          facetField: ComplexSearchFacetsEnum.Generalmaterialtype,
+          selectedValues: [type]
+        }
+      ],
+      onlyExtraTitles: true,
+      sort: SortOption.LatestPubDateDesc,
+      view: "results"
+    });
+
   const isUserAnonymous = isAnonymous();
   const t = useText();
   // With the adapter enabled it is the lending provider, so its quotas are the
@@ -93,36 +120,6 @@ const MaterialAvailabilityTextOnline: React.FC<
         limit: libraryProfileData?.maxConcurrentAudioLoansPerBorrower
       };
 
-  const availabilityTextMap: AvailabilityTextMap = {
-    ...readerTypes.reduce((acc, type) => {
-      if (isUserAnonymous) return acc;
-
-      return {
-        ...acc,
-        [type]: {
-          text: "onlineLimitMonthEbookInfoText",
-          count: ebookQuota.current,
-          limit: ebookQuota.limit
-        }
-      };
-    }, {}),
-    ...playerTypes.reduce((acc, type) => {
-      if (isUserAnonymous) return acc;
-
-      return {
-        ...acc,
-        [type]: {
-          text: "onlineLimitMonthAudiobookInfoText",
-          count: audioQuota.current,
-          limit: audioQuota.limit
-        }
-      };
-    }, {}),
-    materialIsIncluded: {
-      text: "materialIsIncludedText"
-    }
-  };
-
   // Publizon states cost-free outright on the product. The service layer
   // reports the licence can-loan picked; which licences are cost-free is its
   // rule to know - see isCostFreeLoan.
@@ -130,19 +127,83 @@ const MaterialAvailabilityTextOnline: React.FC<
     ? isCostFreeLoan(loanDecision?.loanProvider)
     : Boolean(productsData?.product?.costFree);
 
-  const availabilityTextType = isCostFree ? "materialIsIncluded" : materialType;
+  // We always show the helper text even when the title doesn't count towards the user's quota.
+  if (isCostFree) {
+    return (
+      <MaterialAvailabilityTextParagraph>
+        {t("materialIsIncludedText")}
+      </MaterialAvailabilityTextParagraph>
+    );
+  }
 
-  const availabilityText = getAvailabilityText({
-    type: availabilityTextType,
-    map: availabilityTextMap,
-    t
-  });
+  // We don't show quota information when users are logged out
+  if (isUserAnonymous) {
+    return null;
+  }
 
-  return (
-    <MaterialAvailabilityTextParagraph>
-      {availabilityText}
-    </MaterialAvailabilityTextParagraph>
-  );
+  if (isPlayerType(materialType)) {
+    if (!hasValue(audioQuota.current) || !hasValue(audioQuota.limit)) {
+      return null;
+    }
+
+    return (
+      <MaterialAvailabilityTextParagraph>
+        {t("onlineLimitMonthAudiobookInfoText", {
+          placeholders: {
+            "@count": audioQuota.current,
+            "@limit": audioQuota.limit
+          }
+        })}
+        {audioQuota.current >= audioQuota.limit && (
+          <>
+            {". "}
+            <Link
+              href={getAlwaysLoanableDigitalTitlesUrl(MATERIAL_TYPE_AUDIOBOOKS)}
+              dataCy="material-always-loanable-link"
+            >
+              {t("onlineLimitMonthAlwaysLoanableLinkText")}
+            </Link>
+          </>
+        )}
+      </MaterialAvailabilityTextParagraph>
+    );
+  }
+
+  if (isReaderType(materialType)) {
+    if (!hasValue(ebookQuota.current) || !hasValue(ebookQuota.limit)) {
+      return null;
+    }
+
+    return (
+      <MaterialAvailabilityTextParagraph>
+        {t("onlineLimitMonthEbookInfoText", {
+          placeholders: {
+            "@count": ebookQuota.current,
+            "@limit": ebookQuota.limit
+          }
+        })}
+        {ebookQuota.current >= ebookQuota.limit && (
+          <>
+            {". "}
+            <Link
+              href={getAlwaysLoanableDigitalTitlesUrl(MATERIAL_TYPE_EBOOKS)}
+              dataCy="material-always-loanable-link"
+            >
+              {t("onlineLimitMonthAlwaysLoanableLinkText")}
+            </Link>
+          </>
+        )}
+      </MaterialAvailabilityTextParagraph>
+    );
+  }
+
+  return null;
 };
 
 export default MaterialAvailabilityTextOnline;
+
+const isReaderType = (type: ManifestationMaterialType) =>
+  readerTypes.includes(type);
+
+const isPlayerType = (type: ManifestationMaterialType) =>
+  playerTypes.includes(type);
