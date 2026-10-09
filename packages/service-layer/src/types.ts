@@ -35,9 +35,8 @@ export type Patron = {
 }
 
 // Availability for one edition, summed across the kommune's branches.
-// `reservable` is FBS's own verdict and is independent of the counts: a
-// lent-out edition stays reservable, and so can one the kommune holds no
-// copies of.
+// `reservable` is FBS's own verdict and is independent of the counts.
+// See docs/go/material-availability.md
 export type RecordAvailability = {
   recordId: string
   totalCopies: number

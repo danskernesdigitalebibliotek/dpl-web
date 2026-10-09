@@ -75,7 +75,7 @@ const QueueStatus = ({ reservation, workId }: { reservation: Reservation; workId
       subline={
         aheadInQueue === 0 ? "Du er forrest i køen" : `Der er ${aheadInQueue} foran dig i køen`
       }>
-      {availability && <span>Biblioteket har {availability.totalCopies} eksemplarer</span>}
+      {availability && <span>Biblioteket har {availability.totalCopies} stk. af denne bog</span>}
     </StatusLabel>
   )
 }
