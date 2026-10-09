@@ -18,11 +18,6 @@ export type ServiceLayerConfig = {
   // Unilogin and anonymous) never fire doomed 401 requests. Public data
   // (material availability) ignores it. Defaults to true when omitted.
   isPatronAuthenticated?: boolean
-  // TEMPORARY: whether a material the adapter does not know is answered as
-  // unavailable instead of an error - see getDigitalLoanDecision, the one
-  // place that acts on it. A resolver like the others, because the host's
-  // setting lands after this object is built. Omitted means no.
-  tolerateUnknownMaterials?: () => boolean
 }
 
 export type Patron = {
@@ -256,6 +251,11 @@ export type LoanDecision = {
   unavailableReason?: string
   lendingBlockReason?: string
 }
+
+// The adapter's decision, or that the material cannot be borrowed through
+// Biblio at all because the adapter does not know it.
+export type LoanDecisionResult =
+  { type: "success"; loanDecision: LoanDecision } | { type: "failure"; error: "cannot-be-borrowed" }
 
 // The outcome of asking for a loan or a reservation: the decision, plus the
 // loan when the request actually produced one.

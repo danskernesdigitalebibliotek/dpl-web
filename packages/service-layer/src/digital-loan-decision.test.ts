@@ -1,66 +1,20 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { describe, expect, it } from "vitest"
 
-import { getDigitalLoanDecision, isMaterialAvailable } from "./digital-loan-decision"
-import { mockJsonResponse } from "./test-utils"
-import type { ServiceLayerConfig } from "./types"
+import { cannotBeBorrowed, isMaterialAvailable } from "./digital-loan-decision"
+import type { LoanDecisionStatus } from "./types"
 
-const configThat = (tolerateUnknownMaterials?: () => boolean): ServiceLayerConfig => ({
-  getBaseUrl: () => "https://biblio.example",
-  getAuthHeader: () => "Bearer abc",
-  tolerateUnknownMaterials,
-})
-
-const notFound = () => mockJsonResponse({ message: "Material not found: 9788758855752" }, 404)
-
-// TEMPORARY, with the toleration setting it covers.
-describe("getDigitalLoanDecision for a material the adapter does not know", () => {
-  beforeEach(() => {
-    vi.stubGlobal("fetch", vi.fn())
-  })
-
-  afterEach(() => {
-    vi.unstubAllGlobals()
-  })
-
-  it("Answers an unavailable material when the host tolerates it", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(notFound())
-
-    const decision = await getDigitalLoanDecision(
-      configThat(() => true),
-      "9788758855752"
-    )
-
-    // An ordinary decision: nothing downstream has to know about the 404.
-    expect(isMaterialAvailable(decision.status)).toBe(false)
-  })
-
-  it("Fails when the host does not tolerate it", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(notFound())
-
-    await expect(
-      getDigitalLoanDecision(
-        configThat(() => false),
-        "9788758855752"
-      )
-    ).rejects.toThrow("404")
-  })
-
-  it("Fails when the host has no say on it", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(notFound())
-
-    await expect(getDigitalLoanDecision(configThat(), "9788758855752")).rejects.toThrow("404")
-  })
-})
+const answered = (status: LoanDecisionStatus) =>
+  ({ type: "success", loanDecision: { status } }) as const
 
 describe("isMaterialAvailable", () => {
   it("Treats a loanable material as available", () => {
-    expect(isMaterialAvailable("loanable")).toBe(true)
+    expect(isMaterialAvailable(answered("loanable"))).toBe(true)
   })
 
   it.each(["reservable", "wishable", "unavailable"] as const)(
     "Treats a material that can only be %s as unavailable",
     status => {
-      expect(isMaterialAvailable(status)).toBe(false)
+      expect(isMaterialAvailable(answered(status))).toBe(false)
     }
   )
 
@@ -72,11 +26,19 @@ describe("isMaterialAvailable", () => {
   ] as const)(
     "Keeps the material available when %s describes the user, not the material",
     status => {
-      expect(isMaterialAvailable(status)).toBe(true)
+      expect(isMaterialAvailable(answered(status))).toBe(true)
     }
   )
 
   it("Does not promise a material available on a status it does not know", () => {
-    expect(isMaterialAvailable("brand-new-status")).toBe(false)
+    expect(isMaterialAvailable(answered("brand-new-status"))).toBe(false)
+  })
+
+  it("Treats a material that cannot be borrowed as unavailable", () => {
+    expect(isMaterialAvailable(cannotBeBorrowed)).toBe(false)
+  })
+
+  it("Treats an unanswered decision as unavailable", () => {
+    expect(isMaterialAvailable(undefined)).toBe(false)
   })
 })

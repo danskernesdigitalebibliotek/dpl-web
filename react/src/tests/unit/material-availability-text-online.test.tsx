@@ -131,7 +131,10 @@ describe("MaterialAvailabilityTextOnline", () => {
 
     const biblioLends = (loanProvider?: string) =>
       vi.mocked(useDigitalLoanDecision).mockReturnValue({
-        data: { status: "loanable", loanProvider }
+        data: {
+          type: "success",
+          loanDecision: { status: "loanable", loanProvider }
+        }
       } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
     it("Says the material is included when it is lent as a blue title", () => {

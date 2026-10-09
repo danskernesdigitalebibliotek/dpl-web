@@ -80,15 +80,12 @@ const useDigitalReaderPlayerState = ({
   const queuedReservation =
     digitalReservation && !offerId ? digitalReservation : undefined;
 
-  const status = loanDecision?.status;
-
   return {
     isAlreadyLoaned: Boolean(loan),
     isAlreadyReserved: Boolean(queuedReservation),
     // An offer the user already holds is claimed through the same button.
-    canBeLoaned:
-      Boolean(offerId) || (status ? isMaterialLoanable(status) : false),
-    canBeReserved: status ? isMaterialReservable(status) : false,
+    canBeLoaned: Boolean(offerId) || isMaterialLoanable(loanDecision),
+    canBeReserved: isMaterialReservable(loanDecision),
     // TEMPORARY: only the Publizon queue is frozen - see
     // usePublizonReservationsClosed.
     publizonReservationsClosed: false,

@@ -10,6 +10,9 @@ export const digitalLoanDecisionQueryKey = (materialId: string | null) =>
 export const digitalLoanDecisionQuery = (config: ServiceLayerConfig, materialId: string | null) =>
   queryOptions({
     queryKey: digitalLoanDecisionQueryKey(materialId),
+    // The decision only shapes how a material is shown, so a failure must not
+    // take the page down. useDigitalLoanDecision answers it as unavailable.
+    throwOnError: false,
     queryFn: () => {
       if (materialId === null) {
         // The hook disables itself without a material id; a direct caller of

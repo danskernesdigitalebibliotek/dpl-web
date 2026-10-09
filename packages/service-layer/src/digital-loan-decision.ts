@@ -1,33 +1,35 @@
 import { createBiblioClient } from "../biblio/src"
+import { isCostFreeLoan } from "./digital-loans"
 import { resolveBiblioConfig } from "./internal/resolveBiblioConfig"
-import type { LoanDecision, LoanDecisionStatus, ServiceLayerConfig } from "./types"
+import type {
+  LoanDecision,
+  LoanDecisionResult,
+  LoanDecisionStatus,
+  ServiceLayerConfig,
+} from "./types"
 
-// TEMPORARY, with the toleration setting it serves. The adapter answers 404
-// for a material it does not know; with the setting on that becomes this
-// decision instead, so callers see an ordinary unavailable material and
-// nothing downstream has to know about the 404. Without the setting the 404
-// stays an error - asking about an unknown material is normally a routing
-// mistake worth hearing about.
-const UNKNOWN_MATERIAL_REASON = "unknown_material"
-
-const unknownMaterialDecision: LoanDecision = {
-  status: "unavailable",
-  unavailableReason: UNKNOWN_MATERIAL_REASON,
+export const cannotBeBorrowed: LoanDecisionResult = {
+  type: "failure",
+  error: "cannot-be-borrowed",
 }
 
 // Whether the user can borrow a material right now. The answer covers both the
 // material (is it available?) and the user (quota, lending blocks), so callers
-// must pick the part they care about - see isMaterialAvailable.
+// must pick the part they care about - see isMaterialAvailable. A material
+// the adapter does not know cannot be borrowed through Biblio at all.
 export async function getDigitalLoanDecision(
   config: ServiceLayerConfig,
   materialId: string
-): Promise<LoanDecision> {
+): Promise<LoanDecisionResult> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  const decision = await biblio.getLoanDecision(materialId, {
-    allowNotFound: config.tolerateUnknownMaterials?.() ?? false,
-  })
-  return decision ?? unknownMaterialDecision
+  const loanDecision = await biblio.getLoanDecision(materialId)
+  return loanDecision ? { type: "success", loanDecision } : cannotBeBorrowed
 }
+
+// The predicates below take the result as useDigitalLoanDecision hands it out.
+// An unanswered or failed one never promises anything.
+const decisionOf = (result: LoanDecisionResult | undefined): LoanDecision | undefined =>
+  result?.type === "success" ? result.loanDecision : undefined
 
 /**
  * Whether the MATERIAL itself can be borrowed right now.
@@ -37,8 +39,8 @@ export async function getDigitalLoanDecision(
  * available. This mirrors Publizon, where status 0 ("not loanable, max loans
  * reached") is also counted as available.
  */
-export const isMaterialAvailable = (status: LoanDecisionStatus): boolean => {
-  switch (status) {
+export const isMaterialAvailable = (result: LoanDecisionResult | undefined): boolean => {
+  switch (decisionOf(result)?.status) {
     case "loanable":
     case "monthly_limit_exceeded":
     case "concurrent_limit_exceeded":
@@ -56,7 +58,8 @@ export const isMaterialAvailable = (status: LoanDecisionStatus): boolean => {
  * Whether the user can borrow the material right now - the loan button's
  * answer, so a spent quota counts as "no", as with Publizon's status 0.
  */
-export const isMaterialLoanable = (status: LoanDecisionStatus): boolean => status === "loanable"
+export const isMaterialLoanable = (result: LoanDecisionResult | undefined): boolean =>
+  decisionOf(result)?.status === "loanable"
 
 /**
  * Whether the user can join the queue for the material.
@@ -64,7 +67,15 @@ export const isMaterialLoanable = (status: LoanDecisionStatus): boolean => statu
  * A wishable material is deliberately excluded: wishing is not reserving, and
  * there is no Publizon equivalent to render it with.
  */
-export const isMaterialReservable = (status: LoanDecisionStatus): boolean => status === "reservable"
+export const isMaterialReservable = (result: LoanDecisionResult | undefined): boolean =>
+  decisionOf(result)?.status === "reservable"
+
+/**
+ * Whether a loan of the material costs the user nothing, judged by the licence
+ * the adapter picked - see isCostFreeLoan.
+ */
+export const isMaterialCostFree = (result: LoanDecisionResult | undefined): boolean =>
+  isCostFreeLoan(decisionOf(result)?.loanProvider)
 
 /**
  * Whether the adapter acted on a loan or reservation request.
