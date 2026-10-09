@@ -130,26 +130,30 @@ export const constructSearchUrl = (searchUrl: URL, q: string) =>
     q
   });
 
-export const constructCreatorSearchUrl = (searchUrl: URL, creator: string) =>
+export const constructFacetSearchUrl = (
+  searchUrl: URL,
+  facetName: string,
+  value: string
+) =>
   constructSearchUrlWithFacets({
     searchUrl,
     q: "*",
-    facets: [{ facetName: "creators", selectedValues: [creator.toLowerCase()] }]
+    facets: [{ facetName, selectedValues: [value.toLowerCase()] }]
   });
+
+export const constructCreatorSearchUrl = (searchUrl: URL, creator: string) =>
+  constructFacetSearchUrl(searchUrl, "creators", creator);
 
 export const constructSubjectSearchUrl = (searchUrl: URL, subject: string) =>
-  constructSearchUrlWithFacets({
-    searchUrl,
-    q: "*",
-    facets: [{ facetName: "subjects", selectedValues: [subject.toLowerCase()] }]
-  });
+  constructFacetSearchUrl(searchUrl, "subjects", subject);
 
 export const constructDK5SearchUrl = (searchUrl: URL, dk5: string) =>
-  constructSearchUrlWithFacets({
-    searchUrl,
-    q: "*",
-    facets: [{ facetName: "dk5", selectedValues: [dk5.toLowerCase()] }]
-  });
+  constructFacetSearchUrl(searchUrl, "dk5", dk5);
+
+export const constructGenreAndFormSearchUrl = (
+  searchUrl: URL,
+  genreAndForm: string
+) => constructFacetSearchUrl(searchUrl, "genreAndForm", genreAndForm);
 
 export const constructAdvancedSearchUrl = (advancedSearchUrl: URL, q: string) =>
   appendQueryParametersToUrl(advancedSearchUrl, {
