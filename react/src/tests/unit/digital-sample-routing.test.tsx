@@ -5,6 +5,7 @@ import ReaderEntry from "../../apps/reader/Reader.entry";
 import PlayerEntry from "../../apps/player/Player.entry";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../core/utils/helpers/user";
+import digitalSessionArgs from "../../core/storybook/digitalSessionArgs";
 
 /**
  * The reader and player pages' routing for samples. An identifier link with
@@ -45,6 +46,10 @@ vi.mock("../../core/utils/useBiblioAdapter", () => ({
 }));
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
 
+// Required by the entries' types; the routing under test never reads them.
+/* eslint-disable react/jsx-props-no-spreading */
+const texts = digitalSessionArgs;
+
 describe("Reader page sample routing", () => {
   beforeEach(() => {
     cleanup();
@@ -54,7 +59,7 @@ describe("Reader page sample routing", () => {
 
   it("Samples through WeDoBooks", () => {
     const { queryByTestId } = render(
-      <ReaderEntry identifier="9788711623497" />
+      <ReaderEntry {...texts} identifier="9788711623497" />
     );
 
     expect(queryByTestId("biblio-sample")).not.toBeNull();
@@ -67,7 +72,7 @@ describe("Reader page sample routing", () => {
     vi.mocked(isAnonymous).mockReturnValue(true);
 
     const { queryByTestId } = render(
-      <ReaderEntry identifier="9788711623497" />
+      <ReaderEntry {...texts} identifier="9788711623497" />
     );
 
     expect(queryByTestId("biblio-sample")).not.toBeNull();
@@ -78,7 +83,7 @@ describe("Reader page sample routing", () => {
     vi.mocked(useBiblioAdapter).mockReturnValue(false);
 
     const { queryByTestId } = render(
-      <ReaderEntry identifier="9788711623497" />
+      <ReaderEntry {...texts} identifier="9788711623497" />
     );
 
     expect(queryByTestId("publizon-reader")).not.toBeNull();
@@ -86,7 +91,7 @@ describe("Reader page sample routing", () => {
 
   it("Opens a Publizon loan in Publizon's reader, never as a sample", () => {
     const { queryByTestId } = render(
-      <ReaderEntry identifier="9788711623497" orderid="order-1" />
+      <ReaderEntry {...texts} identifier="9788711623497" orderid="order-1" />
     );
 
     expect(queryByTestId("publizon-reader")).not.toBeNull();
@@ -94,7 +99,9 @@ describe("Reader page sample routing", () => {
   });
 
   it("Opens a Biblio loan in the loan reader, never as a sample", () => {
-    const { queryByTestId } = render(<ReaderEntry loanid="loan-1" />);
+    const { queryByTestId } = render(
+      <ReaderEntry {...texts} loanid="loan-1" />
+    );
 
     expect(queryByTestId("biblio-loan")).not.toBeNull();
   });
@@ -109,7 +116,7 @@ describe("Player page sample routing", () => {
 
   it("Samples through WeDoBooks", () => {
     const { queryByTestId } = render(
-      <PlayerEntry identifier="9788711823453" />
+      <PlayerEntry {...texts} identifier="9788711823453" />
     );
 
     expect(queryByTestId("biblio-sample")).not.toBeNull();
@@ -120,13 +127,17 @@ describe("Player page sample routing", () => {
     // flag is off; a hand-made one gets an empty page, not a stand-in.
     vi.mocked(useBiblioAdapter).mockReturnValue(false);
 
-    const { container } = render(<PlayerEntry identifier="9788711823453" />);
+    const { container } = render(
+      <PlayerEntry {...texts} identifier="9788711823453" />
+    );
 
     expect(container.firstChild).toBeNull();
   });
 
   it("Opens a Biblio loan as a loan, never as a sample", () => {
-    const { queryByTestId } = render(<PlayerEntry loanid="loan-1" />);
+    const { queryByTestId } = render(
+      <PlayerEntry {...texts} loanid="loan-1" />
+    );
 
     expect(queryByTestId("biblio-loan")).not.toBeNull();
   });
