@@ -253,16 +253,6 @@ updates:
         versions: [">=10.0.0"]
       - dependency-name: "cypress"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/typescript-react-query"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/cli"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/client-preset"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/introspection"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/schema-ast"
-        update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
       # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
@@ -366,8 +356,6 @@ updates:
         versions: [">=9.0.9"]
       - dependency-name: "eslint-plugin-react-hooks"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "@graphql-codegen/typescript-react-query"
-        update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
       # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
@@ -376,18 +364,14 @@ updates:
       - dependency-name: "stylelint-config-recommended-scss"
         update-types: ["version-update:semver-major"]
       # codegen breaks with these versions. DDFNEXT-1455
-      # typescript / typescript-operations v6 emit a second set of input/enum
-      # types that collide with the typescript-react-query@6 output.
+      # typescript-operations v6 emits the enums and inputs it uses itself and
+      # collides with the typescript plugin in the same file, so the output has
+      # to be split in two files. It also makes nullable fields required
+      # (`field: T | null`), which a handful of Cypress factories must follow.
       # graphql 17 is also unsupported by the pinned codegen toolchain (all
       # plugins peer-require graphql ^16), so codegen crashes on it.
       - dependency-name: "graphql"
         versions: [">=17.0.0"]
-      - dependency-name: "@graphql-codegen/add"
-        versions: [">=7.0.0"]
-      - dependency-name: "@graphql-codegen/cli"
-        versions: [">=7.0.0"]
-      - dependency-name: "@graphql-codegen/introspection"
-        versions: [">=6.0.0"]
       - dependency-name: "@graphql-codegen/typescript"
         versions: [">=6.0.0"]
       - dependency-name: "@graphql-codegen/typescript-operations"
