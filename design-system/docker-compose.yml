@@ -32,6 +32,27 @@ services:
       STORYBOOK_CLIENT_ID: bdc1d425-9117-4867-acb9-c7307ddc2e0f
       SHELL: /bin/sh
 
+  # Browser for the Argos screenshots (task argos:capture), in the image CI
+  # uses. The task pins the tag to the installed Playwright.
+  playwright:
+    image: 'mcr.microsoft.com/playwright:${PLAYWRIGHT_IMAGE_TAG:-noble}'
+    profiles: ['argos']
+    # Reaps the browsers the server starts.
+    init: true
+    # More shared memory for Chromium than Docker's 64 MB.
+    ipc: host
+    volumes:
+      - '.:/work:ro'
+    working_dir: /work
+    # The playwright package the tests use, so client and server match.
+    # --unsafe lets the tests pass launch options; only containers in the
+    # project's network can reach it.
+    command: node node_modules/playwright/cli.js run-server --host 0.0.0.0 --port 3000 --unsafe
+    healthcheck:
+      test: ['CMD', 'curl', '--silent', '--output', '/dev/null', 'http://127.0.0.1:3000']
+      interval: 1s
+      retries: 60
+
 volumes:
   projectroot:
     driver_opts:

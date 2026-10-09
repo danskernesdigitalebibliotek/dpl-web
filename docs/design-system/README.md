@@ -113,6 +113,57 @@ pnpm run storybook
 When storybook is ready it automatically opens up in a browser with the
 interface ready to use.
 
+## Argos
+
+Argos runs visual tests alongside Chromatic while we evaluate it. Pushes to
+`main`, `develop` and `release/*`, and pull requests changing the design
+system, screenshot every story at 400px and 1200px. The screenshots are
+uploaded to the `dpl-web` project in Argos under the build name
+`design-system`.
+
+Argos compares them with the build of the base branch and reports the result
+as the `argos/design-system` status. Follow its link to review changes;
+reviewing requires membership of the Argos team. Approve the changes your pull
+request explains, and **Ignore** the ones it cannot explain: Argos then hides
+that change on later builds, and the ignored changes show how much noise Argos
+produces. Share causes worth knowing, such as a remote image failing to load,
+in Zulip. The Storybook build is published as a preview, linked from Argos'
+comment on the pull request.
+
+Pull requests from forks get no Argos build, as they cannot access the token.
+To get one, push the branch to this repository.
+
+Tag a story `skip-ui-tests` to leave it out of the screenshots. Use it only for
+stories that cannot be screenshotted reliably at all: an untagged story with
+content that breaks the capture, like the YouTube embed, should rather have
+that content blocked or masked so the rest of the story is still covered.
+
+### Comparing local work with Argos
+
+Upload screenshots of commits you have not pushed yet:
+
+```shell
+task dev:argos
+```
+
+They are compared with `develop`. Set `BASE` to compare with another branch,
+e.g. `BASE=main task dev:argos`. The task needs dependencies installed and
+`ARGOS_TOKEN` in the root `.env` (`task dev:dotenv:generate`). Like the other
+tasks here, it runs in Docker: a `node` container builds the static Storybook,
+captures it and uploads the screenshots, and the browser runs in the
+`playwright` service, in the Playwright image, so screenshots render like they
+do in CI. pnpm in the container installs the dependencies' Linux binaries, so
+run `pnpm install` again before using them outside Docker.
+
+To screenshot only some stories, pass their story files, e.g.
+`task dev:argos -- src/stories/Blocks/header`. `task argos:capture` takes the
+same arguments and only writes the screenshots to `screenshots/`, without
+uploading them, to check that stories can be captured.
+
+Local uploads never become baselines. The task refuses to run on `develop`,
+`main` and `release/*`, with uncommitted changes, as Argos files the build
+under `HEAD`, and once `HEAD` is pushed, as CI then compares it.
+
 ## Chromatic
 
 We are using Chromatic for visual test. You can access the dashboard
