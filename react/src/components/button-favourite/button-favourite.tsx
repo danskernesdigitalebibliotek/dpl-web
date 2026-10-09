@@ -92,13 +92,25 @@ const ButtonFavourite: React.FC<ButtonFavouriteProps> = ({
           trackedData: id
         });
         addToListRequest(id);
-        setFillState(true);
+        // An anonymous visitor is sent to login first, and a Unilogin student
+        // can cancel that and stay on the page without a saved favourite.
+        if (!isUserAnonymous) {
+          setFillState(true);
+        }
       }
       // Prevent event from bubbling up. If other components includes the favourite button
       // this wont interfere with their click handler.
       e.stopPropagation();
     },
-    [addToListRequest, fillState, id, removeItem, track, queryClient]
+    [
+      addToListRequest,
+      fillState,
+      id,
+      isUserAnonymous,
+      removeItem,
+      track,
+      queryClient
+    ]
   );
 
   return (

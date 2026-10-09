@@ -81,7 +81,7 @@ const useLoans: UseLoans = () => {
     data: loansServiceLayer,
     isLoading: isLoadingServiceLayer,
     isError: isErrorServiceLayer
-  } = useDigitalLoans({ enabled: viaBiblioAdapter && userIsPatron });
+  } = useDigitalLoans({ enabled: viaBiblioAdapter });
 
   const threshold = useLoanThresholds();
   // A disabled query is never loading or in error so the service layer states
