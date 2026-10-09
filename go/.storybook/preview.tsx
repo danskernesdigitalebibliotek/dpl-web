@@ -20,6 +20,16 @@ const dmSans = DM_Sans({
   display: "swap",
 })
 
+// Shared, so Chromatic and Argos capture the same widths during the pilot.
+const visualTestModes = {
+  mobile: {
+    viewport: "sm",
+  },
+  desktop: {
+    viewport: "xl",
+  },
+}
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -57,14 +67,20 @@ const preview: Preview = {
     },
     chromatic: {
       // Test each story in different viewport modes
+      modes: visualTestModes,
+    },
+    // Argos ignores the chromatic parameters once these exist.
+    argos: {
+      // Without the accessibility check after each mode's render. Argos does
+      // not wait for it, and Storybook reloads the page when the next story
+      // starts while it runs, as it does for 500 ms with a cross-origin iframe.
       modes: {
-        mobile: {
-          viewport: "sm",
-        },
-        desktop: {
-          viewport: "xl",
-        },
+        mobile: { ...visualTestModes.mobile, a11y: { manual: true } },
+        desktop: { ...visualTestModes.desktop, a11y: { manual: true } },
       },
+      // Default crops to the component at 2x zoom, collapsing fullscreen
+      // layouts. Capture the full page like Chromatic does.
+      fitToContent: false,
     },
     a11y: {
       config: {

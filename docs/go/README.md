@@ -141,7 +141,7 @@ In the project, you'll see the following folders and files:
 
 | File                      | Description                                                                                                                                                                                                       |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| go-ci.yml                 | Everything that gates a change to `go/` or `packages/`: ESLint, Prettier, type check, Vitest unit tests, a check that the committed generated clients are up to date, a Storybook build shared by the accessibility (Axe/Playwright) and Chromatic jobs, and Cypress E2E. |
+| go-ci.yml                 | Everything that gates a change to `go/` or `packages/`: ESLint, Prettier, type check, Vitest unit tests, a check that the committed generated clients are up to date, a Storybook build shared by the accessibility (Axe/Playwright), Chromatic and Argos jobs, and Cypress E2E. |
 | go-build-base-image.yml   | Builds `go/lagoon/stage1.dockerfile` and pushes it to `ghcr.io/danskernesdigitalebibliotek/dpl-web-go`. Called by `lagoon-deploy.yml` with `secrets: inherit`, and runs on its own for semver tags.                                          |
 | lagoon-deploy.yml         | Builds the Go base image, then sends a deploy webhook to Lagoon for pull requests and pushes to `develop`, `main`, `go-demo` and `go-playground`.                                                                  |
 | lagoon-close.yml          | Tears down the Lagoon environment when a pull request is closed.                                                                                                                                                  |
@@ -311,7 +311,28 @@ These all run as jobs in `go-ci.yml` on every pull request touching `go/` or
 
 6. **Visual Regression Testing**: the `chromatic` job runs Chromatic to visualize and test UI components in [Storybook]. This helps catch visual regressions and ensures that UI changes do not introduce unexpected issues.
 
+   The `argos` job runs [Argos] next to Chromatic while we evaluate it. It screenshots every story in mobile and desktop mode inside the Playwright image matching the installed Playwright, and uploads them to the `dpl-web` Argos project as the `go` build, reported as `argos/go`. Approve the changes your pull request explains, and **Ignore** the ones it cannot explain, so the ignored changes show how much noise Argos produces. The visual suite lives in `.storybook/test-runners/visual`; tag a story `skip-ui-tests` to leave it out.
+
 7. **Generated code drift**: the `codegen` job re-runs the client generators and fails if the committed output differs, so the checked-in clients cannot silently fall out of sync with the schemas.
+
+
+### Argos screenshots locally
+
+To check that stories can be screenshotted, run:
+
+```shell
+task argos:capture -- components/shared/button
+```
+
+It builds the static Storybook and screenshots the given story files, or every story without arguments, into `screenshots/`. The browser runs in the Playwright image matching the installed Playwright, as in CI, so screenshots render the same. The task needs Docker with host networking: OrbStack, Linux, or Docker Desktop with host networking enabled in its settings. It uses ports 3100 and 6106 on `127.0.0.1`.
+
+To compare commits you have not pushed yet with Argos, upload their screenshots:
+
+```shell
+task dev:argos -- components/shared/button
+```
+
+They are compared with `develop`; set `BASE` to compare with another branch, e.g. `BASE=main task dev:argos`. The task needs `ARGOS_TOKEN` in the root `.env` (`task dev:dotenv:generate`). Local uploads never become baselines. The task refuses to run on `develop`, `main` and `release/*`, with uncommitted changes, as Argos files the build under `HEAD`, and once `HEAD` is pushed, as CI then compares it.
 
 ## Developers
 
@@ -330,6 +351,7 @@ These all run as jobs in `go-ci.yml` on every pull request touching `go/` or
 [prettier]: https://prettier.io/
 [storybook]: https://storybook.js.org/
 [chromatic]: https://www.chromatic.com/
+[Argos]: https://argos-ci.com/
 [react-query]: https://tanstack.com/query/latest/docs/framework/react/overview
 [xstate]: https://xstate.js.org/
 [vitest]: https://vitest.dev/
