@@ -162,8 +162,8 @@ function CategorySlide({
         <div
           style={{ backgroundImage: `url(${backgroundImages[index % 4]})` }}
           className={cn(
-            `relative flex aspect-1/1 items-center justify-center overflow-hidden
-            rounded-sm bg-cover bg-center transition-all duration-300 forced-colors:hidden`
+            `relative flex aspect-1/1 items-center justify-center overflow-hidden rounded-sm
+            bg-cover bg-center transition-all duration-300 forced-colors:hidden`
           )}>
           {category.categoryMenuImage.mediaImage.url && (
             <ImageBase
