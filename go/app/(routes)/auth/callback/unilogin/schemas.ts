@@ -19,7 +19,7 @@ const schemas = {
   institution: z.object({
     instnr: z.string().regex(/^[A-Z0-9]+$/),
     instnavn: z.string(),
-    type: z.string().regex(/^[A-Z0-9]+$/),
+    type: z.string().optional(),
     typenavn: z.string().optional(),
     type3: z.string().optional(),
     type3navn: z.string().optional(),
