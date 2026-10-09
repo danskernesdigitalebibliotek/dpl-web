@@ -75,7 +75,7 @@
     "nuqs": "^2.10.1",
     "plaiceholder": "^3.0.0",
     "react": "19.2.8",
-    "react-dom": "19.2.8",
+    "react-dom": "19.3.0",
     "react-error-boundary": "^6.1.6",
     "react-parallax-tilt": "^1.7.346",
     "replace-in-file": "^9.0.0",
