@@ -30,6 +30,14 @@ describe("Material buttons", () => {
   });
 
   it("Renders a reservation button for physical materials with material type", () => {
+    // Both editions must be reservable: the button follows the selected one.
+    cy.intercept("GET", "**/availability/v3?recordid=**", {
+      statusCode: 200,
+      body: [
+        { recordId: "52557240", available: true, reservable: true },
+        { recordId: "52643414", available: true, reservable: true }
+      ]
+    }).as("Availability");
     cy.visit("/iframe.html?id=apps-material--default&viewMode=story&type=bog")
       .getBySel("material-description")
       .scrollIntoView({ duration: 300 });
