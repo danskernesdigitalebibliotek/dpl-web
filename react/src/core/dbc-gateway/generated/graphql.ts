@@ -1,3 +1,4 @@
+import { DocumentTypeDecoration } from "@graphql-typed-document-node/core";
 import {
   useQuery,
   useMutation,
@@ -10203,7 +10204,28 @@ export type WithLanguagesFragment = {
   } | null;
 };
 
-export const WithLanguagesFragmentDoc = `
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<
+    DocumentTypeDecoration<TResult, TVariables>["__apiType"]
+  >;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+export const WithLanguagesFragmentDoc = new TypedDocumentString(
+  `
     fragment WithLanguages on Manifestation {
   languages {
     main {
@@ -10212,8 +10234,11 @@ export const WithLanguagesFragmentDoc = `
     }
   }
 }
-    `;
-export const ManifestationBasicDetailsFragmentDoc = `
+    `,
+  { fragmentName: "WithLanguages" }
+);
+export const ManifestationBasicDetailsFragmentDoc = new TypedDocumentString(
+  `
     fragment ManifestationBasicDetails on Manifestation {
   ...WithLanguages
   pid
@@ -10247,8 +10272,18 @@ export const ManifestationBasicDetailsFragmentDoc = `
     }
   }
 }
-    ${WithLanguagesFragmentDoc}`;
-export const ManifestationReviewFieldsFragmentDoc = `
+    fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`,
+  { fragmentName: "ManifestationBasicDetails" }
+);
+export const ManifestationReviewFieldsFragmentDoc = new TypedDocumentString(
+  `
     fragment ManifestationReviewFields on Manifestation {
   pid
   recordCreationDate
@@ -10304,8 +10339,11 @@ export const ManifestationReviewFieldsFragmentDoc = `
     }
   }
 }
-    `;
-export const ManifestationsAccessFragmentDoc = `
+    `,
+  { fragmentName: "ManifestationReviewFields" }
+);
+export const ManifestationsAccessFragmentDoc = new TypedDocumentString(
+  `
     fragment ManifestationsAccess on Manifestations {
   all {
     pid
@@ -10337,16 +10375,52 @@ export const ManifestationsAccessFragmentDoc = `
     }
   }
 }
-    `;
-export const WorkAccessFragmentDoc = `
+    `,
+  { fragmentName: "ManifestationsAccess" }
+);
+export const WorkAccessFragmentDoc = new TypedDocumentString(
+  `
     fragment WorkAccess on Work {
   workId
   manifestations {
     ...ManifestationsAccess
   }
 }
-    ${ManifestationsAccessFragmentDoc}`;
-export const SeriesSimpleFragmentDoc = `
+    fragment ManifestationsAccess on Manifestations {
+  all {
+    pid
+    identifiers {
+      type
+      value
+    }
+    access {
+      __typename
+      ... on AccessUrl {
+        origin
+        url
+        loginRequired
+      }
+      ... on RetrieverService {
+        id
+      }
+      ... on InterLibraryLoan {
+        loanIsPossible
+      }
+      ... on Ereol {
+        origin
+        url
+        canAlwaysBeLoaned
+      }
+      ... on DigitalArticleService {
+        issn
+      }
+    }
+  }
+}`,
+  { fragmentName: "WorkAccess" }
+);
+export const SeriesSimpleFragmentDoc = new TypedDocumentString(
+  `
     fragment SeriesSimple on Series {
   title
   seriesId
@@ -10363,8 +10437,11 @@ export const SeriesSimpleFragmentDoc = `
   readThisFirst
   readThisWhenever
 }
-    `;
-export const ManifestationsSimpleFieldsFragmentDoc = `
+    `,
+  { fragmentName: "SeriesSimple" }
+);
+export const ManifestationsSimpleFieldsFragmentDoc = new TypedDocumentString(
+  `
     fragment ManifestationsSimpleFields on Manifestation {
   pid
   genreAndForm
@@ -10514,8 +10591,18 @@ export const ManifestationsSimpleFieldsFragmentDoc = `
     otherCatalogues
   }
 }
-    ${WithLanguagesFragmentDoc}`;
-export const ManifestationsSimpleFragmentDoc = `
+    fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`,
+  { fragmentName: "ManifestationsSimpleFields" }
+);
+export const ManifestationsSimpleFragmentDoc = new TypedDocumentString(
+  `
     fragment ManifestationsSimple on Manifestations {
   all {
     ...ManifestationsSimpleFields
@@ -10527,8 +10614,167 @@ export const ManifestationsSimpleFragmentDoc = `
     ...ManifestationsSimpleFields
   }
 }
-    ${ManifestationsSimpleFieldsFragmentDoc}`;
-export const WorkSmallFragmentDoc = `
+    fragment ManifestationsSimpleFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  subjects {
+    all {
+      display
+    }
+  }
+  ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    __typename
+  }
+  publisher
+  identifiers {
+    type
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contents {
+    heading
+    type
+    raw
+    entries {
+      title {
+        display
+      }
+      creators {
+        persons {
+          display
+          firstName
+          lastName
+          attributeToName
+        }
+        corporations {
+          display
+          main
+        }
+      }
+      contributors
+      playingTime
+      sublevel {
+        title {
+          display
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+        }
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+    childrenOrAdults {
+      display
+      code
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+  }
+  hostPublication {
+    summary
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+      status
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`,
+  { fragmentName: "ManifestationsSimple" }
+);
+export const WorkSmallFragmentDoc = new TypedDocumentString(
+  `
     fragment WorkSmall on Work {
   workId
   titles {
@@ -10551,9 +10797,194 @@ export const WorkSmallFragmentDoc = `
     ...ManifestationsSimple
   }
 }
-    ${SeriesSimpleFragmentDoc}
-${ManifestationsSimpleFragmentDoc}`;
-export const WorkMediumFragmentDoc = `
+    fragment ManifestationsSimple on Manifestations {
+  all {
+    ...ManifestationsSimpleFields
+  }
+  latest {
+    ...ManifestationsSimpleFields
+  }
+  bestRepresentation {
+    ...ManifestationsSimpleFields
+  }
+}
+fragment ManifestationsSimpleFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  subjects {
+    all {
+      display
+    }
+  }
+  ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    __typename
+  }
+  publisher
+  identifiers {
+    type
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contents {
+    heading
+    type
+    raw
+    entries {
+      title {
+        display
+      }
+      creators {
+        persons {
+          display
+          firstName
+          lastName
+          attributeToName
+        }
+        corporations {
+          display
+          main
+        }
+      }
+      contributors
+      playingTime
+      sublevel {
+        title {
+          display
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+        }
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+    childrenOrAdults {
+      display
+      code
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+  }
+  hostPublication {
+    summary
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+      status
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}
+fragment SeriesSimple on Series {
+  title
+  seriesId
+  isPopular
+  members {
+    numberInSeries
+    work {
+      workId
+      titles {
+        main
+      }
+    }
+  }
+  readThisFirst
+  readThisWhenever
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`,
+  { fragmentName: "WorkSmall" }
+);
+export const WorkMediumFragmentDoc = new TypedDocumentString(
+  `
     fragment WorkMedium on Work {
   ...WorkSmall
   materialTypes {
@@ -10599,8 +11030,215 @@ export const WorkMediumFragmentDoc = `
     }
   }
 }
-    ${WorkSmallFragmentDoc}`;
-export const ComplexFacetSearchDocument = `
+    fragment ManifestationsSimple on Manifestations {
+  all {
+    ...ManifestationsSimpleFields
+  }
+  latest {
+    ...ManifestationsSimpleFields
+  }
+  bestRepresentation {
+    ...ManifestationsSimpleFields
+  }
+}
+fragment ManifestationsSimpleFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  subjects {
+    all {
+      display
+    }
+  }
+  ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    __typename
+  }
+  publisher
+  identifiers {
+    type
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contents {
+    heading
+    type
+    raw
+    entries {
+      title {
+        display
+      }
+      creators {
+        persons {
+          display
+          firstName
+          lastName
+          attributeToName
+        }
+        corporations {
+          display
+          main
+        }
+      }
+      contributors
+      playingTime
+      sublevel {
+        title {
+          display
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+        }
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+    childrenOrAdults {
+      display
+      code
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+  }
+  hostPublication {
+    summary
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+      status
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}
+fragment SeriesSimple on Series {
+  title
+  seriesId
+  isPopular
+  members {
+    numberInSeries
+    work {
+      workId
+      titles {
+        main
+      }
+    }
+  }
+  readThisFirst
+  readThisWhenever
+}
+fragment WorkSmall on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  abstract
+  creators {
+    display
+    __typename
+  }
+  series {
+    ...SeriesSimple
+  }
+  workYear {
+    year
+  }
+  genreAndForm
+  manifestations {
+    ...ManifestationsSimple
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`,
+  { fragmentName: "WorkMedium" }
+);
+export const ComplexFacetSearchDocument = new TypedDocumentString(`
     query complexFacetSearch($cql: String!, $facets: ComplexSearchFacetsInput, $filters: ComplexSearchFiltersInput) {
   complexSearch(cql: $cql, filters: $filters, facets: $facets) {
     facets {
@@ -10612,7 +11250,7 @@ export const ComplexFacetSearchDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useComplexFacetSearchQuery = <
   TData = ComplexFacetSearchQuery,
@@ -10640,7 +11278,7 @@ export const useComplexFacetSearchQuery = <
   });
 };
 
-export const ComplexSuggestDocument = `
+export const ComplexSuggestDocument = new TypedDocumentString(`
     query complexSuggest($q: String!, $type: ComplexSuggestionTypeEnum!) {
   complexSuggest(q: $q, type: $type) {
     result {
@@ -10650,7 +11288,7 @@ export const ComplexSuggestDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useComplexSuggestQuery = <
   TData = ComplexSuggestQuery,
@@ -10674,7 +11312,8 @@ export const useComplexSuggestQuery = <
   });
 };
 
-export const GetDashboardRecommendationSourceDocument = `
+export const GetDashboardRecommendationSourceDocument =
+  new TypedDocumentString(`
     query getDashboardRecommendationSource($faust: String, $id: String) {
   work(faust: $faust, id: $id) {
     workId
@@ -10683,7 +11322,7 @@ export const GetDashboardRecommendationSourceDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetDashboardRecommendationSourceQuery = <
   TData = GetDashboardRecommendationSourceQuery,
@@ -10714,7 +11353,8 @@ export const useGetDashboardRecommendationSourceQuery = <
   });
 };
 
-export const GetDashboardRecommendationSourceByIsbnDocument = `
+export const GetDashboardRecommendationSourceByIsbnDocument =
+  new TypedDocumentString(`
     query getDashboardRecommendationSourceByIsbn($cql: String!) {
   complexSearch(cql: $cql, filters: {}) {
     works(offset: 0, limit: 1) {
@@ -10725,7 +11365,7 @@ export const GetDashboardRecommendationSourceByIsbnDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetDashboardRecommendationSourceByIsbnQuery = <
   TData = GetDashboardRecommendationSourceByIsbnQuery,
@@ -10753,7 +11393,7 @@ export const useGetDashboardRecommendationSourceByIsbnQuery = <
   });
 };
 
-export const GetDashboardRecommendationsDocument = `
+export const GetDashboardRecommendationsDocument = new TypedDocumentString(`
     query getDashboardRecommendations($id: String!, $limit: Int!) {
   recommend(id: $id, limit: $limit) {
     result {
@@ -10778,7 +11418,7 @@ export const GetDashboardRecommendationsDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetDashboardRecommendationsQuery = <
   TData = GetDashboardRecommendationsQuery,
@@ -10806,13 +11446,218 @@ export const useGetDashboardRecommendationsQuery = <
   });
 };
 
-export const GetSmallWorkDocument = `
+export const GetSmallWorkDocument = new TypedDocumentString(`
     query getSmallWork($id: String!) {
   work(id: $id) {
     ...WorkSmall
   }
 }
-    ${WorkSmallFragmentDoc}`;
+    fragment ManifestationsSimple on Manifestations {
+  all {
+    ...ManifestationsSimpleFields
+  }
+  latest {
+    ...ManifestationsSimpleFields
+  }
+  bestRepresentation {
+    ...ManifestationsSimpleFields
+  }
+}
+fragment ManifestationsSimpleFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  subjects {
+    all {
+      display
+    }
+  }
+  ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    __typename
+  }
+  publisher
+  identifiers {
+    type
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contents {
+    heading
+    type
+    raw
+    entries {
+      title {
+        display
+      }
+      creators {
+        persons {
+          display
+          firstName
+          lastName
+          attributeToName
+        }
+        corporations {
+          display
+          main
+        }
+      }
+      contributors
+      playingTime
+      sublevel {
+        title {
+          display
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+        }
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+    childrenOrAdults {
+      display
+      code
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+  }
+  hostPublication {
+    summary
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+      status
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}
+fragment SeriesSimple on Series {
+  title
+  seriesId
+  isPopular
+  members {
+    numberInSeries
+    work {
+      workId
+      titles {
+        main
+      }
+    }
+  }
+  readThisFirst
+  readThisWhenever
+}
+fragment WorkSmall on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  abstract
+  creators {
+    display
+    __typename
+  }
+  series {
+    ...SeriesSimple
+  }
+  workYear {
+    year
+  }
+  genreAndForm
+  manifestations {
+    ...ManifestationsSimple
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`);
 
 export const useGetSmallWorkQuery = <
   TData = GetSmallWorkQuery,
@@ -10836,13 +11681,54 @@ export const useGetSmallWorkQuery = <
   });
 };
 
-export const GetManifestationViaMaterialByFaustDocument = `
+export const GetManifestationViaMaterialByFaustDocument =
+  new TypedDocumentString(`
     query getManifestationViaMaterialByFaust($faust: String!) {
   manifestation(faust: $faust) {
     ...ManifestationBasicDetails
   }
 }
-    ${ManifestationBasicDetailsFragmentDoc}`;
+    fragment ManifestationBasicDetails on Manifestation {
+  ...WithLanguages
+  pid
+  ownerWork {
+    workId
+  }
+  titles {
+    full
+  }
+  abstract
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+    }
+  }
+  series {
+    title
+    members {
+      numberInSeries
+      work {
+        workId
+      }
+    }
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`);
 
 export const useGetManifestationViaMaterialByFaustQuery = <
   TData = GetManifestationViaMaterialByFaustQuery,
@@ -10870,7 +11756,8 @@ export const useGetManifestationViaMaterialByFaustQuery = <
   });
 };
 
-export const GetManifestationViaBestRepresentationByFaustDocument = `
+export const GetManifestationViaBestRepresentationByFaustDocument =
+  new TypedDocumentString(`
     query getManifestationViaBestRepresentationByFaust($faust: String!) {
   manifestation(faust: $faust) {
     ownerWork {
@@ -10882,7 +11769,47 @@ export const GetManifestationViaBestRepresentationByFaustDocument = `
     }
   }
 }
-    ${ManifestationBasicDetailsFragmentDoc}`;
+    fragment ManifestationBasicDetails on Manifestation {
+  ...WithLanguages
+  pid
+  ownerWork {
+    workId
+  }
+  titles {
+    full
+  }
+  abstract
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+    }
+  }
+  series {
+    title
+    members {
+      numberInSeries
+      work {
+        workId
+      }
+    }
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`);
 
 export const useGetManifestationViaBestRepresentationByFaustQuery = <
   TData = GetManifestationViaBestRepresentationByFaustQuery,
@@ -10918,13 +11845,263 @@ export const useGetManifestationViaBestRepresentationByFaustQuery = <
   });
 };
 
-export const GetMaterialDocument = `
+export const GetMaterialDocument = new TypedDocumentString(`
     query getMaterial($wid: String!) {
   work(id: $wid) {
     ...WorkMedium
   }
 }
-    ${WorkMediumFragmentDoc}`;
+    fragment ManifestationsSimple on Manifestations {
+  all {
+    ...ManifestationsSimpleFields
+  }
+  latest {
+    ...ManifestationsSimpleFields
+  }
+  bestRepresentation {
+    ...ManifestationsSimpleFields
+  }
+}
+fragment ManifestationsSimpleFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  subjects {
+    all {
+      display
+    }
+  }
+  ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    __typename
+  }
+  publisher
+  identifiers {
+    type
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contents {
+    heading
+    type
+    raw
+    entries {
+      title {
+        display
+      }
+      creators {
+        persons {
+          display
+          firstName
+          lastName
+          attributeToName
+        }
+        corporations {
+          display
+          main
+        }
+      }
+      contributors
+      playingTime
+      sublevel {
+        title {
+          display
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+        }
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+    childrenOrAdults {
+      display
+      code
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+  }
+  hostPublication {
+    summary
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+      status
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}
+fragment SeriesSimple on Series {
+  title
+  seriesId
+  isPopular
+  members {
+    numberInSeries
+    work {
+      workId
+      titles {
+        main
+      }
+    }
+  }
+  readThisFirst
+  readThisWhenever
+}
+fragment WorkSmall on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  abstract
+  creators {
+    display
+    __typename
+  }
+  series {
+    ...SeriesSimple
+  }
+  workYear {
+    year
+  }
+  genreAndForm
+  manifestations {
+    ...ManifestationsSimple
+  }
+}
+fragment WorkMedium on Work {
+  ...WorkSmall
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
+  }
+  mainLanguages {
+    display
+    iso639Set1
+  }
+  subjects {
+    all {
+      display
+    }
+    dbcVerified {
+      display
+    }
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  dk5MainEntry {
+    display
+    code
+  }
+  relations {
+    hasReview {
+      pid
+    }
+    hasAdaptation {
+      ownerWork {
+        workId
+        workTypes
+        titles {
+          main
+        }
+      }
+    }
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`);
 
 export const useGetMaterialQuery = <TData = GetMaterialQuery, TError = unknown>(
   variables: GetMaterialQueryVariables,
@@ -10945,13 +12122,263 @@ export const useGetMaterialQuery = <TData = GetMaterialQuery, TError = unknown>(
   });
 };
 
-export const GetMaterialGloballyDocument = `
+export const GetMaterialGloballyDocument = new TypedDocumentString(`
     query getMaterialGlobally($wid: String!) {
   work(id: $wid) {
     ...WorkMedium
   }
 }
-    ${WorkMediumFragmentDoc}`;
+    fragment ManifestationsSimple on Manifestations {
+  all {
+    ...ManifestationsSimpleFields
+  }
+  latest {
+    ...ManifestationsSimpleFields
+  }
+  bestRepresentation {
+    ...ManifestationsSimpleFields
+  }
+}
+fragment ManifestationsSimpleFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  subjects {
+    all {
+      display
+    }
+  }
+  ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    __typename
+  }
+  publisher
+  identifiers {
+    type
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contents {
+    heading
+    type
+    raw
+    entries {
+      title {
+        display
+      }
+      creators {
+        persons {
+          display
+          firstName
+          lastName
+          attributeToName
+        }
+        corporations {
+          display
+          main
+        }
+      }
+      contributors
+      playingTime
+      sublevel {
+        title {
+          display
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+        }
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+    childrenOrAdults {
+      display
+      code
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+  }
+  hostPublication {
+    summary
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+      status
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}
+fragment SeriesSimple on Series {
+  title
+  seriesId
+  isPopular
+  members {
+    numberInSeries
+    work {
+      workId
+      titles {
+        main
+      }
+    }
+  }
+  readThisFirst
+  readThisWhenever
+}
+fragment WorkSmall on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  abstract
+  creators {
+    display
+    __typename
+  }
+  series {
+    ...SeriesSimple
+  }
+  workYear {
+    year
+  }
+  genreAndForm
+  manifestations {
+    ...ManifestationsSimple
+  }
+}
+fragment WorkMedium on Work {
+  ...WorkSmall
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
+  }
+  mainLanguages {
+    display
+    iso639Set1
+  }
+  subjects {
+    all {
+      display
+    }
+    dbcVerified {
+      display
+    }
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  dk5MainEntry {
+    display
+    code
+  }
+  relations {
+    hasReview {
+      pid
+    }
+    hasAdaptation {
+      ownerWork {
+        workId
+        workTypes
+        titles {
+          main
+        }
+      }
+    }
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`);
 
 export const useGetMaterialGloballyQuery = <
   TData = GetMaterialGloballyQuery,
@@ -10979,7 +12406,7 @@ export const useGetMaterialGloballyQuery = <
   });
 };
 
-export const GetRetrieverDocument = `
+export const GetRetrieverDocument = new TypedDocumentString(`
     query getRetriever($id: String!) {
   retriever(id: $id) {
     error
@@ -10992,7 +12419,7 @@ export const GetRetrieverDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetRetrieverQuery = <
   TData = GetRetrieverQuery,
@@ -11016,13 +12443,67 @@ export const useGetRetrieverQuery = <
   });
 };
 
-export const GetReviewManifestationsDocument = `
+export const GetReviewManifestationsDocument = new TypedDocumentString(`
     query getReviewManifestations($pid: [String!]!) {
   manifestations(pid: $pid) {
     ...ManifestationReviewFields
   }
 }
-    ${ManifestationReviewFieldsFragmentDoc}`;
+    fragment ManifestationReviewFields on Manifestation {
+  pid
+  recordCreationDate
+  creators {
+    display
+  }
+  access {
+    __typename
+    ... on RetrieverService {
+      id
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+    ... on AccessUrl {
+      url
+      origin
+    }
+  }
+  edition {
+    publicationYear {
+      display
+    }
+  }
+  hostPublication {
+    title
+    issue
+  }
+  creators {
+    display
+  }
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  workYear {
+    display
+  }
+  review {
+    rating
+    reviewByLibrarians {
+      content
+      heading
+      type
+      manifestations {
+        pid
+        titles {
+          main
+        }
+      }
+    }
+  }
+}`);
 
 export const useGetReviewManifestationsQuery = <
   TData = GetReviewManifestationsQuery,
@@ -11050,7 +12531,7 @@ export const useGetReviewManifestationsQuery = <
   });
 };
 
-export const OpenOrderDocument = `
+export const OpenOrderDocument = new TypedDocumentString(`
     mutation openOrder($input: SubmitOrderInput!) {
   submitOrder(input: $input, dryRun: false) {
     status
@@ -11058,7 +12539,7 @@ export const OpenOrderDocument = `
     orderId
   }
 }
-    `;
+    `);
 
 export const useOpenOrderMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
@@ -11084,7 +12565,7 @@ export const useOpenOrderMutation = <TError = unknown, TContext = unknown>(
   });
 };
 
-export const RecommendFromFaustDocument = `
+export const RecommendFromFaustDocument = new TypedDocumentString(`
     query recommendFromFaust($faust: String!, $limit: Int!) {
   recommend(faust: $faust, limit: $limit) {
     result {
@@ -11094,7 +12575,212 @@ export const RecommendFromFaustDocument = `
     }
   }
 }
-    ${WorkSmallFragmentDoc}`;
+    fragment ManifestationsSimple on Manifestations {
+  all {
+    ...ManifestationsSimpleFields
+  }
+  latest {
+    ...ManifestationsSimpleFields
+  }
+  bestRepresentation {
+    ...ManifestationsSimpleFields
+  }
+}
+fragment ManifestationsSimpleFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  subjects {
+    all {
+      display
+    }
+  }
+  ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    __typename
+  }
+  publisher
+  identifiers {
+    type
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contents {
+    heading
+    type
+    raw
+    entries {
+      title {
+        display
+      }
+      creators {
+        persons {
+          display
+          firstName
+          lastName
+          attributeToName
+        }
+        corporations {
+          display
+          main
+        }
+      }
+      contributors
+      playingTime
+      sublevel {
+        title {
+          display
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+        }
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+    childrenOrAdults {
+      display
+      code
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+  }
+  hostPublication {
+    summary
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+      status
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}
+fragment SeriesSimple on Series {
+  title
+  seriesId
+  isPopular
+  members {
+    numberInSeries
+    work {
+      workId
+      titles {
+        main
+      }
+    }
+  }
+  readThisFirst
+  readThisWhenever
+}
+fragment WorkSmall on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  abstract
+  creators {
+    display
+    __typename
+  }
+  series {
+    ...SeriesSimple
+  }
+  workYear {
+    year
+  }
+  genreAndForm
+  manifestations {
+    ...ManifestationsSimple
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`);
 
 export const useRecommendFromFaustQuery = <
   TData = RecommendFromFaustQuery,
@@ -11122,7 +12808,7 @@ export const useRecommendFromFaustQuery = <
   });
 };
 
-export const SearchFacetDocument = `
+export const SearchFacetDocument = new TypedDocumentString(`
     query searchFacet($q: SearchQueryInput!, $facets: [FacetFieldEnum!]!, $facetLimit: Int!, $filters: SearchFiltersInput) {
   search(q: $q, filters: $filters) {
     facets(facets: $facets) {
@@ -11137,7 +12823,7 @@ export const SearchFacetDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useSearchFacetQuery = <TData = SearchFacetQuery, TError = unknown>(
   variables: SearchFacetQueryVariables,
@@ -11158,7 +12844,7 @@ export const useSearchFacetQuery = <TData = SearchFacetQuery, TError = unknown>(
   });
 };
 
-export const SearchWithPaginationDocument = `
+export const SearchWithPaginationDocument = new TypedDocumentString(`
     query searchWithPagination($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: SearchFiltersInput) {
   search(q: $q, filters: $filters) {
     hitcount
@@ -11167,7 +12853,212 @@ export const SearchWithPaginationDocument = `
     }
   }
 }
-    ${WorkSmallFragmentDoc}`;
+    fragment ManifestationsSimple on Manifestations {
+  all {
+    ...ManifestationsSimpleFields
+  }
+  latest {
+    ...ManifestationsSimpleFields
+  }
+  bestRepresentation {
+    ...ManifestationsSimpleFields
+  }
+}
+fragment ManifestationsSimpleFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  subjects {
+    all {
+      display
+    }
+  }
+  ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    __typename
+  }
+  publisher
+  identifiers {
+    type
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contents {
+    heading
+    type
+    raw
+    entries {
+      title {
+        display
+      }
+      creators {
+        persons {
+          display
+          firstName
+          lastName
+          attributeToName
+        }
+        corporations {
+          display
+          main
+        }
+      }
+      contributors
+      playingTime
+      sublevel {
+        title {
+          display
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+        }
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+    childrenOrAdults {
+      display
+      code
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+  }
+  hostPublication {
+    summary
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+      status
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}
+fragment SeriesSimple on Series {
+  title
+  seriesId
+  isPopular
+  members {
+    numberInSeries
+    work {
+      workId
+      titles {
+        main
+      }
+    }
+  }
+  readThisFirst
+  readThisWhenever
+}
+fragment WorkSmall on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  abstract
+  creators {
+    display
+    __typename
+  }
+  series {
+    ...SeriesSimple
+  }
+  workYear {
+    year
+  }
+  genreAndForm
+  manifestations {
+    ...ManifestationsSimple
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`);
 
 export const useSearchWithPaginationQuery = <
   TData = SearchWithPaginationQuery,
@@ -11195,7 +13086,8 @@ export const useSearchWithPaginationQuery = <
   });
 };
 
-export const ComplexSearchWithPaginationWorkAccessDocument = `
+export const ComplexSearchWithPaginationWorkAccessDocument =
+  new TypedDocumentString(`
     query complexSearchWithPaginationWorkAccess($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: ComplexSearchFiltersInput!) {
   complexSearch(cql: $cql, filters: $filters) {
     hitcount
@@ -11204,7 +13096,43 @@ export const ComplexSearchWithPaginationWorkAccessDocument = `
     }
   }
 }
-    ${WorkAccessFragmentDoc}`;
+    fragment ManifestationsAccess on Manifestations {
+  all {
+    pid
+    identifiers {
+      type
+      value
+    }
+    access {
+      __typename
+      ... on AccessUrl {
+        origin
+        url
+        loginRequired
+      }
+      ... on RetrieverService {
+        id
+      }
+      ... on InterLibraryLoan {
+        loanIsPossible
+      }
+      ... on Ereol {
+        origin
+        url
+        canAlwaysBeLoaned
+      }
+      ... on DigitalArticleService {
+        issn
+      }
+    }
+  }
+}
+fragment WorkAccess on Work {
+  workId
+  manifestations {
+    ...ManifestationsAccess
+  }
+}`);
 
 export const useComplexSearchWithPaginationWorkAccessQuery = <
   TData = ComplexSearchWithPaginationWorkAccessQuery,
@@ -11232,7 +13160,7 @@ export const useComplexSearchWithPaginationWorkAccessQuery = <
   });
 };
 
-export const ComplexSearchWithPaginationDocument = `
+export const ComplexSearchWithPaginationDocument = new TypedDocumentString(`
     query complexSearchWithPagination($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: ComplexSearchFiltersInput!, $sort: [SortInput!]) {
   complexSearch(cql: $cql, filters: $filters) {
     hitcount
@@ -11241,7 +13169,212 @@ export const ComplexSearchWithPaginationDocument = `
     }
   }
 }
-    ${WorkSmallFragmentDoc}`;
+    fragment ManifestationsSimple on Manifestations {
+  all {
+    ...ManifestationsSimpleFields
+  }
+  latest {
+    ...ManifestationsSimpleFields
+  }
+  bestRepresentation {
+    ...ManifestationsSimpleFields
+  }
+}
+fragment ManifestationsSimpleFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  subjects {
+    all {
+      display
+    }
+  }
+  ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    __typename
+  }
+  publisher
+  identifiers {
+    type
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contents {
+    heading
+    type
+    raw
+    entries {
+      title {
+        display
+      }
+      creators {
+        persons {
+          display
+          firstName
+          lastName
+          attributeToName
+        }
+        corporations {
+          display
+          main
+        }
+      }
+      contributors
+      playingTime
+      sublevel {
+        title {
+          display
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+        }
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+    childrenOrAdults {
+      display
+      code
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+  }
+  hostPublication {
+    summary
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+      status
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}
+fragment SeriesSimple on Series {
+  title
+  seriesId
+  isPopular
+  members {
+    numberInSeries
+    work {
+      workId
+      titles {
+        main
+      }
+    }
+  }
+  readThisFirst
+  readThisWhenever
+}
+fragment WorkSmall on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  abstract
+  creators {
+    display
+    __typename
+  }
+  series {
+    ...SeriesSimple
+  }
+  workYear {
+    year
+  }
+  genreAndForm
+  manifestations {
+    ...ManifestationsSimple
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`);
 
 export const useComplexSearchWithPaginationQuery = <
   TData = ComplexSearchWithPaginationQuery,
@@ -11269,7 +13402,7 @@ export const useComplexSearchWithPaginationQuery = <
   });
 };
 
-export const GetRelatedWorksDocument = `
+export const GetRelatedWorksDocument = new TypedDocumentString(`
     query getRelatedWorks($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: ComplexSearchFiltersInput!, $sort: [SortInput!]) {
   complexSearch(cql: $cql, filters: $filters) {
     works(offset: $offset, limit: $limit, sort: $sort) {
@@ -11296,7 +13429,7 @@ export const GetRelatedWorksDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetRelatedWorksQuery = <
   TData = GetRelatedWorksQuery,
@@ -11320,7 +13453,7 @@ export const useGetRelatedWorksQuery = <
   });
 };
 
-export const GetSeriesDocument = `
+export const GetSeriesDocument = new TypedDocumentString(`
     query getSeries($seriesId: String!, $limit: Int!, $offset: Int!) {
   series(seriesId: $seriesId) {
     title
@@ -11343,7 +13476,212 @@ export const GetSeriesDocument = `
     }
   }
 }
-    ${WorkSmallFragmentDoc}`;
+    fragment ManifestationsSimple on Manifestations {
+  all {
+    ...ManifestationsSimpleFields
+  }
+  latest {
+    ...ManifestationsSimpleFields
+  }
+  bestRepresentation {
+    ...ManifestationsSimpleFields
+  }
+}
+fragment ManifestationsSimpleFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  subjects {
+    all {
+      display
+    }
+  }
+  ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    __typename
+  }
+  publisher
+  identifiers {
+    type
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contents {
+    heading
+    type
+    raw
+    entries {
+      title {
+        display
+      }
+      creators {
+        persons {
+          display
+          firstName
+          lastName
+          attributeToName
+        }
+        corporations {
+          display
+          main
+        }
+      }
+      contributors
+      playingTime
+      sublevel {
+        title {
+          display
+        }
+        contributors
+        playingTime
+        sublevel {
+          title {
+            display
+          }
+          contributors
+          playingTime
+        }
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+    childrenOrAdults {
+      display
+      code
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+  }
+  hostPublication {
+    summary
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+      status
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}
+fragment SeriesSimple on Series {
+  title
+  seriesId
+  isPopular
+  members {
+    numberInSeries
+    work {
+      workId
+      titles {
+        main
+      }
+    }
+  }
+  readThisFirst
+  readThisWhenever
+}
+fragment WorkSmall on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  abstract
+  creators {
+    display
+    __typename
+  }
+  series {
+    ...SeriesSimple
+  }
+  workYear {
+    year
+  }
+  genreAndForm
+  manifestations {
+    ...ManifestationsSimple
+  }
+}
+fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`);
 
 export const useGetSeriesQuery = <TData = GetSeriesQuery, TError = unknown>(
   variables: GetSeriesQueryVariables,
@@ -11361,7 +13699,7 @@ export const useGetSeriesQuery = <TData = GetSeriesQuery, TError = unknown>(
   });
 };
 
-export const SuggestionsFromQueryStringDocument = `
+export const SuggestionsFromQueryStringDocument = new TypedDocumentString(`
     query suggestionsFromQueryString($q: String!, $branchId: String) {
   localSuggest(q: $q, branchId: $branchId) {
     result {
@@ -11388,7 +13726,14 @@ export const SuggestionsFromQueryStringDocument = `
     }
   }
 }
-    ${WithLanguagesFragmentDoc}`;
+    fragment WithLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}`);
 
 export const useSuggestionsFromQueryStringQuery = <
   TData = SuggestionsFromQueryStringQuery,
@@ -11416,7 +13761,7 @@ export const useSuggestionsFromQueryStringQuery = <
   });
 };
 
-export const GetCoversByPidsDocument = `
+export const GetCoversByPidsDocument = new TypedDocumentString(`
     query GetCoversByPids($pids: [String!]!) {
   manifestations(pid: $pids) {
     pid
@@ -11444,7 +13789,7 @@ export const GetCoversByPidsDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetCoversByPidsQuery = <
   TData = GetCoversByPidsQuery,
@@ -11468,7 +13813,7 @@ export const useGetCoversByPidsQuery = <
   });
 };
 
-export const GetBestRepresentationPidByIsbnDocument = `
+export const GetBestRepresentationPidByIsbnDocument = new TypedDocumentString(`
     query GetBestRepresentationPidByIsbn($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: ComplexSearchFiltersInput!) {
   complexSearch(cql: $cql, filters: $filters) {
     works(offset: $offset, limit: $limit) {
@@ -11481,7 +13826,7 @@ export const GetBestRepresentationPidByIsbnDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetBestRepresentationPidByIsbnQuery = <
   TData = GetBestRepresentationPidByIsbnQuery,
@@ -11509,7 +13854,7 @@ export const useGetBestRepresentationPidByIsbnQuery = <
   });
 };
 
-export const IntelligentFacetsDocument = `
+export const IntelligentFacetsDocument = new TypedDocumentString(`
     query intelligentFacets($q: SearchQueryInput!, $facetsLimit: Int!, $valuesLimit: Int!, $filters: SearchFiltersInput!) {
   search(q: $q, filters: $filters) {
     intelligentFacets(limit: $facetsLimit) {
@@ -11524,7 +13869,7 @@ export const IntelligentFacetsDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useIntelligentFacetsQuery = <
   TData = IntelligentFacetsQuery,
@@ -11552,7 +13897,7 @@ export const useIntelligentFacetsQuery = <
   });
 };
 
-export const WorkRecommendationsDocument = `
+export const WorkRecommendationsDocument = new TypedDocumentString(`
     query WorkRecommendations($pid: String!, $limit: Int!) {
   recommend(pid: $pid, limit: $limit) {
     result {
@@ -11568,7 +13913,7 @@ export const WorkRecommendationsDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useWorkRecommendationsQuery = <
   TData = WorkRecommendationsQuery,
@@ -11596,7 +13941,7 @@ export const useWorkRecommendationsQuery = <
   });
 };
 
-export const PlaceCopyDocument = `
+export const PlaceCopyDocument = new TypedDocumentString(`
     mutation placeCopy($input: CopyRequestInput!) {
   elba {
     placeCopyRequest(input: $input) {
@@ -11604,7 +13949,7 @@ export const PlaceCopyDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const usePlaceCopyMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<

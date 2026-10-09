@@ -1,6 +1,11 @@
 import * as React from "react"
 
-import type { WedoBooksReaderMaterial, WedoBooksSdk } from "./sdk"
+import {
+  reportSdkError,
+  type WedoBooksReaderMaterial,
+  type WedoBooksSdk,
+  type WedoBooksStopReason,
+} from "./sdk"
 import { useSdkMount } from "./useSdkMount"
 
 export interface WedoBooksReaderProps {
@@ -12,6 +17,12 @@ export interface WedoBooksReaderProps {
   checkout: WedoBooksReaderMaterial
   /** The reader's own close control was used. */
   onClose: () => void
+  /**
+   * The SDK will not show the book: it closed the reader because the session
+   * moved, or refused to open it and mounted nothing. Either way the page is
+   * empty, and only the caller can say why.
+   */
+  onStop: (reason: WedoBooksStopReason) => void
   /**
    * The reader asked to finish the book.
    *
@@ -34,6 +45,7 @@ export function WedoBooksReader({
   sdk,
   checkout,
   onClose,
+  onStop,
   onFinishBook,
 }: WedoBooksReaderProps): React.ReactElement {
   const elementRef = useSdkMount(
@@ -41,9 +53,14 @@ export function WedoBooksReader({
       sdk.books.openReader({
         element,
         checkout,
-        callbacks: { onClose, onFinishBookClick: onFinishBook },
+        callbacks: {
+          onClose: interruption => (interruption ? onStop(interruption) : onClose()),
+          onFinishBookClick: onFinishBook,
+          onError: reportSdkError,
+        },
       }),
-    [sdk, checkout.id]
+    [sdk, checkout.id],
+    onStop
   )
 
   return <div ref={elementRef} className="wedobooks-reader" />
