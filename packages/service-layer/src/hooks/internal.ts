@@ -19,8 +19,9 @@ export type DigitalQueryOptions<TData, TKey extends QueryKey> = Omit<
 > & { enabled?: boolean }
 
 // Shared mechanics of every digital query hook. Patron-scoped queries never
-// fire without a patron session, whatever the consumer's `enabled` says, and
-// a query that `requires` an input it lacks stays off the wire.
+// fire without a borrowing session (a patron or a Unilogin user — see
+// isDigitalLoanAuthenticated), whatever the consumer's `enabled` says, and a
+// query that `requires` an input it lacks stays off the wire.
 //
 // Each hook keeps its own file on purpose: hooks are where aggregation across
 // lending providers would live, so only the shared mechanics belong here.
@@ -40,7 +41,11 @@ export const useDigitalQuery = <TData, TKey extends QueryKey>({
   return useQuery({
     ...query(config),
     ...restOptions,
-    enabled: (!patronScoped || (config.isPatronAuthenticated ?? true)) && enabled && requires,
+    enabled:
+      (!patronScoped ||
+        (config.isDigitalLoanAuthenticated ?? config.isPatronAuthenticated ?? true)) &&
+      enabled &&
+      requires,
   })
 }
 
