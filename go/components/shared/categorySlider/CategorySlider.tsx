@@ -119,6 +119,13 @@ function CategorySlide({
 }) {
   const [randomIndex, setRandomIndex] = useState<number>(0)
 
+  const backgroundImages = [
+    "/icons/category_bg_1.svg",
+    "/icons/category_bg_2.svg",
+    "/icons/category_bg_3.svg",
+    "/icons/category_bg_4.svg",
+  ]
+
   // Rotation effect options
   const rotations = [
     "has-checked:rotate-2",
@@ -153,18 +160,10 @@ function CategorySlide({
           isSelected ? `${rotations[randomIndex]}` : ""
         )}>
         <div
+          style={{ backgroundImage: `url(${backgroundImages[index % 4]})` }}
           className={cn(
-            `bg-background-overlay relative flex aspect-1/1 items-center justify-center
-            overflow-hidden rounded-sm transition-all duration-300 forced-colors:hidden`,
-            // Add hover effect based on every category by fourth index
-            index % 4 === 0 &&
-              "group-hover:bg-content-1 group-focus:bg-content-1 group-has-checked:bg-content-1",
-            index % 4 === 1 &&
-              "group-hover:bg-content-2 group-focus:bg-content-2 group-has-checked:bg-content-2",
-            index % 4 === 2 &&
-              "group-hover:bg-content-3 group-focus:bg-content-3 group-has-checked:bg-content-3",
-            index % 4 === 3 &&
-              "group-hover:bg-content-4 group-focus:bg-content-4 group-has-checked:bg-content-4"
+            `relative flex aspect-1/1 items-center justify-center overflow-hidden rounded-sm
+            bg-cover bg-center transition-all duration-300 forced-colors:hidden`
           )}>
           {category.categoryMenuImage.mediaImage.url && (
             <ImageBase
