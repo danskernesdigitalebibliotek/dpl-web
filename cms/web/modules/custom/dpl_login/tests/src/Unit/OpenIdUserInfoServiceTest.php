@@ -7,6 +7,7 @@ use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Site\Settings;
 use Drupal\dpl_login\AuthorizationIdType;
 use Drupal\dpl_login\OpenIdUserInfoService;
+use Drupal\dpl_login\Unilogin;
 use Drupal\Tests\UnitTestCase;
 use phpmock\MockBuilder;
 
@@ -63,7 +64,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   }
 
   /**
-   * Test Exception if both CPR and uniqueId are missing.
+   * Test Exception if CPR, uniqueId and Unilogin uni-id are missing.
    */
   public function testThatGettingSubHashFromUserInfoThrowsAnExceptionIfBothCprAndUniqueIdAreMissing() {
     $service = new OpenIdUserInfoService($this->settings, $this->configFactory);
@@ -71,7 +72,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
       'attributes' => [],
     ];
     $this->expectException(\Exception::class);
-    $this->expectExceptionMessage('Unable to identify user. Both CPR and uniqueId are missing.');
+    $this->expectExceptionMessage('Unable to identify user. CPR, uniqueId and Unilogin uni-id are missing.');
 
     $service->getSubjectIdFromUserInfo($userinfo);
   }
@@ -198,6 +199,36 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
         ],
         '70abf093ee19f055b16d35e494e3cc1c6a0f4bae36c6b07ae9ed0d7867bf1909',
         AuthorizationIdType::UniqueId,
+      ],
+      'uniqueId has precedence over the Unilogin uni-id' => [
+        [
+          'attributes' => [
+            'uniqueId' => '9d67c9fa-81d6-41ce-8b42-9d187b306fd9',
+            Unilogin::CLAIM_UNI_ID => 'abcd1234',
+          ],
+        ],
+        '70abf093ee19f055b16d35e494e3cc1c6a0f4bae36c6b07ae9ed0d7867bf1909',
+        AuthorizationIdType::UniqueId,
+      ],
+      'Unilogin uni-id is getting hashed when cpr and uniqueId are missing' => [
+        [
+          'attributes' => [
+            Unilogin::CLAIM_UNI_ID => 'abcd1234',
+          ],
+        ],
+        hash_hmac('sha256', 'abcd1234', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'),
+        AuthorizationIdType::UniId,
+      ],
+      'Unilogin uni-id is getting hashed when cpr is null' => [
+        [
+          'attributes' => [
+            'cpr' => NULL,
+            'idpUsed' => 'unilogin_oidc',
+            Unilogin::CLAIM_UNI_ID => 'abcd1234',
+          ],
+        ],
+        hash_hmac('sha256', 'abcd1234', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'),
+        AuthorizationIdType::UniId,
       ],
     ];
   }

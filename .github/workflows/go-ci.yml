@@ -143,8 +143,6 @@ jobs:
         run: task codegen:publizon
       - name: Codegen - Pubhub
         run: task codegen:pubhub
-      - name: Codegen - Unilogin
-        run: task codegen:unilogin
       - name: Ensure generated client code has not drifted
         run: git diff --exit-code
 
@@ -285,8 +283,8 @@ jobs:
           # By overridding the variables here we can ensure that the correct urls are set
           TEST_MODE: true
           DPL_CMS_BASE_URL: http://localhost:9000
-          UNILOGIN_CLIENT_ID: http://localhost:9000/client
-          UNILOGIN_WELLKNOWN_URL: http://localhost:9000
+          PUBHUB_BASE_URL: http://localhost:9000
+          ADGANGSPLATFORMEN_USERINFO_URL: http://localhost:9000/userinfo
           DPL_GO_BASE_URL: http://localhost:3000
         with:
           install: false

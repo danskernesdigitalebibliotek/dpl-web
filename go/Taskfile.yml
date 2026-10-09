@@ -51,12 +51,6 @@ tasks:
       - task dev:nvm:use
       - pnpm run codegen:pubhub
 
-  codegen:unilogin:
-    desc: Regenerate Unilogin SOAP client from WSDL.
-    cmds:
-      - task dev:nvm:use
-      - pnpm run codegen:unilogin
-
   lagoon:stage1:build:
     desc: Build the Go base image (lagoon/stage1.dockerfile) locally.
     summary: |

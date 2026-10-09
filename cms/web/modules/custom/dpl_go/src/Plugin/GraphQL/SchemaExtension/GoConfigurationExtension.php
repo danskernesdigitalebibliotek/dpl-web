@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_go\Plugin\GraphQL\SchemaExtension;
 
+use Drupal\dpl_login\Unilogin;
 use Drupal\graphql\GraphQL\ResolverBuilder;
 use Drupal\graphql\GraphQL\ResolverRegistryInterface;
 use Drupal\graphql\Plugin\GraphQL\SchemaExtension\SdlSchemaExtensionPluginBase;
@@ -31,6 +32,10 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
     $registry->addFieldResolver('GoLoginUrls', 'adgangsplatformen',
       $builder->produce('go_adgangsplatformen_login_url')
     );
+    $registry->addFieldResolver('GoLoginUrls', 'unilogin',
+      $builder->produce('go_adgangsplatformen_login_url')
+        ->map('idp', $builder->fromValue(Unilogin::IDP))
+    );
 
     $registry->addFieldResolver('GoConfigurationPublic', 'logoutUrls', $builder->callback(fn () => TRUE));
     $registry->addFieldResolver('GoLogoutUrls', 'adgangsplatformen',
@@ -48,10 +53,6 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
 
     $registry->addFieldResolver('GoConfigurationPrivate', 'unilogin',
       $builder->produce('unilogin_private_producer')
-    );
-
-    $registry->addFieldResolver('GoConfigurationPublic', 'unilogin',
-      $builder->produce('unilogin_public_producer')
     );
 
     $registry->addFieldResolver('GoConfigurationPublic', 'mapp',

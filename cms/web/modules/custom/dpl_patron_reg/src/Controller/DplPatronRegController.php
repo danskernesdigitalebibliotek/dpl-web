@@ -70,6 +70,8 @@ class DplPatronRegController extends ControllerBase {
     // Set the authentication type in session. We use this later to
     // distinguish between login and registration.
     $this->dplLoginSession->setAuthenticationType(AuthenticationType::Registration);
+    // Registration is never a Unilogin login, whatever an earlier attempt left.
+    $this->dplLoginSession->deleteUniloginLogin();
 
     /** @var \Drupal\Core\Routing\TrustedRedirectResponse $response */
     $response = $plugin->authorize($scopes);

@@ -29,6 +29,13 @@ class AccessToken {
   public AccessTokenType $type;
 
   /**
+   * The uni-id of a Unilogin user, so the user can see who is logged in.
+   *
+   * @var string|null
+   */
+  public ?string $uniId = NULL;
+
+  /**
    * Named constructor that create an Access Token object.
    *
    * From the data of the openid connect context.

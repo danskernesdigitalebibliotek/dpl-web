@@ -11,6 +11,12 @@ export const isAnonymous = () => {
   return !hasToken("user");
 };
 
+// A registered patron: the CMS only hands out a "user" token for one, never
+// for an unregistered patron or a Unilogin student.
+export const isPatron = () => {
+  return hasToken("user");
+};
+
 export const isUnregistered = () => {
   return hasToken("unregistered-user");
 };

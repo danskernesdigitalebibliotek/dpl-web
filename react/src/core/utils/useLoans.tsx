@@ -11,6 +11,7 @@ import {
 import { LoanType } from "./types/loan-type";
 import useBiblioAdapter from "./useBiblioAdapter";
 import useLoanThresholds from "./useLoanThresholds";
+import { isPatron } from "./helpers/user";
 
 // Loans with more than warning-threshold days until due
 const filterLoansNotOverdue = (loans: LoanType[], warning: number) => {
@@ -64,21 +65,23 @@ type UseLoans = () => UseLoansType;
 // The hook is NOT responsible for any sorting of the loans.
 const useLoans: UseLoans = () => {
   const viaBiblioAdapter = useBiblioAdapter();
+  // Loans belong to a patron, so they are only fetched with a user token.
+  const userIsPatron = isPatron();
   const {
     data: loansFbs,
     isLoading: isLoadingFbs,
     isError: isErrorFbs
-  } = useGetLoansV2();
+  } = useGetLoansV2({ query: { enabled: userIsPatron } });
   const {
     data: loansPublizon,
     isLoading: isLoadingPublizon,
     isError: isErrorPublizon
-  } = useGetV1UserLoans();
+  } = useGetV1UserLoans(undefined, { query: { enabled: userIsPatron } });
   const {
     data: loansServiceLayer,
     isLoading: isLoadingServiceLayer,
     isError: isErrorServiceLayer
-  } = useDigitalLoans({ enabled: viaBiblioAdapter });
+  } = useDigitalLoans({ enabled: viaBiblioAdapter && userIsPatron });
 
   const threshold = useLoanThresholds();
   // A disabled query is never loading or in error so the service layer states

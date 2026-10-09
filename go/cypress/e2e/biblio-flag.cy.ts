@@ -2,6 +2,7 @@ import getV1UserLoansAdapterFactory from "../factories/ap/getV1UserLoansAdapter"
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import { biblioEnabledConfig } from "../factories/dpl-cms/getDplCmsPublicConfiguration"
 import getMaterial from "../factories/fbi/getMaterial"
+import UniloginUserinfo from "../factories/unilogin/userinfo"
 import { mockConfig, mockFrontpage } from "../support/mocks"
 
 const WORK_URL = "/work/work-of%3A870970-basis%3A136817027"
@@ -42,12 +43,24 @@ const revalidateCmsConfig = () => {
 const setSessionType = (type: "unilogin" | "adgangsplatformen") => {
   cy.createGoSession({ type })
   cy.setCookie("go-session:type", type)
-  if (type === "adgangsplatformen") {
-    // See work-page-modal-flows.cy.ts for why both of these are needed.
-    cy.setCookie("SSESS_dpl_cms", "test-drupal-session")
-    cy.mockServerGraphQLQuery({
-      operationName: "getAdgangsplatformenUserToken",
-      data: getAdgangsplatformenUserToken.build(),
+  // See work-page-modal-flows.cy.ts for why both of these are needed. Both
+  // session types live on the Drupal session, so both need them.
+  cy.setCookie("SSESS_dpl_cms", "test-drupal-session")
+  cy.mockServerGraphQLQuery({
+    operationName: "getAdgangsplatformenUserToken",
+    data: getAdgangsplatformenUserToken.build(
+      type === "unilogin"
+        ? { dplTokens: { adgangsplatformen: { user: { type: "unilogin_user" } } } }
+        : {}
+    ),
+  })
+  if (type === "unilogin") {
+    // If the middleware finds no logged-in session, it logs the student in
+    // from the token, which reads the Unilogin userinfo.
+    cy.mockServerRest({
+      method: "GET",
+      path: "/userinfo",
+      data: UniloginUserinfo.build(),
     })
   }
 }

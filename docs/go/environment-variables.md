@@ -78,12 +78,18 @@ Standard Node.js environment indicator. Controls:
 
 Enables test-specific behaviour:
 
-- **Unilogin OIDC** – allows insecure (non-HTTPS) requests to the identity broker (`uniloginClient.ts`)
-- **SOAP services** – redirects Publizon loan creation and Unilogin institution lookup endpoints to the local mock server (`requests.ts` files)
+- **SOAP services** – redirects Publizon loan creation to the local mock server at `PUBHUB_BASE_URL` (`requests.ts`)
 
 ## Server-Only Variables
 
 Only available server-side. Accessed via `getServerEnv()`.
+
+### `ADGANGSPLATFORMEN_USERINFO_URL`
+
+- **Required:** No (optional, validated as URL if set)
+- **Example:** `http://localhost:9000/userinfo`
+
+Overrides the Adgangsplatformen userinfo endpoint (`auth.adgangsplatformen-userinfo-url`, default `https://login.bib.dk/userinfo/`). Go reads the Unilogin attributes from it at login, in `lib/helpers/unilogin.ts`. Only set in tests, to point at the mock server.
 
 ### `DRUPAL_REVALIDATE_SECRET`
 
@@ -104,31 +110,12 @@ The encryption password for `iron-session`. Used to seal/unseal the `go-session`
 
 Indicates the current Next.js lifecycle phase. The helper `isBuildingGoApp()` in `next-phase.ts` checks for `phase-production-build` — during builds, the session system returns a default anonymous session instead of attempting to read cookies (which aren't available at build time).
 
-### `UNILOGIN_CLIENT_ID`
-
-- **Required:** No (optional)
-- **Example:** `https://ereolengo.dk/`
-
-OpenID Connect client ID for the Unilogin identity broker. Used by `openid-client` during OIDC discovery in `uniloginClient.ts`. Can be overridden by this env var; otherwise the value can come from DPL CMS configuration.
-
-### `UNILOGIN_CLIENT_SECRET`
-
-- **Required:** No (optional, can come from DPL CMS private config)
-
-OpenID Connect client secret for Unilogin. If set, overrides the value fetched from DPL CMS private configuration in `dplCmsConfig.ts`.
-
-### `UNILOGIN_WELLKNOWN_URL`
+### `PUBHUB_BASE_URL`
 
 - **Required:** No (optional, validated as URL if set)
-- **Example:** `https://broker.unilogin.dk/auth/realms/broker/.well-known/openid-configuration`
+- **Example:** `http://localhost:9000`
 
-The OIDC discovery endpoint for the Unilogin broker. Used by `openid-client` to discover authorization/token endpoints. In test mode, also used as the base URL for mocked SOAP service endpoints (Publizon create-loan, Unilogin institution lookup).
-
-### `UNILOGIN_MUNICIPALITY_ID`
-
-- **Required:** No (optional)
-
-Overrides the municipality ID from DPL CMS public config. Used for Unilogin institution filtering in `getDplCmsPublicConfig()`.
+Base URL of the mock server that the Publizon create-loan SOAP call goes to in test mode. Not used outside tests.
 
 ### `UNLILOGIN_PUBHUB_CLIENT_ID`
 
@@ -153,30 +140,6 @@ Retailer ID for Publizon SOAP API calls. Passed as `retailerid` in loan creation
 Retailer key code for Publizon. MD5-hashed at runtime before being sent as `retailerkeycode` in SOAP requests (`publizon.ts`). If set as an env var, overrides the DPL CMS private config value.
 
 > **Note:** The `UNLILOGIN_` prefix (rather than `UNILOGIN_`) is a typo that has been carried through the codebase.
-
-### `UNILOGIN_WS_UDBYDERSYSTEM_ID`
-
-- **Required:** No (optional in `env.ts`, but throws at runtime if missing when the SOAP call is made)
-
-Provider system ID from STIL Tilslutning, used when signing Unilogin SOAP webservice requests. Read via `getServerEnv()` in `go/app/(routes)/auth/callback/unilogin/requests.ts`, which raises `Missing Unilogin UdbydersystemId` if it is unset.
-
-### `UNILOGIN_WS_PRIVATE_KEY`
-
-- **Required:** No (optional)
-- **Example:** PEM-encoded private key with newlines written as `\n`
-
-Private key used to sign Unilogin SOAP webservice requests. Read in `go/app/(routes)/auth/callback/unilogin/requests.ts`, which converts the literal `\n` sequences back into newlines.
-
-### `UNILOGIN_WS_PUBLIC_CERT`
-
-- **Required:** No (optional)
-- **Example:** PEM-encoded certificate
-
-Public certificate paired with the private key above. Read in `go/app/(routes)/auth/callback/unilogin/requests.ts`, which converts the literal `\n` sequences back into newlines.
-
-> **Note:** These three replaced the earlier username/password pair
-> (`UNLILOGIN_SERVICES_WS_USER` / `UNLILOGIN_SERVICES_WS_PASSWORD`), which is no
-> longer read anywhere. Some Lagoon projects still carry the old variables.
 
 ## Build / Tooling Variables
 

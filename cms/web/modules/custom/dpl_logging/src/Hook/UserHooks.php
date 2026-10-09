@@ -42,8 +42,9 @@ class UserHooks implements LoggerAwareInterface {
       return;
     }
 
-    // We're not interested in logging changes to patron accounts.
-    if ($user->hasRole('patron')) {
+    // We're not interested in logging changes to patron accounts, including
+    // those of Unilogin users.
+    if ($user->hasRole('patron') || $user->hasRole('unilogin_patron')) {
       return;
     }
 

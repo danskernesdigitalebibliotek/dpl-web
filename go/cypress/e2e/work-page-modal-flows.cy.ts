@@ -1,6 +1,7 @@
 import getV1UserLoansAdapterFactory from "../factories/ap/getV1UserLoansAdapter"
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import getMaterial from "../factories/fbi/getMaterial"
+import UniloginUserinfo from "../factories/unilogin/userinfo"
 import { mockFrontpage } from "../support/mocks"
 
 const WORK_URL = "/work/work-of%3A870970-basis%3A136817027"
@@ -33,18 +34,31 @@ const setSessionType = (type: "unilogin" | "adgangsplatformen") => {
   // The middleware destroys adgangsplatformen sessions that lack a DPL CMS
   // session cookie (proxy.ts → getDplCmsSessionCookie). Without this the
   // session is wiped before the work page renders and the LoggedIn buttons
-  // never mount. Any SSESS-prefixed cookie satisfies the check.
-  if (type === "adgangsplatformen") {
-    cy.setCookie("SSESS_dpl_cms", "test-drupal-session")
-    // The same SSESS cookie gives `loadUserToken` something to ask the CMS
-    // about, so proxy.ts can query it between tests. Without a mock
-    // that DPL CMS query falls through to the catch arm and noisily fails,
-    // and the resulting save-session work has been observed to delay the next
-    // page load past Cypress's 15s data-cy timeout. Stub it so the refresh
-    // path completes quickly when triggered.
-    cy.mockServerGraphQLQuery({
-      operationName: "getAdgangsplatformenUserToken",
-      data: getAdgangsplatformenUserToken.build(),
+  // never mount. Any SSESS-prefixed cookie satisfies the check. Both session
+  // types live on the Drupal session, so both need it.
+  cy.setCookie("SSESS_dpl_cms", "test-drupal-session")
+  // The same SSESS cookie gives `loadUserToken` something to ask the CMS
+  // about, so proxy.ts can query it between tests. Without a mock
+  // that DPL CMS query falls through to the catch arm and noisily fails,
+  // and the resulting save-session work has been observed to delay the next
+  // page load past Cypress's 15s data-cy timeout. Stub it so the refresh
+  // path completes quickly when triggered. The token's type must match the
+  // session's, or the middleware ends the session.
+  cy.mockServerGraphQLQuery({
+    operationName: "getAdgangsplatformenUserToken",
+    data: getAdgangsplatformenUserToken.build(
+      type === "unilogin"
+        ? { dplTokens: { adgangsplatformen: { user: { type: "unilogin_user" } } } }
+        : {}
+    ),
+  })
+  if (type === "unilogin") {
+    // If the middleware finds no logged-in session, it logs the student in
+    // from the token, which reads the Unilogin userinfo.
+    cy.mockServerRest({
+      method: "GET",
+      path: "/userinfo",
+      data: UniloginUserinfo.build(),
     })
   }
 }

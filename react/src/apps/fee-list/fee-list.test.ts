@@ -1,4 +1,4 @@
-import { TOKEN_LIBRARY_KEY } from "../../core/token";
+import { TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../../core/token";
 import {
   digitalLoansData,
   feesData,
@@ -18,6 +18,8 @@ describe("Fee list", () => {
       // notify scheduler, leaving every component stuck in its loading state.
       cy.clock(wednesday20220603, ["Date"]);
       win.sessionStorage.setItem(TOKEN_LIBRARY_KEY, "random-token");
+      // Loans, reservations and fees are only fetched for a patron.
+      win.sessionStorage.setItem(TOKEN_USER_KEY, "random-token");
 
       cy.intercept("GET", "**/external/agencyid/patrons/patronid/v4**", {
         patron: {

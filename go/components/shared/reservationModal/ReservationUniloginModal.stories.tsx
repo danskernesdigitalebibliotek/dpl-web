@@ -7,11 +7,13 @@ import { TDplCmsPublicConfig } from "@/lib/config/dpl-cms/configSchemas"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 
 const dplCmsConfig: TDplCmsPublicConfig = {
-  loginUrls: { adgangsplatformen: "https://login.example/adgangsplatformen" },
+  loginUrls: {
+    adgangsplatformen: "https://login.example/adgangsplatformen",
+    unilogin: "https://login.example/unilogin",
+  },
   logoutUrls: { adgangsplatformen: "https://login.example/logout" },
   libraryInfo: { name: "Story Bibliotek", baseURL: "https://library.example" },
   mapp: null,
-  unilogin: { municipalityId: "0000" },
   blacklistedAvailabilityBranches: [],
   biblio: { enabled: false, baseUrl: null, sdk: null },
   smsNotificationsEnabled: true,
