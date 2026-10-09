@@ -50,9 +50,10 @@ describe("constructAdvancedSearchUrl", () => {
     );
     expect(url.searchParams.get("view")).toBe("results");
 
-    // The results view is only kept when this part of the query is not a
-    // wildcard, see useFormVisibility.
+    // The results view is only kept when the query is not a wildcard, see
+    // useFormVisibility. The facet and the toggle each keep it on their own.
     expect(isWildcardQuery(buildCQLQuery([], preSearchFacets, []))).toBe(false);
+    expect(isWildcardQuery(buildCQLQuery([], [], [], true))).toBe(false);
     expect(buildCQLQuery([], preSearchFacets, [], true)).toContain(
       'term.canAlwaysBeLoaned="true"'
     );
