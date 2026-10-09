@@ -196,6 +196,20 @@ export default [
     }
   },
   {
+    // graphql-codegen output: the TypedDocumentString wrapper it emits uses
+    // `any` and `__meta__`, and @graphql-typed-document-node/core ships only
+    // typings, which the node resolver cannot see.
+    files: ["src/core/dbc-gateway/generated/**"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-underscore-dangle": "off",
+      "import/no-unresolved": [
+        "error",
+        { ignore: ["^@graphql-typed-document-node/core$"] }
+      ]
+    }
+  },
+  {
     files: ["**/*.stories.jsx", "**/*.stories.tsx"],
 
     rules: {

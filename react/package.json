@@ -50,14 +50,14 @@
     "@cypress/code-coverage": "^4.0.3",
     "@cypress/webpack-preprocessor": "^8.0.0",
     "@eslint/js": "^9.39.2",
-    "@graphql-codegen/add": "^6.0.1",
-    "@graphql-codegen/cli": "^6.3.1",
-    "@graphql-codegen/introspection": "^5.0.2",
+    "@graphql-codegen/add": "^7.1.1",
+    "@graphql-codegen/cli": "^7.4.3",
+    "@graphql-codegen/introspection": "^6.1.0",
     "@graphql-codegen/named-operations-object": "^4.0.1",
     "@graphql-codegen/typescript": "^5.0.10",
     "@graphql-codegen/typescript-graphql-files-modules": "^4.0.1",
     "@graphql-codegen/typescript-operations": "^5.1.0",
-    "@graphql-codegen/typescript-react-query": "^6.1.1",
+    "@graphql-codegen/typescript-react-query": "^7.0.5",
     "@graphql-typed-document-node/core": "^3.1.1",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@namics/stylelint-bem": "^11.1.0",
@@ -116,7 +116,7 @@
     "mutationobserver-shim": "^0.3.7",
     "nyc": "^18.0.0",
     "orval": "^8.39.0",
-    "postcss": "^8.5.28",
+    "postcss": "^8.5.29",
     "postcss-cli": "^12.0.0",
     "postcss-loader": "^8.2.1",
     "postcss-scss": "^4.0.9",
@@ -177,6 +177,6 @@
     "unfetch": "^5.0.0"
   },
   "peerDependencies": {
-    "postcss": "^8.5.28"
+    "postcss": "^8.5.29"
   }
 }

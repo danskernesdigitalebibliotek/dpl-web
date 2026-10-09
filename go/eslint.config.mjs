@@ -162,6 +162,15 @@ const eslintConfig = [
       ],
     },
   },
+  {
+    // graphql-codegen output: the TypedDocumentString wrapper it emits uses
+    // `any` and `__meta__`.
+    files: ["lib/graphql/generated/**"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-underscore-dangle": "off",
+    },
+  },
 ]
 
 export default eslintConfig
