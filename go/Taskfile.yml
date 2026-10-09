@@ -119,3 +119,36 @@ tasks:
         node_modules/.bin/test-storybook --config-dir .storybook/test-runners/visual
         --url http://127.0.0.1:6106 {{.CLI_ARGS}}
 
+  dev:argos:
+    desc: Upload screenshots of unpushed commits to Argos
+    summary: |
+      Screenshots stories like `argos:capture` and uploads them to Argos,
+      compared with the CI baseline of BASE (default develop). Pass story
+      files to upload only some. Needs ARGOS_TOKEN in the root .env.
+    vars:
+      BASE: '{{.BASE | default "develop"}}'
+      BRANCH:
+        sh: git rev-parse --abbrev-ref HEAD
+    env:
+      ARGOS_TOKEN:
+        sh: sed -n 's/^ARGOS_TOKEN=//p' .env 2>/dev/null | tr -d '"'
+    preconditions:
+      - sh: test -n "$ARGOS_TOKEN"
+        msg: ARGOS_TOKEN is missing from the root .env. Run `task dev:dotenv:generate` in the repository root.
+      - sh: test "{{.BRANCH}}" != HEAD
+        msg: Check out a branch first.
+      - sh: 'case "{{.BRANCH}}" in develop|main|release/*) exit 1;; esac'
+        msg: Baselines for {{.BRANCH}} come from CI only.
+      # Argos files the build under HEAD, so it must show HEAD's code.
+      - sh: test -z "$(git status --porcelain)"
+        msg: Commit your change locally first.
+      # Fetched first, as HEAD may have been pushed from another clone.
+      - sh: git fetch --quiet origin && test -z "$(git branch -r --contains HEAD)"
+        msg: HEAD is already pushed, so CI compares it.
+    cmds:
+      - task: argos:capture
+      # A subset build compares against the baseline but never becomes one.
+      - >-
+        ARGOS_REFERENCE_BRANCH={{.BASE}}
+        ARGOS_REFERENCE_COMMIT=$(git merge-base HEAD origin/{{.BASE}})
+        node_modules/.bin/argos upload --build-name go --subset ./screenshots
