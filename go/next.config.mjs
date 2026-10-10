@@ -4,10 +4,12 @@ import { env } from "process"
 import { fileURLToPath } from "url"
 
 // Force singleton instances of packages that hold React/QueryClient context.
-// Without this, file:-installed workspace packages (e.g. dpl-service-layer)
-// ship their own node_modules and resolve to a second copy at runtime, which
-// breaks any React context (QueryClientContext, etc.) shared across the
-// boundary. Remove once the monorepo moves to proper workspace links.
+// Workspace packages (e.g. dpl-service-layer) resolve through their symlink
+// to their own directory, whose node_modules holds their own dev copies of
+// these. Without the aliases those copies load as a second instance at
+// runtime, which breaks any React context (QueryClientContext, etc.) shared
+// across the boundary. tsconfig.json mirrors this for @tanstack/react-query
+// types.
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const singletonModules = ["react", "react-dom", "@tanstack/react-query"]
 // Turbopack expects paths relative to the project root (no leading slash).

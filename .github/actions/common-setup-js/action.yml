@@ -56,16 +56,11 @@ runs:
     # The WeDoBooks wrapper is the only workspace package that ships a build
     # instead of sources - the SDK has to be pre-bundled for webpack to accept
     # it. Nothing that imports it can typecheck or build until its dist exists.
-    #
-    # react/ links the wrapper with workspace:, so the symlink sees the fresh
-    # dist by itself. go/ pins it with file:, which pnpm copied into
-    # go/node_modules during the install above - before the dist existed - so
-    # go's copy has to be refreshed with a second install.
+    # react/ and go/ link the wrapper with workspace:, so their symlinks see
+    # the fresh dist without another install.
     - name: Build the WeDoBooks wrapper
       if: inputs.wedobooks-token != '' && inputs.build-wedobooks == 'true'
       shell: bash
       env:
         NODE_AUTH_TOKEN: ${{ inputs.token }}
-      run: |
-        pnpm --filter @danskernesdigitalebibliotek/dpl-wedobooks build
-        pnpm install --dir go
+      run: pnpm --filter @danskernesdigitalebibliotek/dpl-wedobooks build
