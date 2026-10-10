@@ -1,0 +1,7 @@
+{
+  "packages": [
+    { "name": "acme/gamma", "version": "3.0.0" },
+    { "name": "other/transitive", "version": "9.9.9" }
+  ],
+  "packages-dev": []
+}

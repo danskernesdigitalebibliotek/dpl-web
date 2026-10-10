@@ -1,18 +1,27 @@
 ---
-name: Service Layer / CI
+name: Packages / CI
 
 on:
   pull_request:
     paths:
       - "packages/**"
       - "schemas/openapi/fbs-adapter.yaml"
-      - ".github/workflows/service-layer-ci.yml"
+      - ".github/workflows/packages-ci.yml"
+
+# One workflow for everything under packages/, with a group of jobs per package.
+# The trigger is deliberately the whole directory: a change to one package also
+# re-runs the others' jobs. They are short and the concurrency group cancels
+# superseded runs, so this is accepted over a per-package path filter.
 
 concurrency:
   group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  # ---------------------------------------------------------------------------
+  # packages/service-layer
+  # ---------------------------------------------------------------------------
+
   TypeCheck:
     name: Service Layer / Type check
     runs-on: ubuntu-latest
@@ -90,3 +99,47 @@ jobs:
             echo "::error::Generated FBS files are out of date with fbs-adapter.yaml. Run 'pnpm run codegen:fbs' inside packages/service-layer and commit the result."
             exit 1
           fi
+
+  # ---------------------------------------------------------------------------
+  # packages/wedobooks
+  # ---------------------------------------------------------------------------
+
+  WedobooksBuild:
+    name: WeDoBooks / Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      - run: pnpm run typecheck
+        working-directory: packages/wedobooks
+      - run: pnpm run build
+        working-directory: packages/wedobooks
+
+  # ---------------------------------------------------------------------------
+  # packages/dependabot-ignore-lint
+  # The audit itself runs from dependabot-ignore-lint.yml; this checks the tool.
+  # ---------------------------------------------------------------------------
+
+  DependabotIgnoreAuditCheck:
+    name: Dependabot Ignore Lint / Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/dependabot-ignore-lint
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      - run: pnpm run typecheck
+      - run: pnpm run lint
+      - run: pnpm run format:check
+      - run: pnpm run test
