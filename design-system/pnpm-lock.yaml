@@ -140,8 +140,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.1(@babel/plugin-syntax-flow@7.29.7(@babel/core@7.29.7(supports-color@8.1.1)))(@babel/plugin-transform-react-jsx@7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/babel__core@7.20.5)(clean-css@5.3.3)(cssnano@5.1.15(postcss@8.5.28))(csso@4.2.0)(debug@4.4.3(supports-color@8.1.1))(esbuild@0.25.12)(eslint@9.39.4(jiti@1.21.7)(supports-color@8.1.1))(html-minifier-terser@6.1.0)(react@18.3.1)(sass@1.105.1)(supports-color@8.1.1)(type-fest@0.21.3)(typescript@5.9.3)(webpack-hot-middleware@2.26.1)
       react-syntax-highlighter:
-        specifier: ^16.1.1
-        version: 16.1.1(react@18.3.1)
+        specifier: ^16.1.2
+        version: 16.1.2(react@18.3.1)
       sass:
         specifier: 1.105.1
         version: 1.105.1
@@ -6069,8 +6069,8 @@ packages:
     peerDependencies:
       react: ^16.3.0 || ^17.0.0 || ^18.0.0
 
-  react-syntax-highlighter@16.1.1:
-    resolution: {integrity: sha512-PjVawBGy80C6YbC5DDZJeUjBmC7skaoEUdvfFQediQHgCL7aKyVHe57SaJGfQsloGDac+gCpTfRdtxzWWKmCXA==}
+  react-syntax-highlighter@16.1.2:
+    resolution: {integrity: sha512-4dM0+mYtfnhgwYWAvFx56fgyjIYk2yFopfiICFvMDhRfeSGRNd+ngFALdPD9q7llyGAmiE6pzOSOwI8Lf9ca1w==}
     engines: {node: '>= 16.20.2'}
     peerDependencies:
       react: '>= 0.14.0'
@@ -14474,7 +14474,7 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  react-syntax-highlighter@16.1.1(react@18.3.1):
+  react-syntax-highlighter@16.1.2(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.29.7
       highlight.js: 10.7.3
