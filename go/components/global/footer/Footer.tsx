@@ -16,7 +16,7 @@ export default function Footer() {
             <ul className="mt-10 space-y-5">
               <li>
                 <SmartLink
-                  href="https://www.detdigitalefolkebibliotek.dk/ereolen-go"
+                  href="https://www.biblo.dk/ombiblogo"
                   linkType="external"
                   className="animate-text-underline text-typo-body-md">
                   Info om GO
@@ -24,7 +24,7 @@ export default function Footer() {
               </li>
               <li>
                 <SmartLink
-                  href="https://detdigitalefolkebibliotek.atlassian.net/servicedesk/customer/portal/6"
+                  href="https://detdigitalefolkebibliotek.atlassian.net/servicedesk/customer/portal/210?xpis=eyJicmlkZ2UiOiJzbWFydExpbmtzIiwiaWQiOiIxNzkxMzU4MzY0ODA2Iiwic291cmNlIjoiamlyYS1KU1cifQ%3D%3D"
                   linkType="external"
                   className="animate-text-underline text-typo-body-md">
                   Kontakt og support
@@ -44,6 +44,14 @@ export default function Footer() {
                   linkType="external"
                   className="animate-text-underline text-typo-body-md">
                   Bliv boganbefaler
+                </SmartLink>
+              </li>
+              <li>
+                <SmartLink
+                  href="https://biblo.dk"
+                  linkType="external"
+                  className="animate-text-underline text-typo-body-md">
+                  Download appen
                 </SmartLink>
               </li>
             </ul>
