@@ -5,7 +5,18 @@ export {
   type WedoBooksSdkConfig,
   type WedoBooksSignInResult,
 } from "./sdk"
-export type { WedoBooksCheckout, WedoBooksReaderMaterial, WedoBooksSampleMaterial } from "./sdk"
+export type {
+  WedoBooksCheckout,
+  WedoBooksDevice,
+  WedoBooksDevices,
+  WedoBooksOpenFailure,
+  WedoBooksReaderMaterial,
+  WedoBooksSampleMaterial,
+  WedoBooksSessionInterruption,
+  WedoBooksStopReason,
+} from "./sdk"
+export { WedoBooksDeviceSession } from "./WedoBooksDeviceSession"
+export type { WedoBooksDeviceSessionProps } from "./WedoBooksDeviceSession"
 export { WedoBooksReader } from "./WedoBooksReader"
 export type { WedoBooksReaderProps } from "./WedoBooksReader"
 export { WedoBooksPlayer } from "./WedoBooksPlayer"

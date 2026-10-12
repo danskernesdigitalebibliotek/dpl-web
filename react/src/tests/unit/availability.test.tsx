@@ -22,15 +22,47 @@ import { useDigitalLoanDecision } from "@danskernesdigitalebibliotek/dpl-service
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../core/utils/helpers/user";
 
+vi.mock("../../core/fbs/fbs", () => ({
+  useGetAvailabilityV3: vi.fn()
+}));
+vi.mock("../../core/utils/config", () => ({
+  useConfig: vi.fn()
+}));
+vi.mock("../../core/publizon/publizon", async () => {
+  const actual = (await vi.importActual("../../core/publizon/publizon")) ?? {};
+  return {
+    // No need for the ts check here.
+    // We want to partially mock the module and this is the way to do it.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    ...actual,
+    useGetV1ProductsIdentifier: vi.fn(),
+    useGetV1LoanstatusIdentifier: vi.fn()
+  };
+});
+
+// Only the query is stubbed. isMaterialAvailable stays real - it is the
+// rule the hook is here to apply, and a copy of it in the test would
+// pass whatever the package does.
+vi.mock(
+  "@danskernesdigitalebibliotek/dpl-service-layer",
+  async (importOriginal) => ({
+    ...(await importOriginal<
+      typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
+    >()),
+    useDigitalLoanDecision: vi.fn()
+  })
+);
+vi.mock("../../core/utils/useBiblioAdapter", () => ({
+  default: vi.fn()
+}));
+vi.mock("../../core/utils/helpers/user", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("../../core/utils/helpers/user")>()),
+  isAnonymous: vi.fn()
+}));
+
 describe("usePhysicalAvailability tests", () => {
   beforeAll(() => {
-    vi.mock("../../core/fbs/fbs", () => ({
-      useGetAvailabilityV3: vi.fn()
-    }));
-    vi.mock("../../core/utils/config", () => ({
-      useConfig: vi.fn()
-    }));
-
     // Make sure that the config hook returns an array with an empty string.
     // In that way we do not have any blacklisted branches (they are not needed for the test).
     // Typescript does not understand our mocked hook.
@@ -237,44 +269,6 @@ describe("usePhysicalAvailability tests", () => {
 });
 
 describe("useOnlineAvailabilityData tests", () => {
-  beforeAll(() => {
-    vi.mock("../../core/publizon/publizon", async () => {
-      const actual =
-        (await vi.importActual("../../core/publizon/publizon")) ?? {};
-      return {
-        // No need for the ts check here.
-        // We want to partially mock the module and this is the way to do it.
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        ...actual,
-        useGetV1ProductsIdentifier: vi.fn(),
-        useGetV1LoanstatusIdentifier: vi.fn()
-      };
-    });
-
-    // Only the query is stubbed. isMaterialAvailable stays real - it is the
-    // rule the hook is here to apply, and a copy of it in the test would
-    // pass whatever the package does.
-    vi.mock(
-      "@danskernesdigitalebibliotek/dpl-service-layer",
-      async (importOriginal) => ({
-        ...(await importOriginal<
-          typeof import("@danskernesdigitalebibliotek/dpl-service-layer")
-        >()),
-        useDigitalLoanDecision: vi.fn()
-      })
-    );
-    vi.mock("../../core/utils/useBiblioAdapter", () => ({
-      default: vi.fn()
-    }));
-    vi.mock("../../core/utils/helpers/user", async (importOriginal) => ({
-      ...(await importOriginal<
-        typeof import("../../core/utils/helpers/user")
-      >()),
-      isAnonymous: vi.fn()
-    }));
-  });
-
   const mockedLoanDecision = vi.mocked(useDigitalLoanDecision);
   const mockedFlag = vi.mocked(useBiblioAdapter);
   const mockedIsAnonymous = vi.mocked(isAnonymous);

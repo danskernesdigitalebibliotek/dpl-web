@@ -1,7 +1,7 @@
 import { MaterialType } from "@wedobooks/sdk"
 import * as React from "react"
 
-import type { WedoBooksSampleMaterial, WedoBooksSdk } from "./sdk"
+import { reportSdkError, type WedoBooksSampleMaterial, type WedoBooksSdk } from "./sdk"
 import { useSdkMount } from "./useSdkMount"
 
 export interface WedoBooksSamplePlayerProps {
@@ -33,7 +33,10 @@ export function WedoBooksSamplePlayer({
         element,
         sampleUrl,
         material: { ...material, material_type: MaterialType.Audiobook },
-        callbacks: { onClose },
+        callbacks: {
+          onClose,
+          onError: reportSdkError,
+        },
       }),
     [sdk, sampleUrl, material.material_id]
   )

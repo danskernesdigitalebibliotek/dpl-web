@@ -51,6 +51,12 @@ export interface MenuProps {
   materialAndAuthorText: string;
   materialByAuthorText: string;
   statusBadgeWarningText: string;
+  uniloginUserIdConfig: string;
+  uniloginPatronLoginHeadingText: string;
+  uniloginPatronLoginDescriptionText: string;
+  uniloginPatronLoginLogoutText: string;
+  uniloginPatronLoginConfirmText: string;
+  uniloginPatronLoginCancelText: string;
 }
 
 export interface MenuEntryProps

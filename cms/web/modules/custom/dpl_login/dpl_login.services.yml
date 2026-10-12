@@ -24,11 +24,16 @@ services:
     class: Drupal\dpl_login\UnregisteredUserTokensProvider
     arguments: ['@tempstore.private']
 
+  dpl_login.unilogin_user_tokens:
+    class: Drupal\dpl_login\UniloginUserTokensProvider
+    arguments: ['@tempstore.private']
+
   dpl_login.user_tokens:
     class: Drupal\dpl_login\UserTokens
     arguments:
       - '@dpl_login.registered_user_tokens'
       - '@dpl_login.unregistered_user_tokens'
+      - '@dpl_login.unilogin_user_tokens'
   Drupal\dpl_login\UserTokens: '@dpl_login.user_tokens'
 
   dpl_login.library_agency_id_provider:

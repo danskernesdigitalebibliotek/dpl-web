@@ -7,12 +7,7 @@ import { configs as storybookConfigs } from "eslint-plugin-storybook"
 
 const eslintConfig = [
   {
-    ignores: [
-      "lib/soap/publizon/v2_7/generated/",
-      "lib/soap/unilogin/wsiinst-v6/generated/",
-      "lib/rest/**/generated/",
-      "**/.history/",
-    ],
+    ignores: ["lib/soap/publizon/v2_7/generated/", "lib/rest/**/generated/", "**/.history/"],
   },
   {
     linterOptions: {
@@ -160,6 +155,15 @@ const eslintConfig = [
           ],
         },
       ],
+    },
+  },
+  {
+    // graphql-codegen output: the TypedDocumentString wrapper it emits uses
+    // `any` and `__meta__`.
+    files: ["lib/graphql/generated/**"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-underscore-dangle": "off",
     },
   },
 ]

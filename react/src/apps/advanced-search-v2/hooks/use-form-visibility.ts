@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { useQueryState, parseAsJson, parseAsStringEnum } from "nuqs";
 import { buildCQLQuery, isWildcardQuery } from "../lib/query-builder";
 import { isValidFilterState, isValidFacetState } from "../lib/validation";
-
-type FormView = "search" | "results";
+import { FormView } from "../types";
 
 interface UseFormVisibilityReturn {
   view: FormView;

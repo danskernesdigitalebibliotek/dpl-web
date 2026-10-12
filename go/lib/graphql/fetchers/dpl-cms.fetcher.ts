@@ -1,5 +1,6 @@
 import { getEnv } from "@/lib/config/env"
 import goConfig from "@/lib/config/goConfig"
+import type { TypedDocumentString } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 import AccessForbiddenError from "./AccessForbiddenError"
 import UnauthenticatedError from "./UnauthenticatedError"
@@ -26,10 +27,13 @@ const getHeaders = (headers: RequestInit["headers"] | undefined) => {
 }
 
 export function fetcher<TData, TVariables>(
-  query: string,
+  // typescript-react-query emits documents as TypedDocumentString without
+  // type arguments, so the untyped form is what the generated hooks pass in.
+  document: string | TypedDocumentString<unknown, unknown>,
   variables?: TVariables,
   options?: RequestInit & { next?: NextFetchRequestConfig }
 ) {
+  const query = document.toString()
   const { next, headers } = options || {}
 
   const dplCmsGraphqlEndpoint = `${getEnv("DPL_CMS_BASE_URL")}/graphql`

@@ -848,3 +848,20 @@ function dpl_update_deploy_uninstall_gsearch(): string {
 
   return 'Uninstalled modules: gsearch, dk_address_gsearch_migrate.';
 }
+
+/**
+ * Let Unilogin users fetch their token over GraphQL.
+ *
+ * Config import creates the unilogin_patron role with this permission. GO
+ * needs it to read the student's token from the CMS, so make sure it is
+ * granted on sites that manage their own permissions too.
+ */
+function dpl_update_deploy_unilogin_patron_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['unilogin_patron'],
+    ['execute graphql_compose_server arbitrary graphql requests'],
+    TRUE,
+  );
+
+  return 'Allow Unilogin users to fetch their token over GraphQL';
+}

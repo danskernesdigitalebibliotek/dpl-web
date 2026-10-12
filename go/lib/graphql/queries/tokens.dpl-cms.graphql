@@ -19,6 +19,7 @@ query getAdgangsplatformenUserToken {
           timestamp
         }
         token
+        type
       }
     }
   }

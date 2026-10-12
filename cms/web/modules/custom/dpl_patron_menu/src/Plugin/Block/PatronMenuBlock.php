@@ -4,10 +4,13 @@ namespace Drupal\dpl_patron_menu\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\GeneralSettings;
+use Drupal\dpl_login\DplLoginInterface;
+use Drupal\dpl_login\UserTokens;
 use Drupal\dpl_patron_menu\DplMenuSettings;
 use Drupal\dpl_patron_reg\DplPatronRegSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
@@ -43,6 +46,10 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   General settings.
    * @param \Drupal\dpl_patron_reg\DplPatronRegSettings $patronRegSettings
    *   Patron registration settings.
+   * @param \Drupal\dpl_login\UserTokens $userTokens
+   *   The user tokens of the current user.
+   * @param \Drupal\Core\Session\AccountInterface $currentUser
+   *   The current user.
    */
   public function __construct(
     array $configuration,
@@ -53,6 +60,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
     protected BranchRepositoryInterface $branchRepository,
     protected GeneralSettings $generalSettings,
     protected DplPatronRegSettings $patronRegSettings,
+    protected UserTokens $userTokens,
+    protected AccountInterface $currentUser,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -83,6 +92,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_library_agency.general_settings'),
       $container->get('dpl_patron_reg.settings'),
+      $container->get('dpl_login.user_tokens'),
+      $container->get('current_user'),
     );
   }
 
@@ -96,6 +107,9 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    */
   public function build(): array {
     $patronRegSettings = $this->patronRegSettings;
+    // Only a Unilogin student has a uni-id, so only then does the menu vary
+    // per user.
+    $is_unilogin_user = $this->currentUser->hasRole(DplLoginInterface::ROLE_UNILOGIN_PATRON);
     $generalSettings = $this->generalSettings->loadConfig();
 
     // Alternative to this menu array here this could be loaded from a drupal
@@ -144,6 +158,9 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'page-size-mobile' => $this->patronMenuSettings->getListSizeMobile(),
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
+      // A Unilogin student is logged in without being a patron, so the header
+      // shows the student's uni-id instead of a name.
+      'unilogin-user-id-config' => ($is_unilogin_user ? $this->userTokens->getUniloginUserId() : NULL) ?? '',
       "expiration-warning-days-before-config" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
       "menu-navigation-data-config" => json_encode($menu, JSON_THROW_ON_ERROR),
       'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations'),
@@ -181,12 +198,18 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'menu-user-icon-aria-label-text' => $this->t('Open login menu', [], ['context' => 'Patron menu (aria)']),
       'menu-view-your-profile-text' => $this->t('Dashboard', [], ['context' => 'Patron menu']),
       'reservations-ready-for-pickup-text' => $this->t('Reservations ready for pickup', [], ['context' => 'Patron menu']),
+      'unilogin-patron-login-cancel-text' => $this->t('Stay logged in with Unilogin', [], ['context' => 'Patron menu']),
+      'unilogin-patron-login-confirm-text' => $this->t('Log out and log in as a patron', [], ['context' => 'Patron menu']),
+      'unilogin-patron-login-description-text' => $this->t('This requires logging in as a library patron.', [], ['context' => 'Patron menu']),
+      'unilogin-patron-login-heading-text' => $this->t('You are logged in with Unilogin', [], ['context' => 'Patron menu']),
+      'unilogin-patron-login-logout-text' => $this->t('If you continue, you will be logged out of Unilogin.', [], ['context' => 'Patron menu']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
       "#theme" => "dpl_react_app",
       "#name" => "menu",
       "#data" => $data,
+      "#cache" => ["contexts" => $is_unilogin_user ? ["user.roles", "user"] : ["user.roles"]],
     ];
   }
 
