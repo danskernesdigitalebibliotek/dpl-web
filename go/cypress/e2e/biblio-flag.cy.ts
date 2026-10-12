@@ -31,6 +31,32 @@ const mockEmptyLoans = () => {
   })
 }
 
+// A successful Biblio adapter loan creation, in the adapter's wire shape
+// (mapped by the service layer). The modal keys success off `loan`, so the
+// material and dates only need to parse.
+const mockBiblioLoanCreated = () => {
+  cy.intercept("POST", /\/ap-service\/biblio\/v1\/loans(\?.*)?$/, {
+    statusCode: 201,
+    body: {
+      status: "loanable",
+      loan: {
+        id: "biblio-loan-1",
+        material_id: "9788711668016",
+        material_type: "ebook",
+        start: "2026-08-01T10:00:00Z",
+        end: "2026-08-31T10:00:00Z",
+        active: true,
+        title: "En bog",
+        author: "Christie, Agatha",
+        publisher: "Forlag",
+        publish_date: "2014-11-07T00:00:00Z",
+        license: { type: "selection" },
+      },
+    },
+    headers: { "content-type": "application/json" },
+  }).as("createBiblioLoan")
+}
+
 // The server caches goConfiguration ("use cache", tagged dpl-cms-config), so
 // a spec that changes the mocked configuration must drop the cached entry
 // before visiting — otherwise the previous spec's config wins for 15 minutes.
@@ -116,26 +142,7 @@ describe("Work page with the Biblio adapter switched on", () => {
     it("E-book → the loan goes through the Biblio adapter", () => {
       // Unilogin now loans with its own Adgangsplatformen token (ADR-013), so
       // the attempt reaches the adapter instead of the old Unilogin error.
-      cy.intercept("POST", /\/ap-service\/biblio\/v1\/loans(\?.*)?$/, {
-        statusCode: 201,
-        body: {
-          status: "loanable",
-          loan: {
-            id: "biblio-loan-1",
-            material_id: "9788711668016",
-            material_type: "ebook",
-            start: "2026-08-01T10:00:00Z",
-            end: "2026-08-31T10:00:00Z",
-            active: true,
-            title: "En bog",
-            author: "Christie, Agatha",
-            publisher: "Forlag",
-            publish_date: "2014-11-07T00:00:00Z",
-            license: { type: "selection" },
-          },
-        },
-        headers: { "content-type": "application/json" },
-      }).as("createBiblioLoan")
+      mockBiblioLoanCreated()
 
       visitWork("EBOOK")
       cy.dataCy("work-page-button-logged-in").contains("Lån e-bog").click()
@@ -165,6 +172,29 @@ describe("Work page with the Biblio adapter switched on", () => {
         .should("be.visible")
         .should("be.enabled")
       cy.contains("logget ind med Unilogin").should("not.exist")
+    })
+  })
+
+  describe("Logged in via Adgangsplatformen", () => {
+    beforeEach(() => {
+      setSessionType("adgangsplatformen")
+      mockEmptyLoans()
+    })
+
+    it("E-book → the loan goes through the Biblio adapter", () => {
+      // The patron path must keep working too: the digital hooks gate on
+      // isDigitalLoanAuthenticated, which falls back to the patron flag, so a
+      // regression that dropped the fallback would lock patrons out here.
+      mockBiblioLoanCreated()
+
+      visitWork("EBOOK")
+      cy.dataCy("work-page-button-logged-in").contains("Lån e-bog").click()
+      cy.dataCy("loan-material-modal").should("be.visible")
+      cy.dataCy("approve-loan-button").click()
+
+      cy.wait("@createBiblioLoan")
+      // A created loan advances to the "Dit lån" view with the read action.
+      cy.dataCy("read-loan-button").should("be.visible")
     })
   })
 })
