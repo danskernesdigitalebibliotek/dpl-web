@@ -7,9 +7,7 @@ services:
     tags:
       - { name: event_subscriber }
 
-  dpl_go.revalidator:
-    class: Drupal\dpl_go\GoRevalidator
-  Drupal\dpl_go\GoRevalidatorInterface: '@dpl_go.revalidator'
+  Drupal\dpl_go\GoRevalidator: {}
 
   dpl_go.config_revalidate_subscriber:
     class: Drupal\dpl_go\EventSubscriber\ConfigRevalidateSubscriber

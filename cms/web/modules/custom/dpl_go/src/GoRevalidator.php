@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  * plumbing. Go self-heals when its cache TTL expires, so a failed ping is
  * logged, never fatal.
  */
-class GoRevalidator implements GoRevalidatorInterface {
+class GoRevalidator {
 
   public function __construct(
     #[Autowire(service: 'http_client')]
@@ -30,7 +30,14 @@ class GoRevalidator implements GoRevalidatorInterface {
   ) {}
 
   /**
-   * {@inheritdoc}
+   * Drop one or more Next cache tags in Go.
+   *
+   * @param string ...$tags
+   *   The cache tags to drop, e.g. "dpl-cms-config".
+   *
+   * @return bool
+   *   TRUE if a revalidation request was sent; FALSE when there is nothing to
+   *   do or Go is not reachable/configured.
    */
   public function revalidateTags(string ...$tags): bool {
     $tags = array_values(array_filter($tags));
@@ -42,7 +49,13 @@ class GoRevalidator implements GoRevalidatorInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * Revalidate one or more paths (routes) in Go.
+   *
+   * @param string ...$paths
+   *   The paths to revalidate, e.g. "/".
+   *
+   * @return bool
+   *   TRUE if every path's request was sent; FALSE otherwise.
    */
   public function revalidatePaths(string ...$paths): bool {
     $paths = array_values(array_filter($paths));

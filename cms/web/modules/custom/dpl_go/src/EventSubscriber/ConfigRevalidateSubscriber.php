@@ -6,7 +6,7 @@ namespace Drupal\dpl_go\EventSubscriber;
 
 use Drupal\Core\Config\ConfigCrudEvent;
 use Drupal\Core\Config\ConfigEvents;
-use Drupal\dpl_go\GoRevalidatorInterface;
+use Drupal\dpl_go\GoRevalidator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -33,7 +33,7 @@ class ConfigRevalidateSubscriber implements EventSubscriberInterface {
   ];
 
   public function __construct(
-    protected GoRevalidatorInterface $revalidator,
+    protected GoRevalidator $revalidator,
   ) {}
 
   /**
