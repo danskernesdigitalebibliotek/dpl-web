@@ -1,3 +1,4 @@
+import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 import { useQuery, useSuspenseQuery, UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
 import { fetcher } from '@/lib/graphql/fetchers/dpl-cms.fetcher';
 export type Maybe<T> = T | null;
@@ -2904,15 +2905,33 @@ export type GetLogoutUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetLogoutUrlsQuery = { go: { cacheTags: string[] } } & { __typename?: 'Query', goConfiguration?: { __typename?: 'GoConfiguration', public?: { __typename?: 'GoConfigurationPublic', logoutUrls?: { __typename?: 'GoLogoutUrls', adgangsplatformen?: string | null } | null } | null } | null };
 
 
-export const MediaVideotoolFragmentFragmentDoc = `
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+export const MediaVideotoolFragmentFragmentDoc = new TypedDocumentString(`
     fragment mediaVideotoolFragment on MediaVideotool {
   id
   name
   mediaVideotool
   thumbnail
 }
-    `;
-export const GoVideoFragmentDoc = `
+    `, {"fragmentName":"mediaVideotoolFragment"});
+export const GoVideoFragmentDoc = new TypedDocumentString(`
     fragment goVideo on ParagraphGoVideo {
   __typename
   id
@@ -2924,8 +2943,13 @@ export const GoVideoFragmentDoc = `
     ...mediaVideotoolFragment
   }
 }
-    `;
-export const GoVideoBundleAutomaticFragmentDoc = `
+    fragment mediaVideotoolFragment on MediaVideotool {
+  id
+  name
+  mediaVideotool
+  thumbnail
+}`, {"fragmentName":"goVideo"});
+export const GoVideoBundleAutomaticFragmentDoc = new TypedDocumentString(`
     fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
   __typename
   cqlSearch {
@@ -2938,8 +2962,13 @@ export const GoVideoBundleAutomaticFragmentDoc = `
   videoAmountOfMaterials
   id
 }
-    `;
-export const GoVideoBundleManualFragmentDoc = `
+    fragment mediaVideotoolFragment on MediaVideotool {
+  id
+  name
+  mediaVideotool
+  thumbnail
+}`, {"fragmentName":"goVideoBundleAutomatic"});
+export const GoVideoBundleManualFragmentDoc = new TypedDocumentString(`
     fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
   __typename
   id
@@ -2952,16 +2981,21 @@ export const GoVideoBundleManualFragmentDoc = `
     work_id
   }
 }
-    `;
-export const MediaVideotoolVerticalFragmentFragmentDoc = `
+    fragment mediaVideotoolFragment on MediaVideotool {
+  id
+  name
+  mediaVideotool
+  thumbnail
+}`, {"fragmentName":"goVideoBundleManual"});
+export const MediaVideotoolVerticalFragmentFragmentDoc = new TypedDocumentString(`
     fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
   id
   name
   mediaVideotoolVertical
   thumbnail
 }
-    `;
-export const GoVideoBundleVerticalManualFragmentDoc = `
+    `, {"fragmentName":"mediaVideotoolVerticalFragment"});
+export const GoVideoBundleVerticalManualFragmentDoc = new TypedDocumentString(`
     fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
   __typename
   id
@@ -2974,8 +3008,13 @@ export const GoVideoBundleVerticalManualFragmentDoc = `
     work_id
   }
 }
-    `;
-export const GoVideoBundleVerticalAutomaticFragmentDoc = `
+    fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotoolVertical
+  thumbnail
+}`, {"fragmentName":"goVideoBundleVerticalManual"});
+export const GoVideoBundleVerticalAutomaticFragmentDoc = new TypedDocumentString(`
     fragment goVideoBundleVerticalAutomatic on ParagraphGoVideoBundleVerticalAuto {
   __typename
   cqlSearch {
@@ -2988,8 +3027,13 @@ export const GoVideoBundleVerticalAutomaticFragmentDoc = `
   videoAmountOfMaterials
   id
 }
-    `;
-export const GoMaterialSliderAutomaticFragmentDoc = `
+    fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotoolVertical
+  thumbnail
+}`, {"fragmentName":"goVideoBundleVerticalAutomatic"});
+export const GoMaterialSliderAutomaticFragmentDoc = new TypedDocumentString(`
     fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
   __typename
   cqlSearch {
@@ -2998,8 +3042,8 @@ export const GoMaterialSliderAutomaticFragmentDoc = `
   titleOptional: title
   sliderAmountOfMaterials
 }
-    `;
-export const GoMaterialSliderManualFragmentDoc = `
+    `, {"fragmentName":"goMaterialSliderAutomatic"});
+export const GoMaterialSliderManualFragmentDoc = new TypedDocumentString(`
     fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
   __typename
   titleOptional: title
@@ -3008,8 +3052,8 @@ export const GoMaterialSliderManualFragmentDoc = `
     work_id
   }
 }
-    `;
-export const ImageFragmentFragmentDoc = `
+    `, {"fragmentName":"goMaterialSliderManual"});
+export const ImageFragmentFragmentDoc = new TypedDocumentString(`
     fragment imageFragment on MediaImage {
   name
   mediaImage {
@@ -3023,8 +3067,8 @@ export const ImageFragmentFragmentDoc = `
   }
   byline
 }
-    `;
-export const GoLinkboxFragmentDoc = `
+    `, {"fragmentName":"imageFragment"});
+export const GoLinkboxFragmentDoc = new TypedDocumentString(`
     fragment goLinkbox on ParagraphGoLinkbox {
   __typename
   title
@@ -3044,24 +3088,48 @@ export const GoLinkboxFragmentDoc = `
     }
   }
 }
-    `;
-export const GoTextBodyFragmentDoc = `
+    fragment imageFragment on MediaImage {
+  name
+  mediaImage {
+    url
+    alt
+    height
+    width
+    mime
+    size
+    title
+  }
+  byline
+}`, {"fragmentName":"goLinkbox"});
+export const GoTextBodyFragmentDoc = new TypedDocumentString(`
     fragment goTextBody on ParagraphGoTextBody {
   __typename
   body {
     processed
   }
 }
-    `;
-export const GoImagesFragmentDoc = `
+    `, {"fragmentName":"goTextBody"});
+export const GoImagesFragmentDoc = new TypedDocumentString(`
     fragment goImages on ParagraphGoImages {
   __typename
   goImages {
     ...imageFragment
   }
 }
-    `;
-export const NodeGoPageFragmentDoc = `
+    fragment imageFragment on MediaImage {
+  name
+  mediaImage {
+    url
+    alt
+    height
+    width
+    mime
+    size
+    title
+  }
+  byline
+}`, {"fragmentName":"goImages"});
+export const NodeGoPageFragmentDoc = new TypedDocumentString(`
     fragment nodeGoPage on NodeGoPage {
   __typename
   paragraphs {
@@ -3077,8 +3145,138 @@ export const NodeGoPageFragmentDoc = `
     ...goImages
   }
 }
-    `;
-export const NodeGoArticleFragmentDoc = `
+    fragment imageFragment on MediaImage {
+  name
+  mediaImage {
+    url
+    alt
+    height
+    width
+    mime
+    size
+    title
+  }
+  byline
+}
+fragment mediaVideotoolFragment on MediaVideotool {
+  id
+  name
+  mediaVideotool
+  thumbnail
+}
+fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotoolVertical
+  thumbnail
+}
+fragment goVideo on ParagraphGoVideo {
+  __typename
+  id
+  created {
+    timestamp
+  }
+  title
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+}
+fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalAutomatic on ParagraphGoVideoBundleVerticalAuto {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  titleOptional: title
+  sliderAmountOfMaterials
+}
+fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
+  __typename
+  titleOptional: title
+  materialSliderWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goLinkbox on ParagraphGoLinkbox {
+  __typename
+  title
+  goImage {
+    ...imageFragment
+  }
+  goColor
+  goDescription
+  goLinkParagraph {
+    ... on ParagraphGoLink {
+      link {
+        title
+        url
+      }
+      targetBlank
+      ariaLabel
+    }
+  }
+}
+fragment goTextBody on ParagraphGoTextBody {
+  __typename
+  body {
+    processed
+  }
+}
+fragment goImages on ParagraphGoImages {
+  __typename
+  goImages {
+    ...imageFragment
+  }
+}`, {"fragmentName":"nodeGoPage"});
+export const NodeGoArticleFragmentDoc = new TypedDocumentString(`
     fragment nodeGoArticle on NodeGoArticle {
   __typename
   id
@@ -3103,8 +3301,138 @@ export const NodeGoArticleFragmentDoc = `
     ...goImages
   }
 }
-    `;
-export const NodeGoCategoryFragmentDoc = `
+    fragment imageFragment on MediaImage {
+  name
+  mediaImage {
+    url
+    alt
+    height
+    width
+    mime
+    size
+    title
+  }
+  byline
+}
+fragment mediaVideotoolFragment on MediaVideotool {
+  id
+  name
+  mediaVideotool
+  thumbnail
+}
+fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotoolVertical
+  thumbnail
+}
+fragment goVideo on ParagraphGoVideo {
+  __typename
+  id
+  created {
+    timestamp
+  }
+  title
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+}
+fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalAutomatic on ParagraphGoVideoBundleVerticalAuto {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  titleOptional: title
+  sliderAmountOfMaterials
+}
+fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
+  __typename
+  titleOptional: title
+  materialSliderWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goLinkbox on ParagraphGoLinkbox {
+  __typename
+  title
+  goImage {
+    ...imageFragment
+  }
+  goColor
+  goDescription
+  goLinkParagraph {
+    ... on ParagraphGoLink {
+      link {
+        title
+        url
+      }
+      targetBlank
+      ariaLabel
+    }
+  }
+}
+fragment goTextBody on ParagraphGoTextBody {
+  __typename
+  body {
+    processed
+  }
+}
+fragment goImages on ParagraphGoImages {
+  __typename
+  goImages {
+    ...imageFragment
+  }
+}`, {"fragmentName":"nodeGoArticle"});
+export const NodeGoCategoryFragmentDoc = new TypedDocumentString(`
     fragment nodeGoCategory on NodeGoCategory {
   __typename
   id
@@ -3123,14 +3451,144 @@ export const NodeGoCategoryFragmentDoc = `
     ...goImages
   }
 }
-    `;
-export const RouteRedirectFragmentDoc = `
+    fragment imageFragment on MediaImage {
+  name
+  mediaImage {
+    url
+    alt
+    height
+    width
+    mime
+    size
+    title
+  }
+  byline
+}
+fragment mediaVideotoolFragment on MediaVideotool {
+  id
+  name
+  mediaVideotool
+  thumbnail
+}
+fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotoolVertical
+  thumbnail
+}
+fragment goVideo on ParagraphGoVideo {
+  __typename
+  id
+  created {
+    timestamp
+  }
+  title
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+}
+fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalAutomatic on ParagraphGoVideoBundleVerticalAuto {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  titleOptional: title
+  sliderAmountOfMaterials
+}
+fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
+  __typename
+  titleOptional: title
+  materialSliderWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goLinkbox on ParagraphGoLinkbox {
+  __typename
+  title
+  goImage {
+    ...imageFragment
+  }
+  goColor
+  goDescription
+  goLinkParagraph {
+    ... on ParagraphGoLink {
+      link {
+        title
+        url
+      }
+      targetBlank
+      ariaLabel
+    }
+  }
+}
+fragment goTextBody on ParagraphGoTextBody {
+  __typename
+  body {
+    processed
+  }
+}
+fragment goImages on ParagraphGoImages {
+  __typename
+  goImages {
+    ...imageFragment
+  }
+}`, {"fragmentName":"nodeGoCategory"});
+export const RouteRedirectFragmentDoc = new TypedDocumentString(`
     fragment routeRedirect on RouteRedirect {
   __typename
   url
 }
-    `;
-export const GetArticleByPathDocument = `
+    `, {"fragmentName":"routeRedirect"});
+export const GetArticleByPathDocument = new TypedDocumentString(`
     query getArticleByPath($path: String!) {
   route(path: $path) {
     __typename
@@ -3166,20 +3624,141 @@ export const GetArticleByPathDocument = `
     }
   }
 }
-    ${RouteRedirectFragmentDoc}
-${ImageFragmentFragmentDoc}
-${GoVideoFragmentDoc}
-${MediaVideotoolFragmentFragmentDoc}
-${GoVideoBundleAutomaticFragmentDoc}
-${GoVideoBundleManualFragmentDoc}
-${GoVideoBundleVerticalManualFragmentDoc}
-${MediaVideotoolVerticalFragmentFragmentDoc}
-${GoVideoBundleVerticalAutomaticFragmentDoc}
-${GoMaterialSliderAutomaticFragmentDoc}
-${GoMaterialSliderManualFragmentDoc}
-${GoLinkboxFragmentDoc}
-${GoTextBodyFragmentDoc}
-${GoImagesFragmentDoc}`;
+    fragment imageFragment on MediaImage {
+  name
+  mediaImage {
+    url
+    alt
+    height
+    width
+    mime
+    size
+    title
+  }
+  byline
+}
+fragment mediaVideotoolFragment on MediaVideotool {
+  id
+  name
+  mediaVideotool
+  thumbnail
+}
+fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotoolVertical
+  thumbnail
+}
+fragment goVideo on ParagraphGoVideo {
+  __typename
+  id
+  created {
+    timestamp
+  }
+  title
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+}
+fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalAutomatic on ParagraphGoVideoBundleVerticalAuto {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  titleOptional: title
+  sliderAmountOfMaterials
+}
+fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
+  __typename
+  titleOptional: title
+  materialSliderWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goLinkbox on ParagraphGoLinkbox {
+  __typename
+  title
+  goImage {
+    ...imageFragment
+  }
+  goColor
+  goDescription
+  goLinkParagraph {
+    ... on ParagraphGoLink {
+      link {
+        title
+        url
+      }
+      targetBlank
+      ariaLabel
+    }
+  }
+}
+fragment goTextBody on ParagraphGoTextBody {
+  __typename
+  body {
+    processed
+  }
+}
+fragment goImages on ParagraphGoImages {
+  __typename
+  goImages {
+    ...imageFragment
+  }
+}
+fragment routeRedirect on RouteRedirect {
+  __typename
+  url
+}`);
 
 export const useGetArticleByPathQuery = <
       TData = GetArticleByPathQuery,
@@ -3220,14 +3799,14 @@ useSuspenseGetArticleByPathQuery.getKey = (variables: GetArticleByPathQueryVaria
 
 useGetArticleByPathQuery.fetcher = (variables: GetArticleByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetArticleByPathQuery, GetArticleByPathQueryVariables>(GetArticleByPathDocument, variables, options);
 
-export const GetBranchesDocument = `
+export const GetBranchesDocument = new TypedDocumentString(`
     query getBranches($isilId: String) {
   getBranches(isilId: $isilId) {
     isilId
     title
   }
 }
-    `;
+    `);
 
 export const useGetBranchesQuery = <
       TData = GetBranchesQuery,
@@ -3268,13 +3847,13 @@ useSuspenseGetBranchesQuery.getKey = (variables?: GetBranchesQueryVariables) => 
 
 useGetBranchesQuery.fetcher = (variables?: GetBranchesQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetBranchesQuery, GetBranchesQueryVariables>(GetBranchesDocument, variables, options);
 
-export const GetBranchesByContextDocument = `
+export const GetBranchesByContextDocument = new TypedDocumentString(`
     query getBranchesByContext($availabilityContexts: [String!]) {
   getBranches(availabilityContexts: $availabilityContexts) {
     isilId
   }
 }
-    `;
+    `);
 
 export const useGetBranchesByContextQuery = <
       TData = GetBranchesByContextQuery,
@@ -3315,7 +3894,7 @@ useSuspenseGetBranchesByContextQuery.getKey = (variables?: GetBranchesByContextQ
 
 useGetBranchesByContextQuery.fetcher = (variables?: GetBranchesByContextQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetBranchesByContextQuery, GetBranchesByContextQueryVariables>(GetBranchesByContextDocument, variables, options);
 
-export const GetCategoriesDocument = `
+export const GetCategoriesDocument = new TypedDocumentString(`
     query getCategories {
   goCategories {
     results {
@@ -3345,7 +3924,7 @@ export const GetCategoriesDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetCategoriesQuery = <
       TData = GetCategoriesQuery,
@@ -3386,7 +3965,7 @@ useSuspenseGetCategoriesQuery.getKey = (variables?: GetCategoriesQueryVariables)
 
 useGetCategoriesQuery.fetcher = (variables?: GetCategoriesQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, variables, options);
 
-export const GetCategoryPageByPathDocument = `
+export const GetCategoryPageByPathDocument = new TypedDocumentString(`
     query getCategoryPageByPath($path: String!) {
   route(path: $path) {
     __typename
@@ -3399,21 +3978,159 @@ export const GetCategoryPageByPathDocument = `
     }
   }
 }
-    ${RouteRedirectFragmentDoc}
-${NodeGoCategoryFragmentDoc}
-${GoVideoFragmentDoc}
-${MediaVideotoolFragmentFragmentDoc}
-${GoVideoBundleAutomaticFragmentDoc}
-${GoVideoBundleManualFragmentDoc}
-${GoVideoBundleVerticalManualFragmentDoc}
-${MediaVideotoolVerticalFragmentFragmentDoc}
-${GoVideoBundleVerticalAutomaticFragmentDoc}
-${GoMaterialSliderAutomaticFragmentDoc}
-${GoMaterialSliderManualFragmentDoc}
-${GoLinkboxFragmentDoc}
-${ImageFragmentFragmentDoc}
-${GoTextBodyFragmentDoc}
-${GoImagesFragmentDoc}`;
+    fragment imageFragment on MediaImage {
+  name
+  mediaImage {
+    url
+    alt
+    height
+    width
+    mime
+    size
+    title
+  }
+  byline
+}
+fragment mediaVideotoolFragment on MediaVideotool {
+  id
+  name
+  mediaVideotool
+  thumbnail
+}
+fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotoolVertical
+  thumbnail
+}
+fragment nodeGoCategory on NodeGoCategory {
+  __typename
+  id
+  path
+  title
+  paragraphs {
+    ...goVideo
+    ...goVideoBundleAutomatic
+    ...goVideoBundleManual
+    ...goVideoBundleVerticalManual
+    ...goVideoBundleVerticalAutomatic
+    ...goMaterialSliderAutomatic
+    ...goMaterialSliderManual
+    ...goLinkbox
+    ...goTextBody
+    ...goImages
+  }
+}
+fragment goVideo on ParagraphGoVideo {
+  __typename
+  id
+  created {
+    timestamp
+  }
+  title
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+}
+fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalAutomatic on ParagraphGoVideoBundleVerticalAuto {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  titleOptional: title
+  sliderAmountOfMaterials
+}
+fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
+  __typename
+  titleOptional: title
+  materialSliderWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goLinkbox on ParagraphGoLinkbox {
+  __typename
+  title
+  goImage {
+    ...imageFragment
+  }
+  goColor
+  goDescription
+  goLinkParagraph {
+    ... on ParagraphGoLink {
+      link {
+        title
+        url
+      }
+      targetBlank
+      ariaLabel
+    }
+  }
+}
+fragment goTextBody on ParagraphGoTextBody {
+  __typename
+  body {
+    processed
+  }
+}
+fragment goImages on ParagraphGoImages {
+  __typename
+  goImages {
+    ...imageFragment
+  }
+}
+fragment routeRedirect on RouteRedirect {
+  __typename
+  url
+}`);
 
 export const useGetCategoryPageByPathQuery = <
       TData = GetCategoryPageByPathQuery,
@@ -3454,7 +4171,7 @@ useSuspenseGetCategoryPageByPathQuery.getKey = (variables: GetCategoryPageByPath
 
 useGetCategoryPageByPathQuery.fetcher = (variables: GetCategoryPageByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetCategoryPageByPathQuery, GetCategoryPageByPathQueryVariables>(GetCategoryPageByPathDocument, variables, options);
 
-export const GetDplCmsPrivateConfigurationDocument = `
+export const GetDplCmsPrivateConfigurationDocument = new TypedDocumentString(`
     query getDplCmsPrivateConfiguration {
   goConfiguration {
     private {
@@ -3464,7 +4181,7 @@ export const GetDplCmsPrivateConfigurationDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetDplCmsPrivateConfigurationQuery = <
       TData = GetDplCmsPrivateConfigurationQuery,
@@ -3505,7 +4222,7 @@ useSuspenseGetDplCmsPrivateConfigurationQuery.getKey = (variables?: GetDplCmsPri
 
 useGetDplCmsPrivateConfigurationQuery.fetcher = (variables?: GetDplCmsPrivateConfigurationQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetDplCmsPrivateConfigurationQuery, GetDplCmsPrivateConfigurationQueryVariables>(GetDplCmsPrivateConfigurationDocument, variables, options);
 
-export const GetDplCmsPublicConfigurationDocument = `
+export const GetDplCmsPublicConfigurationDocument = new TypedDocumentString(`
     query getDplCmsPublicConfiguration {
   goConfiguration {
     public {
@@ -3539,7 +4256,7 @@ export const GetDplCmsPublicConfigurationDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetDplCmsPublicConfigurationQuery = <
       TData = GetDplCmsPublicConfigurationQuery,
@@ -3580,7 +4297,7 @@ useSuspenseGetDplCmsPublicConfigurationQuery.getKey = (variables?: GetDplCmsPubl
 
 useGetDplCmsPublicConfigurationQuery.fetcher = (variables?: GetDplCmsPublicConfigurationQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetDplCmsPublicConfigurationQuery, GetDplCmsPublicConfigurationQueryVariables>(GetDplCmsPublicConfigurationDocument, variables, options);
 
-export const GetPageByPathDocument = `
+export const GetPageByPathDocument = new TypedDocumentString(`
     query getPageByPath($path: String!) {
   route(path: $path) {
     __typename
@@ -3607,20 +4324,141 @@ export const GetPageByPathDocument = `
     }
   }
 }
-    ${RouteRedirectFragmentDoc}
-${GoVideoFragmentDoc}
-${MediaVideotoolFragmentFragmentDoc}
-${GoVideoBundleAutomaticFragmentDoc}
-${GoVideoBundleManualFragmentDoc}
-${GoVideoBundleVerticalManualFragmentDoc}
-${MediaVideotoolVerticalFragmentFragmentDoc}
-${GoVideoBundleVerticalAutomaticFragmentDoc}
-${GoMaterialSliderAutomaticFragmentDoc}
-${GoMaterialSliderManualFragmentDoc}
-${GoLinkboxFragmentDoc}
-${ImageFragmentFragmentDoc}
-${GoTextBodyFragmentDoc}
-${GoImagesFragmentDoc}`;
+    fragment imageFragment on MediaImage {
+  name
+  mediaImage {
+    url
+    alt
+    height
+    width
+    mime
+    size
+    title
+  }
+  byline
+}
+fragment mediaVideotoolFragment on MediaVideotool {
+  id
+  name
+  mediaVideotool
+  thumbnail
+}
+fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotoolVertical
+  thumbnail
+}
+fragment goVideo on ParagraphGoVideo {
+  __typename
+  id
+  created {
+    timestamp
+  }
+  title
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+}
+fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalAutomatic on ParagraphGoVideoBundleVerticalAuto {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  titleOptional: title
+  sliderAmountOfMaterials
+}
+fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
+  __typename
+  titleOptional: title
+  materialSliderWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goLinkbox on ParagraphGoLinkbox {
+  __typename
+  title
+  goImage {
+    ...imageFragment
+  }
+  goColor
+  goDescription
+  goLinkParagraph {
+    ... on ParagraphGoLink {
+      link {
+        title
+        url
+      }
+      targetBlank
+      ariaLabel
+    }
+  }
+}
+fragment goTextBody on ParagraphGoTextBody {
+  __typename
+  body {
+    processed
+  }
+}
+fragment goImages on ParagraphGoImages {
+  __typename
+  goImages {
+    ...imageFragment
+  }
+}
+fragment routeRedirect on RouteRedirect {
+  __typename
+  url
+}`);
 
 export const useGetPageByPathQuery = <
       TData = GetPageByPathQuery,
@@ -3661,7 +4499,7 @@ useSuspenseGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) 
 
 useGetPageByPathQuery.fetcher = (variables: GetPageByPathQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables, options);
 
-export const GetPreviewPageByIddDocument = `
+export const GetPreviewPageByIddDocument = new TypedDocumentString(`
     query getPreviewPageByIdd($id: ID!, $token: String!) {
   __typename
   preview(id: $id, token: $token) {
@@ -3671,22 +4509,194 @@ export const GetPreviewPageByIddDocument = `
     ...nodeGoCategory
   }
 }
-    ${NodeGoPageFragmentDoc}
-${GoVideoFragmentDoc}
-${MediaVideotoolFragmentFragmentDoc}
-${GoVideoBundleAutomaticFragmentDoc}
-${GoVideoBundleManualFragmentDoc}
-${GoVideoBundleVerticalManualFragmentDoc}
-${MediaVideotoolVerticalFragmentFragmentDoc}
-${GoVideoBundleVerticalAutomaticFragmentDoc}
-${GoMaterialSliderAutomaticFragmentDoc}
-${GoMaterialSliderManualFragmentDoc}
-${GoLinkboxFragmentDoc}
-${ImageFragmentFragmentDoc}
-${GoTextBodyFragmentDoc}
-${GoImagesFragmentDoc}
-${NodeGoArticleFragmentDoc}
-${NodeGoCategoryFragmentDoc}`;
+    fragment imageFragment on MediaImage {
+  name
+  mediaImage {
+    url
+    alt
+    height
+    width
+    mime
+    size
+    title
+  }
+  byline
+}
+fragment mediaVideotoolFragment on MediaVideotool {
+  id
+  name
+  mediaVideotool
+  thumbnail
+}
+fragment mediaVideotoolVerticalFragment on MediaVideotoolVertical {
+  id
+  name
+  mediaVideotoolVertical
+  thumbnail
+}
+fragment nodeGoPage on NodeGoPage {
+  __typename
+  paragraphs {
+    ...goVideo
+    ...goVideoBundleAutomatic
+    ...goVideoBundleManual
+    ...goVideoBundleVerticalManual
+    ...goVideoBundleVerticalAutomatic
+    ...goMaterialSliderAutomatic
+    ...goMaterialSliderManual
+    ...goLinkbox
+    ...goTextBody
+    ...goImages
+  }
+}
+fragment nodeGoArticle on NodeGoArticle {
+  __typename
+  id
+  title
+  subtitle
+  goArticleImage {
+    ...imageFragment
+  }
+  publicationDate {
+    timestamp
+  }
+  paragraphs {
+    ...goVideo
+    ...goVideoBundleAutomatic
+    ...goVideoBundleManual
+    ...goVideoBundleVerticalManual
+    ...goVideoBundleVerticalAutomatic
+    ...goMaterialSliderAutomatic
+    ...goMaterialSliderManual
+    ...goLinkbox
+    ...goTextBody
+    ...goImages
+  }
+}
+fragment nodeGoCategory on NodeGoCategory {
+  __typename
+  id
+  path
+  title
+  paragraphs {
+    ...goVideo
+    ...goVideoBundleAutomatic
+    ...goVideoBundleManual
+    ...goVideoBundleVerticalManual
+    ...goVideoBundleVerticalAutomatic
+    ...goMaterialSliderAutomatic
+    ...goMaterialSliderManual
+    ...goLinkbox
+    ...goTextBody
+    ...goImages
+  }
+}
+fragment goVideo on ParagraphGoVideo {
+  __typename
+  id
+  created {
+    timestamp
+  }
+  title
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+}
+fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalManual on ParagraphGoVideoBundleVerticalManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goVideoBundleVerticalAutomatic on ParagraphGoVideoBundleVerticalAuto {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolVerticalFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  titleOptional: title
+  sliderAmountOfMaterials
+}
+fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
+  __typename
+  titleOptional: title
+  materialSliderWorkIds {
+    material_type
+    work_id
+  }
+}
+fragment goLinkbox on ParagraphGoLinkbox {
+  __typename
+  title
+  goImage {
+    ...imageFragment
+  }
+  goColor
+  goDescription
+  goLinkParagraph {
+    ... on ParagraphGoLink {
+      link {
+        title
+        url
+      }
+      targetBlank
+      ariaLabel
+    }
+  }
+}
+fragment goTextBody on ParagraphGoTextBody {
+  __typename
+  body {
+    processed
+  }
+}
+fragment goImages on ParagraphGoImages {
+  __typename
+  goImages {
+    ...imageFragment
+  }
+}`);
 
 export const useGetPreviewPageByIddQuery = <
       TData = GetPreviewPageByIddQuery,
@@ -3727,7 +4737,7 @@ useSuspenseGetPreviewPageByIddQuery.getKey = (variables: GetPreviewPageByIddQuer
 
 useGetPreviewPageByIddQuery.fetcher = (variables: GetPreviewPageByIddQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetPreviewPageByIddQuery, GetPreviewPageByIddQueryVariables>(GetPreviewPageByIddDocument, variables, options);
 
-export const GetAdgangsplatformenLibraryTokenDocument = `
+export const GetAdgangsplatformenLibraryTokenDocument = new TypedDocumentString(`
     query getAdgangsplatformenLibraryToken {
   dplTokens {
     adgangsplatformen {
@@ -3740,7 +4750,7 @@ export const GetAdgangsplatformenLibraryTokenDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetAdgangsplatformenLibraryTokenQuery = <
       TData = GetAdgangsplatformenLibraryTokenQuery,
@@ -3781,7 +4791,7 @@ useSuspenseGetAdgangsplatformenLibraryTokenQuery.getKey = (variables?: GetAdgang
 
 useGetAdgangsplatformenLibraryTokenQuery.fetcher = (variables?: GetAdgangsplatformenLibraryTokenQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetAdgangsplatformenLibraryTokenQuery, GetAdgangsplatformenLibraryTokenQueryVariables>(GetAdgangsplatformenLibraryTokenDocument, variables, options);
 
-export const GetAdgangsplatformenUserTokenDocument = `
+export const GetAdgangsplatformenUserTokenDocument = new TypedDocumentString(`
     query getAdgangsplatformenUserToken {
   dplTokens {
     adgangsplatformen {
@@ -3795,7 +4805,7 @@ export const GetAdgangsplatformenUserTokenDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetAdgangsplatformenUserTokenQuery = <
       TData = GetAdgangsplatformenUserTokenQuery,
@@ -3836,7 +4846,7 @@ useSuspenseGetAdgangsplatformenUserTokenQuery.getKey = (variables?: GetAdgangspl
 
 useGetAdgangsplatformenUserTokenQuery.fetcher = (variables?: GetAdgangsplatformenUserTokenQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetAdgangsplatformenUserTokenQuery, GetAdgangsplatformenUserTokenQueryVariables>(GetAdgangsplatformenUserTokenDocument, variables, options);
 
-export const GetLoginUrlsDocument = `
+export const GetLoginUrlsDocument = new TypedDocumentString(`
     query getLoginUrls {
   goConfiguration {
     public {
@@ -3846,7 +4856,7 @@ export const GetLoginUrlsDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetLoginUrlsQuery = <
       TData = GetLoginUrlsQuery,
@@ -3887,7 +4897,7 @@ useSuspenseGetLoginUrlsQuery.getKey = (variables?: GetLoginUrlsQueryVariables) =
 
 useGetLoginUrlsQuery.fetcher = (variables?: GetLoginUrlsQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetLoginUrlsQuery, GetLoginUrlsQueryVariables>(GetLoginUrlsDocument, variables, options);
 
-export const GetLogoutUrlsDocument = `
+export const GetLogoutUrlsDocument = new TypedDocumentString(`
     query getLogoutUrls {
   goConfiguration {
     public {
@@ -3897,7 +4907,7 @@ export const GetLogoutUrlsDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useGetLogoutUrlsQuery = <
       TData = GetLogoutUrlsQuery,

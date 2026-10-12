@@ -39,6 +39,10 @@ vi.mock("../../core/utils/text", () => ({
   useText: () => (key: string) => key
 }));
 
+vi.mock("../../core/utils/url", () => ({
+  useUrls: () => () => new URL("https://example.dk/search")
+}));
+
 // The token store is module state, so every test starts from a fresh copy -
 // as a fresh page load does.
 const loadModules = async () => ({

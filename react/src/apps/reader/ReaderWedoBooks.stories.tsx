@@ -9,6 +9,9 @@ import biblioAdapterArgs, {
 import wedobooksArgs, {
   argTypes as wedobooksArgTypes
 } from "../../core/storybook/wedobooksArgs";
+import digitalSessionArgs, {
+  argTypes as digitalSessionArgTypes
+} from "../../core/storybook/digitalSessionArgs";
 
 /**
  * The reader page opening a WeDoBooks book.
@@ -34,6 +37,7 @@ const meta: Meta<typeof ReaderEntry> = {
     ...serviceUrlArgTypes,
     ...biblioAdapterArgTypes,
     ...wedobooksArgTypes,
+    ...digitalSessionArgTypes,
     identifier: {
       description: "The material to sample, by its WeDoBooks material id.",
       control: { type: "text" }
@@ -50,7 +54,8 @@ const meta: Meta<typeof ReaderEntry> = {
     // The flag that makes the service layer the lending provider. Without it
     // this page falls through to Publizon - which is the Publizon stories'
     // subject, not this file's.
-    useBiblioAdapterConfig: "1"
+    useBiblioAdapterConfig: "1",
+    ...digitalSessionArgs
   }
 };
 

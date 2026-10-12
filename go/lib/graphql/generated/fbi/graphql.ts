@@ -1,3 +1,4 @@
+import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 import { useQuery, useSuspenseQuery, UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
 import { fetchData } from '@/lib/graphql/fetchers/fbi.fetcher';
 export type Maybe<T> = T | null;
@@ -3439,7 +3440,25 @@ export type GetMaterialQuery = { __typename?: 'Query', work?: { __typename?: 'Wo
     >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCodeEnum }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', display: string, code: string } }>, workYear?: { __typename?: 'PublicationYear', display: string } | null } | null };
 
 
-export const SearchFacetFragmentDoc = `
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+export const SearchFacetFragmentDoc = new TypedDocumentString(`
     fragment SearchFacet on FacetResult {
   name
   values(limit: $facetLimit) {
@@ -3448,8 +3467,8 @@ export const SearchFacetFragmentDoc = `
     score
   }
 }
-    `;
-export const ManifestationAccessFragmentDoc = `
+    `, {"fragmentName":"SearchFacet"});
+export const ManifestationAccessFragmentDoc = new TypedDocumentString(`
     fragment ManifestationAccess on Manifestation {
   accessTypes {
     code
@@ -3478,8 +3497,8 @@ export const ManifestationAccessFragmentDoc = `
     }
   }
 }
-    `;
-export const WorkAccessFragmentDoc = `
+    `, {"fragmentName":"ManifestationAccess"});
+export const WorkAccessFragmentDoc = new TypedDocumentString(`
     fragment WorkAccess on Work {
   workId
   manifestations {
@@ -3488,24 +3507,51 @@ export const WorkAccessFragmentDoc = `
     }
   }
 }
-    ${ManifestationAccessFragmentDoc}`;
-export const WorkTitlesFragmentDoc = `
+    fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}`, {"fragmentName":"WorkAccess"});
+export const WorkTitlesFragmentDoc = new TypedDocumentString(`
     fragment WorkTitles on Work {
   titles {
     full
     original
   }
 }
-    `;
-export const WorkCreatorsFragmentDoc = `
+    `, {"fragmentName":"WorkTitles"});
+export const WorkCreatorsFragmentDoc = new TypedDocumentString(`
     fragment WorkCreators on Work {
   creators {
     display
     __typename
   }
 }
-    `;
-export const WorkMaterialTypesFragmentDoc = `
+    `, {"fragmentName":"WorkCreators"});
+export const WorkMaterialTypesFragmentDoc = new TypedDocumentString(`
     fragment WorkMaterialTypes on Work {
   materialTypes {
     materialTypeGeneral {
@@ -3518,15 +3564,15 @@ export const WorkMaterialTypesFragmentDoc = `
     }
   }
 }
-    `;
-export const WorkPublicationYearFragmentDoc = `
+    `, {"fragmentName":"WorkMaterialTypes"});
+export const WorkPublicationYearFragmentDoc = new TypedDocumentString(`
     fragment WorkPublicationYear on Work {
   workYear {
     display
   }
 }
-    `;
-export const ManifestationMaterialTypesFragmentDoc = `
+    `, {"fragmentName":"WorkPublicationYear"});
+export const ManifestationMaterialTypesFragmentDoc = new TypedDocumentString(`
     fragment ManifestationMaterialTypes on Manifestation {
   materialTypes {
     materialTypeGeneral {
@@ -3539,8 +3585,8 @@ export const ManifestationMaterialTypesFragmentDoc = `
     }
   }
 }
-    `;
-export const ManifestationIdentifiersFragmentDoc = `
+    `, {"fragmentName":"ManifestationMaterialTypes"});
+export const ManifestationIdentifiersFragmentDoc = new TypedDocumentString(`
     fragment ManifestationIdentifiers on Manifestation {
   pid
   identifiers {
@@ -3548,8 +3594,8 @@ export const ManifestationIdentifiersFragmentDoc = `
     value
   }
 }
-    `;
-export const ManifestationCoverFragmentDoc = `
+    `, {"fragmentName":"ManifestationIdentifiers"});
+export const ManifestationCoverFragmentDoc = new TypedDocumentString(`
     fragment ManifestationCover on Manifestation {
   pid
   cover {
@@ -3576,8 +3622,8 @@ export const ManifestationCoverFragmentDoc = `
     }
   }
 }
-    `;
-export const ManifestationDetailsFragmentDoc = `
+    `, {"fragmentName":"ManifestationCover"});
+export const ManifestationDetailsFragmentDoc = new TypedDocumentString(`
     fragment ManifestationDetails on Manifestation {
   physicalDescription {
     summaryFull
@@ -3600,8 +3646,8 @@ export const ManifestationDetailsFragmentDoc = `
   }
   contributorsFromDescription
 }
-    `;
-export const ManifestationSearchPageTeaserFragmentDoc = `
+    `, {"fragmentName":"ManifestationDetails"});
+export const ManifestationSearchPageTeaserFragmentDoc = new TypedDocumentString(`
     fragment ManifestationSearchPageTeaser on Manifestation {
   ...ManifestationAccess
   ...ManifestationMaterialTypes
@@ -3609,12 +3655,102 @@ export const ManifestationSearchPageTeaserFragmentDoc = `
   ...ManifestationCover
   ...ManifestationDetails
 }
-    ${ManifestationAccessFragmentDoc}
-${ManifestationMaterialTypesFragmentDoc}
-${ManifestationIdentifiersFragmentDoc}
-${ManifestationCoverFragmentDoc}
-${ManifestationDetailsFragmentDoc}`;
-export const WorkTeaserSearchPageFragmentDoc = `
+    fragment ManifestationCover on Manifestation {
+  pid
+  cover {
+    thumbnail
+    xSmall {
+      url
+      width
+      height
+    }
+    small {
+      url
+      width
+      height
+    }
+    medium {
+      url
+      width
+      height
+    }
+    large {
+      url
+      width
+      height
+    }
+  }
+}
+fragment ManifestationIdentifiers on Manifestation {
+  pid
+  identifiers {
+    type
+    value
+  }
+}
+fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}
+fragment ManifestationDetails on Manifestation {
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    edition
+    summary
+  }
+  genreAndForm
+  publisher
+  contributors {
+    display
+  }
+  contributorsFromDescription
+}
+fragment ManifestationMaterialTypes on Manifestation {
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
+}`, {"fragmentName":"ManifestationSearchPageTeaser"});
+export const WorkTeaserSearchPageFragmentDoc = new TypedDocumentString(`
     fragment WorkTeaserSearchPage on Work {
   workId
   ...WorkTitles
@@ -3630,25 +3766,151 @@ export const WorkTeaserSearchPageFragmentDoc = `
     }
   }
 }
-    ${WorkTitlesFragmentDoc}
-${WorkCreatorsFragmentDoc}
-${WorkMaterialTypesFragmentDoc}
-${WorkPublicationYearFragmentDoc}
-${ManifestationSearchPageTeaserFragmentDoc}`;
-export const WorkDescriptionFragmentDoc = `
+    fragment ManifestationCover on Manifestation {
+  pid
+  cover {
+    thumbnail
+    xSmall {
+      url
+      width
+      height
+    }
+    small {
+      url
+      width
+      height
+    }
+    medium {
+      url
+      width
+      height
+    }
+    large {
+      url
+      width
+      height
+    }
+  }
+}
+fragment ManifestationIdentifiers on Manifestation {
+  pid
+  identifiers {
+    type
+    value
+  }
+}
+fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}
+fragment ManifestationDetails on Manifestation {
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    edition
+    summary
+  }
+  genreAndForm
+  publisher
+  contributors {
+    display
+  }
+  contributorsFromDescription
+}
+fragment ManifestationMaterialTypes on Manifestation {
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
+}
+fragment ManifestationSearchPageTeaser on Manifestation {
+  ...ManifestationAccess
+  ...ManifestationMaterialTypes
+  ...ManifestationIdentifiers
+  ...ManifestationCover
+  ...ManifestationDetails
+}
+fragment WorkMaterialTypes on Work {
+  materialTypes {
+    materialTypeGeneral {
+      display
+      code
+    }
+    materialTypeSpecific {
+      display
+      code
+    }
+  }
+}
+fragment WorkTitles on Work {
+  titles {
+    full
+    original
+  }
+}
+fragment WorkCreators on Work {
+  creators {
+    display
+    __typename
+  }
+}
+fragment WorkPublicationYear on Work {
+  workYear {
+    display
+  }
+}`, {"fragmentName":"WorkTeaserSearchPage"});
+export const WorkDescriptionFragmentDoc = new TypedDocumentString(`
     fragment WorkDescription on Work {
   abstract
 }
-    `;
-export const ManifestationTitlesFragmentDoc = `
+    `, {"fragmentName":"WorkDescription"});
+export const ManifestationTitlesFragmentDoc = new TypedDocumentString(`
     fragment ManifestationTitles on Manifestation {
   titles {
     identifyingAddition
     full
   }
 }
-    `;
-export const ManifestationLanguagesFragmentDoc = `
+    `, {"fragmentName":"ManifestationTitles"});
+export const ManifestationLanguagesFragmentDoc = new TypedDocumentString(`
     fragment ManifestationLanguages on Manifestation {
   languages {
     main {
@@ -3657,8 +3919,8 @@ export const ManifestationLanguagesFragmentDoc = `
     }
   }
 }
-    `;
-export const ManifestationDescriptionFragmentDoc = `
+    `, {"fragmentName":"ManifestationLanguages"});
+export const ManifestationDescriptionFragmentDoc = new TypedDocumentString(`
     fragment ManifestationDescription on Manifestation {
   audience {
     ages {
@@ -3675,8 +3937,8 @@ export const ManifestationDescriptionFragmentDoc = `
     }
   }
 }
-    `;
-export const ManifestationWorkPageFragmentDoc = `
+    `, {"fragmentName":"ManifestationDescription"});
+export const ManifestationWorkPageFragmentDoc = new TypedDocumentString(`
     fragment ManifestationWorkPage on Manifestation {
   ...ManifestationMaterialTypes
   ...ManifestationIdentifiers
@@ -3687,15 +3949,132 @@ export const ManifestationWorkPageFragmentDoc = `
   ...ManifestationDescription
   ...ManifestationDetails
 }
-    ${ManifestationMaterialTypesFragmentDoc}
-${ManifestationIdentifiersFragmentDoc}
-${ManifestationCoverFragmentDoc}
-${ManifestationAccessFragmentDoc}
-${ManifestationTitlesFragmentDoc}
-${ManifestationLanguagesFragmentDoc}
-${ManifestationDescriptionFragmentDoc}
-${ManifestationDetailsFragmentDoc}`;
-export const WorkFullWorkPageFragmentDoc = `
+    fragment ManifestationCover on Manifestation {
+  pid
+  cover {
+    thumbnail
+    xSmall {
+      url
+      width
+      height
+    }
+    small {
+      url
+      width
+      height
+    }
+    medium {
+      url
+      width
+      height
+    }
+    large {
+      url
+      width
+      height
+    }
+  }
+}
+fragment ManifestationIdentifiers on Manifestation {
+  pid
+  identifiers {
+    type
+    value
+  }
+}
+fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}
+fragment ManifestationTitles on Manifestation {
+  titles {
+    identifyingAddition
+    full
+  }
+}
+fragment ManifestationLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}
+fragment ManifestationDescription on Manifestation {
+  audience {
+    ages {
+      display
+    }
+  }
+  series {
+    numberInSeries
+    title
+  }
+  subjects {
+    all {
+      display
+    }
+  }
+}
+fragment ManifestationDetails on Manifestation {
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    edition
+    summary
+  }
+  genreAndForm
+  publisher
+  contributors {
+    display
+  }
+  contributorsFromDescription
+}
+fragment ManifestationMaterialTypes on Manifestation {
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
+}`, {"fragmentName":"ManifestationWorkPage"});
+export const WorkFullWorkPageFragmentDoc = new TypedDocumentString(`
     fragment WorkFullWorkPage on Work {
   workId
   ...WorkTitles
@@ -3712,13 +4091,174 @@ export const WorkFullWorkPageFragmentDoc = `
     }
   }
 }
-    ${WorkTitlesFragmentDoc}
-${WorkCreatorsFragmentDoc}
-${WorkMaterialTypesFragmentDoc}
-${WorkPublicationYearFragmentDoc}
-${WorkDescriptionFragmentDoc}
-${ManifestationWorkPageFragmentDoc}`;
-export const SearchWithPaginationDocument = `
+    fragment ManifestationCover on Manifestation {
+  pid
+  cover {
+    thumbnail
+    xSmall {
+      url
+      width
+      height
+    }
+    small {
+      url
+      width
+      height
+    }
+    medium {
+      url
+      width
+      height
+    }
+    large {
+      url
+      width
+      height
+    }
+  }
+}
+fragment ManifestationIdentifiers on Manifestation {
+  pid
+  identifiers {
+    type
+    value
+  }
+}
+fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}
+fragment ManifestationTitles on Manifestation {
+  titles {
+    identifyingAddition
+    full
+  }
+}
+fragment ManifestationLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}
+fragment ManifestationDescription on Manifestation {
+  audience {
+    ages {
+      display
+    }
+  }
+  series {
+    numberInSeries
+    title
+  }
+  subjects {
+    all {
+      display
+    }
+  }
+}
+fragment ManifestationDetails on Manifestation {
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    edition
+    summary
+  }
+  genreAndForm
+  publisher
+  contributors {
+    display
+  }
+  contributorsFromDescription
+}
+fragment ManifestationMaterialTypes on Manifestation {
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
+}
+fragment ManifestationWorkPage on Manifestation {
+  ...ManifestationMaterialTypes
+  ...ManifestationIdentifiers
+  ...ManifestationCover
+  ...ManifestationAccess
+  ...ManifestationTitles
+  ...ManifestationLanguages
+  ...ManifestationDescription
+  ...ManifestationDetails
+}
+fragment WorkMaterialTypes on Work {
+  materialTypes {
+    materialTypeGeneral {
+      display
+      code
+    }
+    materialTypeSpecific {
+      display
+      code
+    }
+  }
+}
+fragment WorkTitles on Work {
+  titles {
+    full
+    original
+  }
+}
+fragment WorkCreators on Work {
+  creators {
+    display
+    __typename
+  }
+}
+fragment WorkPublicationYear on Work {
+  workYear {
+    display
+  }
+}
+fragment WorkDescription on Work {
+  abstract
+}`, {"fragmentName":"WorkFullWorkPage"});
+export const SearchWithPaginationDocument = new TypedDocumentString(`
     query searchWithPagination($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: SearchFiltersInput) {
   search(q: $q, filters: $filters) {
     hitcount
@@ -3727,7 +4267,152 @@ export const SearchWithPaginationDocument = `
     }
   }
 }
-    ${WorkTeaserSearchPageFragmentDoc}`;
+    fragment ManifestationCover on Manifestation {
+  pid
+  cover {
+    thumbnail
+    xSmall {
+      url
+      width
+      height
+    }
+    small {
+      url
+      width
+      height
+    }
+    medium {
+      url
+      width
+      height
+    }
+    large {
+      url
+      width
+      height
+    }
+  }
+}
+fragment ManifestationIdentifiers on Manifestation {
+  pid
+  identifiers {
+    type
+    value
+  }
+}
+fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}
+fragment ManifestationDetails on Manifestation {
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    edition
+    summary
+  }
+  genreAndForm
+  publisher
+  contributors {
+    display
+  }
+  contributorsFromDescription
+}
+fragment ManifestationMaterialTypes on Manifestation {
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
+}
+fragment ManifestationSearchPageTeaser on Manifestation {
+  ...ManifestationAccess
+  ...ManifestationMaterialTypes
+  ...ManifestationIdentifiers
+  ...ManifestationCover
+  ...ManifestationDetails
+}
+fragment WorkMaterialTypes on Work {
+  materialTypes {
+    materialTypeGeneral {
+      display
+      code
+    }
+    materialTypeSpecific {
+      display
+      code
+    }
+  }
+}
+fragment WorkTitles on Work {
+  titles {
+    full
+    original
+  }
+}
+fragment WorkCreators on Work {
+  creators {
+    display
+    __typename
+  }
+}
+fragment WorkPublicationYear on Work {
+  workYear {
+    display
+  }
+}
+fragment WorkTeaserSearchPage on Work {
+  workId
+  ...WorkTitles
+  ...WorkCreators
+  ...WorkMaterialTypes
+  ...WorkPublicationYear
+  manifestations {
+    all {
+      ...ManifestationSearchPageTeaser
+    }
+    bestRepresentation {
+      ...ManifestationSearchPageTeaser
+    }
+  }
+}`);
 
 export const useSearchWithPaginationQuery = <
       TData = SearchWithPaginationQuery,
@@ -3768,7 +4453,7 @@ useSuspenseSearchWithPaginationQuery.getKey = (variables: SearchWithPaginationQu
 
 useSearchWithPaginationQuery.fetcher = (variables: SearchWithPaginationQueryVariables, options?: RequestInit['headers']) => fetchData<SearchWithPaginationQuery, SearchWithPaginationQueryVariables>(SearchWithPaginationDocument, variables, options);
 
-export const SearchFacetsDocument = `
+export const SearchFacetsDocument = new TypedDocumentString(`
     query searchFacets($q: SearchQueryInput!, $facets: [FacetFieldEnum!]!, $facetLimit: Int!, $filters: SearchFiltersInput) {
   search(q: $q, filters: $filters) {
     facets(facets: $facets) {
@@ -3776,7 +4461,14 @@ export const SearchFacetsDocument = `
     }
   }
 }
-    ${SearchFacetFragmentDoc}`;
+    fragment SearchFacet on FacetResult {
+  name
+  values(limit: $facetLimit) {
+    key
+    term
+    score
+  }
+}`);
 
 export const useSearchFacetsQuery = <
       TData = SearchFacetsQuery,
@@ -3817,7 +4509,7 @@ useSuspenseSearchFacetsQuery.getKey = (variables: SearchFacetsQueryVariables) =>
 
 useSearchFacetsQuery.fetcher = (variables: SearchFacetsQueryVariables, options?: RequestInit['headers']) => fetchData<SearchFacetsQuery, SearchFacetsQueryVariables>(SearchFacetsDocument, variables, options);
 
-export const ComplexSearchForWorkTeaserDocument = `
+export const ComplexSearchForWorkTeaserDocument = new TypedDocumentString(`
     query complexSearchForWorkTeaser($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: ComplexSearchFiltersInput!) {
   complexSearch(cql: $cql, filters: $filters) {
     hitcount
@@ -3826,7 +4518,152 @@ export const ComplexSearchForWorkTeaserDocument = `
     }
   }
 }
-    ${WorkTeaserSearchPageFragmentDoc}`;
+    fragment ManifestationCover on Manifestation {
+  pid
+  cover {
+    thumbnail
+    xSmall {
+      url
+      width
+      height
+    }
+    small {
+      url
+      width
+      height
+    }
+    medium {
+      url
+      width
+      height
+    }
+    large {
+      url
+      width
+      height
+    }
+  }
+}
+fragment ManifestationIdentifiers on Manifestation {
+  pid
+  identifiers {
+    type
+    value
+  }
+}
+fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}
+fragment ManifestationDetails on Manifestation {
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    edition
+    summary
+  }
+  genreAndForm
+  publisher
+  contributors {
+    display
+  }
+  contributorsFromDescription
+}
+fragment ManifestationMaterialTypes on Manifestation {
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
+}
+fragment ManifestationSearchPageTeaser on Manifestation {
+  ...ManifestationAccess
+  ...ManifestationMaterialTypes
+  ...ManifestationIdentifiers
+  ...ManifestationCover
+  ...ManifestationDetails
+}
+fragment WorkMaterialTypes on Work {
+  materialTypes {
+    materialTypeGeneral {
+      display
+      code
+    }
+    materialTypeSpecific {
+      display
+      code
+    }
+  }
+}
+fragment WorkTitles on Work {
+  titles {
+    full
+    original
+  }
+}
+fragment WorkCreators on Work {
+  creators {
+    display
+    __typename
+  }
+}
+fragment WorkPublicationYear on Work {
+  workYear {
+    display
+  }
+}
+fragment WorkTeaserSearchPage on Work {
+  workId
+  ...WorkTitles
+  ...WorkCreators
+  ...WorkMaterialTypes
+  ...WorkPublicationYear
+  manifestations {
+    all {
+      ...ManifestationSearchPageTeaser
+    }
+    bestRepresentation {
+      ...ManifestationSearchPageTeaser
+    }
+  }
+}`);
 
 export const useComplexSearchForWorkTeaserQuery = <
       TData = ComplexSearchForWorkTeaserQuery,
@@ -3867,7 +4704,7 @@ useSuspenseComplexSearchForWorkTeaserQuery.getKey = (variables: ComplexSearchFor
 
 useComplexSearchForWorkTeaserQuery.fetcher = (variables: ComplexSearchForWorkTeaserQueryVariables, options?: RequestInit['headers']) => fetchData<ComplexSearchForWorkTeaserQuery, ComplexSearchForWorkTeaserQueryVariables>(ComplexSearchForWorkTeaserDocument, variables, options);
 
-export const GetManifestationsByFaustDocument = `
+export const GetManifestationsByFaustDocument = new TypedDocumentString(`
     query getManifestationsByFaust($faust: [String!]!) {
   manifestations(faust: $faust) {
     pid
@@ -3881,7 +4718,152 @@ export const GetManifestationsByFaustDocument = `
     }
   }
 }
-    ${WorkTeaserSearchPageFragmentDoc}`;
+    fragment ManifestationCover on Manifestation {
+  pid
+  cover {
+    thumbnail
+    xSmall {
+      url
+      width
+      height
+    }
+    small {
+      url
+      width
+      height
+    }
+    medium {
+      url
+      width
+      height
+    }
+    large {
+      url
+      width
+      height
+    }
+  }
+}
+fragment ManifestationIdentifiers on Manifestation {
+  pid
+  identifiers {
+    type
+    value
+  }
+}
+fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}
+fragment ManifestationDetails on Manifestation {
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    edition
+    summary
+  }
+  genreAndForm
+  publisher
+  contributors {
+    display
+  }
+  contributorsFromDescription
+}
+fragment ManifestationMaterialTypes on Manifestation {
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
+}
+fragment ManifestationSearchPageTeaser on Manifestation {
+  ...ManifestationAccess
+  ...ManifestationMaterialTypes
+  ...ManifestationIdentifiers
+  ...ManifestationCover
+  ...ManifestationDetails
+}
+fragment WorkMaterialTypes on Work {
+  materialTypes {
+    materialTypeGeneral {
+      display
+      code
+    }
+    materialTypeSpecific {
+      display
+      code
+    }
+  }
+}
+fragment WorkTitles on Work {
+  titles {
+    full
+    original
+  }
+}
+fragment WorkCreators on Work {
+  creators {
+    display
+    __typename
+  }
+}
+fragment WorkPublicationYear on Work {
+  workYear {
+    display
+  }
+}
+fragment WorkTeaserSearchPage on Work {
+  workId
+  ...WorkTitles
+  ...WorkCreators
+  ...WorkMaterialTypes
+  ...WorkPublicationYear
+  manifestations {
+    all {
+      ...ManifestationSearchPageTeaser
+    }
+    bestRepresentation {
+      ...ManifestationSearchPageTeaser
+    }
+  }
+}`);
 
 export const useGetManifestationsByFaustQuery = <
       TData = GetManifestationsByFaustQuery,
@@ -3922,13 +4904,195 @@ useSuspenseGetManifestationsByFaustQuery.getKey = (variables: GetManifestationsB
 
 useGetManifestationsByFaustQuery.fetcher = (variables: GetManifestationsByFaustQueryVariables, options?: RequestInit['headers']) => fetchData<GetManifestationsByFaustQuery, GetManifestationsByFaustQueryVariables>(GetManifestationsByFaustDocument, variables, options);
 
-export const GetMaterialDocument = `
+export const GetMaterialDocument = new TypedDocumentString(`
     query getMaterial($wid: String!) {
   work(id: $wid) {
     ...WorkFullWorkPage
   }
 }
-    ${WorkFullWorkPageFragmentDoc}`;
+    fragment ManifestationCover on Manifestation {
+  pid
+  cover {
+    thumbnail
+    xSmall {
+      url
+      width
+      height
+    }
+    small {
+      url
+      width
+      height
+    }
+    medium {
+      url
+      width
+      height
+    }
+    large {
+      url
+      width
+      height
+    }
+  }
+}
+fragment ManifestationIdentifiers on Manifestation {
+  pid
+  identifiers {
+    type
+    value
+  }
+}
+fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}
+fragment ManifestationTitles on Manifestation {
+  titles {
+    identifyingAddition
+    full
+  }
+}
+fragment ManifestationLanguages on Manifestation {
+  languages {
+    main {
+      display
+      iso639Set1
+    }
+  }
+}
+fragment ManifestationDescription on Manifestation {
+  audience {
+    ages {
+      display
+    }
+  }
+  series {
+    numberInSeries
+    title
+  }
+  subjects {
+    all {
+      display
+    }
+  }
+}
+fragment ManifestationDetails on Manifestation {
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    edition
+    summary
+  }
+  genreAndForm
+  publisher
+  contributors {
+    display
+  }
+  contributorsFromDescription
+}
+fragment ManifestationMaterialTypes on Manifestation {
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
+}
+fragment ManifestationWorkPage on Manifestation {
+  ...ManifestationMaterialTypes
+  ...ManifestationIdentifiers
+  ...ManifestationCover
+  ...ManifestationAccess
+  ...ManifestationTitles
+  ...ManifestationLanguages
+  ...ManifestationDescription
+  ...ManifestationDetails
+}
+fragment WorkMaterialTypes on Work {
+  materialTypes {
+    materialTypeGeneral {
+      display
+      code
+    }
+    materialTypeSpecific {
+      display
+      code
+    }
+  }
+}
+fragment WorkTitles on Work {
+  titles {
+    full
+    original
+  }
+}
+fragment WorkCreators on Work {
+  creators {
+    display
+    __typename
+  }
+}
+fragment WorkPublicationYear on Work {
+  workYear {
+    display
+  }
+}
+fragment WorkDescription on Work {
+  abstract
+}
+fragment WorkFullWorkPage on Work {
+  workId
+  ...WorkTitles
+  ...WorkCreators
+  ...WorkMaterialTypes
+  ...WorkPublicationYear
+  ...WorkDescription
+  manifestations {
+    all {
+      ...ManifestationWorkPage
+    }
+    bestRepresentation {
+      ...ManifestationWorkPage
+    }
+  }
+}`);
 
 export const useGetMaterialQuery = <
       TData = GetMaterialQuery,

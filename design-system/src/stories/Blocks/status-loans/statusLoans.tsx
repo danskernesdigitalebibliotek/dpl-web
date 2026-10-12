@@ -8,62 +8,30 @@ export type LinkProps = {
   text: string;
 };
 
-export type StatusProps = {
-  statusBars: ProgressBarProps[];
-  title: string;
-};
-
 export type StatusLoansProps = {
-  statusBarsData: StatusProps[];
   title: string;
+  statusBars: ProgressBarProps[];
   link: LinkProps;
-  bread: string;
   reservationsText: string;
 };
 
 export const StatusLoans = (props: StatusLoansProps) => {
-  const {
-    statusBarsData,
-    title: statusBarsTitle,
-    link,
-    bread,
-    reservationsText,
-  } = props;
-  const { link: url, text: linkText } = link;
+  const { title, statusBars, link, reservationsText } = props;
 
   return (
-    <>
-      <h2 className="text-header-h4 mt-64 mb-16">{statusBarsTitle}</h2>
-      <div className="text-body-small-regular mb-8">
-        {`${bread} `}
-        <a href={url} className="text-links">
-          {linkText}
-        </a>
-      </div>
-      <div className="text-body-small-regular mt-8 mb-8">
+    <section className="dpl-status-loans">
+      <h2 className="text-header-h4 mt-64 mb-16">{title}</h2>
+      <p className="text-body-small-regular dpl-status-loans__reservations">
         {reservationsText}
-      </div>
-      <div className="dpl-status mt-32">
-        {statusBarsData.map(({ statusBars, title }, index) => (
-          <div key={index} className="dpl-status-loans__container">
-            <h3 className="text-small-caption">{title}</h3>
-            {statusBars.map(
-              (
-                { title: statusBarTitle, amount, fullAmount, outOf },
-                sIndex,
-              ) => (
-                <ProgressBar
-                  key={sIndex}
-                  title={statusBarTitle}
-                  fullAmount={fullAmount}
-                  outOf={outOf}
-                  amount={amount}
-                />
-              ),
-            )}
-          </div>
+      </p>
+      <a href={link.link} className="link-tag text-body-small-regular">
+        {link.text}
+      </a>
+      <div className="dpl-status-loans__progress-bars">
+        {statusBars.map((statusBar) => (
+          <ProgressBar key={statusBar.title} {...statusBar} />
         ))}
       </div>
-    </>
+    </section>
   );
 };

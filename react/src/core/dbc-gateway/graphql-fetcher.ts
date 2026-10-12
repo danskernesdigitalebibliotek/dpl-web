@@ -3,12 +3,18 @@ import FetchFailedCriticalError from "../fetchers/FetchFailedCriticalError";
 import { getToken, TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../token";
 import DbcGateWayHttpError from "./DbcGateWayHttpError";
 import { addOperationNameToUrl, getQueryUrlFromContext } from "./helper";
+import type { TypedDocumentString } from "./generated/graphql";
+
+// typescript-react-query emits documents as TypedDocumentString without type
+// arguments, so the untyped form is what the generated hooks pass in.
+type QueryDocument = string | TypedDocumentString<unknown, unknown>;
 
 export const fetcher = <TData, TVariables>(
-  query: string,
+  document: QueryDocument,
   variables?: TVariables,
   urlOverride?: string
 ) => {
+  const query = document.toString();
   return (context?: QueryFunctionContext): Promise<TData> => {
     // Resolve the url based on the query name if present.
     const baseUrl = urlOverride ?? getQueryUrlFromContext(context);

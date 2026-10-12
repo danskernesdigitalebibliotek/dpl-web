@@ -1,11 +1,15 @@
+import {
+  MATERIAL_TYPE_AUDIOBOOKS,
+  MATERIAL_TYPE_EBOOKS
+} from "../../../core/advanced-search/material-types";
 import type { Option, RangePreset } from "../types";
 
 const currentYear = new Date().getFullYear();
 
 export const MATERIAL_TYPE_OPTIONS: Option[] = [
   { label: "Bøger", value: "bøger" },
-  { label: "E-bøger", value: "e-bøger" },
-  { label: "Lydbøger", value: "lydbøger" },
+  { label: "E-bøger", value: MATERIAL_TYPE_EBOOKS },
+  { label: "Lydbøger", value: MATERIAL_TYPE_AUDIOBOOKS },
   { label: "Podcasts", value: "podcasts" },
   { label: "Film", value: "film" },
   { label: "Tv-serier", value: "tv-serier" },
