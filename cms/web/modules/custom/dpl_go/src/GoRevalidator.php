@@ -77,16 +77,14 @@ class GoRevalidator implements GoRevalidatorInterface {
         return FALSE;
       }
 
-      $url = $site->getRevalidateUrl();
-      $secret = $site->getRevalidateSecret();
-      if (!$url || !$secret) {
+      // Reuse the next module's own url construction - it adds the shared
+      // secret - the same call its CacheTag and Path revalidators make.
+      $url = $site->buildRevalidateUrl($query);
+      if (!$url) {
         return FALSE;
       }
 
-      $this->httpClient->request('GET', $url, [
-        'query' => $query + ['secret' => $secret],
-        'timeout' => 5,
-      ]);
+      $this->httpClient->request('GET', $url->toString(), ['timeout' => 5]);
 
       return TRUE;
     }

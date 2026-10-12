@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_go\GoRevalidator;
 use Drupal\next\Entity\NextSiteInterface;
 use Drupal\Tests\UnitTestCase;
@@ -24,17 +25,14 @@ use Prophecy\Prophecy\ObjectProphecy;
 class GoRevalidatorTest extends UnitTestCase {
 
   /**
-   * The revalidate url the Go next_site returns.
+   * The Go next_site, which builds the revalidate url (next module reuse).
+   *
+   * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\next\Entity\NextSiteInterface>
    */
-  private const REVALIDATE_URL = 'https://go.example/cache/revalidate';
+  private ObjectProphecy $site;
 
   /**
-   * The shared secret the Go next_site returns.
-   */
-  private const REVALIDATE_SECRET = 's3cret';
-
-  /**
-   * An entity type manager whose "go" next_site returns a url and secret.
+   * An entity type manager whose "next_site" storage returns the Go site.
    *
    * @var \Prophecy\Prophecy\ObjectProphecy<\Drupal\Core\Entity\EntityTypeManagerInterface>
    */
@@ -46,29 +44,26 @@ class GoRevalidatorTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    $site = $this->prophesize(NextSiteInterface::class);
-    $site->getRevalidateUrl()->willReturn(self::REVALIDATE_URL);
-    $site->getRevalidateSecret()->willReturn(self::REVALIDATE_SECRET);
+    $this->site = $this->prophesize(NextSiteInterface::class);
 
     $storage = $this->prophesize(EntityStorageInterface::class);
-    $storage->load('go')->willReturn($site->reveal());
+    $storage->load('go')->willReturn($this->site->reveal());
 
     $this->entityTypeManager = $this->prophesize(EntityTypeManagerInterface::class);
     $this->entityTypeManager->getStorage('next_site')->willReturn($storage->reveal());
   }
 
   /**
-   * Tags are sent, comma-joined, with the secret, to the revalidate url.
+   * Tags are passed to buildRevalidateUrl and the built url is requested.
    */
   public function testRevalidateTagsSendsRequest(): void {
+    $built = 'https://go.example/cache/revalidate?tags=dpl-cms-config,other&secret=s3cret';
+    $this->stubRevalidateUrl(['tags' => 'dpl-cms-config,other'], $built);
+
     $client = $this->prophesize(ClientInterface::class);
-    $client->request('GET', self::REVALIDATE_URL, [
-      'query' => [
-        'tags' => 'dpl-cms-config,other',
-        'secret' => self::REVALIDATE_SECRET,
-      ],
-      'timeout' => 5,
-    ])->shouldBeCalledOnce()->willReturn(new Response(200));
+    $client->request('GET', $built, ['timeout' => 5])
+      ->shouldBeCalledOnce()
+      ->willReturn(new Response(200));
 
     $revalidator = new GoRevalidator(
       $client->reveal(),
@@ -80,17 +75,16 @@ class GoRevalidatorTest extends UnitTestCase {
   }
 
   /**
-   * A path is sent to the revalidate url with the secret.
+   * A path is passed to buildRevalidateUrl and the built url is requested.
    */
   public function testRevalidatePathsSendsRequest(): void {
+    $built = 'https://go.example/cache/revalidate?path=/&secret=s3cret';
+    $this->stubRevalidateUrl(['path' => '/'], $built);
+
     $client = $this->prophesize(ClientInterface::class);
-    $client->request('GET', self::REVALIDATE_URL, [
-      'query' => [
-        'path' => '/',
-        'secret' => self::REVALIDATE_SECRET,
-      ],
-      'timeout' => 5,
-    ])->shouldBeCalledOnce()->willReturn(new Response(200));
+    $client->request('GET', $built, ['timeout' => 5])
+      ->shouldBeCalledOnce()
+      ->willReturn(new Response(200));
 
     $revalidator = new GoRevalidator(
       $client->reveal(),
@@ -102,18 +96,17 @@ class GoRevalidatorTest extends UnitTestCase {
   }
 
   /**
-   * With nothing to drop, no request is made.
+   * With nothing to drop, the site is never touched and no request is made.
    */
   public function testEmptyTagsSendNothing(): void {
+    $this->site->buildRevalidateUrl(Argument::any())->shouldNotBeCalled();
+
     $client = $this->prophesize(ClientInterface::class);
     $client->request(Argument::cetera())->shouldNotBeCalled();
 
-    $entityTypeManager = $this->prophesize(EntityTypeManagerInterface::class);
-    $entityTypeManager->getStorage(Argument::any())->shouldNotBeCalled();
-
     $revalidator = new GoRevalidator(
       $client->reveal(),
-      $entityTypeManager->reveal(),
+      $this->entityTypeManager->reveal(),
       $this->unusedLoggerFactory(),
     );
 
@@ -146,6 +139,11 @@ class GoRevalidatorTest extends UnitTestCase {
    * An unreachable Go is logged, not thrown, and reported as not sent.
    */
   public function testSwallowsRequestErrors(): void {
+    $this->stubRevalidateUrl(
+      ['tags' => 'dpl-cms-config'],
+      'https://go.example/cache/revalidate?tags=dpl-cms-config&secret=s3cret',
+    );
+
     $client = $this->prophesize(ClientInterface::class);
     $client->request(Argument::cetera())->willThrow(new \RuntimeException('Go is down'));
 
@@ -165,6 +163,20 @@ class GoRevalidatorTest extends UnitTestCase {
     );
 
     $this->assertFalse($revalidator->revalidateTags('dpl-cms-config'));
+  }
+
+  /**
+   * Stub the Go site to build the given url for the given revalidate query.
+   *
+   * @param array<string, string> $query
+   *   The query the service passes to buildRevalidateUrl.
+   * @param string $built
+   *   The url string the built Url resolves to.
+   */
+  private function stubRevalidateUrl(array $query, string $built): void {
+    $url = $this->prophesize(Url::class);
+    $url->toString()->willReturn($built);
+    $this->site->buildRevalidateUrl($query)->willReturn($url->reveal());
   }
 
   /**
