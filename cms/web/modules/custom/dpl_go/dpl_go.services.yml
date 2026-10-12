@@ -7,6 +7,11 @@ services:
     tags:
       - { name: event_subscriber }
 
+  dpl_go.config_revalidate_subscriber:
+    class: Drupal\dpl_go\EventSubscriber\ConfigRevalidateSubscriber
+    tags:
+      - { name: event_subscriber }
+
   dpl_go.go_site:
     class: Drupal\dpl_go\GoSite
     # Lazy-load to break a service container dependency cycle: GoSite's
