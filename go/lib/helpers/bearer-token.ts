@@ -3,7 +3,7 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 
 import goConfig from "../config/goConfig"
-import { getPatronUserToken, getSession } from "../session/session"
+import { getServiceUserToken, getSession } from "../session/session"
 import { TServiceType, getApServiceSettings } from "./ap-service"
 
 export const getBearerTokenServerSide = async (
@@ -17,7 +17,7 @@ export const getBearerTokenServerSide = async (
   }
 
   const session = await getSession()
-  const userToken = getPatronUserToken(session)
+  const userToken = getServiceUserToken(session, serviceType)
 
   if (userToken) {
     return userToken
