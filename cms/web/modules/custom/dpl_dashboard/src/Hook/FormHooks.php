@@ -30,7 +30,7 @@ class FormHooks {
   }
 
   /**
-   * Add list size settings to the dpl library agency list form.
+   * Add dashboard list size fields to the agency list size settings form.
    *
    * @param array<mixed> $form
    *   An associative array containing the structure of the form.
@@ -68,7 +68,7 @@ class FormHooks {
   }
 
   /**
-   * Custom submit callback.
+   * Save the dashboard list sizes to the dashboard config.
    *
    * @param array<mixed> $form
    *   An associative array containing the structure of the form.
