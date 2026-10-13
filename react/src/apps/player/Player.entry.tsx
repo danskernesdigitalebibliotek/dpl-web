@@ -7,11 +7,13 @@ import PlayerPage, {
 } from "../../components/reader-player/PlayerPage";
 import type { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
 import type { WedoBooksArgs } from "../../core/storybook/wedobooksArgs";
+import type { DigitalSessionArgs } from "../../core/storybook/digitalSessionArgs";
 
 // The SDK configuration and the lending flag are read deep inside the player
 // rather than passed down, so they never appear in PlayerPageProps - but they
 // do arrive as data attributes, and Storybook needs them typed to offer them.
 export type PlayerEntryType = Omit<PlayerPageProps, "onClose"> &
+  DigitalSessionArgs &
   Partial<BiblioAdapterArgs & WedoBooksArgs>;
 
 const PlayerEntry: React.FC<PlayerEntryType> = ({ identifier, loanid }) => (

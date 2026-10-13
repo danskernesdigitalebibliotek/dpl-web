@@ -32,6 +32,9 @@ export interface DashBoardProps {
   // Texts
   dashboardNumberInLineText: string;
   dashboardRecommendationsHeadingText: string;
+  dashboardRecommendationsLoanCaptionText: string;
+  dashboardRecommendationsReservationCaptionText: string;
+  dashboardRecommendationsFavoriteCaptionText: string;
   deleteReservationModalDeleteButtonText: string;
   deleteReservationModalDeleteProcessingText: string;
   deleteReservationModalErrorsStatusText: string;

@@ -1,0 +1,35 @@
+diff --git a/src/Entity/EventSeries.php b/src/Entity/EventSeries.php
+index d8894cc..9ad3468 100644
+--- a/src/Entity/EventSeries.php
++++ b/src/Entity/EventSeries.php
+@@ -1005,10 +1005,12 @@ class EventSeries extends EditorialContentEntityBase implements EventInterface {
+     $dates = $this->get('custom_date')->getIterator();
+     if (!empty($dates)) {
+       foreach ($dates as $date) {
+-        $custom_dates[] = [
+-          'start_date' => $date->start_date,
+-          'end_date' => $date->end_date,
+-        ];
++        if (is_string($date->value) && is_string($date->end_value)) {
++          $custom_dates[] = [
++            'start_date' => $date->start_date,
++            'end_date' => $date->end_date,
++          ];
++        }
+       }
+     }
+ 
+diff --git a/src/EventCreationService.php b/src/EventCreationService.php
+index 83d610b..394305a 100644
+--- a/src/EventCreationService.php
++++ b/src/EventCreationService.php
+@@ -156,7 +156,8 @@ class EventCreationService {
+         }
+         $end_date = NULL;
+ 
+-        if (!empty($custom_date['value']) && !empty($custom_date['end_value'])) {
++        if ($custom_date['value'] instanceof DrupalDateTime && !$custom_date['value']->hasErrors() &&
++            $custom_date['end_value'] instanceof DrupalDateTime && !$custom_date['end_value']->hasErrors()) {
+ 
+           $start_timestamp = $custom_date['value']->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+           $end_timestamp = $custom_date['end_value']->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);

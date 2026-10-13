@@ -67,6 +67,16 @@ class DplBiblioSettings extends DplReactConfigBase {
   }
 
   /**
+   * Whether GO should use the Biblio adapter for digital materials.
+   *
+   * Independent of {@link isEnabled()}: the CMS web apps and GO are
+   * switched separately.
+   */
+  public function isEnabledForGo(): bool {
+    return (bool) $this->loadConfig()->get('enabled_go');
+  }
+
+  /**
    * TEMPORARY: whether the Publizon reservation queue is closed.
    *
    * Biblio needs a period where the Publizon reservation queue stands still

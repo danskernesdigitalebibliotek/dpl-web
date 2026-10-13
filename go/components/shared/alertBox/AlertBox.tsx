@@ -21,7 +21,7 @@ export default function AlertBox({
         "bg-success-green-100 text-success-green-500": variant === "success",
       })}>
       <Icon className="h-5 min-h-5 w-5 min-w-5" name={icon} />
-      <p className="text-typo-link">{message}</p>
+      <p className="text-typo-body-sm">{message}</p>
     </div>
   )
 }

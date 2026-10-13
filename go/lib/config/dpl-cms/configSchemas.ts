@@ -3,6 +3,7 @@ import { z } from "zod"
 export const publicConfigSchema = z.object({
   loginUrls: z.object({
     adgangsplatformen: z.string().nullable(),
+    unilogin: z.string().nullable(),
   }),
   logoutUrls: z.object({
     adgangsplatformen: z.string().nullable(),
@@ -17,14 +18,30 @@ export const publicConfigSchema = z.object({
       id: z.string().nullable(),
     })
     .nullable(),
-  unilogin: z.object({
-    municipalityId: z.string().nullable(),
-  }),
   blacklistedAvailabilityBranches: z
     .array(z.string())
     .nullable()
     .optional()
     .transform(value => value ?? []),
+  // Safe fallback while the CMS release without the biblio field is still
+  // around: a missing field parses as "disabled".
+  biblio: z
+    .object({
+      enabled: z.boolean(),
+      baseUrl: z.string().nullable(),
+      sdk: z
+        .object({
+          applicationId: z.string(),
+          firebaseApiKey: z.string(),
+          firebaseProjectId: z.string(),
+          firebaseAppId: z.string(),
+          readerApiKey: z.string(),
+        })
+        .nullable(),
+    })
+    .nullable()
+    .optional()
+    .transform(value => value ?? { enabled: false, baseUrl: null, sdk: null }),
   // Mirrors the CMS default: SMS notifications are considered enabled unless a
   // library has explicitly turned them off.
   smsNotificationsEnabled: z
@@ -36,7 +53,6 @@ export const publicConfigSchema = z.object({
 
 export const privateConfigSchema = z.object({
   unilogin: z.object({
-    clientSecret: z.string().nullable(),
     pubHubRetailerKeyCode: z.string().nullable(),
   }),
 })

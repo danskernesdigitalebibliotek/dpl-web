@@ -49,6 +49,16 @@ RUN corepack enable
 # `env` sets the config key because its name contains `/` and `:`, which no
 # shell will accept as a variable name. Same trick as `init:pnpm` in the root
 # Taskfile.
+#
+# The WeDoBooks wrapper ships a build rather than sources, and Go pins it with
+# file: - pnpm copies the package into go/node_modules when the filtered
+# install below runs. So the wrapper's dist has to exist before that install
+# takes its snapshot: install the wrapper's own dependencies and build it
+# first.
+RUN --mount=type=secret,id=WEDOBOOKS_NPM_TOKEN \
+    env "npm_config_//npm.pkg.wedobooks.io/:_authToken=$(cat /run/secrets/WEDOBOOKS_NPM_TOKEN)" \
+    pnpm install --frozen-lockfile --dir packages/wedobooks
+RUN pnpm --dir packages/wedobooks run build
 RUN --mount=type=secret,id=WEDOBOOKS_NPM_TOKEN \
     env "npm_config_//npm.pkg.wedobooks.io/:_authToken=$(cat /run/secrets/WEDOBOOKS_NPM_TOKEN)" \
     pnpm install --frozen-lockfile --filter @danskernesdigitalebibliotek/dpl-go...

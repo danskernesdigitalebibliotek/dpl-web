@@ -13,8 +13,8 @@ dependencies:
     - field.field.node.branch.field_promoted_on_lists
     - node.type.branch
   module:
+    - dk_address
     - entity_reference_revisions
-    - gsearch
     - telephone_formatter
     - user
 id: node.branch.default
@@ -23,7 +23,7 @@ bundle: branch
 mode: default
 content:
   field_address_gsearch:
-    type: address_gsearch
+    type: dk_address
     label: above
     settings: {  }
     third_party_settings: {  }

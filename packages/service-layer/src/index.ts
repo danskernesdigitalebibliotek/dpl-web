@@ -3,6 +3,7 @@ export type {
   ApiId,
   Patron,
   MaterialAvailability,
+  RecordAvailability,
   ServiceLayerConfig,
   CreateReservationInput,
   CreateReservationResult,
@@ -66,6 +67,8 @@ export {
   isRequestGranted,
 } from "./digital-loan-decision"
 export { isCostFreeLoan } from "./digital-loans"
+export { opensIn } from "./material-type"
+export type { OpensInType } from "./material-type"
 export { getDigitalLoanQuota } from "./digital-quotas"
 export { digitalLoanDecisionQueryKey } from "./queries/digital-loan-decision"
 export { digitalLoansQueryKey } from "./queries/digital-loans"
@@ -88,7 +91,6 @@ export { useDigitalSupportId } from "./hooks/useDigitalSupportId"
 export type { QuotaUsage } from "./digital-quotas"
 export type {
   DigitalMaterial,
-  DigitalMaterialType,
   MaterialType,
   LoanProvider,
   DigitalLoan,

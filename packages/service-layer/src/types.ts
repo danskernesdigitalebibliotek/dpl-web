@@ -1,3 +1,10 @@
+import type {
+  LoanProvider as BiblioLoanProvider,
+  MaterialType as BiblioMaterialType,
+  CanLoanResponseType,
+  SampleFormat,
+} from "../biblio/src/generated/model"
+
 // Backends this package knows how to talk to. Apps never name these in
 // hook calls — only in the resolvers they implement on ServiceLayerConfig.
 export type ApiId = "fbs" | "biblio" | "fbi"
@@ -11,6 +18,13 @@ export type ServiceLayerConfig = {
   // Unilogin and anonymous) never fire doomed 401 requests. Public data
   // (material availability) ignores it. Defaults to true when omitted.
   isPatronAuthenticated?: boolean
+  // Whether the session may make digital loans through the Biblio adapter. A
+  // superset of isPatronAuthenticated: a patron qualifies, and so does a
+  // Unilogin user, who runs through Adgangsplatformen (GO's ADR-013) and so
+  // holds a real Adgangsplatformen token. The digital hooks gate on this;
+  // falls back to isPatronAuthenticated when omitted (the React apps, where a
+  // Unilogin user is anonymous). Defaults to true when both are omitted.
+  isDigitalLoanAuthenticated?: boolean
   // TEMPORARY: whether a material the adapter does not know is answered as
   // unavailable instead of an error - see getDigitalLoanDecision, the one
   // place that acts on it. A resolver like the others, because the host's
@@ -27,9 +41,23 @@ export type Patron = {
   receiveSms: boolean | undefined
 }
 
+// Availability for one edition, summed across the kommune's branches.
+// `reservable` is FBS's own verdict and is independent of the counts: a
+// lent-out edition stays reservable, and so can one the kommune holds no
+// copies of.
+export type RecordAvailability = {
+  recordId: string
+  totalCopies: number
+  availableCopies: number
+  reservationCount: number
+  reservable: boolean
+}
+
 export type MaterialAvailability = {
   totalCopies: number
   reservationCount: number
+  // Per edition, keyed by FAUST. The totals above stay work-wide.
+  records: Record<string, RecordAvailability>
 }
 
 export type CreateReservationInput = {
@@ -157,20 +185,20 @@ export type RenewedLoan = RenewedLoanSuccess | RenewedLoanFailed
 // read or listened to in a reader, as opposed to the physical materials FBS
 // lends out.
 
-// Formats a digital material comes in. Loans and reservations may also report
-// `paper_book` — see MaterialType.
-export type DigitalMaterialType = "ebook" | "audiobook"
+// A value the adapter's spec closes but the adapter has been seen to break, so
+// any other string is passed through - see openStringUnion. The known values come
+// from the generated models of the spec and keep their autocomplete.
+export type OpenStringUnion<T extends string> = T | (string & {})
 
-// The broad material type used by the loan and reservation DTOs. Metadata
-// only ever describes digital materials, so it uses the narrower
-// DigitalMaterialType.
-export type MaterialType = DigitalMaterialType | "paper_book"
+// The material type the adapter reports. It has sent types outside its own
+// spec (a podcast) - see opensIn for what can be done with each of them.
+export type MaterialType = OpenStringUnion<BiblioMaterialType>
 
 // Catalogue fields for a digital material. Title and authors are FBI's where
 // it knows the ISBN — see withCatalogueDetails.
 export type DigitalMaterial = {
   isbn: string
-  materialType: DigitalMaterialType
+  materialType: MaterialType
   title: string
   description: string
   publishDate: string
@@ -211,15 +239,9 @@ export type DigitalReservation = {
   offerExpiresAt?: string
 }
 
-export type LoanDecisionStatus =
-  | "loanable"
-  | "reservable"
-  | "wishable"
-  | "unavailable"
-  | "monthly_limit_exceeded"
-  | "concurrent_limit_exceeded"
-  | "no_valid_credentials"
-  | "lending_blocked"
+// Whether and how a material can be had. A status the adapter adds since is
+// passed through and counts as neither available, loanable nor reservable.
+export type LoanDecisionStatus = OpenStringUnion<CanLoanResponseType>
 
 // Which licence the loan would be made under: the organization configures a
 // prioritized list of providers and the backend reports the one it picked.
@@ -227,8 +249,9 @@ export type LoanDecisionStatus =
 // so it is the one the UI may call included - see isCostFreeLoan. The rest
 // ("click" pay-per-loan, "package" subscription) are ways the LIBRARY pays for
 // a loan that still counts against the patron's quota. "free" is not in use
-// yet and confirmed only to be quota-exempt, not free to the patron.
-export type LoanProvider = "free" | "k-fond" | "click" | "package" | "premium" | "selection"
+// yet and confirmed only to be quota-exempt, not free to the patron. Any
+// licence the adapter adds since is simply not included.
+export type LoanProvider = OpenStringUnion<BiblioLoanProvider>
 
 // Whether a loan can be made right now, and if not, why. Covers both the
 // material and the patron (quota, lending blocks) - see isMaterialAvailable.
@@ -287,7 +310,7 @@ export type DigitalSample = {
 
 // The file a sample arrives as - an excerpt of an e-book is an EPUB, of an
 // audiobook an MP3.
-export type DigitalSampleFormat = "epub" | "mp3"
+export type DigitalSampleFormat = SampleFormat
 
 // Short-lived token that signs the patron in to the reader and player.
 export type ReaderSignInToken = {

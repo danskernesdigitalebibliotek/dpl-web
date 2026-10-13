@@ -46,7 +46,7 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
             whileTap={{ scale: 0.92 }}
             whileHover={{ scale: 1.06 }}
             className={cn(
-              `focus-visible text-typo-caption relative flex flex-row items-center gap-2
+              `focus-visible text-typo-label-sm relative flex flex-row items-center gap-2
               rounded-full px-4 py-2 whitespace-nowrap hover:cursor-pointer`,
               isSelected ? "text-background" : "bg-background-overlay text-foreground"
             )}>

@@ -75,4 +75,8 @@ describe("isMaterialAvailable", () => {
       expect(isMaterialAvailable(status)).toBe(true)
     }
   )
+
+  it("Does not promise a material available on a status it does not know", () => {
+    expect(isMaterialAvailable("brand-new-status")).toBe(false)
+  })
 })

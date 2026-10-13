@@ -50,6 +50,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Run linter
         run: pnpm run lint
 
@@ -86,6 +87,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Run typescript compile check
         run: pnpm exec tsc --noEmit
 
@@ -104,6 +106,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Run unit tests
         run: pnpm run test:unit:once
 
@@ -127,6 +130,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Install go-task
         uses: arduino/setup-task@v3
         with:
@@ -139,8 +143,6 @@ jobs:
         run: task codegen:publizon
       - name: Codegen - Pubhub
         run: task codegen:pubhub
-      - name: Codegen - Unilogin
-        run: task codegen:unilogin
       - name: Ensure generated client code has not drifted
         run: git diff --exit-code
 
@@ -166,6 +168,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Build Storybook
         run: pnpm run build-storybook --quiet
       - name: Upload Storybook build
@@ -268,6 +271,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+          build-wedobooks: 'true'
       - name: Load environment variables
         uses: cardinalby/export-env-action@v2
         with:
@@ -279,13 +283,17 @@ jobs:
           # By overridding the variables here we can ensure that the correct urls are set
           TEST_MODE: true
           DPL_CMS_BASE_URL: http://localhost:9000
-          UNILOGIN_CLIENT_ID: http://localhost:9000/client
-          UNILOGIN_WELLKNOWN_URL: http://localhost:9000
+          PUBHUB_BASE_URL: http://localhost:9000
+          ADGANGSPLATFORMEN_USERINFO_URL: http://localhost:9000/userinfo
           DPL_GO_BASE_URL: http://localhost:3000
         with:
           install: false
           build: pnpm run build
           start: pnpm run start
+          # Holds the suite until the server answers: Cypress otherwise starts
+          # as soon as `start` is spawned.
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
           command: pnpm run cypress:run
           browser: chrome
           working-directory: go

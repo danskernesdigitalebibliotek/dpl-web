@@ -1,7 +1,7 @@
 import { MaterialType } from "@wedobooks/sdk"
 import * as React from "react"
 
-import type { WedoBooksSampleMaterial, WedoBooksSdk } from "./sdk"
+import { reportSdkError, type WedoBooksSampleMaterial, type WedoBooksSdk } from "./sdk"
 import { useSdkMount } from "./useSdkMount"
 
 export interface WedoBooksSampleReaderProps {
@@ -42,7 +42,10 @@ export function WedoBooksSampleReader({
         // component that is the e-book target states it rather than trusting
         // a caller to pair them correctly.
         material: { ...material, material_type: MaterialType.EBook },
-        callbacks: { onClose },
+        callbacks: {
+          onClose,
+          onError: reportSdkError,
+        },
       }),
     [sdk, sampleUrl, material.material_id]
   )

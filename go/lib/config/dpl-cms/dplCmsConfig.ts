@@ -1,5 +1,6 @@
 "use server"
 
+import { cacheTag } from "next/cache"
 import { connection } from "next/server"
 
 import {
@@ -22,8 +23,11 @@ const queryDplCmsPublicConfig = async () => {
 
 const getDplCmsPrivateConfigData = async () => {
   "use cache"
-  // @todo: We should handle triggered revalidation or having a longer caching time.
-  // Right now the default cache time should be 15 minutes.
+  // Tagged so /cache/revalidate?tags=dpl-cms-config can drop the entry —
+  // used by the e2e tests when a spec changes the mocked configuration, and
+  // available to Drupal-triggered revalidation. Default cache time is 15
+  // minutes otherwise.
+  cacheTag("dpl-cms-config")
 
   try {
     const data = await queryDplCmsPrivateConfig()
@@ -31,7 +35,6 @@ const getDplCmsPrivateConfigData = async () => {
   } catch {
     return {
       unilogin: {
-        clientSecret: null,
         pubHubRetailerKeyCode: null,
       },
     }
@@ -47,9 +50,6 @@ export const getDplCmsPrivateConfig = async () => {
   const data = await getDplCmsPrivateConfigData()
 
   const uniLoginConfigEnv = {
-    ...(getServerEnv("UNILOGIN_CLIENT_SECRET")
-      ? { clientSecret: getServerEnv("UNILOGIN_CLIENT_SECRET") }
-      : {}),
     ...(getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE")
       ? { pubHubRetailerKeyCode: getServerEnv("UNLILOGIN_PUBHUB_RETAILER_KEY_CODE") }
       : {}),
@@ -65,47 +65,55 @@ export const getDplCmsPrivateConfig = async () => {
   }
 }
 
+// What the app runs on when the CMS cannot be read. Adgangsplatformen login
+// is disabled without its url, so this is a degraded state.
+const publicConfigFallback = () => ({
+  loginUrls: {
+    adgangsplatformen: null,
+    unilogin: null,
+  },
+  logoutUrls: {
+    adgangsplatformen: null,
+  },
+  libraryInfo: {
+    name: null,
+    baseURL: null,
+  },
+  mapp: null,
+  blacklistedAvailabilityBranches: [],
+  biblio: {
+    enabled: false,
+    baseUrl: null,
+    sdk: null,
+  },
+  smsNotificationsEnabled: true,
+})
+
+// Throws when the CMS cannot be read, so only a successful read is cached.
+// The caller supplies the fallback outside the cache scope.
 const getDplCmsPublicConfigData = async () => {
   "use cache"
-  // @todo: We should handle triggered revalidation or having a longer caching time.
-  // Right now the default cache time should be 15 minutes.
+  // See getDplCmsPrivateConfigData for the tag.
+  cacheTag("dpl-cms-config")
 
-  try {
-    const data = await queryDplCmsPublicConfig()
-    return publicConfigSchema.parse(data)
-  } catch {
-    console.error("Failed to parse DPL CMS public config")
-    return {
-      loginUrls: {
-        adgangsplatformen: null,
-      },
-      logoutUrls: {
-        adgangsplatformen: null,
-      },
-      libraryInfo: {
-        name: null,
-        baseURL: null,
-      },
-      mapp: null,
-      unilogin: {
-        municipalityId: null,
-      },
-      blacklistedAvailabilityBranches: [],
-      smsNotificationsEnabled: true,
-    }
-  }
+  const data = await queryDplCmsPublicConfig()
+  return publicConfigSchema.parse(data)
 }
 
 export const getDplCmsPublicConfig = async () => {
   await connection()
-  const data = await getDplCmsPublicConfigData()
-  // If environment variables are set, they will override the values from DPL CMS.
-  const envMunicipalityId = getServerEnv("UNILOGIN_MUNICIPALITY_ID")
-  if (envMunicipalityId) {
-    data.unilogin.municipalityId = envMunicipalityId
+  const data = await getDplCmsPublicConfigData().catch(() => {
+    console.error("Failed to parse DPL CMS public config")
+    return publicConfigFallback()
+  })
+
+  // `data` is the cached object in the normal path, so the env overrides go
+  // into a copy that every caller gets its own of.
+  return {
+    ...data,
+    libraryInfo: {
+      ...data.libraryInfo,
+      baseURL: getEnv("DPL_CMS_BASE_URL"),
+    },
   }
-
-  data.libraryInfo.baseURL = getEnv("DPL_CMS_BASE_URL")
-
-  return data
 }

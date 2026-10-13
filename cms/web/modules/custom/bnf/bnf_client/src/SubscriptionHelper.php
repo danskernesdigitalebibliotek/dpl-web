@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\bnf_client;
 
+use Drupal\bnf_client\Entity\Subscription;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\taxonomy\Entity\Term;
 
@@ -12,7 +14,10 @@ use Drupal\taxonomy\Entity\Term;
  */
 class SubscriptionHelper {
 
-  public function __construct(protected EntityTypeManagerInterface $entityTypeManager) {}
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected BnfScheduler $scheduler,
+  ) {}
 
   /**
    * Ensure subscription with term exists.
@@ -38,14 +43,7 @@ class SubscriptionHelper {
     string $label,
     ?string $tagName = NULL,
   ): bool {
-    $subscriptionStorage = $this->entityTypeManager->getStorage('bnf_subscription');
-
-    /** @var \Drupal\bnf_client\Entity\Subscription[] $existing */
-    $existing = $subscriptionStorage->loadByProperties([
-      'subscription_uuid' => $subscriptionUuid,
-    ]);
-
-    if ($existing) {
+    if ($this->getBySubscriptionUuid($subscriptionUuid)) {
       return FALSE;
     }
 
@@ -81,10 +79,56 @@ class SubscriptionHelper {
       $subscriptionData['tags'] = [['target_id' => $tagTerm->id()]];
     }
 
-    $subscription = $subscriptionStorage->create($subscriptionData);
+    $subscription = $this->storage()->create($subscriptionData);
     $subscription->save();
 
     return TRUE;
+  }
+
+  /**
+   * Get subscription by subscription UUID.
+   */
+  public function getBySubscriptionUuid(string $subscriptionUuid): ?Subscription {
+    /** @var \Drupal\bnf_client\Entity\Subscription[] $subscriptions */
+    $subscriptions = $this->storage()->loadByProperties([
+      'subscription_uuid' => $subscriptionUuid,
+    ]);
+
+    if (!$subscriptions) {
+      return NULL;
+    }
+
+    return reset($subscriptions);
+  }
+
+  /**
+   * Delete a subscription.
+   *
+   * Only deletes the subscription, not any imported content on the
+   * subscription.
+   */
+  public function delete(Subscription $subsciption): void {
+    $this->storage()->delete([$subsciption]);
+
+  }
+
+  /**
+   * Delete a subscription and it's content.
+   *
+   * Deletes content associated with the subscription if it's not part of any
+   * other subscription, and it's either not locally claimed or it's
+   * unpublished.
+   */
+  public function deleteWithContent(Subscription $subscription): void {
+    $subscription->pruneContent = TRUE;
+    $this->delete($subscription);
+  }
+
+  /**
+   * Get the subscription storage.
+   */
+  protected function storage(): EntityStorageInterface {
+    return $this->entityTypeManager->getStorage('bnf_subscription');
   }
 
 }

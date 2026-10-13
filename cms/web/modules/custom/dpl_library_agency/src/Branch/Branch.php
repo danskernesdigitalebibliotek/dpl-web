@@ -3,9 +3,9 @@
 namespace Drupal\dpl_library_agency\Branch;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\dk_address\DkAddressItemInterface;
 use Drupal\dpl_library_agency\Entity\BranchNode;
 use Drupal\drupal_typed\DrupalTyped;
-use Drupal\gsearch\AddressGsearchItemInterface;
 
 /**
  * Value object representing a branch in an agency.
@@ -76,10 +76,10 @@ class Branch {
   /**
    * Getting address data of a branch, set on a possible Drupal node.
    *
-   * @return \Drupal\gsearch\AddressGsearchItemInterface|null
+   * @return \Drupal\dk_address\DkAddressItemInterface|null
    *   The address field, along with metadata such as GPS coordinates.
    */
-  public function getAddressData(): ?AddressGsearchItemInterface {
+  public function getAddressData(): ?DkAddressItemInterface {
     return $this->node?->getAddressData();
   }
 

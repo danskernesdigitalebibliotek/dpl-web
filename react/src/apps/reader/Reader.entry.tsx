@@ -5,11 +5,13 @@ import { withText } from "../../core/utils/text";
 import Reader, { ReaderProps } from "../../components/reader-player/Reader";
 import type { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
 import type { WedoBooksArgs } from "../../core/storybook/wedobooksArgs";
+import type { DigitalSessionArgs } from "../../core/storybook/digitalSessionArgs";
 
 // The SDK configuration and the lending flag are read deep inside the reader
 // rather than passed down, so they never appear in ReaderProps - but they do
 // arrive as data attributes, and Storybook needs them typed to offer them.
 export type ReaderEntryType = Omit<ReaderProps, "onClose"> &
+  DigitalSessionArgs &
   Partial<BiblioAdapterArgs & WedoBooksArgs>;
 
 const ReaderEntry: React.FC<ReaderEntryType> = ({

@@ -25,7 +25,8 @@ const validHoldingsBody = [
   {
     recordId: "12345678",
     reservations: 2,
-    holdings: [{ materials: [{}, {}, {}] }],
+    reservable: true,
+    holdings: [{ materials: [{ available: true }, { available: true }, { available: false }] }],
   },
 ]
 
@@ -106,7 +107,7 @@ describe("createFbsClient.getMaterialAvailability", () => {
     const result = await buildClient().getMaterialAvailability([])
 
     expect(fetch).not.toHaveBeenCalled()
-    expect(result).toEqual({ totalCopies: 0, reservationCount: 0 })
+    expect(result).toEqual({ totalCopies: 0, reservationCount: 0, records: {} })
   })
 
   it("fetches with repeated recordid query params and returns the aggregated DTO", async () => {
@@ -123,7 +124,19 @@ describe("createFbsClient.getMaterialAvailability", () => {
       method: "GET",
       headers: { authorization: "Bearer abc" },
     })
-    expect(result).toEqual({ totalCopies: 3, reservationCount: 2 })
+    expect(result).toEqual({
+      totalCopies: 3,
+      reservationCount: 2,
+      records: {
+        "12345678": {
+          recordId: "12345678",
+          totalCopies: 3,
+          availableCopies: 2,
+          reservationCount: 2,
+          reservable: true,
+        },
+      },
+    })
   })
 
   it("adds an exclude query param per blacklisted branch id", async () => {

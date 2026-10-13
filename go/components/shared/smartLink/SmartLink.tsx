@@ -21,7 +21,7 @@ function SmartLink({
   children: React.ReactNode
   onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
   className?: string
-  // Forwarded to the anchor — arrives via Slot when wrapped in Button asChild.
+  // Forwarded to the anchor — arrive via Slot when wrapped in Button asChild.
   "aria-label"?: string
   "data-cy"?: string
 }) {

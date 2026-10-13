@@ -6,7 +6,7 @@ dependencies:
     - field.storage.eventseries.field_event_address_gsearch
     - recurring_events.eventseries_type.default
   module:
-    - gsearch
+    - dk_address
 id: eventseries.default.field_event_address_gsearch
 field_name: field_event_address_gsearch
 entity_type: eventseries
@@ -19,4 +19,4 @@ default_value: {  }
 default_value_callback: ''
 settings:
   allow_freetext: true
-field_type: address_gsearch
+field_type: dk_address

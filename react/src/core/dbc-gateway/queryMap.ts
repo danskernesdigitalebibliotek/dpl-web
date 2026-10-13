@@ -7,6 +7,8 @@ export default {
   complexSearchWithPagination: serviceUrlKeys.fbiLocal,
   complexSuggest: serviceUrlKeys.fbiLocal,
   complexSearchWithPaginationWorkAccess: serviceUrlKeys.fbiLocal,
+  getDashboardRecommendationSource: serviceUrlKeys.fbiLocal,
+  getDashboardRecommendationSourceByIsbn: serviceUrlKeys.fbiLocal,
   getDashboardRecommendations: serviceUrlKeys.fbiLocal,
   getMaterial: serviceUrlKeys.fbiLocal,
   getRelatedWorks: serviceUrlKeys.fbiLocal,

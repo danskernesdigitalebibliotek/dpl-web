@@ -2,6 +2,7 @@ import getV1LibraryProfileAdapterFactory from "../factories/ap/getV1LibraryProfi
 import getV1ProductsIdentifierAdapterFactory from "../factories/ap/getV1ProductsIdentifierAdapter"
 import getV1UserLoansAdapterFactory from "../factories/ap/getV1UserLoansAdapter"
 import GetAdgangsplatformenLibraryToken from "../factories/dpl-cms/getAdgangsplatformenLibraryToken"
+import GetAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
 import GetCategories from "../factories/dpl-cms/getCategories"
 import GetDplCmsPrivateConfiguration from "../factories/dpl-cms/getDplCmsPrivateConfiguration"
 import GetDplCmsPublicConfiguration from "../factories/dpl-cms/getDplCmsPublicConfiguration"
@@ -9,8 +10,33 @@ import GoFrontpage from "../factories/dpl-cms/getPageByPathQuery/go-frontpage"
 import ComplexSearchForWorkTeaser from "../factories/fbi/complexSearchForWorkTeaser"
 import { identifierFactory } from "../factories/fbi/factory-parts/identifier"
 import { worksWithIdentifiersFactory } from "../factories/fbi/factory-parts/works"
+import UniloginUserinfo from "../factories/unilogin/userinfo"
 
-export const mockConfig = () => {
+// Drops the server-side CMS configuration cache, which the root layout reads
+// on every page and which otherwise lives for 15 minutes. Each test then
+// renders against a config built from its own mocks.
+export const revalidateConfigCache = () => {
+  const secret = Cypress.env("DRUPAL_REVALIDATE_SECRET")
+  if (!secret) {
+    throw new Error(
+      "DRUPAL_REVALIDATE_SECRET is missing, so the config cache cannot be revalidated."
+    )
+  }
+
+  // A non-2xx response means the cache still holds the old config, so the
+  // request is left to fail the test.
+  cy.request({
+    url: "/cache/revalidate",
+    qs: {
+      tags: "dpl-cms-config",
+      secret,
+    },
+  })
+}
+
+export const mockConfig = (options?: {
+  biblio?: Parameters<typeof GetDplCmsPublicConfiguration.transient>[0]["biblio"]
+}) => {
   cy.mockServerGraphQLQuery({
     operationName: "getAdgangsplatformenLibraryToken",
     data: GetAdgangsplatformenLibraryToken.build(),
@@ -20,6 +46,7 @@ export const mockConfig = () => {
     operationName: "getDplCmsPublicConfiguration",
     data: GetDplCmsPublicConfiguration.transient({
       appUrl: Cypress.env("DPL_GO_BASE_URL"),
+      ...(options?.biblio ? { biblio: options.biblio } : {}),
     }).build(),
   })
 
@@ -134,5 +161,25 @@ export const mockUniloginProfilePage = () => {
       }),
       headers: { "content-type": "application/json" },
     })
+  })
+}
+
+// A Unilogin login runs through the CMS like an Adgangsplatformen login. The
+// CMS hands GO a Unilogin-typed user token, and GO reads the Unilogin
+// attributes from the Adgangsplatformen userinfo endpoint with it.
+export const mockUniloginLoginCallback = () => {
+  cy.setCookie("SSESS", "cookie-value")
+
+  cy.mockServerGraphQLQuery({
+    operationName: "getAdgangsplatformenUserToken",
+    data: GetAdgangsplatformenUserToken.build({
+      dplTokens: { adgangsplatformen: { user: { type: "unilogin_user" } } },
+    }),
+  })
+
+  cy.mockServerRest({
+    method: "GET",
+    path: "/userinfo",
+    data: UniloginUserinfo.build(),
   })
 }

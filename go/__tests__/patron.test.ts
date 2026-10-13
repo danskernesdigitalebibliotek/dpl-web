@@ -154,6 +154,46 @@ describe("digital shelf", () => {
     expect(paired[0].manifestations.all).toHaveLength(1)
   })
 
+  it("pairDigitalLoanWorks keeps a loan on an older edition", () => {
+    const ebook = (pid: string, isbn: string, year: number) => ({
+      pid,
+      identifiers: [{ type: "ISBN", value: isbn }],
+      edition: { publicationYear: { year } },
+      materialTypes: [
+        {
+          materialTypeGeneral: { display: "e-bøger", code: "EBOOKS" },
+          materialTypeSpecific: { code: "EBOOK", display: "e-bog" },
+        },
+      ],
+    })
+    // One work, two e-book editions; the loan is on the older one.
+    const work = {
+      workId: "work-of:870970-basis:04188128",
+      titles: { full: ["Jorden rundt i 80 dage"] },
+      creators: [],
+      manifestations: {
+        all: [
+          ebook("870970-basis:48469183", "isbn-newest", 2020),
+          ebook("870970-basis:53039073", "isbn-older", 2017),
+        ],
+      },
+    } as unknown as WorkTeaserSearchPageFragment
+    const loanOnOlderEdition: LoanListResult = {
+      loans: [
+        {
+          orderId: "order-older",
+          orderDateUtc: "2026-01-01",
+          loanExpireDateUtc: "2026-02-01",
+          libraryBook: { identifier: "isbn-older" },
+        },
+      ],
+    }
+
+    const paired = pairDigitalLoanWorks(loanOnOlderEdition, [work])
+    expect(paired).toHaveLength(1)
+    expect(paired[0].manifestations.all[0].pid).toBe("870970-basis:53039073")
+  })
+
   it("sortWorksBySoonestExpiry orders paired works by their loan's expiry", () => {
     const works = [digitalWork("2", "isbn-b"), digitalWork("1", "isbn-a")]
     const sorted = sortWorksBySoonestExpiry(works, digitalLoanData)

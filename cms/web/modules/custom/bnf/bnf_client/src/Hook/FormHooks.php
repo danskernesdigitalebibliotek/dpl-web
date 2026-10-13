@@ -6,8 +6,11 @@ namespace Drupal\bnf_client\Hook;
 
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Services\BnfImporter;
+use Drupal\bnf_client\Services\BnfExporter;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
@@ -23,12 +26,16 @@ class FormHooks implements LoggerAwareInterface {
 
   use StringTranslationTrait;
   use LoggerAwareTrait;
+  use MessengerTrait;
 
   public function __construct(
     protected AccountInterface $currentUser,
     TranslationInterface $stringTranslation,
+    MessengerInterface $messenger,
+    protected BnfExporter $exporter,
   ) {
     $this->setStringTranslation($stringTranslation);
+    $this->setMessenger($messenger);
   }
 
   /**
@@ -37,7 +44,7 @@ class FormHooks implements LoggerAwareInterface {
    * Adds an option to export the node to BNF. If checked, a custom form submit
    * handler will take care of the rest.
    *
-   * @see bnf_client_form_node_form_submit()
+   * @see \Drupal\bnf_client\Hook\FormHooks::nodeFormSubmit()
    *
    * @phpstan-ignore missingType.iterableValue ($form is very free form)
    */
@@ -75,7 +82,7 @@ class FormHooks implements LoggerAwareInterface {
 
     // When adding the submit handler here, it happens after ::save() and any
     // validation.
-    $form['actions']['submit']['#submit'][] = 'bnf_client_form_node_form_submit';
+    $form['actions']['submit']['#submit'][] = static::class . ':nodeFormSubmit';
 
     // Let's hide the publishing button when BNF is checked, as the value will
     // be ignored and the node will be published regardless.
@@ -113,6 +120,60 @@ class FormHooks implements LoggerAwareInterface {
       $this->t('Please make sure that all content and media as part of this article is OK to be used by other libraries.', [], ['context' => 'BNF']) :
       $this->t('This content cannot be sent to BNF, as it has either been exported or imported already.', [], ['context' => 'BNF']),
     ];
+  }
+
+  /**
+   * Submit handler that publishes node, and "exports" to BNF.
+   *
+   * @phpstan-ignore missingType.iterableValue ($form is very free form)
+   */
+  public function nodeFormSubmit(array $form, FormStateInterface $form_state): void {
+    /** @var \Drupal\Core\Entity\EntityFormInterface $form_object */
+    $form_object = $form_state->getFormObject();
+
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $form_object->getEntity();
+
+    $bnf_keep_updated = $form_state->getValue('bnf_keep_updated');
+
+    // If the content has been imported, the editor can choose if they want to
+    // keep it up-to-date with the BNF server.
+    // See more info in BnfStateEnum.
+    if (!is_null($bnf_keep_updated)) {
+      $state = ($bnf_keep_updated) ? BnfStateEnum::Imported : BnfStateEnum::LocallyClaimed;
+      $node->set(BnfStateEnum::FIELD_NAME, $state);
+      $node->save();
+    }
+
+    if (empty($form_state->getValue('bnf_export'))) {
+      return;
+    }
+
+    try {
+      $node->setPublished();
+      $node->save();
+    }
+    catch (\Exception $e) {
+      $this->logger?->error('Could not publish node as part of BNF export. @message', ['@message' => $e->getMessage()]);
+
+      $this->messenger()->addError(
+        $this->t("Could not publish node - will not send to BNF.", [], ['context' => 'BNF'])
+      );
+    }
+
+    try {
+      $this->exporter->exportNode($node);
+
+      $this->messenger()->addStatus(
+        $this->t("Content has been published and sent to BNF.", [], ['context' => 'BNF'])
+      );
+    }
+    catch (\Throwable $e) {
+      $this->messenger()->addError($this->t('Could not export node to BNF.', [], ['context' => 'BNF']));
+
+      $this->logger?->error('Could not export node to BNF. @message', ['@message' => $e->getMessage()]);
+
+    }
   }
 
 }

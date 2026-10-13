@@ -206,11 +206,29 @@ export const getEbookPreviewUrl = (workId: string, identifier: string) =>
     queryParams: { id: identifier },
   })
 
+// TODO(publizon-sunset): remove when the Publizon API is phased out —
+// getReadUrlForLoan then only knows loanId, and the orderId query param dies
+// with pubhub's reader.
 export const getEbookReadUrl = (workId: string, orderId: string) =>
   resolveUrl({
     routeParams: { work: "work", ":wid": workId, read: "read" },
     queryParams: { orderId },
   })
+
+// The read url for a loan the Biblio adapter issued — opens the WeDoBooks
+// reader, where orderId (above) opens Publizon's. The loan decides the
+// reader, so both urls stay valid side by side while the providers coexist.
+export const getDigitalReadUrl = (workId: string, loanId: string) =>
+  resolveUrl({
+    routeParams: { work: "work", ":wid": workId, read: "read" },
+    queryParams: { loanId },
+  })
+
+// The rule "the loan decides the reader" as code: a Biblio loan (loanId)
+// opens the WeDoBooks reader, a Publizon loan (orderId) pubhub's. Every
+// read-link goes through here so the callers cannot drift apart on it.
+export const getReadUrlForLoan = (workId: string, loan: { orderId?: string; loanId?: string }) =>
+  loan.loanId ? getDigitalReadUrl(workId, loan.loanId) : getEbookReadUrl(workId, loan.orderId ?? "")
 
 export type ManifestationLabelForm = "indefinite" | "definite"
 

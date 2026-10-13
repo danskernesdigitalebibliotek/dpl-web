@@ -29,6 +29,7 @@ const iconNames = [
   "headphones",
   "lock",
   "logo-borderless",
+  "logo-go-green",
   "logo-white-readme",
   "logo-with-outline",
   "moon",

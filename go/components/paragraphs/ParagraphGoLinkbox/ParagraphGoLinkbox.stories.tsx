@@ -54,11 +54,17 @@ export const AllBackgrounds: Story = {
   parameters: { layout: "fullscreen" },
   render: args => (
     <div className="flex flex-col gap-10 p-10">
-      {(["content_color_1", "content_color_2", "content_color_3", "content_color_4"] as const).map(
-        color => (
-          <ParagraphGoLinkbox key={color} {...args} goColor={color} />
-        )
-      )}
+      {(
+        [
+          "content_color_1",
+          "content_color_2",
+          "content_color_3",
+          "content_color_4",
+          "content_color_5",
+        ] as const
+      ).map(color => (
+        <ParagraphGoLinkbox key={color} {...args} goColor={color} />
+      ))}
     </div>
   ),
 }

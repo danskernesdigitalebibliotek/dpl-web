@@ -18,6 +18,8 @@ export type PlayerButtonProps = {
    * so a void return would throw there and swallow the navigation.
    */
   trackClick: () => Promise<unknown>;
+  /** Runs when playing leaves the page - never for a loan playing in a modal. */
+  onNavigate?: () => void;
   /**
    * What playing means for a Publizon loan: open its modal. Callers own the
    * `PlayerModal` itself, because they differ in where it is mounted.
@@ -37,6 +39,7 @@ const PlayerButton: React.FC<PlayerButtonProps> = ({
   size,
   dataCy,
   trackClick,
+  onNavigate,
   onPlayInModal
 }) => {
   if (!playsInModal(provider)) {
@@ -48,6 +51,7 @@ const PlayerButton: React.FC<PlayerButtonProps> = ({
         size={size}
         dataCy={dataCy}
         trackClick={trackClick}
+        onClick={onNavigate}
       >
         {label}
       </LinkButton>

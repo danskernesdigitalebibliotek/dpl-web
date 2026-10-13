@@ -16,7 +16,7 @@ const LinkToParentLibrary = ({ className }: LinkToParentLibraryProps) => {
   const libraryName = dplCmsConfig?.libraryInfo.name || "dit lokale bibliotek"
 
   return (
-    <p className={cn("text-typo-caption", className)}>
+    <p className={cn("text-typo-body-sm", className)}>
       En del af{" "}
       {parentLibraryUrl ? (
         <SmartLink

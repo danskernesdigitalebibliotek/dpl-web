@@ -48,7 +48,7 @@ export function createFbsClient(config: FbsConfig) {
       excludeBranchIds: string[] = []
     ): Promise<MaterialAvailability> => {
       if (recordIds.length === 0) {
-        return { totalCopies: 0, reservationCount: 0 }
+        return { totalCopies: 0, reservationCount: 0, records: {} }
       }
       const authHeader = await config.getAuthHeader()
       const url = `${config.baseUrl}${getGetHoldingsLogisticsV1Url({

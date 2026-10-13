@@ -39,13 +39,16 @@ export async function getDigitalLoanDecision(
  */
 export const isMaterialAvailable = (status: LoanDecisionStatus): boolean => {
   switch (status) {
-    // Equivalent to Publizon's status 5 (reservation queue).
-    case "reservable":
-    case "wishable":
-    case "unavailable":
-      return false
-    default:
+    case "loanable":
+    case "monthly_limit_exceeded":
+    case "concurrent_limit_exceeded":
+    case "no_valid_credentials":
+    case "lending_blocked":
       return true
+    // "reservable" is equivalent to Publizon's status 5 (reservation queue).
+    // A status this package does not know is not promised as available.
+    default:
+      return false
   }
 }
 

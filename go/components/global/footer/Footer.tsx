@@ -16,7 +16,7 @@ export default function Footer() {
             <ul className="mt-10 space-y-5">
               <li>
                 <SmartLink
-                  href="https://www.detdigitalefolkebibliotek.dk/ereolen-go"
+                  href="https://www.biblo.dk/ombiblogo"
                   linkType="external"
                   className="animate-text-underline text-typo-body-md">
                   Info om GO
@@ -24,7 +24,7 @@ export default function Footer() {
               </li>
               <li>
                 <SmartLink
-                  href="https://detdigitalefolkebibliotek.atlassian.net/servicedesk/customer/portal/6"
+                  href="https://detdigitalefolkebibliotek.atlassian.net/servicedesk/customer/portal/210?xpis=eyJicmlkZ2UiOiJzbWFydExpbmtzIiwiaWQiOiIxNzkxMzU4MzY0ODA2Iiwic291cmNlIjoiamlyYS1KU1cifQ%3D%3D"
                   linkType="external"
                   className="animate-text-underline text-typo-body-md">
                   Kontakt og support
@@ -46,13 +46,19 @@ export default function Footer() {
                   Bliv boganbefaler
                 </SmartLink>
               </li>
+              <li>
+                <SmartLink
+                  href="https://biblo.dk"
+                  linkType="external"
+                  className="animate-text-underline text-typo-body-md">
+                  Download appen
+                </SmartLink>
+              </li>
             </ul>
           </div>
           <div className="col-span-full mt-12 flex flex-col items-center justify-end lg:col-span-6">
-            <div
-              className="bg-foreground mb-10 ml-0 flex flex-0 items-center rounded-full p-0.5
-                lg:ml-auto">
-              <Icon name="logo-with-outline" className="text-background h-auto w-36 lg:w-40" />
+            <div className="mb-10 ml-0 flex flex-0 items-center lg:ml-auto">
+              <Icon name="logo-go-green" className="h-[85px] w-[68px]" />
             </div>
             <LinkToParentLibrary className="text-typo-subtitle-lg lg:w-full lg:text-right" />
           </div>

@@ -3,7 +3,7 @@
 namespace Drupal\dpl_event\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\gsearch\Plugin\Field\FieldFormatter\AddressGsearchFormatter;
+use Drupal\dk_address\Plugin\Field\FieldFormatter\DkAddressFormatter;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
@@ -19,11 +19,11 @@ use Drupal\recurring_events\Entity\EventSeries;
  *   id = "dpl_branch_address",
  *   label = @Translation("DPL: Branch address fallback"),
  *   field_types = {
- *     "address_gsearch"
+ *     "dk_address"
  *   }
  * )
  */
-class BranchAddressFormatter extends AddressGsearchFormatter {
+class BranchAddressFormatter extends DkAddressFormatter {
 
   /**
    * {@inheritdoc}

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\bnf_client\Controller;
 
+use Drupal\bnf_client\SubscriptionHelper;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -22,6 +23,7 @@ class NewSubscriptionRedirectController implements ContainerInjectionInterface {
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
     protected MessengerInterface $messenger,
+    protected SubscriptionHelper $helper,
   ) {}
 
   /**
@@ -37,14 +39,9 @@ class NewSubscriptionRedirectController implements ContainerInjectionInterface {
       throw new \RuntimeException('Need both `uuid` and `label` query parameters');
     }
 
-    /** @var \Drupal\bnf_client\Entity\Subscription[] $existing */
-    $existing = $this->entityTypeManager->getStorage('bnf_subscription')->loadByProperties([
-      'subscription_uuid' => $query['uuid'],
-    ]);
+    $existing = $this->helper->getBySubscriptionUuid($query['uuid']);
 
     if ($existing) {
-      $existing = reset($existing);
-
       $this->messenger->addWarning('This subscription already exists. You can edit it below.');
 
       $url = $existing->toUrl('edit-form')->toString();

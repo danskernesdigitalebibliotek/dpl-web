@@ -15,10 +15,10 @@ inputs:
     description: >-
       Whether to build the WeDoBooks wrapper after installing. Unlike the
       token, the build is only needed by the jobs that typecheck, lint or
-      build react/ - the only package importing the wrapper. Everything else
-      (go/, service-layer, design-system, codegen, translations, and the CMS
-      jobs whose site is built inside docker images) never reads the dist, so
-      it is off by default and those jobs opt in explicitly.
+      build react/ or go/ - the two packages importing the wrapper. Everything
+      else (service-layer, design-system, translations, and the CMS jobs whose
+      site is built inside docker images) never reads the dist, so it is off
+      by default and those jobs opt in explicitly.
     required: false
     default: 'false'
 runs:
@@ -56,7 +56,16 @@ runs:
     # The WeDoBooks wrapper is the only workspace package that ships a build
     # instead of sources - the SDK has to be pre-bundled for webpack to accept
     # it. Nothing that imports it can typecheck or build until its dist exists.
+    #
+    # react/ links the wrapper with workspace:, so the symlink sees the fresh
+    # dist by itself. go/ pins it with file:, which pnpm copied into
+    # go/node_modules during the install above - before the dist existed - so
+    # go's copy has to be refreshed with a second install.
     - name: Build the WeDoBooks wrapper
       if: inputs.wedobooks-token != '' && inputs.build-wedobooks == 'true'
       shell: bash
-      run: pnpm --filter @danskernesdigitalebibliotek/dpl-wedobooks build
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.token }}
+      run: |
+        pnpm --filter @danskernesdigitalebibliotek/dpl-wedobooks build
+        pnpm install --dir go

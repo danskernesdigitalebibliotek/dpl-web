@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 
 import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
 import {
+  fixtureBiblioLoans,
+  fixtureMergedWorks,
   fixtureWorks,
   loanListResult,
   seedClient,
@@ -75,5 +77,34 @@ export const Player: Story = {
     const listenButton = await screen.findByRole("button", { name: /lyt til lydbog/i })
     await userEvent.click(listenButton)
     await screen.findByRole("heading", { name: /lyt til lydbog/i })
+  },
+}
+
+// With the Biblio adapter switched on, both providers' loans show in one
+// list, sorted by expiry across providers: the Biblio e-book (expiring
+// tomorrow) lands between the Publizon fixtures. Publizon loans stay until
+// they expire — the coexistence the rollout depends on.
+// TODO(publizon-sunset): remove when the Publizon API is phased out — there
+// is no coexistence left to show; the Publizon fixtures and stories go with
+// it, and the biblio fixtures become the default.
+export const MergedWithBiblioLoans: Story = {
+  decorators: [withQueryClient(seedClient())],
+  args: {
+    ...baseArgs,
+    works: fixtureMergedWorks,
+    biblioLoans: fixtureBiblioLoans,
+  },
+}
+
+// The details view of a Biblio loan: same layout as a Publizon loan, but the
+// primary action opens the WeDoBooks reader (?loanId=) instead of pubhub's
+// (?orderId=) — the loan decides the reader.
+export const BiblioLoanDetails: Story = {
+  decorators: [withQueryClient(seedClient())],
+  args: {
+    ...baseArgs,
+    works: fixtureMergedWorks,
+    biblioLoans: fixtureBiblioLoans,
+    initialLoan: buildSelectedLoan(fixtureMergedWorks[5], loanListResult, fixtureBiblioLoans),
   },
 }

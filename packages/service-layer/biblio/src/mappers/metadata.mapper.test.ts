@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest"
+import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { parseAndMapMetadata } from "./metadata.mapper"
 
@@ -13,6 +13,10 @@ const upstreamMaterial = {
 }
 
 describe("parseAndMapMetadata", () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   it("maps an upstream material to a DigitalMaterial", () => {
     expect(parseAndMapMetadata({ materials: [upstreamMaterial] })).toEqual({
       isbn: "9788711234567",
@@ -72,11 +76,14 @@ describe("parseAndMapMetadata", () => {
     expect(parseAndMapMetadata(raw)).not.toHaveProperty("thema_codes")
   })
 
-  it("throws on an unexpected material_type (e.g. paper_book)", () => {
-    expect(() =>
-      parseAndMapMetadata({
-        materials: [{ ...upstreamMaterial, material_type: "paper_book" }],
-      })
-    ).toThrow()
+  it("passes an unexpected material_type through and logs it", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined)
+
+    const material = parseAndMapMetadata({
+      materials: [{ ...upstreamMaterial, material_type: "podcast" }],
+    })
+
+    expect(material?.materialType).toBe("podcast")
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('material_type: "podcast"'))
   })
 })

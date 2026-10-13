@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_go\Plugin\GraphQL\SchemaExtension;
 
+use Drupal\dpl_login\Unilogin;
 use Drupal\graphql\GraphQL\ResolverBuilder;
 use Drupal\graphql\GraphQL\ResolverRegistryInterface;
 use Drupal\graphql\Plugin\GraphQL\SchemaExtension\SdlSchemaExtensionPluginBase;
@@ -31,6 +32,10 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
     $registry->addFieldResolver('GoLoginUrls', 'adgangsplatformen',
       $builder->produce('go_adgangsplatformen_login_url')
     );
+    $registry->addFieldResolver('GoLoginUrls', 'unilogin',
+      $builder->produce('go_adgangsplatformen_login_url')
+        ->map('idp', $builder->fromValue(Unilogin::IDP))
+    );
 
     $registry->addFieldResolver('GoConfigurationPublic', 'logoutUrls', $builder->callback(fn () => TRUE));
     $registry->addFieldResolver('GoLogoutUrls', 'adgangsplatformen',
@@ -50,10 +55,6 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
       $builder->produce('unilogin_private_producer')
     );
 
-    $registry->addFieldResolver('GoConfigurationPublic', 'unilogin',
-      $builder->produce('unilogin_public_producer')
-    );
-
     $registry->addFieldResolver('GoConfigurationPublic', 'mapp',
       $builder->produce('mapp_tracking_producer')
     );
@@ -64,6 +65,10 @@ class GoConfigurationExtension extends SdlSchemaExtensionPluginBase {
 
     $registry->addFieldResolver('GoConfigurationPublic', 'blacklistedAvailabilityBranches',
       $builder->produce('blacklisted_availability_branches_producer')
+    );
+
+    $registry->addFieldResolver('GoConfigurationPublic', 'biblio',
+      $builder->produce('go_biblio_configuration_producer')
     );
 
     $registry->addFieldResolver('GoConfigurationPublic', 'smsNotificationsEnabled',

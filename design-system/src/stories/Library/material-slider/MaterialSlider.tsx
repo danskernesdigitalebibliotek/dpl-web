@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, ReactNode, useEffect, useRef } from "react";
 import KeenSlider, { KeenSliderInstance } from "keen-slider";
 import "keen-slider/keen-slider.min.css";
 import { RecommendedMaterial } from "../recommended-material/RecommendedMaterial";
@@ -11,7 +11,12 @@ export type MaterialSliderItem = {
 };
 
 export type MaterialSliderProps = {
-  heading: string;
+  /**
+   * Content of the heading above the track. A string is rendered as a
+   * MaterialSliderTitle. Pass a node to compose the heading yourself, for
+   * instance a MaterialSliderCaption above a MaterialSliderTitle.
+   */
+  heading: string | ReactNode;
   items: MaterialSliderItem[];
   // Accessible names of the prev/next controls, which only show an arrow.
   nextLabel: string;
@@ -45,6 +50,16 @@ const Arrow: FC<{ direction: "left" | "right" }> = ({ direction }) =>
     </svg>
   );
 
+/** A small lead-in above the slider's title, e.g. "Because you borrowed". */
+export const MaterialSliderCaption: FC<{ children: ReactNode }> = ({
+  children,
+}) => <span className="material-slider__caption">{children}</span>;
+
+/** The slider's title, in the heading's own type size. */
+export const MaterialSliderTitle: FC<{ children: ReactNode }> = ({
+  children,
+}) => <span className="material-slider__title">{children}</span>;
+
 // A horizontal slider of material cards with a heading and prev/next
 // controls: MaterialGrid's look, in one long line. The track is keen-slider,
 // the same library dpl-react drives it with in production; here it only makes
@@ -76,7 +91,13 @@ export const MaterialSlider = ({
   return (
     <div className="material-slider">
       <div className="material-slider__header">
-        <h2 className="material-slider__heading text-header-h2">{heading}</h2>
+        <h2 className="material-slider__heading text-header-h2">
+          {typeof heading === "string" ? (
+            <MaterialSliderTitle>{heading}</MaterialSliderTitle>
+          ) : (
+            heading
+          )}
+        </h2>
         <div className="material-slider__controls">
           <button
             type="button"

@@ -13,8 +13,8 @@ dependencies:
     - field.field.node.branch.field_promoted_on_lists
     - node.type.branch
   module:
+    - dk_address
     - field_group
-    - gsearch
     - media_library
     - media_library_edit
     - paragraphs
@@ -48,7 +48,7 @@ bundle: branch
 mode: default
 content:
   field_address_gsearch:
-    type: address_gsearch
+    type: dk_address
     weight: 10
     region: content
     settings:

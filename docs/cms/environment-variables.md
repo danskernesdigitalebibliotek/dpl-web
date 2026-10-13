@@ -145,9 +145,11 @@ library site and BNF site. Set via update hook. Read in
 
 - `DATAFORSYNINGEN_TOKEN`
 
-Token for Dataforsyningen, the Danish address lookup API. Applied to
-`gsearch.settings` in `all.settings.php` and passed to the patron
-registration block (`PatronRegistrationBlock`).
+Token for Dataforsyningen, the Danish address lookup API used by the React
+apps (`PatronRegistrationBlock`, the branch list). Also applied as the site
+credential of `dk_address.settings` in `all.settings.php`, which the
+`dk_address` module falls back to if Adressevælgeren stops accepting its
+shared token.
 
 - `DRUPAL_PREVIEW_SECRET`
 
@@ -206,19 +208,13 @@ These are automatically picked up for configuration (see
 - `OPENID_CLIENT_ID`: Client ID for Adgangsplatformen OIDC.
 - `OPENID_CLIENT_SECRET`: Client secret for Adgangsplatformen OIDC.
 - `OPENID_AGENCY_ID`: Agency ID for Adgangsplatformen OIDC.
-- `UNILOGIN_CLIENT_SECRET`: Client secret for UniLogin API.
 
 And if you need these, grab someone that's worked in the area before
 and ask them.
 
 - `UNILOGIN_PUBHUB_RETAILER_KEY_CODE`: Retailer key for PubHub.
-- `UNILOGIN_MUNICIPALITY_ID`: Municipality ID for UniLogin.
 
 CMS reads `UNILOGIN_PUBHUB_RETAILER_KEY_CODE`, while Go reads the
 misspelled `UNLILOGIN_PUBHUB_RETAILER_KEY_CODE` (a long-standing typo).
 `.env.1pass` sets both to the same value for local development, but
 only the misspelled name exists as a Lagoon project variable.
-
-UniLogin SOAP webservice access lives in Go, not CMS, and uses
-`UNILOGIN_WS_UDBYDERSYSTEM_ID`, `UNILOGIN_WS_PRIVATE_KEY` and
-`UNILOGIN_WS_PUBLIC_CERT`. Nothing in CMS reads webservice credentials.

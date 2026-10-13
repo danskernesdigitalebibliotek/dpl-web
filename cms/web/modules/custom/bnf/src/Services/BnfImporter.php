@@ -105,7 +105,7 @@ class BnfImporter {
       $existingNode = reset($existingNodes);
 
       // Skip import if  node is locally claimed (editor opted out of updates).
-      if ($existingNode instanceof NodeInterface && $this->isLocallyClaimed($existingNode)) {
+      if ($existingNode instanceof NodeInterface && self::isLocallyClaimed($existingNode)) {
         $this->logger->info("Skipped BNF import of locally claimed node {$uuid}.");
         return NULL;
       }
@@ -251,7 +251,7 @@ class BnfImporter {
   /**
    * Check if a node is locally claimed.
    */
-  protected function isLocallyClaimed(NodeInterface $node): bool {
+  public static function isLocallyClaimed(NodeInterface $node): bool {
     if (!$node->hasField(BnfStateEnum::FIELD_NAME) || $node->get(BnfStateEnum::FIELD_NAME)->isEmpty()) {
       return FALSE;
     }

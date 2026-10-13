@@ -55,6 +55,15 @@ const fixturePatron: Patron = {
 const fixtureAvailability: MaterialAvailability = {
   totalCopies: 14,
   reservationCount: 3,
+  records: {
+    "12345678": {
+      recordId: "12345678",
+      totalCopies: 14,
+      availableCopies: 11,
+      reservationCount: 3,
+      reservable: true,
+    },
+  },
 }
 
 const wid = physicalWork.workId

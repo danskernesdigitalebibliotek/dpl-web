@@ -6,10 +6,12 @@ import {
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
+import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import { TModalType } from "@/lib/helpers/modal-url"
 import { openModal } from "@/store/modal.store"
+import { playSample } from "@/store/player.store"
 
 import WorkPageButton from "./WorkPageButton"
 import WorkPageButtons from "./WorkPageButtons"
@@ -29,6 +31,10 @@ const WorkPageButtonsLoggedOut = ({
     selectedManifestation?.materialTypes[0]?.materialTypeSpecific.code
   )
   const isDisabled = !identifier
+  // TODO(publizon-sunset): remove when the Publizon API is phased out —
+  // the audio preview below always goes to the player bar and the
+  // PlayerPreviewModal branch goes.
+  const viaBiblioAdapter = useBiblioAdapter()
 
   const open = (modal: TModalType) =>
     openModal(modal, { wid: workId, pid: selectedManifestation.pid })
@@ -78,7 +84,13 @@ const WorkPageButtonsLoggedOut = ({
         <WorkPageButton
           ariaLabel={`Prøv ${label}`}
           disabled={isDisabled}
-          onClick={() => openModal("PlayerPreviewModal", { manifestation: selectedManifestation })}>
+          onClick={() => {
+            if (viaBiblioAdapter) {
+              playSample(identifier || "")
+              return
+            }
+            openModal("PlayerPreviewModal", { manifestation: selectedManifestation })
+          }}>
           Prøv {label}
         </WorkPageButton>
       </WorkPageButtons>

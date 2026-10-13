@@ -30,8 +30,8 @@ dependencies:
     - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
   module:
+    - dk_address
     - dpl_event
-    - gsearch
     - options
 _core:
   default_config_hash: U53j_RaqaehEh393bzj6vrqXorzo8lkcjhQNCNTPjmQ
@@ -73,7 +73,7 @@ content:
     weight: 2
     region: content
   field_event_address_gsearch:
-    type: address_gsearch
+    type: dk_address
     label: hidden
     settings: {  }
     third_party_settings: {  }

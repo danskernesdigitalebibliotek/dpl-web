@@ -23,6 +23,7 @@ const colorMap = {
   content_color_2: "bg-content-2",
   content_color_3: "bg-content-3",
   content_color_4: "bg-content-4",
+  content_color_5: "bg-content-5",
 }
 
 function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxProps) {
@@ -73,7 +74,7 @@ function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxProps) {
         </div>
         <div className="col-span-full flex items-center lg:col-span-6 xl:col-span-4 xl:col-start-8">
           <div className="lg:ml-grid-column-half xl:-mx-grid-gap space-y-8">
-            <h2 className="text-typo-heading-2">{title}</h2>
+            <h2 className="text-typo-heading-1">{title}</h2>
             <p className="mr-grid-column-half">{description}</p>
             {linkUrl && linkTitle && (
               <Button asChild>
