@@ -1,5 +1,13 @@
 import { ComplexSearchFacetsEnum } from "../../core/dbc-gateway/generated/graphql";
 
+export type {
+  Operator,
+  FilterState,
+  FacetState,
+  FormView
+} from "../../core/advanced-search/types";
+export { SortOption } from "../../core/advanced-search/types";
+
 export type Option = {
   label: string;
   value: string;
@@ -7,20 +15,6 @@ export type Option = {
 };
 
 export const DIVIDER_VALUE = "__divider__";
-
-export type Operator = "and" | "or" | "not";
-
-export type FilterState = {
-  term: string;
-  query: string;
-  operator?: Operator;
-};
-
-// Facets are filters that can be either pre-search (form selects) or post-search (sidebar filters)
-export type FacetState = {
-  facetField: ComplexSearchFacetsEnum;
-  selectedValues: string[];
-};
 
 export type RangeValue = {
   from: number | null;
@@ -51,16 +45,6 @@ export type PreRangeFacetConfig = FacetConfig & {
 };
 
 export type PreFacetConfig = PreSelectFacetConfig | PreRangeFacetConfig;
-
-export enum SortOption {
-  Relevance = "relevance",
-  TitleAsc = "sort.title.asc",
-  TitleDesc = "sort.title.desc",
-  CreatorAsc = "sort.creator.asc",
-  CreatorDesc = "sort.creator.desc",
-  LatestPubDateAsc = "sort.latestpublicationdate.asc",
-  LatestPubDateDesc = "sort.latestpublicationdate.desc"
-}
 
 // Radio button filter types
 export type AccessTypeFilterOptions =

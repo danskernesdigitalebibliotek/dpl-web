@@ -107,6 +107,12 @@ export const guardedRequest = createAsyncThunk(
           redirectToLoginAndBack({ authUrl, returnUrl });
         }
       });
+
+      // The request is run after login, never without a patron.
+      return fulfillWithValue({
+        status: "stored",
+        message: "Request stored until login"
+      });
     }
 
     // We'll leave this debugging here temporarily also in the testing phase for troubleshooting.

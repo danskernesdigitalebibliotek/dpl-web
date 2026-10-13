@@ -82,19 +82,23 @@ class OpenIdUserInfoService {
   public function getIdentifierDataFromUserInfo(array $userinfo): array {
     $cpr = $userinfo['attributes']['cpr'] ?? FALSE;
     $unique_id = $userinfo['attributes']['uniqueId'] ?? FALSE;
-
-    if (!$cpr && !$unique_id) {
-      throw new \Exception('Unable to identify user. Both CPR and uniqueId are missing.');
-    }
-
-    if ($unique_id) {
-      $id = $unique_id;
-      $type = AuthorizationIdType::UniqueId;
-    }
+    // Unilogin users are identified by their uni-id, if nothing else.
+    $uni_id = Unilogin::getUniId($userinfo);
 
     if ($cpr) {
       $id = $cpr;
       $type = AuthorizationIdType::Cpr;
+    }
+    elseif ($unique_id) {
+      $id = $unique_id;
+      $type = AuthorizationIdType::UniqueId;
+    }
+    elseif ($uni_id) {
+      $id = $uni_id;
+      $type = AuthorizationIdType::UniId;
+    }
+    else {
+      throw new \Exception('Unable to identify user. CPR, uniqueId and Unilogin uni-id are missing.');
     }
 
     return ['id' => $id, 'type' => $type];
@@ -103,7 +107,7 @@ class OpenIdUserInfoService {
   /**
    * We need a unique identifier for the openid_connect authmap.
    *
-   * Since we cannot use the CPR or uniqueId directly as the identifier
+   * Since we cannot use the CPR, uniqueId or uni-id directly as the identifier
    * we hash it with a salt. That way we can still identify the user
    * but the actual identifier is not stored in the database.
    *

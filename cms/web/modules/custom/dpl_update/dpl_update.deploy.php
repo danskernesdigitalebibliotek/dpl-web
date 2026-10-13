@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\bnf_client\SubscriptionHelper;
 use Drupal\collation_fixer\CollationFixer;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -847,4 +848,42 @@ function dpl_update_deploy_uninstall_gsearch(): string {
     ->uninstall(['gsearch', 'dk_address_gsearch_migrate']);
 
   return 'Uninstalled modules: gsearch, dk_address_gsearch_migrate.';
+}
+
+/**
+ * Let Unilogin users fetch their token over GraphQL.
+ *
+ * Config import creates the unilogin_patron role with this permission. GO
+ * needs it to read the student's token from the CMS, so make sure it is
+ * granted on sites that manage their own permissions too.
+ */
+function dpl_update_deploy_unilogin_patron_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['unilogin_patron'],
+    ['execute graphql_compose_server arbitrary graphql requests'],
+    TRUE,
+  );
+
+  return 'Allow Unilogin users to fetch their token over GraphQL';
+}
+
+/**
+ * Ensure Biblo subscription exists.
+ *
+ * Was previously done in dpl_update_update_10080, but as the
+ * SubscriptionHelper service was introduced in the same deployment, it didn't
+ * exist when the update hook was run.
+ */
+function dpl_update_deploy_ensure_biblo_subscription(): string {
+  if (\Drupal::getContainer()->has(SubscriptionHelper::class)) {
+    DrupalTyped::service(SubscriptionHelper::class)->ensureWithTag(
+      'e22cc1dc-9c92-418e-bb77-df78f6eb620b',
+      'Biblo',
+      'Biblo',
+    );
+
+    return 'Added the Biblo subscription';
+  }
+
+  return 'Biblo subscription already exists';
 }

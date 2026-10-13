@@ -37,11 +37,13 @@ const wid = ebookWork.workId
 const pid = ebookManifestation.pid
 
 const stubConfig: TDplCmsPublicConfig = {
-  loginUrls: { adgangsplatformen: "https://example.test/login/adgangsplatformen" },
+  loginUrls: {
+    adgangsplatformen: "https://example.test/login/adgangsplatformen",
+    unilogin: "https://example.test/login/unilogin",
+  },
   logoutUrls: { adgangsplatformen: null },
   libraryInfo: { name: "Storybook Bibliotek", baseURL: "https://example.test" },
   mapp: null,
-  unilogin: { municipalityId: null },
   blacklistedAvailabilityBranches: [],
   biblio: { enabled: false, baseUrl: null, sdk: null },
   smsNotificationsEnabled: true,
@@ -91,7 +93,7 @@ export const AdgangsplatformenUnavailable: Story = {
   decorators: [
     withProviders(seedClient(), {
       ...stubConfig,
-      loginUrls: { adgangsplatformen: null },
+      loginUrls: { adgangsplatformen: null, unilogin: null },
     }),
   ],
   args: baseArgs,

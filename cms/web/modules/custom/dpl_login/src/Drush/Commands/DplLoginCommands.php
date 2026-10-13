@@ -5,6 +5,7 @@ namespace Drupal\dpl_login\Drush\Commands;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactory;
 use Drupal\dpl_login\RegisteredUserTokensProvider;
+use Drupal\dpl_login\UniloginUserTokensProvider;
 use Drupal\dpl_login\UnregisteredUserTokensProvider;
 use Drush\Attributes\Command;
 use Drush\Attributes\Argument;
@@ -34,9 +35,9 @@ class DplLoginCommands extends DrushCommands {
   /**
    * Forcefully expire a user token.
    *
-   * Covers both the registered and the unregistered user token, as a user can
-   * hold either - and UserTokens::getCurrent() prefers the unregistered one,
-   * so leaving it alone would keep handing out a live token.
+   * Covers the registered, the unregistered and the Unilogin user token, as a
+   * user can hold any of them - and UserTokens::getCurrent() returns the first
+   * one it finds, so leaving one alone could keep handing out a live token.
    *
    * Only alters Drupal idea of when the token expires, it doesn't change the
    * token at adgangsplatformen.
@@ -50,6 +51,7 @@ class DplLoginCommands extends DrushCommands {
     $providers = [
       'Unregistered user token' => UnregisteredUserTokensProvider::class,
       'Registered user token' => RegisteredUserTokensProvider::class,
+      'Unilogin user token' => UniloginUserTokensProvider::class,
     ];
 
     $expired = FALSE;

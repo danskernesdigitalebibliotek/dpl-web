@@ -7,7 +7,6 @@ import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
 import LoginPanel from "@/components/shared/loginPanel/LoginPanel"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import { cyKeys } from "@/cypress/support/constants"
-import routes from "@/lib/config/resolvers/routes"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
 import { setLoginRedirectCookie } from "@/lib/helpers/login-redirect"
@@ -24,6 +23,7 @@ type LoanLoginModalProps = {
 const LoanLoginModal = ({ open, onClose, wid, pid }: LoanLoginModalProps) => {
   const dplCmsConfig = useContext(DplCmsConfigContext)
   const loginUrlAdgangsplatformen = dplCmsConfig?.loginUrls?.adgangsplatformen
+  const loginUrlUnilogin = dplCmsConfig?.loginUrls?.unilogin
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -42,7 +42,9 @@ const LoanLoginModal = ({ open, onClose, wid, pid }: LoanLoginModalProps) => {
 
   const handleUniLogin = () => {
     redirectAfterLogin()
-    router.push(routes["routes.login.unilogin"])
+    if (loginUrlUnilogin) {
+      router.push(loginUrlUnilogin)
+    }
   }
 
   const handleAdgangsplatformenLogin = () => {
@@ -66,6 +68,7 @@ const LoanLoginModal = ({ open, onClose, wid, pid }: LoanLoginModalProps) => {
           heading="Log ind med Unilogin"
           ariaLabel="Log ind med UNILogin"
           onLogin={handleUniLogin}
+          disabled={!loginUrlUnilogin}
           dataCy={cyKeys["loan-login-modal-unilogin-button"]}
           description="Med UNILogin kan du låne e-bøger, lydbøger og podcasts."
         />

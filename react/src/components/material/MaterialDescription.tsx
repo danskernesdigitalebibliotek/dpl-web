@@ -6,12 +6,12 @@ import {
   materialContainsDanish
 } from "../../apps/material/helper";
 import {
-  constructAdvancedSearchSubjectUrl,
   constructDK5SearchUrl,
   constructMaterialUrl,
   constructSearchUrl,
   constructSubjectSearchUrl
 } from "../../core/utils/helpers/url";
+import { constructAdvancedSearchSubjectUrl } from "../../core/advanced-search/url";
 import { useConfig } from "../../core/utils/config";
 import { useText } from "../../core/utils/text";
 import { Work } from "../../core/utils/types/entities";
