@@ -2,6 +2,7 @@ import { createStore } from "@xstate/store"
 
 import type { CompensationModalProps } from "@/components/shared/compensationModal/CompensationModal"
 import type { DigitalLoansModalProps } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import type { EditionsSelectModalProps } from "@/components/shared/editionsSelectModal/EditionsSelectModal"
 import type { FeesModalProps } from "@/components/shared/feesModal/FeesModal"
 import type { LoanDetailsModalProps } from "@/components/shared/loanDetailsModal/LoanDetailsModal"
 import type { PhysicalLoansModalProps } from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
@@ -20,6 +21,7 @@ export type TModalRegistry = {
   PlayerPreviewModal: PlayerPreviewModalProps
   CompensationModal: CompensationModalProps
   DigitalLoansModal: DigitalLoansModalProps
+  EditionsSelectModal: EditionsSelectModalProps
   FeesModal: FeesModalProps
   LoanDetailsModal: LoanDetailsModalProps
   PhysicalLoansModal: PhysicalLoansModalProps

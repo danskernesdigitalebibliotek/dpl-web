@@ -7,6 +7,7 @@ import React, { useEffect, useRef, useState } from "react"
 
 import CompensationModal from "@/components/shared/compensationModal/CompensationModal"
 import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import EditionsSelectModal from "@/components/shared/editionsSelectModal/EditionsSelectModal"
 import FeesModal from "@/components/shared/feesModal/FeesModal"
 import PhysicalLoansModal from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
 import ReservationsModal from "@/components/shared/reservationsModal/ReservationsModal"
@@ -38,6 +39,7 @@ const ModalComponents: {
   PlayerPreviewModal,
   CompensationModal,
   DigitalLoansModal,
+  EditionsSelectModal,
   FeesModal,
   LoanDetailsModal,
   PhysicalLoansModal,
@@ -81,7 +83,9 @@ export function StoreModal() {
   const [active, setActive] = useState<{
     modalType: TModalStoreType
     props: TModalRegistry[TModalStoreType]
+    key: number
   } | null>(null)
+  const openCount = useRef(0)
   // The modal mounts closed and opens on the next frame, so the enter
   // animation plays from a fully committed tree instead of the dialog
   // painting empty (a blank full-size flash) on mount.
@@ -89,14 +93,18 @@ export function StoreModal() {
 
   useEffect(() => {
     if (open && modalType && props) {
-      setActive({ modalType, props })
+      setActive(current =>
+        current && current.modalType === modalType && current.props === props
+          ? current
+          : { modalType, props, key: ++openCount.current }
+      )
       const frame = requestAnimationFrame(() => setVisible(true))
       return () => cancelAnimationFrame(frame)
-    } else {
-      setVisible(false)
-      const timer = setTimeout(() => setActive(null), 500)
-      return () => clearTimeout(timer)
     }
+
+    setVisible(false)
+    const timer = setTimeout(() => setActive(null), 500)
+    return () => clearTimeout(timer)
   }, [open, modalType, props])
 
   const pathname = usePathname()
@@ -113,7 +121,16 @@ export function StoreModal() {
   const ModalComponent = ModalComponents[active.modalType] as React.ComponentType<
     TModalRegistry[TModalStoreType] & { open: boolean; onClose: () => void }
   >
-  return <ModalComponent open={open && visible} onClose={closeModal} {...active.props} />
+  // Keyed per opening: modals capture their props on mount, so each open
+  // gets a fresh component.
+  return (
+    <ModalComponent
+      key={active.key}
+      open={open && visible}
+      onClose={closeModal}
+      {...active.props}
+    />
+  )
 }
 
 export function DynamicModal() {

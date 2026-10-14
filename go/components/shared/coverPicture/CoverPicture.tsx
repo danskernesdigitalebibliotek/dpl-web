@@ -13,8 +13,15 @@ type CoverPictureProps = {
   className?: string
   alt: string
   withTilt?: boolean
+  sizes?: string
 }
-export const CoverPicture = ({ covers, alt, withTilt = false, className }: CoverPictureProps) => {
+export const CoverPicture = ({
+  covers,
+  alt,
+  withTilt = false,
+  className,
+  sizes = "(max-width: 500px) 110px, (max-width: 1024px) 230px, 320px",
+}: CoverPictureProps) => {
   const { width, height } = covers.large ?? {}
 
   // Contain-fit in pure CSS: the wrapper takes the image's aspect ratio and
@@ -61,7 +68,7 @@ export const CoverPicture = ({ covers, alt, withTilt = false, className }: Cover
             // eslint-disable-next-line @next/next/no-img-element
             <img
               srcSet={`${covers.xSmall?.url} 120w, ${covers.small?.url} 240w, ${covers.medium?.url} 480w, ${covers.large?.url} 960w`}
-              sizes="(max-width: 500px) 110px, (max-width: 1024px) 230px, 320px"
+              sizes={sizes}
               alt={alt}
               loading="lazy"
               className={cn(

@@ -76,5 +76,5 @@ export const audioBookManifestationFactory = Factory.define<Manifestation>(() =>
 }))
 
 export const manifestationContributorFactory = Factory.define<Manifestation["contributors"][0]>(
-  ({ sequence }) => ({ display: `Contributor ${sequence}` })
+  ({ sequence }) => ({ display: `Contributor ${sequence}`, roles: [] })
 )

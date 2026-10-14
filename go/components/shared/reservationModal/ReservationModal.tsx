@@ -3,6 +3,7 @@
 import {
   type CreateReservationResult,
   type CreateReservationSuccess,
+  type RecordAvailability,
   useCreateReservation,
   useMaterialAvailability,
   usePatron,
@@ -10,10 +11,7 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React, { useEffect, useState } from "react"
 
-import {
-  getManifestationLabel,
-  isPhysicalMaterialType,
-} from "@/components/pages/workPageLayout/helper"
+import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import { ModalFlowBody } from "@/components/shared/modalFlow/ModalFlowBody"
 import ReservationFormContent from "@/components/shared/reservationModal/ReservationFormContent"
@@ -23,10 +21,22 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBlacklistedAvailabilityBranches } from "@/hooks/useBlacklistedAvailabilityBranches"
+import { useWorkRecordIds } from "@/hooks/useEditionAvailability"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
 import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
-import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
+import { pidToFaust } from "@/lib/helpers/ids"
+
+// Copies on the shelf and the queue are separate facts: an edition can be
+// lent out with nobody waiting for it. Saying only the queue reads as
+// "available today" for a book that is not there.
+const getQueueText = (edition: RecordAvailability): string => {
+  if (edition.availableCopies > 0) return "Du er ved at reservere den."
+  if (edition.reservationCount === 0) return "Du er den næste i køen."
+
+  const borrowers = edition.reservationCount === 1 ? "låner" : "lånere"
+  return `Der er ${edition.reservationCount} ${borrowers} i kø foran dig.`
+}
 
 type ReservationModalProps = {
   open: boolean
@@ -41,17 +51,18 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
   const manifestation = findManifestationByPid(work, pid)
   const recordId = manifestation ? pidToFaust(manifestation.pid) : null
 
-  const physicalManifestations =
-    work?.manifestations?.all.filter(m =>
-      isPhysicalMaterialType(m.materialTypes[0]?.materialTypeSpecific.code)
-    ) ?? []
-  const recordIds = getFaustIdsFromManifestations(physicalManifestations)
+  // Shared with the edition picker so both land on the same query key.
+  const { recordIds } = useWorkRecordIds(wid)
 
   const { data: patron } = usePatron()
   const blacklistedBranches = useBlacklistedAvailabilityBranches()
   const { data: availability } = useMaterialAvailability(wid, recordIds, blacklistedBranches, {
     enabled: recordIds.length > 0,
   })
+  // The copy below speaks about the edition being reserved, so it reads that
+  // record rather than the work-wide totals the query also carries.
+  const editionAvailability = recordId ? availability?.records[recordId] : undefined
+
   const { data: reservations } = useReservations()
 
   const { mutate: createReservation, isPending: isSubmitting } = useCreateReservation()
@@ -140,13 +151,13 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
           </Button>
         ) : (
           <div className="flex w-full flex-col items-center gap-3">
-            {availability && (
+            {/* Both numbers are for the chosen edition, not the whole work:
+                the reader reserves one edition, so the queue they join is that
+                edition's.*/}
+            {editionAvailability && (
               <p className="text-typo-caption text-foreground-muted text-center">
-                Biblioteket har {availability.totalCopies}{" "}
-                {availability.totalCopies === 1 ? "eksemplar" : "eksemplarer"}. Der er{" "}
-                {availability.reservationCount}{" "}
-                {availability.reservationCount === 1 ? "reservering" : "reserveringer"} til dette
-                materiale.
+                Biblioteket har {editionAvailability.totalCopies} stk. af denne bog.{" "}
+                {getQueueText(editionAvailability)}
               </p>
             )}
             <Button
