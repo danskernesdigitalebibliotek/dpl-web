@@ -51,7 +51,7 @@
     "@cypress/webpack-preprocessor": "^8.0.0",
     "@eslint/js": "^9.39.2",
     "@graphql-codegen/add": "^7.1.1",
-    "@graphql-codegen/cli": "^7.4.3",
+    "@graphql-codegen/cli": "^7.4.6",
     "@graphql-codegen/introspection": "^6.1.0",
     "@graphql-codegen/named-operations-object": "^4.0.1",
     "@graphql-codegen/typescript": "^5.0.10",
