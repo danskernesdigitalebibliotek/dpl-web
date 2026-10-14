@@ -72,10 +72,11 @@ const useOnlineAvailabilityData = ({
 
   // Both derivations are gated on who was asked, not just on the query: an
   // answer sitting in the cache from a provider that may no longer answer
-  // must be ignored. Within a gate, null means "not answered yet".
+  // must be ignored. Within a gate, null means "not answered yet"; a failed
+  // service-layer answer counts as unavailable.
   const isAvailableViaServiceLayer =
-    askServiceLayer && loanDecision
-      ? isMaterialAvailable(loanDecision.status)
+    askServiceLayer && !isLoadingServiceLayer
+      ? Boolean(loanDecision && isMaterialAvailable(loanDecision.status))
       : null;
 
   const isAvailableViaPublizon =

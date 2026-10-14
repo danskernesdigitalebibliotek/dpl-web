@@ -25,11 +25,6 @@ export type ServiceLayerConfig = {
   // falls back to isPatronAuthenticated when omitted (the React apps, where a
   // Unilogin user is anonymous). Defaults to true when both are omitted.
   isDigitalLoanAuthenticated?: boolean
-  // TEMPORARY: whether a material the adapter does not know is answered as
-  // unavailable instead of an error - see getDigitalLoanDecision, the one
-  // place that acts on it. A resolver like the others, because the host's
-  // setting lands after this object is built. Omitted means no.
-  tolerateUnknownMaterials?: () => boolean
 }
 
 export type Patron = {
