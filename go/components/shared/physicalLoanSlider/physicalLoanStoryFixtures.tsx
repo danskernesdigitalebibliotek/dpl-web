@@ -9,6 +9,7 @@ import { Toaster } from "@/components/shared/toaster/Toaster"
 import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
 import { EBookFactory } from "@/cypress/factories/fbi/factory-parts/works"
+import { placeholderImageUrl } from "@/cypress/factories/placeholder-image"
 import { PhysicalLoanItem } from "@/lib/helpers/helper.patron"
 
 // Due dates anchored to local noon so calendar-day counts stay stable
@@ -33,7 +34,7 @@ const coverSizes: Record<CoverRatio, { width: number; height: number }> = {
 
 const buildCover = (ratio: CoverRatio) => {
   const { width, height } = coverSizes[ratio]
-  const url = (scale: number) => `https://placehold.co/${width * scale}x${height * scale}.jpg`
+  const url = (scale: number) => placeholderImageUrl(width * scale, height * scale)
   return coverFactory.build({
     thumbnail: url(1),
     xSmall: { url: url(1), width, height },

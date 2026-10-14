@@ -1,26 +1,27 @@
 import { Factory } from "fishery"
 
+import { placeholderImageUrl } from "@/cypress/factories/placeholder-image"
 import { Cover } from "@/lib/graphql/generated/fbi/graphql"
 
 export const coverFactory = Factory.define<Cover>(() => ({
-  thumbnail: "https://placehold.co/120x173.jpg",
+  thumbnail: placeholderImageUrl(120, 173),
   xSmall: {
-    url: "https://placehold.co/120x173.jpg",
+    url: placeholderImageUrl(120, 173),
     width: 120,
     height: 173,
   },
   small: {
-    url: "https://placehold.co/240x346.jpg",
+    url: placeholderImageUrl(240, 346),
     width: 240,
     height: 346,
   },
   medium: {
-    url: "https://placehold.co/480x691.jpg",
+    url: placeholderImageUrl(480, 691),
     width: 480,
     height: 691,
   },
   large: {
-    url: "https://placehold.co/500x720.jpg",
+    url: placeholderImageUrl(500, 720),
     width: 500,
     height: 720,
   },
