@@ -1,4 +1,7 @@
 import { getJestConfig } from "@storybook/test-runner"
+import { devices } from "playwright"
+
+import { argosUserAgentToken } from "./user-agent.mjs"
 
 const testRunnerConfig = getJestConfig()
 
@@ -34,6 +37,10 @@ const config = {
             },
           }
         : { launchOptions }),
+      contextOptions: {
+        // Playwright can only replace the user agent, so extend its Chrome one.
+        userAgent: `${devices["Desktop Chrome"].userAgent} ${argosUserAgentToken}`,
+      },
     },
   },
 }

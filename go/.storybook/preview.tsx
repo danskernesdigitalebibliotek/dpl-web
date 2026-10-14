@@ -1,4 +1,5 @@
 import type { Preview } from "@storybook/nextjs"
+import { MotionGlobalConfig } from "framer-motion"
 import MockDate from "mockdate"
 import { DM_Sans } from "next/font/google"
 import { useEffect } from "react"
@@ -6,11 +7,18 @@ import { useEffect } from "react"
 import "@/styles/globals.css"
 
 import { useDarkMode, useLightMode } from "../lib/helpers/helper.theme"
+import { isArgosCapture } from "./test-runners/visual/user-agent.mjs"
 
 // Freeze "now" so date-derived UI (due dates, countdowns, pickup deadlines)
 // renders identically on every Chromatic build instead of drifting day by
 // day. Story fixtures compute dates relative to this frozen date.
 MockDate.set("2026-06-15T12:00:00")
+
+// framer-motion animates rotation, scale and position in JavaScript, which
+// Argos's screenshots catch mid-animation. Jump every animation to its end.
+if (isArgosCapture()) {
+  MotionGlobalConfig.skipAnimations = true
+}
 
 // When adding or changing fonts, remember to update the imports in the Layout file
 const dmSans = DM_Sans({
