@@ -9,6 +9,9 @@ overrides:
   brace-expansion@2: ^2.1.7
   brace-expansion@5: ^5.0.12
 
+patchedDependencies:
+  '@storybook/nextjs@10.6.1': 0df833b28b97d6fc0f17dc11a4eaedb85fb55f2cda5875a4426c4bdb45e78205
+
 importers:
 
   .:
