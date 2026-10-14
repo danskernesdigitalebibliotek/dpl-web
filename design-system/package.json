@@ -80,7 +80,7 @@
     "keen-slider": "6.8.6",
     "markdownlint-cli2": "^0.23.3",
     "playwright": "^1.63.0",
-    "postcss": "^8.5.28",
+    "postcss": "^8.5.29",
     "prettier": "^3.9.10",
     "react": "^18.3.1",
     "react-docgen-typescript": "^2.4.0",
