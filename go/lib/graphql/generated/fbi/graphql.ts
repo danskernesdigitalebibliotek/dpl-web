@@ -3109,6 +3109,41 @@ export type WorkTypeEnum =
   | 'SHEETMUSIC'
   | 'TRACK';
 
+export type BookQuizComplexSearchQueryVariables = Exact<{
+  cql: Scalars['String']['input'];
+  offset: Scalars['Int']['input'];
+  limit: Scalars['PaginationLimitScalar']['input'];
+  filters: ComplexSearchFiltersInput;
+}>;
+
+
+export type BookQuizComplexSearchQuery = { __typename?: 'Query', complexSearch: { __typename?: 'ComplexSearchResponse', hitcount: number, works: Array<{ __typename?: 'Work', workId: string, manifestations: { __typename?: 'Manifestations', all: Array<{ __typename?: 'Manifestation', pid: string, genreAndForm: Array<string>, publisher: Array<string>, contributorsFromDescription: Array<string>, audience?: { __typename?: 'Audience', lix?: string | null, ages: Array<{ __typename?: 'Range', begin?: number | null, end?: number | null }> } | null, accessTypes: Array<{ __typename?: 'AccessType', code: AccessTypeCodeEnum, display: string }>, access: Array<
+            | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
+            | { __typename: 'DigitalArticleService', issn: string }
+            | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
+            | { __typename: 'InfomediaService' }
+            | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'Publizon' }
+            | { __typename: 'RetrieverService', id: string }
+          >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
+            | { __typename?: 'Corporation', display: string }
+            | { __typename?: 'Person', display: string }
+          > }>, bestRepresentation: { __typename?: 'Manifestation', pid: string, genreAndForm: Array<string>, publisher: Array<string>, contributorsFromDescription: Array<string>, audience?: { __typename?: 'Audience', lix?: string | null, libraryRecommendation?: string | null, ages: Array<{ __typename?: 'Range', begin?: number | null, end?: number | null }> } | null, accessTypes: Array<{ __typename?: 'AccessType', code: AccessTypeCodeEnum, display: string }>, access: Array<
+            | { __typename: 'AccessUrl', origin: string, url: string, loginRequired: boolean }
+            | { __typename: 'DigitalArticleService', issn: string }
+            | { __typename: 'Ereol', origin: string, url: string, canAlwaysBeLoaned: boolean }
+            | { __typename: 'InfomediaService' }
+            | { __typename: 'InterLibraryLoan', loanIsPossible: boolean }
+            | { __typename: 'Publizon' }
+            | { __typename: 'RetrieverService', id: string }
+          >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', code: GeneralMaterialTypeCodeEnum, display: string }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', code: string, display: string } }>, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null }, physicalDescription?: { __typename?: 'PhysicalUnitDescription', summaryFull?: string | null } | null, dateFirstEdition?: { __typename?: 'PublicationYear', display: string } | null, edition?: { __typename?: 'Edition', edition?: string | null, summary: string, publicationYear?: { __typename?: 'PublicationYear', display: string, year?: number | null } | null } | null, contributors: Array<
+            | { __typename?: 'Corporation', display: string }
+            | { __typename?: 'Person', display: string }
+          > } }, titles: { __typename?: 'WorkTitles', full: Array<string>, original?: Array<string> | null }, creators: Array<
+        | { __typename: 'Corporation', display: string }
+        | { __typename: 'Person', display: string }
+      >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCodeEnum }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', display: string, code: string } }>, workYear?: { __typename?: 'PublicationYear', display: string } | null }> } };
+
 export type SearchFacetFragment = { __typename?: 'FacetResult', name: string, values: Array<{ __typename?: 'FacetValue', key: string, term: string, score?: number | null }> };
 
 export type ManifestationCoverFragment = { __typename?: 'Manifestation', pid: string, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null } };
@@ -4258,6 +4293,222 @@ fragment WorkPublicationYear on Work {
 fragment WorkDescription on Work {
   abstract
 }`, {"fragmentName":"WorkFullWorkPage"});
+export const BookQuizComplexSearchDocument = new TypedDocumentString(`
+    query bookQuizComplexSearch($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: ComplexSearchFiltersInput!) {
+  complexSearch(cql: $cql, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkTeaserSearchPage
+      manifestations {
+        all {
+          audience {
+            lix
+            ages {
+              begin
+              end
+            }
+          }
+        }
+        bestRepresentation {
+          audience {
+            lix
+            libraryRecommendation
+            ages {
+              begin
+              end
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    fragment ManifestationCover on Manifestation {
+  pid
+  cover {
+    thumbnail
+    xSmall {
+      url
+      width
+      height
+    }
+    small {
+      url
+      width
+      height
+    }
+    medium {
+      url
+      width
+      height
+    }
+    large {
+      url
+      width
+      height
+    }
+  }
+}
+fragment ManifestationIdentifiers on Manifestation {
+  pid
+  identifiers {
+    type
+    value
+  }
+}
+fragment ManifestationAccess on Manifestation {
+  accessTypes {
+    code
+    display
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on RetrieverService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}
+fragment ManifestationDetails on Manifestation {
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    edition
+    summary
+  }
+  genreAndForm
+  publisher
+  contributors {
+    display
+  }
+  contributorsFromDescription
+}
+fragment ManifestationMaterialTypes on Manifestation {
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+    materialTypeSpecific {
+      code
+      display
+    }
+  }
+}
+fragment ManifestationSearchPageTeaser on Manifestation {
+  ...ManifestationAccess
+  ...ManifestationMaterialTypes
+  ...ManifestationIdentifiers
+  ...ManifestationCover
+  ...ManifestationDetails
+}
+fragment WorkMaterialTypes on Work {
+  materialTypes {
+    materialTypeGeneral {
+      display
+      code
+    }
+    materialTypeSpecific {
+      display
+      code
+    }
+  }
+}
+fragment WorkTitles on Work {
+  titles {
+    full
+    original
+  }
+}
+fragment WorkCreators on Work {
+  creators {
+    display
+    __typename
+  }
+}
+fragment WorkPublicationYear on Work {
+  workYear {
+    display
+  }
+}
+fragment WorkTeaserSearchPage on Work {
+  workId
+  ...WorkTitles
+  ...WorkCreators
+  ...WorkMaterialTypes
+  ...WorkPublicationYear
+  manifestations {
+    all {
+      ...ManifestationSearchPageTeaser
+    }
+    bestRepresentation {
+      ...ManifestationSearchPageTeaser
+    }
+  }
+}`);
+
+export const useBookQuizComplexSearchQuery = <
+      TData = BookQuizComplexSearchQuery,
+      TError = unknown
+    >(
+      variables: BookQuizComplexSearchQueryVariables,
+      options?: Omit<UseQueryOptions<BookQuizComplexSearchQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<BookQuizComplexSearchQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<BookQuizComplexSearchQuery, TError, TData>(
+      {
+    queryKey: ['bookQuizComplexSearch', variables],
+    queryFn: fetchData<BookQuizComplexSearchQuery, BookQuizComplexSearchQueryVariables>(BookQuizComplexSearchDocument, variables),
+    ...options
+  }
+    )};
+
+useBookQuizComplexSearchQuery.getKey = (variables: BookQuizComplexSearchQueryVariables) => ['bookQuizComplexSearch', variables];
+
+export const useSuspenseBookQuizComplexSearchQuery = <
+      TData = BookQuizComplexSearchQuery,
+      TError = unknown
+    >(
+      variables: BookQuizComplexSearchQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<BookQuizComplexSearchQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<BookQuizComplexSearchQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<BookQuizComplexSearchQuery, TError, TData>(
+      {
+    queryKey: ['bookQuizComplexSearch', variables],
+    queryFn: fetchData<BookQuizComplexSearchQuery, BookQuizComplexSearchQueryVariables>(BookQuizComplexSearchDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseBookQuizComplexSearchQuery.getKey = (variables: BookQuizComplexSearchQueryVariables) => ['bookQuizComplexSearch', variables];
+
+
+useBookQuizComplexSearchQuery.fetcher = (variables: BookQuizComplexSearchQueryVariables, options?: RequestInit['headers']) => fetchData<BookQuizComplexSearchQuery, BookQuizComplexSearchQueryVariables>(BookQuizComplexSearchDocument, variables, options);
+
 export const SearchWithPaginationDocument = new TypedDocumentString(`
     query searchWithPagination($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: SearchFiltersInput) {
   search(q: $q, filters: $filters) {
@@ -5135,6 +5386,7 @@ useGetMaterialQuery.fetcher = (variables: GetMaterialQueryVariables, options?: R
 
 export const operationNames = {
   Query: {
+    bookQuizComplexSearch: 'bookQuizComplexSearch' as const,
     searchWithPagination: 'searchWithPagination' as const,
     searchFacets: 'searchFacets' as const,
     complexSearchForWorkTeaser: 'complexSearchForWorkTeaser' as const,
