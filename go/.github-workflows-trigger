@@ -9,4 +9,4 @@ Permanent file — do NOT remove before merging.
 
 ## Trigger log
 
-_No triggers yet._
+1. Deploy a Lagoon PR environment for a test branch (PR #1966).
