@@ -1,6 +1,6 @@
 import React from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, within } from "@testing-library/react";
 import MaterialAvailabilityTextOnline from "../../components/material/MaterialAvailabilityText/online/MaterialAvailabilityTextOnline";
 import {
   useGetV1LibraryProfile,
@@ -12,6 +12,7 @@ import {
   useDigitalLoanDecision,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
+import { ComplexSearchFacetsEnum } from "../../core/dbc-gateway/generated/graphql";
 
 // Only the hooks under test are stubbed; the rest of the package stays
 // real, so pure helpers keep behaving as they do in production.
@@ -44,6 +45,9 @@ vi.mock("../../core/utils/text", () => ({
     (key: string, options?: { placeholders?: Record<string, unknown> }) => {
       const translations: Record<string, string> = {
         onlineLimitMonthEbookInfoText: "You have borrowed @count of @limit",
+        onlineLimitMonthAudiobookInfoText:
+          "You have borrowed @count of @limit audiobooks",
+        onlineLimitMonthAlwaysLoanableLinkText: "See titles outside the quota",
         materialIsIncludedText: "This material is included"
       };
       let result = translations[key] || key;
@@ -66,6 +70,10 @@ vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: () => false }));
 vi.mock("../../core/utils/useBiblioAdapter", () => ({
   default: vi.fn()
 }));
+// URLs are read from Redux, which has no provider here.
+vi.mock("../../core/utils/url", () => ({
+  useUrls: () => () => new URL("https://example.com/advancedsearch")
+}));
 
 const publizonSays = (quotas: {
   limit: number | undefined;
@@ -76,18 +84,27 @@ const publizonSays = (quotas: {
     data: { product: { costFree: quotas.costFree ?? false } }
   } as unknown as ReturnType<typeof useGetV1ProductsIdentifier>);
   vi.mocked(useGetV1LibraryProfile).mockReturnValue({
-    data: { maxConcurrentEbookLoansPerBorrower: quotas.limit }
+    data: {
+      maxConcurrentEbookLoansPerBorrower: quotas.limit,
+      maxConcurrentAudioLoansPerBorrower: quotas.limit
+    }
   } as unknown as ReturnType<typeof useGetV1LibraryProfile>);
   vi.mocked(useGetV1UserLoans).mockReturnValue({
-    data: { userData: { totalEbookLoans: quotas.borrowed }, loans: [] }
+    data: {
+      userData: {
+        totalEbookLoans: quotas.borrowed,
+        totalAudioLoans: quotas.borrowed
+      },
+      loans: []
+    }
   } as unknown as ReturnType<typeof useGetV1UserLoans>);
 };
 
-const renderText = () =>
+const renderText = (materialType = "e-bog") =>
   render(
     <MaterialAvailabilityTextOnline
       identifier={ISBN}
-      materialType={"e-bog" as never}
+      materialType={materialType as never}
     />
   );
 
@@ -122,6 +139,41 @@ describe("MaterialAvailabilityTextOnline", () => {
         "This material is included"
       );
     });
+
+    it("Leaves out the link to titles outside the quota while there is quota left", () => {
+      publizonSays({ limit: 7, borrowed: 6 });
+
+      expect(within(renderText().container).queryByRole("link")).toBeNull();
+    });
+
+    it.each([
+      { materialType: "e-bog", searchedMaterialType: "e-bøger" },
+      { materialType: "lydbog (online)", searchedMaterialType: "lydbøger" }
+    ])(
+      "Links a spent $materialType quota to $searchedMaterialType outside the quota",
+      ({ materialType, searchedMaterialType }) => {
+        publizonSays({ limit: 7, borrowed: 7 });
+
+        const link = within(renderText(materialType).container).getByRole(
+          "link",
+          {
+            name: "See titles outside the quota"
+          }
+        );
+        const url = new URL(link.getAttribute("href") ?? "");
+
+        expect(url.pathname).toBe("/advancedsearch");
+        expect(url.searchParams.get("onlyExtraTitles")).toBe("true");
+        expect(
+          JSON.parse(url.searchParams.get("preSearchFacets") ?? "")
+        ).toEqual([
+          {
+            facetField: ComplexSearchFacetsEnum.Generalmaterialtype,
+            selectedValues: [searchedMaterialType]
+          }
+        ]);
+      }
+    );
   });
 
   describe("with the feature flag on", () => {
