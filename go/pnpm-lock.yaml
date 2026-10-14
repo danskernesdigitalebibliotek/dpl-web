@@ -56,8 +56,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(@types/react@19.2.18)(react@19.3.0)(xstate@5.33.2)
       '@xstate/store':
-        specifier: ^4.2.3
-        version: 4.2.3
+        specifier: ^4.3.0
+        version: 4.3.0(xstate@5.33.2)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -4565,8 +4565,13 @@ packages:
       xstate:
         optional: true
 
-  '@xstate/store@4.2.3':
-    resolution: {integrity: sha512-vV/s0kpk0i3Mmo2AsDMUB5h4xTu/b3fRvXeYhnnz8ODY5ueQXMOlGI8Fn1fY0RXOmCKCmaNOeM6d2hWCrfuMtA==}
+  '@xstate/store@4.3.0':
+    resolution: {integrity: sha512-Zoe4h8aqsSZLV8KRmwdpfYbfkmHrfZZunKLAB09xz5LwfPQRKyZhDBnQiTaXV3nKe0defaDg+L2N0XHcsa60AQ==}
+    peerDependencies:
+      xstate: ^5.0.0
+    peerDependenciesMeta:
+      xstate:
+        optional: true
 
   '@xtuc/ieee754@1.2.0':
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -14939,7 +14944,9 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@xstate/store@4.2.3': {}
+  '@xstate/store@4.3.0(xstate@5.33.2)':
+    optionalDependencies:
+      xstate: 5.33.2
 
   '@xtuc/ieee754@1.2.0': {}
 
