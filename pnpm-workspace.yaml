@@ -24,6 +24,12 @@ allowBuilds:
   core-js-pure: true
   cypress: true
   esbuild: true
+  # Pulled in by @wedobooks/sdk (firebase). The postinstall only bakes
+  # FIREBASE_WEBAPP_CONFIG into autoinit defaults, which we do not use.
+  '@firebase/util': false
+  # Pulled in by @wedobooks/sdk. The postinstall only prints a version-scheme
+  # warning.
+  protobufjs: false
   puppeteer: true
   sharp: true
   # Optional native dep of mockttp (dev-only HTTP mocking in go). It ships
