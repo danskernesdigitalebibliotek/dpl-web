@@ -40,6 +40,12 @@ allowBuilds:
 # enforced. It is kept here so the protection returns once that bug is fixed or
 # we move off split lockfiles.
 minimumReleaseAge: 2880
+# TEMPORARY: next 16.4.1 (2026-10-14) fixes critical security advisories and
+# cannot wait two days. Remove once it is older than that.
+minimumReleaseAgeExclude:
+  - "next"
+  - "@next/*"
+  - "eslint-config-next"
 
 # Another supply chain risk mitigation: https://pnpm.io/settings#blockexoticsubdeps
 blockExoticSubdeps: true
