@@ -313,6 +313,8 @@ These all run as jobs in `go-ci.yml` on every pull request touching `go/` or
 
    The `argos` job runs [Argos] next to Chromatic while we evaluate it. It screenshots every story in mobile and desktop mode inside the Playwright image matching the installed Playwright, and uploads them to the `dpl-web` Argos project as the `go` build, reported as `argos/go`. Approve the changes your pull request explains, and **Ignore** the ones it cannot explain, so the ignored changes show how much noise Argos produces. The visual suite lives in `.storybook/test-runners/visual`; tag a story `skip-ui-tests` to leave it out.
 
+   Stories may only load files the Storybook itself serves, so their screenshots never depend on another server. The suite fails a story that requests anything else and names the URL. Keep such files in the Storybook or generate them. The few requests that may leave it are listed, with their reasons, in `.storybook/test-runners/external-requests.ts`.
+
 7. **Generated code drift**: the `codegen` job re-runs the client generators and fails if the committed output differs, so the checked-in clients cannot silently fall out of sync with the schemas.
 
 

@@ -2,6 +2,8 @@ import { argosScreenshot } from "@argos-ci/storybook/test-runner"
 import type { TestRunnerConfig } from "@storybook/test-runner"
 import type { Page } from "playwright"
 
+import { assertNoExternalRequests, blockExternalRequests } from "../external-requests"
+
 const pagesWithoutNetworkIdle = new WeakSet<Page>()
 
 // Argos waits for network idle before its screenshots, which Playwright
@@ -36,6 +38,7 @@ const config: TestRunnerConfig = {
   },
   async preVisit(page) {
     replaceNetworkIdleWithFrameLoads(page)
+    await blockExternalRequests(page)
   },
   async postVisit(page, context) {
     // Leave the render error as the story's failure.
@@ -44,6 +47,8 @@ const config: TestRunnerConfig = {
     }
 
     await argosScreenshot(page, context)
+    // After the screenshot, as Argos renders the story again for each mode.
+    assertNoExternalRequests(page)
   },
 }
 
