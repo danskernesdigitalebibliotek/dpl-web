@@ -9,6 +9,7 @@ import { getServerEnv } from "@/lib/config/env"
 import { getBaseURL } from "@/lib/config/getBaseURL"
 
 import goConfig from "../config/goConfig"
+import type { TServiceType } from "../helpers/ap-service"
 import { isBuildingGoApp } from "../helpers/next-phase"
 import { getServiceLayerConfig } from "../helpers/service-layer"
 import { loadUniloginUserInfo } from "../helpers/unilogin"
@@ -48,8 +49,10 @@ export interface TSessionData {
     name?: string
     username?: string
   }
-  // The user token from the CMS, whatever the session type. Only a patron's
-  // token may be sent to the services as a user token: see getPatronUserToken().
+  // The user token from the CMS, whatever the session type. A patron's token
+  // may go to the patron services (getPatronUserToken()); a Unilogin user's
+  // token only to the Biblio adapter for digital loans
+  // (getDigitalLoanUserToken()). See getServiceUserToken().
   userToken?: string
   adgangsplatformenLibraryToken?: string
   // When the CMS last confirmed that this session is still a live one.
@@ -156,6 +159,38 @@ export const getPatronUserToken = (session: TSessionData) =>
   session.type === "adgangsplatformen" ? session.userToken : undefined
 
 /**
+ * Get the user token that authenticates a digital loan.
+ *
+ * Both a patron and a Unilogin user may borrow digital materials: since
+ * Unilogin runs through Adgangsplatformen (ADR-013) a Unilogin user holds a
+ * real Adgangsplatformen token too. Unlike getPatronUserToken() this covers
+ * Unilogin, but the token must still never reach FBS or FBI — only the Biblio
+ * adapter asks for it, through getServiceUserToken().
+ *
+ * @param session - The session to read.
+ * @returns The user token for a patron or Unilogin session, else undefined.
+ */
+export const getDigitalLoanUserToken = (session: TSessionData) =>
+  session.type === "adgangsplatformen" || session.type === "unilogin"
+    ? session.userToken
+    : undefined
+
+/**
+ * Get the user token to send to a service for this session.
+ *
+ * FBS, FBI and the other patron services only ever accept a real patron's
+ * token. The Biblio adapter authenticates digital loans, which a Unilogin user
+ * may also make, so it accepts the digital-loan token too. Keeping the choice
+ * here keeps the "never to FBS/FBI for Unilogin" rule in one place.
+ *
+ * @param session - The session to read.
+ * @param serviceType - The service the token is for.
+ * @returns The user token the service may receive, or undefined.
+ */
+export const getServiceUserToken = (session: TSessionData, serviceType: TServiceType) =>
+  serviceType === "biblio" ? getDigitalLoanUserToken(session) : getPatronUserToken(session)
+
+/**
  * Set what every logged-in session has, whatever its type.
  *
  * The session lives exactly as long as the user token (ADR-012, ADR-013).
@@ -212,9 +247,13 @@ const saveAdgangsplatformenSession = async (
  * Save a logged-in session for a Unilogin student.
  *
  * The student is not a patron, so the token must never be sent to FBS or FBI
- * as a user token; getPatronUserToken() does not return it. It is used to read
- * the Unilogin attributes the Pubhub adapter needs, and kept for later use,
- * e.g. towards Publizon.
+ * as a user token; getPatronUserToken() does not return it. It reads the
+ * Unilogin attributes the local Pubhub adapter needs, and is kept for digital
+ * loans through the Biblio adapter (getDigitalLoanUserToken()).
+ *
+ * TODO(publizon-sunset): the Unilogin attributes serve the local Pubhub
+ * adapter only; when the Publizon API is phased out the Biblio adapter
+ * authenticates with the token alone.
  *
  * @param session - The session to log in.
  * @param userToken - The student's user token from the CMS.

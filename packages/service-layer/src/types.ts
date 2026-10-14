@@ -18,6 +18,13 @@ export type ServiceLayerConfig = {
   // Unilogin and anonymous) never fire doomed 401 requests. Public data
   // (material availability) ignores it. Defaults to true when omitted.
   isPatronAuthenticated?: boolean
+  // Whether the session may make digital loans through the Biblio adapter. A
+  // superset of isPatronAuthenticated: a patron qualifies, and so does a
+  // Unilogin user, who runs through Adgangsplatformen (GO's ADR-013) and so
+  // holds a real Adgangsplatformen token. The digital hooks gate on this;
+  // falls back to isPatronAuthenticated when omitted (the React apps, where a
+  // Unilogin user is anonymous). Defaults to true when both are omitted.
+  isDigitalLoanAuthenticated?: boolean
   // TEMPORARY: whether a material the adapter does not know is answered as
   // unavailable instead of an error - see getDigitalLoanDecision, the one
   // place that acts on it. A resolver like the others, because the host's

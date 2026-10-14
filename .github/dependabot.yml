@@ -267,6 +267,18 @@ updates:
       # DDFNEXT-1616
       - dependency-name: "@graphql-codegen/typescript-operations"
         versions: [">=6.0.0"]
+      # Next.js 16.4.0 broke @storybook/nextjs's app-router mock (useRouter
+      # reads layout.parentRenderTree.data, which the mock doesn't provide) —
+      # https://github.com/storybookjs/storybook/issues/36720. Unignore once
+      # the storybookjs/storybook#36588 fix ships in a release.
+      - dependency-name: "next"
+        versions: [">=16.4.0"]
+      - dependency-name: "@next/env"
+        versions: [">=16.4.0"]
+      - dependency-name: "eslint-config-next"
+        versions: [">=16.4.0"]
+      - dependency-name: "@next/eslint-plugin-next"
+        versions: [">=16.4.0"]
 
   # React - npm dependencies
   - package-ecosystem: npm

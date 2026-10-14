@@ -47,9 +47,18 @@ class CacheableBranchRepository implements BranchRepositoryInterface {
     $expire = ($this->lifetime == CacheBackendInterface::CACHE_PERMANENT) ?
       CacheBackendInterface::CACHE_PERMANENT :
       $this->time->getRequestTime() + $this->lifetime;
-    $this->cache->set($cid, $branches, $expire);
+    $this->cache->set($cid, $branches, $expire, $this->getCacheTags());
 
     return $branches;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags(): array {
+    // Branches embed data from their associated branch node, so changes to
+    // any branch node must invalidate the cached branches.
+    return ['node_list:branch'];
   }
 
   /**
