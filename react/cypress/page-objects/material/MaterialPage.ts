@@ -18,8 +18,6 @@ import { OnlineLoanModalComponent } from "./components/modal-online-loan";
 export const materialStory = {
   default: "default",
   withBiblioAdapter: "material-with-biblio-adapter",
-  // TEMPORARY, with the toleration flag it renders - see the story.
-  withTolerantBiblioAdapter: "material-with-tolerant-biblio-adapter",
   // TEMPORARY: Publizon still lends here, but its reservation queue is frozen
   // while Biblio migrates it - see the story.
   withClosedPublizonReservations: "material-with-closed-publizon-reservations"
