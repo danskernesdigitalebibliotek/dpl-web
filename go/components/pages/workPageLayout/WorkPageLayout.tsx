@@ -1,7 +1,7 @@
 "use client"
 
 import { notFound, useRouter, useSearchParams } from "next/navigation"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState, useSyncExternalStore } from "react"
 
 import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
 import WorkPageLoading from "@/components/pages/workPageLayout/WorkPageLoading"
@@ -20,7 +20,9 @@ import {
   getEbookManifestationOrFallbackManifestation,
 } from "./helper"
 
-function WorkPageLayout({ workId }: { workId: string }) {
+const subscribeNoop = () => () => {}
+
+function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerData: boolean }) {
   const router = useRouter()
   const { data, isLoading } = useGetMaterialQuery({
     wid: workId,
@@ -28,6 +30,11 @@ function WorkPageLayout({ workId }: { workId: string }) {
   const [selectedManifestation, setSelectedManifestation] =
     useState<ManifestationWorkPageFragment>()
   const searchParams = useSearchParams()
+  const isHydrated = useSyncExternalStore(
+    subscribeNoop,
+    () => true,
+    () => false
+  )
 
   if (!isLoading && (!data || !data.work)) {
     notFound()
@@ -75,7 +82,10 @@ function WorkPageLayout({ workId }: { workId: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, manifestations])
 
-  if (isLoading && !data) {
+  // Without server data the server rendered the loading state, but a modal
+  // opened from the URL can fetch the work before this hydrates. Keep the
+  // loading state until hydration so the markup matches the server.
+  if ((isLoading && !data) || (!hasServerData && !isHydrated)) {
     return <WorkPageLoading />
   }
 

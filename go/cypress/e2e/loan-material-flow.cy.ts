@@ -67,9 +67,6 @@ describe("Loan material flow", () => {
     // nuqs-encoded URL so we still exercise the already-loaned content path.
     mockUserLoans([EBOOK_IDENTIFIER])
     cy.interceptGraphql({ operationName: "getMaterial", data: getMaterial.build() })
-    // See login-redirect.cy.ts: a modal opened from the URL loads the work
-    // before the page hydrates, which the server-rendered loading state misses.
-    cy.expectError("Minified React error #418")
 
     const workId = "work-of:870970-basis:136817027"
     const pid = "870970-basis:52380235"

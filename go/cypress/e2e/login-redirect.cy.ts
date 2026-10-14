@@ -12,10 +12,6 @@ describe("Login redirect after loan attempt", () => {
     // minified form, so suppress both.
     cy.expectError("useMediaQuery is a client-only hook")
     cy.expectError("Minified React error #419")
-    // The server can't reach FBI in E2E, so the work page renders loading,
-    // while the loan modal opened from the URL fetches the work in the browser
-    // before the page hydrates. React recovers by rendering on the client.
-    cy.expectError("Minified React error #418")
 
     cy.visit("/")
   })
