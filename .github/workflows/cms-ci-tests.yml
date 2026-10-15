@@ -6,16 +6,23 @@ on:
     paths:
       - 'cms/**'
       - '.github/workflows/cms-*.yml'
+  # Separately passing PRs can still break develop together. Also the
+  # source of the Cypress spec timings.
+  push:
+    branches:
+      - develop
+    paths:
+      - 'cms/**'
+      - '.github/workflows/cms-*.yml'
 
 env:
   PHP_VERSION: 8.4
   COMPOSER_VERSION: v2
 
-# Detect if this action is already running, and cancel it.
-# This most likely happened because a second push has been made to a branch.
+# PRs cancel superseded runs; every push to develop is checked.
 concurrency:
-  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   ValidateComposer:
@@ -206,6 +213,60 @@ jobs:
     uses: ./.github/workflows/cms-cypress-workflow.yml
     secrets:
       WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+
+  # Refreshes cms/cypress/timings.json at most weekly from a green develop
+  # run. See react-ci.yml's integration-timings.
+  CypressTimings:
+    name: CMS / Merge Cypress timings
+    needs: Cypress
+    if: github.event_name == 'push' && github.ref_name == 'develop'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.merge.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: develop
+          persist-credentials: false
+      - id: merge
+        uses: ./.github/actions/merge-cypress-timings
+        with:
+          working-directory: cms
+          artifact-pattern: cms-cypress-timings-*
+          github-token: ${{ github.token }}
+
+  # The bot token bypasses develop's pull request rule, as for translations.
+  # Own job: keeps the token away from the npm code the merge runs.
+  CypressTimingsCommit:
+    name: CMS / Commit Cypress timings
+    needs: CypressTimings
+    if: needs.CypressTimings.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    # One commit at a time.
+    concurrency:
+      group: ${{ github.repository_id }}-cms-cypress-timings
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: develop
+          token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@v6
+        with:
+          name: cypress-timings-merged
+          path: cms/cypress
+      # [skip ci] skips push-triggered workflows, Lagoon / Deploy included.
+      - uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          file_pattern: cms/cypress/timings.json
+          commit_message: Refresh CMS Cypress spec timings [skip ci]
+          # Rebase onto anything newer on develop.
+          before_push_hook: |
+            git pull --rebase
 
   MarkdownLint:
     name: CMS / Lint Markdown
