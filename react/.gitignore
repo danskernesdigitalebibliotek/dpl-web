@@ -5,6 +5,7 @@ dist
 dev
 cypress/videos/apps
 cypress/screenshots/apps
+cypress/timings-out.json
 coverage
 .nyc_output
 index.html

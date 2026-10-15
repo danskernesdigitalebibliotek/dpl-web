@@ -236,7 +236,19 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
           # Balance by duration; a spec missing from it counts as the average.
+          # Refreshed by integration-timings.
           SPLIT_FILE: cypress/timings.json
+          # Leaves the committed file untouched.
+          SPLIT_OUTPUT_FILE: cypress/timings-out.json
+      # For integration-timings.
+      - name: Upload spec timings
+        if: success() && github.event_name == 'push' && github.ref_name == 'develop'
+        uses: actions/upload-artifact@v6
+        with:
+          name: cypress-timings-${{ matrix.containers }}
+          path: react/cypress/timings-out.json
+          retention-days: 1
+          if-no-files-found: error
       - name: Upload screenshots
         uses: actions/upload-artifact@v6
         if: failure()
@@ -261,6 +273,61 @@ jobs:
           directory: react/coverage/
           flags: integration
           fail_ci_if_error: false
+
+  # Refreshes react/cypress/timings.json at most weekly from a green develop
+  # run. Committed, not cached: every machine of a run must split from the
+  # same file, or specs get skipped.
+  integration-timings:
+    name: React / Merge integration test timings
+    needs: integration
+    if: github.event_name == 'push' && github.ref_name == 'develop'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.merge.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: develop
+          persist-credentials: false
+      - id: merge
+        uses: ./.github/actions/merge-cypress-timings
+        with:
+          working-directory: react
+          artifact-pattern: cypress-timings-*
+          github-token: ${{ github.token }}
+
+  # The bot token bypasses develop's pull request rule, as for translations.
+  # Own job: keeps the token away from the npm code the merge runs.
+  integration-timings-commit:
+    name: React / Commit integration test timings
+    needs: integration-timings
+    if: needs.integration-timings.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    # One commit at a time.
+    concurrency:
+      group: ${{ github.repository_id }}-react-cypress-timings
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: develop
+          token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@v6
+        with:
+          name: cypress-timings-merged
+          path: react/cypress
+      # [skip ci] skips push-triggered workflows, Lagoon / Deploy included.
+      - uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          file_pattern: react/cypress/timings.json
+          commit_message: Refresh React Cypress spec timings [skip ci]
+          # Rebase onto anything newer on develop.
+          before_push_hook: |
+            git pull --rebase
 
   unit:
     name: React / Unit test
