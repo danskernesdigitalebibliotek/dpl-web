@@ -1,7 +1,7 @@
 name: Go / CI
 
 # The Storybook static build is produced ONCE in the `storybook` job and shared
-# with both the accessibility and chromatic jobs via an artifact. The Next.js
+# with the accessibility, chromatic and argos jobs via an artifact. The Next.js
 # build has a single consumer (e2e) so it stays inline there — nothing to share.
 # Lint/typecheck/unit/codegen only need node_modules (pnpm cache) and committed
 # generated code, so they have no `needs:` and start in parallel immediately.
@@ -147,12 +147,14 @@ jobs:
         run: git diff --exit-code
 
   # ---------------------------------------------------------------------------
-  # Build Storybook once; accessibility and chromatic both consume the artifact.
+  # Build Storybook once; accessibility, chromatic and argos consume the artifact.
   # Runs on every trigger so whichever consumer is active has its input ready.
   # ---------------------------------------------------------------------------
   storybook:
     name: Go / Build Storybook
     runs-on: ubuntu-latest
+    outputs:
+      playwright-version: ${{ steps.playwright.outputs.version }}
     defaults:
       run:
         working-directory: go
@@ -171,6 +173,11 @@ jobs:
           build-wedobooks: 'true'
       - name: Build Storybook
         run: pnpm run build-storybook --quiet
+      # The argos job's image must match the installed Playwright.
+      - name: Read the installed Playwright version
+        id: playwright
+        run: |
+          echo "version=$(sed -n 's/^  "version": "\([^"]*\)".*/\1/p' node_modules/playwright/package.json)" >> "$GITHUB_OUTPUT"
       - name: Upload Storybook build
         uses: actions/upload-artifact@v6
         with:
@@ -252,6 +259,60 @@ jobs:
           # rebuilding it here.
           storybookBuildDir: storybook-static
           autoAcceptChanges: ${{ github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main' }}
+
+  # Argos is piloted next to Chromatic, on the same Storybook build.
+  argos:
+    name: Go / Argos
+    needs: storybook
+    # As Chromatic; pull requests from forks get no ARGOS_TOKEN.
+    if: >-
+      github.event_name == 'push'
+      || (github.event.pull_request.draft == false && !github.event.pull_request.head.repo.fork)
+    runs-on: ubuntu-latest
+    # Every push build is an Argos baseline, so pushes get a group per commit:
+    # a group also replaces its pending run, cancel-in-progress or not.
+    concurrency:
+      group: ${{ github.repository_id }}-${{ github.workflow }}-argos-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+    # The browser and its fonts come from the Playwright image matching the
+    # installed Playwright, so a Playwright update brings its rendering
+    # changes into the pull request that makes it, and the runner's own image
+    # updates change nothing.
+    container:
+      image: mcr.microsoft.com/playwright:v${{ needs.storybook.outputs.playwright-version }}-noble
+    env:
+      # swc refuses its default cache in /github/home, whose parent the
+      # runner user can write; /tmp has the sticky bit.
+      SWC_NATIVE_BINDING_CACHE: /tmp/swc
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      - name: Download Storybook build
+        uses: actions/download-artifact@v6
+        with:
+          name: go-storybook-static
+          path: go/storybook-static
+      - name: Take screenshots
+        run: |
+          node_modules/.bin/http-server storybook-static -a 127.0.0.1 -p 6006 --silent &
+          node_modules/.bin/wait-on --timeout 60000 http-get://127.0.0.1:6006/index.json
+          NODE_OPTIONS=--experimental-vm-modules pnpm run test:storybook:visual --url http://127.0.0.1:6006
+      - name: Upload screenshots to Argos
+        # The container runs as root in the runner's checkout, so git would
+        # refuse it as a dubious owner. GITHUB_WORKSPACE is the checkout.
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          pnpm exec argos upload --build-name go ./screenshots
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
   # ---------------------------------------------------------------------------
   # E2E builds the Next.js app itself (single consumer → nothing to share).
