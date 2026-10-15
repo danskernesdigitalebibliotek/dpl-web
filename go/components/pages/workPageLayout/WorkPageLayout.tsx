@@ -35,8 +35,12 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     () => true,
     () => false
   )
+  // Without server data the server rendered the loading state, but a modal
+  // opened from the URL can fetch the work before this hydrates. Keep the
+  // loading state until hydration so the markup matches the server.
+  const isAwaitingHydration = !hasServerData && !isHydrated
 
-  if (!isLoading && (!data || !data.work)) {
+  if (!isAwaitingHydration && !isLoading && (!data || !data.work)) {
     notFound()
   }
 
@@ -82,10 +86,7 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, manifestations])
 
-  // Without server data the server rendered the loading state, but a modal
-  // opened from the URL can fetch the work before this hydrates. Keep the
-  // loading state until hydration so the markup matches the server.
-  if ((isLoading && !data) || (!hasServerData && !isHydrated)) {
+  if ((isLoading && !data) || isAwaitingHydration) {
     return <WorkPageLoading />
   }
 
