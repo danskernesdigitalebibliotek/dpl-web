@@ -52,7 +52,7 @@ const StatusSection: FC = () => {
   const {
     loanQuotas: { data: digitalLoanQuotas },
     reservationLimits: { data: digitalReservationLimits }
-  } = useDigitalQuotas({ enabled: viaBiblioAdapter && userIsPatron });
+  } = useDigitalQuotas({ enabled: viaBiblioAdapter });
 
   // Publizon doesn't account for "subscription" (aka, "blue", aka
   // "non-quota") loans, so we have to figure out how many of the

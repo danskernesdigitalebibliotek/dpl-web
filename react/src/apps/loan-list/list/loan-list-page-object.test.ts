@@ -25,7 +25,6 @@ const stubLoanListBackends = ({
 }: StubOptions = {}) => {
   cy.window().then((win) => {
     win.sessionStorage.setItem(TOKEN_LIBRARY_KEY, "random-token");
-    // Loans, reservations and fees are only fetched for a patron.
     win.sessionStorage.setItem(TOKEN_USER_KEY, "random-token");
   });
 

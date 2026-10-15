@@ -1,5 +1,13 @@
-import React from "react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import React, { useSyncExternalStore } from "react";
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  onTestFinished,
+  vi
+} from "vitest";
 import {
   act,
   cleanup,
@@ -28,11 +36,43 @@ vi.mock("../../core/utils/config", () => ({
   useConfig: () => (key: string) => config.values[key] ?? ""
 }));
 
+// Whether the question is open, as the modal store would say. Anything on the
+// page can close it, e.g. Escape, so the tests change it directly too.
+const modal = vi.hoisted(() => {
+  let isOpen = false;
+  let isTop = false;
+  const listeners = new Set<() => void>();
+  return {
+    isOpen: () => isOpen,
+    isTop: () => isTop,
+    set: (open: boolean, top = open) => {
+      isOpen = open;
+      isTop = top;
+      listeners.forEach((listener) => listener());
+    },
+    subscribe: (listener: () => void) => {
+      listeners.add(listener);
+      return () => listeners.delete(listener);
+    }
+  };
+});
+
 vi.mock("../../core/utils/modal", () => ({
   default: ({ children }: { children: React.ReactNode }) => (
     <div>{children}</div>
   ),
-  useModalButtonHandler: () => ({ open, close })
+  useIsModalOpen: () => useSyncExternalStore(modal.subscribe, modal.isOpen),
+  useIsTopModal: () => useSyncExternalStore(modal.subscribe, modal.isTop),
+  useModalButtonHandler: () => ({
+    open: (...args: unknown[]) => {
+      open(...args);
+      modal.set(true);
+    },
+    close: (...args: unknown[]) => {
+      close(...args);
+      modal.set(false);
+    }
+  })
 }));
 
 vi.mock("react-redux", async (importOriginal) => ({
@@ -55,6 +95,7 @@ describe("starting a patron login", () => {
     vi.resetModules();
     vi.clearAllMocks();
     config.values = {};
+    modal.set(false);
   });
 
   afterEach(cleanup);
@@ -79,6 +120,13 @@ describe("starting a patron login", () => {
     expect(open).not.toHaveBeenCalled();
   });
 
+  it("is not there for a visitor who is not a Unilogin student", async () => {
+    const { MenuUniloginPatronLogin } = await loadModules();
+    render(<MenuUniloginPatronLogin />);
+
+    expect(screen.queryByText("uniloginPatronLoginHeadingText")).toBeNull();
+  });
+
   it("asks a Unilogin student first, and goes on when the student agrees", async () => {
     const { uniloginUser, MenuUniloginPatronLogin } = await loadModules();
     config.values.uniloginUserIdConfig = "elev4821";
@@ -94,6 +142,7 @@ describe("starting a patron login", () => {
 
     fireEvent.mouseUp(screen.getByText("uniloginPatronLoginConfirmText"));
     expect(proceed).toHaveBeenCalled();
+    expect(dispatch).not.toHaveBeenCalled();
   });
 
   it("drops the started action when the student cancels", async () => {
@@ -110,5 +159,90 @@ describe("starting a patron login", () => {
     expect(close).toHaveBeenCalledWith("unilogin-patron-login");
     // A guarded request stored for after login must not run at a later login.
     expect(dispatch).toHaveBeenCalledWith(guardedRequests.removeRequest());
+  });
+
+  it("drops the started action when the question is closed another way, e.g. with Escape", async () => {
+    const { uniloginUser, guardedRequests, MenuUniloginPatronLogin } =
+      await loadModules();
+    config.values.uniloginUserIdConfig = "elev4821";
+    render(<MenuUniloginPatronLogin />);
+    const proceed = vi.fn();
+
+    act(() => uniloginUser.requestPatronLogin(proceed));
+    expect(open).toHaveBeenCalled();
+    act(() => modal.set(false));
+
+    expect(proceed).not.toHaveBeenCalled();
+    expect(dispatch).toHaveBeenCalledWith(guardedRequests.removeRequest());
+  });
+
+  it("closes a question reopened from the URL, with no login to go on with", async () => {
+    const { guardedRequests, MenuUniloginPatronLogin } = await loadModules();
+    const { closeModal } = await import("../../core/modal.slice");
+    config.values.uniloginUserIdConfig = "elev4821";
+    modal.set(true);
+
+    render(<MenuUniloginPatronLogin />);
+
+    expect(dispatch).toHaveBeenCalledWith(
+      closeModal({ modalId: "unilogin-patron-login" })
+    );
+    expect(dispatch).toHaveBeenCalledWith(guardedRequests.removeRequest());
+  });
+
+  it("closes a question reopened from the URL for any visitor", async () => {
+    const { MenuUniloginPatronLogin } = await loadModules();
+    const { closeModal } = await import("../../core/modal.slice");
+    modal.set(true);
+
+    render(<MenuUniloginPatronLogin />);
+
+    expect(dispatch).toHaveBeenCalledWith(
+      closeModal({ modalId: "unilogin-patron-login" })
+    );
+  });
+
+  it("leaves a modal on top of a reopened question alone", async () => {
+    const { MenuUniloginPatronLogin } = await loadModules();
+    const { closeModal } = await import("../../core/modal.slice");
+    config.values.uniloginUserIdConfig = "elev4821";
+    modal.set(true, false);
+
+    render(<MenuUniloginPatronLogin />);
+    expect(dispatch).not.toHaveBeenCalled();
+
+    act(() => modal.set(true, true));
+    expect(dispatch).toHaveBeenCalledWith(
+      closeModal({ modalId: "unilogin-patron-login" })
+    );
+  });
+
+  it("is asked before every redirect to the patron login", async () => {
+    const { uniloginUser } = await loadModules();
+    const { redirectToLoginAndBack } =
+      await import("../../core/utils/helpers/url");
+    const assign = vi
+      .spyOn(window.location, "assign")
+      .mockImplementation(() => {});
+    onTestFinished(() => assign.mockRestore());
+    const ask = vi.fn();
+    uniloginUser.setAskStudentBeforePatronLogin(ask);
+
+    redirectToLoginAndBack({
+      authUrl: new URL("https://bibliotek.example/login"),
+      returnUrl: new URL(
+        "https://bibliotek.example/work/work-of:870970-basis:00000001"
+      )
+    });
+
+    expect(ask).toHaveBeenCalledTimes(1);
+    expect(assign).not.toHaveBeenCalled();
+
+    ask.mock.calls[0][0]();
+    expect(assign).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /^https:\/\/bibliotek\.example\/login\?current-path=/
+      )
+    );
   });
 });

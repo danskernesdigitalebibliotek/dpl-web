@@ -166,6 +166,12 @@ export const useIsModalOpen = (modalId: string) => {
   return !!modalIds?.includes(modalId);
 };
 
+export const useIsTopModal = (modalId: string) => {
+  const { modalIds } = useSelector((s: ModalIdsProps) => s.modal);
+
+  return modalIds?.[modalIds.length - 1] === modalId;
+};
+
 export const useModalButtonHandler = () => {
   const dispatch = useDispatch();
   const { modalIds } = useSelector((s: ModalIdsProps) => s.modal);
