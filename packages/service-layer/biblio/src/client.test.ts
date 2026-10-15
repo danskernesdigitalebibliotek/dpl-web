@@ -458,7 +458,7 @@ describe("createBiblioClient user endpoints", () => {
     ])
   })
 
-  it("asks the organization it is given for its reservation ceiling", async () => {
+  it("asks the patron's organization for its reservation ceiling", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(
       mockJsonResponse({
         organization_configurations: {
@@ -469,19 +469,15 @@ describe("createBiblioClient user endpoints", () => {
       })
     )
 
-    await expect(buildClient().getReservationLimits("org-2")).resolves.toEqual({
+    await expect(buildClient().getReservationLimits()).resolves.toEqual({
       ebook: 3,
       audiobook: 2,
     })
-    // The endpoint resolves no organization from the token, so the id has to
-    // reach it as a query parameter.
-    expect(fetch).toHaveBeenCalledWith(
-      `${baseUrl}/v1/organizations/configs?organization_id=org-2`,
-      {
-        method: "GET",
-        headers: { authorization: "Bearer abc" },
-      }
-    )
+    // No organization id: the adapter resolves it from the patron's token.
+    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/v1/organizations/configs`, {
+      method: "GET",
+      headers: { authorization: "Bearer abc" },
+    })
   })
 
   it("returns the support id", async () => {

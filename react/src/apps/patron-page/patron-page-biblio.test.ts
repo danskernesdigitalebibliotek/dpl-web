@@ -12,10 +12,7 @@ import {
   publizonLibraryProfileFactory,
   publizonLoanListFactory
 } from "../../../cypress/factories/publizon/publizon.factory";
-import {
-  BIBLIO_ORG_ID,
-  biblioSplitLoanQuotaFactory
-} from "../../../cypress/factories/biblio/biblio.factory";
+import { biblioSplitLoanQuotaFactory } from "../../../cypress/factories/biblio/biblio.factory";
 
 /**
  * The patron page during the Publizon → Biblio transition.
@@ -141,11 +138,7 @@ describe("Patron page - Biblio adapter feature flag", () => {
     // The monthly figures from the same response must not surface here.
     cy.contains("3 out of").should("not.exist");
 
-    // And: the reservation ceilings come from the organization the quotas
-    // were issued for.
-    cy.wait("@biblioOrganizationConfigs")
-      .its("request.query.organization_id")
-      .should("eq", BIBLIO_ORG_ID);
+    // And: the reservation ceilings come from the patron's organization.
     cy.contains("You can reserve 5 ebooks and 6 audiobooks").should("exist");
   });
 });

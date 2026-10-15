@@ -153,7 +153,7 @@ export const givenUserHasBiblioLoanQuotas = (
 /**
  * Given: how many reservations the user's organization allows at once. The
  * ceiling lives on the organization rather than on the user, so it comes
- * from its own endpoint, asked for by organization id.
+ * from its own endpoint.
  */
 export const givenOrganizationHasBiblioReservationLimits = () => {
   cy.intercept("GET", "**/v1/organizations/configs*", {
