@@ -12,6 +12,11 @@ on:
       - 'design-system/**'
       - '.github/workflows/design-system-*.yml'
 
+# A newer push to a pull request cancels the run in progress.
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   a11y:
     runs-on: ubuntu-latest
