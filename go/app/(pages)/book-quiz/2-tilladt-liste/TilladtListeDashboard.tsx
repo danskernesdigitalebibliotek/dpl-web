@@ -8,12 +8,8 @@ import {
 } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 
-import {
-  entriesByDimension,
-  entriesFromLabels,
-  entryClause,
-  TAllowedEntry,
-} from "./allowedList"
+import BookQuizCover from "../_shared/BookQuizCover"
+import { TAllowedEntry, entriesByDimension, entriesFromLabels, entryClause } from "./allowedList"
 import { buildCql } from "./buildCql"
 
 const RESULT_LIMIT = 50
@@ -190,10 +186,7 @@ const TilladtListeDashboard = () => {
   const rawWorks = useMemo(() => data?.complexSearch.works ?? [], [data])
 
   const lixTargets = useMemo(() => lix.map(toNumber).filter((n): n is number => n != null), [lix])
-  const ageTargets = useMemo(
-    () => ages.map(toNumber).filter((n): n is number => n != null),
-    [ages]
-  )
+  const ageTargets = useMemo(() => ages.map(toNumber).filter((n): n is number => n != null), [ages])
   const works = useMemo(
     () => rerankWorks(rawWorks, lixTargets, ageTargets),
     [rawWorks, lixTargets, ageTargets]
@@ -274,7 +267,9 @@ const TilladtListeDashboard = () => {
 
           <div className="flex flex-col gap-1">
             <h2 className="text-sm font-bold">Genereret CQL</h2>
-            <pre className="border border-black/20 bg-black/5 p-3 text-sm break-words whitespace-pre-wrap">
+            <pre
+              className="border border-black/20 bg-black/5 p-3 text-sm break-words
+                whitespace-pre-wrap">
               {hasCql ? cql : "— vælg mindst ét filter —"}
             </pre>
           </div>
@@ -297,20 +292,25 @@ const TilladtListeDashboard = () => {
                 const workLix = getWorkLix(work)
                 const workAges = formatAges(work)
                 return (
-                  <li key={work.workId} className="py-2 text-sm">
-                    <div>
-                      <span className="font-medium">{work.titles.full[0] ?? "Uden titel"}</span>
-                      {work.creators.length > 0 ? (
-                        <span className="opacity-70"> · {displayCreators(work.creators, 2)}</span>
-                      ) : null}
-                      {work.workYear?.display ? (
-                        <span className="opacity-50"> · {work.workYear.display}</span>
-                      ) : null}
-                    </div>
-                    <div className="opacity-50">
-                      {work.materialTypes.map(type => type.materialTypeSpecific.display).join(", ")}
-                      {workLix != null ? ` · lix ${workLix}` : " · lix —"}
-                      {workAges ? ` · ${workAges}` : " · alder —"}
+                  <li key={work.workId} className="flex items-start gap-3 py-2 text-sm">
+                    <BookQuizCover work={work} />
+                    <div className="flex min-w-0 flex-col">
+                      <div>
+                        <span className="font-medium">{work.titles.full[0] ?? "Uden titel"}</span>
+                        {work.creators.length > 0 ? (
+                          <span className="opacity-70"> · {displayCreators(work.creators, 2)}</span>
+                        ) : null}
+                        {work.workYear?.display ? (
+                          <span className="opacity-50"> · {work.workYear.display}</span>
+                        ) : null}
+                      </div>
+                      <div className="opacity-50">
+                        {work.materialTypes
+                          .map(type => type.materialTypeSpecific.display)
+                          .join(", ")}
+                        {workLix != null ? ` · lix ${workLix}` : " · lix —"}
+                        {workAges ? ` · ${workAges}` : " · alder —"}
+                      </div>
                     </div>
                   </li>
                 )
