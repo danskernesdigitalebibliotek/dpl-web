@@ -60,6 +60,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             DPL_VERSION=${{ steps.meta.outputs.version }}
+          # Layers are cached in the GitHub Actions cache. stage1.dockerfile
+          # copies Go's sources only after the installs, so a commit that
+          # leaves the lockfiles alone reuses them and only runs the build.
+          # mode=max also stores the intermediate layers; the default mode
+          # keeps just the final image's, which the installs are not part of.
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           # A BuildKit secret, not a build argument: this Dockerfile has a
           # single stage and that stage is what gets published, so a build
           # argument would be readable from `docker history`.
