@@ -9,15 +9,6 @@ export async function getDigitalLoanQuotas(
   return biblio.getLoanQuotas()
 }
 
-// One quota arrives per organization the patron belongs to; in practice that
-// is a single library, so the first is it - several would need a rule from
-// DBC. Both callers below key on that same rule.
-const patronQuota = (quotas: DigitalLoanQuota[] | undefined) => quotas?.[0]
-
-export const getDigitalQuotaOrganizationId = (
-  quotas: DigitalLoanQuota[] | undefined
-): string | null => patronQuota(quotas)?.orgId ?? null
-
 export type QuotaUsage = {
   current: number
   limit: number | undefined
@@ -44,7 +35,10 @@ export const getDigitalLoanQuota = ({
   format: "ebook" | "audiobook"
   period?: "monthly" | "concurrent"
 }): QuotaUsage => {
-  const quota = patronQuota(quotas)
+  // One quota arrives per organization the patron belongs to; in practice
+  // that is a single library, so the first is it - several would need a rule
+  // from DBC.
+  const quota = quotas?.[0]
 
   if (!quota) {
     return { current: 0, limit: undefined }
@@ -74,9 +68,8 @@ export const getDigitalLoanQuota = ({
 }
 
 export async function getDigitalReservationLimits(
-  config: ServiceLayerConfig,
-  organizationId: string
+  config: ServiceLayerConfig
 ): Promise<DigitalReservationLimits | null> {
   const biblio = createBiblioClient(resolveBiblioConfig(config))
-  return biblio.getReservationLimits(organizationId)
+  return biblio.getReservationLimits()
 }

@@ -10,6 +10,11 @@ tasks:
     cmds:
       - pnpm run codegen:fbs
 
+  codegen:biblio:
+    desc: Regenerate the internal Biblio adapter from /schemas/openapi/biblio-adapter.yaml
+    cmds:
+      - pnpm run codegen:biblio
+
   codegen:fbi:
     desc: Regenerate the internal FBI adapter from /schemas/graphql/dbc-fbi.graphql
     cmds:
