@@ -32,6 +32,7 @@ web/test.sqlite*
 /.lighthouseci/
 /cypress/videos/
 /cypress/screenshots/
+/cypress/timings-out.json
 
 # Task workspace and environment file
 .task.env

@@ -201,61 +201,11 @@ jobs:
           name: pa11y-screenshots
           path: cms/pa11y/screenshots
 
-  CypressUnmapped:
-    name: CMS / Cypress unmapped tests
+  Cypress:
+    name: CMS / Cypress
     uses: ./.github/workflows/cms-cypress-workflow.yml
     secrets:
       WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-    with:
-      id: unmapped
-
-  CypressMapped:
-    name: CMS / Cypress mapped tests
-    uses: ./.github/workflows/cms-cypress-workflow.yml
-    secrets:
-      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-    with:
-      id: mapped
-
-  CypressWebmaster:
-    name: CMS / Cypress webmaster tests
-    uses: ./.github/workflows/cms-cypress-workflow.yml
-    secrets:
-      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-    with:
-      id: webmaster
-
-  CypressOpeningHours:
-    name: CMS / Cypress opening hours tests
-    uses: ./.github/workflows/cms-cypress-workflow.yml
-    secrets:
-      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-    with:
-      id: opening-hours
-
-  CypressParagraphs:
-    name: CMS / Cypress paragraphs tests
-    uses: ./.github/workflows/cms-cypress-workflow.yml
-    secrets:
-      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-    with:
-      id: paragraphs
-
-  CypressCampaigns:
-    name: CMS / Cypress campaigns tests
-    uses: ./.github/workflows/cms-cypress-workflow.yml
-    secrets:
-      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-    with:
-      id: campaigns
-
-  CypressEvents:
-    name: CMS / Cypress events tests
-    uses: ./.github/workflows/cms-cypress-workflow.yml
-    secrets:
-      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-    with:
-      id: events
 
   MarkdownLint:
     name: CMS / Lint Markdown

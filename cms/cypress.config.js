@@ -1,5 +1,7 @@
 const { defineConfig } = require('cypress');
 const { WireMockRestClient } = require('wiremock-rest-client');
+// https://github.com/bahmutov/cypress-split
+const cypressSplit = require('cypress-split');
 
 const wiremockUrl = process.env.CYPRESS_WIREMOCK_URL || 'http://wiremock';
 const wiremock = () => new WireMockRestClient(wiremockUrl);
@@ -13,8 +15,11 @@ module.exports = defineConfig({
       runMode: 3,
       openMode: 0,
     },
-    setupNodeEvents(on) {
+    setupNodeEvents(on, config) {
       require('cypress-terminal-report/src/installLogsPrinter')(on);
+
+      // No-op without SPLIT / SPLIT_INDEX (CI only).
+      cypressSplit(on, config);
 
       // wiremock-rest-client is a Node.js library that cannot be bundled
       // for the browser. All WireMock operations run here via cy.task().
@@ -44,6 +49,9 @@ module.exports = defineConfig({
           return wiremock().requests.getAllRequests();
         },
       });
+
+      // cypress-split narrows specPattern here; else all specs run.
+      return config;
     },
   },
   env: {

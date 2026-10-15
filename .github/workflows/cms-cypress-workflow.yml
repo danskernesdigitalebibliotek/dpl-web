@@ -2,11 +2,6 @@
 name: CMS / Cypress workflow
 on:
   workflow_call:
-    inputs:
-      # e.g. "unmapped" from "ci:cypress:unmapped"
-      id:
-        required: true
-        type: string
     secrets:
       WEDOBOOKS_NPM_TOKEN:
         description: >-
@@ -17,8 +12,30 @@ on:
 
 jobs:
   Cypress:
-    name: CMS / Cypress / ${{ inputs.id }}
+    name: CMS / Cypress (${{ matrix.bucket }})
     runs-on: ubuntu-latest
+    strategy:
+      # One failing machine must not hide the others' results.
+      fail-fast: false
+      matrix:
+        # withMappings/ specs run apart from the rest, on their own site.
+        # cypress-split (cms/cypress.config.js) splits the rest over four
+        # machines; ~7 min setup each, so a fifth would save under a minute.
+        include:
+          - bucket: with mappings
+            task: ci:cypress:mapped
+          - bucket: without mappings 1/4
+            task: ci:cypress:split
+            split-index: 0
+          - bucket: without mappings 2/4
+            task: ci:cypress:split
+            split-index: 1
+          - bucket: without mappings 3/4
+            task: ci:cypress:split
+            split-index: 2
+          - bucket: without mappings 4/4
+            task: ci:cypress:split
+            split-index: 3
 
     steps:
       - uses: actions/checkout@v7
@@ -47,20 +64,26 @@ jobs:
           WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
 
       - name: Run Cypress
-        run: task ci:cypress:${{ inputs.id }}
+        run: task ${{ matrix.task }}
         working-directory: cms
+        # Read by ci:cypress:split only.
+        env:
+          SPLIT: 4
+          SPLIT_INDEX: ${{ matrix.split-index }}
+          # Balance by duration; a spec missing from it counts as the average.
+          SPLIT_FILE: cypress/timings.json
 
       - name: Archive videoes
         if: always()
         continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
-          name: cypress-${{ inputs.id }}-videos
+          name: cypress-videos-${{ strategy.job-index }}
           path: cms/cypress/videos
 
       - name: Archive screenshots
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: cypress-${{ inputs.id }}-screenshots
+          name: cypress-screenshots-${{ strategy.job-index }}
           path: cms/cypress/screenshots
