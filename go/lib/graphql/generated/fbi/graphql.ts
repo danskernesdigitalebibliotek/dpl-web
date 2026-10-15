@@ -3144,6 +3144,15 @@ export type BookQuizComplexSearchQuery = { __typename?: 'Query', complexSearch: 
         | { __typename: 'Person', display: string }
       >, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCodeEnum }, materialTypeSpecific: { __typename?: 'SpecificMaterialType', display: string, code: string } }>, workYear?: { __typename?: 'PublicationYear', display: string } | null }> } };
 
+export type BookQuizComplexFacetsQueryVariables = Exact<{
+  cql: Scalars['String']['input'];
+  facets: ComplexSearchFacetsInput;
+  filters: ComplexSearchFiltersInput;
+}>;
+
+
+export type BookQuizComplexFacetsQuery = { __typename?: 'Query', complexSearch: { __typename?: 'ComplexSearchResponse', hitcount: number, facets?: Array<{ __typename?: 'ComplexSearchFacetResponse', name?: string | null, values?: Array<{ __typename?: 'ComplexSearchFacetValue', key: string, score: number }> | null }> | null } };
+
 export type SearchFacetFragment = { __typename?: 'FacetResult', name: string, values: Array<{ __typename?: 'FacetValue', key: string, term: string, score?: number | null }> };
 
 export type ManifestationCoverFragment = { __typename?: 'Manifestation', pid: string, cover: { __typename?: 'Cover', thumbnail?: string | null, xSmall?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, small?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, medium?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null, large?: { __typename?: 'CoverDetails', url?: string | null, width?: number | null, height?: number | null } | null } };
@@ -4509,6 +4518,60 @@ useSuspenseBookQuizComplexSearchQuery.getKey = (variables: BookQuizComplexSearch
 
 useBookQuizComplexSearchQuery.fetcher = (variables: BookQuizComplexSearchQueryVariables, options?: RequestInit['headers']) => fetchData<BookQuizComplexSearchQuery, BookQuizComplexSearchQueryVariables>(BookQuizComplexSearchDocument, variables, options);
 
+export const BookQuizComplexFacetsDocument = new TypedDocumentString(`
+    query bookQuizComplexFacets($cql: String!, $facets: ComplexSearchFacetsInput!, $filters: ComplexSearchFiltersInput!) {
+  complexSearch(cql: $cql, facets: $facets, filters: $filters) {
+    hitcount
+    facets {
+      name
+      values {
+        key
+        score
+      }
+    }
+  }
+}
+    `);
+
+export const useBookQuizComplexFacetsQuery = <
+      TData = BookQuizComplexFacetsQuery,
+      TError = unknown
+    >(
+      variables: BookQuizComplexFacetsQueryVariables,
+      options?: Omit<UseQueryOptions<BookQuizComplexFacetsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<BookQuizComplexFacetsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<BookQuizComplexFacetsQuery, TError, TData>(
+      {
+    queryKey: ['bookQuizComplexFacets', variables],
+    queryFn: fetchData<BookQuizComplexFacetsQuery, BookQuizComplexFacetsQueryVariables>(BookQuizComplexFacetsDocument, variables),
+    ...options
+  }
+    )};
+
+useBookQuizComplexFacetsQuery.getKey = (variables: BookQuizComplexFacetsQueryVariables) => ['bookQuizComplexFacets', variables];
+
+export const useSuspenseBookQuizComplexFacetsQuery = <
+      TData = BookQuizComplexFacetsQuery,
+      TError = unknown
+    >(
+      variables: BookQuizComplexFacetsQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<BookQuizComplexFacetsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<BookQuizComplexFacetsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<BookQuizComplexFacetsQuery, TError, TData>(
+      {
+    queryKey: ['bookQuizComplexFacets', variables],
+    queryFn: fetchData<BookQuizComplexFacetsQuery, BookQuizComplexFacetsQueryVariables>(BookQuizComplexFacetsDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseBookQuizComplexFacetsQuery.getKey = (variables: BookQuizComplexFacetsQueryVariables) => ['bookQuizComplexFacets', variables];
+
+
+useBookQuizComplexFacetsQuery.fetcher = (variables: BookQuizComplexFacetsQueryVariables, options?: RequestInit['headers']) => fetchData<BookQuizComplexFacetsQuery, BookQuizComplexFacetsQueryVariables>(BookQuizComplexFacetsDocument, variables, options);
+
 export const SearchWithPaginationDocument = new TypedDocumentString(`
     query searchWithPagination($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: SearchFiltersInput) {
   search(q: $q, filters: $filters) {
@@ -5387,6 +5450,7 @@ useGetMaterialQuery.fetcher = (variables: GetMaterialQueryVariables, options?: R
 export const operationNames = {
   Query: {
     bookQuizComplexSearch: 'bookQuizComplexSearch' as const,
+    bookQuizComplexFacets: 'bookQuizComplexFacets' as const,
     searchWithPagination: 'searchWithPagination' as const,
     searchFacets: 'searchFacets' as const,
     complexSearchForWorkTeaser: 'complexSearchForWorkTeaser' as const,

@@ -8,7 +8,7 @@ export const metadata: Metadata = setPageMetadata("Boganbefaler-quiz – PoCer")
 const pocs = [
   { href: "/book-quiz/1-facetsoegning", label: "PoC 1 – Facetsøgning", ready: true },
   { href: "/book-quiz/2-tilladt-liste", label: "PoC 2 – Tilladt-liste", ready: true },
-  { href: "/book-quiz/3-korrelation", label: "PoC 3 – Korrelation", ready: false },
+  { href: "/book-quiz/3-korrelation", label: "PoC 3 – Korrelation", ready: true },
   { href: "/book-quiz/4-emoji", label: "PoC 4 – Emoji", ready: false },
   { href: "/book-quiz/5-score", label: "PoC 5 – Score", ready: false },
 ]
