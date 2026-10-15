@@ -1,0 +1,184 @@
+{
+  "durations": [
+    {
+      "spec": "src/apps/material/retriever.test.ts",
+      "duration": 0
+    },
+    {
+      "spec": "src/apps/advanced-search-v2/advanced-search-v2.test.ts",
+      "duration": 116000
+    },
+    {
+      "spec": "src/apps/search-result/search-result.test.ts",
+      "duration": 85000
+    },
+    {
+      "spec": "src/apps/material/material-biblio.test.ts",
+      "duration": 48000
+    },
+    {
+      "spec": "src/apps/material/material-page-object.test.ts",
+      "duration": 45000
+    },
+    {
+      "spec": "src/apps/material/material.test.ts",
+      "duration": 41000
+    },
+    {
+      "spec": "src/components/material/material-buttons/material-buttons.test.ts",
+      "duration": 30000
+    },
+    {
+      "spec": "src/apps/loan-list/list/loan-list-page-object.test.ts",
+      "duration": 21000
+    },
+    {
+      "spec": "src/apps/dashboard/dashboard.test.tsx",
+      "duration": 20000
+    },
+    {
+      "spec": "src/apps/advanced-search/advanced-search.test.ts",
+      "duration": 21000
+    },
+    {
+      "spec": "src/apps/material/order-digital-copy.test.ts",
+      "duration": 20000
+    },
+    {
+      "spec": "src/apps/loan-list/list/loan-list.test.ts",
+      "duration": 19000
+    },
+    {
+      "spec": "src/apps/loan-list/list/loan-list-biblio-journey.test.ts",
+      "duration": 16000
+    },
+    {
+      "spec": "src/apps/create-patron-user-info/create-patron-page-object.test.ts",
+      "duration": 15000
+    },
+    {
+      "spec": "src/apps/material/open-order.test.ts",
+      "duration": 13000
+    },
+    {
+      "spec": "src/apps/reservation-list/list/reservation-list.test.ts",
+      "duration": 12000
+    },
+    {
+      "spec": "src/apps/reservation-list/modal/reservation-details/reservation-details.test.ts",
+      "duration": 10000
+    },
+    {
+      "spec": "src/apps/reservation-list/list/reservation-list-biblio-journey.test.ts",
+      "duration": 9000
+    },
+    {
+      "spec": "src/apps/material/material-publizon-reservation-freeze.test.ts",
+      "duration": 8000
+    },
+    {
+      "spec": "src/apps/material/instant-loan.test.ts",
+      "duration": 7000
+    },
+    {
+      "spec": "src/apps/material/material-availability-biblio.test.ts",
+      "duration": 6000
+    },
+    {
+      "spec": "src/apps/search-header/search-header.test.ts",
+      "duration": 6000
+    },
+    {
+      "spec": "src/apps/material/login-redirect.test.ts",
+      "duration": 6000
+    },
+    {
+      "spec": "src/components/blocked-patron/BlockedPatron.test.ts",
+      "duration": 5000
+    },
+    {
+      "spec": "src/apps/fee-list/fee-list.test.ts",
+      "duration": 4000
+    },
+    {
+      "spec": "src/apps/recommended-material/recommended-material.test.tsx",
+      "duration": 4000
+    },
+    {
+      "spec": "src/apps/favorites-list/favorites-list.test.ts",
+      "duration": 4000
+    },
+    {
+      "spec": "src/apps/reservation-list/list/reservation-list-publizon-freeze.test.ts",
+      "duration": 4000
+    },
+    {
+      "spec": "src/apps/recommendation/recommendation.test.tsx",
+      "duration": 4000
+    },
+    {
+      "spec": "src/apps/patron-page/patron-page-biblio.test.ts",
+      "duration": 4000
+    },
+    {
+      "spec": "src/apps/material/material-sample-biblio.test.ts",
+      "duration": 4000
+    },
+    {
+      "spec": "src/components/cover/cover.test.ts",
+      "duration": 4000
+    },
+    {
+      "spec": "src/apps/reservation-list/modal/delete-reservation/delete-reservation.test.ts",
+      "duration": 3000
+    },
+    {
+      "spec": "src/apps/material/periodical.test.ts",
+      "duration": 3000
+    },
+    {
+      "spec": "src/apps/dashboard/dashboard-biblio.test.ts",
+      "duration": 3000
+    },
+    {
+      "spec": "src/components/date-inputs/DateRangeInput.test.ts",
+      "duration": 3000
+    },
+    {
+      "spec": "src/components/button-favourite/button-favourite.test.ts",
+      "duration": 2000
+    },
+    {
+      "spec": "src/apps/reservation-list/list/reservation-list-pagination.test.ts",
+      "duration": 2000
+    },
+    {
+      "spec": "src/apps/loan-list/modal/modals.test.tsx",
+      "duration": 2000
+    },
+    {
+      "spec": "src/apps/menu/menu.test.ts",
+      "duration": 2000
+    },
+    {
+      "spec": "src/apps/reservation-list/modal/delete-reservation/pause-reservations.test.ts",
+      "duration": 2000
+    },
+    {
+      "spec": "src/apps/reservation-list/list/reservation-list-biblio.test.ts",
+      "duration": 2000
+    },
+    {
+      "spec": "src/apps/patron-page/PatronPage.test.tsx",
+      "duration": 1000
+    },
+    {
+      "spec": "src/apps/demo-modal/demo-modal.test.ts",
+      "duration": 1000
+    },
+    {
+      "spec": "src/apps/demo-modal/demo-modal-page-object.test.ts",
+      "duration": 1000
+    }
+  ]
+}

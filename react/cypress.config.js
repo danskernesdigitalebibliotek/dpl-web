@@ -1,12 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from "cypress";
 import plugins from "./cypress/plugins";
+// https://github.com/bahmutov/cypress-split
+import cypressSplit from "cypress-split";
 
 export default defineConfig({
-  // Cypress 14's Test Replay caused a CI deadlock when running under pnpm.
-  // Upgraded to Cypress 15 which fixes the underlying bug; keeping this
-  // disabled as a precaution when Cloud recording is enabled.
-  testReplayEnabled: false,
   defaultCommandTimeout: 10000,
   pageLoadTimeout: 10000,
   requestTimeout: 30000,
@@ -36,7 +34,12 @@ export default defineConfig({
         terminalReportOptions
       );
 
-      return plugins(on, config);
+      // No-op without SPLIT / SPLIT_INDEX (CI only).
+      cypressSplit(on, config);
+      plugins(on, config);
+
+      // cypress-split narrows specPattern here; else all specs run.
+      return config;
     }
   }
 });
