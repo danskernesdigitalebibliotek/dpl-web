@@ -1,7 +1,7 @@
 // Kurateret tilladt-liste for PoC 2. Hver post oversætter et børnevendt label
 // til de rigtige FBI-termer via det rigtige indeks (term vs phrase) og kan dække
 // flere FBI-værdier (én-til-mange). `emojis` og `score` er forberedt til PoC 4/5
-// og står tomme indtil da.
+// og står tomme indtil da. Termerne er trukket fra FBI's faktiske genre-/emneord.
 
 export type TAllowedDimension = "genre" | "emne" | "materialetype"
 
@@ -14,56 +14,77 @@ export type TAllowedEntry = {
   score?: Record<string, number>
 }
 
+const genre = (label: string, cqlValues: string[], phrase = false): TAllowedEntry => ({
+  label,
+  dimension: "genre",
+  cqlIndex: phrase ? "phrase.genreandform" : "term.genreandform",
+  cqlValues,
+})
+
+const emne = (label: string, cqlValues: string[], phrase = false): TAllowedEntry => ({
+  label,
+  dimension: "emne",
+  cqlIndex: phrase ? "phrase.subject" : "term.subject",
+  cqlValues,
+})
+
+const materiale = (label: string, cqlValues: string[]): TAllowedEntry => ({
+  label,
+  dimension: "materialetype",
+  cqlIndex: "term.specificmaterialtype",
+  cqlValues,
+})
+
 export const ALLOWED_LIST: TAllowedEntry[] = [
-  // Genrer (enkeltord → term, flerord → phrase, én-til-mange → flere værdier)
-  { label: "Gys", dimension: "genre", cqlIndex: "term.genreandform", cqlValues: ["gys"] },
-  { label: "Fantasy", dimension: "genre", cqlIndex: "term.genreandform", cqlValues: ["fantasy"] },
-  { label: "Spænding", dimension: "genre", cqlIndex: "term.genreandform", cqlValues: ["spænding"] },
-  {
-    label: "Sjove bøger",
-    dimension: "genre",
-    cqlIndex: "phrase.genreandform",
-    cqlValues: ["sjove bøger"],
-  },
-  {
-    label: "Tegneserier",
-    dimension: "genre",
-    cqlIndex: "term.genreandform",
-    cqlValues: ["tegneserier", "manga"],
-  },
+  // Genrer — enkeltord → term, flerord → phrase, én-til-mange → flere værdier
+  genre("Gys", ["gys"]),
+  genre("Fantasy", ["fantasy"]),
+  genre("Spænding", ["spænding"]),
+  genre("Krimi", ["krimi"]),
+  genre("Science fiction", ["science fiction"], true),
+  genre("Dystopier", ["dystopier"]),
+  genre("Eventyr", ["eventyr"]),
+  genre("Eventyrlige fortællinger", ["eventyrlige fortællinger"], true),
+  genre("Romaner", ["romaner"]),
+  genre("Noveller", ["noveller"]),
+  genre("Billedbøger", ["billedbøger"]),
+  genre("Tegneserier", ["tegneserier", "manga"]),
+  genre("Sjove bøger", ["sjove bøger"], true),
+  genre("Humor", ["humor"]),
+  genre("Young adult", ["young adult"], true),
+  genre("Lydret (let at læse)", ["lydret"]),
+  genre("Biografier", ["biografier"]),
+  genre("Rim", ["rim"]),
 
   // Emner
-  {
-    label: "Venskab",
-    dimension: "emne",
-    cqlIndex: "term.subject",
-    cqlValues: ["venskab", "venner"],
-  },
-  { label: "Magi", dimension: "emne", cqlIndex: "term.subject", cqlValues: ["magi"] },
-  { label: "Uhygge", dimension: "emne", cqlIndex: "term.subject", cqlValues: ["uhyggelig"] },
-  {
-    label: "Kærlighed",
-    dimension: "emne",
-    cqlIndex: "term.subject",
-    cqlValues: ["kærlighed", "forelskelse"],
-  },
-  { label: "Mit liv", dimension: "emne", cqlIndex: "phrase.subject", cqlValues: ["mit liv"] },
-  { label: "Dyr", dimension: "emne", cqlIndex: "term.subject", cqlValues: ["dyr"] },
+  emne("Venskab", ["venskab", "venner", "venskaber", "veninder"]),
+  emne("Kærlighed", ["kærlighed", "forelskelse", "romantisk"]),
+  emne("Magi", ["magi"]),
+  emne("Uhygge", ["uhyggelig", "gys"]),
+  emne("Spændende", ["spændende", "action"]),
+  emne("Sjov", ["sjov"]),
+  emne("Dyr", ["dyr"]),
+  emne("Familie", ["familien"]),
+  emne("Sport", ["sport"]),
+  emne("Gaming", ["gaming"]),
+  emne("Piger", ["piger"]),
+  emne("Drenge", ["drenge"]),
+  emne("Følelser", ["følelser", "trist", "tankevækkende"]),
+  emne("Identitet", ["identitet"]),
+  emne("Skolen", ["skolen"]),
+  emne("Historie", ["historie"]),
+  emne("Eventyrlig", ["eventyrlig"]),
+  emne("Mit liv", ["mit liv"], true),
+  emne("Natur og miljø", ["natur og miljø"], true),
+  emne("Let at læse", ["let at læse"], true),
+  emne("Den store verden", ["den store verden"], true),
+  emne("Ud i fremtiden", ["ud i fremtiden"], true),
 
   // Materialetype
-  { label: "Bog", dimension: "materialetype", cqlIndex: "term.specificmaterialtype", cqlValues: ["bog"] },
-  {
-    label: "E-bog",
-    dimension: "materialetype",
-    cqlIndex: "term.specificmaterialtype",
-    cqlValues: ["e-bog"],
-  },
-  {
-    label: "Lydbog",
-    dimension: "materialetype",
-    cqlIndex: "term.specificmaterialtype",
-    cqlValues: ["lydbog (online)"],
-  },
+  materiale("Bog", ["bog"]),
+  materiale("E-bog", ["e-bog"]),
+  materiale("Lydbog", ["lydbog (online)"]),
+  materiale("Tegneserie", ["tegneserie"]),
 ]
 
 export const entriesByDimension = (dimension: TAllowedDimension) =>
