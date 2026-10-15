@@ -17,7 +17,10 @@ COPY packages /app/packages
 # Only the mapping - the credential stays out of the repository and reaches
 # pnpm through the secret mount below.
 COPY package.json pnpm-* .npmrc /app/
-COPY go /app/go
+# Only Go's manifests here. The installs below then depend on nothing but
+# lockfiles, so CI's layer cache serves them for any commit that changes Go's
+# sources alone. The sources arrive right before the build.
+COPY go/package.json go/pnpm-lock.yaml /app/go/
 WORKDIR /app
 
 # The install below happens before NODE_ENV=production is set, so it pulls in
@@ -72,5 +75,6 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ARG DPL_VERSION=unknown
 RUN echo "${DPL_VERSION}" > /app/VERSION
 
+COPY go /app/go
 WORKDIR /app/go
 RUN corepack pnpm run build:stage1
