@@ -16,6 +16,11 @@ on:
       - pnpm-lock.yaml
       - pnpm-workspace.yaml
 
+# A newer push to a pull request cancels the run in progress.
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   css-lint:
     name: Design / CSS Linter

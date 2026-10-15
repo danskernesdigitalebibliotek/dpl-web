@@ -31,6 +31,13 @@ on:
       - 'schemas/graphql/dbc-fbi.graphql'
       - 'cms/dpl-cms.bnf.graphql'
 
+# A newer push to a pull request cancels the run in progress. Pushes get a
+# group per commit: every push build is a Chromatic and Argos baseline, and a
+# group also replaces its pending run, cancel-in-progress or not.
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # ---------------------------------------------------------------------------
   # Node-only checks: need only node_modules (pnpm cache) and the committed
@@ -114,9 +121,6 @@ jobs:
     name: Go / Generated clients
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.repository_id }}-${{ github.workflow }}-codegen-${{ github.ref }}
-      cancel-in-progress: true
     defaults:
       run:
         working-directory: go
@@ -226,9 +230,6 @@ jobs:
     needs: storybook
     if: github.event_name == 'push' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.repository_id }}-${{ github.workflow }}-chromatic-${{ github.ref }}
-      cancel-in-progress: true
     defaults:
       run:
         working-directory: go
@@ -269,11 +270,6 @@ jobs:
       github.event_name == 'push'
       || (github.event.pull_request.draft == false && !github.event.pull_request.head.repo.fork)
     runs-on: ubuntu-latest
-    # Every push build is an Argos baseline, so pushes get a group per commit:
-    # a group also replaces its pending run, cancel-in-progress or not.
-    concurrency:
-      group: ${{ github.repository_id }}-${{ github.workflow }}-argos-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
-      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
     # The browser and its fonts come from the Playwright image matching the
     # installed Playwright, so a Playwright update brings its rendering
     # changes into the pull request that makes it, and the runner's own image
