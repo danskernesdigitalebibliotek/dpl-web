@@ -1,4 +1,4 @@
-import { entryClause, TAllowedEntry } from "./allowedList"
+import { TAllowedEntry, entryClause } from "./allowedList"
 
 // CQL-bygger for PoC 2: bygger led ud fra tilladt-listens poster, så hvert label
 // bruger sit eget indeks (term/phrase) og sine egne FBI-værdier (én-til-mange).

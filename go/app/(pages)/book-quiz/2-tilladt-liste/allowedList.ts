@@ -87,6 +87,41 @@ export const ALLOWED_LIST: TAllowedEntry[] = [
   materiale("Tegneserie", ["tegneserie"]),
 ]
 
+// PoC 4 (emoji): fylder det reserverede `emojis`-felt på en kurateret delmængde
+// af genre- og emne-posterne. Kun poster med en emoji er med i emoji-quizzen;
+// PoC 2/3 ignorerer feltet.
+const EMOJI_BY_LABEL: Record<string, string> = {
+  // Genre
+  Gys: "👻",
+  Fantasy: "🧙",
+  Spænding: "😱",
+  Krimi: "🕵️",
+  "Science fiction": "🚀",
+  Eventyr: "🏰",
+  Tegneserier: "💥",
+  "Sjove bøger": "😂",
+  Romaner: "📖",
+  Billedbøger: "🖼️",
+  // Emne
+  Venskab: "🤝",
+  Kærlighed: "❤️",
+  Magi: "✨",
+  Dyr: "🐾",
+  Familie: "👨‍👩‍👧",
+  Sport: "⚽",
+  Gaming: "🎮",
+  Følelser: "😢",
+  Skolen: "🏫",
+  Historie: "📜",
+  "Natur og miljø": "🌿",
+  Uhygge: "🕷️",
+}
+
+for (const entry of ALLOWED_LIST) {
+  const emoji = EMOJI_BY_LABEL[entry.label]
+  if (emoji) entry.emojis = [emoji]
+}
+
 export const entriesByDimension = (dimension: TAllowedDimension) =>
   ALLOWED_LIST.filter(entry => entry.dimension === dimension)
 
