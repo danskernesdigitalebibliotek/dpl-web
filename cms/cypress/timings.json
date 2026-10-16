@@ -1,0 +1,112 @@
+{
+  "durations": [
+    {
+      "spec": "cypress/e2e/openingHours/opening-hours-editor.cy.ts",
+      "duration": 150000
+    },
+    {
+      "spec": "cypress/e2e/events/events.cy.ts",
+      "duration": 129000
+    },
+    {
+      "spec": "cypress/e2e/webmaster/webmaster-upload.cy.ts",
+      "duration": 117000
+    },
+    {
+      "spec": "cypress/e2e/paragraphs/paragraphs.cy.ts",
+      "duration": 100000
+    },
+    {
+      "spec": "cypress/e2e/campaigns/campaign.cy.ts",
+      "duration": 53000
+    },
+    {
+      "spec": "cypress/e2e/webforms.cy.ts",
+      "duration": 44000
+    },
+    {
+      "spec": "cypress/e2e/branches.cy.ts",
+      "duration": 33000
+    },
+    {
+      "spec": "cypress/e2e/events/event-month-separators.cy.ts",
+      "duration": 32000
+    },
+    {
+      "spec": "cypress/e2e/adgangsplatformen.cy.ts",
+      "duration": 31000
+    },
+    {
+      "spec": "cypress/e2e/events/instance-preservation.cy.ts",
+      "duration": 25000
+    },
+    {
+      "spec": "cypress/e2e/patron-collisions.cy.ts",
+      "duration": 23000
+    },
+    {
+      "spec": "cypress/e2e/events/event-creation.cy.ts",
+      "duration": 22000
+    },
+    {
+      "spec": "cypress/e2e/withMappings/user-journey.cy.ts",
+      "duration": 18000
+    },
+    {
+      "spec": "cypress/e2e/webmaster/classes.cy.ts",
+      "duration": 17000
+    },
+    {
+      "spec": "cypress/e2e/content-lock.cy.ts",
+      "duration": 16000
+    },
+    {
+      "spec": "cypress/e2e/varnish.cy.ts",
+      "duration": 15000
+    },
+    {
+      "spec": "cypress/e2e/dpl-react-apps.cy.ts",
+      "duration": 14000
+    },
+    {
+      "spec": "cypress/e2e/withMappings/proxy-url.cy.ts",
+      "duration": 12000
+    },
+    {
+      "spec": "cypress/e2e/flat-taxonomies.cy.ts",
+      "duration": 11000
+    },
+    {
+      "spec": "cypress/e2e/mapp-tracking.cy.ts",
+      "duration": 9000
+    },
+    {
+      "spec": "cypress/e2e/admin-toolbar.cy.ts",
+      "duration": 7000
+    },
+    {
+      "spec": "cypress/e2e/smoke-test.cy.ts",
+      "duration": 7000
+    },
+    {
+      "spec": "cypress/e2e/withMappings/advanced-search.cy.ts",
+      "duration": 7000
+    },
+    {
+      "spec": "cypress/e2e/check-static-pages.cy.ts",
+      "duration": 3000
+    },
+    {
+      "spec": "cypress/e2e/facets.cy.ts",
+      "duration": 2000
+    },
+    {
+      "spec": "cypress/e2e/withMappings/work.cy.ts",
+      "duration": 1000
+    },
+    {
+      "spec": "cypress/e2e/wiremock.cy.ts",
+      "duration": 0
+    }
+  ]
+}

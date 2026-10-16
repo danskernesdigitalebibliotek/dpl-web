@@ -459,6 +459,22 @@ tasks:
       # To be overriden by the tasks that use this task.
       SPEC_PATH: ""
 
+  # Mixes suites on one site, so creates the mappings most of them need.
+  # SPLIT_OUTPUT_FILE: else the bind mount writes timings into the committed
+  # file.
+  ci:cypress:split:
+    desc: Run this machine's share of the Cypress tests outside withMappings/, chosen by cypress-split from SPLIT and SPLIT_INDEX.
+    deps: [ci:wiremock:create-mappings]
+    cmds:
+      - task dev:cli -- drush pm:enable -y dpl_webmaster
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD -e SPLIT -e SPLIT_INDEX -e SPLIT_FILE -e SKIP_SPEC -e SPLIT_OUTPUT_FILE=cypress/timings-out.json cypress
+    env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+      CYPRESS_DRUPAL_USERNAME: admin
+      CYPRESS_DRUPAL_PASSWORD: admin
+      # Run apart, by ci:cypress:mapped.
+      SKIP_SPEC: cypress/e2e/withMappings/*.cy.ts
+
   dev:cypress:run:
     desc: Run Cypress test in docker. Assumes ci:reset has already run.
     cmds:
