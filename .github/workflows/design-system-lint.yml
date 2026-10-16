@@ -38,6 +38,10 @@ jobs:
       - name: Run js:lint
         if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm run js:lint
+      # Last, so the matcher sees no other step's output.
+      - name: Install problem matcher
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Run markdown:lint
         if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm run markdown:lint
