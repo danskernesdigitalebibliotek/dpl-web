@@ -1,6 +1,4 @@
-// A parent that centres its children would otherwise shrink the list to its widest row.
 .action-list {
-  width: 100%;
   max-width: $layout__max-width--small;
   display: grid;
   gap: $s-sm;
@@ -14,6 +12,7 @@
   gap: $s-sm $s-md;
   padding: $s-md;
   background-color: $color__global-white;
+  text-align: center;
 
   @include media-query__x-small {
     flex-direction: row;
