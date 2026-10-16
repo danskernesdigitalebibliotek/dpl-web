@@ -13,78 +13,40 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  TypeCheck:
-    name: Service Layer / Type check
+  # One job: install takes minutes, each check seconds.
+  # Checks run despite earlier failures, so one run reports all.
+  Checks:
+    name: Service Layer / Checks
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-      - run: pnpm run typecheck
+    defaults:
+      run:
         working-directory: packages/service-layer
-
-  UnitTest:
-    name: Service Layer / Unit test
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: ./.github/actions/common-setup-js
+        id: setup
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-      - run: pnpm run test
-        working-directory: packages/service-layer
-
-  FormatCheck:
-    name: Service Layer / Format check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-      - run: pnpm run format:check
-        working-directory: packages/service-layer
-
-  LintCheck:
-    name: Service Layer / Lint check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-      - run: pnpm run lint
-        working-directory: packages/service-layer
-
-  CodegenCheck:
-    name: Service Layer / Codegen up to date
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      - name: Type check
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: pnpm run typecheck
+      - name: Unit test
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: pnpm run test
+      - name: Format check
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: pnpm run format:check
+      - name: Lint check
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: pnpm run lint
       - name: Re-run FBS codegen
-        working-directory: packages/service-layer
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm run codegen:fbs
       - name: Verify generated files match the spec
-        working-directory: packages/service-layer
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: |
           if ! git diff --exit-code -- fbs/src/generated; then
             echo "::error::Generated FBS files are out of date with fbs-adapter.yaml. Run 'pnpm run codegen:fbs' inside packages/service-layer and commit the result."
