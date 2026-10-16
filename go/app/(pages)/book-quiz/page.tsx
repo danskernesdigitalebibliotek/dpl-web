@@ -32,6 +32,11 @@ const Page = () => {
           </li>
         ))}
       </ul>
+      <p className="mt-4">
+        <Link className="underline" href="/book-quiz/fremtid">
+          Fremtidig optimering (parkerede emner)
+        </Link>
+      </p>
     </section>
   )
 }
