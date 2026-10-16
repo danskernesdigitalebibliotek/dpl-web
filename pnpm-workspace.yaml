@@ -40,10 +40,6 @@ allowBuilds:
 # enforced. It is kept here so the protection returns once that bug is fixed or
 # we move off split lockfiles.
 minimumReleaseAge: 2880
-# TEMPORARY: @wedobooks/sdk 0.7.0 was published on 2026-10-06 and is wanted
-# before the two days are up. Remove once it is older than that.
-minimumReleaseAgeExclude:
-  - "@wedobooks/sdk"
 
 # Another supply chain risk mitigation: https://pnpm.io/settings#blockexoticsubdeps
 blockExoticSubdeps: true
