@@ -6,11 +6,11 @@ export type ActionListItem = {
   buttonLabel: string;
 };
 
-export type ActionListProps = {
+export type ActionListType = {
   items: ActionListItem[];
 };
 
-const ActionList: React.FC<ActionListProps> = ({ items }) => {
+const ActionList: React.FC<ActionListType> = ({ items }) => {
   return (
     <ul className="action-list">
       {items.map(({ title, caption, buttonLabel }, index) => (

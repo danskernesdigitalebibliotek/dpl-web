@@ -1,12 +1,12 @@
 import { Button } from "../Buttons/button/Button";
 
-export type DigitalSessionMessageProps = {
+export type DigitalSessionMessageType = {
   text: string;
   buttonLabel: string;
   children?: React.ReactNode;
 };
 
-const DigitalSessionMessage: React.FC<DigitalSessionMessageProps> = ({
+const DigitalSessionMessage: React.FC<DigitalSessionMessageType> = ({
   text,
   buttonLabel,
   children,
