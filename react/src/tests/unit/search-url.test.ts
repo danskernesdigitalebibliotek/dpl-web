@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { constructSearchUrlWithFacets } from "../../core/utils/helpers/url";
+import {
+  constructFacetSearchUrl,
+  constructSearchUrlWithFacets
+} from "../../core/utils/helpers/url";
 
 // The produced URL is the wire contract with the CMS: dpl_search reads the
 // q and facets parameters to build the web search teaser. If this format
@@ -48,5 +51,20 @@ describe("constructSearchUrlWithFacets", () => {
     constructSearchUrlWithFacets({ searchUrl, q: "harry", facets: [] });
 
     expect(searchUrl.searchParams.has("q")).toBe(false);
+  });
+});
+
+describe("constructFacetSearchUrl", () => {
+  it("searches everything, narrowed by one lowercased facet value", () => {
+    const url = constructFacetSearchUrl(
+      new URL("https://example.com/search"),
+      "genreAndForm",
+      "Rejseguides"
+    );
+
+    expect(url.searchParams.get("q")).toBe("*");
+    expect(JSON.parse(url.searchParams.get("facets") ?? "")).toEqual([
+      { facetName: "genreAndForm", selectedValues: ["rejseguides"] }
+    ]);
   });
 });

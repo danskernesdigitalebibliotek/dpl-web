@@ -332,12 +332,6 @@ export const getDetailsListData = ({
     },
 
     {
-      label: t("detailsListGenreAndFormText"),
-      value: getManifestationGenreAndForm(
-        manifestation ?? fallBackManifestation
-      )
-    },
-    {
       label: t("detailsListOriginalTitleText"),
       value: getManifestationOriginalTitle(
         manifestation ?? fallBackManifestation
