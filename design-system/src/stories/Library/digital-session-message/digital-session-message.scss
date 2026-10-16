@@ -1,4 +1,5 @@
 .digital-session-message {
+  max-width: $layout__max-width--small;
   padding: $s-2xl $s-md;
 }
 
@@ -10,9 +11,7 @@
   margin-top: $s-xl;
 }
 
-// As wide as a device list above it, so the way back lines up with its rows.
 .digital-session-message__footer {
-  max-width: $layout__max-width--small;
   margin-top: $s-xl;
   display: flex;
   flex-direction: column;
