@@ -45,7 +45,7 @@ const DeviceLimitReached: React.FC<DeviceLimitReachedProps> = ({
               })}
               onClose={onClose}
             >
-              <ul className="action-list my-32">
+              <ul className="action-list">
                 {devices.devices.map((device) => (
                   <li key={device.id} className="action-list__item">
                     <div>
