@@ -4,7 +4,7 @@ name: Go / CI
 # with the accessibility, chromatic and argos jobs via an artifact. The Next.js
 # build has a single consumer (e2e) so it stays inline there — nothing to share.
 # Lint/typecheck/unit/codegen only need node_modules (pnpm cache) and committed
-# generated code, so they have no `needs:` and start in parallel immediately.
+# generated code, so their `checks` job has no `needs:` and starts immediately.
 
 on:
   push:
@@ -31,92 +31,25 @@ on:
       - 'schemas/graphql/dbc-fbi.graphql'
       - 'cms/dpl-cms.bnf.graphql'
 
+# Superseded PR pushes cancel the run. Pushes get a group per commit, as a
+# group also replaces its pending run.
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # ---------------------------------------------------------------------------
   # Node-only checks: need only node_modules (pnpm cache) and the committed
-  # generated code. No `needs:`, so they run in parallel from the start.
+  # generated code, so no `needs:`.
+  # One job: install takes minutes, each check seconds.
+  # Checks run despite earlier failures, so one run reports all. Codegen last,
+  # so the others see committed code.
   # PR-only, matching the original go-*-check workflows.
   # ---------------------------------------------------------------------------
-  eslint:
-    name: Go / ESLint check
+  checks:
+    name: Go / Checks
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: go
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-          build-wedobooks: 'true'
-      - name: Run linter
-        run: pnpm run lint
-
-  prettier:
-    name: Go / Prettier check
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: go
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0 # Required to retrieve git history
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-      - name: Check Prettier formatting
-        run: pnpm run format:check
-
-  typecheck:
-    name: Go / Type check
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: go
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0 # Required to retrieve git history
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-          build-wedobooks: 'true'
-      - name: Run typescript compile check
-        run: pnpm exec tsc --noEmit
-
-  unit:
-    name: Go / Unit test
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: go
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0 # Required to retrieve git history
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-          build-wedobooks: 'true'
-      - name: Run unit tests
-        run: pnpm run test:unit:once
-
-  codegen:
-    name: Go / Generated clients
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.repository_id }}-${{ github.workflow }}-codegen-${{ github.ref }}
-      cancel-in-progress: true
     defaults:
       run:
         working-directory: go
@@ -127,23 +60,42 @@ jobs:
           # certain vars.
           fetch-depth: 0
       - uses: ./.github/actions/common-setup-js
+        id: setup
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
           build-wedobooks: 'true'
       - name: Install go-task
+        id: go-task
         uses: arduino/setup-task@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run linter
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: pnpm run lint
+      - name: Check Prettier formatting
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: pnpm run format:check
+      - name: Run typescript compile check
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: pnpm exec tsc --noEmit
+      - name: Run unit tests
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: pnpm run test:unit:once
       - name: Codegen - REST services
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' && steps.go-task.outcome == 'success' }}
         run: task codegen:rest-services
       - name: Codegen - dpl-cms GraphQL
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' && steps.go-task.outcome == 'success' }}
         run: task codegen:graphql
       - name: Codegen - Publizon
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' && steps.go-task.outcome == 'success' }}
         run: task codegen:publizon
       - name: Codegen - Pubhub
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' && steps.go-task.outcome == 'success' }}
         run: task codegen:pubhub
       - name: Ensure generated client code has not drifted
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' && steps.go-task.outcome == 'success' }}
         run: git diff --exit-code
 
   # ---------------------------------------------------------------------------

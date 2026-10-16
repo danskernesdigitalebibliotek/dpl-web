@@ -257,8 +257,10 @@ jobs:
     with:
       id: events
 
-  MarkdownLint:
-    name: CMS / Lint Markdown
+  # One job: install takes minutes, each linter seconds.
+  # Linters run despite earlier failures, so one run reports all.
+  Lint:
+    name: CMS / Lint
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -270,12 +272,22 @@ jobs:
       - name: Reconfigure git to use HTTP authentication
         run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
       - uses: ./.github/actions/common-setup-js
+        id: setup
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      - name: Lint Drupal assets
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: pnpm exec eslint web -c eslint.config.mjs
+      - name: Lint Cypress tests
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: pnpm exec eslint cypress -c cypress/eslint.config.mjs
+      # Last, so the matcher sees no other step's output.
       - name: Install problem matcher
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint Markdown
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm dlx markdownlint-cli2
 
   Shellcheck:
@@ -300,42 +312,6 @@ jobs:
         uses: ammaraskar/gcc-problem-matcher@0.3.0
       - name: shellcheck
         run: task ci:shellcheck
-
-  EslintDrupal:
-    name: CMS / Lint Drupal assets
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
-    steps:
-      - uses: actions/checkout@v7
-        # git with HTTP authentication provides an easy way for us to install
-        # unreleased commits of NPM projects. Currently: Pa11yCI
-      - name: Reconfigure git to use HTTP authentication
-        run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-      - name: Run ESLint
-        run: pnpm exec eslint web -c eslint.config.mjs
-
-  EslintCypress:
-    name: CMS / Lint Cypress tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        # git with HTTP authentication provides an easy way for us to install
-        # unreleased commits of NPM projects. Currently: Pa11yCI
-      - name: Reconfigure git to use HTTP authentication
-        run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-      - name: Run ESLint
-        working-directory: cms
-        run: pnpm exec eslint cypress -c cypress/eslint.config.mjs
 
   CheckDrupalConfig:
     name: CMS / Check Drupal Config
