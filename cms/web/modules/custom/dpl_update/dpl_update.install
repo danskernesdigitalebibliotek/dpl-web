@@ -1342,3 +1342,21 @@ function dpl_update_update_10082(): string {
 function dpl_update_update_10083(): string {
   return _dpl_update_install_modules(['dk_address', 'dk_address_gsearch_migrate']);
 }
+
+/**
+ * Remove the setting that tolerated materials unknown to the Biblio adapter.
+ *
+ * Such a material is now always shown as unavailable. Sites that saved the
+ * Biblio form keep their copy of the configuration through config_ignore_auto,
+ * so the key has to be removed here rather than by the configuration import.
+ */
+function dpl_update_update_10084(): string {
+  $config = \Drupal::configFactory()->getEditable('dpl_biblio.settings');
+  if ($config->isNew()) {
+    return 'dpl_biblio.settings does not exist; nothing to remove.';
+  }
+
+  $config->clear('tolerate_unknown_materials')->save();
+
+  return 'Removed tolerate_unknown_materials from dpl_biblio.settings.';
+}
