@@ -182,6 +182,9 @@
         "drupal/drupal": "*",
         "drush/drush": "<11.0"
     },
+    "replace": {
+        "drupal/telephone": "*"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
