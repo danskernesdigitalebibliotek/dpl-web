@@ -11,6 +11,8 @@ const pocs = [
   { href: "/book-quiz/3-korrelation", label: "PoC 3 – Korrelation", ready: true },
   { href: "/book-quiz/4-emoji", label: "PoC 4 – Emoji", ready: true },
   { href: "/book-quiz/5-score", label: "PoC 5 – Score", ready: true },
+  { href: "/book-quiz/6-flow", label: "PoC 6 – Rigtigt flow", ready: true },
+  { href: "/book-quiz/7-score-model", label: "PoC 7 – Score-model (A/B)", ready: true },
 ]
 
 const Page = () => {
