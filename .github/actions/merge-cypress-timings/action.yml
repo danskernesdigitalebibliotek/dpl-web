@@ -1,0 +1,83 @@
+name: Merge Cypress spec timings
+description: >-
+  Merge the spec durations this run's Cypress machines measured into a
+  project's cypress/timings.json, which cypress-split balances the machines
+  by, and upload the result as cypress-timings-merged. Skipped while the
+  committed file is younger than max-age-days.
+inputs:
+  working-directory:
+    description: The project directory, holding cypress/timings.json and pnpm-lock.yaml.
+    required: true
+  artifact-pattern:
+    description: Pattern matching the machines' artifacts, each holding a timings-out.json.
+    required: true
+  max-age-days:
+    description: How old the committed file may get before it is merged anew.
+    default: '7'
+  github-token:
+    description: Token for reading the branch's commit history.
+    required: true
+outputs:
+  changed:
+    description: "'true' when the merged file differs from the committed one and was uploaded."
+    value: ${{ steps.merge.outputs.changed }}
+runs:
+  using: composite
+  steps:
+    # Durations jitter from run to run; merging every run would commit on
+    # almost every push. The API, as a shallow checkout dates every file to
+    # its tip commit.
+    - name: Check the age of the committed timings
+      id: age
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        TIMINGS: ${{ inputs.working-directory }}/cypress/timings.json
+        MAX_AGE_DAYS: ${{ inputs.max-age-days }}
+      run: |
+        set -euo pipefail
+        committed=$(gh api "repos/$GITHUB_REPOSITORY/commits?path=$TIMINGS&sha=$GITHUB_REF_NAME&per_page=1" \
+          --jq '.[0].commit.committer.date // empty')
+        if [ -n "$committed" ] && [ $(( $(date +%s) - $(date -d "$committed" +%s) )) -lt $(( MAX_AGE_DAYS * 86400 )) ]; then
+          echo "::notice::$TIMINGS was committed $committed, less than $MAX_AGE_DAYS days ago."
+          echo "due=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "due=true" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Download the measured durations
+      if: steps.age.outputs.due == 'true'
+      uses: actions/download-artifact@v6
+      with:
+        pattern: ${{ inputs.artifact-pattern }}
+        path: ${{ runner.temp }}/cypress-timings
+
+    # As in cypress-split's own split workflow:
+    # https://github.com/bahmutov/cypress-workflows/blob/main/.github/workflows/split.yml
+    # Version from the lockfile, so it stays in step with the project's.
+    - name: Merge the durations into cypress/timings.json
+      id: merge
+      if: steps.age.outputs.due == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        OUTPUTS: ${{ runner.temp }}/cypress-timings
+      run: |
+        set -euo pipefail
+        version=$(yq '.importers["."].devDependencies["cypress-split"].version' pnpm-lock.yaml | cut -d'(' -f1)
+        npx --yes --package "cypress-split@$version" -- cypress-split-merge \
+          --parent-folder "$OUTPUTS" --split-file timings-out.json --output cypress/timings.json
+        if git diff --quiet -- cypress/timings.json; then
+          echo "changed=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Upload the merged timings
+      if: steps.merge.outputs.changed == 'true'
+      uses: actions/upload-artifact@v6
+      with:
+        name: cypress-timings-merged
+        path: ${{ inputs.working-directory }}/cypress/timings.json
+        retention-days: 1
+        if-no-files-found: error
