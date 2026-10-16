@@ -55,6 +55,14 @@ export const ALLOWED_LIST: TAllowedEntry[] = [
   genre("Lydret (let at læse)", ["lydret"]),
   genre("Biografier", ["biografier"]),
   genre("Rim", ["rim"]),
+  genre("Digte", ["digte"]),
+  genre("Dagbøger", ["dagbøger"]),
+  genre("Dyrefortællinger", ["dyrefortællinger"]),
+  genre("Godnathistorier", ["godnathistorier"]),
+  genre("Pegebøger", ["pegebøger"]),
+  genre("Historiske romaner", ["historiske romaner"], true),
+  genre("Fantastiske fortællinger", ["fantastiske fortællinger"], true),
+  genre("Dark fantasy", ["dark fantasy"], true),
 
   // Emner
   emne("Venskab", ["venskab", "venner", "venskaber", "veninder"]),
@@ -79,6 +87,9 @@ export const ALLOWED_LIST: TAllowedEntry[] = [
   emne("Let at læse", ["let at læse"], true),
   emne("Den store verden", ["den store verden"], true),
   emne("Ud i fremtiden", ["ud i fremtiden"], true),
+  emne("Danmark", ["danmark"]),
+  emne("Krea og kultur", ["krea og kultur"], true),
+  emne("Hyggeligt", ["rar"]),
 
   // Materialetype
   materiale("Bog", ["bog"]),
@@ -102,6 +113,14 @@ const EMOJI_BY_LABEL: Record<string, string> = {
   "Sjove bøger": "😂",
   Romaner: "📖",
   Billedbøger: "🖼️",
+  Digte: "🪶",
+  Dagbøger: "📔",
+  Dyrefortællinger: "🦊",
+  Godnathistorier: "🌙",
+  Pegebøger: "👶",
+  "Historiske romaner": "🏛️",
+  "Fantastiske fortællinger": "🌟",
+  "Dark fantasy": "🌑",
   // Emne
   Venskab: "🤝",
   Kærlighed: "❤️",
@@ -115,6 +134,9 @@ const EMOJI_BY_LABEL: Record<string, string> = {
   Historie: "📜",
   "Natur og miljø": "🌿",
   Uhygge: "🕷️",
+  Danmark: "🇩🇰",
+  "Krea og kultur": "🎨",
+  Hyggeligt: "🧸",
 }
 
 for (const entry of ALLOWED_LIST) {
@@ -137,6 +159,22 @@ const SCORE_BY_LABEL: Record<string, Record<string, number>> = {
   "Sjove bøger": { eventyrer: 3, gyser: 1, droemmer: 2, opdager: 2, griner: 10 },
   Romaner: { eventyrer: 4, gyser: 2, droemmer: 7, opdager: 4, griner: 3 },
   Billedbøger: { eventyrer: 3, gyser: 2, droemmer: 6, opdager: 3, griner: 5 },
+  Digte: { eventyrer: 2, gyser: 1, droemmer: 8, opdager: 4, griner: 3 },
+  Dagbøger: { eventyrer: 3, gyser: 1, droemmer: 7, opdager: 3, griner: 6 },
+  Dyrefortællinger: { eventyrer: 3, gyser: 1, droemmer: 6, opdager: 7, griner: 4 },
+  Godnathistorier: { eventyrer: 2, gyser: 1, droemmer: 9, opdager: 2, griner: 3 },
+  Pegebøger: { eventyrer: 2, gyser: 1, droemmer: 6, opdager: 3, griner: 5 },
+  "Historiske romaner": { eventyrer: 5, gyser: 2, droemmer: 4, opdager: 9, griner: 1 },
+  "Fantastiske fortællinger": { eventyrer: 8, gyser: 3, droemmer: 7, opdager: 2, griner: 3 },
+  "Dark fantasy": { eventyrer: 6, gyser: 9, droemmer: 4, opdager: 2, griner: 1 },
+  Dystopier: { eventyrer: 7, gyser: 6, droemmer: 4, opdager: 6, griner: 1 },
+  "Eventyrlige fortællinger": { eventyrer: 9, gyser: 2, droemmer: 5, opdager: 3, griner: 3 },
+  Noveller: { eventyrer: 4, gyser: 3, droemmer: 5, opdager: 5, griner: 3 },
+  Humor: { eventyrer: 3, gyser: 1, droemmer: 2, opdager: 2, griner: 10 },
+  "Young adult": { eventyrer: 5, gyser: 3, droemmer: 7, opdager: 3, griner: 3 },
+  "Lydret (let at læse)": { eventyrer: 3, gyser: 1, droemmer: 5, opdager: 3, griner: 5 },
+  Biografier: { eventyrer: 3, gyser: 1, droemmer: 4, opdager: 9, griner: 2 },
+  Rim: { eventyrer: 2, gyser: 1, droemmer: 6, opdager: 2, griner: 7 },
   // Emne
   Venskab: { eventyrer: 3, gyser: 1, droemmer: 9, opdager: 2, griner: 4 },
   Kærlighed: { eventyrer: 2, gyser: 1, droemmer: 10, opdager: 2, griner: 3 },
@@ -150,6 +188,19 @@ const SCORE_BY_LABEL: Record<string, Record<string, number>> = {
   Historie: { eventyrer: 5, gyser: 3, droemmer: 3, opdager: 10, griner: 2 },
   "Natur og miljø": { eventyrer: 5, gyser: 1, droemmer: 3, opdager: 10, griner: 2 },
   Uhygge: { eventyrer: 4, gyser: 10, droemmer: 2, opdager: 2, griner: 2 },
+  Danmark: { eventyrer: 3, gyser: 1, droemmer: 3, opdager: 9, griner: 2 },
+  "Krea og kultur": { eventyrer: 3, gyser: 1, droemmer: 5, opdager: 7, griner: 5 },
+  Hyggeligt: { eventyrer: 2, gyser: 1, droemmer: 8, opdager: 2, griner: 5 },
+  Spændende: { eventyrer: 10, gyser: 5, droemmer: 2, opdager: 3, griner: 2 },
+  Sjov: { eventyrer: 3, gyser: 1, droemmer: 2, opdager: 2, griner: 10 },
+  Piger: { eventyrer: 4, gyser: 2, droemmer: 6, opdager: 3, griner: 4 },
+  Drenge: { eventyrer: 6, gyser: 3, droemmer: 3, opdager: 3, griner: 4 },
+  Identitet: { eventyrer: 3, gyser: 2, droemmer: 9, opdager: 4, griner: 2 },
+  Eventyrlig: { eventyrer: 9, gyser: 2, droemmer: 4, opdager: 3, griner: 3 },
+  "Mit liv": { eventyrer: 2, gyser: 1, droemmer: 8, opdager: 3, griner: 4 },
+  "Let at læse": { eventyrer: 3, gyser: 1, droemmer: 5, opdager: 3, griner: 5 },
+  "Den store verden": { eventyrer: 5, gyser: 1, droemmer: 3, opdager: 9, griner: 2 },
+  "Ud i fremtiden": { eventyrer: 7, gyser: 3, droemmer: 3, opdager: 8, griner: 2 },
 }
 
 for (const entry of ALLOWED_LIST) {

@@ -42,7 +42,7 @@ export const PROFILES: TProfile[] = [
   },
 ]
 
-const FALLBACK: TProfile = {
+export const FALLBACK: TProfile = {
   key: "laesehest",
   emoji: "📚",
   heading: "Læsehesten",
