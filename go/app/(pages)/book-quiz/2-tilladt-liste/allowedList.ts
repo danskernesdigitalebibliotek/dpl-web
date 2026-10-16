@@ -122,6 +122,41 @@ for (const entry of ALLOWED_LIST) {
   if (emoji) entry.emojis = [emoji]
 }
 
+// PoC 5 (score): hver kurateret post giver point (1-10) til ALLE læse-typer.
+// Rent kuratering — ændrer ikke hvilke bøger der vises. Nøglerne matcher
+// 5-score/profiles.ts (eventyrer, gyser, droemmer, opdager, griner).
+const SCORE_BY_LABEL: Record<string, Record<string, number>> = {
+  // Genre
+  Gys: { eventyrer: 4, gyser: 10, droemmer: 2, opdager: 2, griner: 2 },
+  Fantasy: { eventyrer: 9, gyser: 3, droemmer: 7, opdager: 2, griner: 3 },
+  Spænding: { eventyrer: 10, gyser: 6, droemmer: 2, opdager: 3, griner: 2 },
+  Krimi: { eventyrer: 7, gyser: 5, droemmer: 2, opdager: 6, griner: 2 },
+  "Science fiction": { eventyrer: 8, gyser: 3, droemmer: 3, opdager: 9, griner: 2 },
+  Eventyr: { eventyrer: 10, gyser: 2, droemmer: 6, opdager: 3, griner: 3 },
+  Tegneserier: { eventyrer: 6, gyser: 3, droemmer: 3, opdager: 3, griner: 7 },
+  "Sjove bøger": { eventyrer: 3, gyser: 1, droemmer: 2, opdager: 2, griner: 10 },
+  Romaner: { eventyrer: 4, gyser: 2, droemmer: 7, opdager: 4, griner: 3 },
+  Billedbøger: { eventyrer: 3, gyser: 2, droemmer: 6, opdager: 3, griner: 5 },
+  // Emne
+  Venskab: { eventyrer: 3, gyser: 1, droemmer: 9, opdager: 2, griner: 4 },
+  Kærlighed: { eventyrer: 2, gyser: 1, droemmer: 10, opdager: 2, griner: 3 },
+  Magi: { eventyrer: 7, gyser: 3, droemmer: 8, opdager: 2, griner: 3 },
+  Dyr: { eventyrer: 4, gyser: 2, droemmer: 5, opdager: 7, griner: 5 },
+  Familie: { eventyrer: 2, gyser: 1, droemmer: 7, opdager: 3, griner: 4 },
+  Sport: { eventyrer: 7, gyser: 2, droemmer: 3, opdager: 4, griner: 4 },
+  Gaming: { eventyrer: 7, gyser: 3, droemmer: 3, opdager: 4, griner: 6 },
+  Følelser: { eventyrer: 2, gyser: 2, droemmer: 10, opdager: 3, griner: 2 },
+  Skolen: { eventyrer: 3, gyser: 2, droemmer: 5, opdager: 4, griner: 6 },
+  Historie: { eventyrer: 5, gyser: 3, droemmer: 3, opdager: 10, griner: 2 },
+  "Natur og miljø": { eventyrer: 5, gyser: 1, droemmer: 3, opdager: 10, griner: 2 },
+  Uhygge: { eventyrer: 4, gyser: 10, droemmer: 2, opdager: 2, griner: 2 },
+}
+
+for (const entry of ALLOWED_LIST) {
+  const score = SCORE_BY_LABEL[entry.label]
+  if (score) entry.score = score
+}
+
 export const entriesByDimension = (dimension: TAllowedDimension) =>
   ALLOWED_LIST.filter(entry => entry.dimension === dimension)
 

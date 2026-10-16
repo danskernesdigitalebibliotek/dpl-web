@@ -10,7 +10,7 @@ const pocs = [
   { href: "/book-quiz/2-tilladt-liste", label: "PoC 2 – Tilladt-liste", ready: true },
   { href: "/book-quiz/3-korrelation", label: "PoC 3 – Korrelation", ready: true },
   { href: "/book-quiz/4-emoji", label: "PoC 4 – Emoji", ready: true },
-  { href: "/book-quiz/5-score", label: "PoC 5 – Score", ready: false },
+  { href: "/book-quiz/5-score", label: "PoC 5 – Score", ready: true },
 ]
 
 const Page = () => {
