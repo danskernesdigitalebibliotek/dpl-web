@@ -80,15 +80,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-      - name: stylelint
-        uses: reviewdog/action-stylelint@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-check
-          stylelint_input: "src/**/*.scss"
-          workdir: "react"
       - name: Lint SCSS
-        run: pnpm run lint:scss
+        # Compact output fits setup-node's eslint-compact problem matcher.
+        run: pnpm run lint:scss --formatter compact
 
   typescript:
     name: React / Typescript compile check
