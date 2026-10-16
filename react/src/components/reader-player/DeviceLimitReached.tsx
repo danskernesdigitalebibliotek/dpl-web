@@ -45,38 +45,34 @@ const DeviceLimitReached: React.FC<DeviceLimitReachedProps> = ({
               })}
               onClose={onClose}
             >
-              <ul className="my-32">
+              <ul className="action-list my-32">
                 {devices.devices.map((device) => (
-                  <li key={device.id} className="list-details">
-                    <div className="list-details__container">
-                      <div>
-                        <h3 className="text-header-h5">{device.name}</h3>
-                        {device.lastUsed && (
-                          <p className="text-small-caption">
-                            {t("digitalSessionDeviceLastUsedText", {
-                              placeholders: {
-                                "@date": formatDate(device.lastUsed)
-                              }
-                            })}
-                          </p>
-                        )}
-                      </div>
-                      <div className="list-details__menu">
-                        <Button
-                          label={t("digitalSessionRemoveDeviceButtonText")}
-                          buttonType="none"
-                          collapsible={false}
-                          size="small"
-                          variant="outline"
-                          disabled={removing}
-                          onClick={() =>
-                            removeDevice(device.id).then((removed) => {
-                              if (removed) onDeviceRemoved();
-                            })
-                          }
-                        />
-                      </div>
+                  <li key={device.id} className="action-list__item">
+                    <div>
+                      <h3 className="text-header-h5">{device.name}</h3>
+                      {device.lastUsed && (
+                        <p className="text-small-caption">
+                          {t("digitalSessionDeviceLastUsedText", {
+                            placeholders: {
+                              "@date": formatDate(device.lastUsed)
+                            }
+                          })}
+                        </p>
+                      )}
                     </div>
+                    <Button
+                      label={t("digitalSessionRemoveDeviceButtonText")}
+                      buttonType="none"
+                      collapsible={false}
+                      size="small"
+                      variant="outline"
+                      disabled={removing}
+                      onClick={() =>
+                        removeDevice(device.id).then((removed) => {
+                          if (removed) onDeviceRemoved();
+                        })
+                      }
+                    />
                   </li>
                 ))}
               </ul>
