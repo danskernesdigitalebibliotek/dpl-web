@@ -28,6 +28,12 @@ on:
       - "schemas/graphql/dbc-fbi.graphql"
       - "cms/openapi.json"
 
+# Superseded PR pushes cancel the run. Pushes get a group per commit, as a
+# group also replaces its pending run.
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # ---------------------------------------------------------------------------
   # Build the design-system once. Everything downstream downloads this artifact
@@ -155,9 +161,6 @@ jobs:
     name: React / Generated clients
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.repository_id }}-${{ github.workflow }}-codegen-${{ github.ref }}
-      cancel-in-progress: true
     defaults:
       run:
         working-directory: react
