@@ -4,6 +4,7 @@ import { useText } from "../../core/utils/text";
 import { formatDate } from "../../core/utils/helpers/date";
 import { Button } from "../Buttons/Button";
 import DigitalSessionMessage from "./DigitalSessionMessage";
+import { ActionList, ActionListItem } from "../action-list/action-list";
 
 // Loaded on demand like the reader itself: the device list talks to the SDK,
 // and importing it statically would link the SDK chunk into the page bundle.
@@ -45,41 +46,38 @@ const DeviceLimitReached: React.FC<DeviceLimitReachedProps> = ({
               })}
               onClose={onClose}
             >
-              <ul className="my-32">
+              <ActionList>
                 {devices.devices.map((device) => (
-                  <li key={device.id} className="list-details">
-                    <div className="list-details__container">
-                      <div>
-                        <h3 className="text-header-h5">{device.name}</h3>
-                        {device.lastUsed && (
-                          <p className="text-small-caption">
-                            {t("digitalSessionDeviceLastUsedText", {
-                              placeholders: {
-                                "@date": formatDate(device.lastUsed)
-                              }
-                            })}
-                          </p>
-                        )}
-                      </div>
-                      <div className="list-details__menu">
-                        <Button
-                          label={t("digitalSessionRemoveDeviceButtonText")}
-                          buttonType="none"
-                          collapsible={false}
-                          size="small"
-                          variant="outline"
-                          disabled={removing}
-                          onClick={() =>
-                            removeDevice(device.id).then((removed) => {
-                              if (removed) onDeviceRemoved();
-                            })
-                          }
-                        />
-                      </div>
-                    </div>
-                  </li>
+                  <ActionListItem
+                    key={device.id}
+                    title={device.name}
+                    caption={
+                      device.lastUsed
+                        ? t("digitalSessionDeviceLastUsedText", {
+                            placeholders: {
+                              "@date": formatDate(device.lastUsed)
+                            }
+                          })
+                        : undefined
+                    }
+                    action={
+                      <Button
+                        label={t("digitalSessionRemoveDeviceButtonText")}
+                        buttonType="none"
+                        collapsible={false}
+                        size="small"
+                        variant="outline"
+                        disabled={removing}
+                        onClick={() =>
+                          removeDevice(device.id).then((removed) => {
+                            if (removed) onDeviceRemoved();
+                          })
+                        }
+                      />
+                    }
+                  />
                 ))}
-              </ul>
+              </ActionList>
             </DigitalSessionMessage>
           )
         }
