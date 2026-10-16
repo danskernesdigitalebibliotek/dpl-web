@@ -36,15 +36,3 @@ const Template: StoryFn<typeof ActionList> = (props) => (
 );
 
 export const ActionListExample = Template.bind({});
-
-// As the device-limit message uses it: the list spans the block even though
-// the block centres its children.
-export const InsideListEmpty: StoryFn<typeof ActionList> = (props) => (
-  <div className="dpl-list-empty">
-    <p>
-      Du kan læse og lytte på op til 3 enheder, og de er alle i brug. Fjern en
-      for at fortsætte her.
-    </p>
-    <ActionList {...props} className="my-32" />
-  </div>
-);
