@@ -24,6 +24,12 @@ allowBuilds:
   core-js-pure: true
   cypress: true
   esbuild: true
+  # Pulled in by @wedobooks/sdk (firebase). The postinstall only bakes
+  # FIREBASE_WEBAPP_CONFIG into autoinit defaults, which we do not use.
+  '@firebase/util': false
+  # Pulled in by @wedobooks/sdk. The postinstall only prints a version-scheme
+  # warning.
+  protobufjs: false
   puppeteer: true
   sharp: true
   # Optional native dep of mockttp (dev-only HTTP mocking in go). It ships
@@ -42,8 +48,13 @@ allowBuilds:
 minimumReleaseAge: 2880
 # TEMPORARY: @wedobooks/sdk 0.7.0 was published on 2026-10-06 and is wanted
 # before the two days are up. Remove once it is older than that.
+# TEMPORARY: next 16.4.1 (2026-10-14) fixes critical security advisories and
+# cannot wait two days. Remove once it is older than that.
 minimumReleaseAgeExclude:
   - "@wedobooks/sdk"
+  - "next"
+  - "@next/*"
+  - "eslint-config-next"
 
 # Another supply chain risk mitigation: https://pnpm.io/settings#blockexoticsubdeps
 blockExoticSubdeps: true
@@ -58,3 +69,12 @@ overrides:
   brace-expansion@1: ^1.1.21
   brace-expansion@2: ^2.1.7
   brace-expansion@5: ^5.0.12
+
+# TEMPORARY: backports storybookjs/storybook#36588 so GO's app-dir stories work
+# on Next.js 16.4. Remove once @storybook/nextjs ships it in a release.
+patchedDependencies:
+  '@storybook/nextjs@10.6.1': go/patches/@storybook__nextjs@10.6.1.patch
+
+# patchedDependencies apply to every project, but each patched package only
+# exists in one of them.
+allowUnusedPatches: true

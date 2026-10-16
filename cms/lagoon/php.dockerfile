@@ -14,6 +14,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY design-system/package.json design-system/pnpm-lock.yaml ./design-system/
 COPY react/package.json react/pnpm-lock.yaml ./react/
 COPY go/package.json go/pnpm-lock.yaml ./go/
+# patchedDependencies in pnpm-workspace.yaml point here; pnpm hashes them on install.
+COPY go/patches ./go/patches/
 COPY packages/service-layer/package.json packages/service-layer/pnpm-lock.yaml ./packages/service-layer/
 COPY packages/wedobooks/package.json packages/wedobooks/pnpm-lock.yaml ./packages/wedobooks/
 # Maps the @wedobooks scope to their private registry, which serves the SDK
