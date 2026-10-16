@@ -28,6 +28,17 @@ export default {
   },
   parameters: {
     layout: "fullscreen",
+    // Rows only stack below "x-small" (375px), which the global modes miss.
+    viewport: {
+      viewports: {
+        xxs: { name: "XXSmall", styles: { width: "300px", height: "900px" } },
+      },
+    },
+    chromatic: {
+      modes: {
+        "300px": { viewport: "xxs" },
+      },
+    },
   },
 } as Meta<typeof ActionList>;
 
