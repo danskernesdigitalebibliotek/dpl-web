@@ -93,6 +93,17 @@ GitHub Actions workflows are located in `.github/workflows/` and prefixed by pro
 
 Dependabot configuration is unified at `.github/dependabot.yml` and manages all projects.
 
+Minor and patch bumps are merged unattended by `.github/workflows/dependabot-auto-merge.yml`
+once every other check has passed.
+
+An Orval bump usually changes the generated REST clients, which fails the
+"Generated clients" drift checks in `react/`, `go/` and `packages/service-layer`
+and so blocks auto-merge. Comment `/orval:regenerate` on the pull request to
+have CI re-run the Orval codegen and commit the result to the branch. It
+regenerates only the Orval-backed output — GraphQL and WSDL/SOAP codegen are
+untouched — and only works for members with write access, on branches in this
+repository.
+
 ---
 
 ## Contributing
