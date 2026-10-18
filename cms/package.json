@@ -26,7 +26,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-cypress": "^6.4.4",
     "eslint-plugin-drupal-contrib": "^2.1.0",
-    "eslint-plugin-prettier": "^5.5.6",
+    "eslint-plugin-prettier": "^5.5.7",
     "graphql": "^17",
     "jsome": "^2.5.0",
     "markdownlint-cli2": "^0.23.3",
