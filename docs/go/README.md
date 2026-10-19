@@ -326,7 +326,13 @@ To check that stories can be screenshotted, run:
 task argos:capture -- components/shared/button
 ```
 
-It builds the static Storybook and screenshots the given story files, or every story without arguments, into `screenshots/`. The browser runs in the Playwright image matching the installed Playwright, as in CI, so screenshots render the same. The task needs Docker with host networking: OrbStack, Linux, or Docker Desktop with host networking enabled in its settings. It uses ports 3100 and 6106 on `127.0.0.1`.
+It builds the static Storybook and screenshots the given story files, or every story without arguments, into `screenshots/`. The browser runs in the Playwright image matching the installed Playwright, as in CI, so it has the same browser and fonts. The task needs Docker with host networking: OrbStack, Linux, or Docker Desktop with host networking enabled in its settings. It uses ports 3100 and 6106 on `127.0.0.1`.
+
+By default the task runs the image's build for the Docker host. On Apple Silicon Macs that is the arm64 build, while CI runs the amd64 build. Rotated content, such as tilted covers, their shadows and rotated text, then renders slightly differently from CI. To match CI, run the amd64 build under emulation, which takes more than twice as long:
+
+```shell
+PLATFORM=linux/amd64 task argos:capture -- components/shared/button
+```
 
 To compare commits you have not pushed yet with Argos, upload their screenshots:
 
@@ -335,6 +341,8 @@ task dev:argos -- components/shared/button
 ```
 
 They are compared with `develop`; set `BASE` to compare with another branch, e.g. `BASE=main task dev:argos`. The task needs `ARGOS_TOKEN` in the root `.env` (`task dev:dotenv:generate`). Local uploads never become baselines. The task refuses to run on `develop`, `main` and `release/*`, with uncommitted changes, as Argos files the build under `HEAD`, and once `HEAD` is pushed, as CI then compares it.
+
+On Apple Silicon Macs, Argos therefore shows changes along rotated content in every story that has it, unless you set `PLATFORM=linux/amd64`. Disregard those changes when you review a local upload.
 
 ## Developers
 

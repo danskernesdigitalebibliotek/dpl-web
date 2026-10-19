@@ -78,12 +78,17 @@ tasks:
         msg: "WEDOBOOKS_NPM_TOKEN is missing from the central .env - run 'task dev:dotenv:generate'. See packages/wedobooks/README.md."
 
   argos:capture:
-    desc: Screenshot stories into ./screenshots, rendered like Argos' screenshots in CI
+    desc: Screenshot stories into ./screenshots in the Playwright image CI uses
     summary: |
       Builds the static Storybook and runs the visual suite against it, with
       the browser in the Playwright image matching the installed Playwright,
-      so screenshots render like CI's. Pass story files to screenshot only
-      some, e.g. `task argos:capture -- components/shared/button`.
+      as in CI. Pass story files to screenshot only some, e.g.
+      `task argos:capture -- components/shared/button`.
+
+      PLATFORM picks the image's build, by default the Docker host's. On
+      Apple Silicon that is linux/arm64, where rotated content renders
+      slightly differently from CI's linux/amd64. PLATFORM=linux/amd64
+      matches CI under emulation, at more than twice the run time.
 
       The container shares the host's network, which on macOS needs OrbStack
       or Docker Desktop's host networking.
@@ -94,6 +99,8 @@ tasks:
         sh: >-
           sed -n 's/^  "version": "\([^"]*\)".*/\1/p' node_modules/playwright/package.json
       CONTAINER: go-argos-playwright
+      PLATFORM:
+        sh: echo "${PLATFORM:-$(docker version --format '{{"{{"}}.Server.Os{{"}}"}}/{{"{{"}}.Server.Arch{{"}}"}}')}"
     cmds:
       - rm -rf screenshots
       # The tools directly, not through pnpm, whose dependency check before a
@@ -104,9 +111,10 @@ tasks:
       # outlives the task. The playwright package the tests use, so client and
       # server match. --init reaps the browsers the server starts, --ipc=host
       # gives Chromium more shared memory than Docker's 64 MB. On loopback
-      # only, as --unsafe lets clients pass any launch option.
+      # only, as --unsafe lets clients pass any launch option. Always with
+      # --platform, as Docker otherwise runs whichever build was pulled last.
       - >-
-        docker run --detach --rm --init --ipc=host --network host --name {{.CONTAINER}}
+        docker run --platform {{.PLATFORM}} --detach --rm --init --ipc=host --network host --name {{.CONTAINER}}
         --volume "$PWD":/work:ro --workdir /work
         mcr.microsoft.com/playwright:v{{.PLAYWRIGHT_VERSION}}-noble
         sh -c 'node node_modules/http-server/bin/http-server storybook-static -a 127.0.0.1 -p 6106 --silent &
@@ -125,6 +133,9 @@ tasks:
       Screenshots stories like `argos:capture` and uploads them to Argos,
       compared with the CI baseline of BASE (default develop). Pass story
       files to upload only some. Needs ARGOS_TOKEN in the root .env.
+
+      On Apple Silicon, expect changes along rotated content unless
+      PLATFORM=linux/amd64; see argos:capture.
     vars:
       BASE: '{{.BASE | default "develop"}}'
       BRANCH:
