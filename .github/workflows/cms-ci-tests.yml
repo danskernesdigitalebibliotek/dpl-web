@@ -276,7 +276,7 @@ jobs:
       - name: Install problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint Markdown
-        run: pnpm dlx markdownlint-cli2
+        run: pnpm run markdown:lint
 
   Shellcheck:
     name: CMS / Shellcheck
@@ -318,7 +318,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Run ESLint
-        run: pnpm exec eslint web -c eslint.config.mjs
+        run: pnpm run lint:js
 
   EslintCypress:
     name: CMS / Lint Cypress tests
@@ -335,7 +335,7 @@ jobs:
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Run ESLint
         working-directory: cms
-        run: pnpm exec eslint cypress -c cypress/eslint.config.mjs
+        run: pnpm run lint:cypress
 
   CheckDrupalConfig:
     name: CMS / Check Drupal Config

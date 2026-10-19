@@ -127,8 +127,8 @@ tasks:
       - task dev:cli -- php vendor/bin/twig-cs-fixer lint --fix
       - task dev:cli -- php vendor/bin/phpstan
       - task dev:cli -- corepack pnpm install --frozen-lockfile
-      - task dev:cli -- corepack pnpm exec eslint web -c eslint.config.mjs --fix
-      - task dev:cli -- corepack pnpm exec eslint cypress -c cypress/eslint.config.mjs --fix
+      - task dev:cli -- corepack pnpm run lint:js:fix
+      - task dev:cli -- corepack pnpm run lint:cypress:fix
 
   dev:build:
     summary: Build docker containers

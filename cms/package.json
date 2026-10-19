@@ -39,6 +39,12 @@
     "wiremock:create-mappings": "tsc -p wiremock && node wiremock/build/createMappings.js",
     "pa11y:ci": "pa11y-ci",
     "wiremock:dev:watch": "tsc -p wiremock -w",
-    "wiremock:build": "tsc -p wiremock"
+    "wiremock:build": "tsc -p wiremock",
+    "markdown:lint": "markdownlint-cli2",
+    "markdown:lint:fix": "markdownlint-cli2 --fix",
+    "lint:js": "eslint web -c eslint.config.mjs",
+    "lint:js:fix": "eslint web -c eslint.config.mjs --fix",
+    "lint:cypress": "eslint cypress -c cypress/eslint.config.mjs",
+    "lint:cypress:fix": "eslint cypress -c cypress/eslint.config.mjs --fix"
   }
 }
