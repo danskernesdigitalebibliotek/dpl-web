@@ -50,6 +50,13 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN node ./scripts/prepare-docker-env-vars.mjs && \
     corepack pnpm run build:stage2
 
+# Each prune below is an install under the hood and re-verifies every lockfile
+# entry against the registry for minimumReleaseAge: ~1 min per site deploy, and
+# a hard failure when the registry refuses. Stage 1 verified the lockfile when
+# it installed it. Env var rather than pnpm-workspace.yaml so stage 1 keeps the
+# check.
+ENV pnpm_config_trust_lockfile=true
+
 # Drop devDependencies before the runner stage copies /app, so Storybook,
 # Cypress, Vitest and the rest of the build-time tooling do not ship to
 # production.

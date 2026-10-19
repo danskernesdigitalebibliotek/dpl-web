@@ -23,9 +23,9 @@ scripts in `go/package.json` that they each run:
 ## The WeDoBooks credential
 
 Both stages need a token for WeDoBooks' private npm registry — stage 1 for the
-`pnpm install`, stage 2 for the `pnpm prune` passes, which resolve every
-workspace lockfile against its registry. They get it two different ways, and
-the difference is not incidental:
+`pnpm install`, stage 2 for the `pnpm prune` passes, which still fetch from
+the registry when a workspace package is missing from the store. They get it
+two different ways, and the difference is not incidental:
 
 - **Stage 1 takes a BuildKit secret** (`--mount=type=secret`). This Dockerfile
   has a single stage, and that stage is what gets published, so a build
