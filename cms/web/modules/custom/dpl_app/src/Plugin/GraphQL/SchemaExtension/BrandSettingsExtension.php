@@ -9,9 +9,12 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Theme\ThemeInitializationInterface;
+use Drupal\graphql\GraphQL\Execution\FieldContext;
+use Drupal\graphql\GraphQL\Execution\ResolveContext;
 use Drupal\graphql\GraphQL\ResolverBuilder;
 use Drupal\graphql\GraphQL\ResolverRegistryInterface;
 use Drupal\graphql\Plugin\GraphQL\SchemaExtension\SdlSchemaExtensionPluginBase;
+use GraphQL\Type\Definition\ResolveInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -71,8 +74,15 @@ class BrandSettingsExtension extends SdlSchemaExtensionPluginBase {
     );
 
     $registry->addFieldResolver('BrandSettings', 'logoUrl',
-      $builder->callback(function () {
-        $default_theme = $this->configFactory->get('system.theme')->get('default');
+      $builder->callback(function ($value, $args, ResolveContext $context, ResolveInfo $info, FieldContext $field_context) {
+        $system_theme = $this->configFactory->get('system.theme');
+        $default_theme = $system_theme->get('default');
+
+        // The logo is read from the global and the default theme's settings,
+        // so the result must be invalidated when either of them changes.
+        $field_context->addCacheableDependency($system_theme);
+        $field_context->addCacheableDependency($this->configFactory->get('system.theme.global'));
+        $field_context->addCacheableDependency($this->configFactory->get($default_theme . '.settings'));
 
         $logo_path = $this->themeSettingsProvider->getSetting('logo.path', $default_theme);
 
