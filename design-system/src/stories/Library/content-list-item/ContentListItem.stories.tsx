@@ -27,9 +27,7 @@ export default {
     location: "Stadsbiblioteket",
     price: "80 KR",
     href: "/",
-    image: (
-      <ImageCredited src="https://images.unsplash.com/photo-1585779034823-7e9ac8faec70?q=80&w=3024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
-    ),
+    image: <ImageCredited src="images/bookcase_sofa.jpg" />,
     placeholderText: "Stine Pilgaard vinder De Gyldne Laurbær",
   },
   parameters: {
@@ -54,9 +52,7 @@ const TemplateArticle: StoryFn<typeof ContentListItem> = () => (
       publicationDate: "15 Maj 2025",
       description:
         "Da honningen tog overhånd - en historie om Peter Plys og hans fald ind i afhængighedens mørke væsen.",
-      image: (
-        <ImageCredited src="https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHN0b2xlbiUyMGhvbmV5fGVufDB8fDB8fHww" />
-      ),
+      image: <ImageCredited src="images/honey_jar.jpg" />,
     }}
   />
 );
