@@ -10,6 +10,7 @@ import {
   useDigitalQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import useBiblioAdapter from "../../../core/utils/useBiblioAdapter";
+import { isPatron } from "../../../core/utils/helpers/user";
 import { useUrls } from "../../../core/utils/url";
 import { constructAdvancedSearchUrl } from "../../../core/advanced-search/url";
 import {
@@ -25,6 +26,8 @@ const StatusSection: FC = () => {
   const t = useText();
   const u = useUrls();
   const viaBiblioAdapter = useBiblioAdapter();
+  // Loan quotas belong to a patron, so they are only fetched with a user token.
+  const userIsPatron = isPatron();
 
   const alwaysLoanableDigitalTitlesUrl = constructAdvancedSearchUrl({
     advancedSearchUrl: u("advancedSearchUrl"),
@@ -44,12 +47,12 @@ const StatusSection: FC = () => {
   });
   const { data } = useGetV1UserLoans(
     {},
-    { query: { enabled: !viaBiblioAdapter } }
+    { query: { enabled: !viaBiblioAdapter && userIsPatron } }
   );
   const {
     loanQuotas: { data: digitalLoanQuotas },
     reservationLimits: { data: digitalReservationLimits }
-  } = useDigitalQuotas({ enabled: viaBiblioAdapter });
+  } = useDigitalQuotas({ enabled: viaBiblioAdapter && userIsPatron });
 
   // Publizon doesn't account for "subscription" (aka, "blue", aka
   // "non-quota") loans, so we have to figure out how many of the

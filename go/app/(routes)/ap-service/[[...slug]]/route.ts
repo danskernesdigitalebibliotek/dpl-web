@@ -4,9 +4,10 @@ import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { TServiceType, getApServiceSettings, getApServiceUrl } from "@/lib/helpers/ap-service"
 import { userIsAnonymous } from "@/lib/helpers/user"
 import {
-  adgangsplatformenAccessTokenHasExpired,
   destroySession,
+  getServiceUserToken,
   getSession,
+  userTokenHasExpired,
 } from "@/lib/session/session"
 
 type TContext = { params: Promise<{ slug: string[] }> }
@@ -25,13 +26,13 @@ const getAuthHeader = async (
 ): Promise<TResolvedAuth> => {
   const useLibraryToken = getApServiceSettings(serviceType)?.useLibraryTokenAlways ?? true
   const session = await getSession()
-  const userToken = session?.adgangsplatformenUserToken
+  const userToken = getServiceUserToken(session, serviceType)
   const libraryToken = session?.adgangsplatformenLibraryToken
 
   // The middleware does not run on this route, so we check for an expired
   // session here as well. If it has expired we destroy it and skip the user
   // token — the service would reject it anyway.
-  const sessionHasExpired = adgangsplatformenAccessTokenHasExpired(session)
+  const sessionHasExpired = userTokenHasExpired(session)
   if (sessionHasExpired) {
     await destroySession(session)
   }
@@ -133,8 +134,10 @@ async function proxyRequest(
     // clock or revoked with a future expire (the middleware can only catch
     // the former). Destroy the GO session so /auth/session reports logged
     // out instead of letting clients retry with the same dead token forever.
-    // Only Adgangsplatformen sessions carry a user token here; Unilogin
-    // sessions are untouched.
+    // A Unilogin session also sends its token here, but only to the Biblio
+    // adapter: a digital-loan rejection must not end the whole session, whose
+    // lifecycle is the CMS's (ADR-013), so only Adgangsplatformen sessions are
+    // torn down.
     if (auth.source === "user-token" && (result.status === 401 || result.status === 403)) {
       const session = await getSession()
       if (!userIsAnonymous(session) && session.type === "adgangsplatformen") {

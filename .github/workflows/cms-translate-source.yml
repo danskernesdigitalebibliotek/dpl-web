@@ -66,6 +66,10 @@ jobs:
         with:
           file_pattern: "./cms/web/profiles/dpl_cms/translations/*.combined.po"
           commit_message: New translations were found
+          # Pulls in any changes that's landed on develop while we were
+          # running.
+          before_push_hook: |
+            git pull --rebase
       - name: Make Poeditor look for changes in translation strings
         uses: distributhor/workflow-webhook@v3
         with:

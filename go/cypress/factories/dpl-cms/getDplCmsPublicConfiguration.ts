@@ -29,6 +29,7 @@ export default Factory.define<
       public: {
         loginUrls: {
           adgangsplatformen: "/mocked/login",
+          unilogin: "/mocked/login?idp=unilogin",
         },
         logoutUrls: {
           adgangsplatformen: "/mocked/logout",
@@ -40,9 +41,6 @@ export default Factory.define<
         mapp: {
           domain: "responder.wt-safetag.com",
           id: "476651662471322",
-        },
-        unilogin: {
-          municipalityId: "101",
         },
         blacklistedAvailabilityBranches: [],
         biblio: transientParams.biblio ?? { enabled: false, baseUrl: null, sdk: null },

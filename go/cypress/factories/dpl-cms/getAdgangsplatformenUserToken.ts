@@ -15,6 +15,7 @@ export default Factory.define<GetAdgangsplatformenUserTokenQuery>(() => {
           expire: {
             timestamp: dayjs().add(1, "day").unix(),
           },
+          type: "user",
         },
       },
     },

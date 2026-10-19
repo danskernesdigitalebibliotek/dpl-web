@@ -10,8 +10,11 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Routing\LocalRedirectResponse;
+use Drupal\Core\Routing\RequestContext;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Routing\UrlGenerator;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\AccessTokenType;
@@ -24,9 +27,11 @@ use Drupal\dpl_login\User;
 use Drupal\dpl_login\UnregisteredUserTokensProvider;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
+use Drupal\openid_connect\OpenIDConnectClientEntityInterface;
 use Drupal\openid_connect\OpenIDConnectSession;
 use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
+use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Drupal\Tests\UnitTestCase;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
@@ -207,6 +212,147 @@ class DplLoginControllerTest extends UnitTestCase {
       'https://local.site',
       $response->headers->get('location')
     );
+  }
+
+  /**
+   * An allow-listed identity provider is forwarded to Adgangsplatformen.
+   *
+   * @dataProvider provideIdentityProviders
+   */
+  public function testThatLoginForwardsAllowListedIdentityProvider(?string $idp, bool $is_unilogin, array $additional_params): void {
+    $current_user = $this->prophesize(AccountProxyInterface::class);
+    $current_user->isAuthenticated()->willReturn(FALSE);
+
+    $response = new Response();
+    $plugin = $this->prophesize(OpenIDConnectClientInterface::class);
+    $plugin->authorize('openid', $additional_params)->willReturn($response)->shouldBeCalled();
+    $client = $this->prophesize(OpenIDConnectClientEntityInterface::class);
+    $client->getPlugin()->willReturn($plugin->reveal());
+    $client_storage = $this->prophesize(EntityStorageInterface::class);
+    $client_storage->load('adgangsplatformen')->willReturn($client->reveal());
+    $entity_type_manager = $this->prophesize(EntityTypeManagerInterface::class);
+    $entity_type_manager->getStorage('openid_connect_client')->willReturn($client_storage->reveal());
+
+    $claims = $this->prophesize(OpenIDConnectClaims::class);
+    $claims->getScopes($plugin->reveal())->willReturn('openid');
+
+    $dpl_login_session = $this->prophesize(DplLoginSession::class);
+
+    $container = \Drupal::getContainer();
+    $container->set('current_user', $current_user->reveal());
+    $container->set('entity_type.manager', $entity_type_manager->reveal());
+    $container->set('openid_connect.claims', $claims->reveal());
+    $container->set('dpl_login.session', $dpl_login_session->reveal());
+    $container->setAlias(Config::class, 'dpl_login.adgangsplatformen.config');
+    \Drupal::setContainer($container);
+
+    $query = $idp ? ['idp' => $idp] : [];
+    $controller = DplLoginController::create($container);
+    $this->assertSame($response, $controller->login(new Request($query)));
+
+    $dpl_login_session->setUniloginLogin($is_unilogin)->shouldHaveBeenCalled();
+  }
+
+  /**
+   * A logged-in user who hits /login is logged out before logging in again.
+   *
+   * A Unilogin student starting a patron login is also logged out of
+   * Adgangsplatformen, and then sent back to /login. Otherwise a cancelled
+   * patron login would leave the student logged out of the CMS only.
+   *
+   * @dataProvider provideLoggedInUsers
+   */
+  public function testThatLoggedInUsersAreLoggedOutOnLogin(?AccessTokenType $token_type, array $query, ?string $expected_location): void {
+    $current_user = $this->prophesize(AccountProxyInterface::class);
+    $current_user->isAuthenticated()->willReturn(TRUE);
+
+    $token = NULL;
+    if ($token_type) {
+      $token = new AccessToken();
+      $token->token = 'student-token';
+      $token->expire = 9999;
+      $token->type = $token_type;
+    }
+    $user_tokens = $this->prophesize(UserTokens::class);
+    $user_tokens->getCurrent()->willReturn($token);
+
+    $config = $this->prophesize(ImmutableConfig::class);
+    $config->get('settings')->willReturn(['logout_endpoint' => 'https://login.example/logout']);
+    $config_factory = $this->prophesize(ConfigFactoryInterface::class);
+    $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
+    $config_manager = $this->prophesize(ConfigManagerInterface::class);
+    $config_manager->getConfigFactory()->willReturn($config_factory->reveal());
+
+    $logger = $this->prophesize(LoggerInterface::class);
+    $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);
+    $logger_factory->get(Argument::any())->willReturn($logger->reveal());
+
+    $user_service = $this->prophesize(User::class);
+
+    $container = \Drupal::getContainer();
+    $container->set('current_user', $current_user->reveal());
+    $container->set('dpl_login.user_tokens', $user_tokens->reveal());
+    $container->set('dpl_login.adgangsplatformen.config', new Config($config_manager->reveal()));
+    $container->setAlias(Config::class, 'dpl_login.adgangsplatformen.config');
+    $container->set('logger.factory', $logger_factory->reveal());
+    $container->set('dpl_login.user', $user_service->reveal());
+    $request = Request::create('https://library.example/login', 'GET', $query);
+    $request_context = new RequestContext();
+    $request_context->fromRequest($request);
+    $request_context->setCompleteBaseUrl('https://library.example');
+    $container->set('router.request_context', $request_context);
+    \Drupal::setContainer($container);
+
+    $controller = DplLoginController::create($container);
+    $response = $controller->login($request);
+
+    $user_service->logout()->shouldHaveBeenCalled();
+    if ($expected_location) {
+      $this->assertInstanceOf(TrustedRedirectResponse::class, $response);
+      $this->assertSame($expected_location, $response->headers->get('location'));
+    }
+    else {
+      $this->assertInstanceOf(LocalRedirectResponse::class, $response);
+      $this->assertSame($request->getUri(), $response->headers->get('location'));
+    }
+  }
+
+  /**
+   * Test cases for testThatLoggedInUsersAreLoggedOutOnLogin.
+   *
+   * @return array<string, array{?\Drupal\dpl_login\AccessTokenType, array<string, string>, ?string}>
+   *   Token type, query and the expected external redirect, if any.
+   */
+  public static function provideLoggedInUsers(): array {
+    return [
+      'Unilogin student starting a patron login' => [
+        AccessTokenType::UniloginUser,
+        ['current-path' => '/work/123'],
+        'https://login.example/logout?singlelogout=true&access_token=student-token&redirect_uri=https%3A//library.example/login%3Fcurrent-path%3D%252Fwork%252F123',
+      ],
+      'Unilogin student starting a Unilogin login' => [
+        AccessTokenType::UniloginUser,
+        ['current-path' => '/go-login', 'idp' => 'unilogin'],
+        NULL,
+      ],
+      'Patron' => [AccessTokenType::User, ['current-path' => '/work/123'], NULL],
+      'Editor without a token' => [NULL, [], NULL],
+    ];
+  }
+
+  /**
+   * Test cases for testThatLoginForwardsAllowListedIdentityProvider.
+   *
+   * @return array<string, array{?string, bool, array<string, string>}>
+   *   The idp query parameter, whether it is a Unilogin login and the
+   *   parameters expected to be added to the authorization request.
+   */
+  public static function provideIdentityProviders(): array {
+    return [
+      'No identity provider' => [NULL, FALSE, []],
+      'Unilogin' => ['unilogin', TRUE, ['idp' => 'unilogin_oidc']],
+      'Unknown identity provider' => ['nemlogin', FALSE, []],
+    ];
   }
 
 }

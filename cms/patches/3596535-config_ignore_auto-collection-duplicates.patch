@@ -1,0 +1,26 @@
+diff --git a/src/EventSubscriber/ConfigIgnoreAutoEventsSubscriber.php b/src/EventSubscriber/ConfigIgnoreAutoEventsSubscriber.php
+index 9b9b4ad..8498d4d 100644
+--- a/src/EventSubscriber/ConfigIgnoreAutoEventsSubscriber.php
++++ b/src/EventSubscriber/ConfigIgnoreAutoEventsSubscriber.php
+@@ -115,16 +115,16 @@ public function configSave(ConfigCrudEvent $event) {
+       $config_ignore_settings = $this->storage->read('config_ignore_auto.settings') ?: [];
+ 
+       $ignored_keys = $config_ignore_settings['ignored_config_entities'] ?? [];
++      $ignored_key = $is_collection
++        ? $config_collection_name . '|' . $config_name
++        : $config_name;
++
+       // Avoid rewriting active config and clearing caches when the config entity
+       // is already tracked.
+-      if (in_array($config_name, $ignored_keys, TRUE)) {
++      if (in_array($ignored_key, $ignored_keys, TRUE)) {
+         return;
+       }
+ 
+-      $ignored_key = $is_collection
+-        ? $config_collection_name . '|' . $config_name
+-        : $config_name;
+-
+       $ignored_keys[] = $ignored_key;
+       sort($ignored_keys);
+ 

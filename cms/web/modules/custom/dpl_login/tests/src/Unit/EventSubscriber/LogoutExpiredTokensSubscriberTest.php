@@ -8,6 +8,9 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\EventSubscriber\LogoutExpiredTokensSubscriber;
+use Drupal\dpl_login\RegisteredUserTokensProvider;
+use Drupal\dpl_login\UniloginUserTokensProvider;
+use Drupal\dpl_login\UnregisteredUserTokensProvider;
 use Drupal\dpl_login\User;
 use Drupal\dpl_login\UserTokens;
 use Drupal\Tests\UnitTestCase;
@@ -83,6 +86,42 @@ class LogoutExpiredTokensSubscriberTest extends UnitTestCase {
       'Non-expired token' => [TRUE, self::VALID_TIMESTAMP, FALSE],
       'Expired token' => [TRUE, self::EXPIRED_TIMESTAMP, TRUE],
     ];
+  }
+
+  /**
+   * Test that users with an expired Unilogin token are logged out.
+   */
+  public function testLogoutExpiredUniloginToken(): void {
+    $user = $this->prophesize(AccountInterface::class);
+    $user->isAuthenticated()->willReturn(TRUE);
+
+    $accessToken = new AccessToken();
+    $accessToken->expire = self::EXPIRED_TIMESTAMP;
+
+    // Only the Unilogin provider holds a token.
+    $registered = $this->prophesize(RegisteredUserTokensProvider::class);
+    $registered->getAccessToken()->willReturn(NULL);
+    $unregistered = $this->prophesize(UnregisteredUserTokensProvider::class);
+    $unregistered->getAccessToken()->willReturn(NULL);
+    $unilogin = $this->prophesize(UniloginUserTokensProvider::class);
+    $unilogin->getAccessToken()->willReturn($accessToken);
+    $userTokens = new UserTokens($registered->reveal(), $unregistered->reveal(), $unilogin->reveal());
+
+    $dateTime = $this->prophesize(TimeInterface::class);
+    $dateTime->getRequestTime()->willReturn(self::CURRENT_TIMESTAMP);
+
+    $userService = $this->prophesize(User::class);
+
+    $subscriber = new LogoutExpiredTokensSubscriber(
+      $user->reveal(),
+      $userTokens,
+      $dateTime->reveal(),
+      $userService->reveal(),
+    );
+
+    $subscriber->logoutExpired($this->prophesize(RequestEvent::class)->reveal());
+
+    $userService->logout()->shouldHaveBeenCalled();
   }
 
 }

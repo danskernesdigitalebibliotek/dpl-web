@@ -626,6 +626,7 @@ class DplReactAppsController extends ControllerBase {
       'online-internal-success-loaned-text' => $this->t('You can read/listen to the material until @expirationDate', [], ['context' => 'Work Page']),
       'online-internal-success-reserved-text' => $this->t('You have reserved the material. If you have provided an phonenumber or email during the reservation, you will receive a notification when the material is ready. Please note that the loan does not happen automatically.', [], ['context' => 'Work Page']),
       'online-internal-success-manual-borrowing-notice-text' => $this->t('Please note that the loan does not happen automatically. You must manually borrow the digital material yourself within 48 hours', [], ['context' => 'Work Page']),
+      'online-limit-month-always-loanable-link-text' => $this->t("See titles that don't count towards your quota", [], ['context' => 'Work Page']),
       'online-limit-month-audiobook-info-text' => $this->t('You have borrowed @count out of @limit possible audio-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-ebook-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),

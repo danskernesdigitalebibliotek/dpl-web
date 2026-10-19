@@ -6,10 +6,20 @@ import AccessForbiddenError from "../graphql/fetchers/AccessForbiddenError"
 import UnauthenticatedError from "../graphql/fetchers/UnauthenticatedError"
 import { useGetAdgangsplatformenUserTokenQuery } from "../graphql/generated/dpl-cms/graphql"
 import { getDplCmsSessionCookie } from "../session/session"
+import { TUserToken } from "../types/session"
+
+// The CMS types each token it hands out. A Unilogin login gets its own type,
+// so it never ends up as a patron session. Unregistered patrons log in to GO
+// like registered ones.
+const sessionTypeByCmsTokenType = {
+  user: "adgangsplatformen",
+  unregistered_user: "adgangsplatformen",
+  unilogin_user: "unilogin",
+} as const
 
 export type TUserTokenResult =
   // The CMS handed out a token the session can use.
-  | { status: "token"; data: { token: string; expire: { timestamp: number } } }
+  | { status: "token"; data: TUserToken }
   // The CMS answered, and this browser has no usable token: the Drupal
   // session is gone, or this is a CMS user who is not a patron.
   | { status: "no-token" }
@@ -45,6 +55,9 @@ export const loadUserToken = async (): Promise<TUserTokenResult> => {
         expire: z.object({
           timestamp: z.number(),
         }),
+        type: z
+          .enum(["user", "unregistered_user", "unilogin_user"])
+          .transform(type => sessionTypeByCmsTokenType[type]),
       })
       .safeParse(user)
 

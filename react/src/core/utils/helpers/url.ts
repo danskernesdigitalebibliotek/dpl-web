@@ -1,4 +1,5 @@
 import { WorkId } from "../types/ids";
+import { requestPatronLogin } from "../../unilogin-user";
 
 export const getCurrentLocation = () => String(window.location);
 
@@ -224,10 +225,14 @@ export function redirectToLoginAndBack({
   const redirectUrl = appendQueryParametersToUrl(authUrl, {
     "current-path": localPathToReturnTo
   });
-  if (trackingFunction) {
-    trackingFunction().then(() => redirectTo(redirectUrl));
-  }
-  redirectTo(redirectUrl);
+  // A Unilogin student is asked first, since a patron login logs the student
+  // out.
+  requestPatronLogin(() => {
+    if (trackingFunction) {
+      trackingFunction().then(() => redirectTo(redirectUrl));
+    }
+    redirectTo(redirectUrl);
+  });
 }
 
 // Checks whether a valid URL can be made out of a given string.

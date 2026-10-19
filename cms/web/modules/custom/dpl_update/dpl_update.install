@@ -1342,3 +1342,41 @@ function dpl_update_update_10082(): string {
 function dpl_update_update_10083(): string {
   return _dpl_update_install_modules(['dk_address', 'dk_address_gsearch_migrate']);
 }
+
+/**
+ * Remove duplicate entries from the config_ignore_auto ignore list.
+ */
+function dpl_update_update_10084(): string {
+  $settings = \Drupal::configFactory()->getEditable('config_ignore_auto.settings');
+  $items = (array) $settings->get('ignored_config_entities');
+  $unique_items = array_values(array_unique($items));
+
+  $removed_count = count($items) - count($unique_items);
+
+  if ($removed_count === 0) {
+    return 'No duplicates found in config_ignore_auto.settings.ignored_config_entities.';
+  }
+
+  $settings->set('ignored_config_entities', $unique_items);
+  $settings->save();
+
+  return "Removed $removed_count duplicates from config_ignore_auto.settings.ignored_config_entities.";
+}
+
+/**
+ * Remove the setting that tolerated materials unknown to the Biblio adapter.
+ *
+ * Such a material is now always shown as unavailable. Sites that saved the
+ * Biblio form keep their copy of the configuration through config_ignore_auto,
+ * so the key has to be removed here rather than by the configuration import.
+ */
+function dpl_update_update_10085(): string {
+  $config = \Drupal::configFactory()->getEditable('dpl_biblio.settings');
+  if ($config->isNew()) {
+    return 'dpl_biblio.settings does not exist; nothing to remove.';
+  }
+
+  $config->clear('tolerate_unknown_materials')->save();
+
+  return 'Removed tolerate_unknown_materials from dpl_biblio.settings.';
+}

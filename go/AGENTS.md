@@ -58,14 +58,16 @@ If you are working with caching, make sure to see ADR-008 and ADR-009.
 Two identity providers, both sharing a single `go-session` cookie. A user
 is either one or the other at a time, never both.
 
-- **Adgangsplatformen** — library patrons. Drupal `SSESS*` cookie ties the
-  Go session to the CMS session; middleware destroys the Go session if the
-  CMS cookie disappears.
-- **Unilogin** — students. OpenID Connect + PKCE via `openid-client`. The
-  user's first institution's `kommunenr` must match
-  `UNILOGIN_MUNICIPALITY_ID`.
+- **Adgangsplatformen** — library patrons.
+- **Unilogin** — students. An Adgangsplatformen login with Unilogin forced;
+  the CMS checks license and municipality.
 
-If you are doing anything with authentication, make sure to see ADR-005 and [`../docs/go/authentication.md`](../docs/go/authentication.md)
+Both log in through the CMS. The type of the user token the CMS hands out
+decides the session type. The Drupal `SSESS*` cookie ties the Go session to
+the CMS session; middleware destroys the Go session if the CMS cookie
+disappears, the token expires, or the CMS hands out a token of another type.
+
+If you are doing anything with authentication, make sure to see ADR-005, ADR-012, ADR-013 and [`../docs/go/authentication.md`](../docs/go/authentication.md)
 
 ## Where to learn more
 

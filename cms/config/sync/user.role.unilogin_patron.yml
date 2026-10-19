@@ -1,0 +1,12 @@
+uuid: 67f6b5e4-0230-4e0e-9b81-6a7a8c08f32b
+langcode: en
+status: true
+dependencies:
+  module:
+    - graphql
+id: unilogin_patron
+label: 'Unilogin patron'
+weight: 14
+is_admin: null
+permissions:
+  - 'execute graphql_compose_server arbitrary graphql requests'

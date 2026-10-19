@@ -31,6 +31,8 @@ Endpoints that read or change a user's loans, reservations, or user data require
 
 Metadata and sample endpoints can be accessed with either an end-user token or a server-to-server token.
 
+`GET /v1/organizations` accepts any valid bearer token. If the token resolves to an end user, the client may omit `third_party_id`; the adapter then uses the user's municipality. Otherwise, the client must send `organization_id` or `third_party_id`.
+
 Server-to-server access requires a token issued via the OAuth2 `client_credentials` grant. The OAuth client must be configured with access to the endpoint.
 
 **Identity resolution**
@@ -40,12 +42,15 @@ User-scoped endpoints do not accept client-supplied `user_id` or organization id
 1. If both `uniqueId` and `municipality` are present:
    - `user_id` = `uniqueId`
    - `organization_third_party_id` = `municipality`
+   - `user_data.type` = `"library"`
 2. Otherwise, use the Unilogin fallback:
    - `user_id` = `uniloginUniIdHash`
    - `organization_third_party_id` = `uniloginMunicipality`
+   - `user_data.type` = `"unilogin"`
+   - `user_data.institution_id` = the first id in `uniloginInstitutionIds`
 
 
-Unilogin fallback requires an active Unilogin license; otherwise the adapter returns 403 with `User is missing license`.
+Unilogin fallback requires at least one institution id and an active Unilogin license. Without an active license, the adapter returns 403 with `User is missing license`.
 
 If identity cannot be resolved, the adapter returns 403 Forbidden.
 ## Unsupported endpoints in adapter
@@ -68,6 +73,7 @@ import type { LendingBlockReason } from "./lendingBlockReason"
 import type { LoanDto } from "./loanDto"
 import type { LoanProvider } from "./loanProvider"
 import type { QuotaReject } from "./quotaReject"
+import type { ReservationDto } from "./reservationDto"
 import type { UnavailableReason } from "./unavailableReason"
 
 export interface CreateReservationApiResponse {
@@ -91,4 +97,6 @@ for the material. Only set when `status` is `unavailable`. */
   lending_block_reason?: LendingBlockReason
   /** Present only when the reservation request was fulfilled immediately as a loan. */
   loan?: LoanDto
+  /** The reservation created by this request, or the one the user already held for the material. */
+  reservation?: ReservationDto
 }
