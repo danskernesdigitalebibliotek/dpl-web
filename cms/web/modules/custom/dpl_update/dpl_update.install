@@ -1393,3 +1393,10 @@ function dpl_update_update_10086(): string {
     'facets.facet.event_date',
   ]);
 }
+
+/**
+ * Uninstall facets_date_range.
+ */
+function dpl_update_update_10087(): string {
+  return _dpl_update_uninstall_modules(['facets_date_range']);
+}
