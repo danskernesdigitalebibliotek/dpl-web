@@ -31,6 +31,8 @@ Endpoints that read or change a user's loans, reservations, or user data require
 
 Metadata and sample endpoints can be accessed with either an end-user token or a server-to-server token.
 
+`GET /v1/organizations` accepts any valid bearer token. If the token resolves to an end user, the client may omit `third_party_id`; the adapter then uses the user's municipality. Otherwise, the client must send `organization_id` or `third_party_id`.
+
 Server-to-server access requires a token issued via the OAuth2 `client_credentials` grant. The OAuth client must be configured with access to the endpoint.
 
 **Identity resolution**
@@ -40,12 +42,15 @@ User-scoped endpoints do not accept client-supplied `user_id` or organization id
 1. If both `uniqueId` and `municipality` are present:
    - `user_id` = `uniqueId`
    - `organization_third_party_id` = `municipality`
+   - `user_data.type` = `"library"`
 2. Otherwise, use the Unilogin fallback:
    - `user_id` = `uniloginUniIdHash`
    - `organization_third_party_id` = `uniloginMunicipality`
+   - `user_data.type` = `"unilogin"`
+   - `user_data.institution_id` = the first id in `uniloginInstitutionIds`
 
 
-Unilogin fallback requires an active Unilogin license; otherwise the adapter returns 403 with `User is missing license`.
+Unilogin fallback requires at least one institution id and an active Unilogin license. Without an active license, the adapter returns 403 with `User is missing license`.
 
 If identity cannot be resolved, the adapter returns 403 Forbidden.
 ## Unsupported endpoints in adapter
@@ -756,8 +761,9 @@ export const getReservationsForAuthenticatedUser = async (
  * Requests a reservation for a user and material.
 
 If the material can be loaned right away, the endpoint creates a loan instead of a waiting
-reservation and responds with status `201`. Otherwise it returns status `200` with a
-reservation-oriented decision payload.
+reservation. Status `201` means a new reservation or a loan was created and is in the
+response. Status `200` means nothing new was written; a reservation the user already held is
+still included.
 
 > **Adapter specifics**
 >
@@ -1196,15 +1202,14 @@ export const deleteReservationForAuthenticatedUser = async (
 }
 
 /**
- * Returns organization details resolved by either the internal `organization_id` or an external
-`third_party_id`.
-Use this endpoint to resolve an organization before making organization-scoped calls or when
-you need display, hierarchy, contact, or branding data for the organization.
-At least one identifier must be provided.
+ * Returns organization details resolved by either the internal `organization_id` or an external `third_party_id`.
+Use this endpoint to resolve an organization before making organization-scoped calls or when you need display, hierarchy, contact, or branding data for the organization.
 
 > **Adapter specifics**
 >
-> Requires a valid bearer token with server-to-server access.
+> - Requires a valid bearer token with end-user or server-to-server access.
+> - For end users, omitted `third_party_id` defaults to the user's resolved municipality. An explicit value overrides this default.
+> - Without a resolved end user, the client must send `organization_id` or `third_party_id`.
 
  * @summary Get organization
  */
@@ -1284,7 +1289,9 @@ Use this endpoint when your integration needs organization-level settings that i
 
 > **Adapter specifics**
 >
-> Requires a valid bearer token with server-to-server access.
+> - Requires a valid bearer token with end-user or server-to-server access.
+> - For end users, omitted `third_party_id` defaults to the user's resolved municipality. An explicit value overrides this default.
+> - Without a resolved end user, the client must send `organization_id` or `third_party_id`.
 
  * @summary Get organization configs
  */

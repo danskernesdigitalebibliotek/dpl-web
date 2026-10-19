@@ -8,6 +8,7 @@ import React from "react"
 import { StoreModal } from "@/components/shared/dynamicModal/DynamicModal"
 import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
 import { worksWithIdentifiersFactory } from "@/cypress/factories/fbi/factory-parts/works"
+import { placeholderImageUrl } from "@/cypress/factories/placeholder-image"
 import {
   getGetV1LibraryProfileAdapterQueryKey,
   getGetV1ProductsIdentifierAdapterQueryKey,
@@ -88,7 +89,7 @@ const coverSizes = [
 
 const buildCover = (index: number) => {
   const { width, height } = coverSizes[index % coverSizes.length]
-  const url = `https://placehold.co/${width}x${height}.jpg`
+  const url = placeholderImageUrl(width, height)
   return coverFactory.build({
     thumbnail: url,
     xSmall: { url, width, height },

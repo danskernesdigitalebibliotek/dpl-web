@@ -29,3 +29,6 @@ cypress/screenshots
 # Storybook
 storybook-static/
 *storybook.log
+
+# Argos
+/screenshots

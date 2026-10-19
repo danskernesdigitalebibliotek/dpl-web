@@ -27,9 +27,16 @@ class NodeHooks {
       return;
     }
 
-    // Locally claim unpublished nodes so they won't get re-synced and
-    // consequently published again, if it's updated in BNF.
-    if (!$node->isPublished()) {
+    if (!$node->hasField(BnfStateEnum::FIELD_NAME) || $node->get(BnfStateEnum::FIELD_NAME)->isEmpty()) {
+      return;
+    }
+
+    // @phpstan-ignore property.notFound (we're sure the magic property exists)
+    $state = $node->get(BnfStateEnum::FIELD_NAME)->first()?->enum;
+
+    // Locally claim unpublished imported nodes so they won't get re-synced
+    // and consequently published again if it's updated in BNF.
+    if ($state === BnfStateEnum::Imported && !$node->isPublished()) {
       $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::LocallyClaimed);
     }
   }

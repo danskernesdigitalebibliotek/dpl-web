@@ -76,3 +76,79 @@ tasks:
     preconditions:
       - sh: '[ -n "$WEDOBOOKS_NPM_TOKEN" ]'
         msg: "WEDOBOOKS_NPM_TOKEN is missing from the central .env - run 'task dev:dotenv:generate'. See packages/wedobooks/README.md."
+
+  argos:capture:
+    desc: Screenshot stories into ./screenshots, rendered like Argos' screenshots in CI
+    summary: |
+      Builds the static Storybook and runs the visual suite against it, with
+      the browser in the Playwright image matching the installed Playwright,
+      so screenshots render like CI's. Pass story files to screenshot only
+      some, e.g. `task argos:capture -- components/shared/button`.
+
+      The container shares the host's network, which on macOS needs OrbStack
+      or Docker Desktop's host networking.
+    # The variables CI builds Storybook with.
+    dotenv: [".env.test"]
+    vars:
+      PLAYWRIGHT_VERSION:
+        sh: >-
+          sed -n 's/^  "version": "\([^"]*\)".*/\1/p' node_modules/playwright/package.json
+      CONTAINER: go-argos-playwright
+    cmds:
+      - rm -rf screenshots
+      # The tools directly, not through pnpm, whose dependency check before a
+      # run fails while another project's node_modules hold a container's
+      # install.
+      - node_modules/.bin/storybook build --quiet
+      # The container serves the static Storybook too, so nothing on the host
+      # outlives the task. The playwright package the tests use, so client and
+      # server match. --init reaps the browsers the server starts, --ipc=host
+      # gives Chromium more shared memory than Docker's 64 MB. On loopback
+      # only, as --unsafe lets clients pass any launch option.
+      - >-
+        docker run --detach --rm --init --ipc=host --network host --name {{.CONTAINER}}
+        --volume "$PWD":/work:ro --workdir /work
+        mcr.microsoft.com/playwright:v{{.PLAYWRIGHT_VERSION}}-noble
+        sh -c 'node node_modules/http-server/bin/http-server storybook-static -a 127.0.0.1 -p 6106 --silent &
+        exec node node_modules/playwright/cli.js run-server --host 127.0.0.1 --port 3100 --unsafe'
+        > /dev/null
+      - defer: docker stop {{.CONTAINER}} > /dev/null
+      - node_modules/.bin/wait-on --timeout 60000 tcp:127.0.0.1:3100 http-get://127.0.0.1:6106/index.json
+      - >-
+        PLAYWRIGHT_SERVER=ws://127.0.0.1:3100/ NODE_OPTIONS=--experimental-vm-modules
+        node_modules/.bin/test-storybook --config-dir .storybook/test-runners/visual
+        --url http://127.0.0.1:6106 {{.CLI_ARGS}}
+
+  dev:argos:
+    desc: Upload screenshots of unpushed commits to Argos
+    summary: |
+      Screenshots stories like `argos:capture` and uploads them to Argos,
+      compared with the CI baseline of BASE (default develop). Pass story
+      files to upload only some. Needs ARGOS_TOKEN in the root .env.
+    vars:
+      BASE: '{{.BASE | default "develop"}}'
+      BRANCH:
+        sh: git rev-parse --abbrev-ref HEAD
+    env:
+      ARGOS_TOKEN:
+        sh: sed -n 's/^ARGOS_TOKEN=//p' .env 2>/dev/null | tr -d '"'
+    preconditions:
+      - sh: test -n "$ARGOS_TOKEN"
+        msg: ARGOS_TOKEN is missing from the root .env. Run `task dev:dotenv:generate` in the repository root.
+      - sh: test "{{.BRANCH}}" != HEAD
+        msg: Check out a branch first.
+      - sh: 'case "{{.BRANCH}}" in develop|main|release/*) exit 1;; esac'
+        msg: Baselines for {{.BRANCH}} come from CI only.
+      # Argos files the build under HEAD, so it must show HEAD's code.
+      - sh: test -z "$(git status --porcelain)"
+        msg: Commit your change locally first.
+      # Fetched first, as HEAD may have been pushed from another clone.
+      - sh: git fetch --quiet origin && test -z "$(git branch -r --contains HEAD)"
+        msg: HEAD is already pushed, so CI compares it.
+    cmds:
+      - task: argos:capture
+      # A subset build compares against the baseline but never becomes one.
+      - >-
+        ARGOS_REFERENCE_BRANCH={{.BASE}}
+        ARGOS_REFERENCE_COMMIT=$(git merge-base HEAD origin/{{.BASE}})
+        node_modules/.bin/argos upload --build-name go --subset ./screenshots

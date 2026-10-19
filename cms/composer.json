@@ -303,6 +303,9 @@
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
                 "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch"
             },
+            "drupal/config_ignore_auto": {
+                "3596535: Do not add duplicate entries for collection (translation) config": "patches/3596535-config_ignore_auto-collection-duplicates.patch"
+            },
             "drupal/config_translation_po": {
                 "3426797: Problem: Untranslated string used as source": "patches/vendor/config_translation_po-5.patch"
             },

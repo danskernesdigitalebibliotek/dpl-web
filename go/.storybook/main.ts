@@ -6,6 +6,9 @@ import { fileURLToPath } from "url"
 // main.ts is loaded as ESM, where __dirname is not defined.
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
+// next/font/google reads its CSS from this module instead of Google Fonts.
+process.env.NEXT_FONT_GOOGLE_MOCKED_RESPONSES = path.resolve(dirname, "google-fonts-mock.js")
+
 const config: StorybookConfig = {
   stories: [
     "../components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
@@ -28,7 +31,7 @@ const config: StorybookConfig = {
       .filter(key => key.startsWith("NEXT_PUBLIC_"))
       .reduce((state, nextKey) => ({ ...state, [nextKey]: process.env[nextKey] }), {}),
   }),
-  staticDirs: ["../public"],
+  staticDirs: ["../public", { from: "./fonts", to: "/storybook-fonts" }],
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   webpackFinal: async (config: any) => {
     // This modifies the existing image rule to exclude `.svg` files
