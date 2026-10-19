@@ -1,6 +1,9 @@
 // Requests outside the Storybook that stories may make, as Playwright URL
 // globs.
-const allowedRequests = [];
+const allowedRequests = [
+  // Swiper, loaded from the CDN like the CMS theme does.
+  "https://cdn.jsdelivr.net/npm/swiper@11/**",
+];
 
 // The current story's requests outside the served Storybook, per page.
 const externalRequests = new WeakMap();
