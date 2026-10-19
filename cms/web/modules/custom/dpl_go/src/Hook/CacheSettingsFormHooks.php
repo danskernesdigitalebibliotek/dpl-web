@@ -75,6 +75,7 @@ class CacheSettingsFormHooks {
     $messenger = \Drupal::messenger();
 
     if ($revalidator->revalidateEverything()) {
+      \Drupal::logger('dpl_go')->info('Go cache cleared manually.');
       $messenger->addMessage(t('Go cache cleared.', [], ['context' => 'dpl_go']));
     }
     else {

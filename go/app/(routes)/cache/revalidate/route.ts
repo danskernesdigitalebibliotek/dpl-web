@@ -36,10 +36,17 @@ export async function GET(request: NextRequest) {
       // so a call with path "/" clears every page. Omitting type keeps the
       // default "page" behaviour, revalidating only the exact path.
       revalidatePath(path, type)
+      console.info(
+        `[cache/revalidate] Cleared cache for path "${path}" (${type ?? "page"})`
+      )
     }
 
     if (tags) {
-      tags.split(",").forEach(tag => revalidateTag(tag, "default"))
+      const tagList = tags.split(",")
+      tagList.forEach(tag => revalidateTag(tag, "default"))
+      console.info(
+        `[cache/revalidate] Cleared cache for tags: ${tagList.join(", ")}`
+      )
     }
 
     return NextResponse.json({ message: "Revalidation successful" })
