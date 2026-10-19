@@ -10,5 +10,13 @@
     }
   },
   "private": true,
-  "packageManager": "pnpm@11.26.0"
+  "packageManager": "pnpm@11.26.0",
+  "devDependencies": {
+    "@types/node": "^24.13.6",
+    "knip": "^6.38.0",
+    "typescript": "^7.0.2"
+  },
+  "scripts": {
+    "knip": "knip"
+  }
 }

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": [
+    "-lintignore"
+  ],
+  "ignoreExportsUsedInFile": true,
+  "ignoreBinaries": [
+    "eslint",
+    "playwright",
+    "magenta,blue",
+    "http-server",
+    "wait-on",
+    "argos",
+    "nyc"
+  ],
+  "workspaces": {
+    ".": {},
+    "cms": {
+      "entry": [
+        ".lighthouserc.js",
+        "cypress/eslint.config.mjs",
+        "dev-scripts/*.js",
+        "wiremock/src/createMappings.ts",
+        "web/modules/custom/**/*.js",
+        "web/themes/custom/**/*.js"
+      ]
+    },
+    "design-system": {
+      "entry": [
+        "base.scss",
+        "wysiwyg.scss",
+        "admin-base.scss",
+        "src/**/*.js"
+      ],
+      "ignoreBinaries": [
+        "chromatic"
+      ],
+      "ignoreDependencies": [
+        "@babel/preset-env",
+        "playwright",
+        "react-docgen-typescript"
+      ]
+    },
+    "go": {
+      "entry": [
+        ".storybook/mocks/**",
+        ".storybook/test-runners/**",
+        ".storybook/google-fonts-mock.js"
+      ],
+      "ignore": [
+        "lib/soap/**/generated/**",
+        "lib/rest/**/generated/**",
+        "lib/helpers/zod-validation.ts"
+      ],
+      "ignoreBinaries": [
+        "shadcn"
+      ],
+      "ignoreDependencies": [
+        "@babel/core",
+        "@babel/preset-env",
+        "@babel/preset-react",
+        "@babel/preset-typescript",
+        "@argos-ci/cli",
+        "@jest/types",
+        "babel-loader",
+        "http-server",
+        "wait-on",
+        "@types/jwt-simple"
+      ]
+    },
+    "packages/wedobooks": {},
+    "packages/service-layer": {
+      "entry": [
+        "*/orval.config.ts"
+      ],
+      "ignore": [
+        "*/src/generated/**"
+      ]
+    },
+    "react": {
+      "entry": [
+        "src/apps/**/*.mount.ts",
+        "src/components/design-system/_system.scss",
+        ".storybook/webpack.config.js"
+      ],
+      "ignore": [
+        "src/core/fbs/model/**",
+        "src/core/dpl-cms/dpl-cms.ts",
+        "src/core/material-list-api/material-list.ts"
+      ],
+      "ignoreDependencies": [
+        "core-js",
+        "caniuse-lite",
+        "ts-loader",
+        "postcss-scss",
+        "postcss-loader"
+      ]
+    }
+  }
+}
