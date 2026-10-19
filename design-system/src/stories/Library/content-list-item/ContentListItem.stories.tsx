@@ -63,9 +63,7 @@ const TemplateBranch: StoryFn<typeof ContentListItem> = () => (
       href: "#",
       title: "Hovedbiblioteket",
       description: "Krystalgade 15, 1172 København K, Danmark",
-      image: (
-        <ImageCredited src="https://plus.unsplash.com/premium_photo-1661875977781-adbb21036841?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGxpYnJhcnl8ZW58MHx8MHx8fDA%3D" />
-      ),
+      image: <ImageCredited src="images/library_shelves.jpg" />,
     }}
   />
 );
