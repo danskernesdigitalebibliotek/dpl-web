@@ -18,6 +18,13 @@ MockDate.set("2026-06-15T12:00:00")
 // Argos's screenshots catch mid-animation. Jump every animation to its end.
 if (isArgosCapture()) {
   MotionGlobalConfig.skipAnimations = true
+
+  // Argos hides scrollbars just before the screenshot, which widens the page
+  // after keen-slider measured its slides. Hide them from the start instead,
+  // with the same rule as Argos.
+  const style = document.createElement("style")
+  style.textContent = "::-webkit-scrollbar { display: none !important; }"
+  document.head.appendChild(style)
 }
 
 // When adding or changing fonts, remember to update the imports in the Layout file
