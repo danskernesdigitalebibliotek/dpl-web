@@ -93,10 +93,6 @@
   "devDependencies": {
     "@argos-ci/cli": "^6.9.6",
     "@argos-ci/storybook": "^6.4.2",
-    "@babel/core": "7.29.7",
-    "@babel/preset-env": "7.29.7",
-    "@babel/preset-react": "7.29.7",
-    "@babel/preset-typescript": "7.29.7",
     "@chromatic-com/storybook": "^5.4.0",
     "@eslint/js": "^10.0.1",
     "@graphql-codegen/cli": "^7.4.3",
@@ -132,7 +128,6 @@
     "@typescript-eslint/eslint-plugin": "^8.71.2",
     "@vitejs/plugin-react": "^5.2.0",
     "axe-playwright": "^2.2.2",
-    "babel-loader": "10.1.1",
     "cypress": "^14.5.4",
     "dayjs": "^1.11.23",
     "eslint": "^9.39.4",
