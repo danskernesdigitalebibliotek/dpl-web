@@ -5,6 +5,14 @@ const allowedRequests = [
   "https://cdn.jsdelivr.net/npm/swiper@11/**",
 ];
 
+// Requests outside the Storybook that are blocked without failing the story.
+const silentlyBlockedRequests = [
+  // The video embed's iframe. Its consent placeholder covers the player, and
+  // once it loads, Playwright stops reporting the network idle that Argos
+  // waits for (microsoft/playwright#42598).
+  "https://www.youtube.com/embed/**",
+];
+
 // The current story's requests outside the served Storybook, per page.
 const externalRequests = new WeakMap();
 
@@ -22,6 +30,9 @@ export const blockExternalRequests = async (page) => {
       },
     );
     // Registered later, so they handle their requests first.
+    for (const silentlyBlockedRequest of silentlyBlockedRequests) {
+      await page.route(silentlyBlockedRequest, (route) => route.abort());
+    }
     for (const allowedRequest of allowedRequests) {
       await page.route(allowedRequest, (route) => route.continue());
     }
