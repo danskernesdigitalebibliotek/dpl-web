@@ -1,4 +1,8 @@
 import { argosScreenshot } from "@argos-ci/storybook/test-runner";
+import {
+  assertNoExternalRequests,
+  blockExternalRequests,
+} from "./external-requests";
 
 // The test runner reuses a page for every story in a file.
 const routedPages = new WeakSet();
@@ -9,6 +13,8 @@ export default {
     exclude: ["skip-ui-tests"],
   },
   async preVisit(page) {
+    await blockExternalRequests(page);
+
     if (routedPages.has(page)) {
       return;
     }
@@ -29,5 +35,7 @@ export default {
     }
 
     await argosScreenshot(page, context);
+    // After the screenshot, as Argos renders the story again for each mode.
+    assertNoExternalRequests(page);
   },
 };

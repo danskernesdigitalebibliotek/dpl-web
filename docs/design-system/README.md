@@ -126,12 +126,17 @@ as the `argos/design-system` status. Follow its link to review changes;
 reviewing requires membership of the Argos team. Approve the changes your pull
 request explains, and **Ignore** the ones it cannot explain: Argos then hides
 that change on later builds, and the ignored changes show how much noise Argos
-produces. Share causes worth knowing, such as a remote image failing to load,
-in Zulip. The Storybook build is published as a preview, linked from Argos'
-comment on the pull request.
+produces. Share causes worth knowing in Zulip. The Storybook build is
+published as a preview, linked from Argos' comment on the pull request.
 
 Pull requests from forks get no Argos build, as they cannot access the token.
 To get one, push the branch to this repository.
+
+Stories may only load files the Storybook serves itself, such as images in
+`public/images/`. Anything else makes their screenshots depend on another
+server, so the capture blocks it and fails the story with the URLs it
+requested. Exceptions go, each with its reason, in
+`.storybook/external-requests.js`.
 
 Tag a story `skip-ui-tests` to leave it out of the screenshots. Use it only for
 stories that cannot be screenshotted reliably at all: an untagged story with
