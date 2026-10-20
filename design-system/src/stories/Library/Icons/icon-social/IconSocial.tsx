@@ -29,5 +29,3 @@ export const IconSocial = () => {
     </div>
   );
 };
-
-export default IconSocial;

@@ -50,5 +50,3 @@ export const MaterialUnavailableNotice: FC<MaterialUnavailableNoticeProps> = ({
     </div>
   );
 };
-
-export default MaterialUnavailableNotice;
