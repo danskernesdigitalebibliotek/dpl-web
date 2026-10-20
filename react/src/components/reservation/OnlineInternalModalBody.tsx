@@ -16,7 +16,7 @@ import {
   onlineInternalModalId
 } from "../../apps/material/helper";
 import { ApiResult, CreateLoanResult } from "../../core/publizon/model";
-import { formatDate } from "../../core/utils/helpers/date";
+import { formatDateUtc } from "../../core/utils/helpers/date";
 import { getPublizonErrorStatusText } from "../../core/utils/helpers/publizon";
 import { WorkId } from "../../core/utils/types/ids";
 
@@ -66,7 +66,7 @@ const OnlineInternalModalBody = ({
           >
             {t("onlineInternalSuccessLoanedText", {
               placeholders: {
-                "@expirationDate": formatDate(loanResponse.expirationDateUtc)
+                "@expirationDate": formatDateUtc(loanResponse.expirationDateUtc)
               }
             })}
           </p>

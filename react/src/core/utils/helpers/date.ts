@@ -89,6 +89,12 @@ export const formatDateTimeUtc = (date: string) => {
   return dayjs(date).utc().format(dateFormatDashWithTime);
 };
 
+// Digital material dates are shown in UTC, like formatDateTimeUtc, so a
+// date-only view never lands on another day than the date-and-time view.
+export const formatDateUtc = (date: string) => {
+  return dayjs(date).utc().format(dateFormatDash);
+};
+
 export const formatDayMonth = (date: string | Date) => {
   return dayjs(date).format(dateFormatSlashDayMonth);
 };

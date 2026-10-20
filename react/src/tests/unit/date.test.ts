@@ -4,7 +4,8 @@ import {
   formatDate,
   formatDateDependingOnDigitalMaterial,
   formatDateTime,
-  formatDateTimeUtc
+  formatDateTimeUtc,
+  formatDateUtc
 } from "../../core/utils/helpers/date";
 import {
   dateFormatDash,
@@ -47,6 +48,13 @@ describe("formatDateTime", () => {
     expect(result).toEqual(expectedResult);
   });
   // We need to test whether the function correctly formats the dates
+});
+
+describe("formatDateUtc", () => {
+  it("reads the day in UTC, like formatDateTimeUtc", () => {
+    // In Danish time this moment is already the next day.
+    expect(formatDateUtc("2026-10-31T23:59:59.999Z")).toBe("31-10-2026");
+  });
 });
 
 describe("Date helper tests", () => {
