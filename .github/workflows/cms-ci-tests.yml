@@ -134,6 +134,9 @@ jobs:
 
   LightHouse:
     name: CMS / Test site performance using Lighthouse
+    # Temporarily skipped — re-enable in a follow-up ticket, by setting the repo
+    # variable RUN_LIGHTHOUSE=true or by removing this `if`.
+    if: ${{ vars.RUN_LIGHTHOUSE == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

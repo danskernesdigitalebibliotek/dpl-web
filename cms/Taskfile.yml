@@ -567,18 +567,18 @@ tasks:
     desc: Run Lighthouse to test performance
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm dlx lhci autorun
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm exec lhci autorun
 
   ci:openapi:validate:
     desc: Validate the Drupal OpenAPI specification
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm dlx swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm exec swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
 
   ci:openapi:download:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
       - task dev:cli -- curl "http://varnish:8080/openapi/rest?_format=json&language=en" -o openapi.tmp
-      - task -d .. dev:cli -- sh -c "cd cms && corepack pnpm dlx jsome -r < openapi.tmp > openapi.json"
+      - task -d .. dev:cli -- sh -c "cd cms && corepack pnpm exec jsome -r < openapi.tmp > openapi.json"
       - rm -f openapi.tmp
 
   ci:shellcheck:
