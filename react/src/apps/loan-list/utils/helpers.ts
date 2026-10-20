@@ -3,6 +3,7 @@ import { ListView } from "../../../core/utils/types/list-view";
 import { LoanType } from "../../../core/utils/types/loan-type";
 import { UseTextFunction } from "../../../core/utils/text";
 import { ListType } from "../../../core/utils/types/list-type";
+import { formatDate, formatDateUtc } from "../../../core/utils/helpers/date";
 
 export const removeLoansWithDuplicateDueDate = (
   date: string,
@@ -62,6 +63,9 @@ export const queryMatchesFaust = (query: string | null) => {
 
 export const isDigital = (loan: ListType) => Boolean(loan.identifier);
 
+export const formatLoanDate = (loan: ListType, date: string) =>
+  isDigital(loan) ? formatDateUtc(date) : formatDate(date);
+
 export const getStackedItems = (
   view: ListView,
   list: LoanType[],
@@ -83,11 +87,7 @@ export const getStackedItems = (
   return returnLoans;
 };
 
-export const getLoanDeliveryDate = (
-  loanType: LoanType,
-  formatDate: (date: string) => string,
-  t: UseTextFunction
-) => {
+export const getLoanDeliveryDate = (loanType: LoanType, t: UseTextFunction) => {
   // Set the value of 'neutralText' based on the material type and due date
   return loanType.dueDate
     ? t(
@@ -96,7 +96,7 @@ export const getLoanDeliveryDate = (
           : "groupModalDueDateMaterialText",
         {
           placeholders: {
-            "@date": formatDate(loanType.dueDate)
+            "@date": formatLoanDate(loanType, loanType.dueDate)
           }
         }
       )

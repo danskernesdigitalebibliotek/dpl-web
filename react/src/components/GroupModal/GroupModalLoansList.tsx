@@ -5,7 +5,6 @@ import { isLoanType, LoanType } from "../../core/utils/types/loan-type";
 import usePager from "../result-pager/use-pager";
 import StatusMessage from "../../apps/loan-list/materials/selectable-material/StatusMessage";
 import StatusBadge from "../../apps/loan-list/materials/utils/status-badge";
-import { formatDate } from "../../core/utils/helpers/date";
 import { ListType } from "../../core/utils/types/list-type";
 import { getLoanDeliveryDate } from "../../apps/loan-list/utils/helpers";
 import { sortLoansByIsRenewableThenDueDate } from "../../core/utils/helpers/general";
@@ -63,13 +62,13 @@ const GroupModalLoansList: FC<GroupModalLoansListProps> = ({
             statusBadgeComponent={
               <StatusBadge
                 badgeDate={loanType.dueDate}
-                neutralText={getLoanDeliveryDate(loanType, formatDate, t)}
+                neutralText={getLoanDeliveryDate(loanType, t)}
               />
             }
             statusBadgeComponentMobile={
               <StatusBadge
                 badgeDate={loanType.dueDate}
-                neutralText={getLoanDeliveryDate(loanType, formatDate, t)}
+                neutralText={getLoanDeliveryDate(loanType, t)}
                 mobileVersion
               />
             }
