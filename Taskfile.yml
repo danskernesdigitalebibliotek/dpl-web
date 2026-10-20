@@ -4,6 +4,7 @@ output: prefixed
 
 includes:
   branch-tag-cleanup: ./taskfiles/Taskfile.branch-tag-cleanup.yml
+  changelog: ./taskfiles/Taskfile.changelog.yml
 
 vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
