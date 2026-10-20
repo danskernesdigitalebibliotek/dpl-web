@@ -88,6 +88,15 @@ tasks:
     cmds:
       - docker run --rm --volume "{{.TASKFILE_DIR}}:/repo:ro" --workdir /repo rhysd/actionlint:latest -color
 
+  knip:
+    desc: "Run knip dead-code analysis for every workspace. Target one with pnpm knip:<folder>, e.g. pnpm knip:react."
+    cmds:
+      - pnpm knip:cms
+      - pnpm knip:design-system
+      - pnpm knip:go
+      - pnpm knip:react
+      - pnpm knip:packages
+
   # ---------------------------------------------------------------------------
   # Tokens
   # ---------------------------------------------------------------------------
