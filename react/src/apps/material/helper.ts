@@ -74,20 +74,6 @@ export const filterManifestationsByType = (
   manifestations: Manifestation[]
 ) => manifestations.filter((item) => getMaterialType([item]) === type);
 
-export const getManifestationsFromType = (
-  type: string,
-  { manifestations: { all: manifestations } }: Work
-) => {
-  const allManifestations = orderManifestationsByYear(manifestations);
-
-  const allManifestationsThatMatchType = filterManifestationsByType(
-    type,
-    allManifestations
-  );
-
-  return allManifestationsThatMatchType;
-};
-
 export const getFirstManifestation = (manifestations: Manifestation[]) => {
   return first(manifestations) || null;
 };

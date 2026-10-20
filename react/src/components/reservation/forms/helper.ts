@@ -91,5 +91,3 @@ export function modalReservationFormSelectTypeIsInterestPeriod(
 ): type is "interestPeriod" {
   return type === "interestPeriod";
 }
-
-export default {};

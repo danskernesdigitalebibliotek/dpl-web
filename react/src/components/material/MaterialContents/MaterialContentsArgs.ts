@@ -13,8 +13,3 @@ export default {
   materialContentsShowLessText: "Show less",
   materialContentsShowAllText: "Show all (@count)"
 };
-
-export interface MaterialContentsArgs {
-  materialContentsShowLessText: string;
-  materialContentsShowAllText: string;
-}

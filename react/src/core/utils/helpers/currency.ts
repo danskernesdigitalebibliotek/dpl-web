@@ -6,5 +6,3 @@ export function formatCurrency(number: number): string {
   };
   return number.toLocaleString("da-DK", options);
 }
-
-export default {};

@@ -88,5 +88,3 @@ export function handleSelectYear(
   const changedEdition = getLatestEditionFromYear(year, periodicalEditions);
   handleSelectEdition(groupList, year, changedEdition, selectPeriodicalHandler);
 }
-
-export default {};

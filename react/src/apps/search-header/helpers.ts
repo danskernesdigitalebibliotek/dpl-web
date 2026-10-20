@@ -70,5 +70,3 @@ export function getInitialSearchQuery(): string {
   // If q is "*" or doesn't exist, return empty string for display
   return qParam === "*" || !qParam ? "" : qParam;
 }
-
-export default {};
