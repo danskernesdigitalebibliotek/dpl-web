@@ -118,20 +118,8 @@ export const formatShortDate = (dateString: string): string => {
 
 // Digital material dates are shown in UTC, so every view of a digital loan
 // or reservation lands on the same day.
-export const formatDateDependingOnDigitalMaterial = ({
-  date,
-  isDigital,
-  withTime = true
-}: {
-  date: string;
-  isDigital: boolean;
-  withTime?: boolean;
-}) => {
-  if (!isDigital) {
-    return formatDate(date);
-  }
-  return withTime ? formatDateTimeUtc(date) : formatDateUtc(date);
-};
+export const formatMaterialDate = (date: string, isDigital: boolean) =>
+  isDigital ? formatDateUtc(date) : formatDate(date);
 
 // Date calculation functions: Get dates relative to today
 export const getMonthAgoDate = () =>

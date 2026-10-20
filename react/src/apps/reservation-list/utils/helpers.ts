@@ -1,7 +1,7 @@
 import { ReservationDetailsV2 } from "../../../core/fbs/model";
 import {
   calculateRoundedUpDaysUntil,
-  formatDateDependingOnDigitalMaterial,
+  formatDate,
   formatDateTimeUtc
 } from "../../../core/utils/helpers/date";
 import { UseTextFunction } from "../../../core/utils/text";
@@ -76,10 +76,7 @@ export const getReservationStatusInfoLabel = ({
 
   return t(textKey, {
     placeholders: {
-      "@date": formatDateDependingOnDigitalMaterial({
-        date,
-        isDigital
-      })
+      "@date": isDigital ? formatDateTimeUtc(date) : formatDate(date)
     }
   });
 };

@@ -3,7 +3,7 @@ import { ListView } from "../../../core/utils/types/list-view";
 import { LoanType } from "../../../core/utils/types/loan-type";
 import { UseTextFunction } from "../../../core/utils/text";
 import { ListType } from "../../../core/utils/types/list-type";
-import { formatDateDependingOnDigitalMaterial } from "../../../core/utils/helpers/date";
+import { formatMaterialDate } from "../../../core/utils/helpers/date";
 
 export const removeLoansWithDuplicateDueDate = (
   date: string,
@@ -64,11 +64,7 @@ export const queryMatchesFaust = (query: string | null) => {
 export const isDigital = (loan: ListType) => Boolean(loan.identifier);
 
 export const formatLoanDate = (loan: ListType, date: string) =>
-  formatDateDependingOnDigitalMaterial({
-    date,
-    isDigital: isDigital(loan),
-    withTime: false
-  });
+  formatMaterialDate(date, isDigital(loan));
 
 export const getStackedItems = (
   view: ListView,

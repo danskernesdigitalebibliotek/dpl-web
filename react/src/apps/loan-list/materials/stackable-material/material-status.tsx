@@ -5,7 +5,10 @@ import StatusCircle from "../utils/status-circle";
 import StatusBadge from "../utils/status-badge";
 import { useText } from "../../../../core/utils/text";
 import ArrowButton from "../../../../components/Buttons/ArrowButton";
-import { formatDateDependingOnDigitalMaterial } from "../../../../core/utils/helpers/date";
+import {
+  formatDate,
+  formatDateTimeUtc
+} from "../../../../core/utils/helpers/date";
 import StatusMessage from "../selectable-material/StatusMessage";
 
 interface MaterialStatusProps {
@@ -73,10 +76,9 @@ const MaterialStatus: FC<MaterialStatusProps> = ({
                 : "loanListToBeDeliveredText",
               {
                 placeholders: {
-                  "@date": formatDateDependingOnDigitalMaterial({
-                    date: dueDate,
-                    isDigital: isDigital(loan)
-                  })
+                  "@date": isDigital(loan)
+                    ? formatDateTimeUtc(dueDate)
+                    : formatDate(dueDate)
                 }
               }
             )}
