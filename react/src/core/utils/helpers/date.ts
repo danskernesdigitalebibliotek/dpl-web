@@ -89,8 +89,6 @@ export const formatDateTimeUtc = (date: string) => {
   return dayjs(date).utc().format(dateFormatDashWithTime);
 };
 
-// Digital material dates are shown in UTC, like formatDateTimeUtc, so a
-// date-only view never lands on another day than the date-and-time view.
 export const formatDateUtc = (date: string) => {
   return dayjs(date).utc().format(dateFormatDash);
 };
@@ -118,14 +116,21 @@ export const formatShortDate = (dateString: string): string => {
   return dayjs(dateString).format("D. MMM YYYY");
 };
 
+// Digital material dates are shown in UTC, so every view of a digital loan
+// or reservation lands on the same day.
 export const formatDateDependingOnDigitalMaterial = ({
   date,
-  isDigital
+  isDigital,
+  withTime = true
 }: {
   date: string;
   isDigital: boolean;
+  withTime?: boolean;
 }) => {
-  return isDigital ? formatDateTimeUtc(date) : formatDate(date);
+  if (!isDigital) {
+    return formatDate(date);
+  }
+  return withTime ? formatDateTimeUtc(date) : formatDateUtc(date);
 };
 
 // Date calculation functions: Get dates relative to today
