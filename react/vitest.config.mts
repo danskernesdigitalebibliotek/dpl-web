@@ -1,5 +1,9 @@
 import { defineConfig } from "vitest/config";
 
+// Run in Danish time, like the integration tests, so date tests mean the same
+// locally and in CI. Set here so the test workers inherit it.
+process.env.TZ = "Europe/Copenhagen";
+
 export default defineConfig({
   define: {
     "import.meta.vitest": "undefined"

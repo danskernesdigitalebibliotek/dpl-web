@@ -53,6 +53,7 @@ describe("formatDateTime", () => {
 describe("formatDateUtc", () => {
   it("reads the day in UTC, like formatDateTimeUtc", () => {
     // In Danish time this moment is already the next day.
+    expect(formatDate("2026-10-31T23:59:59.999Z")).toBe("01-11-2026");
     expect(formatDateUtc("2026-10-31T23:59:59.999Z")).toBe("31-10-2026");
   });
 });
