@@ -4,6 +4,7 @@ import LoansIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icon
 import EbookIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Ebook.svg";
 import { useText } from "../../../core/utils/text";
 import { formatLoanDate, isDigital } from "../utils/helpers";
+import { formatDate } from "../../../core/utils/helpers/date";
 import { materialIsOverdue } from "../../../core/utils/helpers/general";
 import StatusBadge from "../materials/utils/status-badge";
 import WarningBar from "../materials/utils/warning-bar";
@@ -159,7 +160,7 @@ const MaterialDetails: FC<MaterialDetailsProps & MaterialProps> = ({
             {loanDate && (
               <ListDetails
                 icon={ReservationIcon}
-                labels={formatLoanDate(loan, loanDate)}
+                labels={formatDate(loanDate)}
                 title={t("materialDetailsLoanDateLabelText")}
               />
             )}
