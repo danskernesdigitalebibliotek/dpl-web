@@ -16,8 +16,10 @@ const silentlyBlockedRequests = [
 // The current story's requests outside the served Storybook, per page.
 const externalRequests = new WeakMap();
 
-// Stories may only load the Storybook's own files: anything else makes their
-// screenshots depend on another server.
+/**
+ * Stories may only load the Storybook's own files: anything else makes their
+ * screenshots depend on another server.
+ */
 export const blockExternalRequests = async (page) => {
   // The test runner reuses a page for all stories in a file.
   if (!externalRequests.has(page)) {
@@ -40,6 +42,9 @@ export const blockExternalRequests = async (page) => {
   externalRequests.set(page, []);
 };
 
+/**
+ * Fails the current story if it requested files outside the Storybook.
+ */
 export const assertNoExternalRequests = (page) => {
   const urls = [...new Set(externalRequests.get(page))];
   if (urls.length > 0) {
