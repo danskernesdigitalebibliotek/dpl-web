@@ -90,7 +90,7 @@
     "@argos-ci/storybook": "^6.4.2",
     "@babel/core": "7.29.7",
     "@babel/preset-env": "7.29.7",
-    "@babel/preset-react": "7.29.7",
+    "@babel/preset-react": "8.0.1",
     "@babel/preset-typescript": "7.29.7",
     "@chromatic-com/storybook": "^5.5.1",
     "@graphql-codegen/cli": "^7.4.3",
