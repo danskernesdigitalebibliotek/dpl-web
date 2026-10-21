@@ -1,0 +1,139 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": [
+    "-knip-ignore"
+  ],
+  // Report exports only when they are used outside their own file. Without
+  // this, Knip flags ~383 in-file-only exports across the repo (mostly
+  // conventional `*Props` types in React), which is a separate cleanup.
+  "ignoreExportsUsedInFile": true,
+  // Binaries invoked in ways Knip cannot trace: through Docker, or via full
+  // paths (`node_modules/.bin/...`) in Taskfiles and CI rather than bare names.
+  "ignoreBinaries": [
+    "eslint",
+    "playwright",
+    "magenta,blue",
+    "http-server",
+    "wait-on",
+    "argos",
+    "nyc",
+    "tsc"
+  ],
+  "workspaces": {
+    ".": {},
+    "cms": {
+      "entry": [
+        ".lighthouserc.js",
+        "cypress/eslint.config.mjs",
+        "dev-scripts/*.js",
+        "wiremock/src/createMappings.ts",
+        "web/modules/custom/**/*.js",
+        "web/themes/custom/**/*.js"
+      ],
+      // Vendored third-party libraries (git-ignored, installed locally); not ours to analyse.
+      "ignore": [
+        "web/libraries/**"
+      ],
+      // Run through Docker-wrapped Taskfile/CI commands (e.g. `docker compose
+      // ... pnpm exec lhci`), so Knip only sees `docker` and cannot resolve them.
+      "ignoreDependencies": [
+        "@lhci/cli",
+        "@apidevtools/swagger-cli",
+        "jsome",
+        "chrome-launcher",
+        "markdownlint-cli2"
+      ]
+    },
+    "design-system": {
+      "entry": [
+        "base.scss",
+        "wysiwyg.scss",
+        "admin-base.scss",
+        "src/**/*.js",
+        "test-runner-jest.config.js"
+      ],
+      // Invoked in CI, not referenced from source.
+      "ignoreBinaries": [
+        "chromatic"
+      ],
+      // Referenced from build/test config strings (Babel, Jest, Storybook
+      // docgen) or invoked in CI via full paths, none of which Knip can trace.
+      "ignoreDependencies": [
+        "@babel/preset-env",
+        "playwright",
+        "react-docgen-typescript",
+        "@argos-ci/cli",
+        "http-server",
+        "wait-on",
+        "@jest/types"
+      ]
+    },
+    "go": {
+      "entry": [
+        ".storybook/mocks/**",
+        ".storybook/test-runners/**",
+        ".storybook/google-fonts-mock.js"
+      ],
+      // Generated code; not meant to be analysed for dead exports.
+      "ignore": [
+        "lib/soap/**/generated/**",
+        "lib/rest/**/generated/**",
+        "lib/helpers/zod-validation.ts"
+      ],
+      // CLI invoked ad-hoc, not referenced from source.
+      "ignoreBinaries": [
+        "shadcn"
+      ],
+      // Babel/loader deps referenced from Webpack/Storybook config, and
+      // argos/http-server/wait-on invoked via full paths in Taskfile + CI
+      // (see go/Taskfile.yml -> argos:capture) — Knip cannot detect either.
+      "ignoreDependencies": [
+        "@babel/core",
+        "@babel/preset-env",
+        "@babel/preset-react",
+        "@babel/preset-typescript",
+        "@argos-ci/cli",
+        "@jest/types",
+        "babel-loader",
+        "http-server",
+        "wait-on",
+        "@types/jwt-simple"
+      ]
+    },
+    "packages/wedobooks": {},
+    "packages/service-layer": {
+      // Generated Orval output.
+      "ignore": [
+        "*/src/generated/**"
+      ],
+      "includeEntryExports": true,
+      "orval": {
+        "config": [
+          "*/orval.config.ts"
+        ]
+      }
+    },
+    "react": {
+      "entry": [
+        "src/apps/**/*.mount.ts",
+        "src/components/design-system/_system.scss",
+        ".storybook/webpack.config.js"
+      ],
+      // Generated API clients.
+      "ignore": [
+        "src/core/fbs/model/**",
+        "src/core/dpl-cms/dpl-cms.ts",
+        "src/core/material-list-api/material-list.ts"
+      ],
+      // Pulled in by build tooling (browserslist, Webpack, PostCSS) rather
+      // than imported from source.
+      "ignoreDependencies": [
+        "core-js",
+        "caniuse-lite",
+        "ts-loader",
+        "postcss-scss",
+        "postcss-loader"
+      ]
+    }
+  }
+}

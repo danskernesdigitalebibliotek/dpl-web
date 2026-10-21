@@ -1,6 +1,6 @@
 {
   "name": "@danskernesdigitalebibliotek/dpl-web",
-  "description": "Mono-repo for DPL apps. Actual dependencies are located in the individual packages.",
+  "description": "Mono-repo for DPL apps. Package dependencies live in the individual packages; the root holds only repo-wide tooling.",
   "version": "1.0.0",
   "devEngines": {
     "runtime": {
@@ -10,5 +10,16 @@
     }
   },
   "private": true,
-  "packageManager": "pnpm@11.26.0"
+  "packageManager": "pnpm@11.26.0",
+  "devDependencies": {
+    "knip": "^6.38.0"
+  },
+  "scripts": {
+    "knip": "knip",
+    "knip:cms": "knip --workspace cms",
+    "knip:design-system": "knip --workspace design-system",
+    "knip:go": "knip --workspace go",
+    "knip:react": "knip --workspace react",
+    "knip:packages": "knip --workspace 'packages/*'"
+  }
 }
