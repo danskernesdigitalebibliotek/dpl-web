@@ -22,3 +22,15 @@ jobs:
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Find unused files, exports and dependencies
         run: pnpm knip --workspace go
+
+  design-system:
+    name: Knip / Design System
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      - name: Find unused files, exports and dependencies
+        run: pnpm knip --workspace design-system
