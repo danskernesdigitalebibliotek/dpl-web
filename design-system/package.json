@@ -29,7 +29,8 @@
     "dev": "DISABLE_ESLINT_PLUGIN=true concurrently --raw 'pnpm run storybook' 'pnpm run css:watch' 'pnpm run watch'",
     "chromatic": "pnpm exec chromatic --exit-zero-on-changes",
     "lint": "concurrently 'pnpm run js:lint' 'pnpm run css:lint' 'pnpm run markdown:lint'",
-    "format": "concurrently 'pnpm run js:format' 'pnpm run css:format' 'pnpm run markdown:format'"
+    "format": "concurrently 'pnpm run js:format' 'pnpm run css:format' 'pnpm run markdown:format'",
+    "knip": "knip"
   },
   "browserslist": {
     "production": [
@@ -77,6 +78,7 @@
     "globals": "^17",
     "http-server": "^14.1.1",
     "keen-slider": "6.8.6",
+    "knip": "^6.41.0",
     "markdownlint-cli2": "^0.23.3",
     "playwright": "^1.64.1",
     "postcss": "^8.5.30",

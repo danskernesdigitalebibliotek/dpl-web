@@ -21,7 +21,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Find unused files, exports and dependencies
-        run: pnpm knip --workspace go
+        run: pnpm --dir go run knip
 
   design-system:
     name: Knip / Design System
@@ -33,4 +33,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Find unused files, exports and dependencies
-        run: pnpm knip --workspace design-system
+        run: pnpm --dir design-system run knip
