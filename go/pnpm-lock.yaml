@@ -4092,12 +4092,6 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/tsconfig-utils@8.71.0':
-    resolution: {integrity: sha512-Z1UlWHADEK2Mlb9NpWfDeSjqoZ5EyrOv4R3eQpbkzqn/EwaIdOpXXupEA1+0ZIOSJSZZDBHG0BrQyN8zUG6Pwg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.1.0'
-
   '@typescript-eslint/tsconfig-utils@8.71.1':
     resolution: {integrity: sha512-oTvkml5SxXhgg+WWKhod5qWQICDXtOB+/Hi9VdPKFAANJ2b7YOgMffgvzXuqog7R6A/JtrzRf128dsxummyWhg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -14449,7 +14443,7 @@ snapshots:
 
   '@typescript-eslint/project-service@8.69.0(supports-color@8.1.1)(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.71.0(typescript@5.9.3)
+      '@typescript-eslint/tsconfig-utils': 8.71.2(typescript@5.9.3)
       '@typescript-eslint/types': 8.71.2
       debug: 4.4.3(supports-color@8.1.1)
       typescript: 5.9.3
@@ -14495,10 +14489,6 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  '@typescript-eslint/tsconfig-utils@8.71.0(typescript@5.9.3)':
-    dependencies:
-      typescript: 5.9.3
-
   '@typescript-eslint/tsconfig-utils@8.71.1(typescript@5.9.3)':
     dependencies:
       typescript: 5.9.3
@@ -14506,7 +14496,6 @@ snapshots:
   '@typescript-eslint/tsconfig-utils@8.71.2(typescript@5.9.3)':
     dependencies:
       typescript: 5.9.3
-    optional: true
 
   '@typescript-eslint/type-utils@8.69.0(eslint@9.39.4(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3)':
     dependencies:
