@@ -47,7 +47,7 @@ importers:
         specifier: ^1.11.23
         version: 1.11.23
       downshift:
-        specifier: ^9.3.4
+        specifier: ^9.4.0
         version: 9.4.0(react@19.3.1)
       fishery:
         specifier: ^2.4.0
