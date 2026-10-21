@@ -99,7 +99,7 @@ jobs:
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
           build-wedobooks: 'true'
       - name: Run typescript compile check
-        run: pnpm exec tsc --noEmit
+        run: pnpm run typecheck
 
   eslint:
     name: React / Lint .js and .jsx
