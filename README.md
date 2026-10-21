@@ -27,7 +27,7 @@ Once it’s installed, run `pnpm install` in this folder to install JavaScript d
 
 Each project has a `task dev:reset` command to set up the development environment:
 
-- **CMS:** `cd cms && task dev:reset`
+- **CMS:** `cd cms && task dev:resets`
 - **Design System:** `cd design-system && task dev:reset`
 - **Go:** `cd go && task dev:reset`
 - **React:** `cd react && task dev:reset`
