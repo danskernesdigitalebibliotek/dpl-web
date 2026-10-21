@@ -4,11 +4,6 @@ import HorizontalTermLine, {
   generateId,
 } from "../horizontal-term-line/HorizontalTermLine";
 
-export type TicketCategory = {
-  label: string;
-  price: string;
-};
-
 export type EventDescriptionProps = {
   horizontalTermLineData: HorizontalTermLineProps[];
   description: string;

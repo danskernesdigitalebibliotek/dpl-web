@@ -5,5 +5,3 @@ export const IconExternalLink = () => {
     <Svg className="icon icon-external-link" role="img" aria-hidden="true" />
   );
 };
-
-export default IconExternalLink;

@@ -21,5 +21,3 @@ export const Shadows = () => {
     </div>
   );
 };
-
-export default Shadows;
