@@ -145,7 +145,7 @@
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "vite": "^6.0.0",
-    "vite-tsconfig-paths": "^6.0.4",
+    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.0.18",
     "wait-on": "^9.5.1"
   }
