@@ -90,11 +90,13 @@ run_state() {
     --json databaseId --jq '.[0].databaseId // empty' 2>/dev/null)
   [ -n "$id" ] || { echo "none|"; return; }
   gh run view "$id" --json status,conclusion,url,jobs 2>/dev/null | jq -r --arg j "$deploy_job" '
+    # The deploy job is only listed once the jobs it needs have finished.
     ([.jobs[] | select(.name == $j)][0]) as $d
-    | if $d == null then (if .status == "completed" then "none|" else "running|queued" end)
+    | ([.jobs[] | select(.status == "in_progress") | .name][0] // "queued") as $current
+    | if $d == null then (if .status == "completed" then "none|" else "running|\($current)" end)
       elif $d.conclusion == "success" or $d.status == "in_progress" then "sent|\($d.startedAt | fromdateiso8601)"
       elif $d.status == "completed" then "failed|deploy job \($d.conclusion), \(.url)"
-      else "running|\([.jobs[] | select(.status == "in_progress") | .name][0] // "queued")" end' ||
+      else "running|\($current)" end' ||
     echo "none|"
 }
 
