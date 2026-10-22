@@ -427,7 +427,7 @@ updates:
       # so keep this package on the same major as react/ and go/.
       - dependency-name: "eslint"
         versions: [">=10.0.0"]
-      # orval v8 requires breaking config/fetcher changes — upgrade tracked
-      # separately, and must happen in step with react/ and go/.
+      # Orval majors change the config and the generated clients, so upgrade
+      # by hand and keep this package on the same major as react/ and go/.
       - dependency-name: "orval"
         update-types: ["version-update:semver-major"]
