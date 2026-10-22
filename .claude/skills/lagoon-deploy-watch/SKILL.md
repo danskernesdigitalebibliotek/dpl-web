@@ -35,8 +35,10 @@ failed build. If a build fails, report it and let the user decide.
      (`lagoon get environment -p <project> -e <env> --output-json`).
    - **failed/cancelled/error**: run the printed `Logs:` command, find the
      failing step, and quote the relevant error lines with a short diagnosis.
-   - **ERROR:** (exit 2, couldn't resolve something): report the message and
-     ask for the missing `-p`/`-e`/`-d`.
+   - **ERROR:** (exit 2): report the message. For a missing prerequisite
+     (`git`, `jq`, `gh`, `lagoon`, or `gh`/`lagoon` not logged in), pass on the
+     fix it names and let the user run it — don't install or log in yourself.
+     If it couldn't resolve something, ask for the missing `-p`/`-e`/`-d`.
 
 ## Notes
 

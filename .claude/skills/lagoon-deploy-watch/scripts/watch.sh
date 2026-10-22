@@ -21,6 +21,14 @@ while getopts p:e:d:i: o; do
 done
 
 die() { echo "ERROR: $*"; exit 2; }
+
+# Prerequisites: fail with what to fix rather than misbehave later (an
+# unauthenticated gh would otherwise silently fall back to the newest build).
+missing=""
+for c in git jq gh lagoon; do command -v "$c" >/dev/null || missing="$missing $c"; done
+[ -z "$missing" ] || die "missing command(s):$missing; install them first"
+gh auth status >/dev/null 2>&1 || die "gh is not logged in; run: gh auth login"
+lagoon whoami >/dev/null 2>&1 || die "lagoon CLI can't authenticate; run: lagoon login (and check lagoon config)"
 # Lagoon timestamps are UTC "YYYY-MM-DD HH:MM:SS". BSD date (macOS) parses with
 # -j -f; GNU/BusyBox date (Linux) with -d.
 if date -j -f %s 0 +%s >/dev/null 2>&1; then
