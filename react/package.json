@@ -90,7 +90,7 @@
     "change-case-all": "^2.1.0",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^10.0.6",
-    "core-js": "^3.50.0",
+    "core-js": "^3.51.0",
     "css-loader": "^7.1.5",
     "cssnano": "^9.9.0",
     "cypress": "15.18.0",
