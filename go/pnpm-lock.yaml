@@ -71,8 +71,8 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0
       framer-motion:
-        specifier: 14.3.0
-        version: 14.3.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: 14.3.1
+        version: 14.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       graphql:
         specifier: ^16.14.2
         version: 16.14.2
@@ -6593,8 +6593,8 @@ packages:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
 
-  framer-motion@14.3.0:
-    resolution: {integrity: sha512-d8WCrU0ZQn7ukKMykCsDyIOwb/taZeDqqrDBK0du5GO0AO/ynz8fdR/LIIz9Pyy3n3tGwrneR+n0egyrrLa3fw==}
+  framer-motion@14.3.1:
+    resolution: {integrity: sha512-/6kjoSWyGsaUaHGaZehiqyVj0eJlY163TPKQCoTh0gHVr0JLyJE/NwCTqkLbXAnOOM00fLD/d92eh9mZfJaa6w==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
@@ -8079,8 +8079,8 @@ packages:
     engines: {node: '>=20.0.0'}
     hasBin: true
 
-  motion-dom@14.3.0:
-    resolution: {integrity: sha512-rcKO4aEJzAqDEsrH6qFzhLZxs7bNqZpiUEuEATz9LaRwt6dG7hZEbcFUSHNR8NECaKYM0Iuw6Iv6NpWEGXDI+w==}
+  motion-dom@14.3.1:
+    resolution: {integrity: sha512-6gsjOAjXgZPoLLHNiBI1uBVNhSrIXSm6YBU8RsFM//byOvIys8YHPQE3VZqW3rWR021tcd3eT8pmV8zWTY9Jsg==}
 
   motion-utils@14.1.1:
     resolution: {integrity: sha512-3VvN5Uvf8B6qG+OfOui6Nht5EWp+vLuU3IqcAj7ItZGKqtmTjCebl5sGZF7/08gEHRnEl1AP/fIwbcEyVrcQGQ==}
@@ -10637,6 +10637,9 @@ packages:
   zod@4.6.5:
     resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
 
+  zod@4.6.7:
+    resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
+
   zstd-codec@0.1.5:
     resolution: {integrity: sha512-v3fyjpK8S/dpY/X5WxqTK3IoCnp/ZOLxn144GZVlNUjtwAchzrVo03h+oMATFhCIiJ5KTr4V3vDQQYz4RU684g==}
 
@@ -11707,7 +11710,7 @@ snapshots:
     dependencies:
       '@tanstack/react-query': 5.102.8(react@19.3.0)
       react: 19.3.0
-      zod: 4.6.5
+      zod: 4.6.7
 
   '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
@@ -17704,9 +17707,9 @@ snapshots:
 
   forwarded@0.2.0: {}
 
-  framer-motion@14.3.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  framer-motion@14.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
-      motion-dom: 14.3.0
+      motion-dom: 14.3.1
       motion-utils: 14.1.1
       tslib: 2.8.1
     optionalDependencies:
@@ -19418,7 +19421,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  motion-dom@14.3.0:
+  motion-dom@14.3.1:
     dependencies:
       motion-utils: 14.1.1
 
@@ -22153,5 +22156,7 @@ snapshots:
   zod@4.4.3: {}
 
   zod@4.6.5: {}
+
+  zod@4.6.7: {}
 
   zstd-codec@0.1.5: {}
