@@ -16,6 +16,7 @@
     "format:write": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "knip": "knip",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
@@ -39,6 +40,7 @@
     "eslint": "^10.4.0",
     "globals": "^17.13.0",
     "graphql": "^16.14.2",
+    "knip": "^6.41.0",
     "orval": "^7.21.0",
     "prettier": "^3.9.10",
     "react": "^19",

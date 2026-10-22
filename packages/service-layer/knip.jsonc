@@ -1,0 +1,17 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": ["-knip-ignore"],
+  // Report exports only when they are used outside their own file. Without
+  // this, Knip flags in-file-only exports (mostly conventional `*Props`
+  // types), which is a separate cleanup.
+  "ignoreExportsUsedInFile": true,
+  // Generated Orval output.
+  "ignore": ["*/src/generated/**"],
+  // This package is a library consumed by `react`/`go` via its package name.
+  // Running Knip per-project can't see those consumers, so entry-file exports
+  // (the public API) are the boundary and must not be reported as unused —
+  // i.e. keep `includeEntryExports` off (the default).
+  "orval": {
+    "config": ["*/orval.config.ts"]
+  }
+}
