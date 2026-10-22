@@ -21,7 +21,13 @@ while getopts p:e:d:i: o; do
 done
 
 die() { echo "ERROR: $*"; exit 2; }
-epoch() { date -j -u -f '%Y-%m-%d %H:%M:%S' "$1" +%s 2>/dev/null; }
+# Lagoon timestamps are UTC "YYYY-MM-DD HH:MM:SS". BSD date (macOS) parses with
+# -j -f; GNU/BusyBox date (Linux) with -d.
+if date -j -f %s 0 +%s >/dev/null 2>&1; then
+  epoch() { date -j -u -f '%Y-%m-%d %H:%M:%S' "$1" +%s 2>/dev/null; }
+else
+  epoch() { date -u -d "$1" +%s 2>/dev/null; }
+fi
 # A missing environment comes back as {"data":[{}]}; drop such empty entries.
 deployments() { lagoon list deployments -p "$project" -e "$env" --output-json 2>/dev/null | jq -c '(.data // empty) | map(select(.name != null))'; }
 

@@ -21,7 +21,8 @@ bar() {
 out=()
 for f in "${XDG_CACHE_HOME:-$HOME/.cache}"/lagoon-deploy-watch/*; do
   [ -f "$f" ] || continue
-  age=$((now - $(stat -f %m "$f")))
+  # GNU stat (Linux) first: there `stat -f` means filesystem status, not format.
+  age=$((now - $(stat -c %Y "$f" 2>/dev/null || stat -f %m "$f")))
   IFS='|' read -r env status step started _ estimate <"$f"
   case $status in
     complete) [ "$age" -lt 900 ] && out+=("✅ $env deployed") ;;
