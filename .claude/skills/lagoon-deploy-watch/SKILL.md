@@ -49,8 +49,15 @@ failed build. If a build fails, report it and let the user decide.
 - Estimate (progress bar, "8m/~11m"): average of the last 5 successful deploys
   of the environment, else of the production environment, else none (elapsed
   time only).
-- If the newest deployment finished before HEAD was committed, the script
-  waits up to 20 minutes for the push's build to be queued.
+- Which build is HEAD's: Lagoon doesn't record the commit, so the script
+  follows HEAD's run of `.github/workflows/lagoon-deploy.yml` (via `gh`) and
+  takes the first deployment created after its "Lagoon / Send deploy event to
+  Lagoon" job started. While waiting it shows the workflow job in progress
+  (typically the Go base image build, which is why builds start minutes after
+  a push). A failed or cancelled run is reported as such. With no run (manual
+  deploy, docs-only push), it falls back to the newest deployment after 3
+  minutes and says so. Renaming that workflow or job means updating
+  `workflow`/`deploy_job` in `watch.sh`.
 - The status line is opt-in per developer: add a `statusLine` entry
   (`"type": "command"`) to your own `~/.claude/settings.json` pointing at
   `scripts/statusline.sh` in your checkout (absolute path). Without it you

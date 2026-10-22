@@ -9,7 +9,7 @@
 # Usage: watch.sh [-p project] [-e environment] [-d deployment-name] [-i seconds]
 # Defaults: environment from the current branch (pr-<N> if it has a PR, else the
 # branch name), project from the Lagoon projects whose git URL matches origin,
-# deployment = the one triggered by the latest push.
+# deployment = the one built for HEAD (see below; needs an authenticated gh).
 
 set -u
 interval=30 project="" env="" deployment=""
@@ -29,7 +29,8 @@ else
   epoch() { date -u -d "$1" +%s 2>/dev/null; }
 fi
 # A missing environment comes back as {"data":[{}]}; drop such empty entries.
-deployments() { lagoon list deployments -p "$project" -e "$env" --output-json 2>/dev/null | jq -c '(.data // empty) | map(select(.name != null))'; }
+# --wide adds .created (when Lagoon queued the build).
+deployments() { lagoon list deployments -p "$project" -e "$env" --wide --output-json 2>/dev/null | jq -c '(.data // empty) | map(select(.name != null))'; }
 
 if [ -z "$env" ]; then
   branch=$(git branch --show-current) || die "not in a git repository"
@@ -61,33 +62,76 @@ state_dir=${XDG_CACHE_HOME:-$HOME/.cache}/lagoon-deploy-watch
 mkdir -p "$state_dir"
 state_file="$state_dir/${project}__${env}"
 
-# Pick the deployment for the latest push. If the newest one is already finished
-# and started before HEAD was committed, the push's build isn't queued yet: wait.
+# Lagoon doesn't record which commit a deployment builds. In dpl-web, builds are
+# started by the "Lagoon / Deploy application" workflow
+# (.github/workflows/lagoon-deploy.yml): once the Go base image is built, its
+# deploy job sends Lagoon the event and Lagoon creates the deployment within
+# seconds. So HEAD's build is the first deployment created after that job of
+# HEAD's workflow run started. Without such a run (manual deploys, docs-only
+# pushes, a renamed job), fall back to the newest deployment.
+workflow=lagoon-deploy.yml deploy_job="Lagoon / Send deploy event to Lagoon"
+head_sha=$(git rev-parse HEAD 2>/dev/null) short=$(git rev-parse --short HEAD 2>/dev/null)
+# pr-<N> environments are deployed by pull_request runs, branches by push runs.
+case $env in pr-*) event=pull_request ;; *) event=push ;; esac
+
+# HEAD's workflow run as "<state>|<detail>": sent|<epoch the deploy job started>,
+# running|<job in progress>, failed|<why>, or none| (no run, or no deploy job).
+run_state() {
+  local id
+  id=$(gh run list --workflow "$workflow" --commit "$head_sha" --event "$event" --limit 1 \
+    --json databaseId --jq '.[0].databaseId // empty' 2>/dev/null)
+  [ -n "$id" ] || { echo "none|"; return; }
+  gh run view "$id" --json status,conclusion,url,jobs 2>/dev/null | jq -r --arg j "$deploy_job" '
+    ([.jobs[] | select(.name == $j)][0]) as $d
+    | if $d == null then (if .status == "completed" then "none|" else "running|queued" end)
+      elif $d.conclusion == "success" or $d.status == "in_progress" then "sent|\($d.startedAt | fromdateiso8601)"
+      elif $d.status == "completed" then "failed|deploy job \($d.conclusion), \(.url)"
+      else "running|\([.jobs[] | select(.status == "in_progress") | .name][0] // "queued")" end' ||
+    echo "none|"
+}
+
+# Find HEAD's deployment. Waits as long as HEAD's workflow run is still working
+# towards the deploy job, otherwise up to 20 minutes.
 if [ -z "$deployment" ]; then
-  head_ts=$(git log -1 --format=%ct 2>/dev/null || echo 0)
-  waited=0
+  waited=0 shown=""
   while :; do
-    newest=$(deployments | jq -c '.[0] // empty')
-    if [ -n "$newest" ]; then
-      status=$(jq -r .status <<<"$newest")
-      started=$(epoch "$(jq -r .started <<<"$newest")")
-      case $status in
-        complete|failed|cancelled|error)
-          [ -n "$started" ] && [ "$started" -ge "$head_ts" ] && break ;;
-        *) break ;;
-      esac
+    IFS='|' read -r state detail <<<"$(run_state)"
+    case $state in
+      sent)
+        # 5s of slack for clock skew between GitHub and Lagoon.
+        deployment=$(deployments | jq -r --argjson t "$detail" '
+          [.[] | select(.created != null and (.created | strptime("%Y-%m-%d %H:%M:%S") | mktime) >= $t - 5)]
+          | sort_by(.created) | .[0].name // empty')
+        [ -n "$deployment" ] && break
+        detail="Lagoon to queue the build" ;;
+      failed)
+        rm -f "$state_file"
+        die "$workflow run for $short ended without deploying ($detail)" ;;
+      none)
+        # Give GitHub a few minutes to create the run before falling back.
+        if [ "$waited" -ge 180 ]; then
+          deployment=$(deployments | jq -r '.[0].name // empty')
+          if [ -n "$deployment" ]; then
+            echo "$project/$env: no $workflow run for $short; watching the newest deployment, which may be another commit's"
+            break
+          fi
+        fi
+        detail="its $workflow run" ;;
+      running) detail="workflow job \"$detail\"" ;;
+    esac
+    if [ "$detail" != "$shown" ]; then
+      echo "$project/$env: waiting for $short: $detail"
+      shown=$detail
     fi
-    [ "$waited" -eq 0 ] && echo "$project/$env: waiting for a deployment of $(git rev-parse --short HEAD)…"
     # Show the wait in the status line too; rewritten each poll so it never looks stale.
-    printf '%s|waiting|for %s|||\n' "$env" "$(git rev-parse --short HEAD)" >"$state_file"
-    waited=$((waited + interval))
+    printf '%s|waiting|%s|||\n' "$env" "$detail" >"$state_file"
+    [ "$state" = running ] || waited=$((waited + interval))
     if [ "$waited" -gt 1200 ]; then
       rm -f "$state_file"
-      die "no new deployment appeared within 20 min; pass -d to watch an existing one"
+      die "no deployment of $short appeared within 20 min; pass -d to watch an existing one"
     fi
     sleep "$interval"
   done
-  deployment=$(jq -r .name <<<"$newest")
 fi
 
 # Estimate the duration as the average of the last 5 successful deploys of this
@@ -135,8 +179,10 @@ while :; do
   step=$(jq -r .buildstep <<<"$d")
   id=$(jq -r .id <<<"$d")
   started=$(epoch "$(jq -r .started <<<"$d")")
+  # A finished build's duration ends at its completion, not now.
+  ended=$(epoch "$(jq -r .completed <<<"$d")") || ended=""
   elapsed=""
-  [ -n "$started" ] && elapsed=" $(progress $(($(date +%s) - started)))"
+  [ -n "$started" ] && elapsed=" $(progress $((${ended:-$(date +%s)} - started)))"
   # The status line computes elapsed time itself; it needs the start epoch.
   # Pipe-separated: read's IFS would merge empty tab-separated fields.
   printf '%s|%s|%s|%s|%s|%s\n' "$env" "$status" "$step" "${started:-}" "$id" "$estimate" >"$state_file"
