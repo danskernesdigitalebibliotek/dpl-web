@@ -75,13 +75,9 @@ class BrandSettingsExtension extends SdlSchemaExtensionPluginBase {
 
     $registry->addFieldResolver('BrandSettings', 'logoUrl',
       $builder->callback(function ($value, $args, ResolveContext $context, ResolveInfo $info, FieldContext $field_context) {
-        $system_theme = $this->configFactory->get('system.theme');
-        $default_theme = $system_theme->get('default');
+        $default_theme = $this->configFactory->get('system.theme')->get('default');
 
-        // The logo is read from the global and the default theme's settings,
-        // so the result must be invalidated when either of them changes.
-        $field_context->addCacheableDependency($system_theme);
-        $field_context->addCacheableDependency($this->configFactory->get('system.theme.global'));
+        // The logo is configured in the default theme's settings.
         $field_context->addCacheableDependency($this->configFactory->get($default_theme . '.settings'));
 
         $logo_path = $this->themeSettingsProvider->getSetting('logo.path', $default_theme);
