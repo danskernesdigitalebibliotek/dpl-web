@@ -260,6 +260,14 @@ jobs:
     with:
       id: events
 
+  CypressMobileApp:
+    name: CMS / Cypress mobile app API tests
+    uses: ./.github/workflows/cms-cypress-workflow.yml
+    secrets:
+      WEDOBOOKS_NPM_TOKEN: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+    with:
+      id: mobile-app
+
   MarkdownLint:
     name: CMS / Lint Markdown
     runs-on: ubuntu-latest

@@ -447,6 +447,7 @@ tasks:
       - ci:cypress:opening-hours
       - ci:cypress:paragraphs
       - ci:cypress:campaigns
+      - ci:cypress:mobile-app
 
   ci:cypress:run:
     cmds:
@@ -534,6 +535,15 @@ tasks:
       - task ci:cypress:run
     env:
       SPEC_PATH: "cypress/e2e/events/*.ts"
+
+  # The mobile app API tests assert on the endpoints the BFF behind the mobile
+  # apps reads, so a change that would break the apps fails here.
+  ci:cypress:mobile-app:
+    desc: Run Cypress tests for the endpoints the mobile apps use.
+    cmds:
+      - task ci:cypress:run
+    env:
+      SPEC_PATH: "cypress/e2e/mobile-app/*.ts"
 
   ci:cypress:local:
     desc: Run Cypress functional tests locally
