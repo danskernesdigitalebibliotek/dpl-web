@@ -131,7 +131,7 @@
     "fishery": "^2.4.0",
     "http-server": "^14.1.1",
     "jsdom": "^30.0.1",
-    "knip": "^6.41.0",
+    "knip": "^6.42.0",
     "mockdate": "^3.0.5",
     "mockttp": "^4.6.4",
     "next-test-api-route-handler": "^5.0.7",
