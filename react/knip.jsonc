@@ -1,0 +1,28 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": ["-knip-ignore"],
+  // Report exports only when they are used outside their own file. Without
+  // this, Knip flags in-file-only exports (mostly conventional `*Props`
+  // types), which is a separate cleanup.
+  "ignoreExportsUsedInFile": true,
+  "entry": [
+    "src/apps/**/*.mount.ts",
+    "src/components/design-system/_system.scss",
+    ".storybook/webpack.config.js"
+  ],
+  // Generated API clients.
+  "ignore": [
+    "src/core/fbs/model/**",
+    "src/core/dpl-cms/dpl-cms.ts",
+    "src/core/material-list-api/material-list.ts"
+  ],
+  // Pulled in by build tooling (browserslist, Webpack, PostCSS) rather
+  // than imported from source.
+  "ignoreDependencies": [
+    "core-js",
+    "caniuse-lite",
+    "ts-loader",
+    "postcss-scss",
+    "postcss-loader"
+  ]
+}
