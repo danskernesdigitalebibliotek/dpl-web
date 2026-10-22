@@ -130,7 +130,7 @@ importers:
         version: 3.2.8(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))
       '@csstools/postcss-sass':
         specifier: ^5.1.1
-        version: 5.1.1(postcss@8.5.30)
+        version: 5.1.1(postcss@8.5.31)
       '@cypress/code-coverage':
         specifier: ^4.0.3
         version: 4.0.3(@babel/core@8.0.7)(@babel/preset-env@8.0.7(@babel/core@8.0.7))(babel-loader@10.1.1(@babel/core@8.0.7)(webpack@5.112.0))(cypress@15.18.0)(supports-color@8.1.1)(webpack@5.112.0)
@@ -187,7 +187,7 @@ importers:
         version: 8.6.19(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(typescript@5.9.3)
       '@storybook/react-webpack5':
         specifier: ^8.6.19
-        version: 8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(supports-color@8.1.1)(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)
+        version: 8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(supports-color@8.1.1)(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)
       '@testing-library/dom':
         specifier: ^10.4.2
         version: 10.4.2
@@ -232,7 +232,7 @@ importers:
         version: 5.0.3(vitest@5.0.3)
       autoprefixer:
         specifier: ^10.6.1
-        version: 10.6.1(postcss@8.5.30)
+        version: 10.6.1(postcss@8.5.31)
       babel-loader:
         specifier: ^10.1.1
         version: 10.1.1(@babel/core@8.0.7)(webpack@5.112.0)
@@ -268,7 +268,7 @@ importers:
         version: 7.1.5(webpack@5.112.0)
       cssnano:
         specifier: ^9.9.0
-        version: 9.9.0(postcss@8.5.30)
+        version: 9.9.0(postcss@8.5.31)
       cypress:
         specifier: 15.18.0
         version: 15.18.0
@@ -339,17 +339,17 @@ importers:
         specifier: ^8.43.0
         version: 8.43.0(@tanstack/react-query@5.104.4(@types/react@19.3.0)(react@19.3.1))(prettier@3.9.10)(typedoc-plugin-markdown@4.13.0(typedoc@0.28.20(typescript@5.9.3)))(typedoc@0.28.20(typescript@5.9.3))(typescript@5.9.3)(zod@4.6.5)
       postcss:
-        specifier: ^8.5.30
-        version: 8.5.30
+        specifier: ^8.5.31
+        version: 8.5.31
       postcss-cli:
         specifier: ^12.0.0
-        version: 12.0.0(jiti@2.7.0)(postcss@8.5.30)(yaml@2.9.0)
+        version: 12.0.0(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.0)
       postcss-loader:
         specifier: ^8.2.1
-        version: 8.2.1(postcss@8.5.30)(typescript@5.9.3)(webpack@5.112.0)
+        version: 8.2.1(postcss@8.5.31)(typescript@5.9.3)(webpack@5.112.0)
       postcss-scss:
         specifier: ^4.0.9
-        version: 4.0.9(postcss@8.5.30)
+        version: 4.0.9(postcss@8.5.31)
       prettier:
         specifier: ^3.9.10
         version: 3.9.10
@@ -376,7 +376,7 @@ importers:
         version: 9.0.5(stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3))
       stylelint-config-recommended-scss:
         specifier: ^14.1.0
-        version: 14.1.0(postcss@8.5.30)(stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3))
+        version: 14.1.0(postcss@8.5.31)(stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3))
       stylelint-prettier:
         specifier: ^5.0.2
         version: 5.0.3(prettier@3.9.10)(stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3))
@@ -403,7 +403,7 @@ importers:
         version: 5.0.3(@types/node@24.19.2)(@vitest/coverage-istanbul@5.0.3)(happy-dom@21.0.3)(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.105.2)(terser@5.51.2)(yaml@2.9.0))
       webpack:
         specifier: ^5.112.0
-        version: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+        version: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
       webpack-cli:
         specifier: ^7.2.3
         version: 7.2.3(js-yaml@5.4.1)(json5@2.2.3)(webpack@5.112.0)
@@ -6246,6 +6246,10 @@ packages:
     resolution: {integrity: sha512-zkd+e9S1AQHhmaBKye9zlFHWjOwVgqXl1q3ECYy8561K7qxR2cREf/STLskulBFd78k6AOFeA+ff1TtEzk9bAA==}
     engines: {node: ^10 || ^12 || >=14}
 
+  postcss@8.5.31:
+    resolution: {integrity: sha512-YUbWYCgErwnMAVkjUnYa+KlMBzGpHwiIt/DE7f0G33AuX2LH9UcTk6KgWxd3zRU+pN3u/C+Xl3EnMLM4Hea7Sg==}
+    engines: {node: ^10 || ^12 || >=14}
+
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -8534,10 +8538,10 @@ snapshots:
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-tokenizer': 4.0.0
 
-  '@csstools/postcss-sass@5.1.1(postcss@8.5.30)':
+  '@csstools/postcss-sass@5.1.1(postcss@8.5.31)':
     dependencies:
       '@csstools/sass-import-resolve': 1.0.0
-      postcss: 8.5.30
+      postcss: 8.5.31
       sass: 1.105.2
       source-map: 0.7.6
 
@@ -8566,7 +8570,7 @@ snapshots:
       js-yaml: 4.3.0
       nyc: 18.0.0(supports-color@8.1.1)
       tinyglobby: 0.2.17
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -8599,7 +8603,7 @@ snapshots:
       debug: 4.4.3(supports-color@8.1.1)
       lodash: 4.18.1
       semver: 7.8.5
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -8612,7 +8616,7 @@ snapshots:
       debug: 4.4.3(supports-color@8.1.1)
       lodash: 4.18.1
       semver: 7.8.5
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -10112,7 +10116,7 @@ snapshots:
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
-  '@storybook/builder-webpack5@8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)':
+  '@storybook/builder-webpack5@8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)':
     dependencies:
       '@storybook/core-webpack': 8.6.19(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))
       '@types/semver': 7.7.1
@@ -10130,12 +10134,12 @@ snapshots:
       semver: 7.8.5
       storybook: 8.6.19(prettier@3.9.10)(supports-color@8.1.1)
       style-loader: 3.3.4(webpack@5.112.0)
-      terser-webpack-plugin: 5.6.1(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(webpack@5.112.0)
+      terser-webpack-plugin: 5.6.1(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(webpack@5.112.0)
       ts-dedent: 2.3.0
       url: 0.11.4
       util: 0.12.5
       util-deprecate: 1.0.2
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
       webpack-dev-middleware: 6.1.3(webpack@5.112.0)
       webpack-hot-middleware: 2.26.1
       webpack-virtual-modules: 0.6.2
@@ -10207,7 +10211,7 @@ snapshots:
     dependencies:
       storybook: 8.6.19(prettier@3.9.10)(supports-color@8.1.1)
 
-  '@storybook/preset-react-webpack@8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(supports-color@8.1.1)(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)':
+  '@storybook/preset-react-webpack@8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(supports-color@8.1.1)(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)':
     dependencies:
       '@storybook/core-webpack': 8.6.19(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))
       '@storybook/react': 8.6.19(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(typescript@5.9.3)
@@ -10222,7 +10226,7 @@ snapshots:
       semver: 7.8.5
       storybook: 8.6.19(prettier@3.9.10)(supports-color@8.1.1)
       tsconfig-paths: 4.2.0
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -10260,7 +10264,7 @@ snapshots:
       react-docgen-typescript: 2.4.0(typescript@5.9.3)
       tslib: 2.8.1
       typescript: 5.9.3
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -10270,10 +10274,10 @@ snapshots:
       react-dom: 19.3.1(react@19.3.1)
       storybook: 8.6.19(prettier@3.9.10)(supports-color@8.1.1)
 
-  '@storybook/react-webpack5@8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(supports-color@8.1.1)(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)':
+  '@storybook/react-webpack5@8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(supports-color@8.1.1)(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)':
     dependencies:
-      '@storybook/builder-webpack5': 8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)
-      '@storybook/preset-react-webpack': 8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(supports-color@8.1.1)(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)
+      '@storybook/builder-webpack5': 8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)
+      '@storybook/preset-react-webpack': 8.6.19(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(supports-color@8.1.1)(svgo@4.1.0)(typescript@5.9.3)(webpack-cli@7.2.3)
       '@storybook/react': 8.6.19(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))(typescript@5.9.3)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
@@ -10992,13 +10996,13 @@ snapshots:
 
   auto-bind@5.0.1: {}
 
-  autoprefixer@10.6.1(postcss@8.5.30):
+  autoprefixer@10.6.1(postcss@8.5.31):
     dependencies:
       browserslist: 4.28.9
       caniuse-lite: 1.0.30001816
       fraction.js: 5.3.4
       picocolors: 1.1.1
-      postcss: 8.5.30
+      postcss: 8.5.31
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
@@ -11018,14 +11022,14 @@ snapshots:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       find-up: 5.0.0
     optionalDependencies:
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   babel-loader@10.1.1(@babel/core@8.0.7)(webpack@5.112.0):
     dependencies:
       '@babel/core': 8.0.7
       find-up: 5.0.0
     optionalDependencies:
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   babel-plugin-istanbul@8.0.0(supports-color@8.1.1):
     dependencies:
@@ -11454,29 +11458,29 @@ snapshots:
 
   css-loader@6.11.0(webpack@5.112.0):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.30)
-      postcss: 8.5.30
-      postcss-modules-extract-imports: 3.1.0(postcss@8.5.30)
-      postcss-modules-local-by-default: 4.2.0(postcss@8.5.30)
-      postcss-modules-scope: 3.2.1(postcss@8.5.30)
-      postcss-modules-values: 4.0.0(postcss@8.5.30)
+      icss-utils: 5.1.0(postcss@8.5.31)
+      postcss: 8.5.31
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.31)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.31)
+      postcss-modules-scope: 3.2.1(postcss@8.5.31)
+      postcss-modules-values: 4.0.0(postcss@8.5.31)
       postcss-value-parser: 4.2.0
       semver: 7.8.5
     optionalDependencies:
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   css-loader@7.1.5(webpack@5.112.0):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.30)
-      postcss: 8.5.30
-      postcss-modules-extract-imports: 3.1.0(postcss@8.5.30)
-      postcss-modules-local-by-default: 4.2.0(postcss@8.5.30)
-      postcss-modules-scope: 3.2.1(postcss@8.5.30)
-      postcss-modules-values: 4.0.0(postcss@8.5.30)
+      icss-utils: 5.1.0(postcss@8.5.31)
+      postcss: 8.5.31
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.31)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.31)
+      postcss-modules-scope: 3.2.1(postcss@8.5.31)
+      postcss-modules-values: 4.0.0(postcss@8.5.31)
       postcss-value-parser: 4.2.0
       semver: 7.8.5
     optionalDependencies:
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   css-select@4.3.0:
     dependencies:
@@ -11520,14 +11524,14 @@ snapshots:
 
   cssesc@3.0.0: {}
 
-  cssnano@9.9.0(postcss@8.5.30):
+  cssnano@9.9.0(postcss@8.5.31):
     dependencies:
       '@colordx/core': 7.3.0
       '@csstools/css-tokenizer': 4.0.2
       browserslist: 4.29.3
       caniuse-api: 4.0.0
-      postcss: 8.5.30
-      postcss-calc: 11.2.2(postcss@8.5.30)
+      postcss: 8.5.31
+      postcss-calc: 11.2.2(postcss@8.5.31)
 
   csso@5.0.5:
     dependencies:
@@ -12034,7 +12038,7 @@ snapshots:
       lodash: 4.18.1
       resolve: 2.0.0-next.7
       semver: 5.7.2
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -12046,7 +12050,7 @@ snapshots:
       loader-utils: 2.0.4
       object-hash: 2.2.0
       schema-utils: 2.7.1
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   eslint-module-utils@2.13.0(@typescript-eslint/parser@8.71.2(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.10(supports-color@8.1.1))(eslint-import-resolver-webpack@0.13.11)(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
@@ -12168,7 +12172,7 @@ snapshots:
       micromatch: 4.0.8
       normalize-path: 3.0.0
       schema-utils: 4.3.3
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1):
     dependencies:
@@ -12343,7 +12347,7 @@ snapshots:
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   filesize@10.1.6: {}
 
@@ -12448,7 +12452,7 @@ snapshots:
       semver: 7.8.5
       tapable: 2.3.3
       typescript: 5.9.3
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   form-data@4.0.6:
     dependencies:
@@ -12770,7 +12774,7 @@ snapshots:
       pretty-error: 4.0.0
       tapable: 2.3.3
     optionalDependencies:
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   htmlparser2@6.1.0:
     dependencies:
@@ -12795,9 +12799,9 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  icss-utils@5.1.0(postcss@8.5.30):
+  icss-utils@5.1.0(postcss@8.5.31):
     dependencies:
-      postcss: 8.5.30
+      postcss: 8.5.31
 
   ieee754@1.2.1: {}
 
@@ -13749,21 +13753,21 @@ snapshots:
 
   minimist@1.2.8: {}
 
-  minimizer-webpack-plugin@5.13.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack@5.112.0):
+  minimizer-webpack-plugin@5.13.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack@5.112.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.5.0
       terser: 5.51.2
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
     optionalDependencies:
       clean-css: 5.3.3
-      cssnano: 9.9.0(postcss@8.5.30)
+      cssnano: 9.9.0(postcss@8.5.31)
       csso: 5.0.5
       esbuild: 0.25.12
       html-minifier-terser: 6.1.0
       lightningcss: 1.33.0
-      postcss: 8.5.30
+      postcss: 8.5.31
       svgo: 4.1.0
 
   minipass@7.1.3: {}
@@ -14150,19 +14154,19 @@ snapshots:
 
   possible-typed-array-names@1.1.0: {}
 
-  postcss-calc@11.2.2(postcss@8.5.30):
+  postcss-calc@11.2.2(postcss@8.5.31):
     dependencies:
       '@csstools/css-tokenizer': 4.0.2
-      postcss: 8.5.30
+      postcss: 8.5.31
 
-  postcss-cli@12.0.0(jiti@2.7.0)(postcss@8.5.30)(yaml@2.9.0):
+  postcss-cli@12.0.0(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.0):
     dependencies:
       chokidar: 5.0.0
       dependency-graph: 1.0.0
       picocolors: 1.1.1
-      postcss: 8.5.30
-      postcss-load-config: 6.0.1(jiti@2.7.0)(postcss@8.5.30)(yaml@2.9.0)
-      postcss-reporter: 7.1.0(postcss@8.5.30)
+      postcss: 8.5.31
+      postcss-load-config: 6.0.1(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.0)
+      postcss-reporter: 7.1.0(postcss@8.5.31)
       pretty-hrtime: 1.0.3
       read-cache: 1.0.2
       slash: 5.1.0
@@ -14173,63 +14177,63 @@ snapshots:
       - tsx
       - yaml
 
-  postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.30)(yaml@2.9.0):
+  postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.0):
     dependencies:
       lilconfig: 3.1.3
     optionalDependencies:
       jiti: 2.7.0
-      postcss: 8.5.30
+      postcss: 8.5.31
       yaml: 2.9.0
 
-  postcss-loader@8.2.1(postcss@8.5.30)(typescript@5.9.3)(webpack@5.112.0):
+  postcss-loader@8.2.1(postcss@8.5.31)(typescript@5.9.3)(webpack@5.112.0):
     dependencies:
       cosmiconfig: 9.0.2(typescript@5.9.3)
       jiti: 2.7.0
-      postcss: 8.5.30
+      postcss: 8.5.31
       semver: 7.8.5
     optionalDependencies:
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
     transitivePeerDependencies:
       - typescript
 
   postcss-media-query-parser@0.2.3: {}
 
-  postcss-modules-extract-imports@3.1.0(postcss@8.5.30):
+  postcss-modules-extract-imports@3.1.0(postcss@8.5.31):
     dependencies:
-      postcss: 8.5.30
+      postcss: 8.5.31
 
-  postcss-modules-local-by-default@4.2.0(postcss@8.5.30):
+  postcss-modules-local-by-default@4.2.0(postcss@8.5.31):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.30)
-      postcss: 8.5.30
+      icss-utils: 5.1.0(postcss@8.5.31)
+      postcss: 8.5.31
       postcss-selector-parser: 7.1.6
       postcss-value-parser: 4.2.0
 
-  postcss-modules-scope@3.2.1(postcss@8.5.30):
+  postcss-modules-scope@3.2.1(postcss@8.5.31):
     dependencies:
-      postcss: 8.5.30
+      postcss: 8.5.31
       postcss-selector-parser: 7.1.6
 
-  postcss-modules-values@4.0.0(postcss@8.5.30):
+  postcss-modules-values@4.0.0(postcss@8.5.31):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.30)
-      postcss: 8.5.30
+      icss-utils: 5.1.0(postcss@8.5.31)
+      postcss: 8.5.31
 
-  postcss-reporter@7.1.0(postcss@8.5.30):
+  postcss-reporter@7.1.0(postcss@8.5.31):
     dependencies:
       picocolors: 1.1.1
-      postcss: 8.5.30
+      postcss: 8.5.31
       thenby: 1.4.1
 
   postcss-resolve-nested-selector@0.1.6: {}
 
-  postcss-safe-parser@7.1.0(postcss@8.5.30):
+  postcss-safe-parser@7.1.0(postcss@8.5.31):
     dependencies:
-      postcss: 8.5.30
+      postcss: 8.5.31
 
-  postcss-scss@4.0.9(postcss@8.5.30):
+  postcss-scss@4.0.9(postcss@8.5.31):
     dependencies:
-      postcss: 8.5.30
+      postcss: 8.5.31
 
   postcss-selector-parser@7.1.6:
     dependencies:
@@ -14239,6 +14243,12 @@ snapshots:
   postcss-value-parser@4.2.0: {}
 
   postcss@8.5.30:
+    dependencies:
+      nanoid: 3.3.20
+      picocolors: 1.1.1
+      source-map-js: 1.2.2
+
+  postcss@8.5.31:
     dependencies:
       nanoid: 3.3.20
       picocolors: 1.1.1
@@ -14991,24 +15001,24 @@ snapshots:
 
   style-loader@3.3.4(webpack@5.112.0):
     dependencies:
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   style-loader@4.0.0(webpack@5.112.0):
     dependencies:
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   stylelint-config-prettier@9.0.5(stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3)):
     dependencies:
       stylelint: 17.16.0(supports-color@8.1.1)(typescript@5.9.3)
 
-  stylelint-config-recommended-scss@14.1.0(postcss@8.5.30)(stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3)):
+  stylelint-config-recommended-scss@14.1.0(postcss@8.5.31)(stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3)):
     dependencies:
-      postcss-scss: 4.0.9(postcss@8.5.30)
+      postcss-scss: 4.0.9(postcss@8.5.31)
       stylelint: 17.16.0(supports-color@8.1.1)(typescript@5.9.3)
       stylelint-config-recommended: 14.0.1(stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3))
       stylelint-scss: 6.14.0(stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3))
     optionalDependencies:
-      postcss: 8.5.30
+      postcss: 8.5.31
 
   stylelint-config-recommended@14.0.1(stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3)):
     dependencies:
@@ -15055,7 +15065,7 @@ snapshots:
       normalize-path: 3.0.0
       schema-utils: 4.3.3
       stylelint: 17.16.0(supports-color@8.1.1)(typescript@5.9.3)
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   stylelint@17.16.0(supports-color@8.1.1)(typescript@5.9.3):
     dependencies:
@@ -15085,8 +15095,8 @@ snapshots:
       micromatch: 4.0.8
       normalize-path: 3.0.0
       picocolors: 1.1.1
-      postcss: 8.5.30
-      postcss-safe-parser: 7.1.0(postcss@8.5.30)
+      postcss: 8.5.31
+      postcss-safe-parser: 7.1.0(postcss@8.5.31)
       postcss-selector-parser: 7.1.6
       postcss-value-parser: 4.2.0
       string-width: 8.2.2
@@ -15124,7 +15134,7 @@ snapshots:
   svg-url-loader@8.1.0(webpack@5.112.0):
     dependencies:
       file-loader: 6.2.0(webpack@5.112.0)
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   svgo@4.1.0:
     dependencies:
@@ -15181,21 +15191,21 @@ snapshots:
 
   temporal-utils@1.0.3: {}
 
-  terser-webpack-plugin@5.6.1(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(webpack@5.112.0):
+  terser-webpack-plugin@5.6.1(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(webpack@5.112.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.5.0
       terser: 5.51.2
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
     optionalDependencies:
       clean-css: 5.3.3
-      cssnano: 9.9.0(postcss@8.5.30)
+      cssnano: 9.9.0(postcss@8.5.31)
       csso: 5.0.5
       esbuild: 0.25.12
       html-minifier-terser: 6.1.0
       lightningcss: 1.33.0
-      postcss: 8.5.30
+      postcss: 8.5.31
 
   terser@5.51.2:
     dependencies:
@@ -15275,7 +15285,7 @@ snapshots:
       picomatch: 4.0.4
       source-map: 0.7.6
       typescript: 5.9.3
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
     optionalDependencies:
       loader-utils: 2.0.4
 
@@ -15555,7 +15565,7 @@ snapshots:
       import-local: 3.2.0
       interpret: 3.1.1
       rechoir: 0.8.0
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
       webpack-merge: 6.0.1
     optionalDependencies:
       js-yaml: 5.4.1
@@ -15569,7 +15579,7 @@ snapshots:
       range-parser: 1.3.0
       schema-utils: 4.5.0
     optionalDependencies:
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   webpack-hot-middleware@2.26.1:
     dependencies:
@@ -15588,11 +15598,11 @@ snapshots:
   webpack-version-file-plugin@0.6.0(webpack@5.112.0):
     dependencies:
       ejs: 6.0.1
-      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3)
+      webpack: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
 
   webpack-virtual-modules@0.6.2: {}
 
-  webpack@5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack-cli@7.2.3):
+  webpack@5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3):
     dependencies:
       '@types/estree': 1.0.9
       '@types/json-schema': 7.0.15
@@ -15606,7 +15616,7 @@ snapshots:
       events: 3.3.0
       graceful-fs: 4.2.11
       mime-db: 1.54.0
-      minimizer-webpack-plugin: 5.13.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.30))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.30)(svgo@4.1.0)(webpack@5.112.0)
+      minimizer-webpack-plugin: 5.13.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack@5.112.0)
       schema-utils: 4.5.0
       tapable: 2.3.3
       watchpack: 2.6.2
