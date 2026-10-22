@@ -361,6 +361,10 @@ const meta: Meta<typeof MaterialEntry> = {
       description: "Listen online",
       control: { type: "text" }
     },
+    cantLoanText: {
+      description: "Can't be loaned",
+      control: { type: "text" }
+    },
     cantReserveText: {
       description: "Can't be reserved",
       control: { type: "text" }
@@ -922,6 +926,7 @@ const meta: Meta<typeof MaterialEntry> = {
     getOnlineText: "Get online",
     seeOnlineText: "See online",
     listenOnlineText: "Listen online",
+    cantLoanText: "Can't be loaned",
     cantReserveText: "Can't be reserved",
     notLivingInMunicipalityText:
       "You don't live in the municipality where this library is located.",

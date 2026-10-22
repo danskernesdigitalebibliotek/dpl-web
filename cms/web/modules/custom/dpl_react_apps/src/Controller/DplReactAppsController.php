@@ -499,6 +499,7 @@ class DplReactAppsController extends ControllerBase {
       'audience-text' => $this->t('Audience', [], ['context' => 'Work Page']),
       'blocked-button-text' => $this->t('Blocked', [], ['context' => 'Work Page']),
       'cannot-see-review-text' => $this->t('The review is not accessible', [], ['context' => 'Work Page']),
+      'cant-loan-text' => $this->t("Can't be loaned", [], ['context' => 'Work Page']),
       'cant-reserve-text' => $this->t("Can't be reserved", [], ['context' => 'Work Page']),
       'cant-view-review-text' => $this->t('Cannot view review', [], ['context' => 'Work Page']),
       'cant-view-text' => $this->t("Can't be viewed", [], ['context' => 'Work Page']),
