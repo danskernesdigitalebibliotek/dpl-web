@@ -20,3 +20,25 @@ dpl_event.settings:
     list_paging_mode:
       type: string
       label: 'Event list paging mode'
+
+facet.widget.config.dpl_event_date_range:
+  type: facet.widget.default_config
+  label: 'Event date range widget configuration'
+  mapping:
+    min_label:
+      type: label
+      label: 'Minimum date label'
+    max_label:
+      type: label
+      label: 'Maximum date label'
+    end_field:
+      type: string
+      label: 'End date field'
+
+plugin.plugin_configuration.facets_processor.dpl_event_date_range:
+  type: mapping
+  label: 'Event date range'
+  mapping:
+    max_inclusive:
+      type: boolean
+      label: 'Max inclusive'
