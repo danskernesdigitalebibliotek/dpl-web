@@ -166,8 +166,6 @@ class DplReactAppsController extends ControllerBase {
       'facet-let-text' => $this->t('Let', [], ['context' => 'Search Result']),
       'facet-library-recommendation-text' => $this->t('Library recommendation', [], ['context' => 'Search Result']),
       'filter-list-text' => $this->t('Filter list', [], ['context' => 'Search Result']),
-      'intelligent-filters-accessible-headline-text' => $this->t('Available filters', [], ['context' => 'Search Result']),
-      'intelligent-filters-selected-accessible-headline-text' => $this->t('Selected filters', [], ['context' => 'Search Result']),
       'invalid-search-text' => $this->t('Invalid search', [], ['context' => 'Search Result']),
       'invalid-search-description-text' => $this->t('Your search is invalid. Please try again. In order to perform a valid search, you need to include at least three letters.', [], ['context' => 'Search Result']),
       'results-text' => $this->t('results', [], ['context' => 'Search Result']),

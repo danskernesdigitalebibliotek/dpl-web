@@ -28,7 +28,6 @@ export interface FeeListProps {
   feeDetailsModalScreenReaderText: string;
   feeListBodyText: string;
   feeListConfig: string;
-  feeListDaysText: string;
   feeListHeadlineText: string;
   feeListPaymentSiteUrl: string;
   feePaymentModalBodyText: string;
@@ -36,7 +35,6 @@ export interface FeeListProps {
   feePaymentModalGotoText: string;
   feePaymentModalHeaderText: string;
   feePaymentModalNoticeText: string;
-  iAcceptText: string;
   itemFeeAmountText: string;
   materialAndAuthorText: string;
   materialByAuthorText: string;
@@ -45,8 +43,6 @@ export interface FeeListProps {
   paymentOverviewUrl: string;
   payText: string;
   plusXOtherMaterialsText: string;
-  termsOfTradeText: string;
-  termsOfTradeUrl: string;
   totalFeeAmountText: string;
   totalText: string;
   turnedInText: string;

@@ -64,9 +64,6 @@ const meta: Meta<typeof FeeList> = {
     materialAndAuthorText: {
       control: { type: "text" }
     },
-    feeListDaysText: {
-      control: { type: "text" }
-    },
     payText: {
       control: { type: "text" }
     },
@@ -74,12 +71,6 @@ const meta: Meta<typeof FeeList> = {
       control: { type: "text" }
     },
     expirationWarningDaysBeforeConfig: {
-      control: { type: "text" }
-    },
-    iAcceptText: {
-      control: { type: "text" }
-    },
-    termsOfTradeText: {
       control: { type: "text" }
     },
     unpaidFeesPayableByClientHeadlineText: {
@@ -164,9 +155,6 @@ const meta: Meta<typeof FeeList> = {
     availablePaymentTypesUrl: {
       control: { type: "text" }
     },
-    termsOfTradeUrl: {
-      control: { type: "text" }
-    },
     viewFeesAndCompensationRatesUrl: {
       control: { type: "text" }
     }
@@ -196,12 +184,9 @@ export const Primary: Story = {
     otherMaterialsText: "Other materials",
     materialByAuthorText: "By",
     materialAndAuthorText: "and",
-    feeListDaysText: "Days",
     payText: "Pay",
     totalText: "Total @total",
     expirationWarningDaysBeforeConfig: "6",
-    iAcceptText: "I accept the",
-    termsOfTradeText: "Terms of trade",
     unpaidFeesPayableByClientHeadlineText: "Unsettled debt - paid on site",
     unpaidFeesNotPayableByClientHeadlineText:
       "Unsettled debt - paid externally",
@@ -238,7 +223,6 @@ export const Primary: Story = {
     physicalLoansUrl: "/user/me/loans",
     feeListPaymentSiteUrl: "https://google.com",
     availablePaymentTypesUrl: "https://unsplash.com/photos/JDzoTGfoogA",
-    termsOfTradeUrl: "https://unsplash.com/photos/JDzoTGfoogA",
     viewFeesAndCompensationRatesUrl: "https://unsplash.com/photos/NEJcmvLFcws"
   }
 };
