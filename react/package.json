@@ -90,7 +90,7 @@
     "change-case-all": "^2.1.0",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^10.0.6",
-    "core-js": "^3.50.0",
+    "core-js": "^3.51.0",
     "css-loader": "^7.1.5",
     "cssnano": "^9.9.0",
     "cypress": "15.18.0",
@@ -116,7 +116,7 @@
     "mutationobserver-shim": "^0.3.7",
     "nyc": "^18.0.0",
     "orval": "^8.43.0",
-    "postcss": "^8.5.30",
+    "postcss": "^8.5.31",
     "postcss-cli": "^12.0.0",
     "postcss-loader": "^8.2.1",
     "postcss-scss": "^4.0.9",
@@ -177,6 +177,6 @@
     "unfetch": "^5.0.0"
   },
   "peerDependencies": {
-    "postcss": "^8.5.30"
+    "postcss": "^8.5.31"
   }
 }
