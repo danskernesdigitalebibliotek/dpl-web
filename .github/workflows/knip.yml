@@ -35,6 +35,18 @@ jobs:
       - name: Find unused files, exports and dependencies
         run: pnpm --dir design-system run knip
 
+  cms:
+    name: Knip / CMS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      - name: Find unused files, exports and dependencies
+        run: pnpm --dir cms run knip
+
   react:
     name: Knip / React
     runs-on: ubuntu-latest
