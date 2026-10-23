@@ -48,3 +48,15 @@ export default {
   advancedSearchSortAscText: "A-Z",
   advancedSearchSortDescText: "Z-A"
 };
+
+export interface AdvancedSearchV2SortArgs {
+  advancedSearchSortLabelText: string;
+  advancedSearchSortRelevanceText: string;
+  advancedSearchSortLatestPubDateText: string;
+  advancedSearchSortLatestPubDateDescText: string;
+  advancedSearchSortLatestPubDateAscText: string;
+  advancedSearchSortCreatorText: string;
+  advancedSearchSortTitleText: string;
+  advancedSearchSortAscText: string;
+  advancedSearchSortDescText: string;
+}
