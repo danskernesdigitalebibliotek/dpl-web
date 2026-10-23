@@ -16,14 +16,5 @@
   "ignoreBinaries": ["shadcn"],
   // Babel/loader deps referenced from Webpack/Storybook config, and
   // http-server invoked via full path in CI — Knip cannot detect either.
-  "ignoreDependencies": [
-    "@babel/core",
-    "@babel/preset-env",
-    "@babel/preset-react",
-    "@babel/preset-typescript",
-    "@jest/types",
-    "babel-loader",
-    "http-server",
-    "@types/jwt-simple",
-  ],
+  "ignoreDependencies": ["@jest/types", "http-server", "@types/jwt-simple"],
 }
