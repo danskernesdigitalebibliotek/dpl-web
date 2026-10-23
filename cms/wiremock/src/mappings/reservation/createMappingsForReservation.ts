@@ -1,5 +1,5 @@
 import { Options } from 'wiremock-rest-client/dist/model/options.model';
-import wiremock from '../../lib/general';
+import { wiremock } from '../../lib/general';
 
 export default async (baseUri?: string, options?: Options) => {
   // Get user info.
