@@ -38,12 +38,10 @@ export const enum AutosuggestCategory {
   animatedSeries = "tegneserie"
 }
 
-export type AutosuggestCategoryFacet = "materialTypesSpecific" | "workTypes";
+type AutosuggestCategoryFacet = "materialTypesSpecific" | "workTypes";
 
 export type AutosuggestCategoryList = {
   render: string;
   term: AutosuggestCategory;
   facet: AutosuggestCategoryFacet;
 };
-
-export default {};

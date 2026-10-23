@@ -29,5 +29,3 @@ export const getFindOnShelfLocationText = (
 ) => {
   return locationArray.join(" · ");
 };
-
-export default {};

@@ -10,5 +10,3 @@ export const getNumberInSeries = (serie: Work["series"][0], id: WorkId) => {
   ];
   return filteredMembers?.[0]?.numberInSeries;
 };
-
-export default {};

@@ -12,6 +12,7 @@ import AdvancedSearchV2 from "./AdvancedSearchV2";
 import { NuqsAdapter } from "nuqs/adapters/react";
 import { AdvancedSearchV2Args } from "../../core/storybook/advancedSearchV2Args";
 import { AdvancedSearchV2CqlSearchArgs } from "../../core/storybook/advancedSearchV2CqlSearchArgs";
+import { AdvancedSearchV2SortArgs } from "../../core/storybook/advancedSearchV2SortArgs";
 
 interface AdvancedSearchEntryTextProps {
   byAuthorText: string;
@@ -37,7 +38,8 @@ export interface AdvancedSearchEntryProps
     AdvancedSearchEntryTextProps,
     MappArgs,
     AdvancedSearchV2Args,
-    AdvancedSearchV2CqlSearchArgs {
+    AdvancedSearchV2CqlSearchArgs,
+    AdvancedSearchV2SortArgs {
   pageSizeDesktop: number;
   pageSizeMobile: number;
   searchShowingMaterialsText: string;

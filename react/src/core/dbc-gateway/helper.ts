@@ -47,8 +47,6 @@ export const getQueryUrlFromContext = (
   return resolveBaseUrl(queryName as string);
 };
 
-export default {};
-
 /* ********************************* Vitest Section  ********************************* */
 if (import.meta.vitest) {
   const { describe, expect, it } = import.meta.vitest;
