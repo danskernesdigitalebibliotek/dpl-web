@@ -18,13 +18,3 @@ export const buildComplexSearchWithPaginationResponse = (
 ) => ({
   data
 });
-
-// Helper to create empty results
-export const buildComplexSearchWithPaginationEmptyResponse = () => ({
-  data: {
-    complexSearch: {
-      hitcount: 0,
-      works: []
-    }
-  }
-});

@@ -34,5 +34,3 @@ export const getUserToken = () => {
   }
   return null;
 };
-
-export default {};

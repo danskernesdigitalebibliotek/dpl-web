@@ -313,7 +313,6 @@ updates:
       redux:
         patterns:
           - "@reduxjs/toolkit"
-          - "@types/react-redux"
           - "react-redux"
           - "redux"
           - "redux-persist"

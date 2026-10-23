@@ -62,8 +62,6 @@ export const fetcher = async <ResponseType>({
   return null;
 };
 
-export default {};
-
 export type ErrorType<ErrorData> = ErrorData;
 
 export type BodyType<BodyData> = BodyData;
