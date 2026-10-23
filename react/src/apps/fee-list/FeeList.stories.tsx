@@ -64,9 +64,6 @@ const meta: Meta<typeof FeeList> = {
     materialAndAuthorText: {
       control: { type: "text" }
     },
-    payText: {
-      control: { type: "text" }
-    },
     totalText: {
       control: { type: "text" }
     },
@@ -80,21 +77,6 @@ const meta: Meta<typeof FeeList> = {
       control: { type: "text" }
     },
     alreadyPaidText: {
-      control: { type: "text" }
-    },
-    feePaymentModalHeaderText: {
-      control: { type: "text" }
-    },
-    feePaymentModalBodyText: {
-      control: { type: "text" }
-    },
-    feePaymentModalNoticeText: {
-      control: { type: "text" }
-    },
-    feePaymentModalGotoText: {
-      control: { type: "text" }
-    },
-    feePaymentModalCancelText: {
       control: { type: "text" }
     },
     feeDetailsModalScreenReaderText: {
@@ -184,7 +166,6 @@ export const Primary: Story = {
     otherMaterialsText: "Other materials",
     materialByAuthorText: "By",
     materialAndAuthorText: "and",
-    payText: "Pay",
     totalText: "Total @total",
     expirationWarningDaysBeforeConfig: "6",
     unpaidFeesPayableByClientHeadlineText: "Unsettled debt - paid on site",
@@ -192,12 +173,6 @@ export const Primary: Story = {
       "Unsettled debt - paid externally",
     alreadyPaidText:
       "Please note that paid fees are not registered up until 72 hours after your payment after which your debt is updated and your user unblocked if it has been blocked.",
-    feePaymentModalHeaderText: "Unpaid fees post 27/10 2020",
-    feePaymentModalBodyText: "You will be redirected to Mit Betalingsoverblik.",
-    feePaymentModalNoticeText:
-      "Paid fees can take up to 24 hours to registrer.",
-    feePaymentModalGotoText: "Go to Mit Betalingsoverblik",
-    feePaymentModalCancelText: "Cancel",
     feeDetailsModalScreenReaderText: "A modal containing details about a fee",
     emptyFeeListText: "You have 0 unpaid fees or replacement costs",
     feeDetailsModalCloseModalAriaLabelText: "Close fee details modal",

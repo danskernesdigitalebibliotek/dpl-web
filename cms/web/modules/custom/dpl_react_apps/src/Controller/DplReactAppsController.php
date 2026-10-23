@@ -143,8 +143,6 @@ class DplReactAppsController extends ControllerBase {
       'add-more-filters-text' => $this->t('+ more filters', [], ['context' => 'Search Result']),
       'clear-all-text' => $this->t('Clear all', [], ['context' => 'Search Result']),
       'facet-access-types-text' => $this->t('Access types', [], ['context' => 'Search Result']),
-      'facet-browser-modal-close-modal-aria-label-text' => $this->t('Close facet browser modal', [], ['context' => 'Search Result']),
-      'facet-browser-modal-screen-reader-modal-description-text' => $this->t('Modal for facet browser', [], ['context' => 'Search Result']),
       'facet-can-always-be-loaned-text' => $this->t('Can always be loaned', [], ['context' => 'Search Result']),
       'facet-children-or-adults-text' => $this->t('Children or adults', [], ['context' => 'Search Result']),
       'facet-creators-text' => $this->t('Creators', [], ['context' => 'Search Result']),

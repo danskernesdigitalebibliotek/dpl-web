@@ -30,18 +30,11 @@ export interface FeeListProps {
   feeListConfig: string;
   feeListHeadlineText: string;
   feeListPaymentSiteUrl: string;
-  feePaymentModalBodyText: string;
-  feePaymentModalCancelText: string;
-  feePaymentModalGotoText: string;
-  feePaymentModalHeaderText: string;
-  feePaymentModalNoticeText: string;
   itemFeeAmountText: string;
   materialAndAuthorText: string;
   materialByAuthorText: string;
   materialNumberText: string;
   otherMaterialsText: string;
-  paymentOverviewUrl: string;
-  payText: string;
   plusXOtherMaterialsText: string;
   totalFeeAmountText: string;
   totalText: string;
