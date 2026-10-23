@@ -88,6 +88,12 @@ tasks:
     cmds:
       - docker run --rm --volume "{{.TASKFILE_DIR}}:/repo:ro" --workdir /repo rhysd/actionlint:latest -color
 
+  knip:
+    desc: "Run knip dead-code analysis for the projects that have it set up (go and design-system)."
+    cmds:
+      - pnpm --dir go run knip
+      - pnpm --dir design-system run knip
+
   # ---------------------------------------------------------------------------
   # Tokens
   # ---------------------------------------------------------------------------

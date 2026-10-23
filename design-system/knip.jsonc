@@ -1,0 +1,28 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": ["-knip-ignore"],
+  // Report exports only when they are used outside their own file. Without
+  // this, Knip flags in-file-only exports (mostly conventional `*Props`
+  // types), which is a separate cleanup.
+  "ignoreExportsUsedInFile": true,
+  "entry": [
+    "base.scss",
+    "wysiwyg.scss",
+    "admin-base.scss",
+    "src/**/*.js",
+    "test-runner-jest.config.js",
+  ],
+  // Invoked in CI, not referenced from source.
+  "ignoreBinaries": ["chromatic"],
+  // Referenced from build/test config strings (Babel, Jest, Storybook
+  // docgen) or invoked in CI via full paths, none of which Knip can trace.
+  "ignoreDependencies": [
+    "@babel/preset-env",
+    "playwright",
+    "react-docgen-typescript",
+    "@argos-ci/cli",
+    "http-server",
+    "wait-on",
+    "@jest/types",
+  ],
+}

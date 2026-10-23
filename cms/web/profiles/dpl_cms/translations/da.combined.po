@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-10-19 13:00+0200\n"
-"PO-Revision-Date: 2026-10-19 13:00+0200\n"
+"POT-Creation-Date: 2026-10-22 09:43+0200\n"
+"PO-Revision-Date: 2026-10-22 09:43+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-10-19 13:00+0200\n"
-"PO-Revision-Date: 2026-10-19 13:00+0200\n"
+"POT-Creation-Date: 2026-10-22 09:43+0200\n"
+"PO-Revision-Date: 2026-10-22 09:43+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8161,6 +8161,10 @@ msgstr ""
 msgid "Date range formatter"
 msgstr "Date range formatter"
 
+msgctxt "dpl_event"
+msgid "Date range overlap"
+msgstr ""
+
 msgctxt "core.date_format.date_short_month:label"
 msgid "Date short month"
 msgstr "Date short month"
@@ -10277,6 +10281,13 @@ msgctxt "DPL Opening Hours Editor"
 msgid "End date"
 msgstr "Slutdato"
 
+msgid "End date field"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "End date field"
+msgstr ""
+
 msgid "End of the word trimming"
 msgstr ""
 
@@ -10909,6 +10920,16 @@ msgstr "Specifikke inkluderede datoer for arrangementsserie"
 
 msgid "Event Start Time"
 msgstr "Starttidspunkt"
+
+msgid "Event date range"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Event date range"
+msgstr ""
+
+msgid "Event date range widget configuration"
+msgstr ""
 
 msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_event_details:label"
 msgid "Event details"
@@ -11841,6 +11862,10 @@ msgstr ""
 msgctxt "Work Page"
 msgid "Filter displayed materials"
 msgstr "Filtrér viste materialer"
+
+msgctxt "dpl_event"
+msgid "Filter events happening within a range of dates."
+msgstr ""
 
 msgid "Filter items based on filtered result set by other applied filters"
 msgstr ""
@@ -13818,6 +13843,12 @@ msgstr "nkluder blokeret bruger"
 msgid "Include blocked users: @include_blocked"
 msgstr "Inkluder blokerede brugere: @include_blocked"
 
+msgctxt "dpl_event"
+msgid ""
+"Include events happening at any time of day on the max date. Otherwise "
+"events starting after 00:00:00 on the max date are excluded."
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:filters:roles_target_id_2:expose:label"
 msgid "Include patron"
 msgstr ""
@@ -13831,6 +13862,10 @@ msgid "Include patrons"
 msgstr ""
 
 msgid "Include reset sort option"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Include through end of max date"
 msgstr ""
 
 msgid "Include unpublished nodes"
@@ -14253,6 +14288,13 @@ msgstr ""
 
 msgctxt "Open order"
 msgid "Item available, order through the librarys catalogue"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid ""
+"Items are shown when the period from the facet field to this field overlaps "
+"the selected range. Leave empty to only show items where the facet field is "
+"within the range."
 msgstr ""
 
 msgid "Items per page"
@@ -15781,12 +15823,22 @@ msgstr "Maksimalt uddrag"
 msgid "Max Video Preview"
 msgstr "Maksimal video forhåndsvisning"
 
+msgid "Max inclusive"
+msgstr ""
+
 msgctxt "field.field.paragraph.filtered_event_list.field_max_item_amount:label"
 msgid "Max item amount"
 msgstr ""
 
 msgid "Maximum"
 msgstr "Maksimum"
+
+msgid "Maximum date label"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Maximum date label"
+msgstr ""
 
 msgid ""
 "Maximum number of HTTP requests that can be made during Drupal's execution "
@@ -16179,6 +16231,13 @@ msgstr "Minimum"
 msgctxt "Patron registration settings form"
 msgid "Minimum age to allow self registration"
 msgstr "Minimumsalder for selvoprettelse som låner"
+
+msgid "Minimum date label"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Minimum date label"
+msgstr ""
 
 msgid "Minute(s)"
 msgstr "Minut(ter)"
@@ -22236,6 +22295,10 @@ msgstr "Vis alle @title_plural"
 
 msgctxt "views.view.event_instance_list:display:default:display_options:filters:date__value:group_info:group_items:1:title"
 msgid "Show all events"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Show all events happening within the selected date range."
 msgstr ""
 
 msgid "Show arrows for drag & drop"

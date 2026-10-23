@@ -28,5 +28,3 @@ export const SeriesCardSkeleton = () => {
     </article>
   );
 };
-
-export default SeriesCardSkeleton;

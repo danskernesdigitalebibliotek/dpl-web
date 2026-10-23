@@ -29,7 +29,7 @@ export type SeriesPageProps = {
 
 // The whole series landing page, so that Chromatic covers the page-level
 // styling and the spacing between the cards - not just a card on its own.
-export const SeriesPage = ({
+const SeriesPage = ({
   title,
   description,
   seriesByText,

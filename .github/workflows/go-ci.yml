@@ -89,7 +89,7 @@ jobs:
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
           build-wedobooks: 'true'
       - name: Run typescript compile check
-        run: pnpm exec tsc --noEmit
+        run: pnpm run typecheck
 
   unit:
     name: Go / Unit test
@@ -217,9 +217,9 @@ jobs:
       - name: Serve Storybook and run tests
         run: |
           export FORCE_COLOR=1
-          pnpm dlx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "pnpm dlx http-server storybook-static --port 6006 --silent" \
-            "pnpm dlx wait-on tcp:6006 && pnpm run test:storybook"
+          pnpm exec http-server storybook-static --port 6006 --silent &
+          pnpm exec wait-on tcp:6006
+          pnpm run test:storybook
 
   chromatic:
     name: Go / Chromatic
@@ -302,8 +302,8 @@ jobs:
           path: go/storybook-static
       - name: Take screenshots
         run: |
-          node_modules/.bin/http-server storybook-static -a 127.0.0.1 -p 6006 --silent &
-          node_modules/.bin/wait-on --timeout 60000 http-get://127.0.0.1:6006/index.json
+          pnpm exec http-server storybook-static -a 127.0.0.1 -p 6006 --silent &
+          pnpm exec wait-on --timeout 60000 http-get://127.0.0.1:6006/index.json
           NODE_OPTIONS=--experimental-vm-modules pnpm run test:storybook:visual --url http://127.0.0.1:6006
       - name: Upload screenshots to Argos
         # The container runs as root in the runner's checkout, so git would
