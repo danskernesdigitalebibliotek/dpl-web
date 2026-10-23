@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
-import {
-  getAvailability,
-  filterManifestationsByType
-} from "../../apps/material/helper";
+import { useMemo } from "react";
+import { filterManifestationsByType } from "../../apps/material/helper";
 import { convertPostIdToFaustId, getAllFaustIds } from "./helpers/general";
 import { Manifestation } from "./types/entities";
 import { useConfig } from "./config";
+import useGetAvailability from "./useGetAvailability";
 
+/**
+ * Splits manifestations into those FBS will let the user reserve and those it
+ * will not. Both lists are null until availability has loaded.
+ */
 const UseReservableManifestations = ({
   manifestations,
   type
@@ -15,73 +17,48 @@ const UseReservableManifestations = ({
   type?: string;
 }) => {
   const config = useConfig();
-  const faustIds = getAllFaustIds(manifestations);
+  const { data: availability, isLoading } = useGetAvailability({
+    faustIds: getAllFaustIds(manifestations),
+    config,
+    options: { query: { enabled: manifestations.length > 0 } }
+  });
 
-  const [reservableManifestations, setReservableManifestations] = useState<
-    Manifestation[] | null
-  >(null);
-  const [unReservableManifestations, setUnReservableManifestations] = useState<
-    Manifestation[] | null
-  >(null);
-
-  useEffect(() => {
-    if (
-      !manifestations.length ||
-      reservableManifestations ||
-      unReservableManifestations
-    ) {
-      return;
-    }
-
-    const fetchAvailability = async (m: Manifestation[]) => {
-      // Fetch availability data.
-      const data = await getAvailability({ faustIds, config });
-
-      // If we for some reason do not get any data, we return empty arrays.
-      if (!data) {
-        return { reservable: [], unReservable: [] };
+  const { reservableManifestations, unReservableManifestations } =
+    useMemo(() => {
+      if (!availability) {
+        return {
+          reservableManifestations: null,
+          unReservableManifestations: null
+        };
       }
 
-      // If type is set, filter the manifestations by the type.
-      // Otherwise leave as is.
       const filterableManifestations = type
-        ? filterManifestationsByType(type, m)
-        : m;
-      // Get manifestations that are reservable.
-      const reservable = filterableManifestations.filter((manifestation) =>
-        data.some(
+        ? filterManifestationsByType(type, manifestations)
+        : manifestations;
+      const hasAvailability = (
+        manifestation: Manifestation,
+        reservable: boolean
+      ) =>
+        availability.some(
           (item) =>
-            item.reservable &&
+            item.reservable === reservable &&
             item.recordId === convertPostIdToFaustId(manifestation.pid)
-        )
-      );
-      // Get manifestations that are unReservable.
-      const unReservable = filterableManifestations.filter((manifestation) =>
-        data.some(
-          (item) =>
-            !item.reservable &&
-            item.recordId === convertPostIdToFaustId(manifestation.pid)
-        )
-      );
-      return { reservable, unReservable };
-    };
+        );
 
-    fetchAvailability(manifestations).then(({ reservable, unReservable }) => {
-      setReservableManifestations(reservable);
-      setUnReservableManifestations(unReservable);
-    });
-  }, [
-    manifestations,
-    faustIds,
-    type,
-    reservableManifestations,
-    unReservableManifestations,
-    config
-  ]);
+      return {
+        reservableManifestations: filterableManifestations.filter(
+          (manifestation) => hasAvailability(manifestation, true)
+        ),
+        unReservableManifestations: filterableManifestations.filter(
+          (manifestation) => hasAvailability(manifestation, false)
+        )
+      };
+    }, [availability, manifestations, type]);
 
   return {
     reservableManifestations,
-    unReservableManifestations
+    unReservableManifestations,
+    isLoading
   };
 };
 
