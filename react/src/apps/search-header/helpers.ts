@@ -1,5 +1,8 @@
 import { Suggestion } from "../../core/utils/types/autosuggest";
-import { AutosuggestCategory } from "../../core/utils/types/material-type";
+import {
+  AutosuggestCategory,
+  AutosuggestCategoryList
+} from "../../core/utils/types/material-type";
 import { UseTextFunction } from "../../core/utils/text";
 import {
   SuggestionsFromQueryStringQuery,
@@ -8,7 +11,7 @@ import {
 import { getUrlQueryParam } from "../../core/utils/helpers/url";
 
 export const getAutosuggestCategoryList = (t: UseTextFunction) => {
-  const autosuggestCategoryList = [
+  const autosuggestCategoryList: AutosuggestCategoryList[] = [
     {
       render: t("autosuggestBookCategoryText"),
       term: AutosuggestCategory.book,

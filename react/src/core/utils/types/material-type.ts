@@ -37,3 +37,11 @@ export const enum AutosuggestCategory {
   game = "Spil",
   animatedSeries = "tegneserie"
 }
+
+type AutosuggestCategoryFacet = "materialTypesSpecific" | "workTypes";
+
+export type AutosuggestCategoryList = {
+  render: string;
+  term: AutosuggestCategory;
+  facet: AutosuggestCategoryFacet;
+};
