@@ -14,11 +14,11 @@ importers:
   .:
     dependencies:
       '@danskernesdigitalebibliotek/dpl-service-layer':
-        specifier: file:../packages/service-layer
-        version: file:../packages/service-layer(@tanstack/react-query@5.102.8(react@19.3.0))(react@19.3.0)
+        specifier: workspace:*
+        version: link:../packages/service-layer
       '@danskernesdigitalebibliotek/dpl-wedobooks':
-        specifier: file:../packages/wedobooks
-        version: file:../packages/wedobooks(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: workspace:*
+        version: link:../packages/wedobooks
       '@next/env':
         specifier: 16.4.2
         version: 16.4.2
@@ -140,21 +140,12 @@ importers:
       '@argos-ci/storybook':
         specifier: ^6.4.2
         version: 6.4.2(@types/node@24.13.2)(@vitest/browser-playwright@4.1.9)(@vitest/browser@5.0.4(vite@6.4.3(@types/node@24.13.2)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.0))(vitest@4.1.9))(playwright@1.64.1)(storybook@10.6.3(@types/react@19.2.18)(prettier@3.9.4)(react@19.3.0))(supports-color@8.1.1)(vitest@4.1.9)
-      '@babel/core':
-        specifier: 7.29.7
-        version: 7.29.7(supports-color@8.1.1)
-      '@babel/preset-env':
-        specifier: 7.29.7
-        version: 7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
-      '@babel/preset-react':
-        specifier: 7.29.7
-        version: 7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
-      '@babel/preset-typescript':
-        specifier: 7.29.7
-        version: 7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
       '@chromatic-com/storybook':
         specifier: ^5.5.1
         version: 5.5.1(storybook@10.6.3(@types/react@19.2.18)(prettier@3.9.4)(react@19.3.0))
+      '@eslint/js':
+        specifier: ^10.0.1
+        version: 10.0.1(eslint@9.39.4(jiti@2.7.0)(supports-color@8.1.1))
       '@graphql-codegen/cli':
         specifier: ^7.4.3
         version: 7.4.3(@parcel/watcher@2.6.0)(@types/node@24.13.2)(graphql@16.14.2)(supports-color@8.1.1)(typescript@5.9.3)
@@ -230,9 +221,6 @@ importers:
       axe-playwright:
         specifier: ^2.2.2
         version: 2.2.2(playwright@1.64.1)
-      babel-loader:
-        specifier: 10.1.1
-        version: 10.1.1(@babel/core@7.29.7(supports-color@8.1.1))(webpack@5.109.2(@swc/core@1.15.43(@swc/helpers@0.5.23))(clean-css@5.3.3)(csso@5.0.5)(esbuild@0.28.2)(html-minifier-terser@6.1.0)(lightningcss@1.32.0)(postcss@8.5.31))
       cypress:
         specifier: ^14.5.4
         version: 14.5.4
@@ -1151,18 +1139,6 @@ packages:
   '@cypress/xvfb@1.2.4':
     resolution: {integrity: sha512-skbBzPggOVYCbnGgV+0dmBdW/s77ZkAOXIC1knS8NagwDjBrNC1LuXtQJeiN6l+m7lzmHtaoUw/ctJKdqkG57Q==}
 
-  '@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/service-layer':
-    resolution: {directory: ../packages/service-layer, type: directory}
-    peerDependencies:
-      '@tanstack/react-query': ^5.101.0
-      react: ^18 || ^19
-
-  '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks':
-    resolution: {directory: ../packages/wedobooks, type: directory}
-    peerDependencies:
-      react: ^18 || ^19
-      react-dom: ^18 || ^19
-
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
 
@@ -1551,6 +1527,15 @@ packages:
   '@eslint/eslintrc@3.3.5':
     resolution: {integrity: sha512-4IlJx0X0qftVsN5E+/vGujTRIFtwuLbNsVUe7TO6zYPDR1O6nFwvwhIKEKSrl6dZchmYBITazxKoUYOjdtjlRg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@eslint/js@10.0.1':
+    resolution: {integrity: sha512-zeR9k5pd4gxjZ0abRoIaxdc7I3nDktoXZk2qOv9gCNWx3mVwEn32VRhyLaRsDiJjTs0xq/T8mfPtyuXu7GWBcA==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
+    peerDependencies:
+      eslint: ^10.0.0
+    peerDependenciesMeta:
+      eslint:
+        optional: true
 
   '@eslint/js@9.39.4':
     resolution: {integrity: sha512-nE7DEIchvtiFTwBw4Lfbu59PG+kCofhjsKaCWzxTpt4lfRjRMqG6uMBzKXuEcyXhOHoUp9riAm7/aWYGhXZ9cw==}
@@ -5038,19 +5023,6 @@ packages:
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
     peerDependencies:
       '@babel/core': ^7.11.0 || ^8.0.0-0
-
-  babel-loader@10.1.1:
-    resolution: {integrity: sha512-JwKSzk2kjIe7mgPK+/lyZ2QAaJcpahNAdM+hgR2HI8D0OJVkdj8Rl6J3kaLYki9pwF7P2iWnD8qVv80Lq1ABtg==}
-    engines: {node: ^18.20.0 || ^20.10.0 || >=22.0.0}
-    peerDependencies:
-      '@babel/core': ^7.12.0 || ^8.0.0-beta.1
-      '@rspack/core': ^1.0.0 || ^2.0.0-0
-      webpack: '>=5.61.0'
-    peerDependenciesMeta:
-      '@rspack/core':
-        optional: true
-      webpack:
-        optional: true
 
   babel-loader@9.2.1:
     resolution: {integrity: sha512-fqe8naHt46e0yIdkjUZYqddSXfej3AHajX+CSO5X7oy0EmPc6o5Xh+RClNoHjnieWz9AW4kZxW9yyFMhVB1QLA==}
@@ -11645,17 +11617,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@danskernesdigitalebibliotek/dpl-service-layer@file:../packages/service-layer(@tanstack/react-query@5.102.8(react@19.3.0))(react@19.3.0)':
-    dependencies:
-      '@tanstack/react-query': 5.102.8(react@19.3.0)
-      react: 19.3.0
-      zod: 4.6.7
-
-  '@danskernesdigitalebibliotek/dpl-wedobooks@file:../packages/wedobooks(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
-    dependencies:
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
-
   '@emnapi/core@1.10.0':
     dependencies:
       '@emnapi/wasi-threads': 1.2.1
@@ -11929,6 +11890,10 @@ snapshots:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+
+  '@eslint/js@10.0.1(eslint@9.39.4(jiti@2.7.0)(supports-color@8.1.1))':
+    optionalDependencies:
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@8.1.1)
 
   '@eslint/js@9.39.4': {}
 
@@ -15707,13 +15672,6 @@ snapshots:
       slash: 3.0.0
     transitivePeerDependencies:
       - supports-color
-
-  babel-loader@10.1.1(@babel/core@7.29.7(supports-color@8.1.1))(webpack@5.109.2(@swc/core@1.15.43(@swc/helpers@0.5.23))(clean-css@5.3.3)(csso@5.0.5)(esbuild@0.28.2)(html-minifier-terser@6.1.0)(lightningcss@1.32.0)(postcss@8.5.31)):
-    dependencies:
-      '@babel/core': 7.29.7(supports-color@8.1.1)
-      find-up: 5.0.0
-    optionalDependencies:
-      webpack: 5.109.2(@swc/core@1.15.43(@swc/helpers@0.5.23))(clean-css@5.3.3)(csso@5.0.5)(esbuild@0.28.2)(html-minifier-terser@6.1.0)(lightningcss@1.32.0)(postcss@8.5.31)
 
   babel-loader@9.2.1(@babel/core@7.29.7(supports-color@8.1.1))(webpack@5.109.2(@swc/core@1.15.43(@swc/helpers@0.5.23))(clean-css@5.3.3)(csso@5.0.5)(esbuild@0.28.2)(html-minifier-terser@6.1.0)(lightningcss@1.32.0)(postcss@8.5.31)):
     dependencies:
