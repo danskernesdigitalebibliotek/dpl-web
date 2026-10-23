@@ -407,7 +407,7 @@ export default MyNewApplication;
 Repeat all of the same steps as with an atom but place it in it's own directory
 inside `components`.
 
-Such as `./src/components/my-new-component/my-new-component.jsx`
+Such as `./src/components/my-new-component/my-new-component.tsx`
 
 ### Editor example configuration
 
@@ -532,6 +532,7 @@ The above `data-id` would be accessed as `props.id` and `data-error-text` as
 ```tsx
 // ./src/apps/my-new-application/my-new-application.entry.tsx
 import React, { FC } from "react";
+// Here MyNewApplication is assumed to take an `id: string` prop.
 import MyNewApplication from "./my-new-application";
 
 type MyNewApplicationEntryProps = {
