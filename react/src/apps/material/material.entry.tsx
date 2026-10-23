@@ -24,6 +24,7 @@ interface MaterialEntryTextProps {
   approveLoanText: string;
   approveReservationText: string;
   blockedButtonText: string;
+  cantLoanText: string;
   cantReserveText: string;
   cantViewReviewText: string;
   cantViewText: string;

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { FC } from "react";
-import InvalidUrlError from "../../../../core/errors/InvalidUrlError";
 import { statistics } from "../../../../core/statistics/statistics";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { isUrlValid } from "../../../../core/utils/helpers/url";
+import { useText } from "../../../../core/utils/text";
 import { ButtonSize } from "../../../../core/utils/types/button";
 import { Manifestation } from "../../../../core/utils/types/entities";
 import { WorkId } from "../../../../core/utils/types/ids";
@@ -13,6 +13,7 @@ import MaterialButtonOnlineRetrieverArticle from "./MaterialButtonOnlineRetrieve
 import MaterialButtonsOnlineInternal from "./MaterialButtonsOnlineInternal";
 import { isBlocked } from "../../../../core/utils/helpers/user";
 import { usePatronData } from "../../../../core/utils/helpers/usePatronData";
+import MaterialButtonDisabled from "../generic/MaterialButtonDisabled";
 import MaterialButtonUserBlocked from "../generic/MaterialButtonUserBlocked";
 import { OnlineButtonType } from "./resolveOnlineButtonType";
 
@@ -35,6 +36,7 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
   ariaLabelledBy,
   isEditionPicker = false
 }) => {
+  const t = useText();
   const { track } = useEventStatistics();
   const { data: userData } = usePatronData();
   // The article modals are only rendered for a patron who is not blocked, so
@@ -66,8 +68,12 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
 
       //  We have experienced that externalUrl is not always valid.
       if (!isUrlValid(externalUrl)) {
-        throw new InvalidUrlError(
-          `The external url is not valid. ( ${externalUrl} )`
+        return (
+          <MaterialButtonDisabled
+            size={size}
+            label={t("cantLoanText")}
+            dataCy={`${dataCy}-cant-loan`}
+          />
         );
       }
 
