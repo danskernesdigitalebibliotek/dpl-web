@@ -58,3 +58,15 @@ jobs:
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
       - name: Find unused files, exports and dependencies
         run: pnpm --dir react run knip
+
+  service-layer:
+    name: Knip / Service Layer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      - name: Find unused files, exports and dependencies
+        run: pnpm --dir packages/service-layer run knip
