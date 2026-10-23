@@ -83,21 +83,18 @@ be expected for a long time.
 <details>
   <summary>1. Create a new application component</summary>
 
-```javascript
-// ./src/apps/my-new-application/my-new-application.jsx
-import React from "react";
-import PropTypes from "prop-types";
+```tsx
+// ./src/apps/my-new-application/my-new-application.tsx
+import React, { FC } from "react";
 
-export function MyNewApplication({ text }) {
-  return <h2>{text}</h2>;
-}
-
-MyNewApplication.defaultProps = {
-  text: "The fastest man alive!"
+type MyNewApplicationProps = {
+  text?: string;
 };
 
-MyNewApplication.propTypes = {
-  text: PropTypes.string
+const MyNewApplication: FC<MyNewApplicationProps> = ({
+  text = "The fastest man alive!"
+}) => {
+  return <h2>{text}</h2>;
 };
 
 export default MyNewApplication;
@@ -108,18 +105,17 @@ export default MyNewApplication;
 <details>
   <summary>2. Create the entry component</summary>
 
-```javascript
-// ./src/apps/my-new-application/my-new-application.entry.jsx
-import React from "react";
-import PropTypes from "prop-types";
+```tsx
+// ./src/apps/my-new-application/my-new-application.entry.tsx
+import React, { FC } from "react";
 import MyNewApplication from "./my-new-application";
 
 // The props of an entry is all of the data attributes that were
 // set on the DOM element. See the section on "Naive app mount." for
 // an example.
-export function MyNewApplicationEntry(props) {
+const MyNewApplicationEntry: FC = () => {
   return <MyNewApplication text="Might be from a server?" />;
-}
+};
 
 export default MyNewApplicationEntry;
 ```
@@ -234,21 +230,18 @@ appropriate.
 <details>
   <summary>2. Add the class to your application</summary>
 
-```javascript
-// ./src/apps/my-new-application/my-new-application.jsx
-import React from "react";
-import PropTypes from "prop-types";
+```tsx
+// ./src/apps/my-new-application/my-new-application.tsx
+import React, { FC } from "react";
 
-export function MyNewApplication({ text }) {
-  return <h2 className="warm">{text}</h2>;
-}
-
-MyNewApplication.defaultProps = {
-  text: "The fastest man alive!"
+type MyNewApplicationProps = {
+  text?: string;
 };
 
-MyNewApplication.propTypes = {
-  text: PropTypes.string
+const MyNewApplication: FC<MyNewApplicationProps> = ({
+  text = "The fastest man alive!"
+}) => {
+  return <h2 className="warm">{text}</h2>;
 };
 
 export default MyNewApplication;
@@ -319,29 +312,18 @@ some structural differences might be needed.
 <details>
   <summary>1. Create the atom</summary>
 
-```javascript
-// ./src/components/atoms/my-new-atom/my-new-atom.jsx
-import React from "react";
-import PropTypes from "prop-types";
+```tsx
+// ./src/components/atoms/my-new-atom/my-new-atom.tsx
+import React, { FC, ReactNode } from "react";
 
-/**
- * A simple button.
- *
- * @export
- * @param {object} props
- * @returns {ReactNode}
- */
-export function MyNewAtom({ className, children }) {
-  return <button className={`btn ${className}`}>{children}</button>;
-}
-
-MyNewAtom.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired
+type MyNewAtomProps = {
+  className?: string;
+  children: ReactNode;
 };
 
-MyNewAtom.defaultProps = {
-  className: ""
+// A simple button.
+const MyNewAtom: FC<MyNewAtomProps> = ({ className = "", children }) => {
+  return <button className={`btn ${className}`}>{children}</button>;
 };
 
 export default MyNewAtom;
@@ -393,28 +375,24 @@ export function WithText() {
   <summary>5. Import the atom into the applications or other components where
 you would want to use it</summary>
 
-```javascript
-// ./src/apps/my-new-application/my-new-application.jsx
-import React, { Fragment } from "react";
-import PropTypes from "prop-types";
+```tsx
+// ./src/apps/my-new-application/my-new-application.tsx
+import React, { FC } from "react";
+import MyNewAtom from "../../components/atoms/my-new-atom/my-new-atom";
 
-import MyNewAtom from "../../components/atom/my-new-atom/my-new-atom";
-
-export function MyNewApplication({ text }) {
-  return (
-    <Fragment>
-      <h2 className="warm">{text}</h2>
-      <MyNewAtom className="additional-class" />
-    </Fragment>
-  );
-}
-
-MyNewApplication.defaultProps = {
-  text: "The fastest man alive!"
+type MyNewApplicationProps = {
+  text?: string;
 };
 
-MyNewApplication.propTypes = {
-  text: PropTypes.string
+const MyNewApplication: FC<MyNewApplicationProps> = ({
+  text = "The fastest man alive!"
+}) => {
+  return (
+    <>
+      <h2 className="warm">{text}</h2>
+      <MyNewAtom className="additional-class">Click me!</MyNewAtom>
+    </>
+  );
 };
 
 export default MyNewApplication;
@@ -551,19 +529,23 @@ The above `data-id` would be accessed as `props.id` and `data-error-text` as
 <details>
   <summary>Example</summary>
 
-```javascript
-// ./src/apps/my-new-application/my-new-application.entry.jsx
-import React from "react";
-import PropTypes from "prop-types";
-import MyNewApplication from './my-new-application.jsx';
+```tsx
+// ./src/apps/my-new-application/my-new-application.entry.tsx
+import React, { FC } from "react";
+import MyNewApplication from "./my-new-application";
 
-export function MyNewApplicationEntry({ id }) {
+type MyNewApplicationEntryProps = {
+  id: string;
+};
+
+const MyNewApplicationEntry: FC<MyNewApplicationEntryProps> = ({ id }) => {
   return (
     <MyNewApplication
       // 870970-basis:54172613
       id={id}
     />
-}
+  );
+};
 
 export default MyNewApplicationEntry;
 ```
