@@ -9,6 +9,10 @@ services:
 
   Drupal\dpl_go\GoRevalidator: {}
 
+  # @todo Remove explicit registration when upgrading to Drupal 11, which
+  # autodiscovers Hook attribute classes.
+  Drupal\dpl_go\Hook\CacheSettingsFormHooks: {}
+
   dpl_go.config_revalidate_subscriber:
     class: Drupal\dpl_go\EventSubscriber\ConfigRevalidateSubscriber
     tags:
