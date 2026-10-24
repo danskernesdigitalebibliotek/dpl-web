@@ -70,13 +70,18 @@ const MaterialStatus: FC<MaterialStatusProps> = ({
             />
           )}
           <p className="text-small-caption color-secondary-gray">
-            {isDigital(loan)
-              ? t("loanListToBeDeliveredDigitalMaterialText", {
-                  placeholders: { "@date": formatDateTimeUtc(dueDate) }
-                })
-              : t("loanListToBeDeliveredText", {
-                  placeholders: { "@date": formatDate(dueDate) }
-                })}
+            {t(
+              isDigital(loan)
+                ? "loanListToBeDeliveredDigitalMaterialText"
+                : "loanListToBeDeliveredText",
+              {
+                placeholders: {
+                  "@date": isDigital(loan)
+                    ? formatDateTimeUtc(dueDate)
+                    : formatDate(dueDate)
+                }
+              }
+            )}
           </p>
           {!isDigital(loan) && (
             <p className="text-small-caption color-secondary-gray mt-4">

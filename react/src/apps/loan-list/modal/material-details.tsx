@@ -3,7 +3,8 @@ import ReservationIcon from "@danskernesdigitalebibliotek/dpl-design-system/buil
 import LoansIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Loans.svg";
 import EbookIcon from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/collection/Ebook.svg";
 import { useText } from "../../../core/utils/text";
-import { isDigital } from "../utils/helpers";
+import { formatLoanDate, isDigital } from "../utils/helpers";
+import { formatDate } from "../../../core/utils/helpers/date";
 import { materialIsOverdue } from "../../../core/utils/helpers/general";
 import StatusBadge from "../materials/utils/status-badge";
 import WarningBar from "../materials/utils/warning-bar";
@@ -20,7 +21,6 @@ import { useUrls } from "../../../core/utils/url";
 import { RequestStatus } from "../../../core/utils/types/request";
 import { RenewedLoanV2 } from "../../../core/fbs/model";
 import RenewalModalMessage from "../../../components/renewal/RenewalModalMessage";
-import { formatDate } from "../../../core/utils/helpers/date";
 import useWorkUrl from "../../../core/utils/useWorkUrl";
 
 interface MaterialDetailsProps {
@@ -146,18 +146,15 @@ const MaterialDetails: FC<MaterialDetailsProps & MaterialProps> = ({
             </div>
           )}
           <div className="modal-details__list">
-            {dueDate && !isDigital(loan) && (
+            {dueDate && (
               <ListDetails
                 icon={LoansIcon}
-                labels={formatDate(dueDate)}
-                title={t("materialDetailsPhysicalDueDateLabelText")}
-              />
-            )}
-            {dueDate && isDigital(loan) && (
-              <ListDetails
-                icon={LoansIcon}
-                labels={formatDate(dueDate)}
-                title={t("materialDetailsDigitalDueDateLabelText")}
+                labels={formatLoanDate(loan, dueDate)}
+                title={t(
+                  isDigital(loan)
+                    ? "materialDetailsDigitalDueDateLabelText"
+                    : "materialDetailsPhysicalDueDateLabelText"
+                )}
               />
             )}
             {loanDate && (

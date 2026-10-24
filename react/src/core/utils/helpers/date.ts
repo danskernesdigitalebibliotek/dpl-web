@@ -82,6 +82,10 @@ export const formatDateTimeUtc = (date: string) => {
   return dayjs(date).utc().format(dateFormatDashWithTime);
 };
 
+export const formatDateUtc = (date: string) => {
+  return dayjs(date).utc().format(dateFormatDash);
+};
+
 export const formatDayMonth = (date: string | Date) => {
   return dayjs(date).format(dateFormatSlashDayMonth);
 };
@@ -105,15 +109,10 @@ export const formatShortDate = (dateString: string): string => {
   return dayjs(dateString).format("D. MMM YYYY");
 };
 
-export const formatDateDependingOnDigitalMaterial = ({
-  date,
-  isDigital
-}: {
-  date: string;
-  isDigital: boolean;
-}) => {
-  return isDigital ? formatDateTimeUtc(date) : formatDate(date);
-};
+// Digital material dates are shown in UTC, so every view of a digital loan
+// or reservation lands on the same day.
+export const formatMaterialDate = (date: string, isDigital: boolean) =>
+  isDigital ? formatDateUtc(date) : formatDate(date);
 
 // Date calculation functions: Get dates relative to today
 export const getMonthAgoDate = () =>

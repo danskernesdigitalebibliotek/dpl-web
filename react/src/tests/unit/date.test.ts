@@ -2,14 +2,14 @@ import { describe, expect, it } from "vitest";
 import dayjs from "dayjs";
 import {
   formatDate,
-  formatDateDependingOnDigitalMaterial,
   formatDateTime,
-  formatDateTimeUtc
+  formatDateUtc
 } from "../../core/utils/helpers/date";
 import {
   dateFormatDash,
   dateFormatDashWithTime
 } from "../../core/configuration/date-format";
+import { formatLoanDate } from "../../apps/loan-list/utils/helpers";
 
 // We're describing a test suite for the `dateHasPassed` function
 describe("formatDate helper function", () => {
@@ -49,6 +49,26 @@ describe("formatDateTime", () => {
   // We need to test whether the function correctly formats the dates
 });
 
+describe("formatDateUtc", () => {
+  it("reads the day in UTC, like formatDateTimeUtc", () => {
+    // In Danish time this moment is already the next day.
+    expect(formatDate("2026-10-31T23:59:59.999Z")).toBe("01-11-2026");
+    expect(formatDateUtc("2026-10-31T23:59:59.999Z")).toBe("31-10-2026");
+  });
+});
+
+describe("formatLoanDate", () => {
+  const endOfDayUtc = "2026-10-31T23:59:59.999Z";
+
+  it("shows a digital loan's date in UTC", () => {
+    expect(formatLoanDate({ identifier: "1" }, endOfDayUtc)).toBe("31-10-2026");
+  });
+
+  it("shows a physical loan's date in local time", () => {
+    expect(formatLoanDate({ faust: null }, endOfDayUtc)).toBe("01-11-2026");
+  });
+});
+
 describe("Date helper tests", () => {
   // Test for formatDateTime function
   it("should correctly format date and time", () => {
@@ -61,23 +81,5 @@ describe("Date helper tests", () => {
     const date = dayjs().format(); // Get current date
     const formattedDate = formatDate(date);
     expect(formattedDate).toBe(dayjs(date).format(dateFormatDash));
-  });
-  // Test for formatDateDependingOnDigitalMaterial function
-  it("should format date depending on digital material", () => {
-    const date = dayjs().format(); // Get current date
-    const digitalMaterial = { date, isDigital: true };
-    const nonDigitalMaterial = { date, isDigital: false };
-
-    const formattedDigitalMaterialDate =
-      formatDateDependingOnDigitalMaterial(digitalMaterial);
-    const formattedNonDigitalMaterialDate =
-      formatDateDependingOnDigitalMaterial(nonDigitalMaterial);
-
-    // Check if date is formatted correctly depending on whether material is digital or not
-    // Digital materials use UTC time formatting
-    expect(formattedDigitalMaterialDate).toBe(formatDateTimeUtc(date));
-    expect(formattedNonDigitalMaterialDate).toBe(
-      dayjs(date).format(dateFormatDash)
-    );
   });
 });
