@@ -258,8 +258,8 @@ importers:
         specifier: ^3.0.5
         version: 3.0.5
       mockttp:
-        specifier: ^4.6.4
-        version: 4.6.4(supports-color@8.1.1)
+        specifier: ^4.6.5
+        version: 4.6.5(supports-color@8.1.1)
       next-test-api-route-handler:
         specifier: ^5.0.7
         version: 5.0.7(next@16.4.2(@babel/core@7.29.7(supports-color@8.1.1))(@types/node@24.19.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
@@ -8020,8 +8020,8 @@ packages:
   mockdate@3.0.5:
     resolution: {integrity: sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==}
 
-  mockttp@4.6.4:
-    resolution: {integrity: sha512-MoQzWquV6V8B4hVgC8L2z+0Wt4pZC9l3HCvrG997eun5NJf5KUk5lIDQ/Px95HEG0DwqRy0SFVTB3lj2elYJ/Q==}
+  mockttp@4.6.5:
+    resolution: {integrity: sha512-onSD5lB9vTiv9rJ6UgWp89YE7KAReO6B2krgj9GaXGRCqYb9sNGFHg4EVUYQKMkQbwspZIbSItGeVlYwAJ9WfQ==}
     engines: {node: '>=20.0.0'}
     hasBin: true
 
@@ -19243,7 +19243,7 @@ snapshots:
 
   mockdate@3.0.5: {}
 
-  mockttp@4.6.4(supports-color@8.1.1):
+  mockttp@4.6.5(supports-color@8.1.1):
     dependencies:
       '@graphql-tools/schema': 10.1.3(graphql@16.14.2)
       '@graphql-tools/utils': 12.0.3(graphql@16.14.2)
