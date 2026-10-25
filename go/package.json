@@ -130,7 +130,7 @@
     "mockdate": "^3.0.5",
     "mockttp": "^4.6.5",
     "next-test-api-route-handler": "^5.0.7",
-    "orval": "^8.23.0",
+    "orval": "^8.44.0",
     "playwright": "^1.64.1",
     "postcss": "^8.5.31",
     "prettier": "^3.9.10",
