@@ -14,8 +14,8 @@ importers:
   .:
     devDependencies:
       '@argos-ci/cli':
-        specifier: ^6.9.6
-        version: 6.10.0(@types/node@24.19.2)(supports-color@8.1.1)
+        specifier: ^6.11.0
+        version: 6.11.0(@types/node@24.19.2)(supports-color@8.1.1)
       '@argos-ci/storybook':
         specifier: ^6.4.2
         version: 6.4.2(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5(vite@8.3.4(@types/node@24.19.2)(esbuild@0.25.12)(jiti@1.21.7)(sass@1.106.1)(terser@5.48.0)(yaml@2.9.1))(vitest@5.0.5))(playwright@1.64.1)(storybook@9.1.21(@testing-library/dom@10.4.1)(prettier@3.9.10)(supports-color@8.1.1)(vite@8.3.4(@types/node@24.19.2)(esbuild@0.25.12)(jiti@1.21.7)(sass@1.106.1)(terser@5.48.0)(yaml@2.9.1)))(supports-color@8.1.1)(vitest@5.0.5)
@@ -194,8 +194,8 @@ packages:
     resolution: {integrity: sha512-HvoY0tRgi5IESptSvugbLMANRsGiDIKTfG0WnSkWHpIAjq9KwKLgREImo8MbNU6E2t6WTomBGvVvkgPXuuSHdw==}
     engines: {node: '>=22.0.0'}
 
-  '@argos-ci/cli@6.10.0':
-    resolution: {integrity: sha512-CcHBQjZZBBQ93JbNDCBXsNKfLPwcQ/YTTMhfbr5lmJaqU27dYjlFZ9TgslYbnx7rVxqA6t2eTmqWpE6dXMSJtQ==}
+  '@argos-ci/cli@6.11.0':
+    resolution: {integrity: sha512-8U3RhSdcsVszW1WbKJDr5XZDr77mbSI9C/Ivl5SYKrEsApBUE8Ke5AwypRyXLl3GQe3R2AFkx+s09GBlaMnftQ==}
     engines: {node: '>=22.0.0'}
     hasBin: true
 
@@ -9048,7 +9048,7 @@ snapshots:
 
   '@argos-ci/browser@6.5.0': {}
 
-  '@argos-ci/cli@6.10.0(@types/node@24.19.2)(supports-color@8.1.1)':
+  '@argos-ci/cli@6.11.0(@types/node@24.19.2)(supports-color@8.1.1)':
     dependencies:
       '@argos-ci/api-client': 0.31.3(supports-color@8.1.1)
       '@argos-ci/core': 6.8.8(@types/node@24.19.2)(supports-color@8.1.1)
