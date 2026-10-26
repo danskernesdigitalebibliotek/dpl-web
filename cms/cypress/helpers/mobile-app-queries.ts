@@ -8,4 +8,31 @@ export const gqlQueries = {
       logoUrl
     }
   }`,
+  GET_APP_FEES_AND_PAYMENT_INFO: `query {
+    getAppFeesAndPaymentInfo {
+      feesAndReplacementCostsUrl
+      paymentSiteUrl
+      paymentSiteButtonLabel
+    }
+  }`,
+  GET_RESERVATION_SETTINGS: `query {
+    reservationSettings {
+      smsNotificationsEnabled
+      interestPeriods {
+        all {
+          value
+          label
+        }
+        default {
+          value
+          label
+        }
+      }
+      allowRemoveReadyReservations
+      urls {
+        pauseReservationInfo
+        zeroHitsSearch
+      }
+    }
+  }`,
 };
