@@ -3,7 +3,7 @@
   "description": "Youth-oriented digital library site.",
   "version": "1.0.0",
   "engines": {
-    "node": "24.21.0",
+    "node": "24.22.1",
     "pnpm": "^11"
   },
   "scripts": {
@@ -62,7 +62,7 @@
     "clsx": "^2.1.1",
     "cookies-next": "^6.1.1",
     "date-fns": "^4.4.0",
-    "framer-motion": "14.3.0",
+    "framer-motion": "14.6.0",
     "graphql": "^16.14.2",
     "iron-session": "github:danskernesdigitalebibliotek/iron-session#chunking-no-build",
     "js-md5": "^0.9.2",
@@ -85,8 +85,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@argos-ci/cli": "^6.10.0",
-    "@argos-ci/storybook": "^6.4.2",
+    "@argos-ci/cli": "^6.11.0",
+    "@argos-ci/storybook": "^6.4.4",
     "@chromatic-com/storybook": "^5.6.0",
     "@graphql-codegen/cli": "^7.4.6",
     "@graphql-codegen/named-operations-object": "^4.0.1",
@@ -126,12 +126,12 @@
     "jsdom": "^30.0.1",
     "knip": "^6.42.1",
     "mockdate": "^3.0.5",
-    "mockttp": "^4.6.4",
+    "mockttp": "^4.6.5",
     "next-test-api-route-handler": "^5.0.7",
     "orval": "^8.23.0",
     "playwright": "^1.64.1",
     "postcss": "^8.5.31",
-    "prettier": "^3.8.3",
+    "prettier": "^3.9.10",
     "prettier-plugin-classnames": "^0.10.4",
     "prettier-plugin-merge": "^0.10.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
