@@ -42,6 +42,7 @@ services:
     environment:
       <<: *git-safe-directory
       CYPRESS_BASE_URL: "http://varnish:8080"
+      CYPRESS_MOBILE_GRAPHQL_CONSUMER_USER_PASSWORD: "${MOBILE_GRAPHQL_CONSUMER_USER_PASSWORD}"
 
   wiremock:
     image: wiremock/wiremock:2.32.0
