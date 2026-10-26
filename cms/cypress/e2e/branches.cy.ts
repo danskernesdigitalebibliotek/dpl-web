@@ -1,3 +1,5 @@
+import { pickBranchAddress } from '../helpers/helper-branch';
+
 describe('Testing branch functionality', () => {
   const branchTitle = 'test-branch';
   const branchEmail = 'info+ddf@reload.dk';
@@ -32,18 +34,10 @@ describe('Testing branch functionality', () => {
     cy.get('[name="field_phone[0][value]"]').type(branchPhone);
     cy.get('.meta-sidebar__close').click();
 
-    // Wait for the address lookup response before clicking, otherwise Select2's
-    // tags:true may create a tag from typed text instead of a real result.
-    cy.intercept('/dk-address/address/select2*').as('addressResults');
-    cy.get('[name="field_address_gsearch[0][main][user_input]"]')
-      .siblings('.select2-container')
-      .click();
-    cy.get('.select2-search__field').type(branchAddressSearch);
-    cy.wait('@addressResults');
-    cy.get('.select2-results__option')
-      .contains(`${branchAddressStreet}, ${branchAddressPostal}`)
-      .first()
-      .click();
+    pickBranchAddress({
+      search: branchAddressSearch,
+      option: `${branchAddressStreet}, ${branchAddressPostal}`,
+    });
     cy.clickSaveButton();
 
     cy.get('.hero').contains(branchTitle).should('be.visible');
@@ -60,27 +54,11 @@ describe('Testing branch functionality', () => {
     cy.drupalLogin('/node/add/branch');
     cy.get('#edit-title-0-value').type(floorBranchTitle);
 
-    cy.intercept('/dk-address/address/select2*').as('addressResults');
-    cy.get('[name="field_address_gsearch[0][main][user_input]"]')
-      .siblings('.select2-container')
-      .click();
-    cy.get('.select2-search__field').type(floorAddressSearch);
-    cy.wait('@addressResults');
-
-    // The street and number get no further than the entrance: one house number
-    // per town, and no floors. Each house number that has floors behind it is
-    // followed by a row repeating it, and that is the one that opens them.
-    cy.get('.select2-results__option')
-      .filter(`:contains("${floorAddressHouseNumber}")`)
-      .should('have.length', 2)
-      .eq(1)
-      .click();
-    cy.wait('@addressResults');
-
-    cy.get('.select2-results__option')
-      .contains(floorAddressTitle)
-      .first()
-      .click();
+    pickBranchAddress({
+      search: floorAddressSearch,
+      option: floorAddressTitle,
+      houseNumber: floorAddressHouseNumber,
+    });
     cy.clickSaveButton();
 
     // The floor belongs to the street line, with the postal code below it.
