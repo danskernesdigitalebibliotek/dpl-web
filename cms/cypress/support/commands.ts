@@ -367,6 +367,27 @@ Cypress.Commands.add('openParagraphsModal', () => {
   cy.get('button[title="Show all Paragraphs"]').first().click();
 });
 
+// Queries /graphql the way the BFF behind the mobile apps does: as the mobile
+// GraphQL consumer user (see dpl_consumers.module). Basic auth takes
+// precedence over the admin session the tests log in with to edit content.
+Cypress.Commands.add('queryMobileAppGraphql', (query, variables = {}) => {
+  return cy
+    .request({
+      method: 'POST',
+      url: '/graphql',
+      auth: {
+        username: 'mobile_graphql',
+        password: Cypress.env('MOBILE_GRAPHQL_CONSUMER_USER_PASSWORD'),
+      },
+      body: { query, variables },
+    })
+    .then((response) => {
+      expect(response.status).to.equal(200);
+      expect(response.body.errors).to.equal(undefined);
+      return response.body.data;
+    });
+});
+
 // According to the documentation of types and Cypress commands
 // the namespace is declared like it is done here. Therefore we'll bypass errors about it.
 /* eslint-disable @typescript-eslint/no-namespace */
@@ -407,6 +428,10 @@ declare global {
       deleteEntitiesIfExists(name: string): Chainable<null>;
       clickSaveButton(): Chainable<null>;
       openParagraphsModal(): Chainable<null>;
+      queryMobileAppGraphql<T extends object>(
+        query: string,
+        variables?: Record<string, unknown>,
+      ): Chainable<T>;
     }
   }
 }

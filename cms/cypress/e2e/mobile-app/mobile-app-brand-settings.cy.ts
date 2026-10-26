@@ -1,7 +1,6 @@
 // The mobile apps show the library logo, which the BFF behind them reads
 // through getAppBrandSettings. A failure here means a change in the CMS will
 // break the mobile apps.
-import { queryMobileAppGraphql } from '../../helpers/helper-mobile-app-api';
 import { gqlQueries } from '../../helpers/mobile-app-queries';
 
 type BrandSettings = { logoUrl: string | null };
@@ -11,9 +10,11 @@ const png =
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
 const getBrandSettings = () =>
-  queryMobileAppGraphql<{ getAppBrandSettings: BrandSettings }>(
-    gqlQueries.GET_APP_BRAND_SETTINGS,
-  ).then((data) => data.getAppBrandSettings);
+  cy
+    .queryMobileAppGraphql<{ getAppBrandSettings: BrandSettings }>(
+      gqlQueries.GET_APP_BRAND_SETTINGS,
+    )
+    .then((data) => data.getAppBrandSettings);
 
 const uploadLogo = (fileName: string) => {
   cy.drupalLogin('/admin/appearance/settings/novel');
