@@ -139,7 +139,7 @@ leave a `{clipboard}`-style placeholder in the output.
    `gh pr edit <N> --body-file <file>`:
 
    ```bash
-   gh pr create --base develop --head <branch> --title "<KEY>: <summary>" --body-file <file>
+   gh pr create --draft --base develop --head <branch> --title "<KEY>: <summary>" --body-file <file>
    ```
 
 5. **Report** the PR URL and the title. For an existing PR, say what was
