@@ -9,6 +9,7 @@ import {
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 import { getEnv, getServerEnv } from "../env"
+import { DPL_CMS_CONFIG_CACHE_TAG } from "./cacheTags"
 import { privateConfigSchema, publicConfigSchema } from "./configSchemas"
 
 const queryDplCmsPrivateConfig = async () => {
@@ -27,7 +28,7 @@ const getDplCmsPrivateConfigData = async () => {
   // used by the e2e tests when a spec changes the mocked configuration, and
   // available to Drupal-triggered revalidation. Default cache time is 15
   // minutes otherwise.
-  cacheTag("dpl-cms-config")
+  cacheTag(DPL_CMS_CONFIG_CACHE_TAG)
 
   try {
     const data = await queryDplCmsPrivateConfig()
@@ -94,7 +95,7 @@ const publicConfigFallback = () => ({
 const getDplCmsPublicConfigData = async () => {
   "use cache"
   // See getDplCmsPrivateConfigData for the tag.
-  cacheTag("dpl-cms-config")
+  cacheTag(DPL_CMS_CONFIG_CACHE_TAG)
 
   const data = await queryDplCmsPublicConfig()
   return publicConfigSchema.parse(data)

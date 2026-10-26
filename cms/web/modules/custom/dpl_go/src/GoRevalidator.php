@@ -75,20 +75,19 @@ class GoRevalidator {
   /**
    * Drop Go's entire Next cache of CMS-driven content.
    *
-   * Clears both the config cache tag ("dpl-cms-config") and - via a
-   * layout-level revalidation of "/" - every cached page below the root
-   * layout. Use this for a manual, full purge; prefer the targeted
-   * revalidateTags()/revalidatePaths() when you know what changed.
+   * Clears the two umbrella cache tags every CMS-driven entry in Go carries:
+   * "dpl-cms-content" (every cached page) and "dpl-cms-config" (the
+   * goConfiguration). Go's "use cache" entries can only be dropped by tag - a
+   * path revalidation does not touch them - so these two tags are what a full
+   * manual purge needs. Prefer the targeted revalidateTags()/revalidatePaths()
+   * when you know what changed.
    *
    * @return bool
    *   TRUE if a revalidation request was sent; FALSE when Go is not
    *   reachable/configured.
    */
   public function revalidateEverything(): bool {
-    $tag = $this->revalidateTags('dpl-cms-config');
-    $path = $this->send(['path' => '/', 'type' => 'layout']);
-
-    return $tag || $path;
+    return $this->revalidateTags('dpl-cms-content', 'dpl-cms-config');
   }
 
   /**

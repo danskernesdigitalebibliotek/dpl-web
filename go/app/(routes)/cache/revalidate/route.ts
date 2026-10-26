@@ -8,13 +8,11 @@ const paramsSchema = z.union([
   z.object({
     tags: z.string(),
     path: z.string().optional(),
-    type: z.enum(["page", "layout"]).optional(),
     secret: z.string(),
   }),
   z.object({
     tags: z.string().optional(),
     path: z.string(),
-    type: z.enum(["page", "layout"]).optional(),
     secret: z.string(),
   }),
 ])
@@ -25,20 +23,15 @@ export async function GET(request: NextRequest) {
   const requestParams = Object.fromEntries(searchParams.entries())
 
   try {
-    const { tags, path, type, secret } = paramsSchema.parse(requestParams)
+    const { tags, path, secret } = paramsSchema.parse(requestParams)
 
     if (!secret || secret !== secretEnv) {
       return NextResponse.json({ error: "Not authorized" }, { status: 401 })
     }
 
     if (path) {
-      // Passing type "layout" revalidates the whole route subtree below path,
-      // so a call with path "/" clears every page. Omitting type keeps the
-      // default "page" behaviour, revalidating only the exact path.
-      revalidatePath(path, type)
-      console.info(
-        `[cache/revalidate] Cleared cache for path "${path}" (${type ?? "page"})`
-      )
+      revalidatePath(path)
+      console.info(`[cache/revalidate] Cleared cache for path "${path}"`)
     }
 
     if (tags) {
