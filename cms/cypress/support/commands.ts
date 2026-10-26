@@ -370,6 +370,7 @@ Cypress.Commands.add('openParagraphsModal', () => {
 // Queries /graphql the way the BFF behind the mobile apps does: as the mobile
 // GraphQL consumer user (see dpl_consumers.module). Basic auth takes
 // precedence over the admin session the tests log in with to edit content.
+// Yields the whole response body, so specs can assert on all of it.
 Cypress.Commands.add('queryMobileAppGraphql', (query, variables = {}) => {
   return cy
     .request({
@@ -384,7 +385,7 @@ Cypress.Commands.add('queryMobileAppGraphql', (query, variables = {}) => {
     .then((response) => {
       expect(response.status).to.equal(200);
       expect(response.body.errors).to.equal(undefined);
-      return response.body.data;
+      return response.body;
     });
 });
 
@@ -431,7 +432,7 @@ declare global {
       queryMobileAppGraphql<T extends object>(
         query: string,
         variables?: Record<string, unknown>,
-      ): Chainable<T>;
+      ): Chainable<{ data: T }>;
     }
   }
 }

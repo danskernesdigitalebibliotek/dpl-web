@@ -3,18 +3,22 @@
 // break the mobile apps.
 import { gqlQueries } from '../../helpers/mobile-app-queries';
 
-type BrandSettings = { logoUrl: string | null };
-
 // A 1x1 transparent PNG.
 const png =
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
 const getBrandSettings = () =>
-  cy
-    .queryMobileAppGraphql<{ getAppBrandSettings: BrandSettings }>(
-      gqlQueries.GET_APP_BRAND_SETTINGS,
-    )
-    .then((data) => data.getAppBrandSettings);
+  cy.queryMobileAppGraphql<{ getAppBrandSettings: { logoUrl: string } }>(
+    gqlQueries.GET_APP_BRAND_SETTINGS,
+  );
+
+const brandSettingsWithLogo = (fileName: string) => ({
+  data: {
+    getAppBrandSettings: {
+      logoUrl: `${Cypress.config('baseUrl')}/sites/default/files/${fileName}`,
+    },
+  },
+});
 
 const uploadLogo = (fileName: string) => {
   cy.drupalLogin('/admin/appearance/settings/novel');
@@ -29,30 +33,27 @@ const uploadLogo = (fileName: string) => {
 };
 
 describe('Mobile app API: getAppBrandSettings', () => {
-  // The logo is global and the theme settings form offers no way to clear an
-  // uploaded logo ("Use the logo supplied by the theme" leaves logo.path in
-  // place), so the test uploads logos with names unique to the run instead of
-  // cleaning up.
-  const runId = Date.now();
-  const firstLogo = `mobile-app-test-logo-${runId}-first.png`;
-  const secondLogo = `mobile-app-test-logo-${runId}-second.png`;
-
   it('returns the logo an editor uploads and replaces', () => {
-    getBrandSettings().then(({ logoUrl }) => {
-      expect(logoUrl).to.match(/^https?:\/\//);
-      expect(logoUrl).not.to.include(firstLogo);
-    });
+    // The logo is global and the theme settings form offers no way to clear an
+    // uploaded logo ("Use the logo supplied by the theme" leaves logo.path in
+    // place), so the test uploads logos with names unique to each attempt
+    // instead of cleaning up. Unique names also keep Drupal from renaming the
+    // files, so the expected URLs are exact.
+    const runId = Date.now();
+    const firstLogo = `mobile-app-test-logo-${runId}-first.png`;
+    const secondLogo = `mobile-app-test-logo-${runId}-second.png`;
+
+    // The logo before the test depends on what ran before it, so we only know
+    // what it is not.
+    getBrandSettings().should(
+      'not.deep.equal',
+      brandSettingsWithLogo(firstLogo),
+    );
 
     uploadLogo(firstLogo);
-    getBrandSettings().then(({ logoUrl }) => {
-      expect(logoUrl).to.match(/^https?:\/\//);
-      expect(logoUrl).to.include(firstLogo);
-    });
+    getBrandSettings().should('deep.equal', brandSettingsWithLogo(firstLogo));
 
     uploadLogo(secondLogo);
-    getBrandSettings().then(({ logoUrl }) => {
-      expect(logoUrl).to.match(/^https?:\/\//);
-      expect(logoUrl).to.include(secondLogo);
-    });
+    getBrandSettings().should('deep.equal', brandSettingsWithLogo(secondLogo));
   });
 });
