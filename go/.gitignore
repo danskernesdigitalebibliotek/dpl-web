@@ -30,4 +30,5 @@ cypress/screenshots
 storybook-static/
 *storybook.log
 
+# Help scripts
 toolbox/
