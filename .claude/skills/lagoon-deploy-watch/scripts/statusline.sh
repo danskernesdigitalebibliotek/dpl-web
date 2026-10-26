@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # Claude Code status line: one segment per watched Lagoon deployment.
 # Running ones show a progress bar against the estimate (when there is one);
-# finished ones linger for 15 minutes.
+# finished ones linger for 15 minutes, then their state file is removed.
 # A running entry not refreshed for 3 minutes is marked stale (watcher stopped).
+
+# shellcheck source-path=SCRIPTDIR source=lib.sh
+source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 cat >/dev/null  # Claude Code sends session JSON on stdin; unused.
 now=$(date +%s)
@@ -19,33 +22,24 @@ bar() {
 }
 
 out=()
-for f in "${XDG_CACHE_HOME:-$HOME/.cache}"/lagoon-deploy-watch/*; do
+for f in "$state_dir"/*; do
   [ -f "$f" ] || continue
-  # GNU stat (Linux) first: there `stat -f` means filesystem status, not format.
-  age=$((now - $(stat -c %Y "$f" 2>/dev/null || stat -f %m "$f")))
-  IFS='|' read -r env status step started _ estimate <"$f"
+  IFS='|' read -r env status step started estimate updated <"$f"
+  age=$((now - ${updated:-0}))
   case $status in
-    complete) [ "$age" -lt 900 ] && out+=("✅ $env deployed") ;;
-    failed|cancelled|error) [ "$age" -lt 900 ] && out+=("❌ $env $status") ;;
+    complete|failed|cancelled|error)
+      [ "$age" -lt 900 ] || { rm -f "$f"; continue; }
+      if [ "$status" = complete ]; then out+=("✅ $env deployed"); else out+=("❌ $env $status"); fi ;;
     *)
-      [ "$age" -gt 10800 ] && continue
+      [ "$age" -le 10800 ] || { rm -f "$f"; continue; }
       stale=""
       [ "$age" -gt 180 ] && stale=" (stale)"
       if [ -z "$started" ]; then
         out+=("⏳ $env $status · $step$stale")
       elif [ -z "$estimate" ]; then
-        out+=("⏳ $env $step $(((now - started) / 60))m (no estimate)$stale")
+        out+=("⏳ $env $step $(progress $((now - started))) (no estimate)$stale")
       else
-        el=$((now - started)) el_m=$(((now - started) / 60)) est_m=$(((estimate + 30) / 60))
-        if [ "$el" -le "$estimate" ]; then
-          left=$((est_m - el_m)); [ "$left" -lt 1 ] && left=1
-          left="~${left}m left"
-        elif [ "$el_m" -gt "$est_m" ]; then
-          left="+$((el_m - est_m))m over"
-        else
-          left="over estimate"
-        fi
-        out+=("⏳ $env $step $(bar "$el" "$estimate") ${el_m}m/~${est_m}m · $left$stale")
+        out+=("⏳ $env $step $(bar $((now - started)) "$estimate") $(progress $((now - started)))$stale")
       fi ;;
   esac
 done

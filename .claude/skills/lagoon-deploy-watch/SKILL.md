@@ -45,9 +45,10 @@ failed build. If a build fails, report it and let the user decide.
 - Environment: `pr-<N>` when the branch has an open PR, else the branch name
   with `/` → `-`.
 - Project: the Lagoon project whose git URL matches `origin` and has that
-  environment; before a new PR's environment exists, the one named after the
-  repo. In dpl-web, `.lagoon.yml`'s `project:` is *not* the Lagoon project
-  name; the real one is `dpl-web`.
+  environment; before a new PR's environment exists, the only matching
+  project, or the one named after the repo if several match. In dpl-web,
+  `.lagoon.yml`'s `project:` is *not* the Lagoon project name; the real one is
+  `dpl-web`.
 - Estimate (progress bar, "8m/~11m"): average of the last 5 successful deploys
   of the environment, else of the production environment, else none (elapsed
   time only).
