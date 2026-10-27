@@ -1,4 +1,4 @@
-import ImageBaseWithPlaceholder from "@/components/shared/image/ImageBaseWithPlaceholder"
+import ImageBase from "@/components/shared/image/ImageBase"
 import ImageCaptionWrapper from "@/components/shared/image/ImageCaptionWrapper"
 import { MediaImage, ParagraphGoImages } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
@@ -31,7 +31,7 @@ const ImageSingle = ({ image }: { image: MediaImage }) => {
             <ImageCaptionWrapper caption={image.byline || ""} className="col-span-full">
               <div className="rounded-base relative overflow-hidden">
                 {image.mediaImage.url && (
-                  <ImageBaseWithPlaceholder
+                  <ImageBase
                     src={image.mediaImage.url}
                     alt={image.mediaImage.alt || ""}
                     height={image.mediaImage.height || 0}
@@ -66,7 +66,7 @@ const ImageMultiple = ({ images }: { images: Array<MediaImage> }) => {
                   <ImageCaptionWrapper caption={image.byline || ""} className="col-span-full">
                     <div className="rounded-base relative overflow-hidden">
                       {image.mediaImage.url && (
-                        <ImageBaseWithPlaceholder
+                        <ImageBase
                           src={image.mediaImage.url}
                           alt={image.mediaImage.alt || ""}
                           height={image.mediaImage.height || 0}

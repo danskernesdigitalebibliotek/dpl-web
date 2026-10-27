@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { useQueryState, parseAsJson, parseAsStringEnum } from "nuqs";
-import { buildCQLQuery, isWildcardQuery } from "../lib/query-builder";
-import { isValidFilterState, isValidFacetState } from "../lib/validation";
+import { useQueryState, parseAsStringEnum } from "nuqs";
 import { FormView } from "../types";
+import { useSearchQueries } from "./use-search-queries";
 
 interface UseFormVisibilityReturn {
   view: FormView;
@@ -20,42 +19,18 @@ export const useFormVisibility = (): UseFormVisibilityReturn => {
     parseAsStringEnum<FormView>(["search", "results"]).withDefault("search")
   );
 
-  // Read committed search state from URL (not local draft state)
-  const [urlFilters] = useQueryState(
-    "filters",
-    parseAsJson((value) => {
-      if (isValidFilterState(value)) return value;
-      return [];
-    }).withDefault([])
-  );
-
-  const [urlPreSearchFacets] = useQueryState(
-    "preSearchFacets",
-    parseAsJson((value) => {
-      if (isValidFacetState(value)) return value;
-      return [];
-    }).withDefault([])
-  );
-
-  const [urlFacets] = useQueryState(
-    "facets",
-    parseAsJson((value) => {
-      if (isValidFacetState(value)) return value;
-      return [];
-    }).withDefault([])
-  );
-
-  const cql = buildCQLQuery(urlFilters, urlPreSearchFacets, urlFacets);
-  const isNotWildcard = !isWildcardQuery(cql);
+  // Reuse the committed query so this hook and the results agree on what
+  // counts as a search, including toggles and radio filters.
+  const { isSearchEnabled } = useSearchQueries();
 
   // Ensure we show the form when there is no current query (e.g. after clearing)
   useEffect(() => {
-    if (!isNotWildcard && view !== "search") {
+    if (!isSearchEnabled && view !== "search") {
       setView("search");
     }
-  }, [isNotWildcard, view, setView]);
+  }, [isSearchEnabled, view, setView]);
 
-  const showResults = view === "results" && isNotWildcard;
+  const showResults = view === "results" && isSearchEnabled;
 
   return {
     view,
