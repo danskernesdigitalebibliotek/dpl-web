@@ -16,6 +16,7 @@ import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
+import { getBiblioDueDate } from "@/lib/helpers/helper.due-status"
 import {
   type SelectedLoan,
   biblioLoanForWork,
@@ -114,8 +115,9 @@ const DigitalLoansModal = ({
             {sortedWorks.map(work => {
               const manifestation = work.manifestations.all[0]
               const loan = digitalLoanForWork(work, loanData)
+              const biblioLoan = biblioLoanForWork(work, biblioLoans)
               const expiry =
-                loan?.loanExpireDateUtc ?? biblioLoanForWork(work, biblioLoans)?.endDate
+                loan?.loanExpireDateUtc ?? (biblioLoan && getBiblioDueDate(biblioLoan.endDate))
               const creators = displayCreators(work.creators, 1)
               const title = work.titles.full[0]
 

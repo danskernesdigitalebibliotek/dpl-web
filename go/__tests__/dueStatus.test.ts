@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { type DueThresholds, dueStatus } from "@/lib/helpers/helper.due-status"
+import { type DueThresholds, dueStatus, getBiblioDueDate } from "@/lib/helpers/helper.due-status"
 
 // Anchored to local noon so calendar-day counts are stable at any time of day.
 const daysFromNow = (days: number) => {
@@ -55,5 +55,22 @@ describe("dueStatus", () => {
   it("falls back to the configured thresholds when none are given", () => {
     expect(dueStatus(daysFromNow(1)).state).toBe("due-soon")
     expect(dueStatus(daysFromNow(30)).state).toBe("neutral")
+  })
+})
+
+describe("getBiblioDueDate", () => {
+  it.each([
+    ["an older Biblio loan, ending at the end of the UTC day", "2026-11-20T23:59:59.999Z"],
+    ["a Biblio loan ending at the end of the Danish winter day", "2026-11-20T22:59:59.999Z"],
+  ])("gives the last day of %s", (_, end) => {
+    expect(getBiblioDueDate(end)).toBe("2026-11-20")
+  })
+
+  it("gives the last day of a loan ending at the end of the Danish summer day", () => {
+    expect(getBiblioDueDate("2026-06-20T21:59:59.999Z")).toBe("2026-06-20")
+  })
+
+  it("leaves an unparseable date for dueStatus to degrade", () => {
+    expect(getBiblioDueDate("not a date")).toBe("not a date")
   })
 })
