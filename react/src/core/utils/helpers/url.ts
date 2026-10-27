@@ -1,3 +1,4 @@
+import type { SearchFiltersInput } from "../../dbc-gateway/generated/graphql";
 import { WorkId } from "../types/ids";
 import { requestPatronLogin } from "../../unilogin-user";
 
@@ -133,7 +134,7 @@ export const constructSearchUrl = (searchUrl: URL, q: string) =>
 
 export const constructFacetSearchUrl = (
   searchUrl: URL,
-  facetName: string,
+  facetName: keyof SearchFiltersInput,
   facetValue: string
 ) =>
   constructSearchUrlWithFacets({
