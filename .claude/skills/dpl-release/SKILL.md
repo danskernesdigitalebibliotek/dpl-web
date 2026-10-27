@@ -97,15 +97,24 @@ Report to the user when every check is green or only needs human action.
 
 ## 4. GitHub release
 
-The user does this in the GitHub UI, after merging the release PR with a merge
-commit:
+Once the release PR is merged with a merge commit, create the release and its
+tag with `gh`. It does the same as the GitHub UI, including release notes.
+Ask the user first, as publishing starts the image builds.
 
-1. Releases → Draft a new release → Select tag → Create new tag `<version>`.
-2. Set the target to `main`.
-3. Click "Generate release notes".
-4. Make sure "Set as the latest release" is selected, then publish.
+`<previous>` is the tag the notes compare against: the previous regular release
+(`YYYY.WW.0`), or for a hotfix the last tag of the version being fixed. Hotfix
+releases target the `YYYY.WW.x` branch instead of `main`.
 
-Then watch the builds for the tag:
+```sh
+# Preview the notes
+gh api repos/danskernesdigitalebibliotek/dpl-web/releases/generate-notes \
+  -f tag_name=<version> -f target_commitish=main -f previous_tag_name=<previous> --jq .body
+gh release create <version> --target main --title <version> \
+  --generate-notes --notes-start-tag <previous> --latest
+```
+
+The "Container images" section is appended to the notes by the build. Then
+watch the builds for the tag:
 
 ```sh
 gh run list --branch <version> --json name,status,conclusion
