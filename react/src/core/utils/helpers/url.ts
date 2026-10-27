@@ -134,12 +134,12 @@ export const constructSearchUrl = (searchUrl: URL, q: string) =>
 export const constructFacetSearchUrl = (
   searchUrl: URL,
   facetName: string,
-  value: string
+  facetValue: string
 ) =>
   constructSearchUrlWithFacets({
     searchUrl,
     q: "*",
-    facets: [{ facetName, selectedValues: [value.toLowerCase()] }]
+    facets: [{ facetName, selectedValues: [facetValue.toLowerCase()] }]
   });
 
 export const constructCreatorSearchUrl = (searchUrl: URL, creator: string) =>
