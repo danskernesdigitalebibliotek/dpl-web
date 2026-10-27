@@ -50,20 +50,6 @@ const config: StorybookConfig = {
       use: ["@svgr/webpack"],
     })
 
-    // Async server components can't render in Storybook's client-only
-    // environment — swap them for client mocks. A module replacement (not a
-    // resolve alias) so it wins over the tsconfig-paths resolution of "@/".
-    // webpack is not a direct dependency, so reach it through the compiler.
-    config.plugins.push({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      apply: (compiler: any) => {
-        new compiler.webpack.NormalModuleReplacementPlugin(
-          /^@\/components\/shared\/image\/ImageBaseWithPlaceholder$/,
-          path.resolve(dirname, "mocks/ImageBaseWithPlaceholder.tsx")
-        ).apply(compiler)
-      },
-    })
-
     return config
   },
 }
