@@ -9,6 +9,7 @@
 
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\EventListPaging;
 use Drupal\dpl_event\Form\SettingsForm;
@@ -293,4 +294,18 @@ function dpl_event_deploy_set_default_list_paging_mode(): string {
   $config->set('list_paging_mode', $default_mode)->save();
 
   return "Set event list paging mode to the existing default ({$default_mode}).";
+}
+
+/**
+ * Uninstall facets_date_range.
+ *
+ * The event date facet now uses the date range plugins provided by this module.
+ * Config import has switched the facet over before this runs.
+ *
+ * @see dpl_update_update_10084()
+ */
+function dpl_event_deploy_uninstall_facets_date_range(): string {
+  DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer')->uninstall(['facets_date_range']);
+
+  return 'Uninstalled facets_date_range.';
 }

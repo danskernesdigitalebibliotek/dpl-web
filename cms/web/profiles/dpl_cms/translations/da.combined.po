@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-10-13 11:38+0200\n"
-"PO-Revision-Date: 2026-10-13 11:38+0200\n"
+"POT-Creation-Date: 2026-10-27 09:28+0100\n"
+"PO-Revision-Date: 2026-10-27 09:28+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-10-13 11:38+0200\n"
-"PO-Revision-Date: 2026-10-13 11:38+0200\n"
+"POT-Creation-Date: 2026-10-27 09:28+0100\n"
+"PO-Revision-Date: 2026-10-27 09:28+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2863,6 +2863,9 @@ msgctxt "field.field.paragraph.filtered_event_list.field_filter_tags:description
 msgid "Add a tag you want to include"
 msgstr ""
 
+msgid "Add a text body paragraph describing the event."
+msgstr ""
+
 msgid ""
 "Add an edit button to the Media Library widget when an item is selected."
 msgstr ""
@@ -3539,6 +3542,8 @@ msgid ""
 "All material in Retriever is covered by copyright law and may not be copied "
 "without special permission."
 msgstr ""
+"Alt materiale i Retriever er omfattet af lov om ophavsret og må ikke "
+"kopieres uden særlig tilladelse."
 
 msgid "All meta tags in the \"@group\" group."
 msgstr "Alle meta tags i \"@group\"-gruppen."
@@ -5080,7 +5085,7 @@ msgstr ""
 
 msgctxt "Dashboard"
 msgid "Because you borrowed"
-msgstr ""
+msgstr "Fordi du har lånt"
 
 msgctxt "Recommender"
 msgid "Because you have borrowed @title you may also like"
@@ -5092,11 +5097,11 @@ msgstr "Fordi du har lånt @title kan du måske også lide"
 
 msgctxt "Dashboard"
 msgid "Because you reserved"
-msgstr ""
+msgstr "Fordi du har reserveret"
 
 msgctxt "Dashboard"
 msgid "Because your favorites list contains"
-msgstr ""
+msgstr "Fordi din huskeliste indeholder"
 
 msgid "Below"
 msgstr "Under"
@@ -6408,7 +6413,7 @@ msgstr ""
 
 msgctxt "Work Page"
 msgid "Close Retriever modal"
-msgstr ""
+msgstr "Luk Retriever modalen"
 
 msgctxt "Global (Aria)"
 msgid "Close blocked patron modal"
@@ -8158,6 +8163,10 @@ msgstr ""
 
 msgid "Date range formatter"
 msgstr "Date range formatter"
+
+msgctxt "dpl_event"
+msgid "Date range overlap"
+msgstr ""
 
 msgctxt "core.date_format.date_short_month:label"
 msgid "Date short month"
@@ -10275,6 +10284,13 @@ msgctxt "DPL Opening Hours Editor"
 msgid "End date"
 msgstr "Slutdato"
 
+msgid "End date field"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "End date field"
+msgstr ""
+
 msgid "End of the word trimming"
 msgstr ""
 
@@ -10908,6 +10924,16 @@ msgstr "Specifikke inkluderede datoer for arrangementsserie"
 msgid "Event Start Time"
 msgstr "Starttidspunkt"
 
+msgid "Event date range"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Event date range"
+msgstr ""
+
+msgid "Event date range widget configuration"
+msgstr ""
+
 msgctxt "core.entity_form_display.eventinstance.default.default:third_party_settings:field_group:group_event_details:label"
 msgid "Event details"
 msgstr ""
@@ -11039,6 +11065,10 @@ msgstr ""
 
 msgid "Event settings"
 msgstr "Arrangementsindstillinger"
+
+msgctxt "Validation"
+msgid "Event text body"
+msgstr ""
 
 msgctxt "views.view.event_instance_list:display:default:display_options:fields:title:label"
 msgid "Event title"
@@ -11839,6 +11869,10 @@ msgstr ""
 msgctxt "Work Page"
 msgid "Filter displayed materials"
 msgstr "Filtrér viste materialer"
+
+msgctxt "dpl_event"
+msgid "Filter events happening within a range of dates."
+msgstr ""
 
 msgid "Filter items based on filtered result set by other applied filters"
 msgstr ""
@@ -13352,7 +13386,7 @@ msgstr ""
 "Hvis funktionen tilvælges, vil brugerne have mulighed for at finde deres "
 "nærmeste biblioteksfilial med en adressesøgning. <strong>For at funktionen "
 "virker korrekt, er det vigtigt, at man <a href=\"@edit_url\">redigerer alle "
-"filialer og kobler et agency ID fra FBS sammen med filialen samt ajourfører "
+"filialer og kobler et branch ID fra FBS sammen med filialen samt ajourfører "
 "adressefeltet.</a></strong>"
 
 msgid ""
@@ -13725,7 +13759,7 @@ msgid "Importable content"
 msgstr ""
 
 msgid "Important service message"
-msgstr ""
+msgstr "Vigtig servicebesked"
 
 msgid ""
 "Importing entities from files serialized with hal_json is deprecated in "
@@ -13816,6 +13850,12 @@ msgstr "nkluder blokeret bruger"
 msgid "Include blocked users: @include_blocked"
 msgstr "Inkluder blokerede brugere: @include_blocked"
 
+msgctxt "dpl_event"
+msgid ""
+"Include events happening at any time of day on the max date. Otherwise "
+"events starting after 00:00:00 on the max date are excluded."
+msgstr ""
+
 msgctxt "views.view.user_admin_people:display:default:display_options:filters:roles_target_id_2:expose:label"
 msgid "Include patron"
 msgstr ""
@@ -13829,6 +13869,10 @@ msgid "Include patrons"
 msgstr ""
 
 msgid "Include reset sort option"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Include through end of max date"
 msgstr ""
 
 msgid "Include unpublished nodes"
@@ -14002,7 +14046,7 @@ msgstr "Indsæt værdier i forekomst"
 
 msgctxt "Dashboard"
 msgid "Inspiration for you"
-msgstr ""
+msgstr "Inspiration til dig"
 
 msgid "Instagram"
 msgstr "Instagram"
@@ -14251,6 +14295,13 @@ msgstr ""
 
 msgctxt "Open order"
 msgid "Item available, order through the librarys catalogue"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid ""
+"Items are shown when the period from the facet field to this field overlaps "
+"the selected range. Leave empty to only show items where the facet field is "
+"within the range."
 msgstr ""
 
 msgid "Items per page"
@@ -15779,12 +15830,22 @@ msgstr "Maksimalt uddrag"
 msgid "Max Video Preview"
 msgstr "Maksimal video forhåndsvisning"
 
+msgid "Max inclusive"
+msgstr ""
+
 msgctxt "field.field.paragraph.filtered_event_list.field_max_item_amount:label"
 msgid "Max item amount"
 msgstr ""
 
 msgid "Maximum"
 msgstr "Maksimum"
+
+msgid "Maximum date label"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Maximum date label"
+msgstr ""
 
 msgid ""
 "Maximum number of HTTP requests that can be made during Drupal's execution "
@@ -16178,6 +16239,13 @@ msgctxt "Patron registration settings form"
 msgid "Minimum age to allow self registration"
 msgstr "Minimumsalder for selvoprettelse som låner"
 
+msgid "Minimum date label"
+msgstr ""
+
+msgctxt "dpl_event"
+msgid "Minimum date label"
+msgstr ""
+
 msgid "Minute(s)"
 msgstr "Minut(ter)"
 
@@ -16322,7 +16390,7 @@ msgstr "Mere Information"
 
 msgctxt "Series Page"
 msgid "More by @author"
-msgstr ""
+msgstr "Mere af @author"
 
 msgctxt "advanced search 2"
 msgid "More filters"
@@ -19697,6 +19765,8 @@ msgid ""
 "Publishing this as a site-wide message will unpublish %label, which is site-"
 "wide and published now."
 msgstr ""
+"Publicering af denne på hele hjemmesiden vil afpublicere %label, da der kun "
+"kan være én publiceret servicebesked på hele hjemmesiden."
 
 msgctxt "Dpl Publizon"
 msgid "Publizon service url"
@@ -20364,10 +20434,6 @@ msgstr "Fjernede meta tags fra @config metatag konfiguration."
 msgid "Removing orphaned entities."
 msgstr "Fjerner hjemløse enheder."
 
-msgid ""
-"Render materials the adapter does not know as unavailable instead of failing"
-msgstr ""
-
 msgid "Rendered as @mode"
 msgstr "Renderet som @mode"
 
@@ -20532,6 +20598,8 @@ msgid ""
 "Reservations of digital materials are closed while we are moving to a new "
 "service. Please try again later."
 msgstr ""
+"Reserveringer på digitale materialer er ude af drift, mens vi skifter til en "
+"ny service for digitale lån. Prøv igen senere."
 
 msgctxt "Patron menu"
 msgid "Reservations ready for pickup"
@@ -21446,7 +21514,11 @@ msgstr "Se <a href=\":help\">modulhjælp</a> for information."
 
 msgctxt "Patron page"
 msgid "See titles that don't count towards your quota"
-msgstr ""
+msgstr "Se titler, der ikke tæller med i din lånekvote"
+
+msgctxt "Work Page"
+msgid "See titles that don't count towards your quota"
+msgstr "Se titler, der ikke tæller med i din lånekvote"
 
 msgctxt "Dashboard"
 msgid "See your fees and how to pay"
@@ -22232,6 +22304,10 @@ msgctxt "views.view.event_instance_list:display:default:display_options:filters:
 msgid "Show all events"
 msgstr ""
 
+msgctxt "dpl_event"
+msgid "Show all events happening within the selected date range."
+msgstr ""
+
 msgid "Show arrows for drag & drop"
 msgstr "Vis pile for træk og slip"
 
@@ -22287,10 +22363,6 @@ msgstr ""
 
 msgid "Show links"
 msgstr "Vis links"
-
-msgctxt "Dpl Biblio"
-msgid "Show materials the adapter does not know as unavailable"
-msgstr ""
 
 msgid "Show message"
 msgstr "Vis besked"
@@ -22426,7 +22498,7 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Side til 0-hits søgninger"
-msgstr ""
+msgstr "Side til 0-hits søgninger"
 
 msgctxt "Patron menu"
 msgid "Sign up"
@@ -23636,14 +23708,6 @@ msgstr "Midlertidige karakteristika af ressourcen."
 
 msgctxt "views.view.files:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Temporary"
-msgstr ""
-
-msgctxt "Dpl Biblio"
-msgid ""
-"Temporary. The catalogue lists digital materials that are not yet "
-"provisioned in WeDoBooks, and the adapter answers \"Material not found\" for "
-"those. With this enabled such a material is shown as unavailable; without it "
-"the material page fails. Publizon is never asked either way."
 msgstr ""
 
 msgctxt "Dpl Biblio"
@@ -28540,6 +28604,8 @@ msgid ""
 "Upload the logo in PNG or SVG. You will get the best results with 11:5 "
 "format (e.g. width: 220px height: 100px), but any size will work."
 msgstr ""
+"Upload billedet i PNG. Du får det bedste resultat med et 11:5 format. Du får "
+"bedste resultat med formatet 11:5 (f.eks. 220 px bred og 100 px høj)."
 
 msgid "Url"
 msgstr "URL"
@@ -28697,11 +28763,11 @@ msgid "Use the Biblio adapter for digital materials"
 msgstr "Brug Biblio adapteren til digitale materialer"
 
 msgid "Use the Biblio adapter for digital materials on GO"
-msgstr ""
+msgstr "Brug Biblio adapteren til digitale materialer på GO"
 
 msgctxt "Dpl Biblio"
 msgid "Use the Biblio adapter for digital materials on GO"
-msgstr ""
+msgstr "Brug Biblio adapteren til digitale materialer på GO"
 
 msgctxt "DPL Event"
 msgid "Use the address from associated branch as fallback."
@@ -28919,7 +28985,7 @@ msgstr ""
 
 msgctxt "Dashboard"
 msgid "User profile"
-msgstr ""
+msgstr "Brugerprofil"
 
 msgctxt "paragraphs.paragraphs_type.user_registration_item:label"
 msgid "User registration item"
@@ -29496,6 +29562,10 @@ msgid ""
 "adapter. Existing Publizon loans remain visible and playable until they "
 "expire. Independent of the flag for the web apps above."
 msgstr ""
+"Når denne er valgt, vil nye digitale lån på GO kun foretages gennem Biblio "
+"adapteren. Eksisterende digitale lån fra Publizon vil stadig kunne ses og "
+"læses/lyttes inden afleveringsfristen. Dette er uafhængigt af valget for web "
+"apps ovenfor."
 
 msgctxt "Dpl Biblio"
 msgid ""
@@ -29902,7 +29972,7 @@ msgstr "Du er i reserveringskø"
 
 msgctxt "Patron menu"
 msgid "You are logged in with Unilogin"
-msgstr ""
+msgstr "Du er logget ind med Unilogin"
 
 msgctxt "Open order"
 msgid "You are no longer registered at the pickup library"
@@ -30016,6 +30086,8 @@ msgid ""
 "You cannot cancel this reservation while we are moving to a new service. "
 "Your place in the queue is kept."
 msgstr ""
+"Du kan ikke slette din digitale reservering, mens vi skifter til en ny "
+"service for digitale lån. Din plads i køen flyttes med til den nye service."
 
 msgid "You cannot connect another user's account."
 msgstr "Du kan ikke tilslutte en anden brugers konto."

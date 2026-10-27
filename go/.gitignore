@@ -32,3 +32,6 @@ storybook-static/
 
 # Help scripts
 toolbox/
+
+# Argos
+/screenshots

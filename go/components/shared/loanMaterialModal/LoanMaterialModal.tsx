@@ -25,8 +25,7 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { toast } from "@/components/shared/toaster/Toaster"
 import { cyKeys } from "@/cypress/support/constants"
-import { uniloginDigitalLoanErrorText, useBiblioAdapter } from "@/hooks/useBiblioAdapter"
-import useSession from "@/hooks/useSession"
+import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
 import {
   ManifestationSearchPageTeaserFragment,
   useGetMaterialQuery,
@@ -77,13 +76,13 @@ const LoanMaterialModal = ({
 }) => {
   const queryClient = useQueryClient()
   const viaBiblioAdapter = useBiblioAdapter()
-  const { session } = useSession()
   const { data } = useGetMaterialQuery({ wid }, { enabled: !!wid })
   const manifestation = findManifestationByPid(data?.work, pid)
   const { mutate } = usePostV1UserLoansIdentifier()
   const { mutate: mutateBiblio } = useDigitalCreateLoan()
   const { data: loansData, isLoading: isLoadingLoans } = useGetV1UserLoans()
-  // Patron-gated in the service layer — never fires for Unilogin sessions.
+  // Digital-loan-gated in the service layer — fires for a patron or a Unilogin
+  // user, never for an anonymous session.
   const { data: biblioLoansData } = useDigitalLoans({ enabled: viaBiblioAdapter })
   const [isHandlingLoan, setIsHandlingLoan] = useState(false)
   const [loanResult, setLoanResult] = useState<TLoanOutcome | null>(null)
@@ -188,17 +187,13 @@ const LoanMaterialModal = ({
   }
 
   // New loans go through exactly one provider: the Biblio adapter once the
-  // library has switched, Publizon until then.
+  // library has switched, Publizon until then. Both authenticate a Unilogin
+  // user as well as a patron (ADR-013).
+  // TODO(publizon-sunset): collapses to handleBiblioLoan() when the Publizon
+  // API is phased out — the else branch and handlePublizonLoan go.
   const handleLoanMaterial = () => {
     if (!manifestation) return
     if (viaBiblioAdapter) {
-      // Unilogin cannot authenticate against the Biblio adapter, and with the
-      // adapter on there is no Publizon fallback for new loans. The attempt
-      // is answered here rather than with a request that cannot succeed.
-      if (session?.type === "unilogin") {
-        toast.error(uniloginDigitalLoanErrorText)
-        return
-      }
       handleBiblioLoan()
     } else {
       handlePublizonLoan()

@@ -1,5 +1,20 @@
 # Releases
 
+## Changelogs
+
+The [changelogs](../changelogs/README.md) must have their unreleased entries
+moved under the version being released before the release pull request against
+`main` is opened - the `Changelog / Released` check fails it otherwise:
+
+```shell
+task changelog:release VERSION=2026.44.0
+```
+
+Commit the result to `develop` (through a pull request) before opening the
+release pull request. For a hotfix release, run the task on the
+`release/<year>.<week>.x` branch before tagging, and bring the change back to
+`develop`.
+
 ## Building and publishing releases
 
 A CMS release is built by pushing a tag that matches the following pattern:

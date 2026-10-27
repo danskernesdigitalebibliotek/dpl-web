@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import { useDeepCompareEffect } from "react-use";
 import { useText } from "../../core/utils/text";
 import LinkNoStyle from "../atoms/links/LinkNoStyle";
@@ -110,5 +110,3 @@ export const AvailabilityLabel: React.FC<AvailabilityLabelProps> = ({
     </button>
   );
 };
-
-export default memo(AvailabilityLabel);

@@ -1,6 +1,12 @@
 import "../src/styles/css/base.css";
 import { allModes } from "../.storybook/modes";
 
+// Shared, so Chromatic and Argos capture the same widths during the pilot.
+const visualTestModes = {
+  "400px": allModes["xs"],
+  "1200px": allModes["xl"],
+};
+
 export const parameters = {
   layout: "fullscreen",
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -25,9 +31,13 @@ export const parameters = {
     // This is because Chromatic doesn't show the cover image when the animation starts with opacity 0
     pauseAnimationAtEnd: true,
     // Instructs Chromatic to test all stories at the specified viewport
-    modes: {
-      "400px": allModes["xs"],
-      "1200px": allModes["xl"],
-    },
+    modes: visualTestModes,
+  },
+  // Argos ignores the chromatic parameters once these exist.
+  argos: {
+    modes: visualTestModes,
+    // Default crops to the component at 2x zoom, collapsing fullscreen
+    // layouts. Capture the full page like Chromatic does.
+    fitToContent: false,
   },
 };

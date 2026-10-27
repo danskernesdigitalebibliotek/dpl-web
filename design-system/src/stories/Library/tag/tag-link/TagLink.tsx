@@ -36,5 +36,3 @@ export const TagLink = ({
     </a>
   );
 };
-
-export default TagLink;

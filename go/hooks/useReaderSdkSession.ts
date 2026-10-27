@@ -21,9 +21,13 @@ export const useReaderSdkSession = (): UseQueryResult<WedoBooksSdk> => {
   const { data: sdk } = useReaderSdk()
   const config = useServiceLayerConfig()
   const queryClient = useQueryClient()
-  // Signing in is patron-scoped, and the token is read straight through the
-  // query client, which has no patron gate of its own.
-  const isPatronAuthenticated = config.isPatronAuthenticated ?? true
+  // Signing in is scoped to a borrowing session — a patron or, since Unilogin
+  // runs through Adgangsplatformen (ADR-013), a Unilogin user. Falls back to
+  // the patron flag for consumers that do not set the digital one (the React
+  // apps). The token is read straight through the query client, which has no
+  // gate of its own.
+  const isDigitalLoanAuthenticated =
+    config.isDigitalLoanAuthenticated ?? config.isPatronAuthenticated ?? true
 
   return useQuery<WedoBooksSdk>({
     // Not keyed on the token: signing in again whenever it rotates would
@@ -31,7 +35,7 @@ export const useReaderSdkSession = (): UseQueryResult<WedoBooksSdk> => {
     // own once established. Nor on the application - the one client this
     // signs in is already keyed on that.
     queryKey: ["reader", "session"],
-    enabled: Boolean(sdk) && isPatronAuthenticated,
+    enabled: Boolean(sdk) && isDigitalLoanAuthenticated,
     staleTime: Infinity,
     gcTime: Infinity,
     // A rejected token is rejected on every attempt - it is cached and does

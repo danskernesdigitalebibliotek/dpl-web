@@ -2,7 +2,7 @@ import { AvailabilityLabelPropsType } from "../../availability-label/types";
 import AvailabilityLabel from "../availability-label/AvailabilityLabel";
 import Cover from "../cover/Cover";
 import Tag from "../tag/Tag";
-import ButtonFavourite from "../Buttons/button-favourite/ButtonFavourite";
+import { ButtonFavourite } from "../Buttons/button-favourite/ButtonFavourite";
 import { ReactComponent as ArrowSmallRight } from "../Arrows/icon-arrow-ui/icon-arrow-ui-small-right.svg";
 import { getCoverTint } from "../cover/helper";
 
@@ -30,7 +30,7 @@ export type SeriesCardProps = {
 // project: the row contains a favourite button, and interactive content inside
 // an anchor is invalid HTML. The react twin makes the whole row clickable with
 // a click handler for the same reason.
-export const SeriesCard = ({
+const SeriesCard = ({
   title,
   href,
   author,

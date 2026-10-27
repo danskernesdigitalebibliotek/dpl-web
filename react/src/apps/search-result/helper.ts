@@ -2,11 +2,7 @@ import { head, mapValues } from "lodash";
 import { getMaterialTypes } from "../../core/utils/helpers/general";
 import { Manifestation } from "../../core/utils/types/entities";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
-import {
-  FacetFieldEnum,
-  FacetResult,
-  FacetValue
-} from "../../core/dbc-gateway/generated/graphql";
+import { FacetFieldEnum } from "../../core/dbc-gateway/generated/graphql";
 import { FacetOrigin, Filter, FilterItemTerm } from "../../core/filter.slice";
 import invalidSwitchCase from "../../core/utils/helpers/invalid-switch-case";
 
@@ -86,8 +82,6 @@ export const createFilters = (
   };
 };
 
-export const FacetBrowserModalId = "facet-browser-modal";
-
 export function getAllFilterPathsAsString(
   filterObject: Filter,
   origin: FacetOrigin
@@ -159,32 +153,3 @@ export const getFacetFieldTranslation = (name: FacetFieldEnum) => {
       return invalidSwitchCase<string>(name as never);
   }
 };
-
-type FacetMap = { [key: string]: FacetValue };
-// createFacetsMap generates a map for quick lookup and enhanced search
-// capabilities by combining facet name and term into a single string key.
-// Structure: { [facetName:termKey]: FacetValue }
-// Example Key: 'fictionalCharacters:Batman'
-export const createFacetsMap = (facets: FacetResult[]): FacetMap => {
-  return facets.reduce((acc: FacetMap, facet: FacetResult) => {
-    const newAcc = { ...acc };
-
-    facet.values.forEach((value) => {
-      const combinedKey = `${facet.name}:${value.key}`;
-      newAcc[combinedKey] = value;
-    });
-
-    return newAcc;
-  }, {});
-};
-
-export const findTermInFacetMap = (
-  facetName: string,
-  termName: string,
-  facetMap: FacetMap
-): FacetValue => {
-  const key = `${facetName}:${termName}`;
-  return facetMap[key];
-};
-
-export default {};

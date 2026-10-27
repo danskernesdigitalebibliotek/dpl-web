@@ -2,7 +2,6 @@ import {
   AccessUrl,
   DigitalArticleService,
   Ereol,
-  FacetResult,
   InfomediaService,
   RetrieverService,
   InterLibraryLoan,
@@ -63,8 +62,6 @@ export type Work = Omit<
 export type Patron = PatronV5;
 
 export type AuthenticatedPatron = AuthenticatedPatronV8;
-
-export type Facets = FacetResult[] | null;
 
 export type AccessTypes =
   | AccessUrl["__typename"]

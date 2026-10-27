@@ -10,5 +10,8 @@
 # storybook
 storybook-static
 
+# Argos
+/screenshots
+
 # SCSS to CSS
 /src/styles/css

@@ -27,6 +27,9 @@ const uniloginUserInfoSchema = z.object({
 // DDF's Unilogin test institutions. A user with any of them is a test user,
 // as in the CMS (Unilogin::TEST_INSTITUTION_IDS). Publizon does not know them,
 // so test users loan through "Christianshavns skole" instead.
+// TODO(publizon-sunset): the Biblio adapter authenticates with the token
+// alone, so the institution ids and this test-institution mapping go when the
+// Publizon API is phased out.
 const testInstitutionIds = ["R00263", "A04441"]
 const testInstitutionReplacementIds = ["101047"]
 
@@ -35,6 +38,9 @@ const testInstitutionReplacementIds = ["101047"]
 // null when it cannot be read, so no session is created without it. An empty
 // institution list does not stop the login: the CMS decides who may log in,
 // and a loan without an institution is refused by the Pubhub adapter.
+// TODO(publizon-sunset): the uni-id and institution exist for the Publizon
+// adapter; the Biblio adapter needs only the token, so revisit what the
+// Unilogin session must read once the Publizon API is phased out.
 export const loadUniloginUserInfo = async (
   userToken: string
 ): Promise<TSessionData["uniLoginUserInfo"] | null> => {

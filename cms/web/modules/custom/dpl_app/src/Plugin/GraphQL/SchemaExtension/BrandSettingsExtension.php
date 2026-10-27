@@ -9,9 +9,12 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Theme\ThemeInitializationInterface;
+use Drupal\graphql\GraphQL\Execution\FieldContext;
+use Drupal\graphql\GraphQL\Execution\ResolveContext;
 use Drupal\graphql\GraphQL\ResolverBuilder;
 use Drupal\graphql\GraphQL\ResolverRegistryInterface;
 use Drupal\graphql\Plugin\GraphQL\SchemaExtension\SdlSchemaExtensionPluginBase;
+use GraphQL\Type\Definition\ResolveInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -71,8 +74,11 @@ class BrandSettingsExtension extends SdlSchemaExtensionPluginBase {
     );
 
     $registry->addFieldResolver('BrandSettings', 'logoUrl',
-      $builder->callback(function () {
+      $builder->callback(function ($value, $args, ResolveContext $context, ResolveInfo $info, FieldContext $field_context) {
         $default_theme = $this->configFactory->get('system.theme')->get('default');
+
+        // The logo is configured in the default theme's settings.
+        $field_context->addCacheableDependency($this->configFactory->get($default_theme . '.settings'));
 
         $logo_path = $this->themeSettingsProvider->getSetting('logo.path', $default_theme);
 

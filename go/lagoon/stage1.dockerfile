@@ -5,8 +5,8 @@
 FROM uselagoon/node-24-builder:latest
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
-# Workspace packages are referenced from go/package.json via file: deps, so
-# they must be copied into the image before pnpm install can resolve them.
+# go/package.json links workspace packages with workspace:*, so they must be
+# copied into the image before pnpm install can resolve and link them.
 #
 # All of them, not just the ones Go names. The filter below keeps the install
 # itself to Go's slice, but `pnpm prune` in stage 2 takes no filter and walks
@@ -50,11 +50,9 @@ RUN corepack enable
 # shell will accept as a variable name. Same trick as `init:pnpm` in the root
 # Taskfile.
 #
-# The WeDoBooks wrapper ships a build rather than sources, and Go pins it with
-# file: - pnpm copies the package into go/node_modules when the filtered
-# install below runs. So the wrapper's dist has to exist before that install
-# takes its snapshot: install the wrapper's own dependencies and build it
-# first.
+# The WeDoBooks wrapper ships a build rather than sources, so its dist has to
+# exist before Go builds against it: install the wrapper's own dependencies
+# and build it first. Go reaches the result through its workspace symlink.
 RUN --mount=type=secret,id=WEDOBOOKS_NPM_TOKEN \
     env "npm_config_//npm.pkg.wedobooks.io/:_authToken=$(cat /run/secrets/WEDOBOOKS_NPM_TOKEN)" \
     pnpm install --frozen-lockfile --dir packages/wedobooks

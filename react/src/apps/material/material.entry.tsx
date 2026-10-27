@@ -18,6 +18,7 @@ import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
 import withPageStatistics from "../../core/statistics/withPageStatistics";
 import useSetSmoothScroll from "../../core/utils/useSetSmoothScroll";
 import { MaterialUnavailableNoticeArgs } from "../../components/material/MaterialUnavailableNotice/MaterialUnavailableNoticeArgs";
+import { MaterialContentsArgs } from "../../components/material/MaterialContents/MaterialContentsArgs";
 
 interface MaterialEntryTextProps {
   alreadyReservedText: string;
@@ -129,6 +130,7 @@ interface MaterialEntryTextProps {
   onlineInternalSuccessLoanedText: string;
   onlineInternalSuccessManualBorrowingNoticeText: string;
   onlineInternalSuccessReservedText: string;
+  onlineLimitMonthAlwaysLoanableLinkText: string;
   onlineLimitMonthAudiobookInfoText: string;
   onlineLimitMonthEbookInfoText: string;
   onlineMaterialPlayerText: string;
@@ -222,7 +224,8 @@ export interface MaterialEntryProps
     PlayerModalProps,
     BiblioAdapterArgs,
     OpenOrderProps,
-    MaterialUnavailableNoticeArgs {
+    MaterialUnavailableNoticeArgs,
+    MaterialContentsArgs {
   wid: WorkId;
 }
 
