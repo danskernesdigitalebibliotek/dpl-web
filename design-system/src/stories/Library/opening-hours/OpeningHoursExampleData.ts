@@ -246,5 +246,3 @@ export const groupedOpeningHoursExampleData: GroupedOpeningHours = [
     ],
   },
 ];
-
-export default groupedOpeningHoursExampleData;

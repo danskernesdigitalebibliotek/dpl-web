@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": ["-knip-ignore"],
+  // Report exports only when they are used outside their own file. Without
+  // this, Knip flags in-file-only exports (mostly conventional `*Props`
+  // types), which is a separate cleanup.
+  "ignoreExportsUsedInFile": true,
+  "entry": [".storybook/test-runners/**", ".storybook/google-fonts-mock.js"],
+  // Generated code; not meant to be analysed for dead exports.
+  "ignore": [
+    "lib/soap/**/generated/**",
+    "lib/rest/**/generated/**",
+    "lib/helpers/zod-validation.ts",
+  ],
+  // CLI invoked ad-hoc, not referenced from source.
+  "ignoreBinaries": ["shadcn"],
+  // Babel/loader deps referenced from Webpack/Storybook config,
+  // http-server invoked via full path in CI, and sharp loaded by Next.js at
+  // runtime (asserted in lagoon/stage2.dockerfile) — Knip cannot detect these.
+  "ignoreDependencies": ["@jest/types", "http-server", "@types/jwt-simple", "sharp"],
+}

@@ -26,5 +26,3 @@ export const useItemHasBeenVisible = () => {
 
   return { itemRef, hasBeenVisible: isInViewPort || hasBeenVisible };
 };
-
-export default {};

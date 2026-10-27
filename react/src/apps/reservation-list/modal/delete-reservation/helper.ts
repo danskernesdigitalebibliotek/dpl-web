@@ -130,5 +130,3 @@ export const requestsAndReservations = ({
     reservationsDigital
   };
 };
-
-export default {};

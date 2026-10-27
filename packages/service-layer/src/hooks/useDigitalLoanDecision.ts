@@ -12,9 +12,8 @@ import { type DigitalQueryOptions, useDigitalQuery } from "./internal"
 /**
  * Whether the user can borrow a material through the Biblio adapter.
  *
- * Patron-scoped: the adapter answers 403 to a library token, which with
- * errors surfaced takes the whole page down, so the hook refuses to ask
- * without a patron.
+ * Patron-scoped: the adapter answers 403 to a library token, so the hook
+ * refuses to ask without a patron.
  */
 export const useDigitalLoanDecision = (
   materialId: string | null,

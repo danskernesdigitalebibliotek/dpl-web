@@ -10,6 +10,12 @@ export const digitalLoanDecisionQueryKey = (materialId: string | null) =>
 export const digitalLoanDecisionQuery = (config: ServiceLayerConfig, materialId: string | null) =>
   queryOptions({
     queryKey: digitalLoanDecisionQueryKey(materialId),
+    // The decision only shapes how a material is shown, so a failure must not
+    // take the page down. Callers read a missing decision as unavailable.
+    throwOnError: false,
+    // The likeliest failure is the adapter's 404 for a material WeDoBooks has
+    // not provisioned, and that never resolves by asking again.
+    retry: false,
     queryFn: () => {
       if (materialId === null) {
         // The hook disables itself without a material id; a direct caller of

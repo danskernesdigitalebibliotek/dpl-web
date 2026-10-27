@@ -61,6 +61,4 @@ const MyPaymentOverviewModal: FC = () => {
   );
 };
 
-export const getIntermediatePaymentModalId = "intermediate-payment-modal";
-
 export default MyPaymentOverviewModal;

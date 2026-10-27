@@ -86,11 +86,15 @@ async function WorkPage({ params }: TWorkPageProps) {
     }
   }
 
+  const hasServerData = Boolean(
+    queryClient.getQueryData(useGetMaterialQuery.getKey({ wid: workId }))
+  )
+
   // Dehydrate the query data after ensuring it is fetched
   const dehydratedState = dehydrate(queryClient)
   return (
     <HydrationBoundary state={dehydratedState}>
-      <WorkPageLayout workId={workId} />
+      <WorkPageLayout workId={workId} hasServerData={hasServerData} />
     </HydrationBoundary>
   )
 }

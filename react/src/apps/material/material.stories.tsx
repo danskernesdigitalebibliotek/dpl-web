@@ -201,6 +201,10 @@ const meta: Meta<typeof MaterialEntry> = {
       description: "Description headline",
       control: { type: "text" }
     },
+    genreAndFormText: {
+      description: "Genre and form",
+      control: { type: "text" }
+    },
     identifierText: {
       description: "Identifier/topic text",
       control: { type: "text" }
@@ -403,6 +407,10 @@ const meta: Meta<typeof MaterialEntry> = {
     },
     onlineLimitMonthAudiobookInfoText: {
       description: "Online limit info text",
+      control: { type: "text" }
+    },
+    onlineLimitMonthAlwaysLoanableLinkText: {
+      description: "Link to titles that don't count towards the quota",
       control: { type: "text" }
     },
     onlineMaterialPlayerText: {
@@ -877,6 +885,7 @@ const meta: Meta<typeof MaterialEntry> = {
     reservableFromAnotherLibraryText: "Ordered from another library.",
     findOnBookshelfText: "Find on shelf",
     descriptionHeadlineText: "Description",
+    genreAndFormText: "Genre and form",
     identifierText: "Tags",
     inSameSeriesText: "In the same series",
     numberDescriptionText: "Nr.",
@@ -935,6 +944,8 @@ const meta: Meta<typeof MaterialEntry> = {
       "You have borrowed @count out of @limit possible e-books this month",
     onlineLimitMonthAudiobookInfoText:
       "You have borrowed @count out of @limit possible audio-books this month",
+    onlineLimitMonthAlwaysLoanableLinkText:
+      "See titles that don't count towards your quota",
     onlineMaterialPlayerText: "Listen to @materialType",
     onlineMaterialReaderText: "Read @materialType",
     onlineMaterialTeaserText: "Try @materialType",
@@ -1315,17 +1326,5 @@ export const MaterialWithClosedPublizonReservations: Story = {
   args: {
     ...Default.args,
     publizonReservationsClosedConfig: "1"
-  }
-};
-
-// TEMPORARY, with the toleration flag it exercises: the adapter answers 404
-// for materials the catalogue lists but WeDoBooks has not provisioned yet,
-// and this story lets the tests cover that they render as unavailable
-// rather than fail the page.
-export const MaterialWithTolerantBiblioAdapter: Story = {
-  args: {
-    ...Default.args,
-    useBiblioAdapterConfig: "1",
-    biblioTolerateUnknownMaterialsConfig: "1"
   }
 };
