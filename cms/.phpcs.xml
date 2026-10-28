@@ -54,7 +54,6 @@
     <exclude-pattern>*/web/modules/custom/dpl_footer/dpl_footer.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_library_agency/dpl_library_agency.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_library_token/dpl_library_token.module</exclude-pattern>
-    <exclude-pattern>*/web/modules/custom/dpl_link/dpl_link.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_loans/dpl_loans.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_login/dpl_login.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_mail/dpl_mail.module</exclude-pattern>
