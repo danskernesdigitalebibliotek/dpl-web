@@ -21,6 +21,21 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  */
 class GoRevalidator {
 
+  /**
+   * Go cache tag covering every cached CMS content page.
+   *
+   * Contract with Go, which tags each cached page with this (see the "caching"
+   * resolver in go/lib/config/resolvers/caching.ts).
+   */
+  public const CONTENT_CACHE_TAG = 'dpl-cms-content';
+
+  /**
+   * Go cache tag covering the cached goConfiguration.
+   *
+   * Contract with Go, which tags its cached configuration with this.
+   */
+  public const CONFIG_CACHE_TAG = 'dpl-cms-config';
+
   public function __construct(
     #[Autowire(service: 'http_client')]
     protected ClientInterface $httpClient,
@@ -87,7 +102,7 @@ class GoRevalidator {
    *   reachable/configured.
    */
   public function revalidateEverything(): bool {
-    return $this->revalidateTags('dpl-cms-content', 'dpl-cms-config');
+    return $this->revalidateTags(self::CONTENT_CACHE_TAG, self::CONFIG_CACHE_TAG);
   }
 
   /**
