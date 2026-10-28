@@ -65,7 +65,6 @@
     <exclude-pattern>*/web/modules/custom/dpl_paragraphs/dpl_paragraphs.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_patron_menu/dpl_patron_menu.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_patron_page/dpl_patron_page.module</exclude-pattern>
-    <exclude-pattern>*/web/modules/custom/dpl_patron_reg/dpl_patron_reg.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_protected_nodes/dpl_protected_nodes.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_react/dpl_react.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_react_apps/dpl_react_apps.module</exclude-pattern>
