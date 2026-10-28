@@ -37,9 +37,7 @@ export async function GET(request: NextRequest) {
     if (tags) {
       const tagList = tags.split(",")
       tagList.forEach(tag => revalidateTag(tag, "default"))
-      console.info(
-        `[cache/revalidate] Cleared cache for tags: ${tagList.join(", ")}`
-      )
+      console.info(`[cache/revalidate] Cleared cache for tags: ${tagList.join(", ")}`)
     }
 
     return NextResponse.json({ message: "Revalidation successful" })

@@ -51,10 +51,7 @@ export const loadPageData = async ({
   // Umbrella tag so a single revalidation can drop every cached page. Added
   // here - the one place every page loads through - on top of the per-node
   // tags from the CMS, which stay for targeted invalidation.
-  data.go.cacheTags = [
-    ...(data.go.cacheTags ?? []),
-    goConfig("caching.dpl-cms.content-tag"),
-  ]
+  data.go.cacheTags = [...(data.go.cacheTags ?? []), goConfig("caching.dpl-cms.content-tag")]
 
   return data
 }
