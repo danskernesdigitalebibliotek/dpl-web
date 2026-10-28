@@ -115,7 +115,15 @@ class GoRevalidator {
         return FALSE;
       }
 
-      $this->httpClient->request('GET', $url->toString(), ['timeout' => 5]);
+      $options = ['timeout' => 5];
+      // Local Go (`pnpm dev:https`) serves a self-signed certificate on
+      // host.docker.internal, so skip verification there. Never relaxed
+      // outside local.
+      if (getenv('LAGOON_ENVIRONMENT_TYPE') === 'local') {
+        $options['verify'] = FALSE;
+      }
+
+      $this->httpClient->request('GET', $url->toString(), $options);
 
       return TRUE;
     }
