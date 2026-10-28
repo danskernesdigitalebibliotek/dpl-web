@@ -56,6 +56,9 @@ describe('Mobile app API: getAppFeesAndPaymentInfo', () => {
 
   before(() => {
     cy.drupalLogin(formUrl);
+    // Remember what each field holds before the test, so after() can put it
+    // back. Object.keys() is typed as string[], hence the cast to the keys of
+    // FeesSettings.
     (Object.keys(fields) as (keyof FeesSettings)[]).forEach((key) => {
       cy.get(fields[key])
         .invoke('val')
