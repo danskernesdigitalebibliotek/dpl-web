@@ -4,7 +4,12 @@
 
 #### Description
 
-<!-- A short description of the change and the reasoning behind the approach you have chosen. -->
+<!--
+**Problem** - What bug or ticket does this address? The user-visible symptom
+and, for a bug, the root cause. 1-2 sentences.
+
+**Fix** - Broadly how was it solved? High-level strategy only. 1-3 sentences.
+-->
 
 #### Screenshots / videos
 

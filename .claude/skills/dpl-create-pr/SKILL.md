@@ -46,14 +46,10 @@ comment, and strip the comments from the output. The rules below are about
   placeholder in the output.
 - **Link to issue** — `https://reload.atlassian.net/browse/<KEY>` from the
   ticket key derived above. Add or fix it if missing/wrong.
-- **Description** — in English, structured with the subset of these that
-  applies:
-  - **Problem** — the user-visible symptom and the root cause. 1-3 sentences.
-  - **Fix** — what changed and where; if the change funnels through one shared
-    place, say so. 1-3 sentences, or up to 4 bullets for a change that really
-    spans several areas.
-  - **Tests** — only if the diff actually adds/changes tests. **One line**
-    naming what is now covered, not a list of the test files or cases.
+- **Description** — the template's Problem/Fix structure, within its sentence
+  limits. In **Fix**, if the change funnels through one shared place, say so.
+  Add a one-line **Tests** only if the diff actually adds/changes tests, naming
+  what is now covered, not a list of the test files or cases.
 - **Screenshots / videos** — you cannot capture these. If the change is visible
   (styling, a user flow), keep the heading with `_TODO: add before/after
   screenshots_` (or a video for a flow) and tell the user; otherwise remove the
