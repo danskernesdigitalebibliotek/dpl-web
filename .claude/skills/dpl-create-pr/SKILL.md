@@ -19,16 +19,18 @@ produce are always **English**.
 
 **Title**
 - Start with the Jira ticket key, then a concise English summary of the change:
-  `DDF-410: sort same-year editions by edition number`.
-- Derive the ticket key primarily from the **branch name**: take the first
-  `<PROJECT>-<NUMBER>` token (regex `[A-Z]+-[0-9]+`, normally the leading prefix),
-  e.g. `DDF-410-edition-number-sort-tiebreaker` → `DDF-410` and
-  `kb/DDF-410-...` → `DDF-410`. Fall back to the existing PR title or the
+  `DDF-410: Sort same-year editions by edition number`.
+- Derive the ticket key primarily from the **branch name**: the leading
+  `<PROJECT>-<NUMBER>` token, optionally after a `prefix/`, matched
+  case-insensitively and upper-cased —
+  `^(?:.*/)?([A-Za-z]+-[0-9]+)-?(.*)$`, e.g.
+  `DDF-410-edition-number-sort-tiebreaker` → `DDF-410` and
+  `kb/ddf-410-...` → `DDF-410`. Fall back to the existing PR title or the
   "Link to issue" body if the branch has no such token. **Never invent one.** If no
   key can be found anywhere, write the title without a key and tell the user so
   they can add it.
-- Describe the change, not the file. Imperative, lower-case after the colon, no
-  trailing period. Keep it short.
+- Describe the change, not the file. Imperative, first letter upper-case after
+  the colon, no trailing period. Keep it short.
 
 **Body** — the repo's PR template, `.github/PULL_REQUEST_TEMPLATE.md`, is the
 source of truth for *which* sections the body has and what goes in each. Read
@@ -115,9 +117,10 @@ comment, and strip the comments from the output. The rules below are about
    git diff origin/develop...HEAD
    ```
 
-   Extract the ticket key from the branch name — the first `[A-Z]+-[0-9]+` token,
-   e.g. `grep -oE '[A-Z]+-[0-9]+' | head -1` (`DDF-410-edition-number-sort-tiebreaker`
-   → `DDF-410`) — falling back to the existing title/body. If `acli` is authenticated, read the ticket for extra
+   Extract the ticket key from the branch name with the regex above, e.g.
+   `sed -nE 's#^(.*/)?([A-Za-z]+-[0-9]+).*#\2#p' | tr '[:lower:]' '[:upper:]'`
+   (`ddf-410-edition-number-sort-tiebreaker` → `DDF-410`) — falling back to the
+   existing title/body. If `acli` is authenticated, read the ticket for extra
    context (optional): `acli jira workitem view <KEY>`.
 
    Read `.github/PULL_REQUEST_TEMPLATE.md` for the sections to fill.
