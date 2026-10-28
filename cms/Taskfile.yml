@@ -538,8 +538,11 @@ tasks:
 
   # The mobile app API tests assert on the endpoints the BFF behind the mobile
   # apps reads, so a change that would break the apps fails here.
+  # getBranches reads the library's branches from FBS, so the tests need the
+  # wiremock mappings.
   ci:cypress:mobile-app:
     desc: Run Cypress tests for the endpoints the mobile apps use.
+    deps: [ci:wiremock:create-mappings]
     cmds:
       - task ci:cypress:run
     env:
