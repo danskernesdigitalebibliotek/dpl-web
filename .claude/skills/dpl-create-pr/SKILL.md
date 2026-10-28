@@ -35,7 +35,8 @@ produce are always **English**.
 **Body** — the repo's PR template, `.github/PULL_REQUEST_TEMPLATE.md`, is the
 source of truth for *which* sections the body has and what goes in each. Read
 it, keep its headings in its order, fill each one by the guidance in its HTML
-comment, and strip the comments from the output. The rules below are about
+comment, and strip the comments from the output — but the URL patterns inside
+them are content to fill in, not guidance to drop. The rules below are about
 *how* to fill them:
 
 - **URLs from the PR number.** Substitute the real PR number for `<N>` in every
@@ -65,6 +66,8 @@ comment, and strip the comments from the output. The rules below are about
 - **Notes for reviewers** — only something a reviewer genuinely needs before
   reading the diff (a deliberate trade-off, a part to look at closely). Remove
   the section otherwise.
+- **Dev links** — always the Lagoon URL for the PR's environment,
+  `https://ui.lagoon.dplplat02.dpl.reload.dk/projects/dpl-web/dpl-web-pr-<N>`.
 - Keep any other section already present in an existing PR untouched.
 - **Keep it short — this is the hard rule.** Description, How-to-test steps and
   Notes together stay **under ~200 words**; most PRs need well under that. A
