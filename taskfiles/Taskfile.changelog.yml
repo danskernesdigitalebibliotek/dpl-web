@@ -1,0 +1,104 @@
+# Maintenance of the changelogs in docs/changelogs/ (see the README there).
+# Included into the root Taskfile under the `changelog` namespace, so
+# `release` below is run as `task changelog:release`.
+#
+# Every *.md in the directory except the README is a changelog in the
+# keepachangelog.com format, with an `## Unreleased` section at the top that
+# always stays there. Entries are collected under it during development and
+# moved under a version heading when releasing.
+version: '3'
+
+vars:
+  CHANGELOG_DIR: '{{.ROOT_DIR}}/docs/changelogs'
+
+tasks:
+  release:
+    desc: "Move the Unreleased entries of every changelog under a version heading. Run as: task changelog:release VERSION=2026.44.0 [DATE=2026-10-27]"
+    silent: true
+    requires:
+      vars: [VERSION]
+    env:
+      VERSION: '{{.VERSION}}'
+      DATE: '{{.DATE}}'
+      CHANGELOG_DIR: '{{.CHANGELOG_DIR}}'
+    preconditions:
+      - sh: echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'
+        msg: "VERSION must be a release version like 2026.44.0, got '{{.VERSION}}'."
+      - sh: '[ -z "$DATE" ] || echo "$DATE" | grep -Eq "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"'
+        msg: "DATE must be formatted as YYYY-MM-DD, got '{{.DATE}}'."
+    cmds:
+      - |
+        set -eu
+        date="${DATE:-$(date +%F)}"
+        updated=0
+        for file in "$CHANGELOG_DIR"/*.md; do
+          [ "$(basename "$file")" = "README.md" ] && continue
+          name="${file#"$CHANGELOG_DIR"/}"
+
+          if ! grep -Eq "^## Unreleased[[:space:]]*$" "$file"; then
+            echo "$name: no '## Unreleased' section." >&2
+            exit 1
+          fi
+          # Compare the heading's version field exactly, so 2026.44.1 does not
+          # match 2026.44.10.
+          if awk -v version="$VERSION" '$1 == "##" && $2 == version { found = 1 } END { exit !found }' "$file"; then
+            echo "$name: already has a section for $VERSION." >&2
+            exit 1
+          fi
+
+          # Non-blank lines between the Unreleased heading and the next
+          # version heading.
+          entries=$(awk '
+            /^## / { in_unreleased = ($0 ~ /^## Unreleased[[:space:]]*$/); next }
+            in_unreleased && NF { print }
+          ' "$file")
+          if [ -z "$entries" ]; then
+            echo "$name: nothing unreleased, left as is."
+            continue
+          fi
+
+          # Insert the version heading right below the Unreleased heading, so
+          # the entries end up under it and Unreleased is left empty.
+          tmp="$file.tmp"
+          awk -v version="$VERSION" -v date="$date" '
+            { print }
+            /^## Unreleased[[:space:]]*$/ { print ""; print "## " version " - " date }
+          ' "$file" > "$tmp"
+          mv "$tmp" "$file"
+          echo "$name: released as $VERSION - $date."
+          updated=$((updated + 1))
+        done
+
+        if [ "$updated" -gt 0 ]; then
+          echo
+          echo "Review and commit the changes in docs/changelogs/ before opening the release PR."
+        fi
+
+  check-released:
+    desc: "Fail if any changelog has entries under Unreleased. Run on pull requests against main."
+    silent: true
+    env:
+      CHANGELOG_DIR: '{{.CHANGELOG_DIR}}'
+    cmds:
+      - |
+        set -eu
+        failed=0
+        for file in "$CHANGELOG_DIR"/*.md; do
+          [ "$(basename "$file")" = "README.md" ] && continue
+          name="docs/changelogs/${file#"$CHANGELOG_DIR"/}"
+
+          entries=$(awk '
+            /^## / { in_unreleased = ($0 ~ /^## Unreleased[[:space:]]*$/); next }
+            in_unreleased && NF { print }
+          ' "$file")
+          if [ -n "$entries" ]; then
+            message="$name has unreleased entries. Run 'task changelog:release VERSION=<version>' and commit the result."
+            if [ -n "${CI:-}" ]; then
+              echo "::error file=$name::$message"
+            else
+              echo "$message" >&2
+            fi
+            failed=1
+          fi
+        done
+        exit "$failed"

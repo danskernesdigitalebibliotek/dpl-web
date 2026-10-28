@@ -1,0 +1,26 @@
+---
+# Changes to the REST API specification must be announced in its changelog, so
+# consumers following docs/changelogs/cms-rest.md get a heads-up.
+name: Changelog / CMS REST API
+on:
+  pull_request:
+    paths:
+      - 'cms/openapi.json'
+jobs:
+  check:
+    name: Changelog / Check CMS REST API changelog has been updated
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+      - name: Check that the changelog changed along with openapi.json
+        shell: bash
+        run: |
+          if ! git diff --name-only "origin/${{ github.base_ref }}...HEAD" | grep -qx 'docs/changelogs/cms-rest.md'; then
+            echo "::error file=cms/openapi.json::cms/openapi.json changed, but docs/changelogs/cms-rest.md did not. Describe the change under '## Unreleased' in the changelog."
+            exit 1
+          fi

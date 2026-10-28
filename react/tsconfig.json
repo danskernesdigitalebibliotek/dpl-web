@@ -4,7 +4,10 @@
     "jsx": "react",
     "types": ["cypress", "node", "vitest/importMeta"],
     "target": "es6",
-    "allowJs": true
+    "allowJs": true,
+    "paths": {
+      "@tanstack/react-query": ["./node_modules/@tanstack/react-query"]
+    }
   },
   "include": [
     "src/**/*.ts",

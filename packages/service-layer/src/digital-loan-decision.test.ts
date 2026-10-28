@@ -4,51 +4,27 @@ import { getDigitalLoanDecision, isMaterialAvailable } from "./digital-loan-deci
 import { mockJsonResponse } from "./test-utils"
 import type { ServiceLayerConfig } from "./types"
 
-const configThat = (tolerateUnknownMaterials?: () => boolean): ServiceLayerConfig => ({
+const config: ServiceLayerConfig = {
   getBaseUrl: () => "https://biblio.example",
   getAuthHeader: () => "Bearer abc",
-  tolerateUnknownMaterials,
-})
+}
 
-const notFound = () => mockJsonResponse({ message: "Material not found: 9788758855752" }, 404)
-
-// TEMPORARY, with the toleration setting it covers.
-describe("getDigitalLoanDecision for a material the adapter does not know", () => {
+describe("getDigitalLoanDecision", () => {
   beforeEach(() => {
     vi.stubGlobal("fetch", vi.fn())
+    vi.spyOn(console, "error").mockImplementation(() => {})
   })
 
   afterEach(() => {
     vi.unstubAllGlobals()
+    vi.restoreAllMocks()
   })
 
-  it("Answers an unavailable material when the host tolerates it", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(notFound())
+  it("Logs a failed decision and still fails", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(mockJsonResponse({}, 404))
 
-    const decision = await getDigitalLoanDecision(
-      configThat(() => true),
-      "9788758855752"
-    )
-
-    // An ordinary decision: nothing downstream has to know about the 404.
-    expect(isMaterialAvailable(decision.status)).toBe(false)
-  })
-
-  it("Fails when the host does not tolerate it", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(notFound())
-
-    await expect(
-      getDigitalLoanDecision(
-        configThat(() => false),
-        "9788758855752"
-      )
-    ).rejects.toThrow("404")
-  })
-
-  it("Fails when the host has no say on it", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(notFound())
-
-    await expect(getDigitalLoanDecision(configThat(), "9788758855752")).rejects.toThrow("404")
+    await expect(getDigitalLoanDecision(config, "9788758855752")).rejects.toThrow("404")
+    expect(console.error).toHaveBeenCalledWith("Biblio loan decision failed", expect.any(Error))
   })
 })
 

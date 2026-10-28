@@ -1,6 +1,5 @@
 import React from "react";
 import { InputWithDropdown } from "../../Library/input-with-dropdown/InputWithDropdown";
-import { Multiselect } from "../../Library/multiselect/Multiselect";
 import { Button } from "../../Library/Buttons/button/Button";
 import InputPreview from "../../Library/input-preview/InputPreview";
 import data from "../../Library/card-list-page/SearchResultPageData";
@@ -76,24 +75,6 @@ export const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
             </div>
             <InputPreview cqlPreviewText={cqlPreviewText} />
           </div>
-          <section className="search__filters">
-            {Array(3)
-              .fill(0)
-              .map((item, index) => {
-                return (
-                  <div
-                    className="advanced-search__filter"
-                    key={`${item}${index}`}
-                  >
-                    <Multiselect
-                      options={["Mulighed 1", "Mulighed 2", "Mulighed 3"]}
-                      withCaption
-                      isOpen={index === 0}
-                    />
-                  </div>
-                );
-              })}
-          </section>
           <InputPreview cqlPreviewText={cqlPreviewText} isMobile />
         </>
       )}
@@ -177,5 +158,3 @@ export const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
     </div>
   );
 };
-
-export default {};

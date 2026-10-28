@@ -50,40 +50,6 @@ const config: StorybookConfig = {
       use: ["@svgr/webpack"],
     })
 
-    // Async server components can't render in Storybook's client-only
-    // environment — swap them for client mocks. A module replacement (not a
-    // resolve alias) so it wins over the tsconfig-paths resolution of "@/".
-    // webpack is not a direct dependency, so reach it through the compiler.
-    config.plugins.push({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      apply: (compiler: any) => {
-        new compiler.webpack.NormalModuleReplacementPlugin(
-          /^@\/components\/shared\/image\/ImageBaseWithPlaceholder$/,
-          path.resolve(dirname, "mocks/ImageBaseWithPlaceholder.tsx")
-        ).apply(compiler)
-      },
-    })
-
-    // Storybook's webpack doesn't honor Next.js's `transpilePackages` for
-    // file:-installed workspace packages, so it tries to parse our raw
-    // .ts/.tsx source from dpl-service-layer as plain JS and chokes on
-    // TypeScript-only syntax (e.g. `export type {…}`). Transpile those
-    // files explicitly. Remove once the monorepo moves to pnpm/workspaces.
-    config.module.rules.push({
-      test: /\.tsx?$/,
-      include: /node_modules\/@danskernesdigitalebibliotek\/dpl-service-layer/,
-      use: {
-        loader: "babel-loader",
-        options: {
-          presets: [
-            ["@babel/preset-env", { targets: { esmodules: true } }],
-            ["@babel/preset-react", { runtime: "automatic" }],
-            "@babel/preset-typescript",
-          ],
-        },
-      },
-    })
-
     return config
   },
 }

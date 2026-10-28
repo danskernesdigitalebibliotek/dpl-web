@@ -73,6 +73,10 @@ function _dpl_update_config_auto_unignore_entites(array $entities): string {
   $config_ignore_settings = \Drupal::configFactory()->getEditable('config_ignore_auto.settings');
   $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
 
+  if (!$ignored_configs) {
+    return "No entities removed from config_ignore_auto, no ignores exist.";
+  }
+
   $updated_ignored_configs = array_diff($ignored_configs, $entities);
   $config_ignore_settings->set('ignored_config_entities', $updated_ignored_configs)->save();
   $removed_ignored_entities_string = implode(', ', array_intersect($ignored_configs, $entities));
@@ -1361,4 +1365,38 @@ function dpl_update_update_10084(): string {
   $settings->save();
 
   return "Removed $removed_count duplicates from config_ignore_auto.settings.ignored_config_entities.";
+}
+
+/**
+ * Remove the setting that tolerated materials unknown to the Biblio adapter.
+ *
+ * Such a material is now always shown as unavailable. Sites that saved the
+ * Biblio form keep their copy of the configuration through config_ignore_auto,
+ * so the key has to be removed here rather than by the configuration import.
+ */
+function dpl_update_update_10085(): string {
+  $config = \Drupal::configFactory()->getEditable('dpl_biblio.settings');
+  if ($config->isNew()) {
+    return 'dpl_biblio.settings does not exist; nothing to remove.';
+  }
+
+  $config->clear('tolerate_unknown_materials')->save();
+
+  return 'Removed tolerate_unknown_materials from dpl_biblio.settings.';
+}
+
+/**
+ * Make sure the event date facet is switched to the dpl_event plugins.
+ */
+function dpl_update_update_10086(): string {
+  return _dpl_update_config_auto_unignore_entites([
+    'facets.facet.event_date',
+  ]);
+}
+
+/**
+ * Uninstall facets_date_range.
+ */
+function dpl_update_update_10087(): string {
+  return _dpl_update_uninstall_modules(['facets_date_range']);
 }
