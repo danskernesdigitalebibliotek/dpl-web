@@ -1,8 +1,9 @@
-import { first } from "lodash";
+import { first, partition } from "lodash";
 import {
   AccessTypeCodeEnum,
   LinkStatusEnum
 } from "../../../../core/dbc-gateway/generated/graphql";
+import { isUrlValid } from "../../../../core/utils/helpers/url";
 import { Manifestation } from "../../../../core/utils/types/entities";
 import { ManifestationMaterialType } from "../../../../core/utils/types/material-type";
 import { getLoanableManifestation } from "../../../../apps/material/helper";
@@ -46,12 +47,25 @@ const isActiveAccessUrl = (
  * Picks the access url to link to, preferring DBC Webarkiv over other origins.
  */
 const findActiveAccessUrl = (manifestations: Manifestation[]) => {
-  const access = first(manifestations)?.access ?? [];
-  const activeAccessUrls = access.filter(isActiveAccessUrl);
+  const manifestation = first(manifestations);
+  const [validAccessUrls, invalidAccessUrls] = partition(
+    (manifestation?.access ?? []).filter(isActiveAccessUrl),
+    (accessUrl: ManifestationAccessUrl) => isUrlValid(accessUrl.url)
+  );
+
+  // Invalid URLs are skipped and logged.
+  invalidAccessUrls.forEach(({ origin, url }) => {
+    // eslint-disable-next-line no-console
+    console.error("AccessUrl is invalid", {
+      pid: manifestation?.pid,
+      origin,
+      url
+    });
+  });
 
   return (
-    activeAccessUrls.find(({ origin }) => origin === "DBC Webarkiv") ??
-    first(activeAccessUrls)
+    validAccessUrls.find(({ origin }) => origin === "DBC Webarkiv") ??
+    first(validAccessUrls)
   );
 };
 
