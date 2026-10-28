@@ -66,7 +66,7 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
     case "external": {
       const { origin, url: externalUrl } = type.access;
 
-      //  We have experienced that externalUrl is not always valid.
+      // externalUrl is not always valid; show a disabled button instead.
       if (!isUrlValid(externalUrl)) {
         return (
           <MaterialButtonDisabled
