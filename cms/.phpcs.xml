@@ -68,7 +68,6 @@
     <exclude-pattern>*/web/modules/custom/dpl_patron_reg/dpl_patron_reg.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_po/dpl_po.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_protected_nodes/dpl_protected_nodes.module</exclude-pattern>
-    <exclude-pattern>*/web/modules/custom/dpl_publication/dpl_publication.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_react/dpl_react.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_react_apps/dpl_react_apps.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_related_content/dpl_related_content.module</exclude-pattern>
