@@ -1,6 +1,6 @@
 ---
 name: dpl-create-pr
-description: "Create the GitHub pull request for the current dpl-web branch, or update the title and description of one that already exists, following dpl-web conventions — ticket key in the title, Jira link in the body, Test and Dev-links sections built from the PR number, and a clear English Problem/Fix/Tests/How-to-verify description grounded in the actual diff. Does NOT touch code, commits or pushes. Use when the user says 'lav en PR', 'opret PR', 'create a PR', 'renskriv PR', 'omskriv PR', 'clean up the PR', or 'rewrite the PR title/description'."
+description: "Create the GitHub pull request for the current dpl-web branch, or update the title and description of one that already exists, following dpl-web conventions — ticket key in the title, and the sections of .github/PULL_REQUEST_TEMPLATE.md filled in English, grounded in the actual diff, with environment links built from the PR number. Does NOT touch code, commits or pushes. Use when the user says 'lav en PR', 'opret PR', 'create a PR', 'renskriv PR', 'omskriv PR', 'clean up the PR', or 'rewrite the PR title/description'."
 argument-hint: "[<pr-number> | <pr-url>]"
 ---
 
@@ -30,32 +30,21 @@ produce are always **English**.
 - Describe the change, not the file. Imperative, lower-case after the colon, no
   trailing period. Keep it short.
 
-**Body** — always include these sections, in this order:
-- `#### Link to issue` — the full Jira URL built from the ticket key derived
-  above: `https://reload.atlassian.net/browse/<KEY>` (e.g. `DDF-410` →
-  `https://reload.atlassian.net/browse/DDF-410`). Add or fix it if missing/wrong.
-- `#### Test` — the PR's environment URLs, built from the PR number `<N>`. The
-  CMS is served through `varnish`, GO through `node`. Include both, even when
-  the PR only touches one of them:
+**Body** — the repo's PR template, `.github/PULL_REQUEST_TEMPLATE.md`, is the
+source of truth for *which* sections the body has and what goes in each. Read
+it, keep its headings in its order, fill each one by the guidance in its HTML
+comment, and strip the comments from the output. The rules below are about
+*how* to fill them:
 
-  ```
-  - CMS: https://varnish.pr-<N>.dpl-web.dplplat02.dpl.reload.dk/
-  - GO: https://node.pr-<N>.dpl-web.dplplat02.dpl.reload.dk/
-  ```
-
-- `#### Dev links` — the Lagoon URL, built from the PR number `<N>`:
-
-  ```
-  https://ui.lagoon.dplplat02.dpl.reload.dk/projects/dpl-web/dpl-web-pr-<N>
-  ```
-
-- `#### Description` — see below.
-
-Substitute the real PR number for `<N>` in the Test and Dev-links URLs (e.g. PR
-1187 → `varnish.pr-1187…`, `node.pr-1187…` and `…dpl-web-pr-1187`). If those sections already exist
-with the correct URLs, keep them as-is; otherwise (re)build them from `<N>`. Never
-leave a `{clipboard}`-style placeholder in the output.
-- Write `#### Description` in English, structured with the subset of these that
+- **URLs from the PR number.** Substitute the real PR number for `<N>` in every
+  environment URL the template gives (e.g. PR 1187 → `varnish.pr-1187…`,
+  `node.pr-1187…` and `…dpl-web-pr-1187`). List both the CMS and the GO URL,
+  even when the PR only touches one of them. If the sections already hold the
+  correct URLs, keep them as-is. Never leave a `<N>` or `{clipboard}`-style
+  placeholder in the output.
+- **Link to issue** — `https://reload.atlassian.net/browse/<KEY>` from the
+  ticket key derived above. Add or fix it if missing/wrong.
+- **Description** — in English, structured with the subset of these that
   applies:
   - **Problem** — the user-visible symptom and the root cause. 1-3 sentences.
   - **Fix** — what changed and where; if the change funnels through one shared
@@ -63,19 +52,27 @@ leave a `{clipboard}`-style placeholder in the output.
     spans several areas.
   - **Tests** — only if the diff actually adds/changes tests. **One line**
     naming what is now covered, not a list of the test files or cases.
-  - **How to verify** — numbered steps a reviewer can follow, using **full,
-    clickable URLs, not bare identifiers**. Point at the PR's own test
-    environment — the `node` URL for a GO change, `varnish` for everything
-    else. A specific work lives at the `/work/` path, so append the work
-    id to it — e.g.
-    `https://varnish.pr-<N>.dpl-web.dplplat02.dpl.reload.dk/work/work-of:870970-basis:22252852`,
-    not just `work-of:870970-basis:22252852`. Reuse the example from the ticket
-    when there is one.
-- **Keep it short — this is the hard rule.** The whole `#### Description` stays
-  **under ~200 words**; most PRs need well under that. A reviewer reads the
-  description to know where to look, then reads the diff. Write for that, and
-  err on the short side — a description that is too brief costs a question, one
-  that is too long does not get read.
+- **Screenshots / videos** — you cannot capture these. If the change is visible
+  (styling, a user flow), keep the heading with `_TODO: add before/after
+  screenshots_` (or a video for a flow) and tell the user; otherwise remove the
+  section.
+- **How to test** — the environment URLs, then numbered steps a tester can
+  follow **in the browser alone** (testers have no Lagoon, ssh or drush
+  access). Use **full, clickable URLs, not bare identifiers**, on the PR's own
+  environment — `node` for a GO change, `varnish` for everything else. A
+  specific work lives at the `/work/` path, so append the work id to it — e.g.
+  `https://varnish.pr-<N>.dpl-web.dplplat02.dpl.reload.dk/work/work-of:870970-basis:22252852`,
+  not just `work-of:870970-basis:22252852`. Reuse the ticket's "How to test"
+  field or example when there is one.
+- **Notes for reviewers** — only something a reviewer genuinely needs before
+  reading the diff (a deliberate trade-off, a part to look at closely). Remove
+  the section otherwise.
+- Keep any other section already present in an existing PR untouched.
+- **Keep it short — this is the hard rule.** Description, How-to-test steps and
+  Notes together stay **under ~200 words**; most PRs need well under that. A
+  reviewer reads the body to know where to look, then reads the diff. Write for
+  that, and err on the short side — a body that is too brief costs a question,
+  one that is too long does not get read.
   - Cut anything the diff already says: file lists, function and type names,
     signatures, cache values, restated code comments, and rationale that lives
     in a commit message or a code comment.
@@ -120,13 +117,14 @@ leave a `{clipboard}`-style placeholder in the output.
 
    Extract the ticket key from the branch name — the first `[A-Z]+-[0-9]+` token,
    e.g. `grep -oE '[A-Z]+-[0-9]+' | head -1` (`DDF-410-edition-number-sort-tiebreaker`
-   → `DDF-410`) — falling back to the existing title/body. If `acli` is
-   authenticated, read the ticket for extra context (optional):
-   `acli jira workitem view <KEY> --fields summary,description`.
+   → `DDF-410`) — falling back to the existing title/body. If `acli` is authenticated, read the ticket for extra
+   context (optional): `acli jira workitem view <KEY>`.
 
-3. **Draft** the new title and body per the rules above. Build the Link-to-issue,
-   Test, and Dev-links sections from the ticket key and the PR number `<N>` (reuse
-   existing URLs if already correct), then write the rewritten Description.
+   Read `.github/PULL_REQUEST_TEMPLATE.md` for the sections to fill.
+
+3. **Draft** the new title and body per the rules above: the template's sections
+   in order, the issue link from the ticket key and the environment URLs from
+   the PR number `<N>` (reuse existing URLs if already correct).
 
 4. **Apply.** Write the body to a file. Edit an existing PR:
 
@@ -134,8 +132,8 @@ leave a `{clipboard}`-style placeholder in the output.
    gh pr edit <N> --title "<KEY>: <summary>" --body-file <file>
    ```
 
-   A new PR has no number until it exists, so create it without the Test and
-   Dev-links sections, then add them from the returned number with
+   A new PR has no number until it exists, so create it without the
+   environment URLs, then add them from the returned number with
    `gh pr edit <N> --body-file <file>`:
 
    ```bash
@@ -149,11 +147,8 @@ leave a `{clipboard}`-style placeholder in the output.
 
 - Scope is title + description only. Do not push, amend commits, or change code —
   if the diff itself needs work, that is a separate task.
-- The repo's PR template (`.github/PULL_REQUEST_TEMPLATE.md`) ships only
-  **Link to issue** and **Description**. The **Test** and **Dev links** sections
-  are environment URLs derived from the PR number — this skill writes them
-  explicitly (see the Body rules) rather than relying on them being injected, and
-  keeps any other section already present untouched.
+- To change which sections a PR has, change `.github/PULL_REQUEST_TEMPLATE.md`,
+  not this skill — the template serves both people and agents.
 - Keeping ticket keys in code or commit messages is wrong (the repo is open
   source); the ticket number belongs in the PR title and the Jira link. This
   skill only edits PR metadata, so it never introduces keys into the codebase.
