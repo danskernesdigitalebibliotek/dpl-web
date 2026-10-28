@@ -377,11 +377,6 @@ msgstr "Beskrivelse af reserverings pop-up til skærmlæsere"
 
 #: 
 msgctxt "Work Page"
-msgid "Genre"
-msgstr "Genre"
-
-#: 
-msgctxt "Work Page"
 msgid "Get online"
 msgstr "Se online"
 
@@ -34973,20 +34968,6 @@ msgid "Gives access to the Biblio adapter settings form."
 msgstr ""
 
 #: 
-msgid "Render materials the adapter does not know as unavailable instead of failing"
-msgstr ""
-
-#: 
-msgctxt "Dpl Biblio"
-msgid "Show materials the adapter does not know as unavailable"
-msgstr ""
-
-#: 
-msgctxt "Dpl Biblio"
-msgid "Temporary. The catalogue lists digital materials that are not yet provisioned in WeDoBooks, and the adapter answers \"Material not found\" for those. With this enabled such a material is shown as unavailable; without it the material page fails. Publizon is never asked either way."
-msgstr ""
-
-#: 
 msgid "Retrieve happening events"
 msgstr ""
 
@@ -35539,6 +35520,214 @@ msgid "When enabled new digital loans on GO can only be made through the Biblio 
 msgstr "Når denne er valgt, vil nye digitale lån på GO kun foretages gennem Biblio adapteren. Eksisterende digitale lån fra Publizon vil stadig kunne ses og læses/lyttes inden afleveringsfristen. Dette er uafhængigt af valget for web apps ovenfor."
 
 #: 
+msgctxt "Dashboard"
+msgid "Because you borrowed"
+msgstr "Fordi du har lånt"
+
+#: 
+msgctxt "Dashboard"
+msgid "Because you reserved"
+msgstr "Fordi du har reserveret"
+
+#: 
+msgctxt "Dashboard"
+msgid "Because your favorites list contains"
+msgstr "Fordi din huskeliste indeholder"
+
+#: 
+msgctxt "field.storage.paragraph.field_go_color:settings:allowed_values:4:label"
+msgid "Content Color 5"
+msgstr ""
+
+#: 
+msgctxt "DPL admin UX"
+msgid "<p>You are about to delete <strong>\"@title\"</strong>. This page is linked to the breadcrumb <strong>\"@breadcrumb_title\"</strong>.\n"
+"          <br>You cannot delete this content until you replace the page in the \"Content to link to\" field in <strong>\"@breadcrumb_title\"</strong>.\n"
+"          <br><strong><a href=\"@breadcrumb_edit_url\" target=\"_blank\">Edit the breadcrumb \"@breadcrumb_title\"</a></strong></p>"
+msgstr ""
+
+#: 
+msgctxt "Digital session"
+msgid "Back"
+msgstr "Tilbage"
+
+#: 
+msgctxt "Digital session"
+msgid "Last used @date"
+msgstr "Senest brugt @date"
+
+#: 
+msgctxt "Digital session"
+msgid "Open again"
+msgstr "Prøv igen"
+
+#: 
+msgctxt "Digital session"
+msgid "Remove"
+msgstr "Fjern"
+
+#: 
+msgctxt "Digital session"
+msgid "The title could not be opened. Try again later."
+msgstr "Titlen kan ikke åbnes. Prøv igen senere."
+
+#: 
+msgctxt "Digital session"
+msgid "This device is no longer registered to your account."
+msgstr "Enheden er ikke længere registreret til din bruger."
+
+#: 
+msgctxt "Digital session"
+msgid "You can read and listen on up to @limit devices, and they are all in use. Remove one to continue here."
+msgstr "Du kan læse og lytte på maksimum @limit enheder ad gangen og alle enheder er i brug. Fjern en af enhederne for at fortsætte."
+
+#: 
+msgctxt "Digital session"
+msgid "You opened this title in another tab of this browser."
+msgstr "Du har denne titel åben i en anden fane i din browser."
+
+#: 
+msgctxt "Digital session"
+msgid "You opened this title on another device. You can read or listen on one device at a time."
+msgstr "Du har denne titel åben på en anden enhed. Du kan kun lytte til titlen på én enhed ad gangen."
+
+#: 
+msgctxt "Digital session"
+msgid "Your loan of this title has expired, so it was closed."
+msgstr "Dit udlån af titlen er udløbet, og derfor blev det lukket ned."
+
+#: 
+msgctxt "Patron page"
+msgid "See titles that don't count towards your quota"
+msgstr "Se titler, der ikke tæller med i din lånekvote"
+
+#: 
+msgid "Authorization blocked. Unilogin user denied: @reason. User type: @user_type, institutions: @institutions, agency: @agency, expected agency: @expected"
+msgstr ""
+
+#: 
+msgctxt "Patron menu"
+msgid "If you continue, you will be logged out of Unilogin."
+msgstr "Hvis du forsætter, bliver du logget ud af Unilogin."
+
+#: 
+msgctxt "Patron menu"
+msgid "Log out and log in as a patron"
+msgstr ""
+
+#: 
+msgctxt "Patron menu"
+msgid "Stay logged in with Unilogin"
+msgstr ""
+
+#: 
+msgctxt "Patron menu"
+msgid "This requires logging in as a library patron."
+msgstr ""
+
+#: 
+msgctxt "user.role.unilogin_patron:label"
+msgid "Unilogin patron"
+msgstr "Unilogin låner"
+
+#: 
+msgctxt "Patron menu"
+msgid "You are logged in with Unilogin"
+msgstr "Du er logget ind med Unilogin"
+
+#: 
+msgid "Could not revalidate Go (@query): @message"
+msgstr ""
+
+#: 
+msgctxt "Work Page"
+msgid "See titles that don't count towards your quota"
+msgstr "Se titler, der ikke tæller med i din lånekvote"
+
+#: 
+msgctxt "dpl_event"
+msgid "Date range overlap"
+msgstr ""
+
+#: 
+msgid "End date field"
+msgstr ""
+
+#: 
+msgctxt "dpl_event"
+msgid "End date field"
+msgstr ""
+
+#: 
+msgid "Event date range"
+msgstr ""
+
+#: 
+msgctxt "dpl_event"
+msgid "Event date range"
+msgstr ""
+
+#: 
+msgid "Event date range widget configuration"
+msgstr ""
+
+#: 
+msgctxt "dpl_event"
+msgid "Filter events happening within a range of dates."
+msgstr ""
+
+#: 
+msgctxt "dpl_event"
+msgid "Include events happening at any time of day on the max date. Otherwise events starting after 00:00:00 on the max date are excluded."
+msgstr ""
+
+#: 
+msgctxt "dpl_event"
+msgid "Include through end of max date"
+msgstr ""
+
+#: 
+msgctxt "dpl_event"
+msgid "Items are shown when the period from the facet field to this field overlaps the selected range. Leave empty to only show items where the facet field is within the range."
+msgstr ""
+
+#: 
+msgid "Max inclusive"
+msgstr ""
+
+#: 
+msgid "Maximum date label"
+msgstr ""
+
+#: 
+msgctxt "dpl_event"
+msgid "Maximum date label"
+msgstr ""
+
+#: 
+msgid "Minimum date label"
+msgstr ""
+
+#: 
+msgctxt "dpl_event"
+msgid "Minimum date label"
+msgstr ""
+
+#: 
+msgctxt "dpl_event"
+msgid "Show all events happening within the selected date range."
+msgstr ""
+
+#: 
+msgid "Add a text body paragraph describing the event."
+msgstr "Tilføj en brødtekst paragraph der beskriver arrangementet."
+
+#: 
+msgctxt "Validation"
+msgid "Event text body"
+msgstr "Brødtekst for arrangementet"
+
+#: 
 msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
 msgstr ""
@@ -35671,125 +35860,5 @@ msgstr ""
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
 msgid "{{ message }}"
-msgstr ""
-
-#: 
-msgctxt "Dashboard"
-msgid "Because you borrowed"
-msgstr "Fordi du har lånt"
-
-#: 
-msgctxt "Dashboard"
-msgid "Because you reserved"
-msgstr "Fordi du har reserveret"
-
-#: 
-msgctxt "Dashboard"
-msgid "Because your favorites list contains"
-msgstr "Fordi din huskeliste indeholder"
-
-#: 
-msgctxt "field.storage.paragraph.field_go_color:settings:allowed_values:4:label"
-msgid "Content Color 5"
-msgstr ""
-
-#: 
-msgctxt "DPL admin UX"
-msgid "<p>You are about to delete <strong>\"@title\"</strong>. This page is linked to the breadcrumb <strong>\"@breadcrumb_title\"</strong>.\n"
-"          <br>You cannot delete this content until you replace the page in the \"Content to link to\" field in <strong>\"@breadcrumb_title\"</strong>.\n"
-"          <br><strong><a href=\"@breadcrumb_edit_url\" target=\"_blank\">Edit the breadcrumb \"@breadcrumb_title\"</a></strong></p>"
-msgstr ""
-
-#: 
-msgctxt "Digital session"
-msgid "Back"
-msgstr "Tilbage"
-
-#: 
-msgctxt "Digital session"
-msgid "Last used @date"
-msgstr ""
-
-#: 
-msgctxt "Digital session"
-msgid "Open again"
-msgstr ""
-
-#: 
-msgctxt "Digital session"
-msgid "Remove"
-msgstr "Fjern"
-
-#: 
-msgctxt "Digital session"
-msgid "The title could not be opened. Try again later."
-msgstr ""
-
-#: 
-msgctxt "Digital session"
-msgid "This device is no longer registered to your account."
-msgstr ""
-
-#: 
-msgctxt "Digital session"
-msgid "You can read and listen on up to @limit devices, and they are all in use. Remove one to continue here."
-msgstr ""
-
-#: 
-msgctxt "Digital session"
-msgid "You opened this title in another tab of this browser."
-msgstr ""
-
-#: 
-msgctxt "Digital session"
-msgid "You opened this title on another device. You can read or listen on one device at a time."
-msgstr ""
-
-#: 
-msgctxt "Digital session"
-msgid "Your loan of this title has expired, so it was closed."
-msgstr ""
-
-#: 
-msgctxt "Patron page"
-msgid "See titles that don't count towards your quota"
-msgstr "Se titler, der ikke tæller med i din lånekvote"
-
-#: 
-msgid "Authorization blocked. Unilogin user denied: @reason. User type: @user_type, institutions: @institutions, agency: @agency, expected agency: @expected"
-msgstr ""
-
-#: 
-msgctxt "Patron menu"
-msgid "If you continue, you will be logged out of Unilogin."
-msgstr ""
-
-#: 
-msgctxt "Patron menu"
-msgid "Log out and log in as a patron"
-msgstr ""
-
-#: 
-msgctxt "Patron menu"
-msgid "Stay logged in with Unilogin"
-msgstr ""
-
-#: 
-msgctxt "Patron menu"
-msgid "This requires logging in as a library patron."
-msgstr ""
-
-#: 
-msgctxt "user.role.unilogin_patron:label"
-msgid "Unilogin patron"
-msgstr "Unilogin låner"
-
-#: 
-msgctxt "Patron menu"
-msgid "You are logged in with Unilogin"
-msgstr "Du er logget ind med Unilogin"
-
-#: 
-msgid "Could not revalidate Go (@query): @message"
 msgstr ""
 

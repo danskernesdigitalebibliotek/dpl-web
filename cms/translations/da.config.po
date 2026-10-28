@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-10-14 09:20+0200\n"
-"PO-Revision-Date: 2026-10-14 09:20+0200\n"
+"POT-Creation-Date: 2026-10-28 13:22+0100\n"
+"PO-Revision-Date: 2026-10-28 13:22+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8271,6 +8271,14 @@ msgctxt "views.view.service_messages:display:default:display_options:pager:optio
 msgid "‹ Previous"
 msgstr ""
 
+msgctxt "field.storage.paragraph.field_go_color:settings:allowed_values:4:label"
+msgid "Content Color 5"
+msgstr ""
+
+msgctxt "user.role.unilogin_patron:label"
+msgid "Unilogin patron"
+msgstr "Unilogin låner"
+
 msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
 msgstr ""
@@ -8378,12 +8386,4 @@ msgstr ""
 msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
 msgid "{{ message }}"
 msgstr ""
-
-msgctxt "field.storage.paragraph.field_go_color:settings:allowed_values:4:label"
-msgid "Content Color 5"
-msgstr ""
-
-msgctxt "user.role.unilogin_patron:label"
-msgid "Unilogin patron"
-msgstr "Unilogin låner"
 
