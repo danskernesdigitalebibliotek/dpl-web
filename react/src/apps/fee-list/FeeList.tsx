@@ -7,7 +7,6 @@ import { useText } from "../../core/utils/text";
 import { useUrls } from "../../core/utils/url";
 import List from "./list";
 import FeeDetailsModal from "./modal/fee-details-modal";
-import MyPaymentOverviewModal from "./modal/my-payment-overview-modal";
 import FeeDetailsContent from "./stackable-fees/fee-details-content";
 import modalIdsConf from "../../core/configuration/modal-ids.json";
 import {
@@ -187,7 +186,6 @@ const FeeList: FC<FeeListProps> = ({ pageSize }) => {
           />
         )}
       </FeeDetailsModal>
-      <MyPaymentOverviewModal />
       {!isLoadingFbs && (
         <LoansGroupModal
           pageSize={pageSize}

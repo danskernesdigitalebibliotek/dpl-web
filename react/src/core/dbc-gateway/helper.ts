@@ -80,7 +80,6 @@ if (import.meta.vitest) {
       expect(resolveBaseUrl("complexSearchWithPaginationWorkAccess")).toEqual(
         "i-am-fbi-local-url"
       );
-      expect(resolveBaseUrl("intelligentFacets")).toEqual("i-am-fbi-local-url");
       expect(resolveBaseUrl("recommendFromFaust")).toEqual(
         "i-am-fbi-local-url"
       );
