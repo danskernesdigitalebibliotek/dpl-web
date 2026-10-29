@@ -1,0 +1,63 @@
+---
+# Post a digest of open pull requests to Zulip (DDF > reviews) three times
+# every weekday. The message is built by
+# .github/scripts/open-pull-requests-digest.sh.
+#
+# Scheduled and manually started runs only exist on the default branch, so
+# this does nothing until it's merged. Manual runs default to a dry run that
+# only prints the message in the job log.
+
+name: Open pull requests digest
+
+on:
+  schedule:
+    - cron: "0 8 * * 1-5"
+      timezone: "Europe/Copenhagen"
+    - cron: "30 12,15 * * 1-5"
+      timezone: "Europe/Copenhagen"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Print the digest instead of posting it to Zulip
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  digest:
+    name: Post open pull requests digest
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build digest
+        id: digest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          digest=$(.github/scripts/open-pull-requests-digest.sh)
+          printf '%s\n' "$digest"
+          delimiter="digest-$(openssl rand -hex 8)"
+          {
+            echo "content<<$delimiter"
+            printf '%s\n' "$digest"
+            echo "$delimiter"
+          } >> "$GITHUB_OUTPUT"
+
+      # On scheduled runs there are no inputs, so dry-run is empty and the
+      # digest is posted.
+      - name: Post digest to Zulip
+        if: ${{ !inputs.dry-run }}
+        uses: zulip/github-actions-zulip/send-message@f675f2b4eb2a95fae974215476dcb7ad8dfeff6b # v2.0.2
+        with:
+          api-key: ${{ secrets.ZULIP_API_KEY }}
+          email: ddfbot-bot@reload.zulipchat.com
+          organization-url: https://reload.zulipchat.com
+          type: stream
+          to: DDF
+          topic: reviews
+          content: ${{ steps.digest.outputs.content }}
