@@ -70,8 +70,8 @@ describe("getLoanableManifestation", () => {
     expect(getLoanableManifestation([pdf, epub])?.pid).toBe("pid:epub");
   });
 
-  it("falls back to the first manifestation when none has a PUBLIZON identifier", () => {
-    expect(getLoanableManifestation([pdf])?.pid).toBe("pid:pdf");
+  it("returns null when no edition has a PUBLIZON identifier", () => {
+    expect(getLoanableManifestation([pdf])).toBeNull();
   });
 
   it("returns null for an empty list", () => {

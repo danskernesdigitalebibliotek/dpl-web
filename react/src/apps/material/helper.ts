@@ -95,20 +95,16 @@ export const getManifestationDigitalIdentifier = (
   return value ? (value as DigitalMaterialId) : null;
 };
 
-export const hasPublizonIdentifier = (manifestation: Manifestation) =>
-  getManifestationDigitalIdentifier(manifestation) !== null;
-
-// The PUBLIZON identifier marks a loanable edition. The type is FBI's field
-// name and says nothing about which provider holds the material.
-//
 // Several editions of one material type can be loanable, and the reader
 // expects the newest. Ordering copies the list: orderManifestationsByYear
 // sorts in place, and this list belongs to the caller.
 export const getLoanableManifestation = (manifestations: Manifestation[]) => {
-  const loanableManifestations = manifestations.filter(hasPublizonIdentifier);
+  const loanableManifestations = manifestations.filter(
+    (manifestation) => getManifestationDigitalIdentifier(manifestation) !== null
+  );
 
   if (!loanableManifestations.length) {
-    return getFirstManifestation(manifestations);
+    return null;
   }
 
   return getFirstManifestation(
