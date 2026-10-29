@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   AccessTypeCodeEnum,
+  IdentifierTypeEnum,
   LinkStatusEnum
 } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
@@ -21,6 +22,18 @@ const manifestationWith = (
     edition: { publicationYear: { display: "2020" } }
   }) as unknown as Manifestation;
 
+const ereol = {
+  __typename: "Ereol",
+  origin: "eReolen",
+  url: "https://ereolen.dk/ting/object/870970-basis:12345678",
+  canAlwaysBeLoaned: false
+} as const;
+
+const withDigitalId = (manifestation: Manifestation): Manifestation => ({
+  ...manifestation,
+  identifiers: [{ type: IdentifierTypeEnum.Publizon, value: "9788700000001" }]
+});
+
 const accessUrl = (status: LinkStatusEnum, origin = "Filmstriben") =>
   ({
     __typename: "AccessUrl",
@@ -31,6 +44,24 @@ const accessUrl = (status: LinkStatusEnum, origin = "Filmstriben") =>
   }) as const;
 
 describe("resolveOnlineButtonType", () => {
+  it("resolves the internal buttons for an e-material with a digital id", () => {
+    const result = resolveOnlineButtonType([
+      withDigitalId(
+        manifestationWith([ereol, accessUrl(LinkStatusEnum.Ok)], "e-bog")
+      )
+    ]);
+
+    expect(result).toEqual({ type: "internal" });
+  });
+
+  it("falls through to the external link for an e-material without a digital id", () => {
+    const result = resolveOnlineButtonType([
+      manifestationWith([ereol, accessUrl(LinkStatusEnum.Ok)], "e-bog")
+    ]);
+
+    expect(result).toMatchObject({ type: "external" });
+  });
+
   it("resolves an external button for an active access url", () => {
     const result = resolveOnlineButtonType([
       manifestationWith([accessUrl(LinkStatusEnum.Ok)])
