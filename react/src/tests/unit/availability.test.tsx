@@ -443,6 +443,19 @@ describe("useOnlineAvailabilityData tests", () => {
     });
   });
 
+  it("Asks Publizon nothing about a material without a digital id", () => {
+    render(null);
+
+    expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ query: { enabled: false } })
+    );
+    expect(useGetV1LoanstatusIdentifier).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ query: { enabled: false } })
+    );
+  });
+
   it("Leaves Biblio alone at a library that has not switched", () => {
     // The flag defaults to off in this block. Biblio is not merely ignored -
     // the query is disabled, so nothing is asked of an adapter the library
@@ -479,10 +492,6 @@ describe("useOnlineAvailabilityData tests", () => {
       expect(mockedLoanDecision).toHaveBeenCalledWith(null, {
         enabled: false
       });
-      expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(
-        expect.anything(),
-        expect.objectContaining({ query: { enabled: false } })
-      );
     });
 
     it("Asks nobody for an anonymous visitor, who sees the material as available", () => {
