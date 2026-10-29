@@ -78,14 +78,8 @@ export const getFirstManifestation = (manifestations: Manifestation[]) => {
   return first(manifestations) || null;
 };
 
-/**
- * The id a digital material is borrowed, reserved and read by - see
- * DigitalMaterialId for why an ISBN never stands in. Null when the
- * manifestation has none, and the callers then neither ask the providers
- * about it nor offer it.
- *
- * `IdentifierTypeEnum.Publizon` is FBI's field name, not the provider we call.
- */
+// See DigitalMaterialId for why an ISBN never stands in. FBI's PUBLIZON type
+// is a field name, not the provider we call.
 export const getManifestationDigitalIdentifier = (
   manifestation: Manifestation
 ): DigitalMaterialId | null => {

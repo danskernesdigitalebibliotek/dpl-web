@@ -147,17 +147,11 @@ export const playerTypes = [
   ManifestationMaterialType.audioBookTape
 ];
 
-/**
- * Which of the reader and the player a manifestation opens in, or null when
- * it opens in neither. A material without a digital id cannot be lent by any
- * provider, so it is not a reader or player material however it is accessed -
- * the one signal the availability label, the loan buttons and the page layout
- * all follow.
- */
 export const getReaderPlayerType = (
   manifestation: Manifestation | null
 ): "reader" | "player" | null => {
   if (!manifestation) return null;
+  // Without a digital id no provider can lend it, whatever its access says.
   if (getManifestationDigitalIdentifier(manifestation) === null) return null;
   const materialTypes = getMaterialTypes([manifestation]);
 

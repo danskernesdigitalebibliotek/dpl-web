@@ -25,10 +25,9 @@ const useOnlineAvailabilityData = ({
 }) => {
   const viaBiblioAdapter = useBiblioAdapter();
 
-  // Only a material with a digital id is asked about: an online material
-  // outside the e-book service - a PressReader newspaper, whose only
-  // identifier is a URI - is in neither Publizon nor the service layer, so
-  // asking about it can only produce a 404.
+  // An online material outside the e-book service - a PressReader newspaper,
+  // whose only identifier is a URI - has no digital id and is in neither
+  // Publizon nor the service layer, so asking would only produce a 404.
   const hasIdentifier = identifier !== null;
 
   // can-loan is patron-scoped, so with the flag on and no patron nobody is
@@ -54,9 +53,8 @@ const useOnlineAvailabilityData = ({
       query: {
         enabled:
           askPublizon &&
-          // If the material is free (I think it is called blue material btw.)
-          // we should not load the loan status because then we know that it is available.
-          // So if the material is not free we should load the loan status.
+          // A cost-free (blue) title is always available, so its loan status
+          // is not needed.
           dataIdentifier?.product?.costFree === false
       }
     });
