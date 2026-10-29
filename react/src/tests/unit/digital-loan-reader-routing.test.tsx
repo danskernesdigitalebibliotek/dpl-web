@@ -1,5 +1,6 @@
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
+import { DigitalMaterialId } from "../../core/utils/types/ids";
 import { render } from "@testing-library/react";
 import type { Loan } from "../../core/publizon/model";
 import type { DigitalLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
@@ -132,9 +133,11 @@ describe("Where a digital material's url points", () => {
 
   it("sends each sample to the page its material type plays on", () => {
     // The route carries the type: a sample has no loan to read it from.
-    expect(sampleUrl("9788711623497", "ebook").pathname).toBe("/reader");
-    expect(sampleUrl("9788711823453", "audiobook").pathname).toBe("/player");
-    expect(sampleUrl("9788711823453", "audiobook").search).toBe(
+    const ebook = "9788711623497" as DigitalMaterialId;
+    const audiobook = "9788711823453" as DigitalMaterialId;
+    expect(sampleUrl(ebook, "ebook").pathname).toBe("/reader");
+    expect(sampleUrl(audiobook, "audiobook").pathname).toBe("/player");
+    expect(sampleUrl(audiobook, "audiobook").search).toBe(
       "?identifier=9788711823453"
     );
   });

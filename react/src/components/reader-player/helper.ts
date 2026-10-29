@@ -5,6 +5,7 @@ import { ManifestationMaterialType } from "../../core/utils/types/material-type"
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { getManifestationDigitalIdentifier } from "../../apps/material/helper";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
+import { DigitalMaterialId } from "../../core/utils/types/ids";
 
 type AssetType = {
   src: string;
@@ -81,7 +82,7 @@ export const getOrderIdByIdentifier = ({
   identifier
 }: {
   loans: LoanType[];
-  identifier: string;
+  identifier: DigitalMaterialId;
 }) => {
   const loanWithIdentifier = loans.find((i) => i.identifier === identifier);
   return loanWithIdentifier ? loanWithIdentifier.orderId : null;
@@ -125,7 +126,7 @@ export const playsInModal = (provider?: DigitalProvider | null) =>
  * it: e-books sample on the reader page, audiobooks on the player page.
  */
 export const sampleUrl = (
-  identifier: string,
+  identifier: DigitalMaterialId,
   materialType: "ebook" | "audiobook"
 ) =>
   new URL(
@@ -162,7 +163,7 @@ export const getReaderPlayerType = (
 };
 
 export const findReservedReservation = (
-  identifier: string,
+  identifier: DigitalMaterialId,
   reservations: ReservationType[]
 ) =>
   reservations.find(
