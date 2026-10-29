@@ -19,7 +19,6 @@ const manifestation = (
     pid: pid as Pid,
     identifiers,
     materialTypes: [{ materialTypeSpecific: { display: "e-bog" } }],
-    access: [{ __typename: "Ereol" }],
     ...(publicationYear && {
       edition: { publicationYear: { display: publicationYear } }
     })

@@ -3,7 +3,6 @@ import { Manifestation } from "../../core/utils/types/entities";
 import { LoanType } from "../../core/utils/types/loan-type";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
-import { hasCorrectAccess } from "../material/material-buttons/helper";
 import {
   getLoanableManifestation,
   getManifestationDigitalIdentifier
@@ -178,7 +177,6 @@ export const getDigitalLoanable = (
 ): DigitalLoanable | null => {
   const manifestation = getLoanableManifestation(manifestations);
   if (!manifestation) return null;
-  if (!hasCorrectAccess("Ereol", [manifestation])) return null;
 
   const id = getManifestationDigitalIdentifier(manifestation);
   if (id === null) return null;
