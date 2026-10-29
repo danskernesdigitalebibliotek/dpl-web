@@ -123,7 +123,12 @@ describe("getDigitalLoanable", () => {
     expect(getDigitalLoanable([pdf])).toBeNull();
   });
 
-  it("answers null, and says so once, for a lendable type it cannot open", () => {
+  it("answers null, and says so once, for a lendable type it cannot open", async () => {
+    // The warned types are kept in the module, so a fresh copy keeps the
+    // count independent of what other tests resolved first.
+    vi.resetModules();
+    const { getDigitalLoanable: freshGetDigitalLoanable } =
+      await import("../../components/reader-player/helper");
     const graphicNovel: Manifestation = {
       ...epub,
       materialTypes: [
@@ -132,8 +137,8 @@ describe("getDigitalLoanable", () => {
     } as Manifestation;
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    expect(getDigitalLoanable([graphicNovel])).toBeNull();
-    expect(getDigitalLoanable([graphicNovel])).toBeNull();
+    expect(freshGetDigitalLoanable([graphicNovel])).toBeNull();
+    expect(freshGetDigitalLoanable([graphicNovel])).toBeNull();
 
     expect(warn).toHaveBeenCalledTimes(1);
     expect(warn.mock.calls[0][0]).toContain("graphic novel (online)");
