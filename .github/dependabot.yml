@@ -338,8 +338,6 @@ updates:
         versions: [">=9"]
       - dependency-name: "@storybook/addon-queryparams"
         versions: [">=9.0.0"]
-      - dependency-name: "@chromatic-com/storybook"
-        versions: [">=4"]
       # The current React Cypress stack is not compatible with Cypress 14.4+ or code-coverage 4.
       - dependency-name: "cypress"
         versions: [">=14.4.0"]
