@@ -3,7 +3,7 @@ import { Manifestation } from "../../core/utils/types/entities";
 import { LoanType } from "../../core/utils/types/loan-type";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
-import { hasCorrectAccess } from "../material/material-buttons/helper";
+import { getManifestationDigitalIdentifier } from "../../apps/material/helper";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
 
 type AssetType = {
@@ -147,11 +147,18 @@ export const playerTypes = [
   ManifestationMaterialType.audioBookTape
 ];
 
+/**
+ * Which of the reader and the player a manifestation opens in, or null when
+ * it opens in neither. A material without a digital id cannot be lent by any
+ * provider, so it is not a reader or player material however it is accessed -
+ * the one signal the availability label, the loan buttons and the page layout
+ * all follow.
+ */
 export const getReaderPlayerType = (
   manifestation: Manifestation | null
 ): "reader" | "player" | null => {
   if (!manifestation) return null;
-  if (!hasCorrectAccess("Ereol", [manifestation])) return null;
+  if (getManifestationDigitalIdentifier(manifestation) === null) return null;
   const materialTypes = getMaterialTypes([manifestation]);
 
   if (readerTypes.some((type) => materialTypes.includes(type))) return "reader";

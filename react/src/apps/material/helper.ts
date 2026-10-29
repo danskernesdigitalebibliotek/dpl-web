@@ -80,13 +80,11 @@ export const getFirstManifestation = (manifestations: Manifestation[]) => {
 
 /**
  * The id a digital material is borrowed, reserved and read by - see
- * DigitalMaterialId. Null when the manifestation has none, and the callers
- * then neither ask the providers about it nor offer it.
+ * DigitalMaterialId for why an ISBN never stands in. Null when the
+ * manifestation has none, and the callers then neither ask the providers
+ * about it nor offer it.
  *
  * `IdentifierTypeEnum.Publizon` is FBI's field name, not the provider we call.
- * Deliberately no ISBN fallback: a manifestation can carry several ISBNs and
- * the leading one is not always the right edition - a deselected PDF, say -
- * and FBI gives every e-material with Ereol access this identifier anyway.
  */
 export const getManifestationDigitalIdentifier = (
   manifestation: Manifestation
