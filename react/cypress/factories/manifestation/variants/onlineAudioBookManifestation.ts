@@ -31,6 +31,10 @@ export const onlineAudioBookManifestation = manifestationFactory.build({
 
   identifiers: [
     {
+      type: IdentifierTypeEnum.Publizon,
+      value: "9788763850637"
+    },
+    {
       type: IdentifierTypeEnum.Isbn,
       value: "9788763850637"
     }

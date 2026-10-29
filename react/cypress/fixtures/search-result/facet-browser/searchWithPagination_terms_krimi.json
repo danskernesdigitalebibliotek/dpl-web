@@ -3312,6 +3312,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788772044262" },
                   { "type": "ISBN", "value": "9788772044262" },
                   { "type": "ISBN", "value": "9788772044262" }
                 ],
@@ -3361,6 +3362,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788772044026" },
                   { "type": "ISBN", "value": "9788772044026" },
                   { "type": "ISBN", "value": "9788772044026" }
                 ],
@@ -6977,6 +6979,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788772043593" },
                   { "type": "ISBN", "value": "9788772043593" },
                   { "type": "ISBN", "value": "9788772043593" }
                 ],
@@ -7114,6 +7117,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788772043494" },
                   { "type": "ISBN", "value": "9788772043494" },
                   { "type": "ISBN", "value": "9788772043494" }
                 ],
@@ -8265,6 +8269,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788772041667" },
                   { "type": "ISBN", "value": "9788772041667" },
                   { "type": "ISBN", "value": "9788772041667" }
                 ],
@@ -8402,6 +8407,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788772041698" },
                   { "type": "ISBN", "value": "9788772041698" },
                   { "type": "ISBN", "value": "9788772041698" }
                 ],
@@ -8705,6 +8711,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771297119" },
                   { "type": "ISBN", "value": "9788771297119" },
                   { "type": "ISBN", "value": "9788771297119" }
                 ],
@@ -8924,6 +8931,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771297461" },
                   { "type": "ISBN", "value": "9788771297461" },
                   { "type": "ISBN", "value": "9788771297461" }
                 ],
@@ -9391,6 +9399,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771293951" },
                   { "type": "ISBN", "value": "9788771293951" },
                   { "type": "ISBN", "value": "9788771293951" }
                 ],
@@ -9444,6 +9453,7 @@
               ],
               "publisher": ["Klim"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788771293951" },
                 { "type": "ISBN", "value": "9788771293951" },
                 { "type": "ISBN", "value": "9788771293951" }
               ],
@@ -9705,6 +9715,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788772045535" },
                   { "type": "ISBN", "value": "9788772045535" },
                   { "type": "ISBN", "value": "9788772045535" }
                 ],
@@ -9795,6 +9806,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788772045580" },
                   { "type": "ISBN", "value": "9788772045580" },
                   { "type": "ISBN", "value": "9788772045580" }
                 ],
@@ -10186,6 +10198,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771299380" },
                   { "type": "ISBN", "value": "9788771299380" },
                   { "type": "ISBN", "value": "9788771299380" }
                 ],
@@ -10323,6 +10336,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771299472" },
                   { "type": "ISBN", "value": "9788771299472" },
                   { "type": "ISBN", "value": "9788771299472" }
                 ],
@@ -10796,6 +10810,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771293876" },
                   { "type": "ISBN", "value": "9788771293876" },
                   { "type": "ISBN", "value": "9788771293876" }
                 ],
@@ -10845,6 +10860,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771294101" },
                   { "type": "ISBN", "value": "9788771294101" },
                   { "type": "ISBN", "value": "9788771294101" }
                 ],
@@ -10895,6 +10911,7 @@
               ],
               "publisher": ["Klim"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788771293876" },
                 { "type": "ISBN", "value": "9788771293876" },
                 { "type": "ISBN", "value": "9788771293876" }
               ],
@@ -12309,6 +12326,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771290516" },
                   { "type": "ISBN", "value": "9788771290516" },
                   { "type": "ISBN", "value": "9788771290516" }
                 ],
@@ -12362,6 +12380,7 @@
               ],
               "publisher": ["Klim"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788771290516" },
                 { "type": "ISBN", "value": "9788771290516" },
                 { "type": "ISBN", "value": "9788771290516" }
               ],
@@ -12874,6 +12893,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771290530" },
                   { "type": "ISBN", "value": "9788771290530" },
                   { "type": "ISBN", "value": "9788771290530" }
                 ],
@@ -12927,6 +12947,7 @@
               ],
               "publisher": ["Klim"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788771290530" },
                 { "type": "ISBN", "value": "9788771290530" },
                 { "type": "ISBN", "value": "9788771290530" }
               ],
@@ -13694,6 +13715,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771292596" },
                   { "type": "ISBN", "value": "9788771292596" },
                   { "type": "ISBN", "value": "9788771292596" }
                 ],
@@ -13746,6 +13768,7 @@
                 ],
                 "publisher": ["Klim"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788771292787" },
                   { "type": "ISBN", "value": "9788771292787" },
                   { "type": "ISBN", "value": "9788771292787" }
                 ],
@@ -13793,6 +13816,7 @@
               ],
               "publisher": ["Klim"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788771292787" },
                 { "type": "ISBN", "value": "9788771292787" },
                 { "type": "ISBN", "value": "9788771292787" }
               ],
@@ -15239,6 +15263,7 @@
                 ],
                 "publisher": ["Superlux"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788775671038" },
                   { "type": "ISBN", "value": "9788775671038" },
                   { "type": "ISBN", "value": "9788775671038" }
                 ],
@@ -15294,6 +15319,7 @@
                 ],
                 "publisher": ["Superlux"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788775671045" },
                   { "type": "ISBN", "value": "9788775671045" },
                   { "type": "ISBN", "value": "9788775671045" }
                 ],
@@ -15353,6 +15379,7 @@
               ],
               "publisher": ["Superlux"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788775671045" },
                 { "type": "ISBN", "value": "9788775671045" },
                 { "type": "ISBN", "value": "9788775671045" }
               ],
@@ -17364,6 +17391,7 @@
                 ],
                 "publisher": ["Lindhardt og Ringhof"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788711472071" },
                   { "type": "ISBN", "value": "9788711472071" },
                   { "type": "ISBN", "value": "9788711472071" }
                 ],
@@ -17410,6 +17438,7 @@
                 ],
                 "publisher": ["Lindhardt og Ringhof"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788711924891" },
                   { "type": "ISBN", "value": "9788711924891" },
                   { "type": "ISBN", "value": "9788711924891" }
                 ],
@@ -17463,6 +17492,7 @@
               ],
               "publisher": ["Lindhardt og Ringhof"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788711924891" },
                 { "type": "ISBN", "value": "9788711924891" },
                 { "type": "ISBN", "value": "9788711924891" }
               ],
