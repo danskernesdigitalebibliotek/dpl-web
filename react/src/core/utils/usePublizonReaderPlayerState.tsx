@@ -40,7 +40,7 @@ const usePublizonReaderPlayerState = ({
   // TEMPORARY: the queue stands still while Biblio migrates it, so Publizon
   // may still decide on a loan but no longer on a reservation.
   const reservationQueueFrozen = usePublizonReservationsClosed();
-  const hasIdentifier = Boolean(identifier);
+  const hasIdentifier = identifier !== null;
   // An anonymous user has no holdings to look up, and the endpoints need a
   // user token anyway.
   const canReadHoldings = hasIdentifier && !isUserAnonymous;
@@ -53,9 +53,8 @@ const usePublizonReaderPlayerState = ({
   const { data: reservationsPublizon, isLoading: isLoadingReservations } =
     useGetV1UserReservations({ query: { enabled: canReadHoldings } });
 
-  // Safe to use identifier! because the query is disabled without one.
   const { data: dataLoanStatus, isLoading: isLoadingLoanStatus } =
-    useGetV1LoanstatusIdentifier(identifier!, {
+    useGetV1LoanstatusIdentifier(identifier ?? "", {
       query: { enabled: hasIdentifier && canAcquire }
     });
 

@@ -4,6 +4,7 @@ import {
   getManifestationDigitalIdentifier,
   onlineInternalModalId
 } from "../../apps/material/helper";
+import { getReaderPlayerType } from "../../components/reader-player/helper";
 import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
@@ -16,6 +17,8 @@ const manifestation = (
   ({
     pid: pid as Pid,
     identifiers,
+    materialTypes: [{ materialTypeSpecific: { display: "e-bog" } }],
+    access: [{ __typename: "Ereol" }],
     ...(publicationYear && {
       edition: { publicationYear: { display: publicationYear } }
     })
@@ -105,6 +108,18 @@ describe("getManifestationDigitalIdentifier", () => {
     expect(
       getManifestationDigitalIdentifier(manifestation("pid:none", []))
     ).toBeNull();
+  });
+});
+
+describe("getReaderPlayerType", () => {
+  it("opens an edition with a digital id in the reader", () => {
+    expect(getReaderPlayerType(epub)).toBe("reader");
+  });
+
+  it("opens an edition without a digital id in neither reader nor player", () => {
+    // No provider can lend it, so the page must not lay out loan buttons or
+    // ask about availability for it - the same rule the label follows.
+    expect(getReaderPlayerType(pdf)).toBeNull();
   });
 });
 
