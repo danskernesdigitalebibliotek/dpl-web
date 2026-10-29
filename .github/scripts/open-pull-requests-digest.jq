@@ -35,11 +35,8 @@ def next_actions:
        else empty end)
     ];
 
-# " — who (action) · …". When nobody needs to act, the PR is approved, so say
-# that instead of leaving the line without a reason.
+# " — approved · who (action) · …", with "approved" only on approved PRs.
 def format_next_actions:
-  .reviewDecision as $decision
-  | next_actions | map("\(.who | join(", ")) (\(.action))")
-  | if length > 0 then " — " + join(" · ")
-    elif $decision == "APPROVED" then " — approved"
-    else "" end;
+  (if .reviewDecision == "APPROVED" then ["approved"] else [] end)
+    + (next_actions | map("\(.who | join(", ")) (\(.action))"))
+  | if length == 0 then "" else " — " + join(" · ") end;
