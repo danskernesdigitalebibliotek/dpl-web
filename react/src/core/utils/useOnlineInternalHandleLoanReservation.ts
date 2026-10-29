@@ -126,8 +126,12 @@ const useOnlineInternalHandleLoanReservation = ({
     ]).finally(() => clearTimeout(graceTimer));
   };
 
-  /** Everything the adapter's answer for this material was derived from. */
-  const invalidateDigital = (materialId: string | null) => {
+  /**
+   * Everything the adapter's answer for this material was derived from.
+   * Keyed by the material on screen rather than the mutation variables: the
+   * service layer types those as plain strings.
+   */
+  const invalidateDigital = () => {
     // The quota is read on the material page, never on the receipt, so it is
     // refreshed without holding the user up.
     queryClient.invalidateQueries({ queryKey: digitalLoanQuotasQueryKey() });
@@ -135,7 +139,7 @@ const useOnlineInternalHandleLoanReservation = ({
     return awaitReadBack(
       digitalLoansQueryKey(),
       digitalReservationsQueryKey(),
-      digitalLoanDecisionQueryKey(materialId)
+      digitalLoanDecisionQueryKey(loanable?.id ?? null)
     );
   };
 
@@ -158,12 +162,12 @@ const useOnlineInternalHandleLoanReservation = ({
     });
   const { mutate: mutateDigitalLoan, isPending: isLoaningViaAdapter } =
     useDigitalCreateLoan({
-      onSuccess: (result, materialId) => {
+      onSuccess: (result) => {
         // A request the adapter accepted without acting on changed nothing,
         // so there is nothing to count or refetch.
         if (!loanWasCreated(result)) return undefined;
         trackLoan();
-        return invalidateDigital(materialId);
+        return invalidateDigital();
       }
     });
   const { mutate: mutateReservation, isPending: isReservingViaPublizon } =
@@ -180,10 +184,10 @@ const useOnlineInternalHandleLoanReservation = ({
     });
   const { mutate: mutateDigitalReservation, isPending: isReservingViaAdapter } =
     useDigitalCreateReservation({
-      onSuccess: (result, materialId) => {
+      onSuccess: (result) => {
         if (!isRequestGranted(result.status)) return undefined;
         trackReservation();
-        return invalidateDigital(materialId);
+        return invalidateDigital();
       }
     });
   const { mutate: mutateAcceptOffer, isPending: isAcceptingOffer } =
@@ -191,8 +195,7 @@ const useOnlineInternalHandleLoanReservation = ({
       onSuccess: (result) => {
         if (!result.success) return undefined;
         trackLoan();
-        // Keyed by the offer, so the material is the one on screen.
-        return invalidateDigital(loanable?.id ?? null);
+        return invalidateDigital();
       }
     });
 
