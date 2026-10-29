@@ -51,7 +51,7 @@ const getBranches = (variables: BranchesVariables = {}) =>
       gqlQueries.GET_BRANCHES,
       variables,
     )
-    .then((data) => data.getBranches);
+    .then(({ data }) => data.getBranches);
 
 // The branch the tests change, alone, as the query is filtered on it.
 const getTestBranch = (variables: Omit<BranchesVariables, 'isilId'> = {}) =>
