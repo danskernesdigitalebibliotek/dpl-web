@@ -1,4 +1,4 @@
-import { getFirstManifestation } from "../../apps/material/helper";
+import { getLoanableManifestation } from "../../apps/material/helper";
 import { AccessTypeCodeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
@@ -40,9 +40,12 @@ export const isMaterialButtonsOnlineInternal = (
 export const shouldShowMaterialAvailabilityText = (
   manifestations: Manifestation[]
 ) => {
-  const firstManifestation = getFirstManifestation(manifestations);
+  // The same edition the buttons and the text itself act on - the first one
+  // listed may be an edition no provider lends.
+  const loanableManifestation = getLoanableManifestation(manifestations);
   const shouldShowOnlineAvailability =
-    firstManifestation && isMaterialButtonsOnlineInternal(firstManifestation);
+    loanableManifestation &&
+    isMaterialButtonsOnlineInternal(loanableManifestation);
 
   const shouldShowPhysicalAvailability =
     isPhysical(manifestations) &&
