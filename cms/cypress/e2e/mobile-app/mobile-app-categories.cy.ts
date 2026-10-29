@@ -3,11 +3,16 @@
 // failure here means a change in the CMS will break the mobile apps.
 import {
   createGoArticle,
-  getGoNode,
   openGoNodeForm,
 } from '../../helpers/helper-go-content';
 import { mediaLibrarySelect } from '../../helpers/helper-media';
-import { addParagraph } from '../../helpers/helper-paragraph';
+import { getNode } from '../../helpers/helper-node';
+import {
+  addParagraph,
+  appendParagraph,
+  paragraphField,
+  setWorkId,
+} from '../../helpers/helper-paragraph';
 import { gqlQueries } from '../../helpers/mobile-app-queries';
 
 type AppCategory = {
@@ -25,17 +30,8 @@ const getAppCategories = (type: string, id?: string) =>
 
 type Linkbox = { title: string; description: string; linkPath: string };
 
-const linkbox = '[name^="field_paragraphs[0][subform]';
-
-const createGoCategory = (title: string, link: Linkbox) => {
-  openGoNodeForm('go_category');
-  cy.findByLabelText('Title').type(title);
-  cy.findByLabelText('Category menu title').type(title);
-  mediaLibrarySelect(
-    '#field_category_menu_image-media-library-wrapper',
-    'paige-cody',
-  );
-  cy.openParagraphsModal();
+const addGoLinkbox = (link: Linkbox) => {
+  const linkbox = paragraphField(0);
   addParagraph('GO Linkbox');
   cy.get(`${linkbox}[field_title][0][value]"]`).type(link.title);
   cy.get(`${linkbox}[field_go_description][0][value]"]`).type(link.description);
@@ -44,9 +40,21 @@ const createGoCategory = (title: string, link: Linkbox) => {
   cy.get(`${goLink}[uri]"]`).type(link.linkPath);
   // Required by the form, but the apps get the linkbox title instead.
   cy.get(`${goLink}[title]"]`).type(link.title);
+};
+
+const createGoCategory = (title: string, addParagraphs: () => void) => {
+  openGoNodeForm('go_category');
+  cy.findByLabelText('Title').type(title);
+  cy.findByLabelText('Category menu title').type(title);
+  mediaLibrarySelect(
+    '#field_category_menu_image-media-library-wrapper',
+    'paige-cody',
+  );
+  cy.openParagraphsModal();
+  addParagraphs();
   cy.clickSaveButton();
   cy.contains(`GO category ${title} has been created.`);
-  return getGoNode(title);
+  return getNode(title);
 };
 
 // Both the categories and the articles they link to.
@@ -73,48 +81,111 @@ describe('Mobile app API: getAppCategories', () => {
     };
 
     createGoArticle(articleTitle, '<p>Brødtekst</p>').then((article) => {
-      createGoCategory(categoryTitle, { ...link, linkPath: article.path }).then(
-        (category) => {
-          // The apps list all categories first and then ask for each one.
-          getAppCategories('BIBLOGO').then(({ data }) => {
-            const ids = data.getAppCategories.map(({ id }) => id);
-            expect(ids).to.include(category.id);
+      createGoCategory(categoryTitle, () =>
+        addGoLinkbox({ ...link, linkPath: article.path }),
+      ).then((category) => {
+        // The apps list all categories first and then ask for each one.
+        getAppCategories('BIBLOGO').then(({ data }) => {
+          const ids = data.getAppCategories.map(({ id }) => id);
+          expect(ids).to.include(category.id);
+        });
+
+        getAppCategories('BIBLOGO', category.id).then(({ data }) => {
+          // The icon URL contains the upload date, so we only know which
+          // file it is. The apps cannot resolve relative URLs, so it must
+          // be absolute.
+          const icon = data.getAppCategories[0]?.icon;
+          expect(icon).to.match(
+            new RegExp(`^${Cypress.config('baseUrl')}/.*paige-cody`),
+          );
+
+          // The GO app opens the linked article by passing contentId to
+          // getAppPage, see mobile-app-page.cy.ts.
+          expect(data).to.deep.equal({
+            getAppCategories: [
+              {
+                id: category.id,
+                title: categoryTitle,
+                icon,
+                elements: [
+                  {
+                    __typename: 'AppContentElementGoLinkbox',
+                    id: category.paragraphs[0].id,
+                    title: link.title,
+                    color: null,
+                    description: link.description,
+                    image: null,
+                    contentId: article.id,
+                  },
+                ],
+              },
+            ],
           });
+        });
+      });
+    });
+  });
 
-          getAppCategories('BIBLOGO', category.id).then(({ data }) => {
-            // The icon URL contains the upload date, so we only know which
-            // file it is. The apps cannot resolve relative URLs, so it must
-            // be absolute.
-            const icon = data.getAppCategories[0]?.icon;
-            expect(icon).to.match(
-              new RegExp(`^${Cypress.config('baseUrl')}/.*paige-cody`),
-            );
+  it('returns a GO category with material sliders', () => {
+    const runId = Date.now();
+    const categoryTitle = `${titlePrefix} category ${runId}`;
+    const automatic = {
+      title: `Automatisk slider ${runId}`,
+      cql: "term.title='Harry Potter'",
+      limit: 12,
+    };
+    const manual = {
+      title: `Manuel slider ${runId}`,
+      workIds: ['work-of:870970-basis:22629344'],
+    };
 
-            // The GO app opens the linked article by passing contentId to
-            // getAppPage, see mobile-app-page.cy.ts.
-            expect(data).to.deep.equal({
-              getAppCategories: [
+    createGoCategory(categoryTitle, () => {
+      const automaticSlider = paragraphField(0);
+      addParagraph('GO Material Slider - Automatic');
+      cy.get(`${automaticSlider}[field_title][0][value]"]`).type(
+        automatic.title,
+      );
+      cy.get(`${automaticSlider}[field_cql_search][0][filters][cql]"]`).type(
+        automatic.cql,
+        { delay: 0 },
+      );
+      cy.get(
+        `${automaticSlider}[field_slider_amount_of_materials][0][value]"]`,
+      ).type(`{selectall}${automatic.limit}`);
+
+      const manualSlider = paragraphField(1);
+      appendParagraph('GO Material Slider - Manual');
+      cy.get(`${manualSlider}[field_title][0][value]"]`).type(manual.title);
+      setWorkId(
+        `${manualSlider}[field_material_slider_work_ids][0][fields_container][value]"]`,
+        manual.workIds[0],
+      );
+    }).then((category) => {
+      getAppCategories('BIBLOGO', category.id).then(({ data }) => {
+        const icon = data.getAppCategories[0]?.icon;
+
+        expect(data).to.deep.equal({
+          getAppCategories: [
+            {
+              id: category.id,
+              title: categoryTitle,
+              icon,
+              elements: [
                 {
-                  id: category.id,
-                  title: categoryTitle,
-                  icon,
-                  elements: [
-                    {
-                      __typename: 'AppContentElementGoLinkbox',
-                      id: category.paragraphs[0].id,
-                      title: link.title,
-                      color: null,
-                      description: link.description,
-                      image: null,
-                      contentId: article.id,
-                    },
-                  ],
+                  __typename: 'AppContentElementGoMaterialSliderAutomatic',
+                  id: category.paragraphs[0].id,
+                  ...automatic,
+                },
+                {
+                  __typename: 'AppContentElementGoMaterialSliderManual',
+                  id: category.paragraphs[1].id,
+                  ...manual,
                 },
               ],
-            });
-          });
-        },
-      );
+            },
+          ],
+        });
+      });
     });
   });
 });
