@@ -502,11 +502,15 @@ export const reservationModalId = (faustIds: FaustId[]) => {
 
 // Keyed on the one edition the loan is for, so an opener that covers several
 // editions and the modal rendered for a single one agree on the id.
+// Falls back to every edition's faust id so each modal keeps its own id
+// when nothing can be lent - one is rendered per online edition.
 export const onlineInternalModalId = (manifestations: Manifestation[]) => {
   const loanableManifestation = getLoanableManifestation(manifestations);
   return constructModalId(
     "online-internal-modal",
-    loanableManifestation ? getAllFaustIds([loanableManifestation]) : []
+    getAllFaustIds(
+      loanableManifestation ? [loanableManifestation] : manifestations
+    )
   );
 };
 
