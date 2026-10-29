@@ -21,7 +21,7 @@ digest_jq() {
 human_pull_requests=$(jq '[.[] | select(.author.is_bot != true and .isDraft == false)] | sort_by(.number)' <<<"$pull_requests")
 dependabot_pull_requests=$(jq '[.[] | select(.author.login == "app/dependabot")] | sort_by(.number)' <<<"$pull_requests")
 
-echo "**Open PRs on dpl-web** ($(jq length <<<"$human_pull_requests"), excluding Dependabot and drafts)"
+echo "**Open PRs on dpl-web** ($(jq length <<<"$human_pull_requests"))"
 echo
 digest_jq '.[] | "- [#\(.number) \(safe_title)](\(.url))\(format_next_actions)"' "$human_pull_requests"
 echo
