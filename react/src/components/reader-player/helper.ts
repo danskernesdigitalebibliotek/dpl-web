@@ -4,7 +4,10 @@ import { LoanType } from "../../core/utils/types/loan-type";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { hasCorrectAccess } from "../material/material-buttons/helper";
-import { getManifestationDigitalIdentifier } from "../../apps/material/helper";
+import {
+  getLoanableManifestation,
+  getManifestationDigitalIdentifier
+} from "../../apps/material/helper";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
 import { DigitalMaterialId } from "../../core/utils/types/ids";
 
@@ -149,19 +152,39 @@ export const playerTypes = [
   ManifestationMaterialType.audioBookTape
 ];
 
-export const getReaderPlayerType = (
-  manifestation: Manifestation | null
-): "reader" | "player" | null => {
-  if (!manifestation) return null;
-  if (!hasCorrectAccess("Ereol", [manifestation])) return null;
-  // Without a digital id no provider can lend it, even with Ereol access.
-  if (getManifestationDigitalIdentifier(manifestation) === null) return null;
+const opensIn = (manifestation: Manifestation): "reader" | "player" | null => {
   const materialTypes = getMaterialTypes([manifestation]);
 
   if (readerTypes.some((type) => materialTypes.includes(type))) return "reader";
   if (playerTypes.some((type) => materialTypes.includes(type))) return "player";
 
   return null;
+};
+
+export type DigitalLoanable = {
+  manifestation: Manifestation;
+  id: DigitalMaterialId;
+  opensIn: "reader" | "player";
+};
+
+/**
+ * The edition of a material type that is lent out, the id it is lent by and
+ * where it opens - or null when nothing can be lent. One answer for the
+ * label, the availability text, the buttons and the page layout, so they
+ * cannot disagree about which edition they act on.
+ */
+export const getDigitalLoanable = (
+  manifestations: Manifestation[]
+): DigitalLoanable | null => {
+  const manifestation = getLoanableManifestation(manifestations);
+  if (!manifestation) return null;
+  if (!hasCorrectAccess("Ereol", [manifestation])) return null;
+
+  const id = getManifestationDigitalIdentifier(manifestation);
+  const type = opensIn(manifestation);
+  return id !== null && type !== null
+    ? { manifestation, id, opensIn: type }
+    : null;
 };
 
 export const findReservedReservation = (

@@ -23,7 +23,6 @@ import DeleteReservationModal, {
 import { ReservationType } from "../../../../core/utils/types/reservation-type";
 import useOnlineInternalHandleLoanReservation from "../../../../core/utils/useOnlineInternalHandleLoanReservation";
 import { ApiResult, CreateLoanResult } from "../../../../core/publizon/model";
-import { getLoanableManifestation } from "../../../../apps/material/helper";
 import { WorkId } from "../../../../core/utils/types/ids";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
@@ -68,10 +67,9 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const modalCloseOptions = isEditionPicker ? { modalsToClose } : undefined;
 
   const {
-    type,
+    loanable,
     orderId,
     holdingProvider,
-    identifier,
     isAlreadyReserved,
     isAlreadyLoaned,
     canBeLoaned,
@@ -80,7 +78,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     canBeSampled,
     reservation,
     isLoading
-  } = useReaderPlayer(getLoanableManifestation(manifestations));
+  } = useReaderPlayer(manifestations);
 
   const { handleModalLoanReservation, isSubmitting } =
     useOnlineInternalHandleLoanReservation({
@@ -96,9 +94,8 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const [reservationToDelete, setReservationToDelete] =
     useState<ReservationType | null>(null);
 
-  // A reader or player type implies a digital id, but the two come back as
-  // separate fields; narrowing both here lets every render helper rely on them.
-  if (type === null || identifier === null) return null;
+  if (!loanable) return null;
+  const { id: identifier, opensIn: type } = loanable;
 
   const isReady = !isLoading && !isSubmitting;
 

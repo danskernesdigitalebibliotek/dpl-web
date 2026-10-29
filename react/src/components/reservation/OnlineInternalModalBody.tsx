@@ -11,10 +11,7 @@ import MaterialAvailabilityTextOnline from "../material/MaterialAvailabilityText
 import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import OnlineInternalModalUserListItems from "./OnlineInternalModalUserListItems";
 import MaterialButtonsOnlineInternal from "../material/material-buttons/online/MaterialButtonsOnlineInternal";
-import {
-  getLoanableManifestation,
-  onlineInternalModalId
-} from "../../apps/material/helper";
+import { onlineInternalModalId } from "../../apps/material/helper";
 import { ApiResult, CreateLoanResult } from "../../core/publizon/model";
 import { formatDate } from "../../core/utils/helpers/date";
 import { getPublizonErrorStatusText } from "../../core/utils/helpers/publizon";
@@ -44,9 +41,7 @@ const OnlineInternalModalBody = ({
   const authorLine = getAuthorLine(manifestation, t);
 
   const { data: userData } = usePatronData();
-  const { identifier, canBeReserved } = useReaderPlayer(
-    getLoanableManifestation(selectedManifestations)
-  );
+  const { loanable, canBeReserved } = useReaderPlayer(selectedManifestations);
 
   if (loanStatus === "success") {
     return (
@@ -156,9 +151,9 @@ const OnlineInternalModalBody = ({
 
         <div>
           <div className="reservation-modal-submit">
-            {identifier && (
+            {loanable && (
               <MaterialAvailabilityTextOnline
-                identifier={identifier}
+                identifier={loanable.id}
                 materialType={manifestationType}
               />
             )}

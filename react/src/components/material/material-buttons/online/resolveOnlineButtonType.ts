@@ -5,8 +5,7 @@ import {
 } from "../../../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../../../core/utils/types/entities";
 import { ManifestationMaterialType } from "../../../../core/utils/types/material-type";
-import { getLoanableManifestation } from "../../../../apps/material/helper";
-import { getReaderPlayerType } from "../../../reader-player/helper";
+import { getDigitalLoanable } from "../../../reader-player/helper";
 import {
   hasCorrectAccess,
   hasCorrectAccessType,
@@ -75,11 +74,7 @@ export const resolveOnlineButtonType = (
     return null;
   }
 
-  const readerPlayerType = getReaderPlayerType(
-    getLoanableManifestation(manifestations)
-  );
-
-  if (readerPlayerType === "player" || readerPlayerType === "reader") {
+  if (getDigitalLoanable(manifestations)) {
     return { type: "internal" };
   }
 

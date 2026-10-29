@@ -10,10 +10,7 @@ import { usePatronData } from "../../core/utils/helpers/usePatronData";
 import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import { useUrls } from "../../core/utils/url";
 import { useModalButtonHandler } from "../../core/utils/modal";
-import {
-  getLoanableManifestation,
-  onlineInternalModalId
-} from "../../apps/material/helper";
+import { onlineInternalModalId } from "../../apps/material/helper";
 import { formatDanishPhoneNumber } from "../../core/utils/helpers/general";
 import { Manifestation } from "../../core/utils/types/entities";
 import { RequestStatus } from "../../core/utils/types/request";
@@ -88,9 +85,9 @@ const useOnlineInternalHandleLoanReservation = ({
   const {
     canBeLoaned,
     canBeReserved,
-    identifier,
+    loanable,
     offerId: digitalOfferId
-  } = useReaderPlayer(getLoanableManifestation(manifestations));
+  } = useReaderPlayer(manifestations);
 
   const trackLoan = () =>
     track("click", {
@@ -195,7 +192,7 @@ const useOnlineInternalHandleLoanReservation = ({
         if (!result.success) return undefined;
         trackLoan();
         // Keyed by the offer, so the material is the one on screen.
-        return invalidateDigital(identifier);
+        return invalidateDigital(loanable?.id ?? null);
       }
     });
 
@@ -317,25 +314,25 @@ const useOnlineInternalHandleLoanReservation = ({
       return;
     }
 
-    if (canBeLoaned && identifier) {
+    if (canBeLoaned && loanable) {
       if (!viaBiblioAdapter) {
-        loanViaPublizon(identifier);
+        loanViaPublizon(loanable.id);
       } else if (digitalOfferId) {
         // Publizon has no explicit redeem step - a redeemable reservation
         // just shows the loan button - but the service layer requires the
         // offer to be accepted instead of borrowing the material anew.
         acceptOffer(digitalOfferId);
       } else {
-        loanViaAdapter(identifier);
+        loanViaAdapter(loanable.id);
       }
       return;
     }
 
-    if (canBeReserved && identifier) {
+    if (canBeReserved && loanable) {
       if (viaBiblioAdapter) {
-        reserveViaAdapter(identifier);
+        reserveViaAdapter(loanable.id);
       } else {
-        reserveViaPublizon(identifier);
+        reserveViaPublizon(loanable.id);
       }
     }
   };

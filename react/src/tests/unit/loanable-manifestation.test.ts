@@ -4,7 +4,7 @@ import {
   getManifestationDigitalIdentifier,
   onlineInternalModalId
 } from "../../apps/material/helper";
-import { getReaderPlayerType } from "../../components/reader-player/helper";
+import { getDigitalLoanable } from "../../components/reader-player/helper";
 import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
@@ -109,13 +109,17 @@ describe("getManifestationDigitalIdentifier", () => {
   });
 });
 
-describe("getReaderPlayerType", () => {
-  it("opens an edition with a digital id in the reader", () => {
-    expect(getReaderPlayerType(epub)).toBe("reader");
+describe("getDigitalLoanable", () => {
+  it("answers edition, id and reader or player in one go", () => {
+    expect(getDigitalLoanable([pdf, epub])).toEqual({
+      manifestation: epub,
+      id: "9788797577646",
+      opensIn: "reader"
+    });
   });
 
-  it("opens an edition without a digital id in neither reader nor player", () => {
-    expect(getReaderPlayerType(pdf)).toBeNull();
+  it("answers null when no edition can be lent", () => {
+    expect(getDigitalLoanable([pdf])).toBeNull();
   });
 });
 
