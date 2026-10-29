@@ -17,8 +17,11 @@ def next_actions:
   # GitHub leaves re-requested reviewers out of latestReviews, so these are
   # the verdicts nobody has been asked to revisit yet.
   | [.latestReviews[] | select(.author.login != $author)] as $settled_reviews
+  # Candidates stay in the pool after others have reviewed, since the author
+  # may still want their input. Those who already reviewed are not counted.
+  | [.assignees[].login | select(IN($requested[], $reviewed[]) | not)] as $candidates
   | [
-      ($requested | map(select(IN($reviewed[]) | not))
+      ($requested | map(select(IN($reviewed[]) | not)) + $candidates
         | select(length > 0) | {who: ., action: "review"}),
       ($requested | map(select(IN($reviewed[])))
         | select(length > 0) | {who: ., action: "re-review"}),
@@ -29,12 +32,8 @@ def next_actions:
        elif ($requested | length) == 0 and ($reviewed | length) > 0 then
          {who: [$author], action: "follow up on review"}
        else empty end),
-      (if ($requested | length) == 0 and ($reviewed | length) == 0 then
-         if (.assignees | length) > 0 then
-           {who: [.assignees[].login], action: "pick up review"}
-         else
-           {who: [$author], action: "assign review candidates"}
-         end
+      (if ($requested + $reviewed + [.assignees[].login] | length) == 0 then
+         {who: [$author], action: "assign review candidates"}
        else empty end)
     ];
 
