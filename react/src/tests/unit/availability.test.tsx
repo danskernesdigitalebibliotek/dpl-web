@@ -1,4 +1,5 @@
 import { renderHook } from "@testing-library/react";
+import { DigitalMaterialId } from "../../core/utils/types/ids";
 import {
   afterEach,
   beforeEach,
@@ -273,7 +274,7 @@ describe("useOnlineAvailabilityData tests", () => {
   const mockedFlag = vi.mocked(useBiblioAdapter);
   const mockedIsAnonymous = vi.mocked(isAnonymous);
 
-  const ISBN = "9788794564076";
+  const ISBN = "9788794564076" as DigitalMaterialId;
 
   const givenBiblioAnswers = (status: string) =>
     mockedLoanDecision.mockReturnValue({
@@ -281,9 +282,12 @@ describe("useOnlineAvailabilityData tests", () => {
       isLoading: false
     } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
-  const render = (isbn: string | null = ISBN, enabled = true) =>
+  const render = (
+    identifier: DigitalMaterialId | null = ISBN,
+    enabled = true
+  ) =>
     renderHook(() =>
-      useOnlineAvailabilityData({ enabled, access: ["Ereol"], isbn })
+      useOnlineAvailabilityData({ enabled, access: ["Ereol"], identifier })
     );
 
   beforeEach(() => {
@@ -452,7 +456,7 @@ describe("useOnlineAvailabilityData tests", () => {
       useOnlineAvailabilityData({
         enabled: true,
         access: ["AccessUrl"],
-        isbn: ISBN
+        identifier: ISBN
       })
     );
 
@@ -489,7 +493,7 @@ describe("useOnlineAvailabilityData tests", () => {
       });
     });
 
-    it("Leaves Biblio alone without an isbn to ask about", () => {
+    it("Leaves Biblio alone without an identifier to ask about", () => {
       render(null);
 
       // The query is still declared - hooks cannot be conditional - but it

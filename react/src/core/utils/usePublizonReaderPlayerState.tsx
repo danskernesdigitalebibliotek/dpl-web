@@ -18,6 +18,7 @@ import {
   unknownReaderPlayerState
 } from "./types/reader-player-state";
 import usePublizonReservationsClosed from "./usePublizonReservationsClosed";
+import { DigitalMaterialId } from "./types/ids";
 
 /**
  * What Publizon says about a digital material - the Publizon half of the
@@ -31,7 +32,7 @@ const usePublizonReaderPlayerState = ({
   identifier,
   canAcquire
 }: {
-  identifier: string | null;
+  identifier: DigitalMaterialId | null;
   /** Whether Publizon may decide that a new loan or reservation is possible. */
   canAcquire: boolean;
 }): ReaderPlayerState => {

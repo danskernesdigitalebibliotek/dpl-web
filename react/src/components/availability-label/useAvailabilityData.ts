@@ -1,6 +1,6 @@
 import { AccessTypeCodeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { AccessTypes } from "../../core/utils/types/entities";
-import { FaustId } from "../../core/utils/types/ids";
+import { DigitalMaterialId, FaustId } from "../../core/utils/types/ids";
 import { isOnline } from "./helper";
 import useOnlineAvailabilityData from "./useOnlineAvailabilityData";
 import usePhysicalAvailabilityData from "./usePhysicalAvailabilityData";
@@ -10,20 +10,20 @@ const useAvailabilityData = ({
   access,
   faustIds,
   manifestText,
-  isbn,
+  identifier,
   enabled = true
 }: {
   accessTypes: AccessTypeCodeEnum[];
   access: AccessTypes[];
   faustIds: FaustId[];
   manifestText: string;
-  isbn: string | null;
+  identifier: DigitalMaterialId | null;
   enabled?: boolean;
 }) => {
   const availabilityOnline = useOnlineAvailabilityData({
     enabled: isOnline(accessTypes) && enabled,
     access,
-    isbn
+    identifier
   });
 
   const availabilityPhysical = usePhysicalAvailabilityData({

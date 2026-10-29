@@ -95,14 +95,16 @@ describe("getManifestationDigitalIdentifier", () => {
     expect(getManifestationDigitalIdentifier(epub)).toBe("9788797577646");
   });
 
-  it("falls back to the ISBN when there is no PUBLIZON identifier", () => {
-    expect(getManifestationDigitalIdentifier(pdf)).toBe("9788797287996");
+  it("does not fall back to the ISBN when there is no PUBLIZON identifier", () => {
+    // The ISBN may name an edition no provider lends - the deselected PDF -
+    // so asking about it would be asking about the wrong material.
+    expect(getManifestationDigitalIdentifier(pdf)).toBeNull();
   });
 
-  it("returns an empty string when there is no usable identifier", () => {
+  it("returns null when there is no identifier at all", () => {
     expect(
       getManifestationDigitalIdentifier(manifestation("pid:none", []))
-    ).toBe("");
+    ).toBeNull();
   });
 });
 

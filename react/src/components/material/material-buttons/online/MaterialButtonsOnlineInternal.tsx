@@ -96,7 +96,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const [reservationToDelete, setReservationToDelete] =
     useState<ReservationType | null>(null);
 
-  const isReady = Boolean(identifier) && !isLoading && !isSubmitting;
+  const isReady = !isLoading && !isSubmitting;
 
   const manifestationType = getMaterialType(manifestations);
   const reseveLabel = openModal
@@ -413,6 +413,11 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
       />
     );
   };
+
+  // Without a digital id no provider can lend the material - see
+  // getManifestationDigitalIdentifier - so there is no button to offer, and
+  // a spinner would promise one that never comes.
+  if (identifier === null) return null;
 
   if (type === "reader") {
     return (

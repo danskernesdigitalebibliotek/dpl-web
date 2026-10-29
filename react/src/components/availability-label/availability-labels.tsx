@@ -50,7 +50,7 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
           manifestationsOfMaterialType
         );
         const identifier = loanableManifestation
-          ? getManifestationDigitalIdentifier(loanableManifestation) || null
+          ? getManifestationDigitalIdentifier(loanableManifestation)
           : null;
         const url = constructMaterialUrl(materialUrl, workId, materialType);
         const accessTypesCodes = manifestationsOfMaterialType

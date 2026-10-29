@@ -142,7 +142,7 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
           key={`${faustId}-material-manifestation-item`}
           manifestText={materialTypes[0]?.materialTypeSpecific.display}
           faustIds={[faustId]}
-          identifier={getManifestationDigitalIdentifier(manifestation) || null}
+          identifier={getManifestationDigitalIdentifier(manifestation)}
           accessTypes={accessTypesCodes}
           access={access}
           isVisualOnly
