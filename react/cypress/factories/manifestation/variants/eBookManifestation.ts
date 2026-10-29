@@ -19,6 +19,10 @@ export const eBookManifestation = manifestationFactory.build({
 
   identifiers: [
     {
+      type: IdentifierTypeEnum.Publizon,
+      value: "9788702441000"
+    },
+    {
       type: IdentifierTypeEnum.Isbn,
       value: "9788702441000"
     },
