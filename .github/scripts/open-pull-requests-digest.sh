@@ -23,7 +23,7 @@ dependabot_pull_requests=$(jq '[.[] | select(.author.login == "app/dependabot")]
 
 echo "**Open PRs on dpl-web** ($(jq length <<<"$human_pull_requests"), excluding Dependabot and drafts)"
 echo
-digest_jq '.[] | "- [#\(.number) \(safe_title)](\(.url)) — \(format_next_actions)"' "$human_pull_requests"
+digest_jq '.[] | "- [#\(.number) \(safe_title)](\(.url))\(format_next_actions)"' "$human_pull_requests"
 echo
 echo "**Open Dependabot PRs** ($(jq length <<<"$dependabot_pull_requests"))"
 echo

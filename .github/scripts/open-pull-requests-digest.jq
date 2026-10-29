@@ -27,9 +27,7 @@ def next_actions:
         | select(length > 0) | {who: ., action: "re-review"}),
       (if any($settled_reviews[]; .state == "CHANGES_REQUESTED") then
          {who: [$author], action: "address changes"}
-       elif .reviewDecision == "APPROVED" then
-         {who: [$author], action: "merge"}
-       elif ($requested | length) == 0 and ($reviewed | length) > 0 then
+       elif .reviewDecision != "APPROVED" and ($requested | length) == 0 and ($reviewed | length) > 0 then
          {who: [$author], action: "follow up on review"}
        else empty end),
       (if ($requested + $reviewed + [.assignees[].login] | length) == 0 then
@@ -37,5 +35,7 @@ def next_actions:
        else empty end)
     ];
 
+# " — who (action) · …", or nothing when nobody needs to act.
 def format_next_actions:
-  next_actions | map("\(.who | join(", ")) (\(.action))") | join(" · ");
+  next_actions | map("\(.who | join(", ")) (\(.action))")
+  | if length == 0 then "" else " — " + join(" · ") end;
