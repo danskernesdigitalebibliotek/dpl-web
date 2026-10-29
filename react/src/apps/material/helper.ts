@@ -106,6 +106,15 @@ export const getLoanableManifestation = (manifestations: Manifestation[]) => {
   );
 };
 
+// The id the lent edition is asked about, whether or not our reader or player
+// can open its type: availability is the provider's answer, opening is ours.
+export const getLoanableDigitalId = (manifestations: Manifestation[]) => {
+  const manifestation = getLoanableManifestation(manifestations);
+  return manifestation
+    ? getManifestationDigitalIdentifier(manifestation)
+    : null;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getManifestationPlayingTime = (manifestation: Manifestation) => {
   return "";

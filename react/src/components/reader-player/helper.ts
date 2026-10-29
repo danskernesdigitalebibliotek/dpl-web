@@ -181,10 +181,29 @@ export const getDigitalLoanable = (
   if (!hasCorrectAccess("Ereol", [manifestation])) return null;
 
   const id = getManifestationDigitalIdentifier(manifestation);
+  if (id === null) return null;
+
   const type = opensIn(manifestation);
-  return id !== null && type !== null
-    ? { manifestation, id, opensIn: type }
-    : null;
+  if (type === null) {
+    warnUnopenableType(manifestation);
+    return null;
+  }
+  return { manifestation, id, opensIn: type };
+};
+
+// FBI catalogues the same e-book format under several types, so a provider
+// can lend a title whose type is in neither list above. The page then shows
+// no loan button; say so once per type, in production too, since new types
+// turn up in live data rather than in fixtures.
+const warnedTypes = new Set<string>();
+const warnUnopenableType = (manifestation: Manifestation) => {
+  const type = getMaterialTypes([manifestation])[0] ?? "";
+  if (warnedTypes.has(type)) return;
+  warnedTypes.add(type);
+  // eslint-disable-next-line no-console
+  console.warn(
+    `A digital material of type "${type}" can be lent but opens in neither reader nor player - add the type to readerTypes or playerTypes`
+  );
 };
 
 export const findReservedReservation = (

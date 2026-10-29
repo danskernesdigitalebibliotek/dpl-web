@@ -12,8 +12,10 @@ import { WorkId } from "../../core/utils/types/ids";
 import { useUrls } from "../../core/utils/url";
 import { AvailabilityLabel } from "./availability-label";
 import { Manifestation } from "../../core/utils/types/entities";
-import { divideManifestationsByMaterialType } from "../../apps/material/helper";
-import { getDigitalLoanable } from "../reader-player/helper";
+import {
+  divideManifestationsByMaterialType,
+  getLoanableDigitalId
+} from "../../apps/material/helper";
 
 export interface AvailabilityLabelsProps {
   manifestations: Manifestation[];
@@ -43,8 +45,7 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
         const manifestationsOfMaterialType =
           manifestationsByMaterialType[materialType];
         const faustIds = getAllFaustIds(manifestationsOfMaterialType).sort();
-        const identifier =
-          getDigitalLoanable(manifestationsOfMaterialType)?.id ?? null;
+        const identifier = getLoanableDigitalId(manifestationsOfMaterialType);
         const url = constructMaterialUrl(materialUrl, workId, materialType);
         const accessTypesCodes = manifestationsOfMaterialType
           .map((manifest) =>

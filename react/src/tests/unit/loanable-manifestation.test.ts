@@ -1,5 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
+  getLoanableDigitalId,
   getLoanableManifestation,
   getManifestationDigitalIdentifier,
   onlineInternalModalId
@@ -120,6 +121,41 @@ describe("getDigitalLoanable", () => {
 
   it("answers null when no edition can be lent", () => {
     expect(getDigitalLoanable([pdf])).toBeNull();
+  });
+
+  it("answers null, and says so once, for a lendable type it cannot open", () => {
+    const graphicNovel: Manifestation = {
+      ...epub,
+      materialTypes: [
+        { materialTypeSpecific: { display: "graphic novel (online)" } }
+      ]
+    } as Manifestation;
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    expect(getDigitalLoanable([graphicNovel])).toBeNull();
+    expect(getDigitalLoanable([graphicNovel])).toBeNull();
+
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn.mock.calls[0][0]).toContain("graphic novel (online)");
+    warn.mockRestore();
+  });
+});
+
+describe("getLoanableDigitalId", () => {
+  it("still names the id for a lendable type the reader and player do not know", () => {
+    // Availability is the provider's answer; whether we can open the title
+    // is a separate question, so the label keeps asking.
+    const graphicNovel: Manifestation = {
+      ...epub,
+      materialTypes: [
+        { materialTypeSpecific: { display: "graphic novel (online)" } }
+      ]
+    } as Manifestation;
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    expect(getLoanableDigitalId([pdf, graphicNovel])).toBe("9788797577646");
+    expect(getLoanableDigitalId([pdf])).toBeNull();
+    vi.restoreAllMocks();
   });
 });
 
