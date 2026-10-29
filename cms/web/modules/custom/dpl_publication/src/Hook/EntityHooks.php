@@ -25,7 +25,7 @@ class EntityHooks {
       return;
     }
 
-    $original_node = $node->original ?? NULL;
+    $original_node = $node->getOriginal() ?? NULL;
 
     if (!($original_node instanceof NodeInterface)) {
       return;
