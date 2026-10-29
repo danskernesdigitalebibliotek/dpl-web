@@ -72,6 +72,10 @@ describe('Mobile app API: getAppCategories', () => {
       description: `Beskrivelse ${runId}`,
     };
 
+    // Reading the list before creating the category caches it, so a list
+    // that is not invalidated when a category is created fails the test.
+    getAppCategories('BIBLOGO');
+
     createGoArticle(articleTitle, '<p>Brødtekst</p>').then((article) => {
       createGoCategory(categoryTitle, { ...link, linkPath: article.path }).then(
         (category) => {
