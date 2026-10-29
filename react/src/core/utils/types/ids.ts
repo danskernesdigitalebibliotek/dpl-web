@@ -17,3 +17,15 @@ export type GuardedAppId =
   | "dashboard";
 
 export type LoanId = number;
+
+/**
+ * The id a digital material is borrowed, reserved and read by - Publizon's
+ * identifier and the service layer's `material_id` alike. Branded so that an
+ * ISBN picked off a manifestation cannot stand in for it: the two look alike
+ * (both are ISBN-13s), but only the value FBI exposes as a PUBLIZON
+ * identifier names an edition the lending provider actually holds. Produced
+ * by getManifestationDigitalIdentifier only.
+ */
+export type DigitalMaterialId = string & {
+  readonly __brand: "DigitalMaterialId";
+};

@@ -1,4 +1,5 @@
 import { renderHook } from "@testing-library/react";
+import { DigitalMaterialId } from "../../core/utils/types/ids";
 import {
   afterEach,
   beforeEach,
@@ -273,7 +274,7 @@ describe("useOnlineAvailabilityData tests", () => {
   const mockedFlag = vi.mocked(useBiblioAdapter);
   const mockedIsAnonymous = vi.mocked(isAnonymous);
 
-  const ISBN = "9788794564076";
+  const ISBN = "9788794564076" as DigitalMaterialId;
 
   const givenBiblioAnswers = (status: string) =>
     mockedLoanDecision.mockReturnValue({
@@ -281,10 +282,10 @@ describe("useOnlineAvailabilityData tests", () => {
       isLoading: false
     } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
-  const render = (isbn: string | null = ISBN, enabled = true) =>
-    renderHook(() =>
-      useOnlineAvailabilityData({ enabled, access: ["Ereol"], isbn })
-    );
+  const render = (
+    identifier: DigitalMaterialId | null = ISBN,
+    enabled = true
+  ) => renderHook(() => useOnlineAvailabilityData({ enabled, identifier }));
 
   beforeEach(() => {
     vi.useFakeTimers();
@@ -319,7 +320,7 @@ describe("useOnlineAvailabilityData tests", () => {
     vi.useRealTimers();
   });
 
-  it("If the useGetV1ProductsIdentifier service tells us that the material is NOT `costFree` (not a blue title) and the material belongs to 'Ereol' (the access param) the Publizon product status should dictate the availability ", () => {
+  it("If the useGetV1ProductsIdentifier service tells us that the material is NOT `costFree` (not a blue title) the Publizon product status should dictate the availability ", () => {
     // The only Publizon product status that is NOT available is 5.
 
     // Typescript does not understand our mocked hooks.
@@ -444,19 +445,15 @@ describe("useOnlineAvailabilityData tests", () => {
 
   it("Asks no provider about an online material outside the e-book service", () => {
     // A PressReader newspaper is online, but reached through a plain url and
-    // not part of the e-book service - neither Publizon nor Biblio knows it,
-    // so neither should be asked. Even with the library switched to Biblio.
+    // not part of the e-book service: it has no digital id, so neither
+    // Publizon nor Biblio is asked. Even with the library switched to Biblio.
     mockedFlag.mockReturnValue(true);
 
     renderHook(() =>
-      useOnlineAvailabilityData({
-        enabled: true,
-        access: ["AccessUrl"],
-        isbn: ISBN
-      })
+      useOnlineAvailabilityData({ enabled: true, identifier: null })
     );
 
-    expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, { enabled: false });
+    expect(mockedLoanDecision).toHaveBeenCalledWith(null, { enabled: false });
     expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({ query: { enabled: false } })
@@ -489,7 +486,7 @@ describe("useOnlineAvailabilityData tests", () => {
       });
     });
 
-    it("Leaves Biblio alone without an isbn to ask about", () => {
+    it("Leaves Biblio alone without an identifier to ask about", () => {
       render(null);
 
       // The query is still declared - hooks cannot be conditional - but it

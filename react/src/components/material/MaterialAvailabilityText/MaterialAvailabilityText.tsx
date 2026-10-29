@@ -49,7 +49,7 @@ const MaterialAvailabilityText: React.FC<Props> = ({ manifestations }) => {
     const identifier = loanableManifestation
       ? getManifestationDigitalIdentifier(loanableManifestation)
       : null;
-    if (!identifier) {
+    if (identifier === null) {
       return null;
     }
     return (

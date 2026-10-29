@@ -50,19 +50,13 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
           manifestationsOfMaterialType
         );
         const identifier = loanableManifestation
-          ? getManifestationDigitalIdentifier(loanableManifestation) || null
+          ? getManifestationDigitalIdentifier(loanableManifestation)
           : null;
         const url = constructMaterialUrl(materialUrl, workId, materialType);
         const accessTypesCodes = manifestationsOfMaterialType
           .map((manifest) =>
             manifest.accessTypes.map((accessType) => accessType.code)
           )
-          .flat();
-
-        const access = manifestationsOfMaterialType
-          .map((manifest) => {
-            return manifest.access.map((acc) => acc.__typename);
-          })
           .flat();
 
         return (
@@ -73,7 +67,6 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
             faustIds={faustIds}
             manifestText={materialType}
             accessTypes={accessTypesCodes}
-            access={access}
             selected={
               selectedManifestations &&
               materialType === getMaterialType(selectedManifestations)

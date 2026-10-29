@@ -1,4 +1,5 @@
 import React from "react";
+import { DigitalMaterialId } from "../../core/utils/types/ids";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, within } from "@testing-library/react";
 import MaterialAvailabilityTextOnline from "../../components/material/MaterialAvailabilityText/online/MaterialAvailabilityTextOnline";
@@ -37,7 +38,7 @@ vi.mock(
  * spending.
  */
 
-const ISBN = "9788727319346";
+const ISBN = "9788727319346" as DigitalMaterialId;
 
 vi.mock("../../core/utils/text", () => ({
   useText:
