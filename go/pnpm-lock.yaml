@@ -98,8 +98,8 @@ importers:
         specifier: ^6.1.6
         version: 6.1.6(@types/react@19.3.0)(react@19.3.1)
       react-parallax-tilt:
-        specifier: ^1.7.348
-        version: 1.7.348(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^1.7.349
+        version: 1.7.349(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       replace-in-file:
         specifier: ^9.0.0
         version: 9.0.0
@@ -125,8 +125,8 @@ importers:
         specifier: ^5.33.3
         version: 5.33.3
       zod:
-        specifier: ^4.4.3
-        version: 4.4.3
+        specifier: ^4.6.7
+        version: 4.6.7
     devDependencies:
       '@argos-ci/cli':
         specifier: ^6.11.0
@@ -259,7 +259,7 @@ importers:
         version: 5.0.7(next@16.4.2(@babel/core@7.29.7(supports-color@8.1.1))(@types/node@24.19.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
       orval:
         specifier: ^8.44.0
-        version: 8.44.0(@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1))(prettier@3.9.10)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(typescript@5.9.3)(zod@4.4.3)
+        version: 8.44.0(@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1))(prettier@3.9.10)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(typescript@5.9.3)(zod@4.6.7)
       playwright:
         specifier: ^1.64.1
         version: 1.64.1
@@ -8725,8 +8725,8 @@ packages:
   react-is@19.3.0:
     resolution: {integrity: sha512-UpMYezM4v5/18F28aC66AEsjXIgE02kyEMH6yLdgLXu/UTfa1Ntwck/nNLrbqJsEXW7gPb0coNO9FQse9WTovA==}
 
-  react-parallax-tilt@1.7.348:
-    resolution: {integrity: sha512-u6UJjuESR0ogNv+PxhdeV2I20mnVcgfSu83wjVgGtEm1Yu19JkWnVjqWfBJHWrf5qk9fvfgPY3X/qwwbXqbimA==}
+  react-parallax-tilt@1.7.349:
+    resolution: {integrity: sha512-JIidDwXkBF+oMJmJfLecL+yE9glM6ZmReSJ+YrtkdYKQszAviyLabplJzo7ZmVTB26On4nupbKomyxuGiFPi+w==}
     peerDependencies:
       react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -10376,9 +10376,6 @@ packages:
 
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
-
-  zod@4.4.3:
-    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
   zod@4.6.7:
     resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
@@ -12842,10 +12839,10 @@ snapshots:
       - '@faker-js/faker'
       - '@modelcontextprotocol/server'
 
-  '@orval/hono@8.44.0(typescript@5.9.3)(zod@4.4.3)':
+  '@orval/hono@8.44.0(typescript@5.9.3)(zod@4.6.7)':
     dependencies:
       '@orval/core': 8.44.0
-      '@orval/zod': 8.44.0(zod@4.4.3)
+      '@orval/zod': 8.44.0(zod@4.6.7)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -12853,11 +12850,11 @@ snapshots:
       - '@modelcontextprotocol/server'
       - zod
 
-  '@orval/mcp@8.44.0(zod@4.4.3)':
+  '@orval/mcp@8.44.0(zod@4.6.7)':
     dependencies:
       '@orval/core': 8.44.0
       '@orval/fetch': 8.44.0
-      '@orval/zod': 8.44.0(zod@4.4.3)
+      '@orval/zod': 8.44.0(zod@4.6.7)
     transitivePeerDependencies:
       - '@faker-js/faker'
       - zod
@@ -12902,12 +12899,12 @@ snapshots:
       - '@faker-js/faker'
       - '@modelcontextprotocol/server'
 
-  '@orval/zod@8.44.0(zod@4.4.3)':
+  '@orval/zod@8.44.0(zod@4.6.7)':
     dependencies:
       '@orval/core': 8.44.0
       jsesc: 3.1.0
     optionalDependencies:
-      zod: 4.4.3
+      zod: 4.6.7
     transitivePeerDependencies:
       - '@faker-js/faker'
       - '@modelcontextprotocol/server'
@@ -19304,7 +19301,7 @@ snapshots:
       stdin-discarder: 0.3.2
       string-width: 8.2.2
 
-  orval@8.44.0(@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1))(prettier@3.9.10)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(typescript@5.9.3)(zod@4.4.3):
+  orval@8.44.0(@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1))(prettier@3.9.10)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(typescript@5.9.3)(zod@4.6.7):
     dependencies:
       '@commander-js/extra-typings': 15.0.0(commander@15.0.0)
       '@orval/angular': 8.44.0
@@ -19312,14 +19309,14 @@ snapshots:
       '@orval/core': 8.44.0
       '@orval/effect': 8.44.0
       '@orval/fetch': 8.44.0
-      '@orval/hono': 8.44.0(typescript@5.9.3)(zod@4.4.3)
-      '@orval/mcp': 8.44.0(zod@4.4.3)
+      '@orval/hono': 8.44.0(typescript@5.9.3)(zod@4.6.7)
+      '@orval/mcp': 8.44.0(zod@4.6.7)
       '@orval/mock': 8.44.0
       '@orval/pinia-colada': 8.44.0
       '@orval/query': 8.44.0(@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1))
       '@orval/solid-start': 8.44.0
       '@orval/swr': 8.44.0
-      '@orval/zod': 8.44.0(zod@4.4.3)
+      '@orval/zod': 8.44.0(zod@4.6.7)
       '@scalar/json-magic': 0.15.7
       '@scalar/openapi-parser': 0.29.15
       '@scalar/openapi-types': 0.9.7
@@ -19907,7 +19904,7 @@ snapshots:
 
   react-is@19.3.0: {}
 
-  react-parallax-tilt@1.7.348(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
+  react-parallax-tilt@1.7.349(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
@@ -21670,8 +21667,6 @@ snapshots:
       zod: 4.6.7
 
   zod@3.22.4: {}
-
-  zod@4.4.3: {}
 
   zod@4.6.7: {}
 
