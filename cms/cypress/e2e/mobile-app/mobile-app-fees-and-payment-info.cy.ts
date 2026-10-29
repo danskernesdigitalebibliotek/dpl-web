@@ -1,6 +1,7 @@
 // The mobile apps link to the fees page and the payment site, which the BFF
 // behind them reads through getAppFeesAndPaymentInfo. A failure here means a
 // change in the CMS will break the mobile apps.
+import { ignoreLinkitUriError } from '../../helpers/helper-linkit';
 import { gqlQueries } from '../../helpers/mobile-app-queries';
 
 type FeesAndPaymentInfo = {
@@ -42,15 +43,7 @@ const setFeesSettings = (settings: FeesSettings) => {
   cy.contains('The configuration options have been saved.');
 };
 
-// Linkit's autocomplete script throws on the URL fields of this form, as it
-// expects to find them in a link field widget. Saving the form still works.
-Cypress.on(
-  'uncaught:exception',
-  (error) =>
-    !error.message.includes(
-      'must have a data-drupal-selector attribute ending in "-uri"',
-    ),
-);
+ignoreLinkitUriError();
 
 describe('Mobile app API: getAppFeesAndPaymentInfo', () => {
   // When no fees URL is set, the form shows the site's base URL, so restoring
@@ -63,6 +56,9 @@ describe('Mobile app API: getAppFeesAndPaymentInfo', () => {
 
   before(() => {
     cy.drupalLogin(formUrl);
+    // Remember what each field holds before the test, so after() can put it
+    // back. Object.keys() is typed as string[], hence the cast to the keys of
+    // FeesSettings.
     (Object.keys(fields) as (keyof FeesSettings)[]).forEach((key) => {
       cy.get(fields[key])
         .invoke('val')
