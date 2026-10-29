@@ -3,7 +3,7 @@
 #
 # Prints one line per state change (status or build step) and exits when the
 # deployment reaches a terminal state: 0 on complete, 1 on failed/cancelled/error.
-# Mirrors the latest line to $XDG_CACHE_HOME/lagoon-deploy-watch/<project>__<env> for
+# Mirrors the latest line to $XDG_CACHE_HOME/dpl-lagoon-deploy-watch/<project>__<env> for
 # the status line (see statusline.sh).
 #
 # Usage: watch.sh [-p project] [-e environment] [-d deployment-name] [-i seconds]

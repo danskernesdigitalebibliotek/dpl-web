@@ -1,5 +1,5 @@
 ---
-name: lagoon-deploy-watch
+name: dpl-lagoon-deploy-watch
 description: Watches the Lagoon deployment triggered by the latest git push and reports its progress in chat and in the Claude Code status line until it completes or fails. Use when the user asks whether their deployment/build is done, to watch, follow or poll a Lagoon deploy, or says "tell me when it's deployed".
 ---
 
@@ -8,7 +8,7 @@ description: Watches the Lagoon deployment triggered by the latest git push and 
 `scripts/watch.sh` resolves the Lagoon project and environment from the current
 branch, then polls `lagoon list deployments` until the build finishes. It prints
 one line per change of status or build step and mirrors the state to
-`$XDG_CACHE_HOME/lagoon-deploy-watch/` (default `~/.cache`), which `scripts/statusline.sh` shows in the
+`$XDG_CACHE_HOME/dpl-lagoon-deploy-watch/` (default `~/.cache`), which `scripts/statusline.sh` shows in the
 status line. Run it from inside the repo/worktree that was pushed.
 
 **Read-only:** use only `lagoon list …` and `lagoon get …`. Never deploy,
@@ -19,7 +19,7 @@ failed build. If a build fails, report it and let the user decide.
 
 1. Start it with the **Monitor** tool, so each line arrives as a notification
    while the user works on other things:
-   - command: `"$(git rev-parse --show-toplevel)/.claude/skills/lagoon-deploy-watch/scripts/watch.sh"` (add
+   - command: `"$(git rev-parse --show-toplevel)/.claude/skills/dpl-lagoon-deploy-watch/scripts/watch.sh"` (add
      `-p <project>`, `-e <env>`, or `-d <deployment-name>` only if the user
      names them or auto-detection fails)
    - description: `Lagoon deploy <env>`

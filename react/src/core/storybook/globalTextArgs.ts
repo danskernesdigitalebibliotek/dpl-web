@@ -197,12 +197,6 @@ export const argTypes = {
     },
     control: { type: "text" }
   },
-  acceptModalAriaLabelText: {
-    table: {
-      defaultValue: { summary: "accept modal aria label text" }
-    },
-    control: { type: "text" }
-  },
   pauseReservationModalAriaDescriptionText: {
     table: {
       defaultValue: {
@@ -221,45 +215,6 @@ export const argTypes = {
   removeFromFavoritesAriaLabelText: {
     table: {
       defaultValue: { summary: "Remove @title from favorites list" }
-    },
-    control: { type: "text" }
-  },
-  acceptModalAriaDescriptionText: {
-    table: {
-      defaultValue: { summary: "accept modal aria description text" }
-    },
-    control: { type: "text" }
-  },
-  acceptModalHeaderText: {
-    table: {
-      defaultValue: { summary: "Hov, dit gebyr forhøjes!" }
-    },
-    control: { type: "text" }
-  },
-  acceptModalBodyText: {
-    table: {
-      defaultValue: {
-        summary:
-          "Fornyer du dine lån, forhøjes dit gebyr. Alle materialer ikke kan fornys og lånet splittes derfor op. Ved overskredne lån modtager du et gebyr pr. lån og derfor forhøjes dit samlede gebyr, hvis du vælger at gå videre med at fornye."
-      }
-    },
-    control: { type: "text" }
-  },
-  acceptModalAreYouSureText: {
-    table: {
-      defaultValue: { summary: "Er du sikker på du vil fornye?" }
-    },
-    control: { type: "text" }
-  },
-  acceptModalAcceptButtonText: {
-    table: {
-      defaultValue: { summary: "Ja, forny mulige" }
-    },
-    control: { type: "text" }
-  },
-  acceptModalCancelButtonText: {
-    table: {
-      defaultValue: { summary: "Annuller fornyelse" }
     },
     control: { type: "text" }
   },
@@ -367,18 +322,10 @@ export default {
   closeModalAriaLabelSmsText: "Close change mobile number modal",
   closeModalAriaLabelEmailText: "Close change email modal",
   deleteReservationModalButtonText: "Ok",
-  acceptModalAriaLabelText: "accept modal aria label text",
   pauseReservationModalAriaDescriptionText:
     "This modal makes it possible to pause your physical reservations",
   addToFavoritesAriaLabelText: "Add @title to favorites list",
   removeFromFavoritesAriaLabelText: "Remove @title from favorites list",
-  acceptModalAriaDescriptionText: "accept modal aria description text",
-  acceptModalHeaderText: "Hov, dit gebyr forhøjes!",
-  acceptModalBodyText:
-    "Fornyer du dine lån, forhøjes dit gebyr. Alle materialer ikke kan fornys og lånet splittes derfor op. Ved overskredne lån modtager du et gebyr pr. lån og derfor forhøjes dit samlede gebyr, hvis du vælger at gå videre med at fornye.",
-  acceptModalAreYouSureText: "Er du sikker på du vil fornye?",
-  acceptModalAcceptButtonText: "Ja, forny mulige",
-  acceptModalCancelButtonText: "Annuller fornyelse",
   isLoadingHeartText: "Indlæser",
   materialSliderNextText: "Show next",
   materialSliderPreviousText: "Show previous",
@@ -425,15 +372,8 @@ export interface GlobalEntryTextProps {
   closeModalAriaLabelSmsText: string;
   deleteReservationModalButtonText: string;
   pauseReservationModalAriaDescriptionText: string;
-  acceptModalAriaDescriptionText: string;
   addToFavoritesAriaLabelText: string;
   removeFromFavoritesAriaLabelText: string;
-  acceptModalAriaLabelText: string;
-  acceptModalHeaderText: string;
-  acceptModalAreYouSureText: string;
-  acceptModalBodyText: string;
-  acceptModalCancelButtonText: string;
-  acceptModalAcceptButtonText: string;
   isLoadingHeartText: string;
   materialSliderNextText: string;
   materialSliderPreviousText: string;

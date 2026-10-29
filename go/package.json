@@ -54,7 +54,7 @@
     "@radix-ui/react-slot": "^1.5.0",
     "@reloaddk/wsdl-tsclient": "^2.0.14",
     "@tanstack/react-query": "^5.104.5",
-    "@types/lodash": "^4.17.26",
+    "@types/lodash": "^4.17.27",
     "@uidotdev/usehooks": "^2.4.1",
     "@xstate/react": "^6.1.0",
     "@xstate/store": "^4.3.0",
@@ -73,7 +73,7 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-error-boundary": "^6.1.6",
-    "react-parallax-tilt": "^1.7.348",
+    "react-parallax-tilt": "^1.7.349",
     "replace-in-file": "^9.0.0",
     "sharp": "^0.35.5",
     "soap": "^1.14.0",
@@ -82,7 +82,7 @@
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.2",
     "xstate": "^5.33.3",
-    "zod": "^4.4.3"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@argos-ci/cli": "^6.11.0",
@@ -128,7 +128,7 @@
     "mockdate": "^3.0.5",
     "mockttp": "^4.6.5",
     "next-test-api-route-handler": "^5.0.7",
-    "orval": "^8.23.0",
+    "orval": "^8.44.0",
     "playwright": "^1.64.1",
     "postcss": "^8.5.31",
     "prettier": "^3.9.10",
@@ -139,9 +139,9 @@
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
-    "vite": "^6.0.0",
+    "vite": "^8.3.5",
     "vite-tsconfig-paths": "^6.0.4",
-    "vitest": "^4.0.18",
+    "vitest": "^5.0.5",
     "wait-on": "^9.5.1"
   }
 }
