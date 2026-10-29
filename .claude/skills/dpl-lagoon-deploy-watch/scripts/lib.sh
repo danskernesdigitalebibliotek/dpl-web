@@ -10,7 +10,7 @@
 # command substitution. They read watch.sh's settings from globals too:
 # interval, state_file, workflow and deploy_job.
 
-state_dir=${XDG_CACHE_HOME:-$HOME/.cache}/lagoon-deploy-watch
+state_dir=${XDG_CACHE_HOME:-$HOME/.cache}/dpl-lagoon-deploy-watch
 
 die() { echo "ERROR: $*"; exit 2; }
 
