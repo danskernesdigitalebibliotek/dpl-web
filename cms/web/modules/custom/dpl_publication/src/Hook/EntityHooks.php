@@ -18,6 +18,10 @@ class EntityHooks {
    *
    * Sets field_publication_date to the current date if the node is being
    * published, or if the publication date is not already set.
+   *
+   * In general, nodes shouldn't lack a publication date as the field is
+   * required and defaults to today, but as some nodes could predate this
+   * module, we have that extra check.
    */
   #[Hook('node_presave')]
   public function setPublicationDate(NodeInterface $node): void {
