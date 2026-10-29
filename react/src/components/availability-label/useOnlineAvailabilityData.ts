@@ -62,9 +62,8 @@ const useOnlineAvailabilityData = ({
       query: {
         enabled:
           askPublizon &&
-          // If the material is free (I think it is called blue material btw.)
-          // we should not load the loan status because then we know that it is available.
-          // So if the material is not free we should load the loan status.
+          // A cost-free (blue) title is always available, so its loan status
+          // is not needed.
           dataIdentifier?.product?.costFree === false
       }
     });

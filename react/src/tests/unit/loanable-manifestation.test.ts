@@ -99,8 +99,6 @@ describe("getManifestationDigitalIdentifier", () => {
   });
 
   it("does not fall back to the ISBN when there is no PUBLIZON identifier", () => {
-    // The ISBN may name an edition no provider lends - the deselected PDF -
-    // so asking about it would be asking about the wrong material.
     expect(getManifestationDigitalIdentifier(pdf)).toBeNull();
   });
 
@@ -117,8 +115,6 @@ describe("getReaderPlayerType", () => {
   });
 
   it("opens an edition without a digital id in neither reader nor player", () => {
-    // No provider can lend it, so the page must not lay out loan buttons or
-    // ask about availability for it - the same rule the label follows.
     expect(getReaderPlayerType(pdf)).toBeNull();
   });
 });

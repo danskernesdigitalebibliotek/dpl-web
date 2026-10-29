@@ -498,9 +498,8 @@ describe("useOnlineAvailabilityData tests", () => {
     });
 
     it("Asks nobody about a material without a digital id", () => {
-      // A PressReader newspaper is online but reached through a plain url:
-      // no provider lends it, so none is asked. The queries are still
-      // declared - hooks cannot be conditional - but disabled.
+      // The queries are still declared - hooks cannot be conditional - but
+      // disabled, so no request is made.
       render(null);
 
       expect(mockedLoanDecision).toHaveBeenCalledWith(null, {
