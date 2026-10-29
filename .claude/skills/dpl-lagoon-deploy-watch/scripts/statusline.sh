@@ -29,7 +29,9 @@ for f in "$state_dir"/*; do
   case $status in
     complete|failed|cancelled|error)
       [ "$age" -lt 900 ] || { rm -f "$f"; continue; }
-      if [ "$status" = complete ]; then out+=("✅ $env deployed"); else out+=("❌ $env $status"); fi ;;
+      # The final write is when the watcher saw the build finish (BSD or GNU date).
+      at=$(date -r "$updated" '+%Y-%m-%d %H:%M' 2>/dev/null || date -d "@$updated" '+%Y-%m-%d %H:%M')
+      if [ "$status" = complete ]; then out+=("✅ $env deployed $at"); else out+=("❌ $env $status"); fi ;;
     *)
       [ "$age" -le 10800 ] || { rm -f "$f"; continue; }
       stale=""
