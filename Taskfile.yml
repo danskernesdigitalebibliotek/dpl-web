@@ -6,6 +6,13 @@ includes:
   branch-tag-cleanup: ./taskfiles/Taskfile.branch-tag-cleanup.yml
   changelog: ./taskfiles/Taskfile.changelog.yml
 
+# Load .env to get the WeDoBooks NPM token.
+dotenv: [".env"]
+
+env:
+  # Export the WeDoBooks NPM token to commands.
+  npm_config_//npm.pkg.wedobooks.io/:_authToken: "{{ .WEDOBOOKS_NPM_TOKEN }}"
+
 vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
   CMS_REACT_LIBRARY: ./cms/web/libraries/dpl-react
@@ -67,6 +74,8 @@ tasks:
 
   dev:dotenv:link:
     desc: "Create symlinks in each project to the main .env file."
+    deps:
+      - dev:dotenv:generate
     cmds:
       - ln -sf ../.env cms/.env
       - ln -sf ../.env go/.env
@@ -101,7 +110,6 @@ tasks:
 
   token:generate:
     desc: "Generate a new library token from Adgangsplatformen and write it to every *LIBRARY_TOKEN entry in the central root .env"
-    dotenv: ['.env']
     silent: true
     cmds:
       - |
@@ -166,7 +174,6 @@ tasks:
 
   token:check:
     desc: "Verify that LIBRARY_TOKEN in the central root .env is accepted by Adgangsplatformen"
-    dotenv: ['.env']
     silent: true
     cmds:
       - |
@@ -233,6 +240,8 @@ tasks:
 
   init:pnpm:
     desc: "Install dependencies with pnpm"
+    deps:
+      - dev:dotenv:generate
     # Sources are listed explicitly per workspace package, down to each package
     # under packages/ - any glob here, "packages/*" included, walks the whole
     # tree below it and so every node_modules in it, which makes the
@@ -254,24 +263,8 @@ tasks:
       - packages/service-layer/pnpm-lock.yaml
       - packages/wedobooks/package.json
       - packages/wedobooks/pnpm-lock.yaml
-    dotenv: ['.env']
     cmds:
-      # packages/wedobooks needs a credential for WeDoBooks' registry, which
-      # .npmrc deliberately does not carry. pnpm takes any config key from the
-      # environment as npm_config_<key>, so the token in .env reaches it that
-      # way - and only when set, leaving a user-level `pnpm config set` (the
-      # route for a bare pnpm install, see packages/wedobooks/README.md) as the
-      # working alternative rather than overriding it with an empty value.
-      - |
-        if [ -n "${WEDOBOOKS_NPM_TOKEN:-}" ]; then
-          set -- "npm_config_//npm.pkg.wedobooks.io/:_authToken=$WEDOBOOKS_NPM_TOKEN"
-        else
-          set --
-          if ! grep -q "^//npm.pkg.wedobooks.io/:_authToken" "$HOME/.npmrc" 2>/dev/null; then
-            echo "warning: no credential for WeDoBooks' npm registry - WEDOBOOKS_NPM_TOKEN is missing from .env (run 'task dev:dotenv:generate') and the user-level npm config has none either. See packages/wedobooks/README.md." >&2
-          fi
-        fi
-        env "$@" task dev:cli -- corepack pnpm install
+      - task dev:cli -- corepack pnpm install
 
   # ---------------------------------------------------------------------------
   # Main orchestration
