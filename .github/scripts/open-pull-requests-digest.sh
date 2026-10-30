@@ -18,12 +18,12 @@ digest_jq() {
   jq -r -L "$script_directory" "include \"open-pull-requests-digest\"; $1" <<<"$2"
 }
 
-human_pull_requests=$(jq '[.[] | select(.author.is_bot != true and .isDraft == false)] | sort_by(.number)' <<<"$pull_requests")
+human_pull_requests=$(digest_jq '[.[] | select(.author.is_bot != true and .isDraft == false)] | sort_by(review_status.rank, .number)' "$pull_requests")
 dependabot_pull_requests=$(jq '[.[] | select(.author.login == "app/dependabot")] | sort_by(.number)' <<<"$pull_requests")
 
 echo "**Open PRs on dpl-web** ($(jq length <<<"$human_pull_requests"))"
 echo
-digest_jq '.[] | "- \(review_decision_emoji)[#\(.number) \(safe_title)](\(.url))\(format_next_actions)"' "$human_pull_requests"
+digest_jq '.[] | "- \(review_status.emoji) [#\(.number) \(safe_title)](\(.url))\(format_next_actions)"' "$human_pull_requests"
 echo
 echo "**Open Dependabot PRs** ($(jq length <<<"$dependabot_pull_requests"))"
 echo

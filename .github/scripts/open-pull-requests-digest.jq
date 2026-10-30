@@ -37,10 +37,12 @@ def next_actions:
        else empty end)
     ];
 
-# GitHub's overall review decision, as an emoji to lead the line with.
-def review_decision_emoji:
-  {"APPROVED": "✅ ", "CHANGES_REQUESTED": "⛔ "}[.reviewDecision] // "🟡 ";
+# GitHub's overall review decision: the emoji leading the line, and the order
+# PRs are listed in.
+def review_status:
+  {"APPROVED": {emoji: "✅", rank: 0}, "CHANGES_REQUESTED": {emoji: "⛔", rank: 1}}[.reviewDecision]
+    // {emoji: "🟡", rank: 2};
 
 # " — who (action) · …". Every PR gets at least one action.
 def format_next_actions:
-  " — " + (next_actions | map("\(.who | join(", ")) (\(.action))") | join(" · "));
+  " — " + (next_actions | map("\(.who | map("**\(.)**") | join(", ")) (\(.action))") | join(" · "));
