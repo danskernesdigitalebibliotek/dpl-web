@@ -74,6 +74,8 @@ tasks:
 
   dev:dotenv:link:
     desc: "Create symlinks in each project to the main .env file."
+    deps:
+      - dev:dotenv:generate
     cmds:
       - ln -sf ../.env cms/.env
       - ln -sf ../.env go/.env
@@ -108,7 +110,6 @@ tasks:
 
   token:generate:
     desc: "Generate a new library token from Adgangsplatformen and write it to every *LIBRARY_TOKEN entry in the central root .env"
-    dotenv: ['.env']
     silent: true
     cmds:
       - |
@@ -173,7 +174,6 @@ tasks:
 
   token:check:
     desc: "Verify that LIBRARY_TOKEN in the central root .env is accepted by Adgangsplatformen"
-    dotenv: ['.env']
     silent: true
     cmds:
       - |
@@ -240,6 +240,8 @@ tasks:
 
   init:pnpm:
     desc: "Install dependencies with pnpm"
+    deps:
+      - dev:dotenv:generate
     # Sources are listed explicitly per workspace package, down to each package
     # under packages/ - any glob here, "packages/*" included, walks the whole
     # tree below it and so every node_modules in it, which makes the
@@ -261,7 +263,6 @@ tasks:
       - packages/service-layer/pnpm-lock.yaml
       - packages/wedobooks/package.json
       - packages/wedobooks/pnpm-lock.yaml
-    dotenv: ['.env']
     cmds:
       - task dev:cli -- corepack pnpm install
 
