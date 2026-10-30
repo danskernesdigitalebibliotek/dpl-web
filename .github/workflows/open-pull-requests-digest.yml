@@ -2,14 +2,11 @@
 # Post a digest of open pull requests to Zulip (DDF > reviews) three times
 # every weekday. The message is built by
 # .github/scripts/open-pull-requests-digest.sh.
-#
-# Scheduled and manually started runs only exist on the default branch, so
-# this does nothing until it's merged. Manual runs default to a dry run that
-# only prints the message in the job log.
 
 name: Open pull requests digest
 
 on:
+  # Monday to Friday at 08:00, 12:30 and 15:30 Danish time.
   schedule:
     - cron: "0 8 * * 1-5"
       timezone: "Europe/Copenhagen"
