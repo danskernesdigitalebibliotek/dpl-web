@@ -5,8 +5,7 @@ import { RequestStatus } from "./request";
 export type LoanRequestOutcome = {
   status: RequestStatus;
   /**
-   * A loan answers with what the receipt shows. Absent where there is nothing
-   * to show yet - a redeemed offer answers with the loan id only, so the
+   * Absent for a redeemed offer, which answers with the loan id only, so the
    * expiration date is not known until the loan list is refetched.
    */
   loanResponse?: CreateLoanResult;
@@ -18,10 +17,8 @@ type ReportOutcome = (outcome: LoanRequestOutcome) => void;
 
 /**
  * Acquiring a digital material - the write-side counterpart to
- * ReaderPlayerState, and provider-neutral for the same reason: anything
- * specific to Publizon or to the adapter belongs behind this type, not in it,
- * so the provider being migrated away from can be deleted without touching
- * the caller.
+ * ReaderPlayerState. Provider specifics belong behind this type, so Publizon
+ * can be removed without touching the caller.
  */
 export type LoanRequester = {
   loan: (materialId: string, report: ReportOutcome) => void;

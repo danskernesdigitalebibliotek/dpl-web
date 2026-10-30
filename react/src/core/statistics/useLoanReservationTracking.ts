@@ -2,11 +2,7 @@ import { useEventStatistics } from "./useStatistics";
 import { statistics } from "./statistics";
 import { WorkId } from "../utils/types/ids";
 
-/**
- * Counting a loan or a reservation that went through. Both lending providers
- * count the same two events, so the work being counted is bound once here
- * rather than repeated at every call site.
- */
+/** Tracks a completed loan or reservation; shared by both providers. */
 const useLoanReservationTracking = (workId: WorkId) => {
   const { track } = useEventStatistics();
 

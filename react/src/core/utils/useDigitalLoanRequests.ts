@@ -22,12 +22,9 @@ type DigitalLoanRequestsType = {
 };
 
 /**
- * Borrowing, reserving and redeeming through the Biblio adapter.
- *
- * What follows from a request going through - counting it, and refetching what
- * it changed - hangs off the mutations rather than off the callers' requests:
- * those belong to the modal, and are skipped altogether if the user closes it
- * while the read-back is still running.
+ * Borrowing, reserving and redeeming through the Biblio adapter. Tracking and
+ * read-back sit on the mutations, as the callers' callbacks are skipped if the
+ * modal closes first.
  */
 const useDigitalLoanRequests = ({
   workId,
@@ -37,8 +34,7 @@ const useDigitalLoanRequests = ({
   const { trackLoan, trackReservation } = useLoanReservationTracking(workId);
 
   const readBack = (changedMaterialId: string | null) => {
-    // The quota is read on the material page, never on the receipt, so it is
-    // refreshed without holding the user up.
+    // Not shown on the receipt, so not awaited.
     queryClient.invalidateQueries({ queryKey: digitalLoanQuotasQueryKey() });
 
     return awaitReadBack(queryClient, digitalReadBackKeys(changedMaterialId));
@@ -46,8 +42,7 @@ const useDigitalLoanRequests = ({
 
   const { mutate: createLoan, isPending: isLoaning } = useDigitalCreateLoan({
     onSuccess: (result, requestedMaterialId) => {
-      // A request the adapter accepted without acting on changed nothing, so
-      // there is nothing to count or refetch.
+      // Accepted but not acted on: nothing to track or refetch.
       if (!loanWasCreated(result)) return undefined;
       trackLoan();
       return readBack(requestedMaterialId);
@@ -90,8 +85,7 @@ const useDigitalLoanRequests = ({
 
     reserve: (id, report) =>
       createReservation(id, {
-        // The adapter answers 200 with a decision rather than an error when it
-        // refuses, so a request it accepted but did not act on must not tell
+        // The adapter refuses with a 200, so only a granted decision may tell
         // the user they are queued.
         onSuccess: (result) =>
           report({

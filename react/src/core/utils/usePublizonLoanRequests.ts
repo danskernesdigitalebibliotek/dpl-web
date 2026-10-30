@@ -18,9 +18,7 @@ import { WorkId } from "./types/ids";
 const publizonErrorBody = (err: unknown) =>
   err instanceof PublizonServiceError ? err.responseBody : undefined;
 
-/**
- * Borrowing and reserving through Publizon.
- */
+/** Borrowing and reserving through Publizon. */
 const usePublizonLoanRequests = ({
   workId
 }: {
@@ -69,8 +67,7 @@ const usePublizonLoanRequests = ({
       ),
 
     reserve: (id, report) => {
-      // Publizon takes an email and a phone number to notify with, so a
-      // request without a patron to read them off cannot be made.
+      // Publizon needs the patron's contact details to notify with.
       if (!userData?.patron) return;
 
       createReservation(

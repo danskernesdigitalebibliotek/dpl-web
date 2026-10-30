@@ -6,24 +6,17 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 
 /**
- * How long a loan or reservation waits for the lists it changed to answer
- * before the user is told it went through anyway. A refetch that keeps
- * failing retries with backoff, and one whose connection drops after it went
- * out stays unresolved until the device is back - neither may hold a receipt
- * hostage for something the server has already done.
+ * Upper bound on the read-back. A failing refetch retries with backoff and an
+ * offline one waits for the device to reconnect - neither may hold back the
+ * receipt for a request the server already carried out.
  */
 export const readBackGraceMs = 3000;
 
 /**
- * Refetch the given lists and resolve once they have landed, or once the
- * grace period is up, whichever comes first.
- *
- * Callers await this from a mutation's onSuccess, which is what keeps the
- * mutation pending until the read-back is in: the receipt hands the user the
- * same buttons the material page has, and read off lists that have not caught
- * up they offer the loan that was just made. `refetchType: "all"` so the
- * promise means "the answer is in" even for a list nothing is showing at the
- * time.
+ * Refetch the lists and resolve when they land or the grace period ends.
+ * Returned from a mutation's onSuccess, which keeps it pending until then: the
+ * receipt shows the material page's buttons, and stale lists would offer the
+ * loan just made.
  */
 export const awaitReadBack = (
   queryClient: QueryClient,
@@ -33,6 +26,8 @@ export const awaitReadBack = (
   return Promise.race([
     Promise.all(
       queryKeys.map((queryKey) =>
+        // "all", or a list not on screen is only marked stale and the promise
+        // resolves before its answer is in.
         queryClient.invalidateQueries({ queryKey, refetchType: "all" })
       )
     ),
