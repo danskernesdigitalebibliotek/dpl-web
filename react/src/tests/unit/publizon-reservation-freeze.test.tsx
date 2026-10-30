@@ -11,6 +11,7 @@ import {
 import { isAnonymous } from "../../core/utils/helpers/user";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { ContentLoanStatusEnum } from "../../core/publizon/model";
+import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 
 /**
  * TEMPORARY: the Publizon reservation queue standing still while Biblio
@@ -69,7 +70,10 @@ const given = ({
 const renderState = () =>
   renderHook(() =>
     usePublizonReaderPlayerState({
-      identifier: IDENTIFIER,
+      identifier: {
+        type: IdentifierTypeEnum.Publizon,
+        value: IDENTIFIER
+      },
       canAcquire: true
     })
   ).result.current;

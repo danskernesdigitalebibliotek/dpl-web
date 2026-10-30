@@ -27,12 +27,12 @@ import {
 import { useUrls } from "../../../../core/utils/url";
 import { SortOption } from "../../../../core/advanced-search/types";
 import Link from "../../../atoms/links/Link";
+import { PublizonIdentifier } from "../../../../core/utils/types/ids";
 
 interface MaterialAvailabilityTextOnlineProps {
-  /** The digital identifier the material is lent by - see
-   * getManifestationDigitalIdentifier. Shared with the loan buttons so both
-   * ask the providers about the same edition. */
-  identifier: string;
+  /** Shared with the loan buttons so both ask the providers about the same
+   * edition. */
+  identifier: PublizonIdentifier;
   materialType: ManifestationMaterialType;
 }
 
@@ -64,12 +64,8 @@ const MaterialAvailabilityTextOnline: React.FC<
   // borrowing against.
   const viaBiblioAdapter = useBiblioAdapter();
 
-  const { data: productsData } = useGetV1ProductsIdentifier(identifier, {
-    query: {
-      // We never want to pass an empty string to the API
-      // So we only enable the query if we have an identifier
-      enabled: !!identifier && !viaBiblioAdapter
-    }
+  const { data: productsData } = useGetV1ProductsIdentifier(identifier.value, {
+    query: { enabled: !viaBiblioAdapter }
   });
 
   const { data: libraryProfileData } = useGetV1LibraryProfile({
@@ -91,8 +87,8 @@ const MaterialAvailabilityTextOnline: React.FC<
   });
 
   // Only read for its licence - see isCostFree below.
-  const { data: loanDecision } = useDigitalLoanDecision(identifier, {
-    enabled: Boolean(identifier) && viaBiblioAdapter
+  const { data: loanDecision } = useDigitalLoanDecision(identifier.value, {
+    enabled: viaBiblioAdapter
   });
 
   if (!productsData && !viaBiblioAdapter) return null;

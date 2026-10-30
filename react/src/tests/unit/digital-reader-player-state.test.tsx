@@ -14,6 +14,8 @@ import {
   useDigitalSample
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { isAnonymous } from "../../core/utils/helpers/user";
+import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
+import { PublizonIdentifier } from "../../core/utils/types/ids";
 
 // Only the hooks under test are stubbed; the rest of the package stays
 // real, so pure helpers keep behaving as they do in production.
@@ -43,6 +45,10 @@ vi.mock(
 vi.mock("../../core/utils/helpers/user", () => ({ isAnonymous: vi.fn() }));
 
 const IDENTIFIER = "9788727319346";
+const PUBLIZON_ID: PublizonIdentifier = {
+  type: IdentifierTypeEnum.Publizon,
+  value: IDENTIFIER
+};
 const LOAN_ID = "3f7b1c62-9d4e-4a71-b0c3-1d5a8e2f4b90";
 const RESERVATION_ID = "e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11";
 const OFFER_ID = "9a1c7f30-4d62-4e18-b5a7-2c8e6f0b3d94";
@@ -110,7 +116,10 @@ const givenAdapterSays = ({
   } as unknown as ReturnType<typeof useDigitalSample>);
 };
 
-const render = (identifier: string | null = IDENTIFIER, enabled = true) =>
+const render = (
+  identifier: PublizonIdentifier | null = PUBLIZON_ID,
+  enabled = true
+) =>
   renderHook(() => useDigitalReaderPlayerState({ identifier, enabled })).result
     .current;
 
@@ -264,7 +273,7 @@ describe("useDigitalReaderPlayerState", () => {
     it("Knows nothing when another provider holds the material", () => {
       givenAdapterSays({ status: "loanable", heldLoan: loan });
 
-      expect(render(IDENTIFIER, false)).toMatchObject({
+      expect(render(PUBLIZON_ID, false)).toMatchObject({
         canBeLoaned: false,
         canBeReserved: false,
         isAlreadyLoaned: false,
@@ -286,7 +295,7 @@ describe("useDigitalReaderPlayerState", () => {
       givenAdapterSays({ stillAnswering: true });
 
       expect(render().isLoading).toBe(true);
-      expect(render(IDENTIFIER, false).isLoading).toBe(false);
+      expect(render(PUBLIZON_ID, false).isLoading).toBe(false);
     });
   });
 });

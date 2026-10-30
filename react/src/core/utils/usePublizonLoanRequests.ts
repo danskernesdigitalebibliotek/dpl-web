@@ -55,9 +55,9 @@ const usePublizonLoanRequests = ({
     });
 
   return {
-    loan: (id, report) =>
+    loan: (identifier, report) =>
       createLoan(
-        { identifier: id },
+        { identifier: identifier.value },
         {
           onSuccess: (loanResponse) =>
             report({ status: "success", loanResponse }),
@@ -66,12 +66,15 @@ const usePublizonLoanRequests = ({
         }
       ),
 
-    reserve: (id, report) => {
+    reserve: (identifier, report) => {
       // Publizon needs the patron's contact details to notify with.
       if (!userData?.patron) return;
 
       createReservation(
-        { identifier: id, data: publizonReservationContact(userData.patron) },
+        {
+          identifier: identifier.value,
+          data: publizonReservationContact(userData.patron)
+        },
         {
           onSuccess: () => report({ status: "success" }),
           onError: (err) =>

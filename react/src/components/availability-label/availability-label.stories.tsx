@@ -7,7 +7,10 @@ import { withUrls } from "../../core/utils/url";
 import { AvailabilityLabel } from "./availability-label";
 import globalTextArgs from "../../core/storybook/globalTextArgs";
 import globalConfigArgs from "../../core/storybook/globalConfigArgs";
-import { AccessTypeCodeEnum } from "../../core/dbc-gateway/generated/graphql";
+import {
+  AccessTypeCodeEnum,
+  IdentifierTypeEnum
+} from "../../core/dbc-gateway/generated/graphql";
 
 // The configuration below addresses the different variables,
 // their default values, and how they translate into storybook
@@ -107,7 +110,7 @@ export const Unavailable: Story = {
 
 export const EBogPrinsenHarry: Story = {
   args: {
-    identifier: "9788763844123",
+    identifier: { type: IdentifierTypeEnum.Publizon, value: "9788763844123" },
     manifestText: "ebog",
     accessTypes: [AccessTypeCodeEnum.Online]
   }

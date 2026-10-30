@@ -21,7 +21,6 @@ import {
   getManifestationAudience,
   getManifestationAuthors,
   getManifestationContributors,
-  getManifestationDigitalIdentifier,
   getManifestationEdition,
   getManifestationGenreAndForm,
   getManifestationIsbn,
@@ -42,6 +41,7 @@ import {
   getIdFromUrlHash,
   HashPrefix
 } from "../../core/utils/helpers/url";
+import { getPublizonIdentifier } from "../../core/utils/helpers/digital-loanable";
 
 export interface MaterialMainfestationItemProps {
   manifestation: Manifestation;
@@ -142,7 +142,7 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
           key={`${faustId}-material-manifestation-item`}
           manifestText={materialTypes[0]?.materialTypeSpecific.display}
           faustIds={[faustId]}
-          identifier={getManifestationDigitalIdentifier(manifestation) || null}
+          identifier={getPublizonIdentifier(manifestation)}
           accessTypes={accessTypesCodes}
           access={access}
           isVisualOnly
