@@ -240,8 +240,6 @@ tasks:
 
   init:pnpm:
     desc: "Install dependencies with pnpm"
-    deps:
-      - dev:dotenv:generate
     # Sources are listed explicitly per workspace package, down to each package
     # under packages/ - any glob here, "packages/*" included, walks the whole
     # tree below it and so every node_modules in it, which makes the
