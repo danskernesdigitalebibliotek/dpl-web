@@ -103,11 +103,11 @@ const publizonSays = (quotas: {
   } as unknown as ReturnType<typeof useGetV1UserLoans>);
 };
 
-const renderText = (materialType = "e-bog") =>
+const renderText = (opensIn: "reader" | "player" = "reader") =>
   render(
     <MaterialAvailabilityTextOnline
-      identifier={{ type: IdentifierTypeEnum.Publizon, value: ISBN }}
-      materialType={materialType as never}
+      id={{ type: IdentifierTypeEnum.Publizon, value: ISBN }}
+      opensIn={opensIn}
     />
   );
 
@@ -150,19 +150,16 @@ describe("MaterialAvailabilityTextOnline", () => {
     });
 
     it.each([
-      { materialType: "e-bog", searchedMaterialType: "e-bøger" },
-      { materialType: "lydbog (online)", searchedMaterialType: "lydbøger" }
+      { opensIn: "reader" as const, searchedMaterialType: "e-bøger" },
+      { opensIn: "player" as const, searchedMaterialType: "lydbøger" }
     ])(
-      "Links a spent $materialType quota to $searchedMaterialType outside the quota",
-      ({ materialType, searchedMaterialType }) => {
+      "Links a spent $opensIn quota to $searchedMaterialType outside the quota",
+      ({ opensIn, searchedMaterialType }) => {
         publizonSays({ limit: 7, borrowed: 7 });
 
-        const link = within(renderText(materialType).container).getByRole(
-          "link",
-          {
-            name: "See titles outside the quota"
-          }
-        );
+        const link = within(renderText(opensIn).container).getByRole("link", {
+          name: "See titles outside the quota"
+        });
         const url = new URL(link.getAttribute("href") ?? "");
 
         expect(url.pathname).toBe("/advancedsearch");

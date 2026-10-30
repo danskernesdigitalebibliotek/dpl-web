@@ -6,8 +6,6 @@ import {
 } from "../../../../core/publizon/publizon";
 import { useText } from "../../../../core/utils/text";
 import MaterialAvailabilityTextParagraph from "../generic/MaterialAvailabilityTextParagraph";
-import { ManifestationMaterialType } from "../../../../core/utils/types/material-type";
-import { playerTypes, readerTypes } from "../../../reader-player/helper";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
 import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
 import {
@@ -27,18 +25,18 @@ import {
 import { useUrls } from "../../../../core/utils/url";
 import { SortOption } from "../../../../core/advanced-search/types";
 import Link from "../../../atoms/links/Link";
-import { PublizonIdentifier } from "../../../../core/utils/types/ids";
+import { DigitalLoanable } from "../../../../core/utils/helpers/digital-loanable";
 
-interface MaterialAvailabilityTextOnlineProps {
-  /** Shared with the loan buttons so both ask the providers about the same
-   * edition. */
-  identifier: PublizonIdentifier;
-  materialType: ManifestationMaterialType;
-}
+/** Shared with the loan buttons so both ask the providers about the same
+ * edition, and the quota shown is the one its reader or player draws on. */
+type MaterialAvailabilityTextOnlineProps = Pick<
+  DigitalLoanable,
+  "id" | "opensIn"
+>;
 
 const MaterialAvailabilityTextOnline: React.FC<
   MaterialAvailabilityTextOnlineProps
-> = ({ identifier, materialType }) => {
+> = ({ id: identifier, opensIn }) => {
   const u = useUrls();
 
   const getAlwaysLoanableDigitalTitlesUrl = (
@@ -137,7 +135,7 @@ const MaterialAvailabilityTextOnline: React.FC<
     return null;
   }
 
-  if (isPlayerType(materialType)) {
+  if (opensIn === "player") {
     if (!hasValue(audioQuota.current) || !hasValue(audioQuota.limit)) {
       return null;
     }
@@ -165,41 +163,31 @@ const MaterialAvailabilityTextOnline: React.FC<
     );
   }
 
-  if (isReaderType(materialType)) {
-    if (!hasValue(ebookQuota.current) || !hasValue(ebookQuota.limit)) {
-      return null;
-    }
-
-    return (
-      <MaterialAvailabilityTextParagraph>
-        {t("onlineLimitMonthEbookInfoText", {
-          placeholders: {
-            "@count": ebookQuota.current,
-            "@limit": ebookQuota.limit
-          }
-        })}
-        {ebookQuota.current >= ebookQuota.limit && (
-          <>
-            {". "}
-            <Link
-              href={getAlwaysLoanableDigitalTitlesUrl(MATERIAL_TYPE_EBOOKS)}
-              dataCy="material-always-loanable-link"
-            >
-              {t("onlineLimitMonthAlwaysLoanableLinkText")}
-            </Link>
-          </>
-        )}
-      </MaterialAvailabilityTextParagraph>
-    );
+  if (!hasValue(ebookQuota.current) || !hasValue(ebookQuota.limit)) {
+    return null;
   }
 
-  return null;
+  return (
+    <MaterialAvailabilityTextParagraph>
+      {t("onlineLimitMonthEbookInfoText", {
+        placeholders: {
+          "@count": ebookQuota.current,
+          "@limit": ebookQuota.limit
+        }
+      })}
+      {ebookQuota.current >= ebookQuota.limit && (
+        <>
+          {". "}
+          <Link
+            href={getAlwaysLoanableDigitalTitlesUrl(MATERIAL_TYPE_EBOOKS)}
+            dataCy="material-always-loanable-link"
+          >
+            {t("onlineLimitMonthAlwaysLoanableLinkText")}
+          </Link>
+        </>
+      )}
+    </MaterialAvailabilityTextParagraph>
+  );
 };
 
 export default MaterialAvailabilityTextOnline;
-
-const isReaderType = (type: ManifestationMaterialType) =>
-  readerTypes.includes(type);
-
-const isPlayerType = (type: ManifestationMaterialType) =>
-  playerTypes.includes(type);

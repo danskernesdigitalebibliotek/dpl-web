@@ -1,6 +1,5 @@
 import * as React from "react";
-import { getLoanableManifestation } from "../../../apps/material/helper";
-import { getPublizonIdentifier } from "../../../core/utils/helpers/digital-loanable";
+import { getDigitalLoanable } from "../../../core/utils/helpers/digital-loanable";
 import { AccessTypeCodeEnum } from "../../../core/dbc-gateway/generated/graphql";
 import {
   getAllPids,
@@ -40,20 +39,17 @@ const MaterialAvailabilityText: React.FC<Props> = ({ manifestations }) => {
     hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) &&
     materialType
   ) {
-    // The same identifier the loan buttons act on, so text and buttons ask
-    // about the same edition and share one request. A pick without an
-    // identifier renders no text: the buttons cannot lend it either.
-    const loanableManifestation = getLoanableManifestation(manifestations);
-    const identifier = loanableManifestation
-      ? getPublizonIdentifier(loanableManifestation)
-      : null;
-    if (!identifier) {
+    // The edition the loan buttons act on, so text and buttons ask about the
+    // same one and share one request. Nothing to lend means no text: the
+    // buttons cannot lend it either.
+    const loanable = getDigitalLoanable(manifestations);
+    if (!loanable) {
       return null;
     }
     return (
       <MaterialAvailabilityTextOnline
-        identifier={identifier}
-        materialType={materialType}
+        id={loanable.id}
+        opensIn={loanable.opensIn}
       />
     );
   }

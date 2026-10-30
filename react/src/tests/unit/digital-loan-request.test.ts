@@ -69,16 +69,6 @@ describe("resolveLoanReservationRequest", () => {
   it("answers nothing for a material that can neither be borrowed nor reserved", () => {
     expect(resolveLoanReservationRequest(material)).toBeNull();
   });
-
-  it("answers nothing without an identifier to act on", () => {
-    expect(
-      resolveLoanReservationRequest({
-        ...material,
-        canBeLoaned: true,
-        identifier: null
-      })
-    ).toBeNull();
-  });
 });
 
 describe("loanWasCreated", () => {

@@ -15,7 +15,7 @@ import { formatDanishPhoneNumber } from "./general";
 export type LoanableMaterial = Pick<
   ReaderPlayerState,
   "canBeLoaned" | "canBeReserved" | "offerId"
-> & { identifier: PublizonIdentifier | null };
+> & { identifier: PublizonIdentifier };
 
 /**
  * What pressing the loan or reserve button should do. `open-modal` is the
@@ -38,7 +38,6 @@ export const resolveLoanReservationRequest = ({
   openModal: boolean;
 }): LoanReservationRequest | null => {
   if (openModal) return { kind: "open-modal" };
-  if (!identifier) return null;
 
   if (canBeLoaned) {
     // Only the adapter has offers, and they are claimed rather than borrowed.
