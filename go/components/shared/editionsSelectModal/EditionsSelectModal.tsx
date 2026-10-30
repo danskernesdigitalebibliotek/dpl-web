@@ -237,6 +237,9 @@ const EditionsSelectModal = ({
         <Button theme="primary" size="lg" onClick={handleConfirm}>
           Vælg udgave
         </Button>
+        <Button size="lg" onClick={handleClose}>
+          Annuller
+        </Button>
       </ResponsiveDialog.Actions>
     </ResponsiveDialog>
   )
