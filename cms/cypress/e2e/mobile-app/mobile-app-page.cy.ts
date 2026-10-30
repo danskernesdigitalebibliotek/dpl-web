@@ -3,7 +3,11 @@
 // in the CMS will break the mobile apps.
 import { typeInCkEditor } from '../../helpers/helper-ckeditor';
 import { createGoArticle } from '../../helpers/helper-go-content';
-import { getNode } from '../../helpers/helper-node';
+import {
+  getNode,
+  openNodeEditForm,
+  setNodePublished,
+} from '../../helpers/helper-node';
 import {
   addParagraph,
   appendParagraph,
@@ -220,6 +224,61 @@ describe('Mobile app API: getAppPage', () => {
           });
         });
       });
+    });
+  });
+
+  it('reflects an editor updating, unpublishing and deleting a page', () => {
+    const runId = Date.now();
+    const title = `${pageTitlePrefix} ${runId}`;
+    const updatedTitle = `${pageTitlePrefix} updated ${runId}`;
+    const page = {
+      title,
+      subtitle: `Undertitel ${runId}`,
+      body: '<p>Brødtekst</p>',
+    };
+    const updatedPage = {
+      title: updatedTitle,
+      subtitle: `Ny undertitel ${runId}`,
+      body: '<p>Ny brødtekst</p>',
+    };
+
+    createPage(page.title, page.subtitle, () => {
+      addParagraph('Text body');
+      typeInCkEditor(page.body);
+    }).then(({ id, paragraphs }) => {
+      const expected = ({ title, subtitle, body }: typeof page) => ({
+        getAppPage: {
+          title,
+          subtitle,
+          image: null,
+          elements: [
+            { __typename: 'AppContentElementText', id: paragraphs[0].id, body },
+          ],
+        },
+      });
+
+      // Reading the page before changing it caches it, so a response that is
+      // not invalidated fails the test.
+      getAppPage(id).its('data').should('deep.equal', expected(page));
+
+      openNodeEditForm(page.title);
+      cy.findByLabelText('Title').clear();
+      cy.findByLabelText('Title').type(updatedPage.title);
+      cy.findByLabelText('Subtitle').clear();
+      cy.findByLabelText('Subtitle').type(updatedPage.subtitle);
+      typeInCkEditor(updatedPage.body);
+      cy.clickSaveButton();
+      cy.contains(`Page ${updatedPage.title} has been updated.`);
+      getAppPage(id).its('data').should('deep.equal', expected(updatedPage));
+
+      setNodePublished(updatedPage.title, false);
+      getAppPage(id).its('data').should('deep.equal', { getAppPage: null });
+
+      setNodePublished(updatedPage.title, true);
+      getAppPage(id).its('data').should('deep.equal', expected(updatedPage));
+
+      cy.deleteEntitiesIfExists(updatedPage.title);
+      getAppPage(id).its('data').should('deep.equal', { getAppPage: null });
     });
   });
 });

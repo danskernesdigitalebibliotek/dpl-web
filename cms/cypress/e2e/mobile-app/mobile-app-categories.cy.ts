@@ -6,7 +6,11 @@ import {
   openGoNodeForm,
 } from '../../helpers/helper-go-content';
 import { mediaLibrarySelect } from '../../helpers/helper-media';
-import { getNode } from '../../helpers/helper-node';
+import {
+  getNode,
+  openNodeEditForm,
+  setNodePublished,
+} from '../../helpers/helper-node';
 import {
   addParagraph,
   appendParagraph,
@@ -186,6 +190,84 @@ describe('Mobile app API: getAppCategories', () => {
           ],
         });
       });
+    });
+  });
+
+  it('reflects an editor updating, unpublishing and deleting a GO category', () => {
+    const runId = Date.now();
+    const category = {
+      title: `${titlePrefix} category ${runId}`,
+      sliderTitle: `Slider ${runId}`,
+    };
+    const updatedCategory = {
+      title: `${titlePrefix} category updated ${runId}`,
+      sliderTitle: `Ny slider ${runId}`,
+    };
+    const slider = paragraphField(0);
+    const sliderTitleField = `${slider}[field_title][0][value]"]`;
+    const cql = "term.title='Harry Potter'";
+
+    createGoCategory(category.title, () => {
+      addParagraph('GO Material Slider - Automatic');
+      cy.get(sliderTitleField).type(category.sliderTitle);
+      cy.get(`${slider}[field_cql_search][0][filters][cql]"]`).type(cql, {
+        delay: 0,
+      });
+    }).then(({ id, paragraphs }) => {
+      // The apps list all categories first and then ask for each one.
+      const getListedIds = () =>
+        getAppCategories('BIBLOGO').then(({ data }) =>
+          data.getAppCategories.map((listed) => listed.id),
+        );
+      // The icon is covered by the other tests.
+      const assertCategory = ({ title, sliderTitle }: typeof category) =>
+        getAppCategories('BIBLOGO', id).then(({ data }) => {
+          const [listed] = data.getAppCategories;
+          expect(listed).to.deep.equal({
+            id,
+            title,
+            icon: listed?.icon,
+            elements: [
+              {
+                __typename: 'AppContentElementGoMaterialSliderAutomatic',
+                id: paragraphs[0].id,
+                title: sliderTitle,
+                cql,
+                limit: null,
+              },
+            ],
+          });
+        });
+
+      // Reading the category before changing it caches it, so a response that
+      // is not invalidated fails the test.
+      getListedIds().should('include', id);
+      assertCategory(category);
+
+      openNodeEditForm(category.title);
+      cy.findByLabelText('Title').clear();
+      cy.findByLabelText('Title').type(updatedCategory.title);
+      cy.get(sliderTitleField).clear();
+      cy.get(sliderTitleField).type(updatedCategory.sliderTitle);
+      cy.clickSaveButton();
+      cy.contains(`GO category ${updatedCategory.title} has been updated.`);
+      assertCategory(updatedCategory);
+
+      setNodePublished(updatedCategory.title, false);
+      getListedIds().should('not.include', id);
+      getAppCategories('BIBLOGO', id)
+        .its('data')
+        .should('deep.equal', { getAppCategories: [] });
+
+      setNodePublished(updatedCategory.title, true);
+      getListedIds().should('include', id);
+      assertCategory(updatedCategory);
+
+      cy.deleteEntitiesIfExists(updatedCategory.title);
+      getListedIds().should('not.include', id);
+      getAppCategories('BIBLOGO', id)
+        .its('data')
+        .should('deep.equal', { getAppCategories: [] });
     });
   });
 });

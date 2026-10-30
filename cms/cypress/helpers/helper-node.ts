@@ -57,3 +57,21 @@ export const getNode = (title: string) => {
         .then(({ data }): TestNode => ({ ...data.route.entity, path: path! })),
     );
 };
+
+// Opens the edit form of the node from the content overview, which sends us
+// back there on save, as saving GO content otherwise redirects to the GO site.
+export const openNodeEditForm = (title: string) => {
+  cy.drupalLogin(
+    `/admin/content?title=${encodeURIComponent(title)}&status=All&langcode=All`,
+  );
+  cy.contains('tr', title).contains('a', 'Edit').click();
+};
+
+export const setNodePublished = (title: string, published: boolean) => {
+  openNodeEditForm(title);
+  cy.get('[name="status[value]"]')[published ? 'check' : 'uncheck']({
+    force: true,
+  });
+  cy.clickSaveButton();
+  cy.contains(`${title} has been updated.`);
+};
