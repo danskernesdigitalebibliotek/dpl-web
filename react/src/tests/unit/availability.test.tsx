@@ -290,10 +290,7 @@ describe("useOnlineAvailabilityData tests", () => {
   const render = (
     identifier: PublizonIdentifier | null = PUBLIZON_ID,
     enabled = true
-  ) =>
-    renderHook(() =>
-      useOnlineAvailabilityData({ enabled, access: ["Ereol"], identifier })
-    );
+  ) => renderHook(() => useOnlineAvailabilityData({ enabled, identifier }));
 
   beforeEach(() => {
     vi.useFakeTimers();
@@ -328,7 +325,7 @@ describe("useOnlineAvailabilityData tests", () => {
     vi.useRealTimers();
   });
 
-  it("If the useGetV1ProductsIdentifier service tells us that the material is NOT `costFree` (not a blue title) and the material belongs to 'Ereol' (the access param) the Publizon product status should dictate the availability ", () => {
+  it("If the useGetV1ProductsIdentifier service tells us that the material is NOT `costFree` (not a blue title) the Publizon product status should dictate the availability ", () => {
     // The only Publizon product status that is NOT available is 5.
 
     // Typescript does not understand our mocked hooks.
@@ -451,24 +448,14 @@ describe("useOnlineAvailabilityData tests", () => {
     });
   });
 
-  it("Asks no provider about an online material outside the e-book service", () => {
-    // A PressReader newspaper is online, but reached through a plain url and
-    // not part of the e-book service - neither Publizon nor Biblio knows it,
-    // so neither should be asked. Even with the library switched to Biblio.
-    mockedFlag.mockReturnValue(true);
+  it("Asks Publizon nothing about a material without a digital id", () => {
+    render(null);
 
-    renderHook(() =>
-      useOnlineAvailabilityData({
-        enabled: true,
-        access: ["AccessUrl"],
-        identifier: PUBLIZON_ID
-      })
-    );
-
-    expect(mockedLoanDecision).toHaveBeenCalledWith(MATERIAL_ID, {
-      enabled: false
-    });
     expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ query: { enabled: false } })
+    );
+    expect(useGetV1LoanstatusIdentifier).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({ query: { enabled: false } })
     );

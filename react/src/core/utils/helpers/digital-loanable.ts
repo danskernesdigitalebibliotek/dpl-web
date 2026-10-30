@@ -3,7 +3,6 @@ import { Manifestation } from "../types/entities";
 import { PublizonIdentifier } from "../types/ids";
 import { ManifestationMaterialType } from "../types/material-type";
 import { getMaterialTypes, orderManifestationsByYear } from "./general";
-import { hasCorrectAccess } from "../../../components/material/material-buttons/helper";
 
 // No ISBN stands in when the PUBLIZON identifier is missing: a manifestation
 // can carry several ISBNs, and the leading one is not always the edition a
@@ -76,7 +75,6 @@ export const getDigitalLoanable = (
 ): DigitalLoanable | null => {
   const lendable = getLendableEdition(manifestations);
   if (!lendable) return null;
-  if (!hasCorrectAccess("Ereol", [lendable.manifestation])) return null;
 
   const type = opensIn(lendable.manifestation);
   return type ? { ...lendable, opensIn: type } : null;

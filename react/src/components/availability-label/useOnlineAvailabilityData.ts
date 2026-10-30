@@ -7,7 +7,6 @@ import {
   useGetV1ProductsIdentifier
 } from "../../core/publizon/publizon";
 import { publizonProductStatuses } from "./types";
-import { AccessTypes } from "../../core/utils/types/entities";
 import { PublizonIdentifier } from "../../core/utils/types/ids";
 import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
 import { isAnonymous } from "../../core/utils/helpers/user";
@@ -19,31 +18,23 @@ import { isAnonymous } from "../../core/utils/helpers/user";
  */
 const useOnlineAvailabilityData = ({
   enabled,
-  access,
   identifier
 }: {
   enabled: boolean;
-  access: AccessTypes[];
   identifier: PublizonIdentifier | null;
 }) => {
   const viaBiblioAdapter = useBiblioAdapter();
 
   // An online material outside the e-book service - a PressReader newspaper,
-  // whose only identifier is a URI - is in neither Publizon nor the service
-  // layer, so asking about it can only produce a 404.
-  const isEreolMaterial = access.some((acc) => acc === "Ereol");
+  // whose only identifier is a URI - has no digital id and is in neither
+  // Publizon nor the service layer, so asking would only produce a 404.
   const materialId = identifier?.value ?? null;
 
   // can-loan is patron-scoped, so with the flag on and no patron nobody is
   // asked and the default applies.
   const askServiceLayer =
-    viaBiblioAdapter &&
-    enabled &&
-    isEreolMaterial &&
-    materialId !== null &&
-    !isAnonymous();
-  const askPublizon =
-    !viaBiblioAdapter && enabled && isEreolMaterial && materialId !== null;
+    viaBiblioAdapter && enabled && materialId !== null && !isAnonymous();
+  const askPublizon = !viaBiblioAdapter && enabled && materialId !== null;
 
   const { data: loanDecision, isLoading: isLoadingServiceLayer } =
     useDigitalLoanDecision(materialId, { enabled: askServiceLayer });

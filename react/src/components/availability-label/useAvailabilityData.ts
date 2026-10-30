@@ -1,5 +1,4 @@
 import { AccessTypeCodeEnum } from "../../core/dbc-gateway/generated/graphql";
-import { AccessTypes } from "../../core/utils/types/entities";
 import { FaustId, PublizonIdentifier } from "../../core/utils/types/ids";
 import { isOnline } from "./helper";
 import useOnlineAvailabilityData from "./useOnlineAvailabilityData";
@@ -7,14 +6,12 @@ import usePhysicalAvailabilityData from "./usePhysicalAvailabilityData";
 
 const useAvailabilityData = ({
   accessTypes,
-  access,
   faustIds,
   manifestText,
   identifier,
   enabled = true
 }: {
   accessTypes: AccessTypeCodeEnum[];
-  access: AccessTypes[];
   faustIds: FaustId[];
   manifestText: string;
   identifier: PublizonIdentifier | null;
@@ -22,7 +19,6 @@ const useAvailabilityData = ({
 }) => {
   const availabilityOnline = useOnlineAvailabilityData({
     enabled: isOnline(accessTypes) && enabled,
-    access,
     identifier
   });
 
