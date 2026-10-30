@@ -12,8 +12,6 @@
     "src/**/*.js",
     "test-runner-jest.config.js",
   ],
-  // Invoked in CI, not referenced from source.
-  "ignoreBinaries": ["chromatic"],
   // Referenced from build/test config strings (Babel, Jest, Storybook
   // docgen) or invoked in CI via full paths, none of which Knip can trace.
   "ignoreDependencies": [

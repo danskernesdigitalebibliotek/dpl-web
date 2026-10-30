@@ -1,4 +1,4 @@
-// Set the viewport widths that Chromatic tests with globally.
+// Set the viewport widths that visual regression tests use globally.
 export const allModes = {
   xs: {
     viewport: "xs",

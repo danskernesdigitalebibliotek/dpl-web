@@ -78,7 +78,7 @@ The application is now running at [https://localhost:3000](https://localhost:300
 - [shadcn/ui][shadcn]
 - [Tailwind CSS][tailwind]
 - [ESLint][eslint] & [Prettier][prettier]
-- [Storybook][storybook] & [Chromatic][chromatic]
+- [Storybook][storybook] & visual regression testing
 - [cypress][cypress]
 - [Vitest][vitest]
 
@@ -141,7 +141,7 @@ In the project, you'll see the following folders and files:
 
 | File                      | Description                                                                                                                                                                                                       |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| go-ci.yml                 | Everything that gates a change to `go/` or `packages/`: ESLint, Prettier, type check, Vitest unit tests, a check that the committed generated clients are up to date, a Storybook build shared by the accessibility (Axe/Playwright), Chromatic and Argos jobs, and Cypress E2E. |
+| go-ci.yml                 | Everything that gates a change to `go/` or `packages/`: ESLint, Prettier, type check, Vitest unit tests, a check that the committed generated clients are up to date, a Storybook build shared by the accessibility (Axe/Playwright) and Argos jobs, and Cypress E2E. |
 | go-build-base-image.yml   | Builds `go/lagoon/stage1.dockerfile` and pushes it to `ghcr.io/danskernesdigitalebibliotek/dpl-web-go`. Called by `lagoon-deploy.yml` with `secrets: inherit`, and runs on its own for semver tags.                                          |
 | lagoon-deploy.yml         | Builds the Go base image, then sends a deploy webhook to Lagoon for pull requests and pushes to `develop`, `main`, `go-demo` and `go-playground`.                                                                  |
 | lagoon-close.yml          | Tears down the Lagoon environment when a pull request is closed.                                                                                                                                                  |
@@ -198,7 +198,7 @@ Storybook is an essential tool in our development workflow for several reasons:
 
 1. **Component Isolation**: It allows us to develop and test UI components in isolation, ensuring that each component works as expected without dependencies on the rest of the application.
 2. **Visual Documentation**: Storybook provides a visual representation of our components, making it easier for developers and designers to understand and collaborate on the UI.
-3. **Automated Testing**: With integrations like Chromatic, we can automate visual regression testing to catch UI changes and bugs early in the development process.
+3. **Automated Testing**: With visual regression testing, we can catch unintended UI changes and bugs early in the development process.
 4. **Reusable Components**: By documenting components in Storybook, we promote reusability and consistency across the application, reducing duplication and improving maintainability.
 
 To start Storybook, run the following command:
@@ -249,7 +249,7 @@ When creating a pull request, follow these steps:
 
 1. Create a new pull request `feature`->`main`.
 2. Add relevant information to the PR template. At a minimum, include a link to the ticket (if available) and a description.
-3. Resolve any merge conflicts, fix errors in workflows, and check Chromatic to ensure new changes do not cause conflicts in the app. The PR creator is responsible for these checks.
+3. Resolve any merge conflicts, fix errors in workflows, and check the visual regression tests to ensure new changes do not introduce unintended visual changes. The PR creator is responsible for these checks.
 4. Await approval from a relevant team member for the changes to the code.
 5. Merge the code to `main` and delete the feature branch to clean up.
 
@@ -309,9 +309,7 @@ These all run as jobs in `go-ci.yml` on every pull request touching `go/` or
 
 5. **Accessibility Testing**: the `accessibility` job runs accessibility tests on each [Storybook] Story using [Axe] through [Playwright]. This ensures that the application meets accessibility standards and provides a better user experience for all users.
 
-6. **Visual Regression Testing**: the `chromatic` job runs Chromatic to visualize and test UI components in [Storybook]. This helps catch visual regressions and ensures that UI changes do not introduce unexpected issues.
-
-   The `argos` job runs [Argos] next to Chromatic while we evaluate it. It screenshots every story in mobile and desktop mode inside the Playwright image matching the installed Playwright, and uploads them to the `dpl-web` Argos project as the `go` build, reported as `argos/go`. Approve the changes your pull request explains, and **Ignore** the ones it cannot explain, so the ignored changes show how much noise Argos produces. The visual suite lives in `.storybook/test-runners/visual`; tag a story `skip-ui-tests` to leave it out.
+6. **Visual Regression Testing**: the `argos` job runs [Argos] on every [Storybook] story, so that UI changes do not introduce unexpected visual changes. It screenshots every story in mobile and desktop mode inside the Playwright image matching the installed Playwright, and uploads them to the `dpl-web` Argos project as the `go` build, reported as `argos/go`. Approve the changes your pull request explains, and **Ignore** the ones it cannot explain, so Argos hides them on later builds. The visual suite lives in `.storybook/test-runners/visual`; tag a story `skip-ui-tests` to leave it out.
 
    Stories may only load files the Storybook itself serves, so their screenshots never depend on another server. The suite fails a story that requests anything else and names the URL. Keep such files in the Storybook or generate them. The few requests that may leave it are listed, with their reasons, in `.storybook/test-runners/external-requests.ts`.
 
@@ -352,7 +350,6 @@ They are compared with `develop`; set `BASE` to compare with another branch, e.g
 [eslint]: https://eslint.org/
 [prettier]: https://prettier.io/
 [storybook]: https://storybook.js.org/
-[chromatic]: https://www.chromatic.com/
 [Argos]: https://argos-ci.com/
 [react-query]: https://tanstack.com/query/latest/docs/framework/react/overview
 [xstate]: https://xstate.js.org/
