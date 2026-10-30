@@ -13,12 +13,12 @@ import {
 } from "./helpers/digital-loan-read-back";
 import { loanWasCreated } from "./helpers/digital-loan-request";
 import { LoanRequester } from "./types/loan-requester";
-import { WorkId } from "./types/ids";
+import { PublizonIdentifier, WorkId } from "./types/ids";
 
 type DigitalLoanRequestsType = {
   workId: WorkId;
   /** The material on screen, which a redeemed offer is read back for. */
-  materialId: string | null;
+  identifier: PublizonIdentifier | null;
 };
 
 /**
@@ -28,7 +28,7 @@ type DigitalLoanRequestsType = {
  */
 const useDigitalLoanRequests = ({
   workId,
-  materialId
+  identifier
 }: DigitalLoanRequestsType): LoanRequester => {
   const queryClient = useQueryClient();
   const { trackLoan, trackReservation } = useLoanReservationTracking(workId);
@@ -64,13 +64,13 @@ const useDigitalLoanRequests = ({
         if (!result.success) return undefined;
         trackLoan();
         // Keyed by the offer, so the material is the one on screen.
-        return readBack(materialId);
+        return readBack(identifier?.value ?? null);
       }
     });
 
   return {
-    loan: (id, report) =>
-      createLoan(id, {
+    loan: (loanIdentifier, report) =>
+      createLoan(loanIdentifier.value, {
         onSuccess: (result) =>
           report(
             loanWasCreated(result)
@@ -83,8 +83,8 @@ const useDigitalLoanRequests = ({
         onError: () => report({ status: "error" })
       }),
 
-    reserve: (id, report) =>
-      createReservation(id, {
+    reserve: (reserveIdentifier, report) =>
+      createReservation(reserveIdentifier.value, {
         // The adapter refuses with a 200, so only a granted decision may tell
         // the user they are queued.
         onSuccess: (result) =>

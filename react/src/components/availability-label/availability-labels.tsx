@@ -15,7 +15,7 @@ import { Manifestation } from "../../core/utils/types/entities";
 import {
   divideManifestationsByMaterialType,
   getLoanableManifestation,
-  getManifestationDigitalIdentifier
+  getPublizonIdentifier
 } from "../../apps/material/helper";
 
 export interface AvailabilityLabelsProps {
@@ -50,7 +50,7 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
           manifestationsOfMaterialType
         );
         const identifier = loanableManifestation
-          ? getManifestationDigitalIdentifier(loanableManifestation) || null
+          ? getPublizonIdentifier(loanableManifestation)
           : null;
         const url = constructMaterialUrl(materialUrl, workId, materialType);
         const accessTypesCodes = manifestationsOfMaterialType

@@ -389,7 +389,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
 
     return (
       <>
-        <PlayerModal identifier={identifier} />
+        <PlayerModal identifier={identifier.value} />
         <MaterialSecondaryButton
           label={tryLabel}
           size={size || "large"}
@@ -399,7 +399,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
               name: statistics.publizonTry.name,
               trackedData: workId
             });
-            open(playerModalId(identifier), modalCloseOptions);
+            open(playerModalId(identifier.value), modalCloseOptions);
           }}
           dataCy={`${dataCy}-player-teaser`}
           ariaDescribedBy={t("onlineMaterialTeaserText")}

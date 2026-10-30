@@ -5,6 +5,8 @@ import { ManifestationMaterialType } from "../../core/utils/types/material-type"
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { hasCorrectAccess } from "../material/material-buttons/helper";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
+import { PublizonIdentifier } from "../../core/utils/types/ids";
+import { getPublizonIdentifier } from "../../apps/material/helper";
 
 type AssetType = {
   src: string;
@@ -81,9 +83,11 @@ export const getOrderIdByIdentifier = ({
   identifier
 }: {
   loans: LoanType[];
-  identifier: string;
+  identifier: PublizonIdentifier;
 }) => {
-  const loanWithIdentifier = loans.find((i) => i.identifier === identifier);
+  const loanWithIdentifier = loans.find(
+    (i) => i.identifier === identifier.value
+  );
   return loanWithIdentifier ? loanWithIdentifier.orderId : null;
 };
 
@@ -125,11 +129,11 @@ export const playsInModal = (provider?: DigitalProvider | null) =>
  * it: e-books sample on the reader page, audiobooks on the player page.
  */
 export const sampleUrl = (
-  identifier: string,
+  identifier: PublizonIdentifier,
   materialType: "ebook" | "audiobook"
 ) =>
   new URL(
-    `/${materialType === "audiobook" ? "player" : "reader"}?identifier=${encodeURIComponent(identifier)}`,
+    `/${materialType === "audiobook" ? "player" : "reader"}?identifier=${encodeURIComponent(identifier.value)}`,
     window.location.href
   );
 
@@ -152,6 +156,8 @@ export const getReaderPlayerType = (
 ): "reader" | "player" | null => {
   if (!manifestation) return null;
   if (!hasCorrectAccess("Ereol", [manifestation])) return null;
+  // Without an id there is nothing to lend, read or play it by.
+  if (!getPublizonIdentifier(manifestation)) return null;
   const materialTypes = getMaterialTypes([manifestation]);
 
   if (readerTypes.some((type) => materialTypes.includes(type))) return "reader";
@@ -161,10 +167,11 @@ export const getReaderPlayerType = (
 };
 
 export const findReservedReservation = (
-  identifier: string,
+  identifier: PublizonIdentifier,
   reservations: ReservationType[]
 ) =>
   reservations.find(
     (reservation) =>
-      reservation.identifier === identifier && reservation.state === "reserved"
+      reservation.identifier === identifier.value &&
+      reservation.state === "reserved"
   );

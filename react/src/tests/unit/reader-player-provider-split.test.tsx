@@ -33,7 +33,7 @@ vi.mock("../../core/utils/usePublizonReaderPlayerState", () => ({
   default: vi.fn()
 }));
 vi.mock("../../apps/material/helper", () => ({
-  getManifestationDigitalIdentifier: () => "9788727319346"
+  getPublizonIdentifier: () => ({ type: "PUBLIZON", value: "9788727319346" })
 }));
 vi.mock("../../components/reader-player/helper", () => ({
   getReaderPlayerType: () => "reader"

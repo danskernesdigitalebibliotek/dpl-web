@@ -12,7 +12,10 @@ import {
   useDigitalLoanDecision,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import { ComplexSearchFacetsEnum } from "../../core/dbc-gateway/generated/graphql";
+import {
+  ComplexSearchFacetsEnum,
+  IdentifierTypeEnum
+} from "../../core/dbc-gateway/generated/graphql";
 
 // Only the hooks under test are stubbed; the rest of the package stays
 // real, so pure helpers keep behaving as they do in production.
@@ -103,7 +106,7 @@ const publizonSays = (quotas: {
 const renderText = (materialType = "e-bog") =>
   render(
     <MaterialAvailabilityTextOnline
-      identifier={ISBN}
+      identifier={{ type: IdentifierTypeEnum.Publizon, value: ISBN }}
       materialType={materialType as never}
     />
   );

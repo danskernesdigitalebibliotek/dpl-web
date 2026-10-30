@@ -1,7 +1,7 @@
 import * as React from "react";
 import {
   getLoanableManifestation,
-  getManifestationDigitalIdentifier
+  getPublizonIdentifier
 } from "../../../apps/material/helper";
 import { AccessTypeCodeEnum } from "../../../core/dbc-gateway/generated/graphql";
 import {
@@ -47,7 +47,7 @@ const MaterialAvailabilityText: React.FC<Props> = ({ manifestations }) => {
     // identifier renders no text: the buttons cannot lend it either.
     const loanableManifestation = getLoanableManifestation(manifestations);
     const identifier = loanableManifestation
-      ? getManifestationDigitalIdentifier(loanableManifestation)
+      ? getPublizonIdentifier(loanableManifestation)
       : null;
     if (!identifier) {
       return null;

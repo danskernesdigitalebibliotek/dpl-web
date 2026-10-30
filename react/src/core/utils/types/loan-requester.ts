@@ -1,5 +1,6 @@
 import { ApiResult, CreateLoanResult } from "../../publizon/model";
 import { RequestStatus } from "./request";
+import { PublizonIdentifier } from "./ids";
 
 /** What came of asking, in the same shape whichever provider answered. */
 export type LoanRequestOutcome = {
@@ -21,8 +22,8 @@ type ReportOutcome = (outcome: LoanRequestOutcome) => void;
  * can be removed without touching the caller.
  */
 export type LoanRequester = {
-  loan: (materialId: string, report: ReportOutcome) => void;
-  reserve: (materialId: string, report: ReportOutcome) => void;
+  loan: (identifier: PublizonIdentifier, report: ReportOutcome) => void;
+  reserve: (identifier: PublizonIdentifier, report: ReportOutcome) => void;
   /** Only the adapter has a redeem step - see ReaderPlayerState.offerId. */
   acceptOffer?: (offerId: string, report: ReportOutcome) => void;
   /** True until the request's read-back has landed. */

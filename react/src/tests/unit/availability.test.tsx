@@ -9,6 +9,8 @@ import {
   vi
 } from "vitest";
 import { act } from "react";
+import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
+import { PublizonIdentifier } from "../../core/utils/types/ids";
 import usePhysicalAvailabilityData from "../../components/availability-label/usePhysicalAvailabilityData";
 import { useGetAvailabilityV3 } from "../../core/fbs/fbs";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
@@ -273,7 +275,11 @@ describe("useOnlineAvailabilityData tests", () => {
   const mockedFlag = vi.mocked(useBiblioAdapter);
   const mockedIsAnonymous = vi.mocked(isAnonymous);
 
-  const ISBN = "9788794564076";
+  const MATERIAL_ID = "9788794564076";
+  const PUBLIZON_ID: PublizonIdentifier = {
+    type: IdentifierTypeEnum.Publizon,
+    value: MATERIAL_ID
+  };
 
   const givenBiblioAnswers = (status: string) =>
     mockedLoanDecision.mockReturnValue({
@@ -281,9 +287,12 @@ describe("useOnlineAvailabilityData tests", () => {
       isLoading: false
     } as unknown as ReturnType<typeof useDigitalLoanDecision>);
 
-  const render = (isbn: string | null = ISBN, enabled = true) =>
+  const render = (
+    identifier: PublizonIdentifier | null = PUBLIZON_ID,
+    enabled = true
+  ) =>
     renderHook(() =>
-      useOnlineAvailabilityData({ enabled, access: ["Ereol"], isbn })
+      useOnlineAvailabilityData({ enabled, access: ["Ereol"], identifier })
     );
 
   beforeEach(() => {
@@ -432,7 +441,7 @@ describe("useOnlineAvailabilityData tests", () => {
   });
 
   it("Test that if the hook is not enabled it should return null statuses", () => {
-    const { result } = render(ISBN, false);
+    const { result } = render(PUBLIZON_ID, false);
 
     act(() => {
       expect(result.current).toEqual({
@@ -452,11 +461,13 @@ describe("useOnlineAvailabilityData tests", () => {
       useOnlineAvailabilityData({
         enabled: true,
         access: ["AccessUrl"],
-        isbn: ISBN
+        identifier: PUBLIZON_ID
       })
     );
 
-    expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, { enabled: false });
+    expect(mockedLoanDecision).toHaveBeenCalledWith(MATERIAL_ID, {
+      enabled: false
+    });
     expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({ query: { enabled: false } })
@@ -469,7 +480,9 @@ describe("useOnlineAvailabilityData tests", () => {
     // has not opted in to, and Publizon keeps answering.
     render();
 
-    expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, { enabled: false });
+    expect(mockedLoanDecision).toHaveBeenCalledWith(MATERIAL_ID, {
+      enabled: false
+    });
     expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({ query: { enabled: true } })
@@ -484,12 +497,12 @@ describe("useOnlineAvailabilityData tests", () => {
     it("Asks Biblio about the material", () => {
       render();
 
-      expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
+      expect(mockedLoanDecision).toHaveBeenCalledWith(MATERIAL_ID, {
         enabled: true
       });
     });
 
-    it("Leaves Biblio alone without an isbn to ask about", () => {
+    it("Leaves Biblio alone without an id to ask about", () => {
       render(null);
 
       // The query is still declared - hooks cannot be conditional - but it
@@ -506,7 +519,7 @@ describe("useOnlineAvailabilityData tests", () => {
 
       const { result } = render();
 
-      expect(mockedLoanDecision).toHaveBeenCalledWith(ISBN, {
+      expect(mockedLoanDecision).toHaveBeenCalledWith(MATERIAL_ID, {
         enabled: false
       });
       expect(useGetV1ProductsIdentifier).toHaveBeenCalledWith(

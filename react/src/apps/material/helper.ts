@@ -36,7 +36,7 @@ import {
 import { constructModalId } from "../../core/utils/helpers/modal-helpers";
 import { UseTextFunction } from "../../core/utils/text";
 import { Manifestation, Work } from "../../core/utils/types/entities";
-import { FaustId } from "../../core/utils/types/ids";
+import { FaustId, PublizonIdentifier } from "../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import vitestData from "./__vitest_data__/helper";
 
@@ -78,19 +78,26 @@ export const getFirstManifestation = (manifestations: Manifestation[]) => {
   return first(manifestations) || null;
 };
 
-export const hasPublizonIdentifier = (manifestation: Manifestation) =>
-  manifestation.identifiers?.some(
+// No ISBN stands in when the PUBLIZON identifier is missing: a manifestation
+// can carry several ISBNs, and the leading one is not always the edition a
+// provider lends - a deselected PDF, say.
+export const getPublizonIdentifier = (
+  manifestation: Manifestation
+): PublizonIdentifier | null => {
+  const value = manifestation.identifiers?.find(
     (identifier) => identifier.type === IdentifierTypeEnum.Publizon
-  ) ?? false;
+  )?.value;
+  return value ? { type: IdentifierTypeEnum.Publizon, value } : null;
+};
 
-// The PUBLIZON identifier marks a loanable edition. The type is FBI's field
-// name and says nothing about which provider holds the material.
-//
-// Several editions of one material type can be loanable, and the reader
-// expects the newest. Ordering copies the list: orderManifestationsByYear
-// sorts in place, and this list belongs to the caller.
+// The PUBLIZON identifier marks a loanable edition. Several editions of one
+// material type can be loanable, and the reader expects the newest. Ordering
+// copies the list: orderManifestationsByYear sorts in place, and this list
+// belongs to the caller.
 export const getLoanableManifestation = (manifestations: Manifestation[]) => {
-  const loanableManifestations = manifestations.filter(hasPublizonIdentifier);
+  const loanableManifestations = manifestations.filter(
+    (manifestation) => getPublizonIdentifier(manifestation) !== null
+  );
 
   if (!loanableManifestations.length) {
     return getFirstManifestation(manifestations);
@@ -162,23 +169,6 @@ export const getManifestationIsbn = (manifestation: Manifestation) => {
     (identifier) => identifier.type === IdentifierTypeEnum.Isbn
   );
   return isbnIdentifier?.value ?? "";
-};
-
-/**
- * The identifier a digital material is borrowed, reserved and read by - both
- * Publizon's identifier and the service layer's `material_id`.
- *
- * `IdentifierTypeEnum.Publizon` is FBI's field name, not the provider we call.
- * Preferred over the ISBN because a manifestation can carry several ISBNs and
- * the leading one is not always the right edition - a deselected PDF, say.
- */
-export const getManifestationDigitalIdentifier = (
-  manifestation: Manifestation
-) => {
-  const fbiPublizonIdentifier = manifestation.identifiers?.find(
-    (identifier) => identifier.type === IdentifierTypeEnum.Publizon
-  );
-  return fbiPublizonIdentifier?.value ?? getManifestationIsbn(manifestation);
 };
 
 export const getManifestationSource = (manifestation: Manifestation) => {

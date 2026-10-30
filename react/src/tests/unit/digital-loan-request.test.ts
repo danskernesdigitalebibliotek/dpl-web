@@ -5,12 +5,19 @@ import {
   resolveLoanReservationRequest
 } from "../../core/utils/helpers/digital-loan-request";
 import { Patron } from "../../core/utils/types/entities";
+import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
+import { PublizonIdentifier } from "../../core/utils/types/ids";
+
+const PUBLIZON_ID: PublizonIdentifier = {
+  type: IdentifierTypeEnum.Publizon,
+  value: "material-1"
+};
 
 const material = {
   openModal: false,
   canBeLoaned: false,
   canBeReserved: false,
-  identifier: "material-1",
+  identifier: PUBLIZON_ID,
   offerId: null
 };
 
@@ -30,7 +37,7 @@ describe("resolveLoanReservationRequest", () => {
   it("borrows a material that can be borrowed", () => {
     expect(
       resolveLoanReservationRequest({ ...material, canBeLoaned: true })
-    ).toEqual({ kind: "loan", materialId: "material-1" });
+    ).toEqual({ kind: "loan", identifier: PUBLIZON_ID });
   });
 
   it("redeems an offer rather than borrowing the material anew", () => {
@@ -50,13 +57,13 @@ describe("resolveLoanReservationRequest", () => {
         canBeLoaned: true,
         canBeReserved: true
       })
-    ).toEqual({ kind: "loan", materialId: "material-1" });
+    ).toEqual({ kind: "loan", identifier: PUBLIZON_ID });
   });
 
   it("reserves a material that can only be queued for", () => {
     expect(
       resolveLoanReservationRequest({ ...material, canBeReserved: true })
-    ).toEqual({ kind: "reserve", materialId: "material-1" });
+    ).toEqual({ kind: "reserve", identifier: PUBLIZON_ID });
   });
 
   it("answers nothing for a material that can neither be borrowed nor reserved", () => {

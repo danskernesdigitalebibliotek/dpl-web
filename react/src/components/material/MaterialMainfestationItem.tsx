@@ -21,7 +21,6 @@ import {
   getManifestationAudience,
   getManifestationAuthors,
   getManifestationContributors,
-  getManifestationDigitalIdentifier,
   getManifestationEdition,
   getManifestationGenreAndForm,
   getManifestationIsbn,
@@ -34,6 +33,7 @@ import {
   getManifestationPhysicalDescription,
   getManifestationPublisher,
   getManifestationSource,
+  getPublizonIdentifier,
   getManifestationTitle
 } from "../../apps/material/helper";
 import {
@@ -142,7 +142,7 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
           key={`${faustId}-material-manifestation-item`}
           manifestText={materialTypes[0]?.materialTypeSpecific.display}
           faustIds={[faustId]}
-          identifier={getManifestationDigitalIdentifier(manifestation) || null}
+          identifier={getPublizonIdentifier(manifestation)}
           accessTypes={accessTypesCodes}
           access={access}
           isVisualOnly

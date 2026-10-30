@@ -1,5 +1,5 @@
 import { Manifestation } from "./types/entities";
-import { getManifestationDigitalIdentifier } from "../../apps/material/helper";
+import { getPublizonIdentifier } from "../../apps/material/helper";
 import { getReaderPlayerType } from "../../components/reader-player/helper";
 import useBiblioAdapter from "./useBiblioAdapter";
 import { DigitalProvider } from "./types/digital-provider";
@@ -24,7 +24,7 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
 
   const type = getReaderPlayerType(manifestation);
   const identifier = manifestation
-    ? getManifestationDigitalIdentifier(manifestation)
+    ? getPublizonIdentifier(manifestation)
     : null;
 
   const serviceLayer = useDigitalReaderPlayerState({
