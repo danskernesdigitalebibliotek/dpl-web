@@ -37,9 +37,8 @@ Locally it comes from the central `.env`, which holds `WEDOBOOKS_NPM_TOKEN`
 from 1Password. The root `Taskfile.yml` loads `.env` and exports the token to
 every command it runs as the environment config key
 `npm_config_//npm.pkg.wedobooks.io/:_authToken`, which pnpm reads like any
-other config key. `task init:pnpm` depends on `task dev:dotenv:generate`, so
-`.env` is created first if it is missing, or regenerated if `.env.1pass` has
-changed. When the repository is set up to
+other config key. `task init` runs `task dev:dotenv:generate` to create `.env`,
+or regenerate it if `.env.1pass` has changed. When the repository is set up to
 run in docker, `dev:cli` passes the same variable on into the container.
 
 Without it the install fails on the Colibrio tarball with
