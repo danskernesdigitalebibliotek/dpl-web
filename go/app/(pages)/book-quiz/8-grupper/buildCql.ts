@@ -5,8 +5,14 @@ import { TClauseGroup, TGenreGroup, TGroupVariant, TSubjectGroup } from "./group
 // queries → to resultatlister. `variant` vælger A (genreOnly) eller B
 // (genrePlusSubjects) for alle genregrupper på én gang.
 
-const clausesToCql = (clauses: TClauseGroup[]) =>
-  "(" + clauses.flatMap(clause => clause.cqlValues.map(value => `${clause.cqlIndex}="${value}"`)).join(" OR ") + ")"
+// Tom term-liste (fx en pakke redigeret tom i debug) → "" (intet led), så vi
+// aldrig sender "()" til FBI.
+const clausesToCql = (clauses: TClauseGroup[]) => {
+  const terms = clauses.flatMap(clause =>
+    clause.cqlValues.filter(value => value.trim() !== "").map(value => `${clause.cqlIndex}="${value}"`)
+  )
+  return terms.length > 0 ? `(${terms.join(" OR ")})` : ""
+}
 
 export type TGenreResult = { group: TGenreGroup; cql: string }
 
@@ -15,10 +21,13 @@ export const buildQueries = (
   subjectGroups: TSubjectGroup[],
   variant: TGroupVariant
 ): TGenreResult[] => {
-  const emner = subjectGroups.map(group => clausesToCql(group.match)).join(" OR ")
+  const emner = subjectGroups
+    .map(group => clausesToCql(group.match))
+    .filter(Boolean)
+    .join(" OR ")
   return genreGroups.map(group => {
     const genre = clausesToCql(group[variant])
-    const cql = emner ? `${genre} AND (${emner})` : genre
+    const cql = [genre, emner ? `(${emner})` : ""].filter(Boolean).join(" AND ")
     return { group, cql }
   })
 }

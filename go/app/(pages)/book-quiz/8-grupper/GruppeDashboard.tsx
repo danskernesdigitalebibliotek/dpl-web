@@ -12,11 +12,9 @@ import { TFilterMode, withHardAudienceFilters } from "../_shared/audienceCql"
 import BookQuizCover from "../_shared/BookQuizCover"
 import { buildQueries } from "./buildCql"
 import {
-  clauseTerms,
-  genreGroupById,
   GENRE_GROUPS,
   SUBJECT_GROUPS,
-  subjectGroupById,
+  TClauseGroup,
   TGenreGroup,
   TGroupVariant,
   TSubjectGroup,
@@ -105,23 +103,33 @@ const rerankWorks = (works: TQuizWork[], lixRanges: TRange[], ageRanges: TRange[
     .map(entry => entry.work)
 }
 
-// Hvad et svar peger på (vises som indsigt under hvert valg).
-const optionMapping = (option: TQuizOption): string => {
+// Hvad et svar peger på (vises som indsigt under hvert valg). Slår pakke-labels
+// op i den (redigerbare) pakke-state.
+const optionMapping = (
+  option: TQuizOption,
+  genrePackages: TGenreGroup[],
+  subjectPackages: TSubjectGroup[]
+): string => {
   if (option.genreGroupId) {
-    const group = genreGroupById(option.genreGroupId)
-    return group ? `genregruppe: ${group.label}` : `genregruppe: ${option.genreGroupId}`
+    const group = genrePackages.find(current => current.id === option.genreGroupId)
+    return `genregruppe: ${group?.label ?? option.genreGroupId}`
   }
   if (option.subjectGroupId) {
-    const group = subjectGroupById(option.subjectGroupId)
-    return group ? `emnegruppe: ${group.label}` : `emnegruppe: ${option.subjectGroupId}`
+    const group = subjectPackages.find(current => current.id === option.subjectGroupId)
+    return `emnegruppe: ${group?.label ?? option.subjectGroupId}`
   }
   if (option.ageRange) return `alder ${option.ageRange[0]}–${option.ageRange[1]} år`
   if (option.lixRange) return `lix ${option.lixRange[0]}–${option.lixRange[1]}`
   return "—"
 }
 
-// Udled de valgte grupper + alders-/lix-intervaller fra svarene.
-const deriveSelection = (answers: Record<string, string[]>) => {
+// Udled de valgte grupper + alders-/lix-intervaller fra svarene. Grupperne
+// resolves mod den redigerbare pakke-state, så debug-redigeringer slår igennem.
+const deriveSelection = (
+  answers: Record<string, string[]>,
+  genrePackages: TGenreGroup[],
+  subjectPackages: TSubjectGroup[]
+) => {
   const selected = QUESTIONS.flatMap(question =>
     (answers[question.id] ?? []).flatMap(id => {
       const option = question.options.find(current => current.id === id)
@@ -131,13 +139,17 @@ const deriveSelection = (answers: Record<string, string[]>) => {
 
   const genreGroups: TGenreGroup[] = []
   for (const option of selected) {
-    const group = option.genreGroupId ? genreGroupById(option.genreGroupId) : undefined
+    const group = option.genreGroupId
+      ? genrePackages.find(current => current.id === option.genreGroupId)
+      : undefined
     if (group && !genreGroups.some(current => current.id === group.id)) genreGroups.push(group)
   }
 
   const subjectGroups: TSubjectGroup[] = []
   for (const option of selected) {
-    const group = option.subjectGroupId ? subjectGroupById(option.subjectGroupId) : undefined
+    const group = option.subjectGroupId
+      ? subjectPackages.find(current => current.id === option.subjectGroupId)
+      : undefined
     if (group && !subjectGroups.some(current => current.id === group.id)) subjectGroups.push(group)
   }
 
@@ -150,6 +162,111 @@ const deriveSelection = (answers: Record<string, string[]>) => {
 const formatRanges = (ranges: TRange[], unit: string) =>
   ranges.length > 0 ? ranges.map(([lo, hi]) => `${lo}–${hi}${unit}`).join(", ") : "—"
 
+// --- Redigerbare pakker (debug): facetter ⇄ flade termer + dyb kopi + editor ---
+
+const INDEX_OPTIONS = [
+  "term.genreandform",
+  "phrase.genreandform",
+  "term.subject",
+  "phrase.subject",
+]
+const INDEX_LABEL: Record<string, string> = {
+  "term.genreandform": "genre (term)",
+  "phrase.genreandform": "genre (frase)",
+  "term.subject": "emne (term)",
+  "phrase.subject": "emne (frase)",
+}
+
+type TTerm = { index: string; value: string }
+
+const clausesToTerms = (clauses: TClauseGroup[]): TTerm[] =>
+  clauses.flatMap(clause => clause.cqlValues.map(value => ({ index: clause.cqlIndex, value })))
+
+// Flade termer → TClauseGroup[] (grupperet pr. indeks, tomme værdier droppes).
+const termsToClauses = (terms: TTerm[]): TClauseGroup[] => {
+  const out: TClauseGroup[] = []
+  for (const term of terms) {
+    if (term.value.trim() === "") continue
+    const existing = out.find(clause => clause.cqlIndex === term.index)
+    if (existing) existing.cqlValues.push(term.value)
+    else out.push({ cqlIndex: term.index, cqlValues: [term.value] })
+  }
+  return out
+}
+
+const cloneGenre = (groups: TGenreGroup[]): TGenreGroup[] =>
+  groups.map(group => ({
+    ...group,
+    genreOnly: group.genreOnly.map(clause => ({ ...clause, cqlValues: [...clause.cqlValues] })),
+    genrePlusSubjects: group.genrePlusSubjects.map(clause => ({
+      ...clause,
+      cqlValues: [...clause.cqlValues],
+    })),
+  }))
+
+const cloneSubject = (groups: TSubjectGroup[]): TSubjectGroup[] =>
+  groups.map(group => ({
+    ...group,
+    match: group.match.map(clause => ({ ...clause, cqlValues: [...clause.cqlValues] })),
+  }))
+
+// Editor for én liste af facetter. Holder egen flade term-state (så rækkerne ikke
+// hopper mens man skriver); sender rebuilt clauses opad ved hver ændring.
+const ClauseEditor = ({
+  initial,
+  onChange,
+}: {
+  initial: TClauseGroup[]
+  onChange: (clauses: TClauseGroup[]) => void
+}) => {
+  const [terms, setTerms] = useState<TTerm[]>(() => clausesToTerms(initial))
+  const apply = (next: TTerm[]) => {
+    setTerms(next)
+    onChange(termsToClauses(next))
+  }
+  return (
+    <div className="flex flex-col gap-1">
+      {terms.map((term, index) => (
+        <div key={index} className="flex flex-wrap items-center gap-1">
+          <select
+            value={term.index}
+            onChange={event =>
+              apply(terms.map((t, i) => (i === index ? { ...t, index: event.target.value } : t)))
+            }
+            className="border border-black/30 px-1 py-0.5 text-xs">
+            {INDEX_OPTIONS.map(option => (
+              <option key={option} value={option}>
+                {INDEX_LABEL[option]}
+              </option>
+            ))}
+          </select>
+          <input
+            value={term.value}
+            placeholder="FBI-term"
+            onChange={event =>
+              apply(terms.map((t, i) => (i === index ? { ...t, value: event.target.value } : t)))
+            }
+            className="w-40 border border-black/30 px-1 py-0.5 text-xs"
+          />
+          <button
+            type="button"
+            aria-label="Fjern term"
+            onClick={() => apply(terms.filter((_, i) => i !== index))}
+            className="opacity-60 hover:opacity-100">
+            ✕
+          </button>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={() => apply([...terms, { index: "term.subject", value: "" }])}
+        className="self-start border border-black/30 px-2 py-0.5 text-xs">
+        + term
+      </button>
+    </div>
+  )
+}
+
 const GruppeDashboard = () => {
   const [phase, setPhase] = useState<TPhase>("quiz")
   const [qIndex, setQIndex] = useState(0)
@@ -161,7 +278,32 @@ const GruppeDashboard = () => {
   const [showInsight, setShowInsight] = useState(true)
   const [showDebug, setShowDebug] = useState(false)
 
-  const { genreGroups, subjectGroups, ageRanges, lixRanges } = deriveSelection(answers)
+  // Redigerbare kopier af pakke-katalogerne (debug). resetSeq remounter editorerne.
+  const [genrePackages, setGenrePackages] = useState<TGenreGroup[]>(() => cloneGenre(GENRE_GROUPS))
+  const [subjectPackages, setSubjectPackages] = useState<TSubjectGroup[]>(() =>
+    cloneSubject(SUBJECT_GROUPS)
+  )
+  const [resetSeq, setResetSeq] = useState(0)
+
+  const setGenreSlot = (id: string, slot: TGroupVariant, clauses: TClauseGroup[]) =>
+    setGenrePackages(prev => prev.map(group => (group.id === id ? { ...group, [slot]: clauses } : group)))
+  const setGenreLabel = (id: string, label: string) =>
+    setGenrePackages(prev => prev.map(group => (group.id === id ? { ...group, label } : group)))
+  const setSubjectMatch = (id: string, clauses: TClauseGroup[]) =>
+    setSubjectPackages(prev => prev.map(group => (group.id === id ? { ...group, match: clauses } : group)))
+  const setSubjectLabel = (id: string, label: string) =>
+    setSubjectPackages(prev => prev.map(group => (group.id === id ? { ...group, label } : group)))
+  const resetPackages = () => {
+    setGenrePackages(cloneGenre(GENRE_GROUPS))
+    setSubjectPackages(cloneSubject(SUBJECT_GROUPS))
+    setResetSeq(seq => seq + 1)
+  }
+
+  const { genreGroups, subjectGroups, ageRanges, lixRanges } = deriveSelection(
+    answers,
+    genrePackages,
+    subjectPackages
+  )
 
   // Én query pr. genregruppe (altså to lister). buildQueries honorerer variant.
   // Hårde alder/lix-filtre AND'es direkte ind i CQL'en (blødt = rerank client-side).
@@ -319,7 +461,9 @@ const GruppeDashboard = () => {
                         {option.emoji ? <span className="mr-1">{option.emoji}</span> : null}
                         {option.label}
                       </button>
-                      <span className="text-[10px] opacity-50">→ {optionMapping(option)}</span>
+                      <span className="text-[10px] opacity-50">
+                        → {optionMapping(option, genrePackages, subjectPackages)}
+                      </span>
                     </div>
                   )
                 })}
@@ -515,7 +659,7 @@ const GruppeDashboard = () => {
         ) : null}
       </div>
 
-      {/* --- Debug: koblingen svar → gruppe → facetter (A/B) → CQL → hits --- */}
+      {/* --- Debug: redigér genre- & emnepakker (facetter) → se effekt på søgningen --- */}
       <div className="flex flex-col border border-dashed border-black/30 text-sm">
         <button
           type="button"
@@ -523,75 +667,98 @@ const GruppeDashboard = () => {
           aria-expanded={showDebug}
           className="flex items-center justify-between px-3 py-2 text-left">
           <span className="text-xs font-bold tracking-wide uppercase opacity-60">
-            🛠 Debug — gruppe → facetter (variant A vs B)
+            🛠 Debug — redigér genre- &amp; emnepakker
           </span>
           <span className="opacity-60">{showDebug ? "skjul ▲" : "vis ▼"}</span>
         </button>
         {showDebug ? (
           <div className="flex flex-col gap-5 border-t border-black/10 p-3">
-            <p className="opacity-60">
-              Her ser du hele kæden: hvilke facetter hver valgt genregruppe folder ud til i begge
-              variationer, og hvor mange hits den aktive variant giver. Forskellen mellem A og B er
-              recall-effekten af at tage emne-termer med.
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="opacity-60">
+                Redigér hvilke FBI-facetter hver pakke indeholder (navn + termer). Ændringer slår
+                live igennem på CQL og resultater. “(valgt)” = pakken bruges af dine nuværende svar.
+                {GENRE_GROUPS.length} genre- · {SUBJECT_GROUPS.length} emnepakker.
+              </p>
+              <button
+                type="button"
+                onClick={resetPackages}
+                className="border border-black/40 px-3 py-1">
+                Nulstil pakker
+              </button>
+            </div>
 
-            <div className="flex flex-col gap-3">
-              <h4 className="text-xs font-bold tracking-wide uppercase opacity-60">
-                Valgte genregrupper → facetter
-              </h4>
-              {genreGroups.length === 0 ? (
-                <p className="opacity-50">— ingen valgt endnu —</p>
-              ) : (
-                genreGroups.map((group, index) => {
-                  const list = lists[index]
-                  return (
-                    <div key={group.id} className="flex flex-col gap-1 border-t border-black/10 pt-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">{group.emoji}</span>
-                        <span className="font-medium">{group.label}</span>
-                        {list ? <span className="opacity-60">→ {list.hitcount} hits</span> : null}
+            <div className="flex flex-col gap-4">
+              <h4 className="text-xs font-bold tracking-wide uppercase opacity-60">Genrepakker</h4>
+              {genrePackages.map(group => {
+                const list = lists.find(current => current.group.id === group.id)
+                const isSelected = genreGroups.some(current => current.id === group.id)
+                return (
+                  <div
+                    key={group.id}
+                    className="flex flex-col gap-2 border-t border-black/10 pt-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-lg">{group.emoji}</span>
+                      <input
+                        value={group.label}
+                        onChange={event => setGenreLabel(group.id, event.target.value)}
+                        className="w-48 border border-black/30 px-1 py-0.5 font-medium"
+                      />
+                      <code className="opacity-50">{group.id}</code>
+                      {isSelected ? (
+                        <span className="opacity-60">
+                          (valgt{list ? ` · ${list.hitcount} hits` : ""})
+                        </span>
+                      ) : null}
+                    </div>
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs opacity-60">A · kun genre</span>
+                        <ClauseEditor
+                          key={`${group.id}-A-${resetSeq}`}
+                          initial={group.genreOnly}
+                          onChange={clauses => setGenreSlot(group.id, "genreOnly", clauses)}
+                        />
                       </div>
-                      <div>
-                        <span className="opacity-60">A · kun genre:</span>{" "}
-                        <code className="break-words">{clauseTerms(group.genreOnly).join(" OR ")}</code>
-                      </div>
-                      <div>
-                        <span className="opacity-60">B · genre + emner:</span>{" "}
-                        <code className="break-words">
-                          {clauseTerms(group.genrePlusSubjects).join(" OR ")}
-                        </code>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs opacity-60">B · genre + emner</span>
+                        <ClauseEditor
+                          key={`${group.id}-B-${resetSeq}`}
+                          initial={group.genrePlusSubjects}
+                          onChange={clauses => setGenreSlot(group.id, "genrePlusSubjects", clauses)}
+                        />
                       </div>
                     </div>
-                  )
-                })
-              )}
-            </div>
-
-            <div className="flex flex-col gap-3">
-              <h4 className="text-xs font-bold tracking-wide uppercase opacity-60">
-                Valgte emnegrupper → facetter
-              </h4>
-              {subjectGroups.length === 0 ? (
-                <p className="opacity-50">— ingen valgt endnu —</p>
-              ) : (
-                subjectGroups.map(group => (
-                  <div key={group.id} className="flex flex-wrap items-center gap-2">
-                    <span className="w-36 shrink-0 opacity-80">
-                      {group.emoji} {group.label}
-                    </span>
-                    <code className="break-words">{clauseTerms(group.match).join(" OR ")}</code>
                   </div>
-                ))
-              )}
+                )
+              })}
             </div>
 
-            <div className="flex flex-col gap-1">
-              <h4 className="text-xs font-bold tracking-wide uppercase opacity-60">
-                Gruppe-katalog (bare nok til quizzen)
-              </h4>
-              <p className="opacity-60">
-                {GENRE_GROUPS.length} genregrupper · {SUBJECT_GROUPS.length} emnegrupper
-              </p>
+            <div className="flex flex-col gap-4">
+              <h4 className="text-xs font-bold tracking-wide uppercase opacity-60">Emnepakker</h4>
+              {subjectPackages.map(group => {
+                const isSelected = subjectGroups.some(current => current.id === group.id)
+                return (
+                  <div
+                    key={group.id}
+                    className="flex flex-col gap-2 border-t border-black/10 pt-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-lg">{group.emoji}</span>
+                      <input
+                        value={group.label}
+                        onChange={event => setSubjectLabel(group.id, event.target.value)}
+                        className="w-48 border border-black/30 px-1 py-0.5 font-medium"
+                      />
+                      <code className="opacity-50">{group.id}</code>
+                      {isSelected ? <span className="opacity-60">(valgt)</span> : null}
+                    </div>
+                    <ClauseEditor
+                      key={`${group.id}-${resetSeq}`}
+                      initial={group.match}
+                      onChange={clauses => setSubjectMatch(group.id, clauses)}
+                    />
+                  </div>
+                )
+              })}
             </div>
           </div>
         ) : null}
