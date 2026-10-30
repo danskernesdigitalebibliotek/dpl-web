@@ -34,11 +34,13 @@ mirror of Colibrio. `.npmrc` at the repository root maps both scopes; the
 credential is the one part that stays out of the repository.
 
 Locally it comes from the central `.env`, which holds `WEDOBOOKS_NPM_TOKEN`
-from 1Password - so `task dev:dotenv:generate` is enough, and `task init:pnpm`
-(and everything that depends on it, including `task dev:reset:clean`) picks it
-up from there. `init:pnpm` passes it to pnpm as the environment config key
-`npm_config_//npm.pkg.wedobooks.io/:_authToken`, which is also how it crosses
-into the container when the repository is set up to run in docker.
+from 1Password. The root `Taskfile.yml` loads `.env` and exports the token to
+every command it runs as the environment config key
+`npm_config_//npm.pkg.wedobooks.io/:_authToken`, which pnpm reads like any
+other config key. `task init:pnpm` depends on `task dev:dotenv:generate`, so
+`.env` is created first if it is missing, or regenerated if `.env.1pass` has
+changed. When the repository is set up to
+run in docker, `dev:cli` passes the same variable on into the container.
 
 Without it the install fails on the Colibrio tarball with
 `ERR_PNPM_FETCH_401`, and the task that happens to be installing - typically

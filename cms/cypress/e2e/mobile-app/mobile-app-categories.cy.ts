@@ -117,4 +117,27 @@ describe('Mobile app API: getAppCategories', () => {
       );
     });
   });
+
+  it('lists a category created after the list was cached', () => {
+    const runId = Date.now();
+    const articleTitle = `${titlePrefix} cached article ${runId}`;
+    const categoryTitle = `${titlePrefix} cached category ${runId}`;
+
+    // Reading the list caches it, so the list must be invalidated when the
+    // category is created for the category to show up.
+    getAppCategories('BIBLOGO');
+
+    createGoArticle(articleTitle, '<p>Brødtekst</p>').then((article) => {
+      createGoCategory(categoryTitle, {
+        title: `Linkbox ${runId}`,
+        description: `Beskrivelse ${runId}`,
+        linkPath: article.path,
+      }).then((category) => {
+        getAppCategories('BIBLOGO').then(({ data }) => {
+          const ids = data.getAppCategories.map(({ id }) => id);
+          expect(ids).to.include(category.id);
+        });
+      });
+    });
+  });
 });
