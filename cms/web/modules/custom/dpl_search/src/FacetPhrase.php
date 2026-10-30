@@ -17,10 +17,10 @@ class FacetPhrase {
   /**
    * The facet types whose values are usable as a search phrase.
    */
-  private const PHRASE_FACETS = ['creators', 'subjects', 'dk5'];
+  private const PHRASE_FACETS = ['creators', 'subjects', 'dk5', 'genreAndForm'];
 
   /**
-   * Get the first creator, subject or dk5 facet value.
+   * Get the first creator, subject, dk5 or genre and form facet value.
    *
    * @param string $facets_json
    *   The JSON facets query parameter as produced by dpl-react.

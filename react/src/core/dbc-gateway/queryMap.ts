@@ -12,7 +12,6 @@ export default {
   getDashboardRecommendations: serviceUrlKeys.fbiLocal,
   getMaterial: serviceUrlKeys.fbiLocal,
   getRelatedWorks: serviceUrlKeys.fbiLocal,
-  intelligentFacets: serviceUrlKeys.fbiLocal,
   recommendFromFaust: serviceUrlKeys.fbiLocal,
   searchFacet: serviceUrlKeys.fbiLocal,
   searchWithPagination: serviceUrlKeys.fbiLocal,

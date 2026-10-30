@@ -37,20 +37,6 @@ const translateRowsToCql = (rowsToTranslate: AdvancedSearchRowData[]) => {
   }, "");
 };
 
-export const wrapFiltersInParentheses = (filters: string) => {
-  // No filters, no wrapping needed.
-  if (filters.trim() === "") {
-    return "";
-  }
-  // If there's only one clause, no wrapping is needed either.
-  if (!filters.includes(" OR ")) {
-    return filters;
-  }
-  // The filter string always start with " AND", so we can work with that.
-  const splitFiltersArray = filters.split(" AND", 2);
-  return `${splitFiltersArray.join(" AND (")})`;
-};
-
 export const translateSearchObjectToCql = (
   searchObject: AdvancedSearchQuery
 ) => {
@@ -77,5 +63,3 @@ export const commaSeparatedStringToArray = (input: string): string[] => {
     .map((s) => s.trim())
     .filter((s) => s.length > 0);
 };
-
-export default {};

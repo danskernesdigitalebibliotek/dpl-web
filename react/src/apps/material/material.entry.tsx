@@ -18,6 +18,7 @@ import { BiblioAdapterArgs } from "../../core/storybook/biblioAdapterArgs";
 import withPageStatistics from "../../core/statistics/withPageStatistics";
 import useSetSmoothScroll from "../../core/utils/useSetSmoothScroll";
 import { MaterialUnavailableNoticeArgs } from "../../components/material/MaterialUnavailableNotice/MaterialUnavailableNoticeArgs";
+import { MaterialContentsArgs } from "../../components/material/MaterialContents/MaterialContentsArgs";
 
 interface MaterialEntryTextProps {
   alreadyReservedText: string;
@@ -72,6 +73,7 @@ interface MaterialEntryTextProps {
   findOnShelfModalScreenReaderModalDescriptionText: string;
   findOnShelfTableDescriptionText: string;
   firstAvailableEditionText: string;
+  genreAndFormText: string;
   getOnlineText: string;
   goToText: string;
   reservationDetailsNoInterestAfterTitleText: string;
@@ -223,7 +225,8 @@ export interface MaterialEntryProps
     PlayerModalProps,
     BiblioAdapterArgs,
     OpenOrderProps,
-    MaterialUnavailableNoticeArgs {
+    MaterialUnavailableNoticeArgs,
+    MaterialContentsArgs {
   wid: WorkId;
 }
 

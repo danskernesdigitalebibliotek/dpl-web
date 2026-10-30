@@ -64,22 +64,10 @@ const meta: Meta<typeof FeeList> = {
     materialAndAuthorText: {
       control: { type: "text" }
     },
-    feeListDaysText: {
-      control: { type: "text" }
-    },
-    payText: {
-      control: { type: "text" }
-    },
     totalText: {
       control: { type: "text" }
     },
     expirationWarningDaysBeforeConfig: {
-      control: { type: "text" }
-    },
-    iAcceptText: {
-      control: { type: "text" }
-    },
-    termsOfTradeText: {
       control: { type: "text" }
     },
     unpaidFeesPayableByClientHeadlineText: {
@@ -89,21 +77,6 @@ const meta: Meta<typeof FeeList> = {
       control: { type: "text" }
     },
     alreadyPaidText: {
-      control: { type: "text" }
-    },
-    feePaymentModalHeaderText: {
-      control: { type: "text" }
-    },
-    feePaymentModalBodyText: {
-      control: { type: "text" }
-    },
-    feePaymentModalNoticeText: {
-      control: { type: "text" }
-    },
-    feePaymentModalGotoText: {
-      control: { type: "text" }
-    },
-    feePaymentModalCancelText: {
       control: { type: "text" }
     },
     feeDetailsModalScreenReaderText: {
@@ -164,9 +137,6 @@ const meta: Meta<typeof FeeList> = {
     availablePaymentTypesUrl: {
       control: { type: "text" }
     },
-    termsOfTradeUrl: {
-      control: { type: "text" }
-    },
     viewFeesAndCompensationRatesUrl: {
       control: { type: "text" }
     }
@@ -196,23 +166,13 @@ export const Primary: Story = {
     otherMaterialsText: "Other materials",
     materialByAuthorText: "By",
     materialAndAuthorText: "and",
-    feeListDaysText: "Days",
-    payText: "Pay",
     totalText: "Total @total",
     expirationWarningDaysBeforeConfig: "6",
-    iAcceptText: "I accept the",
-    termsOfTradeText: "Terms of trade",
     unpaidFeesPayableByClientHeadlineText: "Unsettled debt - paid on site",
     unpaidFeesNotPayableByClientHeadlineText:
       "Unsettled debt - paid externally",
     alreadyPaidText:
       "Please note that paid fees are not registered up until 72 hours after your payment after which your debt is updated and your user unblocked if it has been blocked.",
-    feePaymentModalHeaderText: "Unpaid fees post 27/10 2020",
-    feePaymentModalBodyText: "You will be redirected to Mit Betalingsoverblik.",
-    feePaymentModalNoticeText:
-      "Paid fees can take up to 24 hours to registrer.",
-    feePaymentModalGotoText: "Go to Mit Betalingsoverblik",
-    feePaymentModalCancelText: "Cancel",
     feeDetailsModalScreenReaderText: "A modal containing details about a fee",
     emptyFeeListText: "You have 0 unpaid fees or replacement costs",
     feeDetailsModalCloseModalAriaLabelText: "Close fee details modal",
@@ -238,7 +198,6 @@ export const Primary: Story = {
     physicalLoansUrl: "/user/me/loans",
     feeListPaymentSiteUrl: "https://google.com",
     availablePaymentTypesUrl: "https://unsplash.com/photos/JDzoTGfoogA",
-    termsOfTradeUrl: "https://unsplash.com/photos/JDzoTGfoogA",
     viewFeesAndCompensationRatesUrl: "https://unsplash.com/photos/NEJcmvLFcws"
   }
 };

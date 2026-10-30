@@ -1,4 +1,3 @@
-import withPlaiceholder from "@plaiceholder/next"
 import path from "path"
 import { env } from "process"
 import { fileURLToPath } from "url"
@@ -93,4 +92,4 @@ const nextConfig = {
   },
 }
 
-export default withPlaiceholder(nextConfig)
+export default nextConfig
