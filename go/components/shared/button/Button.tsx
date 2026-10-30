@@ -92,6 +92,10 @@ export interface ButtonProps
   isLoading?: boolean
   // Name of the icon rendered before the label (variant "icon-text").
   icon?: string
+  // Unavailable, but still reachable by keyboard: the button keeps its place
+  // in the tab order and announces itself as unavailable, so the reason it
+  // carries can be read.
+  ariaDisabled?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -99,12 +103,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     {
       className,
       ariaLabel,
+      "aria-label": ariaLabelProp,
       variant,
       theme,
       size,
       asChild = false,
       isLoading,
       icon,
+      ariaDisabled,
+      onClick,
       children,
       ...props
     },
@@ -124,11 +131,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       )
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, theme }), className)}
+        className={cn(
+          buttonVariants({ variant, size, theme }),
+          // The disabled look without the disabled attribute. The hover cursor
+          // is explicit: its merge group outlives a plain cursor-not-allowed.
+          ariaDisabled &&
+            `cursor-not-allowed opacity-50 hover:translate-none hover:cursor-not-allowed
+            active:translate-none`,
+          className
+        )}
         ref={ref}
         {...props}
         aria-busy={isLoading || undefined}
-        aria-label={ariaLabel || props["aria-label"] || undefined}>
+        aria-disabled={ariaDisabled || undefined}
+        onClick={ariaDisabled ? undefined : onClick}
+        aria-label={ariaLabel || ariaLabelProp || undefined}>
         {isLoading ? (
           <span className="grid items-center justify-items-center">
             <span className="col-start-1 row-start-1 opacity-0">{content}</span>
