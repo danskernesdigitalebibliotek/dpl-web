@@ -26,8 +26,7 @@ export const useReaderSdkSession = (): UseQueryResult<WedoBooksSdk> => {
   // the patron flag for consumers that do not set the digital one (the React
   // apps). The token is read straight through the query client, which has no
   // gate of its own.
-  const canUseDigitalLoans =
-    config.canUseDigitalLoans ?? config.isPatronAuthenticated ?? true
+  const canUseDigitalLoans = config.canUseDigitalLoans ?? config.isPatronAuthenticated ?? true
 
   return useQuery<WedoBooksSdk>({
     // Not keyed on the token: signing in again whenever it rotates would

@@ -42,8 +42,7 @@ export const useDigitalQuery = <TData, TKey extends QueryKey>({
     ...query(config),
     ...restOptions,
     enabled:
-      (!patronScoped ||
-        (config.canUseDigitalLoans ?? config.isPatronAuthenticated ?? true)) &&
+      (!patronScoped || (config.canUseDigitalLoans ?? config.isPatronAuthenticated ?? true)) &&
       enabled &&
       requires,
   })
