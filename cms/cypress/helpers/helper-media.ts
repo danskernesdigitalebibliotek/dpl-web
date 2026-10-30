@@ -3,6 +3,9 @@ export const mediaLibrarySelect = (
   selector: string,
   fileName: string,
   index = 0,
+  // The path of the form the media field is on. Event forms are not node
+  // forms.
+  formPathname = /^\/node\//,
 ) => {
   // Create unique intercepts for each media library select
   const mediaNodeEditAjax = `mediaNodeEditAjax${index}`;
@@ -13,7 +16,7 @@ export const mediaLibrarySelect = (
   // test is not taken for one of them.
   cy.intercept({
     method: 'POST',
-    pathname: /^\/node\//,
+    pathname: formPathname,
     query: { ajax_form: '1' },
   }).as(mediaNodeEditAjax);
   cy.intercept('POST', '/media-library**').as(mediaLibraryAjax);
