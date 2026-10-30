@@ -15,6 +15,9 @@ export type TQuizOption = {
   subjectGroupId?: string
   ageRange?: TRange
   lixRange?: TRange
+  // Sideantal-interval. Længde kan KUN filtreres client-side (FBI har ingen
+  // søgbar facet for boglængde — kun sideantal på manifestationen).
+  pageRange?: TRange
 }
 
 export type TQuizQuestion = {
@@ -90,6 +93,17 @@ export const QUESTIONS: TQuizQuestion[] = [
       { id: "lix-let", label: "Jeg vil have det let", emoji: "😌", lixRange: [0, 15] },
       { id: "lix-mellem", label: "Midt imellem", emoji: "🙂", lixRange: [15, 25] },
       { id: "lix-svaer", label: "Jeg læser gerne svært", emoji: "💪", lixRange: [25, 55] },
+    ],
+  },
+  // --- Længde (sideantal) som intervaller (multi) — kun client-side filter ---
+  {
+    id: "laengde",
+    title: "Hvor tyk en bog vil du helst læse?",
+    multi: true,
+    options: [
+      { id: "laengde-kort", label: "Kort (under 100 sider)", emoji: "📄", pageRange: [0, 100] },
+      { id: "laengde-mellem", label: "Mellem (100–250 sider)", emoji: "📗", pageRange: [100, 250] },
+      { id: "laengde-lang", label: "Lang (over 250 sider)", emoji: "📚", pageRange: [250, 2000] },
     ],
   },
 ]
