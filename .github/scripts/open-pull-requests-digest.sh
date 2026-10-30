@@ -23,7 +23,9 @@ dependabot_pull_requests=$(jq '[.[] | select(.author.login == "app/dependabot")]
 
 echo "**Open PRs on dpl-web** ($(jq length <<<"$human_pull_requests"))"
 echo
-digest_jq '.[] | "- \(review_status.emoji) [#\(.number) \(safe_title)](\(.url))\(format_next_actions)"' "$human_pull_requests"
+echo "| Status | PR | Author | Next action |"
+echo "| :---: | --- | --- | --- |"
+digest_jq '.[] | "| \(review_status.emoji) | [\(safe_title | escape_table_cell)](\(.url)) | \(.author.login) | \(format_next_actions) |"' "$human_pull_requests"
 echo
 echo "**Open Dependabot PRs** ($(jq length <<<"$dependabot_pull_requests"))"
 echo
