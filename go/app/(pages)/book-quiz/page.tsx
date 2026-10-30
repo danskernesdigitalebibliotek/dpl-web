@@ -13,6 +13,7 @@ const pocs = [
   { href: "/book-quiz/5-score", label: "PoC 5 – Score", ready: true },
   { href: "/book-quiz/6-flow", label: "PoC 6 – Rigtigt flow", ready: true },
   { href: "/book-quiz/7-score-model", label: "PoC 7 – Score-model (A/B)", ready: true },
+  { href: "/book-quiz/8-grupper", label: "PoC 8 – Genre- & emnegrupper", ready: true },
 ]
 
 const Page = () => {
