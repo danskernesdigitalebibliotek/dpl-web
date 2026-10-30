@@ -4,7 +4,12 @@ import { LoanType } from "../../core/utils/types/loan-type";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { hasCorrectAccess } from "../material/material-buttons/helper";
+import {
+  getLoanableManifestation,
+  getManifestationDigitalIdentifier
+} from "../../apps/material/helper";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
+import { DigitalMaterialId } from "../../core/utils/types/ids";
 
 type AssetType = {
   src: string;
@@ -81,7 +86,7 @@ export const getOrderIdByIdentifier = ({
   identifier
 }: {
   loans: LoanType[];
-  identifier: string;
+  identifier: DigitalMaterialId;
 }) => {
   const loanWithIdentifier = loans.find((i) => i.identifier === identifier);
   return loanWithIdentifier ? loanWithIdentifier.orderId : null;
@@ -125,7 +130,7 @@ export const playsInModal = (provider?: DigitalProvider | null) =>
  * it: e-books sample on the reader page, audiobooks on the player page.
  */
 export const sampleUrl = (
-  identifier: string,
+  identifier: DigitalMaterialId,
   materialType: "ebook" | "audiobook"
 ) =>
   new URL(
@@ -147,11 +152,7 @@ export const playerTypes = [
   ManifestationMaterialType.audioBookTape
 ];
 
-export const getReaderPlayerType = (
-  manifestation: Manifestation | null
-): "reader" | "player" | null => {
-  if (!manifestation) return null;
-  if (!hasCorrectAccess("Ereol", [manifestation])) return null;
+const opensIn = (manifestation: Manifestation): "reader" | "player" | null => {
   const materialTypes = getMaterialTypes([manifestation]);
 
   if (readerTypes.some((type) => materialTypes.includes(type))) return "reader";
@@ -160,8 +161,53 @@ export const getReaderPlayerType = (
   return null;
 };
 
+export type DigitalLoanable = {
+  manifestation: Manifestation;
+  id: DigitalMaterialId;
+  opensIn: "reader" | "player";
+};
+
+/**
+ * The edition of a material type that is lent out, the id it is lent by and
+ * where it opens - or null when nothing can be lent. One answer for the
+ * label, the availability text, the buttons and the page layout, so they
+ * cannot disagree about which edition they act on.
+ */
+export const getDigitalLoanable = (
+  manifestations: Manifestation[]
+): DigitalLoanable | null => {
+  const manifestation = getLoanableManifestation(manifestations);
+  if (!manifestation) return null;
+  if (!hasCorrectAccess("Ereol", [manifestation])) return null;
+
+  const id = getManifestationDigitalIdentifier(manifestation);
+  if (id === null) return null;
+
+  const type = opensIn(manifestation);
+  if (type === null) {
+    warnUnopenableType(manifestation);
+    return null;
+  }
+  return { manifestation, id, opensIn: type };
+};
+
+// FBI catalogues the same e-book format under several types, so a provider
+// can lend a title whose type is in neither list above. The page then shows
+// no loan button; say so once per type, in production too, since new types
+// turn up in live data rather than in fixtures.
+const warnedTypes = new Set<string>();
+const warnUnopenableType = (manifestation: Manifestation) => {
+  const type = getMaterialTypes([manifestation])[0] ?? "";
+  if (warnedTypes.has(type)) return;
+  warnedTypes.add(type);
+  // eslint-disable-next-line no-console
+  console.warn(
+    `A digital material of type "${type}" can be lent but opens in neither reader nor player - add the type to readerTypes or playerTypes`
+  );
+};
+
 export const findReservedReservation = (
-  identifier: string,
+  identifier: DigitalMaterialId,
   reservations: ReservationType[]
 ) =>
   reservations.find(

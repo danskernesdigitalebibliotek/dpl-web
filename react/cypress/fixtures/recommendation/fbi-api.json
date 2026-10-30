@@ -136,6 +136,9 @@
             "publisher": ["Turbine"],
             "identifiers": [
               {
+                "type": "PUBLIZON", "value": "9788740692587"
+              },
+              {
                 "type": "ISBN", "value": "9788740692587"
               },
               {

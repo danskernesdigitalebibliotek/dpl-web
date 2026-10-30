@@ -1,9 +1,11 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
+  getLoanableDigitalId,
   getLoanableManifestation,
   getManifestationDigitalIdentifier,
   onlineInternalModalId
 } from "../../apps/material/helper";
+import { getDigitalLoanable } from "../../components/reader-player/helper";
 import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
@@ -16,6 +18,8 @@ const manifestation = (
   ({
     pid: pid as Pid,
     identifiers,
+    materialTypes: [{ materialTypeSpecific: { display: "e-bog" } }],
+    access: [{ __typename: "Ereol" }],
     ...(publicationYear && {
       edition: { publicationYear: { display: publicationYear } }
     })
@@ -67,8 +71,8 @@ describe("getLoanableManifestation", () => {
     expect(getLoanableManifestation([pdf, epub])?.pid).toBe("pid:epub");
   });
 
-  it("falls back to the first manifestation when none has a PUBLIZON identifier", () => {
-    expect(getLoanableManifestation([pdf])?.pid).toBe("pid:pdf");
+  it("returns null when no edition has a PUBLIZON identifier", () => {
+    expect(getLoanableManifestation([pdf])).toBeNull();
   });
 
   it("returns null for an empty list", () => {
@@ -95,14 +99,68 @@ describe("getManifestationDigitalIdentifier", () => {
     expect(getManifestationDigitalIdentifier(epub)).toBe("9788797577646");
   });
 
-  it("falls back to the ISBN when there is no PUBLIZON identifier", () => {
-    expect(getManifestationDigitalIdentifier(pdf)).toBe("9788797287996");
+  it("does not fall back to the ISBN when there is no PUBLIZON identifier", () => {
+    expect(getManifestationDigitalIdentifier(pdf)).toBeNull();
   });
 
-  it("returns an empty string when there is no usable identifier", () => {
+  it("returns null when there is no identifier at all", () => {
     expect(
       getManifestationDigitalIdentifier(manifestation("pid:none", []))
-    ).toBe("");
+    ).toBeNull();
+  });
+});
+
+describe("getDigitalLoanable", () => {
+  it("answers edition, id and reader or player in one go", () => {
+    expect(getDigitalLoanable([pdf, epub])).toEqual({
+      manifestation: epub,
+      id: "9788797577646",
+      opensIn: "reader"
+    });
+  });
+
+  it("answers null when no edition can be lent", () => {
+    expect(getDigitalLoanable([pdf])).toBeNull();
+  });
+
+  it("answers null, and says so once, for a lendable type it cannot open", async () => {
+    // The warned types are kept in the module, so a fresh copy keeps the
+    // count independent of what other tests resolved first.
+    vi.resetModules();
+    const { getDigitalLoanable: freshGetDigitalLoanable } =
+      await import("../../components/reader-player/helper");
+    const graphicNovel: Manifestation = {
+      ...epub,
+      materialTypes: [
+        { materialTypeSpecific: { display: "graphic novel (online)" } }
+      ]
+    } as Manifestation;
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    expect(freshGetDigitalLoanable([graphicNovel])).toBeNull();
+    expect(freshGetDigitalLoanable([graphicNovel])).toBeNull();
+
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn.mock.calls[0][0]).toContain("graphic novel (online)");
+    warn.mockRestore();
+  });
+});
+
+describe("getLoanableDigitalId", () => {
+  it("still names the id for a lendable type the reader and player do not know", () => {
+    // Availability is the provider's answer; whether we can open the title
+    // is a separate question, so the label keeps asking.
+    const graphicNovel: Manifestation = {
+      ...epub,
+      materialTypes: [
+        { materialTypeSpecific: { display: "graphic novel (online)" } }
+      ]
+    } as Manifestation;
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    expect(getLoanableDigitalId([pdf, graphicNovel])).toBe("9788797577646");
+    expect(getLoanableDigitalId([pdf])).toBeNull();
+    vi.restoreAllMocks();
   });
 });
 

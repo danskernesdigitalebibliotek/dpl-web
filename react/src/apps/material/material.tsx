@@ -140,7 +140,7 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
       faustIds: selectedManifestations
         ? getAllFaustIds(selectedManifestations)
         : [],
-      isbn: null, // Not needed.
+      identifier: null, // Not needed.
       // "manifestText" is used inside the availability hook to check whether the material is an article
       // which we check inside shouldShowMaterialAvailabilityText() helper here.
       manifestText: "NOT AN ARTICLE",

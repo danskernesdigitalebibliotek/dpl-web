@@ -23,7 +23,6 @@ import DeleteReservationModal, {
 import { ReservationType } from "../../../../core/utils/types/reservation-type";
 import useOnlineInternalHandleLoanReservation from "../../../../core/utils/useOnlineInternalHandleLoanReservation";
 import { ApiResult, CreateLoanResult } from "../../../../core/publizon/model";
-import { getLoanableManifestation } from "../../../../apps/material/helper";
 import { WorkId } from "../../../../core/utils/types/ids";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
@@ -68,10 +67,9 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const modalCloseOptions = isEditionPicker ? { modalsToClose } : undefined;
 
   const {
-    type,
+    loanable,
     orderId,
     holdingProvider,
-    identifier,
     isAlreadyReserved,
     isAlreadyLoaned,
     canBeLoaned,
@@ -80,7 +78,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     canBeSampled,
     reservation,
     isLoading
-  } = useReaderPlayer(getLoanableManifestation(manifestations));
+  } = useReaderPlayer(manifestations);
 
   const { handleModalLoanReservation, isSubmitting } =
     useOnlineInternalHandleLoanReservation({
@@ -96,7 +94,10 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const [reservationToDelete, setReservationToDelete] =
     useState<ReservationType | null>(null);
 
-  const isReady = Boolean(identifier) && !isLoading && !isSubmitting;
+  if (!loanable) return null;
+  const { id: identifier, opensIn: type } = loanable;
+
+  const isReady = !isLoading && !isSubmitting;
 
   const manifestationType = getMaterialType(manifestations);
   const reseveLabel = openModal
@@ -221,9 +222,6 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   // differ. The url carries the material type because the page it opens is
   // chosen before the adapter has said what the excerpt is.
   const renderSampleLink = (kind: "ebook" | "audiobook") => {
-    // Guaranteed by the callers, which return early without one.
-    if (!identifier) return null;
-
     return (
       <MaterialSecondaryLink
         label={tryLabel}
@@ -246,7 +244,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   // would flash and vanish.
   const sampleTeaserState = () => {
     if (!openModal) return "none";
-    if (!identifier || isLoading) return "loading";
+    if (isLoading) return "loading";
     if (isAlreadyLoaned) return "none";
     // Not every material has an excerpt - hiding the teaser beats opening an
     // empty reader or player.
@@ -371,9 +369,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const renderPlayerTeaserButton = () => {
     const state = sampleTeaserState();
     if (state === "loading") return <MaterialButtonLoading />;
-    // The identifier is guaranteed by "offer" - the state reports "loading"
-    // without one - but only the check narrows it for the Publizon branch.
-    if (state !== "offer" || !identifier) return null;
+    if (state !== "offer") return null;
 
     // With the flag on the service layer answers samples and Publizon must not
     // stand in. Audiobook samples play on the player page, like digital loans
@@ -424,17 +420,13 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     );
   }
 
-  if (type === "player") {
-    return (
-      <>
-        {renderPlayerButton()}
-        {renderPlayerTeaserButton()}
-        {renderDeleteReservationModal()}
-      </>
-    );
-  }
-
-  return null;
+  return (
+    <>
+      {renderPlayerButton()}
+      {renderPlayerTeaserButton()}
+      {renderDeleteReservationModal()}
+    </>
+  );
 };
 
 export default MaterialButtonsOnlineInternal;

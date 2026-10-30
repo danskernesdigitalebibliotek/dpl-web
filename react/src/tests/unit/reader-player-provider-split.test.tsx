@@ -32,11 +32,12 @@ vi.mock("../../core/utils/useDigitalReaderPlayerState", () => ({
 vi.mock("../../core/utils/usePublizonReaderPlayerState", () => ({
   default: vi.fn()
 }));
-vi.mock("../../apps/material/helper", () => ({
-  getManifestationDigitalIdentifier: () => "9788727319346"
-}));
 vi.mock("../../components/reader-player/helper", () => ({
-  getReaderPlayerType: () => "reader"
+  getDigitalLoanable: () => ({
+    manifestation: {},
+    id: "9788727319346",
+    opensIn: "reader"
+  })
 }));
 
 const PUBLIZON_ORDER_ID = "publizon-order-1";
@@ -61,8 +62,7 @@ const given = ({
   vi.mocked(usePublizonReaderPlayerState).mockReturnValue(state(publizon));
 };
 
-const render = () =>
-  renderHook(() => useReaderPlayer({} as never)).result.current;
+const render = () => renderHook(() => useReaderPlayer([])).result.current;
 
 describe("useReaderPlayer - which provider answers what", () => {
   beforeEach(() => {

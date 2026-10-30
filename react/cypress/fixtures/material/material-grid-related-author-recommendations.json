@@ -1206,6 +1206,10 @@
                 "publisher": ["Cicero"],
                 "identifiers": [
                   {
+                    "type": "PUBLIZON",
+                    "value": "9788763844123"
+                  },
+                  {
                     "type": "ISBN",
                     "value": "9788763844123"
                   },
@@ -1881,6 +1885,10 @@
                 ],
                 "publisher": ["Cicero"],
                 "identifiers": [
+                  {
+                    "type": "PUBLIZON",
+                    "value": "9788763854474"
+                  },
                   {
                     "type": "ISBN",
                     "value": "9788763854474"
@@ -2687,6 +2695,10 @@
                 "publisher": ["Cicero"],
                 "identifiers": [
                   {
+                    "type": "PUBLIZON",
+                    "value": "9788763864671"
+                  },
+                  {
                     "type": "ISBN",
                     "value": "9788763864671"
                   },
@@ -3307,6 +3319,10 @@
                 "publisher": ["Cicero"],
                 "identifiers": [
                   {
+                    "type": "PUBLIZON",
+                    "value": "9788763859059"
+                  },
+                  {
                     "type": "ISBN",
                     "value": "9788763859059"
                   },
@@ -3922,6 +3938,10 @@
                 "publisher": ["Cicero"],
                 "identifiers": [
                   {
+                    "type": "PUBLIZON",
+                    "value": "9788763844147"
+                  },
+                  {
                     "type": "ISBN",
                     "value": "9788763844147"
                   },
@@ -4430,6 +4450,10 @@
                 ],
                 "publisher": ["Cicero"],
                 "identifiers": [
+                  {
+                    "type": "PUBLIZON",
+                    "value": "9788763852470"
+                  },
                   {
                     "type": "ISBN",
                     "value": "9788763852470"

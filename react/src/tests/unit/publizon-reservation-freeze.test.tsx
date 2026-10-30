@@ -1,4 +1,5 @@
 import { renderHook } from "@testing-library/react";
+import { DigitalMaterialId } from "../../core/utils/types/ids";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import usePublizonReaderPlayerState from "../../core/utils/usePublizonReaderPlayerState";
 import useCanCancelReservation from "../../core/utils/useCanCancelReservation";
@@ -32,7 +33,7 @@ vi.mock("../../core/utils/usePublizonReservationsClosed", () => ({
   default: vi.fn()
 }));
 
-const IDENTIFIER = "9788727319346";
+const IDENTIFIER = "9788727319346" as DigitalMaterialId;
 const RESERVATION_ID = "e5b4bbd1-6d63-4a24-9a25-2f0f4e9b1f11";
 
 // Publizon answers the whole loan decision with one status code.

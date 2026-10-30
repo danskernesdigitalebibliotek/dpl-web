@@ -14,8 +14,7 @@ import { AvailabilityLabel } from "./availability-label";
 import { Manifestation } from "../../core/utils/types/entities";
 import {
   divideManifestationsByMaterialType,
-  getLoanableManifestation,
-  getManifestationDigitalIdentifier
+  getLoanableDigitalId
 } from "../../apps/material/helper";
 
 export interface AvailabilityLabelsProps {
@@ -46,12 +45,7 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
         const manifestationsOfMaterialType =
           manifestationsByMaterialType[materialType];
         const faustIds = getAllFaustIds(manifestationsOfMaterialType).sort();
-        const loanableManifestation = getLoanableManifestation(
-          manifestationsOfMaterialType
-        );
-        const identifier = loanableManifestation
-          ? getManifestationDigitalIdentifier(loanableManifestation) || null
-          : null;
+        const identifier = getLoanableDigitalId(manifestationsOfMaterialType);
         const url = constructMaterialUrl(materialUrl, workId, materialType);
         const accessTypesCodes = manifestationsOfMaterialType
           .map((manifest) =>

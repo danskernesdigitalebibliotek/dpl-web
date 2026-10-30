@@ -10,10 +10,7 @@ import { usePatronData } from "../../core/utils/helpers/usePatronData";
 import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import { useUrls } from "../../core/utils/url";
 import { useModalButtonHandler } from "../../core/utils/modal";
-import {
-  getLoanableManifestation,
-  onlineInternalModalId
-} from "../../apps/material/helper";
+import { onlineInternalModalId } from "../../apps/material/helper";
 import { formatDanishPhoneNumber } from "../../core/utils/helpers/general";
 import { Manifestation } from "../../core/utils/types/entities";
 import { RequestStatus } from "../../core/utils/types/request";
@@ -33,7 +30,7 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { useEventStatistics } from "../statistics/useStatistics";
 import { statistics } from "../statistics/statistics";
-import { WorkId } from "./types/ids";
+import { DigitalMaterialId, WorkId } from "./types/ids";
 import useBiblioAdapter from "./useBiblioAdapter";
 
 type useOnlineInternalHandleLoanReservationType = {
@@ -88,9 +85,9 @@ const useOnlineInternalHandleLoanReservation = ({
   const {
     canBeLoaned,
     canBeReserved,
-    identifier,
+    loanable,
     offerId: digitalOfferId
-  } = useReaderPlayer(getLoanableManifestation(manifestations));
+  } = useReaderPlayer(manifestations);
 
   const trackLoan = () =>
     track("click", {
@@ -129,8 +126,12 @@ const useOnlineInternalHandleLoanReservation = ({
     ]).finally(() => clearTimeout(graceTimer));
   };
 
-  /** Everything the adapter's answer for this material was derived from. */
-  const invalidateDigital = (materialId: string | null) => {
+  /**
+   * Everything the adapter's answer for this material was derived from.
+   * Keyed by the material on screen rather than the mutation variables: the
+   * service layer types those as plain strings.
+   */
+  const invalidateDigital = () => {
     // The quota is read on the material page, never on the receipt, so it is
     // refreshed without holding the user up.
     queryClient.invalidateQueries({ queryKey: digitalLoanQuotasQueryKey() });
@@ -138,7 +139,7 @@ const useOnlineInternalHandleLoanReservation = ({
     return awaitReadBack(
       digitalLoansQueryKey(),
       digitalReservationsQueryKey(),
-      digitalLoanDecisionQueryKey(materialId)
+      digitalLoanDecisionQueryKey(loanable?.id ?? null)
     );
   };
 
@@ -161,12 +162,12 @@ const useOnlineInternalHandleLoanReservation = ({
     });
   const { mutate: mutateDigitalLoan, isPending: isLoaningViaAdapter } =
     useDigitalCreateLoan({
-      onSuccess: (result, materialId) => {
+      onSuccess: (result) => {
         // A request the adapter accepted without acting on changed nothing,
         // so there is nothing to count or refetch.
         if (!loanWasCreated(result)) return undefined;
         trackLoan();
-        return invalidateDigital(materialId);
+        return invalidateDigital();
       }
     });
   const { mutate: mutateReservation, isPending: isReservingViaPublizon } =
@@ -183,10 +184,10 @@ const useOnlineInternalHandleLoanReservation = ({
     });
   const { mutate: mutateDigitalReservation, isPending: isReservingViaAdapter } =
     useDigitalCreateReservation({
-      onSuccess: (result, materialId) => {
+      onSuccess: (result) => {
         if (!isRequestGranted(result.status)) return undefined;
         trackReservation();
-        return invalidateDigital(materialId);
+        return invalidateDigital();
       }
     });
   const { mutate: mutateAcceptOffer, isPending: isAcceptingOffer } =
@@ -194,8 +195,7 @@ const useOnlineInternalHandleLoanReservation = ({
       onSuccess: (result) => {
         if (!result.success) return undefined;
         trackLoan();
-        // Keyed by the offer, so the material is the one on screen.
-        return invalidateDigital(identifier);
+        return invalidateDigital();
       }
     });
 
@@ -233,7 +233,7 @@ const useOnlineInternalHandleLoanReservation = ({
     });
   };
 
-  const loanViaAdapter = (materialId: string) => {
+  const loanViaAdapter = (materialId: DigitalMaterialId) => {
     mutateDigitalLoan(materialId, {
       onSuccess: (result) => {
         if (!loanWasCreated(result)) {
@@ -248,7 +248,7 @@ const useOnlineInternalHandleLoanReservation = ({
     });
   };
 
-  const loanViaPublizon = (materialId: string) => {
+  const loanViaPublizon = (materialId: DigitalMaterialId) => {
     mutateLoan(
       { identifier: materialId },
       {
@@ -264,7 +264,7 @@ const useOnlineInternalHandleLoanReservation = ({
     );
   };
 
-  const reserveViaAdapter = (materialId: string) => {
+  const reserveViaAdapter = (materialId: DigitalMaterialId) => {
     mutateDigitalReservation(materialId, {
       onSuccess: (result) => {
         // The adapter answers 200 with a decision rather than an error when
@@ -282,7 +282,7 @@ const useOnlineInternalHandleLoanReservation = ({
 
   // Publizon takes email and phone number to notify with - the adapter, by
   // contrast, derives the user from the token and needs no contact details.
-  const reserveViaPublizon = (materialId: string) => {
+  const reserveViaPublizon = (materialId: DigitalMaterialId) => {
     if (!userData?.patron) {
       return;
     }
@@ -317,25 +317,25 @@ const useOnlineInternalHandleLoanReservation = ({
       return;
     }
 
-    if (canBeLoaned && identifier) {
+    if (canBeLoaned && loanable) {
       if (!viaBiblioAdapter) {
-        loanViaPublizon(identifier);
+        loanViaPublizon(loanable.id);
       } else if (digitalOfferId) {
         // Publizon has no explicit redeem step - a redeemable reservation
         // just shows the loan button - but the service layer requires the
         // offer to be accepted instead of borrowing the material anew.
         acceptOffer(digitalOfferId);
       } else {
-        loanViaAdapter(identifier);
+        loanViaAdapter(loanable.id);
       }
       return;
     }
 
-    if (canBeReserved && identifier) {
+    if (canBeReserved && loanable) {
       if (viaBiblioAdapter) {
-        reserveViaAdapter(identifier);
+        reserveViaAdapter(loanable.id);
       } else {
-        reserveViaPublizon(identifier);
+        reserveViaPublizon(loanable.id);
       }
     }
   };

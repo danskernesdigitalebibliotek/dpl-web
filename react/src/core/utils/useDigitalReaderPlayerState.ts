@@ -12,6 +12,7 @@ import {
   ReaderPlayerState,
   unknownReaderPlayerState
 } from "./types/reader-player-state";
+import { DigitalMaterialId } from "./types/ids";
 
 /**
  * What the service layer says about a digital material - the service layer
@@ -26,11 +27,11 @@ const useDigitalReaderPlayerState = ({
   identifier,
   enabled
 }: {
-  identifier: string | null;
+  identifier: DigitalMaterialId | null;
   enabled: boolean;
 }): ReaderPlayerState => {
   const isUserAnonymous = isAnonymous();
-  const isActive = enabled && Boolean(identifier);
+  const isActive = enabled && identifier !== null;
   // Borrowing, holding and queuing are all user-scoped and need an end-user
   // token, so an anonymous user is offered the loan and the login guard takes
   // over - the same deal Publizon gets. Sampling is the exception below.
