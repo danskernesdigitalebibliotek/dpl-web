@@ -136,7 +136,6 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
   const { isAvailable, isLoading: isAvailabilityLoading } = useAvailabilityData(
     {
       accessTypes: [AccessTypeCodeEnum.Physical, AccessTypeCodeEnum.Online],
-      access: [undefined],
       faustIds: selectedManifestations
         ? getAllFaustIds(selectedManifestations)
         : [],

@@ -3,7 +3,6 @@ import { Manifestation } from "../../core/utils/types/entities";
 import { LoanType } from "../../core/utils/types/loan-type";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
-import { hasCorrectAccess } from "../material/material-buttons/helper";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
 import { PublizonIdentifier } from "../../core/utils/types/ids";
 import {
@@ -178,7 +177,6 @@ export const getDigitalLoanable = (
 ): DigitalLoanable | null => {
   const lendable = getLendableEdition(manifestations);
   if (!lendable) return null;
-  if (!hasCorrectAccess("Ereol", [lendable.manifestation])) return null;
 
   const type = opensIn(lendable.manifestation);
   return type ? { ...lendable, opensIn: type } : null;

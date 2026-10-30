@@ -9,12 +9,10 @@ import AvailabilityLabelInside from "./availability-label-inside";
 import { FaustId, PublizonIdentifier } from "../../core/utils/types/ids";
 import useAvailabilityData from "./useAvailabilityData";
 import { AccessTypeCodeEnum } from "../../core/dbc-gateway/generated/graphql";
-import { AccessTypes } from "../../core/utils/types/entities";
 
 export interface AvailabilityLabelProps {
   manifestText: string;
   accessTypes: AccessTypeCodeEnum[];
-  access: AccessTypes[];
   selected?: boolean;
   url?: URL;
   faustIds: FaustId[];
@@ -30,7 +28,6 @@ export interface AvailabilityLabelProps {
 export const AvailabilityLabel: React.FC<AvailabilityLabelProps> = ({
   manifestText,
   accessTypes,
-  access,
   selected = false,
   url,
   faustIds,
@@ -45,7 +42,6 @@ export const AvailabilityLabel: React.FC<AvailabilityLabelProps> = ({
 
   const { isLoading, isAvailable } = useAvailabilityData({
     accessTypes,
-    access,
     faustIds,
     identifier,
     manifestText

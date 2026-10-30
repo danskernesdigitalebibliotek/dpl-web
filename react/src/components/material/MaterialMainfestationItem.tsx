@@ -125,7 +125,6 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
   ];
 
   const accessTypesCodes = manifestation.accessTypes.map((item) => item.code);
-  const access = manifestation.access.map((acc) => acc.__typename);
   const detailsId = `material-details-${pid}`;
   const manifestationId = createUrlHash(HashPrefix.MANIFESTATION, pid);
 
@@ -144,7 +143,6 @@ const MaterialMainfestationItem: FC<MaterialMainfestationItemProps> = ({
           faustIds={[faustId]}
           identifier={getPublizonIdentifier(manifestation)}
           accessTypes={accessTypesCodes}
-          access={access}
           isVisualOnly
         />
       </div>
