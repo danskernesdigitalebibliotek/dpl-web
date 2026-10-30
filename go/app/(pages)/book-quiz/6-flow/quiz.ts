@@ -12,6 +12,10 @@
 // subset (de valgbare først), så der altid er mindst 3 valgbare — også efter
 // emne-korrelationen har deaktiveret nogle.
 
+// Et [min, max]-interval for alder/lix (PoC 7 bruger intervaller i stedet for
+// enkelt-værdier). De gamle string-felter lix/age bevares til PoC 6.
+export type TRange = [number, number]
+
 export type TQuizOption = {
   id: string
   label: string
@@ -21,6 +25,8 @@ export type TQuizOption = {
   materialTypes?: string[]
   lix?: string
   age?: string
+  ageRange?: TRange
+  lixRange?: TRange
   note?: string
 }
 

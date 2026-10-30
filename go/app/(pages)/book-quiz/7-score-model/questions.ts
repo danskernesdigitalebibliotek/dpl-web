@@ -10,11 +10,11 @@ const AGE_STEP: TQuizQuestion = {
   title: "Hvad alderstrin, du vil læse på?",
   multi: true,
   options: [
-    { id: "alder-6", label: "5-6 år", age: "6 år" },
-    { id: "alder-8", label: "7-8 år", age: "8 år" },
-    { id: "alder-10", label: "9-10 år", age: "10 år" },
-    { id: "alder-12", label: "11-12 år", age: "12 år" },
-    { id: "alder-14", label: "13-14 år", age: "14 år" },
+    { id: "alder-6", label: "5-6 år", ageRange: [5, 6] },
+    { id: "alder-8", label: "7-8 år", ageRange: [7, 8] },
+    { id: "alder-10", label: "9-10 år", ageRange: [9, 10] },
+    { id: "alder-12", label: "11-12 år", ageRange: [11, 12] },
+    { id: "alder-14", label: "13-14 år", ageRange: [13, 14] },
   ],
 }
 
@@ -23,9 +23,9 @@ const LIX_STEP: TQuizQuestion = {
   title: "Hvor meget kan du lide at læse?",
   multi: true,
   options: [
-    { id: "lix-let", label: "Jeg vil have det let", emoji: "😌", lix: "10" },
-    { id: "lix-mellem", label: "Midt imellem", emoji: "🙂", lix: "20" },
-    { id: "lix-svaer", label: "Jeg læser gerne svært", emoji: "💪", lix: "35" },
+    { id: "lix-let", label: "Jeg vil have det let", emoji: "😌", lixRange: [0, 15] },
+    { id: "lix-mellem", label: "Midt imellem", emoji: "🙂", lixRange: [15, 25] },
+    { id: "lix-svaer", label: "Jeg læser gerne svært", emoji: "💪", lixRange: [25, 55] },
   ],
 }
 

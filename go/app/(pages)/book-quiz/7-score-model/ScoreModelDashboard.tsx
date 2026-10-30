@@ -12,7 +12,8 @@ import { displayCreators } from "@/lib/helpers/helper.creators"
 import { entriesByDimension, entriesFromLabels, entryClause } from "../2-tilladt-liste/allowedList"
 import { buildCql } from "../2-tilladt-liste/buildCql"
 import { FALLBACK, PROFILES } from "../5-score/profiles"
-import { TQuizOption, TQuizQuestion } from "../6-flow/quiz"
+import { TQuizOption, TQuizQuestion, TRange } from "../6-flow/quiz"
+import { withHardAudienceFilters } from "../_shared/audienceCql"
 import BookQuizCover from "../_shared/BookQuizCover"
 import { QUIZ_QUESTIONS } from "./questions"
 
@@ -46,12 +47,11 @@ type TQuizWork = BookQuizComplexSearchQuery["complexSearch"]["works"][number]
 
 const uniq = (values: string[]) => [...new Set(values)]
 
-const toNumber = (value: string) => {
-  const match = value.match(/\d+/)
-  return match ? Number(match[0]) : null
-}
+const formatRanges = (ranges: TRange[], unit: string) =>
+  ranges.length > 0 ? ranges.map(([lo, hi]) => `${lo}–${hi}${unit}`).join(", ") : "—"
 
-// --- Bløde signaler: rerank efter nærhed til valgt lix/alder (jf. PoC 1/5) ---
+// --- Alder & lix som INTERVALLER. Blødt = rerank efter afstand til nærmeste
+// valgte interval; hårdt = filtrér værker udenfor helt væk. ---
 
 const getWorkAudiences = (work: TQuizWork) => {
   const audiences = [
@@ -71,47 +71,39 @@ const getWorkLix = (work: TQuizWork): number | null => {
   return null
 }
 
-const getWorkAges = (work: TQuizWork): { begin: number | null; end: number | null } | null => {
+const getWorkAges = (work: TQuizWork): { low: number; high: number } | null => {
   for (const audience of getWorkAudiences(work)) {
     const begins = audience.ages.map(range => range.begin).filter((n): n is number => n != null)
     const ends = audience.ages.map(range => range.end).filter((n): n is number => n != null)
     if (begins.length > 0 || ends.length > 0) {
-      return {
-        begin: begins.length > 0 ? Math.min(...begins) : null,
-        end: ends.length > 0 ? Math.max(...ends) : null,
-      }
+      const low = begins.length > 0 ? Math.min(...begins) : Math.min(...ends)
+      const high = ends.length > 0 ? Math.max(...ends) : Math.max(...begins)
+      return { low, high }
     }
   }
   return null
 }
 
-const lixDistance = (value: number, targets: number[]) =>
-  Math.min(...targets.map(target => Math.abs(value - target)))
+// Afstand fra et lix-tal til nærmeste valgte interval (0 = indeni).
+const lixDistance = (value: number, ranges: TRange[]) =>
+  Math.min(...ranges.map(([lo, hi]) => (value < lo ? lo - value : value > hi ? value - hi : 0)))
 
-const ageDistance = (range: { begin: number | null; end: number | null }, targets: number[]) =>
-  Math.min(
-    ...targets.map(target => {
-      const low = range.begin ?? range.end
-      const high = range.end ?? range.begin
-      if (low == null || high == null) return Infinity
-      if (target < low) return low - target
-      if (target > high) return target - high
-      return 0
-    })
-  )
+// Afstand mellem værkets alders-interval og nærmeste valgte interval (0 = overlap).
+const ageDistance = (ages: { low: number; high: number }, ranges: TRange[]) =>
+  Math.min(...ranges.map(([lo, hi]) => Math.max(0, Math.max(ages.low, lo) - Math.min(ages.high, hi))))
 
-const rerankWorks = (works: TQuizWork[], lixTargets: number[], ageTargets: number[]) => {
-  if (lixTargets.length === 0 && ageTargets.length === 0) return works
+const rerankWorks = (works: TQuizWork[], lixRanges: TRange[], ageRanges: TRange[]) => {
+  if (lixRanges.length === 0 && ageRanges.length === 0) return works
   return works
     .map((work, index) => {
       const distances: number[] = []
-      if (lixTargets.length > 0) {
+      if (lixRanges.length > 0) {
         const lix = getWorkLix(work)
-        if (lix != null) distances.push(lixDistance(lix, lixTargets))
+        if (lix != null) distances.push(lixDistance(lix, lixRanges))
       }
-      if (ageTargets.length > 0) {
+      if (ageRanges.length > 0) {
         const ages = getWorkAges(work)
-        if (ages) distances.push(ageDistance(ages, ageTargets))
+        if (ages) distances.push(ageDistance(ages, ageRanges))
       }
       const hasData = distances.length > 0
       const distance = hasData
@@ -130,29 +122,12 @@ const rerankWorks = (works: TQuizWork[], lixTargets: number[], ageTargets: numbe
 const formatAges = (work: TQuizWork): string | null => {
   const ages = getWorkAges(work)
   if (!ages) return null
-  if (ages.begin != null && ages.end != null) return `${ages.begin}–${ages.end} år`
-  if (ages.begin != null) return `fra ${ages.begin} år`
-  return `til ${ages.end} år`
+  if (ages.low === ages.high) return `${ages.low} år`
+  return `${ages.low}–${ages.high} år`
 }
 
-// Hård alders-filtrering: ligger alderen inden for værkets målgruppe-interval?
-// Værker uden alders-metadata tælles som "uden for" (ekskluderes i hård tilstand).
-const ageIncludes = (work: TQuizWork, age: number): boolean => {
-  const ages = getWorkAges(work)
-  if (!ages) return false
-  const low = ages.begin ?? ages.end
-  const high = ages.end ?? ages.begin
-  if (low == null || high == null) return false
-  return age >= low && age <= high
-}
-
-// Hård lix-filtrering: ligger værkets lix inden for ±LIX_TOLERANCE af målet?
-// Værker uden lix-metadata ekskluderes i hård tilstand.
-const LIX_TOLERANCE = 10
-const lixWithin = (work: TQuizWork, target: number): boolean => {
-  const lix = getWorkLix(work)
-  return lix != null && Math.abs(lix - target) <= LIX_TOLERANCE
-}
+// Hård alder/lix-filtrering sker nu i CQL'en (se ../_shared/audienceCql), ikke
+// client-side — så hitcount/0-hits er ægte.
 
 // Hvad et svar peger på (vises som PoC-indsigt under hvert valg).
 const optionMapping = (option: TQuizOption): string => {
@@ -160,8 +135,8 @@ const optionMapping = (option: TQuizOption): string => {
   if (option.genres?.length) parts.push(`genre: ${option.genres.join(", ")}`)
   if (option.subjects?.length) parts.push(`emne: ${option.subjects.join(", ")}`)
   if (option.materialTypes?.length) parts.push(`type: ${option.materialTypes.join(", ")}`)
-  if (option.lix) parts.push(`lix ${option.lix}`)
-  if (option.age) parts.push(option.age)
+  if (option.lixRange) parts.push(`lix ${option.lixRange[0]}–${option.lixRange[1]}`)
+  if (option.ageRange) parts.push(`alder ${option.ageRange[0]}–${option.ageRange[1]} år`)
   if (option.note) parts.push(option.note)
   return parts.length > 0 ? parts.join(" · ") : "—"
 }
@@ -178,8 +153,8 @@ const deriveLabels = (questions: TQuizQuestion[], answers: Record<string, string
     genreLabels: uniq(selected.flatMap(option => option.genres ?? [])),
     subjectLabels: uniq(selected.flatMap(option => option.subjects ?? [])),
     materialTypeLabels: uniq(selected.flatMap(option => option.materialTypes ?? [])),
-    lixPrefs: uniq(selected.flatMap(option => (option.lix ? [option.lix] : []))),
-    agePrefs: uniq(selected.flatMap(option => (option.age ? [option.age] : []))),
+    lixRanges: selected.flatMap(option => (option.lixRange ? [option.lixRange] : [])),
+    ageRanges: selected.flatMap(option => (option.ageRange ? [option.ageRange] : [])),
   }
 }
 
@@ -464,32 +439,24 @@ const ProfileColumn = ({
       }),
     [derived]
   )
-  const ageTargets = useMemo(
-    () => derived.agePrefs.map(toNumber).filter((n): n is number => n != null),
-    [derived]
-  )
-  const lixTargets = useMemo(
-    () => derived.lixPrefs.map(toNumber).filter((n): n is number => n != null),
-    [derived]
+  const ageRanges = derived.ageRanges
+  const lixRanges = derived.lixRanges
+  // Hårde alder/lix-filtre AND'es ind i CQL'en; bløde rerankes client-side.
+  const effectiveCql = useMemo(
+    () => withHardAudienceFilters(cql, { ageRanges, lixRanges, ageMode, lixMode }),
+    [cql, ageRanges, lixRanges, ageMode, lixMode]
   )
   const { data, isFetching, isError } = useBookQuizComplexSearchQuery(
-    { cql, offset: 0, limit: 20, filters: {} },
+    { cql: effectiveCql, offset: 0, limit: 20, filters: {} },
     { enabled: cql.length > 0 }
   )
   const hitcount = data?.complexSearch.hitcount ?? 0
   const rawWorks = useMemo(() => data?.complexSearch.works ?? [], [data])
-  // Blødt = kun rerank (sortér). Hårdt = filtrér bøger fra. Alder og lix
-  // styres hver for sig.
   const works = useMemo(() => {
-    let list = rerankWorks(rawWorks, lixTargets, ageTargets)
-    if (ageMode === "hard" && ageTargets.length > 0) {
-      list = list.filter(work => ageTargets.some(age => ageIncludes(work, age)))
-    }
-    if (lixMode === "hard" && lixTargets.length > 0) {
-      list = list.filter(work => lixTargets.some(target => lixWithin(work, target)))
-    }
-    return list.slice(0, TEST_TOP_N)
-  }, [rawWorks, lixTargets, ageTargets, ageMode, lixMode])
+    const softLix = lixMode === "soft" ? lixRanges : []
+    const softAge = ageMode === "soft" ? ageRanges : []
+    return rerankWorks(rawWorks, softLix, softAge).slice(0, TEST_TOP_N)
+  }, [rawWorks, lixRanges, ageRanges, ageMode, lixMode])
   return (
     <div className="flex w-64 shrink-0 flex-col gap-2 border border-black/20 p-3 text-xs">
       <h3 className="text-sm font-bold">{profile.name}</h3>
@@ -503,7 +470,7 @@ const ProfileColumn = ({
         <div>Genrer: {derived.genreLabels.join(", ") || "—"}</div>
         <div>Emner: {derived.subjectLabels.join(", ") || "—"}</div>
         <div>
-          Alder: {ageTargets.join("/") || "—"} · lix: {lixTargets.join("/") || "—"}
+          Alder: {formatRanges(ageRanges, " år")} · lix: {formatRanges(lixRanges, "")}
         </div>
       </div>
       <details className="opacity-70">
@@ -573,7 +540,7 @@ const ScoreModelDashboard = () => {
   )
 
   // Alle valgte svar på tværs af spørgsmål → de underliggende labels.
-  const { genreLabels, subjectLabels, materialTypeLabels, lixPrefs, agePrefs } = deriveLabels(
+  const { genreLabels, subjectLabels, materialTypeLabels, lixRanges, ageRanges } = deriveLabels(
     questionsState,
     answers
   )
@@ -691,45 +658,29 @@ const ScoreModelDashboard = () => {
   }, [facetData])
   const hasSubjectFacets = subjectTerms.size > 0
 
+  // Alder og lix kommer fra læsepræference-trinnene i quizzen (begge multi-valg).
+  // Blødt = rerank client-side; HÅRDT = AND'es ind i selve CQL-søgningen.
+  const effectiveCql = useMemo(
+    () => withHardAudienceFilters(cql, { ageRanges, lixRanges, ageMode, lixMode }),
+    [cql, ageRanges, lixRanges, ageMode, lixMode]
+  )
   const { data, isFetching, isError } = useBookQuizComplexSearchQuery(
-    { cql, offset: 0, limit: RESULT_LIMIT, filters: {} },
+    { cql: effectiveCql, offset: 0, limit: RESULT_LIMIT, filters: {} },
     { enabled: phase === "result" && hasCql }
   )
   const hitcount = data?.complexSearch.hitcount ?? 0
 
   const rawWorks = useMemo(() => data?.complexSearch.works ?? [], [data])
-  const lixTargets = useMemo(
-    () => lixPrefs.map(toNumber).filter((n): n is number => n != null),
-    [lixPrefs]
+  const softAgeRanges = ageMode === "soft" ? ageRanges : []
+  const softLixRanges = lixMode === "soft" ? lixRanges : []
+  const displayWorks = useMemo(
+    () => rerankWorks(rawWorks, softLixRanges, softAgeRanges),
+    [rawWorks, softLixRanges, softAgeRanges]
   )
-  const ageTargets = useMemo(
-    () => agePrefs.map(toNumber).filter((n): n is number => n != null),
-    [agePrefs]
-  )
-  const works = useMemo(
-    () => rerankWorks(rawWorks, lixTargets, ageTargets),
-    [rawWorks, lixTargets, ageTargets]
-  )
-  // Alder og lix kommer fra læsepræference-trinnene i quizzen (begge multi-valg).
-  // De reranker altid blødt; i "hård" tilstand (debug) filtreres resultater der
-  // ikke passer til MINDST ÉN valgt alder / lix-værdi desuden fra.
-  const ageFiltered = ageMode === "hard" && ageTargets.length > 0
-  const lixFiltered = lixMode === "hard" && lixTargets.length > 0
-  const displayWorks = useMemo(() => {
-    let list = works
-    if (ageMode === "hard" && ageTargets.length > 0) {
-      list = list.filter(work => ageTargets.some(age => ageIncludes(work, age)))
-    }
-    if (lixMode === "hard" && lixTargets.length > 0) {
-      list = list.filter(work => lixTargets.some(target => lixWithin(work, target)))
-    }
-    return list
-  }, [works, ageMode, ageTargets, lixMode, lixTargets])
-  const activeResultFilters = [
-    ageFiltered ? `alder ${ageTargets.join("/")}` : null,
-    lixFiltered ? `lix ~${lixTargets.join("/")}` : null,
-  ].filter((value): value is string => value != null)
-  const isReranked = lixTargets.length > 0 || ageTargets.length > 0
+  const ageFiltered = ageMode === "hard" && ageRanges.length > 0
+  const lixFiltered = lixMode === "hard" && lixRanges.length > 0
+  const anyHard = ageFiltered || lixFiltered
+  const isReranked = softLixRanges.length > 0 || softAgeRanges.length > 0
 
   // "Vi har næsten noget" — kort overgang før resultatet.
   useEffect(() => {
@@ -857,18 +808,19 @@ const ScoreModelDashboard = () => {
   // Aldersgate: når alder(e) er valgt (læsepræference-trinnet), deaktiveres
   // genre/emne-valg der ikke er alderssvarende for NOGEN af de valgte aldre
   // (fx Gys/Krimi for de yngste).
-  const ageAppropriate = (option: TQuizOption, age: number) => {
+  const ageAppropriate = (option: TQuizOption, range: TRange) => {
     const labels = [...(option.genres ?? []), ...(option.subjects ?? [])]
     return labels.every(label => {
       const entry = entriesFromLabels([label])[0]
       if (!entry) return true
-      if (entry.minAge != null && age < entry.minAge) return false
-      if (entry.maxAge != null && age > entry.maxAge) return false
+      // Alderssvarende hvis det valgte interval overlapper postens tilladte bånd.
+      if (entry.minAge != null && range[1] < entry.minAge) return false
+      if (entry.maxAge != null && range[0] > entry.maxAge) return false
       return true
     })
   }
   const ageGate = (option: TQuizOption) =>
-    ageTargets.length > 0 && !ageTargets.some(age => ageAppropriate(option, age))
+    ageRanges.length > 0 && !ageRanges.some(range => ageAppropriate(option, range))
 
   const isOptionSelected = (option: TQuizOption) => chosenIds.includes(option.id)
   const isOptionDisabled = (option: TQuizOption) =>
@@ -1119,10 +1071,8 @@ const ScoreModelDashboard = () => {
                   <h3 className="text-sm font-bold">
                     {hasCql ? `${hitcount} bøger` : "— ingen genre/emne valgt —"}
                     {isFetching ? " (henter…)" : ""}
+                    {anyHard ? " · alder/lix filtreret i søgningen" : ""}
                     {isReranked ? " · sorteret efter lix/alder" : ""}
-                    {activeResultFilters.length > 0
-                      ? ` · ${displayWorks.length}/${works.length} efter ${activeResultFilters.join(" + ")}`
-                      : ""}
                   </h3>
                   {isError ? <p className="text-red-700">Fejl ved søgning i FBI.</p> : null}
                   <ul className="flex flex-col divide-y divide-black/10">
@@ -1158,8 +1108,8 @@ const ScoreModelDashboard = () => {
                   </ul>
                   {hasCql && !isFetching && displayWorks.length === 0 ? (
                     <p className="opacity-70">
-                      {(ageFiltered || lixFiltered) && works.length > 0
-                        ? "Ingen af de fundne bøger passer til dit alders-/lix-filter — prøv blødt filter eller andre svar."
+                      {anyHard
+                        ? "Ingen bøger matchede dit alders-/lix-filter — prøv blødt filter eller andre svar."
                         : "Ingen bøger matchede — prøv at ændre dine svar."}
                     </p>
                   ) : null}
@@ -1237,10 +1187,15 @@ const ScoreModelDashboard = () => {
                   {materialTypeLabels.join(", ")}
                 </div>
               ) : null}
-              {lixPrefs.length > 0 || agePrefs.length > 0 ? (
+              {lixRanges.length > 0 || ageRanges.length > 0 ? (
                 <div>
-                  <span className="font-medium">Bløde signaler:</span>{" "}
-                  {[...lixPrefs.map(value => `lix ${value}`), ...agePrefs].join(", ")}
+                  <span className="font-medium">Alder &amp; lix:</span>{" "}
+                  {[
+                    ageRanges.length > 0 ? `alder ${formatRanges(ageRanges, " år")}` : null,
+                    lixRanges.length > 0 ? `lix ${formatRanges(lixRanges, "")}` : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
                 </div>
               ) : null}
               <div className="flex flex-wrap gap-x-3 gap-y-1">
@@ -1557,26 +1512,26 @@ const ScoreModelDashboard = () => {
                   4 · Alders- og lix-tilstand
                 </h4>
                 <p className="opacity-60">
-                  Alder og lix kommer fra læsepræference-trinnene i quizzen (begge kan vælges
-                  flere). Alder:{" "}
-                  {ageTargets.length > 0 ? `${ageTargets.join("/")} år` : "ikke valgt endnu"}. Lix:{" "}
-                  {lixTargets.length > 0 ? lixTargets.join("/") : "ikke valgt endnu"}. Alderen gater
-                  desuden hvilke genrer/emner der kan vælges. Begge reranker altid blødt; i “hård”
-                  tilstand filtreres bøger uden for målgruppen / lix-båndet fra (værker uden
-                  metadata ekskluderes).
+                  Alder og lix kommer fra læsepræference-trinnene i quizzen som INTERVALLER (begge
+                  kan vælges flere). Alder:{" "}
+                  {ageRanges.length > 0 ? formatRanges(ageRanges, " år") : "ikke valgt endnu"}. Lix:{" "}
+                  {lixRanges.length > 0 ? formatRanges(lixRanges, "") : "ikke valgt endnu"}. Alderen
+                  gater desuden hvilke genrer/emner der kan vælges. Blødt = rerank (sortér tættest
+                  på øverst); hårdt = intervallet AND&apos;es direkte ind i CQL-søgningen
+                  (<code>ages within</code> / <code>lix within</code>), så 0-hits og hitcount er ægte.
                 </p>
                 {[
                   {
                     label: "Aldersfilter",
                     mode: ageMode,
                     set: setAgeMode,
-                    has: ageTargets.length > 0,
+                    has: ageRanges.length > 0,
                   },
                   {
                     label: "Lixfilter",
                     mode: lixMode,
                     set: setLixMode,
-                    has: lixTargets.length > 0,
+                    has: lixRanges.length > 0,
                   },
                 ].map(row => (
                   <div key={row.label} className="flex flex-wrap items-center gap-3">
