@@ -27,7 +27,9 @@ def next_actions:
         | select(length > 0) | {who: ., action: "re-review"}),
       (if any($settled_reviews[]; .state == "CHANGES_REQUESTED") then
          {who: [$author], action: "address changes"}
-       elif .reviewDecision != "APPROVED" and ($requested | length) == 0 and ($reviewed | length) > 0 then
+       elif .reviewDecision == "APPROVED" then
+         {who: [$author], action: "approved"}
+       elif ($requested | length) == 0 and ($reviewed | length) > 0 then
          {who: [$author], action: "follow up on review"}
        else empty end),
       (if ($requested + $reviewed + [.assignees[].login] | length) == 0 then
@@ -35,8 +37,10 @@ def next_actions:
        else empty end)
     ];
 
-# " — approved · who (action) · …", with "approved" only on approved PRs.
+# GitHub's overall review decision, as an emoji to lead the line with.
+def review_decision_emoji:
+  {"APPROVED": "✅ ", "CHANGES_REQUESTED": "⛔ "}[.reviewDecision] // "🟡 ";
+
+# " — who (action) · …". Every PR gets at least one action.
 def format_next_actions:
-  (if .reviewDecision == "APPROVED" then ["approved"] else [] end)
-    + (next_actions | map("\(.who | join(", ")) (\(.action))"))
-  | if length == 0 then "" else " — " + join(" · ") end;
+  " — " + (next_actions | map("\(.who | join(", ")) (\(.action))") | join(" · "));
