@@ -291,18 +291,18 @@ describe("Loan list journey - Publizon and Biblio side by side", () => {
         .author()
         .should("contain", MATERIAL.digitalEbookQuota.author);
       // And: 19 Oct 2022 → 16 Nov 2022, seen from 21 Oct
-      row.elements.dueDate().should("have.text", "Due date 16-11-2022 08:15");
+      row.elements.dueDate().should("have.text", "Due date 16-11-2022");
       row.elements.daysLeft().should("have.text", "26 days");
       row.elements.materialType().first().should("have.text", "E-book");
     }, MATERIAL.digitalEbookQuota.row);
   });
 
   it("Warns about the Biblio loan that is due soon", () => {
-    // The audiobook runs out 24 Oct 19:40, seen from 21 Oct 10:00. The
-    // remaining time is rounded up, so a bit over three days reads as four.
+    // The audiobook is due 24 Oct, seen from 21 Oct 10:00. Its due date is
+    // a plain date, counted like a physical loan's, so it reads three days.
     loanList.components.DigitalLoanRow((row) => {
-      row.elements.daysLeft().should("have.text", "4 days");
-      row.elements.dueDate().should("have.text", "Due date 24-10-2022 19:40");
+      row.elements.daysLeft().should("have.text", "3 days");
+      row.elements.dueDate().should("have.text", "Due date 24-10-2022");
     }, MATERIAL.biblioAudiobook.row);
   });
 

@@ -35,6 +35,7 @@ import { useEventStatistics } from "../statistics/useStatistics";
 import { statistics } from "../statistics/statistics";
 import { WorkId } from "./types/ids";
 import useBiblioAdapter from "./useBiblioAdapter";
+import { getBiblioDueDate } from "./helpers/date";
 
 type useOnlineInternalHandleLoanReservationType = {
   manifestations: Manifestation[];
@@ -241,7 +242,9 @@ const useOnlineInternalHandleLoanReservation = ({
           return;
         }
         // Map to the shape the success modal expects.
-        setLoanResponse?.({ expirationDateUtc: result.loan.endDate });
+        setLoanResponse?.({
+          expirationDateUtc: getBiblioDueDate(result.loan.endDate)
+        });
         reportLoan("success");
       },
       onError: () => reportLoan("error")

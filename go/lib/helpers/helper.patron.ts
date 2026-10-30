@@ -17,6 +17,7 @@ import {
   WorkTeaserSearchPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
+import { getBiblioDueDate } from "@/lib/helpers/helper.due-status"
 import { pidToFaust } from "@/lib/helpers/ids"
 import { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
 
@@ -284,7 +285,7 @@ export const buildSelectedLoan = (
   if (biblioLoan) {
     return {
       ...shared,
-      dueDate: biblioLoan.endDate,
+      dueDate: getBiblioDueDate(biblioLoan.endDate),
       loanDate: biblioLoan.startDate,
       loanId: biblioLoan.loanId,
     }
