@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   AccessTypeCodeEnum,
+  IdentifierTypeEnum,
   LinkStatusEnum
 } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
@@ -31,6 +32,42 @@ const accessUrl = (status: LinkStatusEnum, origin = "Filmstriben") =>
   }) as const;
 
 describe("resolveOnlineButtonType", () => {
+  const ebook = (identifiers: Manifestation["identifiers"]) =>
+    ({
+      ...manifestationWith([
+        {
+          __typename: "Ereol",
+          origin: "Ereolen",
+          url: "https://ereolen.dk",
+          canAlwaysBeLoaned: false
+        }
+      ]),
+      materialTypes: [{ materialTypeSpecific: { display: "e-bog" } }],
+      identifiers
+    }) as Manifestation;
+
+  it("carries the edition it lends for an e-book with a PUBLIZON identifier", () => {
+    const result = resolveOnlineButtonType([
+      ebook([{ type: IdentifierTypeEnum.Publizon, value: "9788711623497" }])
+    ]);
+
+    expect(result).toMatchObject({
+      type: "internal",
+      loanable: {
+        id: { type: IdentifierTypeEnum.Publizon, value: "9788711623497" },
+        opensIn: "reader"
+      }
+    });
+  });
+
+  it("offers no internal button for an e-book with only an ISBN", () => {
+    const result = resolveOnlineButtonType([
+      ebook([{ type: IdentifierTypeEnum.Isbn, value: "9788711623497" }])
+    ]);
+
+    expect(result).toBeNull();
+  });
+
   it("resolves an external button for an active access url", () => {
     const result = resolveOnlineButtonType([
       manifestationWith([accessUrl(LinkStatusEnum.Ok)])

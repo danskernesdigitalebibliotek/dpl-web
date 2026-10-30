@@ -14,8 +14,7 @@ import { AvailabilityLabel } from "./availability-label";
 import { Manifestation } from "../../core/utils/types/entities";
 import {
   divideManifestationsByMaterialType,
-  getLoanableManifestation,
-  getPublizonIdentifier
+  getLendableEdition
 } from "../../apps/material/helper";
 
 export interface AvailabilityLabelsProps {
@@ -46,12 +45,10 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
         const manifestationsOfMaterialType =
           manifestationsByMaterialType[materialType];
         const faustIds = getAllFaustIds(manifestationsOfMaterialType).sort();
-        const loanableManifestation = getLoanableManifestation(
-          manifestationsOfMaterialType
-        );
-        const identifier = loanableManifestation
-          ? getPublizonIdentifier(loanableManifestation)
-          : null;
+        // The provider's answer about the lent edition, whether or not our
+        // reader or player can open its type.
+        const identifier =
+          getLendableEdition(manifestationsOfMaterialType)?.id ?? null;
         const url = constructMaterialUrl(materialUrl, workId, materialType);
         const accessTypesCodes = manifestationsOfMaterialType
           .map((manifest) =>

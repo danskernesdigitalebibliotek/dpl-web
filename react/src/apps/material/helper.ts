@@ -90,22 +90,25 @@ export const getPublizonIdentifier = (
   return value ? { type: IdentifierTypeEnum.Publizon, value } : null;
 };
 
-// The PUBLIZON identifier marks a loanable edition. Several editions of one
-// material type can be loanable, and the reader expects the newest. Ordering
-// copies the list: orderManifestationsByYear sorts in place, and this list
-// belongs to the caller.
-export const getLoanableManifestation = (manifestations: Manifestation[]) => {
-  const loanableManifestations = manifestations.filter(
-    (manifestation) => getPublizonIdentifier(manifestation) !== null
-  );
+export type LendableEdition = {
+  manifestation: Manifestation;
+  id: PublizonIdentifier;
+};
 
-  if (!loanableManifestations.length) {
-    return getFirstManifestation(manifestations);
-  }
-
-  return getFirstManifestation(
-    orderManifestationsByYear([...loanableManifestations])
+// The edition a provider is asked about and lends, or null when none of them
+// carries a PUBLIZON identifier. Several editions of one material type can,
+// and the reader expects the newest. orderManifestationsByYear sorts in
+// place, which only touches the filtered copy, not the caller's list.
+export const getLendableEdition = (
+  manifestations: Manifestation[]
+): LendableEdition | null => {
+  const [manifestation] = orderManifestationsByYear(
+    manifestations.filter(
+      (candidate) => getPublizonIdentifier(candidate) !== null
+    )
   );
+  const id = manifestation ? getPublizonIdentifier(manifestation) : null;
+  return manifestation && id ? { manifestation, id } : null;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -495,13 +498,8 @@ export const reservationModalId = (faustIds: FaustId[]) => {
 
 // Keyed on the one edition the loan is for, so an opener that covers several
 // editions and the modal rendered for a single one agree on the id.
-export const onlineInternalModalId = (manifestations: Manifestation[]) => {
-  const loanableManifestation = getLoanableManifestation(manifestations);
-  return constructModalId(
-    "online-internal-modal",
-    loanableManifestation ? getAllFaustIds([loanableManifestation]) : []
-  );
-};
+export const onlineInternalModalId = ({ manifestation }: LendableEdition) =>
+  constructModalId("online-internal-modal", getAllFaustIds([manifestation]));
 
 export const editionSwitchModalId = () => {
   return "edition-switch-modal";

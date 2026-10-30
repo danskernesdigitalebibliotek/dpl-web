@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  getLoanableManifestation,
+  getLendableEdition,
   getPublizonIdentifier,
   onlineInternalModalId
 } from "../../apps/material/helper";
@@ -40,39 +40,42 @@ const newEbook = manifestation(
   "2025"
 );
 
-describe("getLoanableManifestation", () => {
+describe("getLendableEdition", () => {
   it("prefers the newest of the loanable editions", () => {
     // Several editions of one material type can be loanable, and the reader
     // expects the newest - not whichever the data happens to list first.
-    expect(getLoanableManifestation([oldEbook, newEbook])?.pid).toBe(
+    expect(getLendableEdition([oldEbook, newEbook])?.manifestation.pid).toBe(
       "pid:new-ebook"
     );
-    expect(getLoanableManifestation([newEbook, oldEbook])?.pid).toBe(
+    expect(getLendableEdition([newEbook, oldEbook])?.manifestation.pid).toBe(
       "pid:new-ebook"
     );
   });
 
+  it("carries the id of the edition it picked", () => {
+    expect(getLendableEdition([oldEbook, newEbook])?.id).toEqual({
+      type: IdentifierTypeEnum.Publizon,
+      value: "9788727272894"
+    });
+  });
+
   it("leaves the caller's list in the order it was given", () => {
-    // Ordering by year sorts in place, so the list has to be copied first.
     const manifestations = [oldEbook, newEbook];
-    getLoanableManifestation(manifestations);
+    getLendableEdition(manifestations);
     expect(manifestations.map(({ pid }) => pid)).toEqual([
       "pid:old-ebook",
       "pid:new-ebook"
     ]);
   });
 
-  it("prefers the manifestation that has a PUBLIZON identifier", () => {
+  it("skips an edition without a PUBLIZON identifier", () => {
     // The deselected PDF is listed first but is not loanable.
-    expect(getLoanableManifestation([pdf, epub])?.pid).toBe("pid:epub");
+    expect(getLendableEdition([pdf, epub])?.manifestation.pid).toBe("pid:epub");
   });
 
-  it("falls back to the first manifestation when none has a PUBLIZON identifier", () => {
-    expect(getLoanableManifestation([pdf])?.pid).toBe("pid:pdf");
-  });
-
-  it("returns null for an empty list", () => {
-    expect(getLoanableManifestation([])).toBeNull();
+  it("returns null when no edition can be lent", () => {
+    expect(getLendableEdition([pdf])).toBeNull();
+    expect(getLendableEdition([])).toBeNull();
   });
 });
 
@@ -115,21 +118,20 @@ const ebook2025 = manifestation(
 );
 
 describe("onlineInternalModalId", () => {
+  const modalIdFor = (manifestations: Manifestation[]) => {
+    const lendable = getLendableEdition(manifestations);
+    return lendable && onlineInternalModalId(lendable);
+  };
+
   it("is the id of the edition that is going to be lent", () => {
     // One modal is rendered per manifestation, so an opener covering several
     // editions still has to name a single one - and not the leading one.
-    expect(onlineInternalModalId([ebook2025, ebook2019])).toBe(
+    expect(modalIdFor([ebook2025, ebook2019])).toBe(
       "online-internal-modal-141423606"
     );
   });
 
   it("is the same id whether or not the set holds other editions", () => {
-    expect(onlineInternalModalId([ebook2025])).toBe(
-      "online-internal-modal-141423606"
-    );
-  });
-
-  it("returns the bare prefix when there is no manifestation to lend", () => {
-    expect(onlineInternalModalId([])).toBe("online-internal-modal");
+    expect(modalIdFor([ebook2025])).toBe("online-internal-modal-141423606");
   });
 });

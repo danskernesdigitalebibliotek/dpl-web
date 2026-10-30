@@ -189,7 +189,7 @@ const Material: React.FC<MaterialProps> = ({ wid }) => {
               ]) ? (
                 <OnlineInternalModal
                   workId={wid}
-                  selectedManifestations={[manifestation]}
+                  manifestation={manifestation}
                 />
               ) : (
                 <ReservationFindOnShelfModals

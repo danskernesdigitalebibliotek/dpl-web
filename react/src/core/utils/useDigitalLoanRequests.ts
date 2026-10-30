@@ -18,7 +18,7 @@ import { PublizonIdentifier, WorkId } from "./types/ids";
 type DigitalLoanRequestsType = {
   workId: WorkId;
   /** The material on screen, which a redeemed offer is read back for. */
-  identifier: PublizonIdentifier | null;
+  identifier: PublizonIdentifier;
 };
 
 /**
@@ -64,7 +64,7 @@ const useDigitalLoanRequests = ({
         if (!result.success) return undefined;
         trackLoan();
         // Keyed by the offer, so the material is the one on screen.
-        return readBack(identifier?.value ?? null);
+        return readBack(identifier.value);
       }
     });
 

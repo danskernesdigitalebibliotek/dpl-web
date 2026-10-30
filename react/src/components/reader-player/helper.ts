@@ -6,7 +6,10 @@ import { ReservationType } from "../../core/utils/types/reservation-type";
 import { hasCorrectAccess } from "../material/material-buttons/helper";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
 import { PublizonIdentifier } from "../../core/utils/types/ids";
-import { getPublizonIdentifier } from "../../apps/material/helper";
+import {
+  getLendableEdition,
+  LendableEdition
+} from "../../apps/material/helper";
 
 type AssetType = {
   src: string;
@@ -151,19 +154,34 @@ export const playerTypes = [
   ManifestationMaterialType.audioBookTape
 ];
 
-export const getReaderPlayerType = (
-  manifestation: Manifestation | null
-): "reader" | "player" | null => {
-  if (!manifestation) return null;
-  if (!hasCorrectAccess("Ereol", [manifestation])) return null;
-  // Without an id there is nothing to lend, read or play it by.
-  if (!getPublizonIdentifier(manifestation)) return null;
+const opensIn = (manifestation: Manifestation): "reader" | "player" | null => {
   const materialTypes = getMaterialTypes([manifestation]);
 
   if (readerTypes.some((type) => materialTypes.includes(type))) return "reader";
   if (playerTypes.some((type) => materialTypes.includes(type))) return "player";
 
   return null;
+};
+
+export type DigitalLoanable = LendableEdition & {
+  opensIn: "reader" | "player";
+};
+
+/**
+ * The edition of a material type that is lent out, the id it is lent by and
+ * where it opens - or null when we cannot lend it. Resolved once per set of
+ * manifestations and handed down, so the buttons, the loan modal and the
+ * page layout act on the same edition.
+ */
+export const getDigitalLoanable = (
+  manifestations: Manifestation[]
+): DigitalLoanable | null => {
+  const lendable = getLendableEdition(manifestations);
+  if (!lendable) return null;
+  if (!hasCorrectAccess("Ereol", [lendable.manifestation])) return null;
+
+  const type = opensIn(lendable.manifestation);
+  return type ? { ...lendable, opensIn: type } : null;
 };
 
 export const findReservedReservation = (
