@@ -10,7 +10,7 @@ import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts
 import { GeneralMaterialTypeCodeEnum } from "@/lib/graphql/generated/fbi/graphql"
 
 // Due dates anchored to local noon so calendar-day counts stay stable
-// whenever the story renders (e.g. in Chromatic snapshots).
+// whenever the story renders (e.g. in visual regression tests).
 const daysFromNow = (days: number) => {
   const date = new Date()
   date.setHours(12, 0, 0, 0)

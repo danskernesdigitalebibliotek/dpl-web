@@ -13,7 +13,7 @@ import {
 } from "@/lib/rest/publizon/adapter/generated/publizon"
 
 // Expiry dates are computed relative to "now" so the rendered day counts stay
-// stable over time (e.g. in Chromatic snapshots).
+// stable over time (e.g. in visual regression tests).
 const daysFromNow = (days: number) => {
   const date = new Date()
   date.setHours(12, 0, 0, 0)
