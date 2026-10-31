@@ -9,6 +9,7 @@ import {
 } from "../../apps/material/helper";
 import { getAllFaustIds } from "./helpers/general";
 import { Manifestation } from "./types/entities";
+import { getDigitalLoanable } from "../../components/reader-player/helper";
 
 /**
  * Custom hook that creates a handler for edition switch modal reservation logic.
@@ -33,13 +34,22 @@ export const useEditionSwitch = (
       selectedManifestations
     );
 
-    const modalId = isPhysical
-      ? reservationModalId(faustIds)
-      : onlineInternalModalId(selectedManifestations);
+    if (isPhysical) {
+      openGuarded({
+        authUrl,
+        modalId: reservationModalId(faustIds),
+        options: { modalsToClose }
+      });
+      return;
+    }
+
+    // Only an edition we can lend has a loan modal to open.
+    const loanable = getDigitalLoanable(selectedManifestations);
+    if (!loanable) return;
 
     openGuarded({
       authUrl,
-      modalId,
+      modalId: onlineInternalModalId(loanable),
       options: { modalsToClose }
     });
   };

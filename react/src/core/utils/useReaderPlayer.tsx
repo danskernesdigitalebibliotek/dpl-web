@@ -1,6 +1,4 @@
-import { Manifestation } from "./types/entities";
-import { getManifestationDigitalIdentifier } from "../../apps/material/helper";
-import { getReaderPlayerType } from "../../components/reader-player/helper";
+import { DigitalLoanable } from "../../components/reader-player/helper";
 import useBiblioAdapter from "./useBiblioAdapter";
 import { DigitalProvider } from "./types/digital-provider";
 import useDigitalReaderPlayerState from "./useDigitalReaderPlayerState";
@@ -19,13 +17,8 @@ import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
  * When Publizon goes away, delete `usePublizonReaderPlayerState` and return
  * the service layer state directly.
  */
-const useReaderPlayer = (manifestation: Manifestation | null) => {
+const useReaderPlayer = ({ id: identifier }: DigitalLoanable) => {
   const viaBiblioAdapter = useBiblioAdapter();
-
-  const type = getReaderPlayerType(manifestation);
-  const identifier = manifestation
-    ? getManifestationDigitalIdentifier(manifestation)
-    : null;
 
   const serviceLayer = useDigitalReaderPlayerState({
     identifier,
@@ -57,8 +50,6 @@ const useReaderPlayer = (manifestation: Manifestation | null) => {
       : null;
 
   return {
-    type,
-    identifier,
     canBeLoaned: acquisition.canBeLoaned,
     canBeReserved: acquisition.canBeReserved,
     // TEMPORARY: why the reservation is refused, so the page can say so -

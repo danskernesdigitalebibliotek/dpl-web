@@ -12,6 +12,7 @@ import {
   ReaderPlayerState,
   unknownReaderPlayerState
 } from "./types/reader-player-state";
+import { PublizonIdentifier } from "./types/ids";
 
 /**
  * What the service layer says about a digital material - the service layer
@@ -26,18 +27,19 @@ const useDigitalReaderPlayerState = ({
   identifier,
   enabled
 }: {
-  identifier: string | null;
+  identifier: PublizonIdentifier | null;
   enabled: boolean;
 }): ReaderPlayerState => {
   const isUserAnonymous = isAnonymous();
-  const isActive = enabled && Boolean(identifier);
+  const materialId = identifier?.value ?? null;
+  const isActive = enabled && materialId !== null;
   // Borrowing, holding and queuing are all user-scoped and need an end-user
   // token, so an anonymous user is offered the loan and the login guard takes
   // over - the same deal Publizon gets. Sampling is the exception below.
   const isActiveForUser = isActive && !isUserAnonymous;
 
   const { data: loanDecision, isLoading: isLoadingLoanDecision } =
-    useDigitalLoanDecision(identifier, {
+    useDigitalLoanDecision(materialId, {
       enabled: isActiveForUser
     });
 
@@ -45,7 +47,7 @@ const useDigitalReaderPlayerState = ({
   // list: only its existence and its id are used here, and the list waits on
   // the catalogue to describe every loan in it.
   const { data: loan, isLoading: isLoadingLoan } = useDigitalMaterialHolding(
-    identifier,
+    materialId,
     { enabled: isActiveForUser }
   );
 
@@ -56,7 +58,7 @@ const useDigitalReaderPlayerState = ({
   // for a library token, so this is the one question a visitor gets an answer
   // to. Asking it here is also what makes the teaser honest - a material with
   // no excerpt is never offered one.
-  const { data: sample } = useDigitalSample(identifier, { enabled: isActive });
+  const { data: sample } = useDigitalSample(materialId, { enabled: isActive });
 
   if (!isActive) {
     return unknownReaderPlayerState;
@@ -71,7 +73,7 @@ const useDigitalReaderPlayerState = ({
   }
 
   const digitalReservation = reservationsData?.reservations.find(
-    ({ materialId }) => materialId === identifier
+    (reservation) => reservation.materialId === materialId
   );
 
   // An offer is waiting to be accepted as a loan; without one the user is

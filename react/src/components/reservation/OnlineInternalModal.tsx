@@ -5,23 +5,27 @@ import { useText } from "../../core/utils/text";
 import { Manifestation } from "../../core/utils/types/entities";
 import OnlineInternalModalBody from "./OnlineInternalModalBody";
 import { WorkId } from "../../core/utils/types/ids";
+import { getDigitalLoanable } from "../reader-player/helper";
 
 export type OnlineInternalModalProps = {
-  selectedManifestations: Manifestation[];
+  manifestation: Manifestation;
   workId: WorkId;
   dataCy?: string;
 };
 
 const OnlineInternalModal = ({
-  selectedManifestations,
+  manifestation,
   workId,
   dataCy
 }: OnlineInternalModalProps) => {
   const t = useText();
+  // Nothing opens a loan modal for an edition we cannot lend.
+  const loanable = getDigitalLoanable([manifestation]);
+  if (!loanable) return null;
 
   return (
     <Modal
-      modalId={onlineInternalModalId(selectedManifestations)}
+      modalId={onlineInternalModalId(loanable)}
       screenReaderModalDescriptionText={t(
         "onlineInternalModalScreenReaderDescriptionText"
       )}
@@ -29,10 +33,7 @@ const OnlineInternalModal = ({
       dataCy={dataCy || "online-internal-modal"}
       classNames="modal-cta"
     >
-      <OnlineInternalModalBody
-        selectedManifestations={selectedManifestations}
-        workId={workId}
-      />
+      <OnlineInternalModalBody loanable={loanable} workId={workId} />
     </Modal>
   );
 };

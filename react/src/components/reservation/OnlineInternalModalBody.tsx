@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { getMaterialType } from "../../core/utils/helpers/general";
 import { useText } from "../../core/utils/text";
 import { Cover } from "../cover/cover";
-import { Manifestation } from "../../core/utils/types/entities";
 import { getAuthorLine } from "./helper";
 import ModalMessage from "../message/modal-message/ModalMessage";
 import { usePatronData } from "../../core/utils/helpers/usePatronData";
@@ -11,22 +10,20 @@ import MaterialAvailabilityTextOnline from "../material/MaterialAvailabilityText
 import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import OnlineInternalModalUserListItems from "./OnlineInternalModalUserListItems";
 import MaterialButtonsOnlineInternal from "../material/material-buttons/online/MaterialButtonsOnlineInternal";
-import {
-  getLoanableManifestation,
-  onlineInternalModalId
-} from "../../apps/material/helper";
+import { onlineInternalModalId } from "../../apps/material/helper";
+import { DigitalLoanable } from "../reader-player/helper";
 import { ApiResult, CreateLoanResult } from "../../core/publizon/model";
 import { formatDate } from "../../core/utils/helpers/date";
 import { getPublizonErrorStatusText } from "../../core/utils/helpers/publizon";
 import { WorkId } from "../../core/utils/types/ids";
 
 type OnlineInternalModalBodyProps = {
-  selectedManifestations: Manifestation[];
+  loanable: DigitalLoanable;
   workId: WorkId;
 };
 
 const OnlineInternalModalBody = ({
-  selectedManifestations,
+  loanable,
   workId
 }: OnlineInternalModalBodyProps) => {
   const t = useText();
@@ -39,14 +36,12 @@ const OnlineInternalModalBody = ({
   const [reservationOrLoanErrorResponse, setReservationOrLoanErrorResponse] =
     useState<ApiResult | null>(null);
 
-  const manifestationType = getMaterialType(selectedManifestations);
-  const manifestation = selectedManifestations[0];
+  const { manifestation } = loanable;
+  const manifestationType = getMaterialType([manifestation]);
   const authorLine = getAuthorLine(manifestation, t);
 
   const { data: userData } = usePatronData();
-  const { identifier, canBeReserved } = useReaderPlayer(
-    getLoanableManifestation(selectedManifestations)
-  );
+  const { canBeReserved } = useReaderPlayer(loanable);
 
   if (loanStatus === "success") {
     return (
@@ -73,7 +68,7 @@ const OnlineInternalModalBody = ({
         )}
         <MaterialButtonsOnlineInternal
           openModal={false}
-          manifestations={selectedManifestations}
+          loanable={loanable}
           workId={workId}
         />
       </ModalMessage>
@@ -118,7 +113,7 @@ const OnlineInternalModalBody = ({
         })}
         ctaButton={{
           text: t("tryAginButtonText"),
-          modalId: onlineInternalModalId(selectedManifestations),
+          modalId: onlineInternalModalId(loanable),
           dataCy: "online-internal-close-button"
         }}
       >
@@ -142,9 +137,7 @@ const OnlineInternalModalBody = ({
         <header className="reservation-modal-header">
           <Cover ids={[manifestation.pid]} size="medium" animate />
           <div className="reservation-modal-description">
-            <div className="reservation-modal-tag">
-              {getMaterialType(selectedManifestations)}
-            </div>
+            <div className="reservation-modal-tag">{manifestationType}</div>
             <h2 className="text-header-h2 mt-22 mb-8">
               {manifestation.titles.main}
             </h2>
@@ -156,16 +149,14 @@ const OnlineInternalModalBody = ({
 
         <div>
           <div className="reservation-modal-submit">
-            {identifier && (
-              <MaterialAvailabilityTextOnline
-                identifier={identifier}
-                materialType={manifestationType}
-              />
-            )}
+            <MaterialAvailabilityTextOnline
+              identifier={loanable.id}
+              materialType={manifestationType}
+            />
             <MaterialButtonsOnlineInternal
               workId={workId}
               openModal={false}
-              manifestations={selectedManifestations}
+              loanable={loanable}
               setReservationStatus={setReservationStatus}
               setLoanStatus={setloanStatus}
               setLoanResponse={setLoanResponse}
