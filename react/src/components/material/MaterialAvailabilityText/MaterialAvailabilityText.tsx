@@ -1,5 +1,4 @@
 import * as React from "react";
-import { getDigitalLoanable } from "../../../core/utils/helpers/digital-loanable";
 import { AccessTypeCodeEnum } from "../../../core/dbc-gateway/generated/graphql";
 import {
   getAllPids,
@@ -12,12 +11,18 @@ import MaterialAvailabilityTextPhysical from "./physical/MaterialAvailabilityTex
 import useReservableFromAnotherLibrary from "../../../core/utils/useReservableFromAnotherLibrary";
 import MaterialAvailabilityTextParagraph from "./generic/MaterialAvailabilityTextParagraph";
 import { useText } from "../../../core/utils/text";
+import { DigitalLoanable } from "../../../core/utils/helpers/digital-loanable";
 
 interface Props {
   manifestations: Manifestation[];
+  /** The edition the header buttons lend, if they lend one. */
+  loanable: DigitalLoanable | null;
 }
 
-const MaterialAvailabilityText: React.FC<Props> = ({ manifestations }) => {
+const MaterialAvailabilityText: React.FC<Props> = ({
+  manifestations,
+  loanable
+}) => {
   const t = useText();
   const materialType = getMaterialType(manifestations);
   const { materialIsReservableFromAnotherLibrary } =
@@ -39,10 +44,8 @@ const MaterialAvailabilityText: React.FC<Props> = ({ manifestations }) => {
     hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) &&
     materialType
   ) {
-    // The edition the loan buttons act on, so text and buttons ask about the
-    // same one and share one request. Nothing to lend means no text: the
-    // buttons cannot lend it either.
-    const loanable = getDigitalLoanable(manifestations);
+    // Text and buttons ask about the same edition and share one request.
+    // Nothing to lend means no text: the buttons cannot lend it either.
     if (!loanable) {
       return null;
     }
