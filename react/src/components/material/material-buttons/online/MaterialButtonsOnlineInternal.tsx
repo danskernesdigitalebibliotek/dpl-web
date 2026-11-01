@@ -11,7 +11,6 @@ import {
   readerUrl,
   sampleUrl
 } from "../../../reader-player/helper";
-import { DigitalLoanable } from "../../../../core/utils/helpers/digital-loanable";
 import useBiblioAdapter from "../../../../core/utils/useBiblioAdapter";
 import LinkButton from "../../../Buttons/LinkButton";
 import { Button } from "../../../Buttons/Button";
@@ -33,6 +32,7 @@ import MaterialButtonLoading from "../generic/MaterialButtonLoading";
 import MaterialButtonDisabled from "../generic/MaterialButtonDisabled";
 import { useModalIdsToCloseForReservation } from "../../../../core/utils/useModalIdsToCloseForReservation";
 import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
+import { DigitalLoanable } from "../../../../core/utils/helpers/digital-loanable";
 
 type MaterialButtonsOnlineInternalType = {
   size?: ButtonSize;
@@ -80,7 +80,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     canBeSampled,
     reservation,
     isLoading
-  } = useReaderPlayer(loanable);
+  } = useReaderPlayer(identifier);
 
   const { handleModalLoanReservation, isSubmitting } =
     useOnlineInternalHandleLoanReservation({

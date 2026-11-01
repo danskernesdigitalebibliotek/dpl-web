@@ -1,8 +1,8 @@
-import { DigitalLoanable } from "./helpers/digital-loanable";
 import useBiblioAdapter from "./useBiblioAdapter";
 import { DigitalProvider } from "./types/digital-provider";
 import useDigitalReaderPlayerState from "./useDigitalReaderPlayerState";
 import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
+import { PublizonIdentifier } from "./types/ids";
 
 /**
  * Everything the material page needs to offer one digital material. Two
@@ -17,7 +17,7 @@ import usePublizonReaderPlayerState from "./usePublizonReaderPlayerState";
  * When Publizon goes away, delete `usePublizonReaderPlayerState` and return
  * the service layer state directly.
  */
-const useReaderPlayer = ({ id: identifier }: DigitalLoanable) => {
+const useReaderPlayer = (identifier: PublizonIdentifier) => {
   const viaBiblioAdapter = useBiblioAdapter();
 
   const serviceLayer = useDigitalReaderPlayerState({

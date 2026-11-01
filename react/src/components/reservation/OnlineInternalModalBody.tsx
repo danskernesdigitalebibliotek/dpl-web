@@ -11,11 +11,11 @@ import useReaderPlayer from "../../core/utils/useReaderPlayer";
 import OnlineInternalModalUserListItems from "./OnlineInternalModalUserListItems";
 import MaterialButtonsOnlineInternal from "../material/material-buttons/online/MaterialButtonsOnlineInternal";
 import { onlineInternalModalId } from "../../apps/material/helper";
-import { DigitalLoanable } from "../../core/utils/helpers/digital-loanable";
 import { ApiResult, CreateLoanResult } from "../../core/publizon/model";
 import { formatDate } from "../../core/utils/helpers/date";
 import { getPublizonErrorStatusText } from "../../core/utils/helpers/publizon";
 import { WorkId } from "../../core/utils/types/ids";
+import { DigitalLoanable } from "../../core/utils/helpers/digital-loanable";
 
 type OnlineInternalModalBodyProps = {
   loanable: DigitalLoanable;
@@ -41,7 +41,7 @@ const OnlineInternalModalBody = ({
   const authorLine = getAuthorLine(manifestation, t);
 
   const { data: userData } = usePatronData();
-  const { canBeReserved } = useReaderPlayer(loanable);
+  const { canBeReserved } = useReaderPlayer(loanable.id);
 
   if (loanStatus === "success") {
     return (

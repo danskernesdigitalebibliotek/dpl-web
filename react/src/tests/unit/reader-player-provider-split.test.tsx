@@ -9,7 +9,6 @@ import {
   unknownReaderPlayerState
 } from "../../core/utils/types/reader-player-state";
 import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
-import { Manifestation } from "../../core/utils/types/entities";
 
 /**
  * Two questions, two answers.
@@ -60,9 +59,8 @@ const given = ({
 const render = () =>
   renderHook(() =>
     useReaderPlayer({
-      manifestation: {} as Manifestation,
-      id: { type: IdentifierTypeEnum.Publizon, value: "9788727319346" },
-      opensIn: "reader"
+      type: IdentifierTypeEnum.Publizon,
+      value: "9788727319346"
     })
   ).result.current;
 

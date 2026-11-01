@@ -116,10 +116,7 @@ const givenAdapterSays = ({
   } as unknown as ReturnType<typeof useDigitalSample>);
 };
 
-const render = (
-  identifier: PublizonIdentifier | null = PUBLIZON_ID,
-  enabled = true
-) =>
+const render = (identifier: PublizonIdentifier = PUBLIZON_ID, enabled = true) =>
   renderHook(() => useDigitalReaderPlayerState({ identifier, enabled })).result
     .current;
 
@@ -281,12 +278,6 @@ describe("useDigitalReaderPlayerState", () => {
         // Not loading either: a provider that is not asked will never answer.
         isLoading: false
       });
-    });
-
-    it("Knows nothing without an identifier to ask about", () => {
-      givenAdapterSays({ status: "loanable" });
-
-      expect(render(null)).toMatchObject({ canBeLoaned: false });
     });
   });
 
