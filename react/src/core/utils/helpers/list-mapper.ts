@@ -19,6 +19,7 @@ import { LoanType } from "../types/loan-type";
 import { store } from "../../store";
 import { ReservationType } from "../types/reservation-type";
 import { getContributors } from "./general";
+import { getBiblioDueDate } from "./date";
 import { ReservationGroupDetails } from "../useGetReservationGroups";
 import {
   dashboardReadyForPickupApiValueText,
@@ -110,7 +111,7 @@ export const mapDigitalLoanToLoanType = (list: DigitalLoan[]): LoanType[] => {
   return list.map((loan) => {
     const { loanId, materialId, startDate, endDate } = loan;
     return {
-      dueDate: endDate,
+      dueDate: getBiblioDueDate(endDate),
       loanDate: startDate,
       isRenewable: false,
       materialItemNumber: materialId,

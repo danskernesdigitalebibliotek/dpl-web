@@ -64,9 +64,9 @@ describe("ReservationStatusInfoLabel", () => {
 
     const label = getByText(`Borrow before ${expectedUtcDate}`);
 
-    // Don't freeze a wall-clock time into a snapshot: digital dates are
-    // rendered via formatDateTimeUtc(), so the time shifts with the runner's
-    // timezone (UTC in CI, local elsewhere). Assert structure + the
+    // Don't freeze a wall-clock time into a snapshot: the input is parsed in
+    // the test timezone (Danish by default, see vitest.config.mts) and shown
+    // in UTC, so the time depends on TZ. Assert structure + the
     // dynamically-formatted value instead.
     expect(label.classList.contains("status-label--info")).toBe(true);
     expect(label.textContent).toContain(expectedUtcDate);
