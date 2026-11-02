@@ -43,9 +43,10 @@ def review_status:
   {"APPROVED": {emoji: "✅", rank: 0}, "CHANGES_REQUESTED": {emoji: "⛔", rank: 1}}[.reviewDecision]
     // {emoji: "🟡", rank: 2};
 
-# "who (action) · …". Every PR gets at least one action.
-def format_next_actions:
-  next_actions | map("\(.who | map("**\(.)**") | join(", ")) (\(.action))") | join(" · ");
+# "who (action) · …", with each name passed through format_name. Every PR
+# gets at least one action.
+def format_next_actions(format_name):
+  next_actions | map("\(.who | map(format_name) | join(", ")) (\(.action))") | join(" · ");
 
 # A pipe in a title would end its table cell early.
 def escape_table_cell: gsub("\\|"; "\\|");
