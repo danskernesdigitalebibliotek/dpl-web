@@ -7060,7 +7060,7 @@
             "extra": {
                 "drupal": {
                     "version": "8.x-1.23",
-                    "datestamp": "1785907921",
+                    "datestamp": "1786629882",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7105,32 +7105,35 @@
         },
         {
             "name": "drupal/paragraphs_ee",
-            "version": "10.1.0",
+            "version": "10.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/paragraphs_ee.git",
-                "reference": "10.1.0"
+                "reference": "10.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/paragraphs_ee-10.1.0.zip",
-                "reference": "10.1.0",
-                "shasum": "ab52a7d1fd667d4161a1637f41fcb6a6fce179ef"
+                "url": "https://ftp.drupal.org/files/projects/paragraphs_ee-10.2.0.zip",
+                "reference": "10.2.0",
+                "shasum": "5a170b6920db65656c093b72784d69489d549300"
             },
             "require": {
-                "drupal/core": "^11.3",
+                "drupal/core": "^11.4",
                 "drupal/paragraphs_features": "^2.0"
             },
             "require-dev": {
-                "drupal/paragraphs_sets": "*",
+                "drupal/paragraphs_sets": "^3.0",
                 "phpunit/phpunit": "^11",
                 "weitzman/drupal-test-traits": "^1.5 || ^2.5"
+            },
+            "suggest": {
+                "drupal/paragraphs_sets": "^3.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "10.1.0",
-                    "datestamp": "1780469376",
+                    "version": "10.2.0",
+                    "datestamp": "1789745874",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7156,17 +7159,17 @@
         },
         {
             "name": "drupal/paragraphs_features",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/paragraphs_features.git",
-                "reference": "2.2.0"
+                "reference": "2.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/paragraphs_features-2.2.0.zip",
-                "reference": "2.2.0",
-                "shasum": "8a4872256ca008a9a0c86fdbe6e7dfa594d47779"
+                "url": "https://ftp.drupal.org/files/projects/paragraphs_features-2.3.0.zip",
+                "reference": "2.3.0",
+                "shasum": "c318a6307add7fe85bc0d2bf03e9f01f4d24a64e"
             },
             "require": {
                 "drupal/core": "^9.2 || ^10 || ^11",
@@ -7178,8 +7181,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.2.0",
-                    "datestamp": "1750763757",
+                    "version": "2.3.0",
+                    "datestamp": "1791367452",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
