@@ -152,7 +152,7 @@
         "npm-asset/flatpickr": "^4.6.13",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
-        "phpdocumentor/reflection-docblock": "^5.3",
+        "phpdocumentor/reflection-docblock": "^6.0",
         "promphp/prometheus_client_php": "^2.15",
         "spatie/color": "^2.0",
         "spawnia/sailor": "^1.1.0",
