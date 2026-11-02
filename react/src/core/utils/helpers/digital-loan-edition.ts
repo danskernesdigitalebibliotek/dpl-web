@@ -1,3 +1,4 @@
+import { OpensInType } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { IdentifierTypeEnum } from "../../dbc-gateway/generated/graphql";
 import { Manifestation } from "../types/entities";
 import { PublizonIdentifier } from "../types/ids";
@@ -39,6 +40,9 @@ export const getLendableEdition = (
   return manifestation && identifier ? { manifestation, identifier } : null;
 };
 
+// Read from the catalogue, because the page decides before any loan exists
+// and for either provider. Once lent, the loan's own type decides - see
+// opensIn in the service layer and ADR-004.
 const readerTypes = [
   ManifestationMaterialType.ebook,
   ManifestationMaterialType.pictureBookOnline,
@@ -53,7 +57,7 @@ const playerTypes = [
   ManifestationMaterialType.audioBookTape
 ];
 
-const opensIn = (manifestation: Manifestation): "reader" | "player" | null => {
+const catalogueOpensIn = (manifestation: Manifestation): OpensInType | null => {
   const materialTypes = getMaterialTypes([manifestation]);
 
   if (readerTypes.some((type) => materialTypes.includes(type))) return "reader";
@@ -63,7 +67,7 @@ const opensIn = (manifestation: Manifestation): "reader" | "player" | null => {
 };
 
 export type DigitalLoanEdition = LendableEdition & {
-  opensIn: "reader" | "player";
+  opensIn: OpensInType;
 };
 
 /**
@@ -78,6 +82,6 @@ export const getDigitalLoanEdition = (
   const lendable = getLendableEdition(manifestations);
   if (!lendable) return null;
 
-  const type = opensIn(lendable.manifestation);
+  const type = catalogueOpensIn(lendable.manifestation);
   return type ? { ...lendable, opensIn: type } : null;
 };
