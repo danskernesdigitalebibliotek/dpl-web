@@ -13,7 +13,7 @@ import { useUrls } from "../../core/utils/url";
 import { AvailabilityLabel } from "./availability-label";
 import { Manifestation } from "../../core/utils/types/entities";
 import { divideManifestationsByMaterialType } from "../../apps/material/helper";
-import { getLendableEdition } from "../../core/utils/helpers/digital-loanable";
+import { getLendableEdition } from "../../core/utils/helpers/digital-loan-edition";
 
 export interface AvailabilityLabelsProps {
   manifestations: Manifestation[];
@@ -46,7 +46,7 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
         // The provider's answer about the lent edition, whether or not our
         // reader or player can open its type.
         const identifier =
-          getLendableEdition(manifestationsOfMaterialType)?.id ?? null;
+          getLendableEdition(manifestationsOfMaterialType)?.identifier ?? null;
         const url = constructMaterialUrl(materialUrl, workId, materialType);
         const accessTypesCodes = manifestationsOfMaterialType
           .map((manifest) =>

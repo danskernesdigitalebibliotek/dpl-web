@@ -6,7 +6,7 @@ import { Pid } from "../../core/utils/types/ids";
 import {
   getLendableEdition,
   getPublizonIdentifier
-} from "../../core/utils/helpers/digital-loanable";
+} from "../../core/utils/helpers/digital-loan-edition";
 
 const manifestation = (
   pid: string,
@@ -53,7 +53,7 @@ describe("getLendableEdition", () => {
   });
 
   it("carries the id of the edition it picked", () => {
-    expect(getLendableEdition([oldEbook, newEbook])?.id).toEqual({
+    expect(getLendableEdition([oldEbook, newEbook])?.identifier).toEqual({
       type: IdentifierTypeEnum.Publizon,
       value: "9788727272894"
     });

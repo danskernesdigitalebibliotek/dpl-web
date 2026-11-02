@@ -32,11 +32,11 @@ import MaterialButtonLoading from "../generic/MaterialButtonLoading";
 import MaterialButtonDisabled from "../generic/MaterialButtonDisabled";
 import { useModalIdsToCloseForReservation } from "../../../../core/utils/useModalIdsToCloseForReservation";
 import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
-import { DigitalLoanable } from "../../../../core/utils/helpers/digital-loanable";
+import { DigitalLoanEdition } from "../../../../core/utils/helpers/digital-loan-edition";
 
 type MaterialButtonsOnlineInternalType = {
   size?: ButtonSize;
-  loanable: DigitalLoanable;
+  edition: DigitalLoanEdition;
   dataCy?: string;
   openModal: boolean;
   setReservationStatus?: (status: RequestStatus) => void;
@@ -49,7 +49,7 @@ type MaterialButtonsOnlineInternalType = {
 
 const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   size,
-  loanable,
+  edition,
   dataCy = "material-button-online-internal",
   openModal,
   setReservationStatus,
@@ -67,7 +67,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const modalsToClose = useModalIdsToCloseForReservation();
   const modalCloseOptions = isEditionPicker ? { modalsToClose } : undefined;
 
-  const { id: identifier, opensIn } = loanable;
+  const { identifier, opensIn } = edition;
   const {
     orderId,
     holdingProvider,
@@ -85,7 +85,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const { handleModalLoanReservation, isSubmitting } =
     useOnlineInternalHandleLoanReservation({
       openModal,
-      modalId: onlineInternalModalId(loanable),
+      modalId: onlineInternalModalId(edition),
       material: { identifier, canBeLoaned, canBeReserved, offerId },
       setReservationStatus,
       setLoanResponse,
@@ -99,7 +99,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
 
   const isReady = !isLoading && !isSubmitting;
 
-  const manifestationType = getMaterialType([loanable.manifestation]);
+  const manifestationType = getMaterialType([edition.manifestation]);
   const reseveLabel = openModal
     ? t("reserveWithMaterialTypeText", {
         placeholders: { "@materialType": manifestationType }

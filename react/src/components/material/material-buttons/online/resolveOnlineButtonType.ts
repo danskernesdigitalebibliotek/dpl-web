@@ -13,9 +13,9 @@ import {
   isArticle
 } from "../helper";
 import {
-  DigitalLoanable,
-  getDigitalLoanable
-} from "../../../../core/utils/helpers/digital-loanable";
+  DigitalLoanEdition,
+  getDigitalLoanEdition
+} from "../../../../core/utils/helpers/digital-loan-edition";
 
 type ManifestationAccess = Manifestation["access"][number];
 type ManifestationAccessUrl = Extract<
@@ -36,7 +36,7 @@ type ManifestationAccessUrl = Extract<
  * - `retriever-article`: an article read in the Retriever archive.
  */
 export type OnlineButtonType =
-  | { type: "internal"; loanable: DigitalLoanable }
+  | { type: "internal"; edition: DigitalLoanEdition }
   | { type: "external"; access: ManifestationAccessUrl }
   | { type: "digital-article" }
   | { type: "retriever-article" };
@@ -92,9 +92,9 @@ export const resolveOnlineButtonType = (
     return null;
   }
 
-  const loanable = getDigitalLoanable(manifestations);
-  if (loanable) {
-    return { type: "internal", loanable };
+  const edition = getDigitalLoanEdition(manifestations);
+  if (edition) {
+    return { type: "internal", edition };
   }
 
   // External access, e.g. Filmstriben or eReolen Global.

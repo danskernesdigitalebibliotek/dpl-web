@@ -9,7 +9,7 @@ import {
 } from "../../apps/material/helper";
 import { getAllFaustIds } from "./helpers/general";
 import { Manifestation } from "./types/entities";
-import { getDigitalLoanable } from "./helpers/digital-loanable";
+import { getDigitalLoanEdition } from "./helpers/digital-loan-edition";
 
 /**
  * Custom hook that creates a handler for edition switch modal reservation logic.
@@ -44,12 +44,12 @@ export const useEditionSwitch = (
     }
 
     // Only an edition we can lend has a loan modal to open.
-    const loanable = getDigitalLoanable(selectedManifestations);
-    if (!loanable) return;
+    const edition = getDigitalLoanEdition(selectedManifestations);
+    if (!edition) return;
 
     openGuarded({
       authUrl,
-      modalId: onlineInternalModalId(loanable),
+      modalId: onlineInternalModalId(edition),
       options: { modalsToClose }
     });
   };

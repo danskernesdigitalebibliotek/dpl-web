@@ -18,7 +18,7 @@ export const getPublizonIdentifier = (
 
 export type LendableEdition = {
   manifestation: Manifestation;
-  id: PublizonIdentifier;
+  identifier: PublizonIdentifier;
 };
 
 // The edition a provider is asked about and lends, or null when none of them
@@ -33,8 +33,10 @@ export const getLendableEdition = (
       (candidate) => getPublizonIdentifier(candidate) !== null
     )
   );
-  const id = manifestation ? getPublizonIdentifier(manifestation) : null;
-  return manifestation && id ? { manifestation, id } : null;
+  const identifier = manifestation
+    ? getPublizonIdentifier(manifestation)
+    : null;
+  return manifestation && identifier ? { manifestation, identifier } : null;
 };
 
 const readerTypes = [
@@ -60,7 +62,7 @@ const opensIn = (manifestation: Manifestation): "reader" | "player" | null => {
   return null;
 };
 
-export type DigitalLoanable = LendableEdition & {
+export type DigitalLoanEdition = LendableEdition & {
   opensIn: "reader" | "player";
 };
 
@@ -70,9 +72,9 @@ export type DigitalLoanable = LendableEdition & {
  * lent edition: the header, the loan modal and the edition switch all go
  * through here, so whatever they resolve it from, they agree.
  */
-export const getDigitalLoanable = (
+export const getDigitalLoanEdition = (
   manifestations: Manifestation[]
-): DigitalLoanable | null => {
+): DigitalLoanEdition | null => {
   const lendable = getLendableEdition(manifestations);
   if (!lendable) return null;
 

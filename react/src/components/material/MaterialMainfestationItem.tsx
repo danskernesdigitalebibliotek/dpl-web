@@ -41,7 +41,7 @@ import {
   getIdFromUrlHash,
   HashPrefix
 } from "../../core/utils/helpers/url";
-import { getPublizonIdentifier } from "../../core/utils/helpers/digital-loanable";
+import { getPublizonIdentifier } from "../../core/utils/helpers/digital-loan-edition";
 
 export interface MaterialMainfestationItemProps {
   manifestation: Manifestation;

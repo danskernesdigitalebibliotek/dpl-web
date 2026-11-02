@@ -106,7 +106,7 @@ const publizonSays = (quotas: {
 const renderText = (opensIn: "reader" | "player" = "reader") =>
   render(
     <MaterialAvailabilityTextOnline
-      id={{ type: IdentifierTypeEnum.Publizon, value: ISBN }}
+      identifier={{ type: IdentifierTypeEnum.Publizon, value: ISBN }}
       opensIn={opensIn}
     />
   );

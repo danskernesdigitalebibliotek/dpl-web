@@ -11,17 +11,17 @@ import MaterialAvailabilityTextPhysical from "./physical/MaterialAvailabilityTex
 import useReservableFromAnotherLibrary from "../../../core/utils/useReservableFromAnotherLibrary";
 import MaterialAvailabilityTextParagraph from "./generic/MaterialAvailabilityTextParagraph";
 import { useText } from "../../../core/utils/text";
-import { DigitalLoanable } from "../../../core/utils/helpers/digital-loanable";
+import { DigitalLoanEdition } from "../../../core/utils/helpers/digital-loan-edition";
 
 interface Props {
   manifestations: Manifestation[];
   /** The edition the header buttons lend, if they lend one. */
-  loanable: DigitalLoanable | null;
+  edition: DigitalLoanEdition | null;
 }
 
 const MaterialAvailabilityText: React.FC<Props> = ({
   manifestations,
-  loanable
+  edition
 }) => {
   const t = useText();
   const materialType = getMaterialType(manifestations);
@@ -46,13 +46,13 @@ const MaterialAvailabilityText: React.FC<Props> = ({
   ) {
     // Text and buttons ask about the same edition and share one request.
     // Nothing to lend means no text: the buttons cannot lend it either.
-    if (!loanable) {
+    if (!edition) {
       return null;
     }
     return (
       <MaterialAvailabilityTextOnline
-        id={loanable.id}
-        opensIn={loanable.opensIn}
+        identifier={edition.identifier}
+        opensIn={edition.opensIn}
       />
     );
   }

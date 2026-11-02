@@ -39,7 +39,7 @@ import { Manifestation, Work } from "../../core/utils/types/entities";
 import { FaustId } from "../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import vitestData from "./__vitest_data__/helper";
-import { LendableEdition } from "../../core/utils/helpers/digital-loanable";
+import { LendableEdition } from "../../core/utils/helpers/digital-loan-edition";
 
 export const getWorkManifestation = (
   work: Work,

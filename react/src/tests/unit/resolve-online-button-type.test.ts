@@ -53,8 +53,11 @@ describe("resolveOnlineButtonType", () => {
 
     expect(result).toMatchObject({
       type: "internal",
-      loanable: {
-        id: { type: IdentifierTypeEnum.Publizon, value: "9788711623497" },
+      edition: {
+        identifier: {
+          type: IdentifierTypeEnum.Publizon,
+          value: "9788711623497"
+        },
         opensIn: "reader"
       }
     });

@@ -15,15 +15,15 @@ import { ApiResult, CreateLoanResult } from "../../core/publizon/model";
 import { formatDate } from "../../core/utils/helpers/date";
 import { getPublizonErrorStatusText } from "../../core/utils/helpers/publizon";
 import { WorkId } from "../../core/utils/types/ids";
-import { DigitalLoanable } from "../../core/utils/helpers/digital-loanable";
+import { DigitalLoanEdition } from "../../core/utils/helpers/digital-loan-edition";
 
 type OnlineInternalModalBodyProps = {
-  loanable: DigitalLoanable;
+  edition: DigitalLoanEdition;
   workId: WorkId;
 };
 
 const OnlineInternalModalBody = ({
-  loanable,
+  edition,
   workId
 }: OnlineInternalModalBodyProps) => {
   const t = useText();
@@ -36,12 +36,12 @@ const OnlineInternalModalBody = ({
   const [reservationOrLoanErrorResponse, setReservationOrLoanErrorResponse] =
     useState<ApiResult | null>(null);
 
-  const { manifestation } = loanable;
+  const { manifestation } = edition;
   const manifestationType = getMaterialType([manifestation]);
   const authorLine = getAuthorLine(manifestation, t);
 
   const { data: userData } = usePatronData();
-  const { canBeReserved } = useReaderPlayer(loanable.id);
+  const { canBeReserved } = useReaderPlayer(edition.identifier);
 
   if (loanStatus === "success") {
     return (
@@ -68,7 +68,7 @@ const OnlineInternalModalBody = ({
         )}
         <MaterialButtonsOnlineInternal
           openModal={false}
-          loanable={loanable}
+          edition={edition}
           workId={workId}
         />
       </ModalMessage>
@@ -113,7 +113,7 @@ const OnlineInternalModalBody = ({
         })}
         ctaButton={{
           text: t("tryAginButtonText"),
-          modalId: onlineInternalModalId(loanable),
+          modalId: onlineInternalModalId(edition),
           dataCy: "online-internal-close-button"
         }}
       >
@@ -150,13 +150,13 @@ const OnlineInternalModalBody = ({
         <div>
           <div className="reservation-modal-submit">
             <MaterialAvailabilityTextOnline
-              id={loanable.id}
-              opensIn={loanable.opensIn}
+              identifier={edition.identifier}
+              opensIn={edition.opensIn}
             />
             <MaterialButtonsOnlineInternal
               workId={workId}
               openModal={false}
-              loanable={loanable}
+              edition={edition}
               setReservationStatus={setReservationStatus}
               setLoanStatus={setloanStatus}
               setLoanResponse={setLoanResponse}

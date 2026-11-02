@@ -52,7 +52,7 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
         <MaterialButtonsOnlineInternal
           openModal
           size={size}
-          loanable={type.loanable}
+          edition={type.edition}
           dataCy={`${dataCy}-internal`}
           workId={workId}
           isEditionPicker={isEditionPicker}

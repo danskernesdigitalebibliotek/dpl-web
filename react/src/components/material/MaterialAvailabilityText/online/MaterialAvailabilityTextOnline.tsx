@@ -25,18 +25,18 @@ import {
 import { useUrls } from "../../../../core/utils/url";
 import { SortOption } from "../../../../core/advanced-search/types";
 import Link from "../../../atoms/links/Link";
-import { DigitalLoanable } from "../../../../core/utils/helpers/digital-loanable";
+import { DigitalLoanEdition } from "../../../../core/utils/helpers/digital-loan-edition";
 
 /** Shared with the loan buttons so both ask the providers about the same
  * edition, and the quota shown is the one its reader or player draws on. */
 type MaterialAvailabilityTextOnlineProps = Pick<
-  DigitalLoanable,
-  "id" | "opensIn"
+  DigitalLoanEdition,
+  "identifier" | "opensIn"
 >;
 
 const MaterialAvailabilityTextOnline: React.FC<
   MaterialAvailabilityTextOnlineProps
-> = ({ id: identifier, opensIn }) => {
+> = ({ identifier, opensIn }) => {
   const u = useUrls();
 
   const getAlwaysLoanableDigitalTitlesUrl = (
