@@ -23658,16 +23658,16 @@
         },
         {
             "name": "vincentlanglet/twig-cs-fixer",
-            "version": "4.0.2",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/VincentLanglet/Twig-CS-Fixer.git",
-                "reference": "1cb75618f7dd0f9bf51924aa6d3aa8c588f51d5a"
+                "reference": "53c1234b6e5d87ac2beaf686774bba013697f9c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/VincentLanglet/Twig-CS-Fixer/zipball/1cb75618f7dd0f9bf51924aa6d3aa8c588f51d5a",
-                "reference": "1cb75618f7dd0f9bf51924aa6d3aa8c588f51d5a",
+                "url": "https://api.github.com/repos/VincentLanglet/Twig-CS-Fixer/zipball/53c1234b6e5d87ac2beaf686774bba013697f9c5",
+                "reference": "53c1234b6e5d87ac2beaf686774bba013697f9c5",
                 "shasum": ""
             },
             "require": {
@@ -23723,7 +23723,7 @@
             "homepage": "https://github.com/VincentLanglet/Twig-CS-Fixer",
             "support": {
                 "issues": "https://github.com/VincentLanglet/Twig-CS-Fixer/issues",
-                "source": "https://github.com/VincentLanglet/Twig-CS-Fixer/tree/4.0.2"
+                "source": "https://github.com/VincentLanglet/Twig-CS-Fixer/tree/4.1.1"
             },
             "funding": [
                 {
@@ -23731,7 +23731,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-29T15:22:14+00:00"
+            "time": "2026-09-08T21:26:25+00:00"
         }
     ],
     "aliases": [],
