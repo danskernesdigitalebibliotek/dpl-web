@@ -99,7 +99,11 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
     // them out and, through single sign-on, straight back in, so send them to
     // their profile on Go instead.
     if ($this->getPatronPagePath() !== NULL && $this->userTokens->isUniloginUser()) {
-      $event->setResponse(new TrustedRedirectResponse($this->goSite->getGoBaseUrl() . '/user/profile', 307));
+      $response = new TrustedRedirectResponse($this->goSite->getGoBaseUrl() . '/user/profile', 307);
+      // Don't cache the response. We can use normal caching rules here,
+      // instead of the killswitch.
+      $response->getCacheableMetadata()->setCacheMaxAge(0);
+      $event->setResponse($response);
     }
   }
 
