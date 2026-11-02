@@ -33,14 +33,14 @@ class VideoToolMediaLibraryAddForm extends AddFormBase {
     $form['container'] = [
       '#type' => 'container',
       '#title' => $this->t('Add @type', [
-        '@type' => $media_type->label(),
+        '@type' => (string) $media_type->label(),
       ]),
     ];
 
     $form['container']['url'] = [
       '#type' => 'url',
       '#title' => $this->t('Add @type video via URL', [
-        '@type' => $media_type->label(),
+        '@type' => (string) $media_type->label(),
       ]),
       '#description' => $this->t('VideoTool URL examples: https://media.videotool.dk?vn=557_2023103014511477700668916683 or https://media.videotool.dk/?vn=557_2023103014511477700668916683'),
       '#required' => TRUE,
