@@ -2,16 +2,28 @@ import { PageObject, Elements } from '@hammzj/cypress-page-object';
 import * as dayjs from 'dayjs';
 import { typeInCkEditor } from '../helpers/helper-ckeditor';
 import { mediaLibrarySelect } from '../helpers/helper-media';
+import { addParagraph } from '../helpers/helper-paragraph';
+import { EventLocationComponent } from './event-location';
 
 type WeeklyRecurrence = {
   // The first and last day of the recurrence.
   from: dayjs.Dayjs;
   to: dayjs.Dayjs;
-  // As the time selects list them, e.g. "09:00 am".
-  startTime: string;
-  endTime: string;
-  day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday';
+  // As the time selects list them, e.g. "09:00 am". Left at the form's
+  // defaults when not given.
+  startTime?: string;
+  endTime?: string;
+  days: Weekday[];
 };
+
+type Weekday =
+  | 'monday'
+  | 'tuesday'
+  | 'wednesday'
+  | 'thursday'
+  | 'friday'
+  | 'saturday'
+  | 'sunday';
 
 /**
  * The event series form, which is the same when adding and editing.
@@ -51,6 +63,7 @@ export class EventFormPage extends PageObject {
           .findByText('End date')
           .siblings()
           .findByLabelText('Time'),
+      allDayField: () => cy.findByLabelText('All day'),
       // The other recurrence types have fields with the same labels.
       weekly: () => cy.get('#edit-weekly-recurring-date-wrapper'),
       weeklyFromDateField: () =>
@@ -112,6 +125,10 @@ export class EventFormPage extends PageObject {
       audienceField: () =>
         this.elements.section('Event details').findByLabelText('Audiences'),
       tagField: () => this.elements.section('Tagging').findByLabelText('Tags'),
+      paragraphsModalButton: () =>
+        cy.findAllByTitle('Show all Paragraphs').first(),
+      confirmDateChangesButton: () =>
+        cy.findByRole('button', { name: 'Confirm Date Changes' }),
       saveButton: () =>
         cy
           .get('#edit-gin-sticky-actions')
@@ -150,10 +167,22 @@ export class EventFormPage extends PageObject {
    * Sets the date of an event with a single occurrence.
    */
   fillSingleDate(start: dayjs.Dayjs, end: dayjs.Dayjs) {
+    this.fillStartDate(start);
+    this.fillEndDate(end);
+  }
+
+  fillStartDate(start: dayjs.Dayjs) {
     this.elements.customFromDateField().type(start.format('YYYY-MM-DD'));
     this.elements.customFromTimeField().type(start.format('HH:mm'));
+  }
+
+  fillEndDate(end: dayjs.Dayjs) {
     this.elements.customToDateField().type(end.format('YYYY-MM-DD'));
     this.elements.customToTimeField().type(end.format('HH:mm'));
+  }
+
+  toggleAllDay() {
+    this.elements.allDayField().click();
   }
 
   fillWeeklyRecurrence({
@@ -161,15 +190,27 @@ export class EventFormPage extends PageObject {
     to,
     startTime,
     endTime,
-    day,
+    days,
   }: WeeklyRecurrence) {
     this.selectRecurType('Weekly Event');
     this.elements.weeklyFromDateField().type(from.format('YYYY-MM-DD'));
     this.elements.weeklyToDateField().type(to.format('YYYY-MM-DD'));
-    this.elements.weeklyStartTimeField().select(startTime);
-    this.elements.weeklySetEndTimeField().check();
-    this.elements.weeklyEndTimeField().select(endTime);
-    this.elements.weeklyDayField(day).check();
+    if (startTime) {
+      this.elements.weeklyStartTimeField().select(startTime);
+    }
+    if (endTime) {
+      this.elements.weeklySetEndTimeField().check();
+      this.elements.weeklyEndTimeField().select(endTime);
+    }
+    days.forEach((day) => this.elements.weeklyDayField(day).check());
+  }
+
+  /**
+   * Changes the last day of a weekly recurrence.
+   */
+  changeWeeklyEndDate(to: dayjs.Dayjs) {
+    this.elements.weeklyToDateField().clear();
+    this.elements.weeklyToDateField().type(to.format('YYYY-MM-DD'));
   }
 
   /**
@@ -242,8 +283,29 @@ export class EventFormPage extends PageObject {
     this.elements.tagField().select(tag, { force: true });
   }
 
+  addParagraph(type: string) {
+    this.elements.paragraphsModalButton().click();
+    addParagraph(type);
+  }
+
+  location() {
+    return new EventLocationComponent();
+  }
+
   save() {
     this.elements.saveButton().click();
+  }
+
+  /**
+   * Saving a series whose recurrence changed puts the form into a second step,
+   * which has to be confirmed before the change is applied.
+   */
+  saveAndConfirmDateChanges() {
+    this.save();
+    this.elements.confirmDateChangesButton().click({
+      // The sticky Gin action bar can overlap the inline confirm button.
+      force: true,
+    });
   }
 
   /**

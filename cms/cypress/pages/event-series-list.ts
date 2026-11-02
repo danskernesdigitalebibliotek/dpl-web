@@ -30,9 +30,10 @@ export class EventSeriesListPage extends PageObject {
   }
 
   /**
-   * Deletes every listed series whose title starts with prefix.
+   * Deletes every series whose title starts with prefix, if there are any.
    */
   deleteAllTitled(prefix: string) {
+    this.visitSearch(prefix);
     // Looked up without retrying, as there may be none.
     cy.get('body').then(($body) => {
       const deletePaths = $body

@@ -166,7 +166,6 @@ const createEvent = (event: EventInput, branch: string) => {
 const deleteEventsIfExist = () => {
   login();
   const eventSeriesList = new EventSeriesListPage();
-  eventSeriesList.visitSearch(titlePrefix);
   eventSeriesList.deleteAllTitled(titlePrefix);
 };
 
@@ -317,7 +316,7 @@ describe('Mobile app API: events', () => {
       to: mondays[2],
       startTime: '09:00 am',
       endTime: '11:00 am',
-      day: 'monday',
+      days: ['monday'],
     });
     eventAdd.save();
     cy.contains(title);

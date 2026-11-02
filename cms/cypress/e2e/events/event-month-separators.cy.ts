@@ -1,7 +1,14 @@
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/da';
-import 'cypress-if';
-import { typeInCkEditor } from '../../helpers/helper-ckeditor';
+import { EventAddPage } from '../../pages/event-add';
+import { LoginPage } from '../../pages/login-page';
+import { EventSeriesListPage } from '../../pages/event-series-list';
+
+const login = () =>
+  LoginPage.ensureLogin(
+    Cypress.env('DRUPAL_USERNAME'),
+    Cypress.env('DRUPAL_PASSWORD'),
+  );
 
 // Two events in different months, so the events overview must render a month
 // separator for each. Titles are unique so the AJAX search can filter down to
@@ -56,44 +63,22 @@ const anyMonthLabel = monthNameRegex(
 // the separators gone entirely.
 const separatorOptions = { selector: '.content-list__month-separator' };
 
-const setDate = (field: 'Start date' | 'End date', date: dayjs.Dayjs) => {
-  cy.findByText(field)
-    .siblings()
-    .findByLabelText('Date')
-    .type(date.format('YYYY-MM-DD'));
-  cy.findByText(field)
-    .siblings()
-    .findByLabelText('Time')
-    .type(date.format('HH:mm'));
-};
-
 const createSingleEvent = (event: (typeof separatorEvents)['first']) => {
-  cy.drupalLogin('/events/add/default');
-  cy.findByLabelText('Title').type(event.title);
-  cy.findByLabelText('Subtitle').type(event.subtitle);
-  cy.findByLabelText('Recur Type').select('Custom/Single Event', {
-    // We have to use force when using Select2.
-    force: true,
-  });
-  typeInCkEditor('Hello, world!');
-  cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
-    force: true,
-  });
-  setDate('Start date', event.start);
-  setDate('End date', event.end);
-  cy.clickSaveButton();
+  login();
+  const eventAdd = new EventAddPage();
+  eventAdd.visit([]);
+  eventAdd.fillTitle(event.title);
+  eventAdd.fillSubtitle(event.subtitle);
+  eventAdd.selectRecurType('Custom/Single Event');
+  eventAdd.fillBody('Hello, world!');
+  eventAdd.selectBranch('Det virtuelle bibliotek');
+  eventAdd.fillSingleDate(event.start, event.end);
+  eventAdd.save();
 };
 
 const deleteEventSeries = (title: string) => {
-  cy.drupalLogin('/admin/content/eventseries');
-  cy.get('tr')
-    .contains(title)
-    // Empty if: don't fail if the series doesn't exist.
-    .if()
-    .each(() => {
-      cy.get(`a[aria-label="Delete ${title}"]`).first().click({ force: true });
-      cy.findByRole('dialog').findByRole('button', { name: 'Delete' }).click();
-    });
+  login();
+  new EventSeriesListPage().deleteAllTitled(title);
 };
 
 describe('Events overview month separators', () => {
