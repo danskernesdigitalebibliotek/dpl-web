@@ -10,6 +10,7 @@ import { isAnonymous } from "../../../../core/utils/helpers/user";
 import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
 import {
   getDigitalLoanQuota,
+  OpensInType,
   isCostFreeLoan,
   useDigitalLoanDecision,
   useDigitalLoanQuotas
@@ -25,14 +26,15 @@ import {
 import { useUrls } from "../../../../core/utils/url";
 import { SortOption } from "../../../../core/advanced-search/types";
 import Link from "../../../atoms/links/Link";
-import { DigitalLoanEdition } from "../../../../core/utils/helpers/digital-loan-edition";
+import { PublizonIdentifier } from "../../../../core/utils/types/ids";
 
-/** Shared with the loan buttons so both ask the providers about the same
- * edition, and the quota shown is the one its reader or player draws on. */
-type MaterialAvailabilityTextOnlineProps = Pick<
-  DigitalLoanEdition,
-  "identifier" | "opensIn"
->;
+type MaterialAvailabilityTextOnlineProps = {
+  /** Shared with the loan buttons so both ask the providers about the same
+   * edition. */
+  identifier: PublizonIdentifier;
+  /** Which quota the edition draws on: its reader's or its player's. */
+  opensIn: OpensInType;
+};
 
 const MaterialAvailabilityTextOnline: React.FC<
   MaterialAvailabilityTextOnlineProps
