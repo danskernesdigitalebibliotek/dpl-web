@@ -10,7 +10,9 @@ on:
   schedule:
     - cron: "0 8 * * 1-5"
       timezone: "Europe/Copenhagen"
-    - cron: "30 12,15 * * 1-5"
+    - cron: "30 12 * * 1-5"
+      timezone: "Europe/Copenhagen"
+    - cron: "30 15 * * 1-5"
       timezone: "Europe/Copenhagen"
   workflow_dispatch:
 
