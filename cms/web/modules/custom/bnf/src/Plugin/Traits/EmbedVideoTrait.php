@@ -2,7 +2,6 @@
 
 namespace Drupal\bnf\Plugin\Traits;
 
-use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideo;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideotool;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideotoolVertical;
@@ -17,7 +16,6 @@ use Spawnia\Sailor\ObjectLike;
  * We try to look up existing medias, to avoid re-creating them if we can.
  */
 trait EmbedVideoTrait {
-  use AutowirePluginTrait;
 
   /**
    * The entity type manager.

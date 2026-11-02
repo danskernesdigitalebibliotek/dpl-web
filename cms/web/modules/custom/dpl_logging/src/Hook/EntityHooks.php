@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_logging\Hook;
 
-use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\file\FileInterface;
@@ -16,7 +15,6 @@ use Psr\Log\LoggerAwareTrait;
  */
 class EntityHooks implements LoggerAwareInterface {
 
-  use AutowirePluginTrait;
   use LoggerAwareTrait;
 
   /**
