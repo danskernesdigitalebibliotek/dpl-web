@@ -149,10 +149,7 @@ const OnlineInternalModalBody = ({
 
         <div>
           <div className="reservation-modal-submit">
-            <MaterialAvailabilityTextOnline
-              identifier={edition.identifier}
-              opensIn={edition.opensIn}
-            />
+            <MaterialAvailabilityTextOnline edition={edition} />
             <MaterialButtonsOnlineInternal
               workId={workId}
               openModal={false}

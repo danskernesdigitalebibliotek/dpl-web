@@ -32,7 +32,10 @@ import MaterialButtonLoading from "../generic/MaterialButtonLoading";
 import MaterialButtonDisabled from "../generic/MaterialButtonDisabled";
 import { useModalIdsToCloseForReservation } from "../../../../core/utils/useModalIdsToCloseForReservation";
 import useCanCancelReservation from "../../../../core/utils/useCanCancelReservation";
-import { DigitalLoanEdition } from "../../../../core/utils/helpers/digital-loan-edition";
+import {
+  DigitalLoanEdition,
+  opensInReader
+} from "../../../../core/utils/helpers/digital-loan-edition";
 
 type MaterialButtonsOnlineInternalType = {
   size?: ButtonSize;
@@ -67,7 +70,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
   const modalsToClose = useModalIdsToCloseForReservation();
   const modalCloseOptions = isEditionPicker ? { modalsToClose } : undefined;
 
-  const { identifier, opensIn } = edition;
+  const { identifier } = edition;
   const {
     orderId,
     holdingProvider,
@@ -408,7 +411,7 @@ const MaterialButtonsOnlineInternal: FC<MaterialButtonsOnlineInternalType> = ({
     );
   };
 
-  if (opensIn === "reader") {
+  if (opensInReader(edition)) {
     return (
       <>
         {renderReaderButton()}

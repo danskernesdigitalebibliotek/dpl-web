@@ -10,7 +10,6 @@ import { isAnonymous } from "../../../../core/utils/helpers/user";
 import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
 import {
   getDigitalLoanQuota,
-  OpensInType,
   isCostFreeLoan,
   useDigitalLoanDecision,
   useDigitalLoanQuotas
@@ -26,19 +25,21 @@ import {
 import { useUrls } from "../../../../core/utils/url";
 import { SortOption } from "../../../../core/advanced-search/types";
 import Link from "../../../atoms/links/Link";
-import { PublizonIdentifier } from "../../../../core/utils/types/ids";
+import {
+  DigitalLoanEdition,
+  opensInPlayer
+} from "../../../../core/utils/helpers/digital-loan-edition";
 
 type MaterialAvailabilityTextOnlineProps = {
   /** Shared with the loan buttons so both ask the providers about the same
-   * edition. */
-  identifier: PublizonIdentifier;
-  /** Which quota the edition draws on: its reader's or its player's. */
-  opensIn: OpensInType;
+   * edition, and the quota shown is the one its reader or player draws on. */
+  edition: Pick<DigitalLoanEdition, "identifier" | "opensIn">;
 };
 
 const MaterialAvailabilityTextOnline: React.FC<
   MaterialAvailabilityTextOnlineProps
-> = ({ identifier, opensIn }) => {
+> = ({ edition }) => {
+  const { identifier } = edition;
   const u = useUrls();
 
   const getAlwaysLoanableDigitalTitlesUrl = (
@@ -137,7 +138,7 @@ const MaterialAvailabilityTextOnline: React.FC<
     return null;
   }
 
-  if (opensIn === "player") {
+  if (opensInPlayer(edition)) {
     if (!hasValue(audioQuota.current) || !hasValue(audioQuota.limit)) {
       return null;
     }

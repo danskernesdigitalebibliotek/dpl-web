@@ -49,12 +49,7 @@ const MaterialAvailabilityText: React.FC<Props> = ({
     if (!edition) {
       return null;
     }
-    return (
-      <MaterialAvailabilityTextOnline
-        identifier={edition.identifier}
-        opensIn={edition.opensIn}
-      />
-    );
+    return <MaterialAvailabilityTextOnline edition={edition} />;
   }
 
   return null;

@@ -70,6 +70,12 @@ export type DigitalLoanEdition = LendableEdition & {
   opensIn: OpensInType;
 };
 
+export const opensInReader = (edition: Pick<DigitalLoanEdition, "opensIn">) =>
+  edition.opensIn === "reader";
+
+export const opensInPlayer = (edition: Pick<DigitalLoanEdition, "opensIn">) =>
+  edition.opensIn === "player";
+
 /**
  * The edition of a material type that is lent out, the id it is lent by and
  * where it opens - or null when we cannot lend it. The one way to pick the
