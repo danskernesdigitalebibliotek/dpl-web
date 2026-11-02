@@ -4,9 +4,17 @@
 import * as dayjs from 'dayjs';
 import * as timezone from 'dayjs/plugin/timezone';
 import * as utc from 'dayjs/plugin/utc';
-import { pickBranchAddress } from '../../helpers/helper-branch';
-import { typeInCkEditor } from '../../helpers/helper-ckeditor';
-import { mediaLibrarySelect } from '../../helpers/helper-media';
+import { BranchAddPage } from '../../pages/branch-add';
+import { EventAddPage } from '../../pages/event-add';
+import { LoginPage } from '../../pages/login-page';
+import { EventSeriesListPage } from '../../pages/event-series-list';
+import { NodePage } from '../../pages/node';
+
+const login = () =>
+  LoginPage.ensureLogin(
+    Cypress.env('DRUPAL_USERNAME'),
+    Cypress.env('DRUPAL_PASSWORD'),
+  );
 
 type Image = { url: string };
 
@@ -115,75 +123,57 @@ const getEventsTitled = (title: string) =>
   );
 
 const createBranch = (title: string) => {
-  cy.drupalLogin('/node/add/branch');
-  cy.get('#edit-title-0-value').type(title);
-  cy.get('.meta-sidebar__trigger').click();
-  cy.get('[name="field_email[0][value]"]').type(branchEmail);
-  cy.get('[name="field_phone[0][value]"]').type(branchPhone);
-  cy.get('.meta-sidebar__close').click();
-  pickBranchAddress({
-    search: 'Ishøj Store Torv 1 2635',
-    option: 'Ishøj Store Torv 1, 2635 Ishøj',
-  });
-  // The select2 widget is synced from the underlying select on submit.
-  cy.get('select[name="field_agency_branch_id"]').select(isilId, {
-    force: true,
-  });
-  cy.clickSaveButton();
-  cy.get('.hero').contains(title).should('be.visible');
-  return cy
-    .get('link[rel="shortlink"]')
-    .invoke('attr', 'href')
-    .then((nodePath) => String(nodePath).split('/').pop() as string);
+  login();
+  const branchAdd = new BranchAddPage();
+  branchAdd.visit([]);
+  branchAdd.fillTitle(title);
+  branchAdd.fillContactInfo(branchEmail, branchPhone);
+  branchAdd.pickAddress(
+    'Ishøj Store Torv 1 2635',
+    'Ishøj Store Torv 1, 2635 Ishøj',
+  );
+  branchAdd.selectAgencyBranch(isilId);
+  branchAdd.save();
+
+  const branchPage = new NodePage();
+  branchPage.elements.hero().contains(title).should('be.visible');
+  return branchPage.nodeId();
 };
 
-// The fields every event form needs before it will save.
-const fillRequiredEventFields = (
+// Fills the fields every event form needs before it will save.
+const startEvent = (
   { title, subtitle }: Pick<EventInput, 'title' | 'subtitle'>,
-  branchId: string,
+  branch: string,
 ) => {
-  cy.findByLabelText('Title').type(title);
-  cy.findByLabelText('Subtitle').type(subtitle);
-  typeInCkEditor('Brødtekst');
-  // We have to use force when using Select2.
-  cy.get('select[name="field_branch"]').select(branchId, { force: true });
-};
-
-const setCustomDate = (start: dayjs.Dayjs, end: dayjs.Dayjs) => {
-  const field = (name: string) =>
-    cy.get(`[data-drupal-selector="edit-custom-date-0-${name}"]`);
-  field('value-date').type(start.format('YYYY-MM-DD'));
-  field('value-time').type(start.format('HH:mm'));
-  field('end-value-date').type(end.format('YYYY-MM-DD'));
-  field('end-value-time').type(end.format('HH:mm'));
+  login();
+  const eventAdd = new EventAddPage();
+  eventAdd.visit([]);
+  eventAdd.fillTitle(title);
+  eventAdd.fillSubtitle(subtitle);
+  eventAdd.fillBody('Brødtekst');
+  eventAdd.selectBranch(branch);
+  return eventAdd;
 };
 
 // Creates an event with a single occurrence.
-const createEvent = (event: EventInput, branchId: string) => {
-  cy.drupalLogin('/events/add/default');
-  fillRequiredEventFields(event, branchId);
-  setCustomDate(event.start, event.end);
-  cy.clickSaveButton();
+const createEvent = (event: EventInput, branch: string) => {
+  const eventAdd = startEvent(event, branch);
+  eventAdd.fillSingleDate(event.start, event.end);
+  eventAdd.save();
   cy.contains(event.title);
 };
 
 const deleteEventsIfExist = () => {
-  cy.drupalLogin(`/admin/content/eventseries?search=${titlePrefix}`);
-  cy.get('body').then(($body) => {
-    const deletePaths = $body
-      .find(`a[aria-label^="Delete ${titlePrefix}"]`)
-      .toArray()
-      .map((link) => link.getAttribute('href') as string);
-
-    deletePaths.forEach((path) => {
-      cy.visit(path);
-      cy.get('input[value="Delete"]').click();
-    });
-  });
+  login();
+  const eventSeriesList = new EventSeriesListPage();
+  eventSeriesList.visitSearch(titlePrefix);
+  eventSeriesList.deleteAllTitled(titlePrefix);
 };
 
 describe('Mobile app API: events', () => {
   const branchTitle = `${titlePrefix} branch ${Date.now()}`;
+  // The branch is picked by ID, as the event form lists branches with their
+  // address after the title.
   let branchId: string;
 
   before(() => {
@@ -210,51 +200,19 @@ describe('Mobile app API: events', () => {
       end: danishTime('2030-04-01T12:30:00'),
     };
 
-    cy.drupalLogin('/events/add/default');
-    fillRequiredEventFields(event, branchId);
-    setCustomDate(event.start, event.end);
-    // Searching the media library submits the search twice, and the browser
-    // aborts the first request. That is harmless, but Drupal reports it.
-    Cypress.on(
-      'uncaught:exception',
-      (error) => !error.message.includes('ReadyState: 0'),
-    );
-    // The images are in the sidebar, which is collapsed on narrow screens.
-    cy.get('.meta-sidebar__trigger').click();
-    mediaLibrarySelect(
-      '#field_event_image-media-library-wrapper',
-      'paige-cody',
-      0,
-      /^\/events\//,
-    );
-    mediaLibrarySelect(
-      '#field_teaser_image-media-library-wrapper',
-      'paige-cody',
-      1,
-      /^\/events\//,
-    );
-    cy.get('.meta-sidebar__close').click();
-    cy.get('[name="field_event_place[0][value]"]').type('Salen');
+    const eventAdd = startEvent(event, branchId);
+    eventAdd.fillSingleDate(event.start, event.end);
+    eventAdd.selectImages('paige-cody', 'paige-cody');
+    eventAdd.fillPlace('Salen');
     // Events are relevant for ticket managers by default, which is when they
     // have a ticket capacity.
-    cy.contains('summary', 'Tickets').click();
-    cy.get('[name="field_ticket_capacity[0][value]"]').type('50');
-    cy.get('input[value="Add Ticket category"]').click();
-    cy.get(
-      '[name="field_ticket_categories[0][subform][field_ticket_category_name][0][value]"]',
-    ).type('Voksne');
-    cy.get(
-      '[name="field_ticket_categories[0][subform][field_ticket_category_price][0][value]"]',
-    ).type('75');
-    cy.contains('summary', 'Partners').click();
-    cy.get('[name="field_event_partners[0][value]"]').type('Partneren');
-    // We have to use force when using Select2.
-    cy.get('select[name="field_categories"]').select('Litteratur', {
-      force: true,
-    });
-    cy.get('select[name="field_audiences[]"]').select('Børn', { force: true });
-    cy.get('select[name="field_tags[]"]').select('læsning', { force: true });
-    cy.clickSaveButton();
+    eventAdd.fillTicketCapacity(50);
+    eventAdd.addTicketCategory('Voksne', 75);
+    eventAdd.fillPartner('Partneren');
+    eventAdd.selectCategory('Litteratur');
+    eventAdd.selectAudience('Børn');
+    eventAdd.selectTag('læsning');
+    eventAdd.save();
     cy.contains(event.title);
 
     getEventsTitled(event.title).then((events) => {
@@ -352,22 +310,16 @@ describe('Mobile app API: events', () => {
       danishTime('2030-05-13T09:00:00'),
       danishTime('2030-05-20T09:00:00'),
     ];
-    const weeklyField = (name: string) =>
-      cy.get(`[data-drupal-selector="edit-weekly-recurring-date-0-${name}"]`);
 
-    cy.drupalLogin('/events/add/default');
-    fillRequiredEventFields({ title, subtitle: 'Undertitel' }, branchId);
-    cy.findByLabelText('Recur Type').select('Weekly Event', {
-      // We have to use force when using Select2.
-      force: true,
+    const eventAdd = startEvent({ title, subtitle: 'Undertitel' }, branchId);
+    eventAdd.fillWeeklyRecurrence({
+      from: mondays[0],
+      to: mondays[2],
+      startTime: '09:00 am',
+      endTime: '11:00 am',
+      day: 'monday',
     });
-    weeklyField('value-date').type(mondays[0].format('YYYY-MM-DD'));
-    weeklyField('end-value-date').type(mondays[2].format('YYYY-MM-DD'));
-    weeklyField('time').select('09:00 am');
-    weeklyField('duration-or-end-time-end-time').check();
-    weeklyField('end-time-time').select('11:00 am');
-    cy.get('[name="weekly_recurring_date[0][days][monday]"]').check();
-    cy.clickSaveButton();
+    eventAdd.save();
     cy.contains(title);
 
     getEventsTitled(title).then((events) => {
@@ -404,23 +356,16 @@ describe('Mobile app API: events', () => {
       expect(events[0].state).to.equal('Active');
     });
 
-    cy.drupalLogin(`/admin/content/eventseries?search=${event.title}`);
-    cy.get(`a[aria-label="Edit ${event.title}"]`).click();
-    cy.findByLabelText('Title').clear();
-    cy.findByLabelText('Title').type(updatedTitle);
-    cy.findByLabelText('Subtitle').clear();
-    cy.findByLabelText('Subtitle').type('Ny undertitel');
-    // We have to use force when using Select2.
-    cy.get('select[name="field_event_state"]').select('Cancelled', {
-      force: true,
-    });
+    login();
+    const eventSeriesList = new EventSeriesListPage();
+    eventSeriesList.visitSearch(event.title);
+    const eventEdit = eventSeriesList.edit(event.title);
+    eventEdit.fillTitle(updatedTitle);
+    eventEdit.fillSubtitle('Ny undertitel');
+    eventEdit.selectState('Cancelled');
     // Without a ticket manager, the event links to where tickets are sold.
-    cy.contains('summary', 'Tickets').click();
-    cy.get('[name="field_relevant_ticket_manager[value]"]').uncheck();
-    cy.get('[name="field_event_link[0][uri]"]').type(
-      'https://example.com/billetter',
-    );
-    cy.clickSaveButton();
+    eventEdit.fillExternalTicketLink('https://example.com/billetter');
+    eventEdit.save();
     cy.contains(updatedTitle);
 
     getEventsTitled(event.title).should('deep.equal', []);
