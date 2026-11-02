@@ -1,6 +1,15 @@
 // The mobile apps show the opening hours of the library's branches from the
 // /api/v1/opening_hours REST endpoint, which the BFF behind them reads. A
 // failure here means a change in the CMS will break the mobile apps.
+import { BranchAddPage } from '../../pages/branch-add';
+import { LoginPage } from '../../pages/login-page';
+import { NodePage } from '../../pages/node';
+
+const login = () =>
+  LoginPage.ensureLogin(
+    Cypress.env('DRUPAL_USERNAME'),
+    Cypress.env('DRUPAL_PASSWORD'),
+  );
 
 type OpeningHours = {
   id: number;
@@ -61,7 +70,7 @@ const editOpeningHours = (
   method: 'POST' | 'PATCH',
   body: OpeningHoursRequest,
 ) => {
-  cy.drupalLogin();
+  login();
   return cy
     .request({
       method,
@@ -76,7 +85,7 @@ const editOpeningHours = (
 };
 
 const deleteOpeningHours = (id: number, repetitionId?: number) => {
-  cy.drupalLogin();
+  login();
   cy.request({
     method: 'DELETE',
     url: `/api/v1/opening_hours/${id}`,
@@ -90,18 +99,16 @@ const deleteOpeningHours = (id: number, repetitionId?: number) => {
 };
 
 const createBranch = (title: string) => {
-  cy.drupalLogin('/node/add/branch');
-  cy.get('#edit-title-0-value').type(title);
-  // The select2 widget is synced from the underlying select on submit.
-  cy.get('select[name="field_agency_branch_id"]').select(isilId, {
-    force: true,
-  });
-  cy.clickSaveButton();
-  cy.get('.hero').contains(title).should('be.visible');
-  return cy
-    .get('link[rel="shortlink"]')
-    .invoke('attr', 'href')
-    .then((nodePath) => Number(String(nodePath).split('/').pop()));
+  login();
+  const branchAdd = new BranchAddPage();
+  branchAdd.visit([]);
+  branchAdd.fillTitle(title);
+  branchAdd.selectAgencyBranch(isilId);
+  branchAdd.save();
+
+  const branchPage = new NodePage();
+  branchPage.elements.hero().contains(title).should('be.visible');
+  return branchPage.nodeId().then(Number);
 };
 
 describe('Mobile app API: opening hours', () => {
