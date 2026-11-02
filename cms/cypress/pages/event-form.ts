@@ -224,20 +224,46 @@ export class EventFormPage extends PageObject {
       (error) => !error.message.includes('ReadyState: 0'),
     );
     // The images are in the sidebar, which is collapsed on narrow screens.
-    this.elements.sidebarOpenButton().click();
+    // There, Gin also collapses it whenever the page changes size, which the
+    // media library dialog does when it hides the page scrollbar, so it has
+    // to be opened again for each image.
+    this.openSidebar();
     mediaLibrarySelect(
       '#field_event_image-media-library-wrapper',
       eventImage,
       0,
       /^\/events\//,
     );
+    this.openSidebar();
     mediaLibrarySelect(
       '#field_teaser_image-media-library-wrapper',
       teaserImage,
       1,
       /^\/events\//,
     );
-    this.elements.sidebarCloseButton().click();
+    this.closeSidebar();
+  }
+
+  /**
+   * Opens the sidebar, unless it is already open.
+   */
+  openSidebar() {
+    this.elements.sidebarOpenButton().then(($trigger) => {
+      if ($trigger.attr('aria-expanded') !== 'true') {
+        cy.wrap($trigger).click();
+      }
+    });
+  }
+
+  /**
+   * Closes the sidebar, unless it is already closed.
+   */
+  closeSidebar() {
+    this.elements.sidebarOpenButton().then(($trigger) => {
+      if ($trigger.attr('aria-expanded') === 'true') {
+        this.elements.sidebarCloseButton().click();
+      }
+    });
   }
 
   fillPlace(place: string) {
