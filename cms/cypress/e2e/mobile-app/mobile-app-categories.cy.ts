@@ -1,19 +1,17 @@
 // The mobile apps build their navigation from categories and their content
 // elements, which the BFF behind them reads through getAppCategories. A
 // failure here means a change in the CMS will break the mobile apps.
-import {
-  createGoArticle,
-  openGoNodeForm,
-} from '../../helpers/helper-go-content';
-import { mediaLibrarySelect } from '../../helpers/helper-media';
 import { getNode } from '../../helpers/helper-node';
-import {
-  addParagraph,
-  appendParagraph,
-  paragraphField,
-  setWorkId,
-} from '../../helpers/helper-paragraph';
 import { gqlQueries } from '../../helpers/mobile-app-queries';
+import { GoArticleAddPage } from '../../pages/go-article-add';
+import { GoCategoryAddPage } from '../../pages/go-category-add';
+import { LoginPage } from '../../pages/login-page';
+import {
+  GoLinkboxParagraph,
+  GoMaterialSliderAutomaticParagraph,
+  GoMaterialSliderManualParagraph,
+  GoTextBodyParagraph,
+} from '../../pages/paragraphs';
 
 type AppCategory = {
   id: string;
@@ -28,31 +26,37 @@ const getAppCategories = (type: string, id?: string) =>
     { type, id },
   );
 
-type Linkbox = { title: string; description: string; linkPath: string };
+const login = () =>
+  LoginPage.ensureLogin(
+    Cypress.env('DRUPAL_USERNAME'),
+    Cypress.env('DRUPAL_PASSWORD'),
+  );
 
-const addGoLinkbox = (link: Linkbox) => {
-  const linkbox = paragraphField(0);
-  addParagraph('GO Linkbox');
-  cy.get(`${linkbox}[field_title][0][value]"]`).type(link.title);
-  cy.get(`${linkbox}[field_go_description][0][value]"]`).type(link.description);
-  // The linkbox links through a GO link paragraph, which the form adds for us.
-  const goLink = `${linkbox}[field_go_link_paragraph][0][subform][field_go_link][0]`;
-  cy.get(`${goLink}[uri]"]`).type(link.linkPath);
-  // Required by the form, but the apps get the linkbox title instead.
-  cy.get(`${goLink}[title]"]`).type(link.title);
+const createGoArticle = (title: string) => {
+  login();
+  const articleAdd = new GoArticleAddPage();
+  articleAdd.visitReturningToContent();
+  articleAdd.fillTitle(title);
+  articleAdd.selectTeaserImage('paige-cody');
+  articleAdd.addParagraph(GoTextBodyParagraph).fillBody('<p>Brødtekst</p>');
+  articleAdd.save();
+  cy.contains(`GO Article ${title} has been created.`);
+  return getNode(title);
 };
 
-const createGoCategory = (title: string, addParagraphs: () => void) => {
-  openGoNodeForm('go_category');
-  cy.findByLabelText('Title').type(title);
-  cy.findByLabelText('Category menu title').type(title);
-  mediaLibrarySelect(
-    '#field_category_menu_image-media-library-wrapper',
-    'paige-cody',
-  );
-  cy.openParagraphsModal();
-  addParagraphs();
-  cy.clickSaveButton();
+// Starts a GO category with the fields every category needs.
+const startGoCategory = (title: string) => {
+  login();
+  const categoryAdd = new GoCategoryAddPage();
+  categoryAdd.visitReturningToContent();
+  categoryAdd.fillTitle(title);
+  categoryAdd.fillMenuTitle(title);
+  categoryAdd.selectMenuImage('paige-cody');
+  return categoryAdd;
+};
+
+const saveGoCategory = (categoryAdd: GoCategoryAddPage, title: string) => {
+  categoryAdd.save();
   cy.contains(`GO category ${title} has been created.`);
   return getNode(title);
 };
@@ -80,10 +84,15 @@ describe('Mobile app API: getAppCategories', () => {
       description: `Beskrivelse ${runId}`,
     };
 
-    createGoArticle(articleTitle, '<p>Brødtekst</p>').then((article) => {
-      createGoCategory(categoryTitle, () =>
-        addGoLinkbox({ ...link, linkPath: article.path }),
-      ).then((category) => {
+    createGoArticle(articleTitle).then((article) => {
+      const categoryAdd = startGoCategory(categoryTitle);
+      const linkbox = categoryAdd.addParagraph(GoLinkboxParagraph);
+      linkbox.fillTitle(link.title);
+      linkbox.fillDescription(link.description);
+      // Required by the form, but the apps get the linkbox title instead.
+      linkbox.fillLink(article.path, link.title);
+
+      saveGoCategory(categoryAdd, categoryTitle).then((category) => {
         // The apps list all categories first and then ask for each one.
         getAppCategories('BIBLOGO').then(({ data }) => {
           const ids = data.getAppCategories.map(({ id }) => id);
@@ -139,28 +148,22 @@ describe('Mobile app API: getAppCategories', () => {
       workIds: ['work-of:870970-basis:22629344'],
     };
 
-    createGoCategory(categoryTitle, () => {
-      const automaticSlider = paragraphField(0);
-      addParagraph('GO Material Slider - Automatic');
-      cy.get(`${automaticSlider}[field_title][0][value]"]`).type(
-        automatic.title,
-      );
-      cy.get(`${automaticSlider}[field_cql_search][0][filters][cql]"]`).type(
-        automatic.cql,
-        { delay: 0 },
-      );
-      cy.get(
-        `${automaticSlider}[field_slider_amount_of_materials][0][value]"]`,
-      ).type(`{selectall}${automatic.limit}`);
+    const categoryAdd = startGoCategory(categoryTitle);
 
-      const manualSlider = paragraphField(1);
-      appendParagraph('GO Material Slider - Manual');
-      cy.get(`${manualSlider}[field_title][0][value]"]`).type(manual.title);
-      setWorkId(
-        `${manualSlider}[field_material_slider_work_ids][0][fields_container][value]"]`,
-        manual.workIds[0],
-      );
-    }).then((category) => {
+    const automaticSlider = categoryAdd.addParagraph(
+      GoMaterialSliderAutomaticParagraph,
+    );
+    automaticSlider.fillTitle(automatic.title);
+    automaticSlider.fillCql(automatic.cql);
+    automaticSlider.fillAmount(automatic.limit);
+
+    const manualSlider = categoryAdd.addParagraph(
+      GoMaterialSliderManualParagraph,
+    );
+    manualSlider.fillTitle(manual.title);
+    manualSlider.selectWork(manual.workIds[0]);
+
+    saveGoCategory(categoryAdd, categoryTitle).then((category) => {
       getAppCategories('BIBLOGO', category.id).then(({ data }) => {
         const icon = data.getAppCategories[0]?.icon;
 

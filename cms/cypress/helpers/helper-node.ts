@@ -1,3 +1,5 @@
+import { ContentListPage } from '../pages/content-list';
+
 export type TestNode = {
   id: string;
   paragraphs: { id: string }[];
@@ -40,20 +42,11 @@ const GET_NODE_IDS = `query ($path: String!) {
   }
 }`;
 
-// The content overview is an admin page, so it links to the node's path on
-// the CMS rather than on the GO site.
-export const getNode = (title: string) => {
-  cy.visit(
-    `/admin/content?title=${encodeURIComponent(title)}&status=All&langcode=All`,
+export const getNode = (title: string) =>
+  new ContentListPage().pathOf(title).then((path) =>
+    cy
+      .queryMobileAppGraphql<{
+        route: { entity: Omit<TestNode, 'path'> };
+      }>(GET_NODE_IDS, { path })
+      .then(({ data }): TestNode => ({ ...data.route.entity, path })),
   );
-  return cy
-    .contains('a', title)
-    .invoke('attr', 'href')
-    .then((path) =>
-      cy
-        .queryMobileAppGraphql<{
-          route: { entity: Omit<TestNode, 'path'> };
-        }>(GET_NODE_IDS, { path })
-        .then(({ data }): TestNode => ({ ...data.route.entity, path: path! })),
-    );
-};

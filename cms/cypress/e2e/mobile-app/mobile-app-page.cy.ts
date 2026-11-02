@@ -1,16 +1,19 @@
 // The mobile apps show pages and articles with their content elements, which
 // the BFF behind them reads through getAppPage. A failure here means a change
 // in the CMS will break the mobile apps.
-import { typeInCkEditor } from '../../helpers/helper-ckeditor';
-import { createGoArticle } from '../../helpers/helper-go-content';
 import { getNode } from '../../helpers/helper-node';
-import {
-  addParagraph,
-  appendParagraph,
-  paragraphField,
-  setWorkId,
-} from '../../helpers/helper-paragraph';
 import { gqlQueries } from '../../helpers/mobile-app-queries';
+import { GoArticleAddPage } from '../../pages/go-article-add';
+import { LoginPage } from '../../pages/login-page';
+import { PageAddPage } from '../../pages/page-add';
+import {
+  GoTextBodyParagraph,
+  MaterialGridAutomaticParagraph,
+  MaterialGridManualParagraph,
+  NavSpotsManualParagraph,
+  RecommendationParagraph,
+  TextBodyParagraph,
+} from '../../pages/paragraphs';
 
 type AppContentElement = { __typename: string; id: string } & Record<
   string,
@@ -33,23 +36,24 @@ const getAppPage = (id: string) =>
 const titlePrefix = 'Mobile app test GO article';
 const pageTitlePrefix = 'Mobile app test page';
 
-// Creates a page, which the Biblo apps show, with the paragraphs added by
-// addParagraphs.
-const createPage = (
-  title: string,
-  subtitle: string,
-  addParagraphs?: () => void,
-) => {
-  cy.drupalLogin('/node/add/page');
-  cy.findByLabelText('Title').type(title);
-  // The subtitle field is hidden until the titles are displayed.
-  cy.findByLabelText('Display titles').check();
-  cy.findByLabelText('Subtitle').type(subtitle);
-  if (addParagraphs) {
-    cy.openParagraphsModal();
-    addParagraphs();
-  }
-  cy.clickSaveButton();
+const login = () =>
+  LoginPage.ensureLogin(
+    Cypress.env('DRUPAL_USERNAME'),
+    Cypress.env('DRUPAL_PASSWORD'),
+  );
+
+// Starts a page, which the Biblo apps show, with the fields every page needs.
+const startPage = (title: string, subtitle: string) => {
+  login();
+  const pageAdd = new PageAddPage();
+  pageAdd.visit([]);
+  pageAdd.fillTitle(title);
+  pageAdd.fillSubtitle(subtitle);
+  return pageAdd;
+};
+
+const savePage = (pageAdd: PageAddPage, title: string) => {
+  pageAdd.save();
   cy.contains(`Page ${title} has been created.`);
   return getNode(title);
 };
@@ -75,7 +79,16 @@ describe('Mobile app API: getAppPage', () => {
       '<p><strong>Fed</strong>, <em>kursiv</em> og <a href="https://example.com/">et link</a>.</p>' +
       '<ul><li>Punkt</li></ul>';
 
-    createGoArticle(title, body).then((article) => {
+    login();
+    const articleAdd = new GoArticleAddPage();
+    articleAdd.visitReturningToContent();
+    articleAdd.fillTitle(title);
+    articleAdd.selectTeaserImage('paige-cody');
+    articleAdd.addParagraph(GoTextBodyParagraph).fillBody(body);
+    articleAdd.save();
+    cy.contains(`GO Article ${title} has been created.`);
+
+    getNode(title).then((article) => {
       getAppPage(article.id).then(({ data }) => {
         // The image URL contains the upload date, so we only know which file
         // it is. The apps cannot resolve relative URLs, so it must be absolute.
@@ -128,63 +141,43 @@ describe('Mobile app API: getAppPage', () => {
     };
 
     // The page the navigation spots link to.
-    createPage(linkedTitle, subtitle).then((linkedPage) => {
-      createPage(title, subtitle, () => {
-        addParagraph('Text body');
-        typeInCkEditor(body);
+    const linkedPageAdd = startPage(linkedTitle, subtitle);
+    savePage(linkedPageAdd, linkedTitle).then((linkedPage) => {
+      const pageAdd = startPage(title, subtitle);
 
-        const recommendationFields = paragraphField(1);
-        appendParagraph('Recommendation');
-        cy.get(
-          `${recommendationFields}[field_image_position_right][value]"]`,
-        ).check();
-        cy.get(
-          `${recommendationFields}[field_recommendation_title][0][value]"]`,
-        ).type(recommendation.nullableTitle);
-        cy.get(
-          `${recommendationFields}[field_recommendation_description][0][value]"]`,
-        ).type(recommendation.nullableDescription);
-        setWorkId(
-          `${recommendationFields}[field_recommendation_work_id][0][fields_container][value]"]`,
-          recommendation.workId,
-        );
+      pageAdd.addParagraph(TextBodyParagraph).fillBody(body);
 
-        appendParagraph('Navigation spots - manual');
-        cy.get(
-          `${paragraphField(2)}[field_nav_spots_content][0][target_id]"]`,
-        ).type(linkedTitle);
+      const recommendationParagraph = pageAdd.addParagraph(
+        RecommendationParagraph,
+      );
+      recommendationParagraph.placeImageRight();
+      recommendationParagraph.fillTitle(recommendation.nullableTitle);
+      recommendationParagraph.fillDescription(
+        recommendation.nullableDescription,
+      );
+      recommendationParagraph.selectWork(recommendation.workId);
 
-        const gridAutomaticFields = paragraphField(3);
-        appendParagraph('Material grid automatic');
-        cy.get(
-          `${gridAutomaticFields}[field_material_grid_title][0][value]"]`,
-        ).type(gridAutomatic.nullableTitle);
-        cy.get(
-          `${gridAutomaticFields}[field_material_grid_description][0][value]"]`,
-        ).type(gridAutomatic.nullableDescription);
-        cy.get(
-          `${gridAutomaticFields}[field_cql_search][0][filters][cql]"]`,
-        ).type(gridAutomatic.cql, { delay: 0 });
-        cy.get(
-          `${gridAutomaticFields}[field_material_amount][0][value]"]`,
-        ).type(`{selectall}${gridAutomatic.limit}`);
-        cy.get(`${gridAutomaticFields}[field_priority_material_type]"]`).select(
-          gridAutomatic.priorityMaterialType,
-        );
+      pageAdd.addParagraph(NavSpotsManualParagraph).linkContent(linkedTitle);
 
-        const gridManualFields = paragraphField(4);
-        appendParagraph('Material grid manual');
-        cy.get(
-          `${gridManualFields}[field_material_grid_title][0][value]"]`,
-        ).type(gridManual.nullableTitle);
-        cy.get(
-          `${gridManualFields}[field_material_grid_description][0][value]"]`,
-        ).type(gridManual.nullableDescription);
-        setWorkId(
-          `${gridManualFields}[field_material_grid_work_ids][0][fields_container][value]"]`,
-          gridManual.workIds[0],
-        );
-      }).then((page) => {
+      const gridAutomaticParagraph = pageAdd.addParagraph(
+        MaterialGridAutomaticParagraph,
+      );
+      gridAutomaticParagraph.fillTitle(gridAutomatic.nullableTitle);
+      gridAutomaticParagraph.fillDescription(gridAutomatic.nullableDescription);
+      gridAutomaticParagraph.fillCql(gridAutomatic.cql);
+      gridAutomaticParagraph.fillAmount(gridAutomatic.limit);
+      gridAutomaticParagraph.selectPriorityMaterialType(
+        gridAutomatic.priorityMaterialType,
+      );
+
+      const gridManualParagraph = pageAdd.addParagraph(
+        MaterialGridManualParagraph,
+      );
+      gridManualParagraph.fillTitle(gridManual.nullableTitle);
+      gridManualParagraph.fillDescription(gridManual.nullableDescription);
+      gridManualParagraph.selectWork(gridManual.workIds[0]);
+
+      savePage(pageAdd, title).then((page) => {
         getAppPage(page.id).then(({ data }) => {
           const ids = page.paragraphs.map(({ id }) => id);
 
