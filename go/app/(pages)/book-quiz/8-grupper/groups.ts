@@ -3,21 +3,16 @@
 // quiz-svar peger på PRÆCIS ÉN gruppe. Resultatet er to genregrupper + mange
 // emner, der vises som to adskilte lister (jf. buildCql.ts).
 //
-// Hver GENREGRUPPE findes i to variationer, så de kan A/B-sammenlignes:
-//   A ("genreOnly")        — rent genreandform (smal, præcis)
-//   B ("genrePlusSubjects") — genre + beslægtede emne-termer (bredere recall)
-// Emnegrupper har kun ét match (altid term.subject).
+// Hver gruppe har ét match: genregrupper = genre + beslægtede emne-termer
+// (bredere recall), emnegrupper = emne-termer.
 
 export type TClauseGroup = { cqlIndex: string; cqlValues: string[] }
-
-export type TGroupVariant = "genreOnly" | "genrePlusSubjects"
 
 export type TGenreGroup = {
   id: string
   label: string
   emoji?: string
-  genreOnly: TClauseGroup[]
-  genrePlusSubjects: TClauseGroup[]
+  match: TClauseGroup[]
 }
 
 export type TSubjectGroup = {
@@ -27,90 +22,214 @@ export type TSubjectGroup = {
   match: TClauseGroup[]
 }
 
-// Små hjælpere: term = enkeltord, phrase = flerord. Termerne er trukket fra
-// FBI's faktiske genre-/emneord (samme kilde som tilladt-listen i PoC 2).
-const gen = (cqlValues: string[], phrase = false): TClauseGroup => ({
-  cqlIndex: phrase ? "phrase.genreandform" : "term.genreandform",
+// Små hjælpere: termerne er dokumentets tilladte genre-/emneord og bruger alle
+// phrase-indekset (flerord tåles). Fakta er ikke en genre men
+// term.fictionnonfiction="nonfiction".
+const gen = (cqlValues: string[]): TClauseGroup => ({
+  cqlIndex: "phrase.genreandform",
   cqlValues,
 })
-const sub = (cqlValues: string[], phrase = false): TClauseGroup => ({
-  cqlIndex: phrase ? "phrase.subject" : "term.subject",
-  cqlValues,
-})
+const sub = (cqlValues: string[]): TClauseGroup => ({ cqlIndex: "phrase.subject", cqlValues })
+const nonfiction: TClauseGroup = { cqlIndex: "term.fictionnonfiction", cqlValues: ["nonfiction"] }
 
-// Bare nok genregrupper til at dække de to genre-spørgsmål (ét pr. svar).
+// Genregrupper til de to genre-spørgsmål: overordnet genre (liste 1) og stemning
+// (liste 2). Hver matcher genreandform (eller fiktion/fakta) + emner.
+// Kun dokumentets termer: venner, gys og romantik har ingen genre, kun emner.
+const VENNER = sub(["venner", "veninder", "venskab", "skole"])
+const GYS = sub([
+  "gys",
+  "spøgelser",
+  "zombier",
+  "hekse",
+  "uhyggelig",
+  "uhygge",
+  "monstre",
+  "vampyrer",
+  "varulve",
+  "splatter",
+  "genfærd",
+  "halloween",
+])
+const ROMANTIK = sub([
+  "kærlighed",
+  "forelskelse",
+  "kærester",
+  "seksualitet",
+  "romantisk",
+  "romantik",
+])
+
 export const GENRE_GROUPS: TGenreGroup[] = [
+  // --- Overordnet genre ---
   {
-    id: "gys",
-    label: "Gys & uhygge",
-    emoji: "👻",
-    genreOnly: [gen(["gys", "splatter"])],
-    genrePlusSubjects: [gen(["gys", "splatter"]), sub(["uhyggelig", "uhygge", "gys"])],
+    id: "spaending",
+    label: "Spænding",
+    emoji: "💣",
+    match: [gen(["spænding", "krimi"]), sub(["action", "mysterier"])],
   },
   {
     id: "fantasy",
     label: "Fantasy",
-    emoji: "🧙",
-    genreOnly: [gen(["fantasy"]), gen(["dark fantasy", "fantastiske fortællinger"], true)],
-    genrePlusSubjects: [
-      gen(["fantasy"]),
-      gen(["dark fantasy", "fantastiske fortællinger"], true),
-      sub(["magi", "eventyrlig"]),
-    ],
+    emoji: "🦄",
+    match: [gen(["fantasy"])],
   },
   {
-    id: "spaending",
-    label: "Spænding",
-    emoji: "😱",
-    genreOnly: [gen(["spænding"])],
-    genrePlusSubjects: [gen(["spænding"]), sub(["spændende", "action"])],
+    id: "venner",
+    label: "Venner",
+    emoji: "👨‍👩‍👧‍👦",
+    match: [VENNER],
   },
   {
-    id: "sjov",
-    label: "Sjove bøger",
-    emoji: "😂",
-    genreOnly: [gen(["humor"]), gen(["sjove bøger"], true)],
-    genrePlusSubjects: [gen(["humor"]), gen(["sjove bøger"], true), sub(["sjov"])],
-  },
-  {
-    id: "eventyr",
-    label: "Eventyr",
-    emoji: "🏰",
-    genreOnly: [gen(["eventyr"]), gen(["eventyrlige fortællinger"], true)],
-    genrePlusSubjects: [
-      gen(["eventyr"]),
-      gen(["eventyrlige fortællinger"], true),
-      sub(["eventyrlig", "magi"]),
-    ],
+    id: "fakta",
+    label: "Fakta",
+    emoji: "🧪",
+    match: [nonfiction],
   },
   {
     id: "scifi",
     label: "Science fiction",
-    emoji: "🚀",
-    genreOnly: [gen(["dystopier", "fremtidsfortællinger"]), gen(["science fiction"], true)],
-    genrePlusSubjects: [
-      gen(["dystopier", "fremtidsfortællinger"]),
-      gen(["science fiction"], true),
-      sub(["ud i fremtiden"], true),
+    emoji: "🪐",
+    match: [
+      gen(["science fiction"]),
+      sub([
+        "rumfartøjer",
+        "rumrejser",
+        "rummet",
+        "raketter",
+        "rumvæsener",
+        "astronauter",
+        "rumstationer",
+        "månelandinger",
+        "stjerner",
+        "månen",
+        "solsystemet",
+        "rumskibe",
+        "planeter",
+      ]),
     ],
+  },
+  {
+    id: "historie",
+    label: "Historie",
+    emoji: "🕰️",
+    match: [
+      gen(["historie"]),
+      sub([
+        "middelalderen",
+        "1700-tallet",
+        "1800-tallet",
+        "1900-tallet",
+        "verdenshistorie",
+        "den 2. verdenskrig",
+        "besættelsestiden",
+        "mellemkrigstiden",
+        "modstandbevægelsen",
+        "oldtiden",
+        "antikken",
+        "romerriget",
+        "vikingetid",
+        "vikinger",
+        "vikingetiden",
+      ]),
+    ],
+  },
+  {
+    id: "romaner",
+    label: "Romaner",
+    emoji: "🙃",
+    match: [gen(["romaner"])],
+  },
+  // --- Stemning ---
+  {
+    id: "sjov",
+    label: "Sjov",
+    emoji: "😂",
+    match: [gen(["sjove bøger"]), sub(["sjov"])],
+  },
+  {
+    id: "gys",
+    label: "Gys",
+    emoji: "🧟",
+    match: [GYS],
+  },
+  {
+    id: "romantik",
+    label: "Romantik",
+    emoji: "💘",
+    match: [ROMANTIK],
   },
 ]
 
-// Bare nok emnegrupper til at dække emne-spørgsmålet.
+// Emnegrupper til emne-spørgsmålet.
 export const SUBJECT_GROUPS: TSubjectGroup[] = [
-  { id: "venskab", label: "Venskab", emoji: "🤝", match: [sub(["venskab", "venner", "veninder"])] },
   {
-    id: "kaerlighed",
-    label: "Kærlighed",
-    emoji: "❤️",
-    match: [sub(["kærlighed", "forelskelse", "romantisk"])],
+    id: "dyr",
+    label: "Dyr",
+    emoji: "🐰",
+    match: [
+      sub([
+        "dyr",
+        "vilde dyr",
+        "pattedyr",
+        "insekter",
+        "øgler",
+        "hunde",
+        "katte",
+        "kryb",
+        "forhistoriske dyr",
+        "kæledyr",
+        "husdyr",
+        "dinosaurer",
+        "fugle",
+        "dyreliv",
+      ]),
+    ],
   },
-  { id: "magi", label: "Magi", emoji: "✨", match: [sub(["magi"])] },
-  { id: "dyr", label: "Dyr", emoji: "🐾", match: [sub(["dyr"])] },
-  { id: "familie", label: "Familie", emoji: "👨‍👩‍👧", match: [sub(["familien"])] },
-  { id: "sport", label: "Sport", emoji: "⚽", match: [sub(["sport"])] },
-  { id: "gaming", label: "Gaming", emoji: "🎮", match: [sub(["gaming"])] },
-  { id: "natur", label: "Natur", emoji: "🌿", match: [sub(["natur og miljø"], true)] },
+  {
+    id: "gaming",
+    label: "Gaming",
+    emoji: "🎮",
+    match: [sub(["gaming", "computerspil", "fortnite", "roblox", "minecraft"])],
+  },
+  {
+    id: "sport",
+    label: "Sport",
+    emoji: "⚽",
+    match: [
+      sub([
+        "sport",
+        "fodbold",
+        "tennis",
+        "cykling",
+        "håndbold",
+        "badminton",
+        "motorsport",
+        "håndboldspillere",
+        "fodboldspillere",
+      ]),
+    ],
+  },
+  {
+    id: "klima",
+    label: "Klima",
+    emoji: "🌿",
+    match: [
+      sub([
+        "klima",
+        "miljø",
+        "klimaændringer",
+        "global opvarmning",
+        "klima bevidsthed",
+        "natur og miljø",
+      ]),
+    ],
+  },
+  {
+    id: "andet",
+    label: "Ingen af delene",
+    emoji: "🤔",
+    match: [sub(["krea og kultur", "mit liv"])],
+  },
 ]
 
 export const genreGroupById = (id: string) => GENRE_GROUPS.find(group => group.id === id)

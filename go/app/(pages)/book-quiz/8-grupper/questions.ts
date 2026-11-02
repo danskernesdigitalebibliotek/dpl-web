@@ -1,11 +1,16 @@
 // PoC 8: abstrakte, børnevendte spørgsmål som i PoC 6 — men hvert svar peger på
 // PRÆCIS ÉN gruppe (genre eller emne), ikke en liste. Ingen score/læsetype.
 //
-// Flow: to SEPARATE enkelt-valgs genre-spørgsmål (→ præcis to genregrupper),
-// ét fler-valgs emne-spørgsmål (→ mange emner), og til sidst alder + lix som
-// INTERVALLER (bruges som blødt eller hårdt filter på resultatet).
+// Flow: to SEPARATE enkelt-valgs genre-spørgsmål (overordnet genre + stemning →
+// højst to genregrupper = to lister), ét fler-valgs emne-spørgsmål (→ mange
+// emner), alder som INTERVALLER og læseniveau.
+// "Det er forskelligt"/"Ved ikke"-svar har intet mapping = intet filter.
 
 export type TRange = [number, number]
+
+// Læseniveau: "easy" = generalaudience "let at læse" (CQL), "hard" = bøger UDEN
+// lix (kun client-side — vi kender ingen CQL for "felt mangler").
+export type TReadingLevel = "easy" | "hard"
 
 export type TQuizOption = {
   id: string
@@ -14,10 +19,7 @@ export type TQuizOption = {
   genreGroupId?: string
   subjectGroupId?: string
   ageRange?: TRange
-  lixRange?: TRange
-  // Sideantal-interval. Længde kan KUN filtreres client-side (FBI har ingen
-  // søgbar facet for boglængde — kun sideantal på manifestationen).
-  pageRange?: TRange
+  readingLevel?: TReadingLevel
 }
 
 export type TQuizQuestion = {
@@ -27,83 +29,77 @@ export type TQuizQuestion = {
   options: TQuizOption[]
 }
 
-export const GENRE_QUESTION_IDS = ["genre-1", "genre-2"] as const
+export const GENRE_QUESTION_IDS = ["genre", "stemning"] as const
 
 export const QUESTIONS: TQuizQuestion[] = [
-  // --- To separate genre-spørgsmål → to genregrupper ---
+  // --- Overordnet genre → genregruppe (liste 1) ---
   {
-    id: "genre-1",
-    title: "Du får en superkraft. Hvilken vælger du?",
+    id: "genre",
+    title: "Hvilken rejse vil du helst ud på?",
     options: [
-      { id: "g1-fantasy", label: "Rejse til verdener, der ikke findes", genreGroupId: "fantasy" },
-      { id: "g1-gys", label: "Tale med spøgelser", genreGroupId: "gys" },
-      { id: "g1-spaending", label: "Løbe hurtigere end en bil", genreGroupId: "spaending" },
-      { id: "g1-sjov", label: "Få hvem som helst til at grine", genreGroupId: "sjov" },
-      { id: "g1-eventyr", label: "Åbne døre til eventyr", genreGroupId: "eventyr" },
-      { id: "g1-scifi", label: "Rejse ud i rummet", genreGroupId: "scifi" },
+      { id: "g-spaending", label: "Ud på en vild mission", emoji: "💣", genreGroupId: "spaending" },
+      { id: "g-fantasy", label: "Ride på en enhjørning", emoji: "🦄", genreGroupId: "fantasy" },
+      { id: "g-venner", label: "På tur med vennerne", emoji: "👨‍👩‍👧‍👦", genreGroupId: "venner" },
+      { id: "g-fakta", label: "På opdagelse i laboratoriet", emoji: "🧪", genreGroupId: "fakta" },
+      {
+        id: "g-scifi",
+        label: "På rejse til en fremmed planet",
+        emoji: "🪐",
+        genreGroupId: "scifi",
+      },
+      {
+        id: "g-historie",
+        label: "På en tidsrejse tilbage i tiden",
+        emoji: "🕰️",
+        genreGroupId: "historie",
+      },
+      { id: "g-romaner", label: "Jeg aner det ikke", emoji: "🙃", genreGroupId: "romaner" },
     ],
   },
+  // --- Stemning → genregruppe (liste 2) ---
   {
-    id: "genre-2",
-    title: "Hvilket sted ville du helst være i en historie?",
+    id: "stemning",
+    title: "Hvad går du efter?",
     options: [
-      { id: "g2-fantasy", label: "I en magisk skov", emoji: "🌲", genreGroupId: "fantasy" },
-      { id: "g2-gys", label: "Et mørkt, hjemsøgt hus", emoji: "🏚️", genreGroupId: "gys" },
-      { id: "g2-spaending", label: "Midt i en vild jagt", emoji: "🏃", genreGroupId: "spaending" },
-      { id: "g2-sjov", label: "I en skæv og fjollet verden", emoji: "🤪", genreGroupId: "sjov" },
-      { id: "g2-eventyr", label: "Et gammelt slot", emoji: "🏰", genreGroupId: "eventyr" },
-      { id: "g2-scifi", label: "En fremmed planet", emoji: "🪐", genreGroupId: "scifi" },
+      { id: "s-sjov", label: "Et godt grin", emoji: "😂", genreGroupId: "sjov" },
+      { id: "s-gys", label: "Gys", emoji: "🧟", genreGroupId: "gys" },
+      { id: "s-romantik", label: "Romantik", emoji: "💘", genreGroupId: "romantik" },
+      { id: "s-alle", label: "Det er forskelligt", emoji: "🍬🍭" },
+    ],
+  },
+  // --- Alder som intervaller. 10 år er en vigtig skillelinje (børneinddragelse). ---
+  // Idé til senere: udeluk bøger der spænder over mange alderstrin (a la NOT ages >= 9).
+  {
+    id: "alder",
+    title: "Hvilket alderstrin vil du læse på?",
+    options: [
+      { id: "alder-6-8", label: "6-8 år", ageRange: [6, 8] },
+      { id: "alder-9-10", label: "9-10 år", ageRange: [9, 10] },
+      { id: "alder-11-12", label: "11-12 år", ageRange: [11, 12] },
+      { id: "alder-teen", label: "Teenagere", ageRange: [13, 18] },
     ],
   },
   // --- Ét emne-spørgsmål (multi) → mange emner ---
   {
     id: "emne",
-    title: "Hvad får dit hjerte til at banke hurtigere?",
+    title: "Hvad synes du er mest spændende?",
     multi: true,
     options: [
-      { id: "e-venskab", label: "Når venner holder sammen", emoji: "🤝", subjectGroupId: "venskab" },
-      { id: "e-kaerlighed", label: "Forelskelse", emoji: "❤️", subjectGroupId: "kaerlighed" },
-      { id: "e-magi", label: "Når der er magi i luften", emoji: "✨", subjectGroupId: "magi" },
-      { id: "e-dyr", label: "Søde og vilde dyr", emoji: "🐾", subjectGroupId: "dyr" },
-      { id: "e-familie", label: "Min familie", emoji: "👨‍👩‍👧", subjectGroupId: "familie" },
-      { id: "e-sport", label: "En vigtig kamp eller turnering", emoji: "⚽", subjectGroupId: "sport" },
-      { id: "e-gaming", label: "At vinde det store spil", emoji: "🎮", subjectGroupId: "gaming" },
-      { id: "e-natur", label: "Naturen og de vilde steder", emoji: "🌿", subjectGroupId: "natur" },
+      { id: "e-dyr", label: "Dyr", emoji: "🐰", subjectGroupId: "dyr" },
+      { id: "e-gaming", label: "Gaming", emoji: "🎮", subjectGroupId: "gaming" },
+      { id: "e-sport", label: "Sport", emoji: "⚽", subjectGroupId: "sport" },
+      { id: "e-klima", label: "Klima", emoji: "🌿", subjectGroupId: "klima" },
+      { id: "e-andet", label: "Ingen af delene", emoji: "🤔", subjectGroupId: "andet" },
     ],
   },
-  // --- Alder som intervaller (multi) ---
+  // --- Læseniveau ---
   {
-    id: "alder",
-    title: "Hvad alderstrin vil du læse på?",
-    multi: true,
+    id: "laeseniveau",
+    title: "Hvad passer bedst på dig?",
     options: [
-      { id: "alder-6", label: "5-6 år", ageRange: [5, 6] },
-      { id: "alder-8", label: "7-8 år", ageRange: [7, 8] },
-      { id: "alder-10", label: "9-10 år", ageRange: [9, 10] },
-      { id: "alder-12", label: "11-12 år", ageRange: [11, 12] },
-      { id: "alder-14", label: "13-14 år", ageRange: [13, 14] },
-    ],
-  },
-  // --- Lix som intervaller (multi) ---
-  {
-    id: "lix",
-    title: "Hvor meget kan du lide at læse?",
-    multi: true,
-    options: [
-      { id: "lix-let", label: "Jeg vil have det let", emoji: "😌", lixRange: [0, 15] },
-      { id: "lix-mellem", label: "Midt imellem", emoji: "🙂", lixRange: [15, 25] },
-      { id: "lix-svaer", label: "Jeg læser gerne svært", emoji: "💪", lixRange: [25, 55] },
-    ],
-  },
-  // --- Længde (sideantal) som intervaller (multi) — kun client-side filter ---
-  {
-    id: "laengde",
-    title: "Hvor tyk en bog vil du helst læse?",
-    multi: true,
-    options: [
-      { id: "laengde-kort", label: "Kort (under 100 sider)", emoji: "📄", pageRange: [0, 100] },
-      { id: "laengde-mellem", label: "Mellem (100–250 sider)", emoji: "📗", pageRange: [100, 250] },
-      { id: "laengde-lang", label: "Lang (over 250 sider)", emoji: "📚", pageRange: [250, 2000] },
+      { id: "niveau-svaer", label: "Jeg er en kæmpe læsehest", emoji: "🏇", readingLevel: "hard" },
+      { id: "niveau-let", label: "Jeg er mest til lette bøger", emoji: "📘", readingLevel: "easy" },
+      { id: "niveau-alle", label: "Ved ikke", emoji: "❓" },
     ],
   },
 ]
