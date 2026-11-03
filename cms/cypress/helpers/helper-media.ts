@@ -1,3 +1,6 @@
+// Numbers the calls, so their intercepts can be told apart.
+let selectCount = 0;
+
 // INSPRIATION: https://github.com/kanopi/shrubs/blob/main/mediaLibrarySelect.js
 export const mediaLibrarySelect = (
   selector: string,
@@ -7,10 +10,14 @@ export const mediaLibrarySelect = (
   // forms.
   formPathname = /^\/node\//,
 ) => {
-  // Create unique intercepts for each media library select
-  const mediaNodeEditAjax = `mediaNodeEditAjax${index}`;
-  const mediaLibraryAjax = `mediaLibraryAjax${index}`;
-  const viewsAjax = `viewsAjax${index}`;
+  // Create unique intercepts for each media library select. Waiting on an
+  // alias takes the oldest request not yet waited on, so an alias shared with
+  // an earlier call would take a request that call never waited on, such as
+  // adding a paragraph to the form.
+  selectCount += 1;
+  const mediaNodeEditAjax = `mediaNodeEditAjax${selectCount}`;
+  const mediaLibraryAjax = `mediaLibraryAjax${selectCount}`;
+  const viewsAjax = `viewsAjax${selectCount}`;
 
   // Only the form's AJAX requests, so saving a node form earlier in the same
   // test is not taken for one of them.
