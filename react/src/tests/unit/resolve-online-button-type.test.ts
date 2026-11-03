@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   AccessTypeCodeEnum,
   LinkStatusEnum
@@ -26,7 +26,7 @@ const accessUrl = (status: LinkStatusEnum, origin = "Filmstriben") =>
     __typename: "AccessUrl",
     status,
     origin,
-    url: `https://${origin.toLowerCase()}.dk`,
+    url: `https://${origin.toLowerCase().replace(/\s/g, "")}.dk`,
     loginRequired: false
   }) as const;
 
@@ -62,6 +62,28 @@ describe("resolveOnlineButtonType", () => {
     ]);
 
     expect(result).toBeNull();
+  });
+
+  it("skips and logs an active access url that is not a valid url", () => {
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    const result = resolveOnlineButtonType([
+      manifestationWith([
+        { ...accessUrl(LinkStatusEnum.Ok, "DBC Webarkiv"), url: "" },
+        accessUrl(LinkStatusEnum.Ok)
+      ])
+    ]);
+
+    expect(result).toMatchObject({
+      type: "external",
+      access: { origin: "Filmstriben" }
+    });
+    expect(consoleError).toHaveBeenCalledWith(
+      "AccessUrl is invalid",
+      expect.objectContaining({ url: "" })
+    );
+    consoleError.mockRestore();
   });
 
   it("resolves a digital article button for article manifestations", () => {
