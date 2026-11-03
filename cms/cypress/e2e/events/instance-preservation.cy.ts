@@ -1,6 +1,17 @@
 import * as dayjs from 'dayjs';
-import 'cypress-if';
-import { typeInCkEditor } from '../../helpers/helper-ckeditor';
+import { EventAddPage } from '../../pages/event-add';
+import { LoginPage } from '../../pages/login-page';
+import { EventEditPage } from '../../pages/event-edit';
+import { EventInstanceEditPage } from '../../pages/event-instance-edit';
+import { EventInstancesPage } from '../../pages/event-instances';
+import { EventSeriesListPage } from '../../pages/event-series-list';
+import { EventSeriesPage } from '../../pages/event-series';
+
+const login = () =>
+  LoginPage.ensureLogin(
+    Cypress.env('DRUPAL_USERNAME'),
+    Cypress.env('DRUPAL_PASSWORD'),
+  );
 
 // When an editor changes the recurrence of an event series, the occurrences the
 // change does not touch have to come out the other side as the same event
@@ -22,79 +33,24 @@ const firstMonday = dayjs('2030-01-07');
 const thirdMonday = dayjs('2030-01-21');
 const fourthMonday = dayjs('2030-01-28');
 
-const weeklyEndDate =
-  '[data-drupal-selector="edit-weekly-recurring-date-0-end-value-date"]';
-
-// Every eventseries form needs these before it will save.
-const fillRequiredSeriesFields = (title: string) => {
-  cy.findByLabelText('Title').type(title);
-  cy.findByLabelText('Subtitle').type('A subtitle');
-  cy.findByLabelText('Recur Type').select('Weekly Event', {
-    // We have to use force when using Select2.
-    force: true,
-  });
-  typeInCkEditor('Hello, world!');
-  cy.findByLabelText('Branch').select(branch, {
-    // We have to use force when using Select2.
-    force: true,
-  });
-};
-
-// Saving a series whose recurrence configuration changed puts the form into a
-// second step, which has to be confirmed before the change is applied.
 const setRecurrenceEndDate = (seriesId: string, date: dayjs.Dayjs) => {
-  cy.visit(`/events/series/${seriesId}/edit`);
-  cy.get(weeklyEndDate).clear();
-  cy.get(weeklyEndDate).type(date.format('YYYY-MM-DD'));
-
-  cy.clickSaveButton();
-  cy.contains('Confirm Date Changes').should('be.visible');
-  cy.get('#edit-confirm').click({
-    // The sticky Gin action bar can overlap the inline confirm button.
-    force: true,
-  });
+  const eventEdit = new EventEditPage();
+  eventEdit.visit([seriesId]);
+  eventEdit.changeWeeklyEndDate(date);
+  eventEdit.saveAndConfirmDateChanges();
 };
 
-// Front-end event URLs are path aliases, so they carry no entity ID. Admin links
-// to the same entity are built from the internal paths, so read the ID off the
-// series edit tab instead.
-const seriesIdFromPage = () =>
-  cy
-    .get('a[href^="/events/series/"][href$="/edit"]')
-    .first()
-    .invoke('attr', 'href')
-    .then((href) => {
-      const match = /\/events\/series\/(\d+)/.exec(String(href));
-
-      if (!match) {
-        throw new Error(`Expected to find a series ID in "${href}"`);
-      }
-
-      return match[1];
-    });
-
-// The "Edit Instances" tab lists every instance of the series with its entity ID
-// in a column of its own, which is the cheapest way to observe whether instances
-// were replaced.
 const readInstanceIds = (seriesId: string) => {
-  cy.visit(`/events/series/${seriesId}/edit-instances`);
-
-  return cy
-    .get('td.views-field-id')
-    .then((cells) => cells.toArray().map((cell) => cell.innerText.trim()));
+  const eventInstances = new EventInstancesPage();
+  eventInstances.visit([seriesId]);
+  // The tab lists every instance of the series with its entity ID, which is
+  // the cheapest way to observe whether instances were replaced.
+  return eventInstances.instanceIds();
 };
 
 const deleteSeriesIfExists = (title: string) => {
-  cy.drupalLogin('/admin/content/eventseries');
-  cy.get('tr')
-    .contains(title)
-    // Empty if: we don't want a failing test if the item does not exist.
-    .if()
-    .each(() => {
-      cy.get(`a[aria-label="Delete ${title}"]`).first().click({ force: true });
-
-      cy.findByRole('dialog').findByRole('button', { name: 'Delete' }).click();
-    });
+  login();
+  new EventSeriesListPage().deleteAllTitled(title);
 };
 
 describe('Event instance preservation', () => {
@@ -103,19 +59,22 @@ describe('Event instance preservation', () => {
     // we're testing.
     Cypress.on('uncaught:exception', () => false);
 
-    cy.drupalLogin('/events/add/default');
-    fillRequiredSeriesFields(seriesTitle);
-
-    cy.get(
-      '[data-drupal-selector="edit-weekly-recurring-date-0-value-date"]',
-    ).type(firstMonday.format('YYYY-MM-DD'));
-    cy.get(weeklyEndDate).type(thirdMonday.format('YYYY-MM-DD'));
-    cy.get('[name="weekly_recurring_date[0][days][monday]"]').check();
-
-    cy.clickSaveButton();
+    login();
+    const eventAdd = new EventAddPage();
+    eventAdd.visit([]);
+    eventAdd.fillTitle(seriesTitle);
+    eventAdd.fillSubtitle('A subtitle');
+    eventAdd.fillBody('Hello, world!');
+    eventAdd.selectBranch(branch);
+    eventAdd.fillWeeklyRecurrence({
+      from: firstMonday,
+      to: thirdMonday,
+      days: ['monday'],
+    });
+    eventAdd.save();
 
     // A series with several upcoming instances stays on the series page.
-    seriesIdFromPage().then((seriesId) => {
+    new EventSeriesPage().seriesId().then((seriesId) => {
       readInstanceIds(seriesId).then((originalIds) => {
         cy.log(`Series ${seriesId} has instances ${originalIds.join(', ')}.`);
 
@@ -128,9 +87,10 @@ describe('Event instance preservation', () => {
         cy.log(
           'Give the first instance a title of its own, so we can tell whether instance-only data survives.',
         );
-        cy.visit(`/events/${keptId}/edit`);
-        cy.get('[name="field_event_title[0][value]"]').type(keptInstanceTitle);
-        cy.clickSaveButton();
+        const instanceEdit = new EventInstanceEditPage();
+        instanceEdit.visit([keptId]);
+        instanceEdit.typeTitle(keptInstanceTitle);
+        instanceEdit.save();
 
         cy.log(
           'Extending the recurrence by one Monday adds one occurrence and leaves the existing ones as they are.',
@@ -147,11 +107,10 @@ describe('Event instance preservation', () => {
         readInstanceIds(seriesId).should('have.members', originalIds);
 
         cy.log('The instance-only title survived all of it.');
-        cy.visit(`/events/${keptId}/edit`);
-        cy.get('[name="field_event_title[0][value]"]').should(
-          'have.value',
-          keptInstanceTitle,
-        );
+        instanceEdit.visit([keptId]);
+        instanceEdit.elements
+          .titleField()
+          .should('have.value', keptInstanceTitle);
       });
     });
   });

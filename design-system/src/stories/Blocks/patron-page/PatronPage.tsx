@@ -44,12 +44,7 @@ const PatronPage: React.FC<PatronPageProps> = ({ skeletonVersion = false }) => {
       <h2 className="text-header-h4 mt-32 mb-16">Basic details</h2>
 
       {/* Patron info section */}
-      <PatronInfo
-        name="Professor Utonium"
-        nameLabel="Name"
-        address="The Utonium Residence, 107 Pokey Oaks South, Townsville, USA"
-        addressLabel="Address"
-      />
+      <PatronInfo name="Professor Utonium" nameLabel="Name" />
 
       <div className="patron-page-info">
         <ContactInfoSection />
