@@ -8,7 +8,7 @@ import { withErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryAlert from "../src/components/error-boundary-alert/ErrorBoundaryAlert";
 import Store from "../src/components/store";
 
-const getSessionStorage = (type) => window.sessionStorage.getItem(type);
+const getSessionStorage = (type: string) => window.sessionStorage.getItem(type);
 const userToken =
   process.env.STORYBOOK_USER_TOKEN || getSessionStorage(TOKEN_USER_KEY);
 const libraryToken =
@@ -31,7 +31,7 @@ if (!libraryToken && userToken) {
   setToken(TOKEN_LIBRARY_KEY, userToken);
 }
 
-const WrappedStory = (app) =>
+const WrappedStory = (app: React.ComponentType) =>
   withErrorBoundary(app, {
     FallbackComponent: ErrorBoundaryAlert,
     onError(error, info) {
@@ -41,7 +41,7 @@ const WrappedStory = (app) =>
     }
   });
 
-function App({ story }) {
+function App({ story }: { story: React.ReactNode }) {
   return (
     <Store>
       <>{story}</>

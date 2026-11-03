@@ -14,6 +14,10 @@
     "src/**/*.tsx",
     "src/**/*.js",
     "src/**/*.jsx",
-    "cypress"
+    "cypress",
+    "scripts",
+    ".storybook/*.ts",
+    ".storybook/*.tsx",
+    "vitest.config.mts"
   ]
 }
