@@ -57,10 +57,9 @@ const EditionsSelectModal = ({
   //
   // `label` and `text` are decided together and say the same thing: the pill
   // is hidden from the accessibility tree, so `text` is what carries the
-  // status into the edition's accessible name. A digital edition already on
-  // loan to this reader is disabled — there is nothing a second selection
-  // would do; a physical one lent out elsewhere stays selectable, since
-  // picking it still starts a reservation.
+  // status into the edition's accessible name. Both stay selectable — a
+  // digital edition already on loan to this reader is exactly the one they'd
+  // want to pick, to read it from the work page.
   const getUnavailable = (manifestation: ManifestationWorkPageFragment) => {
     if (isEditionLentOut(manifestation)) {
       return {
@@ -70,14 +69,12 @@ const EditionsSelectModal = ({
           </StatusLabel>
         ),
         text: "Udlånt lige nu, du kan stadig reservere bogen",
-        disabled: false,
       }
     }
     if (isDigitalEditionOnLoan(manifestation)) {
       return {
         label: <StatusLabel variant="warning">Udlånt til dig</StatusLabel>,
         text: "Udlånt til dig",
-        disabled: true,
       }
     }
     return undefined
@@ -133,7 +130,6 @@ const EditionsSelectModal = ({
                       checked={draftPid === manifestation.pid}
                       unavailableLabel={unavailable?.label}
                       unavailableText={unavailable?.text}
-                      disabled={unavailable?.disabled}
                       onSelect={() => setDraftChoice({ pid: manifestation.pid })}
                     />
                   )
