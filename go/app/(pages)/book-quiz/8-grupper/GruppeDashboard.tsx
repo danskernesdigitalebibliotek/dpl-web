@@ -12,7 +12,7 @@ import BookQuizCover from "../_shared/BookQuizCover"
 import { TFilterMode, withHardAudienceFilters } from "../_shared/audienceCql"
 import { buildQueries } from "./buildCql"
 import { GENRE_GROUPS, SUBJECT_GROUPS, TClauseGroup, TGenreGroup, TSubjectGroup } from "./groups"
-import { QUESTIONS, TQuizOption, TQuizQuestion, TRange, TReadingLevel } from "./questions"
+import { QUESTIONS, TQuizOption, TQuizQuestion, TRange } from "./questions"
 
 const RESULT_LIMIT = 30
 
@@ -67,16 +67,23 @@ const ageDistance = (ages: { low: number; high: number }, ranges: TRange[]) =>
     ...ranges.map(([lo, hi]) => Math.max(0, Math.max(ages.low, lo) - Math.min(ages.high, hi)))
   )
 
+const lixDistance = (lix: number, ranges: TRange[]) =>
+  Math.min(...ranges.map(([lo, hi]) => Math.max(0, lo - lix, lix - hi)))
+
 // Blødt: sortér værker tættest på de valgte intervaller øverst (uden data nederst).
-// Alder er kun med her i blød tilstand.
-const rerankWorks = (works: TQuizWork[], ageRanges: TRange[]) => {
-  if (ageRanges.length === 0) return works
+// Alder/lix er kun med her i blød tilstand.
+const rerankWorks = (works: TQuizWork[], ageRanges: TRange[], lixRanges: TRange[]) => {
+  if (ageRanges.length === 0 && lixRanges.length === 0) return works
   return works
     .map((work, index) => {
       const distances: number[] = []
       if (ageRanges.length > 0) {
         const ages = getWorkAges(work)
         if (ages) distances.push(ageDistance(ages, ageRanges))
+      }
+      if (lixRanges.length > 0) {
+        const lix = getWorkLix(work)
+        if (lix != null) distances.push(lixDistance(lix, lixRanges))
       }
       const hasData = distances.length > 0
       const distance = hasData
@@ -92,13 +99,15 @@ const rerankWorks = (works: TQuizWork[], ageRanges: TRange[]) => {
     .map(entry => entry.work)
 }
 
-// Læseniveau: "let" er en facet i søgningen; "svær" (= bøger uden lix) kan kun
-// filtreres client-side, da vi ikke kender en CQL for et manglende felt.
+// Læseniveau "let" er en facet i søgningen.
 const EASY_CQL = 'phrase.generalaudience="let at læse"'
-const READING_LEVEL_LABEL: Record<TReadingLevel, string> = {
-  easy: "lette bøger (let at læse)",
-  hard: "svære bøger (uden lix, client-side)",
-}
+
+// Lix vælges i resultatet (ikke i quizzen). Intervaller som i PoC 7.
+const LIX_RANGES: { id: string; label: string; range: TRange }[] = [
+  { id: "let", label: "let (0–15)", range: [0, 15] },
+  { id: "mellem", label: "mellem (15–25)", range: [15, 25] },
+  { id: "svaer", label: "svær (25–55)", range: [25, 55] },
+]
 
 // Hvad et svar peger på (vises som indsigt under hvert valg). Slår pakke-labels
 // op i den (redigerbare) pakke-state.
@@ -116,7 +125,8 @@ const optionMapping = (
     return `emnegruppe: ${group?.label ?? option.subjectGroupId}`
   }
   if (option.ageRange) return `alder ${option.ageRange[0]}–${option.ageRange[1]} år`
-  if (option.readingLevel) return READING_LEVEL_LABEL[option.readingLevel]
+  if (option.readingLevel === "easy") return "lette bøger (let at læse)"
+  if (option.note) return option.note
   return "intet filter"
 }
 
@@ -268,6 +278,8 @@ const GruppeDashboard = () => {
   const [answers, setAnswers] = useState<Record<string, string[]>>({})
 
   const [ageMode, setAgeMode] = useState<TFilterMode>("soft")
+  const [lixIds, setLixIds] = useState<string[]>([])
+  const [lixMode, setLixMode] = useState<TFilterMode>("soft")
   const [showInsight, setShowInsight] = useState(true)
   const [showDebug, setShowDebug] = useState(false)
 
@@ -301,13 +313,17 @@ const GruppeDashboard = () => {
     genrePackages,
     subjectPackages
   )
+  const lixRanges = useMemo(
+    () => LIX_RANGES.filter(option => lixIds.includes(option.id)).map(option => option.range),
+    [lixIds]
+  )
 
   // Én query pr. genregruppe (altså to lister) + én kombineret (genre AND stemning).
-  // Hårdt alder-filter AND'es direkte ind i CQL'en (blødt = rerank client-side).
+  // Hårde alder/lix-filtre AND'es direkte ind i CQL'en (blødt = rerank client-side).
   // Læseniveau "let" AND'es altid ind som facet.
   const queries = useMemo(() => {
     const base = buildQueries(genreGroups, subjectGroups)
-    const opts = { ageRanges, lixRanges: [], ageMode, lixMode: "soft" as const }
+    const opts = { ageRanges, lixRanges, ageMode, lixMode }
     return base.map(query => {
       const cql = withHardAudienceFilters(query.cql, opts)
       return {
@@ -315,13 +331,14 @@ const GruppeDashboard = () => {
         cql: cql && readingLevel === "easy" ? `${cql} AND ${EASY_CQL}` : cql,
       }
     })
-  }, [genreGroups, subjectGroups, ageRanges, ageMode, readingLevel])
+  }, [genreGroups, subjectGroups, ageRanges, lixRanges, ageMode, lixMode, readingLevel])
   const cqlA = queries[0]?.cql ?? ""
   const cqlB = queries[1]?.cql ?? ""
   const cqlC = queries[2]?.cql ?? ""
 
-  // Alder: kun blød tilstand rerankes client-side (hård ligger i CQL'en).
+  // Alder/lix: kun blød tilstand rerankes client-side (hård ligger i CQL'en).
   const softAgeRanges = ageMode === "soft" ? ageRanges : []
+  const softLixRanges = lixMode === "soft" ? lixRanges : []
 
   const resultA = useBookQuizComplexSearchQuery(
     { cql: cqlA, offset: 0, limit: RESULT_LIMIT, filters: {} },
@@ -374,18 +391,13 @@ const GruppeDashboard = () => {
     setPhase("quiz")
   }
 
-  // Et resultat pr. genre-liste. Hårdt alder-filter er i CQL'en; her rerankes
-  // blød alder, og "svær" læseniveau (uden lix) filtreres client-side (ingen
-  // FBI-facet).
-  const onlyWithoutLix = readingLevel === "hard"
+  // Et resultat pr. genre-liste. Hårde alder/lix-filtre er i CQL'en; her rerankes
+  // de bløde.
   const buildList = (result: typeof resultA) => {
     const raw = result.data?.complexSearch.works ?? []
-    const reranked = rerankWorks(raw, softAgeRanges)
-    const works = onlyWithoutLix ? reranked.filter(work => getWorkLix(work) == null) : reranked
     return {
-      works,
+      works: rerankWorks(raw, softAgeRanges, softLixRanges),
       hitcount: result.data?.complexSearch.hitcount ?? 0,
-      droppedClientSide: reranked.length - works.length,
       isFetching: result.isFetching,
       isError: result.isError,
     }
@@ -397,8 +409,14 @@ const GruppeDashboard = () => {
     ...buildList([resultA, resultB, resultC][index]),
   }))
 
-  const isReranked = softAgeRanges.length > 0
-  const anyHard = ageMode === "hard" && ageRanges.length > 0
+  const sortedBy = [
+    softAgeRanges.length > 0 ? "alder" : null,
+    softLixRanges.length > 0 ? "lix" : null,
+  ].filter(Boolean)
+  const hardFiltered = [
+    ageMode === "hard" && ageRanges.length > 0 ? "alder" : null,
+    lixMode === "hard" && lixRanges.length > 0 ? "lix" : null,
+  ].filter(Boolean)
 
   const renderBook = (work: TQuizWork) => {
     const workLix = getWorkLix(work)
@@ -434,8 +452,8 @@ const GruppeDashboard = () => {
           og hvert svar peger på præcis én gruppe. Genre- og stemnings-spørgsmålet giver hver én
           genregruppe; emne-spørgsmålet giver mange emner. Resultatet vises som to lister — én pr.
           genregruppe, hver AND&apos;et med alle de valgte emner. Alder kan bruges blødt (sortér)
-          eller hårdt (filtrér); læseniveau filtrerer altid. Genregrupper matcher genre + beslægtede
-          emner.
+          eller hårdt (filtrér); lix vælges i resultatet og kan ligeledes være blødt eller hårdt.
+          Genregrupper matcher genre + beslægtede emner.
         </p>
       </header>
 
@@ -495,7 +513,7 @@ const GruppeDashboard = () => {
 
           {phase === "result" ? (
             <div className="flex flex-col gap-6">
-              {/* Styring: alder soft/hard — gælder begge lister. */}
+              {/* Styring: alder + lix soft/hard — gælder alle lister. */}
               <div className="flex flex-wrap items-center gap-4 border border-black/20 p-3 text-sm">
                 <div className="flex items-center gap-2">
                   <span className="font-medium">Alder:</span>
@@ -508,6 +526,39 @@ const GruppeDashboard = () => {
                       ageMode === "hard" ? "border-black bg-black/10" : "border-black/30",
                     ].join(" ")}>
                     {ageMode === "hard" ? "hårdt filter" : "blødt (sortér)"}
+                  </button>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-medium">Lix:</span>
+                  {LIX_RANGES.map(option => {
+                    const selected = lixIds.includes(option.id)
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        onClick={() =>
+                          setLixIds(prev =>
+                            selected ? prev.filter(id => id !== option.id) : [...prev, option.id]
+                          )
+                        }
+                        aria-pressed={selected}
+                        className={[
+                          "border px-2 py-0.5",
+                          selected ? "border-black bg-black/10" : "border-black/30",
+                        ].join(" ")}>
+                        {option.label}
+                      </button>
+                    )
+                  })}
+                  <button
+                    type="button"
+                    onClick={() => setLixMode(mode => (mode === "soft" ? "hard" : "soft"))}
+                    aria-pressed={lixMode === "hard"}
+                    className={[
+                      "border px-2 py-0.5",
+                      lixMode === "hard" ? "border-black bg-black/10" : "border-black/30",
+                    ].join(" ")}>
+                    {lixMode === "hard" ? "hårdt filter" : "blødt (sortér)"}
                   </button>
                 </div>
               </div>
@@ -524,12 +575,11 @@ const GruppeDashboard = () => {
                       </div>
                       <p className="text-xs opacity-60">
                         {list.hitcount} bøger{list.isFetching ? " (henter…)" : ""}
-                        {anyHard ? " · alder filtreret i søgningen" : ""}
-                        {readingLevel === "easy" ? " · kun lette bøger" : ""}
-                        {onlyWithoutLix
-                          ? ` · uden lix filtreret client-side (${list.droppedClientSide} fra)`
+                        {hardFiltered.length > 0
+                          ? ` · ${hardFiltered.join(" + ")} filtreret i søgningen`
                           : ""}
-                        {isReranked ? " · sorteret efter alder" : ""}
+                        {readingLevel === "easy" ? " · kun lette bøger" : ""}
+                        {sortedBy.length > 0 ? ` · sorteret efter ${sortedBy.join(" + ")}` : ""}
                       </p>
                       {list.isError ? (
                         <p className="text-red-700">Fejl ved søgning i FBI.</p>
@@ -540,7 +590,7 @@ const GruppeDashboard = () => {
                       {!list.isFetching && list.works.length === 0 ? (
                         <p className="opacity-70">
                           Ingen bøger matchede
-                          {anyHard || onlyWithoutLix ? " (prøv blødt filter)" : ""}.
+                          {hardFiltered.length > 0 ? " (prøv blødt filter)" : ""}.
                         </p>
                       ) : null}
                     </div>
@@ -617,7 +667,11 @@ const GruppeDashboard = () => {
             </div>
             <div>
               <span className="font-medium">Læseniveau:</span>{" "}
-              {readingLevel ? READING_LEVEL_LABEL[readingLevel] : "—"}
+              {readingLevel === "easy" ? "lette bøger (let at læse)" : "—"}
+            </div>
+            <div>
+              <span className="font-medium">Lix:</span> {formatRanges(lixRanges, "")} (
+              {lixMode === "hard" ? "hårdt filter" : "blødt"})
             </div>
             {queries.map((query, index) => (
               <div key={query.group.id}>

@@ -3,14 +3,15 @@
 //
 // Flow: to SEPARATE enkelt-valgs genre-spørgsmål (overordnet genre + stemning →
 // højst to genregrupper = to lister), ét fler-valgs emne-spørgsmål (→ mange
-// emner), alder som INTERVALLER og læseniveau.
+// emner), alder som INTERVALLER og læseniveau. Lix vælges i resultatet (blødt/hårdt), ikke
+// i quizzen.
 // "Det er forskelligt"/"Ved ikke"-svar har intet mapping = intet filter.
 
 export type TRange = [number, number]
 
-// Læseniveau: "easy" = generalaudience "let at læse" (CQL), "hard" = bøger UDEN
-// lix (kun client-side — vi kender ingen CQL for "felt mangler").
-export type TReadingLevel = "easy" | "hard"
+// Læseniveau: "easy" = generalaudience "let at læse" (CQL). Der findes intet
+// filter for "svære" bøger — svaret har kun en note.
+export type TReadingLevel = "easy"
 
 export type TQuizOption = {
   id: string
@@ -20,6 +21,8 @@ export type TQuizOption = {
   subjectGroupId?: string
   ageRange?: TRange
   readingLevel?: TReadingLevel
+  // Vises i stedet for mapping, når svaret ikke kan oversættes til et filter.
+  note?: string
 }
 
 export type TQuizQuestion = {
@@ -97,7 +100,12 @@ export const QUESTIONS: TQuizQuestion[] = [
     id: "laeseniveau",
     title: "Hvad passer bedst på dig?",
     options: [
-      { id: "niveau-svaer", label: "Jeg er en kæmpe læsehest", emoji: "🏇", readingLevel: "hard" },
+      {
+        id: "niveau-svaer",
+        label: "Jeg er en kæmpe læsehest",
+        emoji: "🏇",
+        note: "kan ikke finde et filter på dette",
+      },
       { id: "niveau-let", label: "Jeg er mest til lette bøger", emoji: "📘", readingLevel: "easy" },
       { id: "niveau-alle", label: "Ved ikke", emoji: "❓" },
     ],
