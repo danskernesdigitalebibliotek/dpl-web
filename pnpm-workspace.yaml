@@ -41,10 +41,9 @@ allowBuilds:
 
 # Supply chain risk mitigation: wait two days before accepting a new version of a
 # package.
-# NOTE: pnpm silently ignores minimumReleaseAge when sharedWorkspaceLockfile is
-# false (pnpm/pnpm#10008, still open as of pnpm 11.26), so this is currently NOT
-# enforced. It is kept here so the protection returns once that bug is fixed or
-# we move off split lockfiles.
+# Enforced with split lockfiles (sharedWorkspaceLockfile: false) as of pnpm 11.26.
+# To take an urgent security release earlier, add the package temporarily to
+# minimumReleaseAgeExclude.
 minimumReleaseAge: 2880
 
 # Another supply chain risk mitigation: https://pnpm.io/settings#blockexoticsubdeps
