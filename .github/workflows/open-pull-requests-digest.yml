@@ -6,9 +6,9 @@
 name: Open pull requests digest
 
 on:
-  # Monday to Friday at 08:00, 12:30 and 15:30 Danish time.
+  # Monday to Friday at 07:00, 12:30 and 15:30 Danish time.
   schedule:
-    - cron: "0 8 * * 1-5"
+    - cron: "0 7 * * 1-5"
       timezone: "Europe/Copenhagen"
     - cron: "30 12 * * 1-5"
       timezone: "Europe/Copenhagen"
