@@ -42,7 +42,7 @@ export const getPublizonManifestation = (
 
 // Read from the catalogue, because the page decides before any loan exists
 // and for either provider. Once lent, the loan's own type decides - see
-// opensIn in the service layer and ADR-004.
+// opensIn in the service layer.
 const readerTypes = [
   ManifestationMaterialType.ebook,
   ManifestationMaterialType.pictureBookOnline,
