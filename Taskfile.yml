@@ -98,6 +98,11 @@ tasks:
     cmds:
       - docker run --rm --volume "{{.TASKFILE_DIR}}:/repo:ro" --workdir /repo rhysd/actionlint:latest -color
 
+  ci:shellcheck:
+    summary: Run ShellCheck on scripts in .github/scripts
+    cmds:
+      - find .github/scripts -type f -name '*.sh' -print -exec docker run --rm --volume "{{.TASKFILE_DIR}}:/mnt:ro" koalaman/shellcheck:stable --format=gcc {} +
+
   knip:
     desc: "Run knip dead-code analysis for the projects that have it set up (go and design-system)."
     cmds:
