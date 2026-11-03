@@ -33,6 +33,14 @@ export const getLoanThresholds = (): DueThresholds => ({
   renewalWindow: goConfig("loans.renewal-window"),
 })
 
+// A Biblio loan runs to the end of a day: the UTC date of its end timestamp.
+// As a plain date it is shown and counted like a physical loan's, as in
+// dpl-react. Unparseable input is returned as is, for dueStatus to degrade.
+export const getBiblioDueDate = (end: string) => {
+  const date = new Date(end)
+  return Number.isNaN(date.getTime()) ? end : date.toISOString().slice(0, 10)
+}
+
 // Unparseable due dates yield NaN day counts and degrade to "neutral".
 export const dueStatus = (
   dueDate: string,

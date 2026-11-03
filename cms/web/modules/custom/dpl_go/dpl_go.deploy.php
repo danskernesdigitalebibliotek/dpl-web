@@ -26,7 +26,10 @@ function dpl_go_deploy_0001_create_next_go_site_configuration(): string {
 
   // Revalidate URL and preview/revalidates for development.
   if (getenv('LAGOON_ENVIRONMENT_TYPE') === 'local') {
-    $revalidate_url = sprintf('%s/cache/revalidate', 'http://host.docker.internal:3000');
+    // host.docker.internal reaches Go on the host from inside the CMS
+    // container; https matches `pnpm dev:https`, the default local Go server.
+    // GoRevalidator skips cert verification locally for its self-signed cert.
+    $revalidate_url = sprintf('%s/cache/revalidate', 'https://host.docker.internal:3000');
     $preview_secret = 'HRGx27rJGAB8Dy8mJDRd';
     $revalidate_secret = 'CeXF8E2Rd9wXZ2sswFHR';
   }

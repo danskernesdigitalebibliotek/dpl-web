@@ -64,11 +64,6 @@ tasks:
       - task dev:down
       - task dev:start
 
-  dev:test:
-    summary: Run tests
-    cmds:
-      - task dev:cli -- pnpm run chromatic
-
   dev:format:
     summary: Auto-fix linting errors
     cmds:
@@ -78,11 +73,6 @@ tasks:
     summary: Run linters
     cmds:
       - task dev:cli -- pnpm run lint
-
-  dev:chromatic:
-    summary:  Run Chromatic for visual test
-    cmds:
-      - task dev:cli -- pnpm run chromatic
 
   dev:argos:
     summary: |

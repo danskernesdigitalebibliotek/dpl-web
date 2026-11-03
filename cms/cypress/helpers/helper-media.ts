@@ -9,9 +9,17 @@ export const mediaLibrarySelect = (
   const mediaLibraryAjax = `mediaLibraryAjax${index}`;
   const viewsAjax = `viewsAjax${index}`;
 
-  cy.intercept('POST', '/node/*/**').as(mediaNodeEditAjax);
+  // Only the form's AJAX requests, so saving a node form earlier in the same
+  // test is not taken for one of them.
+  cy.intercept({
+    method: 'POST',
+    pathname: /^\/node\//,
+    query: { ajax_form: '1' },
+  }).as(mediaNodeEditAjax);
   cy.intercept('POST', '/media-library**').as(mediaLibraryAjax);
-  cy.intercept('GET', '/views/ajax?**').as(viewsAjax);
+  // Matched on the path only, as the query can carry the form's own query,
+  // such as a destination, and globs do not match slashes in it.
+  cy.intercept({ method: 'GET', pathname: '/views/ajax' }).as(viewsAjax);
 
   cy.get(selector).within(() => {
     cy.get('input[value="Add media"]').click();

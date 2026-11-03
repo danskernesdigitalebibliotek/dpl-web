@@ -90,8 +90,8 @@ Flaky patterns seen so far (this list goes stale, so verify each time):
 - **Go E2E spec timing out** while waiting for content to render, when Go CI
   was green on the previous `develop` commit and the new commits can't affect
   it.
-- **Chromatic check pending "… must be accepted as baseline"**. A human has to
-  review it in Chromatic.
+- **`argos/go` or `argos/design-system` failing with changes awaiting
+  review**. A human has to review them in Argos.
 
 Report to the user when every check is green or only needs human action.
 

@@ -1,10 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import dayjs from "dayjs";
 import {
+  calculateRoundedUpDaysUntil,
+  dateHasPassed,
   formatDate,
   formatDateDependingOnDigitalMaterial,
   formatDateTime,
-  formatDateTimeUtc
+  formatDateTimeUtc,
+  getBiblioDueDate
 } from "../../core/utils/helpers/date";
 import {
   dateFormatDash,
@@ -79,5 +82,41 @@ describe("Date helper tests", () => {
     expect(formattedNonDigitalMaterialDate).toBe(
       dayjs(date).format(dateFormatDash)
     );
+  });
+});
+
+describe("getBiblioDueDate", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it.each([
+    [
+      "an older Biblio loan, ending at the end of the UTC day",
+      "2026-11-20T23:59:59.999Z"
+    ],
+    [
+      "a Biblio loan ending at the end of the Danish winter day",
+      "2026-11-20T22:59:59.999Z"
+    ]
+  ])("gives the last day of %s", (_, end) => {
+    expect(getBiblioDueDate(end)).toBe("2026-11-20");
+  });
+
+  it("gives the last day of a loan ending at the end of the Danish summer day", () => {
+    expect(getBiblioDueDate("2026-06-20T21:59:59.999Z")).toBe("2026-06-20");
+  });
+
+  it("is due, not overdue, all through its last day", () => {
+    const dueDate = getBiblioDueDate("2026-11-20T23:59:59.999Z");
+
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-11-20T22:30:00Z"));
+    expect(formatDate(dueDate)).toBe("20-11-2026");
+    expect(calculateRoundedUpDaysUntil(dueDate)).toBeCloseTo(0);
+    expect(dateHasPassed(dueDate)).toBe(false);
+
+    vi.setSystemTime(new Date("2026-11-20T23:30:00Z"));
+    expect(dateHasPassed(dueDate)).toBe(true);
   });
 });

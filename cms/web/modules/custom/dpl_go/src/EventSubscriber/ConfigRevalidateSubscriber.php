@@ -29,7 +29,7 @@ class ConfigRevalidateSubscriber implements EventSubscriberInterface {
    * @var array<string, string[]>
    */
   protected const CONFIG_TAGS = [
-    'dpl_biblio.settings' => ['dpl-cms-config'],
+    'dpl_biblio.settings' => [GoRevalidator::CONFIG_CACHE_TAG],
   ];
 
   public function __construct(

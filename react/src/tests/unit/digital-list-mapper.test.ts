@@ -72,7 +72,7 @@ describe("Biblio list mappers", () => {
       const [loan] = mapDigitalLoanToLoanType([digitalLoan]);
 
       expect(loan.loanDate).toBe(digitalLoan.startDate);
-      expect(loan.dueDate).toBe(digitalLoan.endDate);
+      expect(loan.dueDate).toBe("2022-11-16");
       expect(loan.identifier).toBe(digitalLoan.materialId);
       expect(loan.materialItemNumber).toBe(digitalLoan.materialId);
     });

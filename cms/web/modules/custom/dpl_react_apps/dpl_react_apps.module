@@ -47,13 +47,6 @@ function dpl_react_apps_texts(): array {
     'blocked-patron-w-title' => t('Your user is blocked (w)', [], ['context' => 'Global']),
 
     // Shared across multiple apps.
-    'accept-modal-accept-button' => t("Yes, renew", [], ['context' => 'Global']),
-    'accept-modal-are-you-sure' => t("Are you sure you want to renew?", [], ['context' => 'Global']),
-    'accept-modal-aria-description' => t("accept modal aria description text", [], ['context' => 'Global']),
-    'accept-modal-aria-label' => t("accept modal aria label text", [], ['context' => 'Global']),
-    'accept-modal-body' => t("If you renew your fee will be raised", [], ['context' => 'Global']),
-    'accept-modal-cancel-button' => t("Cancel renewal", [], ['context' => 'Global']),
-    'accept-modal-header' => t("Your fee is raised", [], ['context' => 'Global']),
     'add-to-favorites-aria-label' => t('add @title to favorites list', [], ['context' => 'Global']),
     'alert-error-close' => t('Close', [], ['context' => 'React apps (Global error handling)']),
     'alert-error-message' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),

@@ -74,7 +74,7 @@ class ThemeHooks {
 
     $site_url = $this->session->get(LoginController::CALLBACK_URL_KEY);
     $site_name = $this->session->get(LoginController::SITE_NAME_KEY);
-    $site_name = $site_name ?? $this->t('my site', [], ['context' => 'BNF']);
+    $site_name = is_string($site_name) ? $site_name : $this->t('my site', [], ['context' => 'BNF']);
 
     if (!$site_url || $this->adminContext->isAdminRoute()) {
       return;
@@ -101,7 +101,7 @@ class ThemeHooks {
           '#cache' => ['max-age' => 0],
           '#label' => $this->t(
             'Import "@content_title" to @site_name',
-            ['@content_title' => $node->label(), '@site_name' => $site_name],
+            ['@content_title' => (string) $node->label(), '@site_name' => $site_name],
             ['context' => 'BNF']
           ),
           '#url' => Url::fromRoute(

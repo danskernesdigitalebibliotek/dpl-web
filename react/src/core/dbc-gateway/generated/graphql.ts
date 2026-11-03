@@ -8045,32 +8045,6 @@ export type GetBestRepresentationPidByIsbnQuery = {
   };
 };
 
-export type IntelligentFacetsQueryVariables = Exact<{
-  q: SearchQueryInput;
-  facetsLimit: Scalars["Int"]["input"];
-  valuesLimit: Scalars["Int"]["input"];
-  filters: SearchFiltersInput;
-}>;
-
-export type IntelligentFacetsQuery = {
-  __typename?: "Query";
-  search: {
-    __typename?: "SearchResponse";
-    intelligentFacets: Array<{
-      __typename?: "FacetResult";
-      name: string;
-      type: FacetFieldEnum;
-      values: Array<{
-        __typename?: "FacetValue";
-        key: string;
-        term: string;
-        score?: number | null;
-        traceId: string;
-      }>;
-    }>;
-  };
-};
-
 export type WorkRecommendationsQueryVariables = Exact<{
   pid: Scalars["String"]["input"];
   limit: Scalars["Int"]["input"];
@@ -13854,49 +13828,6 @@ export const useGetBestRepresentationPidByIsbnQuery = <
   });
 };
 
-export const IntelligentFacetsDocument = new TypedDocumentString(`
-    query intelligentFacets($q: SearchQueryInput!, $facetsLimit: Int!, $valuesLimit: Int!, $filters: SearchFiltersInput!) {
-  search(q: $q, filters: $filters) {
-    intelligentFacets(limit: $facetsLimit) {
-      name
-      type
-      values(limit: $valuesLimit) {
-        key
-        term
-        score
-        traceId
-      }
-    }
-  }
-}
-    `);
-
-export const useIntelligentFacetsQuery = <
-  TData = IntelligentFacetsQuery,
-  TError = unknown
->(
-  variables: IntelligentFacetsQueryVariables,
-  options?: Omit<
-    UseQueryOptions<IntelligentFacetsQuery, TError, TData>,
-    "queryKey"
-  > & {
-    queryKey?: UseQueryOptions<
-      IntelligentFacetsQuery,
-      TError,
-      TData
-    >["queryKey"];
-  }
-) => {
-  return useQuery<IntelligentFacetsQuery, TError, TData>({
-    queryKey: ["intelligentFacets", variables],
-    queryFn: fetcher<IntelligentFacetsQuery, IntelligentFacetsQueryVariables>(
-      IntelligentFacetsDocument,
-      variables
-    ),
-    ...options
-  });
-};
-
 export const WorkRecommendationsDocument = new TypedDocumentString(`
     query WorkRecommendations($pid: String!, $limit: Int!) {
   recommend(pid: $pid, limit: $limit) {
@@ -14004,7 +13935,6 @@ export const operationNames = {
     suggestionsFromQueryString: "suggestionsFromQueryString" as const,
     GetCoversByPids: "GetCoversByPids" as const,
     GetBestRepresentationPidByIsbn: "GetBestRepresentationPidByIsbn" as const,
-    intelligentFacets: "intelligentFacets" as const,
     WorkRecommendations: "WorkRecommendations" as const
   },
   Mutation: {

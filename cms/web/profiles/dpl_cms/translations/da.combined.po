@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-10-27 12:01+0100\n"
-"PO-Revision-Date: 2026-10-27 12:01+0100\n"
+"POT-Creation-Date: 2026-11-02 19:03+0100\n"
+"PO-Revision-Date: 2026-11-02 19:03+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-10-27 12:01+0100\n"
-"PO-Revision-Date: 2026-10-27 12:01+0100\n"
+"POT-Creation-Date: 2026-11-02 19:04+0100\n"
+"PO-Revision-Date: 2026-11-02 19:04+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1181,6 +1181,15 @@ msgstr ""
 msgid "<h2>No registrations found</h2>"
 msgstr ""
 
+msgctxt "dpl_go"
+msgid ""
+"<hr><h3>Go front-end</h3>\n"
+"         <p>The Go front-end keeps its own cache of the content and "
+"configuration it reads from the CMS. A change here normally reaches Go on "
+"its own within a few minutes. Use this button to drop that cache right away."
+"</p>"
+msgstr ""
+
 msgid ""
 "<p class=\"fieldgroup-help\">Fields can be dragged into groups with "
 "unlimited nesting. Each fieldgroup format comes with a configuration form, "
@@ -1521,6 +1530,17 @@ msgid "@name field is required."
 msgstr "Feltet @name er påkrævet."
 
 msgid "@name field must be blank."
+msgstr ""
+
+msgid ""
+"@number record(s) could not be moved from the old "
+"<code>openid_connect_authmap</code> table into the <code>authmap</code> "
+"table, usually because another account is already mapped to the same "
+"identifier for that client. Any account whose record was not migrated "
+"<strong>cannot authenticate</strong> through OpenID Connect until this is "
+"resolved. Review the OpenID Connect log messages to identify them, migrate "
+"or remove the conflicting records, then drop the "
+"<code>openid_connect_authmap</code> table."
 msgstr ""
 
 msgid "@purger not configured."
@@ -2864,7 +2884,7 @@ msgid "Add a tag you want to include"
 msgstr ""
 
 msgid "Add a text body paragraph describing the event."
-msgstr ""
+msgstr "Tilføj en brødtekst paragraph der beskriver arrangementet."
 
 msgid ""
 "Add an edit button to the Media Library widget when an item is selected."
@@ -4301,10 +4321,6 @@ msgstr ""
 msgid "Are you sure you want to remove this paragraph?"
 msgstr ""
 
-msgctxt "Global"
-msgid "Are you sure you want to renew?"
-msgstr "Er du sikker på at du vil forny?"
-
 msgid "Are you sure you want to revert %name to its default values?"
 msgstr ""
 "Er du sikker på, at du vil tilbagerulle %name til dens standardværdier?"
@@ -4878,10 +4894,6 @@ msgstr "Tilgængelig"
 
 msgid "Available countries"
 msgstr "Tilgængelige lande"
-
-msgctxt "Search Result"
-msgid "Available filters"
-msgstr "Tilgængelige filtre"
 
 msgctxt "Global"
 msgid "Available in @count days"
@@ -5803,10 +5815,6 @@ msgctxt "DPL Opening Hours Editor"
 msgid "Cancel"
 msgstr "Annullér"
 
-msgctxt "Fees list"
-msgid "Cancel"
-msgstr "Annullér"
-
 msgctxt "Global"
 msgid "Cancel"
 msgstr "Annullér"
@@ -5827,10 +5835,6 @@ msgstr "Fortryd alle ændringer"
 msgctxt "Global"
 msgid "Cancel pause"
 msgstr "Fjern pause"
-
-msgctxt "Global"
-msgid "Cancel renewal"
-msgstr "Forny ikke"
 
 msgctxt "Global"
 msgid "Cancel reservation"
@@ -6282,7 +6286,14 @@ msgstr "Klasser for paragpraphs og nodes"
 msgid "Classes of the fieldgroup"
 msgstr ""
 
+msgid "Clean-up pending"
+msgstr ""
+
 msgid "Cleanup orphaned events entities"
+msgstr ""
+
+msgctxt "dpl_go"
+msgid "Clear Go cache"
 msgstr ""
 
 msgctxt "Search Result"
@@ -6434,10 +6445,6 @@ msgstr "Luk modal for udgave-skift"
 msgctxt "React apps (Global error handling)"
 msgid "Close error message"
 msgstr "Luk fejlbesked"
-
-msgctxt "Search Result"
-msgid "Close facet browser modal"
-msgstr "Luk pop-up"
 
 msgctxt "Fees list (Aria)"
 msgid "Close fee details modal"
@@ -7295,6 +7302,13 @@ msgid "Could not migrate data for address search. @message"
 msgstr ""
 
 msgid ""
+"Could not move the openid_connect_authmap entry for UID @uid / client "
+"@client / sub @sub into the authmap table: another account is already mapped "
+"to that identifier for this client. The record has been left in "
+"openid_connect_authmap."
+msgstr ""
+
+msgid ""
 "Could not prepare thumbnail destination directory @dir for VideoTool media."
 msgstr ""
 
@@ -7305,6 +7319,10 @@ msgstr ""
 "Delingstjenesten."
 
 msgid "Could not publish node as part of BNF export. @message"
+msgstr ""
+
+msgctxt "dpl_go"
+msgid "Could not reach Go to clear its cache. See the logs for details."
 msgstr ""
 
 msgid "Could not render related content list. Exception: @exception"
@@ -8199,10 +8217,6 @@ msgstr "Dag i måned"
 msgid "Day of the Month"
 msgstr "Dag i måneden"
 
-msgid "Days"
-msgstr "Dage"
-
-msgctxt "Fees list"
 msgid "Days"
 msgstr "Dage"
 
@@ -10203,6 +10217,13 @@ msgstr ""
 msgid "Enable the Token module to allow token replacement in this field."
 msgstr "Aktiver Token-modulet for at tillade token-erstatning i dette felt."
 
+msgid ""
+"Enable this if you would like roles to be reset on every login. When this is "
+"enabled, upon login, if the groups returned by the provider are empty and "
+"any role mappings are defined, then all Drupal roles will be cleared. This "
+"setting has a default of enabled to maintain backward compatibility."
+msgstr ""
+
 msgctxt "field.field.paragraph.user_registration_item.field_display_in_navigation:description"
 msgid ""
 "Enable this option to display a button at the top of the page for easier "
@@ -11068,7 +11089,7 @@ msgstr "Arrangementsindstillinger"
 
 msgctxt "Validation"
 msgid "Event text body"
-msgstr ""
+msgstr "Brødtekst for arrangementet"
 
 msgctxt "views.view.event_instance_list:display:default:display_options:fields:title:label"
 msgid "Event title"
@@ -11381,6 +11402,11 @@ msgid "Failed in setting the admin lang for user 1"
 msgstr ""
 
 msgid "Failed to create user account for @email: @violations"
+msgstr ""
+
+msgid ""
+"Failed to delete the old openid_connect_authmap entry for UID @uid / client "
+"@client: @message"
 msgstr ""
 
 msgctxt "translation handling"
@@ -12255,6 +12281,9 @@ msgstr "Forbudt"
 msgid "Force replace"
 msgstr "Gennemtving erstat"
 
+msgid "Force reset role mappings"
+msgstr ""
+
 msgid "Form"
 msgstr "Formular"
 
@@ -12673,6 +12702,13 @@ msgstr ""
 msgid "Go back to your library site, and press import at:"
 msgstr "Gå tilbage til dit site og tryk på hent:"
 
+msgid "Go cache cleared manually."
+msgstr ""
+
+msgctxt "dpl_go"
+msgid "Go cache cleared."
+msgstr ""
+
 msgctxt "Opening Hours sidebar"
 msgid "Go to @branchName"
 msgstr "Gå til @branchName"
@@ -12684,10 +12720,6 @@ msgstr "Gå til detaljer for @label"
 msgctxt "Work Page"
 msgid "Go to @source"
 msgstr "Gå til @source"
-
-msgctxt "Fees list"
-msgid "Go to Mit Betalingsoverblik"
-msgstr "Gå til \"Mit betalingsoverblik\""
 
 msgctxt "Favorites list material component"
 msgid "Go to My list"
@@ -13148,10 +13180,6 @@ msgstr "Hreflang per sprog"
 msgid "Html id of the fieldgroup"
 msgstr ""
 
-msgctxt "Fees list"
-msgid "I accept the"
-msgstr "Jeg godkender dette"
-
 msgctxt "DPL Opening Hours Editor"
 msgid "I'm sure"
 msgstr "Jeg er sikker"
@@ -13539,7 +13567,7 @@ msgstr ""
 
 msgctxt "Patron menu"
 msgid "If you continue, you will be logged out of Unilogin."
-msgstr ""
+msgstr "Hvis du forsætter, bliver du logget ud af Unilogin."
 
 msgctxt "DPL admin UX"
 msgid ""
@@ -13562,12 +13590,6 @@ msgid ""
 msgstr ""
 "Hvis du trykker på knappen ”Indsæt værdier fra serien”, udfyldes denne "
 "forekomst med alt indhold fra serien."
-
-msgctxt "Global"
-msgid "If you renew your fee will be raised"
-msgstr ""
-"Hvis du kun fornyer nogle af dine lån, risikerer du at dit gebyr bliver "
-"forhøjet, fordi dine lån opsplittes i flere"
 
 msgid ""
 "If you set this for sub‐admins, then the sub‐admin can choose a cancellation "
@@ -14626,7 +14648,7 @@ msgstr "Sidst opdateret indhold"
 
 msgctxt "Digital session"
 msgid "Last used @date"
-msgstr ""
+msgstr "Senest brugt @date"
 
 msgid "Last »"
 msgstr "Sidste »"
@@ -16298,10 +16320,6 @@ msgctxt "Work Page"
 msgid "Modal for Order digital copy"
 msgstr "Pop-up til bestilling af digital kopi"
 
-msgctxt "Search Result"
-msgid "Modal for facet browser"
-msgstr "Pop-up med facetbrowser"
-
 msgctxt "Player modal"
 msgid "Modal for player"
 msgstr "Afspiller modal"
@@ -16427,9 +16445,6 @@ msgstr "Flere"
 
 msgid "Multiple Fields Remove Button"
 msgstr "Fjern-knap til flere felter"
-
-msgid "Multiple records found for openid_connect Client with Error @message"
-msgstr ""
 
 msgid ""
 "Multiple values may be used, separated by `:delimiter`. Note: Tokens that "
@@ -17012,6 +17027,9 @@ msgstr "Norton Safe Web"
 
 msgctxt "language.entity.zxx:label"
 msgid "Not applicable"
+msgstr ""
+
+msgid "Not completed"
 msgstr ""
 
 msgid "Not connected"
@@ -17713,7 +17731,7 @@ msgstr "Åben registrering"
 
 msgctxt "Digital session"
 msgid "Open again"
-msgstr ""
+msgstr "Prøv igen"
 
 msgid "Open by default"
 msgstr ""
@@ -17774,6 +17792,9 @@ msgstr ""
 
 msgid "OpenID Connect Settings"
 msgstr "OpenID Connect opsætning"
+
+msgid "OpenID Connect authmap migration"
+msgstr ""
 
 msgid "OpenID Connect client"
 msgstr "OpenID Connect client"
@@ -18237,12 +18258,6 @@ msgid ""
 "in a section for communication or navigation."
 msgstr ""
 
-msgctxt "Fees list"
-msgid "Paid fees can take up to 24 hours to registrer."
-msgstr ""
-"Betalte gebyrer og erstatninger kan tage op til 72 timer om at blive "
-"registreret."
-
 msgctxt "core.entity_form_display.eventinstance.default.default:content:field_event_paragraphs:settings:title"
 msgid "Paragraph"
 msgstr ""
@@ -18578,10 +18593,6 @@ msgid ""
 msgstr ""
 "Sæt dine reserveringer på fysiske materialer på pause i god tid, da "
 "reserveringer som allerede er i proces ikke kan sættes på hold."
-
-msgctxt "Fees list"
-msgid "Pay"
-msgstr "Betal"
 
 msgctxt "Global"
 msgid "Pay your fees here"
@@ -19266,6 +19277,9 @@ msgstr ""
 
 msgid "Provided by"
 msgstr "Stillet til rådighed af"
+
+msgid "Provider slug"
+msgstr ""
 
 msgid "Provider: @title"
 msgstr "Udbyder: @title"
@@ -20027,6 +20041,9 @@ msgstr ""
 msgid "Redirect URL"
 msgstr "Omdirigér til URL"
 
+msgid "Redirect URL Slug"
+msgstr ""
+
 msgctxt "Patron registration settings form"
 msgid "Redirect on create"
 msgstr "Side som låner omdirigeres til ved oprettelse"
@@ -20727,6 +20744,9 @@ msgstr ""
 msgctxt "DPL admin"
 msgid "Reset password"
 msgstr "Gendan adgangskode"
+
+msgid "Reset role mappings if no groups are passed."
+msgstr ""
 
 msgid "Reset sort label"
 msgstr ""
@@ -21817,10 +21837,6 @@ msgctxt "Library Agency Configuration"
 msgid ""
 "Selected branches will not be available as pickup locations for reservations."
 msgstr "Valgte filialer vil ikke kunne vælges som afhentningssted."
-
-msgctxt "Search Result"
-msgid "Selected filters"
-msgstr "Valgte filtre"
 
 msgid "Selecting reference type"
 msgstr "Valg af referencetype"
@@ -25588,8 +25604,20 @@ msgstr ""
 msgid "The object representing the scheduled @entity_type"
 msgstr "Objektet, der repræsenterer den planlagte @entity_type"
 
+msgid ""
+"The old <code>openid_connect_authmap</code> table is empty but still "
+"present. Its records have all been migrated or removed, so the table can now "
+"be dropped."
+msgstr ""
+
 msgid "The opacity value."
 msgstr "The opacity value."
+
+msgid ""
+"The openid_connect_authmap entry for UID @uid / client @client reached the "
+"authmap table, but could not be deleted from openid_connect_authmap. The "
+"account can authenticate; only the old record needs removing."
+msgstr ""
 
 msgid "The optional description of the content type."
 msgstr "Indholdstypens valgfri beskrivelse."
@@ -25707,6 +25735,17 @@ msgctxt "Library Agency Configuration"
 msgid "The profile to use when searching for materials."
 msgstr "Profil som anvendes til søgning efter materialer"
 
+msgid "The provider slug %slug can not be used in a URL."
+msgstr ""
+
+msgid ""
+"The provider slug can only contain letters, numbers, dots, hyphens and "
+"underscores."
+msgstr ""
+
+msgid "The provider slug must be unique."
+msgstr ""
+
 msgid "The publishing date to be used by Scheduler."
 msgstr "Publiceringsdatoen, der skal bruges af Scheduler."
 
@@ -25779,12 +25818,6 @@ msgstr "The roles of the actor(s)."
 
 msgid "The root term of the taxonomy term."
 msgstr "Roden for en taksonomiterm."
-
-msgid "The row has been moved down. Do not forget to save your changes."
-msgstr ""
-
-msgid "The row has been moved up. Do not forget to save your changes."
-msgstr ""
 
 msgid "The scheduled node"
 msgstr "Den planlagte node"
@@ -26076,7 +26109,7 @@ msgstr "Timeout for anmodningen i sekunder."
 
 msgctxt "Digital session"
 msgid "The title could not be opened. Try again later."
-msgstr ""
+msgstr "Titlen kan ikke åbnes. Prøv igen senere."
 
 msgctxt "field.field.paragraph.material_grid_automatic.field_material_grid_title:description"
 msgid ""
@@ -26672,7 +26705,7 @@ msgstr ""
 
 msgctxt "Digital session"
 msgid "This device is no longer registered to your account."
-msgstr ""
+msgstr "Enheden er ikke længere registreret til din bruger."
 
 msgid "This entity (%type: %id) cannot be referenced."
 msgstr "Der kan ikke henvises til denne entity (%type: %id)."
@@ -28301,10 +28334,6 @@ msgstr "Ulåst. Alle kan nu redigere denne indholdsoversættelse."
 msgid "Unlocked. Anyone can now edit this content."
 msgstr "Ulåst. Alle kan nu redigere dette indhold."
 
-msgctxt "Fees list"
-msgid "Unpaid fees post 27/10 2020"
-msgstr "Ubetalte gebyrer efter 27/10 2020"
-
 msgctxt "dpl_service_message"
 msgid "Unpublish"
 msgstr "Træk tilbage"
@@ -29928,10 +29957,6 @@ msgstr ""
 msgid "Yes"
 msgstr "Ja"
 
-msgctxt "Global"
-msgid "Yes, renew"
-msgstr "Ja, forny"
-
 msgid ""
 "You are about to revert the custom meta tags for the %display_name display "
 "on the %view_name view. This action cannot be undone."
@@ -30042,6 +30067,8 @@ msgid ""
 "You can read and listen on up to @limit devices, and they are all in use. "
 "Remove one to continue here."
 msgstr ""
+"Du kan læse og lytte på maksimum @limit enheder ad gangen og alle enheder er "
+"i brug. Fjern en af enhederne for at fortsætte."
 
 msgid ""
 "You can read more in the <a href=\"@readme\">readme</a> file or our <a "
@@ -30094,12 +30121,6 @@ msgid ""
 msgstr ""
 "Du kan ikke nedarve, hvis kilde- og destinationsenhederne og bundterne er de "
 "samme."
-
-msgid "You cannot move this row down because it is already the last."
-msgstr ""
-
-msgid "You cannot move this row up because it is already the first."
-msgstr ""
 
 msgctxt "Global"
 msgid "You cannot regret this action"
@@ -30285,13 +30306,15 @@ msgstr ""
 
 msgctxt "Digital session"
 msgid "You opened this title in another tab of this browser."
-msgstr ""
+msgstr "Du har denne titel åben i en anden fane i din browser."
 
 msgctxt "Digital session"
 msgid ""
 "You opened this title on another device. You can read or listen on one "
 "device at a time."
 msgstr ""
+"Du har denne titel åben på en anden enhed. Du kan kun lytte til titlen på én "
+"enhed ad gangen."
 
 msgctxt "Dashboard"
 msgid "You owe in total"
@@ -30325,10 +30348,6 @@ msgctxt "Loan list"
 msgid "You will be charged a fee, when the item is returned"
 msgstr "Læs om gebyrer ved overskredne materialer"
 
-msgctxt "Fees list"
-msgid "You will be redirected to Mit Betalingsoverblik."
-msgstr "Du vil blive sendt videre til \"Mit Betalingsoverblik\""
-
 msgctxt "Create patron"
 msgid ""
 "You will be sent to the Adgangsplatformen to log in again in @seconds "
@@ -30357,10 +30376,6 @@ msgctxt "Favorites list"
 msgid "Your favorites list is empty"
 msgstr "Din huskeliste er tom"
 
-msgctxt "Global"
-msgid "Your fee is raised"
-msgstr "Dit gebyr kan blive forhøjet"
-
 msgctxt "Work Page"
 msgid "Your library has reached the limit for the number of loans this month"
 msgstr "Dit bibliotek har nået grænsen for antal udlån i denne måned"
@@ -30371,7 +30386,7 @@ msgstr "Huskeliste"
 
 msgctxt "Digital session"
 msgid "Your loan of this title has expired, so it was closed."
-msgstr ""
+msgstr "Dit udlån af titlen er udløbet, og derfor blev det lukket ned."
 
 msgctxt "Loan list"
 msgid "Your loans"
@@ -30815,14 +30830,6 @@ msgstr ""
 msgctxt "metatag.metatag_defaults.user:tags:canonical_url"
 msgid "[user:url]"
 msgstr ""
-
-msgctxt "Global"
-msgid "accept modal aria description text"
-msgstr "Accepter"
-
-msgctxt "Global"
-msgid "accept modal aria label text"
-msgstr "Accepter"
 
 msgctxt "advanced search"
 msgid "accessibility"

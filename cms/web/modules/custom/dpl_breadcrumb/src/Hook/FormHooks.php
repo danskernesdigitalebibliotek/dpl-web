@@ -110,7 +110,7 @@ class FormHooks {
           <br>You cannot delete this content until you replace the page in the "Content to link to" field in <strong>"@breadcrumb_title"</strong>.
           <br><strong><a href="@breadcrumb_edit_url" target="_blank">Edit the breadcrumb "@breadcrumb_title"</a></strong></p>',
         [
-          '@title' => $node->label(),
+          '@title' => (string) $node->label(),
           '@breadcrumb_title' => $breadcrumb_item->getName(),
           '@breadcrumb_edit_url' => Url::fromRoute('entity.taxonomy_term.edit_form', ['taxonomy_term' => $breadcrumb_item->id()])->toString(),
         ],
