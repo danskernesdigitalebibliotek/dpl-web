@@ -2,12 +2,10 @@
 
 namespace Drupal\dpl_po\Commands;
 
-use Drupal\Component\Gettext\PoHeader;
 use Drupal\Component\Gettext\PoItem;
 use Drupal\Component\Gettext\PoStreamReader;
 use Drupal\Component\Gettext\PoStreamWriter;
 use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\File\Exception\FileException;
@@ -15,6 +13,7 @@ use Drupal\Core\File\Exception\InvalidStreamWrapperException;
 use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\dpl_po\DplPoHeader;
 use Drupal\dpl_po\Services\CtpConfigManager;
 use Drupal\locale\File\LocaleFile;
 use Drupal\locale\LocaleImportBatch;
@@ -51,7 +50,6 @@ class DplPoCommands extends DrushCommands {
    * Class constructor.
    */
   public function __construct(
-    protected ConfigFactoryInterface $configFactory,
     protected CtpConfigManager $cteiConfigManager,
     protected FileSystemInterface $fileSystem,
     protected ModuleHandlerInterface $moduleHandler,
@@ -364,9 +362,7 @@ class DplPoCommands extends DrushCommands {
         return;
       }
 
-      $header = new PoHeader($langcode);
-      $header->setProjectName($this->configFactory->get('system.site')->get('name'));
-      $header->setLanguageName($langcode);
+      $header = new DplPoHeader($langcode);
 
       $writer = new PoStreamWriter();
       $writer->setURI($tmp_filename);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\dpl_po\Unit;
 
 use Drupal\Tests\UnitTestCase;
+use Drupal\dpl_po\DplPoHeader;
 use Drupal\dpl_po\PoFileBuilder;
 use Psr\Log\NullLogger;
 
@@ -68,17 +69,23 @@ class PoFileBuilderTest extends UnitTestCase {
 
   /**
    * The rendered file is a translation, not the template potx builds.
+   *
+   * Potx' header is replaced by the one we give, so none of the template
+   * markup in it survives - including the time of the run, which would make
+   * every scan a change.
    */
-  public function testRenderedFileDropsPotxTemplateMarkup(): void {
+  public function testRenderedFileReplacesPotxTemplateMarkup(): void {
     $built = [
-      'header' => "# --VERSIONS--\n#\n#, fuzzy\nmsgid \"\"\nmsgstr \"\"\n\n",
+      'header' => "# --VERSIONS--\n#\n#, fuzzy\nmsgid \"\"\nmsgstr \"\"\n\"POT-Creation-Date: 2026-11-02 14:41+0100\\n\"\n\n",
       'strings' => "#: some/file.php:12\nmsgid \"Hello\"\nmsgstr \"Hej\"\n\n",
     ];
 
-    $rendered = $this->builder->render($built);
+    $rendered = $this->builder->render($built, new DplPoHeader('da'));
 
+    $this->assertStringStartsWith((string) new DplPoHeader('da'), $rendered);
     $this->assertStringNotContainsString('--VERSIONS--', $rendered);
     $this->assertStringNotContainsString('#, fuzzy', $rendered);
+    $this->assertStringNotContainsString('POT-Creation-Date', $rendered);
     $this->assertStringNotContainsString('#: some/file.php', $rendered);
     $this->assertStringContainsString("msgid \"Hello\"\nmsgstr \"Hej\"", $rendered);
   }
