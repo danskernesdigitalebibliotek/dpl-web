@@ -282,12 +282,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
                     the new one — and until availability says whether the
                     button belongs here at all. */}
                 {isEditionPickerLoading ? (
-                  <div
-                    role="status"
-                    aria-label="Henter udgaver"
-                    className="bg-background-skeleton h-12 w-full animate-pulse rounded-full
-                      lg:max-w-80 lg:min-w-72"
-                  />
+                  <></>
                 ) : (
                   <button
                     type="button"
