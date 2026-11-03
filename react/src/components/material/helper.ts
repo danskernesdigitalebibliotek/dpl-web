@@ -2,7 +2,7 @@ import { AccessTypeCodeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { hasCorrectMaterialType, isArticle } from "./material-buttons/helper";
-import { DigitalLoanEdition } from "../../core/utils/helpers/digital-loan-edition";
+import { DigitalLoanableManifestation } from "../../core/utils/helpers/digital-loanable-manifestation";
 
 export const isPhysical = (manifestations: Manifestation[]) => {
   return manifestations.some((manifestation) => {
@@ -32,9 +32,9 @@ export const isPeriodical = (manifestations: Manifestation[]) => {
 
 export const shouldShowMaterialAvailabilityText = (
   manifestations: Manifestation[],
-  edition: DigitalLoanEdition | null
+  loanableManifestation: DigitalLoanableManifestation | null
 ) => {
-  const shouldShowOnlineAvailability = edition !== null;
+  const shouldShowOnlineAvailability = loanableManifestation !== null;
 
   const shouldShowPhysicalAvailability =
     isPhysical(manifestations) &&

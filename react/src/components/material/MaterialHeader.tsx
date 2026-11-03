@@ -93,10 +93,10 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
   }, [manifestationMaterialTypes]);
 
   const buttonsType = resolveMaterialButtonsType(selectedManifestations);
-  // The edition the buttons lend, so the availability text asks about it too.
-  const edition =
+  // The manifestation the buttons lend, so the availability text asks about it too.
+  const loanableManifestation =
     buttonsType?.type === "online" && buttonsType.online.type === "internal"
-      ? buttonsType.online.edition
+      ? buttonsType.online.loanableManifestation
       : null;
 
   const materialUnavailableNotice = (
@@ -178,12 +178,12 @@ const MaterialHeader: React.FC<MaterialHeaderProps> = ({
               */}
               {shouldShowMaterialAvailabilityText(
                 selectedManifestations,
-                edition
+                loanableManifestation
               ) &&
                 isAvailable && (
                   <MaterialAvailabilityText
                     manifestations={selectedManifestations}
-                    edition={edition}
+                    loanableManifestation={loanableManifestation}
                   />
                 )}
               {children}

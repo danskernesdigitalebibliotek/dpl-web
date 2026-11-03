@@ -26,20 +26,23 @@ import { useUrls } from "../../../../core/utils/url";
 import { SortOption } from "../../../../core/advanced-search/types";
 import Link from "../../../atoms/links/Link";
 import {
-  DigitalLoanEdition,
+  DigitalLoanableManifestation,
   opensInPlayer
-} from "../../../../core/utils/helpers/digital-loan-edition";
+} from "../../../../core/utils/helpers/digital-loanable-manifestation";
 
 type MaterialAvailabilityTextOnlineProps = {
   /** Shared with the loan buttons so both ask the providers about the same
-   * edition, and the quota shown is the one its reader or player draws on. */
-  edition: Pick<DigitalLoanEdition, "identifier" | "opensIn">;
+   * manifestation, and the quota shown is the one its reader or player draws on. */
+  loanableManifestation: Pick<
+    DigitalLoanableManifestation,
+    "identifier" | "opensIn"
+  >;
 };
 
 const MaterialAvailabilityTextOnline: React.FC<
   MaterialAvailabilityTextOnlineProps
-> = ({ edition }) => {
-  const { identifier } = edition;
+> = ({ loanableManifestation }) => {
+  const { identifier } = loanableManifestation;
   const u = useUrls();
 
   const getAlwaysLoanableDigitalTitlesUrl = (
@@ -138,7 +141,7 @@ const MaterialAvailabilityTextOnline: React.FC<
     return null;
   }
 
-  if (opensInPlayer(edition)) {
+  if (opensInPlayer(loanableManifestation)) {
     if (!hasValue(audioQuota.current) || !hasValue(audioQuota.limit)) {
       return null;
     }

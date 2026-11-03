@@ -4,9 +4,9 @@ import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
 import {
-  getLendableEdition,
+  getPublizonManifestation,
   getPublizonIdentifier
-} from "../../core/utils/helpers/digital-loan-edition";
+} from "../../core/utils/helpers/digital-loanable-manifestation";
 
 const manifestation = (
   pid: string,
@@ -40,20 +40,20 @@ const newEbook = manifestation(
   "2025"
 );
 
-describe("getLendableEdition", () => {
+describe("getPublizonManifestation", () => {
   it("prefers the newest of the loanable editions", () => {
     // Several editions of one material type can be loanable, and the reader
     // expects the newest - not whichever the data happens to list first.
-    expect(getLendableEdition([oldEbook, newEbook])?.manifestation.pid).toBe(
-      "pid:new-ebook"
-    );
-    expect(getLendableEdition([newEbook, oldEbook])?.manifestation.pid).toBe(
-      "pid:new-ebook"
-    );
+    expect(
+      getPublizonManifestation([oldEbook, newEbook])?.manifestation.pid
+    ).toBe("pid:new-ebook");
+    expect(
+      getPublizonManifestation([newEbook, oldEbook])?.manifestation.pid
+    ).toBe("pid:new-ebook");
   });
 
   it("carries the id of the edition it picked", () => {
-    expect(getLendableEdition([oldEbook, newEbook])?.identifier).toEqual({
+    expect(getPublizonManifestation([oldEbook, newEbook])?.identifier).toEqual({
       type: IdentifierTypeEnum.Publizon,
       value: "9788727272894"
     });
@@ -61,7 +61,7 @@ describe("getLendableEdition", () => {
 
   it("leaves the caller's list in the order it was given", () => {
     const manifestations = [oldEbook, newEbook];
-    getLendableEdition(manifestations);
+    getPublizonManifestation(manifestations);
     expect(manifestations.map(({ pid }) => pid)).toEqual([
       "pid:old-ebook",
       "pid:new-ebook"
@@ -70,12 +70,14 @@ describe("getLendableEdition", () => {
 
   it("skips an edition without a PUBLIZON identifier", () => {
     // The deselected PDF is listed first but is not loanable.
-    expect(getLendableEdition([pdf, epub])?.manifestation.pid).toBe("pid:epub");
+    expect(getPublizonManifestation([pdf, epub])?.manifestation.pid).toBe(
+      "pid:epub"
+    );
   });
 
   it("returns null when no edition can be lent", () => {
-    expect(getLendableEdition([pdf])).toBeNull();
-    expect(getLendableEdition([])).toBeNull();
+    expect(getPublizonManifestation([pdf])).toBeNull();
+    expect(getPublizonManifestation([])).toBeNull();
   });
 });
 
@@ -119,7 +121,7 @@ const ebook2025 = manifestation(
 
 describe("onlineInternalModalId", () => {
   const modalIdFor = (manifestations: Manifestation[]) => {
-    const lendable = getLendableEdition(manifestations);
+    const lendable = getPublizonManifestation(manifestations);
     return lendable && onlineInternalModalId(lendable);
   };
 

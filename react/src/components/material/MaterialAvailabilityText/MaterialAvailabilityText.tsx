@@ -11,17 +11,17 @@ import MaterialAvailabilityTextPhysical from "./physical/MaterialAvailabilityTex
 import useReservableFromAnotherLibrary from "../../../core/utils/useReservableFromAnotherLibrary";
 import MaterialAvailabilityTextParagraph from "./generic/MaterialAvailabilityTextParagraph";
 import { useText } from "../../../core/utils/text";
-import { DigitalLoanEdition } from "../../../core/utils/helpers/digital-loan-edition";
+import { DigitalLoanableManifestation } from "../../../core/utils/helpers/digital-loanable-manifestation";
 
 interface Props {
   manifestations: Manifestation[];
-  /** The edition the header buttons lend, if they lend one. */
-  edition: DigitalLoanEdition | null;
+  /** The manifestation the header buttons lend, if they lend one. */
+  loanableManifestation: DigitalLoanableManifestation | null;
 }
 
 const MaterialAvailabilityText: React.FC<Props> = ({
   manifestations,
-  edition
+  loanableManifestation
 }) => {
   const t = useText();
   const materialType = getMaterialType(manifestations);
@@ -44,12 +44,16 @@ const MaterialAvailabilityText: React.FC<Props> = ({
     hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) &&
     materialType
   ) {
-    // Text and buttons ask about the same edition and share one request.
+    // Text and buttons ask about the same manifestation and share one request.
     // Nothing to lend means no text: the buttons cannot lend it either.
-    if (!edition) {
+    if (!loanableManifestation) {
       return null;
     }
-    return <MaterialAvailabilityTextOnline edition={edition} />;
+    return (
+      <MaterialAvailabilityTextOnline
+        loanableManifestation={loanableManifestation}
+      />
+    );
   }
 
   return null;

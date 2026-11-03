@@ -39,7 +39,7 @@ import { Manifestation, Work } from "../../core/utils/types/entities";
 import { FaustId } from "../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import vitestData from "./__vitest_data__/helper";
-import { LendableEdition } from "../../core/utils/helpers/digital-loan-edition";
+import { PublizonManifestation } from "../../core/utils/helpers/digital-loanable-manifestation";
 
 export const getWorkManifestation = (
   work: Work,
@@ -462,7 +462,9 @@ export const reservationModalId = (faustIds: FaustId[]) => {
 
 // Keyed on the one edition the loan is for, so an opener that covers several
 // editions and the modal rendered for a single one agree on the id.
-export const onlineInternalModalId = ({ manifestation }: LendableEdition) =>
+export const onlineInternalModalId = ({
+  manifestation
+}: PublizonManifestation) =>
   constructModalId("online-internal-modal", getAllFaustIds([manifestation]));
 
 export const editionSwitchModalId = () => {

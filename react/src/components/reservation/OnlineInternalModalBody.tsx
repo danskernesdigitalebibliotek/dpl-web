@@ -15,15 +15,15 @@ import { ApiResult, CreateLoanResult } from "../../core/publizon/model";
 import { formatDate } from "../../core/utils/helpers/date";
 import { getPublizonErrorStatusText } from "../../core/utils/helpers/publizon";
 import { WorkId } from "../../core/utils/types/ids";
-import { DigitalLoanEdition } from "../../core/utils/helpers/digital-loan-edition";
+import { DigitalLoanableManifestation } from "../../core/utils/helpers/digital-loanable-manifestation";
 
 type OnlineInternalModalBodyProps = {
-  edition: DigitalLoanEdition;
+  loanableManifestation: DigitalLoanableManifestation;
   workId: WorkId;
 };
 
 const OnlineInternalModalBody = ({
-  edition,
+  loanableManifestation,
   workId
 }: OnlineInternalModalBodyProps) => {
   const t = useText();
@@ -36,12 +36,12 @@ const OnlineInternalModalBody = ({
   const [reservationOrLoanErrorResponse, setReservationOrLoanErrorResponse] =
     useState<ApiResult | null>(null);
 
-  const { manifestation } = edition;
+  const { manifestation } = loanableManifestation;
   const manifestationType = getMaterialType([manifestation]);
   const authorLine = getAuthorLine(manifestation, t);
 
   const { data: userData } = usePatronData();
-  const { canBeReserved } = useReaderPlayer(edition.identifier);
+  const { canBeReserved } = useReaderPlayer(loanableManifestation.identifier);
 
   if (loanStatus === "success") {
     return (
@@ -68,7 +68,7 @@ const OnlineInternalModalBody = ({
         )}
         <MaterialButtonsOnlineInternal
           openModal={false}
-          edition={edition}
+          loanableManifestation={loanableManifestation}
           workId={workId}
         />
       </ModalMessage>
@@ -113,7 +113,7 @@ const OnlineInternalModalBody = ({
         })}
         ctaButton={{
           text: t("tryAginButtonText"),
-          modalId: onlineInternalModalId(edition),
+          modalId: onlineInternalModalId(loanableManifestation),
           dataCy: "online-internal-close-button"
         }}
       >
@@ -149,11 +149,13 @@ const OnlineInternalModalBody = ({
 
         <div>
           <div className="reservation-modal-submit">
-            <MaterialAvailabilityTextOnline edition={edition} />
+            <MaterialAvailabilityTextOnline
+              loanableManifestation={loanableManifestation}
+            />
             <MaterialButtonsOnlineInternal
               workId={workId}
               openModal={false}
-              edition={edition}
+              loanableManifestation={loanableManifestation}
               setReservationStatus={setReservationStatus}
               setLoanStatus={setloanStatus}
               setLoanResponse={setLoanResponse}
