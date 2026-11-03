@@ -53,6 +53,18 @@ const getWorkAges = (work: TQuizWork): { low: number; high: number } | null => {
   return null
 }
 
+// Sideantal (længde): første numberOfPages fundet på tværs af manifestationer.
+const getWorkPages = (work: TQuizWork): number | null => {
+  for (const manifestation of work.manifestations.all) {
+    const pages = manifestation.physicalDescription?.numberOfPages
+    if (pages != null && pages > 0) return pages
+  }
+  return null
+}
+
+const pagesInRanges = (pages: number, ranges: TRange[]) =>
+  ranges.some(([lo, hi]) => pages >= lo && pages <= hi)
+
 const formatAges = (work: TQuizWork): string | null => {
   const ages = getWorkAges(work)
   if (!ages) return null
@@ -71,9 +83,14 @@ const lixDistance = (lix: number, ranges: TRange[]) =>
   Math.min(...ranges.map(([lo, hi]) => Math.max(0, lo - lix, lix - hi)))
 
 // Blødt: sortér værker tættest på de valgte intervaller øverst (uden data nederst).
-// Alder/lix er kun med her i blød tilstand.
-const rerankWorks = (works: TQuizWork[], ageRanges: TRange[], lixRanges: TRange[]) => {
-  if (ageRanges.length === 0 && lixRanges.length === 0) return works
+// Alder/lix/længde er kun med her i blød tilstand.
+const rerankWorks = (
+  works: TQuizWork[],
+  ageRanges: TRange[],
+  lixRanges: TRange[],
+  pageRanges: TRange[]
+) => {
+  if (ageRanges.length === 0 && lixRanges.length === 0 && pageRanges.length === 0) return works
   return works
     .map((work, index) => {
       const distances: number[] = []
@@ -84,6 +101,10 @@ const rerankWorks = (works: TQuizWork[], ageRanges: TRange[], lixRanges: TRange[
       if (lixRanges.length > 0) {
         const lix = getWorkLix(work)
         if (lix != null) distances.push(lixDistance(lix, lixRanges))
+      }
+      if (pageRanges.length > 0) {
+        const pages = getWorkPages(work)
+        if (pages != null) distances.push(pagesInRanges(pages, pageRanges) ? 0 : 1)
       }
       const hasData = distances.length > 0
       const distance = hasData
@@ -98,6 +119,14 @@ const rerankWorks = (works: TQuizWork[], ageRanges: TRange[], lixRanges: TRange[
     })
     .map(entry => entry.work)
 }
+
+// Længde (sideantal) vælges i resultatet. Kun client-side — FBI har ingen
+// søgbar facet for boglængde, kun sideantal på manifestationen.
+const PAGE_RANGES: { id: string; label: string; range: TRange }[] = [
+  { id: "kort", label: "kort (under 100)", range: [0, 100] },
+  { id: "mellem", label: "mellem (100–250)", range: [100, 250] },
+  { id: "lang", label: "lang (over 250)", range: [250, 2000] },
+]
 
 // Læseniveau "let" er en facet i søgningen.
 const EASY_CQL = 'phrase.generalaudience="let at læse"'
@@ -280,6 +309,9 @@ const GruppeDashboard = () => {
   const [ageMode, setAgeMode] = useState<TFilterMode>("soft")
   const [lixIds, setLixIds] = useState<string[]>([])
   const [lixMode, setLixMode] = useState<TFilterMode>("soft")
+  // Længde er ALTID client-side: blødt = rerank, hårdt = filtrér efter søgningen.
+  const [pageIds, setPageIds] = useState<string[]>([])
+  const [lengthMode, setLengthMode] = useState<TFilterMode>("soft")
   const [showInsight, setShowInsight] = useState(true)
   const [showDebug, setShowDebug] = useState(false)
 
@@ -317,6 +349,10 @@ const GruppeDashboard = () => {
     () => LIX_RANGES.filter(option => lixIds.includes(option.id)).map(option => option.range),
     [lixIds]
   )
+  const pageRanges = useMemo(
+    () => PAGE_RANGES.filter(option => pageIds.includes(option.id)).map(option => option.range),
+    [pageIds]
+  )
 
   // Én query pr. genregruppe (altså to lister) + én kombineret (genre AND stemning).
   // Hårde alder/lix-filtre AND'es direkte ind i CQL'en (blødt = rerank client-side).
@@ -339,6 +375,7 @@ const GruppeDashboard = () => {
   // Alder/lix: kun blød tilstand rerankes client-side (hård ligger i CQL'en).
   const softAgeRanges = ageMode === "soft" ? ageRanges : []
   const softLixRanges = lixMode === "soft" ? lixRanges : []
+  const softPageRanges = lengthMode === "soft" ? pageRanges : []
 
   const resultA = useBookQuizComplexSearchQuery(
     { cql: cqlA, offset: 0, limit: RESULT_LIMIT, filters: {} },
@@ -392,11 +429,20 @@ const GruppeDashboard = () => {
   }
 
   // Et resultat pr. genre-liste. Hårde alder/lix-filtre er i CQL'en; her rerankes
-  // de bløde.
+  // de bløde, og LÆNGDE filtreres hårdt client-side (ingen FBI-facet).
+  const lengthHard = lengthMode === "hard" && pageRanges.length > 0
   const buildList = (result: typeof resultA) => {
     const raw = result.data?.complexSearch.works ?? []
+    const reranked = rerankWorks(raw, softAgeRanges, softLixRanges, softPageRanges)
+    const works = lengthHard
+      ? reranked.filter(work => {
+          const pages = getWorkPages(work)
+          return pages != null && pagesInRanges(pages, pageRanges)
+        })
+      : reranked
     return {
-      works: rerankWorks(raw, softAgeRanges, softLixRanges),
+      works,
+      droppedByLength: reranked.length - works.length,
       hitcount: result.data?.complexSearch.hitcount ?? 0,
       isFetching: result.isFetching,
       isError: result.isError,
@@ -412,6 +458,7 @@ const GruppeDashboard = () => {
   const sortedBy = [
     softAgeRanges.length > 0 ? "alder" : null,
     softLixRanges.length > 0 ? "lix" : null,
+    softPageRanges.length > 0 ? "længde" : null,
   ].filter(Boolean)
   const hardFiltered = [
     ageMode === "hard" && ageRanges.length > 0 ? "alder" : null,
@@ -421,6 +468,7 @@ const GruppeDashboard = () => {
   const renderBook = (work: TQuizWork) => {
     const workLix = getWorkLix(work)
     const workAges = formatAges(work)
+    const workPages = getWorkPages(work)
     return (
       <li key={work.workId} className="flex items-start gap-3 py-2 text-sm">
         <BookQuizCover work={work} />
@@ -435,6 +483,7 @@ const GruppeDashboard = () => {
             {work.materialTypes.map(type => type.materialTypeSpecific.display).join(", ")}
             {workLix != null ? ` · lix ${workLix}` : " · lix —"}
             {workAges ? ` · ${workAges}` : " · alder —"}
+            {workPages != null ? ` · ${workPages} sider` : " · sider —"}
           </div>
         </div>
       </li>
@@ -513,7 +562,7 @@ const GruppeDashboard = () => {
 
           {phase === "result" ? (
             <div className="flex flex-col gap-6">
-              {/* Styring: alder + lix soft/hard — gælder alle lister. */}
+              {/* Styring: alder + lix + længde soft/hard — gælder alle lister. */}
               <div className="flex flex-wrap items-center gap-4 border border-black/20 p-3 text-sm">
                 <div className="flex items-center gap-2">
                   <span className="font-medium">Alder:</span>
@@ -561,6 +610,40 @@ const GruppeDashboard = () => {
                     {lixMode === "hard" ? "hårdt filter" : "blødt (sortér)"}
                   </button>
                 </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-medium">Længde:</span>
+                  {PAGE_RANGES.map(option => {
+                    const selected = pageIds.includes(option.id)
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        onClick={() =>
+                          setPageIds(prev =>
+                            selected ? prev.filter(id => id !== option.id) : [...prev, option.id]
+                          )
+                        }
+                        aria-pressed={selected}
+                        className={[
+                          "border px-2 py-0.5",
+                          selected ? "border-black bg-black/10" : "border-black/30",
+                        ].join(" ")}>
+                        {option.label}
+                      </button>
+                    )
+                  })}
+                  <button
+                    type="button"
+                    onClick={() => setLengthMode(mode => (mode === "soft" ? "hard" : "soft"))}
+                    aria-pressed={lengthMode === "hard"}
+                    className={[
+                      "border px-2 py-0.5",
+                      lengthMode === "hard" ? "border-black bg-black/10" : "border-black/30",
+                    ].join(" ")}>
+                    {lengthMode === "hard" ? "hårdt filter" : "blødt (sortér)"}
+                  </button>
+                  <span className="opacity-40">(client-side)</span>
+                </div>
               </div>
 
               {lists.length === 0 ? (
@@ -579,6 +662,9 @@ const GruppeDashboard = () => {
                           ? ` · ${hardFiltered.join(" + ")} filtreret i søgningen`
                           : ""}
                         {readingLevel === "easy" ? " · kun lette bøger" : ""}
+                        {lengthHard
+                          ? ` · længde filtreret client-side (${list.droppedByLength} fra)`
+                          : ""}
                         {sortedBy.length > 0 ? ` · sorteret efter ${sortedBy.join(" + ")}` : ""}
                       </p>
                       {list.isError ? (
@@ -590,7 +676,7 @@ const GruppeDashboard = () => {
                       {!list.isFetching && list.works.length === 0 ? (
                         <p className="opacity-70">
                           Ingen bøger matchede
-                          {hardFiltered.length > 0 ? " (prøv blødt filter)" : ""}.
+                          {hardFiltered.length > 0 || lengthHard ? " (prøv blødt filter)" : ""}.
                         </p>
                       ) : null}
                     </div>
@@ -672,6 +758,10 @@ const GruppeDashboard = () => {
             <div>
               <span className="font-medium">Lix:</span> {formatRanges(lixRanges, "")} (
               {lixMode === "hard" ? "hårdt filter" : "blødt"})
+            </div>
+            <div>
+              <span className="font-medium">Længde:</span> {formatRanges(pageRanges, " sider")} (
+              {lengthMode === "hard" ? "hårdt filter" : "blødt"} · altid client-side)
             </div>
             {queries.map((query, index) => (
               <div key={query.group.id}>
