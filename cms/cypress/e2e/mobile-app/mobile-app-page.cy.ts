@@ -1,10 +1,24 @@
 // The mobile apps show pages and articles with their content elements, which
 // the BFF behind them reads through getAppPage. A failure here means a change
 // in the CMS will break the mobile apps.
-import { createGoArticle } from '../../helpers/helper-go-content';
+import { getNode } from '../../helpers/helper-node';
 import { gqlQueries } from '../../helpers/mobile-app-queries';
+import { GoArticleAddPage } from '../../pages/go-article-add';
+import { LoginPage } from '../../pages/login-page';
+import { PageAddPage } from '../../pages/page-add';
+import {
+  GoTextBodyParagraph,
+  MaterialGridAutomaticParagraph,
+  MaterialGridManualParagraph,
+  NavSpotsManualParagraph,
+  RecommendationParagraph,
+  TextBodyParagraph,
+} from '../../pages/paragraphs';
 
-type AppContentElement = { __typename: string; id: string; body?: string };
+type AppContentElement = { __typename: string; id: string } & Record<
+  string,
+  unknown
+>;
 
 type AppPage = {
   title: string;
@@ -20,14 +34,21 @@ const getAppPage = (id: string) =>
   );
 
 const titlePrefix = 'Mobile app test GO article';
+const pageTitlePrefix = 'Mobile app test page';
 
 describe('Mobile app API: getAppPage', () => {
   before(() => {
     cy.deleteEntitiesIfExists(titlePrefix);
+    cy.deleteEntitiesIfExists(pageTitlePrefix);
+  });
+
+  beforeEach(() => {
+    LoginPage.ensureEditorLogin();
   });
 
   after(() => {
     cy.deleteEntitiesIfExists(titlePrefix);
+    cy.deleteEntitiesIfExists(pageTitlePrefix);
   });
 
   it('returns the GO Text Body of a GO article', () => {
@@ -40,7 +61,12 @@ describe('Mobile app API: getAppPage', () => {
       '<p><strong>Fed</strong>, <em>kursiv</em> og <a href="https://example.com/">et link</a>.</p>' +
       '<ul><li>Punkt</li></ul>';
 
-    createGoArticle(title, body).then((article) => {
+    const articleAdd = GoArticleAddPage.add(title);
+    articleAdd.addParagraph(GoTextBodyParagraph).fillBody(body);
+    articleAdd.save();
+    cy.contains(`GO Article ${title} has been created.`);
+
+    getNode(title).then((article) => {
       getAppPage(article.id).then(({ data }) => {
         // The image URL contains the upload date, so we only know which file
         // it is. The apps cannot resolve relative URLs, so it must be absolute.
@@ -62,6 +88,113 @@ describe('Mobile app API: getAppPage', () => {
               },
             ],
           },
+        });
+      });
+    });
+  });
+
+  it('returns the elements of a page', () => {
+    const runId = Date.now();
+    const title = `${pageTitlePrefix} ${runId}`;
+    const subtitle = `Undertitel ${runId}`;
+    const linkedTitle = `${pageTitlePrefix} linked ${runId}`;
+    const body = '<p>Brødtekst med <strong>fed</strong>.</p>';
+    const recommendation = {
+      imagePositionRight: true,
+      nullableTitle: `Anbefaling ${runId}`,
+      nullableDescription: `Anbefalingsbeskrivelse ${runId}`,
+      workId: 'work-of:870970-basis:22629344',
+    };
+    const gridAutomatic = {
+      nullableTitle: `Automatisk grid ${runId}`,
+      nullableDescription: `Automatisk beskrivelse ${runId}`,
+      cql: "term.title='Harry Potter'",
+      limit: 12,
+      priorityMaterialType: 'bog',
+    };
+    const gridManual = {
+      nullableTitle: `Manuelt grid ${runId}`,
+      nullableDescription: `Manuel beskrivelse ${runId}`,
+      workIds: ['work-of:870970-basis:22629344'],
+    };
+
+    // The page the navigation spots link to.
+    PageAddPage.add(linkedTitle).save();
+    cy.contains(`Page ${linkedTitle} has been created.`);
+
+    getNode(linkedTitle).then((linkedPage) => {
+      const pageAdd = PageAddPage.add(title);
+      pageAdd.fillSubtitle(subtitle);
+
+      pageAdd.addParagraph(TextBodyParagraph).fillBody(body);
+
+      const recommendationParagraph = pageAdd.addParagraph(
+        RecommendationParagraph,
+      );
+      recommendationParagraph.placeImageRight();
+      recommendationParagraph.fillTitle(recommendation.nullableTitle);
+      recommendationParagraph.fillDescription(
+        recommendation.nullableDescription,
+      );
+      recommendationParagraph.selectWork(recommendation.workId);
+
+      pageAdd.addParagraph(NavSpotsManualParagraph).linkContent(linkedTitle);
+
+      const gridAutomaticParagraph = pageAdd.addParagraph(
+        MaterialGridAutomaticParagraph,
+      );
+      gridAutomaticParagraph.fillTitle(gridAutomatic.nullableTitle);
+      gridAutomaticParagraph.fillDescription(gridAutomatic.nullableDescription);
+      gridAutomaticParagraph.fillCql(gridAutomatic.cql);
+      gridAutomaticParagraph.fillAmount(gridAutomatic.limit);
+      gridAutomaticParagraph.selectPriorityMaterialType(
+        gridAutomatic.priorityMaterialType,
+      );
+
+      const gridManualParagraph = pageAdd.addParagraph(
+        MaterialGridManualParagraph,
+      );
+      gridManualParagraph.fillTitle(gridManual.nullableTitle);
+      gridManualParagraph.fillDescription(gridManual.nullableDescription);
+      gridManualParagraph.selectWork(gridManual.workIds[0]);
+
+      pageAdd.save();
+      cy.contains(`Page ${title} has been created.`);
+
+      getNode(title).then((page) => {
+        getAppPage(page.id).then(({ data }) => {
+          const ids = page.paragraphs.map(({ id }) => id);
+
+          expect(data).to.deep.equal({
+            getAppPage: {
+              title,
+              subtitle,
+              image: null,
+              elements: [
+                { __typename: 'AppContentElementText', id: ids[0], body },
+                {
+                  __typename: 'AppContentElementRecommendation',
+                  id: ids[1],
+                  ...recommendation,
+                },
+                {
+                  __typename: 'AppContentElementNavSpotsManual',
+                  id: ids[2],
+                  linkedPages: [linkedPage.id],
+                },
+                {
+                  __typename: 'AppContentElementMaterialGridAutomatic',
+                  id: ids[3],
+                  ...gridAutomatic,
+                },
+                {
+                  __typename: 'AppContentElementMaterialGridManual',
+                  id: ids[4],
+                  ...gridManual,
+                },
+              ],
+            },
+          });
         });
       });
     });
