@@ -126,7 +126,7 @@ function dpl_library_agency_validate_branch_node(array &$form, FormStateInterfac
 
       $form_state->setErrorByName(
         'field_agency_branch_id',
-        t('This agency branch ID is already in use by @title', ['@title' => $used_node->label()], ['context' => 'dpl_library_agency']),
+        t('This agency branch ID is already in use by @title', ['@title' => (string) $used_node->label()], ['context' => 'dpl_library_agency']),
       );
       return;
     }

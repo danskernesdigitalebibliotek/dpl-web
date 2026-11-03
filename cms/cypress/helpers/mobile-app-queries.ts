@@ -112,6 +112,33 @@ export const gqlQueries = {
       }
     }
   }`,
+  GET_BRANCHES: `query (
+    $isilId: String
+    $availabilityContexts: [String!]
+    $cmsConfigured: Boolean
+  ) {
+    getBranches(
+      isilId: $isilId
+      availabilityContexts: $availabilityContexts
+      cmsConfigured: $cmsConfigured
+    ) {
+      isilId
+      title
+      address {
+        street
+        postalCode
+        city
+        country
+      }
+      phone
+      email
+      availabilityContext {
+        search
+        availability
+        reservations
+      }
+    }
+  }`,
   GET_RESERVATION_SETTINGS: `query {
     reservationSettings {
       smsNotificationsEnabled

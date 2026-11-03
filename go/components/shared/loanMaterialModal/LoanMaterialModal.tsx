@@ -31,6 +31,7 @@ import {
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
+import { getBiblioDueDate } from "@/lib/helpers/helper.due-status"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
 import { findBiblioLoan, findPublizonLoan } from "@/lib/helpers/helper.patron"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
@@ -176,7 +177,10 @@ const LoanMaterialModal = ({
           return
         }
         queryClient.invalidateQueries({ queryKey: digitalLoansQueryKey() })
-        setLoanResult({ loanId: result.loan.loanId, expiresUtc: result.loan.endDate })
+        setLoanResult({
+          loanId: result.loan.loanId,
+          expiresUtc: getBiblioDueDate(result.loan.endDate),
+        })
         flow.goTo("details")
       },
       onError: () => {

@@ -26,8 +26,7 @@ export const useReaderSdkSession = (): UseQueryResult<WedoBooksSdk> => {
   // the patron flag for consumers that do not set the digital one (the React
   // apps). The token is read straight through the query client, which has no
   // gate of its own.
-  const isDigitalLoanAuthenticated =
-    config.isDigitalLoanAuthenticated ?? config.isPatronAuthenticated ?? true
+  const canUseDigitalLoans = config.canUseDigitalLoans ?? config.isPatronAuthenticated ?? true
 
   return useQuery<WedoBooksSdk>({
     // Not keyed on the token: signing in again whenever it rotates would
@@ -35,7 +34,7 @@ export const useReaderSdkSession = (): UseQueryResult<WedoBooksSdk> => {
     // own once established. Nor on the application - the one client this
     // signs in is already keyed on that.
     queryKey: ["reader", "session"],
-    enabled: Boolean(sdk) && isDigitalLoanAuthenticated,
+    enabled: Boolean(sdk) && canUseDigitalLoans,
     staleTime: Infinity,
     gcTime: Infinity,
     // A rejected token is rejected on every attempt - it is cached and does

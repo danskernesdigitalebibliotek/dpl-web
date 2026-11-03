@@ -70,7 +70,7 @@ A few rules that override generic SCSS instincts:
 - The root Taskfile's `dev:design-system:build` — assembles `build/`, i.e.
   exactly what the other projects consume.
 - `.storybook/main.js`, `.storybook/preview.js`, `.storybook/modes.js` —
-  Storybook configuration, viewports, Chromatic modes.
+  Storybook configuration, viewports, visual regression test modes.
 
 ## Gotchas worth knowing up front
 

@@ -24,7 +24,7 @@ export type ServiceLayerConfig = {
   // holds a real Adgangsplatformen token. The digital hooks gate on this;
   // falls back to isPatronAuthenticated when omitted (the React apps, where a
   // Unilogin user is anonymous). Defaults to true when both are omitted.
-  isDigitalLoanAuthenticated?: boolean
+  canUseDigitalLoans?: boolean
 }
 
 export type Patron = {

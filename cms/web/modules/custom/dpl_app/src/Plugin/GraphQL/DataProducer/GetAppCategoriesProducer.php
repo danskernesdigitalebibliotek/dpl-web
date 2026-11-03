@@ -77,6 +77,13 @@ class GetAppCategoriesProducer extends DataProducerPluginBase implements Contain
       default => [],
     };
 
+    // A category that is created or published must show up in the list, so
+    // the list depends on all nodes it can be made of, not only the ones it
+    // returns. Biblo and MyBiblo categories can be nodes of any type.
+    $field_context->addCacheTags([
+      $type === AppType::BibloGo ? 'node_list:go_category' : 'node_list',
+    ]);
+
     foreach ($nodes as $node) {
       $field_context->addCacheableDependency($node);
     }

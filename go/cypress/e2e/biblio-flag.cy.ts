@@ -183,7 +183,7 @@ describe("Work page with the Biblio adapter switched on", () => {
 
     it("E-book → the loan goes through the Biblio adapter", () => {
       // The patron path must keep working too: the digital hooks gate on
-      // isDigitalLoanAuthenticated, which falls back to the patron flag, so a
+      // canUseDigitalLoans, which falls back to the patron flag, so a
       // regression that dropped the fallback would lock patrons out here.
       mockBiblioLoanCreated()
 

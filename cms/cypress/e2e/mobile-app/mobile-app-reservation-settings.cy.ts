@@ -2,6 +2,7 @@
 // periods to show for reservations from reservationSettings, which the BFF
 // behind them reads. A failure here means a change in the CMS will break the
 // mobile apps.
+import { ignoreLinkitUriError } from '../../helpers/helper-linkit';
 import { gqlQueries } from '../../helpers/mobile-app-queries';
 
 type InterestPeriod = { value: number; label: string };
@@ -62,15 +63,7 @@ const setInterestPeriods = (periods: string, defaultPeriod: string) => {
   saveForm();
 };
 
-// Linkit's autocomplete script throws on the URL fields of this form, as it
-// expects to find them in a link field widget. Saving the form still works.
-Cypress.on(
-  'uncaught:exception',
-  (error) =>
-    !error.message.includes(
-      'must have a data-drupal-selector attribute ending in "-uri"',
-    ),
-);
+ignoreLinkitUriError();
 
 describe('Mobile app API: reservationSettings', () => {
   const original = { sms: true, periods: '', defaultPeriod: '' };
