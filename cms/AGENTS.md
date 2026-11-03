@@ -67,6 +67,50 @@ known.
 - `openapi.json` — generated, checked-in REST surface (Swagger 2.0). When a
   REST resource changes, this needs regenerating and committing alongside.
 
+## Caching — assume every response is cached somewhere
+
+Responses pass through several cache layers before a user sees them:
+Varnish, Drupal's page cache (anonymous users), Drupal's dynamic page
+cache and render cache (all users), Next.js caches in GO, React Query in
+the browser, and the browser's own HTTP cache. A response that depends on
+_who_ is asking or _what state_ they are in, but does not say so, gets
+cached and served to the wrong person. These bugs pass unit tests and
+single-user manual tests, then show up in production as "it works again
+after a cache clear".
+
+Whenever you write or change code that returns a response, ask: _which
+caches can store this, under which key, and what does it vary on?_ In
+particular:
+
+- **Redirects.** A redirect is a response like any other and is cached
+  like any other. `TrustedRedirectResponse` is cacheable; a redirect
+  decided by user, role, token type, session or login state must carry
+  that as cache metadata (a cache context, or `max-age` 0). The anonymous
+  page cache ignores cacheability metadata entirely — use the page cache
+  kill switch there. Browsers cache 301/308 permanently, so use 302/303/307
+  for anything conditional.
+- **GraphQL and REST endpoints.** Results must carry cache tags for the
+  data they contain (so edits invalidate them) and cache contexts for
+  anything that varies by user, site or request (so users don't share
+  them). Check what the GO side caches too (`fetch` cache, tags, and the
+  `/cache/revalidate` route) — invalidating Drupal does not invalidate GO.
+- **Render arrays and blocks** showing user-specific content (name,
+  loans, login state) need `user` or a narrower context, or a lazy builder.
+- **Event subscribers and middleware** that short-circuit the request
+  (`$event->setResponse()`) bypass the normal render pipeline, so nothing
+  adds cache metadata for you.
+- **Lists and listings** need list cache tags (e.g. `node_list`) or new
+  items won't appear until the cache expires.
+- **Per-site variation.** 100+ sites share this codebase; anything
+  depending on site config needs the config's cache tag.
+
+**Test for it.** A test that makes one request as one user cannot catch a
+cache bug. When behaviour varies by user or state, test the _sequence_:
+request as user A, then the same URL as user B (or the same user after
+login/logout/state change), and assert B gets B's response. At minimum, in
+unit tests, assert the cache metadata (`max-age`, contexts, tags) on the
+response.
+
 ## Gotchas worth knowing up front
 
 - **Multi-site BNF.** A secondary site lives behind `docker-compose.bnf.yml`
