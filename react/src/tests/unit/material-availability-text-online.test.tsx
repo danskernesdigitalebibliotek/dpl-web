@@ -12,10 +12,8 @@ import {
   useDigitalLoanDecision,
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
-import {
-  ComplexSearchFacetsEnum,
-  IdentifierTypeEnum
-} from "../../core/dbc-gateway/generated/graphql";
+import { ComplexSearchFacetsEnum } from "../../core/dbc-gateway/generated/graphql";
+import { publizonIdentifier } from "./__vitest_data__/publizon-identifier";
 
 // Only the hooks under test are stubbed; the rest of the package stays
 // real, so pure helpers keep behaving as they do in production.
@@ -107,7 +105,7 @@ const renderText = (opensIn: "reader" | "player" = "reader") =>
   render(
     <MaterialAvailabilityTextOnline
       loanableManifestation={{
-        identifier: { type: IdentifierTypeEnum.Publizon, value: ISBN },
+        identifier: publizonIdentifier(ISBN),
         opensIn
       }}
     />

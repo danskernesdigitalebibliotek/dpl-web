@@ -80,9 +80,7 @@ export const getOrderIdByIdentifier = ({
   loans: LoanType[];
   identifier: PublizonIdentifier;
 }) => {
-  const loanWithIdentifier = loans.find(
-    (i) => i.identifier === identifier.value
-  );
+  const loanWithIdentifier = loans.find((i) => i.identifier === identifier);
   return loanWithIdentifier ? loanWithIdentifier.orderId : null;
 };
 
@@ -128,7 +126,7 @@ export const sampleUrl = (
   materialType: "ebook" | "audiobook"
 ) =>
   new URL(
-    `/${materialType === "audiobook" ? "player" : "reader"}?identifier=${encodeURIComponent(identifier.value)}`,
+    `/${materialType === "audiobook" ? "player" : "reader"}?identifier=${encodeURIComponent(identifier)}`,
     window.location.href
   );
 
@@ -138,6 +136,5 @@ export const findReservedReservation = (
 ) =>
   reservations.find(
     (reservation) =>
-      reservation.identifier === identifier.value &&
-      reservation.state === "reserved"
+      reservation.identifier === identifier && reservation.state === "reserved"
   );

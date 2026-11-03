@@ -50,7 +50,7 @@ const usePublizonReaderPlayerState = ({
     useGetV1UserReservations({ query: { enabled: canReadHoldings } });
 
   const { data: dataLoanStatus, isLoading: isLoadingLoanStatus } =
-    useGetV1LoanstatusIdentifier(identifier.value, {
+    useGetV1LoanstatusIdentifier(identifier, {
       query: { enabled: canAcquire }
     });
 

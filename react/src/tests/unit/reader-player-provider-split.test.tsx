@@ -8,7 +8,7 @@ import {
   ReaderPlayerState,
   unknownReaderPlayerState
 } from "../../core/utils/types/reader-player-state";
-import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
+import { publizonIdentifier } from "./__vitest_data__/publizon-identifier";
 
 /**
  * Two questions, two answers.
@@ -57,12 +57,8 @@ const given = ({
 };
 
 const render = () =>
-  renderHook(() =>
-    useReaderPlayer({
-      type: IdentifierTypeEnum.Publizon,
-      value: "9788727319346"
-    })
-  ).result.current;
+  renderHook(() => useReaderPlayer(publizonIdentifier("9788727319346"))).result
+    .current;
 
 describe("useReaderPlayer - which provider answers what", () => {
   beforeEach(() => {

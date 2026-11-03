@@ -14,7 +14,7 @@ export const getPublizonIdentifier = (
   const value = manifestation.identifiers?.find(
     (identifier) => identifier.type === IdentifierTypeEnum.Publizon
   )?.value;
-  return value ? { type: IdentifierTypeEnum.Publizon, value } : null;
+  return value ? (value as PublizonIdentifier) : null;
 };
 
 export type PublizonManifestation = {

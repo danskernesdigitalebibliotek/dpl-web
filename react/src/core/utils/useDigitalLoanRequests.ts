@@ -65,13 +65,13 @@ const useDigitalLoanRequests = ({
         if (!result.success) return undefined;
         trackLoan();
         // Keyed by the offer, so the material is the one on screen.
-        return readBack(identifier.value);
+        return readBack(identifier);
       }
     });
 
   return {
     loan: (loanIdentifier, report) =>
-      createLoan(loanIdentifier.value, {
+      createLoan(loanIdentifier, {
         onSuccess: (result) =>
           report(
             loanWasCreated(result)
@@ -87,7 +87,7 @@ const useDigitalLoanRequests = ({
       }),
 
     reserve: (reserveIdentifier, report) =>
-      createReservation(reserveIdentifier.value, {
+      createReservation(reserveIdentifier, {
         // The adapter refuses with a 200, so only a granted decision may tell
         // the user they are queued.
         onSuccess: (result) =>

@@ -5,13 +5,9 @@ import {
   resolveLoanReservationRequest
 } from "../../core/utils/helpers/digital-loan-request";
 import { Patron } from "../../core/utils/types/entities";
-import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
-import { PublizonIdentifier } from "../../core/utils/types/ids";
+import { publizonIdentifier } from "./__vitest_data__/publizon-identifier";
 
-const PUBLIZON_ID: PublizonIdentifier = {
-  type: IdentifierTypeEnum.Publizon,
-  value: "material-1"
-};
+const PUBLIZON_ID = publizonIdentifier("material-1");
 
 const material = {
   openModal: false,

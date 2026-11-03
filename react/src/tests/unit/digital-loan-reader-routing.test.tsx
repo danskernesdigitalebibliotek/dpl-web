@@ -1,8 +1,6 @@
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
-import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
-import { PublizonIdentifier } from "../../core/utils/types/ids";
 import type { Loan } from "../../core/publizon/model";
 import type { DigitalLoan } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import {
@@ -16,6 +14,7 @@ import {
 } from "../../components/reader-player/helper";
 import DigitalReaderPlayer from "../../components/reader-player/DigitalReaderPlayer";
 import useDigitalCheckout from "../../components/reader-player/useDigitalCheckout";
+import { publizonIdentifier } from "./__vitest_data__/publizon-identifier";
 
 // The reader and player themselves need the SDK; which of them mounts is the
 // decision under test, so they are reduced to markers.
@@ -134,14 +133,8 @@ describe("Where a digital material's url points", () => {
 
   it("sends each sample to the page its material type plays on", () => {
     // The route carries the type: a sample has no loan to read it from.
-    const ebook: PublizonIdentifier = {
-      type: IdentifierTypeEnum.Publizon,
-      value: "9788711623497"
-    };
-    const audiobook: PublizonIdentifier = {
-      type: IdentifierTypeEnum.Publizon,
-      value: "9788711823453"
-    };
+    const ebook = publizonIdentifier("9788711623497");
+    const audiobook = publizonIdentifier("9788711823453");
     expect(sampleUrl(ebook, "ebook").pathname).toBe("/reader");
     expect(sampleUrl(audiobook, "audiobook").pathname).toBe("/player");
     expect(sampleUrl(audiobook, "audiobook").search).toBe(

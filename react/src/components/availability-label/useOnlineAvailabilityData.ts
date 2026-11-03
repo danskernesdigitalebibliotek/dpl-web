@@ -28,20 +28,18 @@ const useOnlineAvailabilityData = ({
   // An online material outside the e-book service - a PressReader newspaper,
   // whose only identifier is a URI - has no digital id and is in neither
   // Publizon nor the service layer, so asking would only produce a 404.
-  const materialId = identifier?.value ?? null;
-
   // can-loan is patron-scoped, so with the flag on and no patron nobody is
   // asked and the default applies.
   const askServiceLayer =
-    viaBiblioAdapter && enabled && materialId !== null && !isAnonymous();
-  const askPublizon = !viaBiblioAdapter && enabled && materialId !== null;
+    viaBiblioAdapter && enabled && identifier !== null && !isAnonymous();
+  const askPublizon = !viaBiblioAdapter && enabled && identifier !== null;
 
   const { data: loanDecision, isLoading: isLoadingServiceLayer } =
-    useDigitalLoanDecision(materialId, { enabled: askServiceLayer });
+    useDigitalLoanDecision(identifier, { enabled: askServiceLayer });
 
   // Find out if the material is cost free.
   const { isLoading: isLoadingIdentifier, data: dataIdentifier } =
-    useGetV1ProductsIdentifier(materialId ?? "", {
+    useGetV1ProductsIdentifier(identifier ?? "", {
       query: { enabled: askPublizon }
     });
 
@@ -49,7 +47,7 @@ const useOnlineAvailabilityData = ({
   // This status is only available for products found on Publizon. Other online
   // materials are always supposed to be shown as "available".
   const { isLoading: isLoadingPublizonData, data: dataPublizon } =
-    useGetV1LoanstatusIdentifier(materialId ?? "", {
+    useGetV1LoanstatusIdentifier(identifier ?? "", {
       query: {
         enabled:
           askPublizon &&

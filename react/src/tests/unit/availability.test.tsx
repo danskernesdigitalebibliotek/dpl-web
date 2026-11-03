@@ -9,8 +9,8 @@ import {
   vi
 } from "vitest";
 import { act } from "react";
-import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { PublizonIdentifier } from "../../core/utils/types/ids";
+import { publizonIdentifier } from "./__vitest_data__/publizon-identifier";
 import usePhysicalAvailabilityData from "../../components/availability-label/usePhysicalAvailabilityData";
 import { useGetAvailabilityV3 } from "../../core/fbs/fbs";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
@@ -276,10 +276,7 @@ describe("useOnlineAvailabilityData tests", () => {
   const mockedIsAnonymous = vi.mocked(isAnonymous);
 
   const MATERIAL_ID = "9788794564076";
-  const PUBLIZON_ID: PublizonIdentifier = {
-    type: IdentifierTypeEnum.Publizon,
-    value: MATERIAL_ID
-  };
+  const PUBLIZON_ID = publizonIdentifier(MATERIAL_ID);
 
   const givenBiblioAnswers = (status: string) =>
     mockedLoanDecision.mockReturnValue({

@@ -53,10 +53,9 @@ describe("getPublizonManifestation", () => {
   });
 
   it("carries the id of the edition it picked", () => {
-    expect(getPublizonManifestation([oldEbook, newEbook])?.identifier).toEqual({
-      type: IdentifierTypeEnum.Publizon,
-      value: "9788727272894"
-    });
+    expect(getPublizonManifestation([oldEbook, newEbook])?.identifier).toBe(
+      "9788727272894"
+    );
   });
 
   it("leaves the caller's list in the order it was given", () => {
@@ -91,10 +90,7 @@ const rodloesEbook = manifestation("pid:rodloes-ebook", [
 
 describe("getPublizonIdentifier", () => {
   it("returns the PUBLIZON identifier, not the leading (deselected PDF) ISBN", () => {
-    expect(getPublizonIdentifier(rodloesEbook)).toEqual({
-      type: IdentifierTypeEnum.Publizon,
-      value: "9788797577646"
-    });
+    expect(getPublizonIdentifier(rodloesEbook)).toBe("9788797577646");
   });
 
   it("never falls back to an ISBN", () => {

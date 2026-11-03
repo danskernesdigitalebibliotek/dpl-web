@@ -68,7 +68,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   // borrowing against.
   const viaBiblioAdapter = useBiblioAdapter();
 
-  const { data: productsData } = useGetV1ProductsIdentifier(identifier.value, {
+  const { data: productsData } = useGetV1ProductsIdentifier(identifier, {
     query: { enabled: !viaBiblioAdapter }
   });
 
@@ -91,7 +91,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   });
 
   // Only read for its licence - see isCostFree below.
-  const { data: loanDecision } = useDigitalLoanDecision(identifier.value, {
+  const { data: loanDecision } = useDigitalLoanDecision(identifier, {
     enabled: viaBiblioAdapter
   });
 

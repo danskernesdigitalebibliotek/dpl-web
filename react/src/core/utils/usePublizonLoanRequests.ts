@@ -57,7 +57,7 @@ const usePublizonLoanRequests = ({
   return {
     loan: (identifier, report) =>
       createLoan(
-        { identifier: identifier.value },
+        { identifier },
         {
           onSuccess: (loanResponse) =>
             report({ status: "success", loanResponse }),
@@ -72,7 +72,7 @@ const usePublizonLoanRequests = ({
 
       createReservation(
         {
-          identifier: identifier.value,
+          identifier,
           data: publizonReservationContact(userData.patron)
         },
         {

@@ -31,14 +31,13 @@ const useDigitalReaderPlayerState = ({
   enabled: boolean;
 }): ReaderPlayerState => {
   const isUserAnonymous = isAnonymous();
-  const materialId = identifier.value;
   // Borrowing, holding and queuing are all user-scoped and need an end-user
   // token, so an anonymous user is offered the loan and the login guard takes
   // over - the same deal Publizon gets. Sampling is the exception below.
   const isActiveForUser = enabled && !isUserAnonymous;
 
   const { data: loanDecision, isLoading: isLoadingLoanDecision } =
-    useDigitalLoanDecision(materialId, {
+    useDigitalLoanDecision(identifier, {
       enabled: isActiveForUser
     });
 
@@ -46,7 +45,7 @@ const useDigitalReaderPlayerState = ({
   // list: only its existence and its id are used here, and the list waits on
   // the catalogue to describe every loan in it.
   const { data: loan, isLoading: isLoadingLoan } = useDigitalMaterialHolding(
-    materialId,
+    identifier,
     { enabled: isActiveForUser }
   );
 
@@ -57,7 +56,7 @@ const useDigitalReaderPlayerState = ({
   // for a library token, so this is the one question a visitor gets an answer
   // to. Asking it here is also what makes the teaser honest - a material with
   // no excerpt is never offered one.
-  const { data: sample } = useDigitalSample(materialId, { enabled });
+  const { data: sample } = useDigitalSample(identifier, { enabled });
 
   if (!enabled) {
     return unknownReaderPlayerState;
@@ -72,7 +71,7 @@ const useDigitalReaderPlayerState = ({
   }
 
   const digitalReservation = reservationsData?.reservations.find(
-    (reservation) => reservation.materialId === materialId
+    (reservation) => reservation.materialId === identifier
   );
 
   // An offer is waiting to be accepted as a loan; without one the user is
