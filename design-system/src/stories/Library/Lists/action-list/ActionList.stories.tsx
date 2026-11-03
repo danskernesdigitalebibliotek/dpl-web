@@ -34,7 +34,7 @@ export default {
         xxs: { name: "XXSmall", styles: { width: "300px", height: "900px" } },
       },
     },
-    chromatic: {
+    argos: {
       modes: {
         "300px": { viewport: "xxs" },
       },

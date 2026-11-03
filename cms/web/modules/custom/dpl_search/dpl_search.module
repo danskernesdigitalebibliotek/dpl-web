@@ -309,7 +309,7 @@ function dpl_search_preprocess_taxonomy_term(array &$variables): void {
   $view->execute();
   $view->setTitle(t(
     'Showing web results related to "@term" (@total_results)',
-    ['@term' => $term->label(), '@total_results' => $view->total_rows],
+    ['@term' => (string) $term->label(), '@total_results' => $view->total_rows],
     ['context' => 'dpl_search']
   ));
 

@@ -1,7 +1,7 @@
 name: Go / CI
 
 # The Storybook static build is produced ONCE in the `storybook` job and shared
-# with the accessibility, chromatic and argos jobs via an artifact. The Next.js
+# with the accessibility and argos jobs via an artifact. The Next.js
 # build has a single consumer (e2e) so it stays inline there — nothing to share.
 # Lint/typecheck/unit/codegen only need node_modules (pnpm cache) and committed
 # generated code, so they have no `needs:` and start in parallel immediately.
@@ -147,7 +147,7 @@ jobs:
         run: git diff --exit-code
 
   # ---------------------------------------------------------------------------
-  # Build Storybook once; accessibility, chromatic and argos consume the artifact.
+  # Build Storybook once; accessibility and argos consume the artifact.
   # Runs on every trigger so whichever consumer is active has its input ready.
   # ---------------------------------------------------------------------------
   storybook:
@@ -221,50 +221,10 @@ jobs:
           pnpm exec wait-on tcp:6006
           pnpm run test:storybook
 
-  chromatic:
-    name: Go / Chromatic
-    needs: storybook
-    if: github.event_name == 'push' || github.event.pull_request.draft == false
-    runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.repository_id }}-${{ github.workflow }}-chromatic-${{ github.ref }}
-      cancel-in-progress: true
-    defaults:
-      run:
-        working-directory: go
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - name: Load environment variables
-        uses: cardinalby/export-env-action@v2
-        with:
-          envFile: 'go/.env.test'
-      - uses: ./.github/actions/common-setup-js
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-      - name: Download Storybook build
-        uses: actions/download-artifact@v6
-        with:
-          name: go-storybook-static
-          path: go/storybook-static
-      - name: Publish to Chromatic
-        uses: chromaui/action@v18
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_GO }}
-          workingDir: go
-          # Use the prebuilt Storybook from the `storybook` job instead of
-          # rebuilding it here.
-          storybookBuildDir: storybook-static
-          autoAcceptChanges: ${{ github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main' }}
-
-  # Argos is piloted next to Chromatic, on the same Storybook build.
   argos:
     name: Go / Argos
     needs: storybook
-    # As Chromatic; pull requests from forks get no ARGOS_TOKEN.
+    # Pull requests from forks get no ARGOS_TOKEN.
     if: >-
       github.event_name == 'push'
       || (github.event.pull_request.draft == false && !github.event.pull_request.head.repo.fork)

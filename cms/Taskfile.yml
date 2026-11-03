@@ -591,7 +591,9 @@ tasks:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
       - task dev:cli -- curl "http://varnish:8080/openapi/rest?_format=json&language=en" -o openapi.tmp
-      - task -d .. dev:cli -- sh -c "cd cms && corepack pnpm exec jsome -r < openapi.tmp > openapi.json"
+      # The cli container is the PHP image: it has node but no pnpm/corepack,
+      # so invoke the jsome binary that pnpm installed into node_modules directly.
+      - task -d .. dev:cli -- sh -c "cd cms && ./node_modules/.bin/jsome -r < openapi.tmp > openapi.json"
       - rm -f openapi.tmp
 
   ci:shellcheck:

@@ -27,8 +27,9 @@ export type SeriesPageProps = {
   relatedWorks?: MaterialSliderItem[];
 };
 
-// The whole series landing page, so that Chromatic covers the page-level
-// styling and the spacing between the cards - not just a card on its own.
+// The whole series landing page, so that visual regression tests cover the
+// page-level styling and the spacing between the cards - not just a card on
+// its own.
 const SeriesPage = ({
   title,
   description,

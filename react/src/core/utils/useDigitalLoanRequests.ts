@@ -11,6 +11,7 @@ import {
   awaitReadBack,
   digitalReadBackKeys
 } from "./helpers/digital-loan-read-back";
+import { getBiblioDueDate } from "./helpers/date";
 import { loanWasCreated } from "./helpers/digital-loan-request";
 import { LoanRequester } from "./types/loan-requester";
 import { WorkId } from "./types/ids";
@@ -76,7 +77,9 @@ const useDigitalLoanRequests = ({
             loanWasCreated(result)
               ? {
                   status: "success",
-                  loanResponse: { expirationDateUtc: result.loan.endDate }
+                  loanResponse: {
+                    expirationDateUtc: getBiblioDueDate(result.loan.endDate)
+                  }
                 }
               : { status: "error" }
           ),

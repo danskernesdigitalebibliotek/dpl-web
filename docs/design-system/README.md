@@ -115,19 +115,18 @@ interface ready to use.
 
 ## Argos
 
-Argos runs visual tests alongside Chromatic while we evaluate it. Pushes to
-`main`, `develop` and `release/*`, and pull requests changing the design
-system, screenshot every story at 400px and 1200px. The screenshots are
-uploaded to the `dpl-web` project in Argos under the build name
-`design-system`.
+Argos runs the visual regression tests. Pushes to `main`, `develop` and
+`release/*`, and pull requests changing the design system, screenshot every
+story at 400px and 1200px. The screenshots are uploaded to the `dpl-web`
+project in Argos under the build name `design-system`.
 
 Argos compares them with the build of the base branch and reports the result
 as the `argos/design-system` status. Follow its link to review changes;
 reviewing requires membership of the Argos team. Approve the changes your pull
 request explains, and **Ignore** the ones it cannot explain: Argos then hides
-that change on later builds, and the ignored changes show how much noise Argos
-produces. Share causes worth knowing in Zulip. The Storybook build is
-published as a preview, linked from Argos' comment on the pull request.
+that change on later builds. Share causes worth knowing in Zulip. The
+Storybook build is published as a preview, linked from Argos' comment on the
+pull request.
 
 Pull requests from forks get no Argos build, as they cannot access the token.
 To get one, push the branch to this repository.
@@ -142,6 +141,9 @@ Tag a story `skip-ui-tests` to leave it out of the screenshots. Use it only for
 stories that cannot be screenshotted reliably at all: an untagged story with
 content that breaks the capture, like the YouTube embed, should rather have
 that content blocked or masked so the rest of the story is still covered.
+
+A story that needs another width adds it to its `argos.modes` parameter, as
+the action list does for 300px, where its rows stack.
 
 ### Comparing local work with Argos
 
@@ -169,26 +171,7 @@ Local uploads never become baselines. The task refuses to run on `develop`,
 `main` and `release/*`, with uncommitted changes, as Argos files the build
 under `HEAD`, and once `HEAD` is pushed, as CI then compares it.
 
-## Chromatic
-
-We are using Chromatic for visual test. You can access the dashboard
-under the `danskernesdigitalebibliotek` (organisation) `dpl-design-system`
-(project).
-
-<https://www.chromatic.com/builds?appId=616ffdab9acbf5003ad5fd2b>
-
-You can deploy a version locally to Chromatic by running:
-
-```shell
-pnpm run chromatic
-```
-
-Make sure to set the `CHROMATIC_PROJECT_TOKEN` environment variable is available
-in your shell context. You can access the token from:
-
-<https://www.chromatic.com/manage?appId=616ffdab9acbf5003ad5fd2b&view=configure>
-
-### What is Storybook
+## What is Storybook
 
 [Storybook](https://storybook.js.org/docs/react/get-started/introduction) is an
 open source tool for building UI components and pages in isolation from your
@@ -200,7 +183,7 @@ development.
 It is possible to extend Storybook with an ecosystem of addons that help you do
 things like fine-tune responsive layouts or verify accessibility.
 
-#### How to use
+### How to use
 
 The Storybook interface is simple and intuitive to use. Browse the project's
 stories now by navigating to them in the sidebar.
@@ -223,7 +206,7 @@ The `stories` file is used to add the component to the Storybook interface via
 the title. Start the title with "Library" or "Blocks" and use / to
 divide into folders fx. `Library / Buttons / Button`
 
-#### Addons
+### Addons
 
 Storybook ships with some essential
 pre-installed [addons](https://storybook.js.org/addons/tag/essentials/)
@@ -258,9 +241,9 @@ Additional addons used for this project:
 
 All the addons can be found in `storybook/main.js` directory.
 
-#### Important to notice
+### Important to notice
 
-##### Internal classes
+#### Internal classes
 
 To display some components (fx Colors, Spacing) in a more presentable way, we
 are using some "internal" css-classes which can be found in the

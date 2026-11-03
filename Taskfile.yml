@@ -104,6 +104,15 @@ tasks:
       - pnpm --dir go run knip
       - pnpm --dir design-system run knip
 
+  prs:
+    desc: "List open pull requests and who has to act next on each."
+    silent: true
+    # Writes straight to the terminal, so the digest keeps its colours and
+    # isn't prefixed with the task name.
+    interactive: true
+    cmds:
+      - .github/scripts/open-pull-requests-digest.sh --format terminal
+
   # ---------------------------------------------------------------------------
   # Tokens
   # ---------------------------------------------------------------------------
