@@ -70,8 +70,8 @@ const useDigitalLoanRequests = ({
     });
 
   return {
-    loan: (loanIdentifier, report) =>
-      createLoan(loanIdentifier, {
+    loan: (id, report) =>
+      createLoan(id, {
         onSuccess: (result) =>
           report(
             loanWasCreated(result)
@@ -86,8 +86,8 @@ const useDigitalLoanRequests = ({
         onError: () => report({ status: "error" })
       }),
 
-    reserve: (reserveIdentifier, report) =>
-      createReservation(reserveIdentifier, {
+    reserve: (id, report) =>
+      createReservation(id, {
         // The adapter refuses with a 200, so only a granted decision may tell
         // the user they are queued.
         onSuccess: (result) =>
