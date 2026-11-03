@@ -1,0 +1,92 @@
+{
+  "status": "ok",
+  "adresse": {
+    "id_lokalid": "416bbfb5-1ad3-4ae2-9296-b89ab178860c",
+    "adressebetegnelse": "Dronningensgade 53, 1., 1420 København K",
+    "etagebetegnelse": "1",
+    "doerbetegnelse": null,
+    "status": "3",
+    "virkningfra": "2015-09-17T13:30:11.750Z",
+    "virkningtil": null,
+    "registreringfra": "2018-05-03T16:58:34.000Z",
+    "registreringtil": null,
+    "husnummer": {
+      "id_lokalid": "0a3f507a-5e1b-32b8-e044-0003ba298018",
+      "husnummertekst": "53",
+      "adgangsadressebetegnelse": "Dronningensgade 53, 1420 København K",
+      "vejnavn": "Dronningensgade",
+      "status": "3",
+      "virkningfra": "2018-07-04T16:00:00+00:00",
+      "virkningtil": null,
+      "registreringfra": "2018-07-04T16:00:00+00:00",
+      "registreringtil": null,
+      "adgangspunkt": {
+        "id_lokalid": "0a3f507a-5e1b-32b8-e044-0003ba298018",
+        "status": "8",
+        "virkningfra": "2009-11-25T00:07:37+00:00",
+        "virkningtil": null,
+        "registreringfra": "2018-05-03T16:58:34+00:00",
+        "registreringtil": null,
+        "geometri": {
+          "type": "Point",
+          "crs": {
+            "type": "name",
+            "properties": {
+              "name": "EPSG:25832"
+            }
+          },
+          "coordinates": [725870.71, 6175461.13]
+        },
+        "koordinater": {
+          "x": 725870.71,
+          "y": 6175461.13
+        }
+      },
+      "postnummer": {
+        "id_lokalid": "d99db533-59d7-4029-8f39-0cfb8f283be1",
+        "navn": "København K",
+        "postnr": "1420",
+        "status": "3",
+        "virkningfra": "2023-03-24T20:12:57.259387+00:00",
+        "virkningtil": null,
+        "registreringfra": "2023-03-24T20:12:57.259387+00:00",
+        "registreringtil": null
+      },
+      "navngivenvej": {
+        "id_lokalid": "ab5aa13d-f3bd-4f3d-9e54-84e6ce5f145b",
+        "vejnavn": "Dronningensgade",
+        "virkningfra": "2020-05-29T15:15:35.755325+00:00",
+        "virkningtil": null,
+        "registreringfra": "2020-05-29T15:15:35.755325+00:00",
+        "registreringtil": null
+      },
+      "navngivenvejkommunedel": {
+        "id_lokalid": "5c98e02e-4eae-11e8-93fd-066cff24d637",
+        "kommune": "0101",
+        "vejkode": "1352",
+        "navngivenvej": "ab5aa13d-f3bd-4f3d-9e54-84e6ce5f145b",
+        "virkningfra": "2020-02-07T16:26:03.33886+00:00",
+        "virkningtil": null,
+        "registreringfra": "2020-02-07T16:26:03.33886+00:00",
+        "registreringtil": null
+      },
+      "navngivenvejpostnummer": {
+        "id_lokalid": "d898344e-b894-4432-a5c2-23b91bc528c5",
+        "virkningfra": "2020-12-18T15:17:19.000774+00:00",
+        "virkningtil": null,
+        "registreringfra": "2020-12-18T15:17:19.000774+00:00",
+        "registreringtil": null
+      },
+      "supplerendebynavn": {
+        "id_lokalid": null,
+        "status": null,
+        "supplerendebynavn": null,
+        "navn": null,
+        "virkningfra": null,
+        "virkningtil": null,
+        "registreringfra": null,
+        "registreringtil": null
+      }
+    }
+  }
+}

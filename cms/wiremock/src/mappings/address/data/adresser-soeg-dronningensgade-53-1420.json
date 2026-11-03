@@ -1,0 +1,24 @@
+{
+  "status": "ok",
+  "beskrivelse": "",
+  "fund": [
+    {
+      "type": "adresse",
+      "id": "09ffa2ca-09f2-46d0-9a59-55cb833dcf43",
+      "titel": "Dronningensgade 53, st., 1420 København K",
+      "husnummerId": "0a3f507a-5e1b-32b8-e044-0003ba298018"
+    },
+    {
+      "type": "adresse",
+      "id": "0a3f509d-cf27-32b8-e044-0003ba298018",
+      "titel": "Dronningensgade 53, 1. tv, 1420 København K",
+      "husnummerId": "0a3f507a-5e1b-32b8-e044-0003ba298018"
+    },
+    {
+      "type": "adresse",
+      "id": "416bbfb5-1ad3-4ae2-9296-b89ab178860c",
+      "titel": "Dronningensgade 53, 1., 1420 København K",
+      "husnummerId": "0a3f507a-5e1b-32b8-e044-0003ba298018"
+    }
+  ]
+}
