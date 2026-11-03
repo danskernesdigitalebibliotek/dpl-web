@@ -28,52 +28,8 @@ export type EditionsSelectModalProps = {
   onClosed?: () => void
 }
 
-// The group names are used for the native radios, which are hidden but keep the accessibility tree semantics of a radio group.
-const GENERAL_CHOICE_GROUP = "edition-general-choice"
+// The group name is used for the native radios, which are hidden but keep the accessibility tree semantics of a radio group.
 const EDITION_CHOICE_GROUP = "edition-pid"
-
-const GeneralOption = ({
-  label,
-  description,
-  checked,
-  onSelect,
-  disabled,
-}: {
-  label: string
-  description: string
-  checked: boolean
-  onSelect: () => void
-  // "Først tilgængelige" has no backing logic yet — it renders as a visual
-  // placeholder the reader can't actually select.
-  disabled?: boolean
-}) => (
-  <label
-    className="border-foreground/10 has-checked:border-foreground has-checked:bg-background-overlay
-      has-focus-visible:ring-foreground flex w-full cursor-pointer items-start gap-3 rounded-lg
-      border-2 p-4 transition-colors has-focus-visible:ring-2 has-focus-visible:ring-offset-2
-      has-disabled:cursor-not-allowed has-disabled:opacity-50">
-    <input
-      type="radio"
-      name={GENERAL_CHOICE_GROUP}
-      className="sr-only"
-      checked={checked}
-      disabled={disabled}
-      onChange={onSelect}
-    />
-    {/* The radio is drawn rather than native so it matches the design; the
-        real input stays in the accessibility tree via sr-only. */}
-    <span
-      aria-hidden="true"
-      className="border-foreground mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center
-        rounded-full border-2">
-      {checked && <span className="bg-foreground h-2.5 w-2.5 rounded-full" />}
-    </span>
-    <span className="min-w-0">
-      <span className="text-typo-subtitle-md block">{label}</span>
-      <span className="text-typo-body-sm block opacity-70">{description}</span>
-    </span>
-  </label>
-)
 
 const EditionsSelectModal = ({
   open,
@@ -101,7 +57,10 @@ const EditionsSelectModal = ({
   //
   // `label` and `text` are decided together and say the same thing: the pill
   // is hidden from the accessibility tree, so `text` is what carries the
-  // status into the edition's accessible name.
+  // status into the edition's accessible name. A digital edition already on
+  // loan to this reader is disabled — there is nothing a second selection
+  // would do; a physical one lent out elsewhere stays selectable, since
+  // picking it still starts a reservation.
   const getUnavailable = (manifestation: ManifestationWorkPageFragment) => {
     if (isEditionLentOut(manifestation)) {
       return {
@@ -111,24 +70,18 @@ const EditionsSelectModal = ({
           </StatusLabel>
         ),
         text: "Udlånt lige nu, du kan stadig reservere bogen",
+        disabled: false,
       }
     }
     if (isDigitalEditionOnLoan(manifestation)) {
       return {
-        label: <StatusLabel variant="warning">Udlånt lige nu</StatusLabel>,
-        text: "Udlånt lige nu",
+        label: <StatusLabel variant="warning">Udlånt til dig</StatusLabel>,
+        text: "Udlånt til dig",
+        disabled: true,
       }
     }
     return undefined
   }
-
-  // Editions are newest first, so the first shown one is what "nyeste" means.
-  const newestDescription = [
-    shownEditions[0]?.edition?.publicationYear?.year,
-    shownEditions[0]?.publisher?.[0],
-  ]
-    .filter(Boolean)
-    .join(", ")
 
   // The grid waits for both providers, so an edition never renders live and
   // then picks up a status a moment later.
@@ -156,32 +109,9 @@ const EditionsSelectModal = ({
 
   return (
     <ResponsiveDialog title="Vælg udgave" open={open} onClose={handleClose}>
-      {/* Two radio groups, so each gets its own fieldset: a general rule for
-          which edition to get, or one specific edition. */}
-      <fieldset className="m-0 border-0 p-0">
-        <legend className="sr-only">Vælg generel udgave</legend>
-        <div className="xs:grid-cols-2 grid grid-cols-1 gap-4">
-          <GeneralOption
-            label="Nyeste udgave"
-            description={`Du får altid den senest udgivne udgave${
-              newestDescription ? ` — lige nu ${newestDescription}` : ""
-            }`}
-            checked={draftChoice === "newest"}
-            onSelect={() => setDraftChoice("newest")}
-          />
-        </div>
-      </fieldset>
-
       {(isLoadingEditions || shownEditions.length > 0) && (
         <fieldset className="m-0 border-0 p-0">
           <legend className="sr-only">Vælg udgave</legend>
-          <div aria-hidden="true" className="my-8 flex items-center gap-4">
-            <hr className="border-foreground/10 flex-1" />
-            <span className="text-typo-label-sm shrink-0 font-semibold opacity-70">
-              Eller vælg en bestemt udgave · {shownEditions.length}
-            </span>
-            <hr className="border-foreground/10 flex-1" />
-          </div>
 
           {/* Drops from 4 columns at md back to 3 at lg: the dialog's own
               max-width caps there, so each card gets more room instead of
@@ -203,6 +133,7 @@ const EditionsSelectModal = ({
                       checked={draftPid === manifestation.pid}
                       unavailableLabel={unavailable?.label}
                       unavailableText={unavailable?.text}
+                      disabled={unavailable?.disabled}
                       onSelect={() => setDraftChoice({ pid: manifestation.pid })}
                     />
                   )
@@ -234,11 +165,11 @@ const EditionsSelectModal = ({
       </div>
 
       <ResponsiveDialog.Actions>
-        <Button theme="primary" size="lg" onClick={handleConfirm}>
-          Vælg udgave
-        </Button>
         <Button size="lg" onClick={handleClose}>
           Annuller
+        </Button>
+        <Button theme="primary" size="lg" onClick={handleConfirm}>
+          Vælg udgave
         </Button>
       </ResponsiveDialog.Actions>
     </ResponsiveDialog>

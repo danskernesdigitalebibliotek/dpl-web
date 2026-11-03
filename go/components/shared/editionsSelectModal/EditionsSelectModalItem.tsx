@@ -17,6 +17,11 @@ type EditionsSelectModalItemProps = {
   // supplies the status.
   unavailableLabel?: React.ReactNode
   unavailableText?: string
+  // A digital edition already on loan to this reader: picking it again would
+  // do nothing. The card stays focusable and keeps its usual look —
+  // unavailableLabel/unavailableText already say why — only selecting it is
+  // blocked.
+  disabled?: boolean
 }
 
 const EditionsSelectModalItem = ({
@@ -26,6 +31,7 @@ const EditionsSelectModalItem = ({
   onSelect,
   unavailableLabel,
   unavailableText,
+  disabled,
 }: EditionsSelectModalItemProps) => {
   const year = manifestation.edition?.publicationYear?.year
   // `edition` is the plain edition number/name with no year or contributors
@@ -62,13 +68,14 @@ const EditionsSelectModalItem = ({
       className="has-focus-visible:ring-foreground bg-background-overlay
         has-checked:border-foreground rounded-base relative flex cursor-pointer flex-col gap-2
         border-2 border-transparent p-4 transition-[border-color] has-focus-visible:ring-2
-        has-focus-visible:ring-offset-2">
+        has-focus-visible:ring-offset-2 has-aria-disabled:cursor-default">
       <input
         type="radio"
         name={name}
         className="sr-only"
         checked={checked}
-        onChange={onSelect}
+        aria-disabled={disabled}
+        onChange={disabled ? undefined : onSelect}
         aria-label={accessibleName}
       />
       {checked && (
