@@ -8,6 +8,7 @@ import WorkPageLoading from "@/components/pages/workPageLayout/WorkPageLoading"
 import { parseEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
+import { useDefaultObtainableEdition } from "@/hooks/useDefaultObtainableEdition"
 import { useEditionAvailability } from "@/hooks/useEditionAvailability"
 import {
   ManifestationWorkPageFragment,
@@ -62,10 +63,30 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     )
   }, [allManifestations]) as ManifestationWorkPageFragment[]
 
-  useEffect(() => {
-    // Get the material type from the search params
-    const searchParamsMaterialType = searchParams.get("type")
+  const searchParamsMaterialType = searchParams.get("type")
 
+  // The candidates the default-edition pick is drawn from: newest first,
+  // with the kommune's unobtainable ones left out.
+  const obtainableEditions = useMemo(
+    () =>
+      getEditionsForMaterialType(
+        (allManifestations ?? []) as ManifestationWorkPageFragment[],
+        searchParamsMaterialType ?? ""
+      ).filter(manifestation => !isEditionHidden(manifestation)),
+    // isEditionHidden is rebuilt every render, so the flags behind it stand
+    // in for it — see the effect below for the same reasoning.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [allManifestations, searchParamsMaterialType, isLoadingAvailability, isAvailabilityUnknown]
+  )
+
+  // The newest obtainable edition renders immediately — it needs no network
+  // round trip — and is swapped for the newest blue one if the Publizon
+  // lookups behind it land one. No loading state: the page never blocks on
+  // these, it just quietly upgrades the pick.
+  const { defaultManifestation: defaultObtainableEdition } =
+    useDefaultObtainableEdition(obtainableEditions)
+
+  useEffect(() => {
     if (!searchParamsMaterialType && bestRepresentation) {
       // If no material type is specified is url params, redirect to the ebook manifestation if available or a fallback manifestation
       const manifestation = getEbookManifestationOrFallbackManifestation(
@@ -94,26 +115,22 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     const pinnedManifestation = getPinnedEditionManifestation(
       (allManifestations ?? []) as ManifestationWorkPageFragment[],
       searchParamsMaterialType ?? "",
-      typeof editionChoice === "object" ? editionChoice.pid : null
+      editionChoice?.pid ?? null
     )
-
-    // "Nyeste" means the newest edition the kommune can supply, matching the
-    // picker. Editions come back newest first.
-    const newestObtainable = getEditionsForMaterialType(
-      (allManifestations ?? []) as ManifestationWorkPageFragment[],
-      searchParamsMaterialType ?? ""
-    ).find(manifestation => !isEditionHidden(manifestation))
 
     // defaultManifestation is cast non-nullable above but can be undefined,
     // so keep the last good pick rather than clearing the page.
-    const nextManifestation = pinnedManifestation ?? newestObtainable ?? defaultManifestation
+    const nextManifestation =
+      pinnedManifestation ?? defaultObtainableEdition ?? defaultManifestation
     if (nextManifestation) {
       setSelectedManifestation(nextManifestation)
     }
     // isEditionHidden is rebuilt every render, so the flags behind it stand
     // in for it. Both settle once, so a background refetch does not swap the
     // edition under the reader; isAvailabilityUnknown catches an error that
-    // later succeeds, which is the first real answer.
+    // later succeeds, which is the first real answer. defaultObtainableEdition
+    // itself re-runs this once its Publizon lookups upgrade the pick to the
+    // newest blue edition.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     searchParams,
@@ -121,6 +138,7 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     allManifestations,
     isLoadingAvailability,
     isAvailabilityUnknown,
+    defaultObtainableEdition,
   ])
 
   if ((isLoading && !data) || isAwaitingHydration) {

@@ -3,32 +3,21 @@ import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graph
 // The reader's edition choice, shared between the picker that sets it and the
 // work page that reads it back out of the url.
 
-// A pid is a pin to one specific edition. "newest" is the default and so is
-// the absence of a choice — it is never written to the url.
-export type TEditionChoice = "newest" | { pid: string }
+// A pid pins one specific edition. No choice at all (undefined) means the
+// page picks a default itself — see useDefaultObtainableEdition — and that
+// default is never written to the url.
+export type TEditionChoice = { pid: string } | undefined
 
-export const DEFAULT_EDITION_CHOICE: TEditionChoice = "newest"
-
-// The url carries the choice as a single `edition` param: a pid, or nothing at
-// all for the default.
+// The url carries the choice as a single `edition` param: a pid, or nothing
+// at all when there is no pinned choice.
 export const parseEditionChoice = (param: string | null): TEditionChoice => {
-  if (!param) return DEFAULT_EDITION_CHOICE
+  if (!param) return undefined
 
   return { pid: param }
 }
 
-export const serializeEditionChoice = (choice: TEditionChoice): string | null => {
-  if (choice === "newest") return null
-
-  return choice.pid
-}
+export const serializeEditionChoice = (choice: TEditionChoice): string | null => choice?.pid ?? null
 
 // Label for the trigger button that opens the modal.
-export const getEditionChoiceLabel = (
-  choice: TEditionChoice,
-  selectedManifestation: ManifestationWorkPageFragment
-): string => {
-  if (choice === "newest") return "Nyeste"
-
-  return selectedManifestation.edition?.publicationYear?.year?.toString() ?? "Valgt udgave"
-}
+export const getEditionLabel = (selectedManifestation: ManifestationWorkPageFragment): string =>
+  selectedManifestation.edition?.publicationYear?.year?.toString() ?? "Valgt udgave"

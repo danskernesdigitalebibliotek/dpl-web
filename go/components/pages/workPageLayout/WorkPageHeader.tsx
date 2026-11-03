@@ -12,10 +12,8 @@ import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import {
-  DEFAULT_EDITION_CHOICE,
   type TEditionChoice,
-  getEditionChoiceLabel,
-  parseEditionChoice,
+  getEditionLabel,
   serializeEditionChoice,
 } from "@/components/shared/editionsSelectModal/editionChoice"
 import MaterialTypeSelect, {
@@ -120,16 +118,11 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
     (isUrlMaterialTypeKnown && urlMaterialTypeCode !== selectedManifestationMaterialTypeCode) ||
     pickedMaterialTypeCode !== selectedManifestationMaterialTypeCode
 
-  // The choice lives in the url, so the button label follows the chosen manifestation
-  const urlEditionChoice = parseEditionChoice(searchParams.get("edition"))
+  // The picker always opens on the manifestation actually shown, whether it
+  // got there by an explicit url pin or the page's own default pick.
+  const editionChoice = { pid: selectedManifestation.pid }
 
-  // Fallback to the default edition choice if the url edition choice is for a different manifestation than the selected one.
-  const editionChoice =
-    typeof urlEditionChoice === "object" && urlEditionChoice.pid !== selectedManifestation.pid
-      ? DEFAULT_EDITION_CHOICE
-      : urlEditionChoice
-
-  const editionChoiceLabel = getEditionChoiceLabel(editionChoice, selectedManifestation)
+  const editionChoiceLabel = getEditionLabel(selectedManifestation)
 
   // The picker lists the editions of the picked type that the kommune can
   // supply, so the same set decides whether there is anything to pick between.
@@ -186,20 +179,15 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           routeParams: { work: "work", wid: work.workId },
           queryParams: {
             type: materialTypeCode,
-            // "newest" is the default pick, so it needs no param of its own.
             ...(editionParam ? { edition: editionParam } : {}),
           },
         })
         router.push(url, { scroll: false })
         // The modal closes on confirm and the buttons behind it change state,
-        // none of which a screen reader would otherwise report.
-        if (choice === "newest") {
-          announceChoice("Nyeste udgave valgt")
-          return
-        }
-        // Named from the picked manifestation, not the selected one: the page
-        // has not swapped it yet at this point.
-        const picked = manifestations.find(manifestation => manifestation.pid === choice.pid)
+        // none of which a screen reader would otherwise report. Named from
+        // the picked manifestation, not the selected one: the page has not
+        // swapped it yet at this point.
+        const picked = manifestations.find(manifestation => manifestation.pid === choice?.pid)
         const pickedYear = picked?.edition?.publicationYear?.year
         announceChoice(pickedYear ? `Udgave valgt: ${pickedYear}` : "Udgave valgt")
       },
@@ -273,33 +261,30 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
             {choiceAnnouncement.text}
           </p>
           {/* Fewer than two obtainable editions is no choice, so the picker
-              is left out entirely for such a material type. */}
-          {(isEditionPickerLoading || hasEditionsToChooseFrom) && (
+              is left out entirely for such a material type. Mid-switch the
+              label would still name the previous type's edition, and until
+              availability says whether the button belongs here at all —
+              so the button disappears entirely rather than show a stale
+              label or a skeleton, and reappears once the new type resolves
+              to more than one edition. */}
+          {!isEditionPickerLoading && hasEditionsToChooseFrom && (
             <div className="mb-3 w-full">
               <WorkPageButtons>
-                {/* Mid-switch the label would name the previous type's
-                    edition, so a skeleton stands in until the page resolves
-                    the new one — and until availability says whether the
-                    button belongs here at all. */}
-                {isEditionPickerLoading ? (
-                  <></>
-                ) : (
-                  <button
-                    type="button"
-                    ref={editionButtonRef}
-                    onClick={openEditionsSelect}
-                    aria-label={`Udgave: ${editionChoiceLabel}. Skift udgave`}
-                    className="border-foreground/10 focus-visible text-typo-body-sm
-                      hover:bg-background-overlay flex w-full items-center justify-between gap-3
-                      rounded-full border px-5 py-3 text-left transition-colors lg:max-w-80
-                      lg:min-w-72">
-                    <span className="min-w-0 truncate">
-                      {"Udgave: "}
-                      <span className="font-semibold">{editionChoiceLabel}</span>
-                    </span>
-                    <span className="animate-text-underline shrink-0">Skift</span>
-                  </button>
-                )}
+                <button
+                  type="button"
+                  ref={editionButtonRef}
+                  onClick={openEditionsSelect}
+                  aria-label={`Udgave: ${editionChoiceLabel}. Skift udgave`}
+                  className="border-foreground/10 focus-visible text-typo-body-sm
+                    hover:bg-background-overlay flex w-full items-center justify-between gap-3
+                    rounded-full border px-5 py-3 text-left transition-colors lg:max-w-80
+                    lg:min-w-72">
+                  <span className="min-w-0 truncate">
+                    {"Udgave: "}
+                    <span className="font-semibold">{editionChoiceLabel}</span>
+                  </span>
+                  <span className="animate-text-underline shrink-0">Skift</span>
+                </button>
               </WorkPageButtons>
             </div>
           )}
