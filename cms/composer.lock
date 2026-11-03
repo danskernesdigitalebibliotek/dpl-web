@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13903646c97081b04ce0042daf9325e9",
+    "content-hash": "a75e5120ab532caf1060b8918e6cdb56",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -20195,38 +20195,41 @@
         },
         {
             "name": "palantirnet/drupal-rector",
-            "version": "0.21.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/palantirnet/drupal-rector.git",
-                "reference": "421665d1777df769292b47c51e297c73ed417d00"
+                "reference": "c13b82014e9ab3b89768d5047aef9d4814c2e905"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/palantirnet/drupal-rector/zipball/421665d1777df769292b47c51e297c73ed417d00",
-                "reference": "421665d1777df769292b47c51e297c73ed417d00",
+                "url": "https://api.github.com/repos/palantirnet/drupal-rector/zipball/c13b82014e9ab3b89768d5047aef9d4814c2e905",
+                "reference": "c13b82014e9ab3b89768d5047aef9d4814c2e905",
                 "shasum": ""
             },
             "require": {
-                "rector/rector": "^1 || ^2",
+                "rector/rector": "^2",
                 "webflo/drupal-finder": "^1.2"
+            },
+            "conflict": {
+                "rector/rector": ">=2.6.2"
             },
             "replace": {
                 "drupal8-rector/drupal8-rector": "*",
                 "palantirnet/drupal8-rector": "*"
             },
             "require-dev": {
-                "cweagans/composer-patches": "^1.7.2",
-                "friendsofphp/php-cs-fixer": "^3.58",
+                "cweagans/composer-patches": "^2.0",
+                "friendsofphp/php-cs-fixer": "^3.95.1",
                 "php": "^8.2",
                 "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^1.12 || ^2.0",
-                "phpstan/phpstan-deprecation-rules": "^1.2 || ^2.0",
-                "phpunit/phpunit": "^10.0",
-                "symfony/yaml": "^5 || ^6 || ^7",
-                "symplify/vendor-patches": "^11.0"
+                "phpstan/phpstan": "^2.1.54",
+                "phpstan/phpstan-deprecation-rules": "^2.0.4",
+                "phpunit/phpunit": "^12.5.24",
+                "symfony/yaml": "^5 || ^6 || ^7.4.8",
+                "symplify/vendor-patches": "^12.0.6"
             },
-            "type": "library",
+            "type": "rector-extension",
             "extra": {
                 "enable-patching": true
             },
@@ -20273,9 +20276,10 @@
                 "rector"
             ],
             "support": {
-                "source": "https://github.com/palantirnet/drupal-rector/tree/0.21.2"
+                "issues": "https://github.com/palantirnet/drupal-rector/issues",
+                "source": "https://github.com/palantirnet/drupal-rector/tree/1.1.3"
             },
-            "time": "2026-05-08T14:23:45+00:00"
+            "time": "2026-09-03T11:32:43+00:00"
         },
         {
             "name": "phar-io/manifest",
