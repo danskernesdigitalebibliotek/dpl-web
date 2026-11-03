@@ -97,7 +97,7 @@ const EditionsSelectModalItem = ({
           alt=""
           covers={manifestation.cover}
           sizes="(max-width: 1024px) 120px, 160px"
-          withTilt
+          withTilt={disabled ? false : true}
         />
       </div>
       <div aria-hidden="true" className="min-w-0 space-y-1">
