@@ -55,6 +55,16 @@ const startGoCategory = (title: string) => {
   return categoryAdd;
 };
 
+type Linkbox = { title: string; description: string; linkPath: string };
+
+const addGoLinkbox = (categoryAdd: GoCategoryAddPage, link: Linkbox) => {
+  const linkbox = categoryAdd.addParagraph(GoLinkboxParagraph);
+  linkbox.fillTitle(link.title);
+  linkbox.fillDescription(link.description);
+  // Required by the form, but the apps get the linkbox title instead.
+  linkbox.fillLink(link.linkPath, link.title);
+};
+
 const saveGoCategory = (categoryAdd: GoCategoryAddPage, title: string) => {
   categoryAdd.save();
   cy.contains(`GO category ${title} has been created.`);
@@ -86,11 +96,7 @@ describe('Mobile app API: getAppCategories', () => {
 
     createGoArticle(articleTitle).then((article) => {
       const categoryAdd = startGoCategory(categoryTitle);
-      const linkbox = categoryAdd.addParagraph(GoLinkboxParagraph);
-      linkbox.fillTitle(link.title);
-      linkbox.fillDescription(link.description);
-      // Required by the form, but the apps get the linkbox title instead.
-      linkbox.fillLink(article.path, link.title);
+      addGoLinkbox(categoryAdd, { ...link, linkPath: article.path });
 
       saveGoCategory(categoryAdd, categoryTitle).then((category) => {
         // The apps list all categories first and then ask for each one.
@@ -201,12 +207,15 @@ describe('Mobile app API: getAppCategories', () => {
     // category is created for the category to show up.
     getAppCategories('BIBLOGO');
 
-    createGoArticle(articleTitle, '<p>Brødtekst</p>').then((article) => {
-      createGoCategory(categoryTitle, {
+    createGoArticle(articleTitle).then((article) => {
+      const categoryAdd = startGoCategory(categoryTitle);
+      addGoLinkbox(categoryAdd, {
         title: `Linkbox ${runId}`,
         description: `Beskrivelse ${runId}`,
         linkPath: article.path,
-      }).then((category) => {
+      });
+
+      saveGoCategory(categoryAdd, categoryTitle).then((category) => {
         getAppCategories('BIBLOGO').then(({ data }) => {
           const ids = data.getAppCategories.map(({ id }) => id);
           expect(ids).to.include(category.id);
