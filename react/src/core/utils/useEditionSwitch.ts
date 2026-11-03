@@ -43,13 +43,15 @@ export const useEditionSwitch = (
       return;
     }
 
-    // Only an edition we can lend has a loan modal to open.
-    const edition = getDigitalLoanableManifestation(selectedManifestations);
-    if (!edition) return;
+    // Only a manifestation we can lend has a loan modal to open.
+    const loanableManifestation = getDigitalLoanableManifestation(
+      selectedManifestations
+    );
+    if (!loanableManifestation) return;
 
     openGuarded({
       authUrl,
-      modalId: onlineInternalModalId(edition),
+      modalId: onlineInternalModalId(loanableManifestation),
       options: { modalsToClose }
     });
   };

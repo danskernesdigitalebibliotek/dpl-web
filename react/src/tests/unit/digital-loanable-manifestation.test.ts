@@ -52,7 +52,7 @@ describe("getPublizonManifestation", () => {
     ).toBe("pid:new-ebook");
   });
 
-  it("carries the id of the edition it picked", () => {
+  it("carries the id of the manifestation it picked", () => {
     expect(getPublizonManifestation([oldEbook, newEbook])?.identifier).toBe(
       "9788727272894"
     );
@@ -67,14 +67,14 @@ describe("getPublizonManifestation", () => {
     ]);
   });
 
-  it("skips an edition without a PUBLIZON identifier", () => {
+  it("skips a manifestation without a PUBLIZON identifier", () => {
     // The deselected PDF is listed first but is not loanable.
     expect(getPublizonManifestation([pdf, epub])?.manifestation.pid).toBe(
       "pid:epub"
     );
   });
 
-  it("returns null when no edition can be lent", () => {
+  it("returns null when no manifestation can be lent", () => {
     expect(getPublizonManifestation([pdf])).toBeNull();
     expect(getPublizonManifestation([])).toBeNull();
   });
@@ -121,7 +121,7 @@ describe("onlineInternalModalId", () => {
     return lendable && onlineInternalModalId(lendable);
   };
 
-  it("is the id of the edition that is going to be lent", () => {
+  it("is the id of the manifestation that is going to be lent", () => {
     // One modal is rendered per manifestation, so an opener covering several
     // editions still has to name a single one - and not the leading one.
     expect(modalIdFor([ebook2025, ebook2019])).toBe(

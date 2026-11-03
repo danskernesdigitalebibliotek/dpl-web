@@ -46,7 +46,7 @@ describe("resolveOnlineButtonType", () => {
       identifiers
     }) as Manifestation;
 
-  it("carries the edition it lends for an e-book with a PUBLIZON identifier", () => {
+  it("carries the manifestation it lends for an e-book with a PUBLIZON identifier", () => {
     const result = resolveOnlineButtonType([
       ebook([{ type: IdentifierTypeEnum.Publizon, value: "9788711623497" }])
     ]);
