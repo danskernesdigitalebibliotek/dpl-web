@@ -135,6 +135,13 @@ class RedirectPatronSubscriberTest extends UnitTestCase {
 
     $this->assertInstanceOf(TrustedRedirectResponse::class, $response);
     $this->assertSame($expectedRedirect, $response->getTargetUrl());
+
+    // The redirect depends on who the user is, so the dynamic page cache must
+    // not store it for the route. Anonymous redirects are kept out of the
+    // page cache by the kill switch instead.
+    if (!$anonymous) {
+      $this->assertSame(0, $response->getCacheableMetadata()->getCacheMaxAge());
+    }
   }
 
   /**
