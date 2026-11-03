@@ -36,32 +36,14 @@ const getAppPage = (id: string) =>
 const titlePrefix = 'Mobile app test GO article';
 const pageTitlePrefix = 'Mobile app test page';
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
-
-// Starts a page, which the Biblo apps show, with the fields every page needs.
-const startPage = (title: string, subtitle: string) => {
-  login();
-  const pageAdd = new PageAddPage();
-  pageAdd.visit([]);
-  pageAdd.fillTitle(title);
-  pageAdd.fillSubtitle(subtitle);
-  return pageAdd;
-};
-
-const savePage = (pageAdd: PageAddPage, title: string) => {
-  pageAdd.save();
-  cy.contains(`Page ${title} has been created.`);
-  return getNode(title);
-};
-
 describe('Mobile app API: getAppPage', () => {
   before(() => {
     cy.deleteEntitiesIfExists(titlePrefix);
     cy.deleteEntitiesIfExists(pageTitlePrefix);
+  });
+
+  beforeEach(() => {
+    LoginPage.ensureEditorLogin();
   });
 
   after(() => {
@@ -79,11 +61,7 @@ describe('Mobile app API: getAppPage', () => {
       '<p><strong>Fed</strong>, <em>kursiv</em> og <a href="https://example.com/">et link</a>.</p>' +
       '<ul><li>Punkt</li></ul>';
 
-    login();
-    const articleAdd = new GoArticleAddPage();
-    articleAdd.visitReturningToContent();
-    articleAdd.fillTitle(title);
-    articleAdd.selectTeaserImage('paige-cody');
+    const articleAdd = GoArticleAddPage.add(title);
     articleAdd.addParagraph(GoTextBodyParagraph).fillBody(body);
     articleAdd.save();
     cy.contains(`GO Article ${title} has been created.`);
@@ -141,9 +119,12 @@ describe('Mobile app API: getAppPage', () => {
     };
 
     // The page the navigation spots link to.
-    const linkedPageAdd = startPage(linkedTitle, subtitle);
-    savePage(linkedPageAdd, linkedTitle).then((linkedPage) => {
-      const pageAdd = startPage(title, subtitle);
+    PageAddPage.add(linkedTitle).save();
+    cy.contains(`Page ${linkedTitle} has been created.`);
+
+    getNode(linkedTitle).then((linkedPage) => {
+      const pageAdd = PageAddPage.add(title);
+      pageAdd.fillSubtitle(subtitle);
 
       pageAdd.addParagraph(TextBodyParagraph).fillBody(body);
 
@@ -177,7 +158,10 @@ describe('Mobile app API: getAppPage', () => {
       gridManualParagraph.fillDescription(gridManual.nullableDescription);
       gridManualParagraph.selectWork(gridManual.workIds[0]);
 
-      savePage(pageAdd, title).then((page) => {
+      pageAdd.save();
+      cy.contains(`Page ${title} has been created.`);
+
+      getNode(title).then((page) => {
         getAppPage(page.id).then(({ data }) => {
           const ids = page.paragraphs.map(({ id }) => id);
 

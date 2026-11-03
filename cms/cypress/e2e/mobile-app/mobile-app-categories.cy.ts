@@ -10,7 +10,6 @@ import {
   GoLinkboxParagraph,
   GoMaterialSliderAutomaticParagraph,
   GoMaterialSliderManualParagraph,
-  GoTextBodyParagraph,
 } from '../../pages/paragraphs';
 
 type AppCategory = {
@@ -26,35 +25,6 @@ const getAppCategories = (type: string, id?: string) =>
     { type, id },
   );
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
-
-const createGoArticle = (title: string) => {
-  login();
-  const articleAdd = new GoArticleAddPage();
-  articleAdd.visitReturningToContent();
-  articleAdd.fillTitle(title);
-  articleAdd.selectTeaserImage('paige-cody');
-  articleAdd.addParagraph(GoTextBodyParagraph).fillBody('<p>Brødtekst</p>');
-  articleAdd.save();
-  cy.contains(`GO Article ${title} has been created.`);
-  return getNode(title);
-};
-
-// Starts a GO category with the fields every category needs.
-const startGoCategory = (title: string) => {
-  login();
-  const categoryAdd = new GoCategoryAddPage();
-  categoryAdd.visitReturningToContent();
-  categoryAdd.fillTitle(title);
-  categoryAdd.fillMenuTitle(title);
-  categoryAdd.selectMenuImage('paige-cody');
-  return categoryAdd;
-};
-
 type Linkbox = { title: string; description: string; linkPath: string };
 
 const addGoLinkbox = (categoryAdd: GoCategoryAddPage, link: Linkbox) => {
@@ -65,18 +35,16 @@ const addGoLinkbox = (categoryAdd: GoCategoryAddPage, link: Linkbox) => {
   linkbox.fillLink(link.linkPath, link.title);
 };
 
-const saveGoCategory = (categoryAdd: GoCategoryAddPage, title: string) => {
-  categoryAdd.save();
-  cy.contains(`GO category ${title} has been created.`);
-  return getNode(title);
-};
-
 // Both the categories and the articles they link to.
 const titlePrefix = 'Mobile app test GO';
 
 describe('Mobile app API: getAppCategories', () => {
   before(() => {
     cy.deleteEntitiesIfExists(titlePrefix);
+  });
+
+  beforeEach(() => {
+    LoginPage.ensureEditorLogin();
   });
 
   after(() => {
@@ -94,11 +62,17 @@ describe('Mobile app API: getAppCategories', () => {
       description: `Beskrivelse ${runId}`,
     };
 
-    createGoArticle(articleTitle).then((article) => {
-      const categoryAdd = startGoCategory(categoryTitle);
+    GoArticleAddPage.add(articleTitle).save();
+    cy.contains(`GO Article ${articleTitle} has been created.`);
+
+    getNode(articleTitle).then((article) => {
+      const categoryAdd = GoCategoryAddPage.add(categoryTitle);
       addGoLinkbox(categoryAdd, { ...link, linkPath: article.path });
 
-      saveGoCategory(categoryAdd, categoryTitle).then((category) => {
+      categoryAdd.save();
+      cy.contains(`GO category ${categoryTitle} has been created.`);
+
+      getNode(categoryTitle).then((category) => {
         // The apps list all categories first and then ask for each one.
         getAppCategories('BIBLOGO').then(({ data }) => {
           const ids = data.getAppCategories.map(({ id }) => id);
@@ -154,7 +128,7 @@ describe('Mobile app API: getAppCategories', () => {
       workIds: ['work-of:870970-basis:22629344'],
     };
 
-    const categoryAdd = startGoCategory(categoryTitle);
+    const categoryAdd = GoCategoryAddPage.add(categoryTitle);
 
     const automaticSlider = categoryAdd.addParagraph(
       GoMaterialSliderAutomaticParagraph,
@@ -169,7 +143,10 @@ describe('Mobile app API: getAppCategories', () => {
     manualSlider.fillTitle(manual.title);
     manualSlider.selectWork(manual.workIds[0]);
 
-    saveGoCategory(categoryAdd, categoryTitle).then((category) => {
+    categoryAdd.save();
+    cy.contains(`GO category ${categoryTitle} has been created.`);
+
+    getNode(categoryTitle).then((category) => {
       getAppCategories('BIBLOGO', category.id).then(({ data }) => {
         const icon = data.getAppCategories[0]?.icon;
 
@@ -207,15 +184,21 @@ describe('Mobile app API: getAppCategories', () => {
     // category is created for the category to show up.
     getAppCategories('BIBLOGO');
 
-    createGoArticle(articleTitle).then((article) => {
-      const categoryAdd = startGoCategory(categoryTitle);
+    GoArticleAddPage.add(articleTitle).save();
+    cy.contains(`GO Article ${articleTitle} has been created.`);
+
+    getNode(articleTitle).then((article) => {
+      const categoryAdd = GoCategoryAddPage.add(categoryTitle);
       addGoLinkbox(categoryAdd, {
         title: `Linkbox ${runId}`,
         description: `Beskrivelse ${runId}`,
         linkPath: article.path,
       });
 
-      saveGoCategory(categoryAdd, categoryTitle).then((category) => {
+      categoryAdd.save();
+      cy.contains(`GO category ${categoryTitle} has been created.`);
+
+      getNode(categoryTitle).then((category) => {
         getAppCategories('BIBLOGO').then(({ data }) => {
           const ids = data.getAppCategories.map(({ id }) => id);
           expect(ids).to.include(category.id);

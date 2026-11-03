@@ -8,6 +8,18 @@ export class GoCategoryAddPage extends GoNodeAddPage {
     };
   }
 
+  /**
+   * Starts a category with the fields every category needs.
+   */
+  static add(title: string) {
+    const categoryAdd = new GoCategoryAddPage();
+    categoryAdd.visitReturningToContent();
+    categoryAdd.fillTitle(title);
+    categoryAdd.fillMenuTitle(title);
+    categoryAdd.selectMenuImage('paige-cody');
+    return categoryAdd;
+  }
+
   fillMenuTitle(title: string) {
     // The menu title is in the sidebar, which is collapsed on narrow screens.
     this.openSidebar();

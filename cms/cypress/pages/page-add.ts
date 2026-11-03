@@ -9,6 +9,16 @@ export class PageAddPage extends NodeFormPage {
     };
   }
 
+  /**
+   * Starts a page with the fields every page needs.
+   */
+  static add(title: string) {
+    const pageAdd = new PageAddPage();
+    pageAdd.visit([]);
+    pageAdd.fillTitle(title);
+    return pageAdd;
+  }
+
   fillSubtitle(subtitle: string) {
     // The subtitle is hidden until the titles are displayed.
     this.elements.displayTitlesField().check();
