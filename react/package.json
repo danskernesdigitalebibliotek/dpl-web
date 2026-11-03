@@ -39,7 +39,7 @@
     "codegen:client:fbs": "rm -rf src/core/fbs/model/*.* && orval --project fbsAdapter",
     "codegen:client:publizon": "rm -rf src/core/publizon/model/*.* && orval --project publizonAdapter",
     "codegen:client:dpl-cms": "rm -rf src/core/dpl-cms/model/*.* && orval --project dplCms",
-    "post-process-generated-graphql": "ts-node ./scripts/post-process-generated-graphql.ts"
+    "post-process-generated-graphql": "node ./scripts/post-process-generated-graphql.ts"
   },
   "devDependencies": {
     "@babel/core": "^8.0.7",
@@ -49,7 +49,6 @@
     "@chromatic-com/storybook": "^3",
     "@csstools/postcss-sass": "^5.1.1",
     "@cypress/code-coverage": "^4.0.3",
-    "@cypress/webpack-preprocessor": "^8.0.0",
     "@eslint/js": "^9.39.2",
     "@graphql-codegen/cli": "^7.4.6",
     "@graphql-codegen/introspection": "^6.1.0",
@@ -119,8 +118,6 @@
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-prettier": "^5.0.2",
     "svg-url-loader": "^8.1.0",
-    "ts-loader": "^9.6.2",
-    "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3",
     "webpack": "^5.112.0",

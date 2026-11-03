@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from "cypress";
-import plugins from "./cypress/plugins";
+import codeCoverageTask from "@cypress/code-coverage/task";
 
 export default defineConfig({
   // Cypress 14's Test Replay caused a CI deadlock when running under pnpm.
@@ -36,7 +36,9 @@ export default defineConfig({
         terminalReportOptions
       );
 
-      return plugins(on, config);
+      codeCoverageTask(on, config);
+
+      return config;
     }
   }
 });

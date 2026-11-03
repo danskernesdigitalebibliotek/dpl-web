@@ -21,7 +21,6 @@
   "ignoreDependencies": [
     "core-js",
     "caniuse-lite",
-    "ts-loader",
     "postcss-scss",
     "postcss-loader"
   ]

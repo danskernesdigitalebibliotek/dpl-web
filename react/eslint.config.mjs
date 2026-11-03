@@ -124,7 +124,6 @@ export default [
             "webpack.helpers.js",
             "postcss.config.js",
             "orval.config.ts",
-            "cypress/plugins/index.js",
             "cypress/support/index.ts",
             "scripts/postcss-node-sass.js",
             "scripts/post-process-generated-graphql.ts",
