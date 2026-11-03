@@ -3,7 +3,7 @@
   "compilerOptions": {
     "jsx": "react",
     "types": ["cypress", "node", "vitest/importMeta"],
-    "target": "es6",
+    "target": "es2025",
     "allowJs": true,
     "paths": {
       "@tanstack/react-query": ["./node_modules/@tanstack/react-query"]

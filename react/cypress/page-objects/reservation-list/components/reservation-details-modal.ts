@@ -13,7 +13,7 @@ export const reservationDetailsModalSelector = ".modal-details";
  * reaches the cancel confirmation.
  */
 export class ReservationDetailsModalComponent extends ComponentObject {
-  public elements!: Elements;
+  declare public elements: Elements;
 
   constructor() {
     super(() => cy.get(reservationDetailsModalSelector));
