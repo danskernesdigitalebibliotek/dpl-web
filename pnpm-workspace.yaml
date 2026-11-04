@@ -12,7 +12,7 @@ packages:
 sharedWorkspaceLockfile: false
 
 # Whitelist of packages that are allowed to run build scripts. Anything not
-# listed here is "unreviewed": with strictDepBuilds (pnpm 11 default) its build
+# listed here is "unreviewed": with strictDepBuilds (on by default) its build
 # scripts are skipped and the install fails, so new native dependencies must be
 # reviewed and added deliberately. pnpm appends unreviewed packages here with a
 # placeholder value during install — replace it with true or false.
@@ -50,11 +50,8 @@ minimumReleaseAge: 2880
 # Another supply chain risk mitigation: https://pnpm.io/settings#blockexoticsubdeps
 blockExoticSubdeps: true
 
-# Security floors for transitive dependencies. With sharedWorkspaceLockfile:
-# false, `pnpm update <name>` only matches a project's direct dependencies and
-# silently skips transitive ones, so Dependabot security updates for these fail
-# with security_update_not_possible. Drop an entry once nothing resolves below
-# its floor without it.
+# Security floors for transitive dependencies. Drop an entry once nothing
+# resolves below its floor without it.
 overrides:
   # ReDoS advisories, fixed in 1.1.21 / 2.1.7 / 5.0.12.
   brace-expansion@1: ^1.1.21
