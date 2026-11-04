@@ -49,10 +49,9 @@ run_command() {
   local attempt rc=1
   for ((attempt=1; attempt<=RETRIES; attempt++)); do
     printf '\n$ (attempt %d/%d) %s\n' "$attempt" "$RETRIES" "$cmd" >> "$log"
-    if bash -c "$cmd" >> "$log" 2>&1; then
-      return 0
-    fi
+    bash -c "$cmd" >> "$log" 2>&1
     rc=$?
+    (( rc == 0 )) && return 0
     if (( attempt < RETRIES )); then
       printf '[exit %d, retrying in %ss]\n' "$rc" "$RETRY_DELAY" >> "$log"
       sleep "$RETRY_DELAY"
