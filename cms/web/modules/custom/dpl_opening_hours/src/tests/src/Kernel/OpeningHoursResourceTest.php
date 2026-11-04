@@ -13,6 +13,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
+use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
+use Drupal\dpl_opening_hours\Model\Repetition\WeeklyRepetition;
 use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursCreateResource;
 use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursDeleteResource;
 use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursResource;
@@ -228,6 +230,36 @@ class OpeningHoursResourceTest extends KernelTestBase {
     // created.
     $allOpeningHours = $this->listOpeningHours();
     $this->assertEquals($createdOpeningHours, $allOpeningHours);
+  }
+
+  /**
+   * Test that a weekly repetition includes its end date at any time of day.
+   */
+  public function testWeeklyRepetitionIncludesEndDate(): void {
+    /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager */
+    $entityTypeManager = $this->container->get('dpl_opening_hours.test_entity_type_manager');
+    /** @var \Drupal\node\NodeInterface $branch */
+    $branch = $entityTypeManager->getStorage('node')->load(1);
+    /** @var \Drupal\taxonomy\TermInterface $category */
+    $category = $entityTypeManager->getStorage('taxonomy_term')->load(1);
+    /** @var \Drupal\dpl_opening_hours\Model\OpeningHoursRepository $repository */
+    $repository = $this->container->get('dpl_opening_hours.repository');
+
+    // The time of day of an end date from a request is the time of the
+    // request. Midnight is earlier on the day than the last instance.
+    $instances = $repository->insert(new OpeningHoursInstance(
+      NULL,
+      $branch,
+      $category,
+      new \DateTimeImmutable('2030-02-04 10:00'),
+      new \DateTimeImmutable('2030-02-04 14:30'),
+      new WeeklyRepetition(NULL, new \DateTimeImmutable('2030-02-18 00:00')),
+    ));
+
+    $this->assertSame(
+      ['2030-02-04', '2030-02-11', '2030-02-18'],
+      array_map(fn (OpeningHoursInstance $instance) => $instance->startTime->format('Y-m-d'), $instances),
+    );
   }
 
   /**

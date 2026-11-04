@@ -123,7 +123,14 @@ class OpeningHoursRepository {
 
     $repetitions = match ($repetition::class) {
       NoRepetition::class => [$instance->startTime],
-      WeeklyRepetition::class => new \DatePeriod($instance->startTime, new \DateInterval("P1W"), $repetition->endDate),
+      WeeklyRepetition::class => new \DatePeriod(
+        $instance->startTime,
+        new \DateInterval("P1W"),
+        // The end date is inclusive, but its time of day is arbitrary: dates
+        // from requests get the time of day of the request. End the period
+        // at the start of the following day, as the period excludes its end.
+        \DateTimeImmutable::createFromInterface($repetition->endDate)->setTime(0, 0)->modify('+1 day'),
+      ),
       default => throw new \InvalidArgumentException("Unknown repetition type " . $repetition::class),
     };
 
