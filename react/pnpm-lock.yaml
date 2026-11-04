@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  brace-expansion@1: ^1.1.21
-  brace-expansion@2: ^2.1.7
-  brace-expansion@5: ^5.0.12
-
 importers:
 
   .:
@@ -301,7 +296,7 @@ importers:
         version: 8.5.31
       postcss-cli:
         specifier: ^12.0.0
-        version: 12.0.0(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.0)
+        version: 12.0.0(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.1)
       postcss-loader:
         specifier: ^8.2.1
         version: 8.2.1(postcss@8.5.31)(typescript@6.0.3)(webpack@5.112.0)
@@ -3271,7 +3266,6 @@ packages:
 
   ansi-html-community@0.0.8:
     resolution: {integrity: sha512-1APHAyr3+PCamwNw3bXCPp4HFLONZt/yIH0sZp0/469KWNTEy+qN5jQ3GVX6DMZ1UXAi34yVwtTeaG/HpBuuzw==}
-    engines: {'0': node >= 0.8.0}
     hasBin: true
 
   ansi-regex@4.1.1:
@@ -4429,7 +4423,6 @@ packages:
 
   extsprintf@1.3.0:
     resolution: {integrity: sha512-11Ndz7Nv+mvAC1j0ktTa7fAb0vLyGGX+rMHNBYQviQDGU0Hw7lhctJANqbPhu9nV9/izT/IntTgZ7Im/9LJs9g==}
-    engines: {'0': node >=0.6.0}
 
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
@@ -5352,7 +5345,6 @@ packages:
 
   jsprim@2.0.2:
     resolution: {integrity: sha512-gqXddjPqQ6G40VdnI6T6yObEC+pDNvyP95wdQhkWkg7crHH3km5qP1FsOXEkzEQwnz6gz5qGTn1c2Y52wP3OyQ==}
-    engines: {'0': node >=0.6.0}
 
   jsx-ast-utils@3.3.5:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
@@ -7416,7 +7408,6 @@ packages:
 
   verror@1.10.0:
     resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
-    engines: {'0': node >=0.6.0}
 
   vite@8.3.2:
     resolution: {integrity: sha512-SQr1x6W5vVSbROg7vsyXIaxK9b0G7zsT68acdWWRmnBUsgDieLCRG+Rep9WdZgcposvv/GSnr4GUUBqB3vXq6w==}
@@ -10052,7 +10043,7 @@ snapshots:
       '@scalar/types': 0.23.1
       ajv: 8.20.0
       ajv-draft-04: 1.0.0(ajv@8.20.0)
-      ajv-formats: 3.0.1(ajv@8.20.0)
+      ajv-formats: 3.0.1
       yaml: 2.9.1
 
   '@scalar/openapi-parser@0.29.12':
@@ -10858,12 +10849,12 @@ snapshots:
     optionalDependencies:
       ajv: 8.20.0
 
-  ajv-formats@2.1.1(ajv@8.20.0):
-    optionalDependencies:
+  ajv-formats@2.1.1:
+    dependencies:
       ajv: 8.20.0
 
-  ajv-formats@3.0.1(ajv@8.20.0):
-    optionalDependencies:
+  ajv-formats@3.0.1:
+    dependencies:
       ajv: 8.20.0
 
   ajv-keywords@3.5.2(ajv@6.15.0):
@@ -14249,13 +14240,13 @@ snapshots:
       '@csstools/css-tokenizer': 4.0.2
       postcss: 8.5.31
 
-  postcss-cli@12.0.0(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.0):
+  postcss-cli@12.0.0(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.1):
     dependencies:
       chokidar: 5.0.0
       dependency-graph: 1.0.0
       picocolors: 1.1.1
       postcss: 8.5.31
-      postcss-load-config: 6.0.1(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.0)
+      postcss-load-config: 6.0.1(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.1)
       postcss-reporter: 7.1.0(postcss@8.5.31)
       pretty-hrtime: 1.0.3
       read-cache: 1.0.2
@@ -14267,13 +14258,13 @@ snapshots:
       - tsx
       - yaml
 
-  postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.0):
+  postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.31)(yaml@2.9.1):
     dependencies:
       lilconfig: 3.1.3
     optionalDependencies:
       jiti: 2.7.0
       postcss: 8.5.31
-      yaml: 2.9.0
+      yaml: 2.9.1
 
   postcss-loader@8.2.1(postcss@8.5.31)(typescript@6.0.3)(webpack@5.112.0):
     dependencies:
@@ -14759,14 +14750,14 @@ snapshots:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.20.0
-      ajv-formats: 2.1.1(ajv@8.20.0)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.20.0)
 
   schema-utils@4.5.0:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.20.0
-      ajv-formats: 3.0.1(ajv@8.20.0)
+      ajv-formats: 3.0.1
       ajv-keywords: 5.1.0(ajv@8.20.0)
 
   screenfull@5.2.0: {}
