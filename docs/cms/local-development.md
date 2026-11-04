@@ -88,14 +88,17 @@ WireMock stands in for the external services. Run the tasks from `cms/`:
    apps use, with `task ci:cypress:mobile-app`. `task --list | grep
    ci:cypress` lists the groups, and `task ci:cypress` runs all of them.
 3. Run a single spec with `task dev:cypress:run --
-   cypress/e2e/mobile-app/mobile-app-events.cy.ts`. Run a group first, as
-   that creates the WireMock mappings the tests rely on.
+   cypress/e2e/mobile-app/mobile-app-events.cy.ts`. The specs run
+   independently, but they need the WireMock mappings, so create them first
+   with `task ci:wiremock:create-mappings`.
 
 The site and the Cypress container read their secrets, such as the password
-of the mobile GraphQL consumer, from the `.env` at the root of the checkout.
-`task ci:reset` creates one if it is missing. Run the tests from the checkout
-you ran `task ci:reset` in, otherwise the mobile app tests fail with
-`403 Forbidden`.
+of the mobile GraphQL consumer, from the `.env` at the root of the repository
+directory. `task ci:reset` creates one if it is missing. Run the tests from the
+same directory you ran `task ci:reset` in. Switching branches there is fine,
+but if you work in several clones or git worktrees, each has its own `.env`,
+and running the tests from another one than the site was set up from makes the
+mobile app tests fail with `403 Forbidden`.
 
 To follow the tests in the Cypress app instead, run `task ci:cypress:local`.
 It adds the WireMock hosts to `/etc/hosts`, which asks for your password.
