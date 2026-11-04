@@ -65,7 +65,6 @@
     <exclude-pattern>*/web/modules/custom/dpl_related_content/dpl_related_content.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_reservations/dpl_reservations.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/dpl_search/dpl_search.module</exclude-pattern>
-    <exclude-pattern>*/web/modules/custom/dpl_webform/dpl_webform.module</exclude-pattern>
     <exclude-pattern>*/web/modules/custom/media_twentythree/media_twentythree.module</exclude-pattern>
   </rule>
 
