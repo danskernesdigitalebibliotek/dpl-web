@@ -1,0 +1,49 @@
+---
+# Checks that Adressevælgeren, the address register behind the dk_address
+# module, still accepts the shared token the module sends by default.
+#
+# Klimadatastyrelsen plan to retire the shared token once Adressevælgeren gets
+# user management. CI mocks the API, so nothing else would notice. A failure
+# here is reported to Zulip by check-failing-actions-workflow-run.yml.
+
+name: CMS / Check address register token
+
+on:
+  schedule:
+    - cron: "0 6 * * 1-5"
+      timezone: "Europe/Copenhagen"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    name: Check address register token
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      # DkAddress::DEFAULT_TOKEN in the dk_address module, a published value.
+      TOKEN: adressevaelger123
+    steps:
+      - name: Search with the shared token
+        run: |
+          set -uo pipefail
+          status=$(curl -sS -G https://adressevaelger.dk/adresser/soeg \
+            --data-urlencode tekst=Algade \
+            --data-urlencode maksimum=1 \
+            --data-urlencode "token=$TOKEN" \
+            -o body.txt -w '%{http_code}')
+          echo "HTTP $status"
+          head -c 500 body.txt; echo
+
+          # The same test as DkAddress::isTokenRejection().
+          if [ "$status" = 401 ] || [ "$status" = 403 ] \
+            || { [ "$status" = 400 ] && grep -qi token body.txt; }; then
+            echo "::error::Adressevælgeren refused the shared token. Sites without their own token in dk_address settings can no longer look up addresses."
+            exit 1
+          fi
+
+          # An outage says nothing about the token, so it does not fail the job.
+          if [ "$status" != 200 ]; then
+            echo "::warning::Adressevælgeren answered HTTP $status, so the token could not be checked."
+          fi

@@ -6,7 +6,7 @@ export const dashboardStory = {
 } as const;
 
 export class DashboardPage extends PageObject {
-  public elements!: Elements;
+  declare public elements: Elements;
 
   constructor(story: string = dashboardStory.default) {
     super({

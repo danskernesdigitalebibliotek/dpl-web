@@ -5,8 +5,8 @@ import {
 } from "@hammzj/cypress-page-object";
 
 export class DemoModalPage extends PageObject {
-  public elements!: Elements;
-  public components!: NestedComponents;
+  declare public elements: Elements;
+  declare public components: NestedComponents;
 
   constructor() {
     super({

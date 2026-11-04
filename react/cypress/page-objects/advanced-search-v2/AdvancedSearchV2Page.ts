@@ -9,8 +9,8 @@ import { SearchFacetsComponent } from "./components/SearchFacests";
 import { AdvancedSearchSortComponent } from "./components/AdvancedSearchSort";
 
 export class AdvancedSearchV2Page extends PageObject {
-  public elements!: Elements;
-  public components!: NestedComponents;
+  declare public elements: Elements;
+  declare public components: NestedComponents;
 
   constructor() {
     super({

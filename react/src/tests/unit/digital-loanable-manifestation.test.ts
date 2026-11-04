@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import {
-  getLoanableManifestation,
-  getManifestationDigitalIdentifier,
-  onlineInternalModalId
-} from "../../apps/material/helper";
+import { onlineInternalModalId } from "../../apps/material/helper";
 import { IdentifierTypeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { Pid } from "../../core/utils/types/ids";
+import {
+  getPublizonManifestation,
+  getPublizonIdentifier
+} from "../../core/utils/helpers/digital-loanable-manifestation";
 
 const manifestation = (
   pid: string,
@@ -40,39 +40,43 @@ const newEbook = manifestation(
   "2025"
 );
 
-describe("getLoanableManifestation", () => {
+describe("getPublizonManifestation", () => {
   it("prefers the newest of the loanable editions", () => {
     // Several editions of one material type can be loanable, and the reader
     // expects the newest - not whichever the data happens to list first.
-    expect(getLoanableManifestation([oldEbook, newEbook])?.pid).toBe(
-      "pid:new-ebook"
-    );
-    expect(getLoanableManifestation([newEbook, oldEbook])?.pid).toBe(
-      "pid:new-ebook"
+    expect(
+      getPublizonManifestation([oldEbook, newEbook])?.manifestation.pid
+    ).toBe("pid:new-ebook");
+    expect(
+      getPublizonManifestation([newEbook, oldEbook])?.manifestation.pid
+    ).toBe("pid:new-ebook");
+  });
+
+  it("carries the id of the manifestation it picked", () => {
+    expect(getPublizonManifestation([oldEbook, newEbook])?.identifier).toBe(
+      "9788727272894"
     );
   });
 
   it("leaves the caller's list in the order it was given", () => {
-    // Ordering by year sorts in place, so the list has to be copied first.
     const manifestations = [oldEbook, newEbook];
-    getLoanableManifestation(manifestations);
+    getPublizonManifestation(manifestations);
     expect(manifestations.map(({ pid }) => pid)).toEqual([
       "pid:old-ebook",
       "pid:new-ebook"
     ]);
   });
 
-  it("prefers the manifestation that has a PUBLIZON identifier", () => {
+  it("skips a manifestation without a PUBLIZON identifier", () => {
     // The deselected PDF is listed first but is not loanable.
-    expect(getLoanableManifestation([pdf, epub])?.pid).toBe("pid:epub");
+    expect(getPublizonManifestation([pdf, epub])?.manifestation.pid).toBe(
+      "pid:epub"
+    );
   });
 
-  it("falls back to the first manifestation when none has a PUBLIZON identifier", () => {
-    expect(getLoanableManifestation([pdf])?.pid).toBe("pid:pdf");
-  });
-
-  it("returns null for an empty list", () => {
-    expect(getLoanableManifestation([])).toBeNull();
+  it("returns null when no manifestation can be lent", () => {
+    expect(getPublizonManifestation([pdf])).toBeNull();
+    expect(getPublizonManifestation([])).toBeNull();
   });
 });
 
@@ -84,25 +88,17 @@ const rodloesEbook = manifestation("pid:rodloes-ebook", [
   { type: IdentifierTypeEnum.Isbn, value: "9788797577646" }
 ]);
 
-describe("getManifestationDigitalIdentifier", () => {
-  it("returns the PUBLIZON value, not the leading (deselected PDF) ISBN", () => {
-    expect(getManifestationDigitalIdentifier(rodloesEbook)).toBe(
-      "9788797577646"
-    );
+describe("getPublizonIdentifier", () => {
+  it("returns the PUBLIZON identifier, not the leading (deselected PDF) ISBN", () => {
+    expect(getPublizonIdentifier(rodloesEbook)).toBe("9788797577646");
   });
 
-  it("returns the PUBLIZON identifier value when present", () => {
-    expect(getManifestationDigitalIdentifier(epub)).toBe("9788797577646");
+  it("never falls back to an ISBN", () => {
+    expect(getPublizonIdentifier(pdf)).toBeNull();
   });
 
-  it("falls back to the ISBN when there is no PUBLIZON identifier", () => {
-    expect(getManifestationDigitalIdentifier(pdf)).toBe("9788797287996");
-  });
-
-  it("returns an empty string when there is no usable identifier", () => {
-    expect(
-      getManifestationDigitalIdentifier(manifestation("pid:none", []))
-    ).toBe("");
+  it("returns null without any identifier", () => {
+    expect(getPublizonIdentifier(manifestation("pid:none", []))).toBeNull();
   });
 });
 
@@ -120,21 +116,20 @@ const ebook2025 = manifestation(
 );
 
 describe("onlineInternalModalId", () => {
-  it("is the id of the edition that is going to be lent", () => {
+  const modalIdFor = (manifestations: Manifestation[]) => {
+    const lendable = getPublizonManifestation(manifestations);
+    return lendable && onlineInternalModalId(lendable);
+  };
+
+  it("is the id of the manifestation that is going to be lent", () => {
     // One modal is rendered per manifestation, so an opener covering several
     // editions still has to name a single one - and not the leading one.
-    expect(onlineInternalModalId([ebook2025, ebook2019])).toBe(
+    expect(modalIdFor([ebook2025, ebook2019])).toBe(
       "online-internal-modal-141423606"
     );
   });
 
   it("is the same id whether or not the set holds other editions", () => {
-    expect(onlineInternalModalId([ebook2025])).toBe(
-      "online-internal-modal-141423606"
-    );
-  });
-
-  it("returns the bare prefix when there is no manifestation to lend", () => {
-    expect(onlineInternalModalId([])).toBe("online-internal-modal");
+    expect(modalIdFor([ebook2025])).toBe("online-internal-modal-141423606");
   });
 });

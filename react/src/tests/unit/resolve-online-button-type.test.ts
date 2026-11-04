@@ -1,6 +1,7 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   AccessTypeCodeEnum,
+  IdentifierTypeEnum,
   LinkStatusEnum
 } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
@@ -26,11 +27,47 @@ const accessUrl = (status: LinkStatusEnum, origin = "Filmstriben") =>
     __typename: "AccessUrl",
     status,
     origin,
-    url: `https://${origin.toLowerCase()}.dk`,
+    url: `https://${origin.toLowerCase().replace(/\s/g, "")}.dk`,
     loginRequired: false
   }) as const;
 
 describe("resolveOnlineButtonType", () => {
+  const ebook = (identifiers: Manifestation["identifiers"]) =>
+    ({
+      ...manifestationWith([
+        {
+          __typename: "Ereol",
+          origin: "Ereolen",
+          url: "https://ereolen.dk",
+          canAlwaysBeLoaned: false
+        }
+      ]),
+      materialTypes: [{ materialTypeSpecific: { display: "e-bog" } }],
+      identifiers
+    }) as Manifestation;
+
+  it("carries the manifestation it lends for an e-book with a PUBLIZON identifier", () => {
+    const result = resolveOnlineButtonType([
+      ebook([{ type: IdentifierTypeEnum.Publizon, value: "9788711623497" }])
+    ]);
+
+    expect(result).toMatchObject({
+      type: "internal",
+      loanableManifestation: {
+        identifier: "9788711623497",
+        opensIn: "reader"
+      }
+    });
+  });
+
+  it("offers no internal button for an e-book with only an ISBN", () => {
+    const result = resolveOnlineButtonType([
+      ebook([{ type: IdentifierTypeEnum.Isbn, value: "9788711623497" }])
+    ]);
+
+    expect(result).toBeNull();
+  });
+
   it("resolves an external button for an active access url", () => {
     const result = resolveOnlineButtonType([
       manifestationWith([accessUrl(LinkStatusEnum.Ok)])
@@ -62,6 +99,28 @@ describe("resolveOnlineButtonType", () => {
     ]);
 
     expect(result).toBeNull();
+  });
+
+  it("skips and logs an active access url that is not a valid url", () => {
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    const result = resolveOnlineButtonType([
+      manifestationWith([
+        { ...accessUrl(LinkStatusEnum.Ok, "DBC Webarkiv"), url: "" },
+        accessUrl(LinkStatusEnum.Ok)
+      ])
+    ]);
+
+    expect(result).toMatchObject({
+      type: "external",
+      access: { origin: "Filmstriben" }
+    });
+    expect(consoleError).toHaveBeenCalledWith(
+      "AccessUrl is invalid",
+      expect.objectContaining({ url: "" })
+    );
+    consoleError.mockRestore();
   });
 
   it("resolves a digital article button for article manifestations", () => {

@@ -6,8 +6,6 @@ import {
 } from "../../../../core/publizon/publizon";
 import { useText } from "../../../../core/utils/text";
 import MaterialAvailabilityTextParagraph from "../generic/MaterialAvailabilityTextParagraph";
-import { ManifestationMaterialType } from "../../../../core/utils/types/material-type";
-import { playerTypes, readerTypes } from "../../../reader-player/helper";
 import { isAnonymous } from "../../../../core/utils/helpers/user";
 import { getPatronLoanQuotas } from "../../../../core/utils/helpers/publizon";
 import {
@@ -27,18 +25,24 @@ import {
 import { useUrls } from "../../../../core/utils/url";
 import { SortOption } from "../../../../core/advanced-search/types";
 import Link from "../../../atoms/links/Link";
+import {
+  DigitalLoanableManifestation,
+  opensInPlayer
+} from "../../../../core/utils/helpers/digital-loanable-manifestation";
 
-interface MaterialAvailabilityTextOnlineProps {
-  /** The digital identifier the material is lent by - see
-   * getManifestationDigitalIdentifier. Shared with the loan buttons so both
-   * ask the providers about the same edition. */
-  identifier: string;
-  materialType: ManifestationMaterialType;
-}
+type MaterialAvailabilityTextOnlineProps = {
+  /** Shared with the loan buttons so both ask the providers about the same
+   * manifestation, and the quota shown is the one its reader or player draws on. */
+  loanableManifestation: Pick<
+    DigitalLoanableManifestation,
+    "identifier" | "opensIn"
+  >;
+};
 
 const MaterialAvailabilityTextOnline: React.FC<
   MaterialAvailabilityTextOnlineProps
-> = ({ identifier, materialType }) => {
+> = ({ loanableManifestation }) => {
+  const { identifier } = loanableManifestation;
   const u = useUrls();
 
   const getAlwaysLoanableDigitalTitlesUrl = (
@@ -65,11 +69,7 @@ const MaterialAvailabilityTextOnline: React.FC<
   const viaBiblioAdapter = useBiblioAdapter();
 
   const { data: productsData } = useGetV1ProductsIdentifier(identifier, {
-    query: {
-      // We never want to pass an empty string to the API
-      // So we only enable the query if we have an identifier
-      enabled: !!identifier && !viaBiblioAdapter
-    }
+    query: { enabled: !viaBiblioAdapter }
   });
 
   const { data: libraryProfileData } = useGetV1LibraryProfile({
@@ -92,7 +92,7 @@ const MaterialAvailabilityTextOnline: React.FC<
 
   // Only read for its licence - see isCostFree below.
   const { data: loanDecision } = useDigitalLoanDecision(identifier, {
-    enabled: Boolean(identifier) && viaBiblioAdapter
+    enabled: viaBiblioAdapter
   });
 
   if (!productsData && !viaBiblioAdapter) return null;
@@ -141,7 +141,7 @@ const MaterialAvailabilityTextOnline: React.FC<
     return null;
   }
 
-  if (isPlayerType(materialType)) {
+  if (opensInPlayer(loanableManifestation)) {
     if (!hasValue(audioQuota.current) || !hasValue(audioQuota.limit)) {
       return null;
     }
@@ -169,41 +169,31 @@ const MaterialAvailabilityTextOnline: React.FC<
     );
   }
 
-  if (isReaderType(materialType)) {
-    if (!hasValue(ebookQuota.current) || !hasValue(ebookQuota.limit)) {
-      return null;
-    }
-
-    return (
-      <MaterialAvailabilityTextParagraph>
-        {t("onlineLimitMonthEbookInfoText", {
-          placeholders: {
-            "@count": ebookQuota.current,
-            "@limit": ebookQuota.limit
-          }
-        })}
-        {ebookQuota.current >= ebookQuota.limit && (
-          <>
-            {". "}
-            <Link
-              href={getAlwaysLoanableDigitalTitlesUrl(MATERIAL_TYPE_EBOOKS)}
-              dataCy="material-always-loanable-link"
-            >
-              {t("onlineLimitMonthAlwaysLoanableLinkText")}
-            </Link>
-          </>
-        )}
-      </MaterialAvailabilityTextParagraph>
-    );
+  if (!hasValue(ebookQuota.current) || !hasValue(ebookQuota.limit)) {
+    return null;
   }
 
-  return null;
+  return (
+    <MaterialAvailabilityTextParagraph>
+      {t("onlineLimitMonthEbookInfoText", {
+        placeholders: {
+          "@count": ebookQuota.current,
+          "@limit": ebookQuota.limit
+        }
+      })}
+      {ebookQuota.current >= ebookQuota.limit && (
+        <>
+          {". "}
+          <Link
+            href={getAlwaysLoanableDigitalTitlesUrl(MATERIAL_TYPE_EBOOKS)}
+            dataCy="material-always-loanable-link"
+          >
+            {t("onlineLimitMonthAlwaysLoanableLinkText")}
+          </Link>
+        </>
+      )}
+    </MaterialAvailabilityTextParagraph>
+  );
 };
 
 export default MaterialAvailabilityTextOnline;
-
-const isReaderType = (type: ManifestationMaterialType) =>
-  readerTypes.includes(type);
-
-const isPlayerType = (type: ManifestationMaterialType) =>
-  playerTypes.includes(type);

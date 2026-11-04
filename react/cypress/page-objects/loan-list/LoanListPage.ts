@@ -14,9 +14,9 @@ export const loanListStory = {
 } as const;
 
 export class LoanListPage extends PageObject {
-  public elements!: Elements;
+  declare public elements: Elements;
 
-  public components!: NestedComponents;
+  declare public components: NestedComponents;
 
   constructor(story: string = loanListStory.default) {
     super({

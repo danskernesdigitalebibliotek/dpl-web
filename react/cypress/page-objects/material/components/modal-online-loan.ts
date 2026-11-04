@@ -5,7 +5,7 @@ export const onlineLoanModalSelector = "[data-cy='online-internal-modal']";
 
 /** The modal that confirms a loan of a digital material. */
 export class OnlineLoanModalComponent extends ComponentObject {
-  public elements!: Elements;
+  declare public elements: Elements;
 
   constructor() {
     super(() => cy.get(onlineLoanModalSelector));

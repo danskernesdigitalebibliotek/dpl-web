@@ -14,6 +14,7 @@ import {
 } from "../../components/reader-player/helper";
 import DigitalReaderPlayer from "../../components/reader-player/DigitalReaderPlayer";
 import useDigitalCheckout from "../../components/reader-player/useDigitalCheckout";
+import { publizonIdentifier } from "./__vitest_data__/publizon-identifier";
 
 // The reader and player themselves need the SDK; which of them mounts is the
 // decision under test, so they are reduced to markers.
@@ -132,9 +133,11 @@ describe("Where a digital material's url points", () => {
 
   it("sends each sample to the page its material type plays on", () => {
     // The route carries the type: a sample has no loan to read it from.
-    expect(sampleUrl("9788711623497", "ebook").pathname).toBe("/reader");
-    expect(sampleUrl("9788711823453", "audiobook").pathname).toBe("/player");
-    expect(sampleUrl("9788711823453", "audiobook").search).toBe(
+    const ebook = publizonIdentifier("9788711623497");
+    const audiobook = publizonIdentifier("9788711823453");
+    expect(sampleUrl(ebook, "ebook").pathname).toBe("/reader");
+    expect(sampleUrl(audiobook, "audiobook").pathname).toBe("/player");
+    expect(sampleUrl(audiobook, "audiobook").search).toBe(
       "?identifier=9788711823453"
     );
   });
