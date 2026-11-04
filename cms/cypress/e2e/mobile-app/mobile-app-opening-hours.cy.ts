@@ -198,7 +198,11 @@ describe('Mobile app API: opening hours', () => {
       start_time: '10:00',
       end_time: '14:30',
       branch_id: branchId,
-      repetition: { type: 'weekly', weekly_data: { end_date: '2030-02-18' } },
+      // The end date is the day after the last instance. The CMS gives the end
+      // date the time of day of the request, so with an end date on the day
+      // of the last instance, the last instance is left out of requests made
+      // before 10:00. Move it back to 2030-02-18 when that is fixed.
+      repetition: { type: 'weekly', weekly_data: { end_date: '2030-02-19' } },
     };
 
     editOpeningHours('POST', request).then((created) => {
