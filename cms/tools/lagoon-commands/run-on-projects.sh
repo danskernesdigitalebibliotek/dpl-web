@@ -49,7 +49,9 @@ run_command() {
   local attempt rc=1
   for ((attempt=1; attempt<=RETRIES; attempt++)); do
     printf '\n$ (attempt %d/%d) %s\n' "$attempt" "$RETRIES" "$cmd" >> "$log"
-    bash -c "$cmd" >> "$log" 2>&1
+    # Without </dev/null the command inherits the commands file as stdin and
+    # anything that reads stdin swallows the remaining commands.
+    bash -c "$cmd" < /dev/null >> "$log" 2>&1
     rc=$?
     (( rc == 0 )) && return 0
     if (( attempt < RETRIES )); then
