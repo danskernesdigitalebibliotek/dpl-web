@@ -1,5 +1,6 @@
 ---
 name: CMS / CI Tests
+# TEMPORARY: triggers CMS CI for a React-only PR. Remove before merge.
 
 on:
   pull_request:
