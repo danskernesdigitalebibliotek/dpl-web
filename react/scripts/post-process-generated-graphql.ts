@@ -18,6 +18,7 @@ replaceInFile({
     console.log("Replacement results:", results);
   })
   .catch((error: unknown) => {
+    // eslint-disable-next-line no-console
     console.error("Error occurred:", error);
   })
   .finally(() => {
@@ -33,6 +34,7 @@ replaceInFile({
         console.log("Replacement results:", results);
       })
       .catch((error: unknown) => {
+        // eslint-disable-next-line no-console
         console.error("Error occurred:", error);
       });
   });

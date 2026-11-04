@@ -4,7 +4,7 @@ import { ComponentObject, Elements } from "@hammzj/cypress-page-object";
 // `role="button"` on the row's outer element (physical rows are clickable
 // to open due-date/details; digital rows are not).
 export class PhysicalLoanRowComponent extends ComponentObject {
-  public elements!: Elements;
+  declare public elements: Elements;
 
   constructor(index = 0) {
     super(() => cy.get(".list-reservation[role='button']").eq(index));

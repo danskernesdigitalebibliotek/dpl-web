@@ -4,7 +4,7 @@ import { ComponentObject, Elements } from "@hammzj/cypress-page-object";
 // the `.list-reservation` class with the loan list, but live inside a
 // reservation list container.
 export class ReservationRowComponent extends ComponentObject {
-  public elements!: Elements;
+  declare public elements: Elements;
 
   constructor(index = 0) {
     super(() => cy.get(".list-reservation").eq(index));

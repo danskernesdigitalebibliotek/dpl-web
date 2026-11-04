@@ -6,8 +6,8 @@ import {
 import { DialogFindLibrary } from "./components/DialogFindLibrary";
 
 export class CreatePatronPage extends PageObject {
-  public elements!: Elements;
-  public components!: NestedComponents;
+  declare public elements: Elements;
+  declare public components: NestedComponents;
 
   constructor(storyId = "apps-create-patron--primary") {
     super({
