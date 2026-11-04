@@ -41,6 +41,7 @@
                 ],
                 "publisher": ["Memoris"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788793681095" },
                   { "type": "ISBN", "value": "9788793681095" },
                   { "type": "ISBN", "value": "9788793681095" }
                 ],
@@ -131,6 +132,7 @@
                 ],
                 "publisher": ["Memoris"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788793681132" },
                   { "type": "ISBN", "value": "9788793681132" },
                   { "type": "ISBN", "value": "9788793681132" }
                 ],
@@ -6822,6 +6824,7 @@
                 ],
                 "publisher": ["Turbulenz"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788792861917" },
                   { "type": "ISBN", "value": "9788792861917" },
                   { "type": "ISBN", "value": "9788792861917" }
                 ],
@@ -6884,6 +6887,7 @@
               ],
               "publisher": ["Turbulenz"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788792861917" },
                 { "type": "ISBN", "value": "9788792861917" },
                 { "type": "ISBN", "value": "9788792861917" }
               ],
@@ -7507,6 +7511,7 @@
                 ],
                 "publisher": ["Carlsen"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788711909294" },
                   { "type": "ISBN", "value": "9788711909294" },
                   { "type": "ISBN", "value": "9788711909294" }
                 ],
@@ -7560,6 +7565,7 @@
               ],
               "publisher": ["Carlsen"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788711909294" },
                 { "type": "ISBN", "value": "9788711909294" },
                 { "type": "ISBN", "value": "9788711909294" }
               ],
@@ -10796,6 +10802,7 @@
                 ],
                 "publisher": ["Memoris"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788793681040" },
                   { "type": "ISBN", "value": "9788793681040" },
                   { "type": "ISBN", "value": "9788793681040" }
                 ],
@@ -10892,6 +10899,7 @@
                 ],
                 "publisher": ["Memoris"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788793681071" },
                   { "type": "ISBN", "value": "9788793681071" },
                   { "type": "ISBN", "value": "9788793681071" }
                 ],
@@ -11472,6 +11480,7 @@
                 ],
                 "publisher": ["People's"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788772387277" },
                   { "type": "ISBN", "value": "9788772387277" },
                   { "type": "ISBN", "value": "9788772387277" }
                 ],
@@ -11524,6 +11533,7 @@
                 ],
                 "publisher": ["People's"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788772387321" },
                   { "type": "ISBN", "value": "9788772387321" },
                   { "type": "ISBN", "value": "9788772387321" }
                 ],
@@ -13725,6 +13735,7 @@
                 ],
                 "publisher": ["ABC"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788779163256" },
                   { "type": "ISBN", "value": "9788779163256" },
                   { "type": "ISBN", "value": "9788779163256" }
                 ],
@@ -13778,6 +13789,7 @@
               ],
               "publisher": ["ABC"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788779163256" },
                 { "type": "ISBN", "value": "9788779163256" },
                 { "type": "ISBN", "value": "9788779163256" }
               ],
@@ -26938,6 +26950,7 @@
                 ],
                 "publisher": ["ABC"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788779163409" },
                   { "type": "ISBN", "value": "9788779163409" },
                   { "type": "ISBN", "value": "9788779163409" }
                 ],
@@ -26991,6 +27004,7 @@
               ],
               "publisher": ["ABC"],
               "identifiers": [
+                { "type": "PUBLIZON", "value": "9788779163409" },
                 { "type": "ISBN", "value": "9788779163409" },
                 { "type": "ISBN", "value": "9788779163409" }
               ],

@@ -12,11 +12,8 @@ import { WorkId } from "../../core/utils/types/ids";
 import { useUrls } from "../../core/utils/url";
 import { AvailabilityLabel } from "./availability-label";
 import { Manifestation } from "../../core/utils/types/entities";
-import {
-  divideManifestationsByMaterialType,
-  getLoanableManifestation,
-  getManifestationDigitalIdentifier
-} from "../../apps/material/helper";
+import { divideManifestationsByMaterialType } from "../../apps/material/helper";
+import { getPublizonManifestation } from "../../core/utils/helpers/digital-loanable-manifestation";
 
 export interface AvailabilityLabelsProps {
   manifestations: Manifestation[];
@@ -46,23 +43,16 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
         const manifestationsOfMaterialType =
           manifestationsByMaterialType[materialType];
         const faustIds = getAllFaustIds(manifestationsOfMaterialType).sort();
-        const loanableManifestation = getLoanableManifestation(
-          manifestationsOfMaterialType
-        );
-        const identifier = loanableManifestation
-          ? getManifestationDigitalIdentifier(loanableManifestation) || null
-          : null;
+        // The provider's answer about the lent edition, whether or not our
+        // reader or player can open its type.
+        const identifier =
+          getPublizonManifestation(manifestationsOfMaterialType)?.identifier ??
+          null;
         const url = constructMaterialUrl(materialUrl, workId, materialType);
         const accessTypesCodes = manifestationsOfMaterialType
           .map((manifest) =>
             manifest.accessTypes.map((accessType) => accessType.code)
           )
-          .flat();
-
-        const access = manifestationsOfMaterialType
-          .map((manifest) => {
-            return manifest.access.map((acc) => acc.__typename);
-          })
           .flat();
 
         return (
@@ -73,7 +63,6 @@ export const AvailabilityLabels: React.FC<AvailabilityLabelsProps> = ({
             faustIds={faustIds}
             manifestText={materialType}
             accessTypes={accessTypesCodes}
-            access={access}
             selected={
               selectedManifestations &&
               materialType === getMaterialType(selectedManifestations)

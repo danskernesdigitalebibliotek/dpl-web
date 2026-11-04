@@ -48,7 +48,7 @@ const useOnlineInternalHandleLoanReservation = ({
 
   const digital = useDigitalLoanRequests({
     workId,
-    materialId: material.identifier
+    identifier: material.identifier
   });
   const publizon = usePublizonLoanRequests({ workId });
   const requester = viaBiblioAdapter ? digital : publizon;
@@ -78,10 +78,10 @@ const useOnlineInternalHandleLoanReservation = ({
         requester.acceptOffer?.(request.offerId, reportLoan);
         break;
       case "loan":
-        requester.loan(request.materialId, reportLoan);
+        requester.loan(request.identifier, reportLoan);
         break;
       case "reserve":
-        requester.reserve(request.materialId, reportReservation);
+        requester.reserve(request.identifier, reportReservation);
         break;
       default:
         invalidSwitchCase<void>(request);
