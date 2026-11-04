@@ -14,12 +14,12 @@ import {
 import { getBiblioDueDate } from "./helpers/date";
 import { loanWasCreated } from "./helpers/digital-loan-request";
 import { LoanRequester } from "./types/loan-requester";
-import { WorkId } from "./types/ids";
+import { PublizonIdentifier, WorkId } from "./types/ids";
 
 type DigitalLoanRequestsType = {
   workId: WorkId;
   /** The material on screen, which a redeemed offer is read back for. */
-  materialId: string | null;
+  identifier: PublizonIdentifier;
 };
 
 /**
@@ -29,7 +29,7 @@ type DigitalLoanRequestsType = {
  */
 const useDigitalLoanRequests = ({
   workId,
-  materialId
+  identifier
 }: DigitalLoanRequestsType): LoanRequester => {
   const queryClient = useQueryClient();
   const { trackLoan, trackReservation } = useLoanReservationTracking(workId);
@@ -65,7 +65,7 @@ const useDigitalLoanRequests = ({
         if (!result.success) return undefined;
         trackLoan();
         // Keyed by the offer, so the material is the one on screen.
-        return readBack(materialId);
+        return readBack(identifier);
       }
     });
 

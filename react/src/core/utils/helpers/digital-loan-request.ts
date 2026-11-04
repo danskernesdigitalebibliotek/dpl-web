@@ -4,6 +4,7 @@ import {
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { ReservationInput } from "../../publizon/model";
 import { Patron } from "../types/entities";
+import { PublizonIdentifier } from "../types/ids";
 import { ReaderPlayerState } from "../types/reader-player-state";
 import { formatDanishPhoneNumber } from "./general";
 
@@ -14,7 +15,7 @@ import { formatDanishPhoneNumber } from "./general";
 export type LoanableMaterial = Pick<
   ReaderPlayerState,
   "canBeLoaned" | "canBeReserved" | "offerId"
-> & { identifier: string | null };
+> & { identifier: PublizonIdentifier };
 
 /**
  * What pressing the loan or reserve button should do. `open-modal` is the
@@ -23,8 +24,8 @@ export type LoanableMaterial = Pick<
 export type LoanReservationRequest =
   | { kind: "open-modal" }
   | { kind: "accept-offer"; offerId: string }
-  | { kind: "loan"; materialId: string }
-  | { kind: "reserve"; materialId: string };
+  | { kind: "loan"; identifier: PublizonIdentifier }
+  | { kind: "reserve"; identifier: PublizonIdentifier };
 
 /** The whole decision of what a press means, with no side effects. */
 export const resolveLoanReservationRequest = ({
@@ -37,15 +38,14 @@ export const resolveLoanReservationRequest = ({
   openModal: boolean;
 }): LoanReservationRequest | null => {
   if (openModal) return { kind: "open-modal" };
-  if (!identifier) return null;
 
   if (canBeLoaned) {
     // Only the adapter has offers, and they are claimed rather than borrowed.
     if (offerId) return { kind: "accept-offer", offerId };
-    return { kind: "loan", materialId: identifier };
+    return { kind: "loan", identifier };
   }
 
-  if (canBeReserved) return { kind: "reserve", materialId: identifier };
+  if (canBeReserved) return { kind: "reserve", identifier };
 
   return null;
 };

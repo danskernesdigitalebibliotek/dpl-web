@@ -7,8 +7,8 @@ import { SearchResultFacetsComponent } from "./components/SearchResultFacets";
 import { SearchResultDialogFacetsComponent } from "./components/SearchResultDialogFacets";
 
 export class SearchResultPage extends PageObject {
-  public elements!: Elements;
-  public components!: NestedComponents;
+  declare public elements: Elements;
+  declare public components: NestedComponents;
 
   constructor() {
     super({

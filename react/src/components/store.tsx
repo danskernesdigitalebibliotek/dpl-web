@@ -7,7 +7,6 @@ import { store, persistor } from "../core/store";
 import FetcherHttpError from "../core/fetchers/FetcherHttpError";
 import FetcherError from "../core/fetchers/FetcherError";
 import FetcherCriticalHttpError from "../core/fetchers/FetcherCriticalHttpError";
-import InvalidUrlError from "../core/errors/InvalidUrlError";
 import getServiceLayerConfig from "../core/serviceLayerConfig";
 
 const queryErrorHandler = (error: unknown) => {
@@ -15,8 +14,7 @@ const queryErrorHandler = (error: unknown) => {
   if (
     error instanceof FetcherHttpError ||
     error instanceof FetcherCriticalHttpError ||
-    error instanceof FetcherError ||
-    error instanceof InvalidUrlError
+    error instanceof FetcherError
   ) {
     return error.useErrorBoundary;
   }
