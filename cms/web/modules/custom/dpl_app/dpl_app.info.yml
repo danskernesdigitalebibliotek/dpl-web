@@ -6,4 +6,5 @@ core_version_requirement: ^10 || ^11
 dependencies:
   - dpl_library_agency:dpl_library_agency
   - graphql:graphql
+  - dpl_graphql:dpl_graphql
   - autowire_plugin_trait:autowire_plugin_trait
