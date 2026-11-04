@@ -1,8 +1,21 @@
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/da';
-import 'cypress-if';
-import { typeInCkEditor } from '../../helpers/helper-ckeditor';
-import { addParagraph } from '../../helpers/helper-paragraph';
+import { EventAddPage } from '../../pages/event-add';
+import { LoginPage } from '../../pages/login-page';
+import { EventInstanceEditPage } from '../../pages/event-instance-edit';
+import { EventInstancesPage } from '../../pages/event-instances';
+import {
+  EventLocationComponent,
+  FreetextAddress,
+} from '../../pages/event-location';
+import { EventSeriesListPage } from '../../pages/event-series-list';
+import { EventSeriesPage } from '../../pages/event-series';
+
+const login = () =>
+  LoginPage.ensureLogin(
+    Cypress.env('DRUPAL_USERNAME'),
+    Cypress.env('DRUPAL_PASSWORD'),
+  );
 
 const events = {
   singleEvent: {
@@ -18,7 +31,7 @@ const events = {
     recurType: 'Weekly Event',
     start: dayjs('2030-01-01'),
     end: dayjs('2030-01-30'),
-    daysOfWeek: ['monday', 'thursday'],
+    daysOfWeek: ['monday' as const, 'thursday' as const],
   },
 };
 
@@ -34,36 +47,49 @@ const dateInAnyLocale = (date: dayjs.Dayjs, format: string) => {
   return new RegExp(variants.join('|'));
 };
 
-const setDate = (field: 'Start date' | 'End date', date: dayjs.Dayjs) => {
-  cy.findByText(field)
-    .siblings()
-    .findByLabelText('Date')
-    .type(date.format('YYYY-MM-DD'));
-  cy.findByText(field)
-    .siblings()
-    .findByLabelText('Time')
-    .type(date.format('HH:mm'));
+const branch = 'Det virtuelle bibliotek';
+
+// Starts adding an event, with the fields every event form needs before it
+// will save.
+const startEvent = (event: { title: string; subtitle: string }) => {
+  login();
+  const eventAdd = new EventAddPage();
+  eventAdd.visit([]);
+  eventAdd.fillTitle(event.title);
+  eventAdd.fillSubtitle(event.subtitle);
+  eventAdd.fillBody('Hello, world!');
+  eventAdd.selectBranch(branch);
+  return eventAdd;
+};
+
+// Saves a repeating event and opens its first instance for editing.
+//
+// A Weekly Event spanning multiple days is used so the series produces more
+// than one instance: Drupal redirects to the series page when an eventinstance
+// has no siblings, which breaks the save/re-open flow.
+const saveAndEditFirstInstance = (eventAdd: EventAddPage, title: string) => {
+  eventAdd.fillWeeklyRecurrence({
+    from: events.repeatingEvent.start,
+    to: events.repeatingEvent.end,
+    days: events.repeatingEvent.daysOfWeek,
+  });
+  eventAdd.save();
+
+  new EventSeriesPage().seriesId().then((seriesId) => {
+    const eventInstances = new EventInstancesPage();
+    eventInstances.visit([seriesId]);
+    eventInstances.editFirst(title);
+  });
+
+  return new EventInstanceEditPage();
 };
 
 describe('Events', () => {
   it('can be created with a single occurrence', () => {
-    // Login as admin.
-    cy.drupalLogin('/events/add/default');
-    cy.findByLabelText('Title').type(events.singleEvent.title);
-    cy.findByLabelText('Subtitle').type(events.singleEvent.subtitle);
-    cy.findByLabelText('Recur Type').select(events.singleEvent.recurType, {
-      // We have to use force when using Select2.
-      force: true,
-    });
-    typeInCkEditor('Hello, world!');
-    cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
-      // We have to use force when using Select2.
-      force: true,
-    });
-
-    setDate('Start date', events.singleEvent.start);
-    setDate('End date', events.singleEvent.end);
-    cy.clickSaveButton();
+    const eventAdd = startEvent(events.singleEvent);
+    eventAdd.selectRecurType(events.singleEvent.recurType);
+    eventAdd.fillSingleDate(events.singleEvent.start, events.singleEvent.end);
+    eventAdd.save();
 
     // Ensure that the core data from the event is displayed on the resulting page.
     // @todo This should probably be replaced by a visual regression test.
@@ -77,18 +103,17 @@ describe('Events', () => {
   });
 
   it('prefills end date/time based on start date/time', () => {
-    // Login as admin.
-    cy.drupalLogin('/events/add/default');
-    setDate('Start date', events.singleEvent.start);
-    cy.findByText('End date').siblings().findByLabelText('Date').focus();
-    cy.findByText('End date')
-      .siblings()
-      .findByLabelText('Date')
+    login();
+    const eventAdd = new EventAddPage();
+    eventAdd.visit([]);
+    eventAdd.fillStartDate(events.singleEvent.start);
+    eventAdd.elements.customToDateField().focus();
+    eventAdd.elements
+      .customToDateField()
       .should('have.value', events.singleEvent.start.format('YYYY-MM-DD'));
-    cy.findByText('End date').siblings().findByLabelText('Time').focus();
-    cy.findByText('End date')
-      .siblings()
-      .findByLabelText('Time')
+    eventAdd.elements.customToTimeField().focus();
+    eventAdd.elements
+      .customToTimeField()
       .should(
         'have.value',
         events.singleEvent.start.add(1, 'hour').format('HH:mm'),
@@ -96,187 +121,118 @@ describe('Events', () => {
   });
 
   it('all-day event is respected', () => {
-    // Login as admin.
-    cy.drupalLogin('/events/add/default');
-
-    cy.findByLabelText('Title').type(events.singleEvent.title);
-    cy.findByLabelText('Subtitle').type(events.singleEvent.subtitle);
-    cy.findByLabelText('Recur Type').select(events.singleEvent.recurType, {
-      // We have to use force when using Select2.
-      force: true,
-    });
-    typeInCkEditor('Hello, world!');
-    cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
-      // We have to use force when using Select2.
-      force: true,
-    });
-
-    setDate('Start date', events.singleEvent.start);
-    setDate('End date', events.singleEvent.end);
+    const eventAdd = startEvent(events.singleEvent);
+    eventAdd.selectRecurType(events.singleEvent.recurType);
+    eventAdd.fillSingleDate(events.singleEvent.start, events.singleEvent.end);
 
     const warningText =
       'Any specific times below will be ignored when "All day" is enabled';
 
     cy.contains(warningText).should('not.be.visible');
-    cy.findByLabelText('All day').click();
+    eventAdd.toggleAllDay();
     cy.contains(warningText).should('be.visible');
 
-    cy.clickSaveButton();
+    eventAdd.save();
 
     cy.contains(events.singleEvent.start.format('HH:mm')).should('not.exist');
     cy.contains(/All day|Hele dagen/g).should('be.visible');
   });
 
   it('copying all values from series to instance', () => {
-    cy.drupalLogin('/events/add/default');
-
     // Ignore JS warnings, emitted from reccuring_events weekly input.
     Cypress.on('uncaught:exception', () => {
       return false;
     });
 
-    cy.openParagraphsModal();
+    login();
+    const eventAdd = new EventAddPage();
+    eventAdd.visit([]);
+    eventAdd.addParagraph('Text body');
+    eventAdd.fillTitle(events.repeatingEvent.title);
+    eventAdd.fillSubtitle(events.repeatingEvent.subtitle);
+    eventAdd.fillBody('Hello from series!');
+    eventAdd.selectBranch(branch);
 
-    addParagraph('Text body');
-
-    cy.findByLabelText('Title').type(events.repeatingEvent.title);
-    cy.findByLabelText('Subtitle').type(events.repeatingEvent.subtitle);
-    cy.findByLabelText('Recur Type').select(events.repeatingEvent.recurType, {
-      // We have to use force when using Select2.
-      force: true,
-    });
-
-    cy.get(
-      '[data-drupal-selector="edit-weekly-recurring-date-0-end-value-date"]',
-    ).type(events.repeatingEvent.end.format('YYYY-MM-DD'));
-    cy.get(
-      '[data-drupal-selector="edit-weekly-recurring-date-0-value-date"]',
-    ).type(events.repeatingEvent.start.format('YYYY-MM-DD'));
-
-    events.repeatingEvent.daysOfWeek.forEach((day) => {
-      cy.get(`[name="weekly_recurring_date[0][days][${day}]"]`).check();
-    });
-
-    typeInCkEditor('Hello from series!');
-    cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
-      // We have to use force when using Select2.
-      force: true,
-    });
-
-    cy.clickSaveButton();
-
-    // Editing a single instance.
-    cy.get('a[href^="/events/series"][href$="/edit"]').click({
-      // The admin toolbar gets in the way.
-      force: true,
-    });
-    cy.contains('Edit Instances').click();
-    cy.get(`a[aria-label="Edit ${events.repeatingEvent.title}"]`)
-      .first()
-      .click();
-
+    const instanceEdit = saveAndEditFirstInstance(
+      eventAdd,
+      events.repeatingEvent.title,
+    );
     // Checking that the values don't already exist (inheritance default)
-    cy.get('[name="field_event_title[0][value]"]').should('be.empty');
+    instanceEdit.elements.titleField().should('be.empty');
     cy.contains('Hello from series!').should('not.exist');
 
     // Getting values from the series.
-    cy.contains('Insert values from series').click();
-    cy.contains('Insert values to instance').click();
+    instanceEdit.insertValuesFromSeries();
 
     // Checking that the values have been set, and add instance-only changes.
-    cy.get('[name="field_event_title[0][value]"]').should(
-      'contain.value',
-      events.repeatingEvent.title,
-    );
-    cy.get('[name="field_event_title[0][value]"]').type(' - instance');
+    instanceEdit.elements
+      .titleField()
+      .should('contain.value', events.repeatingEvent.title);
+    instanceEdit.typeTitle(' - instance');
 
     cy.contains('Hello from series!').should('exist');
-    cy.get('[name="field_event_paragraphs_edit_all"]').click();
-    typeInCkEditor('Hello from instance!');
-    cy.clickSaveButton();
+    instanceEdit.fillParagraphText('Hello from instance!');
+    instanceEdit.save();
 
     cy.go('back');
 
     // Checking that copying from series *without* overwriting respects values.
-    cy.contains('Insert values from series').click();
-    cy.get('[data-drupal-selector="edit-overwrite-existing"]').uncheck();
-    cy.contains('Insert values to instance').click();
+    instanceEdit.insertValuesFromSeries(false);
 
     cy.contains('Hello from instance!').should('exist');
     cy.contains('Hello from series!').should('not.exist');
 
-    cy.get('[name="field_event_title[0][value]"]').should(
-      'have.value',
-      `${events.repeatingEvent.title} - instance`,
-    );
+    instanceEdit.elements
+      .titleField()
+      .should('have.value', `${events.repeatingEvent.title} - instance`);
 
     // Re-copying and overwriting from series.
-    cy.contains('Insert values from series').click();
-    cy.get('[data-drupal-selector="edit-overwrite-existing"]').check();
-    cy.contains('Insert values to instance').click();
+    instanceEdit.insertValuesFromSeries(true);
 
-    cy.get('[name="field_event_title[0][value]"]').should(
-      'not.contain.value',
-      `instance`,
-    );
+    instanceEdit.elements.titleField().should('not.contain.value', `instance`);
     cy.contains('Hello from instance!').should('not.exist');
     cy.contains('Hello from series!').should('exist');
   });
 
   it('Location field flow works', () => {
-    // Login as admin.
-    cy.drupalLogin('/events/add/default');
-
-    // Getting the relevant fields, we want to check.
-    cy.get('[data-drupal-selector="edit-field-event-location-0-value"]').as(
-      'location',
-    );
-    cy.get(
-      '[data-drupal-selector="edit-field-event-address-gsearch-wrapper"]',
-    ).as('address');
-    cy.get(
-      '[data-drupal-selector="edit-field-event-non-branch-location-value"]',
-    ).as('non_branch');
-    cy.get('[data-drupal-selector="edit-field-event-location-type-online"]').as(
-      'online',
-    );
+    login();
+    const eventAdd = new EventAddPage();
+    eventAdd.visit([]);
+    const location = eventAdd.location();
 
     cy.log(`
       Initially, no branch has been selected, so location/address should not be
       visible, but "non-branch location" can be visible.
     `);
-    cy.get('@location').should('not.be.visible');
-    cy.get('@address').should('not.be.visible');
-    cy.get('@non_branch').should('be.visible');
+    location.elements.locationField().should('not.be.visible');
+    location.elements.addressWidget().should('not.be.visible');
+    location.elements.overrideBranchAddressField().should('be.visible');
 
     cy.log(`
       Choosing to override the branch address should make the fields visible,
       and the location required.
     `);
-    cy.get('@non_branch').click();
-    cy.get('@location').should('be.visible');
-    cy.get('@location').should('have.attr', 'required');
-    cy.get('@address').should('be.visible');
+    location.overrideBranchAddress();
+    location.elements.locationField().should('be.visible');
+    location.elements.locationField().should('have.attr', 'required');
+    location.elements.addressWidget().should('be.visible');
 
     cy.log(
       `Selecting a branch should not have any affect on the surrounding fields.`,
     );
-    cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
-      // We have to use force when using Select2.
-      force: true,
-    });
-    cy.get('@location').should('be.visible');
-    cy.get('@location').should('have.attr', 'required');
-    cy.get('@address').should('be.visible');
+    eventAdd.selectBranch(branch);
+    location.elements.locationField().should('be.visible');
+    location.elements.locationField().should('have.attr', 'required');
+    location.elements.addressWidget().should('be.visible');
 
     cy.log(
       `Setting the event to online should mean all location fields are hidden.`,
     );
-    cy.get('@online').click();
-    cy.get('@location').should('not.be.visible');
-    cy.get('@location').should('not.have.attr', 'required');
-    cy.get('@address').should('not.be.visible');
-    cy.get('@non_branch').should('not.be.visible');
+    location.selectLocationType('online');
+    location.elements.locationField().should('not.be.visible');
+    location.elements.locationField().should('not.have.attr', 'required');
+    location.elements.addressWidget().should('not.be.visible');
+    location.elements.overrideBranchAddressField().should('not.be.visible');
   });
 
   // Fields hidden by Drupal #states in dpl_event_form_alter() must also be
@@ -295,134 +251,54 @@ describe('Events', () => {
   //      presave early-returned on empty location_type.
   describe('Hidden location fields on eventinstance', () => {
     const seriesTitle = 'Hidden fields series';
-    type Address = { street: string; postalCode: string; postalName: string };
-    const customAddress: Address = {
+    const customAddress: FreetextAddress = {
       street: 'Testvej 1',
       postalCode: '1000',
       postalName: 'Testby',
     };
-    const emptyAddress: Address = {
+    const emptyAddress: FreetextAddress = {
       street: '',
       postalCode: '',
       postalName: '',
     };
 
-    // The location widgets are re-rendered on every page load, so Cypress
-    // element aliases have to be re-established after each navigation. Call
-    // this whenever a fresh instance edit form is on screen, then refer to the
-    // fields by their @alias for the rest of the test.
-    const aliasLocationFields = () => {
-      cy.get('[data-drupal-selector="edit-field-event-location-0-value"]').as(
-        'location',
-      );
-      cy.get(
-        '[data-drupal-selector="edit-field-event-address-gsearch-wrapper"]',
-      ).as('address');
-      cy.get(
-        '[data-drupal-selector="edit-field-event-non-branch-location-value"]',
-      ).as('overrideBranchAddress');
-      cy.get(
-        '[data-drupal-selector="edit-field-event-address-gsearch-0-main-enable-freetext"]',
-      ).as('freetextToggle');
-      cy.get(
-        '[data-drupal-selector="edit-field-event-address-gsearch-0-freetext-address"]',
-      ).as('street');
-      cy.get(
-        '[data-drupal-selector="edit-field-event-address-gsearch-0-freetext-postal-code"]',
-      ).as('postalCode');
-      cy.get(
-        '[data-drupal-selector="edit-field-event-address-gsearch-0-freetext-postal-name"]',
-      ).as('postalName');
-    };
-
-    const setLocationType = (value: 'physical' | 'online' | '_none') =>
-      cy
-        .get(`input[name="field_event_location_type"][value="${value}"]`)
-        .check();
-
-    // Use the freetext path of the address widget so the test doesn't depend
-    // on the live address autocomplete endpoint.
-    const fillFreetextAddress = (address: Address) => {
-      cy.get('@freetextToggle').check();
-      cy.get('@street').clear();
-      cy.get('@street').type(address.street);
-      cy.get('@postalCode').clear();
-      cy.get('@postalCode').type(address.postalCode);
-      cy.get('@postalName').clear();
-      cy.get('@postalName').type(address.postalName);
-    };
-
-    const assertFreetextAddress = (address: Address) => {
-      cy.get('@street').should('have.value', address.street);
-      cy.get('@postalCode').should('have.value', address.postalCode);
-      cy.get('@postalName').should('have.value', address.postalName);
-    };
-
-    // The custom-address widget is hidden by #states until location-type is
-    // "In person" *and* the "override branch address" toggle is checked (see
-    // dpl_event_form_alter). Reveal it so the freetext fields are interactive.
-    const revealCustomAddress = () => {
-      setLocationType('physical');
-      cy.get('@overrideBranchAddress').check();
-      cy.get('@address').should('be.visible');
-    };
-
     // Create the parent series (branch set, no custom address) and open the
-    // first instance for editing, leaving the form aliased and ready to use.
-    //
-    // A Weekly Event spanning multiple days is used so the series produces
-    // more than one instance: Drupal redirects to the series page when an
-    // eventinstance has no siblings, which breaks the save/re-open flow.
+    // first instance for editing.
     const createSeriesAndOpenInstance = (title: string) => {
       // The weekly recurring widget emits uncaught JS warnings — unrelated to
       // what we're testing.
       Cypress.on('uncaught:exception', () => false);
 
-      cy.drupalLogin('/events/add/default');
-      cy.findByLabelText('Title').type(title);
-      cy.findByLabelText('Subtitle').type('Hello, world!');
-      cy.findByLabelText('Recur Type').select(events.repeatingEvent.recurType, {
-        force: true,
-      });
-      typeInCkEditor('Hello, world!');
-      cy.findByLabelText('Branch').select('Det virtuelle bibliotek', {
-        force: true,
-      });
+      const eventAdd = startEvent({ title, subtitle: 'Hello, world!' });
+      return saveAndEditFirstInstance(eventAdd, title);
+    };
 
-      cy.get(
-        '[data-drupal-selector="edit-weekly-recurring-date-0-value-date"]',
-      ).type(events.repeatingEvent.start.format('YYYY-MM-DD'));
-      cy.get(
-        '[data-drupal-selector="edit-weekly-recurring-date-0-end-value-date"]',
-      ).type(events.repeatingEvent.end.format('YYYY-MM-DD'));
-      events.repeatingEvent.daysOfWeek.forEach((day) => {
-        cy.get(`[name="weekly_recurring_date[0][days][${day}]"]`).check();
-      });
-
-      cy.clickSaveButton();
-
-      cy.get('a[href^="/events/series"][href$="/edit"]').click({ force: true });
-      cy.contains('Edit Instances').click();
-      cy.get(`a[aria-label="Edit ${title}"]`).first().click();
-
-      aliasLocationFields();
+    // The custom-address widget is hidden by #states until location-type is
+    // "In person" *and* the "override branch address" toggle is checked (see
+    // dpl_event_form_alter). Reveal it so the freetext fields are interactive.
+    // The freetext path of the address widget is used so the test doesn't
+    // depend on the live address autocomplete endpoint.
+    const revealCustomAddress = (location: EventLocationComponent) => {
+      location.selectLocationType('physical');
+      location.overrideBranchAddress();
+      location.elements.addressWidget().should('be.visible');
     };
 
     it('keeps a custom address when the address widget is visible', () => {
       const title = `${seriesTitle} - kept`;
-      createSeriesAndOpenInstance(title);
+      const instanceEdit = createSeriesAndOpenInstance(title);
+      const location = instanceEdit.location();
 
       cy.log('Reveal the custom-address widget and enter an address.');
-      revealCustomAddress();
-      fillFreetextAddress(customAddress);
-      cy.clickSaveButton();
+      revealCustomAddress(location);
+      location.fillFreetextAddress(customAddress);
+      instanceEdit.save();
 
       cy.log(
         'Re-open the same instance and confirm the address survived presave.',
       );
       cy.go('back');
-      aliasLocationFields();
-      assertFreetextAddress(customAddress);
+      location.freetextAddress().should('deep.equal', customAddress);
     });
 
     // Both "Online" and the empty "- None -" hide the address widget via
@@ -437,68 +313,37 @@ describe('Events', () => {
     hidingTransitions.forEach(({ label, slug, radioValue }) => {
       it(`clears the address when location-type is set to ${label}`, () => {
         const title = `${seriesTitle} - cleared-${slug}`;
-        createSeriesAndOpenInstance(title);
+        const instanceEdit = createSeriesAndOpenInstance(title);
+        const location = instanceEdit.location();
 
         cy.log('Save an address first so we have something to clear.');
-        revealCustomAddress();
-        cy.get('@location').type('Some location');
-        fillFreetextAddress(customAddress);
-        cy.clickSaveButton();
+        revealCustomAddress(location);
+        location.fillLocation('Some location');
+        location.fillFreetextAddress(customAddress);
+        instanceEdit.save();
 
         cy.go('back');
-        aliasLocationFields();
-        assertFreetextAddress(customAddress);
+        location.freetextAddress().should('deep.equal', customAddress);
 
         cy.log(`Switching to ${label} hides the widget, so presave clears it.`);
-        setLocationType(radioValue);
-        cy.get('@address').should('not.be.visible');
-        cy.clickSaveButton();
+        location.selectLocationType(radioValue);
+        location.elements.addressWidget().should('not.be.visible');
+        instanceEdit.save();
 
         cy.go('back');
-        aliasLocationFields();
-        assertFreetextAddress(emptyAddress);
+        location.freetextAddress().should('deep.equal', emptyAddress);
       });
     });
 
     after(() => {
-      [
-        `${seriesTitle} - kept`,
-        `${seriesTitle} - cleared-online`,
-        `${seriesTitle} - cleared-none`,
-      ].forEach((title) => {
-        cy.drupalLogin('/admin/content/eventseries');
-        cy.get('tr')
-          .contains(title)
-          // Empty if: we don't want a failing test if the item does not exist.
-          .if()
-          .each(() => {
-            cy.get(`a[aria-label="Delete ${title}"]`)
-              .first()
-              .click({ force: true });
-
-            cy.findByRole('dialog')
-              .findByRole('button', { name: 'Delete' })
-              .click();
-          });
-      });
+      login();
+      new EventSeriesListPage().deleteAllTitled(seriesTitle);
     });
   });
 
   before(() => {
-    cy.drupalLogin('/admin/content/eventseries');
     // Delete all preexisting instances of each event.
-    cy.get('tr')
-      .contains(events.singleEvent.title)
-      // Empty if: we don't want failing test if the item does not exist.
-      .if()
-      .each(() => {
-        cy.get(`a[aria-label="Delete ${events.singleEvent.title}"]`)
-          .first()
-          .click({ force: true });
-
-        cy.findByRole('dialog')
-          .findByRole('button', { name: 'Delete' })
-          .click();
-      });
+    login();
+    new EventSeriesListPage().deleteAllTitled(events.singleEvent.title);
   });
 });

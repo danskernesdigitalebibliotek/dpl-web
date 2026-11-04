@@ -144,15 +144,6 @@ describe("Patron page", { testIsolation: false }, () => {
       .find(".dpl-patron-info__text")
       .eq(0)
       .should("have.text", "Testkort ITK CMS Merkur");
-    // ID 36 2.c.ii. Address
-    cy.get(".dpl-patron-page .dpl-patron-info")
-      .find("h4.dpl-patron-info__label")
-      .eq(1)
-      .should("have.text", "Address");
-    cy.get(".dpl-patron-page .dpl-patron-info")
-      .find(".dpl-patron-info__text")
-      .eq(1)
-      .should("have.text", "Hack Kampmanns Plads 28000Aarhus CDK");
 
     // ID 36 2.d. Contact info
     cy.get("[data-cy='patron-page-contact-info']")

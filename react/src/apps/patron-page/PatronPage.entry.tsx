@@ -31,7 +31,6 @@ interface PatronPageTextProps {
   patronContactInfoHeaderText: string;
   patronContactPhoneCheckboxText: string;
   patronContactPhoneLabelText: string;
-  patronPageBasicDetailsAddressLabelText: string;
   patronPageBasicDetailsHeaderText: string;
   patronPageBasicDetailsNameLabelText: string;
   patronPageBasicFriendlyCardNumberLabelText: string;

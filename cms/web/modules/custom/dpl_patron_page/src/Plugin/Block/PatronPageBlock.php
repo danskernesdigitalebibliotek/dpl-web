@@ -94,7 +94,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'pause-reservation-info-url' => dpl_react_apps_format_app_url($patron_page_settings->get('pause_reservation_info_url'), GeneralSettings::PAUSE_RESERVATION_INFO_URL),
 
       // Texts.
-      'patron-page-basic-details-address-label-text' => $this->t('Address', [], ['context' => 'Patron page']),
       'patron-page-basic-details-header-text' => $this->t('BASIC DETAILS', [], ['context' => 'Patron page']),
       'patron-page-basic-details-name-label-text' => $this->t('Name', [], ['context' => 'Patron page']),
       'patron-page-basic-friendly-card-number-label-text' => $this->t('Card number', [], ['context' => 'Patron page']),
