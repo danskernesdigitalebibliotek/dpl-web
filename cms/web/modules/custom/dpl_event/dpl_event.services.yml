@@ -5,10 +5,12 @@ services:
   dpl_event.price_formatter:
     class: Drupal\dpl_event\PriceFormatter
     arguments: ['@string_translation', '@config.factory']
+  Drupal\dpl_event\PriceFormatter: '@dpl_event.price_formatter'
   dpl_event.reoccurring_date_formatter:
     class: Drupal\dpl_event\ReoccurringDateFormatter
     arguments:
       ['@string_translation', '@entity_type.manager', '@date.formatter']
+  Drupal\dpl_event\ReoccurringDateFormatter: '@dpl_event.reoccurring_date_formatter'
   dpl_event.occurred_schedule:
     class: Drupal\dpl_event\Workflows\OccurredSchedule
     arguments:
@@ -16,6 +18,7 @@ services:
       - '@datetime.time'
       - '@job_scheduler.manager'
       - '@entity_type.manager'
+  Drupal\dpl_event\Workflows\OccurredSchedule: '@dpl_event.occurred_schedule'
   dpl_event.unpublish_schedule:
     class: Drupal\dpl_event\Workflows\UnpublishSchedule
     arguments:
@@ -24,11 +27,13 @@ services:
       - '@job_scheduler.manager'
       - '@entity_type.manager'
       - '@config.factory'
+  Drupal\dpl_event\Workflows\UnpublishSchedule: '@dpl_event.unpublish_schedule'
   dpl_event.unpublish_series_schedule:
     class: Drupal\dpl_event\Workflows\UnpublishSeriesSchedule
     arguments:
       - '@entity_type.manager'
       - '@config.factory'
+  Drupal\dpl_event\Workflows\UnpublishSeriesSchedule: '@dpl_event.unpublish_series_schedule'
   dpl_event.event_rest_mapper:
     class: Drupal\dpl_event\Services\EventRestMapper
     autowire: true
@@ -53,6 +58,5 @@ services:
     class: Drupal\dpl_event\EventSubscriber\EventInstanceEditRedirect
     tags:
       - { name: event_subscriber }
-  Drupal\dpl_event\Hook\EventListPagingHooks:
-    class: Drupal\dpl_event\Hook\EventListPagingHooks
+  Drupal\dpl_event\EventRowGrouper:
     autowire: true
