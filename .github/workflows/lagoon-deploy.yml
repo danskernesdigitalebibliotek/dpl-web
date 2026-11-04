@@ -17,6 +17,15 @@ on:
     # Keep in sync with the pull_request filter above.
     paths-ignore:
       - 'docs/**'
+
+# A superseded run must not reach Lagoon: its webhook carries the commits of
+# the push that started it, which a force-push may have removed since, and
+# Lagoon then fails the build before the post-rollout tasks that would report
+# the failure to the GitHub deployment.
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 name: Lagoon / Deploy application
 
 env:
