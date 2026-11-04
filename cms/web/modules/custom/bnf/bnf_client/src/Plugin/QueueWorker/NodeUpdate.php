@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\bnf_client\Plugin\QueueWorker;
 
-use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_client\Form\SettingsForm;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -25,8 +24,6 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  * )
  */
 class NodeUpdate extends QueueWorkerBase implements ContainerFactoryPluginInterface {
-
-  use AutowirePluginTrait;
 
   /**
    * The BNF site base URL.
