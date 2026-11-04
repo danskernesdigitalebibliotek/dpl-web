@@ -4,7 +4,9 @@ import { notFound, useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useMemo, useState, useSyncExternalStore } from "react"
 
 import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
-import WorkPageLoading from "@/components/pages/workPageLayout/WorkPageLoading"
+import WorkPageLoading, {
+  WorkPageHeaderSkeleton,
+} from "@/components/pages/workPageLayout/WorkPageLoading"
 import { parseEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
@@ -79,12 +81,29 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     [allManifestations, searchParamsMaterialType, isLoadingAvailability, isAvailabilityUnknown]
   )
 
-  // The newest obtainable edition renders immediately — it needs no network
-  // round trip — and is swapped for the newest blue one if the Publizon
-  // lookups behind it land one. No loading state: the page never blocks on
-  // these, it just quietly upgrades the pick.
-  const { defaultManifestation: defaultObtainableEdition } =
+  // The edition the url pins, if it names one this material type has. Shared
+  // by the effect below, which picks it over any default, and by the header's
+  // loading gate, which has nothing to wait for once it exists.
+  const pinnedManifestation = useMemo(
+    () =>
+      getPinnedEditionManifestation(
+        (allManifestations ?? []) as ManifestationWorkPageFragment[],
+        searchParamsMaterialType ?? "",
+        parseEditionChoice(searchParams.get("edition"))?.pid ?? null
+      ),
+    [allManifestations, searchParamsMaterialType, searchParams]
+  )
+
+  // The page waits for this before showing anything edition-dependent: the
+  // reader should never see the newest edition and then have it swapped for
+  // the newest blue one underneath them — the first thing shown must already
+  // be the right default.
+  const { defaultManifestation: defaultObtainableEdition, isLoading: isLoadingDefaultEdition } =
     useDefaultObtainableEdition(obtainableEditions)
+
+  // A pinned edition is the answer already, so the lookups behind the default
+  // pick have nothing left to decide and the header need not wait for them.
+  const isWaitingForDefaultEdition = isLoadingDefaultEdition && !pinnedManifestation
 
   useEffect(() => {
     if (!searchParamsMaterialType && bestRepresentation) {
@@ -109,15 +128,6 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
       )
     }) as ManifestationWorkPageFragment
 
-    // The edition choice is serialized in the url query params, so the correct
-    // edition is shown for the selected manifestation.
-    const editionChoice = parseEditionChoice(searchParams.get("edition"))
-    const pinnedManifestation = getPinnedEditionManifestation(
-      (allManifestations ?? []) as ManifestationWorkPageFragment[],
-      searchParamsMaterialType ?? "",
-      editionChoice?.pid ?? null
-    )
-
     // defaultManifestation is cast non-nullable above but can be undefined,
     // so keep the last good pick rather than clearing the page.
     const nextManifestation =
@@ -128,17 +138,18 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     // isEditionHidden is rebuilt every render, so the flags behind it stand
     // in for it. Both settle once, so a background refetch does not swap the
     // edition under the reader; isAvailabilityUnknown catches an error that
-    // later succeeds, which is the first real answer. defaultObtainableEdition
-    // itself re-runs this once its Publizon lookups upgrade the pick to the
-    // newest blue edition.
+    // later succeeds, which is the first real answer. isLoadingDefaultEdition
+    // is the same kind of settle-once signal for the Publizon lookups behind
+    // defaultObtainableEdition.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     searchParams,
     manifestations,
     allManifestations,
+    pinnedManifestation,
     isLoadingAvailability,
     isAvailabilityUnknown,
-    defaultObtainableEdition,
+    isLoadingDefaultEdition,
   ])
 
   if ((isLoading && !data) || isAwaitingHydration) {
@@ -153,15 +164,33 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     <div
       className="content-container mb-grid-gap-2 lg:mb-grid-gap-half flex flex-col flex-row
         flex-wrap gap-y-10">
-      {work && selectedManifestation && (
+      {work && (
         <>
-          <WorkPageHeader
-            manifestations={manifestations}
+          {/* The header waits for the default-edition pick, reserving its space
+              with the header skeleton meanwhile: it never shows the newest
+              edition only to swap it for the newest blue one underneath the
+              reader. A url-pinned edition skips that wait — it is already the
+              answer. The skeleton is the containerless variant, since this div
+              is already the content-container. The description comes from the
+              work and does not depend on the pick, so it renders regardless;
+              the fields that do depend on it fall back to "-" until it
+              settles. */}
+          {isWaitingForDefaultEdition || !selectedManifestation ? (
+            <WorkPageHeaderSkeleton />
+          ) : (
+            <WorkPageHeader
+              manifestations={manifestations}
+              work={work}
+              selectedManifestation={selectedManifestation}
+            />
+          )}
+          <InfoBox
             work={work}
-            selectedManifestation={selectedManifestation}
+            selectedManifestation={isWaitingForDefaultEdition ? undefined : selectedManifestation}
           />
-          <InfoBox work={work} selectedManifestation={selectedManifestation} />
-          <InfoBoxDetails selectedManifestation={selectedManifestation} />
+          <InfoBoxDetails
+            selectedManifestation={isWaitingForDefaultEdition ? undefined : selectedManifestation}
+          />
         </>
       )}
     </div>

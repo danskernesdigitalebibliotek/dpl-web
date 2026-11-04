@@ -4,6 +4,7 @@ import { useQueries } from "@tanstack/react-query"
 
 import { isPodcastMaterialType } from "@/components/pages/workPageLayout/helper"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { ProductResult } from "@/lib/rest/publizon/adapter/generated/model"
 import { getGetV1ProductsIdentifierAdapterQueryOptions } from "@/lib/rest/publizon/adapter/generated/publizon"
 
 // Whether a manifestation is cost-free ("BLÅ"): podcasts always are, an
@@ -11,7 +12,7 @@ import { getGetV1ProductsIdentifierAdapterQueryOptions } from "@/lib/rest/publiz
 // never looked up — Publizon has no catalogue entry for it.
 const isCostFree = (
   manifestation: ManifestationWorkPageFragment,
-  query: { data?: { product?: { costFree?: boolean } } }
+  query: { data?: ProductResult }
 ): boolean =>
   Boolean(
     query.data?.product?.costFree ||
@@ -37,13 +38,26 @@ export const useDefaultObtainableEdition = (
       })
     }),
     // obtainableEditions is newest first, so the first blue one found is the
-    // newest blue one.
-    combine: results => ({
-      newestBlue: obtainableEditions.find((manifestation, index) =>
+    // newest blue one. The pick only has to wait for results up to and
+    // including that one — an older edition's answer cannot change which
+    // one is newest-blue, so it is not worth waiting on.
+    combine: results => {
+      const newestBlueIndex = obtainableEditions.findIndex((manifestation, index) =>
         isCostFree(manifestation, results[index])
-      ),
-      isLoading: results.some(result => result.isLoading),
-    }),
+      )
+      // `isLoading` is `isPending && isFetching`, so a disabled query — a
+      // physical edition, or one with no ISBN — reports false. That is what
+      // this needs: an edition that is never looked up can never change the
+      // pick, so waiting on it would hang the page on an answer that is not
+      // coming.
+      const stillDeciding = results
+        .slice(0, newestBlueIndex === -1 ? results.length : newestBlueIndex + 1)
+        .some(result => result.isLoading)
+      return {
+        newestBlue: newestBlueIndex === -1 ? undefined : obtainableEditions[newestBlueIndex],
+        isLoading: stillDeciding,
+      }
+    },
   })
 
   return {
