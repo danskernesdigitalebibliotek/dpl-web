@@ -1,15 +1,15 @@
 services:
+  _defaults:
+    autowire: true
+
   dpl_event.logger:
     parent: logger.channel_base
     arguments: ['dpl_event']
   dpl_event.price_formatter:
     class: Drupal\dpl_event\PriceFormatter
-    arguments: ['@string_translation', '@config.factory']
   Drupal\dpl_event\PriceFormatter: '@dpl_event.price_formatter'
   dpl_event.reoccurring_date_formatter:
     class: Drupal\dpl_event\ReoccurringDateFormatter
-    arguments:
-      ['@string_translation', '@entity_type.manager', '@date.formatter']
   Drupal\dpl_event\ReoccurringDateFormatter: '@dpl_event.reoccurring_date_formatter'
   dpl_event.occurred_schedule:
     class: Drupal\dpl_event\Workflows\OccurredSchedule
@@ -30,33 +30,23 @@ services:
   Drupal\dpl_event\Workflows\UnpublishSchedule: '@dpl_event.unpublish_schedule'
   dpl_event.unpublish_series_schedule:
     class: Drupal\dpl_event\Workflows\UnpublishSeriesSchedule
-    arguments:
-      - '@entity_type.manager'
-      - '@config.factory'
   Drupal\dpl_event\Workflows\UnpublishSeriesSchedule: '@dpl_event.unpublish_series_schedule'
   dpl_event.event_rest_mapper:
     class: Drupal\dpl_event\Services\EventRestMapper
-    autowire: true
   dpl_event.route_subscriber:
     class: Drupal\dpl_event\Routing\RouteSubscriber
     tags:
       - { name: event_subscriber }
   dpl_event.access_event_instances_tab:
     class: Drupal\dpl_event\Access\EventSeriesTabAccessCheck
-    arguments:
-      - '@entity_type.manager'
     tags:
       - { name: access_check, applies_to: _access_event_series_instances_tab }
   dpl_event.event_series_redirect:
     class: Drupal\dpl_event\EventSubscriber\EventSeriesRedirect
-    arguments:
-      - '@entity_type.manager'
-      - '@dpl_event.reoccurring_date_formatter'
     tags:
       - { name: event_subscriber }
   dpl_event.event_instance_edit_redirect:
     class: Drupal\dpl_event\EventSubscriber\EventInstanceEditRedirect
     tags:
       - { name: event_subscriber }
-  Drupal\dpl_event\EventRowGrouper:
-    autowire: true
+  Drupal\dpl_event\EventRowGrouper: {}
