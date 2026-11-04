@@ -89,7 +89,7 @@ const EditionsSelectModal = ({
   // never reach past the first edition the arrow lands on. The footer button
   // confirms instead, and nothing leaves the modal until then.
   const [draftChoice, setDraftChoice] = useState<TEditionChoice>(choice)
-  const draftPid = typeof draftChoice === "object" ? draftChoice.pid : null
+  const draftPid = draftChoice?.pid ?? null
 
   // Every close runs through here, so the caller gets `onClosed` whether the
   // reader confirmed a choice, used the close button, pressed Escape or
