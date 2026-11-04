@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_app\Plugin\GraphQL\DataProducer;
 
-use Drupal\Core\DependencyInjection\AutowiredInstanceTrait;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_graphql\Plugin\GraphQL\DataProducer\AutowiredDataProducerPluginBase;
 use Drupal\dpl_media\Entity\VideotoolBase;
 use Drupal\dpl_media\Entity\VideotoolVerticalMedia;
 use Drupal\file\Entity\File;
@@ -25,9 +24,7 @@ use Drupal\dpl_paragraphs\Entity\RecommendationParagraph;
 use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
 use Drupal\dpl_paragraphs\Entity\VideoParagraph;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
-use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Drupal\media_videotool\VideoTool;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Resolves paragraphs to app elements.
@@ -46,9 +43,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  */
-class ElementsProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
-
-  use AutowiredInstanceTrait;
+class ElementsProducer extends AutowiredDataProducerPluginBase {
 
   /**
    * TTL for streaming URLs.
@@ -72,25 +67,6 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
     protected FileUrlGeneratorInterface $fileUrlGenerator,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
-  }
-
-  /**
-   * Instantiates the plugin using autowiring.
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   The container to pull out services used in the plugin.
-   * @param mixed[] $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin ID for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   *
-   * @return static
-   *   Returns an instance of this plugin.
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return static::createInstanceAutowired($container, $configuration, $plugin_id, $plugin_definition);
   }
 
   /**
