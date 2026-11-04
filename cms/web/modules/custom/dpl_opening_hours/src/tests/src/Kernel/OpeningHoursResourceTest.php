@@ -245,8 +245,9 @@ class OpeningHoursResourceTest extends KernelTestBase {
     /** @var \Drupal\dpl_opening_hours\Model\OpeningHoursRepository $repository */
     $repository = $this->container->get('dpl_opening_hours.repository');
 
-    // The time of day of an end date from a request is the time of the
-    // request. Midnight is earlier on the day than the last instance.
+    // The end date gets the time of day of the request. Use midnight to
+    // simulate a request made before the opening hours start at 10:00, so
+    // the end date is earlier than the instance on that day.
     $instances = $repository->insert(new OpeningHoursInstance(
       NULL,
       $branch,
