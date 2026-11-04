@@ -267,12 +267,12 @@ describe('Mobile app API: getBranches', () => {
       phone: '33 33 33 33',
       email: 'info+unpublished@reload.dk',
     };
-    const nodePage = new NodePage();
+    const branchNode = new NodePage();
     const setPublished = (published: boolean) => {
-      nodePage.nodeId().then((nodeId) => {
-        nodePage.setPublished(nodeId, published);
+      branchNode.nodeId().then((nodeId) => {
+        branchNode.setPublished(nodeId, published);
       });
-      nodePage.elements.hero().contains(title).should('be.visible');
+      branchNode.elements.hero().contains(title).should('be.visible');
     };
 
     cy.drupalLogin('/node/add/branch');

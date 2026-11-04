@@ -139,9 +139,9 @@ const createBranch = (title: string, agencyBranch: string | null = isilId) => {
   }
   branchAdd.save();
 
-  const branchPage = new NodePage();
-  branchPage.elements.hero().contains(title).should('be.visible');
-  return branchPage.nodeId();
+  const branchNode = new NodePage();
+  branchNode.elements.hero().contains(title).should('be.visible');
+  return branchNode.nodeId();
 };
 
 // Fills the fields every event form needs before it will save.
@@ -396,7 +396,7 @@ describe('Mobile app API: events', () => {
       start: danishTime('2030-07-01T10:00:00'),
       end: danishTime('2030-07-01T12:00:00'),
     };
-    const nodePage = new NodePage();
+    const branchNode = new NodePage();
 
     createBranch(`${titlePrefix} branch to unpublish ${runId}`, null).then(
       (unpublishedBranchId) => {
@@ -406,11 +406,11 @@ describe('Mobile app API: events', () => {
         getEventsTitled(event.title).should('have.length', 1);
 
         login();
-        nodePage.setPublished(unpublishedBranchId, false);
+        branchNode.setPublished(unpublishedBranchId, false);
         getEventsTitled(event.title).should('deep.equal', []);
 
         login();
-        nodePage.setPublished(unpublishedBranchId, true);
+        branchNode.setPublished(unpublishedBranchId, true);
         getEventsTitled(event.title).should('have.length', 1);
       },
     );
