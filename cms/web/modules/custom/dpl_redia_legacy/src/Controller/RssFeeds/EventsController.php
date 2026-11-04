@@ -83,6 +83,10 @@ class EventsController extends ControllerBase {
     $items = [];
 
     foreach ($events as $event) {
+      if ($event->hasOnlyUnpublishedBranches()) {
+        continue;
+      }
+
       $items[] = new RediaEvent($event, $this->priceFormatter);
     }
 

@@ -70,7 +70,7 @@ class BranchesExtension extends SdlSchemaExtensionPluginBase {
 
     $registry->addFieldResolver('Branch', 'phone',
       $builder->callback(function (Branch $branch): ?string {
-        $node = $branch->getNode();
+        $node = $branch->node;
         if (!$node || !$node->hasField('field_phone') || $node->get('field_phone')->isEmpty()) {
           return NULL;
         }
@@ -80,7 +80,7 @@ class BranchesExtension extends SdlSchemaExtensionPluginBase {
 
     $registry->addFieldResolver('Branch', 'email',
       $builder->callback(function (Branch $branch): ?string {
-        $node = $branch->getNode();
+        $node = $branch->node;
         if (!$node || !$node->hasField('field_email') || $node->get('field_email')->isEmpty()) {
           return NULL;
         }

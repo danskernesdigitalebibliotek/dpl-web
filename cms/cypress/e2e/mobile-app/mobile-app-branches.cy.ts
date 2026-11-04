@@ -4,6 +4,7 @@
 import { pickBranchAddress } from '../../helpers/helper-branch';
 import { ignoreLinkitUriError } from '../../helpers/helper-linkit';
 import { gqlQueries } from '../../helpers/mobile-app-queries';
+import { NodePage } from '../../pages/node';
 
 type AvailabilityContext = 'search' | 'availability' | 'reservations';
 
@@ -247,6 +248,53 @@ describe('Mobile app API: getBranches', () => {
     cy.deleteEntitiesIfExists(nodeTitlePrefix);
 
     assertTestBranch(unchanged, false);
+  });
+
+  // A library may prepare a branch node before publishing it. Until then the
+  // apps must not see it: the branch is still there, as FBS reports it, but
+  // as if it had no node.
+  it('ignores an unpublished branch node', () => {
+    const title = `${nodeTitlePrefix} unpublished ${Date.now()}`;
+    const configured = {
+      ...unchanged,
+      title,
+      address: {
+        street: 'Ishøj Store Torv 1',
+        postalCode: '2635',
+        city: 'Ishøj',
+        country: 'DK',
+      },
+      phone: '33 33 33 33',
+      email: 'info+unpublished@reload.dk',
+    };
+    const nodePage = new NodePage();
+    const setPublished = (published: boolean) => {
+      nodePage.nodeId().then((nodeId) => {
+        nodePage.setPublished(nodeId, published);
+      });
+      nodePage.elements.hero().contains(title).should('be.visible');
+    };
+
+    cy.drupalLogin('/node/add/branch');
+    fillBranchForm(title, '33 33 33 33', 'info+unpublished@reload.dk');
+    pickBranchAddress({
+      search: 'Ishøj Store Torv 1 2635',
+      option: 'Ishøj Store Torv 1, 2635 Ishøj',
+    });
+    cy.get('select[name="field_agency_branch_id"]').select(isilId, {
+      force: true,
+    });
+    cy.clickSaveButton();
+    cy.get('.hero').contains(title).should('be.visible');
+    assertTestBranch(configured, true);
+
+    // Unpublishing must take the node out of the response right away, also
+    // when the response was cached while the node was published.
+    setPublished(false);
+    assertTestBranch(unchanged, false);
+
+    setPublished(true);
+    assertTestBranch(configured, true);
   });
 
   contexts.forEach((context) => {

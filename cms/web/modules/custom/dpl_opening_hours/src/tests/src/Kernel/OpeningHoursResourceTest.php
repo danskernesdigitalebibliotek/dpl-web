@@ -8,15 +8,19 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseI
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory as OpeningHoursCategory;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition as OpeningHoursRepetitionResponse;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData as OpeningHoursWeeklyData;
+use Drupal\Core\Cache\CacheableResponseInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
 use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursCreateResource;
 use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursDeleteResource;
 use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursResource;
 use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursUpdateResource;
+use Drupal\dpl_redia_legacy\Plugin\rest\resource\OpeningHoursResource as LegacyOpeningHoursResource;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeStorageInterface;
@@ -35,7 +39,12 @@ class OpeningHoursResourceTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $modules = ['dpl_opening_hours', 'dpl_rest_base'];
+  protected static $modules = ['dpl_opening_hours', 'dpl_redia_legacy', 'dpl_rest_base'];
+
+  /**
+   * The id of the branch which is not published.
+   */
+  private const UNPUBLISHED_BRANCH_ID = 3;
 
   /**
    * {@inheritDoc}
@@ -43,6 +52,10 @@ class OpeningHoursResourceTest extends KernelTestBase {
   public function setUp(): void {
     parent::setUp();
     $this->installSchema('dpl_opening_hours', ['dpl_opening_hours_instance', 'dpl_opening_hours_repetition']);
+
+    // Requests are made as a member of the public unless a test says
+    // otherwise.
+    $this->setCurrentUserPermissions([]);
   }
 
   /**
@@ -57,6 +70,8 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $category = $this->prophesize(TermInterface::class)
       ->id()->willReturn(1)->getObjectProphecy()
       ->label()->willReturn('Open')->getObjectProphecy()
+      // The legacy endpoint uses the name of the category as notice.
+      ->getName()->willReturn('Open')->getObjectProphecy()
       ->get('field_opening_hours_color')->willReturn(
         $this->prophesize(FieldItemListInterface::class)
           ->first()->willReturn(
@@ -71,12 +86,15 @@ class OpeningHoursResourceTest extends KernelTestBase {
       ->load(Argument::any())->willReturn($category->reveal())->getObjectProphecy();
 
     $branchStorage = $this->prophesize(NodeStorageInterface::class);
-    foreach ([1, 2] as $branchId) {
+    // Branches 1 and 2 are published. Branch 3 is not, e.g. because the
+    // library is still preparing it.
+    foreach ([1 => TRUE, 2 => TRUE, self::UNPUBLISHED_BRANCH_ID => FALSE] as $branchId => $published) {
       $branchStorage->load($branchId)->willReturn(
         $this->prophesize(NodeInterface::class)
           ->bundle()->willReturn('branch')->getObjectProphecy()
           ->id()->willReturn($branchId)->getObjectProphecy()
           ->label()->willReturn('Branch ' . $branchId)->getObjectProphecy()
+          ->isPublished()->willReturn($published)->getObjectProphecy()
           ->hasField('field_agency_branch_id')->willReturn(FALSE)->getObjectProphecy()
       );
     }
@@ -156,6 +174,85 @@ class OpeningHoursResourceTest extends KernelTestBase {
 
     $openingHoursByBranchAndDate = $this->listOpeningHours(branchId: 1, fromDate: $now, toDate: $tomorrow);
     $this->assertCount(2, $openingHoursByBranchAndDate);
+  }
+
+  /**
+   * Opening hours of an unpublished branch are not listed for the public.
+   */
+  public function testListLeavesOutUnpublishedBranches(): void {
+    $this->createOpeningHours(branchId: 1);
+    $this->createOpeningHours(branchId: self::UNPUBLISHED_BRANCH_ID);
+
+    $this->assertSame(
+      [1],
+      array_map(fn(OpeningHoursResponse $openingHours) => $openingHours->getBranchId(), $this->listOpeningHours()),
+      'Only opening hours of the published branch are listed.',
+    );
+    $this->assertSame(
+      [],
+      $this->listOpeningHours(branchId: self::UNPUBLISHED_BRANCH_ID),
+      'Asking for the unpublished branch directly does not reveal its opening hours either.',
+    );
+  }
+
+  /**
+   * Editors still see opening hours of unpublished branches.
+   *
+   * The opening hours editor uses the same endpoint, and editors must be able
+   * to prepare opening hours before a branch is published.
+   */
+  public function testListIncludesUnpublishedBranchesForOpeningHoursManagers(): void {
+    $this->createOpeningHours(branchId: 1);
+    $this->createOpeningHours(branchId: self::UNPUBLISHED_BRANCH_ID);
+
+    $this->setCurrentUserPermissions(['manage opening hours for branches']);
+
+    $this->assertCount(2, $this->listOpeningHours());
+    $this->assertCount(1, $this->listOpeningHours(branchId: self::UNPUBLISHED_BRANCH_ID));
+  }
+
+  /**
+   * The list response must be cached per permissions, and per branch changes.
+   *
+   * The public and editors get different responses for the same URL, so they
+   * must not share a cache entry. Publishing or unpublishing a branch changes
+   * the response as well, so that must invalidate it.
+   */
+  public function testListCacheabilityCoversBranchVisibility(): void {
+    $listResource = OpeningHoursResource::create($this->container, [], '', '');
+    $response = $listResource->get(new Request());
+
+    $this->assertInstanceOf(CacheableResponseInterface::class, $response);
+    $cacheability = $response->getCacheableMetadata();
+    $this->assertContains('user.permissions', $cacheability->getCacheContexts());
+    $this->assertContains('node_list:branch', $cacheability->getCacheTags());
+  }
+
+  /**
+   * The legacy app endpoint leaves out unpublished branches as well.
+   */
+  public function testLegacyListLeavesOutUnpublishedBranches(): void {
+    $now = new DateTime('now');
+    $this->createOpeningHours($now, branchId: 1);
+    $this->createOpeningHours($now, branchId: self::UNPUBLISHED_BRANCH_ID);
+
+    $legacyResource = LegacyOpeningHoursResource::create($this->container, [], '', '');
+    $response = $legacyResource->get(new Request([
+      'nid' => '1,' . self::UNPUBLISHED_BRANCH_ID,
+      'from_date' => $now->format('Y-m-d'),
+      'to_date' => $now->format('Y-m-d'),
+    ]));
+
+    $content = $response->getContent();
+    $this->assertIsString($content);
+    $openingHours = json_decode($content, TRUE);
+    $this->assertIsArray($openingHours);
+    $this->assertSame([1], array_column($openingHours, 'nid'));
+
+    $this->assertInstanceOf(CacheableResponseInterface::class, $response);
+    $cacheability = $response->getCacheableMetadata();
+    $this->assertContains('user.permissions', $cacheability->getCacheContexts());
+    $this->assertContains('node_list:branch', $cacheability->getCacheTags());
   }
 
   /**
@@ -574,6 +671,24 @@ class OpeningHoursResourceTest extends KernelTestBase {
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner[] $responseData */
     $responseData = $serializer->deserialize($response->getContent(), 'array<' . OpeningHoursResponse::class . '>', 'application/json');
     return $responseData;
+  }
+
+  /**
+   * Make the following requests as a user with the given permissions.
+   *
+   * @param string[] $permissions
+   *   The permissions the user has.
+   */
+  protected function setCurrentUserPermissions(array $permissions): void {
+    $account = $this->prophesize(AccountInterface::class);
+    $account->id()->willReturn($permissions ? 1 : 0);
+    $account->hasPermission(Argument::type('string'))->will(
+      fn(array $args) => in_array($args[0], $permissions, TRUE)
+    );
+
+    $currentUser = $this->container->get('current_user');
+    $this->assertInstanceOf(AccountProxyInterface::class, $currentUser);
+    $currentUser->setAccount($account->reveal());
   }
 
   /**
