@@ -14,7 +14,6 @@ export default defineConfig({
     include: ["./src/tests/unit/*.test.(ts|tsx)"],
     includeSource: ["src/**/*.{ts,tsx}"],
     coverage: {
-      all: true,
       provider: "istanbul",
       reporter: ["clover"],
       include: ["src/**/*.{ts,tsx}"]

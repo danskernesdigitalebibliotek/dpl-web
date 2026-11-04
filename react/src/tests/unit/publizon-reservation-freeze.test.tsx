@@ -11,6 +11,7 @@ import {
 import { isAnonymous } from "../../core/utils/helpers/user";
 import { ReservationType } from "../../core/utils/types/reservation-type";
 import { ContentLoanStatusEnum } from "../../core/publizon/model";
+import { publizonIdentifier } from "./__vitest_data__/publizon-identifier";
 
 /**
  * TEMPORARY: the Publizon reservation queue standing still while Biblio
@@ -69,7 +70,7 @@ const given = ({
 const renderState = () =>
   renderHook(() =>
     usePublizonReaderPlayerState({
-      identifier: IDENTIFIER,
+      identifier: publizonIdentifier(IDENTIFIER),
       canAcquire: true
     })
   ).result.current;

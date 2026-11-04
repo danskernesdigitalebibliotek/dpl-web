@@ -41,6 +41,7 @@
                 ],
                 "publisher": ["Memoris"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788793681095" },
                   { "type": "ISBN", "value": "9788793681095" },
                   { "type": "ISBN", "value": "9788793681095" }
                 ],
@@ -131,6 +132,7 @@
                 ],
                 "publisher": ["Memoris"],
                 "identifiers": [
+                  { "type": "PUBLIZON", "value": "9788793681132" },
                   { "type": "ISBN", "value": "9788793681132" },
                   { "type": "ISBN", "value": "9788793681132" }
                 ],

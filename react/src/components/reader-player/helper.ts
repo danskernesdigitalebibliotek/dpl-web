@@ -1,10 +1,7 @@
-import { getMaterialTypes } from "../../core/utils/helpers/general";
-import { Manifestation } from "../../core/utils/types/entities";
 import { LoanType } from "../../core/utils/types/loan-type";
-import { ManifestationMaterialType } from "../../core/utils/types/material-type";
 import { ReservationType } from "../../core/utils/types/reservation-type";
-import { hasCorrectAccess } from "../material/material-buttons/helper";
 import { DigitalProvider } from "../../core/utils/types/digital-provider";
+import { PublizonIdentifier } from "../../core/utils/types/ids";
 
 type AssetType = {
   src: string;
@@ -81,7 +78,7 @@ export const getOrderIdByIdentifier = ({
   identifier
 }: {
   loans: LoanType[];
-  identifier: string;
+  identifier: PublizonIdentifier;
 }) => {
   const loanWithIdentifier = loans.find((i) => i.identifier === identifier);
   return loanWithIdentifier ? loanWithIdentifier.orderId : null;
@@ -125,7 +122,7 @@ export const playsInModal = (provider?: DigitalProvider | null) =>
  * it: e-books sample on the reader page, audiobooks on the player page.
  */
 export const sampleUrl = (
-  identifier: string,
+  identifier: PublizonIdentifier,
   materialType: "ebook" | "audiobook"
 ) =>
   new URL(
@@ -133,35 +130,8 @@ export const sampleUrl = (
     window.location.href
   );
 
-export const readerTypes = [
-  ManifestationMaterialType.ebook,
-  ManifestationMaterialType.pictureBookOnline,
-  ManifestationMaterialType.animatedSeriesOnline,
-  ManifestationMaterialType.yearBookOnline
-];
-
-export const playerTypes = [
-  ManifestationMaterialType.audioBook,
-  ManifestationMaterialType.podcast,
-  ManifestationMaterialType.musicOnline,
-  ManifestationMaterialType.audioBookTape
-];
-
-export const getReaderPlayerType = (
-  manifestation: Manifestation | null
-): "reader" | "player" | null => {
-  if (!manifestation) return null;
-  if (!hasCorrectAccess("Ereol", [manifestation])) return null;
-  const materialTypes = getMaterialTypes([manifestation]);
-
-  if (readerTypes.some((type) => materialTypes.includes(type))) return "reader";
-  if (playerTypes.some((type) => materialTypes.includes(type))) return "player";
-
-  return null;
-};
-
 export const findReservedReservation = (
-  identifier: string,
+  identifier: PublizonIdentifier,
   reservations: ReservationType[]
 ) =>
   reservations.find(

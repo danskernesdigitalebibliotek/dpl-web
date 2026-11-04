@@ -1,0 +1,13 @@
+{
+  "status": "ok",
+  "beskrivelse": "",
+  "fund": [
+    {
+      "type": "husnummer",
+      "id": "0a3f507a-5e1b-32b8-e044-0003ba298018",
+      "titel": "Dronningensgade 53, 1420 København K",
+      "vejnavn": "Dronningensgade",
+      "husnummer": "53"
+    }
+  ]
+}
