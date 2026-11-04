@@ -134,3 +134,22 @@ re-run only failed:
 Lagoon doesn't handle a flood of concurrent SSH sessions well, so the default
 is `-j 3`. Crank it up cautiously; if you see SSH or auth errors in the logs,
 lower it again.
+
+## Commands must not prompt
+
+Each command runs with stdin from `/dev/null`, so nothing can answer a prompt:
+
+- drush takes the prompt's default answer without asking. Pass `-y` so the
+  result does not depend on that default.
+- When `sshkey:` is set in `~/.lagoon.yml`, `lagoon ssh` skips the ssh-agent
+  and reads the key file itself, so a passphrase-protected key prompts and
+  fails with `inappropriate ioctl for device`. Set `sshkey: ""` and load the
+  key with `ssh-add` before running.
+
+To set a boolean config value, pass `--input-format=yaml` inside the
+`lagoon ssh … --command "…"`. Without it drush passes the value as a string,
+and a boolean in config schema casts `"false"` to `true`:
+
+```sh
+drush config:set -y --input-format=yaml my_module.settings my_flag false
+```
