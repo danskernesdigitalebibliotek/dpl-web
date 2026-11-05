@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import React, { Suspense } from "react"
 
+import DefaultLayout from "@/app/(pages)/layout"
 import CategorySliderLayout from "@/app/(pages-with-category-slider)/layout"
 import ArticlePageLayout, {
   TArticlePageLayoutProps,
@@ -46,7 +47,11 @@ async function PreviewPage(props: {
     )
   }
   if (pageType === "NodeGoArticle") {
-    return <ArticlePageLayout pageData={data.preview as TArticlePageLayoutProps} />
+    return (
+      <DefaultLayout>
+        <ArticlePageLayout pageData={data.preview as TArticlePageLayoutProps} />
+      </DefaultLayout>
+    )
   }
   if (pageType === "NodeGoCategory") {
     return (
