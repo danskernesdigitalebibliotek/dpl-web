@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\bnf_client\Hook;
 
-use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_client\Entity\Subscription;
@@ -18,8 +17,6 @@ use Webmozart\Assert\Assert;
  * Subscription hooks.
  */
 class SubscriptionHooks {
-
-  use AutowirePluginTrait;
 
   /**
    * Constructor.

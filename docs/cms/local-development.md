@@ -78,6 +78,31 @@ temporarily through a task:
 4. When you are finished, hit `enter` in the terminal where you enabled XDebug.
    This will disable XDebug
 
+### Run the Cypress tests
+
+The Cypress tests run in Docker against the CI setup of the site, where
+WireMock stands in for the external services. Run the tasks from `cms/`:
+
+1. Set up the CI site with `task ci:reset`. It replaces your local site.
+2. Run a group of tests, for example the tests of the endpoints the mobile
+   apps use, with `task ci:cypress:mobile-app`. `task --list | grep
+   ci:cypress` lists the groups, and `task ci:cypress` runs all of them.
+3. Run a single spec with `task dev:cypress:run --
+   cypress/e2e/mobile-app/mobile-app-events.cy.ts`. The specs run
+   independently, but they need the WireMock mappings, so create them first
+   with `task ci:wiremock:create-mappings`.
+
+The site and the Cypress container read their secrets, such as the password
+of the mobile GraphQL consumer, from the `.env` at the root of the repository
+directory. `task ci:reset` creates one if it is missing. Run the tests from the
+same directory you ran `task ci:reset` in. Switching branches there is fine,
+but if you work in several clones or git worktrees, each has its own `.env`,
+and running the tests from another one than the site was set up from makes the
+mobile app tests fail with `403 Forbidden`.
+
+To follow the tests in the Cypress app instead, run `task ci:cypress:local`.
+It adds the WireMock hosts to `/etc/hosts`, which asks for your password.
+
 ### Download database and files from Lagoon
 
 #### Retrieve the latest backup of database and files from Lagoon

@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\bnf_server\Plugin\GraphQL\DataProducer;
 
-use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf_server\GraphQL\NewContentResponse;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_graphql\Plugin\GraphQL\DataProducer\AutowiredDataProducerPluginBase;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
-use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Safe\DateTime;
 
 /**
@@ -33,9 +31,7 @@ use Safe\DateTime;
  *   }
  * )
  */
-class NewContentProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
-
-  use AutowirePluginTrait;
+class NewContentProducer extends AutowiredDataProducerPluginBase {
 
   /**
    * {@inheritdoc}

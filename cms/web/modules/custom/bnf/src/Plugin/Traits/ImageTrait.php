@@ -2,7 +2,6 @@
 
 namespace Drupal\bnf\Plugin\Traits;
 
-use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Medias\MediaImage;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\media\Entity\Media;
@@ -14,7 +13,6 @@ use Spawnia\Sailor\ObjectLike;
 trait ImageTrait {
 
   use FileTrait;
-  use AutowirePluginTrait;
 
   /**
    * The entity type manager.
