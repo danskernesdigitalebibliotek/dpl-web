@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import React, { Suspense } from "react"
 
 import CategorySliderLayout from "@/app/(pages-with-category-slider)/layout"
+import DefaultLayout from "@/app/(pages)/layout"
 import ArticlePageLayout, {
   TArticlePageLayoutProps,
 } from "@/components/pages/articlePageLayout/ArticlePageLayout"
@@ -46,7 +47,11 @@ async function PreviewPage(props: {
     )
   }
   if (pageType === "NodeGoArticle") {
-    return <ArticlePageLayout pageData={data.preview as TArticlePageLayoutProps} />
+    return (
+      <DefaultLayout>
+        <ArticlePageLayout pageData={data.preview as TArticlePageLayoutProps} />
+      </DefaultLayout>
+    )
   }
   if (pageType === "NodeGoCategory") {
     return (
