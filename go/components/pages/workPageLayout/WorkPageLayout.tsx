@@ -101,9 +101,28 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
   const { defaultManifestation: defaultObtainableEdition, isLoading: isLoadingDefaultEdition } =
     useDefaultObtainableEdition(obtainableEditions)
 
+  // The pick settles once per material type, and the page stops waiting for
+  // good once it has. The lookups behind it share their query keys with every
+  // other Publizon request for the same ISBN, so one started elsewhere — a
+  // BLÅ badge in the editions picker, say — moves a key they observe and
+  // would otherwise send the header back to its skeleton with the edition
+  // already on screen. A material type switch is a new decision and starts
+  // over; the candidate array cannot stand in for it, since it is rebuilt
+  // whenever the availability flags behind it change.
+  const [settledMaterialType, setSettledMaterialType] = useState<string | null>(null)
+  useEffect(() => {
+    if (!isLoadingDefaultEdition) setSettledMaterialType(searchParamsMaterialType)
+  }, [isLoadingDefaultEdition, searchParamsMaterialType])
+  // Nothing in flight right now.
+  const isPickIdle = !isLoadingDefaultEdition
+  // Something is in flight, but this type's pick was already made — so it is
+  // a lookup started elsewhere, not a pick still being decided.
+  const isPickAlreadyMade = settledMaterialType === searchParamsMaterialType
+  const hasSettled = isPickIdle || isPickAlreadyMade
+
   // A pinned edition is the answer already, so the lookups behind the default
   // pick have nothing left to decide and the header need not wait for them.
-  const isWaitingForDefaultEdition = isLoadingDefaultEdition && !pinnedManifestation
+  const isWaitingForDefaultEdition = !hasSettled && !pinnedManifestation
 
   useEffect(() => {
     if (!searchParamsMaterialType && bestRepresentation) {
