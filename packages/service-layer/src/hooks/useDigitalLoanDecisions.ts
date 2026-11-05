@@ -8,15 +8,9 @@ import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 
 /**
  * The loan decision for several materials at once, keyed by material id.
- *
- * Biblio's loan decision has no batch endpoint, unlike Publizon's loanstatus
- * — this fires one request per material and combines the results, for a
- * caller (e.g. an edition picker) that needs every result before it can
- * settle, the way a single combined request would.
- *
- * Patron-scoped like useDigitalLoanDecision: every query stays disabled
- * without a borrowing session (a patron or a Unilogin user — see
- * canUseDigitalLoans), whatever materialIds holds.
+ * Fires one request per id and combines the results. Patron-scoped: every
+ * query stays disabled without a borrowing session (a patron or a Unilogin
+ * user — see canUseDigitalLoans), whatever materialIds holds.
  */
 export const useDigitalLoanDecisions = (
   materialIds: string[]
