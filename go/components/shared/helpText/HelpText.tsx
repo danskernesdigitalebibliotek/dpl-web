@@ -9,10 +9,8 @@ type HelpTextProps = {
   className?: string
 }
 
-// A short line of help in the caption type the app uses for it, explaining
-// what the reader cannot do right now or what state something is already in.
-// Lets a control keep its ordinary label instead of renaming itself to carry
-// the explanation.
+// A short line of help in the app's caption type, saying what the reader
+// cannot do right now or what state something is already in.
 const HelpText = ({ children, align = "center", className }: HelpTextProps) => (
   <p
     className={cn(

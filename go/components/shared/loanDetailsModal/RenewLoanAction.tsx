@@ -19,9 +19,7 @@ type RenewLoanActionProps = {
   onRenew: () => void
 }
 
-// "Forlæng lån" with the reason it cannot be used above it. aria-disabled
-// rather than disabled, so the button keeps its place in the tab order and a
-// keyboard reader reaches the reason it carries.
+// "Forlæng lån" with the reason it cannot be used above it, and in its label.
 const DisabledRenewAction = ({ title, message }: { title: string; message: string }) => (
   <div className="flex w-full flex-col items-center gap-3">
     <HelpText>{message}</HelpText>

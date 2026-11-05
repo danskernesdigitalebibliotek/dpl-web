@@ -10,7 +10,8 @@ const buttonVariants = cva(
   `inline-flex border text-typo-button-lg shadow-button rounded-full items-center
   justify-center hover:cursor-pointer whitespace-nowrap focus-visible disabled:pointer-events-none
   disabled:opacity-50 hover:translate-x-[1px] hover:translate-y-[1px] transition
-  hover:shadow-button-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none pointer-events-auto`,
+  hover:shadow-button-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none pointer-events-auto
+  aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50`,
   {
     variants: {
       variant: {
@@ -113,6 +114,12 @@ export type ButtonProps = ButtonBaseProps &
       }
   )
 
+// Enter and Space activate a focused button natively, which aria-disabled
+// does not prevent.
+const suppressActivationKeys = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+  if (event.key === "Enter" || event.key === " ") event.preventDefault()
+}
+
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -127,6 +134,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       icon,
       ariaDisabled,
       onClick,
+      onKeyDown,
       children,
       ...props
     },
@@ -146,19 +154,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       )
     return (
       <Comp
-        className={cn(
-          buttonVariants({ variant, size, theme }),
-          // The disabled look without the disabled attribute. The hover cursor
-          // is explicit: its merge group outlives a plain cursor-not-allowed.
-          ariaDisabled &&
-            `cursor-not-allowed opacity-50 hover:translate-none hover:cursor-not-allowed
-            active:translate-none`,
-          className
-        )}
+        className={cn(buttonVariants({ variant, size, theme }), className)}
         ref={ref}
         {...props}
         aria-busy={isLoading || undefined}
         aria-disabled={ariaDisabled || undefined}
+        // Pointer events stop at the CSS layer; Enter and Space reach the
+        // button regardless, since it keeps its place in the tab order.
+        onKeyDown={ariaDisabled ? suppressActivationKeys : onKeyDown}
         onClick={ariaDisabled ? undefined : onClick}
         aria-label={ariaLabel || ariaLabelProp || undefined}>
         {isLoading ? (

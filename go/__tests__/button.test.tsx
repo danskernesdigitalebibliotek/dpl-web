@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { createEvent, fireEvent, render, screen } from "@testing-library/react"
 import React from "react"
 import { describe, expect, it, vi } from "vitest"
 
@@ -28,6 +28,29 @@ describe("Button", () => {
 
       fireEvent.click(screen.getByRole("button"))
       expect(onClick).not.toHaveBeenCalled()
+    })
+
+    it("suppresses Enter and Space, which activate a focused button natively", () => {
+      const onKeyDown = vi.fn()
+      render(
+        <Button ariaDisabled onKeyDown={onKeyDown}>
+          Forlæng lån
+        </Button>
+      )
+
+      const button = screen.getByRole("button")
+      for (const key of ["Enter", " "]) {
+        const event = createEvent.keyDown(button, { key })
+        fireEvent(button, event)
+        expect(event.defaultPrevented).toBe(true)
+      }
+      expect(onKeyDown).not.toHaveBeenCalled()
+    })
+
+    it("takes pointer events out of reach, so other handlers cannot fire either", () => {
+      render(<Button ariaDisabled>Forlæng lån</Button>)
+
+      expect(screen.getByRole("button").className).toContain("aria-disabled:pointer-events-none")
     })
 
     it("leaves onClick alone when not set", () => {
