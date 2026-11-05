@@ -253,6 +253,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
+  numberInSeries
   members {
     numberInSeries
     work {

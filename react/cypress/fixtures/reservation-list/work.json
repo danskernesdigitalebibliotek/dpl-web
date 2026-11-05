@@ -17,6 +17,7 @@
       "series": [
         {
           "title": "Harry Potter (bøger)",
+          "numberInSeries": "Del 1",
           "isPopular": true,
           "members": [
             {
