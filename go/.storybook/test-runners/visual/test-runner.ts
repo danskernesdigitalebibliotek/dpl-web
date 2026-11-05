@@ -46,7 +46,13 @@ const config: TestRunnerConfig = {
       return
     }
 
-    await argosScreenshot(page, context)
+    await argosScreenshot(page, context, {
+      // Screenshot every element in its resting style. Playwright's disabled
+      // animations leave one that has not started on its first frame, like
+      // ResponsiveDialog's desktop dialog, which mounts only when Argos widens
+      // the viewport and so would be captured at opacity 0.
+      argosCSS: "*, *::before, *::after { animation: none !important; transition: none !important; }",
+    })
     // After the screenshot, as Argos renders the story again for each mode.
     assertNoExternalRequests(page)
   },
