@@ -87,8 +87,9 @@ $_menu_animation_delay: 0.2s;
   cursor: initial;
 }
 
-// Hidden (not just moved off-screen) while closed, so its links can't receive
-// keyboard focus. Visibility switches once the slide-out has finished.
+// Hidden while closed so its links can't take keyboard focus. visibility can't
+// animate, so it switches after the slide-out (transform is repeated because
+// `transition` replaces the list). Opening uses the base rule: visible at once.
 .header-sidebar-nav[data-open="closed"] {
   visibility: hidden;
   transition:
