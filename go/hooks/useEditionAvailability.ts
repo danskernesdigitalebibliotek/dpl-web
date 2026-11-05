@@ -7,7 +7,11 @@ import {
   ManifestationWorkPageFragment,
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
-import { isEditionObtainable, isEditionOnLoan } from "@/lib/helpers/helper.availability"
+import {
+  getEditionQueueCountText,
+  isEditionObtainable,
+  isEditionOnLoan,
+} from "@/lib/helpers/helper.availability"
 import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
 
 import { useBlacklistedAvailabilityBranches } from "./useBlacklistedAvailabilityBranches"
@@ -76,10 +80,22 @@ export const useEditionAvailability = (wid: string) => {
     return isEditionOnLoan(availability, faust)
   }
 
+  // Undefined when availability isn't resolved yet or the edition is digital
+  // — callers fall back to no queue copy in that case.
+  const getEditionQueueText = (
+    manifestation: ManifestationWorkPageFragment
+  ): string | undefined => {
+    const faust = getRecord(manifestation)
+    if (!faust) return undefined
+
+    return getEditionQueueCountText(availability, faust)
+  }
+
   return {
     isLoadingAvailability,
     isAvailabilityUnknown: isError,
     isEditionHidden,
     isEditionLentOut,
+    getEditionQueueText,
   }
 }

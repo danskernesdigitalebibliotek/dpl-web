@@ -24,3 +24,20 @@ export const isEditionOnLoan = (
 
   return record.totalCopies > 0 && record.availableCopies === 0
 }
+
+// How many are in queue for this edition, in Danish. Always states the
+// count regardless of shelf availability — the picker shows this before the
+// reader has chosen to reserve anything. Undefined for a record FBS did not
+// answer for, which is the caller's cue to show no queue copy at all.
+export const getEditionQueueCountText = (
+  availability: MaterialAvailability | undefined,
+  recordId: string
+): string | undefined => {
+  const record = availability?.records[recordId]
+  if (!record) return undefined
+
+  if (record.reservationCount === 0) return "Der er ingen i kø."
+
+  const borrowers = record.reservationCount === 1 ? "låner" : "lånere"
+  return `Der er ${record.reservationCount} ${borrowers} i kø.`
+}

@@ -46,6 +46,7 @@ const EditionsSelectModal = ({
     isLoadingAvailability,
     isAvailabilityUnknown,
     isEditionLentOut,
+    getEditionQueueText,
   } = useShownEditions(wid, materialTypeCode)
   const { isLoadingDigitalAvailability, isDigitalEditionOnLoan } =
     useDigitalEditionAvailability(wid)
@@ -62,13 +63,14 @@ const EditionsSelectModal = ({
   // want to pick, to read it from the work page.
   const getUnavailable = (manifestation: ManifestationWorkPageFragment) => {
     if (isEditionLentOut(manifestation)) {
+      const queueText = getEditionQueueText(manifestation) ?? ""
       return {
         label: (
-          <StatusLabel variant="warning" subline="Du kan stadig reservere bogen">
+          <StatusLabel variant="warning" subline={queueText}>
             Udlånt lige nu
           </StatusLabel>
         ),
-        text: "Udlånt lige nu, du kan stadig reservere bogen",
+        text: `Udlånt lige nu${queueText ? `, ${queueText}` : ""}`,
       }
     }
     if (isDigitalEditionOnLoan(manifestation)) {

@@ -29,8 +29,13 @@ export const useShownEditions = (wid: string, materialTypeCode: string) => {
     [allManifestations, materialTypeCode]
   )
 
-  const { isLoadingAvailability, isAvailabilityUnknown, isEditionHidden, isEditionLentOut } =
-    useEditionAvailability(wid)
+  const {
+    isLoadingAvailability,
+    isAvailabilityUnknown,
+    isEditionHidden,
+    isEditionLentOut,
+    getEditionQueueText,
+  } = useEditionAvailability(wid)
 
   // FBS is asked about every physical record of the work, so a work holding
   // both a book and an ebook keeps that request in flight while the reader is
@@ -51,5 +56,6 @@ export const useShownEditions = (wid: string, materialTypeCode: string) => {
     isLoadingAvailability: needsPhysicalAvailability && isLoadingAvailability,
     isAvailabilityUnknown,
     isEditionLentOut,
+    getEditionQueueText,
   }
 }
