@@ -51,6 +51,13 @@ jobs:
       - name: Take screenshots
         run: task argos:capture
 
+      - name: Find Argos reference commit
+        id: argos-reference
+        uses: ./.github/actions/argos-reference-commit
+        with:
+          build-name: design-system
+          argos-token: ${{ secrets.ARGOS_TOKEN }}
+
       # The CLI directly, not through pnpm: pnpm in the capture's container
       # reinstalled node_modules, and pnpm here would then reinstall them
       # again.
@@ -58,6 +65,7 @@ jobs:
         run: node_modules/.bin/argos upload --build-name design-system ./screenshots
         env:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+          ARGOS_REFERENCE_COMMIT: ${{ steps.argos-reference.outputs.sha }}
 
       - name: Deploy Storybook preview to Argos
         # Also when capturing failed, as the preview helps debug that.
