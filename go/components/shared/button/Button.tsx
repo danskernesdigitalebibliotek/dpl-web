@@ -84,19 +84,34 @@ const buttonVariants = cva(
   }
 )
 
-export interface ButtonProps
+interface ButtonBaseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-  asChild?: boolean
   ariaLabel?: string
   dataCy?: string
   isLoading?: boolean
   // Name of the icon rendered before the label (variant "icon-text").
   icon?: string
-  // Unavailable, but still reachable by keyboard: the button keeps its place
-  // in the tab order and announces itself as unavailable, so the reason it
-  // carries can be read.
-  ariaDisabled?: boolean
 }
+
+// `ariaDisabled` and `asChild` are mutually exclusive. Making a button inert
+// means dropping its onClick, but `asChild` renders a Radix Slot, which merges
+// props onto the child instead of replacing them: the child keeps its own
+// onClick, and an <a> keeps its href, so the control would still work while
+// announcing itself as unavailable.
+export type ButtonProps = ButtonBaseProps &
+  (
+    | {
+        asChild: true
+        ariaDisabled?: never
+      }
+    | {
+        asChild?: false
+        // Unavailable, but still reachable by keyboard: the button keeps its
+        // place in the tab order and announces itself as unavailable, so the
+        // reason it carries can be read.
+        ariaDisabled?: boolean
+      }
+  )
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
