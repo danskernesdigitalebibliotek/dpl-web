@@ -254,15 +254,6 @@ fragment SeriesSimple on Series {
   seriesId
   isPopular
   numberInSeries
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
   readThisFirst
   readThisWhenever
 }
@@ -299,6 +290,21 @@ fragment WorkSmall on Work {
 
 fragment WorkMedium on Work {
   ...WorkSmall
+  # The material page's "in same series" list is the only thing that needs the
+  # member list, so it stays out of WorkSmall, which every work card and nested
+  # work uses. Other getMaterial callers still fetch it. 1000 means "all": the
+  # FBI default is 50, and the largest series we know of has about 630 members.
+  series {
+    members(limit: 1000) {
+      numberInSeries
+      work {
+        workId
+        titles {
+          main
+        }
+      }
+    }
+  }
   materialTypes {
     materialTypeGeneral {
       code
