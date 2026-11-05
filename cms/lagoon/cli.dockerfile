@@ -53,7 +53,9 @@ RUN if [ "$SKIP_JS_ASSETS" = "true" ]; then mkdir -p design-system/build; else \
     cp -r public/icons build/icons && \
     cp -r src/styles/css build/css && \
     cp -r src/styles/fonts build/fonts && \
-    find src -name "*.js" | while read -r f; do cp "$f" build/js/"$(basename "$f")"; done; \
+    find src -name "*.js" | while read -r f; do cp "$f" build/js/"$(basename "$f")"; done && \
+    cp node_modules/swiper/swiper-bundle.min.js build/js/ && \
+    cp node_modules/swiper/swiper-bundle.min.css build/css/; \
     fi
 
 # Workspace packages consumed by React ship raw TypeScript, so their source

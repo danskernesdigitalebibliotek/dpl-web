@@ -34,12 +34,10 @@ swiper:
     url: https://github.com/nolimits4web/swiper/blob/master/LICENSE
     gpl-compatible: true
   js:
-    'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js':
-      { type: external }
+    assets/dpl-design-system/js/swiper-bundle.min.js: { minified: true }
   css:
     theme:
-      'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css':
-        { type: external }
+      assets/dpl-design-system/css/swiper-bundle.min.css: { minified: true }
 footer-accordions:
   js:
     assets/dpl-design-system/js/footer-accordions.js: {}
