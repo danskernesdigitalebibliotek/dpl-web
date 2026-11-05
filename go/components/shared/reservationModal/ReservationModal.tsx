@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react"
 
 import { getManifestationLabel } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
+import HelpText from "@/components/shared/helpText/HelpText"
 import { ModalFlowBody } from "@/components/shared/modalFlow/ModalFlowBody"
 import ReservationFormContent from "@/components/shared/reservationModal/ReservationFormContent"
 import ReservationReceiptContent from "@/components/shared/reservationModal/ReservationReceiptContent"
@@ -155,10 +156,10 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
                 the reader reserves one edition, so the queue they join is that
                 edition's.*/}
             {editionAvailability && (
-              <p className="text-typo-caption text-foreground-muted text-center">
+              <HelpText>
                 Biblioteket har {editionAvailability.totalCopies} stk. af denne bog.{" "}
                 {getQueueText(editionAvailability)}
-              </p>
+              </HelpText>
             )}
             <Button
               theme="primary"

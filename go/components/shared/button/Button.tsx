@@ -10,7 +10,8 @@ const buttonVariants = cva(
   `inline-flex border text-typo-button-lg shadow-button rounded-full items-center
   justify-center hover:cursor-pointer whitespace-nowrap focus-visible disabled:pointer-events-none
   disabled:opacity-50 hover:translate-x-[1px] hover:translate-y-[1px] transition
-  hover:shadow-button-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none pointer-events-auto`,
+  hover:shadow-button-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none pointer-events-auto
+  aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50`,
   {
     variants: {
       variant: {
@@ -84,9 +85,8 @@ const buttonVariants = cva(
   }
 )
 
-export interface ButtonProps
+interface ButtonBaseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-  asChild?: boolean
   ariaLabel?: string
   dataCy?: string
   isLoading?: boolean
@@ -96,6 +96,32 @@ export interface ButtonProps
   // in the tab order and announces itself as unavailable, so the reason it
   // carries can be read.
   ariaDisabled?: boolean
+}
+
+// `ariaDisabled` and `asChild` are mutually exclusive. Making a button inert
+// means dropping its onClick, but `asChild` renders a Radix Slot, which merges
+// props onto the child instead of replacing them: the child keeps its own
+// onClick, and an <a> keeps its href, so the control would still work while
+// announcing itself as unavailable.
+export type ButtonProps = ButtonBaseProps &
+  (
+    | {
+        asChild: true
+        ariaDisabled?: never
+      }
+    | {
+        asChild?: false
+        // Unavailable, but still reachable by keyboard: the button keeps its
+        // place in the tab order and announces itself as unavailable, so the
+        // reason it carries can be read.
+        ariaDisabled?: boolean
+      }
+  )
+
+// Enter and Space activate a focused button natively, which aria-disabled
+// does not prevent.
+const suppressActivationKeys = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+  if (event.key === "Enter" || event.key === " ") event.preventDefault()
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -112,6 +138,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       icon,
       ariaDisabled,
       onClick,
+      onKeyDown,
       children,
       ...props
     },
@@ -144,6 +171,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
         aria-busy={isLoading || undefined}
         aria-disabled={ariaDisabled || undefined}
+        // Pointer events stop at the CSS layer; Enter and Space reach the
+        // button regardless, since it keeps its place in the tab order.
+        onKeyDown={ariaDisabled ? suppressActivationKeys : onKeyDown}
         onClick={ariaDisabled ? undefined : onClick}
         aria-label={ariaLabel || ariaLabelProp || undefined}>
         {isLoading ? (

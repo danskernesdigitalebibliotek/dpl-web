@@ -10,6 +10,7 @@ import { da } from "date-fns/locale"
 import React, { useContext } from "react"
 
 import { getManifestationMaterialTypeIcon } from "@/components/pages/workPageLayout/helper"
+import HelpText from "@/components/shared/helpText/HelpText"
 import InfoCard from "@/components/shared/infoCard/InfoCard"
 import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
@@ -166,7 +167,7 @@ const ReservationDetailsContent = ({ item }: { item: ReservationItem }) => {
           </>
         )}
 
-        <p className="text-typo-caption text-foreground-muted text-center">
+        <HelpText>
           Vil du ændre afhentningssted eller kontaktinformation, skal du bruge{" "}
           <a
             className="text-foreground underline"
@@ -176,7 +177,7 @@ const ReservationDetailsContent = ({ item }: { item: ReservationItem }) => {
             voksen-hjemmesiden
           </a>
           .
-        </p>
+        </HelpText>
       </div>
     </div>
   )
