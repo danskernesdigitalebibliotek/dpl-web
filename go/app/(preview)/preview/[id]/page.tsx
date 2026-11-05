@@ -2,8 +2,8 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import React, { Suspense } from "react"
 
-import CategorySliderLayout from "@/app/(pages-with-category-slider)/layout"
 import DefaultLayout from "@/app/(pages)/layout"
+import CategorySliderLayout from "@/app/(pages-with-category-slider)/layout"
 import ArticlePageLayout, {
   TArticlePageLayoutProps,
 } from "@/components/pages/articlePageLayout/ArticlePageLayout"
