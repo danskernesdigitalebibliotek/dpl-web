@@ -1,0 +1,23 @@
+name: Find Argos reference commit
+description: >-
+  Find the commit of the nearest eligible Argos baseline among the ancestors
+  of the commit under test, for ARGOS_REFERENCE_COMMIT. Argos itself only
+  searches 100 commits back from the merge base, and path-filtered workflows
+  leave baselines further apart than that. Empty when none is found, which
+  leaves the baseline to Argos.
+inputs:
+  build-name:
+    description: Build name, as given to `argos upload --build-name`.
+    required: true
+  argos-token:
+    description: Argos project token.
+    required: true
+  github-token:
+    description: Token for listing commits with the GitHub API.
+    default: ${{ github.token }}
+outputs:
+  sha:
+    description: Commit SHA of the baseline build, or empty.
+runs:
+  using: node24
+  main: find-reference-commit.mjs
