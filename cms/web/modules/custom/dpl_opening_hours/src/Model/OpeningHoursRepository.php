@@ -123,7 +123,7 @@ class OpeningHoursRepository {
 
     $repetitions = match ($repetition::class) {
       NoRepetition::class => [$instance->startTime],
-      WeeklyRepetition::class => $repetition->startTimes($instance->startTime),
+      WeeklyRepetition::class => $repetition->recurrences($instance->startTime),
       default => throw new \InvalidArgumentException("Unknown repetition type " . $repetition::class),
     };
 

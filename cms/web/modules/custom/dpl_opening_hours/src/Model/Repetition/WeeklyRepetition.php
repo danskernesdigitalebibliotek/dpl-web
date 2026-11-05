@@ -25,7 +25,7 @@ class WeeklyRepetition extends Repetition {
    * @return \DatePeriod<\DateTimeInterface, \DateTimeImmutable, null>
    *   The weekly start times from the first start time.
    */
-  public function startTimes(\DateTimeInterface $firstStartTime): \DatePeriod {
+  public function recurrences(\DateTimeInterface $firstStartTime): \DatePeriod {
     // The time of day of the end date is arbitrary: dates from requests get
     // the time of day of the request. End the period at the start of the
     // following day, as the period excludes its end.
