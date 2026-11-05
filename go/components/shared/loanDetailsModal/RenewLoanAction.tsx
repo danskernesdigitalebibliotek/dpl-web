@@ -3,6 +3,7 @@
 import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
+import HelpText from "@/components/shared/helpText/HelpText"
 import { type LoanDetails } from "@/components/shared/loanDetailsModal/LoanDetailsContent"
 import {
   getRenewalFailureMessage,
@@ -18,15 +19,15 @@ type RenewLoanActionProps = {
   onRenew: () => void
 }
 
-// Disabled "Forlæng lån" with an explanation above it.
+// "Forlæng lån" with the reason it cannot be used above it, and in its label.
 const DisabledRenewAction = ({ title, message }: { title: string; message: string }) => (
   <div className="flex w-full flex-col items-center gap-3">
-    <p className="text-typo-caption text-foreground-muted text-center">{message}</p>
+    <HelpText>{message}</HelpText>
     <Button
       theme="primary"
       size="lg"
-      disabled
-      ariaLabel={`Forlæng lån af ${title}`}
+      ariaDisabled
+      ariaLabel={`Forlæng lån af ${title} — ${message}`}
       data-cy={cyKeys["approve-renew-loan-button"]}>
       Forlæng lån
     </Button>
