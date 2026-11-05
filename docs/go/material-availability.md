@@ -73,7 +73,7 @@ questions, and the picker branches on them:
 | State | Condition | UI |
 |---|---|---|
 | **Obtainable, on the shelf** | copies > 0, some available | Listed normally |
-| **Obtainable, lent out** | copies > 0, none available | Listed, caption says "Udlånt lige nu, men du kan stadig reservere bogen" |
+| **Obtainable, lent out** | copies > 0, none available | Listed, caption says "Udlånt lige nu" (plus the queue count, if any) |
 | **Not obtainable** | no copies and not reservable | Filtered out of the picker |
 
 A record missing from the response counts as **not obtainable**. FBS states
@@ -170,9 +170,9 @@ button is disabled and reads "Udlånt lige nu", logged in or out. Trying a
 sample stays available, and an edition already on loan to the reader still
 opens.
 
-The edition stays selectable in the picker, captioned "Udlånt lige nu"
-against the physical wording "Udlånt lige nu, men du kan stadig reservere
-bogen". Disabling it there would not be enough on its own — a reader also
+The edition stays selectable in the picker, captioned "Udlånt lige nu" —
+the same base wording the physical state uses, except the physical one can
+also carry a queue count. Disabling it there would not be enough on its own — a reader also
 arrives through a shared link, through "nyeste", or because it is the only
 edition of its type — and filtering it out would leave an empty picker for a
 type with one edition.
@@ -184,9 +184,12 @@ type with one edition.
 those that have not — never both, since falling back would offer a loan the
 library has decided not to make.
 
-GO has no Biblio adapter yet, so only the Publizon path applies. The switch
-is expected around late October 2026. `useDigitalEditionAvailability` is the
-single place that will need to change.
+GO now has `useBiblioAdapter` too, and uses it for digital loans, quotas and
+the reader/player (`WorkPageButtonsLoggedIn`, `LoanMaterialModal`,
+`QuotasSection`, `ReadPageLayout`). **Availability is the one question that
+hasn't moved yet**: `useDigitalEditionAvailability` still only asks
+Publizon's `loanstatus`, regardless of `useBiblioAdapter`. It stays the
+single place to change once availability itself is answered by the adapter.
 
 ### Not covered
 
