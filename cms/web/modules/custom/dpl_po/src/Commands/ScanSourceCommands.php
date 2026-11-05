@@ -6,6 +6,7 @@ namespace Drupal\dpl_po\Commands;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\dpl_po\DplPoHeader;
 use Drupal\dpl_po\PoFileBuilder;
 use Drush\Attributes\Argument;
 use Drush\Attributes\Command;
@@ -253,7 +254,7 @@ class ScanSourceCommands extends DrushCommands {
       return '';
     }
 
-    return $this->poFileBuilder->render($store[self::POTX_FILE_NAME]);
+    return $this->poFileBuilder->render($store[self::POTX_FILE_NAME], new DplPoHeader($langcode));
   }
 
   /**
