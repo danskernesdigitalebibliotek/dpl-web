@@ -123,24 +123,17 @@ class OpeningHoursRepository {
 
     $repetitions = match ($repetition::class) {
       NoRepetition::class => [$instance->startTime],
-      WeeklyRepetition::class => new \DatePeriod(
-        $instance->startTime,
-        new \DateInterval("P1W"),
-        // The end date is inclusive, but its time of day is arbitrary: dates
-        // from requests get the time of day of the request. End the period
-        // at the start of the following day, as the period excludes its end.
-        \DateTimeImmutable::createFromInterface($repetition->endDate)->setTime(0, 0)->modify('+1 day'),
-      ),
+      WeeklyRepetition::class => $repetition->startTimes($instance->startTime),
       default => throw new \InvalidArgumentException("Unknown repetition type " . $repetition::class),
     };
 
     $instances = [];
     // Generate an opening hours per repetition.
-    foreach ($repetitions as $date) {
+    foreach ($repetitions as $repetitionStartDate) {
       // We would normally use \Safe\$updatedOpeningHours here but there seems
       // to be a bug in the project when using add() so we stick with regular
       // \DateTimeImmutable.
-      $startDate = \DateTimeImmutable::createFromInterface($date);
+      $startDate = \DateTimeImmutable::createFromInterface($repetitionStartDate);
       // Calculate the difference from the start date of the repetition to the
       // current instance so we can adjust the end date accordingly.
       // For opening hours without repetition there is only once instance and
