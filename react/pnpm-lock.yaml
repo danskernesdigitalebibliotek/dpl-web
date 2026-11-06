@@ -307,8 +307,8 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0
       sass:
-        specifier: ^1.106.1
-        version: 1.106.1
+        specifier: ^1.107.1
+        version: 1.107.1
       storybook:
         specifier: ^8.6.19
         version: 8.6.19(prettier@3.9.10)(supports-color@8.1.1)
@@ -332,7 +332,7 @@ importers:
         version: 6.0.3
       vitest:
         specifier: ^5.0.3
-        version: 5.0.3(@types/node@24.19.2)(@vitest/coverage-istanbul@5.0.3)(happy-dom@21.0.4)(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.106.1)(terser@5.51.2)(yaml@2.9.1))
+        version: 5.0.3(@types/node@24.19.2)(@vitest/coverage-istanbul@5.0.3)(happy-dom@21.0.4)(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.107.1)(terser@5.51.2)(yaml@2.9.1))
       webpack:
         specifier: ^5.112.0
         version: 5.112.0(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.31))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.31)(svgo@4.1.0)(webpack-cli@7.2.3)
@@ -6663,8 +6663,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sass@1.106.1:
-    resolution: {integrity: sha512-kD+Gi66vycZcbJt+42NC4z4PXNMcCajVrJPhqoKKXy5cOBMmJQt052CxIBcRjwYXeImHYOpu/ydWWGZQIenl7A==}
+  sass@1.107.1:
+    resolution: {integrity: sha512-aJ1/LvxOOb04YhmiBjzZn3jVwdHKol+OVhoMV6fFl02fF9T3i+5Mg9l/CnzqtM+NX5Jn5o3lAbs/ZJivTCLHfQ==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -8550,7 +8550,7 @@ snapshots:
     dependencies:
       '@csstools/sass-import-resolve': 1.0.0
       postcss: 8.5.31
-      sass: 1.106.1
+      sass: 1.107.1
       source-map: 0.7.6
 
   '@csstools/sass-import-resolve@1.0.0': {}
@@ -10734,7 +10734,7 @@ snapshots:
       magicast: 0.5.4
       obug: 2.2.1
       tinyrainbow: 3.1.1
-      vitest: 5.0.3(@types/node@24.19.2)(@vitest/coverage-istanbul@5.0.3)(happy-dom@21.0.4)(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.106.1)(terser@5.51.2)(yaml@2.9.1))
+      vitest: 5.0.3(@types/node@24.19.2)(@vitest/coverage-istanbul@5.0.3)(happy-dom@21.0.4)(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.107.1)(terser@5.51.2)(yaml@2.9.1))
 
   '@vitest/istanbul-lib-coverage@1.0.1': {}
 
@@ -10756,14 +10756,14 @@ snapshots:
       '@vitest/istanbul-lib-coverage': 1.0.1
       obug: 2.2.1
 
-  '@vitest/mocker@5.0.3(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.106.1)(terser@5.51.2)(yaml@2.9.1))':
+  '@vitest/mocker@5.0.3(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.107.1)(terser@5.51.2)(yaml@2.9.1))':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@vitest/spy': 5.0.3
       estree-walker: 3.0.3
       magic-string: 1.4.2
     optionalDependencies:
-      vite: 8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.106.1)(terser@5.51.2)(yaml@2.9.1)
+      vite: 8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.107.1)(terser@5.51.2)(yaml@2.9.1)
 
   '@vitest/spy@5.0.3': {}
 
@@ -14761,7 +14761,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass@1.106.1:
+  sass@1.107.1:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.9
@@ -15540,7 +15540,7 @@ snapshots:
       core-util-is: 1.0.2
       extsprintf: 1.3.0
 
-  vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.106.1)(terser@5.51.2)(yaml@2.9.1):
+  vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.107.1)(terser@5.51.2)(yaml@2.9.1):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
@@ -15552,14 +15552,14 @@ snapshots:
       esbuild: 0.25.12
       fsevents: 2.3.3
       jiti: 2.7.0
-      sass: 1.106.1
+      sass: 1.107.1
       terser: 5.51.2
       yaml: 2.9.1
 
-  vitest@5.0.3(@types/node@24.19.2)(@vitest/coverage-istanbul@5.0.3)(happy-dom@21.0.4)(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.106.1)(terser@5.51.2)(yaml@2.9.1)):
+  vitest@5.0.3(@types/node@24.19.2)(@vitest/coverage-istanbul@5.0.3)(happy-dom@21.0.4)(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.107.1)(terser@5.51.2)(yaml@2.9.1)):
     dependencies:
       '@types/chai': 5.2.3
-      '@vitest/mocker': 5.0.3(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.106.1)(terser@5.51.2)(yaml@2.9.1))
+      '@vitest/mocker': 5.0.3(vite@8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.107.1)(terser@5.51.2)(yaml@2.9.1))
       chai: 6.3.0
       es-module-lexer: 2.3.2
       expect-type: 1.4.0
@@ -15570,7 +15570,7 @@ snapshots:
       tinybench: 6.2.0
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
-      vite: 8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.106.1)(terser@5.51.2)(yaml@2.9.1)
+      vite: 8.3.2(@types/node@24.19.2)(esbuild@0.25.12)(jiti@2.7.0)(sass@1.107.1)(terser@5.51.2)(yaml@2.9.1)
       why-is-node-running: 3.2.1
     optionalDependencies:
       '@types/node': 24.19.2
