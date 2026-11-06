@@ -156,7 +156,7 @@
         "promphp/prometheus_client_php": "^2.15",
         "spatie/color": "^2.0",
         "spawnia/sailor": "^1.1.0",
-        "symfony/property-access": "^7.3",
+        "symfony/property-access": "^8.1",
         "symfony/property-info": "^8.1",
         "thecodingmachine/safe": "^2.5.0",
         "webmozart/assert": "^2.1",
