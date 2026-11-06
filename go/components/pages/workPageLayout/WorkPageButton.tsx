@@ -8,6 +8,7 @@ function WorkPageButton({
   className,
   dataCy,
   disabled,
+  ariaDisabled,
   onClick,
   asChild = false,
   children,
@@ -22,6 +23,7 @@ function WorkPageButton({
       // eslint-disable-next-line no-restricted-syntax
       data-cy={dataCy}
       disabled={disabled}
+      ariaDisabled={ariaDisabled}
       onClick={onClick}
       theme={theme}>
       {children}

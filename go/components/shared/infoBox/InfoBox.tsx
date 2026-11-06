@@ -15,7 +15,10 @@ import { Button } from "../button/Button"
 
 type InfoBoxProps = {
   work: WorkFullWorkPageFragment
-  selectedManifestation: ManifestationWorkPageFragment
+  // Undefined while the page is still deciding which edition is the
+  // default — the description itself comes from the work and renders
+  // regardless, but age/series/subjects fall back to "-" until then.
+  selectedManifestation: ManifestationWorkPageFragment | undefined
 }
 
 const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
@@ -41,10 +44,12 @@ const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
             )}
           </div>
         </div>
-        <dl className="flex-1">
+        {/* Only this list waits for the default edition — the description
+            beside it comes from the work and is already final. */}
+        <dl className="flex-1" aria-busy={!selectedManifestation || undefined}>
           <InfoBoxItem term="Alder">{ageString}</InfoBoxItem>
           <InfoBoxItem term="Serie">
-            {selectedManifestation.series.length
+            {selectedManifestation?.series.length
               ? selectedManifestation.series.map((series, index) => {
                   if (!series.title) {
                     return <span key={index}>{"-"}</span>
