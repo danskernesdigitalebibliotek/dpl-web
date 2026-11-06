@@ -9137,26 +9137,26 @@
         },
         {
             "name": "drupal/verf",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/verf.git",
-                "reference": "2.1.0"
+                "reference": "2.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/verf-2.1.0.zip",
-                "reference": "2.1.0",
-                "shasum": "46e528f0c805580a6c43431fb3400085030294a0"
+                "url": "https://ftp.drupal.org/files/projects/verf-2.2.0.zip",
+                "reference": "2.2.0",
+                "shasum": "431414c19a7264beeb32222e00e6d3fffb91a620"
             },
             "require": {
-                "drupal/core": "^10 || ^11"
+                "drupal/core": "^10 || ^11 || ^12"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.1.0",
-                    "datestamp": "1738325526",
+                    "version": "2.2.0",
+                    "datestamp": "1791471910",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -9173,10 +9173,6 @@
                     "homepage": "https://www.drupal.org/user/2480548"
                 },
                 {
-                    "name": "peelas02",
-                    "homepage": "https://www.drupal.org/user/3836090"
-                },
-                {
                     "name": "podarok",
                     "homepage": "https://www.drupal.org/user/116002"
                 }
@@ -9184,7 +9180,8 @@
             "description": "Provides Views filters for entity reference fields.",
             "homepage": "https://www.drupal.org/project/verf",
             "support": {
-                "source": "https://git.drupalcode.org/project/verf"
+                "source": "https://git.drupalcode.org/project/verf",
+                "issues": "https://www.drupal.org/project/issues/verf"
             }
         },
         {
