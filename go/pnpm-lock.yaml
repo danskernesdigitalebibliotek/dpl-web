@@ -30,8 +30,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(@types/react@19.3.0)(react@19.3.1)
       '@reloaddk/wsdl-tsclient':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       '@tanstack/react-query':
         specifier: ^5.105.0
         version: 5.105.0(@types/react@19.3.0)(react@19.3.1)
@@ -3201,8 +3201,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@reloaddk/wsdl-tsclient@3.0.0':
-    resolution: {integrity: sha512-Um2CHu66F6+w8sBcWd4KQ40U6NT+hyqKuM3+H784rqpVJfqCzitNTRjAMTRgU2rl1ZPWa0Bgz8cV94U5aOLNYQ==}
+  '@reloaddk/wsdl-tsclient@3.0.1':
+    resolution: {integrity: sha512-BfBdj/1nFb8sN38fnMZJ5a/lD6pB10GHbEDVIuC3EsygTFumZ8LImK3JI68bek7N730R2rjwO1efER08WezLTg==}
     engines: {node: '>=24.0.0'}
     hasBin: true
 
@@ -13380,7 +13380,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.3.0
 
-  '@reloaddk/wsdl-tsclient@3.0.0':
+  '@reloaddk/wsdl-tsclient@3.0.1':
     dependencies:
       camelcase: 10.0.0
       chalk: 6.0.1
