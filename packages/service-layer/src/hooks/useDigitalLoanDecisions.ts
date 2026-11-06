@@ -2,9 +2,9 @@
 
 import { useQueries } from "@tanstack/react-query"
 
+import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 import { digitalLoanDecisionQuery } from "../queries/digital-loan-decision"
 import type { LoanDecision } from "../types"
-import { useServiceLayerConfig } from "../context/ServiceLayerContext"
 import { canUseDigitalLoans } from "./internal"
 
 /**
