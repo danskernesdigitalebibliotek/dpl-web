@@ -97,7 +97,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-webpack-plugin": "^6.0.0",
-    "glob": "11.1.0",
+    "glob": "14.0.3",
     "globals": "^17.14.0",
     "happy-dom": "^21.0.4",
     "knip": "^6.44.1",
