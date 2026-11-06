@@ -70,7 +70,7 @@ RUN corepack pnpm prune --prod
 # No --no-optional here either, for the reason given above and for the same
 # binaries: the virtual store is shared across the workspace, so pruning
 # optional dependencies from this package reaches into go's sharp as well.
-# Under pnpm 10 it did not; under pnpm 11 it does, and `require("sharp")`
+# Under pnpm 10 it did not; since pnpm 11 it does, and `require("sharp")`
 # below is what catches it.
 WORKDIR /app/packages/service-layer
 RUN corepack pnpm prune --prod

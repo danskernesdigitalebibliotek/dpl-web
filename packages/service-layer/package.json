@@ -2,6 +2,9 @@
   "name": "@danskernesdigitalebibliotek/dpl-service-layer",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "pnpm": "^12"
+  },
   "main": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "engines": {
     "node": "24.22.1",
-    "pnpm": "^11"
+    "pnpm": "^12"
   },
   "license": "AGPL-3.0",
   "devDependencies": {
