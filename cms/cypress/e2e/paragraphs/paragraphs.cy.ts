@@ -321,4 +321,64 @@ describe('Paragraphs module', () => {
         '[data-sort="sort.creator.desc"]',
     ).should('exist');
   });
+  // TwentyThree runs on the libraries' own domains, which media_twentythree
+  // has to know. video.kk.dk is served by WireMock in CI.
+  it("Adds 'Video' paragraph with a TwentyThree video", () => {
+    const videoUrl =
+      'https://www.video.kk.dk/video/999999999/cypress-test-video';
+    const title = 'Cypress TwentyThree video';
+
+    cy.createMapping({
+      request: {
+        method: 'GET',
+        urlPath: '/oembed',
+        queryParameters: { url: { equalTo: videoUrl } },
+      },
+      response: {
+        headers: { 'Content-Type': 'application/json' },
+        jsonBody: {
+          version: '1.0',
+          type: 'video',
+          provider_name: 'TwentyThree',
+          provider_url: 'https://www.twentythree.net',
+          title,
+          html: `<iframe src="about:blank" title="${title}"></iframe>`,
+          width: 480,
+          height: 270,
+        },
+      },
+    });
+
+    addParagraph('Video');
+    cy.get(
+      '#field_embed_video-media-library-wrapper-field_paragraphs-0-subform',
+    ).within(() => {
+      cy.get('input[value="Add media"]').click();
+    });
+    cy.get('.media-library-widget-modal').within(() => {
+      cy.findByLabelText('Add Video via URL').type(videoUrl);
+      cy.get('input[value="Add"]').click();
+      cy.get('input[name="media[0][fields][name][0][value]"]').should(
+        'have.value',
+        title,
+      );
+    });
+    cy.get('.ui-dialog-buttonpane').contains('button', 'Save').click();
+    cy.get('.ui-dialog-buttonpane')
+      .contains('button', 'Insert selected')
+      .click();
+    cy.get(
+      '#field_embed_video-media-library-wrapper-field_paragraphs-0-subform .media-library-item',
+    ).should('exist');
+    cy.clickSaveButton();
+
+    // Cookie Information holds back the iframe src until marketing cookies
+    // are accepted.
+    cy.get('.video-embed iframe.media-oembed-content')
+      .should('have.attr', 'data-consent-src')
+      .and('include', 'video.kk.dk')
+      .then((src) => {
+        cy.request(String(src)).its('body').should('include', title);
+      });
+  });
 });

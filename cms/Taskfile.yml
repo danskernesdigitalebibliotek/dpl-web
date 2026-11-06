@@ -436,6 +436,7 @@ tasks:
       - ./dev-scripts/add-to-etc-hosts.sh wiremock adgangsplatformen.dpl-cms.local
       - ./dev-scripts/add-to-etc-hosts.sh wiremock adressevaelger.dpl-cms.local
       - ./dev-scripts/add-to-etc-hosts.sh wiremock responder.wt-safetag.com
+      - ./dev-scripts/add-to-etc-hosts.sh wiremock video.kk.dk
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
 

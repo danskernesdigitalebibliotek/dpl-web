@@ -144,6 +144,10 @@ if (getenv('CI')) {
     'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
   ];
 
+  // WireMock stands in for some external HTTPS hosts, such as video.kk.dk,
+  // with a self-signed certificate.
+  $settings['http_client_config']['verify'] = FALSE;
+
   // Avoid attempts to send out mail during tests.
   $config['mailsystem.settings']['defaults'] = [
     'formatter' => 'devel_mail_log',
