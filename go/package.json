@@ -132,7 +132,7 @@
     "postcss": "^8.5.32",
     "prettier": "^3.9.10",
     "prettier-plugin-classnames": "^0.10.5",
-    "prettier-plugin-merge": "^0.10.1",
+    "prettier-plugin-merge": "^0.10.2",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "storybook": "^10.6.5",
     "tailwindcss": "^4.3.4",
