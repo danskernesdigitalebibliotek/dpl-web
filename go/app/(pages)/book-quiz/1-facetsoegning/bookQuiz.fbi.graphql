@@ -1,0 +1,42 @@
+# PoC-specifik complex search: samme teaser som søgesiden, men beriget med
+# audience (lix, alder) + sideantal (physicalDescription.numberOfPages) på
+# manifestationerne, så lix/læsealder/længde kan bruges til client-side
+# rerank/filter. Vi henter på tværs af alle manifestationer (ikke kun bedste),
+# da lix/alder/sideantal ofte kun er sat på den fysiske udgave.
+query bookQuizComplexSearch(
+  $cql: String!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: ComplexSearchFiltersInput!
+) {
+  complexSearch(cql: $cql, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkTeaserSearchPage
+      manifestations {
+        all {
+          physicalDescription {
+            numberOfPages
+          }
+          audience {
+            lix
+            ages {
+              begin
+              end
+            }
+          }
+        }
+        bestRepresentation {
+          audience {
+            lix
+            libraryRecommendation
+            ages {
+              begin
+              end
+            }
+          }
+        }
+      }
+    }
+  }
+}
