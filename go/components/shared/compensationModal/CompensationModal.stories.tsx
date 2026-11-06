@@ -5,7 +5,7 @@ import { darkModeDecorator } from "@/.storybook/decorators"
 import CompensationModal from "@/components/shared/compensationModal/CompensationModal"
 import DplCmsConfigContextProvider from "@/lib/providers/DplCmsConfigContextProvider"
 
-// The payment link resolves the library site's base URL from the CMS config
+// The fees link resolves the library site's base URL from the CMS config
 // context; provide a fixture so the link renders in stories.
 const withCmsConfig = (Story: React.ComponentType): React.ReactElement => (
   <DplCmsConfigContextProvider
