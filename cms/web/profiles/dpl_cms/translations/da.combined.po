@@ -21184,6 +21184,9 @@ msgstr "Scheduler problem 3320341"
 msgid "Scheduler lightweight cron completed."
 msgstr "Scheduler letvægtscron fuldført."
 
+msgid "Scheduler no-bundle entity type settings"
+msgstr ""
+
 msgid "Scheduler options"
 msgstr "Indstillinger for Scheduler"
 
