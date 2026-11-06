@@ -270,12 +270,6 @@ jobs:
           pnpm exec http-server storybook-static -a 127.0.0.1 -p 6006 --silent &
           pnpm exec wait-on --timeout 60000 http-get://127.0.0.1:6006/index.json
           NODE_OPTIONS=--experimental-vm-modules pnpm run test:storybook:visual --url http://127.0.0.1:6006
-      - name: Find Argos reference commit
-        id: argos-reference
-        uses: ./.github/actions/argos-reference-commit
-        with:
-          build-name: go
-          argos-token: ${{ secrets.ARGOS_TOKEN }}
       - name: Upload screenshots to Argos
         run: pnpm exec argos upload --build-name go ./screenshots
         env:
@@ -286,7 +280,6 @@ jobs:
         run: pnpm exec argos deploy ./storybook-static
         env:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
-          ARGOS_REFERENCE_COMMIT: ${{ steps.argos-reference.outputs.sha }}
 
   # ---------------------------------------------------------------------------
   # E2E builds the Next.js app itself (single consumer → nothing to share).
