@@ -66,7 +66,7 @@ final class Unilogin {
    */
   public static function isUniloginUser(array $userinfo): bool {
     return ($userinfo['attributes'][self::CLAIM_IDP_USED] ?? NULL) === self::ADGANGSPLATFORMEN_IDP
-      || self::getUniId($userinfo) !== NULL;
+      && self::getUniId($userinfo) !== NULL;
   }
 
   /**
