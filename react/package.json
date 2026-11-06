@@ -72,7 +72,7 @@
     "@typescript-eslint/eslint-plugin": "^8.72.0",
     "@typescript-eslint/parser": "^8.72.1",
     "@vitest/coverage-istanbul": "^5.0.3",
-    "autoprefixer": "^10.6.1",
+    "autoprefixer": "^10.6.2",
     "babel-loader": "^10.1.1",
     "babel-plugin-istanbul": "^8.0.0",
     "babel-plugin-lodash": "^3.3.4",
