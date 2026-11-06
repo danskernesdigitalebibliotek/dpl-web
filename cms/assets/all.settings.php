@@ -29,13 +29,6 @@ $config['dk_address.settings']['site_token'] = getenv('DATAFORSYNINGEN_TOKEN');
 $config['media_videotool.settings']['public_key'] = getenv('VIDEOTOOL_PUBLIC_KEY');
 $config['media_videotool.settings']['private_key'] = getenv('VIDEOTOOL_PRIVATE_KEY');
 
-// TwentyThree is white-label on the libraries' own domains, so it is not on
-// the oEmbed provider list and media_twentythree relies on oEmbed discovery,
-// which Drupal core only performs for the hosts listed here.
-$settings['media_oembed_discovery_trusted_host_patterns'] = [
-  '^(www\.)?video\.kk\.dk$',
-];
-
 // Configure logging using the project name and environment from the Lagoon
 // environment.
 $config['jsonlog.settings']['jsonlog_siteid'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_ENVIRONMENT');
@@ -150,6 +143,10 @@ if (getenv('CI')) {
     'cover' => ['base_url' => 'http://cover.dandigbib.org'],
     'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
   ];
+
+  // WireMock stands in for some external HTTPS hosts, such as video.kk.dk,
+  // with a self-signed certificate.
+  $settings['http_client_config']['verify'] = FALSE;
 
   // Avoid attempts to send out mail during tests.
   $config['mailsystem.settings']['defaults'] = [

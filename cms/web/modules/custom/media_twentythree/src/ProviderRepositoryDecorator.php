@@ -51,11 +51,15 @@ final class ProviderRepositoryDecorator implements ProviderRepositoryInterface {
       "https://www.twentythree.com/",
       [
         [
-          // oEmbed providers require an endpoint to be defined. Here it is a
-          // dummy value as we cannot provide a fixed set of endpoints due to
-          // the nature of the TwentyThree product.
-          // @see media_twentythree_oembed_resource_url_alter()
-          'url' => "https://www.twentythree.com/oembed",
+          // TwentyThree runs on each customer's own domain, so the domains in
+          // use have to be listed here.
+          'url' => 'https://video.kk.dk/oembed',
+          'schemes' => [
+            'https://video.kk.dk/*',
+            'https://www.video.kk.dk/*',
+            'http://video.kk.dk/*',
+            'http://www.video.kk.dk/*',
+          ],
         ],
       ]
     );
