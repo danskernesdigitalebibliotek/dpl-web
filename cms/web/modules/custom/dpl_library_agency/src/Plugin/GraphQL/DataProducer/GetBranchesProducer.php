@@ -76,7 +76,8 @@ class GetBranchesProducer extends DataProducerPluginBase implements ContainerFac
    * @param bool|null $cmsConfigured
    *   Optional filter to only return branches that have a corresponding CMS
    *   node. When TRUE, only CMS-configured branches are returned. When FALSE,
-   *   only branches without CMS configuration are returned.
+   *   only branches without CMS configuration are returned. A branch whose
+   *   node is unpublished counts as having no CMS configuration.
    * @param \Drupal\graphql\GraphQL\Execution\FieldContext $field_context
    *   The field context for adding cache metadata.
    *
@@ -92,7 +93,13 @@ class GetBranchesProducer extends DataProducerPluginBase implements ContainerFac
     $field_context->addCacheableDependency($this->branchRepository);
     $field_context->addCacheableDependency($this->branchSettings);
 
-    $branches = $this->branchRepository->getBranches();
+    // An unpublished branch node must not be exposed. The branch itself still
+    // exists upstream, so it is kept, but presented as if it had no node.
+    $branches = array_map(
+      fn(Branch $branch) => ($branch->node && !$branch->node->isPublished()) ? $branch->withoutNode() : $branch,
+      $this->branchRepository->getBranches()
+    );
+
     if ($isilId !== NULL) {
       $branches = array_filter(
         $branches,
@@ -119,7 +126,7 @@ class GetBranchesProducer extends DataProducerPluginBase implements ContainerFac
     if ($cmsConfigured !== NULL) {
       $branches = array_filter(
         $branches,
-        fn(Branch $branch) => (bool) $branch->getNode() === (bool) $cmsConfigured
+        fn(Branch $branch) => ($branch->node !== NULL) === (bool) $cmsConfigured
       );
     }
 

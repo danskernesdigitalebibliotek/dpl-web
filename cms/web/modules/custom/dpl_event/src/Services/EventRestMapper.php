@@ -441,7 +441,7 @@ class EventRestMapper {
     $names = [];
     $isil_ids = [];
 
-    $branches = $this->event->getBranches() ?? [];
+    $branches = $this->event->getPublishedBranches();
 
     foreach ($branches as $branch) {
       $label = $branch->getTitle();
@@ -468,7 +468,7 @@ class EventRestMapper {
    * @see self::getAddress()
    */
   private function getOrganizer(): ?EventsGET200ResponseInnerOrganizer {
-    $branches = $this->event->getBranches() ?? [];
+    $branches = $this->event->getPublishedBranches();
     $branch = reset($branches);
 
     if (!($branch instanceof BranchNode)) {
