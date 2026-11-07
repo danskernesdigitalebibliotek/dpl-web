@@ -8743,8 +8743,8 @@ msgid "Dependent locality"
 msgstr "Dependent locality"
 
 msgctxt "Address label"
-msgid "Dependent locality (e.g. Neighbourhood)"
-msgstr "Dependent locality (e.g. Neighbourhood)"
+msgid "Dependent locality (e.g. Neighborhood)"
+msgstr ""
 
 msgid ""
 "Depending on the chosen entity type, additional filtering and sorting "
@@ -24696,10 +24696,8 @@ msgstr "Standardtiden skal være i formatet @format"
 msgid "The default value to use for focal point when none is specified"
 msgstr ""
 
-msgid "The dependent locality (i.e. neighbourhood)"
+msgid "The dependent locality (i.e. neighborhood)"
 msgstr ""
-"\n"
-"The dependent locality (i.e. neighbourhood)"
 
 msgid ""
 "The depth will match nodes tagged with terms in the hierarchy. For example, "
