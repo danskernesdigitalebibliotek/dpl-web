@@ -1,6 +1,4 @@
 import React from "react";
-import { Work } from "../../../core/utils/types/entities";
-import { getNumberInSeries } from "../helper";
 import HorizontalTermLine from "../../horizontal-term-line/HorizontalTermLine";
 import {
   constructSearchUrl,
@@ -8,9 +6,14 @@ import {
 } from "../../../core/utils/helpers/url";
 import { UseTextFunction } from "../../../core/utils/text";
 
+type SeriesListEntry = {
+  title: string;
+  seriesId?: string | null;
+  numberInSeries?: string | null;
+};
+
 type SeriesListProps = {
-  series: Work["series"];
-  workId: Work["workId"];
+  series: SeriesListEntry[];
   searchUrl: URL;
   seriesUrl: URL;
   t: UseTextFunction;
@@ -19,7 +22,6 @@ type SeriesListProps = {
 
 const SeriesList = ({
   series,
-  workId,
   searchUrl,
   seriesUrl,
   t,
@@ -27,25 +29,23 @@ const SeriesList = ({
 }: SeriesListProps) => {
   return (
     <>
-      {series.map((serie, index) => {
-        const numberInSeries = getNumberInSeries(serie, workId);
-
+      {series.map(({ title, seriesId, numberInSeries }, index) => {
         if (!numberInSeries) {
           return null;
         }
 
         // seriesId is nullable, and without one there is no landing page to
         // point at, so those series keep linking to a search for the title.
-        const url = serie.seriesId
-          ? constructSeriesUrl(seriesUrl, serie.seriesId)
-          : constructSearchUrl(searchUrl, serie.title);
+        const url = seriesId
+          ? constructSeriesUrl(seriesUrl, seriesId)
+          : constructSearchUrl(searchUrl, title);
 
         return (
           <HorizontalTermLine
             key={index}
             title={numberInSeries}
             subTitle={t("inSeriesText")}
-            linkList={[{ url, term: serie.title }]}
+            linkList={[{ url, term: title }]}
             dataCy={`${dataCy}-${index}`}
           />
         );

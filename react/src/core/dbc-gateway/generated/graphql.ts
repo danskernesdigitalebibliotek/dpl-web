@@ -3263,17 +3263,9 @@ export type GetSmallWorkQuery = {
       title: string;
       seriesId?: string | null;
       isPopular?: boolean | null;
+      numberInSeries?: string | null;
       readThisFirst?: boolean | null;
       readThisWhenever?: boolean | null;
-      members: Array<{
-        __typename?: "SerieWork";
-        numberInSeries?: string | null;
-        work: {
-          __typename?: "Work";
-          workId: string;
-          titles: { __typename?: "WorkTitles"; main: Array<string> };
-        };
-      }>;
     }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
@@ -3835,7 +3827,6 @@ export type ManifestationBasicDetailsFragment = {
   __typename?: "Manifestation";
   pid: string;
   abstract: Array<string>;
-  ownerWork: { __typename?: "Work"; workId: string };
   titles: { __typename?: "ManifestationTitles"; full: Array<string> };
   materialTypes: Array<{
     __typename?: "MaterialType";
@@ -3858,11 +3849,7 @@ export type ManifestationBasicDetailsFragment = {
   series: Array<{
     __typename?: "Series";
     title: string;
-    members: Array<{
-      __typename?: "SerieWork";
-      numberInSeries?: string | null;
-      work: { __typename?: "Work"; workId: string };
-    }>;
+    numberInSeries?: string | null;
   }>;
   languages?: {
     __typename?: "Languages";
@@ -3884,7 +3871,6 @@ export type GetManifestationViaMaterialByFaustQuery = {
     __typename?: "Manifestation";
     pid: string;
     abstract: Array<string>;
-    ownerWork: { __typename?: "Work"; workId: string };
     titles: { __typename?: "ManifestationTitles"; full: Array<string> };
     materialTypes: Array<{
       __typename?: "MaterialType";
@@ -3907,11 +3893,7 @@ export type GetManifestationViaMaterialByFaustQuery = {
     series: Array<{
       __typename?: "Series";
       title: string;
-      members: Array<{
-        __typename?: "SerieWork";
-        numberInSeries?: string | null;
-        work: { __typename?: "Work"; workId: string };
-      }>;
+      numberInSeries?: string | null;
     }>;
     languages?: {
       __typename?: "Languages";
@@ -3940,7 +3922,6 @@ export type GetManifestationViaBestRepresentationByFaustQuery = {
           __typename?: "Manifestation";
           pid: string;
           abstract: Array<string>;
-          ownerWork: { __typename?: "Work"; workId: string };
           titles: { __typename?: "ManifestationTitles"; full: Array<string> };
           materialTypes: Array<{
             __typename?: "MaterialType";
@@ -3963,11 +3944,7 @@ export type GetManifestationViaBestRepresentationByFaustQuery = {
           series: Array<{
             __typename?: "Series";
             title: string;
-            members: Array<{
-              __typename?: "SerieWork";
-              numberInSeries?: string | null;
-              work: { __typename?: "Work"; workId: string };
-            }>;
+            numberInSeries?: string | null;
           }>;
           languages?: {
             __typename?: "Languages";
@@ -3994,6 +3971,24 @@ export type GetMaterialQuery = {
     workId: string;
     abstract?: Array<string> | null;
     genreAndForm: Array<string>;
+    series: Array<{
+      __typename?: "Series";
+      title: string;
+      seriesId?: string | null;
+      isPopular?: boolean | null;
+      numberInSeries?: string | null;
+      readThisFirst?: boolean | null;
+      readThisWhenever?: boolean | null;
+      members: Array<{
+        __typename?: "SerieWork";
+        numberInSeries?: string | null;
+        work: {
+          __typename?: "Work";
+          workId: string;
+          titles: { __typename?: "WorkTitles"; main: Array<string> };
+        };
+      }>;
+    }>;
     materialTypes: Array<{
       __typename?: "MaterialType";
       materialTypeGeneral: {
@@ -4065,23 +4060,6 @@ export type GetMaterialQuery = {
       | { __typename: "Corporation"; display: string }
       | { __typename: "Person"; display: string }
     >;
-    series: Array<{
-      __typename?: "Series";
-      title: string;
-      seriesId?: string | null;
-      isPopular?: boolean | null;
-      readThisFirst?: boolean | null;
-      readThisWhenever?: boolean | null;
-      members: Array<{
-        __typename?: "SerieWork";
-        numberInSeries?: string | null;
-        work: {
-          __typename?: "Work";
-          workId: string;
-          titles: { __typename?: "WorkTitles"; main: Array<string> };
-        };
-      }>;
-    }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
       __typename?: "Manifestations";
@@ -4649,6 +4627,24 @@ export type GetMaterialGloballyQuery = {
     workId: string;
     abstract?: Array<string> | null;
     genreAndForm: Array<string>;
+    series: Array<{
+      __typename?: "Series";
+      title: string;
+      seriesId?: string | null;
+      isPopular?: boolean | null;
+      numberInSeries?: string | null;
+      readThisFirst?: boolean | null;
+      readThisWhenever?: boolean | null;
+      members: Array<{
+        __typename?: "SerieWork";
+        numberInSeries?: string | null;
+        work: {
+          __typename?: "Work";
+          workId: string;
+          titles: { __typename?: "WorkTitles"; main: Array<string> };
+        };
+      }>;
+    }>;
     materialTypes: Array<{
       __typename?: "MaterialType";
       materialTypeGeneral: {
@@ -4720,23 +4716,6 @@ export type GetMaterialGloballyQuery = {
       | { __typename: "Corporation"; display: string }
       | { __typename: "Person"; display: string }
     >;
-    series: Array<{
-      __typename?: "Series";
-      title: string;
-      seriesId?: string | null;
-      isPopular?: boolean | null;
-      readThisFirst?: boolean | null;
-      readThisWhenever?: boolean | null;
-      members: Array<{
-        __typename?: "SerieWork";
-        numberInSeries?: string | null;
-        work: {
-          __typename?: "Work";
-          workId: string;
-          titles: { __typename?: "WorkTitles"; main: Array<string> };
-        };
-      }>;
-    }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
       __typename?: "Manifestations";
@@ -5419,17 +5398,9 @@ export type RecommendFromFaustQuery = {
           title: string;
           seriesId?: string | null;
           isPopular?: boolean | null;
+          numberInSeries?: string | null;
           readThisFirst?: boolean | null;
           readThisWhenever?: boolean | null;
-          members: Array<{
-            __typename?: "SerieWork";
-            numberInSeries?: string | null;
-            work: {
-              __typename?: "Work";
-              workId: string;
-              titles: { __typename?: "WorkTitles"; main: Array<string> };
-            };
-          }>;
         }>;
         workYear?: {
           __typename?: "PublicationYear";
@@ -6058,17 +6029,9 @@ export type SearchWithPaginationQuery = {
         title: string;
         seriesId?: string | null;
         isPopular?: boolean | null;
+        numberInSeries?: string | null;
         readThisFirst?: boolean | null;
         readThisWhenever?: boolean | null;
-        members: Array<{
-          __typename?: "SerieWork";
-          numberInSeries?: string | null;
-          work: {
-            __typename?: "Work";
-            workId: string;
-            titles: { __typename?: "WorkTitles"; main: Array<string> };
-          };
-        }>;
       }>;
       workYear?: {
         __typename?: "PublicationYear";
@@ -6712,17 +6675,9 @@ export type ComplexSearchWithPaginationQuery = {
         title: string;
         seriesId?: string | null;
         isPopular?: boolean | null;
+        numberInSeries?: string | null;
         readThisFirst?: boolean | null;
         readThisWhenever?: boolean | null;
-        members: Array<{
-          __typename?: "SerieWork";
-          numberInSeries?: string | null;
-          work: {
-            __typename?: "Work";
-            workId: string;
-            titles: { __typename?: "WorkTitles"; main: Array<string> };
-          };
-        }>;
       }>;
       workYear?: {
         __typename?: "PublicationYear";
@@ -7921,17 +7876,9 @@ export type GetSeriesQuery = {
           title: string;
           seriesId?: string | null;
           isPopular?: boolean | null;
+          numberInSeries?: string | null;
           readThisFirst?: boolean | null;
           readThisWhenever?: boolean | null;
-          members: Array<{
-            __typename?: "SerieWork";
-            numberInSeries?: string | null;
-            work: {
-              __typename?: "Work";
-              workId: string;
-              titles: { __typename?: "WorkTitles"; main: Array<string> };
-            };
-          }>;
         }>;
         workYear?: {
           __typename?: "PublicationYear";
@@ -8883,17 +8830,9 @@ export type SeriesSimpleFragment = {
   title: string;
   seriesId?: string | null;
   isPopular?: boolean | null;
+  numberInSeries?: string | null;
   readThisFirst?: boolean | null;
   readThisWhenever?: boolean | null;
-  members: Array<{
-    __typename?: "SerieWork";
-    numberInSeries?: string | null;
-    work: {
-      __typename?: "Work";
-      workId: string;
-      titles: { __typename?: "WorkTitles"; main: Array<string> };
-    };
-  }>;
 };
 
 export type WorkAccessFragment = {
@@ -8951,17 +8890,9 @@ export type WorkSmallFragment = {
     title: string;
     seriesId?: string | null;
     isPopular?: boolean | null;
+    numberInSeries?: string | null;
     readThisFirst?: boolean | null;
     readThisWhenever?: boolean | null;
-    members: Array<{
-      __typename?: "SerieWork";
-      numberInSeries?: string | null;
-      work: {
-        __typename?: "Work";
-        workId: string;
-        titles: { __typename?: "WorkTitles"; main: Array<string> };
-      };
-    }>;
   }>;
   workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
   manifestations: {
@@ -9523,6 +9454,24 @@ export type WorkMediumFragment = {
   workId: string;
   abstract?: Array<string> | null;
   genreAndForm: Array<string>;
+  series: Array<{
+    __typename?: "Series";
+    title: string;
+    seriesId?: string | null;
+    isPopular?: boolean | null;
+    numberInSeries?: string | null;
+    readThisFirst?: boolean | null;
+    readThisWhenever?: boolean | null;
+    members: Array<{
+      __typename?: "SerieWork";
+      numberInSeries?: string | null;
+      work: {
+        __typename?: "Work";
+        workId: string;
+        titles: { __typename?: "WorkTitles"; main: Array<string> };
+      };
+    }>;
+  }>;
   materialTypes: Array<{
     __typename?: "MaterialType";
     materialTypeGeneral: {
@@ -9594,23 +9543,6 @@ export type WorkMediumFragment = {
     | { __typename: "Corporation"; display: string }
     | { __typename: "Person"; display: string }
   >;
-  series: Array<{
-    __typename?: "Series";
-    title: string;
-    seriesId?: string | null;
-    isPopular?: boolean | null;
-    readThisFirst?: boolean | null;
-    readThisWhenever?: boolean | null;
-    members: Array<{
-      __typename?: "SerieWork";
-      numberInSeries?: string | null;
-      work: {
-        __typename?: "Work";
-        workId: string;
-        titles: { __typename?: "WorkTitles"; main: Array<string> };
-      };
-    }>;
-  }>;
   workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
   manifestations: {
     __typename?: "Manifestations";
@@ -10216,9 +10148,6 @@ export const ManifestationBasicDetailsFragmentDoc = new TypedDocumentString(
     fragment ManifestationBasicDetails on Manifestation {
   ...WithLanguages
   pid
-  ownerWork {
-    workId
-  }
   titles {
     full
   }
@@ -10238,12 +10167,7 @@ export const ManifestationBasicDetailsFragmentDoc = new TypedDocumentString(
   }
   series {
     title
-    members {
-      numberInSeries
-      work {
-        workId
-      }
-    }
+    numberInSeries
   }
 }
     fragment WithLanguages on Manifestation {
@@ -10399,15 +10323,7 @@ export const SeriesSimpleFragmentDoc = new TypedDocumentString(
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -10935,15 +10851,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -10961,6 +10869,17 @@ export const WorkMediumFragmentDoc = new TypedDocumentString(
   `
     fragment WorkMedium on Work {
   ...WorkSmall
+  series {
+    members(limit: 1000) {
+      numberInSeries
+      work {
+        workId
+        titles {
+          main
+        }
+      }
+    }
+  }
   materialTypes {
     materialTypeGeneral {
       code
@@ -11168,15 +11087,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -11590,15 +11501,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -11665,9 +11568,6 @@ export const GetManifestationViaMaterialByFaustDocument =
     fragment ManifestationBasicDetails on Manifestation {
   ...WithLanguages
   pid
-  ownerWork {
-    workId
-  }
   titles {
     full
   }
@@ -11687,12 +11587,7 @@ export const GetManifestationViaMaterialByFaustDocument =
   }
   series {
     title
-    members {
-      numberInSeries
-      work {
-        workId
-      }
-    }
+    numberInSeries
   }
 }
 fragment WithLanguages on Manifestation {
@@ -11746,9 +11641,6 @@ export const GetManifestationViaBestRepresentationByFaustDocument =
     fragment ManifestationBasicDetails on Manifestation {
   ...WithLanguages
   pid
-  ownerWork {
-    workId
-  }
   titles {
     full
   }
@@ -11768,12 +11660,7 @@ export const GetManifestationViaBestRepresentationByFaustDocument =
   }
   series {
     title
-    members {
-      numberInSeries
-      work {
-        workId
-      }
-    }
+    numberInSeries
   }
 }
 fragment WithLanguages on Manifestation {
@@ -11989,15 +11876,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -12025,6 +11904,17 @@ fragment WorkSmall on Work {
 }
 fragment WorkMedium on Work {
   ...WorkSmall
+  series {
+    members(limit: 1000) {
+      numberInSeries
+      work {
+        workId
+        titles {
+          main
+        }
+      }
+    }
+  }
   materialTypes {
     materialTypeGeneral {
       code
@@ -12266,15 +12156,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -12302,6 +12184,17 @@ fragment WorkSmall on Work {
 }
 fragment WorkMedium on Work {
   ...WorkSmall
+  series {
+    members(limit: 1000) {
+      numberInSeries
+      work {
+        workId
+        titles {
+          main
+        }
+      }
+    }
+  }
   materialTypes {
     materialTypeGeneral {
       code
@@ -12713,15 +12606,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -12991,15 +12876,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -13307,15 +13184,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -13614,15 +13483,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }

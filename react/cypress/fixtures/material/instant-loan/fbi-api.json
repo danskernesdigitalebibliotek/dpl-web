@@ -22,6 +22,7 @@
       "series": [
         {
           "title": "Krimiserien med Martin Juncker og Signe Kristiansen",
+          "numberInSeries": "4",
           "isPopular": true,
           "readThisFirst": null,
           "readThisWhenever": null,
