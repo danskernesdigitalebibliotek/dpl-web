@@ -44,7 +44,7 @@
     "globals": "^17.14.0",
     "graphql": "^17.0.2",
     "knip": "^6.44.1",
-    "orval": "^8.45.0",
+    "orval": "^8.46.0",
     "prettier": "^3.9.10",
     "react": "^19",
     "typescript": "^5.9.3",
