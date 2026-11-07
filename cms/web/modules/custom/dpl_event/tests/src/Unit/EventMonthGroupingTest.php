@@ -3,8 +3,8 @@
 namespace dpl_event\tests\src\Unit;
 
 use Drupal\Core\Datetime\DateFormatterInterface;
-use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\dpl_event\Entity\EventInstance;
+use Drupal\dpl_event\EventRowGrouper;
 use Drupal\recurring_events\Entity\EventSeries;
 use Drupal\Tests\UnitTestCase;
 
@@ -12,15 +12,19 @@ use Drupal\Tests\UnitTestCase;
  * Tests the month grouping of the events overview.
  *
  * The events overview is grouped by month with a separator before the first
- * event of each month. This is driven by two procedural functions in
- * dpl_event.module:
- * - _dpl_event_stack_eventinstances() flags consecutive same-series events as
- *   stacked (existing behaviour).
- * - _dpl_event_group_events_by_month() adds a localized month label to each
- *   event row and un-stacks the first event of every month, so a month never
- *   opens with a parent-less stacked row beneath its heading.
+ * event of each month. This is driven by two methods of EventRowGrouper:
+ * - stackSeries() flags consecutive same-series events as stacked (existing
+ *   behaviour).
+ * - groupByMonth() adds a localized month label to each event row and
+ *   un-stacks the first event of every month, so a month never opens with a
+ *   parent-less stacked row beneath its heading.
  */
 class EventMonthGroupingTest extends UnitTestCase {
+
+  /**
+   * The grouper under test.
+   */
+  private EventRowGrouper $grouper;
 
   /**
    * {@inheritdoc}
@@ -28,20 +32,14 @@ class EventMonthGroupingTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    // The functions under test live in the .module file.
-    require_once __DIR__ . '/../../../dpl_event.module';
-
-    // _dpl_event_group_events_by_month() resolves the date formatter from the
-    // container. Stub it to honor the requested PHP date format so the display
-    // label ('F') and the grouping key ('Y-m') come out distinct.
+    // Stub the date formatter to honor the requested PHP date format so the
+    // display label ('F') and the grouping key ('Y-m') come out distinct.
     $date_formatter = $this->createMock(DateFormatterInterface::class);
     $date_formatter->method('format')->willReturnCallback(
       fn (int $timestamp, string $type = 'medium', string $format = ''): string => date($format, $timestamp)
     );
 
-    $container = new ContainerBuilder();
-    $container->set('date.formatter', $date_formatter);
-    \Drupal::setContainer($container);
+    $this->grouper = new EventRowGrouper($date_formatter);
   }
 
   /**
@@ -81,7 +79,7 @@ class EventMonthGroupingTest extends UnitTestCase {
     ];
 
     // WHEN the rows are grouped by month.
-    $rows = _dpl_event_group_events_by_month($rows);
+    $rows = $this->grouper->groupByMonth($rows);
 
     // THEN each row carries its own month name (without the year) as label...
     $this->assertSame(date('F', strtotime('2026-07-15')), $rows[0]['month_label']);
@@ -106,8 +104,8 @@ class EventMonthGroupingTest extends UnitTestCase {
     ];
 
     // WHEN the rows are stacked and then grouped by month.
-    $rows = _dpl_event_stack_eventinstances($rows);
-    $rows = _dpl_event_group_events_by_month($rows);
+    $rows = $this->grouper->stackSeries($rows);
+    $rows = $this->grouper->groupByMonth($rows);
 
     // THEN the two share a label but get distinct grouping keys...
     $this->assertSame($rows[0]['month_label'], $rows[1]['month_label']);
@@ -134,8 +132,8 @@ class EventMonthGroupingTest extends UnitTestCase {
     ];
 
     // WHEN the rows are stacked and then grouped by month.
-    $rows = _dpl_event_stack_eventinstances($rows);
-    $rows = _dpl_event_group_events_by_month($rows);
+    $rows = $this->grouper->stackSeries($rows);
+    $rows = $this->grouper->groupByMonth($rows);
 
     // THEN the July continuation is not a month start, so it stays stacked.
     $this->assertTrue($rows[1]['shouldBeStacked']);
@@ -159,8 +157,8 @@ class EventMonthGroupingTest extends UnitTestCase {
     ];
 
     // WHEN the rows are stacked and then grouped by month.
-    $rows = _dpl_event_stack_eventinstances($rows);
-    $rows = _dpl_event_group_events_by_month($rows);
+    $rows = $this->grouper->stackSeries($rows);
+    $rows = $this->grouper->groupByMonth($rows);
 
     // THEN the first event opens the month as a full teaser...
     $this->assertFalse($rows[0]['shouldBeStacked']);
@@ -181,7 +179,7 @@ class EventMonthGroupingTest extends UnitTestCase {
     $rows[0]['content']['#view_mode'] = 'stacked_event';
 
     // WHEN the rows are grouped by month.
-    $rows = _dpl_event_group_events_by_month($rows);
+    $rows = $this->grouper->groupByMonth($rows);
 
     // THEN the first event, opening the first month, is a full teaser.
     $this->assertFalse($rows[0]['shouldBeStacked']);
@@ -199,7 +197,7 @@ class EventMonthGroupingTest extends UnitTestCase {
     ];
 
     // WHEN the rows are grouped by month.
-    $rows = _dpl_event_group_events_by_month($rows);
+    $rows = $this->grouper->groupByMonth($rows);
 
     // THEN the event gets a month label and the non-event row is untouched.
     $this->assertArrayHasKey('month_label', $rows[0]);

@@ -19,14 +19,17 @@ services:
   dpl_login.registered_user_tokens:
     class: Drupal\dpl_login\RegisteredUserTokensProvider
     arguments: ['@tempstore.private']
+  Drupal\dpl_login\RegisteredUserTokensProvider: '@dpl_login.registered_user_tokens'
 
   dpl_login.unregistered_user_tokens:
     class: Drupal\dpl_login\UnregisteredUserTokensProvider
     arguments: ['@tempstore.private']
+  Drupal\dpl_login\UnregisteredUserTokensProvider: '@dpl_login.unregistered_user_tokens'
 
   dpl_login.unilogin_user_tokens:
     class: Drupal\dpl_login\UniloginUserTokensProvider
     arguments: ['@tempstore.private']
+  Drupal\dpl_login\UniloginUserTokensProvider: '@dpl_login.unilogin_user_tokens'
 
   dpl_login.user_tokens:
     class: Drupal\dpl_login\UserTokens
@@ -58,6 +61,7 @@ services:
   dpl_login.openid_user_info:
     class: Drupal\dpl_login\OpenIdUserInfoService
     arguments: ['@settings', '@config.factory']
+  Drupal\dpl_login\OpenIdUserInfoService: '@dpl_login.openid_user_info'
 
   dpl_login.user:
     class: Drupal\dpl_login\User
