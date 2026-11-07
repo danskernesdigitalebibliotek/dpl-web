@@ -27,7 +27,9 @@ $_menu_animation_delay: 0.2s;
     overflow-y: auto;
     max-height: calc(100vh - calc(var(--sidebar-padding) * 2));
     position: unset;
-    visibility: visible;
+    // Overrides the hidden desktop menu under .has-burger-menu while still
+    // following the sidebar's own open/closed visibility.
+    visibility: inherit;
   }
 
   .header__menu-navigation-item:hover {
@@ -85,8 +87,19 @@ $_menu_animation_delay: 0.2s;
   cursor: initial;
 }
 
+// Hidden while closed so its links can't take keyboard focus. visibility can't
+// animate, so it switches after the slide-out (transform is repeated because
+// `transition` replaces the list). Opening uses the base rule: visible at once.
 .header-sidebar-nav[data-open="closed"] {
-  transform: translateX(-100%);
+  visibility: hidden;
+  transition:
+    transform $_transition_speed $_bezier_transition,
+    visibility 0s linear $_transition_speed;
+
+  // The global reduced-motion override shortens durations but not delays.
+  @media (prefers-reduced-motion: reduce) {
+    transition-delay: 0s;
+  }
 }
 
 .header-sidebar-nav[data-open="open"] {
