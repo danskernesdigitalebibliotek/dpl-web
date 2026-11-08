@@ -31,7 +31,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "esbuild": "^0.28.2",
-    "@wedobooks/sdk": "0.7.4",
+    "@wedobooks/sdk": "0.8.0",
     "typescript": "^5.9.3"
   },
   "sideEffects": false
