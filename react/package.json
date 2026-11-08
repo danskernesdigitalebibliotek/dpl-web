@@ -154,7 +154,7 @@
     "react-use": "^17.6.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
-    "temporal-polyfill": "^1.0.6"
+    "temporal-polyfill": "^1.0.8"
   },
   "peerDependencies": {
     "postcss": "^8.5.32"
