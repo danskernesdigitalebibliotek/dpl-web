@@ -382,6 +382,10 @@ jobs:
   CheckPhpVersion:
     name: CMS / Check PHP version
     runs-on: ubuntu-latest
+    env:
+      # Calls docker compose directly, so the setting other CMS jobs get from
+      # cms/Taskfile.yml must be repeated. Only the PHP binary is needed.
+      SKIP_BAKED_IN_BUILDS: "true"
     defaults:
       run:
         working-directory: cms
