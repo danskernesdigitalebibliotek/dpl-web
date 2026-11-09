@@ -5,6 +5,7 @@ import {
   getManifestationLabel,
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
+import HelpText from "@/components/shared/helpText/HelpText"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
 // TODO(biblio-migration): delete once the Biblio path below is verified.
@@ -123,27 +124,23 @@ const DigitalLoanButton = ({
   // const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
   const { isDigitalEditionOnLoan: isOnLoan } =
     useDigitalEditionAvailabilityBiblio(selectedManifestation)
-  const labelCapitalized = label.charAt(0).toUpperCase() + label.slice(1)
-
-  if (isOnLoan) {
-    return (
-      <WorkPageButton
-        ariaLabel={`Udlånt lige nu — ${label} kan ikke lånes i øjeblikket`}
-        theme="primary"
-        ariaDisabled>
-        {labelCapitalized} udlånt lige nu
-      </WorkPageButton>
-    )
-  }
 
   return (
-    <WorkPageButton
-      ariaLabel={`Lån ${label}`}
-      theme="primary"
-      disabled={isDisabled}
-      onClick={onLoan}>
-      Lån {label}
-    </WorkPageButton>
+    <>
+      {isOnLoan && (
+        <div className="w-full lg:max-w-80 lg:min-w-72">
+          <HelpText>Udlånt lige nu</HelpText>
+        </div>
+      )}
+      <WorkPageButton
+        ariaLabel={`Lån ${label}`}
+        theme="primary"
+        disabled={isDisabled}
+        ariaDisabled={isOnLoan}
+        onClick={onLoan}>
+        Lån {label}
+      </WorkPageButton>
+    </>
   )
 }
 
