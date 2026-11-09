@@ -62,6 +62,19 @@ GO still deploy alongside it, so a push takes as long as for any PR.
    run `task codegen`, and read them through a `useQuery` hook like `useWork`.
 3. Use the service layer's hooks for anything library- or patron-specific.
 
+## Concepts
+
+- **Articles** (`src/work/categories/article/`), from the designer's
+  "Materialeside – Udgavevælger" artifact. Access ways are ranked as the
+  ticket orders them and skip links FBI reports as broken. "Bestil digital
+  kopi" is simulated. With the `opac` FBI url, these show the artifact's cases:
+  - Helsingør, dead link: `/work/work-of:870971-tsart:85962698`
+  - Kolding, two editions: `/work/work-of:870971-tsart:73451485`
+  - Varde, two posts: `/work/work-of:159007-lokalbibl:90222007`
+  - Læs artikel and Se online: `/work/work-of:870971-tsart:136293443`
+- Everything else falls back to the raw catch-rest page. A new concept is a
+  new category in `src/work/categories/registry.ts`.
+
 ## Gotchas
 
 - **The FBI profile decides what data exists.** The url's path segment
