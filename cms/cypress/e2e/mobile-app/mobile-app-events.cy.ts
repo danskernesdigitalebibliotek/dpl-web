@@ -167,6 +167,11 @@ const createEvent = (event: EventInput, branch: string) => {
   cy.contains(event.title);
 };
 
+const setBranchPublished = (branchId: string, published: boolean) => {
+  login();
+  new NodePage().setPublished(branchId, published);
+};
+
 const deleteEventsIfExist = () => {
   login();
   const eventSeriesList = new EventSeriesListPage();
@@ -396,8 +401,6 @@ describe('Mobile app API: events', () => {
       start: danishTime('2030-07-01T10:00:00'),
       end: danishTime('2030-07-01T12:00:00'),
     };
-    const branchNode = new NodePage();
-
     createBranch(`${titlePrefix} branch to unpublish ${runId}`, null).then(
       (unpublishedBranchId) => {
         createEvent(event, unpublishedBranchId);
@@ -405,12 +408,10 @@ describe('Mobile app API: events', () => {
         // and unpublishing has to invalidate it.
         getEventsTitled(event.title).should('have.length', 1);
 
-        login();
-        branchNode.setPublished(unpublishedBranchId, false);
+        setBranchPublished(unpublishedBranchId, false);
         getEventsTitled(event.title).should('deep.equal', []);
 
-        login();
-        branchNode.setPublished(unpublishedBranchId, true);
+        setBranchPublished(unpublishedBranchId, true);
         getEventsTitled(event.title).should('have.length', 1);
       },
     );
