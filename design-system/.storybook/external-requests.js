@@ -1,9 +1,6 @@
 // Requests outside the Storybook that stories may make, as Playwright URL
 // globs.
-const allowedRequests = [
-  // Swiper, loaded from the CDN like the CMS theme does.
-  "https://cdn.jsdelivr.net/npm/swiper@11/**",
-];
+const allowedRequests = [];
 
 // Requests outside the Storybook that are blocked without failing the story.
 const silentlyBlockedRequests = [

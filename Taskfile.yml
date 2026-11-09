@@ -321,6 +321,8 @@ tasks:
       - cp -r ./src/styles/css ./build/css
       - cp -r ./src/styles/fonts ./build/fonts
       - find ./src -name "*.js" | while read -r f; do cp "$f" ./build/js/"$(basename "$f")"; done
+      - cp ./node_modules/swiper/swiper-bundle.min.js ./build/js/
+      - cp ./node_modules/swiper/swiper-bundle.min.css ./build/css/
 
   # ---------------------------------------------------------------------------
   # React
