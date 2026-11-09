@@ -27,7 +27,12 @@ const HeaderSidebarNav: React.FC<HeaderSidebarNavProps> = ({
       style={isStorybookContext ? { display: "block" } : undefined}
     >
       <div className="header-sidebar-nav__background-wrapper">
-        <div className="header-sidebar-nav__menu-wrapper">
+        <div
+          className="header-sidebar-nav__menu-wrapper"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+        >
           <div
             className="header-sidebar-nav__close-menu-button"
             id="js-header-sidebar-nav__close-menu-button"
