@@ -30,10 +30,6 @@ const SeriesList = ({
   return (
     <>
       {series.map(({ title, seriesId, numberInSeries }, index) => {
-        if (!numberInSeries) {
-          return null;
-        }
-
         // seriesId is nullable, and without one there is no landing page to
         // point at, so those series keep linking to a search for the title.
         const url = seriesId
@@ -43,8 +39,8 @@ const SeriesList = ({
         return (
           <HorizontalTermLine
             key={index}
-            title={numberInSeries}
-            subTitle={t("inSeriesText")}
+            title={numberInSeries || t("partOfSeriesText")}
+            subTitle={numberInSeries ? t("inSeriesText") : undefined}
             linkList={[{ url, term: title }]}
             dataCy={`${dataCy}-${index}`}
           />

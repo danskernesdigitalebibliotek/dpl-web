@@ -284,6 +284,12 @@ export const argTypes = {
       defaultValue: { summary: "Length of 4 characters" }
     },
     control: { type: "text" }
+  },
+  partOfSeriesText: {
+    table: {
+      defaultValue: { summary: "Part of the series" }
+    },
+    control: { type: "text" }
   }
 };
 
@@ -339,7 +345,8 @@ export default {
     "You cannot cancel this reservation while we are moving to a new service. Your place in the queue is kept.",
   errorBoundaryAlertBodyButtonAriaText: "Close error message",
   loadingText: "Loading...",
-  pincodeSectionDescriptionText: "Length of 4 characters"
+  pincodeSectionDescriptionText: "Length of 4 characters",
+  partOfSeriesText: "Part of the series"
 };
 
 export interface GlobalEntryTextProps {
@@ -387,4 +394,5 @@ export interface GlobalEntryTextProps {
   errorBoundaryAlertBodyButtonAriaText: string;
   buttonText: string;
   etAlText: string;
+  partOfSeriesText: string;
 }
