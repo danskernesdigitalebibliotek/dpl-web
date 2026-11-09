@@ -42,17 +42,13 @@ class VideoToolFormatter extends FormatterBase {
       $url = $videotool->getMetadata($media, VideoTool::METADATA_ATTRIBUTE_URL);
       if ($url) {
         $element[$delta] = [
-          '#type' => 'html_tag',
-          '#tag' => 'iframe',
+          '#theme' => 'media_videotool_iframe',
           '#attributes' => [
-            'src' => '',
-            'data-consent-src' => $url,
+            'src' => $url,
             'frameborder' => 0,
             'allowtransparency' => TRUE,
             'height' => '100%',
             'width' => '100%',
-            'data-category-consent' => 'cookie_cat_marketing',
-            'data-once' => 'cookieinformation-iframe',
           ],
         ];
       }
