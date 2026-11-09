@@ -290,6 +290,12 @@ export const argTypes = {
       defaultValue: { summary: "Part of the series" }
     },
     control: { type: "text" }
+  },
+  inSeriesText: {
+    table: {
+      defaultValue: { summary: "in series" }
+    },
+    control: { type: "text" }
   }
 };
 
@@ -346,7 +352,8 @@ export default {
   errorBoundaryAlertBodyButtonAriaText: "Close error message",
   loadingText: "Loading...",
   pincodeSectionDescriptionText: "Length of 4 characters",
-  partOfSeriesText: "Part of the series"
+  partOfSeriesText: "Part of the series",
+  inSeriesText: "in series"
 };
 
 export interface GlobalEntryTextProps {
@@ -395,4 +402,5 @@ export interface GlobalEntryTextProps {
   buttonText: string;
   etAlText: string;
   partOfSeriesText: string;
+  inSeriesText: string;
 }
