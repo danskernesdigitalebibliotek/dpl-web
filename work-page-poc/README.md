@@ -68,7 +68,8 @@ GO still deploy alongside it, so a push takes as long as for any PR.
 ## Concepts
 
 - **Articles** (`src/work/categories/article/`), from the designer's
-  "Materialeside – Udgavevælger" artifact. Access ways are ranked as the
+  "Materialeside – Udgavevælger" artifact: its mobile article boards below
+  1024px and its "Flere formater · Udgavevælger · Desktop" board from there up. Access ways are ranked as the
   ticket orders them and skip links FBI reports as broken. "Bestil digital
   kopi" is simulated. With the `opac` FBI url, these show the artifact's cases:
   - Helsingør, dead link: `/work/work-of:870971-tsart:85962698`

@@ -94,9 +94,9 @@ export const AccessActions = ({ manifestation, title, isRecommended, hasOtherEdi
           </ActionButton>
         )}
       </div>
-      <div aria-live="polite" className="mt-5 text-body-m leading-[26px] text-text-body">
+      <div aria-live="polite" className="mt-5 text-body-m leading-[26px] text-text-body lg:mt-4 lg:text-body-s lg:leading-[22px] lg:text-text-heading">
         {statusLines.map((line) => (
-          <p key={line} className="m-0 mb-1.5">
+          <p key={line} className="m-0 mb-1.5 lg:mb-0">
             {line}
           </p>
         ))}

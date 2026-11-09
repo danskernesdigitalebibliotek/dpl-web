@@ -9,6 +9,11 @@ query workPage($workId: String!) {
       display
     }
     abstract
+    subjects {
+      all {
+        display
+      }
+    }
     manifestations {
       bestRepresentation {
         pid

@@ -82,7 +82,16 @@ export type WorkPageQueryVariables = Exact<{
 export type WorkPageQuery = { work: { workId: string, abstract: Array<string> | null, titles: { main: Array<string>, full: Array<string> }, creators: Array<
       | { display: string }
       | { display: string }
-    >, manifestations: { bestRepresentation: { pid: string }, all: Array<{ pid: string, source: Array<string>, titles: { full: Array<string> }, creators: Array<
+    >, subjects: { all: Array<
+        | { display: string }
+        | { display: string }
+        | { display: string }
+        | { display: string }
+        | { display: string }
+        | { display: string }
+        | { display: string }
+        | { display: string }
+      > }, manifestations: { bestRepresentation: { pid: string }, all: Array<{ pid: string, source: Array<string>, titles: { full: Array<string> }, creators: Array<
           | { display: string }
           | { display: string }
         >, materialTypes: Array<{ materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum }, materialTypeSpecific: { code: string, display: string } }>, edition: { summary: string, publicationYear: { year: number | null } | null } | null, cover: { detail_207: string | null, detail_500: string | null }, languages: { main: Array<{ display: string }> | null } | null, physicalDescription: { summaryFull: string | null } | null, hostPublication: { title: string, summary: string, year: { year: number | null } | null } | null, access: Array<
@@ -161,6 +170,11 @@ export const WorkPageDocument = new TypedDocumentString(`
       display
     }
     abstract
+    subjects {
+      all {
+        display
+      }
+    }
     manifestations {
       bestRepresentation {
         pid

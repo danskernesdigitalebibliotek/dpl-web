@@ -96,7 +96,7 @@ export const EditionPicker = ({
                         Hurtigste adgang
                       </span>
                     )}
-                    <span className="font-heading text-[19px] leading-6 text-text-heading">{editionTitle}</span>
+                    <span className="font-heading text-[19px] leading-6 text-text-heading md:text-[17px] md:leading-[22px]">{editionTitle}</span>
                     <span className="text-[13px] leading-5 text-text-inactive">{getEditionMeta(edition)}</span>
                   </span>
                 </label>

@@ -44,8 +44,10 @@ are settled; add new ones as they come up.
 - [ ] **Edition card titles.** The PoC derives "year · Online/Trykt". Should
       titles follow a richer rule, like the artifact's "1988 · Trykt – kan
       bestilles som digital kopi"?
-- [ ] **Desktop layout.** Articles on desktop are adapted from the "Flere
-      formater" desktop board. Is that the intended direction?
+- [ ] **Article layout on desktop.** There is no desktop article board; the
+      PoC follows "Flere formater · Udgavevælger · Desktop" (current layout),
+      with the "Artikel" label where that board has the format chips and FBI's
+      subjects as Emneord. Does that match the designer's intent?
 - [ ] **Undrawn flows.** No boards exist for reading in Retriever, the digital
       copy order or the anonymous "log ind" state. The PoC improvises them.
 - [ ] **Covers.** Articles have no covers in FBI, so the page shows FBI's red
