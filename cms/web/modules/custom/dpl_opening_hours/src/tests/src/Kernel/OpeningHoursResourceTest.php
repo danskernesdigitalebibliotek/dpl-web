@@ -227,9 +227,15 @@ class OpeningHoursResourceTest extends KernelTestBase {
     }
 
     // Check that the same opening hours are returned when listed as when
-    // created.
+    // created. Compare them serialized: deserialized dates carry the
+    // wall-clock time of deserialization, which may differ between calls.
     $allOpeningHours = $this->listOpeningHours();
-    $this->assertEquals($createdOpeningHours, $allOpeningHours);
+    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
+    $serializer = $this->container->get('dpl_rest_base.serializer');
+    $this->assertEquals(
+      $serializer->serialize($createdOpeningHours, 'application/json'),
+      $serializer->serialize($allOpeningHours, 'application/json'),
+    );
   }
 
   /**
