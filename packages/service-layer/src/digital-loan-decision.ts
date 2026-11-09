@@ -24,15 +24,20 @@ export async function getDigitalLoanDecision(
  * Whether the MATERIAL itself can be borrowed right now.
  *
  * Statuses that describe the user rather than the material - an exhausted
- * quota, blocked lending, missing credentials - leave the material itself
- * available. This mirrors Publizon, where status 0 ("not loanable, max loans
+ * personal quota, blocked lending, missing credentials - leave the material
+ * itself available: another, unaffected user could still borrow it right
+ * now. This mirrors Publizon, where status 0 ("not loanable, max loans
  * reached") is also counted as available.
+ *
+ * `concurrent_limit_exceeded` is not one of those: it is the organization's
+ * own concurrent-loan slots on this specific material being exhausted, a
+ * fact about the material, not the user - so it counts as unavailable here,
+ * unlike the user-scoped statuses above.
  */
 export const isMaterialAvailable = (status: LoanDecisionStatus): boolean => {
   switch (status) {
     case "loanable":
     case "monthly_limit_exceeded":
-    case "concurrent_limit_exceeded":
     case "no_valid_credentials":
     case "lending_blocked":
       return true

@@ -33,24 +33,25 @@ describe("isMaterialAvailable", () => {
     expect(isMaterialAvailable("loanable")).toBe(true)
   })
 
-  it.each(["reservable", "wishable", "unavailable"] as const)(
+  it.each(["reservable", "wishable", "unavailable", "concurrent_limit_exceeded"] as const)(
     "Treats a material that can only be %s as unavailable",
     status => {
       expect(isMaterialAvailable(status)).toBe(false)
     }
   )
 
-  it.each([
-    "monthly_limit_exceeded",
-    "concurrent_limit_exceeded",
-    "no_valid_credentials",
-    "lending_blocked",
-  ] as const)(
+  it.each(["monthly_limit_exceeded", "no_valid_credentials", "lending_blocked"] as const)(
     "Keeps the material available when %s describes the user, not the material",
     status => {
       expect(isMaterialAvailable(status)).toBe(true)
     }
   )
+
+  it("Treats the organization's own exhausted concurrent-loan slots as unavailable", () => {
+    // Unlike the user-scoped statuses above, this describes the material
+    // itself, not the patron.
+    expect(isMaterialAvailable("concurrent_limit_exceeded")).toBe(false)
+  })
 
   it("Does not promise a material available on a status it does not know", () => {
     expect(isMaterialAvailable("brand-new-status")).toBe(false)
