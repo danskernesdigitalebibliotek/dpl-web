@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "types": ["vite/client"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "target": "es2022",
+    "skipLibCheck": true,
+    "paths": {
+      "@tanstack/react-query": ["./node_modules/@tanstack/react-query"]
+    }
+  },
+  "include": ["src", "vite.config.ts", "codegen.ts"]
+}

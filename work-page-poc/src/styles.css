@@ -1,0 +1,14 @@
+/*
+ * Tailwind without Preflight: the scaffold keeps the browser's default styles
+ * so it reads as unstyled. Add `@import "tailwindcss/preflight.css" layer(base);`
+ * when a concept wants Tailwind's reset.
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
