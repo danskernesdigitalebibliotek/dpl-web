@@ -11,8 +11,7 @@ const config: StorybookConfig = {
   addons: [
     "@storybook/addon-essentials",
     "@storybook/addon-queryparams",
-    "@storybook/addon-webpack5-compiler-babel",
-    "@chromatic-com/storybook"
+    "@storybook/addon-webpack5-compiler-babel"
   ],
 
   typescript: {
