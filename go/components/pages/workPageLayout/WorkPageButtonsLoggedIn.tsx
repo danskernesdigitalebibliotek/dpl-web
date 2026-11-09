@@ -15,7 +15,9 @@ import HelpText from "@/components/shared/helpText/HelpText"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
-import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
+// TODO(biblio-migration): delete once the Biblio path below is verified.
+// import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
+import { useDigitalEditionAvailabilityBiblio } from "@/hooks/useDigitalEditionAvailabilityBiblio"
 import { useEditionAvailability } from "@/hooks/useEditionAvailability"
 import usePatronShelf from "@/hooks/usePatronShelf"
 import useSession from "@/hooks/useSession"
@@ -222,8 +224,11 @@ const DigitalLoanButtons = ({
   onLoan: () => void
   children: React.ReactNode
 }) => {
-  const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
-  const isOnLoan = isDigitalEditionOnLoan(selectedManifestation)
+  // TODO(biblio-migration): delete once the Biblio path below is verified.
+  // const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
+  // const isOnLoan = isDigitalEditionOnLoan(selectedManifestation)
+  const { isDigitalEditionOnLoan: isOnLoan } =
+    useDigitalEditionAvailabilityBiblio(selectedManifestation)
   const labelCapitalized = label.charAt(0).toUpperCase() + label.slice(1)
 
   return (

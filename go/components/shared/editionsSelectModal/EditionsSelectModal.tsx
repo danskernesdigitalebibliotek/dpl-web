@@ -7,7 +7,9 @@ import EditionsSelectModalItem from "@/components/shared/editionsSelectModal/Edi
 import { type TEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
-import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
+// TODO(biblio-migration): delete once the Biblio path below is verified.
+// import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
+import { useDigitalEditionsAvailabilityBiblio } from "@/hooks/useDigitalEditionsAvailabilityBiblio"
 import { useShownEditions } from "@/hooks/useShownEditions"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
@@ -48,8 +50,11 @@ const EditionsSelectModal = ({
     isEditionLentOut,
     getEditionQueueText,
   } = useShownEditions(wid, materialTypeCode)
+  // TODO(biblio-migration): delete once the Biblio path below is verified.
+  // const { isLoadingDigitalAvailability, isDigitalEditionOnLoan } =
+  //   useDigitalEditionAvailability(wid)
   const { isLoadingDigitalAvailability, isDigitalEditionOnLoan } =
-    useDigitalEditionAvailability(wid)
+    useDigitalEditionsAvailabilityBiblio(shownEditions)
 
   // Physical editions can be reserved, so being lent out is not a dead end.
   // Digital ones cannot, so the wording stops at the fact. Each predicate

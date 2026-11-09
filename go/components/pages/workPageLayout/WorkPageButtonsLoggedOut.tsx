@@ -7,7 +7,9 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
-import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
+// TODO(biblio-migration): delete once the Biblio path below is verified.
+// import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
+import { useDigitalEditionAvailabilityBiblio } from "@/hooks/useDigitalEditionAvailabilityBiblio"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import { TModalType } from "@/lib/helpers/modal-url"
@@ -117,10 +119,13 @@ const DigitalLoanButton = ({
   isDisabled: boolean
   onLoan: () => void
 }) => {
-  const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
+  // TODO(biblio-migration): delete once the Biblio path below is verified.
+  // const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
+  const { isDigitalEditionOnLoan: isOnLoan } =
+    useDigitalEditionAvailabilityBiblio(selectedManifestation)
   const labelCapitalized = label.charAt(0).toUpperCase() + label.slice(1)
 
-  if (isDigitalEditionOnLoan(selectedManifestation)) {
+  if (isOnLoan) {
     return (
       <WorkPageButton
         ariaLabel={`Udlånt lige nu — ${label} kan ikke lånes i øjeblikket`}
