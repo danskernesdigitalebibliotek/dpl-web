@@ -887,3 +887,16 @@ function dpl_update_deploy_ensure_biblo_subscription(): string {
 
   return 'Biblo subscription already exists';
 }
+
+/**
+ * Grant administrators access to the TwentyThree settings.
+ */
+function dpl_update_deploy_twentythree_settings_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['administrator', 'local_administrator'],
+    ['administer media_twentythree configuration'],
+    TRUE,
+  );
+
+  return 'Granted TwentyThree settings permissions to administrators.';
+}

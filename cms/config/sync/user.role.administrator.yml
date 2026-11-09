@@ -54,6 +54,7 @@ dependencies:
     - language
     - locale
     - media
+    - media_twentythree
     - node
     - openapi
     - openid_connect
@@ -114,6 +115,7 @@ permissions:
   - 'administer instant loan configuration'
   - 'administer languages'
   - 'administer library agency configuration'
+  - 'administer media_twentythree configuration'
   - 'administer menu'
   - 'administer modules'
   - 'administer nodes'

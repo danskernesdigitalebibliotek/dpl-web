@@ -51,6 +51,7 @@ dependencies:
     - filter
     - locale
     - media
+    - media_twentythree
     - node
     - openapi
     - openid_connect
@@ -98,6 +99,7 @@ permissions:
   - 'administer global service messages'
   - 'administer instant loan configuration'
   - 'administer library agency configuration'
+  - 'administer media_twentythree configuration'
   - 'administer menu'
   - 'administer nodes'
   - 'administer openid connect clients'
