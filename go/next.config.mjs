@@ -53,6 +53,15 @@ const nextConfig = {
   },
   turbopack: {
     resolveAlias: turbopackAliases,
+    ignoreIssue: [
+      // Colibrio, bundled by the WeDoBooks SDK, embeds browserify bundles whose
+      // loader falls back to a dynamic `require(name)` for modules outside the
+      // bundle. Never reached at runtime, but Turbopack warns on every compile.
+      {
+        path: /packages\/wedobooks\/dist\//,
+        title: /not statically analyze-able/,
+      },
+    ],
     rules: {
       "*.svg": {
         loaders: [
