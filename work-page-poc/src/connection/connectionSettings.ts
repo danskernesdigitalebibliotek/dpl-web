@@ -5,14 +5,12 @@ export type ConnectionSettings = {
   fbsUrl: string
 }
 
-// The path segment of the FBI url is a profile, which DBC sets up per library
-// agency; each CMS site configures its own. A profile the token's agency lacks
-// answers 200 with empty results. "opac" returns data for the agency of the
-// tokens we test with (723000), where the CMS fallback "next" returns nothing.
+// The same defaults Storybook in react/ uses. The FBI url is the "local"
+// profile, which react/ reads the work page from.
 const defaultConnectionSettings: ConnectionSettings = {
   libraryToken: "",
   userToken: "",
-  fbiUrl: "https://fbi-api.dbc.dk/opac/graphql",
+  fbiUrl: "https://fbi-api.dbc.dk/next/graphql",
   fbsUrl: "https://fbs-openplatform.dbc.dk",
 }
 
