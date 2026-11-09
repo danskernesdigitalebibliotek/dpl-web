@@ -1,6 +1,6 @@
 import { useMaterialAvailability } from "@danskernesdigitalebibliotek/dpl-service-layer"
 
-import { pidToFaust } from "../fbi/pidToFaust"
+import { pidToFaust } from "../../../fbi/pidToFaust"
 
 type AvailabilityProps = {
   workId: string
