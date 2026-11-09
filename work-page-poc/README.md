@@ -6,6 +6,9 @@ materials. It lives on a pull request that is never merged
 Lagoon gives that PR an environment, and this app is one more service in it:
 <https://work-page-poc.pr-2324.dpl-web.dplplat02.dpl.reload.dk/>.
 
+Open questions and untested scenarios are tracked in
+[OPEN-QUESTIONS.md](OPEN-QUESTIONS.md).
+
 ## What it is
 
 - A static Vite + React app. Pages: a plain FBI search (`/`) and the work page
