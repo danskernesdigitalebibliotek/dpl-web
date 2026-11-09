@@ -17,13 +17,13 @@ export const App = () => {
     <ServiceLayerProvider config={serviceLayerConfig}>
       <header>
         <Link to="/">Search</Link>
-        <ConnectionPanel />
       </header>
       <hr />
       <Routes>
         <Route path="/" element={<SearchPage />} />
         <Route path="/work/:workId" element={<WorkPage />} />
       </Routes>
+      <ConnectionPanel />
     </ServiceLayerProvider>
   )
 }

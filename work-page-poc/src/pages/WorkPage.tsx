@@ -14,7 +14,7 @@ export const WorkPage = () => {
   const { settings } = useConnectionSettings()
   const { data, isPending, error } = useWork(workId)
 
-  if (!settings.libraryToken) return <p>Paste a library token above to load the work.</p>
+  if (!settings.libraryToken) return <p>Add a library token under connection settings (⚙) to load the work.</p>
   if (error) return <p>Could not load the work: {error.message}</p>
   if (isPending) return <p>Loading…</p>
   if (!data.work) return <p>No work with id {workId}.</p>
