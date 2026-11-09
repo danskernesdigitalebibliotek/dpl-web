@@ -107,11 +107,12 @@ sequenceDiagram
     CMS->>Go: The CMS redirects to a callback endpoint in Go
     Note over CMS,Go: By passing the Drupal SESS* cookie in the header<br/>Go is authorized and identified as the Drupal user
     CMS Graphql API-->>Go: Go fetches the user token and its type from CMS API
-    alt type is unilogin_user
+    Note over Go: The token type, not the button clicked,<br/>decides the session type
+    alt token type is unilogin_user
         Adgangsplatformen-->>Go: Go fetches the userinfo with the token
         Go->>Go: Go saves a unilogin session with the uni-id and institution ids
-    else type is user or unregistered_user
-        Go->>Go: Go saves an adgangsplatformen session with the user token attached
+    else token type is user or unregistered_user
+        Go->>Go: Go saves an adgangsplatformen session with the user token<br/>and the patron name from FBS, if any
     end
     Go->>Go: Go saves the go session type cookie
     Go->>Go: Patron is redirected to the user profile page
@@ -179,6 +180,32 @@ flowchart TD
 
     SessionExist -->|No| RedirectToFrontpage
 ```
+
+### Logout initiated on the GO site
+
+Go destroys its own session first, then sends the patron through the CMS so
+the Drupal session and the Adgangsplatformen single sign-on session end too.
+The logout url comes from the CMS (`goConfiguration.public.logoutUrls`) and
+carries `current-path=/go-logout`, which tells the CMS where to go afterwards:
+
+```mermaid
+sequenceDiagram
+    actor Patron
+    participant Go
+    participant CMS
+    participant Adgangsplatformen
+    Patron->>Go: Clicks logout on the Go site (/auth/logout)
+    Go->>Go: Destroys the Go session, whether Adgangsplatformen or Unilogin
+    CMS-->>Go: Go fetches the logout url from the CMS
+    Go->>CMS: Redirects to the CMS logout url (current-path=/go-logout)
+    CMS->>CMS: Logs the user out of Drupal
+    CMS->>Adgangsplatformen: Redirects to single logout
+    Adgangsplatformen->>CMS: Redirects back to /go-logout
+    CMS->>Go: Redirects to the Go front page
+```
+
+If the logout url cannot be fetched, Go redirects straight to its front page;
+the Go session is already gone, but the Drupal session is left as it is.
 
 ### Logout initiated on the CMS site
 
