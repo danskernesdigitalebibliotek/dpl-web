@@ -1,0 +1,34 @@
+query workPage($workId: String!) {
+  work(id: $workId) {
+    workId
+    titles {
+      full
+    }
+    creators {
+      display
+    }
+    abstract
+    manifestations {
+      bestRepresentation {
+        pid
+      }
+      all {
+        pid
+        titles {
+          full
+        }
+        materialTypes {
+          materialTypeSpecific {
+            display
+          }
+        }
+        edition {
+          summary
+        }
+        cover {
+          detail_207
+        }
+      }
+    }
+  }
+}

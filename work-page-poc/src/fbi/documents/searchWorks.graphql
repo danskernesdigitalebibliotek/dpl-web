@@ -1,0 +1,19 @@
+query searchWorks($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!) {
+  search(q: $q) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      workId
+      titles {
+        full
+      }
+      creators {
+        display
+      }
+      materialTypes {
+        materialTypeSpecific {
+          display
+        }
+      }
+    }
+  }
+}
