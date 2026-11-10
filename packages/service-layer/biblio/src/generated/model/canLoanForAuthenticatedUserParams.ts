@@ -70,8 +70,6 @@
  */
 
 export type CanLoanForAuthenticatedUserParams = {
-  /**
-   * ISBN-13 of the material the user wants to loan.
-   */
+  /** ISBN-13 of the material the user wants to loan. */
   material_id: string
 }
