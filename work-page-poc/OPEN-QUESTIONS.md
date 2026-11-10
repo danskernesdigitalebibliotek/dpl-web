@@ -70,6 +70,12 @@ are settled; add new ones as they come up.
         to search.
       - Offer an interlibrary loan order for the article itself (simulated).
       - Keep the search placeholder until DDFNEXT-797 is decided.
+      - Do as today: react/ ignores `InterLibraryLoan` for articles, so an
+        article with only that (like Varde) gets no buttons and shows
+        `MaterialUnavailableNotice` ("not available through the website",
+        linking to the library's `materialUnavailableUrl`, typically
+        Bibliotek.dk, where interlibrary loans can be ordered). In the PoC
+        that would be the artifact's "Kontakt biblioteket" fallback.
 - [ ] **Host publications can't be found reliably in FBI.** `hostPublication`
       has title, ISSN, issue and year, but no work id or pid. `term.issn=…`
       finds the articles in the periodical (840 for Slagmark, 0108-8084), not
