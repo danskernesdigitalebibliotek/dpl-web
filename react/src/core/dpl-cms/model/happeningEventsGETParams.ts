@@ -8,8 +8,6 @@
 import type { HappeningEventsGET_Format } from "./happeningEventsGETFormat";
 
 export type HappeningEventsGETParams = {
-  /**
-   * Request format
-   */
+  /** Request format */
   _format?: HappeningEventsGET_Format;
 };
