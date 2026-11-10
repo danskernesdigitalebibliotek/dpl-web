@@ -9,8 +9,6 @@
 import type { BookTypes } from "./bookTypes"
 
 export type GetV1UserLoansAdapterParams = {
-  /**
-   * 0 = Ebook, 1 = Audio
-   */
+  /** 0 = Ebook, 1 = Audio */
   bookType?: BookTypes
 }
