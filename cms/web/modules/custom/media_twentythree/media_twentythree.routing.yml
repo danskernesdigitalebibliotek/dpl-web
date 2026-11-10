@@ -1,0 +1,7 @@
+media_twentythree.settings_form:
+  path: '/admin/config/media/twentythree'
+  defaults:
+    _title: 'TwentyThree settings'
+    _form: 'Drupal\media_twentythree\Form\SettingsForm'
+  requirements:
+    _permission: 'administer media_twentythree configuration'
