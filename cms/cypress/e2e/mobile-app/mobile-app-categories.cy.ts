@@ -25,14 +25,18 @@ const getAppCategories = (type: string, id?: string) =>
     { type, id },
   );
 
-type Linkbox = { title: string; description: string; linkPath: string };
+type Linkbox = {
+  title: string;
+  description: string;
+  linkPath: string;
+  linkTitle: string;
+};
 
 const addGoLinkbox = (categoryAdd: GoCategoryAddPage, link: Linkbox) => {
   const linkbox = categoryAdd.addParagraph(GoLinkboxParagraph);
   linkbox.fillTitle(link.title);
   linkbox.fillDescription(link.description);
-  // Required by the form, but the apps get the linkbox title instead.
-  linkbox.fillLink(link.linkPath, link.title);
+  linkbox.fillLink(link.linkPath, link.linkTitle);
 };
 
 // Both the categories and the articles they link to.
@@ -60,6 +64,7 @@ describe('Mobile app API: getAppCategories', () => {
     const link = {
       title: `Linkbox ${runId}`,
       description: `Beskrivelse ${runId}`,
+      linkTitle: `Link ${runId}`,
     };
 
     GoArticleAddPage.add(articleTitle).save();
@@ -105,6 +110,7 @@ describe('Mobile app API: getAppCategories', () => {
                     description: link.description,
                     image: null,
                     contentId: article.id,
+                    linkTitle: link.linkTitle,
                   },
                 ],
               },
@@ -193,6 +199,7 @@ describe('Mobile app API: getAppCategories', () => {
         title: `Linkbox ${runId}`,
         description: `Beskrivelse ${runId}`,
         linkPath: article.path,
+        linkTitle: `Link ${runId}`,
       });
 
       categoryAdd.save();
