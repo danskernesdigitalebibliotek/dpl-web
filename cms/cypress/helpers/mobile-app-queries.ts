@@ -76,6 +76,7 @@ const APP_CONTENT_ELEMENT_FIELDS = `
     description
     image
     contentId
+    linkTitle
   }
 `;
 
