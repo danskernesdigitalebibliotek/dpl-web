@@ -107,9 +107,8 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
                 <AccessActions
                   key={manifestation.pid}
                   manifestation={manifestation}
+                  categoryManifestations={categoryManifestations}
                   title={title}
-                  isRecommended={isRecommended}
-                  hasOtherEditions={hasOtherEditions}
                 />
               </div>
             </div>
