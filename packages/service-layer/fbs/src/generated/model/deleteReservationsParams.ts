@@ -6,8 +6,6 @@
  */
 
 export type DeleteReservationsParams = {
-  /**
-   * a list of reservation ids for reservations that are to be deleted
-   */
+  /** a list of reservation ids for reservations that are to be deleted */
   reservationid: number[]
 }

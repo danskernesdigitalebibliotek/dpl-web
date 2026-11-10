@@ -71,8 +71,6 @@
 import type { SampleFormat } from "./sampleFormat"
 
 export type GetSampleParams = {
-  /**
-   * File format of the requested sample. Omit to let the format follow the material type: `epub` for ebooks, `mp3` for audiobooks.
-   */
+  /** File format of the requested sample. Omit to let the format follow the material type: `epub` for ebooks, `mp3` for audiobooks. */
   format?: SampleFormat
 }
