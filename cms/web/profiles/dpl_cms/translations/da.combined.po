@@ -18403,6 +18403,10 @@ msgctxt "advanced search 2"
 msgid "Part of series"
 msgstr "i serien"
 
+msgctxt "Global"
+msgid "Part of the series"
+msgstr ""
+
 msgid "Partners"
 msgstr "I samarbejde med"
 
