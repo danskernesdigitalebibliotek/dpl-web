@@ -53,4 +53,16 @@ class GoLinkParagraph extends Paragraph {
     return NULL;
   }
 
+  /**
+   * Get the link title.
+   */
+  public function getTitle(): ?String {
+    if (!$this->get('field_go_link')->isEmpty()) {
+      /** @var \Drupal\link\Plugin\Field\FieldType\LinkItem|null $link */
+      $link = $this->get('field_go_link')->first();
+      return $link?->title;
+    }
+    return NULL;
+  }
+
 }

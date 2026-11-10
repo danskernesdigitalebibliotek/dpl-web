@@ -86,6 +86,7 @@ export type AppContentElementGoLinkbox = AppContentElement & {
   description: Scalars['String']['output'];
   id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
+  linkTitle?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
 };
 
