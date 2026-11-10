@@ -101,13 +101,18 @@ final class EventsResource extends EventResourceBase {
       $event_instance = $storage->load($id);
 
       if ($event_instance instanceof EventInstance) {
-        $event_responses[] = $this->mapper->getResponse($event_instance);
-
         // The response describes the branches of the event, so it has to be
-        // invalidated when one of them changes.
+        // invalidated when one of them changes - including when an
+        // unpublished branch, and thereby the event, becomes visible.
         foreach ($event_instance->getBranches() ?? [] as $branch) {
           $cache_metadata->addCacheableDependency($branch);
         }
+
+        if ($event_instance->hasOnlyUnpublishedBranches()) {
+          continue;
+        }
+
+        $event_responses[] = $this->mapper->getResponse($event_instance);
       }
     }
 

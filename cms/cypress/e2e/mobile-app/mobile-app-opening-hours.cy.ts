@@ -106,9 +106,9 @@ const createBranch = (title: string) => {
   branchAdd.selectAgencyBranch(isilId);
   branchAdd.save();
 
-  const branchPage = new NodePage();
-  branchPage.elements.hero().contains(title).should('be.visible');
-  return branchPage.nodeId().then(Number);
+  const branchNode = new NodePage();
+  branchNode.elements.hero().contains(title).should('be.visible');
+  return branchNode.nodeId().then(Number);
 };
 
 describe('Mobile app API: opening hours', () => {

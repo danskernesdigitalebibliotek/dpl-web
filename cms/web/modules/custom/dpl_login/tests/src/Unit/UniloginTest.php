@@ -118,9 +118,9 @@ class UniloginTest extends UnitTestCase {
       'Real response for a licensed student' => [self::realStudentUserinfo(), TRUE],
       'Unilogin identity provider without uni-id' => [
         ['attributes' => [Unilogin::CLAIM_IDP_USED => Unilogin::ADGANGSPLATFORMEN_IDP]],
-        TRUE,
+        FALSE,
       ],
-      'Uni-id without identity provider' => [['attributes' => [Unilogin::CLAIM_UNI_ID => 'abcd1234']], TRUE],
+      'Uni-id without identity provider' => [['attributes' => [Unilogin::CLAIM_UNI_ID => 'abcd1234']], FALSE],
       'Patron' => [
         ['attributes' => ['cpr' => '1234567890', 'uniqueId' => 'x', Unilogin::CLAIM_IDP_USED => 'nemlogin']],
         FALSE,

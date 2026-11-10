@@ -7,6 +7,7 @@ import {
   getManifestationLabel,
   getManifestationMaterialTypeIcon,
 } from "@/components/pages/workPageLayout/helper"
+import HelpText from "@/components/shared/helpText/HelpText"
 import InfoCard from "@/components/shared/infoCard/InfoCard"
 import ModalMaterialHeader from "@/components/shared/modalMaterialHeader/ModalMaterialHeader"
 import { useBranchTitle } from "@/hooks/useBranchTitle"
@@ -70,7 +71,7 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
           value={patron?.emailAddress ?? "Der er ikke registreret en e-mail-adresse."}
         />
 
-        <p className="text-typo-caption text-foreground-muted text-center">
+        <HelpText>
           Vil du ændre afhentningssted eller kontaktinformation, skal du bruge{" "}
           <a
             className="text-foreground underline"
@@ -80,7 +81,7 @@ const ReservationFormContent = ({ work, manifestation, patron }: ReservationForm
             voksen-hjemmesiden
           </a>
           .
-        </p>
+        </HelpText>
       </div>
     </div>
   )
