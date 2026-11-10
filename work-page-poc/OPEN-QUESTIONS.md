@@ -62,6 +62,20 @@ are settled; add new ones as they come up.
       Article Service, which the artifact assumes for the Bibliotekskatalog post.
 - [ ] **Ordering via the host publication** (DDFNEXT-797, on hold). Until then
       "Find det trykte nummer" searches the PoC for the periodical's title.
+- [ ] **What gives "Find det trykte nummer", and where does it lead?** The PoC
+      shows it for FBI's `InterLibraryLoan` access, but that entry means the
+      manifestation can be borrowed through interlibrary loan, not that the
+      printed issue can be found. Options:
+      - Link to the periodical's work page when a lookup finds it, falling back
+        to search.
+      - Offer an interlibrary loan order for the article itself (simulated).
+      - Keep the search placeholder until DDFNEXT-797 is decided.
+- [ ] **Host publications can't be found reliably in FBI.** `hostPublication`
+      has title, ISSN, issue and year, but no work id or pid. `term.issn=…`
+      finds the articles in the periodical (840 for Slagmark, 0108-8084), not
+      the periodical itself. A title search found Varde's yearbook
+      (`work-of:150096-slaegt:961722`) but not Slagmark. Is there a reliable
+      way from an article to its periodical, and to the specific issue?
 - [ ] **"Tidsskrift online"**, the ticket's last access way, has no source in
       FBI that we have found.
 - [ ] **Residency.** Retriever reports it as an error. Does the same rule apply
