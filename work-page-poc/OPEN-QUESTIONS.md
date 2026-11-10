@@ -24,7 +24,7 @@ are settled; add new ones as they come up.
 - [ ] An article or review with no access at all, which shows "Kontakt
       biblioteket" (several Harry Potter reviews have no access).
 - [ ] An article with more than two working access ways: only the first two
-      are shown.
+      are shown, pending "How many buttons?" below.
 - [ ] A work mixing articles with other material types: the category in charge
       comes from FBI's best representation.
 
@@ -53,6 +53,17 @@ are settled; add new ones as they come up.
 - [ ] **Covers.** Articles have no covers in FBI, so the page shows FBI's red
       placeholder. Keep it, or use the artifact's coloured title block?
 - [ ] **"Kontakt biblioteket".** Where should it lead? It is a placeholder.
+- [ ] **How many buttons?** The PoC shows at most two (the first primary, the
+      second secondary). The customer conversations suggest that isn't what
+      they want. Should every working access way become a button, in the
+      ticket's order with only the first as primary?
+- [ ] **Several links of the same kind.** The PoC keeps the first working
+      `AccessUrl` and skips the rest. Kolding 2018
+      (`/work/work-of:870971-tsart:73451485`) has two, tidsskrift.dk and
+      doi.org, which lead to the same article; only tidsskrift.dk becomes "Se
+      online". Options: a button per link, named by its origin ("Se online på
+      tidsskrift.dk"), or one "Se online" with the other links listed in the
+      details.
 
 ### For the developers and DDF
 
