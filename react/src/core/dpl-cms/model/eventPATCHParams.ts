@@ -8,8 +8,6 @@
 import type { EventPATCH_Format } from "./eventPATCHFormat";
 
 export type EventPATCHParams = {
-  /**
-   * Request format
-   */
+  /** Request format */
   _format?: EventPATCH_Format;
 };

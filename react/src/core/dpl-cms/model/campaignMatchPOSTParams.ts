@@ -8,8 +8,6 @@
 import type { CampaignMatchPOST_Format } from "./campaignMatchPOSTFormat";
 
 export type CampaignMatchPOSTParams = {
-  /**
-   * Request format
-   */
+  /** Request format */
   _format?: CampaignMatchPOST_Format;
 };

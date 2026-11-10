@@ -8,12 +8,8 @@
 import type { ProxyUrlGET_Format } from "./proxyUrlGETFormat";
 
 export type ProxyUrlGETParams = {
-  /**
-   * Request format
-   */
+  /** Request format */
   _format?: ProxyUrlGET_Format;
-  /**
-   * A url to an online resource which may be accessible through a proxy which requires rewriting of the url
-   */
+  /** A url to an online resource which may be accessible through a proxy which requires rewriting of the url */
   url: string;
 };
