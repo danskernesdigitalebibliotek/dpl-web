@@ -49,7 +49,6 @@ interface SearchResultEntryTextProps {
   facetLetText: string;
   facetLibraryRecommendationText: string;
   filterListText: string;
-  inSeriesText: string;
   loadingText: string;
   numberDescriptionText: string;
   resultPagerStatusText: string;

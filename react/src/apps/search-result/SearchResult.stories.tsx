@@ -73,7 +73,6 @@ export const Default: Story = {
     searchUrl: "/search",
     seriesUrl: "/serie/:seriesid",
     byAuthorText: "By",
-    inSeriesText: "in series",
     showMoreText: "show more",
     resultPagerStatusText: "Showing @itemsShown out of @hitcount results",
     searchShowingMaterialsText: "@hitcount materials",
