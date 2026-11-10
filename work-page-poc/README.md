@@ -77,7 +77,16 @@ GO still deploy alongside it, so a push takes as long as for any PR.
   - Varde, two posts: `/work/work-of:159007-lokalbibl:90222007`
   - Læs artikel and Se online: `/work/work-of:870971-tsart:136293443`
 - Everything else falls back to the raw catch-rest page. A new concept is a
-  new category in `src/work/categories/registry.ts`.
+  new category in `src/work/categories/registry.ts`; [AGENTS.md](AGENTS.md)
+  has the checklist.
+
+## The debug panel
+
+The "?" button opens a drawer that explains why the page looks as it does: the
+category, the chosen manifestation, and for articles every FBI access entry
+and what became of it, plus the category's general rules and the raw FBI data.
+It renders the trace of the same functions the page renders from, and every
+category must provide one, so it stays in step as categories are added.
 
 ## Gotchas
 
