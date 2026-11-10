@@ -25,4 +25,17 @@ export class NodePage extends PageObject {
       .invoke('attr', 'href')
       .then((href) => String(href).split('/').pop() as string);
   }
+
+  /**
+   * Publishes or unpublishes a node through its edit form.
+   */
+  setPublished(nodeId: string, published: boolean) {
+    cy.visit(`/node/${nodeId}/edit`);
+    if (published) {
+      cy.get('input[name="status[value]"]').check({ force: true });
+    } else {
+      cy.get('input[name="status[value]"]').uncheck({ force: true });
+    }
+    cy.clickSaveButton();
+  }
 }

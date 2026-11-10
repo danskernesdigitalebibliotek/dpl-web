@@ -7,4 +7,4 @@ services:
   dpl_consumers.consumer_handler:
     class: Drupal\dpl_consumers\Services\ConsumerHandler
     autowire: true
-    arguments: ['@dpl_breadcrumb.logger', '@entity_type.manager']
+    arguments: ['@dpl_consumers.logger', '@entity_type.manager']

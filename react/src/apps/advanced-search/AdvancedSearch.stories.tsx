@@ -83,10 +83,6 @@ const meta: Meta<typeof AdvancedSearchEntry> = {
       description: "Number description",
       control: { type: "text" }
     },
-    inSeriesText: {
-      description: "In series",
-      control: { type: "text" }
-    },
     searchShowingMaterialsText: {
       description: "Showing materials",
       control: { type: "text" }
@@ -403,7 +399,6 @@ export const Primary: Story = {
     resultPagerStatusText: "Showing @itemsShown out of @hitcount results",
     advancedSearchInputLabelText: "Input field @inputNumber",
     numberDescriptionText: "Nr.",
-    inSeriesText: "in series",
     searchShowingMaterialsText: "Showing materials (@hitcount)",
     noSearchResultText: "Your search has 0 results",
     blacklistedPickupBranchesConfig:

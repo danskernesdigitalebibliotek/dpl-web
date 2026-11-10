@@ -3110,6 +3110,9 @@ msgstr ""
 msgid "Administer Paragraphs categories"
 msgstr ""
 
+msgid "Administer TwentyThree configuration"
+msgstr ""
+
 msgid "Administer Users by Role"
 msgstr "Administrer Brugere efter Rolle"
 
@@ -3587,6 +3590,10 @@ msgstr "Tilladte domæner"
 
 msgid "Allowed file extensions"
 msgstr "Tilladte filendelse"
+
+msgctxt "media_twentythree"
+msgid "Allowed host names"
+msgstr ""
 
 msgid "Allowed if bnf_server is enabled."
 msgstr "Tilladt hvis bnf_server er aktiveret."
@@ -6694,6 +6701,9 @@ msgstr ""
 "\"Konfigurer de udgående HTTP-headers, lad være tom for at slette. Eksempel "
 "for Tag som Type: Cache-Tags for Header and\n"
 "      [invalidation:expression] for Value."
+
+msgid "Configure which host names TwentyThree videos may be added from."
+msgstr ""
 
 msgctxt "Create patron"
 msgid "Confirm"
@@ -13037,6 +13047,12 @@ msgctxt "Url Proxy"
 msgid "Host configuration"
 msgstr "Opsætning af værtsnavne"
 
+msgid "Host name"
+msgstr ""
+
+msgid "Host names TwentyThree videos may be added from"
+msgstr ""
+
 msgctxt "advanced search 2"
 msgid "Host publication"
 msgstr "Værtspublikation"
@@ -18386,6 +18402,10 @@ msgstr "Sogn"
 msgctxt "advanced search 2"
 msgid "Part of series"
 msgstr "i serien"
+
+msgctxt "Global"
+msgid "Part of the series"
+msgstr ""
 
 msgid "Partners"
 msgstr "I samarbejde med"
@@ -24945,6 +24965,12 @@ msgstr ""
 msgid "The height the image, in pixels."
 msgstr "Billedets højde, i pixels."
 
+msgctxt "media_twentythree"
+msgid ""
+"The host names your TwentyThree videos are served from, one per line. For "
+"example: video.example.dk. Videos can only be added from these host names."
+msgstr ""
+
 msgid "The human-readable name of this  profile. This name must be unique."
 msgstr "Det menneskelæsbare navn på denne profil. Dette navn skal være unikt."
 
@@ -27826,6 +27852,9 @@ msgstr "Ændringer til forskellige Paragraphs"
 
 msgid "TwentyThree"
 msgstr "TwentyThree"
+
+msgid "TwentyThree settings"
+msgstr ""
 
 msgid "Twitter Cards"
 msgstr "Twitter Cards"

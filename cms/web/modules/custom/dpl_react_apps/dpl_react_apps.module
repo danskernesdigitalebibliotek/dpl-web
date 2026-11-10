@@ -195,6 +195,7 @@ function dpl_react_apps_texts(): array {
     'order-digital-copy-feedback-title' => t('Digital copy receipt', [], ['context' => 'Global']),
     'order-digital-copy-feedback-unknown-user' => t('Unknown user', [], ['context' => 'Global']),
     'out-of' => t('out of', [], ['context' => 'Global']),
+    'part-of-series' => t('Part of the series', [], ['context' => 'Global']),
     'patron-contact-email-checkbox' => t('Receive emails about your loans, reservations, and so forth', [], ['context' => 'Global']),
     'patron-contact-email-label' => t('E-mail', [], ['context' => 'Global']),
     'patron-contact-info-body' => t('patron page contact info body text', [], ['context' => 'Global']),

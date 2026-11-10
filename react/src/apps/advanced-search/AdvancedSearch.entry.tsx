@@ -14,7 +14,6 @@ import { AdvancedSortSelectArgs } from "../../core/storybook/AdvancedSortSelect"
 interface AdvancedSearchEntryTextProps {
   byAuthorText: string;
   etAlText: string;
-  inSeriesText: string;
   loadingText: string;
   numberDescriptionText: string;
   resultPagerStatusText: string;

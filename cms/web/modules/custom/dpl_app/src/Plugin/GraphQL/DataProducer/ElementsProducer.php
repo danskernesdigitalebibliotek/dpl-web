@@ -467,6 +467,7 @@ class ElementsProducer extends AutowiredDataProducerPluginBase {
       'description' => $paragraph->getDescription(),
       'image' => $imageUrl,
       'contentId' => $node->uuid(),
+      'linkTitle' => $paragraph->getLinkTitle(),
     ];
   }
 

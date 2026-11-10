@@ -1,0 +1,3 @@
+administer media_twentythree configuration:
+  title: 'Administer TwentyThree configuration'
+  description: 'Configure which host names TwentyThree videos may be added from.'

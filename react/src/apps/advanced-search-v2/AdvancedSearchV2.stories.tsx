@@ -79,10 +79,6 @@ const meta: Meta<typeof AdvancedSearchV2Entry> = {
       description: "By (author) Text",
       control: { type: "text" }
     },
-    inSeriesText: {
-      description: "In series",
-      control: { type: "text" }
-    },
     showMoreText: {
       description: "Show more Text",
       control: { type: "text" }
@@ -144,7 +140,6 @@ export const Default: Story = {
     searchUrl: "/search",
     seriesUrl: "/serie/:seriesid",
     byAuthorText: "By",
-    inSeriesText: "in series",
     showMoreText: "show more",
     resultPagerStatusText: "Showing @itemsShown out of @hitcount results",
     searchShowingMaterialsText: "@hitcount materials",
