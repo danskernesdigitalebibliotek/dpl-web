@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_app\Plugin\GraphQL\DataProducer;
 
-use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_graphql\Plugin\GraphQL\DataProducer\AutowiredDataProducerPluginBase;
 use Drupal\dpl_media\Entity\VideotoolBase;
 use Drupal\dpl_media\Entity\VideotoolVerticalMedia;
 use Drupal\file\Entity\File;
@@ -25,7 +24,6 @@ use Drupal\dpl_paragraphs\Entity\RecommendationParagraph;
 use Drupal\dpl_paragraphs\Entity\TextBodyParagraph;
 use Drupal\dpl_paragraphs\Entity\VideoParagraph;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
-use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Drupal\media_videotool\VideoTool;
 
 /**
@@ -45,9 +43,7 @@ use Drupal\media_videotool\VideoTool;
  *   }
  * )
  */
-class ElementsProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
-
-  use AutowirePluginTrait;
+class ElementsProducer extends AutowiredDataProducerPluginBase {
 
   /**
    * TTL for streaming URLs.
@@ -471,6 +467,7 @@ class ElementsProducer extends DataProducerPluginBase implements ContainerFactor
       'description' => $paragraph->getDescription(),
       'image' => $imageUrl,
       'contentId' => $node->uuid(),
+      'linkTitle' => $paragraph->getLinkTitle(),
     ];
   }
 

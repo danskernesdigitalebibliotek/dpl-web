@@ -8,6 +8,7 @@ import {
   ReaderPlayerState,
   unknownReaderPlayerState
 } from "../../core/utils/types/reader-player-state";
+import { publizonIdentifier } from "./__vitest_data__/publizon-identifier";
 
 /**
  * Two questions, two answers.
@@ -31,12 +32,6 @@ vi.mock("../../core/utils/useDigitalReaderPlayerState", () => ({
 }));
 vi.mock("../../core/utils/usePublizonReaderPlayerState", () => ({
   default: vi.fn()
-}));
-vi.mock("../../apps/material/helper", () => ({
-  getManifestationDigitalIdentifier: () => "9788727319346"
-}));
-vi.mock("../../components/reader-player/helper", () => ({
-  getReaderPlayerType: () => "reader"
 }));
 
 const PUBLIZON_ORDER_ID = "publizon-order-1";
@@ -62,7 +57,8 @@ const given = ({
 };
 
 const render = () =>
-  renderHook(() => useReaderPlayer({} as never)).result.current;
+  renderHook(() => useReaderPlayer(publizonIdentifier("9788727319346"))).result
+    .current;
 
 describe("useReaderPlayer - which provider answers what", () => {
   beforeEach(() => {

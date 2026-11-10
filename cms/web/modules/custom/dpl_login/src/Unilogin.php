@@ -28,8 +28,9 @@ final class Unilogin {
   const CLAIM_HAS_LICENSE = 'uniloginHasLicense';
   // A comma separated string in brackets, "[ABC111,CDA222]", or "" for none.
   const CLAIM_INSTITUTION_IDS = 'uniloginInstitutionIds';
-  // The agency id of the main library in the municipality of the user's
-  // institution, e.g. "710100" for a school in Copenhagen.
+  // An agency id set by Adgangsplatformen. Seen as the agency id of the main
+  // library in the municipality of a municipal school, e.g. "710100" for a
+  // school in Copenhagen.
   const CLAIM_AGENCY_ID = 'uniloginAgencyId';
 
   /**
@@ -43,7 +44,7 @@ final class Unilogin {
   const DENIED_NOT_UNILOGIN = 'not a Unilogin user';
   const DENIED_NO_LICENSE = 'no license';
   const DENIED_NO_INSTITUTION = 'no institution';
-  const DENIED_MUNICIPALITY = 'first institution not in the municipality of the library';
+  const DENIED_AGENCY = 'Unilogin agency id does not match the agency id of the library';
 
   /**
    * Get the uni-id of the user, if the user logged in with Unilogin.
@@ -65,7 +66,7 @@ final class Unilogin {
    */
   public static function isUniloginUser(array $userinfo): bool {
     return ($userinfo['attributes'][self::CLAIM_IDP_USED] ?? NULL) === self::ADGANGSPLATFORMEN_IDP
-      || self::getUniId($userinfo) !== NULL;
+      && self::getUniId($userinfo) !== NULL;
   }
 
   /**
@@ -98,9 +99,8 @@ final class Unilogin {
    *
    * The user must have a license and an institution. Test users, with a test
    * institution anywhere among their institutions, may always log in. For
-   * anyone else the first institution must belong to the municipality of the
-   * library: loans are made through the first institution, so only that one
-   * counts.
+   * anyone else the Unilogin agency id from Adgangsplatformen must match the
+   * agency id of the library.
    *
    * @param mixed[] $userinfo
    *   The userinfo from the Adgangsplatformen userinfo endpoint.
@@ -133,7 +133,7 @@ final class Unilogin {
 
     $user_agency_id = $userinfo['attributes'][self::CLAIM_AGENCY_ID] ?? NULL;
     if (empty($agency_id) || (string) $user_agency_id !== $agency_id) {
-      return self::DENIED_MUNICIPALITY;
+      return self::DENIED_AGENCY;
     }
 
     return NULL;

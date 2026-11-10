@@ -29,11 +29,7 @@ class FormHooks {
   }
 
   /**
-   * Implements hook_form_alter().
-   *
-   * - Move the "Published" checkbox to gin sticky action header.
-   * - Hide screen names if the feature is disabled.
-   * - Correct the description of what a recurrence change does to occurrences.
+   * Use a search icon as submit button on the event list exposed form.
    *
    * @phpstan-ignore missingType.iterableValue ($form is too complex for typehint)
    */
@@ -52,7 +48,7 @@ class FormHooks {
   }
 
   /**
-   * Implements hook_form_alter().
+   * Adjust the event series and instance forms.
    *
    * - Move the "Published" checkbox to gin sticky action header.
    * - Hide screen names if the feature is disabled.

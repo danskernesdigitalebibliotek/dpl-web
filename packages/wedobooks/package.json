@@ -2,6 +2,9 @@
   "name": "@danskernesdigitalebibliotek/dpl-wedobooks",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "pnpm": "^12"
+  },
   "description": "WeDoBooks SDK wrapper for the reader and the player",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,7 +31,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "esbuild": "^0.28.2",
-    "@wedobooks/sdk": "0.7.2",
+    "@wedobooks/sdk": "0.8.0",
     "typescript": "^5.9.3"
   },
   "sideEffects": false

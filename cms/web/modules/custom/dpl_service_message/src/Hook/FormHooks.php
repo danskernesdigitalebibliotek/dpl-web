@@ -176,7 +176,7 @@ class FormHooks {
           'warning' => [
             $this->t(
               'Publishing this as a site-wide message will unpublish %label, which is site-wide and published now.',
-              ['%label' => reset($active)->label()],
+              ['%label' => (string) reset($active)->label()],
               ['context' => 'dpl_service_message']
             ),
           ],

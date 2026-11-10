@@ -22,81 +22,8 @@
           "series": [
             {
               "title": "De syv søstre-serien",
+              "numberInSeries": "Del 7",
               "isPopular": true,
-              "members": [
-                {
-                  "numberInSeries": "Del 1",
-                  "work": {
-                    "workId": "work-of:870970-basis:52557240",
-                    "titles": {
-                      "main": ["De syv søstre"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 2",
-                  "work": {
-                    "workId": "work-of:870970-basis:53247806",
-                    "titles": {
-                      "main": ["Stormsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 3",
-                  "work": {
-                    "workId": "work-of:870970-basis:53557791",
-                    "titles": {
-                      "main": ["Skyggesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 4",
-                  "work": {
-                    "workId": "work-of:870970-basis:53802001",
-                    "titles": {
-                      "main": ["Perlesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 5",
-                  "work": {
-                    "workId": "work-of:870970-basis:45942570",
-                    "titles": {
-                      "main": ["Månesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 6",
-                  "work": {
-                    "workId": "work-of:870970-basis:46656172",
-                    "titles": {
-                      "main": ["Solsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 7",
-                  "work": {
-                    "workId": "work-of:870970-basis:38500775",
-                    "titles": {
-                      "main": ["Den forsvundne søster"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 8",
-                  "work": {
-                    "workId": "work-of:870970-basis:134823658",
-                    "titles": {
-                      "main": ["Atlas"]
-                    }
-                  }
-                }
-              ],
               "readThisFirst": null,
               "readThisWhenever": null
             }
@@ -541,81 +468,8 @@
           "series": [
             {
               "title": "De syv søstre-serien",
+              "numberInSeries": "Del 8",
               "isPopular": true,
-              "members": [
-                {
-                  "numberInSeries": "Del 1",
-                  "work": {
-                    "workId": "work-of:870970-basis:52557240",
-                    "titles": {
-                      "main": ["De syv søstre"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 2",
-                  "work": {
-                    "workId": "work-of:870970-basis:53247806",
-                    "titles": {
-                      "main": ["Stormsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 3",
-                  "work": {
-                    "workId": "work-of:870970-basis:53557791",
-                    "titles": {
-                      "main": ["Skyggesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 4",
-                  "work": {
-                    "workId": "work-of:870970-basis:53802001",
-                    "titles": {
-                      "main": ["Perlesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 5",
-                  "work": {
-                    "workId": "work-of:870970-basis:45942570",
-                    "titles": {
-                      "main": ["Månesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 6",
-                  "work": {
-                    "workId": "work-of:870970-basis:46656172",
-                    "titles": {
-                      "main": ["Solsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 7",
-                  "work": {
-                    "workId": "work-of:870970-basis:38500775",
-                    "titles": {
-                      "main": ["Den forsvundne søster"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 8",
-                  "work": {
-                    "workId": "work-of:870970-basis:134823658",
-                    "titles": {
-                      "main": ["Atlas"]
-                    }
-                  }
-                }
-              ],
               "readThisFirst": null,
               "readThisWhenever": null
             }
@@ -1086,81 +940,8 @@
           "series": [
             {
               "title": "De syv søstre-serien",
+              "numberInSeries": "Del 1",
               "isPopular": true,
-              "members": [
-                {
-                  "numberInSeries": "Del 1",
-                  "work": {
-                    "workId": "work-of:870970-basis:52557240",
-                    "titles": {
-                      "main": ["De syv søstre"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 2",
-                  "work": {
-                    "workId": "work-of:870970-basis:53247806",
-                    "titles": {
-                      "main": ["Stormsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 3",
-                  "work": {
-                    "workId": "work-of:870970-basis:53557791",
-                    "titles": {
-                      "main": ["Skyggesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 4",
-                  "work": {
-                    "workId": "work-of:870970-basis:53802001",
-                    "titles": {
-                      "main": ["Perlesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 5",
-                  "work": {
-                    "workId": "work-of:870970-basis:45942570",
-                    "titles": {
-                      "main": ["Månesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 6",
-                  "work": {
-                    "workId": "work-of:870970-basis:46656172",
-                    "titles": {
-                      "main": ["Solsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 7",
-                  "work": {
-                    "workId": "work-of:870970-basis:38500775",
-                    "titles": {
-                      "main": ["Den forsvundne søster"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 8",
-                  "work": {
-                    "workId": "work-of:870970-basis:134823658",
-                    "titles": {
-                      "main": ["Atlas"]
-                    }
-                  }
-                }
-              ],
               "readThisFirst": true,
               "readThisWhenever": null
             }
@@ -1205,6 +986,10 @@
                 ],
                 "publisher": ["Cicero"],
                 "identifiers": [
+                  {
+                    "type": "PUBLIZON",
+                    "value": "9788763844123"
+                  },
                   {
                     "type": "ISBN",
                     "value": "9788763844123"
@@ -1762,81 +1547,8 @@
           "series": [
             {
               "title": "De syv søstre-serien",
+              "numberInSeries": "Del 4",
               "isPopular": true,
-              "members": [
-                {
-                  "numberInSeries": "Del 1",
-                  "work": {
-                    "workId": "work-of:870970-basis:52557240",
-                    "titles": {
-                      "main": ["De syv søstre"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 2",
-                  "work": {
-                    "workId": "work-of:870970-basis:53247806",
-                    "titles": {
-                      "main": ["Stormsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 3",
-                  "work": {
-                    "workId": "work-of:870970-basis:53557791",
-                    "titles": {
-                      "main": ["Skyggesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 4",
-                  "work": {
-                    "workId": "work-of:870970-basis:53802001",
-                    "titles": {
-                      "main": ["Perlesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 5",
-                  "work": {
-                    "workId": "work-of:870970-basis:45942570",
-                    "titles": {
-                      "main": ["Månesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 6",
-                  "work": {
-                    "workId": "work-of:870970-basis:46656172",
-                    "titles": {
-                      "main": ["Solsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 7",
-                  "work": {
-                    "workId": "work-of:870970-basis:38500775",
-                    "titles": {
-                      "main": ["Den forsvundne søster"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 8",
-                  "work": {
-                    "workId": "work-of:870970-basis:134823658",
-                    "titles": {
-                      "main": ["Atlas"]
-                    }
-                  }
-                }
-              ],
               "readThisFirst": null,
               "readThisWhenever": null
             }
@@ -1881,6 +1593,10 @@
                 ],
                 "publisher": ["Cicero"],
                 "identifiers": [
+                  {
+                    "type": "PUBLIZON",
+                    "value": "9788763854474"
+                  },
                   {
                     "type": "ISBN",
                     "value": "9788763854474"
@@ -2456,81 +2172,8 @@
           "series": [
             {
               "title": "De syv søstre-serien",
+              "numberInSeries": "Del 6",
               "isPopular": true,
-              "members": [
-                {
-                  "numberInSeries": "Del 1",
-                  "work": {
-                    "workId": "work-of:870970-basis:52557240",
-                    "titles": {
-                      "main": ["De syv søstre"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 2",
-                  "work": {
-                    "workId": "work-of:870970-basis:53247806",
-                    "titles": {
-                      "main": ["Stormsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 3",
-                  "work": {
-                    "workId": "work-of:870970-basis:53557791",
-                    "titles": {
-                      "main": ["Skyggesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 4",
-                  "work": {
-                    "workId": "work-of:870970-basis:53802001",
-                    "titles": {
-                      "main": ["Perlesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 5",
-                  "work": {
-                    "workId": "work-of:870970-basis:45942570",
-                    "titles": {
-                      "main": ["Månesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 6",
-                  "work": {
-                    "workId": "work-of:870970-basis:46656172",
-                    "titles": {
-                      "main": ["Solsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 7",
-                  "work": {
-                    "workId": "work-of:870970-basis:38500775",
-                    "titles": {
-                      "main": ["Den forsvundne søster"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 8",
-                  "work": {
-                    "workId": "work-of:870970-basis:134823658",
-                    "titles": {
-                      "main": ["Atlas"]
-                    }
-                  }
-                }
-              ],
               "readThisFirst": null,
               "readThisWhenever": null
             }
@@ -2686,6 +2329,10 @@
                 ],
                 "publisher": ["Cicero"],
                 "identifiers": [
+                  {
+                    "type": "PUBLIZON",
+                    "value": "9788763864671"
+                  },
                   {
                     "type": "ISBN",
                     "value": "9788763864671"
@@ -3076,81 +2723,8 @@
           "series": [
             {
               "title": "De syv søstre-serien",
+              "numberInSeries": "Del 5",
               "isPopular": true,
-              "members": [
-                {
-                  "numberInSeries": "Del 1",
-                  "work": {
-                    "workId": "work-of:870970-basis:52557240",
-                    "titles": {
-                      "main": ["De syv søstre"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 2",
-                  "work": {
-                    "workId": "work-of:870970-basis:53247806",
-                    "titles": {
-                      "main": ["Stormsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 3",
-                  "work": {
-                    "workId": "work-of:870970-basis:53557791",
-                    "titles": {
-                      "main": ["Skyggesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 4",
-                  "work": {
-                    "workId": "work-of:870970-basis:53802001",
-                    "titles": {
-                      "main": ["Perlesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 5",
-                  "work": {
-                    "workId": "work-of:870970-basis:45942570",
-                    "titles": {
-                      "main": ["Månesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 6",
-                  "work": {
-                    "workId": "work-of:870970-basis:46656172",
-                    "titles": {
-                      "main": ["Solsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 7",
-                  "work": {
-                    "workId": "work-of:870970-basis:38500775",
-                    "titles": {
-                      "main": ["Den forsvundne søster"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 8",
-                  "work": {
-                    "workId": "work-of:870970-basis:134823658",
-                    "titles": {
-                      "main": ["Atlas"]
-                    }
-                  }
-                }
-              ],
               "readThisFirst": null,
               "readThisWhenever": null
             }
@@ -3306,6 +2880,10 @@
                 ],
                 "publisher": ["Cicero"],
                 "identifiers": [
+                  {
+                    "type": "PUBLIZON",
+                    "value": "9788763859059"
+                  },
                   {
                     "type": "ISBN",
                     "value": "9788763859059"
@@ -3691,81 +3269,8 @@
           "series": [
             {
               "title": "De syv søstre-serien",
+              "numberInSeries": "Del 2",
               "isPopular": true,
-              "members": [
-                {
-                  "numberInSeries": "Del 1",
-                  "work": {
-                    "workId": "work-of:870970-basis:52557240",
-                    "titles": {
-                      "main": ["De syv søstre"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 2",
-                  "work": {
-                    "workId": "work-of:870970-basis:53247806",
-                    "titles": {
-                      "main": ["Stormsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 3",
-                  "work": {
-                    "workId": "work-of:870970-basis:53557791",
-                    "titles": {
-                      "main": ["Skyggesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 4",
-                  "work": {
-                    "workId": "work-of:870970-basis:53802001",
-                    "titles": {
-                      "main": ["Perlesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 5",
-                  "work": {
-                    "workId": "work-of:870970-basis:45942570",
-                    "titles": {
-                      "main": ["Månesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 6",
-                  "work": {
-                    "workId": "work-of:870970-basis:46656172",
-                    "titles": {
-                      "main": ["Solsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 7",
-                  "work": {
-                    "workId": "work-of:870970-basis:38500775",
-                    "titles": {
-                      "main": ["Den forsvundne søster"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 8",
-                  "work": {
-                    "workId": "work-of:870970-basis:134823658",
-                    "titles": {
-                      "main": ["Atlas"]
-                    }
-                  }
-                }
-              ],
               "readThisFirst": null,
               "readThisWhenever": null
             }
@@ -3921,6 +3426,10 @@
                 ],
                 "publisher": ["Cicero"],
                 "identifiers": [
+                  {
+                    "type": "PUBLIZON",
+                    "value": "9788763844147"
+                  },
                   {
                     "type": "ISBN",
                     "value": "9788763844147"
@@ -4311,81 +3820,8 @@
           "series": [
             {
               "title": "De syv søstre-serien",
+              "numberInSeries": "Del 3",
               "isPopular": true,
-              "members": [
-                {
-                  "numberInSeries": "Del 1",
-                  "work": {
-                    "workId": "work-of:870970-basis:52557240",
-                    "titles": {
-                      "main": ["De syv søstre"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 2",
-                  "work": {
-                    "workId": "work-of:870970-basis:53247806",
-                    "titles": {
-                      "main": ["Stormsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 3",
-                  "work": {
-                    "workId": "work-of:870970-basis:53557791",
-                    "titles": {
-                      "main": ["Skyggesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 4",
-                  "work": {
-                    "workId": "work-of:870970-basis:53802001",
-                    "titles": {
-                      "main": ["Perlesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 5",
-                  "work": {
-                    "workId": "work-of:870970-basis:45942570",
-                    "titles": {
-                      "main": ["Månesøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 6",
-                  "work": {
-                    "workId": "work-of:870970-basis:46656172",
-                    "titles": {
-                      "main": ["Solsøsteren"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 7",
-                  "work": {
-                    "workId": "work-of:870970-basis:38500775",
-                    "titles": {
-                      "main": ["Den forsvundne søster"]
-                    }
-                  }
-                },
-                {
-                  "numberInSeries": "Del 8",
-                  "work": {
-                    "workId": "work-of:870970-basis:134823658",
-                    "titles": {
-                      "main": ["Atlas"]
-                    }
-                  }
-                }
-              ],
               "readThisFirst": null,
               "readThisWhenever": null
             }
@@ -4430,6 +3866,10 @@
                 ],
                 "publisher": ["Cicero"],
                 "identifiers": [
+                  {
+                    "type": "PUBLIZON",
+                    "value": "9788763852470"
+                  },
                   {
                     "type": "ISBN",
                     "value": "9788763852470"

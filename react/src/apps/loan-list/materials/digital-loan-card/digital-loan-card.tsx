@@ -11,7 +11,10 @@ import PlayerButton from "../../../../components/reader-player/PlayerButton";
 import { Cover } from "../../../../components/cover/cover";
 import AuthorYear from "../../../../components/author-year/authorYear";
 import { useText } from "../../../../core/utils/text";
-import { formatDateTimeUtc } from "../../../../core/utils/helpers/date";
+import {
+  formatDate,
+  formatDateTimeUtc
+} from "../../../../core/utils/helpers/date";
 import { readerUrl } from "../../../../components/reader-player/helper";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
 import { statistics } from "../../../../core/statistics/statistics";
@@ -181,7 +184,12 @@ const DigitalLoanCard: FC<DigitalLoanCardProps & MaterialProps> = ({
           {dueDate && (
             <p className="text-small-caption color-secondary-gray">
               {t("loanListToBeDeliveredDigitalMaterialText", {
-                placeholders: { "@date": formatDateTimeUtc(dueDate) }
+                placeholders: {
+                  "@date":
+                    digitalProvider === "publizon"
+                      ? formatDateTimeUtc(dueDate)
+                      : formatDate(dueDate)
+                }
               })}
             </p>
           )}

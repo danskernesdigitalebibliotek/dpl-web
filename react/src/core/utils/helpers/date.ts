@@ -115,6 +115,11 @@ export const formatDateDependingOnDigitalMaterial = ({
   return isDigital ? formatDateTimeUtc(date) : formatDate(date);
 };
 
+// A Biblio loan runs to the end of a day: the UTC date of its end timestamp.
+// As a plain date it is shown, counted and checked like a physical loan's.
+export const getBiblioDueDate = (end: string) =>
+  dayjs.utc(end).format(dateFormatDayjs);
+
 // Date calculation functions: Get dates relative to today
 export const getMonthAgoDate = () =>
   dayjs().subtract(1, "month").format(dateFormatDayjs);

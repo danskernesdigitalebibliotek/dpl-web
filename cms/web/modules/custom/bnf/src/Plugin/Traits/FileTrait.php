@@ -2,7 +2,6 @@
 
 namespace Drupal\bnf\Plugin\Traits;
 
-use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Files\MediaDocument;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileExists;
@@ -20,7 +19,6 @@ use function Safe\parse_url;
  * Notice - this is also used by the ImageTrait, to create the image files.
  */
 trait FileTrait {
-  use AutowirePluginTrait;
   /**
    * The entity type manager.
    */

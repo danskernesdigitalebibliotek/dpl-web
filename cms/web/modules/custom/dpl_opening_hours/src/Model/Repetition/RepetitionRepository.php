@@ -46,11 +46,10 @@ class RepetitionRepository {
     $repetition_id = intval($repetition_id);
 
     // Unknown repetition types have already been rejected by the match
-    // above, so anything that is not a NoRepetition is a WeeklyRepetition.
-    $storedRepetition = match ($repetition::class) {
-      NoRepetition::class => new NoRepetition($repetition_id),
-      default => new WeeklyRepetition($repetition_id, $repetition->endDate),
-    };
+    // above, so anything that is not a WeeklyRepetition is a NoRepetition.
+    $storedRepetition = $repetition instanceof WeeklyRepetition
+      ? new WeeklyRepetition($repetition_id, $repetition->endDate)
+      : new NoRepetition($repetition_id);
 
     return $storedRepetition;
   }

@@ -10,8 +10,8 @@ import { useDarkMode, useLightMode } from "../lib/helpers/helper.theme"
 import { isArgosCapture } from "./test-runners/visual/user-agent.mjs"
 
 // Freeze "now" so date-derived UI (due dates, countdowns, pickup deadlines)
-// renders identically on every Chromatic build instead of drifting day by
-// day. Story fixtures compute dates relative to this frozen date.
+// renders identically in every visual regression test instead of drifting
+// day by day. Story fixtures compute dates relative to this frozen date.
 MockDate.set("2026-06-15T12:00:00")
 
 // framer-motion animates rotation, scale and position in JavaScript, which
@@ -35,7 +35,7 @@ const dmSans = DM_Sans({
   display: "swap",
 })
 
-// Shared, so Chromatic and Argos capture the same widths during the pilot.
+// The widths visual regression tests capture every story at.
 const visualTestModes = {
   mobile: {
     viewport: "sm",
@@ -80,11 +80,6 @@ const preview: Preview = {
         },
       },
     },
-    chromatic: {
-      // Test each story in different viewport modes
-      modes: visualTestModes,
-    },
-    // Argos ignores the chromatic parameters once these exist.
     argos: {
       // Without the accessibility check after each mode's render. Argos does
       // not wait for it, and Storybook reloads the page when the next story
@@ -94,7 +89,7 @@ const preview: Preview = {
         desktop: { ...visualTestModes.desktop, a11y: { manual: true } },
       },
       // Default crops to the component at 2x zoom, collapsing fullscreen
-      // layouts. Capture the full page like Chromatic does.
+      // layouts. Capture the full page.
       fitToContent: false,
     },
     a11y: {

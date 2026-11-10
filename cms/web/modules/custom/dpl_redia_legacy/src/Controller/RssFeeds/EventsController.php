@@ -52,7 +52,13 @@ class EventsController extends ControllerBase {
 
     // Create cache metadata.
     $cache_metadata = new CacheableMetadata();
-    $cache_metadata->setCacheTags(['eventinstance_list', 'eventseries_list']);
+    // The feed leaves out the events of unpublished branches, so it must be
+    // rebuilt when a branch is published or unpublished.
+    $cache_metadata->setCacheTags([
+      'eventinstance_list',
+      'eventseries_list',
+      'node_list:branch',
+    ]);
 
     // Add cache metadata to the response.
     $response->addCacheableDependency($cache_metadata);
@@ -83,6 +89,10 @@ class EventsController extends ControllerBase {
     $items = [];
 
     foreach ($events as $event) {
+      if ($event->hasOnlyUnpublishedBranches()) {
+        continue;
+      }
+
       $items[] = new RediaEvent($event, $this->priceFormatter);
     }
 

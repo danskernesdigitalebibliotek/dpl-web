@@ -22,9 +22,9 @@ export const reservationListStory = {
 } as const;
 
 export class ReservationListPage extends PageObject {
-  public elements!: Elements;
+  declare public elements: Elements;
 
-  public components!: NestedComponents;
+  declare public components: NestedComponents;
 
   constructor(story: string = reservationListStory.default) {
     super({

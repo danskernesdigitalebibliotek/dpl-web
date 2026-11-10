@@ -118,9 +118,9 @@ class UniloginTest extends UnitTestCase {
       'Real response for a licensed student' => [self::realStudentUserinfo(), TRUE],
       'Unilogin identity provider without uni-id' => [
         ['attributes' => [Unilogin::CLAIM_IDP_USED => Unilogin::ADGANGSPLATFORMEN_IDP]],
-        TRUE,
+        FALSE,
       ],
-      'Uni-id without identity provider' => [['attributes' => [Unilogin::CLAIM_UNI_ID => 'abcd1234']], TRUE],
+      'Uni-id without identity provider' => [['attributes' => [Unilogin::CLAIM_UNI_ID => 'abcd1234']], FALSE],
       'Patron' => [
         ['attributes' => ['cpr' => '1234567890', 'uniqueId' => 'x', Unilogin::CLAIM_IDP_USED => 'nemlogin']],
         FALSE,
@@ -173,7 +173,7 @@ class UniloginTest extends UnitTestCase {
   }
 
   /**
-   * Only licensed users from the library's municipality are authorized.
+   * Only licensed users whose agency matches the library are authorized.
    *
    * @param mixed[] $userinfo
    *   The userinfo.
@@ -196,14 +196,14 @@ class UniloginTest extends UnitTestCase {
    */
   public static function provideAuthorizationCases(): array {
     $no_license = Unilogin::DENIED_NO_LICENSE;
-    $municipality = Unilogin::DENIED_MUNICIPALITY;
+    $agency = Unilogin::DENIED_AGENCY;
     return [
       'Licensed user from the municipality' => [self::userinfo(), self::AGENCY_ID, NULL],
       'Real response for a licensed student' => [self::realStudentUserinfo(), self::AGENCY_ID, NULL],
       'Real response for a licensed student at another library' => [
         self::realStudentUserinfo(),
         '715100',
-        $municipality,
+        $agency,
       ],
       'Real response for an unlicensed user' => [self::realUnlicensedUserinfo(), self::AGENCY_ID, $no_license],
       'License given as a string' => [
@@ -225,14 +225,14 @@ class UniloginTest extends UnitTestCase {
       'Other municipality' => [
         self::userinfo([Unilogin::CLAIM_AGENCY_ID => '715100']),
         self::AGENCY_ID,
-        $municipality,
+        $agency,
       ],
       'Agency claim missing' => [
         ['attributes' => array_diff_key(self::userinfo()['attributes'], [Unilogin::CLAIM_AGENCY_ID => TRUE])],
         self::AGENCY_ID,
-        $municipality,
+        $agency,
       ],
-      'Agency id of the library missing' => [self::userinfo(), NULL, $municipality],
+      'Agency id of the library missing' => [self::userinfo(), NULL, $agency],
       'No institution' => [
         self::userinfo([Unilogin::CLAIM_INSTITUTION_IDS => '']),
         self::AGENCY_ID,

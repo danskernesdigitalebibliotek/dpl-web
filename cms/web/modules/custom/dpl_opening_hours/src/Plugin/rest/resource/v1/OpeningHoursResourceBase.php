@@ -5,8 +5,10 @@ namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
 use DanskernesDigitaleBibliotek\CMS\Api\Service\SerializerInterface;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursMapper;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
+use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
 use Drupal\dpl_rest_base\Plugin\RestResourceBase;
 use Psr\Log\LoggerInterface;
@@ -35,6 +37,7 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
     protected OpeningHoursRepository $repository,
     protected OpeningHoursMapper $mapper,
     protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
+    protected AccountProxyInterface $currentUser,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger, $serializer);
   }
@@ -52,7 +55,8 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
       $container->get('dpl_rest_base.serializer'),
       $container->get('dpl_opening_hours.repository'),
       $container->get('dpl_opening_hours.mapper'),
-      $container->get('cache_tags.invalidator')
+      $container->get('cache_tags.invalidator'),
+      $container->get('current_user'),
     );
   }
 
@@ -200,11 +204,38 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
       // We also include the list cache tag for opening hours categories to
       // ensure that any changes here (labels and colors) are reflected
       // immediately.
-      ->setCacheTags([self::CACHE_TAG_LIST, 'taxonomy_term_list:opening_hours_categories'])
+      // Opening hours of unpublished branches are left out, so publishing or
+      // unpublishing a branch must also clear the cache.
+      ->setCacheTags([self::CACHE_TAG_LIST, 'taxonomy_term_list:opening_hours_categories', 'node_list:branch'])
       // Vary all responses based on url. Path and query arguments are used
       // to filter opening hours so this provides individual cache entries
       // per argument combination.
-      ->setCacheContexts(['url']);
+      // Whether opening hours of unpublished branches are included depends on
+      // the permissions of the user.
+      ->setCacheContexts(['url', 'user.permissions']);
+  }
+
+  /**
+   * Leave out the opening hours the current user must not see.
+   *
+   * Opening hours of an unpublished branch are only visible to users who
+   * manage opening hours, as they prepare them before the branch is published.
+   *
+   * @param \Drupal\dpl_opening_hours\Model\OpeningHoursInstance[] $instances
+   *   The opening hours instances.
+   *
+   * @return \Drupal\dpl_opening_hours\Model\OpeningHoursInstance[]
+   *   The visible opening hours instances.
+   */
+  protected function filterVisibleInstances(array $instances): array {
+    if ($this->currentUser->hasPermission('manage opening hours for branches')) {
+      return $instances;
+    }
+
+    return array_values(array_filter(
+      $instances,
+      fn (OpeningHoursInstance $instance) => $instance->branch->isPublished()
+    ));
   }
 
   /**

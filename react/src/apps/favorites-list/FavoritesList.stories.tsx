@@ -69,10 +69,6 @@ const meta: Meta<typeof FavoritesListEntry> = {
     numberDescriptionText: {
       description: "Number description",
       control: { type: "text" }
-    },
-    inSeriesText: {
-      description: "In series",
-      control: { type: "text" }
     }
   }
 };
@@ -100,7 +96,6 @@ export const Primary: Story = {
     byAuthorText: "By",
     etAlText: "...",
     favoritesListEmptyText: "Your favorites list is empty",
-    numberDescriptionText: "Nr.",
-    inSeriesText: "in series"
+    numberDescriptionText: "Nr."
   }
 };

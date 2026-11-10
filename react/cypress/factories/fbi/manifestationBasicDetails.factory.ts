@@ -11,10 +11,6 @@ export const manifestationBasicDetailsFactory =
     __typename: "Manifestation",
     pid: "870970-basis:46985591",
     abstract: ["Mock manifestation abstract"],
-    ownerWork: {
-      __typename: "Work",
-      workId: "work-of:870970-basis:46985591"
-    },
     titles: {
       __typename: "ManifestationTitles",
       full: ["Harry Potter"]

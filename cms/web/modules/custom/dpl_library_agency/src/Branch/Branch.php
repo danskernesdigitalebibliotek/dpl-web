@@ -74,6 +74,21 @@ class Branch {
   }
 
   /**
+   * Getting a copy of this branch, as if it had no associated node.
+   *
+   * The copy carries the upstream title and no editorial data, which is how a
+   * branch is presented when its node must not be exposed - e.g. because the
+   * node is unpublished.
+   */
+  public function withoutNode(): static {
+    $branch = clone $this;
+    $branch->node = NULL;
+    $branch->title = $branch->originalTitle;
+
+    return $branch;
+  }
+
+  /**
    * Getting address data of a branch, set on a possible Drupal node.
    *
    * @return \Drupal\dk_address\DkAddressItemInterface|null

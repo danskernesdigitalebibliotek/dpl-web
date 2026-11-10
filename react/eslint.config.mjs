@@ -2,7 +2,6 @@ import noOnlyTests from "eslint-plugin-no-only-tests";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
-import path from "node:path";
 import js from "@eslint/js";
 import react from "eslint-plugin-react";
 import { configs as reactHooksConfigs } from "eslint-plugin-react-hooks";
@@ -10,8 +9,6 @@ import prettierRecommended from "eslint-plugin-prettier/recommended";
 import cypressPlugin from "eslint-plugin-cypress/flat";
 import { flatConfigs as importFlatConfigs } from "eslint-plugin-import";
 import jsxA11y from "eslint-plugin-jsx-a11y";
-
-const __dirname = import.meta.dirname;
 
 export default [
   { files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"] },
@@ -63,12 +60,7 @@ export default [
         ecmaFeatures: {
           jsx: true,
           globalReturn: false
-        },
-
-        project: [
-          path.resolve(__dirname, "./tsconfig.json"),
-          path.resolve(__dirname, "cypress/tsconfig.json")
-        ]
+        }
       }
     },
 
@@ -124,7 +116,6 @@ export default [
             "webpack.helpers.js",
             "postcss.config.js",
             "orval.config.ts",
-            "cypress/plugins/index.js",
             "cypress/support/index.ts",
             "scripts/postcss-node-sass.js",
             "scripts/post-process-generated-graphql.ts",

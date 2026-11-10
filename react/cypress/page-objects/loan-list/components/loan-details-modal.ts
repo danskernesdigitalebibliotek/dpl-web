@@ -7,7 +7,7 @@ import { ComponentObject, Elements } from "@hammzj/cypress-page-object";
 export const loanDetailsModalSelector = ".modal-details";
 
 export class LoanDetailsModalComponent extends ComponentObject {
-  public elements!: Elements;
+  declare public elements: Elements;
 
   constructor() {
     super(() => cy.get(loanDetailsModalSelector));

@@ -4,7 +4,7 @@ import { ComponentObject, Elements } from "@hammzj/cypress-page-object";
 // `.list-reservation--no-hover` variant so it can't accidentally match a
 // physical-loan row (which uses the same outer class but is clickable).
 export class DigitalLoanRowComponent extends ComponentObject {
-  public elements!: Elements;
+  declare public elements: Elements;
 
   constructor(index = 0) {
     super(() =>

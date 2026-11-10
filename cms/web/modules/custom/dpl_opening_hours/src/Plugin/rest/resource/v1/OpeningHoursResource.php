@@ -93,6 +93,7 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
         $typedRequest->getDateTime('from_date'),
         $typedRequest->getDateTime('to_date')
       );
+      $openingHoursInstances = $this->filterVisibleInstances($openingHoursInstances);
 
       $responseData = array_map(function (OpeningHoursInstance $instance) : OpeningHoursResponse {
         return $this->mapper->toResponse($instance);

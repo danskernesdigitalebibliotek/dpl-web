@@ -19,6 +19,7 @@ import { LoanType } from "../types/loan-type";
 import { store } from "../../store";
 import { ReservationType } from "../types/reservation-type";
 import { getContributors } from "./general";
+import { getBiblioDueDate } from "./date";
 import { ReservationGroupDetails } from "../useGetReservationGroups";
 import {
   dashboardReadyForPickupApiValueText,
@@ -29,20 +30,11 @@ function getYearFromDataString(date: string) {
   return new Date(date).getFullYear();
 }
 
-function getSeriesString(
-  series: ManifestationBasicDetailsFragment["series"],
-  workId: string
-) {
+function getSeriesString(series: ManifestationBasicDetailsFragment["series"]) {
   return series
-    .map(({ title, members }) => {
-      const currentMember = members.find(
-        (member) => member.work.workId === workId
-      );
-      if (currentMember?.numberInSeries) {
-        return `${title} ${currentMember.numberInSeries}`;
-      }
-      return title;
-    })
+    .map(({ title, numberInSeries }) =>
+      numberInSeries ? `${title} ${numberInSeries}` : title
+    )
     .join(", ");
 }
 
@@ -110,7 +102,7 @@ export const mapDigitalLoanToLoanType = (list: DigitalLoan[]): LoanType[] => {
   return list.map((loan) => {
     const { loanId, materialId, startDate, endDate } = loan;
     return {
-      dueDate: endDate,
+      dueDate: getBiblioDueDate(endDate),
       loanDate: startDate,
       isRenewable: false,
       materialItemNumber: materialId,
@@ -237,7 +229,6 @@ export const mapManifestationToBasicDetailsType = (
     abstract,
     titles,
     pid,
-    ownerWork,
     materialTypes,
     creators,
     series,
@@ -263,13 +254,9 @@ export const mapManifestationToBasicDetailsType = (
     title: fullText,
     year,
     description,
-    series:
-      series &&
-      series.length > 0 &&
-      series[0].members &&
-      series[0].members.length > 0
-        ? getSeriesString(series, ownerWork.workId)
-        : "",
+    // Typed as required, but some test mocks answer every FBI query with one
+    // fixture whose manifestation has no series.
+    series: series && series.length > 0 ? getSeriesString(series) : "",
     materialType: materialTypes
       ? materialTypes[0].materialTypeSpecific.display
       : undefined

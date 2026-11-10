@@ -4,7 +4,7 @@ import { ComponentObject, Elements } from "@hammzj/cypress-page-object";
 export const deleteReservationModalSelector = ".modal-cta";
 
 export class DeleteReservationModalComponent extends ComponentObject {
-  public elements!: Elements;
+  declare public elements: Elements;
 
   constructor() {
     super(() => cy.get(deleteReservationModalSelector));

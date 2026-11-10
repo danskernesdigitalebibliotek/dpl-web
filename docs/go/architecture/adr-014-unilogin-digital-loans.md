@@ -29,9 +29,9 @@ nothing else — the "never to FBS/FBI" rule of ADR-013 holds.
 
 **A second client gate.** `isPatronAuthenticated` was one flag gating the FBS
 hooks and the digital hooks alike; flipping it for Unilogin would fire doomed
-FBS calls. A new `isDigitalLoanAuthenticated` — a superset, true for a patron
-or a Unilogin user — gates the digital hooks and the reader sign-in, while FBS
-keeps `isPatronAuthenticated`. It falls back to `isPatronAuthenticated` when
+FBS calls. A new `canUseDigitalLoans` — a superset, true for a patron or a
+Unilogin user — gates the digital hooks and the reader sign-in, while FBS keeps
+`isPatronAuthenticated`. It falls back to `isPatronAuthenticated` when
 unset, so the React apps, where a Unilogin user is anonymous, are unchanged.
 
 ## Consequences

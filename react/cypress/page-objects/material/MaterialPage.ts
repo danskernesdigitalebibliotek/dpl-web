@@ -24,8 +24,8 @@ export const materialStory = {
 } as const;
 
 export class MaterialPage extends PageObject {
-  public elements!: Elements;
-  public components!: NestedComponents;
+  declare public elements: Elements;
+  declare public components: NestedComponents;
 
   /**
    * @param story which story to render

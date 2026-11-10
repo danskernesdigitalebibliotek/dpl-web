@@ -1,16 +1,17 @@
 // Same singleton aliasing as webpack.config.js: without it the service layer
 // resolves its own copy of react-query and its hooks cannot see the
 // QueryClientProvider this project mounts.
+import type { StorybookConfig } from "@storybook/react-webpack5";
+
 const { moduleAliases } = require("../webpack.helpers");
 
-const config = {
+const config: StorybookConfig = {
   stories: ["../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
 
   addons: [
     "@storybook/addon-essentials",
     "@storybook/addon-queryparams",
-    "@storybook/addon-webpack5-compiler-babel",
-    "@chromatic-com/storybook"
+    "@storybook/addon-webpack5-compiler-babel"
   ],
 
   typescript: {

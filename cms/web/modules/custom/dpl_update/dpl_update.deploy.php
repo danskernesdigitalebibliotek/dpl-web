@@ -911,3 +911,16 @@ function dpl_update_deploy_administrator_service_message_permissions(): string {
 
   return 'Granted service message permissions to administrators.';
 }
+
+/**
+ * Grant administrators access to the TwentyThree settings.
+ */
+function dpl_update_deploy_twentythree_settings_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['administrator', 'local_administrator'],
+    ['administer media_twentythree configuration'],
+    TRUE,
+  );
+
+  return 'Granted TwentyThree settings permissions to administrators.';
+}
