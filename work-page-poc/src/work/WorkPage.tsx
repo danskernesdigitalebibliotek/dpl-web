@@ -3,7 +3,8 @@ import { useParams, useSearchParams } from "react-router"
 
 import { useConnectionSettings } from "../connection/useConnectionSettings"
 import { useWork } from "../fbi/useWork"
-import { getCategory } from "./categories/registry"
+import { CategoryDebugPanel } from "./CategoryDebugPanel"
+import { belongsTo, getCategory } from "./categories/registry"
 import { selectManifestation } from "./selectManifestation"
 
 /**
@@ -18,7 +19,8 @@ export const WorkPage = () => {
 
   const requestedId = searchParams.get("manifestationId")
   const work = data?.work
-  const manifestation = work ? selectManifestation(work, requestedId) : undefined
+  const selection = work ? selectManifestation(work, requestedId) : undefined
+  const manifestation = selection?.manifestation
 
   // Writes a default choice into the URL, so it always names what is shown.
   useEffect(() => {
@@ -36,17 +38,26 @@ export const WorkPage = () => {
   if (!settings.libraryToken) return <p>Add a library token under connection settings (⚙) to load the work.</p>
   if (error) return <p>Could not load the work: {error.message}</p>
   if (isPending) return <p>Loading…</p>
-  if (!work) return <p>No work with id {workId}.</p>
+  if (!work || !selection) return <p>No work with id {workId}.</p>
   if (!manifestation) return <p>The work has no manifestations.</p>
 
   const category = getCategory(manifestation)
   const { Page } = category
+  const pageProps = {
+    work,
+    manifestation,
+    categoryManifestations: work.manifestations.all.filter((candidate) => belongsTo(category, candidate)),
+  }
 
   return (
-    <Page
-      work={work}
-      manifestation={manifestation}
-      categoryManifestations={work.manifestations.all.filter(category.matches)}
-    />
+    <>
+      <Page {...pageProps} />
+      <CategoryDebugPanel
+        key={category.id}
+        category={category}
+        pageProps={pageProps}
+        selectionTrace={selection.trace}
+      />
+    </>
   )
 }
