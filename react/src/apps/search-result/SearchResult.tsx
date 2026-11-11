@@ -324,6 +324,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
               isLoading={isLoading}
               page={page}
               pageSize={pageSize}
+              restoreScrollToClickedItem
               infoBoxProps={{
                 title: infoBoxTitle,
                 html: infoBoxHtml,
