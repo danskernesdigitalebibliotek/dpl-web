@@ -3268,6 +3268,17 @@ export type GetSmallWorkQuery = {
       readThisFirst?: boolean | null;
       readThisWhenever?: boolean | null;
     }>;
+    materialTypes: Array<{
+      __typename?: "MaterialType";
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
+      };
+      materialTypeSpecific: {
+        __typename?: "SpecificMaterialType";
+        display: string;
+      };
+    }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
       __typename?: "Manifestations";
@@ -3990,17 +4001,6 @@ export type GetMaterialQuery = {
         };
       }>;
     }>;
-    materialTypes: Array<{
-      __typename?: "MaterialType";
-      materialTypeGeneral: {
-        __typename?: "GeneralMaterialType";
-        code: GeneralMaterialTypeCodeEnum;
-      };
-      materialTypeSpecific: {
-        __typename?: "SpecificMaterialType";
-        display: string;
-      };
-    }>;
     mainLanguages: Array<{
       __typename?: "Language";
       display: string;
@@ -4062,6 +4062,17 @@ export type GetMaterialQuery = {
       | { __typename: "Corporation"; display: string }
       | { __typename: "Person"; display: string }
     >;
+    materialTypes: Array<{
+      __typename?: "MaterialType";
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
+      };
+      materialTypeSpecific: {
+        __typename?: "SpecificMaterialType";
+        display: string;
+      };
+    }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
       __typename?: "Manifestations";
@@ -4647,17 +4658,6 @@ export type GetMaterialGloballyQuery = {
         };
       }>;
     }>;
-    materialTypes: Array<{
-      __typename?: "MaterialType";
-      materialTypeGeneral: {
-        __typename?: "GeneralMaterialType";
-        code: GeneralMaterialTypeCodeEnum;
-      };
-      materialTypeSpecific: {
-        __typename?: "SpecificMaterialType";
-        display: string;
-      };
-    }>;
     mainLanguages: Array<{
       __typename?: "Language";
       display: string;
@@ -4719,6 +4719,17 @@ export type GetMaterialGloballyQuery = {
       | { __typename: "Corporation"; display: string }
       | { __typename: "Person"; display: string }
     >;
+    materialTypes: Array<{
+      __typename?: "MaterialType";
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
+      };
+      materialTypeSpecific: {
+        __typename?: "SpecificMaterialType";
+        display: string;
+      };
+    }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
       __typename?: "Manifestations";
@@ -5406,6 +5417,17 @@ export type RecommendFromFaustQuery = {
           readThisFirst?: boolean | null;
           readThisWhenever?: boolean | null;
         }>;
+        materialTypes: Array<{
+          __typename?: "MaterialType";
+          materialTypeGeneral: {
+            __typename?: "GeneralMaterialType";
+            code: GeneralMaterialTypeCodeEnum;
+          };
+          materialTypeSpecific: {
+            __typename?: "SpecificMaterialType";
+            display: string;
+          };
+        }>;
         workYear?: {
           __typename?: "PublicationYear";
           year?: number | null;
@@ -6037,6 +6059,17 @@ export type SearchWithPaginationQuery = {
         numberInSeries?: string | null;
         readThisFirst?: boolean | null;
         readThisWhenever?: boolean | null;
+      }>;
+      materialTypes: Array<{
+        __typename?: "MaterialType";
+        materialTypeGeneral: {
+          __typename?: "GeneralMaterialType";
+          code: GeneralMaterialTypeCodeEnum;
+        };
+        materialTypeSpecific: {
+          __typename?: "SpecificMaterialType";
+          display: string;
+        };
       }>;
       workYear?: {
         __typename?: "PublicationYear";
@@ -6684,6 +6717,17 @@ export type ComplexSearchWithPaginationQuery = {
         numberInSeries?: string | null;
         readThisFirst?: boolean | null;
         readThisWhenever?: boolean | null;
+      }>;
+      materialTypes: Array<{
+        __typename?: "MaterialType";
+        materialTypeGeneral: {
+          __typename?: "GeneralMaterialType";
+          code: GeneralMaterialTypeCodeEnum;
+        };
+        materialTypeSpecific: {
+          __typename?: "SpecificMaterialType";
+          display: string;
+        };
       }>;
       workYear?: {
         __typename?: "PublicationYear";
@@ -7887,6 +7931,17 @@ export type GetSeriesQuery = {
           readThisFirst?: boolean | null;
           readThisWhenever?: boolean | null;
         }>;
+        materialTypes: Array<{
+          __typename?: "MaterialType";
+          materialTypeGeneral: {
+            __typename?: "GeneralMaterialType";
+            code: GeneralMaterialTypeCodeEnum;
+          };
+          materialTypeSpecific: {
+            __typename?: "SpecificMaterialType";
+            display: string;
+          };
+        }>;
         workYear?: {
           __typename?: "PublicationYear";
           year?: number | null;
@@ -8902,6 +8957,17 @@ export type WorkSmallFragment = {
     readThisFirst?: boolean | null;
     readThisWhenever?: boolean | null;
   }>;
+  materialTypes: Array<{
+    __typename?: "MaterialType";
+    materialTypeGeneral: {
+      __typename?: "GeneralMaterialType";
+      code: GeneralMaterialTypeCodeEnum;
+    };
+    materialTypeSpecific: {
+      __typename?: "SpecificMaterialType";
+      display: string;
+    };
+  }>;
   workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
   manifestations: {
     __typename?: "Manifestations";
@@ -9480,17 +9546,6 @@ export type WorkMediumFragment = {
       };
     }>;
   }>;
-  materialTypes: Array<{
-    __typename?: "MaterialType";
-    materialTypeGeneral: {
-      __typename?: "GeneralMaterialType";
-      code: GeneralMaterialTypeCodeEnum;
-    };
-    materialTypeSpecific: {
-      __typename?: "SpecificMaterialType";
-      display: string;
-    };
-  }>;
   mainLanguages: Array<{
     __typename?: "Language";
     display: string;
@@ -9552,6 +9607,17 @@ export type WorkMediumFragment = {
     | { __typename: "Corporation"; display: string }
     | { __typename: "Person"; display: string }
   >;
+  materialTypes: Array<{
+    __typename?: "MaterialType";
+    materialTypeGeneral: {
+      __typename?: "GeneralMaterialType";
+      code: GeneralMaterialTypeCodeEnum;
+    };
+    materialTypeSpecific: {
+      __typename?: "SpecificMaterialType";
+      display: string;
+    };
+  }>;
   workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
   manifestations: {
     __typename?: "Manifestations";
@@ -10689,6 +10755,14 @@ export const WorkSmallFragmentDoc = new TypedDocumentString(
   series {
     ...SeriesSimple
   }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
+  }
   workYear {
     year
   }
@@ -10888,14 +10962,6 @@ export const WorkMediumFragmentDoc = new TypedDocumentString(
           main
         }
       }
-    }
-  }
-  materialTypes {
-    materialTypeGeneral {
-      code
-    }
-    materialTypeSpecific {
-      display
     }
   }
   mainLanguages {
@@ -11115,6 +11181,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
@@ -11531,6 +11605,14 @@ fragment WorkSmall on Work {
   series {
     ...SeriesSimple
   }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
+  }
   workYear {
     year
   }
@@ -11907,6 +11989,14 @@ fragment WorkSmall on Work {
   series {
     ...SeriesSimple
   }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
+  }
   workYear {
     year
   }
@@ -11926,14 +12016,6 @@ fragment WorkMedium on Work {
           main
         }
       }
-    }
-  }
-  materialTypes {
-    materialTypeGeneral {
-      code
-    }
-    materialTypeSpecific {
-      display
     }
   }
   mainLanguages {
@@ -12188,6 +12270,14 @@ fragment WorkSmall on Work {
   series {
     ...SeriesSimple
   }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
+  }
   workYear {
     year
   }
@@ -12207,14 +12297,6 @@ fragment WorkMedium on Work {
           main
         }
       }
-    }
-  }
-  materialTypes {
-    materialTypeGeneral {
-      code
-    }
-    materialTypeSpecific {
-      display
     }
   }
   mainLanguages {
@@ -12639,6 +12721,14 @@ fragment WorkSmall on Work {
   series {
     ...SeriesSimple
   }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
+  }
   workYear {
     year
   }
@@ -12909,6 +12999,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
@@ -13219,6 +13317,14 @@ fragment WorkSmall on Work {
   series {
     ...SeriesSimple
   }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
+  }
   workYear {
     year
   }
@@ -13518,6 +13624,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year

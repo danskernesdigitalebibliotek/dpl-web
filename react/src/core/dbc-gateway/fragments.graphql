@@ -280,6 +280,14 @@ fragment WorkSmall on Work {
   series {
     ...SeriesSimple
   }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
+  }
   workYear {
     year
   }
@@ -304,14 +312,6 @@ fragment WorkMedium on Work {
           main
         }
       }
-    }
-  }
-  materialTypes {
-    materialTypeGeneral {
-      code
-    }
-    materialTypeSpecific {
-      display
     }
   }
   mainLanguages {

@@ -1,5 +1,8 @@
 import { Factory } from "fishery";
-import { ComplexSearchWithPaginationQuery } from "../../../src/core/dbc-gateway/generated/graphql";
+import {
+  ComplexSearchWithPaginationQuery,
+  GeneralMaterialTypeCodeEnum
+} from "../../../src/core/dbc-gateway/generated/graphql";
 import { manifestationFactory } from "../manifestation/manifestation.factory";
 
 // Type alias for WorkSmall from the query response
@@ -26,6 +29,12 @@ export const workSmallFactory = Factory.define<WorkSmall>(() => {
       }
     ],
     series: [],
+    materialTypes: [
+      {
+        materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum.Books },
+        materialTypeSpecific: { display: "bog" }
+      }
+    ],
     workYear: {
       year: 2024
     },
