@@ -193,14 +193,22 @@ pattern `PhysicalReservationButton` uses for its own status lines. Trying a
 sample stays available, and an edition already on loan to the reader still
 opens.
 
-The edition stays selectable in the picker, captioned "Udlånt til dig" —
-not the physical state's "Udlånt lige nu", because a digital edition is
-only ever shown as on loan when it is on loan to _this_ reader, which makes
-it the edition they most likely want to pick. The physical caption can also
-carry a queue count; this one never does. Disabling it would not be enough
-on its own — a reader also arrives through a shared link, through "nyeste",
-or because it is the only edition of its type — and filtering it out would
-leave an empty picker for a type with one edition.
+In the picker, the two kinds of loan get different captions:
+
+| Edition  | Caption          | Means                                      |
+| -------- | ---------------- | ------------------------------------------ |
+| Physical | "Udlånt lige nu" | Someone has it. May add a queue count.     |
+| Digital  | "Udlånt til dig" | _You_ have it. Open it and read.           |
+
+The wording differs because the facts differ. A physical edition is lent to
+some other patron. A digital one is only ever marked as lent when it is lent
+to the reader looking at the page.
+
+Both stay selectable. For the digital one that is the whole point — it is
+the edition the reader most likely wants. The physical one stays selectable
+because a reader does not always arrive through the picker: they follow a
+shared link, pick "nyeste", or the type has only this one edition. Filtering
+it out would leave them with an empty picker.
 
 ### Not covered
 
