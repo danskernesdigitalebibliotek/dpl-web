@@ -80,6 +80,10 @@ module.exports = (_env, argv) => {
     },
     output: {
       filename: "[name].js",
+      // Drupal adds its cache-busting query string only to the entry scripts.
+      // Chunks loaded by webpack's runtime need the hash in their name, or
+      // browsers keep running a stale chunk against a new runtime.
+      chunkFilename: "[name].[contenthash].js",
       path: path.resolve(__dirname, "dist")
     },
     mode: argv.mode,

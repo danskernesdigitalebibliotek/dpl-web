@@ -18,4 +18,8 @@ to expose endpoints from Drupal as an API to be consumed by external parties.
 6. Run `task ci:openapi:download` to download the updated OpenAPI specification
 7. Uninstall the REST UI module `drush pm-uninstall restui`
 8. Export the updated configuration `drush config-export`
-9. Commit your changes including the updated configuration and `openapi.json`
+9. Describe the change for API consumers under `## Unreleased` in the
+   [CMS REST API changelog](../changelogs/cms-rest.md) (see
+   [Changelogs](../changelogs/README.md))
+10. Commit your changes including the updated configuration, `openapi.json` and
+    the changelog

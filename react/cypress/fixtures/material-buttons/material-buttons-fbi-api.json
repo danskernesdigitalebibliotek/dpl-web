@@ -18,6 +18,7 @@
       "series": [
         {
           "title": "De syv søstre-serien",
+          "numberInSeries": "1",
           "isPopular": true,
           "members": [
             {
@@ -242,6 +243,9 @@
             ],
             "publisher": ["Cicero"],
             "identifiers": [
+              {
+                "type": "PUBLIZON", "value": "9788763844123"
+              },
               {
                 "type": "ISBN", "type": "ISBN", "value": "9788763844123"
               },

@@ -1,5 +1,6 @@
 import { Factory } from "fishery"
 
+import { placeholderImageUrl } from "@/cypress/factories/placeholder-image"
 import { GetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 
 type Params = {
@@ -81,24 +82,24 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
               },
             ],
             cover: {
-              thumbnail: "https://placehold.co/120x173.jpg",
+              thumbnail: placeholderImageUrl(120, 173),
               xSmall: {
-                url: "https://placehold.co/120x173.jpg",
+                url: placeholderImageUrl(120, 173),
                 width: 120,
                 height: 181,
               },
               small: {
-                url: "https://placehold.co/240x362.jpg",
+                url: placeholderImageUrl(240, 362),
                 width: 240,
                 height: 362,
               },
               medium: {
-                url: "https://placehold.co/480x723.jpg",
+                url: placeholderImageUrl(480, 723),
                 width: 480,
                 height: 723,
               },
               large: {
-                url: "https://placehold.co/960x1440.jpg",
+                url: placeholderImageUrl(960, 1440),
                 width: 531,
                 height: 800,
               },
@@ -237,24 +238,24 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
               },
             ],
             cover: {
-              thumbnail: "https://placehold.co/120x173.jpg",
+              thumbnail: placeholderImageUrl(120, 173),
               xSmall: {
-                url: "https://placehold.co/120x173.jpg",
+                url: placeholderImageUrl(120, 173),
                 width: 120,
                 height: 191,
               },
               small: {
-                url: "https://placehold.co/240x362.jpg",
+                url: placeholderImageUrl(240, 362),
                 width: 240,
                 height: 382,
               },
               medium: {
-                url: "https://placehold.co/480x723.jpg",
+                url: placeholderImageUrl(480, 723),
                 width: 480,
                 height: 763,
               },
               large: {
-                url: "https://placehold.co/960x1440.jpg",
+                url: placeholderImageUrl(960, 1440),
                 width: 960,
                 height: 1527,
               },
@@ -375,24 +376,24 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
               },
             ],
             cover: {
-              thumbnail: "https://placehold.co/120x173.jpg",
+              thumbnail: placeholderImageUrl(120, 173),
               xSmall: {
-                url: "https://placehold.co/120x173.jpg",
+                url: placeholderImageUrl(120, 173),
                 width: 120,
                 height: 178,
               },
               small: {
-                url: "https://placehold.co/240x356.jpg",
+                url: placeholderImageUrl(240, 356),
                 width: 240,
                 height: 356,
               },
               medium: {
-                url: "https://placehold.co/480x711.jpg",
+                url: placeholderImageUrl(480, 711),
                 width: 480,
                 height: 711,
               },
               large: {
-                url: "https://placehold.co/960x1422.jpg",
+                url: placeholderImageUrl(960, 1422),
                 width: 960,
                 height: 1422,
               },
@@ -503,24 +504,24 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
             },
           ],
           cover: {
-            thumbnail: "https://placehold.co/120x173.jpg",
+            thumbnail: placeholderImageUrl(120, 173),
             xSmall: {
-              url: "https://placehold.co/120x173.jpg",
+              url: placeholderImageUrl(120, 173),
               width: 120,
               height: 181,
             },
             small: {
-              url: "https://placehold.co/240x362.jpg",
+              url: placeholderImageUrl(240, 362),
               width: 240,
               height: 362,
             },
             medium: {
-              url: "https://placehold.co/480x723.jpg",
+              url: placeholderImageUrl(480, 723),
               width: 480,
               height: 723,
             },
             large: {
-              url: "https://placehold.co/960x1440.jpg",
+              url: placeholderImageUrl(960, 1440),
               width: 531,
               height: 800,
             },

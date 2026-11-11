@@ -1,7 +1,3 @@
-export interface RichTextProps {
-  text: string;
-}
-
 export const RichText = () => {
   return (
     <div className="rich-text">

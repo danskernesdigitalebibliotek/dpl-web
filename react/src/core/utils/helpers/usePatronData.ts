@@ -23,5 +23,3 @@ export const getBlockedStatus = (patron?: Patron) => {
   // We cannot resolve the block status so we return unknown
   return BlockedTypes.unknown;
 };
-
-export default {};

@@ -29,5 +29,3 @@ export const Autosuggest: React.FC<AutosuggestProps> = ({
     </ul>
   );
 };
-
-export default Autosuggest;

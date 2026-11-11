@@ -1,12 +1,4 @@
 import {
-  AccessUrl,
-  DigitalArticleService,
-  Ereol,
-  FacetResult,
-  InfomediaService,
-  RetrieverService,
-  InterLibraryLoan,
-  Publizon,
   ManifestationReviewFieldsFragment,
   ManifestationsSimpleFieldsFragment,
   Relations,
@@ -63,16 +55,3 @@ export type Work = Omit<
 export type Patron = PatronV5;
 
 export type AuthenticatedPatron = AuthenticatedPatronV8;
-
-export type Facets = FacetResult[] | null;
-
-export type AccessTypes =
-  | AccessUrl["__typename"]
-  | DigitalArticleService["__typename"]
-  | Ereol["__typename"]
-  // InfomediaService is deprecated upstream in favour of RetrieverService,
-  // but it is still part of the AccessUnion and can appear as a __typename.
-  | InfomediaService["__typename"]
-  | RetrieverService["__typename"]
-  | InterLibraryLoan["__typename"]
-  | Publizon["__typename"];

@@ -79,13 +79,13 @@ class ContentLockHooks {
     if ($locked_by_current_user) {
       // Warning when the current user holds the lock.
       $message = $this->t('<div class="messages messages--warning">You currently have <strong>@title</strong> open in another window or tab. If you delete it now, you may lose changes that have not been saved.</div>', [
-        '@title' => $entity->label(),
+        '@title' => (string) $entity->label(),
       ], ['context' => 'DPL admin UX']);
     }
     else {
       // Warning when another user holds the lock.
       $message = $this->t('<div class="messages messages--warning"><strong>@title</strong> is currently being edited by <strong>@user</strong>. There is a risk of data loss if you proceed with deleting this content.</div>', [
-        '@title' => $entity->label(),
+        '@title' => (string) $entity->label(),
         '@user' => $lock_user?->getDisplayName() ?? $this->t('another user'),
       ], ['context' => 'DPL admin UX']);
     }

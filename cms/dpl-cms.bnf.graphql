@@ -52,6 +52,7 @@ type AppContentElementGoLinkbox implements AppContentElement {
   description: String!
   id: String!
   image: String
+  linkTitle: String
   title: String!
 }
 

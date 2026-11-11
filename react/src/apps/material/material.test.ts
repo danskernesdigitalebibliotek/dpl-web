@@ -77,6 +77,24 @@ describe("Material", () => {
       .should("have.length", 8);
   });
 
+  it("Links each genre and form to a facet search", () => {
+    cy.interceptGraphql({
+      operationName: "getMaterial",
+      fixtureFilePath: "material/fbi-api.json"
+    });
+    cy.visit("/iframe.html?id=apps-material--default&viewMode=story&type=bog");
+    cy.getBySel("material-header-content").scrollIntoView({ duration: 100 });
+
+    cy.contains("h3", "Genre and form")
+      .parent()
+      .find("a")
+      .should("have.length", 3)
+      .first()
+      .should("contain.text", "roman")
+      .and("have.attr", "href")
+      .and("include", "genreAndForm");
+  });
+
   it("Renders authors", () => {
     cy.interceptGraphql({
       operationName: "getMaterial",
@@ -160,12 +178,6 @@ describe("Material", () => {
           .contains("Edition")
           .next()
           .should("contain.text", "1. udgave, 2016");
-
-        // Verify "Genre" field and its value
-        cy.get(".list-description__item")
-          .contains("Genre")
-          .next()
-          .should("contain.text", "roman / slægtsromaner");
 
         // Verify "Original title" field and its value
         cy.get(".list-description__item")

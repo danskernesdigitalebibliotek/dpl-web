@@ -1,9 +1,8 @@
-import { getFirstManifestation } from "../../apps/material/helper";
 import { AccessTypeCodeEnum } from "../../core/dbc-gateway/generated/graphql";
 import { Manifestation } from "../../core/utils/types/entities";
 import { ManifestationMaterialType } from "../../core/utils/types/material-type";
-import { getReaderPlayerType } from "../reader-player/helper";
 import { hasCorrectMaterialType, isArticle } from "./material-buttons/helper";
+import { DigitalLoanableManifestation } from "../../core/utils/helpers/digital-loanable-manifestation";
 
 export const isPhysical = (manifestations: Manifestation[]) => {
   return manifestations.some((manifestation) => {
@@ -31,18 +30,11 @@ export const isPeriodical = (manifestations: Manifestation[]) => {
   );
 };
 
-export const isMaterialButtonsOnlineInternal = (
-  manifestation: Manifestation
-) => {
-  return Boolean(getReaderPlayerType(manifestation));
-};
-
 export const shouldShowMaterialAvailabilityText = (
-  manifestations: Manifestation[]
+  manifestations: Manifestation[],
+  loanableManifestation: DigitalLoanableManifestation | null
 ) => {
-  const firstManifestation = getFirstManifestation(manifestations);
-  const shouldShowOnlineAvailability =
-    firstManifestation && isMaterialButtonsOnlineInternal(firstManifestation);
+  const shouldShowOnlineAvailability = loanableManifestation !== null;
 
   const shouldShowPhysicalAvailability =
     isPhysical(manifestations) &&
@@ -51,5 +43,3 @@ export const shouldShowMaterialAvailabilityText = (
 
   return shouldShowOnlineAvailability || shouldShowPhysicalAvailability;
 };
-
-export default {};

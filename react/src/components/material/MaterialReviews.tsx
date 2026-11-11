@@ -88,5 +88,3 @@ export const MaterialReviews: React.FC<MaterialReviewsProps> = ({
     </ul>
   );
 };
-
-export default MaterialReviews;

@@ -96,9 +96,6 @@ const meta: Meta<typeof PatronPage> = {
     patronPageBasicFriendlyCardNumberLabelText: {
       control: { type: "text" }
     },
-    patronPageBasicDetailsAddressLabelText: {
-      control: { type: "text" }
-    },
     patronContactInfoHeaderText: {
       control: { type: "text" }
     },
@@ -240,7 +237,6 @@ const meta: Meta<typeof PatronPage> = {
     patronPageBasicDetailsHeaderText: "Basic details",
     patronPageBasicDetailsNameLabelText: "Name",
     patronPageBasicFriendlyCardNumberLabelText: "Card number",
-    patronPageBasicDetailsAddressLabelText: "Address",
     patronContactInfoHeaderText: "Contact information",
     patronContactPhoneLabelText: "Phone number",
     patronContactPhoneCheckboxText:

@@ -13,6 +13,7 @@ import {
   useDigitalLoanQuotas
 } from "@danskernesdigitalebibliotek/dpl-service-layer";
 import { ComplexSearchFacetsEnum } from "../../core/dbc-gateway/generated/graphql";
+import { publizonIdentifier } from "./__vitest_data__/publizon-identifier";
 
 // Only the hooks under test are stubbed; the rest of the package stays
 // real, so pure helpers keep behaving as they do in production.
@@ -100,11 +101,13 @@ const publizonSays = (quotas: {
   } as unknown as ReturnType<typeof useGetV1UserLoans>);
 };
 
-const renderText = (materialType = "e-bog") =>
+const renderText = (opensIn: "reader" | "player" = "reader") =>
   render(
     <MaterialAvailabilityTextOnline
-      identifier={ISBN}
-      materialType={materialType as never}
+      loanableManifestation={{
+        identifier: publizonIdentifier(ISBN),
+        opensIn
+      }}
     />
   );
 
@@ -147,19 +150,16 @@ describe("MaterialAvailabilityTextOnline", () => {
     });
 
     it.each([
-      { materialType: "e-bog", searchedMaterialType: "e-bøger" },
-      { materialType: "lydbog (online)", searchedMaterialType: "lydbøger" }
+      { opensIn: "reader" as const, searchedMaterialType: "e-bøger" },
+      { opensIn: "player" as const, searchedMaterialType: "lydbøger" }
     ])(
-      "Links a spent $materialType quota to $searchedMaterialType outside the quota",
-      ({ materialType, searchedMaterialType }) => {
+      "Links a spent $opensIn quota to $searchedMaterialType outside the quota",
+      ({ opensIn, searchedMaterialType }) => {
         publizonSays({ limit: 7, borrowed: 7 });
 
-        const link = within(renderText(materialType).container).getByRole(
-          "link",
-          {
-            name: "See titles outside the quota"
-          }
-        );
+        const link = within(renderText(opensIn).container).getByRole("link", {
+          name: "See titles outside the quota"
+        });
         const url = new URL(link.getAttribute("href") ?? "");
 
         expect(url.pathname).toBe("/advancedsearch");

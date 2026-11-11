@@ -35,6 +35,16 @@ export class LoginPage extends PageObject {
     });
   }
 
+  /**
+   * Logs in as the editor the tests run as.
+   */
+  static ensureEditorLogin() {
+    LoginPage.ensureLogin(
+      Cypress.env('DRUPAL_USERNAME'),
+      Cypress.env('DRUPAL_PASSWORD'),
+    );
+  }
+
   // Strictly isn't related to the login page, but those interested in
   // calling this would already be using LoginPage.
   static anonymousUser() {

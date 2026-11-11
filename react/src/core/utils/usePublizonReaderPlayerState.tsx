@@ -13,11 +13,9 @@ import {
   mapPublizonReservationToReservationType
 } from "./helpers/list-mapper";
 import { isAnonymous } from "./helpers/user";
-import {
-  ReaderPlayerState,
-  unknownReaderPlayerState
-} from "./types/reader-player-state";
+import { ReaderPlayerState } from "./types/reader-player-state";
 import usePublizonReservationsClosed from "./usePublizonReservationsClosed";
+import { PublizonIdentifier } from "./types/ids";
 
 /**
  * What Publizon says about a digital material - the Publizon half of the
@@ -31,7 +29,7 @@ const usePublizonReaderPlayerState = ({
   identifier,
   canAcquire
 }: {
-  identifier: string | null;
+  identifier: PublizonIdentifier;
   /** Whether Publizon may decide that a new loan or reservation is possible. */
   canAcquire: boolean;
 }): ReaderPlayerState => {
@@ -39,10 +37,9 @@ const usePublizonReaderPlayerState = ({
   // TEMPORARY: the queue stands still while Biblio migrates it, so Publizon
   // may still decide on a loan but no longer on a reservation.
   const reservationQueueFrozen = usePublizonReservationsClosed();
-  const hasIdentifier = Boolean(identifier);
   // An anonymous user has no holdings to look up, and the endpoints need a
   // user token anyway.
-  const canReadHoldings = hasIdentifier && !isUserAnonymous;
+  const canReadHoldings = !isUserAnonymous;
 
   const { data: loansPublizon, isLoading: isLoadingLoans } = useGetV1UserLoans(
     {},
@@ -52,15 +49,10 @@ const usePublizonReaderPlayerState = ({
   const { data: reservationsPublizon, isLoading: isLoadingReservations } =
     useGetV1UserReservations({ query: { enabled: canReadHoldings } });
 
-  // Safe to use identifier! because the query is disabled without one.
   const { data: dataLoanStatus, isLoading: isLoadingLoanStatus } =
-    useGetV1LoanstatusIdentifier(identifier!, {
-      query: { enabled: hasIdentifier && canAcquire }
+    useGetV1LoanstatusIdentifier(identifier, {
+      query: { enabled: canAcquire }
     });
-
-  if (!hasIdentifier) {
-    return unknownReaderPlayerState;
-  }
 
   const loans = loansPublizon?.loans
     ? mapPublizonLoanToLoanType(loansPublizon.loans)
@@ -72,14 +64,11 @@ const usePublizonReaderPlayerState = ({
   // The order id IS the loan as far as the reader is concerned: it is what
   // opens it, and every caller checks it alongside isAlreadyLoaned.
   const orderId =
-    (loans && identifier
-      ? getOrderIdByIdentifier({ loans, identifier })
-      : null) ?? null;
+    (loans ? getOrderIdByIdentifier({ loans, identifier }) : null) ?? null;
 
   const reservation =
-    (identifier && reservations
-      ? findReservedReservation(identifier, reservations)
-      : null) ?? null;
+    (reservations ? findReservedReservation(identifier, reservations) : null) ??
+    null;
 
   const { redeemable, loanable, reservable } = getLoanStatus(dataLoanStatus);
 

@@ -3,6 +3,7 @@ import React from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import Images from "@/components/paragraphs/Images/Images"
+import { placeholderImageUrl } from "@/cypress/factories/placeholder-image"
 import { MediaImage } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 const withContentContainer = (Story: React.ComponentType): React.ReactElement => (
@@ -15,7 +16,7 @@ const buildImage = (width: number, height: number, byline: string) =>
   ({
     byline,
     mediaImage: {
-      url: `https://placehold.co/${width}x${height}.jpg`,
+      url: placeholderImageUrl(width, height),
       alt: "Placeholder",
       width,
       height,

@@ -1,8 +1,4 @@
 import * as React from "react";
-import {
-  getLoanableManifestation,
-  getManifestationDigitalIdentifier
-} from "../../../apps/material/helper";
 import { AccessTypeCodeEnum } from "../../../core/dbc-gateway/generated/graphql";
 import {
   getAllPids,
@@ -15,12 +11,18 @@ import MaterialAvailabilityTextPhysical from "./physical/MaterialAvailabilityTex
 import useReservableFromAnotherLibrary from "../../../core/utils/useReservableFromAnotherLibrary";
 import MaterialAvailabilityTextParagraph from "./generic/MaterialAvailabilityTextParagraph";
 import { useText } from "../../../core/utils/text";
+import { DigitalLoanableManifestation } from "../../../core/utils/helpers/digital-loanable-manifestation";
 
 interface Props {
   manifestations: Manifestation[];
+  /** The manifestation the header buttons lend, if they lend one. */
+  loanableManifestation: DigitalLoanableManifestation | null;
 }
 
-const MaterialAvailabilityText: React.FC<Props> = ({ manifestations }) => {
+const MaterialAvailabilityText: React.FC<Props> = ({
+  manifestations,
+  loanableManifestation
+}) => {
   const t = useText();
   const materialType = getMaterialType(manifestations);
   const { materialIsReservableFromAnotherLibrary } =
@@ -42,20 +44,14 @@ const MaterialAvailabilityText: React.FC<Props> = ({ manifestations }) => {
     hasCorrectAccessType(AccessTypeCodeEnum.Online, manifestations) &&
     materialType
   ) {
-    // The same identifier the loan buttons act on, so text and buttons ask
-    // about the same edition and share one request. A pick without an
-    // identifier renders no text: the buttons cannot lend it either.
-    const loanableManifestation = getLoanableManifestation(manifestations);
-    const identifier = loanableManifestation
-      ? getManifestationDigitalIdentifier(loanableManifestation)
-      : null;
-    if (!identifier) {
+    // Text and buttons ask about the same manifestation and share one request.
+    // Nothing to lend means no text: the buttons cannot lend it either.
+    if (!loanableManifestation) {
       return null;
     }
     return (
       <MaterialAvailabilityTextOnline
-        identifier={identifier}
-        materialType={materialType}
+        loanableManifestation={loanableManifestation}
       />
     );
   }

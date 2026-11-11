@@ -2,20 +2,20 @@
 
 Starting context for AI agents working in this repo. Reading this once should
 leave you with roughly what a teammate already has in their head when they
-open a new task — what *DPL* is, what each project actually does, and how the
+open a new task — what _DPL_ is, what each project actually does, and how the
 pieces talk to each other.
 
 ## What this is
 
 `dpl-web` is the codebase behind the shared web platform of the **Danish
-Public Libraries** (*Danish Public Libraries, DPL*). A single codebase
+Public Libraries** (_Danish Public Libraries, DPL_). A single codebase
 here is deployed to **100+ individual library websites** — see
 <https://fkb.dk/> for one running instance. The libraries differ in size and
 ambition but share this platform, so a change to default behaviour ships to
 all of them.
 
 > **Disambiguation:** the site at <https://www.detdigitalefolkebibliotek.dk/>
-> is a *separate, unrelated* project. Don't confuse it with this platform.
+> is a _separate, unrelated_ project. Don't confuse it with this platform.
 
 The repo is a mono-repo of four projects that together form the platform:
 
@@ -47,3 +47,12 @@ The repo is a mono-repo of four projects that together form the platform:
   `pnpm`/`composer`/`drush`/etc. Every task has a `desc:` (or `summary:`)
   field — `task --list` (or reading the file) is the fastest way to find
   the right one.
+
+## Conventions
+
+- **Never run tooling with `pnpm dlx`** — in CI, Taskfiles, or
+  package scripts. `pnpm dlx` downloads and runs the _latest_ version from the
+  registry at run time, bypassing the lockfile: it defeats version pinning and
+  is a supply-chain risk (an unreviewed release executes with repo/secret
+  access). Instead add the tool as a pinned `devDependency` and run it via
+  `pnpm run <script>`, `pnpm exec <tool>`, or `node_modules/.bin/<tool>`.

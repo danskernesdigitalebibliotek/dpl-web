@@ -3263,17 +3263,9 @@ export type GetSmallWorkQuery = {
       title: string;
       seriesId?: string | null;
       isPopular?: boolean | null;
+      numberInSeries?: string | null;
       readThisFirst?: boolean | null;
       readThisWhenever?: boolean | null;
-      members: Array<{
-        __typename?: "SerieWork";
-        numberInSeries?: string | null;
-        work: {
-          __typename?: "Work";
-          workId: string;
-          titles: { __typename?: "WorkTitles"; main: Array<string> };
-        };
-      }>;
     }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
@@ -3835,7 +3827,6 @@ export type ManifestationBasicDetailsFragment = {
   __typename?: "Manifestation";
   pid: string;
   abstract: Array<string>;
-  ownerWork: { __typename?: "Work"; workId: string };
   titles: { __typename?: "ManifestationTitles"; full: Array<string> };
   materialTypes: Array<{
     __typename?: "MaterialType";
@@ -3858,11 +3849,7 @@ export type ManifestationBasicDetailsFragment = {
   series: Array<{
     __typename?: "Series";
     title: string;
-    members: Array<{
-      __typename?: "SerieWork";
-      numberInSeries?: string | null;
-      work: { __typename?: "Work"; workId: string };
-    }>;
+    numberInSeries?: string | null;
   }>;
   languages?: {
     __typename?: "Languages";
@@ -3884,7 +3871,6 @@ export type GetManifestationViaMaterialByFaustQuery = {
     __typename?: "Manifestation";
     pid: string;
     abstract: Array<string>;
-    ownerWork: { __typename?: "Work"; workId: string };
     titles: { __typename?: "ManifestationTitles"; full: Array<string> };
     materialTypes: Array<{
       __typename?: "MaterialType";
@@ -3907,11 +3893,7 @@ export type GetManifestationViaMaterialByFaustQuery = {
     series: Array<{
       __typename?: "Series";
       title: string;
-      members: Array<{
-        __typename?: "SerieWork";
-        numberInSeries?: string | null;
-        work: { __typename?: "Work"; workId: string };
-      }>;
+      numberInSeries?: string | null;
     }>;
     languages?: {
       __typename?: "Languages";
@@ -3940,7 +3922,6 @@ export type GetManifestationViaBestRepresentationByFaustQuery = {
           __typename?: "Manifestation";
           pid: string;
           abstract: Array<string>;
-          ownerWork: { __typename?: "Work"; workId: string };
           titles: { __typename?: "ManifestationTitles"; full: Array<string> };
           materialTypes: Array<{
             __typename?: "MaterialType";
@@ -3963,11 +3944,7 @@ export type GetManifestationViaBestRepresentationByFaustQuery = {
           series: Array<{
             __typename?: "Series";
             title: string;
-            members: Array<{
-              __typename?: "SerieWork";
-              numberInSeries?: string | null;
-              work: { __typename?: "Work"; workId: string };
-            }>;
+            numberInSeries?: string | null;
           }>;
           languages?: {
             __typename?: "Languages";
@@ -3994,6 +3971,24 @@ export type GetMaterialQuery = {
     workId: string;
     abstract?: Array<string> | null;
     genreAndForm: Array<string>;
+    series: Array<{
+      __typename?: "Series";
+      title: string;
+      seriesId?: string | null;
+      isPopular?: boolean | null;
+      numberInSeries?: string | null;
+      readThisFirst?: boolean | null;
+      readThisWhenever?: boolean | null;
+      members: Array<{
+        __typename?: "SerieWork";
+        numberInSeries?: string | null;
+        work: {
+          __typename?: "Work";
+          workId: string;
+          titles: { __typename?: "WorkTitles"; main: Array<string> };
+        };
+      }>;
+    }>;
     materialTypes: Array<{
       __typename?: "MaterialType";
       materialTypeGeneral: {
@@ -4065,23 +4060,6 @@ export type GetMaterialQuery = {
       | { __typename: "Corporation"; display: string }
       | { __typename: "Person"; display: string }
     >;
-    series: Array<{
-      __typename?: "Series";
-      title: string;
-      seriesId?: string | null;
-      isPopular?: boolean | null;
-      readThisFirst?: boolean | null;
-      readThisWhenever?: boolean | null;
-      members: Array<{
-        __typename?: "SerieWork";
-        numberInSeries?: string | null;
-        work: {
-          __typename?: "Work";
-          workId: string;
-          titles: { __typename?: "WorkTitles"; main: Array<string> };
-        };
-      }>;
-    }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
       __typename?: "Manifestations";
@@ -4649,6 +4627,24 @@ export type GetMaterialGloballyQuery = {
     workId: string;
     abstract?: Array<string> | null;
     genreAndForm: Array<string>;
+    series: Array<{
+      __typename?: "Series";
+      title: string;
+      seriesId?: string | null;
+      isPopular?: boolean | null;
+      numberInSeries?: string | null;
+      readThisFirst?: boolean | null;
+      readThisWhenever?: boolean | null;
+      members: Array<{
+        __typename?: "SerieWork";
+        numberInSeries?: string | null;
+        work: {
+          __typename?: "Work";
+          workId: string;
+          titles: { __typename?: "WorkTitles"; main: Array<string> };
+        };
+      }>;
+    }>;
     materialTypes: Array<{
       __typename?: "MaterialType";
       materialTypeGeneral: {
@@ -4720,23 +4716,6 @@ export type GetMaterialGloballyQuery = {
       | { __typename: "Corporation"; display: string }
       | { __typename: "Person"; display: string }
     >;
-    series: Array<{
-      __typename?: "Series";
-      title: string;
-      seriesId?: string | null;
-      isPopular?: boolean | null;
-      readThisFirst?: boolean | null;
-      readThisWhenever?: boolean | null;
-      members: Array<{
-        __typename?: "SerieWork";
-        numberInSeries?: string | null;
-        work: {
-          __typename?: "Work";
-          workId: string;
-          titles: { __typename?: "WorkTitles"; main: Array<string> };
-        };
-      }>;
-    }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
       __typename?: "Manifestations";
@@ -5419,17 +5398,9 @@ export type RecommendFromFaustQuery = {
           title: string;
           seriesId?: string | null;
           isPopular?: boolean | null;
+          numberInSeries?: string | null;
           readThisFirst?: boolean | null;
           readThisWhenever?: boolean | null;
-          members: Array<{
-            __typename?: "SerieWork";
-            numberInSeries?: string | null;
-            work: {
-              __typename?: "Work";
-              workId: string;
-              titles: { __typename?: "WorkTitles"; main: Array<string> };
-            };
-          }>;
         }>;
         workYear?: {
           __typename?: "PublicationYear";
@@ -6058,17 +6029,9 @@ export type SearchWithPaginationQuery = {
         title: string;
         seriesId?: string | null;
         isPopular?: boolean | null;
+        numberInSeries?: string | null;
         readThisFirst?: boolean | null;
         readThisWhenever?: boolean | null;
-        members: Array<{
-          __typename?: "SerieWork";
-          numberInSeries?: string | null;
-          work: {
-            __typename?: "Work";
-            workId: string;
-            titles: { __typename?: "WorkTitles"; main: Array<string> };
-          };
-        }>;
       }>;
       workYear?: {
         __typename?: "PublicationYear";
@@ -6712,17 +6675,9 @@ export type ComplexSearchWithPaginationQuery = {
         title: string;
         seriesId?: string | null;
         isPopular?: boolean | null;
+        numberInSeries?: string | null;
         readThisFirst?: boolean | null;
         readThisWhenever?: boolean | null;
-        members: Array<{
-          __typename?: "SerieWork";
-          numberInSeries?: string | null;
-          work: {
-            __typename?: "Work";
-            workId: string;
-            titles: { __typename?: "WorkTitles"; main: Array<string> };
-          };
-        }>;
       }>;
       workYear?: {
         __typename?: "PublicationYear";
@@ -7921,17 +7876,9 @@ export type GetSeriesQuery = {
           title: string;
           seriesId?: string | null;
           isPopular?: boolean | null;
+          numberInSeries?: string | null;
           readThisFirst?: boolean | null;
           readThisWhenever?: boolean | null;
-          members: Array<{
-            __typename?: "SerieWork";
-            numberInSeries?: string | null;
-            work: {
-              __typename?: "Work";
-              workId: string;
-              titles: { __typename?: "WorkTitles"; main: Array<string> };
-            };
-          }>;
         }>;
         workYear?: {
           __typename?: "PublicationYear";
@@ -8041,32 +7988,6 @@ export type GetBestRepresentationPidByIsbnQuery = {
         __typename?: "Manifestations";
         bestRepresentation: { __typename?: "Manifestation"; pid: string };
       };
-    }>;
-  };
-};
-
-export type IntelligentFacetsQueryVariables = Exact<{
-  q: SearchQueryInput;
-  facetsLimit: Scalars["Int"]["input"];
-  valuesLimit: Scalars["Int"]["input"];
-  filters: SearchFiltersInput;
-}>;
-
-export type IntelligentFacetsQuery = {
-  __typename?: "Query";
-  search: {
-    __typename?: "SearchResponse";
-    intelligentFacets: Array<{
-      __typename?: "FacetResult";
-      name: string;
-      type: FacetFieldEnum;
-      values: Array<{
-        __typename?: "FacetValue";
-        key: string;
-        term: string;
-        score?: number | null;
-        traceId: string;
-      }>;
     }>;
   };
 };
@@ -8909,17 +8830,9 @@ export type SeriesSimpleFragment = {
   title: string;
   seriesId?: string | null;
   isPopular?: boolean | null;
+  numberInSeries?: string | null;
   readThisFirst?: boolean | null;
   readThisWhenever?: boolean | null;
-  members: Array<{
-    __typename?: "SerieWork";
-    numberInSeries?: string | null;
-    work: {
-      __typename?: "Work";
-      workId: string;
-      titles: { __typename?: "WorkTitles"; main: Array<string> };
-    };
-  }>;
 };
 
 export type WorkAccessFragment = {
@@ -8977,17 +8890,9 @@ export type WorkSmallFragment = {
     title: string;
     seriesId?: string | null;
     isPopular?: boolean | null;
+    numberInSeries?: string | null;
     readThisFirst?: boolean | null;
     readThisWhenever?: boolean | null;
-    members: Array<{
-      __typename?: "SerieWork";
-      numberInSeries?: string | null;
-      work: {
-        __typename?: "Work";
-        workId: string;
-        titles: { __typename?: "WorkTitles"; main: Array<string> };
-      };
-    }>;
   }>;
   workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
   manifestations: {
@@ -9549,6 +9454,24 @@ export type WorkMediumFragment = {
   workId: string;
   abstract?: Array<string> | null;
   genreAndForm: Array<string>;
+  series: Array<{
+    __typename?: "Series";
+    title: string;
+    seriesId?: string | null;
+    isPopular?: boolean | null;
+    numberInSeries?: string | null;
+    readThisFirst?: boolean | null;
+    readThisWhenever?: boolean | null;
+    members: Array<{
+      __typename?: "SerieWork";
+      numberInSeries?: string | null;
+      work: {
+        __typename?: "Work";
+        workId: string;
+        titles: { __typename?: "WorkTitles"; main: Array<string> };
+      };
+    }>;
+  }>;
   materialTypes: Array<{
     __typename?: "MaterialType";
     materialTypeGeneral: {
@@ -9620,23 +9543,6 @@ export type WorkMediumFragment = {
     | { __typename: "Corporation"; display: string }
     | { __typename: "Person"; display: string }
   >;
-  series: Array<{
-    __typename?: "Series";
-    title: string;
-    seriesId?: string | null;
-    isPopular?: boolean | null;
-    readThisFirst?: boolean | null;
-    readThisWhenever?: boolean | null;
-    members: Array<{
-      __typename?: "SerieWork";
-      numberInSeries?: string | null;
-      work: {
-        __typename?: "Work";
-        workId: string;
-        titles: { __typename?: "WorkTitles"; main: Array<string> };
-      };
-    }>;
-  }>;
   workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
   manifestations: {
     __typename?: "Manifestations";
@@ -10242,9 +10148,6 @@ export const ManifestationBasicDetailsFragmentDoc = new TypedDocumentString(
     fragment ManifestationBasicDetails on Manifestation {
   ...WithLanguages
   pid
-  ownerWork {
-    workId
-  }
   titles {
     full
   }
@@ -10264,12 +10167,7 @@ export const ManifestationBasicDetailsFragmentDoc = new TypedDocumentString(
   }
   series {
     title
-    members {
-      numberInSeries
-      work {
-        workId
-      }
-    }
+    numberInSeries
   }
 }
     fragment WithLanguages on Manifestation {
@@ -10425,15 +10323,7 @@ export const SeriesSimpleFragmentDoc = new TypedDocumentString(
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -10961,15 +10851,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -10987,6 +10869,17 @@ export const WorkMediumFragmentDoc = new TypedDocumentString(
   `
     fragment WorkMedium on Work {
   ...WorkSmall
+  series {
+    members(limit: 1000) {
+      numberInSeries
+      work {
+        workId
+        titles {
+          main
+        }
+      }
+    }
+  }
   materialTypes {
     materialTypeGeneral {
       code
@@ -11194,15 +11087,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -11616,15 +11501,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -11691,9 +11568,6 @@ export const GetManifestationViaMaterialByFaustDocument =
     fragment ManifestationBasicDetails on Manifestation {
   ...WithLanguages
   pid
-  ownerWork {
-    workId
-  }
   titles {
     full
   }
@@ -11713,12 +11587,7 @@ export const GetManifestationViaMaterialByFaustDocument =
   }
   series {
     title
-    members {
-      numberInSeries
-      work {
-        workId
-      }
-    }
+    numberInSeries
   }
 }
 fragment WithLanguages on Manifestation {
@@ -11772,9 +11641,6 @@ export const GetManifestationViaBestRepresentationByFaustDocument =
     fragment ManifestationBasicDetails on Manifestation {
   ...WithLanguages
   pid
-  ownerWork {
-    workId
-  }
   titles {
     full
   }
@@ -11794,12 +11660,7 @@ export const GetManifestationViaBestRepresentationByFaustDocument =
   }
   series {
     title
-    members {
-      numberInSeries
-      work {
-        workId
-      }
-    }
+    numberInSeries
   }
 }
 fragment WithLanguages on Manifestation {
@@ -12015,15 +11876,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -12051,6 +11904,17 @@ fragment WorkSmall on Work {
 }
 fragment WorkMedium on Work {
   ...WorkSmall
+  series {
+    members(limit: 1000) {
+      numberInSeries
+      work {
+        workId
+        titles {
+          main
+        }
+      }
+    }
+  }
   materialTypes {
     materialTypeGeneral {
       code
@@ -12292,15 +12156,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -12328,6 +12184,17 @@ fragment WorkSmall on Work {
 }
 fragment WorkMedium on Work {
   ...WorkSmall
+  series {
+    members(limit: 1000) {
+      numberInSeries
+      work {
+        workId
+        titles {
+          main
+        }
+      }
+    }
+  }
   materialTypes {
     materialTypeGeneral {
       code
@@ -12739,15 +12606,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -13017,15 +12876,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -13333,15 +13184,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -13640,15 +13483,7 @@ fragment SeriesSimple on Series {
   title
   seriesId
   isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
+  numberInSeries
   readThisFirst
   readThisWhenever
 }
@@ -13854,49 +13689,6 @@ export const useGetBestRepresentationPidByIsbnQuery = <
   });
 };
 
-export const IntelligentFacetsDocument = new TypedDocumentString(`
-    query intelligentFacets($q: SearchQueryInput!, $facetsLimit: Int!, $valuesLimit: Int!, $filters: SearchFiltersInput!) {
-  search(q: $q, filters: $filters) {
-    intelligentFacets(limit: $facetsLimit) {
-      name
-      type
-      values(limit: $valuesLimit) {
-        key
-        term
-        score
-        traceId
-      }
-    }
-  }
-}
-    `);
-
-export const useIntelligentFacetsQuery = <
-  TData = IntelligentFacetsQuery,
-  TError = unknown
->(
-  variables: IntelligentFacetsQueryVariables,
-  options?: Omit<
-    UseQueryOptions<IntelligentFacetsQuery, TError, TData>,
-    "queryKey"
-  > & {
-    queryKey?: UseQueryOptions<
-      IntelligentFacetsQuery,
-      TError,
-      TData
-    >["queryKey"];
-  }
-) => {
-  return useQuery<IntelligentFacetsQuery, TError, TData>({
-    queryKey: ["intelligentFacets", variables],
-    queryFn: fetcher<IntelligentFacetsQuery, IntelligentFacetsQueryVariables>(
-      IntelligentFacetsDocument,
-      variables
-    ),
-    ...options
-  });
-};
-
 export const WorkRecommendationsDocument = new TypedDocumentString(`
     query WorkRecommendations($pid: String!, $limit: Int!) {
   recommend(pid: $pid, limit: $limit) {
@@ -14004,7 +13796,6 @@ export const operationNames = {
     suggestionsFromQueryString: "suggestionsFromQueryString" as const,
     GetCoversByPids: "GetCoversByPids" as const,
     GetBestRepresentationPidByIsbn: "GetBestRepresentationPidByIsbn" as const,
-    intelligentFacets: "intelligentFacets" as const,
     WorkRecommendations: "WorkRecommendations" as const
   },
   Mutation: {

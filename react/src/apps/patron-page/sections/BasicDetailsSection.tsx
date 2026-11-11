@@ -15,16 +15,7 @@ const BasicDetailsSection: FC<BasicDetailsSectionProps> = ({
   patronCardNumber
 }) => {
   const t = useText();
-  const {
-    address: { coName, street, postalCode, city, country } = {
-      coName: "",
-      street: "",
-      postalCode: "",
-      city: "",
-      country: ""
-    },
-    name
-  } = patron || {};
+  const { name } = patron || {};
 
   return (
     <section>
@@ -44,16 +35,6 @@ const BasicDetailsSection: FC<BasicDetailsSectionProps> = ({
           {t("patronPageBasicDetailsNameLabelText")}
         </h3>
         <div className="dpl-patron-info__text">{name}</div>
-        <h3 className="dpl-patron-info__label text-header-h4">
-          {t("patronPageBasicDetailsAddressLabelText")}
-        </h3>
-        <div className="dpl-patron-info__text">
-          <div>{coName}</div>
-          <div>{street}</div>
-          <div>{postalCode}</div>
-          <div>{city}</div>
-          <div>{country}</div>
-        </div>
       </div>
     </section>
   );

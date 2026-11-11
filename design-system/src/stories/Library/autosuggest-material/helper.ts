@@ -18,5 +18,3 @@ export const autosuggestMaterialSuggestions = [
     year: "2018",
   },
 ];
-
-export default {};

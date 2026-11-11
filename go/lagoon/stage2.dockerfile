@@ -64,13 +64,13 @@ RUN node ./scripts/prepare-docker-env-vars.mjs && \
 # "Could not load the sharp module", which breaks next/image at request time.
 RUN corepack pnpm prune --prod
 
-# The service-layer workspace package ships in the image as well (go imports it
-# through a file: dependency) and carries its own eslint/orval/vite/vitest tree.
+# The service-layer workspace package ships in the image as well (go links it
+# with workspace:*) and carries its own eslint/orval/vite/vitest tree.
 #
 # No --no-optional here either, for the reason given above and for the same
 # binaries: the virtual store is shared across the workspace, so pruning
 # optional dependencies from this package reaches into go's sharp as well.
-# Under pnpm 10 it did not; under pnpm 11 it does, and `require("sharp")`
+# Under pnpm 10 it did not; since pnpm 11 it does, and `require("sharp")`
 # below is what catches it.
 WORKDIR /app/packages/service-layer
 RUN corepack pnpm prune --prod

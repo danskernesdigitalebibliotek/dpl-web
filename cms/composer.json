@@ -152,12 +152,12 @@
         "npm-asset/flatpickr": "^4.6.13",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
-        "phpdocumentor/reflection-docblock": "^5.3",
+        "phpdocumentor/reflection-docblock": "^6.0",
         "promphp/prometheus_client_php": "^2.15",
         "spatie/color": "^2.0",
         "spawnia/sailor": "^1.1.0",
         "symfony/property-access": "^7.3",
-        "symfony/property-info": "^7.3",
+        "symfony/property-info": "^8.1",
         "thecodingmachine/safe": "^2.5.0",
         "webmozart/assert": "^2.1",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
@@ -166,7 +166,7 @@
         "drupal/core-dev": "~11.4.0",
         "jangregor/phpstan-prophecy": "^2.3",
         "mglaman/phpstan-drupal": "^2.1",
-        "palantirnet/drupal-rector": "^0.21.0",
+        "palantirnet/drupal-rector": "^1.1.3",
         "php-mock/php-mock": "^2.3",
         "phpspec/prophecy-phpunit": "^2",
         "phpstan/extension-installer": "^1.3",
@@ -342,9 +342,6 @@
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
                 "3343816: Specification includes disabled resources": "patches/vendor/openapi_rest-6618157334feca93fad1041583375eed660b9085.patch"
-            },
-            "drupal/openid_connect": {
-                "3393143: Add try/catch block for catching Integrity constraints violations on duplicate entries": "patches/vendor/openid_connect-312d6282fbc032e2c84f87d6ffdf30676b7534ca.patch"
             },
             "drupal/paragraphs_ee": {
                 "3106254: Sorting paragraph list alphabetically in modal": "patches/vendor/paragraphs_ee_sort.patch"

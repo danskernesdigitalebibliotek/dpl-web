@@ -1,5 +1,5 @@
 import { Options } from "wiremock-rest-client/dist/model/options.model";
-import wiremock, { matchGraphqlQuery } from "../../lib/general";
+import { wiremock, matchGraphqlQuery } from "../../lib/general";
 
 export default async (baseUri?: string, options?: Options) => {
   // Search for "Harry Potter".

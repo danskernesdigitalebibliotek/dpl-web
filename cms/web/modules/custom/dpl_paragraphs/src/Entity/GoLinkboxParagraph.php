@@ -51,6 +51,20 @@ class GoLinkboxParagraph extends Paragraph {
   }
 
   /**
+   * Get the link title.
+   */
+  public function getLinkTitle(): ?String {
+    if (!$this->hasField('field_go_link_paragraph') || $this->get('field_go_link_paragraph')->isEmpty()) {
+      return NULL;
+    }
+
+    $linkParagraphs = $this->get('field_go_link_paragraph')->referencedEntities();
+    $linkParagraph = $linkParagraphs[0] ?? NULL;
+
+    return $linkParagraph instanceof GoLinkParagraph ? $linkParagraph->getTitle() : NULL;
+  }
+
+  /**
    * Get the referenced image file.
    */
   public function getImageFile(): ?File {

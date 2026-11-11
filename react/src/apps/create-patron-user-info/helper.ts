@@ -28,8 +28,6 @@ export const getRedirectUrl = ({
     "current-path": `${loginUrl.pathname}?current-path=${redirectOnUserCreatedUrl.pathname}`
   });
 
-export default {};
-
 // ************** VITEST ***************
 if (import.meta.vitest) {
   const { describe, expect, it } = import.meta.vitest;

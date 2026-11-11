@@ -1,9 +1,7 @@
 import * as React from "react";
 import { FC } from "react";
-import InvalidUrlError from "../../../../core/errors/InvalidUrlError";
 import { statistics } from "../../../../core/statistics/statistics";
 import { useEventStatistics } from "../../../../core/statistics/useStatistics";
-import { isUrlValid } from "../../../../core/utils/helpers/url";
 import { ButtonSize } from "../../../../core/utils/types/button";
 import { Manifestation } from "../../../../core/utils/types/entities";
 import { WorkId } from "../../../../core/utils/types/ids";
@@ -54,7 +52,7 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
         <MaterialButtonsOnlineInternal
           openModal
           size={size}
-          manifestations={manifestations}
+          loanableManifestation={type.loanableManifestation}
           dataCy={`${dataCy}-internal`}
           workId={workId}
           isEditionPicker={isEditionPicker}
@@ -63,13 +61,6 @@ const MaterialButtonsOnline: FC<MaterialButtonsOnlineProps> = ({
 
     case "external": {
       const { origin, url: externalUrl } = type.access;
-
-      //  We have experienced that externalUrl is not always valid.
-      if (!isUrlValid(externalUrl)) {
-        throw new InvalidUrlError(
-          `The external url is not valid. ( ${externalUrl} )`
-        );
-      }
 
       return (
         <MaterialButtonOnlineExternal

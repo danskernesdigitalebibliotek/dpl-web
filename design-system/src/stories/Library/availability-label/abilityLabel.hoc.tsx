@@ -60,5 +60,3 @@ export const withAvailabilityProps = <T extends PageFoldType>(
 
   return WrappedComponent;
 };
-
-export default withAvailabilityProps;

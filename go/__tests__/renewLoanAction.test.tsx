@@ -21,6 +21,15 @@ const loan = (dueInDays: number, overrides: Record<string, unknown> = {}) => ({
 
 const renewButton = () => screen.getByRole("button", { name: /forlæng lån/i }) as HTMLButtonElement
 
+// Blocked means marked unavailable while staying in the tab order, so a
+// keyboard reader still reaches the button and the reason it carries. Both
+// halves are asserted: `disabled` alongside `aria-disabled` would take the
+// button out of the tab order again.
+const isRenewBlocked = () => {
+  const button = renewButton()
+  return button.getAttribute("aria-disabled") === "true" && !button.disabled
+}
+
 describe("RenewLoanAction", () => {
   it("renews through an active button before the window opens when FBS allows it", () => {
     // FBS decides; the configured window only estimates the countdown.
@@ -28,7 +37,7 @@ describe("RenewLoanAction", () => {
       <RenewLoanAction loan={loan(14.5)} title="Vildheks" isRenewing={false} onRenew={() => {}} />
     )
 
-    expect(renewButton().disabled).toBe(false)
+    expect(isRenewBlocked()).toBe(false)
   })
 
   it("uses the singular day form one day before the window opens", () => {
@@ -50,7 +59,7 @@ describe("RenewLoanAction", () => {
       <RenewLoanAction loan={loan(5.5)} title="Vildheks" isRenewing={false} onRenew={onRenew} />
     )
 
-    expect(renewButton().disabled).toBe(false)
+    expect(isRenewBlocked()).toBe(false)
     fireEvent.click(renewButton())
     expect(onRenew).toHaveBeenCalledTimes(1)
   })
@@ -60,7 +69,7 @@ describe("RenewLoanAction", () => {
       <RenewLoanAction loan={loan(-2.5)} title="Vildheks" isRenewing={false} onRenew={() => {}} />
     )
 
-    expect(renewButton().disabled).toBe(false)
+    expect(isRenewBlocked()).toBe(false)
   })
 
   it("disables the button and shows the denial reason when FBS blocks renewal", () => {
@@ -73,7 +82,7 @@ describe("RenewLoanAction", () => {
       />
     )
 
-    expect(renewButton().disabled).toBe(true)
+    expect(isRenewBlocked()).toBe(true)
     expect(screen.getByText(getRenewalFailureMessage("deniedReserved"))).toBeTruthy()
   })
 
@@ -87,7 +96,7 @@ describe("RenewLoanAction", () => {
       />
     )
 
-    expect(renewButton().disabled).toBe(true)
+    expect(isRenewBlocked()).toBe(true)
     expect(screen.getByText(getRenewalFailureMessage("deniedMaxRenewalsReached"))).toBeTruthy()
   })
 
@@ -102,7 +111,7 @@ describe("RenewLoanAction", () => {
       />
     )
 
-    expect(renewButton().disabled).toBe(true)
+    expect(isRenewBlocked()).toBe(true)
     expect(screen.getByText(getRenewalFailureMessage("deniedReserved"))).toBeTruthy()
   })
 
@@ -117,7 +126,7 @@ describe("RenewLoanAction", () => {
       />
     )
 
-    expect(renewButton().disabled).toBe(true)
+    expect(isRenewBlocked()).toBe(true)
     expect(screen.getByText("Lånet kan først forlænges om 7 dage")).toBeTruthy()
   })
 
@@ -131,7 +140,7 @@ describe("RenewLoanAction", () => {
       />
     )
 
-    expect(renewButton().disabled).toBe(true)
+    expect(isRenewBlocked()).toBe(true)
     expect(screen.getByText(getRenewalFailureMessage("deniedOtherReason"))).toBeTruthy()
   })
 

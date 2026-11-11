@@ -113,8 +113,6 @@ export const getStatusText = (
   return "";
 };
 
-export default {};
-
 if (import.meta.vitest) {
   const { describe, expect, it } = import.meta.vitest;
 

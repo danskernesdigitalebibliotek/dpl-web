@@ -887,3 +887,40 @@ function dpl_update_deploy_ensure_biblo_subscription(): string {
 
   return 'Biblo subscription already exists';
 }
+
+/**
+ * Grant service message permissions to administrators.
+ */
+function dpl_update_deploy_administrator_service_message_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['administrator'],
+    [
+      'administer global service messages',
+      'create service_message content',
+      'delete any service_message content',
+      'delete own service_message content',
+      'delete service_message revisions',
+      'edit any service_message content',
+      'edit own service_message content',
+      'revert service_message revisions',
+      'view any unpublished service_message content',
+      'view service_message revisions',
+    ],
+    TRUE,
+  );
+
+  return 'Granted service message permissions to administrators.';
+}
+
+/**
+ * Grant administrators access to the TwentyThree settings.
+ */
+function dpl_update_deploy_twentythree_settings_permissions(): string {
+  _dpl_update_alter_permissions(
+    ['administrator', 'local_administrator'],
+    ['administer media_twentythree configuration'],
+    TRUE,
+  );
+
+  return 'Granted TwentyThree settings permissions to administrators.';
+}

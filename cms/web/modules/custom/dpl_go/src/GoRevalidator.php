@@ -21,6 +21,21 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  */
 class GoRevalidator {
 
+  /**
+   * Go cache tag covering every cached CMS content page.
+   *
+   * Contract with Go, which tags each cached page with this (see the "caching"
+   * resolver in go/lib/config/resolvers/caching.ts).
+   */
+  public const CONTENT_CACHE_TAG = 'dpl-cms-content';
+
+  /**
+   * Go cache tag covering the cached goConfiguration.
+   *
+   * Contract with Go, which tags its cached configuration with this.
+   */
+  public const CONFIG_CACHE_TAG = 'dpl-cms-config';
+
   public function __construct(
     #[Autowire(service: 'http_client')]
     protected ClientInterface $httpClient,
@@ -73,6 +88,24 @@ class GoRevalidator {
   }
 
   /**
+   * Drop Go's entire Next cache of CMS-driven content.
+   *
+   * Clears the two umbrella cache tags every CMS-driven entry in Go carries:
+   * "dpl-cms-content" (every cached page) and "dpl-cms-config" (the
+   * goConfiguration). Go's "use cache" entries can only be dropped by tag - a
+   * path revalidation does not touch them - so these two tags are what a full
+   * manual purge needs. Prefer the targeted revalidateTags()/revalidatePaths()
+   * when you know what changed.
+   *
+   * @return bool
+   *   TRUE if a revalidation request was sent; FALSE when Go is not
+   *   reachable/configured.
+   */
+  public function revalidateEverything(): bool {
+    return $this->revalidateTags(self::CONTENT_CACHE_TAG, self::CONFIG_CACHE_TAG);
+  }
+
+  /**
    * Send a revalidation request to Go's cache route.
    *
    * @param array<string, string> $query
@@ -97,7 +130,15 @@ class GoRevalidator {
         return FALSE;
       }
 
-      $this->httpClient->request('GET', $url->toString(), ['timeout' => 5]);
+      $options = ['timeout' => 5];
+      // Local Go (`pnpm dev:https`) serves a self-signed certificate on
+      // host.docker.internal, so skip verification there. Never relaxed
+      // outside local.
+      if (getenv('LAGOON_ENVIRONMENT_TYPE') === 'local') {
+        $options['verify'] = FALSE;
+      }
+
+      $this->httpClient->request('GET', $url->toString(), $options);
 
       return TRUE;
     }

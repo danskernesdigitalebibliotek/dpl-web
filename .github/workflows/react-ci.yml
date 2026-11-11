@@ -14,6 +14,7 @@ on:
       - release/*
     paths:
       - "react/**"
+      - "packages/**"
       - ".github/workflows/react-ci.yml"
       - ".github/actions/**"
       - "schemas/openapi/**"
@@ -22,6 +23,7 @@ on:
   pull_request:
     paths:
       - "react/**"
+      - "packages/**"
       - ".github/workflows/react-ci.yml"
       - ".github/actions/**"
       - "schemas/openapi/**"
@@ -97,9 +99,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-          build-wedobooks: 'true'
+          build-wedobooks: "true"
       - name: Run typescript compile check
-        run: pnpm exec tsc --noEmit
+        run: pnpm run typecheck
 
   eslint:
     name: React / Lint .js and .jsx
@@ -117,7 +119,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-          build-wedobooks: 'true'
+          build-wedobooks: "true"
       - name: Download design-system build
         uses: actions/download-artifact@v6
         with:
@@ -213,7 +215,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-          build-wedobooks: 'true'
+          build-wedobooks: "true"
       - name: Download design-system build
         uses: actions/download-artifact@v6
         with:
@@ -277,7 +279,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-          build-wedobooks: 'true'
+          build-wedobooks: "true"
       - name: Download design-system build
         uses: actions/download-artifact@v6
         with:
@@ -304,7 +306,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-          build-wedobooks: 'true'
+          build-wedobooks: "true"
       - name: Download design-system build
         uses: actions/download-artifact@v6
         with:
@@ -334,7 +336,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
-          build-wedobooks: 'true'
+          build-wedobooks: "true"
       - name: Download design-system build
         uses: actions/download-artifact@v6
         with:

@@ -8,5 +8,3 @@ export const useBlockedModalHasBeenVisible = () => {
 
   return Boolean(hasBeenVisible);
 };
-
-export default {};

@@ -38,13 +38,6 @@ export const dateHasPassed = (date: string) => {
   return dayjs().isAfter(date, "day");
 };
 
-export const calculateDateDayDifference = (
-  startDate: string,
-  endDate: string
-) => {
-  return dayjs(startDate).diff(dayjs(endDate), "day");
-};
-
 export const calculateDateYearsDifference = (date: string | Date) => {
   return dayjs().diff(dayjs(date), "year");
 };
@@ -121,6 +114,11 @@ export const formatDateDependingOnDigitalMaterial = ({
 }) => {
   return isDigital ? formatDateTimeUtc(date) : formatDate(date);
 };
+
+// A Biblio loan runs to the end of a day: the UTC date of its end timestamp.
+// As a plain date it is shown, counted and checked like a physical loan's.
+export const getBiblioDueDate = (end: string) =>
+  dayjs.utc(end).format(dateFormatDayjs);
 
 // Date calculation functions: Get dates relative to today
 export const getMonthAgoDate = () =>

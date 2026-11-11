@@ -9,9 +9,6 @@ export const PUBLIZON_PRODUCT_TYPE = {
   PODCAST: 4
 } as const;
 
-export type PublizonProductType =
-  (typeof PUBLIZON_PRODUCT_TYPE)[keyof typeof PUBLIZON_PRODUCT_TYPE];
-
 // Where a Publizon material opens, from the product type its API reports;
 // null for a type it does not know.
 export const publizonOpensIn = (

@@ -5,6 +5,7 @@ namespace Drupal\dpl_app\Plugin\GraphQL\DataProducer;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_fees\DplFeesSettings;
+use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\preg_match;
@@ -62,11 +63,16 @@ class AppFeesAndPaymentInfoProducer extends DataProducerPluginBase implements Co
   /**
    * Resolves the app fees and payment info.
    *
+   * @param \Drupal\graphql\GraphQL\Execution\FieldContext $field_context
+   *   The field context for adding cache metadata.
+   *
    * @return array{feesAndReplacementCostsUrl: ?string, paymentSiteUrl: ?string,
    *   paymentSiteButtonLabel: ?string}
    *   The fees and payment info.
    */
-  public function resolve(): array {
+  public function resolve(FieldContext $field_context): array {
+    $field_context->addCacheableDependency($this->feesSettings);
+
     return [
       'feesAndReplacementCostsUrl' => $this->ensureAbsoluteUrl($this->feesSettings->getFeesAndReplacementCostsUrl()),
       'paymentSiteUrl' => $this->ensureAbsoluteUrl($this->feesSettings->getPaymentSiteUrl()),

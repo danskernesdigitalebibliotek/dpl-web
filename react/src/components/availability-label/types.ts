@@ -61,5 +61,3 @@ export const getLoanStatus = (
     reservable: status === 5 // Reservable (not loaned, not reserved, not loanable, but reservable)
   };
 };
-
-export default {};

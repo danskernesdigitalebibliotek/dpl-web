@@ -21,10 +21,12 @@ const DigitalSessionMessage: React.FC<DigitalSessionMessageProps> = ({
   const t = useText();
 
   return (
-    <section className="dpl-list-empty">
-      <p>{text}</p>
-      {children}
-      <div className="dpl-list-empty__links">
+    <section className="digital-session-message">
+      <p className="digital-session-message__text">{text}</p>
+      {children && (
+        <div className="digital-session-message__content">{children}</div>
+      )}
+      <div className="digital-session-message__footer">
         <Button
           label={t("digitalSessionInterruptedCloseButtonText")}
           buttonType="none"

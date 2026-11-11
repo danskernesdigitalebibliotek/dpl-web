@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_logging\Hook;
 
-use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\Component\Utility\DiffArray;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -18,7 +17,6 @@ use Psr\Log\LoggerAwareTrait;
  */
 class UserHooks implements LoggerAwareInterface {
 
-  use AutowirePluginTrait;
   use LoggerAwareTrait;
   use StringTranslationTrait;
 

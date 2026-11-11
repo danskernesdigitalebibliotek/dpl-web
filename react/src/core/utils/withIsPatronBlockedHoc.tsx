@@ -6,12 +6,6 @@ import { useModalButtonHandler } from "./modal";
 import BlockedTypes from "./types/BlockedTypes";
 import { getBlockedStatus, usePatronData } from "./helpers/usePatronData";
 import { useBlockedModalHasBeenVisible } from "../../components/blocked-patron/helper";
-import { AuthenticatedPatron } from "./types/entities";
-
-export interface PatronProps {
-  patron: AuthenticatedPatron | null | undefined;
-}
-
 type InputProps = {
   // This should be a redirect to the front page.
   redirectOnBlocked: string;

@@ -3,6 +3,7 @@
 import { cacheTag } from "next/cache"
 import { connection } from "next/server"
 
+import goConfig from "@/lib/config/goConfig"
 import {
   useGetDplCmsPrivateConfigurationQuery,
   useGetDplCmsPublicConfigurationQuery,
@@ -27,7 +28,7 @@ const getDplCmsPrivateConfigData = async () => {
   // used by the e2e tests when a spec changes the mocked configuration, and
   // available to Drupal-triggered revalidation. Default cache time is 15
   // minutes otherwise.
-  cacheTag("dpl-cms-config")
+  cacheTag(goConfig("caching.dpl-cms.config-tag"))
 
   try {
     const data = await queryDplCmsPrivateConfig()
@@ -44,6 +45,8 @@ const getDplCmsPrivateConfigData = async () => {
 /**
  * TODO: only use env variables for unilogin configuration, and remove the unilogin configuration from DPL CMS.
  * This will simplify the configuration and make it more secure, as we won't be storing sensitive information in DPL CMS.
+ *
+ * @knip-ignore
  **/
 export const getDplCmsPrivateConfig = async () => {
   await connection()
@@ -94,7 +97,7 @@ const publicConfigFallback = () => ({
 const getDplCmsPublicConfigData = async () => {
   "use cache"
   // See getDplCmsPrivateConfigData for the tag.
-  cacheTag("dpl-cms-config")
+  cacheTag(goConfig("caching.dpl-cms.config-tag"))
 
   const data = await queryDplCmsPublicConfig()
   return publicConfigSchema.parse(data)

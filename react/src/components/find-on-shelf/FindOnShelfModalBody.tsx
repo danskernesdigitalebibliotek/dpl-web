@@ -16,19 +16,13 @@ import {
 import { useText } from "../../core/utils/text";
 import { Manifestation, Work } from "../../core/utils/types/entities";
 import { ManifestationHoldings } from "./types";
-import { FaustId } from "../../core/utils/types/ids";
 import Disclosure from "../Disclosures/disclosure";
 import FindOnShelfManifestationList from "./FindOnShelfManifestationList";
 import FindOnShelfPeriodicalDropdowns from "./FindOnShelfPeriodicalDropdowns";
 import { PeriodicalEdition } from "../material/periodical/helper";
 import { useConfig } from "../../core/utils/config";
 import DisclosureSummary from "../Disclosures/DisclosureSummary";
-import { constructModalId } from "../../core/utils/helpers/modal-helpers";
 import { isConfigValueOne } from "../reservation/helper";
-
-export const findOnShelfModalId = (faustIds: FaustId[]) => {
-  return constructModalId("find-on-shelf-modal", faustIds.sort());
-};
 
 export interface FindOnShelfModalBodyProps {
   manifestations: Manifestation[];

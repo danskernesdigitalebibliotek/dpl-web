@@ -34,7 +34,8 @@ exports.getWebPackEnvVariables = () => {
 // a second copy there gives it a separate QueryClientContext - the provider in
 // this project then looks unset from inside the package. Mirrors the aliasing
 // GO does for the same reason. Shared by webpack.config.js and
-// .storybook/main.ts so the two builds cannot drift apart.
+// .storybook/main.ts so the two builds cannot drift apart. tsconfig.json
+// mirrors this for @tanstack/react-query types.
 const singletonModules = ["react", "react-dom", "@tanstack/react-query"];
 
 // Babel's polyfill-corejs3 plugin injects `core-js/modules/…` imports into

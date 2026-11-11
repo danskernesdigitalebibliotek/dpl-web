@@ -1,18 +1,21 @@
-import { first } from "lodash";
+import { first, partition } from "lodash";
 import {
   AccessTypeCodeEnum,
   LinkStatusEnum
 } from "../../../../core/dbc-gateway/generated/graphql";
+import { isUrlValid } from "../../../../core/utils/helpers/url";
 import { Manifestation } from "../../../../core/utils/types/entities";
 import { ManifestationMaterialType } from "../../../../core/utils/types/material-type";
-import { getLoanableManifestation } from "../../../../apps/material/helper";
-import { getReaderPlayerType } from "../../../reader-player/helper";
 import {
   hasCorrectAccess,
   hasCorrectAccessType,
   hasCorrectMaterialType,
   isArticle
 } from "../helper";
+import {
+  DigitalLoanableManifestation,
+  getDigitalLoanableManifestation
+} from "../../../../core/utils/helpers/digital-loanable-manifestation";
 
 type ManifestationAccess = Manifestation["access"][number];
 type ManifestationAccessUrl = Extract<
@@ -24,7 +27,8 @@ type ManifestationAccessUrl = Extract<
  * The online button a set of manifestations resolves to.
  *
  * - `internal`: an e-book or audiobook loaned through eReolen. Opens the
- *   in-app reader or player rather than leaving the site.
+ *   in-app reader or player rather than leaving the site, and carries the
+ *   manifestation it lends so the buttons and the availability text act on it.
  * - `external`: a link out to another service, e.g. Filmstriben or
  *   eReolen Global. Carries the access url to link to.
  * - `digital-article`: an article ordered through the Digital Article
@@ -32,7 +36,7 @@ type ManifestationAccessUrl = Extract<
  * - `retriever-article`: an article read in the Retriever archive.
  */
 export type OnlineButtonType =
-  | { type: "internal" }
+  | { type: "internal"; loanableManifestation: DigitalLoanableManifestation }
   | { type: "external"; access: ManifestationAccessUrl }
   | { type: "digital-article" }
   | { type: "retriever-article" };
@@ -46,12 +50,25 @@ const isActiveAccessUrl = (
  * Picks the access url to link to, preferring DBC Webarkiv over other origins.
  */
 const findActiveAccessUrl = (manifestations: Manifestation[]) => {
-  const access = first(manifestations)?.access ?? [];
-  const activeAccessUrls = access.filter(isActiveAccessUrl);
+  const manifestation = first(manifestations);
+  const [validAccessUrls, invalidAccessUrls] = partition(
+    (manifestation?.access ?? []).filter(isActiveAccessUrl),
+    (accessUrl: ManifestationAccessUrl) => isUrlValid(accessUrl.url)
+  );
+
+  // Invalid URLs are skipped and logged.
+  invalidAccessUrls.forEach(({ origin, url }) => {
+    // eslint-disable-next-line no-console
+    console.error("AccessUrl is invalid", {
+      pid: manifestation?.pid,
+      origin,
+      url
+    });
+  });
 
   return (
-    activeAccessUrls.find(({ origin }) => origin === "DBC Webarkiv") ??
-    first(activeAccessUrls)
+    validAccessUrls.find(({ origin }) => origin === "DBC Webarkiv") ??
+    first(validAccessUrls)
   );
 };
 
@@ -75,12 +92,9 @@ export const resolveOnlineButtonType = (
     return null;
   }
 
-  const readerPlayerType = getReaderPlayerType(
-    getLoanableManifestation(manifestations)
-  );
-
-  if (readerPlayerType === "player" || readerPlayerType === "reader") {
-    return { type: "internal" };
+  const loanableManifestation = getDigitalLoanableManifestation(manifestations);
+  if (loanableManifestation) {
+    return { type: "internal", loanableManifestation };
   }
 
   // External access, e.g. Filmstriben or eReolen Global.

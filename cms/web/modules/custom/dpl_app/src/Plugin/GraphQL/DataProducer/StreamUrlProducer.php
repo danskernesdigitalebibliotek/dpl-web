@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_app\Plugin\GraphQL\DataProducer;
 
-use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_graphql\Plugin\GraphQL\DataProducer\AutowiredDataProducerPluginBase;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
-use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Drupal\media_videotool\VideoTool;
 
 /**
@@ -28,9 +26,7 @@ use Drupal\media_videotool\VideoTool;
  *   }
  * )
  */
-class StreamUrlProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
-
-  use AutowirePluginTrait;
+class StreamUrlProducer extends AutowiredDataProducerPluginBase {
 
   /**
    * {@inheritdoc}

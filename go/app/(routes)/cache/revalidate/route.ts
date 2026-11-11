@@ -31,10 +31,13 @@ export async function GET(request: NextRequest) {
 
     if (path) {
       revalidatePath(path)
+      console.info(`[cache/revalidate] Cleared cache for path "${path}"`)
     }
 
     if (tags) {
-      tags.split(",").forEach(tag => revalidateTag(tag, "default"))
+      const tagList = tags.split(",")
+      tagList.forEach(tag => revalidateTag(tag, "default"))
+      console.info(`[cache/revalidate] Cleared cache for tags: ${tagList.join(", ")}`)
     }
 
     return NextResponse.json({ message: "Revalidation successful" })

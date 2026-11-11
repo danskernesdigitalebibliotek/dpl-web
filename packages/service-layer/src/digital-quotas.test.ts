@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { getDigitalLoanQuota, getDigitalQuotaOrganizationId } from "./digital-quotas"
+import { getDigitalLoanQuota } from "./digital-quotas"
 import { type DigitalLoanQuota } from "./types"
 
 const splitQuota: DigitalLoanQuota = {
@@ -76,16 +76,5 @@ describe("getDigitalLoanQuota", () => {
       current: 0,
       limit: undefined,
     })
-  })
-})
-
-describe("getDigitalQuotaOrganizationId", () => {
-  it("Names the organization the patron's quota was issued for", () => {
-    expect(getDigitalQuotaOrganizationId([splitQuota, combinedQuota])).toBe(splitQuota.orgId)
-  })
-
-  it("Names none before the quotas have arrived", () => {
-    expect(getDigitalQuotaOrganizationId(undefined)).toBeNull()
-    expect(getDigitalQuotaOrganizationId([])).toBeNull()
   })
 })

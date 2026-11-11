@@ -1,6 +1,12 @@
 import "../src/styles/css/base.css";
 import { allModes } from "../.storybook/modes";
 
+// The widths visual regression tests capture every story at.
+const visualTestModes = {
+  "400px": allModes["xs"],
+  "1200px": allModes["xl"],
+};
+
 export const parameters = {
   layout: "fullscreen",
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -20,14 +26,10 @@ export const parameters = {
       "2xl": { name: "2XL", styles: { width: "1536px", height: "900px" } },
     },
   },
-  chromatic: {
-    // Notifies Chromatic to pause the animations when they finish at a global level
-    // This is because Chromatic doesn't show the cover image when the animation starts with opacity 0
-    pauseAnimationAtEnd: true,
-    // Instructs Chromatic to test all stories at the specified viewport
-    modes: {
-      "400px": allModes["xs"],
-      "1200px": allModes["xl"],
-    },
+  argos: {
+    modes: visualTestModes,
+    // Default crops to the component at 2x zoom, collapsing fullscreen
+    // layouts. Capture the full page.
+    fitToContent: false,
   },
 };

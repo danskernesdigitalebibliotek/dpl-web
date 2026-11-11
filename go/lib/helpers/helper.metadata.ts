@@ -33,6 +33,7 @@ export const setLayoutMetadata = () => {
       "GO! er en digital platform, der giver børn og unge adgang til bøger, lydbøger og e-bøger.",
     icons: [
       { rel: "icon", type: "image/png", url: "/favicon-96x96.png", sizes: "96x96" },
+      { rel: "icon", type: "image/svg+xml", url: "/favicon.svg" },
       { rel: "shortcut icon", url: "/favicon.ico" },
       { rel: "apple-touch-icon", sizes: "180x180", url: "/apple-touch-icon.png" },
     ],

@@ -1,13 +1,14 @@
-import withPlaiceholder from "@plaiceholder/next"
 import path from "path"
 import { env } from "process"
 import { fileURLToPath } from "url"
 
 // Force singleton instances of packages that hold React/QueryClient context.
-// Without this, file:-installed workspace packages (e.g. dpl-service-layer)
-// ship their own node_modules and resolve to a second copy at runtime, which
-// breaks any React context (QueryClientContext, etc.) shared across the
-// boundary. Remove once the monorepo moves to proper workspace links.
+// Workspace packages (e.g. dpl-service-layer) resolve through their symlink
+// to their own directory, whose node_modules holds their own dev copies of
+// these. Without the aliases those copies load as a second instance at
+// runtime, which breaks any React context (QueryClientContext, etc.) shared
+// across the boundary. tsconfig.json mirrors this for @tanstack/react-query
+// types.
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const singletonModules = ["react", "react-dom", "@tanstack/react-query"]
 // Turbopack expects paths relative to the project root (no leading slash).
@@ -52,6 +53,16 @@ const nextConfig = {
   },
   turbopack: {
     resolveAlias: turbopackAliases,
+    ignoreIssue: [
+      // Colibrio, bundled by the WeDoBooks SDK, embeds browserify bundles whose
+      // loader falls back to a dynamic `require(name)` for modules outside the
+      // bundle. Never reached at runtime, but Turbopack warns on every compile.
+      // TODO: Remove once the warning is fixed at the source (DDF-809).
+      {
+        path: /packages\/wedobooks\/dist\//,
+        title: /not statically analyze-able/,
+      },
+    ],
     rules: {
       "*.svg": {
         loaders: [
@@ -91,4 +102,4 @@ const nextConfig = {
   },
 }
 
-export default withPlaiceholder(nextConfig)
+export default nextConfig

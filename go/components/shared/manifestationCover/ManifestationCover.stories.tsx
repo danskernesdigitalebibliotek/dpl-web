@@ -5,11 +5,12 @@ import { darkModeDecorator } from "@/.storybook/decorators"
 import { ShowcaseItem } from "@/.storybook/showcase"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
+import { placeholderImageUrl } from "@/cypress/factories/placeholder-image"
 
 // Real covers come in varying proportions; the box takes the cover's own
 // aspect ratio, so the material-type icon always straddles the image edge.
 const buildCover = (width: number, height: number) => {
-  const url = `https://placehold.co/${width}x${height}.jpg`
+  const url = placeholderImageUrl(width, height)
   return coverFactory.build({
     thumbnail: url,
     xSmall: { url, width, height },

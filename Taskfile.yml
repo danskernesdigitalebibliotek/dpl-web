@@ -4,6 +4,14 @@ output: prefixed
 
 includes:
   branch-tag-cleanup: ./taskfiles/Taskfile.branch-tag-cleanup.yml
+  changelog: ./taskfiles/Taskfile.changelog.yml
+
+# Load .env to get the WeDoBooks NPM token.
+dotenv: [".env"]
+
+env:
+  # Export the WeDoBooks NPM token to commands.
+  npm_config_//npm.pkg.wedobooks.io/:_authToken: "{{ .WEDOBOOKS_NPM_TOKEN }}"
 
 vars:
   CMS_DESIGN_SYSTEM_ASSETS: ./cms/web/themes/custom/novel/assets/dpl-design-system
@@ -13,7 +21,7 @@ vars:
   # forward the spunky named npm_config variable, which we need in
   # order to fetch the Biblio SDK.
   CLI_PREFIX:
-    sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI -e 'npm_config_//npm.pkg.wedobooks.io/:_authToken' --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.21-alpine"; fi
+    sh: if [[ -f .run-in-docker ]]; then echo "docker run --user $(id -u):$(id -g) -e HOME=/tmp -e COREPACK_HOME=/tmp/corepack -e PNPM_HOME=/tmp/pnpm -e CI -e 'npm_config_//npm.pkg.wedobooks.io/:_authToken' --rm -v \"{{.TASKFILE_DIR}}:/app\" -w /app node:24.22.1-alpine"; fi
 
 tasks:
   init:
@@ -66,6 +74,8 @@ tasks:
 
   dev:dotenv:link:
     desc: "Create symlinks in each project to the main .env file."
+    deps:
+      - dev:dotenv:generate
     cmds:
       - ln -sf ../.env cms/.env
       - ln -sf ../.env go/.env
@@ -88,13 +98,32 @@ tasks:
     cmds:
       - docker run --rm --volume "{{.TASKFILE_DIR}}:/repo:ro" --workdir /repo rhysd/actionlint:latest -color
 
+  ci:shellcheck:
+    summary: Run ShellCheck on scripts in .github/scripts
+    cmds:
+      - find .github/scripts -type f -name '*.sh' -print -exec docker run --rm --volume "{{.TASKFILE_DIR}}:/mnt:ro" koalaman/shellcheck:stable --format=gcc {} +
+
+  knip:
+    desc: "Run knip dead-code analysis for the projects that have it set up (go and design-system)."
+    cmds:
+      - pnpm --dir go run knip
+      - pnpm --dir design-system run knip
+
+  prs:
+    desc: "List open pull requests and who has to act next on each."
+    silent: true
+    # Writes straight to the terminal, so the digest keeps its colours and
+    # isn't prefixed with the task name.
+    interactive: true
+    cmds:
+      - .github/scripts/open-pull-requests-digest.sh --format terminal
+
   # ---------------------------------------------------------------------------
   # Tokens
   # ---------------------------------------------------------------------------
 
   token:generate:
     desc: "Generate a new library token from Adgangsplatformen and write it to every *LIBRARY_TOKEN entry in the central root .env"
-    dotenv: ['.env']
     silent: true
     cmds:
       - |
@@ -159,7 +188,6 @@ tasks:
 
   token:check:
     desc: "Verify that LIBRARY_TOKEN in the central root .env is accepted by Adgangsplatformen"
-    dotenv: ['.env']
     silent: true
     cmds:
       - |
@@ -247,24 +275,8 @@ tasks:
       - packages/service-layer/pnpm-lock.yaml
       - packages/wedobooks/package.json
       - packages/wedobooks/pnpm-lock.yaml
-    dotenv: ['.env']
     cmds:
-      # packages/wedobooks needs a credential for WeDoBooks' registry, which
-      # .npmrc deliberately does not carry. pnpm takes any config key from the
-      # environment as npm_config_<key>, so the token in .env reaches it that
-      # way - and only when set, leaving a user-level `pnpm config set` (the
-      # route for a bare pnpm install, see packages/wedobooks/README.md) as the
-      # working alternative rather than overriding it with an empty value.
-      - |
-        if [ -n "${WEDOBOOKS_NPM_TOKEN:-}" ]; then
-          set -- "npm_config_//npm.pkg.wedobooks.io/:_authToken=$WEDOBOOKS_NPM_TOKEN"
-        else
-          set --
-          if ! grep -q "^//npm.pkg.wedobooks.io/:_authToken" "$HOME/.npmrc" 2>/dev/null; then
-            echo "warning: no credential for WeDoBooks' npm registry - WEDOBOOKS_NPM_TOKEN is missing from .env (run 'task dev:dotenv:generate') and the user-level npm config has none either. See packages/wedobooks/README.md." >&2
-          fi
-        fi
-        env "$@" task dev:cli -- corepack pnpm install
+      - task dev:cli -- corepack pnpm install
 
   # ---------------------------------------------------------------------------
   # Main orchestration

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import ParagraphGoLinkbox from "@/components/paragraphs/ParagraphGoLinkbox/ParagraphGoLinkbox"
+import { placeholderImageUrl } from "@/cypress/factories/placeholder-image"
 
 const meta = {
   title: "paragraphs/ParagraphGoLinkbox",
@@ -12,7 +13,7 @@ const meta = {
     goColor: "content_color_1",
     goImage: {
       mediaImage: {
-        url: "https://placehold.co/800x600.jpg",
+        url: placeholderImageUrl(800, 600),
         alt: "Placeholder",
         height: 600,
         size: 0,

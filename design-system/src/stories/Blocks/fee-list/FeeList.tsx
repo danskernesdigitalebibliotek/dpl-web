@@ -17,7 +17,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1543858090/bogportalen.dk/9788771840018.jpg"
+                  src="images/book_cover_1.jpg"
                   alt=""
                 />
               </div>
@@ -68,7 +68,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1605729044/bogportalen.dk/9788249515608.jpg"
+                  src="images/book_cover_2.jpg"
                   alt=""
                 />
               </div>
@@ -114,7 +114,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1575217448/bogportalen.dk/9788771849127.jpg"
+                  src="images/book_cover_3.jpg"
                   alt="Om fiskerierhvervet i Danmark og danskernes forbrug af fisk, med fokus på de sidste 100 år."
                 />
               </div>
@@ -157,7 +157,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1597406399/bogportalen.dk/9788772372303.jpg"
+                  src="images/book_cover_4.jpg"
                   alt="Beretning om perioden, hvor Italien blev epicenteret for Covid-19 i Europa. For alle, der ønsker en uddybende beskrivelse af, hvad der psykologisk, økonomisk og sundhedsmæssigt er sket under den første del af Corona-krisen i Europa, specielt i Italien."
                 />
               </div>
@@ -200,7 +200,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1543888408/bogportalen.dk/9788793128576.jpg"
+                  src="images/book_cover_5.jpg"
                   alt="I tekster, der spænder fra reportage over essaystikken og til det lyriske, skriver Susan Simonsen (f. 1987) om sit liv og oplevelser samt en beskrivelse af de politiske arbejdsprocesser og den politiske kultur på Christiansborg."
                 />
               </div>
@@ -283,7 +283,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1543888408/bogportalen.dk/9788793128576.jpg"
+                  src="images/book_cover_5.jpg"
                   alt="I tekster, der spænder fra reportage over essaystikken og til det lyriske, skriver Susan Simonsen (f. 1987) om sit liv og oplevelser samt en beskrivelse af de politiske arbejdsprocesser og den politiske kultur på Christiansborg."
                 />
               </div>
@@ -344,7 +344,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1610030849/bogportalen.dk/9788702307030.jpg"
+                  src="images/book_cover_1.jpg"
                   alt="Er dinosaurerne virkeligt borte for altid, eller gemmer nogle af dem sig stadig rundt omkring i vores natur? Måske ser du en andeøgle på stranden eller en lille flyvende øglefugl på foderbrættet? Flot billedbog for alle natur- og dinofans fra ca. 5 år."
                 />
               </div>
@@ -435,7 +435,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1543627762/bogportalen.dk/9788741000923.jpg"
+                  src="images/book_cover_2.jpg"
                   alt="En samlet læsning der søger at give svar på de centrale spørgsmål for forståelsen af Johannesevangeliet."
                 />
               </div>
@@ -484,7 +484,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1543846278/bogportalen.dk/9788712035756.jpg"
+                  src="images/book_cover_3.jpg"
                   alt="En beskrivelse af 119 fuglearter, samtlige land- og havpattedyr og 220 plantearter på Island med islandske, norske og svenske artsnavne."
                 />
               </div>
@@ -527,7 +527,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1543892539/bogportalen.dk/9788702022995.jpg"
+                  src="images/book_cover_4.jpg"
                   alt=""
                 />
               </div>
@@ -572,7 +572,7 @@ const FeeList = () => (
               <div className="cover cover--size-small cover--aspect-small">
                 <img
                   className="cover__img"
-                  src="https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1600477520/bogportalen.dk/9788772373140.jpg"
+                  src="images/book_cover_5.jpg"
                   alt="En glimrende bog, som kan anbefales til alle, der ønsker at blive klogere på forholdet til andre mennesker, herunder fx parhold. For læsere, som interesserer sig for selvudvikling og psykologi."
                 />
               </div>

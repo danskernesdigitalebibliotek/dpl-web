@@ -15,5 +15,3 @@ export const ButtonFavourite = ({ fill }: ButtonFavouriteProps) => {
     </button>
   );
 };
-
-export default ButtonFavourite;

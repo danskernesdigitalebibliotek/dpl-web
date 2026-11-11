@@ -35,5 +35,3 @@ export const AutosuggestText: React.FC<AutosuggestTextProps> = ({
     );
   });
 };
-
-export default AutosuggestText;

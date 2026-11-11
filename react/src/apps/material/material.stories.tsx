@@ -201,6 +201,10 @@ const meta: Meta<typeof MaterialEntry> = {
       description: "Description headline",
       control: { type: "text" }
     },
+    genreAndFormText: {
+      description: "Genre and form",
+      control: { type: "text" }
+    },
     identifierText: {
       description: "Identifier/topic text",
       control: { type: "text" }
@@ -215,10 +219,6 @@ const meta: Meta<typeof MaterialEntry> = {
     },
     subjectNumberText: {
       description: "Subject number (Emnetal)",
-      control: { type: "text" }
-    },
-    inSeriesText: {
-      description: "In series",
       control: { type: "text" }
     },
     loginToSeeReviewText: {
@@ -881,11 +881,11 @@ const meta: Meta<typeof MaterialEntry> = {
     reservableFromAnotherLibraryText: "Ordered from another library.",
     findOnBookshelfText: "Find on shelf",
     descriptionHeadlineText: "Description",
+    genreAndFormText: "Genre and form",
     identifierText: "Tags",
     inSameSeriesText: "In the same series",
     numberDescriptionText: "Nr.",
     subjectNumberText: "Emnetal",
-    inSeriesText: "in series",
     loginToSeeReviewText: "Login to see the review.",
     cantViewReviewText: "Cannot view the review.",
     ratingIsText:
@@ -1321,17 +1321,5 @@ export const MaterialWithClosedPublizonReservations: Story = {
   args: {
     ...Default.args,
     publizonReservationsClosedConfig: "1"
-  }
-};
-
-// TEMPORARY, with the toleration flag it exercises: the adapter answers 404
-// for materials the catalogue lists but WeDoBooks has not provisioned yet,
-// and this story lets the tests cover that they render as unavailable
-// rather than fail the page.
-export const MaterialWithTolerantBiblioAdapter: Story = {
-  args: {
-    ...Default.args,
-    useBiblioAdapterConfig: "1",
-    biblioTolerateUnknownMaterialsConfig: "1"
   }
 };

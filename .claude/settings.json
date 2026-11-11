@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(lagoon add:*)",
+      "Bash(lagoon delete:*)",
+      "Bash(lagoon deploy:*)",
+      "Bash(lagoon import:*)",
+      "Bash(lagoon raw:*)",
+      "Bash(lagoon run:*)",
+      "Bash(lagoon ssh:*)",
+      "Bash(lagoon update:*)"
+    ]
+  }
+}

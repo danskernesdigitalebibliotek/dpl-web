@@ -9,6 +9,7 @@ services:
       - '@database'
       - '@entity_type.manager'
       - '@dpl_opening_hours.repetition_repository'
+  Drupal\dpl_opening_hours\Model\OpeningHoursRepository: '@dpl_opening_hours.repository'
   dpl_opening_hours.repetition_repository:
     class: Drupal\dpl_opening_hours\Model\Repetition\RepetitionRepository
     arguments:

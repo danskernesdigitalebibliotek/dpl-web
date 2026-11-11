@@ -10,14 +10,3 @@ export const hasOperationName = (
   const matches = pattern.exec(req.body.query);
   return matches && operationName === matches[2];
 };
-
-// Alias query if operationName matches
-export const aliasOperation = (
-  req: CyHttpMessages.IncomingHttpRequest,
-  operationName: Operations
-) => {
-  if (hasOperationName(req, operationName)) {
-    const copyReq = req;
-    copyReq.alias = `gql${operationName}Operation`;
-  }
-};

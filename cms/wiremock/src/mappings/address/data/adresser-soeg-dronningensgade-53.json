@@ -1,0 +1,39 @@
+{
+  "status": "ok",
+  "beskrivelse": "",
+  "fund": [
+    {
+      "type": "husnummer",
+      "id": "0a3f507a-5e1b-32b8-e044-0003ba298018",
+      "titel": "Dronningensgade 53, 1420 København K",
+      "vejnavn": "Dronningensgade",
+      "husnummer": "53"
+    },
+    {
+      "type": "husnummer",
+      "id": "0a3f5089-19af-32b8-e044-0003ba298018",
+      "titel": "Dronningensgade 53, 5000 Odense C",
+      "vejnavn": "Dronningensgade",
+      "husnummer": "53"
+    },
+    {
+      "type": "adresse",
+      "id": "0a3f50ba-8f9b-32b8-e044-0003ba298018",
+      "titel": "Dronningensgade 53, 7000 Fredericia",
+      "husnummerId": "0a3f508e-fb67-32b8-e044-0003ba298018"
+    },
+    {
+      "type": "husnummer",
+      "id": "0a3f509c-2f0f-32b8-e044-0003ba298018",
+      "titel": "Dronningensgade 53, 9400 Nørresundby",
+      "vejnavn": "Dronningensgade",
+      "husnummer": "53"
+    },
+    {
+      "type": "adresse",
+      "id": "09ef4dce-798c-47c8-85b2-a3623e822daf",
+      "titel": "Dronningensgade 53B, 5000 Odense C",
+      "husnummerId": "0cee201b-b27d-4dd9-81e8-47e36d802452"
+    }
+  ]
+}

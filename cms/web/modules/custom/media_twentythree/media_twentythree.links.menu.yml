@@ -1,0 +1,5 @@
+media_twentythree.settings_form:
+  title: TwentyThree
+  description: Configure which host names TwentyThree videos may be added from.
+  parent: system.admin_config_media
+  route_name: media_twentythree.settings_form

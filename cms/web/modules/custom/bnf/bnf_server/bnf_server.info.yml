@@ -6,3 +6,4 @@ core_version_requirement: ^10 || ^11
 dependencies:
   - bnf:bnf
   - dpl_metrics:dpl_metrics
+  - dpl_graphql:dpl_graphql

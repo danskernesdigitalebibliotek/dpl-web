@@ -1,0 +1,24 @@
+.digital-session-message {
+  max-width: $layout__max-width--small;
+  margin: 0 auto;
+  padding: $s-2xl $s-md;
+}
+
+.digital-session-message__text {
+  @include typography($typo__body-large);
+}
+
+.digital-session-message__content {
+  margin-top: $s-xl;
+}
+
+.digital-session-message__footer {
+  margin-top: $s-xl;
+  display: flex;
+  flex-direction: column;
+
+  @include media-query__x-small {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}

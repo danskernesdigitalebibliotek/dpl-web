@@ -84,15 +84,19 @@ pnpm run typecheck      # Run TypeScript type checking
 
 ## How consuming apps import
 
-Apps depend on this package via a `file:` reference in their `package.json`:
+Apps depend on this package via a `workspace:` reference in their `package.json`:
 
 ```json
 {
   "dependencies": {
-    "@danskernesdigitalebibliotek/dpl-service-layer": "file:../packages/service-layer"
+    "@danskernesdigitalebibliotek/dpl-service-layer": "workspace:*"
   }
 }
 ```
+
+Avoid `file:` references: Dependabot treats the linked package's
+`package.json` as a support file and stops updating every dependency the
+consuming app shares with it.
 
 For Next.js apps, also add to `next.config.mjs`:
 

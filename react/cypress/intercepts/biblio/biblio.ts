@@ -153,7 +153,7 @@ export const givenUserHasBiblioLoanQuotas = (
 /**
  * Given: how many reservations the user's organization allows at once. The
  * ceiling lives on the organization rather than on the user, so it comes
- * from its own endpoint, asked for by organization id.
+ * from its own endpoint.
  */
 export const givenOrganizationHasBiblioReservationLimits = () => {
   cy.intercept("GET", "**/v1/organizations/configs*", {
@@ -196,9 +196,7 @@ export const givenBiblioCreatesLoan = (loan?: LoanDto) => {
   }).as("biblioCreateLoan");
 };
 
-// TEMPORARY, with the toleration flag it exists for: the adapter answers
-// 404 for a material the catalogue lists but WeDoBooks has not provisioned.
-export const givenBiblioCannotAnswerCanLoan = (materialId: string) => {
+export const givenBiblioDoesNotKnowMaterial = (materialId: string) => {
   cy.intercept("GET", "**/v1/loans/can-loan*", {
     statusCode: 404,
     body: { message: `Material not found: ${materialId}` }

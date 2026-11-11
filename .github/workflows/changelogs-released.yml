@@ -1,0 +1,22 @@
+---
+# A release must not ship with unreleased changelog entries: they have to be
+# moved under the release's version heading first (task changelog:release).
+name: Changelog / Released
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  check:
+    name: Changelog / Check changelogs have no unreleased entries
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install go-task
+        uses: arduino/setup-task@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check changelogs
+        run: task changelog:check-released

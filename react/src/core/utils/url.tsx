@@ -24,5 +24,3 @@ export const withUrls = <T extends object>(
 ) => {
   return withSuffix(Component, "Url", addUrlEntries);
 };
-
-export default {};

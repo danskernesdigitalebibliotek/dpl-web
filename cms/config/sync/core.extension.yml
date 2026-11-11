@@ -6,7 +6,6 @@ module:
   admin_user_language: 0
   administerusersbyrole: 0
   antibot: 0
-  autowire_plugin_trait: 0
   azure_mailer: 0
   basic_auth: 0
   better_exposed_filters: 0
@@ -105,7 +104,6 @@ module:
   evac: 0
   externalauth: 0
   facets: 0
-  facets_date_range: 0
   field: 0
   field_group: 0
   field_inheritance: 0

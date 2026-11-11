@@ -135,5 +135,3 @@ export const MaterialSlider = ({
     </div>
   );
 };
-
-export default MaterialSlider;

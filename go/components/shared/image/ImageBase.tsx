@@ -13,7 +13,6 @@ export type TImageBaseProps = {
   width: number
   height: number
   alt: string
-  base64?: string
   className?: string
 }
 
@@ -26,7 +25,6 @@ export default function ImageBase({
   width,
   height,
   alt,
-  base64,
 }: TImageBaseProps) {
   const [imageLoaded, setImageLoaded] = useState(false)
 
@@ -48,18 +46,6 @@ export default function ImageBase({
           alt={alt}
           onLoad={() => setImageLoaded(true)}
           loading="lazy"
-          style={
-            base64
-              ? {
-                  backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url('${base64}')`,
-                  backgroundSize: "cover",
-                  height: "100%",
-                  width: "100%",
-                  objectPosition: "50% 50%",
-                  backgroundPosition: "50% 50%",
-                }
-              : {}
-          }
         />
       )}
 
@@ -78,17 +64,6 @@ export default function ImageBase({
           alt={alt}
           onLoad={() => setImageLoaded(true)}
           loading="lazy"
-          style={
-            base64
-              ? {
-                  backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url('${base64}')`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain",
-                  objectPosition: "50% 50%",
-                  backgroundPosition: "50% 50%",
-                }
-              : {}
-          }
         />
       )}
     </>

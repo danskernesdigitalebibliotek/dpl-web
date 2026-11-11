@@ -1,0 +1,26 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": ["-knip-ignore"],
+  // Report exports only when they are used outside their own file. Without
+  // this, Knip flags in-file-only exports (mostly conventional `*Props`
+  // types), which is a separate cleanup.
+  "ignoreExportsUsedInFile": true,
+  "entry": [
+    ".lighthouserc.js",
+    "cypress/eslint.config.mjs",
+    "dev-scripts/*.js",
+    "wiremock/src/createMappings.ts",
+    "web/modules/custom/**/*.js",
+    "web/themes/custom/**/*.js"
+  ],
+  // Vendored third-party libraries (git-ignored, installed locally); not ours to analyse.
+  "ignore": ["web/libraries/**"],
+  // Run through Docker-wrapped Taskfile/CI commands (e.g. `docker compose
+  // ... pnpm exec lhci`), so Knip only sees `docker` and cannot resolve them.
+  "ignoreDependencies": [
+    "@lhci/cli",
+    "@apidevtools/swagger-cli",
+    "jsome",
+    "chrome-launcher"
+  ]
+}

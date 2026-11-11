@@ -50,5 +50,3 @@ export function hasToken(type) {
 export function getToken(type) {
   return tokens[type];
 }
-
-export default getToken;

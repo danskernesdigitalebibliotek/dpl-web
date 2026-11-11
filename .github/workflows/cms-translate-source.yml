@@ -69,6 +69,11 @@ jobs:
           # Pulls in any changes that's landed on develop while we were
           # running.
           before_push_hook: |
+            # These are the same values as the git-auto-commit-action
+            # uses for its commit, but it doesn't propagate it to
+            # commands in the hooks.
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git pull --rebase
       - name: Make Poeditor look for changes in translation strings
         uses: distributhor/workflow-webhook@v3

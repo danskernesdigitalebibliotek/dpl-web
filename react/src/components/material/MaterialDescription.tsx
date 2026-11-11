@@ -7,6 +7,7 @@ import {
 } from "../../apps/material/helper";
 import {
   constructDK5SearchUrl,
+  constructGenreAndFormSearchUrl,
   constructMaterialUrl,
   constructSearchUrl,
   constructSubjectSearchUrl
@@ -45,6 +46,7 @@ const MaterialDescription: React.FC<MaterialDescriptionProps> = ({ work }) => {
     subjects,
     relations,
     dk5MainEntry,
+    genreAndForm,
     manifestations
   } = work;
 
@@ -93,6 +95,11 @@ const MaterialDescription: React.FC<MaterialDescriptionProps> = ({ work }) => {
     }));
 
   const subjectsList = [...localSubjects, ...dbcSubjects];
+
+  const genreAndFormList = genreAndForm.map((item) => ({
+    url: constructGenreAndFormSearchUrl(searchUrl, item),
+    term: item
+  }));
 
   const filmAdaptationsList = getUniqueMovies(relations).map((item) => {
     return {
@@ -149,13 +156,16 @@ const MaterialDescription: React.FC<MaterialDescriptionProps> = ({ work }) => {
             searchUrl={searchUrl}
             seriesUrl={seriesUrl}
             t={t}
-            workId={work.workId}
             dataCy="material-description-series"
           />
           <HorizontalTermLine
             title={t("inSameSeriesText")}
             linkList={seriesMembersList}
             dataCy="material-description-series-members"
+          />
+          <HorizontalTermLine
+            title={t("genreAndFormText")}
+            linkList={genreAndFormList}
           />
           <HorizontalTermLine
             title={t("identifierText")}

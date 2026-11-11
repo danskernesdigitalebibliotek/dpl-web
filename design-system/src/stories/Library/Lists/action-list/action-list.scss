@@ -1,0 +1,22 @@
+.action-list {
+  display: grid;
+  gap: $s-sm;
+}
+
+// All rows switch together, so a long text never leaves one row stacked
+// between rows that sit side by side.
+.action-list__item {
+  display: flex;
+  flex-direction: column;
+  gap: $s-sm $s-md;
+  padding: $s-md;
+  background-color: $color__global-white;
+  text-align: center;
+
+  @include media-query__x-small {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+}

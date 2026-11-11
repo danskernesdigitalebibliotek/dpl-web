@@ -127,8 +127,8 @@ tasks:
       - task dev:cli -- php vendor/bin/twig-cs-fixer lint --fix
       - task dev:cli -- php vendor/bin/phpstan
       - task dev:cli -- corepack pnpm install --frozen-lockfile
-      - task dev:cli -- corepack pnpm exec eslint web -c eslint.config.mjs --fix
-      - task dev:cli -- corepack pnpm exec eslint cypress -c cypress/eslint.config.mjs --fix
+      - task dev:cli -- corepack pnpm run lint:js:fix
+      - task dev:cli -- corepack pnpm run lint:cypress:fix
 
   dev:build:
     summary: Build docker containers
@@ -434,6 +434,7 @@ tasks:
       - ./dev-scripts/add-to-etc-hosts.sh wiremock fbi.dpl-cms.local
       - ./dev-scripts/add-to-etc-hosts.sh wiremock fbs.dpl-cms.local
       - ./dev-scripts/add-to-etc-hosts.sh wiremock adgangsplatformen.dpl-cms.local
+      - ./dev-scripts/add-to-etc-hosts.sh wiremock adressevaelger.dpl-cms.local
       - ./dev-scripts/add-to-etc-hosts.sh wiremock responder.wt-safetag.com
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
@@ -447,6 +448,7 @@ tasks:
       - ci:cypress:opening-hours
       - ci:cypress:paragraphs
       - ci:cypress:campaigns
+      - ci:cypress:mobile-app
 
   ci:cypress:run:
     cmds:
@@ -535,6 +537,18 @@ tasks:
     env:
       SPEC_PATH: "cypress/e2e/events/*.ts"
 
+  # The mobile app API tests assert on the endpoints the BFF behind the mobile
+  # apps reads, so a change that would break the apps fails here.
+  # getBranches reads the library's branches from FBS, so the tests need the
+  # wiremock mappings.
+  ci:cypress:mobile-app:
+    desc: Run Cypress tests for the endpoints the mobile apps use.
+    deps: [ci:wiremock:create-mappings]
+    cmds:
+      - task ci:cypress:run
+    env:
+      SPEC_PATH: "cypress/e2e/mobile-app/*.ts"
+
   ci:cypress:local:
     desc: Run Cypress functional tests locally
     deps: [ci:wiremock:create-mappings, ci:local]
@@ -567,18 +581,20 @@ tasks:
     desc: Run Lighthouse to test performance
     deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm dlx lhci autorun
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm exec lhci autorun
 
   ci:openapi:validate:
     desc: Validate the Drupal OpenAPI specification
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm dlx swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome pnpm exec swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
 
   ci:openapi:download:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
       - task dev:cli -- curl "http://varnish:8080/openapi/rest?_format=json&language=en" -o openapi.tmp
-      - task -d .. dev:cli -- sh -c "cd cms && corepack pnpm dlx jsome -r < openapi.tmp > openapi.json"
+      # The cli container is the PHP image: it has node but no pnpm/corepack,
+      # so invoke the jsome binary that pnpm installed into node_modules directly.
+      - task -d .. dev:cli -- sh -c "cd cms && ./node_modules/.bin/jsome -r < openapi.tmp > openapi.json"
       - rm -f openapi.tmp
 
   ci:shellcheck:

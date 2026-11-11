@@ -30,3 +30,9 @@ services:
     autowire: true
     tags:
       - { name: dpl_metrics_collector }
+
+  # Core registers hook classes without autoconfiguration, so they need to be
+  # defined here for LoggerAwareInterface to get the logger injected until
+  # https://www.drupal.org/project/drupal/issues/3605797 is fixed.
+  Drupal\bnf_client\Hook\FormHooks:
+    autoconfigure: true

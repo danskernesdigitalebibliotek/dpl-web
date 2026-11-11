@@ -2,7 +2,7 @@ import { fromUnixTime } from "date-fns"
 import React from "react"
 
 import ParagraphResolver from "@/components/paragraphs/ParagraphResolver"
-import ImageBaseWithPlaceholder from "@/components/shared/image/ImageBaseWithPlaceholder"
+import ImageBase from "@/components/shared/image/ImageBase"
 import ImageCaptionWrapper from "@/components/shared/image/ImageCaptionWrapper"
 import { Maybe, MediaImage, NodeGoArticle } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { generalGoDateFormat } from "@/lib/helpers/helper.dates"
@@ -32,15 +32,17 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
 
         <ImageCaptionWrapper caption={goArticleImage?.byline || ""} className="col-span-full">
           <div className="rounded-base relative overflow-hidden">
-            <ImageBaseWithPlaceholder
-              className="rounded-base"
-              sizes="100vw"
-              imageSizing="intrinsic"
-              src={mediaImage?.url || ""}
-              width={mediaImage?.width || 0}
-              height={mediaImage?.height || 0}
-              alt={mediaImage?.alt || ""}
-            />
+            {mediaImage?.url && (
+              <ImageBase
+                className="rounded-base"
+                sizes="100vw"
+                imageSizing="intrinsic"
+                src={mediaImage.url}
+                width={mediaImage.width || 0}
+                height={mediaImage.height || 0}
+                alt={mediaImage.alt || ""}
+              />
+            )}
           </div>
         </ImageCaptionWrapper>
 

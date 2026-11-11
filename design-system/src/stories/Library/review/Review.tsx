@@ -57,5 +57,3 @@ export const Review: React.FC<ReviewProps> = ({
     </ul>
   );
 };
-
-export default Review;

@@ -15,6 +15,7 @@ import {
   isPhysicalMaterialType,
 } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
+import HelpText from "@/components/shared/helpText/HelpText"
 import { ModalFlowBody } from "@/components/shared/modalFlow/ModalFlowBody"
 import ReservationFormContent from "@/components/shared/reservationModal/ReservationFormContent"
 import ReservationReceiptContent from "@/components/shared/reservationModal/ReservationReceiptContent"
@@ -141,13 +142,13 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
         ) : (
           <div className="flex w-full flex-col items-center gap-3">
             {availability && (
-              <p className="text-typo-caption text-foreground-muted text-center">
+              <HelpText>
                 Biblioteket har {availability.totalCopies}{" "}
                 {availability.totalCopies === 1 ? "eksemplar" : "eksemplarer"}. Der er{" "}
                 {availability.reservationCount}{" "}
                 {availability.reservationCount === 1 ? "reservering" : "reserveringer"} til dette
                 materiale.
-              </p>
+              </HelpText>
             )}
             <Button
               theme="primary"

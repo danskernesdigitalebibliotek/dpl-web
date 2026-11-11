@@ -67,6 +67,8 @@ export const OpenedFromCard: Story = {
 // link. Clicking it slides forward to the in-modal player view; the back
 // button returns to the details.
 export const Player: Story = {
+  // Its screenshot shows Publizon's player or not, as fast as Publizon answers.
+  tags: ["skip-ui-tests"],
   decorators: [withQueryClient(seedClient())],
   args: {
     ...baseArgs,

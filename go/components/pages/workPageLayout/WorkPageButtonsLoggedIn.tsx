@@ -11,6 +11,7 @@ import {
   getMaterialCategory,
   getReadUrlForLoan,
 } from "@/components/pages/workPageLayout/helper"
+import HelpText from "@/components/shared/helpText/HelpText"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
@@ -230,11 +231,7 @@ const PhysicalReservationButton = ({
     return (
       <>
         <div className="w-full lg:max-w-80 lg:min-w-72">
-          <div
-            className="text-typo-caption text-foreground-muted flex w-full justify-center
-              lg:ml-auto">
-            Du har lånt denne bog
-          </div>
+          <HelpText>Du har lånt denne bog</HelpText>
         </div>
         <ViewLoanButton recordId={existingLoan.recordId} />
       </>
@@ -245,11 +242,7 @@ const PhysicalReservationButton = ({
     return (
       <>
         <div className="w-full lg:max-w-80 lg:min-w-72">
-          <div
-            className="text-typo-caption text-foreground-muted flex w-full justify-center
-              lg:ml-auto">
-            Bogen er reserveret til dig
-          </div>
+          <HelpText>Bogen er reserveret til dig</HelpText>
         </div>
         <WorkPageButton
           ariaLabel="Se reservering"

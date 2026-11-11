@@ -1,4 +1,3 @@
-import { RenewedLoanV2 } from "../../../core/fbs/model/renewedLoanV2";
 import { ListView } from "../../../core/utils/types/list-view";
 import { LoanType } from "../../../core/utils/types/loan-type";
 import { UseTextFunction } from "../../../core/utils/text";
@@ -13,9 +12,6 @@ export const removeLoansWithDuplicateDueDate = (
 export const loansAreEmpty = (list: LoanType[] | null) =>
   Array.isArray(list) && list.length === 0;
 
-export const getRenewedIds = (list: RenewedLoanV2[]) => {
-  return list.map(({ loanDetails }) => loanDetails.recordId);
-};
 export const materialsAreStacked = (materialsInStack: number) => {
   return materialsInStack > 0;
 };
@@ -36,28 +32,6 @@ export const getStatusText = (status: string, t: UseTextFunction) => {
     default:
       return "";
   }
-};
-
-export const removeLoansWithIds = (list: LoanType[], ids: string[]) => {
-  return list.filter(({ faust, identifier }) => {
-    if (faust) {
-      return ids.indexOf(faust) === -1;
-    }
-    if (identifier) {
-      return ids.indexOf(identifier) === -1;
-    }
-    return false;
-  });
-};
-
-// Simple faust match for modals
-export const queryMatchesFaust = (query: string | null) => {
-  // regex for finding date string from modal query param
-  const regex = /^\d{8}$/;
-  const faustFound = query ? query.toString().match(regex) : null;
-  const returnValue =
-    faustFound && faustFound.length > 0 ? faustFound[0] : null;
-  return returnValue;
 };
 
 export const isDigital = (loan: ListType) => Boolean(loan.identifier);
@@ -102,5 +76,3 @@ export const getLoanDeliveryDate = (
       )
     : "";
 };
-
-export default {};
