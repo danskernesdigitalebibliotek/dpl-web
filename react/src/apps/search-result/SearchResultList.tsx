@@ -1,6 +1,7 @@
 import React, { Fragment, memo, useEffect, useRef } from "react";
 import clsx from "clsx";
 import { usePrevious } from "react-use";
+import useRestoreScrollToItem from "../../core/utils/useRestoreScrollToItem";
 import { getCoverTint } from "../../core/utils/helpers/general";
 import { Work } from "../../core/utils/types/entities";
 import CardListItem from "../../components/card-item-list/card-list-item/card-list-item";
@@ -24,6 +25,8 @@ export interface SearchResultListProps {
   pageSize: number;
   infoBoxProps?: CardListInfoBoxProps;
   className?: string;
+  // Scroll back to the clicked work when returning with the back button.
+  restoreScrollToClickedItem?: boolean;
 }
 
 const SearchResultList: React.FC<SearchResultListProps> = ({
@@ -32,8 +35,10 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
   page,
   pageSize,
   infoBoxProps,
-  className
+  className,
+  restoreScrollToClickedItem = false
 }) => {
+  const listRef = useRef<HTMLUListElement>(null);
   const lastItemRef = useRef<HTMLLIElement>(null);
 
   // Focus the first item of a page loaded with the pager. Not when the list
@@ -50,14 +55,30 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
     }
   }, [page, resultItems]);
 
+  const hasWorks = resultItems?.some((item) => !isCampaign(item)) ?? false;
+  const rememberClickedItem = useRestoreScrollToItem({
+    listRef,
+    isReady: !isLoading && hasWorks,
+    enabled: restoreScrollToClickedItem
+  });
+
   const searchInfoBoxIndex = pageSize;
   // A campaign is shown before the works and must not count as one of them.
   const campaignOffset = resultItems?.[0] && isCampaign(resultItems[0]) ? 1 : 0;
 
   return (
     <ul
+      ref={listRef}
       className={clsx("content-list", className)}
       data-cy="search-result-list"
+      // Capture, as the title link stops propagation of its click.
+      onClickCapture={(event) => {
+        const item = (event.target as Element).closest("[data-item-id]");
+        const itemId = item?.getAttribute("data-item-id");
+        if (itemId) {
+          rememberClickedItem(itemId);
+        }
+      }}
     >
       {resultItems?.map((item, i) => {
         const isFirstNewItem = i === page * pageSize + campaignOffset;
@@ -89,6 +110,7 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
               <MaterialListItem
                 className="content-list__item"
                 ref={isFirstNewItem ? lastItemRef : null}
+                itemId={item.workId}
               >
                 <CardListItem
                   item={item}
@@ -104,6 +126,7 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
               className="content-list__item"
               key={item.workId}
               ref={isFirstNewItem ? lastItemRef : null}
+              itemId={item.workId}
             >
               <CardListItem
                 item={item}
