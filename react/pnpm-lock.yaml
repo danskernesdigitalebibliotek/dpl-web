@@ -148,8 +148,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2(nyc@18.0.0(supports-color@8.1.1))
       '@namics/stylelint-bem':
-        specifier: ^11.1.0
-        version: 11.1.0(stylelint@17.16.0(supports-color@8.1.1)(typescript@6.0.3))
+        specifier: ^11.2.0
+        version: 11.2.0(stylelint@17.16.0(supports-color@8.1.1)(typescript@6.0.3))
       '@storybook/addon-essentials':
         specifier: ^8.6.19
         version: 8.6.19(@types/react@19.3.0)(storybook@8.6.19(prettier@3.9.10)(supports-color@8.1.1))
@@ -2054,11 +2054,11 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
-  '@namics/stylelint-bem@11.1.0':
-    resolution: {integrity: sha512-9+hQpo1K5drx9flRLp4tg6SslB+o1DZL2Cm8udpMhlTbPs3WLZFubm+RsWckqj041OtEJgVUjDJ9Gd1OR4N5RA==}
+  '@namics/stylelint-bem@11.2.0':
+    resolution: {integrity: sha512-lvA/sA6yb9icFOHfA9fnLExI05A7D9Bufqq/y3delCYOdOrpYE8yVg1AL3QnxwBT3DmzJu18haDfudeo7ZZwxg==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
-      stylelint: '>=14.0.0 <18.0.0'
+      stylelint: '>=14.0.0 <19.0.0'
 
   '@napi-rs/wasm-runtime@1.2.5':
     resolution: {integrity: sha512-HshSvXzmBxNzqejd3k/KemgQ3hdREUYFRRrgxOZ+gPljDIsO2SDZrVZMd4Z/HsxudQbE62OVyVFE8z9BCurfjA==}
@@ -6255,6 +6255,9 @@ packages:
   postcss-resolve-nested-selector@0.1.6:
     resolution: {integrity: sha512-0sglIs9Wmkzbr8lQwEyIzlDOOC9bGmfVKcJTaxv3vMmd3uo4o4DerC3En0bnmgceeql9BfC8hRkp7cg0fjdVqw==}
 
+  postcss-resolve-nested-selector@0.1.7:
+    resolution: {integrity: sha512-lFcugRCQXWManq7nyZ0dDtir52wc7gKYJfWpSuz4GxvnGc7dtlpXcZYX4A0asatzTuqpQ3ngDdyD+QG/szeXWw==}
+
   postcss-safe-parser@7.1.0:
     resolution: {integrity: sha512-1WzZxRLaAFwEh6Do+zyGpjWV3nGJNxxhuh7Ubu/q1ICImMgZJnLwhoaEpRbG4pJppp2Y1ncL9ffA2f+LhrefQg==}
     engines: {node: '>=18.0'}
@@ -9633,10 +9636,10 @@ snapshots:
       '@types/react': 19.3.0
       react: 19.3.1
 
-  '@namics/stylelint-bem@11.1.0(stylelint@17.16.0(supports-color@8.1.1)(typescript@6.0.3))':
+  '@namics/stylelint-bem@11.2.0(stylelint@17.16.0(supports-color@8.1.1)(typescript@6.0.3))':
     dependencies:
       css-selector-parser: 3.3.0
-      postcss-resolve-nested-selector: 0.1.6
+      postcss-resolve-nested-selector: 0.1.7
       stylelint: 17.16.0(supports-color@8.1.1)(typescript@6.0.3)
 
   '@napi-rs/wasm-runtime@1.2.5(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)':
@@ -14302,6 +14305,8 @@ snapshots:
       thenby: 1.4.1
 
   postcss-resolve-nested-selector@0.1.6: {}
+
+  postcss-resolve-nested-selector@0.1.7: {}
 
   postcss-safe-parser@7.1.0(postcss@8.5.32):
     dependencies:
