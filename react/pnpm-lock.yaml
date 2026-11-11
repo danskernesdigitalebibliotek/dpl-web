@@ -322,8 +322,8 @@ importers:
         specifier: ^14.1.0
         version: 14.1.0(postcss@8.5.32)(stylelint@17.16.0(supports-color@8.1.1)(typescript@6.0.3))
       stylelint-prettier:
-        specifier: ^5.0.2
-        version: 5.0.3(prettier@3.9.10)(stylelint@17.16.0(supports-color@8.1.1)(typescript@6.0.3))
+        specifier: ^5.1.0
+        version: 5.1.0(prettier@3.9.10)(stylelint@17.16.0(supports-color@8.1.1)(typescript@6.0.3))
       svg-url-loader:
         specifier: ^8.1.0
         version: 8.1.0(webpack@5.112.2)
@@ -6957,8 +6957,8 @@ packages:
     peerDependencies:
       stylelint: ^16.1.0
 
-  stylelint-prettier@5.0.3:
-    resolution: {integrity: sha512-B6V0oa35ekRrKZlf+6+jA+i50C4GXJ7X1PPmoCqSUoXN6BrNF6NhqqhanvkLjqw2qgvrS0wjdpeC+Tn06KN3jw==}
+  stylelint-prettier@5.1.0:
+    resolution: {integrity: sha512-YYu3C6AlovZkSUsgyANyxmrzKF6BlK85voexN+iLlh1i1Lgl0IeGhwqFiPHPX8cMSkX0AC2/oHi06j/5iXSWgA==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       prettier: '>=3.0.0'
@@ -15077,7 +15077,7 @@ snapshots:
     dependencies:
       stylelint: 17.16.0(supports-color@8.1.1)(typescript@6.0.3)
 
-  stylelint-prettier@5.0.3(prettier@3.9.10)(stylelint@17.16.0(supports-color@8.1.1)(typescript@6.0.3)):
+  stylelint-prettier@5.1.0(prettier@3.9.10)(stylelint@17.16.0(supports-color@8.1.1)(typescript@6.0.3)):
     dependencies:
       prettier: 3.9.10
       prettier-linter-helpers: 1.0.1
