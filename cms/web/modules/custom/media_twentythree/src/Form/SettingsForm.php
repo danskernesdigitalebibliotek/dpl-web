@@ -53,14 +53,15 @@ class SettingsForm extends ConfigFormBase {
   /**
    * Prepares the saved allowed_hosts property to be displayed in the form.
    *
-   * @param string[] $value
-   *   The value saved in config.
+   * @param string[]|null $value
+   *   The value saved in config. NULL on sites that had the module enabled
+   *   before the config was added, until the form is first saved.
    *
    * @return string
    *   The value of the form element.
    */
-  public static function arrayToMultiLineString(array $value): string {
-    return implode("\n", $value);
+  public static function arrayToMultiLineString(?array $value): string {
+    return implode("\n", $value ?? []);
   }
 
   /**
