@@ -61,7 +61,7 @@
         "drupal/config_ignore": "^3",
         "drupal/config_ignore_auto": "^3",
         "drupal/config_perms": "^2.3",
-        "drupal/config_translation_po": "^1.0",
+        "drupal/config_translation_po": "^2.0",
         "drupal/consumers": "^1.19",
         "drupal/content_lock": "^3.0",
         "drupal/cookieinformation": "^2.1",
