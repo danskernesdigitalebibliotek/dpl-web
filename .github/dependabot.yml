@@ -168,6 +168,10 @@ updates:
       # 0.24 and later require Storybook 10.
       - dependency-name: "@storybook/test-runner"
         versions: [">=0.24"]
+      # Storybook 9 loads @babel/preset-env with the `bugfixes` option, which
+      # Babel 8 removed, so 8.x breaks the Storybook build.
+      - dependency-name: "@babel/preset-env"
+        versions: [">=8"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
 
