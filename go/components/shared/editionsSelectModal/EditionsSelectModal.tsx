@@ -4,7 +4,6 @@ import React, { useState } from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import EditionsSelectModalItem from "@/components/shared/editionsSelectModal/EditionsSelectModalItem"
-import { type TEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
 import { useDigitalEditionsAvailabilityBiblio } from "@/hooks/useDigitalEditionsAvailabilityBiblio"
@@ -17,11 +16,12 @@ export type EditionsSelectModalProps = {
   // The type to list editions for, captured when the modal opens. Not read
   // from the url, which lags behind a material-type tap.
   materialTypeCode: string
-  choice: TEditionChoice
-  // The material type is handed back with the choice: it is the type the modal
+  // The edition the picker opens on.
+  choicePid: string
+  // The material type is handed back with the pid: it is the type the modal
   // actually listed editions for, so the caller never has to guess which type
   // a pid belongs to.
-  onChoiceConfirm: (choice: TEditionChoice, materialTypeCode: string) => void
+  onChoiceConfirm: (pid: string, materialTypeCode: string) => void
   // Runs on every close — a confirmed choice, the close button, Escape or a
   // click outside. The modal renders outside the trigger's tree, so returning
   // focus to the trigger is the caller's to do.
@@ -36,7 +36,7 @@ const EditionsSelectModal = ({
   onClose,
   wid,
   materialTypeCode,
-  choice,
+  choicePid,
   onChoiceConfirm,
   onClosed,
 }: EditionsSelectModalProps & { open: boolean; onClose: () => void }) => {
@@ -90,8 +90,7 @@ const EditionsSelectModal = ({
   // radio group, so selecting cannot be what confirms — a keyboard user would
   // never reach past the first edition the arrow lands on. The footer button
   // confirms instead, and nothing leaves the modal until then.
-  const [draftChoice, setDraftChoice] = useState<TEditionChoice>(choice)
-  const draftPid = draftChoice?.pid ?? null
+  const [draftPid, setDraftPid] = useState(choicePid)
 
   // Every close runs through here, so the caller gets `onClosed` whether the
   // reader confirmed a choice, used the close button, pressed Escape or
@@ -102,7 +101,7 @@ const EditionsSelectModal = ({
   }
 
   const handleConfirm = () => {
-    onChoiceConfirm(draftChoice, materialTypeCode)
+    onChoiceConfirm(draftPid, materialTypeCode)
     handleClose()
   }
 
@@ -132,7 +131,7 @@ const EditionsSelectModal = ({
                       checked={draftPid === manifestation.pid}
                       unavailableLabel={unavailable?.label}
                       unavailableText={unavailable?.text}
-                      onSelect={() => setDraftChoice({ pid: manifestation.pid })}
+                      onSelect={() => setDraftPid(manifestation.pid)}
                     />
                   )
                 })}

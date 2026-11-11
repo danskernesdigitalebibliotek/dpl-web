@@ -11,11 +11,7 @@ import {
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
-import {
-  type TEditionChoice,
-  getEditionLabel,
-  serializeEditionChoice,
-} from "@/components/shared/editionsSelectModal/editionChoice"
+import { getEditionLabel } from "@/components/shared/editionsSelectModal/editionChoice"
 import MaterialTypeSelect, {
   MaterialTypeSelectOption,
 } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
@@ -118,10 +114,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
     (isUrlMaterialTypeKnown && urlMaterialTypeCode !== selectedManifestationMaterialTypeCode) ||
     pickedMaterialTypeCode !== selectedManifestationMaterialTypeCode
 
-  // The picker always opens on the manifestation actually shown, whether it
-  // got there by an explicit url pin or the page's own default pick.
-  const editionChoice = { pid: selectedManifestation.pid }
-
   const editionChoiceLabel = getEditionLabel(selectedManifestation)
 
   // The picker lists the editions of the picked type that the kommune can
@@ -164,30 +156,27 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   useRestoreFocusAfterDialog(shouldRestoreEditionFocus, editionButtonRef)
 
-  // The modal receives the choice pinned to the selected manifestation; on
-  // confirm, the choice is serialized back into the url's edition param.
+  // The picker opens on the manifestation actually shown, whether it got
+  // there by an explicit url pin or the page's own default pick; on confirm,
+  // the picked pid becomes the url's edition param.
   const openEditionsSelect = () =>
     openModal("EditionsSelectModal", {
       wid: work.workId,
       materialTypeCode: pickedMaterialTypeCode,
-      choice: editionChoice,
+      choicePid: selectedManifestation.pid,
       // The modal hands back the type it listed, so the pid and the type
       // always belong together.
-      onChoiceConfirm: (choice: TEditionChoice, materialTypeCode: string) => {
-        const editionParam = serializeEditionChoice(choice)
+      onChoiceConfirm: (pid: string, materialTypeCode: string) => {
         const url = resolveUrl({
           routeParams: { work: "work", wid: work.workId },
-          queryParams: {
-            type: materialTypeCode,
-            ...(editionParam ? { edition: editionParam } : {}),
-          },
+          queryParams: { type: materialTypeCode, edition: pid },
         })
         router.push(url, { scroll: false })
         // The modal closes on confirm and the buttons behind it change state,
         // none of which a screen reader would otherwise report. Named from
         // the picked manifestation, not the selected one: the page has not
         // swapped it yet at this point.
-        const picked = manifestations.find(manifestation => manifestation.pid === choice?.pid)
+        const picked = manifestations.find(manifestation => manifestation.pid === pid)
         const pickedYear = picked?.edition?.publicationYear?.year
         announceChoice(pickedYear ? `Udgave valgt: ${pickedYear}` : "Udgave valgt")
       },

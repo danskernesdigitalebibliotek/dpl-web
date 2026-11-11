@@ -7,7 +7,6 @@ import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
 import WorkPageLoading, {
   WorkPageHeaderSkeleton,
 } from "@/components/pages/workPageLayout/WorkPageLoading"
-import { parseEditionChoice } from "@/components/shared/editionsSelectModal/editionChoice"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
 import { useDefaultObtainableEdition } from "@/hooks/useDefaultObtainableEdition"
@@ -84,12 +83,17 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
   // The edition the url pins, if it names one this material type has. Shared
   // by the effect below, which picks it over any default, and by the header's
   // loading gate, which has nothing to wait for once it exists.
+  //
+  // The `edition` param holds a pid, and is absent on arrival and after a
+  // material-type switch. Absent means the page picks the default itself —
+  // see useDefaultObtainableEdition — and that default is never written back
+  // to the url.
   const pinnedManifestation = useMemo(
     () =>
       getPinnedEditionManifestation(
         (allManifestations ?? []) as ManifestationWorkPageFragment[],
         searchParamsMaterialType ?? "",
-        parseEditionChoice(searchParams.get("edition"))?.pid ?? null
+        searchParams.get("edition")
       ),
     [allManifestations, searchParamsMaterialType, searchParams]
   )
