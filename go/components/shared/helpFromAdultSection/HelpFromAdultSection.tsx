@@ -6,13 +6,11 @@ import ModalInfoSection from "@/components/shared/modalInfoSection/ModalInfoSect
 import { adultSiteUrl } from "@/lib/helpers/helper.adult-site"
 import { DplCmsConfigContext } from "@/lib/providers/DplCmsConfigContextProvider"
 
-// The reassurance box shared by the fee and compensation modals: guardians
-// have been notified, and payment happens on the library site — GO doesn't
-// handle payment itself.
+// The link must not promise online payment: some libraries only collect fees
+// through payment slips sent to the guardians.
 const HelpFromAdultSection = () => {
-  // Payment happens on the library's own (adult) site.
   const dplCmsConfig = useContext(DplCmsConfigContext)
-  const paymentUrl = adultSiteUrl(dplCmsConfig?.libraryInfo?.baseURL, "/user/me/fees")
+  const feesUrl = adultSiteUrl(dplCmsConfig?.libraryInfo?.baseURL, "/user/me/fees")
 
   return (
     <ModalInfoSection title="Hjælp fra en voksen">
@@ -20,11 +18,11 @@ const HelpFromAdultSection = () => {
         Bare rolig - der er styr på det! Dine forældre/værge har allerede fået besked om, at de skal
         betale.
       </p>
-      {paymentUrl && (
+      {feesUrl && (
         <p>
-          I kan også betale via linket her:{" "}
-          <a href={paymentUrl} target="_blank" rel="noopener noreferrer" className="focus-visible">
-            Betalingssiden
+          I kan også læse mere her:{" "}
+          <a href={feesUrl} target="_blank" rel="noopener noreferrer" className="focus-visible">
+            Gebyrer & erstatninger
           </a>
         </p>
       )}

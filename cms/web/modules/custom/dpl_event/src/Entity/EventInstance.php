@@ -6,6 +6,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\dpl_event\EventPeriod;
 use Drupal\dpl_event\EventState;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\recurring_events\Entity\EventInstance as RecurringEventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
@@ -132,6 +133,31 @@ class EventInstance extends RecurringEventInstance {
     }
 
     return $field->referencedEntities() ?? NULL;
+  }
+
+  /**
+   * Getting an events published branches.
+   *
+   * Unpublished branches must not be exposed to the public, e.g. through APIs.
+   *
+   * @return array<\Drupal\node\NodeInterface>
+   *   The published branches, in the order they are referenced.
+   */
+  public function getPublishedBranches(): array {
+    return array_values(array_filter(
+      $this->getBranches() ?? [],
+      fn(NodeInterface $branch) => $branch->isPublished()
+    ));
+  }
+
+  /**
+   * Determine if an event belongs only to unpublished branches.
+   *
+   * Such an event must not be exposed to the public. An event without any
+   * branches is not affected.
+   */
+  public function hasOnlyUnpublishedBranches(): bool {
+    return !empty($this->getBranches()) && empty($this->getPublishedBranches());
   }
 
   /**

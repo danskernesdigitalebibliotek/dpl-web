@@ -19,14 +19,14 @@ class EventListPagingHooks {
   public function __construct(protected ConfigFactoryInterface $configFactory) {}
 
   /**
-   * Implements hook_views_pre_build().
+   * Sets how many events the events list shows per load.
    *
-   * Sets how many events the events list shows per load. This must run before
-   * the query is built. Whether further events load automatically or behind a
-   * "Show more" button is set in viewsPreRender().
+   * This must run before the query is built. Whether further events load
+   * automatically or behind a "Show more" button is set in
+   * setLoadingBehaviour().
    */
   #[Hook('views_pre_build')]
-  public function viewsPreBuild(ViewExecutable $view): void {
+  public function setItemsPerPage(ViewExecutable $view): void {
     $mode = $this->listPagingMode($view);
     if ($mode === NULL) {
       return;
@@ -39,12 +39,12 @@ class EventListPagingHooks {
   }
 
   /**
-   * Implements hook_views_pre_render().
+   * Sets how the events list loads further events.
    *
-   * Sets whether the events list loads further events automatically while
-   * scrolling (infinite scroll) or behind a "Show more" button.
+   * Further events load either automatically while scrolling (infinite scroll)
+   * or behind a "Show more" button.
    *
-   * This is done here, not in viewsPreBuild(), on purpose: in a real page
+   * This is done here, not in setItemsPerPage(), on purpose: in a real page
    * request the pager plugin is already instantiated before pre_build runs, so
    * changing the option on the display would be ignored by the existing pager.
    * By pre_render the pager is always initialised, so we set the option
@@ -52,7 +52,7 @@ class EventListPagingHooks {
    * rendered.
    */
   #[Hook('views_pre_render')]
-  public function viewsPreRender(ViewExecutable $view): void {
+  public function setLoadingBehaviour(ViewExecutable $view): void {
     $mode = $this->listPagingMode($view);
     if ($mode === NULL) {
       return;

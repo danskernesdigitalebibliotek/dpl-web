@@ -122,7 +122,9 @@ const getEventsTitled = (title: string) =>
     events.filter((event) => event.title === title),
   );
 
-const createBranch = (title: string) => {
+// Only one branch node may represent a branch in the library system, so other
+// branches are created without one.
+const createBranch = (title: string, agencyBranch: string | null = isilId) => {
   login();
   const branchAdd = new BranchAddPage();
   branchAdd.visit([]);
@@ -132,12 +134,14 @@ const createBranch = (title: string) => {
     'Ishøj Store Torv 1 2635',
     'Ishøj Store Torv 1, 2635 Ishøj',
   );
-  branchAdd.selectAgencyBranch(isilId);
+  if (agencyBranch) {
+    branchAdd.selectAgencyBranch(agencyBranch);
+  }
   branchAdd.save();
 
-  const branchPage = new NodePage();
-  branchPage.elements.hero().contains(title).should('be.visible');
-  return branchPage.nodeId();
+  const branchNode = new NodePage();
+  branchNode.elements.hero().contains(title).should('be.visible');
+  return branchNode.nodeId();
 };
 
 // Fills the fields every event form needs before it will save.
@@ -161,6 +165,11 @@ const createEvent = (event: EventInput, branch: string) => {
   eventAdd.fillSingleDate(event.start, event.end);
   eventAdd.save();
   cy.contains(event.title);
+};
+
+const setBranchPublished = (branchId: string, published: boolean) => {
+  login();
+  new NodePage().setPublished(branchId, published);
 };
 
 const deleteEventsIfExist = () => {
@@ -380,6 +389,32 @@ describe('Mobile app API: events', () => {
 
     deleteEventsIfExist();
     getEventsTitled(updatedTitle).should('deep.equal', []);
+  });
+
+  // A library may prepare a branch before publishing it. Until then the apps
+  // must not see it, nor its events.
+  it('leaves out the events of an unpublished branch', () => {
+    const runId = Date.now();
+    const event: EventInput = {
+      title: `${titlePrefix} unpublished branch ${runId}`,
+      subtitle: 'Undertitel',
+      start: danishTime('2030-07-01T10:00:00'),
+      end: danishTime('2030-07-01T12:00:00'),
+    };
+    createBranch(`${titlePrefix} branch to unpublish ${runId}`, null).then(
+      (unpublishedBranchId) => {
+        createEvent(event, unpublishedBranchId);
+        // Requested while the branch is published, so the response is cached
+        // and unpublishing has to invalidate it.
+        getEventsTitled(event.title).should('have.length', 1);
+
+        setBranchPublished(unpublishedBranchId, false);
+        getEventsTitled(event.title).should('deep.equal', []);
+
+        setBranchPublished(unpublishedBranchId, true);
+        getEventsTitled(event.title).should('have.length', 1);
+      },
+    );
   });
 
   it('returns ongoing events and leaves out those that have ended', () => {

@@ -151,4 +151,5 @@ type AppContentElementGoLinkbox implements AppContentElement {
   description: String!
   image: String
   contentId: String!
+  linkTitle: String
 }

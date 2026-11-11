@@ -8,8 +8,6 @@
 import type { DplOpeningHoursCreatePOST_Format } from "./dplOpeningHoursCreatePOSTFormat";
 
 export type DplOpeningHoursCreatePOSTParams = {
-  /**
-   * Request format
-   */
+  /** Request format */
   _format?: DplOpeningHoursCreatePOST_Format;
 };

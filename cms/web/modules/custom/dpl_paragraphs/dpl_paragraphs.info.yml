@@ -4,4 +4,6 @@ description: 'Tweaks to various DPL paragraphs'
 package: 'DPL'
 core_version_requirement: ^10 || ^11
 dependencies:
+  - dpl_library_agency:dpl_library_agency
   - dpl_media:dpl_media
+  - dpl_react_apps:dpl_react_apps

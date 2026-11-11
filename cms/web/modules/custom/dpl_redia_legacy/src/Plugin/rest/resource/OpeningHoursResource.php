@@ -53,7 +53,8 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
       $container->get('dpl_opening_hours.custom_serializer'),
       $container->get('dpl_opening_hours.repository'),
       $container->get('dpl_opening_hours.mapper'),
-      $container->get('cache_tags.invalidator')
+      $container->get('cache_tags.invalidator'),
+      $container->get('current_user'),
     );
   }
 
@@ -141,6 +142,7 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
         $fromDate,
         $toDate
       );
+      $openingHoursInstances = $this->filterVisibleInstances($openingHoursInstances);
 
       $responseData = array_map(function (OpeningHoursInstance $instance) :
       OpeningHoursLegacyResponse {

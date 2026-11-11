@@ -39,7 +39,7 @@ class RediaEvent extends ControllerBase {
   public string $promoted;
 
   public function __construct(EventInstance $event_instance, PriceFormatter $price_formatter) {
-    $branch = $event_instance->getBranches()[0] ?? NULL;
+    $branch = $event_instance->getPublishedBranches()[0] ?? NULL;
     $start_date = $event_instance->getStartDate();
     $end_date = $event_instance->getEndDate();
 

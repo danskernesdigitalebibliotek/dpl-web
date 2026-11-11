@@ -8,12 +8,8 @@
 import type { EventsGET_Format } from "./eventsGETFormat";
 
 export type EventsGETParams = {
-  /**
-   * Request format
-   */
+  /** Request format */
   _format?: EventsGET_Format;
-  /**
-   * Retrieve events which occur after and including the provided date. In ISO 8601 format.
-   */
+  /** Retrieve events which occur after and including the provided date. In ISO 8601 format. */
   from_date?: string;
 };
