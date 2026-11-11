@@ -15,8 +15,6 @@ import HelpText from "@/components/shared/helpText/HelpText"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
-// TODO(biblio-migration): delete once the Biblio path below is verified.
-// import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
 import { useDigitalEditionAvailabilityBiblio } from "@/hooks/useDigitalEditionAvailabilityBiblio"
 import { useEditionAvailability } from "@/hooks/useEditionAvailability"
 import usePatronShelf from "@/hooks/usePatronShelf"
@@ -52,6 +50,8 @@ const WorkPageButtonsLoggedIn = ({
   const { data: biblioLoansData, isLoading: isLoadingBiblioLoans } = useDigitalLoans({
     enabled: viaBiblioAdapter,
   })
+  const { isDigitalEditionOnLoan: isOnLoan } =
+    useDigitalEditionAvailabilityBiblio(selectedManifestation)
 
   if (isLoadingLoans || (viaBiblioAdapter && !isUnilogin && isLoadingBiblioLoans)) {
     return <WorkPageButtons.Skeleton />
@@ -126,19 +126,27 @@ const WorkPageButtonsLoggedIn = ({
       )
     }
     return (
-      <DigitalLoanButtons
-        workId={workId}
-        selectedManifestation={selectedManifestation}
-        label={label}
-        dataCy={dataCy}
-        isDisabled={isDisabled}
-        onLoan={() => open("LoanMaterialModal")}>
+      <WorkPageButtons>
+        {isOnLoan && (
+          <div className="w-full lg:max-w-80 lg:min-w-72">
+            <HelpText>Udlånt lige nu</HelpText>
+          </div>
+        )}
+        <WorkPageButton
+          ariaLabel={`Lån ${label}`}
+          theme="primary"
+          dataCy={dataCy}
+          disabled={isDisabled}
+          ariaDisabled={isOnLoan}
+          onClick={() => open("LoanMaterialModal")}>
+          Lån {label}
+        </WorkPageButton>
         <WorkPageButton ariaLabel={`Prøv ${label}`} dataCy={dataCy} asChild disabled={isDisabled}>
           <SmartLink href={getEbookPreviewUrl(workId, identifier || "")} reload>
             Prøv {label}
           </SmartLink>
         </WorkPageButton>
-      </DigitalLoanButtons>
+      </WorkPageButtons>
     )
   }
 
@@ -176,13 +184,21 @@ const WorkPageButtonsLoggedIn = ({
       )
     }
     return (
-      <DigitalLoanButtons
-        workId={workId}
-        selectedManifestation={selectedManifestation}
-        label={label}
-        dataCy={dataCy}
-        isDisabled={isDisabled}
-        onLoan={() => open("LoanMaterialModal")}>
+      <WorkPageButtons>
+        {isOnLoan && (
+          <div className="w-full lg:max-w-80 lg:min-w-72">
+            <HelpText>Udlånt lige nu</HelpText>
+          </div>
+        )}
+        <WorkPageButton
+          ariaLabel={`Lån ${label}`}
+          theme="primary"
+          dataCy={dataCy}
+          disabled={isDisabled}
+          ariaDisabled={isOnLoan}
+          onClick={() => open("LoanMaterialModal")}>
+          Lån {label}
+        </WorkPageButton>
         <WorkPageButton
           ariaLabel={`Prøv ${label}`}
           dataCy={dataCy}
@@ -196,59 +212,11 @@ const WorkPageButtonsLoggedIn = ({
           }}>
           Prøv {label}
         </WorkPageButton>
-      </DigitalLoanButtons>
+      </WorkPageButtons>
     )
   }
 
   return null
-}
-
-// The loan button for a digital edition, with the try button beside it. A
-// material in a Publizon reservation queue cannot be borrowed, so the button
-// says so instead of opening a modal that would fail. Trying a sample stays
-// available.
-const DigitalLoanButtons = ({
-  workId,
-  selectedManifestation,
-  label,
-  dataCy,
-  isDisabled,
-  onLoan,
-  children,
-}: {
-  workId: string
-  selectedManifestation: ManifestationWorkPageFragment
-  label: string
-  dataCy: string
-  isDisabled: boolean
-  onLoan: () => void
-  children: React.ReactNode
-}) => {
-  // TODO(biblio-migration): delete once the Biblio path below is verified.
-  // const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
-  // const isOnLoan = isDigitalEditionOnLoan(selectedManifestation)
-  const { isDigitalEditionOnLoan: isOnLoan } =
-    useDigitalEditionAvailabilityBiblio(selectedManifestation)
-
-  return (
-    <WorkPageButtons>
-      {isOnLoan && (
-        <div className="w-full lg:max-w-80 lg:min-w-72">
-          <HelpText>Udlånt lige nu</HelpText>
-        </div>
-      )}
-      <WorkPageButton
-        ariaLabel={`Lån ${label}`}
-        theme="primary"
-        dataCy={dataCy}
-        disabled={isDisabled}
-        ariaDisabled={isOnLoan}
-        onClick={onLoan}>
-        Lån {label}
-      </WorkPageButton>
-      {children}
-    </WorkPageButtons>
-  )
 }
 
 // Reads the patron's loans and reservations and renders the matching state:

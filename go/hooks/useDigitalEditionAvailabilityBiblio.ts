@@ -13,14 +13,11 @@ import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 const isDigitalMaterialType = (code: string | undefined): boolean =>
   !!code && (isEbookMaterialType(code) || isAudioMaterialType(code) || isPodcastMaterialType(code))
 
-// Temporary name: this replaces useDigitalEditionAvailability once the
-// Biblio path is verified, at which point the Publizon hook (and its
-// commented-out call sites) are deleted and this one is renamed in its
-// place. One hook call answers for one manifestation — unlike Publizon's
-// batch loanstatus endpoint, Biblio's loan decision takes a single material
-// id, so a caller that needs several editions at once (the picker) makes one
-// call per edition rather than one call for the list.
-// See go/scripts/toolbox/temp/digital-availability-biblio-migration.md
+// One hook call answers for one manifestation — unlike Publizon's batch
+// loanstatus endpoint, Biblio's loan decision takes a single material id, so
+// a caller that needs several editions at once (the picker) makes one call
+// per edition rather than one call for the list; see
+// useDigitalEditionsAvailabilityBiblio for that case.
 //
 // Whether a digital edition can be borrowed right now, via the Biblio
 // adapter. Biblio's loan decision is patron-scoped — it has no equivalent of

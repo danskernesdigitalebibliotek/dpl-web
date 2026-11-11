@@ -8,8 +8,6 @@ import {
 import HelpText from "@/components/shared/helpText/HelpText"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
-// TODO(biblio-migration): delete once the Biblio path below is verified.
-// import { useDigitalEditionAvailability } from "@/hooks/useDigitalEditionAvailability"
 import { useDigitalEditionAvailabilityBiblio } from "@/hooks/useDigitalEditionAvailabilityBiblio"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
@@ -39,6 +37,8 @@ const WorkPageButtonsLoggedOut = ({
   // the audio preview below always goes to the player bar and the
   // PlayerPreviewModal branch goes.
   const viaBiblioAdapter = useBiblioAdapter()
+  const { isDigitalEditionOnLoan: isOnLoan } =
+    useDigitalEditionAvailabilityBiblio(selectedManifestation)
 
   const open = (modal: TModalType) =>
     openModal(modal, { wid: workId, pid: selectedManifestation.pid })
@@ -59,13 +59,19 @@ const WorkPageButtonsLoggedOut = ({
   if (category === "ebook") {
     return (
       <WorkPageButtons>
-        <DigitalLoanButton
-          workId={workId}
-          selectedManifestation={selectedManifestation}
-          label={label}
-          isDisabled={isDisabled}
-          onLoan={() => open("LoanLoginModal")}
-        />
+        {isOnLoan && (
+          <div className="w-full lg:max-w-80 lg:min-w-72">
+            <HelpText>Udlånt lige nu</HelpText>
+          </div>
+        )}
+        <WorkPageButton
+          ariaLabel={`Lån ${label}`}
+          theme="primary"
+          disabled={isDisabled}
+          ariaDisabled={isOnLoan}
+          onClick={() => open("LoanLoginModal")}>
+          Lån {label}
+        </WorkPageButton>
         <WorkPageButton ariaLabel={`Prøv ${label}`} asChild disabled={isDisabled}>
           <SmartLink href={getEbookPreviewUrl(workId, identifier || "")} reload>
             Prøv {label}
@@ -78,13 +84,19 @@ const WorkPageButtonsLoggedOut = ({
   if (category === "audio") {
     return (
       <WorkPageButtons>
-        <DigitalLoanButton
-          workId={workId}
-          selectedManifestation={selectedManifestation}
-          label={label}
-          isDisabled={isDisabled}
-          onLoan={() => open("LoanLoginModal")}
-        />
+        {isOnLoan && (
+          <div className="w-full lg:max-w-80 lg:min-w-72">
+            <HelpText>Udlånt lige nu</HelpText>
+          </div>
+        )}
+        <WorkPageButton
+          ariaLabel={`Lån ${label}`}
+          theme="primary"
+          disabled={isDisabled}
+          ariaDisabled={isOnLoan}
+          onClick={() => open("LoanLoginModal")}>
+          Lån {label}
+        </WorkPageButton>
         <WorkPageButton
           ariaLabel={`Prøv ${label}`}
           disabled={isDisabled}
@@ -102,46 +114,6 @@ const WorkPageButtonsLoggedOut = ({
   }
 
   return null
-}
-
-// The loan button for a digital edition. A material in a Publizon reservation
-// queue cannot be borrowed, so the button says so rather than sending the
-// reader through a login to find out.
-const DigitalLoanButton = ({
-  workId,
-  selectedManifestation,
-  label,
-  isDisabled,
-  onLoan,
-}: {
-  workId: string
-  selectedManifestation: ManifestationWorkPageFragment
-  label: string
-  isDisabled: boolean
-  onLoan: () => void
-}) => {
-  // TODO(biblio-migration): delete once the Biblio path below is verified.
-  // const { isDigitalEditionOnLoan } = useDigitalEditionAvailability(workId)
-  const { isDigitalEditionOnLoan: isOnLoan } =
-    useDigitalEditionAvailabilityBiblio(selectedManifestation)
-
-  return (
-    <>
-      {isOnLoan && (
-        <div className="w-full lg:max-w-80 lg:min-w-72">
-          <HelpText>Udlånt lige nu</HelpText>
-        </div>
-      )}
-      <WorkPageButton
-        ariaLabel={`Lån ${label}`}
-        theme="primary"
-        disabled={isDisabled}
-        ariaDisabled={isOnLoan}
-        onClick={onLoan}>
-        Lån {label}
-      </WorkPageButton>
-    </>
-  )
 }
 
 export default WorkPageButtonsLoggedOut

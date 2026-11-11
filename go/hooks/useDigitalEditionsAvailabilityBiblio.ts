@@ -13,13 +13,11 @@ import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 const isDigitalMaterialType = (code: string | undefined): boolean =>
   !!code && (isEbookMaterialType(code) || isAudioMaterialType(code) || isPodcastMaterialType(code))
 
-// Temporary name: this replaces the batch use of useDigitalEditionAvailability
-// in EditionsSelectModal once the Biblio path is verified. Plural
-// counterpart to useDigitalEditionAvailabilityBiblio, for a caller (the
-// picker) that lists several editions at once and needs every result before
-// it settles — see useDigitalLoanDecisions for why that needs its own hook
-// on the service-layer side, Biblio having no batch loan-decision endpoint.
-// See go/scripts/toolbox/temp/digital-availability-biblio-migration.md
+// Plural counterpart to useDigitalEditionAvailabilityBiblio, for a caller
+// (the picker) that lists several editions at once and needs every result
+// before it settles — see useDigitalLoanDecisions for why that needs its own
+// hook on the service-layer side, Biblio having no batch loan-decision
+// endpoint.
 export const useDigitalEditionsAvailabilityBiblio = (
   manifestations: ManifestationWorkPageFragment[]
 ) => {
