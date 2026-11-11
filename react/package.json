@@ -110,7 +110,7 @@
     "postcss-scss": "^4.0.9",
     "prettier": "^3.9.10",
     "replace-in-file": "^9.0.0",
-    "sass": "^1.107.1",
+    "sass": "^1.108.1",
     "storybook": "^8.6.19",
     "style-loader": "^4.0.0",
     "stylelint": "^17.16.0",
