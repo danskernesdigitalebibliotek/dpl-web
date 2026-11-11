@@ -103,7 +103,8 @@ export const sortManifestationsBySortPriority = (
   manifestations: ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[]
 ): ManifestationWorkPageFragment[] | ManifestationSearchPageTeaserFragment[] => {
   const sortPriority = goConfig("materialtypes.sortpriority")
-  return manifestations.sort((manifestationA, manifestationB) => {
+  // Spread to sort a copy and leave the caller's array as it was.
+  return [...manifestations].sort((manifestationA, manifestationB) => {
     const priorityA = sortPriority.indexOf(
       manifestationA.materialTypes[0].materialTypeSpecific.code
     )
@@ -308,4 +309,26 @@ export const getManifestationMaterialTypeIcon = (
 ): MaterialTypeIconNamesType | undefined => {
   const materialType = getManifestationMaterialType(manifestation)
   return getIconNameFromMaterialType(materialType.code)
+}
+
+//Find the editions for the selected type and sort them by publication year, newest first
+export const getEditionsForMaterialType = (
+  manifestations: ManifestationWorkPageFragment[],
+  materialTypeCode: string
+): ManifestationWorkPageFragment[] => {
+  const selectedLabel = translateMaterialTypesStringForRender(materialTypeCode)
+
+  return (filterMaterialTypes(manifestations) as ManifestationWorkPageFragment[])
+    .filter(manifestation =>
+      manifestation.materialTypes.some(
+        materialType =>
+          translateMaterialTypesStringForRender(materialType.materialTypeSpecific.code) ===
+          selectedLabel
+      )
+    )
+    .sort(
+      (a, b) =>
+        (b.edition?.publicationYear?.year ?? -Infinity) -
+        (a.edition?.publicationYear?.year ?? -Infinity)
+    )
 }
