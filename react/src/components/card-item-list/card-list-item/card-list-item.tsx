@@ -145,7 +145,6 @@ const CardListItem: React.FC<CardListItemProps> = ({
             searchUrl={searchUrl}
             seriesUrl={seriesUrl}
             t={t}
-            workId={workId}
           />
         </div>
         {!materialIsFiction(bestRepresentation) && shelfmark && (

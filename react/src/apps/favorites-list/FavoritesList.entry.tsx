@@ -20,7 +20,6 @@ interface FavoritesListTextEntryProps {
   showMoreText: string;
   resultPagerStatusText: string;
   favoritesListEmptyText: string;
-  inSeriesText: string;
   numberDescriptionText: string;
 }
 

@@ -221,10 +221,6 @@ const meta: Meta<typeof MaterialEntry> = {
       description: "Subject number (Emnetal)",
       control: { type: "text" }
     },
-    inSeriesText: {
-      description: "In series",
-      control: { type: "text" }
-    },
     loginToSeeReviewText: {
       description: "Login to see Review",
       control: { type: "text" }
@@ -890,7 +886,6 @@ const meta: Meta<typeof MaterialEntry> = {
     inSameSeriesText: "In the same series",
     numberDescriptionText: "Nr.",
     subjectNumberText: "Emnetal",
-    inSeriesText: "in series",
     loginToSeeReviewText: "Login to see the review.",
     cantViewReviewText: "Cannot view the review.",
     ratingIsText:

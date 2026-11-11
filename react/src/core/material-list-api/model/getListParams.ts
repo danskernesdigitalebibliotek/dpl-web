@@ -7,8 +7,6 @@
 import type { CollectionIdsParameter } from "./collectionIdsParameter";
 
 export type GetListParams = {
-  /**
-   * Filter the list reply down to the given collection identifiers. This is the recommended way to check for existence of multiple collections on the list.
-   */
+  /** Filter the list reply down to the given collection identifiers. This is the recommended way to check for existence of multiple collections on the list. */
   collection_ids?: CollectionIdsParameter;
 };

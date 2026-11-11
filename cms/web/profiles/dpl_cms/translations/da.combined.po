@@ -1157,7 +1157,7 @@ msgid ""
 msgstr ""
 
 msgid "<none>"
-msgstr ""
+msgstr "- ingen -"
 
 msgid ""
 "<p class=\"fieldgroup-help\">Fields can be dragged into groups with "
@@ -3110,6 +3110,9 @@ msgstr ""
 msgid "Administer Paragraphs categories"
 msgstr ""
 
+msgid "Administer TwentyThree configuration"
+msgstr ""
+
 msgid "Administer Users by Role"
 msgstr "Administrer Brugere efter Rolle"
 
@@ -3587,6 +3590,10 @@ msgstr "Tilladte domæner"
 
 msgid "Allowed file extensions"
 msgstr "Tilladte filendelse"
+
+msgctxt "media_twentythree"
+msgid "Allowed host names"
+msgstr "Tilladte værtsnavne"
 
 msgid "Allowed if bnf_server is enabled."
 msgstr "Tilladt hvis bnf_server er aktiveret."
@@ -6695,6 +6702,9 @@ msgstr ""
 "for Tag som Type: Cache-Tags for Header and\n"
 "      [invalidation:expression] for Value."
 
+msgid "Configure which host names TwentyThree videos may be added from."
+msgstr "Indstil hvilke værtsnavne TwentyThree videoer kan tilføjes fra"
+
 msgctxt "Create patron"
 msgid "Confirm"
 msgstr "Bekræft"
@@ -7494,7 +7504,7 @@ msgstr "Ophav mangler"
 
 msgctxt "dpl_service_message"
 msgid "Critical"
-msgstr ""
+msgstr "Kritisk"
 
 msgid "Cron access key now stored in state."
 msgstr "Cron-adgangsnøgle nu gemt i state."
@@ -11330,7 +11340,7 @@ msgstr ""
 
 msgctxt "translation handling"
 msgid "Failed to fetch file due to error \"%error\""
-msgstr "Kunne ikke hente fil pga fejl \"%error\""
+msgstr "Kunne ikke hente filen på grund af fejlen \"%error\""
 
 msgid "Failed to fetch picture from @url: @message"
 msgstr ""
@@ -13036,6 +13046,12 @@ msgstr "Værtspublikation"
 msgctxt "Url Proxy"
 msgid "Host configuration"
 msgstr "Opsætning af værtsnavne"
+
+msgid "Host name"
+msgstr "Værtsnavn"
+
+msgid "Host names TwentyThree videos may be added from"
+msgstr "Værtsnavne videoer fra TwentyThree kan tilføjes fra"
 
 msgctxt "advanced search 2"
 msgid "Host publication"
@@ -15897,7 +15913,7 @@ msgid "Media player width"
 msgstr "Medieafspiller bredde"
 
 msgid "Media type"
-msgstr "Medie type"
+msgstr "Media type"
 
 msgctxt "views.view.media_library:display:default:display_options:filters:bundle:expose:label"
 msgid "Media type"
@@ -18387,6 +18403,10 @@ msgctxt "advanced search 2"
 msgid "Part of series"
 msgstr "i serien"
 
+msgctxt "Global"
+msgid "Part of the series"
+msgstr "En del af serien"
+
 msgid "Partners"
 msgstr "I samarbejde med"
 
@@ -19066,11 +19086,11 @@ msgstr ""
 
 msgctxt "Global"
 msgid "Processing..."
-msgstr "Indlæser..."
+msgstr "Behandler..."
 
 msgctxt "Renew loan"
 msgid "Processing..."
-msgstr "Indlæser..."
+msgstr "Behandler..."
 
 msgid "Product availability"
 msgstr "Produkttilgængelighed"
@@ -20646,7 +20666,7 @@ msgstr ""
 
 msgctxt "DPL admin"
 msgid "Reset password"
-msgstr "Gendan adgangskode"
+msgstr "Nulstil adgangskode"
 
 msgid "Reset role mappings if no groups are passed."
 msgstr ""
@@ -21354,7 +21374,7 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Search results"
-msgstr "Søgning"
+msgstr "Søgeresultater"
 
 msgctxt "Recommender (settings)"
 msgid "Search text"
@@ -21478,7 +21498,7 @@ msgstr "Vælg konto"
 
 msgctxt "Dashboard"
 msgid "Select all"
-msgstr "Vælg alle"
+msgstr "Markér alt"
 
 msgid "Select all categories the paragraph applies to."
 msgstr "Vælg alle kategorier som paragraphen gælder for"
@@ -24945,6 +24965,15 @@ msgstr ""
 msgid "The height the image, in pixels."
 msgstr "Billedets højde, i pixels."
 
+msgctxt "media_twentythree"
+msgid ""
+"The host names your TwentyThree videos are served from, one per line. For "
+"example: video.example.dk. Videos can only be added from these host names."
+msgstr ""
+"De værtsnavne som videoer fra TwentyThree kan tilføjes fra, ét pr. linje. "
+"F.eks. video.example.dk. Videoer kan kun tilføjes fra de indstillede "
+"værtsnavne."
+
 msgid "The human-readable name of this  profile. This name must be unique."
 msgstr "Det menneskelæsbare navn på denne profil. Dette navn skal være unikt."
 
@@ -27827,6 +27856,9 @@ msgstr "Ændringer til forskellige Paragraphs"
 msgid "TwentyThree"
 msgstr "TwentyThree"
 
+msgid "TwentyThree settings"
+msgstr "TwentyThree indstillinger"
+
 msgid "Twitter Cards"
 msgstr "Twitter Cards"
 
@@ -28184,7 +28216,7 @@ msgstr "Ikke-installerede moduler: %modules_list"
 msgid "Uninstalled theme"
 msgid_plural "Uninstalled themes"
 msgstr[0] ""
-msgstr[1] ""
+msgstr[1] "Afinstallerede temaer"
 
 msgid "Unknown"
 msgstr "Ukendt"
@@ -31259,7 +31291,7 @@ msgstr ""
 
 msgctxt "advanced search"
 msgid "language"
-msgstr "Sprog"
+msgstr "sprog"
 
 msgid "last »"
 msgstr "sidste »"

@@ -79,7 +79,6 @@ interface MaterialEntryTextProps {
   reservationDetailsNoInterestAfterTitleText: string;
   identifierText: string;
   inSameSeriesText: string;
-  inSeriesText: string;
   instantLoanSubTitleText: string;
   instantLoanTitleText: string;
   instantLoanUnderlineDescriptionText: string;

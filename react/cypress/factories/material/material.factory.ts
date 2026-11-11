@@ -82,6 +82,7 @@ export const materialFactory = Factory.define<GetMaterialQuery>(() => ({
       {
         title: "De syv søstre-serien",
         isPopular: true,
+        numberInSeries: "Del 1",
         readThisFirst: true,
         readThisWhenever: null,
         members: [

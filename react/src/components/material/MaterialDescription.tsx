@@ -156,7 +156,6 @@ const MaterialDescription: React.FC<MaterialDescriptionProps> = ({ work }) => {
             searchUrl={searchUrl}
             seriesUrl={seriesUrl}
             t={t}
-            workId={work.workId}
             dataCy="material-description-series"
           />
           <HorizontalTermLine

@@ -16,7 +16,6 @@ import { AdvancedSearchV2SortArgs } from "../../core/storybook/advancedSearchV2S
 
 interface AdvancedSearchEntryTextProps {
   byAuthorText: string;
-  inSeriesText: string;
   loadingText: string;
   resultPagerStatusText: string;
   showMoreText: string;

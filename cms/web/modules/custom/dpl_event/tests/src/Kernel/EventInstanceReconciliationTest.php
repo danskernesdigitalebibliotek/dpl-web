@@ -195,7 +195,7 @@ class EventInstanceReconciliationTest extends KernelTestBase {
    * This drives the reconciliation directly rather than saving the series,
    * because saving it does not survive such an instance either way - the status
    * update recurring_events runs over every instance afterwards saves it, and
-   * dpl_event_eventinstance_presave() throws on an instance without a date.
+   * EntityHooks::setAllDayTimes() throws on an instance without a date.
    * That is separate from reconciliation, and older than it.
    */
   public function testOccurrenceWithAnUnreadableDateIsLeftAlone(): void {
@@ -283,7 +283,7 @@ class EventInstanceReconciliationTest extends KernelTestBase {
   /**
    * Strips the date off an event instance, straight in the database.
    *
-   * This goes around the entity API on purpose. dpl_event_eventinstance_presave
+   * This goes around the entity API on purpose. EntityHooks::setAllDayTimes()
    * reads the date of every instance it saves and throws when there is none, so
    * an instance without a date cannot be saved through the API at all - the
    * only way one exists is that its row was damaged from the outside, which is
