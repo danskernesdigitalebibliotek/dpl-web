@@ -110,7 +110,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
   }, [hasSearchChanged]);
 
   // Fetch facets for campaign matching
-  const { data: facetData } = useSearchFacetQuery(
+  const { data: facetData, isPending: isFacetPending } = useSearchFacetQuery(
     {
       q: { all: q },
       facets: allFacetFields,
@@ -125,6 +125,11 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
   const facets = facetData?.search.facets || [];
 
   const campaignMutation = useCampaignMatchPOST();
+  // The campaign is matched once the facets have loaded, if there are any.
+  const isCampaignLoading =
+    isFacetPending ||
+    (facets.length > 0 &&
+      (campaignMutation.isIdle || campaignMutation.isPending));
 
   useEffect(() => {
     if (facets.length === 0) return;
@@ -324,6 +329,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
               isLoading={isLoading}
               page={page}
               pageSize={pageSize}
+              restoreScrollToClickedItem
+              isCampaignLoading={isCampaignLoading}
               infoBoxProps={{
                 title: infoBoxTitle,
                 html: infoBoxHtml,

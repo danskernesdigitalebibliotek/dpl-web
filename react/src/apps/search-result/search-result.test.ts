@@ -569,16 +569,15 @@ describe("Search Result", () => {
       page.visit([]);
     });
 
-    it("keeps the loaded pages when returning from a work", () => {
+    it("keeps the loaded pages and scrolls back to the clicked work", () => {
       // Load the second page. The page is kept in the URL.
-      cy.get(".card-list-item").should("have.length", 50);
+      cy.get("[data-item-id]").should("have.length", 50);
       cy.contains("button", "show more").click();
-      cy.get(".card-list-item").should("have.length", 100);
+      cy.get("[data-item-id]").should("have.length", 100);
       cy.url().should("include", "page=1");
 
       // Open a work from the second page and go back with the browser.
-      cy.get(".card-list-item")
-        .eq(75)
+      cy.get('[data-item-id="work-of:test-75"]')
         .find("[data-cy='card-list-item-title'] a")
         .click();
       cy.url().should("include", "/work/");
@@ -586,7 +585,66 @@ describe("Search Result", () => {
 
       // Both pages are shown again (2 pages with 50 items equals 100), so the
       // work is still in the list.
-      cy.get(".card-list-item").should("have.length", 100);
+      cy.get("[data-item-id]").should("have.length", 100);
+      // The work that was opened has focus and is scrolled into view, so the
+      // user continues where they left off.
+      cy.get('[data-item-id="work-of:test-75"]')
+        .should("have.focus")
+        .and(($item) => {
+          const { top, bottom } = $item[0].getBoundingClientRect();
+          expect(top).to.be.greaterThan(0);
+          expect(bottom).to.be.lessThan(Cypress.config("viewportHeight"));
+        });
+      // The work is only kept in the URL until it has been scrolled to.
+      cy.url().should("not.include", "item=");
+    });
+
+    // The campaign is fetched after the works and added above them, so it
+    // must not push the clicked work away after scrolling back to it.
+    it("scrolls back to the clicked work when a campaign is shown", () => {
+      // Show a campaign above the results, arriving after the works.
+      cy.intercept("POST", "**/dpl_campaign/match*", {
+        statusCode: 200,
+        delay: 1000,
+        body: {
+          data: {
+            id: "1",
+            title: "Campaign title",
+            url: "https://example.com/campaign",
+            open_in_new_tab: false
+          }
+        }
+      });
+
+      // Load the second page, open a work from it and go back.
+      cy.get("[data-item-id]").should("have.length", 50);
+      cy.contains("button", "show more").click();
+      cy.get("[data-item-id]").should("have.length", 100);
+      cy.get('[data-item-id="work-of:test-75"]')
+        .find("[data-cy='card-list-item-title'] a")
+        .click();
+      cy.url().should("include", "/work/");
+      // Turn off scroll anchoring, which would otherwise hide the problem in
+      // Chrome and Firefox, as not all browsers support it.
+      cy.on("window:before:load", (win) => {
+        win.addEventListener("DOMContentLoaded", () => {
+          const style = win.document.createElement("style");
+          style.textContent = "* { overflow-anchor: none; }";
+          win.document.head.append(style);
+        });
+      });
+      cy.go("back");
+
+      // Once the campaign is shown, the work is still focused and in the
+      // middle of the screen, where it was scrolled to.
+      cy.getBySel("campaign-body").should("exist");
+      cy.get('[data-item-id="work-of:test-75"]')
+        .should("have.focus")
+        .and(($item) => {
+          const { top, bottom } = $item[0].getBoundingClientRect();
+          const { innerHeight } = $item[0].ownerDocument.defaultView ?? {};
+          expect((top + bottom) / 2).to.be.closeTo((innerHeight ?? 0) / 2, 20);
+        });
     });
 
     it("starts over on the first page when the filters change", () => {
@@ -599,7 +657,7 @@ describe("Search Result", () => {
       });
       // The page is removed from the URL and only the first page is shown.
       cy.url().should("not.include", "page=");
-      cy.get(".card-list-item").should("have.length", 50);
+      cy.get("[data-item-id]").should("have.length", 50);
     });
   });
 
