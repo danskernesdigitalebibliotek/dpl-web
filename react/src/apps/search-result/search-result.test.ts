@@ -545,6 +545,62 @@ describe("Search Result", () => {
       // The first result of the second page has focus, not the one before it.
       cy.get(".card-list-item").eq(50).closest("li").should("have.focus");
     });
+
+    // Opening a search on a later page, e.g. from a shared link or by going
+    // back, must not jump to the first result of the last page.
+    it("does not move focus or scroll when opened on a later page", () => {
+      // Open the search result with the second page in the URL, like when
+      // reloading the page or following a shared link after showing more.
+      page.visitStory("default", { qs: { page: 1 } });
+      // Both pages are loaded and shown (2 pages with 50 items equals 100).
+      cy.get(".card-list-item").should("have.length", 100);
+
+      // Focusing the first new result is only for "show more". Here the user
+      // did not ask for more results, so focus stays on the page itself and
+      // the page is not scrolled down to the second page.
+      cy.document().its("activeElement.tagName").should("eq", "BODY");
+      cy.window().its("scrollY").should("eq", 0);
+    });
+  });
+
+  describe("Returning to the search result", () => {
+    beforeEach(() => {
+      givenPagedSearchResults();
+      page.visit([]);
+    });
+
+    it("keeps the loaded pages when returning from a work", () => {
+      // Load the second page. The page is kept in the URL.
+      cy.get(".card-list-item").should("have.length", 50);
+      cy.contains("button", "show more").click();
+      cy.get(".card-list-item").should("have.length", 100);
+      cy.url().should("include", "page=1");
+
+      // Open a work from the second page and go back with the browser.
+      cy.get(".card-list-item")
+        .eq(75)
+        .find("[data-cy='card-list-item-title'] a")
+        .click();
+      cy.url().should("include", "/work/");
+      cy.go("back");
+
+      // Both pages are shown again (2 pages with 50 items equals 100), so the
+      // work is still in the list.
+      cy.get(".card-list-item").should("have.length", 100);
+    });
+
+    it("starts over on the first page when the filters change", () => {
+      // Load the second page.
+      cy.contains("button", "show more").click();
+      cy.url().should("include", "page=1");
+      // Change a filter, which gives a new search.
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+      });
+      // The page is removed from the URL and only the first page is shown.
+      cy.url().should("not.include", "page=");
+      cy.get(".card-list-item").should("have.length", 50);
+    });
   });
 
   describe("Campaign", () => {
