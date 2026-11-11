@@ -4,6 +4,7 @@ import {
   givenSearchWithPaginationEmptyResponse
 } from "../../../cypress/intercepts/fbi/searchWithPagination";
 import { givenSearchFacetResponse } from "../../../cypress/intercepts/fbi/searchFacet";
+import { hasOperationName } from "../../../cypress/utils/graphql-test-utils";
 
 describe("Search Result", () => {
   let page: SearchResultPage;
@@ -471,6 +472,78 @@ describe("Search Result", () => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1000);
       page.verifyUrlContains("id=apps-search-result--on-zero-hits-page");
+    });
+  });
+
+  // Gives every page its own works, so the pages can be told apart.
+  const givenPagedSearchResults = () => {
+    cy.fixture("search-result/facet-browser/searchWithPagination.json").then(
+      (fixture) => {
+        cy.intercept({ method: "POST", url: "**/graphql*" }, (req) => {
+          if (!hasOperationName(req, "searchWithPagination")) {
+            return;
+          }
+          const { offset } = req.body.variables;
+          req.reply({
+            data: {
+              search: {
+                ...fixture.data.search,
+                works: fixture.data.search.works.map(
+                  (work: { workId: string }, i: number) => ({
+                    ...work,
+                    workId: `work-of:test-${offset + i}`
+                  })
+                )
+              }
+            }
+          });
+        });
+      }
+    );
+  };
+
+  describe("Show more", () => {
+    beforeEach(() => {
+      givenPagedSearchResults();
+    });
+
+    // Keyboard and screen reader users continue from the first new result
+    // instead of starting over at the top of the list.
+    it("focuses the first new result", () => {
+      // Open the search result and wait for the first page.
+      page.visit([]);
+      cy.get(".card-list-item").should("have.length", 50);
+      // Load the second page.
+      cy.contains("button", "show more").click();
+
+      // The first result of the second page has focus.
+      cy.get(".card-list-item").eq(50).closest("li").should("have.focus");
+    });
+
+    // The campaign is shown before the works and must not shift which result
+    // counts as the first new one.
+    it("focuses the first new result when a campaign is shown", () => {
+      // Show a campaign above the results.
+      cy.intercept("POST", "**/dpl_campaign/match*", {
+        statusCode: 200,
+        body: {
+          data: {
+            id: "1",
+            title: "Campaign title",
+            url: "https://example.com/campaign",
+            open_in_new_tab: false
+          }
+        }
+      });
+      // Open the search result and wait for the campaign and the first page.
+      page.visit([]);
+      cy.getBySel("campaign-body").should("exist");
+      cy.get(".card-list-item").should("have.length", 50);
+      // Load the second page.
+      cy.contains("button", "show more").click();
+
+      // The first result of the second page has focus, not the one before it.
+      cy.get(".card-list-item").eq(50).closest("li").should("have.focus");
     });
   });
 
