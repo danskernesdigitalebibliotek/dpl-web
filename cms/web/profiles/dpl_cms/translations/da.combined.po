@@ -15913,7 +15913,7 @@ msgid "Media player width"
 msgstr "Medieafspiller bredde"
 
 msgid "Media type"
-msgstr "Medie type"
+msgstr "Media type"
 
 msgctxt "views.view.media_library:display:default:display_options:filters:bundle:expose:label"
 msgid "Media type"
