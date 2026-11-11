@@ -3253,6 +3253,7 @@ export type GetSmallWorkQuery = {
       __typename?: "WorkTitles";
       full: Array<string>;
       original?: Array<string> | null;
+      titlePlusLanguage?: string | null;
     };
     creators: Array<
       | { __typename: "Corporation"; display: string }
@@ -4055,6 +4056,7 @@ export type GetMaterialQuery = {
       __typename?: "WorkTitles";
       full: Array<string>;
       original?: Array<string> | null;
+      titlePlusLanguage?: string | null;
     };
     creators: Array<
       | { __typename: "Corporation"; display: string }
@@ -4711,6 +4713,7 @@ export type GetMaterialGloballyQuery = {
       __typename?: "WorkTitles";
       full: Array<string>;
       original?: Array<string> | null;
+      titlePlusLanguage?: string | null;
     };
     creators: Array<
       | { __typename: "Corporation"; display: string }
@@ -5388,6 +5391,7 @@ export type RecommendFromFaustQuery = {
           __typename?: "WorkTitles";
           full: Array<string>;
           original?: Array<string> | null;
+          titlePlusLanguage?: string | null;
         };
         creators: Array<
           | { __typename: "Corporation"; display: string }
@@ -6019,6 +6023,7 @@ export type SearchWithPaginationQuery = {
         __typename?: "WorkTitles";
         full: Array<string>;
         original?: Array<string> | null;
+        titlePlusLanguage?: string | null;
       };
       creators: Array<
         | { __typename: "Corporation"; display: string }
@@ -6665,6 +6670,7 @@ export type ComplexSearchWithPaginationQuery = {
         __typename?: "WorkTitles";
         full: Array<string>;
         original?: Array<string> | null;
+        titlePlusLanguage?: string | null;
       };
       creators: Array<
         | { __typename: "Corporation"; display: string }
@@ -7866,6 +7872,7 @@ export type GetSeriesQuery = {
           __typename?: "WorkTitles";
           full: Array<string>;
           original?: Array<string> | null;
+          titlePlusLanguage?: string | null;
         };
         creators: Array<
           | { __typename: "Corporation"; display: string }
@@ -8880,6 +8887,7 @@ export type WorkSmallFragment = {
     __typename?: "WorkTitles";
     full: Array<string>;
     original?: Array<string> | null;
+    titlePlusLanguage?: string | null;
   };
   creators: Array<
     | { __typename: "Corporation"; display: string }
@@ -9538,6 +9546,7 @@ export type WorkMediumFragment = {
     __typename?: "WorkTitles";
     full: Array<string>;
     original?: Array<string> | null;
+    titlePlusLanguage?: string | null;
   };
   creators: Array<
     | { __typename: "Corporation"; display: string }
@@ -10670,6 +10679,7 @@ export const WorkSmallFragmentDoc = new TypedDocumentString(
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -11096,6 +11106,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -11510,6 +11521,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -11885,6 +11897,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -12165,6 +12178,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -12615,6 +12629,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -12885,6 +12900,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -13193,6 +13209,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -13492,6 +13509,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {

@@ -270,6 +270,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
