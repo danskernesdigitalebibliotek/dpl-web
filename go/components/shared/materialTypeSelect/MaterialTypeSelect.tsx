@@ -18,7 +18,7 @@ export type MaterialTypeSelectProps = {
   onOptionSelect: (option: MaterialTypeSelectOption) => void
 }
 
-// Highlights whichever option `selected` names.∏
+// Highlights whichever option `selected` names.
 
 const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeSelectProps) => {
   return (
