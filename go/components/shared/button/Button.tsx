@@ -92,6 +92,10 @@ interface ButtonBaseProps
   isLoading?: boolean
   // Name of the icon rendered before the label (variant "icon-text").
   icon?: string
+  // Unavailable, but still reachable by keyboard: the button keeps its place
+  // in the tab order and announces itself as unavailable, so the reason it
+  // carries can be read.
+  ariaDisabled?: boolean
 }
 
 // `ariaDisabled` and `asChild` are mutually exclusive. Making a button inert
@@ -154,7 +158,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       )
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, theme }), className)}
+        className={cn(
+          buttonVariants({ variant, size, theme }),
+          // The disabled look without the disabled attribute. The hover cursor
+          // is explicit: its merge group outlives a plain cursor-not-allowed.
+          ariaDisabled &&
+            `cursor-not-allowed opacity-50 hover:translate-none hover:cursor-not-allowed
+            active:translate-none`,
+          className
+        )}
         ref={ref}
         {...props}
         aria-busy={isLoading || undefined}
