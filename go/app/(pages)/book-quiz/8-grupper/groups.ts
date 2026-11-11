@@ -35,7 +35,7 @@ const nonfiction: TClauseGroup = { cqlIndex: "term.fictionnonfiction", cqlValues
 // Genregrupper til de to genre-spørgsmål: overordnet genre (liste 1) og stemning
 // (liste 2). Hver matcher genreandform (eller fiktion/fakta) + emner.
 // Kun dokumentets termer: venner, gys og romantik har ingen genre, kun emner.
-const VENNER = sub(["venner", "veninder", "venskab", "skole"])
+const VENNER = sub(["venner", "veninder", "venskab", "venskaber", "skole"])
 const GYS = sub([
   "gys",
   "spøgelser",
@@ -105,6 +105,9 @@ export const GENRE_GROUPS: TGenreGroup[] = [
         "solsystemet",
         "rumskibe",
         "planeter",
+        "ubåde",
+        "robotter",
+        "dystopier",
       ]),
     ],
   },
@@ -113,8 +116,9 @@ export const GENRE_GROUPS: TGenreGroup[] = [
     label: "Historie",
     emoji: "🕰️",
     match: [
-      gen(["historie"]),
+      gen(["historiske romaner"]),
       sub([
+        "historie",
         "middelalderen",
         "1700-tallet",
         "1800-tallet",

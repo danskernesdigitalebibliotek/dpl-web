@@ -154,8 +154,8 @@ const optionMapping = (
     return `emnegruppe: ${group?.label ?? option.subjectGroupId}`
   }
   if (option.ageRange) return `alder ${option.ageRange[0]}–${option.ageRange[1]} år`
-  if (option.readingLevel === "easy") return "lette bøger (let at læse)"
   if (option.note) return option.note
+  if (option.readingLevel === "easy") return "lette bøger (let at læse)"
   return "intet filter"
 }
 

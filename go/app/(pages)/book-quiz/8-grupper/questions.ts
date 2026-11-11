@@ -9,9 +9,9 @@
 
 export type TRange = [number, number]
 
-// Læseniveau: "easy" = generalaudience "let at læse" (CQL). Der findes intet
-// filter for "svære" bøger — svaret har kun en note.
-export type TReadingLevel = "easy"
+// Læseniveau: "easy" = generalaudience "let at læse" (CQL). PoC 8 har intet
+// filter for "hard" (svaret har kun en note); PoC 9 bruger "hard" til lix-straf.
+export type TReadingLevel = "easy" | "hard"
 
 export type TQuizOption = {
   id: string
@@ -104,6 +104,7 @@ export const QUESTIONS: TQuizQuestion[] = [
         id: "niveau-svaer",
         label: "Jeg er en kæmpe læsehest",
         emoji: "🏇",
+        readingLevel: "hard",
         note: "kan ikke finde et filter på dette",
       },
       { id: "niveau-let", label: "Jeg er mest til lette bøger", emoji: "📘", readingLevel: "easy" },
