@@ -1,6 +1,9 @@
 "use client"
 
-import { isMaterialAvailable, useDigitalLoanDecisions } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import {
+  isMaterialAvailable,
+  useDigitalLoanDecisions,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 
 import {
   isAudioMaterialType,
