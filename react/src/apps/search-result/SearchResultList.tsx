@@ -1,5 +1,6 @@
-import React, { Fragment, memo, useEffect } from "react";
+import React, { Fragment, memo, useEffect, useRef } from "react";
 import clsx from "clsx";
+import { usePrevious } from "react-use";
 import { getCoverTint } from "../../core/utils/helpers/general";
 import { Work } from "../../core/utils/types/entities";
 import CardListItem from "../../components/card-item-list/card-list-item/card-list-item";
@@ -33,15 +34,25 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
   infoBoxProps,
   className
 }) => {
-  const lastItemRef = React.useRef<HTMLLIElement>(null);
+  const lastItemRef = useRef<HTMLLIElement>(null);
 
+  // Focus the first item of a page loaded with the pager. Not when the list
+  // mounts on a later page, e.g. restored from the URL.
+  const previousPage = usePrevious(page);
+  const shouldFocusNewPage = useRef(false);
+  if (previousPage !== undefined && page > previousPage) {
+    shouldFocusNewPage.current = true;
+  }
   useEffect(() => {
-    if (page > 0 && lastItemRef.current) {
+    if (shouldFocusNewPage.current && lastItemRef.current) {
       lastItemRef.current.focus();
+      shouldFocusNewPage.current = false;
     }
   }, [page, resultItems]);
 
   const searchInfoBoxIndex = pageSize;
+  // A campaign is shown before the works and must not count as one of them.
+  const campaignOffset = resultItems?.[0] && isCampaign(resultItems[0]) ? 1 : 0;
 
   return (
     <ul
@@ -49,7 +60,7 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
       data-cy="search-result-list"
     >
       {resultItems?.map((item, i) => {
-        const isFirstNewItem = i === page * pageSize;
+        const isFirstNewItem = i === page * pageSize + campaignOffset;
         if (isCampaign(item)) {
           return (
             <MaterialListItem
