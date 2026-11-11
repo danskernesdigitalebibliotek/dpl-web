@@ -115,6 +115,7 @@ const AdvancedSearchResultsWithFacets: React.FC<
                 page={page}
                 pageSize={pageSize}
                 isLoading={isLoadingOrRefetching}
+                restoreScrollToClickedItem
               />
               <PagerComponent isLoading={isLoadingOrRefetching} />
             </>
