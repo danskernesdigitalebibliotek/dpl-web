@@ -84,9 +84,11 @@ const manifestationMock = {
   contributors: [
     {
       display: "Trine Bech",
+      roles: [],
     },
     {
       display: "Steve Sims",
+      roles: [],
     },
   ],
   contributorsFromDescription: [],
