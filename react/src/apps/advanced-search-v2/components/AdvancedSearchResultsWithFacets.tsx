@@ -33,6 +33,7 @@ const AdvancedSearchResultsWithFacets: React.FC<
     hitcount,
     page,
     PagerComponent,
+    resetPage,
     isLoadingOrRefetching,
     shouldShowSearchResults
   } = usePaginatedResults({ cql, isSearchEnabled, onShelf, pageSize, sort });
@@ -47,6 +48,9 @@ const AdvancedSearchResultsWithFacets: React.FC<
         onEditClick={() => {
           // Clear facets (sidebar filters) when editing, keep preSearchFacets
           clearFacets();
+          // The results are unmounted while editing, so the pager would not
+          // notice the search changing.
+          resetPage();
           setView("search");
         }}
       />
