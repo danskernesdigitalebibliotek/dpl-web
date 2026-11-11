@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a75e5120ab532caf1060b8918e6cdb56",
+    "content-hash": "ab21c04a6c89d625e174e93007a24430",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -121,7 +121,7 @@
             "version": "v2.30.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:mperdeck/jsnlog.js.git",
+                "url": "https://github.com/mperdeck/jsnlog.js.git",
                 "reference": "297b61745b98c827c48b27b92b7057df3ebfdcb7"
             },
             "dist": {
@@ -5350,7 +5350,8 @@
             "homepage": "https://www.drupal.org/project/graphql_compose",
             "support": {
                 "source": "https://git.drupalcode.org/project/graphql_compose"
-            }
+            },
+            "published-time": "2025-11-20T23:33:55+00:00"
         },
         {
             "name": "drupal/gsearch",
@@ -8143,7 +8144,8 @@
             "homepage": "https://www.drupal.org/project/schemata",
             "support": {
                 "source": "https://git.drupalcode.org/project/schemata"
-            }
+            },
+            "published-time": "2024-09-12T18:04:26+00:00"
         },
         {
             "name": "drupal/search_api",
@@ -8669,6 +8671,56 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/taxonomy_unique"
             }
+        },
+        {
+            "name": "drupal/telephone",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/telephone.git",
+                "reference": "1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/telephone-1.0.1.zip",
+                "reference": "1.0.1",
+                "shasum": "53a17f5a0b30daec9c97f52618358c0bc7768adc"
+            },
+            "require": {
+                "drupal/core": "^11.3 || ^12"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.1",
+                    "datestamp": "1786639598",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "dave reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                },
+                {
+                    "name": "smustgrave",
+                    "homepage": "https://www.drupal.org/user/3252890"
+                }
+            ],
+            "description": "Defines a field type for telephone numbers.",
+            "homepage": "https://drupal.org/project/telephone",
+            "support": {
+                "source": "https://git.drupalcode.org/project/telephone",
+                "issues": "https://drupal.org/project/issues/telephone"
+            },
+            "published-time": "2026-08-13T16:45:16+00:00"
         },
         {
             "name": "drupal/telephone_formatter",
@@ -11898,7 +11950,8 @@
             "version": "4.6.13",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/flatpickr/-/flatpickr-4.6.13.tgz"
+                "url": "https://registry.npmjs.org/flatpickr/-/flatpickr-4.6.13.tgz",
+                "shasum": "8a029548187fd6e0d670908471e43abe9ad18d94"
             },
             "type": "npm-asset",
             "license": [
@@ -11910,7 +11963,8 @@
             "version": "4.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/select2/-/select2-4.1.0.tgz"
+                "url": "https://registry.npmjs.org/select2/-/select2-4.1.0.tgz",
+                "shasum": "8b037e02a3c025beda07fed7f9ecc7d298036e1a"
             },
             "type": "npm-asset",
             "license": [
@@ -12774,7 +12828,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-03T12:14:22+00:00"
+            "time": "2026-11-03T12:14:22+00:00",
+            "published-time": "2026-11-03T12:14:36+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -23683,5 +23738,5 @@
         "ext-dom": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
