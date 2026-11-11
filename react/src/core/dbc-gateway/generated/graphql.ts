@@ -3253,7 +3253,15 @@ export type GetSmallWorkQuery = {
       __typename?: "WorkTitles";
       full: Array<string>;
       original?: Array<string> | null;
+      titlePlusLanguage?: string | null;
     };
+    materialTypes: Array<{
+      __typename?: "MaterialType";
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
+      };
+    }>;
     creators: Array<
       | { __typename: "Corporation"; display: string }
       | { __typename: "Person"; display: string }
@@ -3991,13 +3999,13 @@ export type GetMaterialQuery = {
     }>;
     materialTypes: Array<{
       __typename?: "MaterialType";
-      materialTypeGeneral: {
-        __typename?: "GeneralMaterialType";
-        code: GeneralMaterialTypeCodeEnum;
-      };
       materialTypeSpecific: {
         __typename?: "SpecificMaterialType";
         display: string;
+      };
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
       };
     }>;
     mainLanguages: Array<{
@@ -4055,6 +4063,7 @@ export type GetMaterialQuery = {
       __typename?: "WorkTitles";
       full: Array<string>;
       original?: Array<string> | null;
+      titlePlusLanguage?: string | null;
     };
     creators: Array<
       | { __typename: "Corporation"; display: string }
@@ -4647,13 +4656,13 @@ export type GetMaterialGloballyQuery = {
     }>;
     materialTypes: Array<{
       __typename?: "MaterialType";
-      materialTypeGeneral: {
-        __typename?: "GeneralMaterialType";
-        code: GeneralMaterialTypeCodeEnum;
-      };
       materialTypeSpecific: {
         __typename?: "SpecificMaterialType";
         display: string;
+      };
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
       };
     }>;
     mainLanguages: Array<{
@@ -4711,6 +4720,7 @@ export type GetMaterialGloballyQuery = {
       __typename?: "WorkTitles";
       full: Array<string>;
       original?: Array<string> | null;
+      titlePlusLanguage?: string | null;
     };
     creators: Array<
       | { __typename: "Corporation"; display: string }
@@ -5388,7 +5398,15 @@ export type RecommendFromFaustQuery = {
           __typename?: "WorkTitles";
           full: Array<string>;
           original?: Array<string> | null;
+          titlePlusLanguage?: string | null;
         };
+        materialTypes: Array<{
+          __typename?: "MaterialType";
+          materialTypeGeneral: {
+            __typename?: "GeneralMaterialType";
+            code: GeneralMaterialTypeCodeEnum;
+          };
+        }>;
         creators: Array<
           | { __typename: "Corporation"; display: string }
           | { __typename: "Person"; display: string }
@@ -6019,7 +6037,15 @@ export type SearchWithPaginationQuery = {
         __typename?: "WorkTitles";
         full: Array<string>;
         original?: Array<string> | null;
+        titlePlusLanguage?: string | null;
       };
+      materialTypes: Array<{
+        __typename?: "MaterialType";
+        materialTypeGeneral: {
+          __typename?: "GeneralMaterialType";
+          code: GeneralMaterialTypeCodeEnum;
+        };
+      }>;
       creators: Array<
         | { __typename: "Corporation"; display: string }
         | { __typename: "Person"; display: string }
@@ -6665,7 +6691,15 @@ export type ComplexSearchWithPaginationQuery = {
         __typename?: "WorkTitles";
         full: Array<string>;
         original?: Array<string> | null;
+        titlePlusLanguage?: string | null;
       };
+      materialTypes: Array<{
+        __typename?: "MaterialType";
+        materialTypeGeneral: {
+          __typename?: "GeneralMaterialType";
+          code: GeneralMaterialTypeCodeEnum;
+        };
+      }>;
       creators: Array<
         | { __typename: "Corporation"; display: string }
         | { __typename: "Person"; display: string }
@@ -7866,7 +7900,15 @@ export type GetSeriesQuery = {
           __typename?: "WorkTitles";
           full: Array<string>;
           original?: Array<string> | null;
+          titlePlusLanguage?: string | null;
         };
+        materialTypes: Array<{
+          __typename?: "MaterialType";
+          materialTypeGeneral: {
+            __typename?: "GeneralMaterialType";
+            code: GeneralMaterialTypeCodeEnum;
+          };
+        }>;
         creators: Array<
           | { __typename: "Corporation"; display: string }
           | { __typename: "Person"; display: string }
@@ -8880,7 +8922,15 @@ export type WorkSmallFragment = {
     __typename?: "WorkTitles";
     full: Array<string>;
     original?: Array<string> | null;
+    titlePlusLanguage?: string | null;
   };
+  materialTypes: Array<{
+    __typename?: "MaterialType";
+    materialTypeGeneral: {
+      __typename?: "GeneralMaterialType";
+      code: GeneralMaterialTypeCodeEnum;
+    };
+  }>;
   creators: Array<
     | { __typename: "Corporation"; display: string }
     | { __typename: "Person"; display: string }
@@ -9474,13 +9524,13 @@ export type WorkMediumFragment = {
   }>;
   materialTypes: Array<{
     __typename?: "MaterialType";
-    materialTypeGeneral: {
-      __typename?: "GeneralMaterialType";
-      code: GeneralMaterialTypeCodeEnum;
-    };
     materialTypeSpecific: {
       __typename?: "SpecificMaterialType";
       display: string;
+    };
+    materialTypeGeneral: {
+      __typename?: "GeneralMaterialType";
+      code: GeneralMaterialTypeCodeEnum;
     };
   }>;
   mainLanguages: Array<{
@@ -9538,6 +9588,7 @@ export type WorkMediumFragment = {
     __typename?: "WorkTitles";
     full: Array<string>;
     original?: Array<string> | null;
+    titlePlusLanguage?: string | null;
   };
   creators: Array<
     | { __typename: "Corporation"; display: string }
@@ -10670,6 +10721,12 @@ export const WorkSmallFragmentDoc = new TypedDocumentString(
   titles {
     full
     original
+    titlePlusLanguage
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
   }
   abstract
   creators {
@@ -10881,9 +10938,6 @@ export const WorkMediumFragmentDoc = new TypedDocumentString(
     }
   }
   materialTypes {
-    materialTypeGeneral {
-      code
-    }
     materialTypeSpecific {
       display
     }
@@ -11096,6 +11150,12 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
   }
   abstract
   creators {
@@ -11510,6 +11570,12 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
   }
   abstract
   creators {
@@ -11885,6 +11951,12 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
   }
   abstract
   creators {
@@ -11916,9 +11988,6 @@ fragment WorkMedium on Work {
     }
   }
   materialTypes {
-    materialTypeGeneral {
-      code
-    }
     materialTypeSpecific {
       display
     }
@@ -12165,6 +12234,12 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
   }
   abstract
   creators {
@@ -12196,9 +12271,6 @@ fragment WorkMedium on Work {
     }
   }
   materialTypes {
-    materialTypeGeneral {
-      code
-    }
     materialTypeSpecific {
       display
     }
@@ -12615,6 +12687,12 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
   }
   abstract
   creators {
@@ -12885,6 +12963,12 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
   }
   abstract
   creators {
@@ -13193,6 +13277,12 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
   }
   abstract
   creators {
@@ -13492,6 +13582,12 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
   }
   abstract
   creators {
