@@ -4,6 +4,7 @@ import {
   givenSearchWithPaginationEmptyResponse
 } from "../../../cypress/intercepts/fbi/searchWithPagination";
 import { givenSearchFacetResponse } from "../../../cypress/intercepts/fbi/searchFacet";
+import { hasOperationName } from "../../../cypress/utils/graphql-test-utils";
 
 describe("Search Result", () => {
   let page: SearchResultPage;
@@ -471,6 +472,62 @@ describe("Search Result", () => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1000);
       page.verifyUrlContains("id=apps-search-result--on-zero-hits-page");
+    });
+  });
+
+  describe("Returning to the search result", () => {
+    beforeEach(() => {
+      // Give every page its own works, so the pages can be told apart.
+      cy.fixture("search-result/facet-browser/searchWithPagination.json").then(
+        (fixture) => {
+          cy.intercept({ method: "POST", url: "**/graphql*" }, (req) => {
+            if (!hasOperationName(req, "searchWithPagination")) {
+              return;
+            }
+            const { offset } = req.body.variables;
+            req.reply({
+              data: {
+                search: {
+                  ...fixture.data.search,
+                  works: fixture.data.search.works.map(
+                    (work: { workId: string }, i: number) => ({
+                      ...work,
+                      workId: `work-of:test-${offset + i}`
+                    })
+                  )
+                }
+              }
+            });
+          });
+        }
+      );
+      page.visit([]);
+    });
+
+    it("keeps the loaded pages when returning from a work", () => {
+      cy.get(".card-list-item").should("have.length", 50);
+      cy.contains("button", "show more").click();
+      cy.get(".card-list-item").should("have.length", 100);
+      cy.url().should("include", "page=1");
+
+      cy.get(".card-list-item")
+        .eq(75)
+        .find("[data-cy='card-list-item-title'] a")
+        .click();
+      cy.url().should("include", "/work/");
+      cy.go("back");
+
+      cy.get(".card-list-item").should("have.length", 100);
+    });
+
+    it("starts over on the first page when the filters change", () => {
+      cy.contains("button", "show more").click();
+      cy.url().should("include", "page=1");
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+      });
+      cy.url().should("not.include", "page=");
+      cy.get(".card-list-item").should("have.length", 50);
     });
   });
 
