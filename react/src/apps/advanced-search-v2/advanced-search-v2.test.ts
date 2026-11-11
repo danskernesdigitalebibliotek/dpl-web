@@ -903,7 +903,7 @@ describe("Advanced Search V2", () => {
       page.verifyUrlContains("page=1");
     });
 
-    it("keeps the loaded pages when returning from a work", () => {
+    it("keeps the loaded pages and scrolls back to the clicked work", () => {
       // Open a work from the second page and go back with the browser.
       cy.get('[data-item-id="work-of:test-75"]')
         .find("[data-cy='card-list-item-title'] a")
@@ -914,6 +914,15 @@ describe("Advanced Search V2", () => {
       // Both pages are shown again (2 pages with 50 items equals 100), so the
       // work is still in the list.
       cy.get("[data-item-id]").should("have.length", 100);
+      // The work that was opened has focus and is scrolled into view, so the
+      // user continues where they left off.
+      cy.get('[data-item-id="work-of:test-75"]')
+        .should("have.focus")
+        .and(($item) => {
+          const { top, bottom } = $item[0].getBoundingClientRect();
+          expect(top).to.be.greaterThan(0);
+          expect(bottom).to.be.lessThan(Cypress.config("viewportHeight"));
+        });
     });
 
     it("starts over on the first page when the search is edited", () => {
