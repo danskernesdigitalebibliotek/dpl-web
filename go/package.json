@@ -87,7 +87,7 @@
   "devDependencies": {
     "@argos-ci/cli": "^6.11.0",
     "@argos-ci/storybook": "^6.4.4",
-    "@graphql-codegen/cli": "^7.4.6",
+    "@graphql-codegen/cli": "^8.0.0",
     "@graphql-codegen/named-operations-object": "^4.0.1",
     "@graphql-codegen/typescript": "^5.0.10",
     "@graphql-codegen/typescript-operations": "^5.1.0",
