@@ -113,6 +113,7 @@ type Audience {
   Appropriate audience for this manifestation
   """
   generalAudience: [String!]!
+    @deprecated(reason: "Use 'audienceGeneral' instead expires: 01/03-2027")
 
   """
   LET number of this manifestion, defines the reability level, LET stands for læseegnethedstal
@@ -187,7 +188,22 @@ type BibliographicCategory {
   display: String
 }
 
+"""
+Returns all bookmarks associated with a work.
+"""
+input BookmarkFilterInput {
+  """
+  The ID of the work to filter by.
+  """
+  workId: String!
+}
+
 type BookmarkItem {
+  """
+  Branch information for the agency stored with the bookmark, if available.
+  """
+  agency: PatronAgency
+
   """
   The application the bookmark belongs to
   """
@@ -212,6 +228,12 @@ type BookmarkItem {
   The unique identifier for the material this bookmark points to.
   """
   materialId: String!
+
+  """
+  Origin name and comparisons with the current API context.
+  Existing application and agency fields remain available independently.
+  """
+  origin: BookmarkOrigin! @deprecated(reason: "@draft")
 
   """
   The selection applied to the bookmarked work.
@@ -243,6 +265,25 @@ type BookmarkMaterialTypesSelection {
 input BookmarkMaterialTypesSelectionInput {
   general: [GeneralMaterialTypeCodeEnum!]
   specific: [String!]
+}
+
+type BookmarkOrigin {
+  """
+  Library name for multi-agency clients; otherwise the application display name.
+  Null when unavailable.
+  """
+  displayName: String
+
+  """
+  Matches the current application, regardless of agency. Null if unknown.
+  """
+  isCurrentApplication: Boolean
+
+  """
+  Matches the current application and client agency mode (single or multiple).
+  Multi-agency clients must also match the current agency. Null if unknown.
+  """
+  isCurrentOrigin: Boolean
 }
 
 type BookmarkSelection {
@@ -310,6 +351,12 @@ enum BookmarksStatusEnum {
 }
 
 type BookmarksStatusItem {
+  """
+  Stored agency for a confirmed addition or existing bookmark.
+  Null for dry runs, errors and deletions.
+  """
+  agency: PatronAgency
+
   """
   The unique identifier for the bookmark that was attempted to be added or deleted.
   """
@@ -400,16 +447,25 @@ enum CataloguedPublicationStatusEnum {
   New title
   """
   NT
+    @deprecated(
+      reason: "Use MaterialSelectionPublicationStatusEnum.NEW_TITLE expires: 01/03-2027"
+    )
 
   """
   New edition
   """
   NU
+    @deprecated(
+      reason: "Use MaterialSelectionPublicationStatusEnum.NEW_EDITION expires: 01/03-2027"
+    )
 
   """
   New print run
   """
   OP
+    @deprecated(
+      reason: "Use MaterialSelectionPublicationStatusEnum.NEW_PRINT expires: 01/03-2027"
+    )
 }
 
 type ChildOrAdult {
@@ -514,6 +570,7 @@ enum ComplexSearchFacetsEnum {
   PEGI
   PLAYERS
   PRIMARYTARGET
+  PUBLICATIONSTATUS
   PUBLICATIONYEAR
   SERIES
   SETTING
@@ -1113,7 +1170,7 @@ type Edition {
   """
   contributors: [String!]!
     @deprecated(
-      reason: "Field is discontinued and will be removed expires: 05/12-2026"
+      reason: "Field is discontinued and will be removed expires: 01/03-2027"
     )
 
   """
@@ -1153,6 +1210,10 @@ enum EntryTypeEnum {
   MAIN_ENTRY
   NATIONAL_BIBLIOGRAPHY_ADDITIONAL_ENTRY
   NATIONAL_BIBLIOGRAPHY_ENTRY
+    @deprecated(
+      reason: "Use NATIONAL_BIBLIOGRAPHY_MAIN_ENTRY instead expires: 01/03-2027"
+    )
+  NATIONAL_BIBLIOGRAPHY_MAIN_ENTRY
 }
 
 type Ereol {
@@ -1671,7 +1732,7 @@ type Manifestation {
   """
   cataloguedPublicationStatus: CataloguedPublicationStatus
     @deprecated(
-      reason: "Use 'Manifestation.materialSelection.cataloguedPublicationStatus' instead expires: 05/12-2026"
+      reason: "Use 'Manifestation.materialSelection.cataloguedPublicationStatus' instead expires: 01/03-2027"
     )
 
   """
@@ -1728,6 +1789,7 @@ type Manifestation {
   The genre, (literary) form, type etc. of this manifestation
   """
   genreAndForm: [String!]!
+    @deprecated(reason: "Use 'genreForm' instead expires: 01/03-2027")
 
   """
   The genre and (literary) form of this manifestation
@@ -1791,6 +1853,11 @@ type Manifestation {
   ownerWork: Work!
 
   """
+  Notes on relations to this manifestation - e.g. previous/later names or related journals
+  """
+  periodicalTitleHistory: [PeriodicalTitleHistory!]!
+
+  """
   Code for type of periodical
   """
   periodicalType: PeriodicalType
@@ -1825,7 +1892,7 @@ type Manifestation {
   """
   relatedPublications: [RelatedPublication!]!
     @deprecated(
-      reason: "Field is discontinued and will be removed expires: 05/12-2026"
+      reason: "Use 'periodicalTitleHistory' and 'notes' instead expires: 05/12-2026"
     )
 
   """
@@ -1969,7 +2036,7 @@ type ManifestationTitles {
   """
   standard: String
     @deprecated(
-      reason: "Field is discontinued and will be removed expires: 05/12-2026"
+      reason: "Field is discontinued and will be removed expires: 01/03-2027"
     )
 
   """
@@ -1982,7 +2049,7 @@ type ManifestationTitles {
   """
   translated: [String!]
     @deprecated(
-      reason: "Field is discontinued and will be removed expires: 05/12-2026"
+      reason: "Field is discontinued and will be removed expires: 01/03-2027"
     )
 
   """
@@ -2340,7 +2407,7 @@ type Mutation {
   """
   Updates patron information, such as adding or removing bookmarks.
   """
-  patron: PatronMutation @deprecated(reason: "@draft")
+  patron: PatronMutation
   submitOrder(dryRun: Boolean, input: SubmitOrderInput!): SubmitOrder
 }
 
@@ -2362,7 +2429,7 @@ type Note {
   """
   heading: String
     @deprecated(
-      reason: "Field is discontinued and will be removed expires: 05/12-2026"
+      reason: "Field is discontinued and will be removed expires: 01/03-2027"
     )
 
   """
@@ -2377,6 +2444,8 @@ type Note {
 }
 
 enum NoteTypeEnum {
+  CAST_AND_SCENES
+  CONNECTION_TO_OTHER_PERIODICALS
   CONNECTION_TO_OTHER_WORKS
   CONTAINS_AI_GENERATED_CONTENT
   DESCRIPTION_OF_MATERIAL
@@ -2387,9 +2456,11 @@ enum NoteTypeEnum {
   FREQUENCY
   MUSICAL_ENSEMBLE_OR_CAST
   NOT_SPECIFIED
+  NUMBERING_AND_DATING
   OCCASION_FOR_PUBLICATION
   ORIGINAL_TITLE
   ORIGINAL_VERSION
+  PUBLISHED_OTHER_MATERIALTYPE
   REFERENCES
   RESTRICTIONS_ON_USE
   TECHNICAL_REQUIREMENTS
@@ -2464,6 +2535,7 @@ type Patron {
   """
   bookmarks(
     applications: [String!]
+    filter: BookmarkFilterInput
     limit: PaginationLimitScalar
     offset: Int
     orderBy: OrderBookmarksByEnum
@@ -2482,7 +2554,7 @@ type Patron {
     offset: Int
     orderBy: OrderLoansByEnum
     status: PatronLoanStatusEnum
-  ): PatronCurrentLoans!
+  ): PatronCurrentLoans! @deprecated(reason: "@draft")
 
   """
   Email address of the current patron.
@@ -2493,6 +2565,7 @@ type Patron {
   Retrieves consent for storing historical loans and whether the patron is old enough to change it.
   """
   historicalLoanConsent: PatronHistoricalLoanConsent!
+    @deprecated(reason: "@draft")
 
   """
   Retrieves historical loans stored in UserData.
@@ -2500,7 +2573,7 @@ type Patron {
   historicalLoans(
     limit: PaginationLimitScalar
     offset: Int
-  ): PatronHistoricalLoans!
+  ): PatronHistoricalLoans! @deprecated(reason: "@draft")
 
   """
   Agency ID where the current patron is logged in.
@@ -2942,7 +3015,7 @@ type PatronMutation {
   addHistoricalLoans(
     dryRun: Boolean
     loans: [PatronHistoricalLoanInput!]!
-  ): AddHistoricalLoansResponse!
+  ): AddHistoricalLoansResponse! @deprecated(reason: "@draft")
 
   """
   Deletes one or more bookmarks for the patron. If a bookmark does not exist, it will be ignored.
@@ -2955,7 +3028,7 @@ type PatronMutation {
   deleteHistoricalLoans(
     dryRun: Boolean
     ids: [String!]!
-  ): DeleteHistoricalLoansResponse!
+  ): DeleteHistoricalLoansResponse! @deprecated(reason: "@draft")
 
   """
   Changes consent for storing historical loans.
@@ -2963,7 +3036,7 @@ type PatronMutation {
   setHistoricalLoanConsent(
     consent: Boolean!
     dryRun: Boolean
-  ): SetHistoricalLoanConsentResponse!
+  ): SetHistoricalLoanConsentResponse! @deprecated(reason: "@draft")
 }
 
 type PeriodicalSnapshot {
@@ -2986,6 +3059,31 @@ type PeriodicalSnapshot {
   Stored publisher of the host publication.
   """
   publisher: String
+}
+
+"""
+Notes about relations to this manifestation - like previous names or related journals, or publications in different form
+"""
+type PeriodicalTitleHistory {
+  """
+  Notes describing the relation of the related periodical/journal/publication
+  """
+  heading: String!
+
+  """
+  ISSN of the related periodical/journal/publication
+  """
+  issn: String
+
+  """
+  Titles of the related periodical/journal
+  """
+  title: [String!]!
+
+  """
+  URLs of the related publication and possible link text
+  """
+  urls: [String!]!
 }
 
 type PeriodicalType {
@@ -3212,7 +3310,7 @@ type Query {
   """
   Retrieves information about the patron, such as bookmarks, reservations, and loans.
   """
-  patron: Patron @deprecated(reason: "@draft")
+  patron: Patron
 
   """
   Get recommendations
@@ -3256,6 +3354,11 @@ type Query {
   ris(pids: [String!]!): String!
   search(
     filters: SearchFiltersInput
+
+    """
+    Include online/electronic materials. Defaults to true.
+    """
+    includeOnlineMaterials: Boolean! = true
     q: SearchQueryInput!
     search_exact: Boolean
   ): SearchResponse!
@@ -3450,6 +3553,11 @@ type Relations {
   This movie is based on this or these books
   """
   isAdaptationOf: [Manifestation!]!
+
+  """
+  This movie is based on this or these books in Danish
+  """
+  isAdaptationOfDk: [Manifestation!]!
 
   """
   This manifestation is an analysis of these manifestations
@@ -3995,7 +4103,7 @@ type SpecialMaterialGroup {
 
 type SpecificMaterialType {
   """
-  code for materialType
+  Code for the specific material type.
   """
   code: String!
 
@@ -4305,7 +4413,7 @@ type TvSeries {
   """
   danishLaunchTitle: String
     @deprecated(
-      reason: "Field is discontinued and will be removed expires: 05/12-2026"
+      reason: "Field is discontinued and will be removed expires: 01/03-2027"
     )
 
   """
@@ -4471,6 +4579,12 @@ type Work {
   The genre, (literary) form, type etc. of this work
   """
   genreAndForm: [String!]!
+    @deprecated(reason: "Use 'genreForm' instead expires: 01/03-2027")
+
+  """
+  The genre, (literary) form, type etc. of this work, with optional language
+  """
+  genreForm: [GenreForm!]!
 
   """
   Date of latest publication
@@ -4567,7 +4681,7 @@ type WorkTitles {
   """
   standard: String
     @deprecated(
-      reason: "Field is discontinued and will be removed expires: 05/12-2026"
+      reason: "Field is discontinued and will be removed expires: 01/03-2027"
     )
 
   """
@@ -4580,7 +4694,7 @@ type WorkTitles {
   """
   translated: [String!]
     @deprecated(
-      reason: "Field is discontinued and will be removed expires: 05/12-2026"
+      reason: "Field is discontinued and will be removed expires: 01/03-2027"
     )
 
   """
