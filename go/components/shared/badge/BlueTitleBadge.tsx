@@ -24,17 +24,13 @@ export const useIsBlueTitle = (
   enabled = true
 ): boolean => {
   const isbn = manifestation?.identifiers.find(identifier => identifier.type === "ISBN")?.value
-  // Publizon has no catalogue entry for a physical edition, so asking about
-  // one answers nothing. It also shares its query key with the work page's
-  // default-edition lookups, which are disabled for the same reason — a
-  // request here would move a key they observe and send them back to loading.
-  const isLookupWorthwhile =
+  const isDigital =
     !!manifestation &&
     !isPhysicalMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
-  // The generated hook's own `enabled` only rejects null and undefined, so an
-  // empty identifier still fetches `/v1/products/` without one.
+  // Asking about a physical edition would share a query key with the work
+  // page's default-edition lookups and send them back to loading.
   const { data } = useGetV1ProductsIdentifierAdapter(isbn || "", {
-    query: { enabled: enabled && isLookupWorthwhile && !!isbn },
+    query: { enabled: enabled && isDigital && !!isbn },
   })
   if (!enabled || !manifestation) return false
   return Boolean(
