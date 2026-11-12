@@ -79,11 +79,10 @@ const EditionsSelectModalItem = ({
           <Icon name="check" className="h-4 w-4" />
         </span>
       )}
-      {/* The badge sets its own aria-hidden from the lookup; this wrapper's wins
-          over it, which is what the card wants — accessibleName already says
-          "Blå titel". */}
+      {/* The badge sets its own aria-hidden; this wrapper's wins over it, which
+          is what the card wants — accessibleName already says "Blå titel". */}
       <div aria-hidden="true" className="contents">
-        <BlueTitleBadge manifestation={manifestation} isBlueOverride={isBlueTitle} />
+        <BlueTitleBadge isBlue={isBlueTitle} />
       </div>
       <div className="relative mx-auto aspect-[2/3] w-[85%] max-w-[150px] sm:max-w-none">
         <CoverPicture
