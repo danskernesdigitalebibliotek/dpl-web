@@ -1157,7 +1157,7 @@ msgid ""
 msgstr ""
 
 msgid "<none>"
-msgstr "- ingen -"
+msgstr ""
 
 msgid ""
 "<p class=\"fieldgroup-help\">Fields can be dragged into groups with "
@@ -7504,7 +7504,7 @@ msgstr "Ophav mangler"
 
 msgctxt "dpl_service_message"
 msgid "Critical"
-msgstr "Kritisk"
+msgstr ""
 
 msgid "Cron access key now stored in state."
 msgstr "Cron-adgangsnøgle nu gemt i state."
@@ -11340,7 +11340,7 @@ msgstr ""
 
 msgctxt "translation handling"
 msgid "Failed to fetch file due to error \"%error\""
-msgstr "Kunne ikke hente filen på grund af fejlen \"%error\""
+msgstr "Kunne ikke hente fil pga fejl \"%error\""
 
 msgid "Failed to fetch picture from @url: @message"
 msgstr ""
@@ -15913,7 +15913,7 @@ msgid "Media player width"
 msgstr "Medieafspiller bredde"
 
 msgid "Media type"
-msgstr "Media type"
+msgstr "Medie type"
 
 msgctxt "views.view.media_library:display:default:display_options:filters:bundle:expose:label"
 msgid "Media type"
@@ -19086,11 +19086,11 @@ msgstr ""
 
 msgctxt "Global"
 msgid "Processing..."
-msgstr "Behandler..."
+msgstr "Indlæser..."
 
 msgctxt "Renew loan"
 msgid "Processing..."
-msgstr "Behandler..."
+msgstr "Indlæser..."
 
 msgid "Product availability"
 msgstr "Produkttilgængelighed"
@@ -20666,7 +20666,7 @@ msgstr ""
 
 msgctxt "DPL admin"
 msgid "Reset password"
-msgstr "Nulstil adgangskode"
+msgstr "Gendan adgangskode"
 
 msgid "Reset role mappings if no groups are passed."
 msgstr ""
@@ -21374,7 +21374,7 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Search results"
-msgstr "Søgeresultater"
+msgstr "Søgning"
 
 msgctxt "Recommender (settings)"
 msgid "Search text"
@@ -21498,7 +21498,7 @@ msgstr "Vælg konto"
 
 msgctxt "Dashboard"
 msgid "Select all"
-msgstr "Markér alt"
+msgstr "Vælg alle"
 
 msgid "Select all categories the paragraph applies to."
 msgstr "Vælg alle kategorier som paragraphen gælder for"
@@ -28216,7 +28216,7 @@ msgstr "Ikke-installerede moduler: %modules_list"
 msgid "Uninstalled theme"
 msgid_plural "Uninstalled themes"
 msgstr[0] ""
-msgstr[1] "Afinstallerede temaer"
+msgstr[1] ""
 
 msgid "Unknown"
 msgstr "Ukendt"
@@ -31291,7 +31291,7 @@ msgstr ""
 
 msgctxt "advanced search"
 msgid "language"
-msgstr "sprog"
+msgstr "Sprog"
 
 msgid "last »"
 msgstr "sidste »"
