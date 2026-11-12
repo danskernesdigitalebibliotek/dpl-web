@@ -818,6 +818,35 @@ if (import.meta.vitest) {
       expect(title).toMatchInlineSnapshot(`"De syv søstre : Maias historie"`);
     });
 
+    it("ignores titlePlusLanguage for films and tv series", () => {
+      const film = {
+        titles: {
+          full: ["Fucking Åmal"],
+          original: ["Fucking Åmal"],
+          titlePlusLanguage: "Fucking Åmal (Svensk)"
+        },
+        materialTypes: [
+          { materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum.Films } }
+        ]
+      } as unknown as Work;
+
+      const tvSeries = {
+        titles: {
+          full: ["Friends - season one"],
+          original: ["Friends"],
+          titlePlusLanguage: "Friends (Engelsk)"
+        },
+        materialTypes: [
+          {
+            materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum.TvSeries }
+          }
+        ]
+      } as unknown as Work;
+
+      expect(getWorkTitle(film)).toEqual("Fucking Åmal");
+      expect(getWorkTitle(tvSeries)).toEqual("Friends - season one");
+    });
+
     it("returns 'Unknown title' when no data is available", () => {
       const work = {
         titles: {
