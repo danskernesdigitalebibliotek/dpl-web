@@ -46,29 +46,18 @@ export const useIsBlueTitle = (
 // "BLÅ" badge for cost-free titles. Always takes up its space so layouts
 // stay stable; fades in when the title turns out to be blue.
 const BlueTitleBadge = ({
-  manifestation,
-  isBlueOverride,
+  isBlue,
   className,
 }: {
-  manifestation: BlueTitleManifestation
-  // Whether the title is blue, for a caller that has already looked it up —
-  // passing it skips the lookup this component would otherwise do itself.
-  // Named "override" because the neighbouring `useIsBlueTitle(manifestation,
-  // enabled)` takes a boolean too, and that one turns the lookup on and off.
-  isBlueOverride?: boolean
+  // Decided by the caller, which has the answer from `useIsBlueTitle`.
+  isBlue: boolean
   className?: string
 }) => {
-  const lookedUpIsBlue = useIsBlueTitle(manifestation, isBlueOverride === undefined)
-  const resolvedIsBlue = isBlueOverride ?? lookedUpIsBlue
-
   return (
-    <div aria-hidden={!resolvedIsBlue} className={className}>
+    <div aria-hidden={!isBlue} className={className}>
       <Badge
         variant={"blue-title"}
-        className={cn(
-          "transition-opacity duration-300",
-          resolvedIsBlue ? "opacity-100" : "opacity-0"
-        )}>
+        className={cn("transition-opacity duration-300", isBlue ? "opacity-100" : "opacity-0")}>
         BLÅ
       </Badge>
     </div>
