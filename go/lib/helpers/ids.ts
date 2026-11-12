@@ -7,9 +7,7 @@ import {
   WorkFullWorkPageFragment,
 } from "../graphql/generated/fbi/graphql"
 
-export const getIsbnsFromManifestation = (
-  manifestation: ManifestationWorkPageFragment | undefined
-) => {
+export const getIsbnsFromManifestation = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return []
 
   return manifestation.identifiers.reduce((acc, identifier) => {
