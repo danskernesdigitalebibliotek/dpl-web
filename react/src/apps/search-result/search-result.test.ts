@@ -4,6 +4,7 @@ import {
   givenSearchWithPaginationEmptyResponse
 } from "../../../cypress/intercepts/fbi/searchWithPagination";
 import { givenSearchFacetResponse } from "../../../cypress/intercepts/fbi/searchFacet";
+import { hasOperationName } from "../../../cypress/utils/graphql-test-utils";
 
 describe("Search Result", () => {
   let page: SearchResultPage;
@@ -60,6 +61,41 @@ describe("Search Result", () => {
         filters.toggleOnShelf();
         filters.verifyOnShelfIsNotChecked();
       });
+    });
+
+    it("excludes online materials from results and facets only while 'On shelf' is on", () => {
+      const searchRequests: {
+        operationName: string;
+        includeOnlineMaterials: unknown;
+      }[] = [];
+      cy.intercept({ method: "POST", url: "**/graphql*" }, (req) => {
+        (["searchWithPagination", "searchFacet"] as const)
+          .filter((operationName) => hasOperationName(req, operationName))
+          .forEach((operationName) =>
+            searchRequests.push({
+              operationName,
+              includeOnlineMaterials: req.body.variables?.includeOnlineMaterials
+            })
+          );
+      });
+
+      // Reload so the first search is captured too.
+      page.visit([]);
+      cy.wrap(searchRequests).should("deep.include.members", [
+        { operationName: "searchWithPagination", includeOnlineMaterials: true },
+        { operationName: "searchFacet", includeOnlineMaterials: true }
+      ]);
+
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+      });
+      cy.wrap(searchRequests).should("deep.include.members", [
+        {
+          operationName: "searchWithPagination",
+          includeOnlineMaterials: false
+        },
+        { operationName: "searchFacet", includeOnlineMaterials: false }
+      ]);
     });
 
     it("toggles 'Can always be loaned' filter on and off", () => {
