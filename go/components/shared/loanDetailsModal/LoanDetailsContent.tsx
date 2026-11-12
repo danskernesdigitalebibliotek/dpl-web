@@ -65,7 +65,7 @@ const LoanDetailsContent = ({
         href={href}
         badge={
           isBlue ? (
-            <BlueTitleBadge manifestation={manifestation} className="self-start" />
+            <BlueTitleBadge isBlue={isBlue} className="self-start" />
           ) : undefined
         }
         costFree={isBlue}
