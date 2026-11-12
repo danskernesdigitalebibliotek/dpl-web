@@ -63,11 +63,7 @@ const LoanDetailsContent = ({
         alt={`${title} cover billede`}
         status={status}
         href={href}
-        badge={
-          isBlue ? (
-            <BlueTitleBadge isBlue={isBlue} className="self-start" />
-          ) : undefined
-        }
+        badge={isBlue ? <BlueTitleBadge isBlue={isBlue} className="self-start" /> : undefined}
         costFree={isBlue}
         iconClassName={isBlue ? "bg-content-blue-100 dark:text-blue-title-dark" : undefined}
       />
