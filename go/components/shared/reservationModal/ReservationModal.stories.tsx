@@ -52,12 +52,14 @@ const fixturePatron: Patron = {
   receiveSms: true,
 }
 
+const fixtureFaust = getFaustIdsFromManifestations([physicalManifestation])[0]
+
 const fixtureAvailability: MaterialAvailability = {
   totalCopies: 14,
   reservationCount: 3,
   records: {
-    "12345678": {
-      recordId: "12345678",
+    [fixtureFaust]: {
+      recordId: fixtureFaust,
       totalCopies: 14,
       availableCopies: 11,
       reservationCount: 3,
