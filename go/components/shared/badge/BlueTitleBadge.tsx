@@ -27,8 +27,6 @@ export const useIsBlueTitle = (
   const isDigital =
     !!manifestation &&
     !isPhysicalMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
-  // Asking about a physical edition would share a query key with the work
-  // page's default-edition lookups and send them back to loading.
   const { data } = useGetV1ProductsIdentifierAdapter(isbn || "", {
     query: { enabled: enabled && isDigital && !!isbn },
   })
