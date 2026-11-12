@@ -6094,6 +6094,7 @@ export type SearchWithPaginationQueryVariables = Exact<{
   offset: Scalars["Int"]["input"];
   limit: Scalars["PaginationLimitScalar"]["input"];
   filters?: InputMaybe<SearchFiltersInput>;
+  includeOnlineMaterials?: Scalars["Boolean"]["input"];
 }>;
 
 export type SearchWithPaginationQuery = {
@@ -12795,8 +12796,12 @@ export const useSearchFacetQuery = <TData = SearchFacetQuery, TError = unknown>(
 };
 
 export const SearchWithPaginationDocument = new TypedDocumentString(`
-    query searchWithPagination($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: SearchFiltersInput) {
-  search(q: $q, filters: $filters) {
+    query searchWithPagination($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: SearchFiltersInput, $includeOnlineMaterials: Boolean! = true) {
+  search(
+    q: $q
+    filters: $filters
+    includeOnlineMaterials: $includeOnlineMaterials
+  ) {
     hitcount
     works(offset: $offset, limit: $limit) {
       ...WorkSmall

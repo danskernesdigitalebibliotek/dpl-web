@@ -133,7 +133,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       q: { all: q },
       offset: page * pageSize,
       limit: pageSize,
-      filters: searchFilters
+      filters: searchFilters,
+      includeOnlineMaterials: !onShelf
     },
     {
       enabled: q.length >= minimalQueryLength
