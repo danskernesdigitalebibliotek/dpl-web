@@ -61,6 +61,7 @@ a record the kommune holds no copies of can still be reservable when it is
 obtainable from another library, which FBS decides from the kommune's OVE
 catalogue codes.
 
+
 ## The three states GO derives
 
 `lib/helpers/helper.availability.ts` turns the raw answer into two
