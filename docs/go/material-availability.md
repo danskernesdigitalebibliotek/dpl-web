@@ -61,10 +61,6 @@ a record the kommune holds no copies of can still be reservable when it is
 obtainable from another library, which FBS decides from the kommune's OVE
 catalogue codes.
 
-> **Open question:** GO does not offer interlibrary loans as a user-facing
-> action, so it is not confirmed what a patron actually experiences when they
-> reserve a record the kommune holds no copies of. Worth confirming with
-> whoever owns the FBS integration.
 
 ## The three states GO derives
 
@@ -195,10 +191,10 @@ opens.
 
 In the picker, the two kinds of loan get different captions:
 
-| Edition  | Caption          | Means                                      |
-| -------- | ---------------- | ------------------------------------------ |
-| Physical | "Udlånt lige nu" | Someone has it. May add a queue count.     |
-| Digital  | "Udlånt til dig" | _You_ have it. Open it and read.           |
+| Edition  | Caption          | Means                                  |
+| -------- | ---------------- | -------------------------------------- |
+| Physical | "Udlånt lige nu" | Someone has it. May add a queue count. |
+| Digital  | "Udlånt til dig" | _You_ have it. Open it and read.       |
 
 The wording differs because the facts differ. A physical edition is lent to
 some other patron. A digital one is only ever marked as lent when it is lent
