@@ -35,6 +35,10 @@ type TContext = {
   open: boolean
   modalType: TModalStoreType | null
   props: TModalRegistry[TModalStoreType] | null
+  // Counts openings. Modals capture their props on mount, and the host keeps
+  // them mounted through the exit animation, so the host keys on this to give
+  // each opening a fresh component.
+  openId: number
 }
 
 const modalStore = createStore({
@@ -43,6 +47,7 @@ const modalStore = createStore({
     open: false,
     modalType: null,
     props: null,
+    openId: 0,
   } as TContext,
   // Transitions
   on: {
@@ -54,6 +59,7 @@ const modalStore = createStore({
       open: true,
       modalType: event.modalType,
       props: event.props,
+      openId: context.openId + 1,
     }),
     // Keeps modalType/props so the host can play the exit animation before
     // clearing the content.
