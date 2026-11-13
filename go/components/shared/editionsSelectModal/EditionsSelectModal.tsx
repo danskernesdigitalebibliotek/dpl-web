@@ -107,56 +107,40 @@ const EditionsSelectModal = ({
 
   return (
     <ResponsiveDialog title="Vælg udgave" open={open} onClose={handleClose}>
-      {(isLoadingEditions || shownEditions.length > 0) && (
-        <fieldset className="m-0 border-0 p-0">
-          <legend className="sr-only">Vælg udgave</legend>
-
-          {/* Drops from 4 columns at md back to 3 at lg: the dialog's own
-              max-width caps there, so each card gets more room instead of
-              more columns. */}
-          <div
-            className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 md:grid-cols-4
-              lg:grid-cols-3">
-            {isLoadingEditions
-              ? editions.map(manifestation => (
-                  <EditionsSelectModalItem.Skeleton key={manifestation.pid} />
-                ))
-              : shownEditions.map(manifestation => {
-                  const unavailable = getUnavailable(manifestation)
-                  return (
-                    <EditionsSelectModalItem
-                      key={manifestation.pid}
-                      manifestation={manifestation}
-                      name={EDITION_CHOICE_GROUP}
-                      checked={draftPid === manifestation.pid}
-                      unavailableLabel={unavailable?.label}
-                      unavailableText={unavailable?.text}
-                      onSelect={() => setDraftPid(manifestation.pid)}
-                    />
-                  )
-                })}
-          </div>
-        </fieldset>
-      )}
+      <fieldset className="m-0 border-0 p-0">
+        <legend className="sr-only">Vælg udgave</legend>
+        <div
+          className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3">
+          {isLoadingEditions
+            ? editions.map(manifestation => (
+                <EditionsSelectModalItem.Skeleton key={manifestation.pid} />
+              ))
+            : shownEditions.map(manifestation => {
+                const unavailable = getUnavailable(manifestation)
+                return (
+                  <EditionsSelectModalItem
+                    key={manifestation.pid}
+                    manifestation={manifestation}
+                    name={EDITION_CHOICE_GROUP}
+                    checked={draftPid === manifestation.pid}
+                    unavailableLabel={unavailable?.label}
+                    unavailableText={unavailable?.text}
+                    onSelect={() => setDraftPid(manifestation.pid)}
+                  />
+                )
+              })}
+        </div>
+      </fieldset>
 
       {/* The editions arrive after the dialog has opened, so what replaces
-          the skeletons is announced rather than appearing silently. */}
+          the skeletons is announced rather than appearing silently.
+          Availability could not be read, so every edition is shown unmarked —
+          without this the absent "Udlånt lige nu" reads as "all on the
+          shelf". */}
       <div role="status">
-        {/* Availability could not be read, so every edition is shown
-            unmarked. */}
         {isAvailabilityUnknown && (
           <p className="text-typo-caption mt-8 opacity-70">
             Vi kan ikke se hvilke bøger der er hjemme lige nu.
-          </p>
-        )}
-
-        {/* Two different empty states: the work has no editions of this type
-            at all, or the kommune has none of the ones it does have. */}
-        {!isLoadingEditions && shownEditions.length === 0 && (
-          <p className="text-typo-caption mt-8">
-            {editions.length === 0
-              ? "Ingen udgaver for denne materialetype."
-              : "Der er ingen udgaver af denne bog på dit bibliotek."}
           </p>
         )}
       </div>

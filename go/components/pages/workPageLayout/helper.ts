@@ -187,6 +187,11 @@ export const isAudioMaterialType = (code: string): boolean => audioMaterialTypeC
 export const isPodcastMaterialType = (code: string): boolean =>
   podcastMaterialTypeCodes.includes(code)
 
+// Everything the digital providers answer for: the counterpart to
+// isPhysicalMaterialType, which FBS answers for.
+export const isDigitalMaterialType = (code: string | undefined): boolean =>
+  !!code && (isEbookMaterialType(code) || isAudioMaterialType(code) || isPodcastMaterialType(code))
+
 export type TMaterialCategory = "physical" | "ebook" | "audio" | null
 
 // Collapses the four material-type predicates into the three categories the

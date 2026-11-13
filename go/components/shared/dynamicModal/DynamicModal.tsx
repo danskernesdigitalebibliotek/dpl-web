@@ -79,13 +79,12 @@ function ModalUrlListener() {
 // the store outlives page navigations. Exported so stories can mount the
 // store-driven host without the nuqs-dependent URL listener.
 export function StoreModal() {
-  const { open, modalType, props } = useSelector(modalStore, state => state.context)
+  const { open, modalType, props, openId } = useSelector(modalStore, state => state.context)
   const [active, setActive] = useState<{
     modalType: TModalStoreType
     props: TModalRegistry[TModalStoreType]
-    key: number
+    openId: number
   } | null>(null)
-  const openCount = useRef(0)
   // The modal mounts closed and opens on the next frame, so the enter
   // animation plays from a fully committed tree instead of the dialog
   // painting empty (a blank full-size flash) on mount.
@@ -93,11 +92,7 @@ export function StoreModal() {
 
   useEffect(() => {
     if (open && modalType && props) {
-      setActive(current =>
-        current && current.modalType === modalType && current.props === props
-          ? current
-          : { modalType, props, key: ++openCount.current }
-      )
+      setActive({ modalType, props, openId })
       const frame = requestAnimationFrame(() => setVisible(true))
       return () => cancelAnimationFrame(frame)
     }
@@ -105,7 +100,7 @@ export function StoreModal() {
     setVisible(false)
     const timer = setTimeout(() => setActive(null), 500)
     return () => clearTimeout(timer)
-  }, [open, modalType, props])
+  }, [open, modalType, props, openId])
 
   const pathname = usePathname()
   const previousPathname = useRef(pathname)
@@ -125,7 +120,7 @@ export function StoreModal() {
   // gets a fresh component.
   return (
     <ModalComponent
-      key={active.key}
+      key={active.openId}
       open={open && visible}
       onClose={closeModal}
       {...active.props}
