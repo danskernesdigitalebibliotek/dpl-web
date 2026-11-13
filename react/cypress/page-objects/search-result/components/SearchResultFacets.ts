@@ -190,6 +190,10 @@ export class SearchResultFacetsComponent extends ComponentObject {
    * Select a radio button by its label text
    */
   selectRadioOption(labelText: string) {
+    // The radios render before the facet search returns, but ignore clicks
+    // until it has, as their facet names come from its result. The facet
+    // groups render from the same result, so wait for them first.
+    this.container().find(".search-facet-group").should("exist");
     this.container()
       .find(".search-radio-button-group")
       .contains(".search-radio-button-group__label", labelText)
