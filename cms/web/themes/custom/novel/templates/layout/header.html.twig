@@ -68,7 +68,12 @@
 </header>
 <div class="header-sidebar-nav" data-open="closed">
     <div class="header-sidebar-nav__background-wrapper">
-      <div class="header-sidebar-nav__menu-wrapper">
+      <div
+        class="header-sidebar-nav__menu-wrapper"
+        role="dialog"
+        aria-modal="true"
+        aria-label="{{ 'Menu'|t({}, {context: 'Header'}) }}"
+      >
         <div
           class="header-sidebar-nav__close-menu-button"
           id="js-header-sidebar-nav__close-menu-button"
