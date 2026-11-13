@@ -30,7 +30,8 @@ cypress/screenshots
 storybook-static/
 *storybook.log
 
-# Help scripts
+# Help scripts 
+# TODO: Remove this after work on editions
 toolbox/
 
 # Argos
