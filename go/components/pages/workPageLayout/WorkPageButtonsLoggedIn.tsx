@@ -281,13 +281,18 @@ export const PhysicalReservationButton = ({
 
   if (isUnobtainable) {
     return (
-      <WorkPageButton
-        ariaLabel="Vælg en anden udgave — denne udgave findes ikke på dit bibliotek"
-        theme="primary"
-        dataCy={dataCy}
-        ariaDisabled>
-        Vælg en anden udgave
-      </WorkPageButton>
+      <>
+        <div className="w-full lg:max-w-80 lg:min-w-72">
+          <HelpText>Vælg en anden udgave, denne findes ikke på dit bibliotek</HelpText>
+        </div>
+        <WorkPageButton
+          ariaLabel={`Reserver ${label}`}
+          theme="primary"
+          dataCy={dataCy}
+          ariaDisabled>
+          Reserver {label}
+        </WorkPageButton>
+      </>
     )
   }
 
