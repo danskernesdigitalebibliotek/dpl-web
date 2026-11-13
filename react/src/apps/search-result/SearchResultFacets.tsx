@@ -8,19 +8,26 @@ import {
 import { useFacetTracking } from "./useSearchResultTracking";
 import SearchFacetGroup from "./SearchFacetGroup";
 import SearchToggle from "../../components/search-toggle/SearchToggle";
-import { isValidFacetsState, resolveFilterFieldName } from "./helpers";
+import {
+  getSelectedRadioFacetValue,
+  isValidFacetsState,
+  resolveFilterFieldName
+} from "./helpers";
 import { sortSimpleSearchFacetValues } from "../advanced-search-v2/lib/facet-sort-utils";
 import SearchRadioButtonGroup from "../../components/search-radio-button-group/SearchRadioButtonGroup";
 import { getFacetFieldTranslation } from "./helper";
+import { hasValue } from "../../core/utils/helpers/has-value";
 
 // Fixed facet name for "can always be loaned" filter in SearchFiltersInput
 const CAN_ALWAYS_BE_LOANED_FACET_NAME = "canAlwaysBeLoaned";
 
 type AccessTypeFilterOptions =
   { value: "Digital"; label: "Online" } | { value: "Fysisk"; label: "Fysisk" };
+
 type FictionTypeFilterOptions =
   | { value: "Skønlitteratur"; label: "Fiktion" }
   | { value: "Faglitteratur"; label: "Non-fiktion" };
+
 type AgeGroupFilterOptions =
   | { value: "til voksne"; label: "Voksne" }
   | { value: "til børn"; label: "Børn" };
@@ -39,7 +46,15 @@ const AGE_GROUP_OPTIONS: AgeGroupFilterOptions[] = [
   { value: "til børn", label: "Børn" }
 ];
 
-const SearchResultFacets = ({ facets }: { facets: FacetResult[] }) => {
+type SearchResultFacetProps = {
+  facets: FacetResult[];
+  showAccessOptions: boolean;
+};
+
+const SearchResultFacets = ({
+  facets,
+  showAccessOptions
+}: SearchResultFacetProps) => {
   const t = useText();
   const { trackFacetChange } = useFacetTracking();
 
@@ -153,6 +168,20 @@ const SearchResultFacets = ({ facets }: { facets: FacetResult[] }) => {
     handleFacetChange(facetName, value ? [value] : []);
   };
 
+  const selectedAccessType = getSelectedRadioFacetValue(
+    facetsFromUrl,
+    accessTypeFacetName
+  );
+
+  const handleOnShelfToggle = (checked: boolean) => {
+    setOnShelf(checked, { history: "push" });
+    // On shelf excludes online materials, so an access type choice no longer
+    // applies. nuqs batches both URL updates into a single history entry.
+    if (checked && hasValue(selectedAccessType)) {
+      handleRadioFacetChange(accessTypeFacetName, null);
+    }
+  };
+
   // Facets shown as regular groups (exclude Canalwaysbeloaned and radio-driven facets)
   // Apply sorting to facet values based on facet type
   const availableFacets = useMemo(
@@ -183,7 +212,7 @@ const SearchResultFacets = ({ facets }: { facets: FacetResult[] }) => {
               label={t("searchOnShelfText")}
               description={t("searchOnShelfDescriptionText")}
               checked={onShelf}
-              onChange={(checked) => setOnShelf(checked, { history: "push" })}
+              onChange={handleOnShelfToggle}
             />
           </li>
           <li>
@@ -199,31 +228,23 @@ const SearchResultFacets = ({ facets }: { facets: FacetResult[] }) => {
 
         {/* Advanced search-style radio groups */}
         <div className="search-radio-button-group-wrapper">
-          <SearchRadioButtonGroup
-            name="access-type"
-            options={ACCESS_TYPE_OPTIONS}
-            selectedValue={
-              accessTypeFacetName
-                ? (facetsFromUrl.find(
-                    (f) => f.facetName === accessTypeFacetName
-                  )?.selectedValues[0] ?? null)
-                : null
-            }
-            onChange={(value) =>
-              handleRadioFacetChange(accessTypeFacetName, value)
-            }
-          />
-
+          {showAccessOptions && (
+            <SearchRadioButtonGroup
+              name="access-type"
+              options={ACCESS_TYPE_OPTIONS}
+              selectedValue={selectedAccessType}
+              onChange={(value) =>
+                handleRadioFacetChange(accessTypeFacetName, value)
+              }
+            />
+          )}
           <SearchRadioButtonGroup
             name="fiction-type"
             options={FICTION_TYPE_OPTIONS}
-            selectedValue={
+            selectedValue={getSelectedRadioFacetValue(
+              facetsFromUrl,
               fictionTypeFacetName
-                ? (facetsFromUrl.find(
-                    (f) => f.facetName === fictionTypeFacetName
-                  )?.selectedValues[0] ?? null)
-                : null
-            }
+            )}
             onChange={(value) =>
               handleRadioFacetChange(fictionTypeFacetName, value)
             }
@@ -232,12 +253,10 @@ const SearchResultFacets = ({ facets }: { facets: FacetResult[] }) => {
           <SearchRadioButtonGroup
             name="age-group"
             options={AGE_GROUP_OPTIONS}
-            selectedValue={
+            selectedValue={getSelectedRadioFacetValue(
+              facetsFromUrl,
               ageGroupFacetName
-                ? (facetsFromUrl.find((f) => f.facetName === ageGroupFacetName)
-                    ?.selectedValues[0] ?? null)
-                : null
-            }
+            )}
             onChange={(value) =>
               handleRadioFacetChange(ageGroupFacetName, value)
             }

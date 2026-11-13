@@ -256,7 +256,10 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       />
       <div className="search__results">
         <div className="search__grid">
-          <SearchResultFacets facets={facets} />
+          <SearchResultFacets
+            facets={facets}
+            showAccessOptions={includeOnlineMaterials}
+          />
 
           <section>
             <div className="search__results-top-bar">
@@ -284,7 +287,10 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
                           placeholders: { "@hitcount": hitcount }
                         })}
                       </h2>
-                      <SearchResultFacets facets={facets} />
+                      <SearchResultFacets
+                        facets={facets}
+                        showAccessOptions={includeOnlineMaterials}
+                      />
                     </div>
                     <div className="search-facets__dialog__actions">
                       <Button
