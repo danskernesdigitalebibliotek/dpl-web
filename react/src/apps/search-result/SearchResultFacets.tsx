@@ -15,6 +15,7 @@ import {
 } from "./helpers";
 import { sortSimpleSearchFacetValues } from "../advanced-search-v2/lib/facet-sort-utils";
 import SearchRadioButtonGroup from "../../components/search-radio-button-group/SearchRadioButtonGroup";
+import { Collapsible } from "../../components/collapsible/Collapsible";
 import { getFacetFieldTranslation } from "./helper";
 import { hasValue } from "../../core/utils/helpers/has-value";
 
@@ -228,7 +229,7 @@ const SearchResultFacets = ({
 
         {/* Advanced search-style radio groups */}
         <div className="search-radio-button-group-wrapper">
-          {showAccessOptions && (
+          <Collapsible isOpen={showAccessOptions}>
             <SearchRadioButtonGroup
               name="access-type"
               options={ACCESS_TYPE_OPTIONS}
@@ -237,7 +238,7 @@ const SearchResultFacets = ({
                 handleRadioFacetChange(accessTypeFacetName, value)
               }
             />
-          )}
+          </Collapsible>
           <SearchRadioButtonGroup
             name="fiction-type"
             options={FICTION_TYPE_OPTIONS}
