@@ -27,7 +27,14 @@ failed build. If a build fails, report it and let the user decide.
    **AskUserQuestion**: "Your settings have `useStatusLine: true`, but the
    status line isn't set up. Add the `statusLine` entry to
    `.claude/settings.local.json`?" (Yes/No), then run `set true` or
-   `set false` and pass on the line it prints. On `true`/`false`, don't ask.
+   `set false` and pass on the line it prints. If it prints `stale`
+   (`useStatusLine` is false but `.claude/settings.local.json` still has the
+   `statusLine` entry running `statusline.sh`), ask with **AskUserQuestion**:
+   "You have set `useStatusLine` to false, but the deploy-watch `statusLine`
+   entry is still in `.claude/settings.local.json`. Should it be removed?"
+   (Yes: remove it / No: keep it and use the status line), then run
+   `set false` or `set true` and pass on the line it prints. On
+   `true`/`false`, don't ask.
    Then go on to step 1 either way: the chat notifications don't depend on
    the choice.
 1. Start it with the **Monitor** tool, so each line arrives as a notification

@@ -2,8 +2,10 @@
 # Reads and stores the developer's status line choice in the checkout's
 # .claude/settings.local.json under dplLagoonDeployWatch.useStatusLine.
 #
-#   settings.sh get          prints true, false, unset, or missing (true, but
-#                            no statusLine in either settings file)
+#   settings.sh get          prints true, false, unset, missing (true, but
+#                            no statusLine in either settings file) or stale
+#                            (false, but settings.local.json's statusLine
+#                            still runs statusline.sh)
 #   settings.sh set true     stores true and points statusLine at statusline.sh
 #   settings.sh set false    stores false and removes that statusLine again
 #
@@ -38,6 +40,8 @@ case "${1:-} ${2:-}" in
     value=$(jq -r '.dplLagoonDeployWatch.useStatusLine | if . == null then "unset" else tostring end' "$local_file")
     if [ "$value" = true ] && [ -z "$(statusline_in "$local_file")" ] && [ -z "$(statusline_in "$user_file")" ]; then
       value=missing
+    elif [ "$value" = false ] && ours "$(statusline_in "$local_file")"; then
+      value=stale
     fi
     echo "$value" ;;
   "set true")
