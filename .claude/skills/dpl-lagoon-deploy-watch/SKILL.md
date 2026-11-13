@@ -22,11 +22,14 @@ failed build. If a build fails, report it and let the user decide.
    If it prints `unset`, ask with **AskUserQuestion**: "Do you want to use
    your Claude status line for showing the deployment progress?" (Yes/No),
    then run the same script with `set true` or `set false` and pass on the
-   line it prints. On `true`/`false`, don't ask. On `true`, still run
-   `set true` so a missing `statusLine` entry is added back (e.g. when
-   `useStatusLine` was written by hand); pass on its line unless it is
-   "Saved. The status line was already set up.". Then go on to step 1 either
-   way: the chat notifications don't depend on the choice.
+   line it prints. If it prints `missing` (`useStatusLine` is true but no
+   `statusLine` entry exists, e.g. because it was written by hand), ask with
+   **AskUserQuestion**: "Your settings have `useStatusLine: true`, but the
+   status line isn't set up. Add the `statusLine` entry to
+   `.claude/settings.local.json`?" (Yes/No), then run `set true` or
+   `set false` and pass on the line it prints. On `true`/`false`, don't ask.
+   Then go on to step 1 either way: the chat notifications don't depend on
+   the choice.
 1. Start it with the **Monitor** tool, so each line arrives as a notification
    while the user works on other things:
    - command: `"$(git rev-parse --show-toplevel)/.claude/skills/dpl-lagoon-deploy-watch/scripts/watch.sh"` (add
