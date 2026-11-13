@@ -5,8 +5,10 @@ import {
   getManifestationLabel,
   getMaterialCategory,
 } from "@/components/pages/workPageLayout/helper"
+import HelpText from "@/components/shared/helpText/HelpText"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
+import { useDigitalEditionAvailabilityBiblio } from "@/hooks/useDigitalEditionAvailabilityBiblio"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import { TModalType } from "@/lib/helpers/modal-url"
@@ -35,6 +37,8 @@ const WorkPageButtonsLoggedOut = ({
   // the audio preview below always goes to the player bar and the
   // PlayerPreviewModal branch goes.
   const viaBiblioAdapter = useBiblioAdapter()
+  const { isDigitalEditionOnLoan: isOnLoan } =
+    useDigitalEditionAvailabilityBiblio(selectedManifestation)
 
   const open = (modal: TModalType) =>
     openModal(modal, { wid: workId, pid: selectedManifestation.pid })
@@ -55,10 +59,16 @@ const WorkPageButtonsLoggedOut = ({
   if (category === "ebook") {
     return (
       <WorkPageButtons>
+        {isOnLoan && (
+          <div className="w-full lg:max-w-80 lg:min-w-72">
+            <HelpText>Udlånt lige nu</HelpText>
+          </div>
+        )}
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
           theme="primary"
           disabled={isDisabled}
+          ariaDisabled={isOnLoan}
           onClick={() => open("LoanLoginModal")}>
           Lån {label}
         </WorkPageButton>
@@ -74,10 +84,16 @@ const WorkPageButtonsLoggedOut = ({
   if (category === "audio") {
     return (
       <WorkPageButtons>
+        {isOnLoan && (
+          <div className="w-full lg:max-w-80 lg:min-w-72">
+            <HelpText>Udlånt lige nu</HelpText>
+          </div>
+        )}
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
           theme="primary"
           disabled={isDisabled}
+          ariaDisabled={isOnLoan}
           onClick={() => open("LoanLoginModal")}>
           Lån {label}
         </WorkPageButton>

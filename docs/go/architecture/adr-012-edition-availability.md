@@ -42,9 +42,10 @@ never marked unavailable by this mechanism.
 
 A reader with a shared link pinning an edition the kommune cannot supply
 still sees that edition selected, because the pin wins over the default
-pick. The reserve button then says "Vælg en anden udgave" rather than
-silently swapping their choice — a dead end is shown, but it is explained
-and it is the reader's own link that caused it.
+pick. The reserve button is then `aria-disabled` under a help text reading
+"Vælg en anden udgave, denne findes ikke på dit bibliotek", rather than
+the choice being swapped silently — a dead end is shown, but it is
+explained and it is the reader's own link that caused it.
 
 Filtering also means a reader cannot see that an edition exists at all in
 the wider catalogue. That is deliberate for this audience, and it is the
