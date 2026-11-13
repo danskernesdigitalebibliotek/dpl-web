@@ -110,10 +110,6 @@ const EditionsSelectModal = ({
       {(isLoadingEditions || shownEditions.length > 0) && (
         <fieldset className="m-0 border-0 p-0">
           <legend className="sr-only">Vælg udgave</legend>
-
-          {/* Drops from 4 columns at md back to 3 at lg: the dialog's own
-              max-width caps there, so each card gets more room instead of
-              more columns. */}
           <div
             className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 md:grid-cols-4
               lg:grid-cols-3">
