@@ -5,16 +5,9 @@ import {
   useDigitalLoanDecision,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 
-import {
-  isAudioMaterialType,
-  isEbookMaterialType,
-  isPodcastMaterialType,
-} from "@/components/pages/workPageLayout/helper"
+import { isDigitalMaterialType } from "@/components/pages/workPageLayout/helper"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
-
-const isDigitalMaterialType = (code: string | undefined): boolean =>
-  !!code && (isEbookMaterialType(code) || isAudioMaterialType(code) || isPodcastMaterialType(code))
 
 // One hook call answers for one manifestation — unlike Publizon's batch
 // loanstatus endpoint, Biblio's loan decision takes a single material id, so
