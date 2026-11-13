@@ -225,7 +225,7 @@ const WorkPageButtonsLoggedIn = ({
 // details (with deletion inside); otherwise the "Reserver" CTA. Both
 // service-layer hooks are patron-gated, so nothing fires for Unilogin or
 // anonymous sessions.
-const PhysicalReservationButton = ({
+export const PhysicalReservationButton = ({
   dataCy,
   label,
   workId,
