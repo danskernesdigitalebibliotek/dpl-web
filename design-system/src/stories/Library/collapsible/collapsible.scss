@@ -1,0 +1,17 @@
+// Grid rows can transition between 0fr and 1fr, which height: auto cannot.
+// While between the two, the row is smaller than the container, so clip at
+// the container to keep the visible content and its height in step.
+.collapsible {
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.3s ease-in-out;
+}
+
+.collapsible--closed {
+  grid-template-rows: 0fr;
+}
+
+.collapsible__content {
+  min-height: 0;
+}

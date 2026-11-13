@@ -113,7 +113,10 @@ export type Audience = {
   audienceGeneral: Array<AudienceGeneral>;
   /** Is this material for children or adults */
   childrenOrAdults: Array<ChildOrAdult>;
-  /** Appropriate audience for this manifestation */
+  /**
+   * Appropriate audience for this manifestation
+   * @deprecated Use 'audienceGeneral' instead expires: 01/03-2027
+   */
   generalAudience: Array<Scalars["String"]["output"]>;
   /** LET number of this manifestion, defines the reability level, LET stands for læseegnethedstal */
   let?: Maybe<Scalars["String"]["output"]>;
@@ -152,8 +155,16 @@ export type BibliographicCategory = {
   display?: Maybe<Scalars["String"]["output"]>;
 };
 
+/** Returns all bookmarks associated with a work. */
+export type BookmarkFilterInput = {
+  /** The ID of the work to filter by. */
+  workId: Scalars["String"]["input"];
+};
+
 export type BookmarkItem = {
   __typename?: "BookmarkItem";
+  /** Branch information for the agency stored with the bookmark, if available. */
+  agency?: Maybe<PatronAgency>;
   /** The application the bookmark belongs to */
   application: Scalars["String"]["output"];
   /** creation date of the bookmark */
@@ -164,6 +175,12 @@ export type BookmarkItem = {
   material: BookmarkMaterial;
   /** The unique identifier for the material this bookmark points to. */
   materialId: Scalars["String"]["output"];
+  /**
+   * Origin name and comparisons with the current API context.
+   * Existing application and agency fields remain available independently.
+   * @deprecated @draft
+   */
+  origin: BookmarkOrigin;
   /** The selection applied to the bookmarked work. */
   selection?: Maybe<BookmarkSelection>;
   /** Stored metadata captured when the bookmark was created. */
@@ -190,6 +207,22 @@ export type BookmarkMaterialTypesSelection = {
 export type BookmarkMaterialTypesSelectionInput = {
   general?: InputMaybe<Array<GeneralMaterialTypeCodeEnum>>;
   specific?: InputMaybe<Array<Scalars["String"]["input"]>>;
+};
+
+export type BookmarkOrigin = {
+  __typename?: "BookmarkOrigin";
+  /**
+   * Library name for multi-agency clients; otherwise the application display name.
+   * Null when unavailable.
+   */
+  displayName?: Maybe<Scalars["String"]["output"]>;
+  /** Matches the current application, regardless of agency. Null if unknown. */
+  isCurrentApplication?: Maybe<Scalars["Boolean"]["output"]>;
+  /**
+   * Matches the current application and client agency mode (single or multiple).
+   * Multi-agency clients must also match the current agency. Null if unknown.
+   */
+  isCurrentOrigin?: Maybe<Scalars["Boolean"]["output"]>;
 };
 
 export type BookmarkSelection = {
@@ -252,6 +285,11 @@ export enum BookmarksStatusEnum {
 
 export type BookmarksStatusItem = {
   __typename?: "BookmarksStatusItem";
+  /**
+   * Stored agency for a confirmed addition or existing bookmark.
+   * Null for dry runs, errors and deletions.
+   */
+  agency?: Maybe<PatronAgency>;
   /** The unique identifier for the bookmark that was attempted to be added or deleted. */
   id?: Maybe<Scalars["String"]["output"]>;
   /** The material for which bookmark addition failed. */
@@ -297,11 +335,20 @@ export type CataloguedPublicationStatus = {
 
 /** Represents the publication status of a catalogued manifestation. */
 export enum CataloguedPublicationStatusEnum {
-  /** New title */
+  /**
+   * New title
+   * @deprecated Use MaterialSelectionPublicationStatusEnum.NEW_TITLE expires: 01/03-2027
+   */
   Nt = "NT",
-  /** New edition */
+  /**
+   * New edition
+   * @deprecated Use MaterialSelectionPublicationStatusEnum.NEW_EDITION expires: 01/03-2027
+   */
   Nu = "NU",
-  /** New print run */
+  /**
+   * New print run
+   * @deprecated Use MaterialSelectionPublicationStatusEnum.NEW_PRINT expires: 01/03-2027
+   */
   Op = "OP"
 }
 
@@ -387,6 +434,7 @@ export enum ComplexSearchFacetsEnum {
   Pegi = "PEGI",
   Players = "PLAYERS",
   Primarytarget = "PRIMARYTARGET",
+  Publicationstatus = "PUBLICATIONSTATUS",
   Publicationyear = "PUBLICATIONYEAR",
   Series = "SERIES",
   Setting = "SETTING",
@@ -777,7 +825,7 @@ export type Edition = {
   __typename?: "Edition";
   /**
    * Quotation of contributor statements related to the edition
-   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   * @deprecated Field is discontinued and will be removed expires: 01/03-2027
    */
   contributors: Array<Scalars["String"]["output"]>;
   /** The edition number and name */
@@ -804,7 +852,9 @@ export enum EntryTypeEnum {
   AdditionalEntry = "ADDITIONAL_ENTRY",
   MainEntry = "MAIN_ENTRY",
   NationalBibliographyAdditionalEntry = "NATIONAL_BIBLIOGRAPHY_ADDITIONAL_ENTRY",
-  NationalBibliographyEntry = "NATIONAL_BIBLIOGRAPHY_ENTRY"
+  /** @deprecated Use NATIONAL_BIBLIOGRAPHY_MAIN_ENTRY instead expires: 01/03-2027 */
+  NationalBibliographyEntry = "NATIONAL_BIBLIOGRAPHY_ENTRY",
+  NationalBibliographyMainEntry = "NATIONAL_BIBLIOGRAPHY_MAIN_ENTRY"
 }
 
 export type Ereol = {
@@ -1163,7 +1213,7 @@ export type Manifestation = {
   catalogueCodes: CatalogueCodes;
   /**
    * The publication status of a catalogued manifestation.
-   * @deprecated Use 'Manifestation.materialSelection.cataloguedPublicationStatus' instead expires: 05/12-2026
+   * @deprecated Use 'Manifestation.materialSelection.cataloguedPublicationStatus' instead expires: 01/03-2027
    */
   cataloguedPublicationStatus?: Maybe<CataloguedPublicationStatus>;
   /** Classification codes for this manifestation from any classification system */
@@ -1186,7 +1236,10 @@ export type Manifestation = {
   edition?: Maybe<Edition>;
   /** Overall literary category/genre of this manifestation. e.g. fiction or nonfiction. In Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for other types. */
   fictionNonfiction?: Maybe<FictionNonfiction>;
-  /** The genre, (literary) form, type etc. of this manifestation */
+  /**
+   * The genre, (literary) form, type etc. of this manifestation
+   * @deprecated Use 'genreForm' instead expires: 01/03-2027
+   */
   genreAndForm: Array<Scalars["String"]["output"]>;
   /** The genre and (literary) form of this manifestation */
   genreForm: Array<GenreForm>;
@@ -1215,6 +1268,8 @@ export type Manifestation = {
   notes: Array<Note>;
   /** The work that this manifestation is part of */
   ownerWork: Work;
+  /** Notes on relations to this manifestation - e.g. previous/later names or related journals */
+  periodicalTitleHistory: Array<PeriodicalTitleHistory>;
   /** Code for type of periodical */
   periodicalType?: Maybe<PeriodicalType>;
   /** Physical description  of this manifestation like extent (pages/minutes), illustrations etc. */
@@ -1229,7 +1284,7 @@ export type Manifestation = {
   recordCreationDate: Scalars["String"]["output"];
   /**
    * Notes about relations to this book/periodical/journal, - like previous names or related journals
-   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   * @deprecated Use 'periodicalTitleHistory' and 'notes' instead expires: 05/12-2026
    */
   relatedPublications: Array<RelatedPublication>;
   /** Relations to other manifestations */
@@ -1302,14 +1357,14 @@ export type ManifestationTitles = {
   sort: Scalars["String"]["output"];
   /**
    * The standard title of the entity, used for music and movies
-   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   * @deprecated Field is discontinued and will be removed expires: 01/03-2027
    */
   standard?: Maybe<Scalars["String"]["output"]>;
   /** The title of the entity with the language of the entity in parenthesis after. This field is only generated for non-danish titles. */
   titlePlusLanguage?: Maybe<Scalars["String"]["output"]>;
   /**
    * Danish translation of the main title
-   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   * @deprecated Field is discontinued and will be removed expires: 01/03-2027
    */
   translated?: Maybe<Array<Scalars["String"]["output"]>>;
   /** detailed title for tv series */
@@ -1608,10 +1663,7 @@ export type MusicShelf = {
 export type Mutation = {
   __typename?: "Mutation";
   elba: ElbaServices;
-  /**
-   * Updates patron information, such as adding or removing bookmarks.
-   * @deprecated @draft
-   */
+  /** Updates patron information, such as adding or removing bookmarks. */
   patron?: Maybe<PatronMutation>;
   submitOrder?: Maybe<SubmitOrder>;
 };
@@ -1635,7 +1687,7 @@ export type Note = {
   display: Array<Scalars["String"]["output"]>;
   /**
    * Heading before note
-   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   * @deprecated Field is discontinued and will be removed expires: 01/03-2027
    */
   heading?: Maybe<Scalars["String"]["output"]>;
   /** The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known. */
@@ -1645,6 +1697,8 @@ export type Note = {
 };
 
 export enum NoteTypeEnum {
+  CastAndScenes = "CAST_AND_SCENES",
+  ConnectionToOtherPeriodicals = "CONNECTION_TO_OTHER_PERIODICALS",
   ConnectionToOtherWorks = "CONNECTION_TO_OTHER_WORKS",
   ContainsAiGeneratedContent = "CONTAINS_AI_GENERATED_CONTENT",
   DescriptionOfMaterial = "DESCRIPTION_OF_MATERIAL",
@@ -1655,9 +1709,11 @@ export enum NoteTypeEnum {
   Frequency = "FREQUENCY",
   MusicalEnsembleOrCast = "MUSICAL_ENSEMBLE_OR_CAST",
   NotSpecified = "NOT_SPECIFIED",
+  NumberingAndDating = "NUMBERING_AND_DATING",
   OccasionForPublication = "OCCASION_FOR_PUBLICATION",
   OriginalTitle = "ORIGINAL_TITLE",
   OriginalVersion = "ORIGINAL_VERSION",
+  PublishedOtherMaterialtype = "PUBLISHED_OTHER_MATERIALTYPE",
   References = "REFERENCES",
   RestrictionsOnUse = "RESTRICTIONS_ON_USE",
   TechnicalRequirements = "TECHNICAL_REQUIREMENTS",
@@ -1710,13 +1766,22 @@ export type Patron = {
   bookmarks: Bookmarks;
   /** Country of the current patron. */
   country?: Maybe<Scalars["String"]["output"]>;
-  /** Retrieves current loans live from OpenUserStatus. */
+  /**
+   * Retrieves current loans live from OpenUserStatus.
+   * @deprecated @draft
+   */
   currentLoans: PatronCurrentLoans;
   /** Email address of the current patron. */
   email?: Maybe<Scalars["String"]["output"]>;
-  /** Retrieves consent for storing historical loans and whether the patron is old enough to change it. */
+  /**
+   * Retrieves consent for storing historical loans and whether the patron is old enough to change it.
+   * @deprecated @draft
+   */
   historicalLoanConsent: PatronHistoricalLoanConsent;
-  /** Retrieves historical loans stored in UserData. */
+  /**
+   * Retrieves historical loans stored in UserData.
+   * @deprecated @draft
+   */
   historicalLoans: PatronHistoricalLoans;
   /** Agency ID where the current patron is logged in. */
   loggedInAgencyId?: Maybe<Scalars["String"]["output"]>;
@@ -1735,6 +1800,7 @@ export type Patron = {
 /** Information about the patron associated with the current access token. */
 export type PatronBookmarksArgs = {
   applications?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  filter?: InputMaybe<BookmarkFilterInput>;
   limit?: InputMaybe<Scalars["PaginationLimitScalar"]["input"]>;
   offset?: InputMaybe<Scalars["Int"]["input"]>;
   orderBy?: InputMaybe<OrderBookmarksByEnum>;
@@ -1981,13 +2047,20 @@ export type PatronMutation = {
   /**
    * Adds one or more manual historical loans for integration testing.
    * Snapshot data is resolved by the gateway and cannot be supplied by the client.
+   * @deprecated @draft
    */
   addHistoricalLoans: AddHistoricalLoansResponse;
   /** Deletes one or more bookmarks for the patron. If a bookmark does not exist, it will be ignored. */
   deleteBookmarks: DeleteBookmarksResponse;
-  /** Deletes one or more historical loans by their public UserData IDs. */
+  /**
+   * Deletes one or more historical loans by their public UserData IDs.
+   * @deprecated @draft
+   */
   deleteHistoricalLoans: DeleteHistoricalLoansResponse;
-  /** Changes consent for storing historical loans. */
+  /**
+   * Changes consent for storing historical loans.
+   * @deprecated @draft
+   */
   setHistoricalLoanConsent: SetHistoricalLoanConsentResponse;
 };
 
@@ -2026,6 +2099,19 @@ export type PeriodicalSnapshot = {
   pages?: Maybe<Scalars["String"]["output"]>;
   /** Stored publisher of the host publication. */
   publisher?: Maybe<Scalars["String"]["output"]>;
+};
+
+/** Notes about relations to this manifestation - like previous names or related journals, or publications in different form */
+export type PeriodicalTitleHistory = {
+  __typename?: "PeriodicalTitleHistory";
+  /** Notes describing the relation of the related periodical/journal/publication */
+  heading: Scalars["String"]["output"];
+  /** ISSN of the related periodical/journal/publication */
+  issn?: Maybe<Scalars["String"]["output"]>;
+  /** Titles of the related periodical/journal */
+  title: Array<Scalars["String"]["output"]>;
+  /** URLs of the related publication and possible link text */
+  urls: Array<Scalars["String"]["output"]>;
 };
 
 export type PeriodicalType = {
@@ -2146,10 +2232,7 @@ export type Query = {
   manifestation?: Maybe<Manifestation>;
   manifestations: Array<Maybe<Manifestation>>;
   mood: MoodQueries;
-  /**
-   * Retrieves information about the patron, such as bookmarks, reservations, and loans.
-   * @deprecated @draft
-   */
+  /** Retrieves information about the patron, such as bookmarks, reservations, and loans. */
   patron?: Maybe<Patron>;
   /** Get recommendations */
   recommend: RecommendationResponse;
@@ -2236,6 +2319,7 @@ export type QueryRisArgs = {
 
 export type QuerySearchArgs = {
   filters?: InputMaybe<SearchFiltersInput>;
+  includeOnlineMaterials?: Scalars["Boolean"]["input"];
   q: SearchQueryInput;
   search_exact?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
@@ -2362,6 +2446,8 @@ export type Relations = {
   hasTrack: Array<Manifestation>;
   /** This movie is based on this or these books */
   isAdaptationOf: Array<Manifestation>;
+  /** This movie is based on this or these books in Danish */
+  isAdaptationOfDk: Array<Manifestation>;
   /** This manifestation is an analysis of these manifestations */
   isAnalysisOf: Array<Manifestation>;
   /** This is a description from the original publisher of these manifestations */
@@ -2729,7 +2815,7 @@ export type SpecialMaterialGroup = {
 
 export type SpecificMaterialType = {
   __typename?: "SpecificMaterialType";
-  /** code for materialType */
+  /** Code for the specific material type. */
   code: Scalars["String"]["output"];
   /** Ths string to display */
   display: Scalars["String"]["output"];
@@ -2944,7 +3030,7 @@ export type TvSeries = {
   __typename?: "TvSeries";
   /**
    * Dansih translated title of the tv serie
-   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   * @deprecated Field is discontinued and will be removed expires: 01/03-2027
    */
   danishLaunchTitle?: Maybe<Scalars["String"]["output"]>;
   /** Detailed information about the disc */
@@ -3053,8 +3139,13 @@ export type Work = {
   dk5MainEntry?: Maybe<Dk5MainEntry>;
   /** Overall literary category/genre of this work. e.g. fiction or nonfiction. In Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for other types. */
   fictionNonfiction?: Maybe<FictionNonfiction>;
-  /** The genre, (literary) form, type etc. of this work */
+  /**
+   * The genre, (literary) form, type etc. of this work
+   * @deprecated Use 'genreForm' instead expires: 01/03-2027
+   */
   genreAndForm: Array<Scalars["String"]["output"]>;
+  /** The genre, (literary) form, type etc. of this work, with optional language */
+  genreForm: Array<GenreForm>;
   /** Date of latest publication */
   latestPublicationDate?: Maybe<Scalars["String"]["output"]>;
   /** The main language(s) of the work's content */
@@ -3100,14 +3191,14 @@ export type WorkTitles = {
   sort: Scalars["String"]["output"];
   /**
    * The standard title of the entity, used for music and movies
-   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   * @deprecated Field is discontinued and will be removed expires: 01/03-2027
    */
   standard?: Maybe<Scalars["String"]["output"]>;
   /** The title of the entity with the language of the entity in parenthesis after. This field is only generated for non-danish titles. */
   titlePlusLanguage?: Maybe<Scalars["String"]["output"]>;
   /**
    * Danish translation of the main title
-   * @deprecated Field is discontinued and will be removed expires: 05/12-2026
+   * @deprecated Field is discontinued and will be removed expires: 01/03-2027
    */
   translated?: Maybe<Array<Scalars["String"]["output"]>>;
   /** detailed title for tv series */
@@ -5977,6 +6068,7 @@ export type SearchFacetQueryVariables = Exact<{
   facets: Array<FacetFieldEnum> | FacetFieldEnum;
   facetLimit: Scalars["Int"]["input"];
   filters?: InputMaybe<SearchFiltersInput>;
+  includeOnlineMaterials?: Scalars["Boolean"]["input"];
 }>;
 
 export type SearchFacetQuery = {
@@ -6003,6 +6095,7 @@ export type SearchWithPaginationQueryVariables = Exact<{
   offset: Scalars["Int"]["input"];
   limit: Scalars["PaginationLimitScalar"]["input"];
   filters?: InputMaybe<SearchFiltersInput>;
+  includeOnlineMaterials?: Scalars["Boolean"]["input"];
 }>;
 
 export type SearchWithPaginationQuery = {
@@ -12668,8 +12761,12 @@ export const useRecommendFromFaustQuery = <
 };
 
 export const SearchFacetDocument = new TypedDocumentString(`
-    query searchFacet($q: SearchQueryInput!, $facets: [FacetFieldEnum!]!, $facetLimit: Int!, $filters: SearchFiltersInput) {
-  search(q: $q, filters: $filters) {
+    query searchFacet($q: SearchQueryInput!, $facets: [FacetFieldEnum!]!, $facetLimit: Int!, $filters: SearchFiltersInput, $includeOnlineMaterials: Boolean! = true) {
+  search(
+    q: $q
+    filters: $filters
+    includeOnlineMaterials: $includeOnlineMaterials
+  ) {
     facets(facets: $facets) {
       name
       type
@@ -12704,8 +12801,12 @@ export const useSearchFacetQuery = <TData = SearchFacetQuery, TError = unknown>(
 };
 
 export const SearchWithPaginationDocument = new TypedDocumentString(`
-    query searchWithPagination($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: SearchFiltersInput) {
-  search(q: $q, filters: $filters) {
+    query searchWithPagination($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: SearchFiltersInput, $includeOnlineMaterials: Boolean! = true) {
+  search(
+    q: $q
+    filters: $filters
+    includeOnlineMaterials: $includeOnlineMaterials
+  ) {
     hitcount
     works(offset: $offset, limit: $limit) {
       ...WorkSmall

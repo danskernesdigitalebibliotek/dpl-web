@@ -190,6 +190,10 @@ export class SearchResultFacetsComponent extends ComponentObject {
    * Select a radio button by its label text
    */
   selectRadioOption(labelText: string) {
+    // The radios render before the facet search returns, but ignore clicks
+    // until it has, as their facet names come from its result. The facet
+    // groups render from the same result, so wait for them first.
+    this.container().find(".search-facet-group").should("exist");
     this.container()
       .find(".search-radio-button-group")
       .contains(".search-radio-button-group__label", labelText)
@@ -209,6 +213,32 @@ export class SearchResultFacetsComponent extends ComponentObject {
       .parent()
       .find(".search-radio-button-group__input--checked")
       .should("exist");
+  }
+
+  /**
+   * Verify the access type radios are collapsed and inert
+   */
+  verifyAccessTypeOptionsAreHidden() {
+    this.getRadioLabel("Online")
+      .should("not.be.visible")
+      .closest("[inert]")
+      .should("exist");
+  }
+
+  /**
+   * Verify the access type radios are shown and can be used
+   */
+  verifyAccessTypeOptionsAreVisible() {
+    this.getRadioLabel("Online")
+      .should("be.visible")
+      .closest("[inert]")
+      .should("not.exist");
+  }
+
+  private getRadioLabel(labelText: string) {
+    return this.container()
+      .find(".search-radio-button-group")
+      .contains(".search-radio-button-group__label", labelText);
   }
 
   /**
