@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import React from "react"
+import React, { useOptimistic, useTransition } from "react"
 
 import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
 import { cyKeys } from "@/cypress/support/constants"
@@ -18,13 +18,17 @@ export type MaterialTypeSelectProps = {
   onOptionSelect: (option: MaterialTypeSelectOption) => void
 }
 
-// Highlights whichever option `selected` names.
-
+// `selected` follows the manifestation the route resolves to, so it only moves
+// once the new material type has loaded. The pill animates on the optimistic
+// value instead, and settles on `selected` when it catches up.
 const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeSelectProps) => {
+  const [optimisticSelected, setOptimisticSelected] = useOptimistic(selected)
+  const [, startTransition] = useTransition()
+
   return (
     <div className="flex flex-row flex-wrap items-center justify-center gap-2">
       {options.map(option => {
-        const isSelected = option.code === selected
+        const isSelected = option.code === optimisticSelected
         const iconName = getIconNameFromMaterialType(option.code)
 
         return (
@@ -36,7 +40,12 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
                 ? `Nu viser materialet som ${option.display}`
                 : `Skift til visning af ${option.display}`
             }
-            onClick={() => onOptionSelect(option)}
+            onClick={() => {
+              startTransition(() => {
+                onOptionSelect(option)
+                setOptimisticSelected(option.code)
+              })
+            }}
             whileTap={{ scale: 0.92 }}
             whileHover={{ scale: 1.06 }}
             className={cn(
