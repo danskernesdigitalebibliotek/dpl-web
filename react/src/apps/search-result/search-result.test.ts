@@ -4,6 +4,61 @@ import {
   givenSearchWithPaginationEmptyResponse
 } from "../../../cypress/intercepts/fbi/searchWithPagination";
 import { givenSearchFacetResponse } from "../../../cypress/intercepts/fbi/searchFacet";
+import { hasOperationName } from "../../../cypress/utils/graphql-test-utils";
+
+type SearchOperation = "searchWithPagination" | "searchFacet";
+type SearchVariables = {
+  includeOnlineMaterials: boolean;
+  filters: { status?: string[]; accessTypes?: string[] };
+};
+type RecordedSearchVariables = Record<SearchOperation, SearchVariables[]>;
+
+const searchOperations: SearchOperation[] = [
+  "searchWithPagination",
+  "searchFacet"
+];
+
+/**
+ * Records the variables of every search request per operation. The aliases of
+ * cy.interceptGraphql match all GraphQL requests, so they can't tell the two
+ * search queries apart.
+ */
+const recordSearchVariables = () => {
+  const recorded: RecordedSearchVariables = {
+    searchWithPagination: [],
+    searchFacet: []
+  };
+  cy.intercept(
+    { method: "POST", url: "**/graphql*", middleware: true },
+    (request) => {
+      searchOperations
+        .filter((operationName) => hasOperationName(request, operationName))
+        .forEach((operationName) => {
+          recorded[operationName].push(request.body.variables);
+        });
+    }
+  );
+  return recorded;
+};
+
+/**
+ * Retries until the latest request of both search queries passes the
+ * assertions, since new requests arrive after the action that caused them.
+ */
+const verifyLatestSearchVariables = (
+  recorded: RecordedSearchVariables,
+  assertions: (variables: SearchVariables) => void
+) => {
+  cy.wrap(recorded).should(() => {
+    searchOperations.forEach((operationName) => {
+      const latestVariables = recorded[operationName].at(-1);
+      expect(latestVariables, `${operationName} request`).not.to.equal(
+        undefined
+      );
+      assertions(latestVariables as SearchVariables);
+    });
+  });
+};
 
 describe("Search Result", () => {
   let page: SearchResultPage;
@@ -60,6 +115,41 @@ describe("Search Result", () => {
         filters.toggleOnShelf();
         filters.verifyOnShelfIsNotChecked();
       });
+    });
+
+    it("switching on 'On shelf' excludes online materials and clears the access type", () => {
+      const recorded = recordSearchVariables();
+      page.visit([]);
+
+      verifyLatestSearchVariables(recorded, (variables) => {
+        // Leaving the variable out is fine too, as the query defaults it to true.
+        expect(variables.includeOnlineMaterials).not.to.equal(false);
+        expect(variables.filters.status).to.equal(undefined);
+      });
+
+      page.components.Filters((filters) => {
+        filters.verifyAccessTypeOptionsAreVisible();
+        filters.selectRadioOption("Online");
+        filters.verifyRadioOptionIsSelected("Online");
+      });
+
+      verifyLatestSearchVariables(recorded, (variables) => {
+        expect(variables.filters.accessTypes).to.deep.equal(["Digital"]);
+      });
+
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+        filters.verifyAccessTypeOptionsAreHidden();
+      });
+
+      verifyLatestSearchVariables(recorded, (variables) => {
+        expect(variables.includeOnlineMaterials).to.equal(false);
+        expect(variables.filters.status).to.deep.equal(["ONSHELF"]);
+        expect(variables.filters.accessTypes).to.equal(undefined);
+      });
+
+      page.verifyUrlContains("onShelf=true");
+      page.verifyUrlDoesNotContain("accessTypes");
     });
 
     it("toggles 'Can always be loaned' filter on and off", () => {
@@ -320,6 +410,16 @@ describe("Search Result", () => {
 
       page.clickShowResultsButton();
       page.verifyUrlContains("onShelf=true");
+    });
+
+    it("hides the access type options inside dialog when 'On shelf' is switched on", () => {
+      page.openFilterDialog();
+
+      page.components.DialogFilters((filters) => {
+        filters.verifyAccessTypeOptionsAreVisible();
+        filters.toggleOnShelf();
+        filters.verifyAccessTypeOptionsAreHidden();
+      });
     });
 
     it("toggles 'Can always be loaned' filter inside dialog", () => {

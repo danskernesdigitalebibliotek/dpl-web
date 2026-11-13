@@ -216,6 +216,32 @@ export class SearchResultFacetsComponent extends ComponentObject {
   }
 
   /**
+   * Verify the access type radios are collapsed and inert
+   */
+  verifyAccessTypeOptionsAreHidden() {
+    this.getRadioLabel("Online")
+      .should("not.be.visible")
+      .closest("[inert]")
+      .should("exist");
+  }
+
+  /**
+   * Verify the access type radios are shown and can be used
+   */
+  verifyAccessTypeOptionsAreVisible() {
+    this.getRadioLabel("Online")
+      .should("be.visible")
+      .closest("[inert]")
+      .should("not.exist");
+  }
+
+  private getRadioLabel(labelText: string) {
+    return this.container()
+      .find(".search-radio-button-group")
+      .contains(".search-radio-button-group__label", labelText);
+  }
+
+  /**
    * Verify a radio button is not selected by label text
    */
   verifyRadioOptionIsNotSelected(labelText: string) {
