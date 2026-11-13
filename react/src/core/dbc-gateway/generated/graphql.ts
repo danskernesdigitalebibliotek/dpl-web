@@ -6068,6 +6068,7 @@ export type SearchFacetQueryVariables = Exact<{
   facets: Array<FacetFieldEnum> | FacetFieldEnum;
   facetLimit: Scalars["Int"]["input"];
   filters?: InputMaybe<SearchFiltersInput>;
+  includeOnlineMaterials?: Scalars["Boolean"]["input"];
 }>;
 
 export type SearchFacetQuery = {
@@ -12760,8 +12761,12 @@ export const useRecommendFromFaustQuery = <
 };
 
 export const SearchFacetDocument = new TypedDocumentString(`
-    query searchFacet($q: SearchQueryInput!, $facets: [FacetFieldEnum!]!, $facetLimit: Int!, $filters: SearchFiltersInput) {
-  search(q: $q, filters: $filters) {
+    query searchFacet($q: SearchQueryInput!, $facets: [FacetFieldEnum!]!, $facetLimit: Int!, $filters: SearchFiltersInput, $includeOnlineMaterials: Boolean! = true) {
+  search(
+    q: $q
+    filters: $filters
+    includeOnlineMaterials: $includeOnlineMaterials
+  ) {
     facets(facets: $facets) {
       name
       type

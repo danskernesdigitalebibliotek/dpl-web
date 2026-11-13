@@ -65,6 +65,11 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
   // "On shelf" toggle state stored in URL (shared with advanced search)
   const [onShelf] = useQueryState("onShelf", parseAsBoolean.withDefault(false));
 
+  // When the "Find on shelf" filter is applied, we don't want to include interlibrary
+  // loans. That is filtered out by setting the `includeOnlineMaterials` flag on the
+  // input given to the search queries.
+  const includeOnlineMaterials = !onShelf;
+
   // Convert nuqs facets to filters format
   const facetFilters = convertFacetsToFilters(facetsFromUrl);
 
@@ -95,7 +100,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       q: { all: q },
       facets: allFacetFields,
       facetLimit: 50,
-      filters: searchFilters
+      filters: searchFilters,
+      includeOnlineMaterials
     },
     {
       placeholderData: keepPreviousData
@@ -134,7 +140,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       offset: page * pageSize,
       limit: pageSize,
       filters: searchFilters,
-      includeOnlineMaterials: !onShelf
+      includeOnlineMaterials
     },
     {
       enabled: q.length >= minimalQueryLength
