@@ -1,11 +1,12 @@
-// A group gathers many FBI facet values under one child-friendly name. Every
-// quiz answer points at exactly one group (see questions.ts), and a group
-// matches a work when any of its clauses match (OR). The terms come from the
+// A group gathers many FBI facet values under one child-friendly name. Each
+// genre, mood and subject answer points at one group (see questions.ts), and a
+// group matches a work when any of its clauses match (OR). The terms come from the
 // curated term list, all on the phrase index so multi-word values work.
 
 export type TBookQuizClause = { cqlIndex: string; cqlValues: string[] }
 
 export type TBookQuizGroup = {
+  // Short name for section titles, e.g. "Fantasy" in "Sjove fantasybøger".
   label: string
   match: TBookQuizClause[]
 }

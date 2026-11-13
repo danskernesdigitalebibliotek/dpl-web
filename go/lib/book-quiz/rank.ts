@@ -2,21 +2,16 @@ import type { TBookQuizRange } from "./questions"
 
 // Books shown per section.
 export const BOOKS_PER_STEP = 3
-// Books fetched per section, so there are enough left after too wide age
-// spans are dropped.
-export const FETCH_PER_STEP = 10
 // How many years a work's age span may reach outside the chosen range.
 export const MAX_AGE_SPILL = 2
-
-type TAudience = {
-  ages: { begin?: number | null; end?: number | null }[]
-} | null
 
 // The smallest shape rank needs, so it works with any query that includes
 // audience ages on the manifestations.
 export type TRankableWork = {
   workId: string
-  manifestations: { all: { audience?: TAudience }[] }
+  manifestations: {
+    all: { audience?: { ages: { begin?: number | null; end?: number | null }[] } | null }[]
+  }
 }
 
 // Age data is often only set on the physical edition, so the first

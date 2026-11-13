@@ -21,8 +21,9 @@ import {
 // key in the result page URL, and an option's id is its value there.
 //
 // An option maps to at most one thing: a group (genre, mood or subject,
-// depending on the question), an age range or a reading level. Options without a mapping ("Det er forskelligt",
-// "Ved ikke", "Jeg er en kæmpe læsehest") add no filter.
+// depending on the question), an age range or a reading level. Options without
+// a mapping ("Det er forskelligt", "Ved ikke", "Jeg er en kæmpe læsehest") add
+// no filter.
 
 export type TBookQuizRange = [number, number]
 
@@ -122,6 +123,3 @@ export const getQuestion = (id: TBookQuizQuestionId): TBookQuizQuestion => {
   if (!question) throw new Error(`Unknown book quiz question: ${id}`)
   return question
 }
-
-export const getOptionIds = (id: TBookQuizQuestionId): string[] =>
-  getQuestion(id).options.map(option => option.id)

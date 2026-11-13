@@ -1,3 +1,5 @@
+import { filterFalsyValuesFromArray } from "@/lib/helpers/helper.arrays"
+
 import type { TBookQuizClause } from "./groups"
 import type { TBookQuizProfile } from "./profile"
 import type { TBookQuizRange } from "./questions"
@@ -34,7 +36,7 @@ const clauseCql = (clauses: TBookQuizClause[]): string | null => {
   return terms.length > 0 ? `(${terms.join(" OR ")})` : null
 }
 
-export const ageCql = ([low, high]: TBookQuizRange) => `ages within "${low} ${high}"`
+const ageCql = ([low, high]: TBookQuizRange) => `ages within "${low} ${high}"`
 
 // Age and "easy to read" apply to every step. Only genre, mood and subjects are
 // loosened down the ladder.
@@ -45,10 +47,10 @@ export const getLadderSteps = (profile: TBookQuizProfile): TLadderStep[] => {
     // Several subjects widen the search: a work matches any of their terms.
     subjects: clauseCql(profile.subjects.flatMap(group => group.match)),
   }
-  const always = [
+  const always = filterFalsyValuesFromArray([
     profile.ageRange ? ageCql(profile.ageRange) : null,
     profile.easyToRead ? EASY_TO_READ_CQL : null,
-  ].filter(Boolean)
+  ])
 
   return LADDER.map(parts => {
     const cqls = parts.map(part => partCql[part])

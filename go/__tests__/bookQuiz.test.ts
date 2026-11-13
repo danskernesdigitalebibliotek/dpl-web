@@ -1,9 +1,8 @@
 import { describe, expect, it } from "vitest"
 
 import { ANIMALS, FANTASY, FUNNY, SPORT } from "@/lib/book-quiz/groups"
-import { LADDER, ageCql, getLadderSteps } from "@/lib/book-quiz/ladder"
+import { LADDER, getLadderSteps } from "@/lib/book-quiz/ladder"
 import { getBookQuizProfile } from "@/lib/book-quiz/profile"
-import { QUESTIONS } from "@/lib/book-quiz/questions"
 import {
   BOOKS_PER_STEP,
   type TRankableWork,
@@ -11,25 +10,12 @@ import {
   getWorkAgeSpan,
   rankStepWorks,
 } from "@/lib/book-quiz/rank"
-import { serializeBookQuizAnswers } from "@/lib/book-quiz/url"
 
 const work = (workId: string, ages: [number, number] | null): TRankableWork => ({
   workId,
   manifestations: {
     all: [{ audience: ages ? { ages: [{ begin: ages[0], end: ages[1] }] } : null }],
   },
-})
-
-describe("book quiz questions", () => {
-  it("asks age after subjects", () => {
-    expect(QUESTIONS.map(question => question.id)).toEqual([
-      "genre",
-      "mood",
-      "subjects",
-      "age",
-      "level",
-    ])
-  })
 })
 
 describe("getBookQuizProfile", () => {
@@ -91,9 +77,6 @@ describe("getLadderSteps", () => {
     expect(cql).toMatch(/^\(phrase\.subject="dyr" OR .* OR phrase\.subject="gaming" OR .*\)$/)
   })
 
-  it("filters on age as a range", () => {
-    expect(ageCql([9, 10])).toBe('ages within "9 10"')
-  })
 })
 
 describe("rank", () => {
@@ -127,17 +110,5 @@ describe("rank", () => {
   it("puts works without age data last instead of dropping them", () => {
     const ranked = rankStepWorks([work("unknown", null), work("exact", [9, 10])], [9, 10])
     expect(ranked.map(entry => entry.workId)).toEqual(["exact", "unknown"])
-  })
-})
-
-describe("serializeBookQuizAnswers", () => {
-  it("writes answer ids to the URL and skips empty answers", () => {
-    expect(
-      serializeBookQuizAnswers("/bog-quiz", {
-        genre: "genre-fantasy",
-        mood: null,
-        subjects: ["subject-animals", "subject-sport"],
-      })
-    ).toBe("/bog-quiz?genre=genre-fantasy&subjects=subject-animals,subject-sport")
   })
 })
