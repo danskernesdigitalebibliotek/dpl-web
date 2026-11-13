@@ -4,6 +4,7 @@ import {
   givenSearchWithPaginationEmptyResponse
 } from "../../../cypress/intercepts/fbi/searchWithPagination";
 import { givenSearchFacetResponse } from "../../../cypress/intercepts/fbi/searchFacet";
+import { hasOperationName } from "../../../cypress/utils/graphql-test-utils";
 
 describe("Search Result", () => {
   let page: SearchResultPage;
@@ -471,6 +472,144 @@ describe("Search Result", () => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1000);
       page.verifyUrlContains("id=apps-search-result--on-zero-hits-page");
+    });
+  });
+
+  // Gives every page its own works, so the pages can be told apart.
+  const givenPagedSearchResults = () => {
+    cy.fixture("search-result/facet-browser/searchWithPagination.json").then(
+      (fixture) => {
+        cy.intercept({ method: "POST", url: "**/graphql*" }, (req) => {
+          if (!hasOperationName(req, "searchWithPagination")) {
+            return;
+          }
+          const { offset } = req.body.variables;
+          req.reply({
+            data: {
+              search: {
+                ...fixture.data.search,
+                works: fixture.data.search.works.map(
+                  (work: { workId: string }, i: number) => ({
+                    ...work,
+                    workId: `work-of:test-${offset + i}`
+                  })
+                )
+              }
+            }
+          });
+        });
+      }
+    );
+  };
+
+  describe("Show more", () => {
+    beforeEach(() => {
+      givenPagedSearchResults();
+    });
+
+    // Keyboard and screen reader users continue from the first new result
+    // instead of starting over at the top of the list.
+    it("focuses the first new result", () => {
+      // Open the search result and wait for the first page.
+      page.visit([]);
+      cy.get(".card-list-item").should("have.length", 50);
+      // Load the second page.
+      cy.contains("button", "show more").click();
+
+      // The first result of the second page has focus.
+      cy.get(".card-list-item").eq(50).closest("li").should("have.focus");
+    });
+
+    // The campaign is shown before the works and must not shift which result
+    // counts as the first new one.
+    it("focuses the first new result when a campaign is shown", () => {
+      // Show a campaign above the results.
+      cy.intercept("POST", "**/dpl_campaign/match*", {
+        statusCode: 200,
+        body: {
+          data: {
+            id: "1",
+            title: "Campaign title",
+            url: "https://example.com/campaign",
+            open_in_new_tab: false
+          }
+        }
+      });
+      // Open the search result and wait for the campaign and the first page.
+      page.visit([]);
+      cy.getBySel("campaign-body").should("exist");
+      cy.get(".card-list-item").should("have.length", 50);
+      // Load the second page.
+      cy.contains("button", "show more").click();
+
+      // The first result of the second page has focus, not the one before it.
+      cy.get(".card-list-item").eq(50).closest("li").should("have.focus");
+    });
+
+    // Opening a search on a later page, e.g. from a shared link or by going
+    // back, must not jump to the first result of the last page.
+    it("does not move focus or scroll when opened on a later page", () => {
+      // Open the search result with the second page in the URL, like when
+      // reloading the page or following a shared link after showing more.
+      page.visitStory("default", { qs: { page: 1 } });
+      // Both pages are loaded and shown (2 pages with 50 items equals 100).
+      cy.get(".card-list-item").should("have.length", 100);
+
+      // Focusing the first new result is only for "show more". Here the user
+      // did not ask for more results, so focus stays on the page itself and
+      // the page is not scrolled down to the second page.
+      cy.document().its("activeElement.tagName").should("eq", "BODY");
+      cy.window().its("scrollY").should("eq", 0);
+    });
+  });
+
+  describe("Returning to the search result", () => {
+    beforeEach(() => {
+      givenPagedSearchResults();
+      page.visit([]);
+    });
+
+    it("keeps the loaded pages and scrolls back to the clicked work", () => {
+      // Load the second page. The page is kept in the URL.
+      cy.get("[data-item-id]").should("have.length", 50);
+      cy.contains("button", "show more").click();
+      cy.get("[data-item-id]").should("have.length", 100);
+      cy.url().should("include", "page=1");
+
+      // Open a work from the second page and go back with the browser.
+      cy.get('[data-item-id="work-of:test-75"]')
+        .find("[data-cy='card-list-item-title'] a")
+        .click();
+      cy.url().should("include", "/work/");
+      cy.go("back");
+
+      // Both pages are shown again (2 pages with 50 items equals 100), so the
+      // work is still in the list.
+      cy.get("[data-item-id]").should("have.length", 100);
+      // The work that was opened has focus and is scrolled into view, so the
+      // user continues where they left off.
+      cy.get('[data-item-id="work-of:test-75"]')
+        .should("have.focus")
+        .and(($item) => {
+          const { top, bottom } = $item[0].getBoundingClientRect();
+          expect(top).to.be.greaterThan(0);
+          expect(bottom).to.be.lessThan(Cypress.config("viewportHeight"));
+        });
+      // The work is only kept in the URL until it has been scrolled to.
+      cy.url().should("not.include", "item=");
+    });
+
+    it("starts over on the first page when the filters change", () => {
+      // Load the second page.
+      cy.contains("button", "show more").click();
+      cy.url().should("include", "page=1");
+      // Change a filter, which gives a new search.
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+      });
+      // The page is removed from the URL and only the first page is shown.
+      cy.url().should("not.include", "page=");
+      cy.get("[data-item-id]").should("have.length", 50);
     });
   });
 

@@ -3,6 +3,8 @@ import { givenComplexSuggestResponse } from "../../../cypress/intercepts/fbi/com
 import { givenComplexSearchWithPaginationResponse } from "../../../cypress/intercepts/fbi/complexSearchWithPagination";
 import { givenComplexFacetSearchResponse } from "../../../cypress/intercepts/fbi/complexFacetSearch";
 import { ComplexSearchFacetsEnum } from "../../core/dbc-gateway/generated/graphql";
+import { hasOperationName } from "../../../cypress/utils/graphql-test-utils";
+import { workSmallFactory } from "../../../cypress/factories/fbi/workSmall.factory";
 
 const currentYear = new Date().getFullYear();
 const lastYear = currentYear - 1;
@@ -868,6 +870,72 @@ describe("Advanced Search V2", () => {
       page.verifyUrlContains("fictionType=fiction");
       page.verifyUrlContains("ageGroup=til");
       page.verifyUrlContains("voksne");
+    });
+  });
+
+  describe("Returning to the results", () => {
+    beforeEach(() => {
+      // Give every page its own works, so the pages can be told apart.
+      cy.intercept({ method: "POST", url: "**/graphql*" }, (req) => {
+        if (!hasOperationName(req, "complexSearchWithPagination")) {
+          return;
+        }
+        const { offset, limit } = req.body.variables;
+        req.reply({
+          data: {
+            complexSearch: {
+              hitcount: 120,
+              works: Array.from({ length: limit }, (_, i) =>
+                workSmallFactory.build({ workId: `work-of:test-${offset + i}` })
+              )
+            }
+          }
+        });
+      });
+      // Search and load the second page. The page is kept in the URL.
+      page.components.Form((form) => {
+        form.enterSearchTerm(0, "harry");
+        form.clickSearch();
+      });
+      cy.get("[data-item-id]").should("have.length", 50);
+      cy.contains("button", "show more").click();
+      cy.get("[data-item-id]").should("have.length", 100);
+      page.verifyUrlContains("page=1");
+    });
+
+    it("keeps the loaded pages and scrolls back to the clicked work", () => {
+      // Open a work from the second page and go back with the browser.
+      cy.get('[data-item-id="work-of:test-75"]')
+        .find("[data-cy='card-list-item-title'] a")
+        .click();
+      cy.url().should("include", "/work/");
+      cy.go("back");
+
+      // Both pages are shown again (2 pages with 50 items equals 100), so the
+      // work is still in the list.
+      cy.get("[data-item-id]").should("have.length", 100);
+      // The work that was opened has focus and is scrolled into view, so the
+      // user continues where they left off.
+      cy.get('[data-item-id="work-of:test-75"]')
+        .should("have.focus")
+        .and(($item) => {
+          const { top, bottom } = $item[0].getBoundingClientRect();
+          expect(top).to.be.greaterThan(0);
+          expect(bottom).to.be.lessThan(Cypress.config("viewportHeight"));
+        });
+    });
+
+    it("starts over on the first page when the search is edited", () => {
+      // Edit the search. The page is removed from the URL right away.
+      page.components.Summary((summary) => {
+        summary.clickEdit();
+      });
+      cy.url().should("not.include", "page=");
+      // Search again, which only shows the first page.
+      page.components.Form((form) => {
+        form.clickSearch();
+      });
+      cy.get("[data-item-id]").should("have.length", 50);
     });
   });
 });
