@@ -1,0 +1,26 @@
+# One ladder step of the book quiz. Same teaser as the search page, plus the
+# audience ages used to rank and drop works with too wide an age span. Ages are
+# read from all manifestations, as they are often only set on the physical one.
+query bookQuizStep(
+  $cql: String!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: ComplexSearchFiltersInput!
+) {
+  complexSearch(cql: $cql, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkTeaserSearchPage
+      manifestations {
+        all {
+          audience {
+            ages {
+              begin
+              end
+            }
+          }
+        }
+      }
+    }
+  }
+}
