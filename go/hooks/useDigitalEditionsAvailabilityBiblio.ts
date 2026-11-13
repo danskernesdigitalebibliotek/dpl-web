@@ -5,16 +5,9 @@ import {
   useDigitalLoanDecisions,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 
-import {
-  isAudioMaterialType,
-  isEbookMaterialType,
-  isPodcastMaterialType,
-} from "@/components/pages/workPageLayout/helper"
+import { isDigitalMaterialType } from "@/components/pages/workPageLayout/helper"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
-
-const isDigitalMaterialType = (code: string | undefined): boolean =>
-  !!code && (isEbookMaterialType(code) || isAudioMaterialType(code) || isPodcastMaterialType(code))
 
 // Plural counterpart to useDigitalEditionAvailabilityBiblio, for a caller
 // (the picker) that lists several editions at once and needs every result
