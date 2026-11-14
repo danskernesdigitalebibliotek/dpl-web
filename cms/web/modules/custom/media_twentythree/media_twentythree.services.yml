@@ -3,8 +3,5 @@ services:
     decorates: media.oembed.provider_repository
     class: Drupal\media_twentythree\ProviderRepositoryDecorator
     public: false
-    arguments: ['@media_twentythree.oembed.provider_repository.inner']
-  # The core service, which MediaTwentythreeServiceProvider makes a
-  # DiscoveryUrlResolver.
-  media_twentythree.oembed.url_resolver:
-    alias: media.oembed.url_resolver
+    arguments:
+      ['@media_twentythree.oembed.provider_repository.inner', '@config.factory']

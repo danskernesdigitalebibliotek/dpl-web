@@ -26,17 +26,22 @@ Instead this module integrates with TwentyThree in a way which should be easy
 for editors to use:
 
 1. It adds TwentyThree to the list of supported providers for remote video
-2. Through oEmbed discovery it allows editors to add videos from whatever
-   TwentyThree site using whatever domain.
+2. Administrators enter the host names of their TwentyThree site at
+   `/admin/config/media/twentythree`, after which editors can add videos from
+   those hosts.
 
-## Allowed hosts
+## How it works
 
-Drupal Core only runs oEmbed discovery for hosts matching the
-`media_oembed_discovery_trusted_host_patterns` setting, as discovery makes the
-server request whatever URL an editor enters. As every library has its own
-TwentyThree domain, a fixed list in settings does not work for us.
+The module decorates the core oEmbed provider repository, adding a
+`TwentyThree` provider next to the ones from the official list. For each
+configured host, say `video.example.dk`, the provider gets an endpoint at
+`https://video.example.dk/oembed` handling URLs matching
+`http(s)://video.example.dk/*`. Every TwentyThree site serves its oEmbed
+endpoint at `/oembed`, [as documented by TwentyThree](https://www.twentythree.com/help/manage-oembed).
 
-Instead administrators enter the host names of their TwentyThree site at
-`/admin/config/media/twentythree`, and the module runs discovery for those
-hosts. Until a host is added, TwentyThree videos from it are rejected with
+From there core handles TwentyThree like any other oEmbed provider. No oEmbed
+discovery is involved, so the `media_oembed_discovery_trusted_host_patterns`
+setting does not need to list TwentyThree hosts.
+
+Until a host is added, TwentyThree videos from it are rejected with
 "The given URL does not match any known oEmbed providers."
