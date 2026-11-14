@@ -15,6 +15,8 @@ import HelpText from "@/components/shared/helpText/HelpText"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { cyKeys } from "@/cypress/support/constants"
 import { useBiblioAdapter } from "@/hooks/useBiblioAdapter"
+import { useDigitalEditionAvailabilityBiblio } from "@/hooks/useDigitalEditionAvailabilityBiblio"
+import { useEditionAvailability } from "@/hooks/useEditionAvailability"
 import usePatronShelf from "@/hooks/usePatronShelf"
 import useSession from "@/hooks/useSession"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
@@ -48,6 +50,8 @@ const WorkPageButtonsLoggedIn = ({
   const { data: biblioLoansData, isLoading: isLoadingBiblioLoans } = useDigitalLoans({
     enabled: viaBiblioAdapter,
   })
+  const { isDigitalEditionOnLoan: isOnLoan } =
+    useDigitalEditionAvailabilityBiblio(selectedManifestation)
 
   if (isLoadingLoans || (viaBiblioAdapter && !isUnilogin && isLoadingBiblioLoans)) {
     return <WorkPageButtons.Skeleton />
@@ -87,6 +91,7 @@ const WorkPageButtonsLoggedIn = ({
         <PhysicalReservationButton
           dataCy={dataCy}
           label={label}
+          workId={workId}
           selectedManifestation={selectedManifestation}
           reservationModal={reservationModal}
           onOpen={open}
@@ -122,11 +127,17 @@ const WorkPageButtonsLoggedIn = ({
     }
     return (
       <WorkPageButtons>
+        {isOnLoan && (
+          <div className="w-full lg:max-w-80 lg:min-w-72">
+            <HelpText>Udlånt lige nu</HelpText>
+          </div>
+        )}
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
           theme="primary"
           dataCy={dataCy}
           disabled={isDisabled}
+          ariaDisabled={isOnLoan}
           onClick={() => open("LoanMaterialModal")}>
           Lån {label}
         </WorkPageButton>
@@ -174,11 +185,17 @@ const WorkPageButtonsLoggedIn = ({
     }
     return (
       <WorkPageButtons>
+        {isOnLoan && (
+          <div className="w-full lg:max-w-80 lg:min-w-72">
+            <HelpText>Udlånt lige nu</HelpText>
+          </div>
+        )}
         <WorkPageButton
           ariaLabel={`Lån ${label}`}
           theme="primary"
           dataCy={dataCy}
           disabled={isDisabled}
+          ariaDisabled={isOnLoan}
           onClick={() => open("LoanMaterialModal")}>
           Lån {label}
         </WorkPageButton>
@@ -208,15 +225,17 @@ const WorkPageButtonsLoggedIn = ({
 // details (with deletion inside); otherwise the "Reserver" CTA. Both
 // service-layer hooks are patron-gated, so nothing fires for Unilogin or
 // anonymous sessions.
-const PhysicalReservationButton = ({
+export const PhysicalReservationButton = ({
   dataCy,
   label,
+  workId,
   selectedManifestation,
   reservationModal,
   onOpen,
 }: {
   dataCy: string
   label: string
+  workId: string
   selectedManifestation: ManifestationWorkPageFragment
   reservationModal: TModalType
   onOpen: (modal: TModalType) => void
@@ -226,6 +245,11 @@ const PhysicalReservationButton = ({
   const recordId = pidToFaust(selectedManifestation.pid)
   const existing = findReservationByRecordId(reservations, recordId)
   const existingLoan = loans?.find(loan => loan.recordId === recordId)
+
+  // Only reachable through a pinned pid in a shared link, since the picker
+  // offers nothing unobtainable. Lent-out editions keep the normal button.
+  const { isEditionHidden } = useEditionAvailability(workId)
+  const isUnobtainable = isEditionHidden(selectedManifestation)
 
   if (existingLoan) {
     return (
@@ -250,6 +274,23 @@ const PhysicalReservationButton = ({
           dataCy={cyKeys["view-reservation-button"]}
           onClick={() => openModal("ReservationDetailsModal", { recordId: existing.recordId })}>
           Se reservering
+        </WorkPageButton>
+      </>
+    )
+  }
+
+  if (isUnobtainable) {
+    return (
+      <>
+        <div className="w-full lg:max-w-80 lg:min-w-72">
+          <HelpText>Vælg en anden udgave, denne findes ikke på dit bibliotek</HelpText>
+        </div>
+        <WorkPageButton
+          ariaLabel={`Reserver ${label}`}
+          theme="primary"
+          dataCy={dataCy}
+          ariaDisabled>
+          Reserver {label}
         </WorkPageButton>
       </>
     )
