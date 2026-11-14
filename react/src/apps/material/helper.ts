@@ -639,47 +639,28 @@ export const getAvailablePriorityMaterialType = (
 };
 
 export const getWorkTitle = (work: Work): string => {
-  const { titles, mainLanguages } = work;
+  const { titles } = work;
+
+  const fullTitle = titles.full.length ? titles.full.join(", ") : undefined;
+  const originalTitle = titles.original?.length
+    ? titles.original.join(", ")
+    : undefined;
+  const titlePlusLanguage = titles.titlePlusLanguage;
+
   // For movies and TV series, use the full title directly.
   // It already contains all relevant details (season, disc, episodes, etc.)
-  // and matches what the grid/card views display.
   const isMovieOrTvSeries = work.materialTypes?.some(
     ({ materialTypeGeneral }) =>
-      materialTypeGeneral &&
-      [
-        GeneralMaterialTypeCodeEnum.Films,
-        GeneralMaterialTypeCodeEnum.TvSeries
-      ].includes(materialTypeGeneral.code)
+      materialTypeGeneral.code === GeneralMaterialTypeCodeEnum.Films ||
+      materialTypeGeneral.code === GeneralMaterialTypeCodeEnum.TvSeries
   );
+
   if (isMovieOrTvSeries) {
-    if (titles.full.length) {
-      return titles.full.join(", ");
-    }
-    if (titles.original?.length) {
-      return titles.original.join(", ");
-    }
+    return fullTitle ?? originalTitle ?? "Unknown title";
   }
 
-  // If Danish is among the main languages and a full title exists,
-  // we prefer showing the full title because it is translated.
-  if (materialContainsDanish(work) && titles.full) {
-    return titles.full.join(", ");
-  }
-
-  // If there's a full title but no Danish language, we stil show the full title
-  // but append the languages in parentheses, e.g. "My Title (English, Spanish)".
-  if (titles.full.length) {
-    const allLanguages = mainLanguages.map(({ display }) => display).join(", ");
-    return `${titles.full.join(", ")} (${allLanguages})`;
-  }
-
-  // If there’s only an original title, use that.
-  if (titles.original?.length) {
-    return titles.original.join(", ");
-  }
-
-  // This should never happen, so therefore ist not translated.
-  return "Unknown title";
+  // titlePlusLanguage is only set for non-Danish works, e.g. "My Title (engelsk)".
+  return titlePlusLanguage ?? fullTitle ?? originalTitle ?? "Unknown title";
 };
 
 export const getDisclosureOpenStatesFromUrl = () => {
@@ -719,12 +700,6 @@ if (import.meta.vitest) {
           full: ["Dødens gab"],
           original: ["Jaws"]
         },
-        mainLanguages: [
-          {
-            display: "engelsk",
-            iso639Set1: "en"
-          }
-        ],
         materialTypes: [
           {
             materialTypeGeneral: {
@@ -744,7 +719,6 @@ if (import.meta.vitest) {
           full: [],
           original: ["Jaws"]
         },
-        mainLanguages: [],
         materialTypes: [
           {
             materialTypeGeneral: {
@@ -764,12 +738,6 @@ if (import.meta.vitest) {
           full: ["Game of thrones, sæson 1"],
           original: []
         },
-        mainLanguages: [
-          {
-            display: "engelsk",
-            iso639Set1: "en"
-          }
-        ],
         materialTypes: [
           {
             materialTypeGeneral: {
@@ -789,12 +757,6 @@ if (import.meta.vitest) {
           full: ["Matador, disc 1"],
           original: ["Matador"]
         },
-        mainLanguages: [
-          {
-            display: "dansk",
-            iso639Set1: "da"
-          }
-        ],
         materialTypes: [
           {
             materialTypeGeneral: {
@@ -808,58 +770,90 @@ if (import.meta.vitest) {
       expect(title).toMatchInlineSnapshot(`"Matador, disc 1"`);
     });
 
-    it("returns the first full title if main language is Danish", () => {
+    it("ignores titlePlusLanguage for films and TV series", () => {
+      const work = {
+        titles: {
+          full: ["Dødens gab"],
+          original: ["Jaws"],
+          titlePlusLanguage: "Dødens gab (engelsk)"
+        },
+        materialTypes: [
+          {
+            materialTypeGeneral: {
+              code: GeneralMaterialTypeCodeEnum.Films
+            }
+          }
+        ]
+      } as unknown as Work;
+
+      const title = getWorkTitle(work);
+      expect(title).toMatchInlineSnapshot(`"Dødens gab"`);
+    });
+
+    it("prefers titlePlusLanguage when present", () => {
+      const work = {
+        titles: {
+          full: ["Global Adventures"],
+          original: ["Original Global Adventures"],
+          titlePlusLanguage: "Global Adventures (engelsk)"
+        },
+        materialTypes: []
+      } as unknown as Work;
+
+      const title = getWorkTitle(work);
+      expect(title).toMatchInlineSnapshot(`"Global Adventures (engelsk)"`);
+    });
+
+    it("returns the full title when titlePlusLanguage is absent, as for Danish works", () => {
       const work = {
         titles: {
           full: ["De syv søstre : Maias historie"],
           original: ["The seven sisters"],
-          tvSeries: null
+          titlePlusLanguage: null
         },
-        mainLanguages: [
-          {
-            display: "dansk",
-            iso639Set1: "da"
-          }
-        ]
+        materialTypes: []
       } as unknown as Work;
 
       const title = getWorkTitle(work);
       expect(title).toMatchInlineSnapshot(`"De syv søstre : Maias historie"`);
     });
 
-    it("returns the first full title plus languages in parentheses if not Danish", () => {
-      const work = {
+    it("ignores titlePlusLanguage for films and tv series", () => {
+      const film = {
         titles: {
-          full: ["Global Adventures"],
-          original: ["Original Global Adventures"],
-          tvSeries: null
+          full: ["Fucking Åmal"],
+          original: ["Fucking Åmal"],
+          titlePlusLanguage: "Fucking Åmal (Svensk)"
         },
-        mainLanguages: [
+        materialTypes: [
+          { materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum.Films } }
+        ]
+      } as unknown as Work;
+
+      const tvSeries = {
+        titles: {
+          full: ["Friends - season one"],
+          original: ["Friends"],
+          titlePlusLanguage: "Friends (Engelsk)"
+        },
+        materialTypes: [
           {
-            display: "English",
-            iso639Set1: "en"
-          },
-          {
-            display: "German",
-            iso639Set1: "de"
+            materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum.TvSeries }
           }
         ]
       } as unknown as Work;
 
-      const title = getWorkTitle(work);
-      expect(title).toMatchInlineSnapshot(
-        `"Global Adventures (English, German)"`
-      );
+      expect(getWorkTitle(film)).toEqual("Fucking Åmal");
+      expect(getWorkTitle(tvSeries)).toEqual("Friends - season one");
     });
 
     it("returns 'Unknown title' when no data is available", () => {
       const work = {
         titles: {
           full: [],
-          original: [],
-          tvSeries: null
+          original: []
         },
-        mainLanguages: []
+        materialTypes: []
       } as unknown as Work;
 
       const title = getWorkTitle(work);

@@ -25,7 +25,8 @@ import { statistics } from "../../../core/statistics/statistics";
 import { useItemHasBeenVisible } from "../../../core/utils/helpers/lazy-load";
 import {
   getFirstBookManifestation,
-  getManifestationLanguageCode
+  getManifestationLanguageCode,
+  getWorkTitle
 } from "../../../apps/material/helper";
 import useFilterHandler from "../../../apps/search-result/useFilterHandler";
 import { getFirstMaterialTypeFromFilters } from "../../../apps/search-result/helper";
@@ -45,7 +46,6 @@ export interface CardListItemProps {
 const CardListItem: React.FC<CardListItemProps> = ({
   item,
   item: {
-    titles: { full: fullTitle },
     series,
     creators,
     manifestations: { all: manifestations, bestRepresentation },
@@ -70,6 +70,7 @@ const CardListItem: React.FC<CardListItemProps> = ({
   );
   const bookManifestation = getFirstBookManifestation(manifestations);
 
+  const title = getWorkTitle(item);
   const author = creatorsToString(flattenCreators(creators), t);
   const manifestationPids = getManifestationsPids(manifestations);
   const materialFullUrl = constructMaterialUrl(
@@ -135,7 +136,7 @@ const CardListItem: React.FC<CardListItemProps> = ({
         <div className="card-list-item__meta">
           {showItem && (
             <ButtonFavourite
-              title={fullTitle.join(", ")}
+              title={title}
               id={preferredId || workId}
               addToListRequest={addToListRequest}
             />
@@ -161,7 +162,7 @@ const CardListItem: React.FC<CardListItemProps> = ({
           id={searchTitleId}
         >
           <Link href={materialFullUrl} stopPropagation>
-            {fullTitle.join(", ")}
+            {title}
           </Link>
         </h2>
 
