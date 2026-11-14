@@ -75,6 +75,10 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
     ...baseFilters,
     ...(onShelf ? { status: [HoldingsStatusEnum.Onshelf] } : {})
   };
+  // ONSHELF alone still matches online materials and works only held at other
+  // (central) libraries. With this false, FBI only returns works physically held
+  // at the site's own agency.
+  const includeOnlineMaterials = !onShelf;
 
   const { PagerComponent, page, resetPage } = usePager({
     hitcount,
@@ -95,7 +99,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       q: { all: q },
       facets: allFacetFields,
       facetLimit: 50,
-      filters: searchFilters
+      filters: searchFilters,
+      includeOnlineMaterials
     },
     {
       placeholderData: keepPreviousData
@@ -133,7 +138,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       q: { all: q },
       offset: page * pageSize,
       limit: pageSize,
-      filters: searchFilters
+      filters: searchFilters,
+      includeOnlineMaterials
     },
     {
       enabled: q.length >= minimalQueryLength
