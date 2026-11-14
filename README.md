@@ -32,7 +32,7 @@ Each project has a `task dev:reset` command to set up the development environmen
 - **Go:** `cd go && task dev:reset`
 - **React:** `cd react && task dev:reset`
 
-See individual project documentation for additional commands.
+See individual project documentation for additional commands
 
 ## Resources
 

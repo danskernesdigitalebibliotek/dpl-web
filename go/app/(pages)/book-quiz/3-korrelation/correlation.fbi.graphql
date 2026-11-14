@@ -1,0 +1,19 @@
+# PoC 3: facet-respons filtreret på den aktuelle CQL. Bruges til korrelation —
+# kun genrer/emner/materialetyper der faktisk optræder sammen med det allerede
+# valgte (med antal) tilbydes i dashboardet.
+query bookQuizComplexFacets(
+  $cql: String!
+  $facets: ComplexSearchFacetsInput!
+  $filters: ComplexSearchFiltersInput!
+) {
+  complexSearch(cql: $cql, facets: $facets, filters: $filters) {
+    hitcount
+    facets {
+      name
+      values {
+        key
+        score
+      }
+    }
+  }
+}
