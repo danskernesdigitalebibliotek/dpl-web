@@ -638,12 +638,8 @@ export const getAvailablePriorityMaterialType = (
     : undefined;
 };
 
-export const getWorkTitle = (work: Work): string => {
-  const { titles, mainLanguages } = work;
-  // For movies and TV series, use the full title directly.
-  // It already contains all relevant details (season, disc, episodes, etc.)
-  // and matches what the grid/card views display.
-  const isMovieOrTvSeries = work.materialTypes?.some(
+const isMovieOrTvSeries = ({ materialTypes }: Pick<Work, "materialTypes">) =>
+  materialTypes?.some(
     ({ materialTypeGeneral }) =>
       materialTypeGeneral &&
       [
@@ -651,7 +647,13 @@ export const getWorkTitle = (work: Work): string => {
         GeneralMaterialTypeCodeEnum.TvSeries
       ].includes(materialTypeGeneral.code)
   );
-  if (isMovieOrTvSeries) {
+
+export const getWorkTitle = (work: Work): string => {
+  const { titles, mainLanguages } = work;
+  // For movies and TV series, use the full title directly.
+  // It already contains all relevant details (season, disc, episodes, etc.)
+  // and matches what the grid/card views display.
+  if (isMovieOrTvSeries(work)) {
     if (titles.full.length) {
       return titles.full.join(", ");
     }
@@ -674,6 +676,33 @@ export const getWorkTitle = (work: Work): string => {
   }
 
   // If there’s only an original title, use that.
+  if (titles.original?.length) {
+    return titles.original.join(", ");
+  }
+
+  // This should never happen, so therefore ist not translated.
+  return "Unknown title";
+};
+
+/**
+ * Title for a work in search results. Non-Danish works get FBI's
+ * titlePlusLanguage, e.g. "Inferno (engelsk)", so they aren't mistaken for a
+ * Danish edition with the same title.
+ */
+export const getWorkSearchResultTitle = (
+  work: Pick<Work, "titles" | "materialTypes">
+): string => {
+  const { titles } = work;
+  // Movies and TV series skip the language: "(engelsk)" would suggest there
+  // are no Danish subtitles.
+  if (!isMovieOrTvSeries(work) && titles.titlePlusLanguage) {
+    return titles.titlePlusLanguage;
+  }
+
+  if (titles.full.length) {
+    return titles.full.join(", ");
+  }
+
   if (titles.original?.length) {
     return titles.original.join(", ");
   }
@@ -864,6 +893,52 @@ if (import.meta.vitest) {
 
       const title = getWorkTitle(work);
       expect(title).toMatchInlineSnapshot(`"Unknown title"`);
+    });
+  });
+
+  describe("getWorkSearchResultTitle", () => {
+    it("returns titlePlusLanguage for non-Danish works", () => {
+      const title = getWorkSearchResultTitle({
+        titles: {
+          full: ["Inferno"],
+          original: ["Inferno"],
+          titlePlusLanguage: "Inferno (engelsk)"
+        },
+        materialTypes: [
+          {
+            materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum.Books }
+          }
+        ]
+      } as unknown as Work);
+      expect(title).toMatchInlineSnapshot(`"Inferno (engelsk)"`);
+    });
+
+    it("returns the full title without language for movies", () => {
+      const title = getWorkSearchResultTitle({
+        titles: {
+          full: ["Dødens gab"],
+          original: ["Jaws"],
+          titlePlusLanguage: "Dødens gab (engelsk)"
+        },
+        materialTypes: [
+          {
+            materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum.Films }
+          }
+        ]
+      } as unknown as Work);
+      expect(title).toMatchInlineSnapshot(`"Dødens gab"`);
+    });
+
+    it("returns the full title when FBI has no titlePlusLanguage (Danish works)", () => {
+      const title = getWorkSearchResultTitle({
+        titles: {
+          full: ["De syv søstre : Maias historie"],
+          original: ["The seven sisters"],
+          titlePlusLanguage: null
+        },
+        materialTypes: []
+      } as unknown as Work);
+      expect(title).toMatchInlineSnapshot(`"De syv søstre : Maias historie"`);
     });
   });
 

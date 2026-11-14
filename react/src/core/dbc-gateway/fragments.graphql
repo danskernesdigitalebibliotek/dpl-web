@@ -270,6 +270,12 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
   }
   abstract
   creators {
@@ -306,9 +312,6 @@ fragment WorkMedium on Work {
     }
   }
   materialTypes {
-    materialTypeGeneral {
-      code
-    }
     materialTypeSpecific {
       display
     }
