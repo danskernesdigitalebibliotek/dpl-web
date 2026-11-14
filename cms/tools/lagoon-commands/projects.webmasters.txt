@@ -2,7 +2,6 @@ aarhus
 sydslesvig
 silkeborg
 kobenhavn
-faxe
 odense
 albertslund
 aalborg

@@ -34,6 +34,18 @@ directory and runs three projects in parallel.
 - `commands.txt`: One shell command per line. `{project}` is substituted.
 - `logs/<timestamp>/<project>.log`: Output of every command for each project.
 
+### Project lists
+
+| File                      | Projects                        | Environment  |
+|---------------------------|---------------------------------|--------------|
+| `projects.txt`            | Library sites, incl. webmasters | `main`       |
+| `projects.webmasters.txt` | Webmaster library sites         | `main`       |
+| `projects.internal.txt`   | Internal and test sites         | `main`       |
+| `projects.moduletest.txt` | Projects with a moduletest env  | `moduletest` |
+
+The environment is set in the commands file, not the project list, so a run
+against `projects.moduletest.txt` needs commands with `-e moduletest`.
+
 ### `commands.txt` example
 
 ```sh
