@@ -101,7 +101,7 @@
     "globals": "^17.14.0",
     "happy-dom": "^21.0.4",
     "knip": "^6.45.1",
-    "markdownlint-cli2": "^0.24.0",
+    "markdownlint-cli2": "^0.24.1",
     "nyc": "^18.0.0",
     "orval": "^8.46.0",
     "postcss": "^8.5.32",
