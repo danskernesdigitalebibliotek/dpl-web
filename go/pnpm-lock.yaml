@@ -184,8 +184,8 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2(prettier@3.9.10)(supports-color@8.1.1)
       '@tsconfig/create-react-app':
-        specifier: ^2.0.11
-        version: 2.0.11
+        specifier: ^2.0.12
+        version: 2.0.12
       '@types/jwt-simple':
         specifier: ^0.5.36
         version: 0.5.36
@@ -3974,8 +3974,8 @@ packages:
   '@ts-morph/common@0.29.0':
     resolution: {integrity: sha512-35oUmphHbJvQ/+UTwFNme/t2p3FoKiGJ5auTjjpNTop2dyREspirjMy82PLSC1pnDJ8ah1GU98hwpVt64YXQsg==}
 
-  '@tsconfig/create-react-app@2.0.11':
-    resolution: {integrity: sha512-vvIx+rDshVTVyA0l8OAjt8LCFUX0xhp6I5me1ggoQCg4Lny0xLG2Y1aXC7b76TCAq5hbUwTRhKF1RR33Yl7mkA==}
+  '@tsconfig/create-react-app@2.0.12':
+    resolution: {integrity: sha512-MXHiZGDVX+izsD/UjrW8Y0yUj5EWqHSYzgBeWJzFeY6V8aRUirJ92HZIipmVxadksID7TVcGswmfqvsL7oN4tA==}
 
   '@tsconfig/node10@1.0.12':
     resolution: {integrity: sha512-UCYBaeFvM11aU2y3YPZ//O5Rhj+xKyzy7mvcIoAjASbigy8mHMryP5cK7dgjlz2hWxh1g5pLw084E0a/wlUSFQ==}
@@ -14282,7 +14282,7 @@ snapshots:
       path-browserify: 1.0.1
       tinyglobby: 0.2.17
 
-  '@tsconfig/create-react-app@2.0.11': {}
+  '@tsconfig/create-react-app@2.0.12': {}
 
   '@tsconfig/node10@1.0.12':
     optional: true
