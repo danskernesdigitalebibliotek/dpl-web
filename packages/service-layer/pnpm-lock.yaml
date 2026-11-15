@@ -29,7 +29,7 @@ importers:
         version: 5.107.1(@types/react@19.3.0)(react@19.3.1)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^6.0.2
-        version: 6.0.2(prettier@3.9.10)(supports-color@7.2.0)
+        version: 6.0.2(prettier@3.10.1)(supports-color@7.2.0)
       '@types/node':
         specifier: ^24
         version: 24.19.2
@@ -50,10 +50,10 @@ importers:
         version: 6.44.2
       orval:
         specifier: ^8.47.0
-        version: 8.47.0(@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1))(prettier@3.9.10)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(zod@4.6.7)
+        version: 8.47.0(@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1))(prettier@3.10.1)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(zod@4.6.7)
       prettier:
-        specifier: ^3.9.10
-        version: 3.9.10
+        specifier: ^3.10.1
+        version: 3.10.1
       react:
         specifier: ^19
         version: 19.3.1
@@ -2385,8 +2385,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier@3.9.10:
-    resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
+  prettier@3.10.1:
+    resolution: {integrity: sha512-70vp3ZUYoPlFbF9uiTdXHUUCGEIp7d4+6p+8DYbkm2jP7x/3i/paXVF6dopSI3zd/CEitrZN1rc4i85xWmmXlg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -4043,7 +4043,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.3.0
 
-  '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.9.10)(supports-color@7.2.0)':
+  '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.10.1)(supports-color@7.2.0)':
     dependencies:
       '@babel/generator': 7.29.7
       '@babel/parser': 7.29.7
@@ -4053,7 +4053,7 @@ snapshots:
       lodash-es: 4.18.1
       minimatch: 9.0.9
       parse-imports-exports: 0.2.4
-      prettier: 3.9.10
+      prettier: 3.10.1
     transitivePeerDependencies:
       - supports-color
 
@@ -5006,7 +5006,7 @@ snapshots:
       type-check: 0.4.0
       word-wrap: 1.2.5
 
-  orval@8.47.0(@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1))(prettier@3.9.10)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(zod@4.6.7):
+  orval@8.47.0(@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1))(prettier@3.10.1)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(zod@4.6.7):
     dependencies:
       '@commander-js/extra-typings': 15.0.0(commander@15.0.0)
       '@orval/angular': 8.47.0
@@ -5035,7 +5035,7 @@ snapshots:
       json5: 2.2.3
       string-argv: 0.3.2
     optionalDependencies:
-      prettier: 3.9.10
+      prettier: 3.10.1
       typedoc: 0.28.19(typescript@5.9.3)
       typedoc-plugin-markdown: 4.12.0(typedoc@0.28.19(typescript@5.9.3))
     transitivePeerDependencies:
@@ -5164,7 +5164,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier@3.9.10: {}
+  prettier@3.10.1: {}
 
   pretty-ms@9.3.1:
     dependencies:
