@@ -172,8 +172,8 @@ importers:
         specifier: ^16.3.3
         version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@tsconfig/create-react-app':
-        specifier: ^2.0.5
-        version: 2.0.11
+        specifier: ^2.0.12
+        version: 2.0.12
       '@types/node':
         specifier: ^24
         version: 24.19.2
@@ -2924,8 +2924,8 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@tsconfig/create-react-app@2.0.11':
-    resolution: {integrity: sha512-vvIx+rDshVTVyA0l8OAjt8LCFUX0xhp6I5me1ggoQCg4Lny0xLG2Y1aXC7b76TCAq5hbUwTRhKF1RR33Yl7mkA==}
+  '@tsconfig/create-react-app@2.0.12':
+    resolution: {integrity: sha512-MXHiZGDVX+izsD/UjrW8Y0yUj5EWqHSYzgBeWJzFeY6V8aRUirJ92HZIipmVxadksID7TVcGswmfqvsL7oN4tA==}
 
   '@tybys/wasm-util@0.10.4':
     resolution: {integrity: sha512-W3c4gRigFS0T/Ma4qIYF3GDAc5AQdHb1yL5znJT1Zv1YaD9Kitx656wBjvr19qbiosmZT8lWDM5BEMynUqX65A==}
@@ -10477,7 +10477,7 @@ snapshots:
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
 
-  '@tsconfig/create-react-app@2.0.11': {}
+  '@tsconfig/create-react-app@2.0.12': {}
 
   '@tybys/wasm-util@0.10.4':
     dependencies:
