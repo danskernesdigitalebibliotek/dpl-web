@@ -1156,6 +1156,7 @@ msgid ""
 "</p>"
 msgstr ""
 
+msgctxt "Metatag URL"
 msgid "<none>"
 msgstr ""
 
@@ -23835,6 +23836,14 @@ msgstr ""
 msgid "The <a href=\"@module\">Schema.org Metatag</a> module is installed."
 msgstr "<a href=\"@module\">Schema.org Metatag</a> modulet er installeret."
 
+msgid "The <a href=\"@module\">Token Browser module</a> is installed."
+msgstr ""
+
+msgid ""
+"The <a href=\"@module\">Token Browser module</a> is recommended for all "
+"Drupal 11.3+ sites to make the token interface usable."
+msgstr ""
+
 msgid ""
 "The <a href=\"@module\">Token OR module</a> is suggested for when the basic "
 "content tokens are not flexible enough, e.g. to make a meta tag show the "
@@ -23845,6 +23854,9 @@ msgstr ""
 "indholdstokens ikke er fleksible nok, fx for at få en meta tag til at vise "
 "indholdet af et felt, hvis det er udfyldt, eller et andet, hvis det første "
 "er tomt."
+
+msgid "The <a href=\"@module\">Token Or module</a> is installed."
+msgstr ""
 
 msgid ""
 "The <em>settings</em> and the <em>display</em> of the entity reference field "
@@ -27604,8 +27616,17 @@ msgctxt "core.entity_view_mode.user.token:label"
 msgid "Token"
 msgstr ""
 
+msgid "Token Browser"
+msgstr ""
+
+msgid "Token Browser is installed"
+msgstr ""
+
 msgid "Token Or"
 msgstr "Token Or"
+
+msgid "Token Or is installed"
+msgstr ""
 
 msgid "Token available"
 msgstr "Token tilgængelig"
@@ -30457,6 +30478,7 @@ msgctxt "metatag.metatag_defaults.global:tags:title"
 msgid "[current-page:title] | [site:name]"
 msgstr ""
 
+msgctxt "Metatag URL"
 msgid "[current-page:url]"
 msgstr ""
 
@@ -30550,6 +30572,7 @@ msgctxt "metatag.metatag_defaults.node:tags:title"
 msgid "[node:title] | [site:name]"
 msgstr ""
 
+msgctxt "Metatag URL"
 msgid "[node:url]"
 msgstr ""
 
@@ -30560,6 +30583,7 @@ msgctxt "metatag.metatag_defaults.user:tags:description"
 msgid "[site:name]"
 msgstr ""
 
+msgctxt "Metatag URL"
 msgid "[site:url]"
 msgstr ""
 
@@ -30597,6 +30621,7 @@ msgctxt "metatag.metatag_defaults.taxonomy_term:tags:title"
 msgid "[term:name] | [site:name]"
 msgstr ""
 
+msgctxt "Metatag URL"
 msgid "[term:url]"
 msgstr ""
 
@@ -30747,6 +30772,7 @@ msgid ""
 "--  [site:name] team"
 msgstr ""
 
+msgctxt "Metatag URL"
 msgid "[user:url]"
 msgstr ""
 
