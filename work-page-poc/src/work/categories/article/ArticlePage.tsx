@@ -8,14 +8,6 @@ import { getArticleTypeLabel, getDetailRows, getEditionValue, getHostDetail } fr
 import { DetailList } from "./DetailList"
 import { EditionPicker } from "./EditionPicker"
 
-const TypeLabel = ({ label, className }: { label: string; className: string }) => (
-  <span
-    className={`box-border h-9 items-center self-start rounded-lg border border-solid border-outline bg-surface-card px-3.5 text-[15px] leading-5 font-medium ${className}`}
-  >
-    {label}
-  </span>
-)
-
 /**
  * The article concept from the designer's "Materialeside – Udgavevælger"
  * artifact: its mobile article boards below 1024px, and its "Flere formater ·
@@ -56,7 +48,6 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
                 </span>
               )}
             </div>
-            <TypeLabel label={typeLabel} className="inline-flex self-center lg:hidden" />
           </div>
 
           <div className="min-w-0">
@@ -64,11 +55,10 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
               <h1 id="article-title" className="m-0 mt-4 font-heading text-[32px]/10 font-normal lg:mt-0 lg:text-h1">
                 {title}
               </h1>
-              {creators.length > 0 && (
-                <p className="m-0 mt-3 text-body-m text-text-body lg:mt-5 lg:text-[20px] lg:leading-[30px] lg:text-text-heading">
-                  Af {creators.join(", ")}
-                </p>
-              )}
+              <p className="m-0 mt-3 text-body-m text-text-body lg:mt-5 lg:text-[20px] lg:leading-[30px] lg:text-text-heading">
+                {creators.length > 0 && `Af ${creators.join(", ")} · `}
+                <strong className="font-semibold text-text-heading">{typeLabel}</strong>
+              </p>
               {host && (
                 <p className="m-0 mt-1 text-body-m text-text-body lg:text-[20px] lg:leading-[30px] lg:text-text-heading">
                   I:{" "}
@@ -81,7 +71,6 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
                   {hostDetail && `, ${hostDetail}`}
                 </p>
               )}
-              <TypeLabel label={typeLabel} className="mt-6 hidden lg:inline-flex" />
 
               <div className={hasOtherEditions ? "mt-7" : "mt-8 lg:mt-7"}>
                 {hasOtherEditions && (
