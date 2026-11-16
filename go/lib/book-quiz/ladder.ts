@@ -27,6 +27,10 @@ export type TLadderStep = {
   cql: string | null
 }
 
+// Books fetched per step, so there are enough left after rank.ts drops works
+// with too wide an age span.
+export const FETCH_PER_STEP = 10
+
 const EASY_TO_READ_CQL = 'phrase.generalaudience="let at læse"'
 
 const clauseCql = (clauses: TBookQuizClause[]): string | null => {
