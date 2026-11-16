@@ -71,6 +71,7 @@ $_menu_animation_delay: 0.2s;
 }
 
 .header-sidebar-nav__close-menu-button {
+  @include button-reset;
   height: min-content;
   padding: $s-xs;
   line-height: 1;
