@@ -7,18 +7,24 @@ import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graph
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 
 type InfoBoxDetailsProps = {
-  selectedManifestation: ManifestationWorkPageFragment
+  // Undefined while the page is still deciding which edition is the default
+  // — every field below falls back to "-" rather than naming a manifestation
+  // that might not end up selected.
+  selectedManifestation: ManifestationWorkPageFragment | undefined
 }
 
 const InfoBoxDetails = ({ selectedManifestation }: InfoBoxDetailsProps) => {
   // get selectedManifestation materialTypes and translate them for render
-  const materialTypeDisplays = selectedManifestation.materialTypes.map(materialType => {
+  const materialTypeDisplays = (selectedManifestation?.materialTypes ?? []).map(materialType => {
     return translateMaterialTypesStringForRender(materialType.materialTypeSpecific.code)
   })
 
   return (
     <motion.section
       className="bg-background-overlay rounded-base p-grid-edge w-full md:p-8 lg:flex-row"
+      // The fields below read "-" until the default edition is picked, which
+      // on its own is indistinguishable from a work that has no details.
+      aria-busy={!selectedManifestation || undefined}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}>
