@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import { useRouter, useSearchParams } from "next/navigation"
-import React, { useEffect, useOptimistic, useRef, useState, useTransition } from "react"
+import React, { useOptimistic, useRef, useState, useTransition } from "react"
 
 import {
   getManifestationLanguageCode,
@@ -126,25 +126,15 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const isEditionPickerLoading = isSwitchingMaterialType || isLoadingAvailability
 
   const editionButtonRef = useRef<HTMLButtonElement>(null)
-  // Set whenever focus is owed back to the edition button: the picker closed,
-  // or a material-type switch replaced the button with a skeleton and dropped
-  // focus onto <body>. `useRestoreFocusAfterDialog` pays it once no dialog
-  // holds the focus trap and the button is mounted again.
+  // Set when the picker closes, since focus is then owed back to the button
+  // that opened it. `useRestoreFocusAfterDialog` pays it once no dialog holds
+  // the focus trap and the button is mounted again.
   const shouldRestoreEditionFocus = useRef(false)
   // The nonce makes every choice a new value even when the sentence repeats,
   // which is what the live region below needs to announce it again.
   const [choiceAnnouncement, setChoiceAnnouncement] = useState({ text: "", nonce: 0 })
   const announceChoice = (text: string) =>
     setChoiceAnnouncement(current => ({ text, nonce: current.nonce + 1 }))
-
-  // A material-type switch replaces the button with a skeleton, dropping
-  // focus onto <body>. Only a switch that took the focus away owes it back;
-  // one the reader started elsewhere leaves their focus alone. The hook below
-  // pays the debt.
-  useEffect(() => {
-    if (!isEditionPickerLoading) return
-    shouldRestoreEditionFocus.current ||= document.activeElement === document.body
-  }, [isEditionPickerLoading])
 
   // The picker renders outside this tree, so it cannot return focus itself.
   // Only records the debt: the dialog's focus trap holds the focus until it
