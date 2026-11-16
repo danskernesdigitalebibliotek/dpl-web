@@ -30,11 +30,7 @@ export const getWorkAgeSpan = (work: TRankableWork): TBookQuizRange | null => {
 // Years the work's age span reaches outside the chosen range. 0 means fully
 // inside. The CQL age filter only guarantees overlap, so without this a 10–14
 // book would rank as high as a 9–10 book. Null when the work has no age data.
-export const getAgeSpill = (
-  work: TRankableWork,
-  range: TBookQuizRange | undefined
-): number | null => {
-  if (!range) return 0
+export const getAgeSpill = (work: TRankableWork, range: TBookQuizRange): number | null => {
   const span = getWorkAgeSpan(work)
   if (!span) return null
   return Math.max(0, range[0] - span[0]) + Math.max(0, span[1] - range[1])
@@ -42,15 +38,19 @@ export const getAgeSpill = (
 
 // Top books for one ladder step: works reaching more than MAX_AGE_SPILL years
 // outside the range are dropped, then the smallest spill wins, then FBI's own
-// order. Works without age data go last. Steps are ranked independently, so
-// the same book can appear in several sections.
+// order. Works without age data go last. Without a chosen age FBI's order is
+// kept. Steps are ranked independently, so the same book can appear in several
+// sections.
 export const rankStepWorks = <TWork extends TRankableWork>(
   works: TWork[],
   ageRange: TBookQuizRange | undefined
-): TWork[] =>
-  works
+): TWork[] => {
+  if (!ageRange) return works.slice(0, BOOKS_PER_STEP)
+
+  return works
     .map((work, index) => ({ work, index, spill: getAgeSpill(work, ageRange) }))
     .filter(entry => entry.spill === null || entry.spill <= MAX_AGE_SPILL)
     .sort((a, b) => (a.spill ?? Infinity) - (b.spill ?? Infinity) || a.index - b.index)
     .slice(0, BOOKS_PER_STEP)
     .map(entry => entry.work)
+}
