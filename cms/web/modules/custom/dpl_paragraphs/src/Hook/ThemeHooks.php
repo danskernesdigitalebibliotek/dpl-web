@@ -467,6 +467,13 @@ class ThemeHooks {
       $display_amount = (int) $paragraph->get('field_material_amount')->getString();
     }
 
+    // Paragraphs saved before the field existed have no value. Treat them as
+    // using the button, so they keep their existing behaviour.
+    $use_show_all_button = TRUE;
+    if ($paragraph->hasField('field_use_show_all_button') && !$paragraph->get('field_use_show_all_button')->isEmpty()) {
+      $use_show_all_button = (bool) $paragraph->get('field_use_show_all_button')->value;
+    }
+
     // Build configurations for blacklisted search branches and all branches.
     $blacklisted_search_branches_config = DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedSearchBranches());
     $branches_config = DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches(), TRUE);
@@ -477,6 +484,7 @@ class ThemeHooks {
         'title' => $title,
         'description' => $description,
         'requested-amount' => $display_amount,
+        'use-show-all-button' => $use_show_all_button ? 'true' : 'false',
         'button-text' => $this->t('Show all', [], ['context' => 'Material Grid']),
         'blacklisted-search-branches-config' => $blacklisted_search_branches_config,
         'branches-config' => $branches_config,
