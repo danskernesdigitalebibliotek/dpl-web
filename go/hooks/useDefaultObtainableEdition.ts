@@ -1,59 +1,51 @@
 "use client"
 
-import { useQueries } from "@tanstack/react-query"
+import {
+  isCostFreeLoan,
+  useDigitalLoanDecisions,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 
-import { isPodcastMaterialType } from "@/components/pages/workPageLayout/helper"
+import {
+  isDigitalMaterialType,
+  isPodcastMaterialType,
+} from "@/components/pages/workPageLayout/helper"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { ProductResult } from "@/lib/rest/publizon/adapter/generated/model"
-import { getGetV1ProductsIdentifierAdapterQueryOptions } from "@/lib/rest/publizon/adapter/generated/publizon"
-
-// Whether a manifestation is cost-free ("BLÅ"): podcasts always are, an
-// online one is whatever Publizon's lookup answers, and a physical one is
-// never looked up — Publizon has no catalogue entry for it.
-const isCostFree = (
-  manifestation: ManifestationWorkPageFragment,
-  query: { data?: ProductResult }
-): boolean =>
-  Boolean(
-    query.data?.product?.costFree ||
-    isPodcastMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
-  )
+import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 
 // Picks the edition a reader lands on by default: the newest cost-free
-// ("BLÅ") one if the kommune has any, otherwise the newest obtainable one.
-// TODO(publizon-sunset): these lookups go away with the Biblio adapter
-// migration, see helper.ts:208.
+// ("BLÅ") one the kommune can supply, otherwise simply the newest. Biblio's
+// loan decision is patron-scoped, so a reader without a borrowing session
+// finds no blue edition and lands on the newest.
 export const useDefaultObtainableEdition = (
   obtainableEditions: ManifestationWorkPageFragment[]
 ): { defaultManifestation: ManifestationWorkPageFragment | undefined; isLoading: boolean } => {
-  const { newestBlue, isLoading } = useQueries({
-    queries: obtainableEditions.map(manifestation => {
-      const isOnline = manifestation.accessTypes[0]?.code === "ONLINE"
-      const isbn = manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value
-      return getGetV1ProductsIdentifierAdapterQueryOptions(isbn ?? "", {
-        query: { enabled: isOnline && !!isbn },
-      })
-    }),
-    // obtainableEditions is newest first, so the first blue hit is the newest
-    // blue one. Only results up to that index are awaited.
-    combine: results => {
-      const newestBlueIndex = obtainableEditions.findIndex((manifestation, index) =>
-        isCostFree(manifestation, results[index])
-      )
-      // A disabled query — physical, or no ISBN — reports isLoading false, so
-      // it never blocks the pick.
-      const stillDeciding = results
-        .slice(0, newestBlueIndex === -1 ? results.length : newestBlueIndex + 1)
-        .some(result => result.isLoading)
-      return {
-        newestBlue: newestBlueIndex === -1 ? undefined : obtainableEditions[newestBlueIndex],
-        isLoading: stillDeciding,
-      }
-    },
-  })
+  const materialIds = obtainableEditions
+    .filter(manifestation =>
+      isDigitalMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
+    )
+    .map(getPublizonIdentifierFromManifestation)
+    .filter((id): id is string => !!id)
+
+  const { decisions, isLoading } = useDigitalLoanDecisions(materialIds)
+
+  // Podcasts are always cost-free; everything else is whatever the decision
+  // says. A physical edition is never asked about and never blue.
+  const isCostFree = (manifestation: ManifestationWorkPageFragment): boolean => {
+    if (isPodcastMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)) {
+      return true
+    }
+    const materialId = getPublizonIdentifierFromManifestation(manifestation)
+    if (!materialId) return false
+
+    return isCostFreeLoan(decisions[materialId]?.loanProvider)
+  }
+
+  // obtainableEditions is newest first, so the first blue one found is the
+  // newest blue one.
+  const newestBlue = obtainableEditions.find(isCostFree)
 
   return {
     defaultManifestation: newestBlue ?? obtainableEditions[0],
-    isLoading,
+    isLoading: materialIds.length > 0 && isLoading,
   }
 }

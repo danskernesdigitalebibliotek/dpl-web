@@ -10,6 +10,7 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
+import { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import { getEditionLabel } from "@/components/shared/editionsSelectModal/editionChoice"
 import MaterialTypeSelect, {
@@ -24,8 +25,6 @@ import {
 } from "@/lib/graphql/generated/fbi/graphql"
 import { hasCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
-import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
-import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
 import { openModal } from "@/store/modal.store"
 
 import WorkPageButtons from "./WorkPageButtons"
@@ -41,9 +40,6 @@ type WorkPageHeaderProps = {
 const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const selectedManifestationIsbns = selectedManifestation
-    ? getIsbnsFromManifestation(selectedManifestation)
-    : []
   const languageCode = getManifestationLanguageCode(selectedManifestation)
 
   const sortedManifestations = sortManifestationsBySortPriority(manifestations)
@@ -54,20 +50,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   })
 
   const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(materialTypes)
-
-  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(
-    selectedManifestationIsbns?.[0],
-    {
-      // Publizon / useGetV1ProductsIdentifier is responsible for online
-      // materials. It requires an ISBN to do lookups.
-      // If the manifestation is physical, we skip the request
-      query: {
-        enabled:
-          selectedManifestationIsbns.length > 0 &&
-          selectedManifestation.accessTypes[0].code === "ONLINE",
-      },
-    }
-  )
 
   const covers = selectedManifestation.cover
 
@@ -96,9 +78,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const manifestationKey = selectedManifestation?.pid
 
-  const isSelectedManifestationPodcast = selectedManifestationMaterialTypeCode === "PODCAST"
-
-  const isSelectedManifestationCostFree = !!publizonData?.product?.costFree
+  const isSelectedManifestationBlue = useIsBlueTitle(selectedManifestation)
 
   const { session } = useSession()
   const isLoggedIn = session?.isLoggedIn || false
@@ -206,7 +186,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           )}
         </div>
         <div className="col-span-4 flex flex-col items-start justify-end pt-4 lg:pt-0">
-          {isSelectedManifestationCostFree || isSelectedManifestationPodcast ? (
+          {isSelectedManifestationBlue ? (
             <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
               BLÅ
             </Badge>
