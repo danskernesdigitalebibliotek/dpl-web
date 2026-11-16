@@ -17,17 +17,53 @@ window.addEventListener("load", () => {
     return;
   }
 
+  // Safari and Firefox hide a closed dialog at once, so slide the menu out
+  // before calling close(). getAnimations() only lists the dialog's own
+  // transition and is empty when nothing animates. The timeout covers
+  // animations that never finish, e.g. in a background tab.
+  function closeSidebarNav() {
+    if (!sidebarNav.open || sidebarNav.hasAttribute("data-closing")) {
+      return;
+    }
+    sidebarNav.setAttribute("data-closing", "");
+    Promise.race([
+      Promise.allSettled(
+        sidebarNav.getAnimations().map((animation) => animation.finished),
+      ),
+      new Promise((resolve) => {
+        setTimeout(resolve, 500);
+      }),
+    ]).then(() => {
+      // Skip if the menu was reopened or already closed meanwhile.
+      if (sidebarNav.hasAttribute("data-closing")) {
+        sidebarNav.close();
+      }
+    });
+  }
+
   // showModal() makes the rest of the page inert, so screen readers and
   // keyboard users can't reach content behind the open menu.
   if (sidebarNavToggle) {
     sidebarNavToggle.addEventListener("click", () => {
-      sidebarNav.showModal();
+      sidebarNav.removeAttribute("data-closing");
+      if (!sidebarNav.open) {
+        sidebarNav.showModal();
+      }
       sidebarNavToggle.setAttribute("aria-expanded", "true");
     });
   }
 
-  // Fires both for close() and when the browser closes the dialog on Escape.
+  // Escape. Browsers may refuse to let us cancel it (e.g. a second Escape
+  // without user activation); then the dialog closes at once.
+  sidebarNav.addEventListener("cancel", (event) => {
+    if (event.cancelable) {
+      event.preventDefault();
+      closeSidebarNav();
+    }
+  });
+
   sidebarNav.addEventListener("close", () => {
+    sidebarNav.removeAttribute("data-closing");
     if (sidebarNavToggle) {
       sidebarNavToggle.setAttribute("aria-expanded", "false");
       sidebarNavToggle.focus();
@@ -35,13 +71,13 @@ window.addEventListener("load", () => {
   });
 
   if (closeButton) {
-    closeButton.addEventListener("click", () => sidebarNav.close());
+    closeButton.addEventListener("click", closeSidebarNav);
   }
 
   if (menuWrapper) {
     menuWrapper.addEventListener("click", (event) => {
       if (event.target.closest(".header__menu-navigation-item a")) {
-        sidebarNav.close();
+        closeSidebarNav();
       }
     });
   }
@@ -49,7 +85,7 @@ window.addEventListener("load", () => {
   if (backgroundWrapper) {
     backgroundWrapper.addEventListener("click", (event) => {
       if (event.target === backgroundWrapper) {
-        sidebarNav.close();
+        closeSidebarNav();
       }
     });
   }
@@ -58,11 +94,8 @@ window.addEventListener("load", () => {
   // hides the burger, so an open modal would leave the page inert with no way
   // to close it.
   new MutationObserver(() => {
-    if (
-      sidebarNav.open &&
-      !document.documentElement.classList.contains("has-burger-menu")
-    ) {
-      sidebarNav.close();
+    if (!document.documentElement.classList.contains("has-burger-menu")) {
+      closeSidebarNav();
     }
   }).observe(document.documentElement, {
     attributes: true,

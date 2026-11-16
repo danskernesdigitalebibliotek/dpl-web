@@ -16,18 +16,12 @@ $_menu_animation_delay: 0.2s;
   background: transparent;
   color: inherit;
   overflow: hidden;
-  // z-index keeps the menu on top while it slides out in browsers that can't
-  // keep a closing dialog in the top layer.
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: $z-sidebar-nav;
   transform: translateX(-100%);
-  transition:
-    transform $_transition_speed $_bezier_transition,
-    display $_transition_speed allow-discrete,
-    overlay $_transition_speed allow-discrete;
+  transition: transform $_transition_speed $_bezier_transition;
 
   ul.header__menu-navigation {
     padding: 0;
@@ -105,7 +99,10 @@ $_menu_animation_delay: 0.2s;
   background: transparent;
 }
 
-.header-sidebar-nav[open] {
+// data-closing is set by the JS while the menu slides out before close().
+// :where() keeps the specificity equal to the @starting-style rule below, so
+// the menu still slides in when it opens.
+.header-sidebar-nav[open]:where(:not([data-closing])) {
   transform: translateX(0%);
 
   .header-sidebar-nav__menu-wrapper {
