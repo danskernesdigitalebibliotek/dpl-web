@@ -49,7 +49,9 @@ describe("getLadderSteps", () => {
   })
 
   it("only searches steps where every part is answered", () => {
-    const steps = getLadderSteps(getBookQuizProfile({ genre: "genre-fantasy", subjects: ["subject-animals"] }))
+    const steps = getLadderSteps(
+      getBookQuizProfile({ genre: "genre-fantasy", subjects: ["subject-animals"] })
+    )
     const searched = steps.filter(step => step.cql !== null).map(step => step.id)
     expect(searched).toEqual(["genre+subjects", "genre", "subjects"])
   })
@@ -72,11 +74,12 @@ describe("getLadderSteps", () => {
   })
 
   it("ORs the terms of several subjects", () => {
-    const steps = getLadderSteps(getBookQuizProfile({ subjects: ["subject-animals", "subject-gaming"] }))
+    const steps = getLadderSteps(
+      getBookQuizProfile({ subjects: ["subject-animals", "subject-gaming"] })
+    )
     const cql = steps.find(step => step.id === "subjects")?.cql
     expect(cql).toMatch(/^\(phrase\.subject="dyr" OR .* OR phrase\.subject="gaming" OR .*\)$/)
   })
-
 })
 
 describe("rank", () => {
@@ -89,7 +92,6 @@ describe("rank", () => {
     expect(getAgeSpill(work("a", [9, 10]), [9, 10])).toBe(0)
     expect(getAgeSpill(work("a", [8, 14]), [9, 10])).toBe(5)
     expect(getAgeSpill(work("a", null), [9, 10])).toBeNull()
-    expect(getAgeSpill(work("a", [3, 18]), undefined)).toBe(0)
   })
 
   it("drops too wide spans, sorts by spill, keeps FBI order on ties and caps the list", () => {
@@ -105,6 +107,11 @@ describe("rank", () => {
     )
     expect(ranked).toHaveLength(BOOKS_PER_STEP)
     expect(ranked.map(entry => entry.workId)).toEqual(["exact-1", "exact-2", "near"])
+  })
+
+  it("keeps FBI order when no age is chosen", () => {
+    const ranked = rankStepWorks([work("unknown", null), work("wide", [3, 18])], undefined)
+    expect(ranked.map(entry => entry.workId)).toEqual(["unknown", "wide"])
   })
 
   it("puts works without age data last instead of dropping them", () => {
