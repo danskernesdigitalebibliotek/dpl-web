@@ -66,8 +66,7 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
 
   const searchParamsMaterialType = searchParams.get("type")
 
-  // The candidates the default-edition pick is drawn from: newest first,
-  // with the kommune's unobtainable ones left out.
+  // Newest first, minus the ones the kommune cannot supply.
   const obtainableEditions = useMemo(
     () =>
       getEditionsForMaterialType(
@@ -80,14 +79,8 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     [allManifestations, searchParamsMaterialType, isLoadingAvailability, isAvailabilityUnknown]
   )
 
-  // The edition the url pins, if it names one this material type has. Shared
-  // by the effect below, which picks it over any default, and by the header's
-  // loading gate, which has nothing to wait for once it exists.
-  //
-  // The `edition` param holds a pid, and is absent on arrival and after a
-  // material-type switch. Absent means the page picks the default itself —
-  // see useDefaultObtainableEdition — and that default is never written back
-  // to the url.
+  // The `edition` param holds a pid. Absent, the page picks a default itself
+  // and never writes it back to the url.
   const pinnedManifestation = useMemo(
     () =>
       getPinnedEditionManifestation(
@@ -98,34 +91,21 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     [allManifestations, searchParamsMaterialType, searchParams]
   )
 
-  // The page waits for this before showing anything edition-dependent: the
-  // reader should never see the newest edition and then have it swapped for
-  // the newest blue one underneath them — the first thing shown must already
-  // be the right default.
   const { defaultManifestation: defaultObtainableEdition, isLoading: isLoadingDefaultEdition } =
     useDefaultObtainableEdition(obtainableEditions)
 
-  // The pick settles once per material type, and the page stops waiting for
-  // good once it has. The lookups behind it share their query keys with every
-  // other Publizon request for the same ISBN, so one started elsewhere — a
-  // BLÅ badge in the editions picker, say — moves a key they observe and
-  // would otherwise send the header back to its skeleton with the edition
-  // already on screen. A material type switch is a new decision and starts
-  // over; the candidate array cannot stand in for it, since it is rebuilt
-  // whenever the availability flags behind it change.
+  // Remembers the material type whose pick is done. Its lookups share query
+  // keys with every other request for the same ISBN, so one started elsewhere
+  // must not read as this pick still being decided.
   const [settledMaterialType, setSettledMaterialType] = useState<string | null>(null)
   useEffect(() => {
     if (!isLoadingDefaultEdition) setSettledMaterialType(searchParamsMaterialType)
   }, [isLoadingDefaultEdition, searchParamsMaterialType])
-  // Nothing in flight right now.
   const isPickIdle = !isLoadingDefaultEdition
-  // Something is in flight, but this type's pick was already made — so it is
-  // a lookup started elsewhere, not a pick still being decided.
   const isPickAlreadyMade = settledMaterialType === searchParamsMaterialType
   const hasSettled = isPickIdle || isPickAlreadyMade
 
-  // A pinned edition is the answer already, so the lookups behind the default
-  // pick have nothing left to decide and the header need not wait for them.
+  // A pinned edition is the answer, so there is nothing left to wait for.
   const isWaitingForDefaultEdition = !hasSettled && !pinnedManifestation
 
   useEffect(() => {
@@ -158,12 +138,8 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     if (nextManifestation) {
       setSelectedManifestation(nextManifestation)
     }
-    // isEditionHidden is rebuilt every render, so the flags behind it stand
-    // in for it. Both settle once, so a background refetch does not swap the
-    // edition under the reader; isAvailabilityUnknown catches an error that
-    // later succeeds, which is the first real answer. isLoadingDefaultEdition
-    // is the same kind of settle-once signal for the Publizon lookups behind
-    // defaultObtainableEdition.
+    // isEditionHidden is rebuilt every render, so the settle-once flags behind
+    // it stand in for it and a background refetch leaves the edition alone.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     searchParams,
@@ -189,15 +165,10 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
         flex-wrap gap-y-10">
       {work && (
         <>
-          {/* The header waits for the default-edition pick, reserving its space
-              with the header skeleton meanwhile: it never shows the newest
-              edition only to swap it for the newest blue one underneath the
-              reader. A url-pinned edition skips that wait — it is already the
-              answer. The skeleton is the containerless variant, since this div
-              is already the content-container. The description comes from the
-              work and does not depend on the pick, so it renders regardless;
-              the fields that do depend on it fall back to "-" until it
-              settles. */}
+          {/* The skeleton holds the header's place until the edition is
+              decided, so the reader never sees one edition swapped for
+              another. The info boxes stay, their edition fields showing "-"
+              meanwhile. */}
           {isWaitingForDefaultEdition || !selectedManifestation ? (
             <WorkPageHeaderSkeleton />
           ) : (

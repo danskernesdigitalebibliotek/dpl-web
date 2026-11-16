@@ -72,7 +72,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const covers = selectedManifestation.cover
 
   const onOptionSelect = (optionSelected: MaterialTypeSelectOption) => {
-    // The url carries only the new type, with no edition param.
     const url = resolveUrl({
       routeParams: { work: "work", wid: work.workId },
       queryParams: { type: optionSelected.code },
@@ -105,8 +104,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const isLoggedIn = session?.isLoggedIn || false
 
   const urlMaterialTypeCode = searchParams.get("type")
-  // A url type the work does not have never resolves to a manifestation, so
-  // it does not count as a switch in progress.
+  // An unknown url type never resolves, so it is not a switch in progress.
   const isUrlMaterialTypeKnown = materialTypeOptions.some(
     option => option.code === urlMaterialTypeCode
   )
@@ -116,8 +114,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const editionChoiceLabel = getEditionLabel(selectedManifestation)
 
-  // The picker lists the editions of the picked type that the kommune can
-  // supply, so the same set decides whether there is anything to pick between.
+  // Same set the picker lists, so it also decides whether the button shows.
   const { shownEditions, isLoadingAvailability } = useShownEditions(
     work.workId,
     pickedMaterialTypeCode
@@ -126,9 +123,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const isEditionPickerLoading = isSwitchingMaterialType || isLoadingAvailability
 
   const editionButtonRef = useRef<HTMLButtonElement>(null)
-  // Set when the picker closes, since focus is then owed back to the button
-  // that opened it. `useRestoreFocusAfterDialog` pays it once no dialog holds
-  // the focus trap and the button is mounted again.
   const shouldRestoreEditionFocus = useRef(false)
   // The nonce makes every choice a new value even when the sentence repeats,
   // which is what the live region below needs to announce it again.
@@ -136,10 +130,8 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const announceChoice = (text: string) =>
     setChoiceAnnouncement(current => ({ text, nonce: current.nonce + 1 }))
 
-  // The picker renders outside this tree, so it cannot return focus itself.
-  // Only records the debt: the dialog's focus trap holds the focus until it
-  // unmounts, so `useRestoreFocusAfterDialog` waits for that before moving
-  // it.
+  // Records the debt; useRestoreFocusAfterDialog moves the focus once the
+  // dialog unmounts.
   const restoreEditionFocus = () => {
     shouldRestoreEditionFocus.current = true
   }
@@ -162,10 +154,8 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           queryParams: { type: materialTypeCode, edition: pid },
         })
         router.push(url, { scroll: false })
-        // The modal closes on confirm and the buttons behind it change state,
-        // none of which a screen reader would otherwise report. Named from
-        // the picked manifestation, not the selected one: the page has not
-        // swapped it yet at this point.
+        // Named from the picked manifestation, which the page has not
+        // selected yet.
         const picked = manifestations.find(manifestation => manifestation.pid === pid)
         const pickedYear = picked?.edition?.publicationYear?.year
         announceChoice(pickedYear ? `Udgave valgt: ${pickedYear}` : "Udgave valgt")
@@ -239,13 +229,8 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           <p key={choiceAnnouncement.nonce} role="status" className="sr-only">
             {choiceAnnouncement.text}
           </p>
-          {/* Fewer than two obtainable editions is no choice, so the picker
-              is left out entirely for such a material type. Mid-switch the
-              label would still name the previous type's edition, and until
-              availability says whether the button belongs here at all —
-              so the button disappears entirely rather than show a stale
-              label or a skeleton, and reappears once the new type resolves
-              to more than one edition. */}
+          {/* Shown only once the type resolves to more than one obtainable
+              edition, and never mid-switch. */}
           {!isEditionPickerLoading && hasEditionsToChooseFrom && (
             <div className="mb-3 w-full">
               <WorkPageButtons>

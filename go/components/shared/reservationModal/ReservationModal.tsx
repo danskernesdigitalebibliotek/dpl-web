@@ -118,9 +118,8 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
     )
   }
 
-  // The modal also opens straight from the url after a login redirect, which
-  // carries a pid and nothing else — so the dead end is caught here rather
-  // than only on the button that led in.
+  // The modal can open straight from a url pid, so the dead end is caught
+  // here too.
   const isUnobtainable =
     !!recordId && !!availability && !isEditionObtainable(availability, recordId)
 
