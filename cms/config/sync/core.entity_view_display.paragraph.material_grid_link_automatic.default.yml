@@ -8,6 +8,7 @@ dependencies:
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_description
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_link
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_title
+    - field.field.paragraph.material_grid_link_automatic.field_use_show_all_button
     - paragraphs.paragraphs_type.material_grid_link_automatic
   module:
     - options
@@ -55,4 +56,5 @@ content:
     weight: 0
     region: content
 hidden:
+  field_use_show_all_button: true
   search_api_excerpt: true

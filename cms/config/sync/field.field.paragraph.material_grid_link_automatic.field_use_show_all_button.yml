@@ -1,0 +1,23 @@
+uuid: 90427aa5-9060-4541-9f78-0947f5b6b164
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_use_show_all_button
+    - paragraphs.paragraphs_type.material_grid_link_automatic
+id: paragraph.material_grid_link_automatic.field_use_show_all_button
+field_name: field_use_show_all_button
+entity_type: paragraph
+bundle: material_grid_link_automatic
+label: 'Use show all button'
+description: 'If disabled, all materials in the grid are shown from the start.'
+required: true
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

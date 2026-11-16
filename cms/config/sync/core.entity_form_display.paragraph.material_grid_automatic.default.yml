@@ -9,6 +9,7 @@ dependencies:
     - field.field.paragraph.material_grid_automatic.field_material_grid_description
     - field.field.paragraph.material_grid_automatic.field_material_grid_title
     - field.field.paragraph.material_grid_automatic.field_priority_material_type
+    - field.field.paragraph.material_grid_automatic.field_use_show_all_button
     - paragraphs.paragraphs_type.material_grid_automatic
   module:
     - dpl_fbi
@@ -50,6 +51,12 @@ content:
   field_priority_material_type:
     type: options_select
     weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_use_show_all_button:
+    type: options_buttons
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }

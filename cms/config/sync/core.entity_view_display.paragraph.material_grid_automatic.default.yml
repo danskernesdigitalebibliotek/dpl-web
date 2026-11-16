@@ -8,6 +8,8 @@ dependencies:
     - field.field.paragraph.material_grid_automatic.field_material_amount
     - field.field.paragraph.material_grid_automatic.field_material_grid_description
     - field.field.paragraph.material_grid_automatic.field_material_grid_title
+    - field.field.paragraph.material_grid_automatic.field_priority_material_type
+    - field.field.paragraph.material_grid_automatic.field_use_show_all_button
     - paragraphs.paragraphs_type.material_grid_automatic
   module:
     - dpl_fbi
@@ -50,4 +52,5 @@ content:
 hidden:
   field_amount_of_materials: true
   field_priority_material_type: true
+  field_use_show_all_button: true
   search_api_excerpt: true
