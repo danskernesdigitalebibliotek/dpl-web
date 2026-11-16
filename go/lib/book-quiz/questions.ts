@@ -123,3 +123,6 @@ export const getQuestion = (id: TBookQuizQuestionId): TBookQuizQuestion => {
   if (!question) throw new Error(`Unknown book quiz question: ${id}`)
   return question
 }
+
+export const getOptionIds = (id: TBookQuizQuestionId): string[] =>
+  getQuestion(id).options.map(option => option.id)
