@@ -1,5 +1,9 @@
 "use client"
 
+import {
+  isCostFreeLoan,
+  useDigitalLoanDecision,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React from "react"
 
 import {
@@ -9,7 +13,7 @@ import {
 import { Badge } from "@/components/shared/badge/Badge"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
+import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 
 // Both the search teaser and work page manifestation fragments carry these.
 type BlueTitleManifestation = Pick<
@@ -18,21 +22,25 @@ type BlueTitleManifestation = Pick<
 >
 
 // Whether a manifestation is a cost-free ("BLÅ") title: podcasts always are,
-// the rest is looked up in Publizon. False while loading or when disabled.
+// the rest is whatever Biblio's loan decision says.
+//
+// That decision is patron-scoped, so a reader without a borrowing session is
+// answered false rather than asked. A false negative only hides the badge; it
+// never claims a title is included when it is not.
 export const useIsBlueTitle = (
   manifestation: BlueTitleManifestation | undefined,
   enabled = true
 ): boolean => {
-  const isbn = manifestation?.identifiers.find(identifier => identifier.type === "ISBN")?.value
+  const materialId = getPublizonIdentifierFromManifestation(manifestation)
   const isDigital =
     !!manifestation &&
     !isPhysicalMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
-  const { data } = useGetV1ProductsIdentifierAdapter(isbn || "", {
-    query: { enabled: enabled && isDigital && !!isbn },
-  })
+  const { data: loanDecision } = useDigitalLoanDecision(
+    enabled && isDigital ? (materialId ?? null) : null
+  )
   if (!enabled || !manifestation) return false
   return Boolean(
-    data?.product?.costFree ||
+    isCostFreeLoan(loanDecision?.loanProvider) ||
     isPodcastMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
   )
 }
