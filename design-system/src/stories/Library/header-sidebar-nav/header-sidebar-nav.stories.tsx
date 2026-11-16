@@ -21,13 +21,14 @@ export default {
       control: { type: "object" },
     },
     menuOpen: {
-      description: "The state of the menu",
+      description:
+        "The state of the menu. Closed by default, so visual tests don't capture the menu mid-way through its slide-in.",
       control: { type: "select", options: ["open", "closed"] },
     },
   },
   args: {
     menuLinks: menuItems,
-    menuOpen: "open",
+    menuOpen: "closed",
   },
 } as Meta<typeof HeaderSidebarNav>;
 
