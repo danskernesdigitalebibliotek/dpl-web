@@ -31,6 +31,7 @@ export type MaterialGridAutomaticProps = {
   sort?: string;
   firstaccessiondateitem?: string;
   materialType?: ManifestationMaterialType;
+  useShowAllButton?: boolean;
 };
 
 const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
@@ -45,7 +46,8 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
   description,
   requestedAmount,
   firstaccessiondateitem,
-  materialType
+  materialType,
+  useShowAllButton
 }) => {
   const t = useText();
   const buttonText = t("buttonText");
@@ -104,6 +106,7 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
       materials={materials}
       description={description}
       buttonText={buttonText}
+      useShowAllButton={useShowAllButton}
     />
   );
 };

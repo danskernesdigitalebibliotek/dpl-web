@@ -20,13 +20,15 @@ export type MaterialGridLinkAutomaticProps = {
   title?: string;
   description?: string;
   requestedAmount: number;
+  useShowAllButton?: boolean;
 };
 
 const MaterialGridLinkAutomatic: React.FC<MaterialGridLinkAutomaticProps> = ({
   link,
   title,
   description,
-  requestedAmount
+  requestedAmount,
+  useShowAllButton
 }) => {
   const t = useText();
   const buttonText = t("buttonText");
@@ -76,6 +78,7 @@ const MaterialGridLinkAutomatic: React.FC<MaterialGridLinkAutomaticProps> = ({
         materials={materials}
         description={description}
         buttonText={buttonText}
+        useShowAllButton={useShowAllButton}
       />
     </>
   );
