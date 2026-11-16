@@ -22,11 +22,9 @@ type BlueTitleManifestation = Pick<
 >
 
 // Whether a manifestation is a cost-free ("BLÅ") title: podcasts always are,
-// the rest is whatever Biblio's loan decision says.
-//
-// That decision is patron-scoped, so a reader without a borrowing session is
-// answered false rather than asked. A false negative only hides the badge; it
-// never claims a title is included when it is not.
+// the rest is whatever Biblio's loan decision says. That decision is
+// patron-scoped, so a reader without a borrowing session is answered false
+// and the badge stays hidden until they sign in.
 export const useIsBlueTitle = (
   manifestation: BlueTitleManifestation | undefined,
   enabled = true

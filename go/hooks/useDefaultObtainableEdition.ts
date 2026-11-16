@@ -13,13 +13,9 @@ import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graph
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 
 // Picks the edition a reader lands on by default: the newest cost-free
-// ("BLÅ") one the kommune can supply, otherwise simply the newest.
-//
-// Biblio's loan decision is patron-scoped, so it answers nothing for a reader
-// without a borrowing session and the pick falls through to the newest
-// edition. That fallback is the whole handling of the anonymous case — no
-// branch on the session, and nothing to undo here once Biblio can answer
-// without one.
+// ("BLÅ") one the kommune can supply, otherwise simply the newest. Biblio's
+// loan decision is patron-scoped, so a reader without a borrowing session
+// finds no blue edition and lands on the newest.
 export const useDefaultObtainableEdition = (
   obtainableEditions: ManifestationWorkPageFragment[]
 ): { defaultManifestation: ManifestationWorkPageFragment | undefined; isLoading: boolean } => {
@@ -50,8 +46,6 @@ export const useDefaultObtainableEdition = (
 
   return {
     defaultManifestation: newestBlue ?? obtainableEditions[0],
-    // The batch hook settles as one, so unlike the per-edition lookups it
-    // replaces there is no answer to wait on selectively.
     isLoading: materialIds.length > 0 && isLoading,
   }
 }
