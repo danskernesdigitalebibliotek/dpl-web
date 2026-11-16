@@ -4,7 +4,6 @@ import React from "react"
 
 import { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkTeaser from "@/components/shared/workTeaser/WorkTeaser"
-import { getWorkTeaserProps } from "@/components/shared/workTeaser/helper"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 type SearchResultProps = {
@@ -16,7 +15,7 @@ const SearchResults = ({ works }: SearchResultProps) => {
     <div className="grid-go gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)]">
       {works.map(work => (
         <div key={work.workId} className="col-span-3 lg:col-span-4">
-          <WorkTeaser {...getWorkTeaserProps(work)} />
+          <WorkTeaser work={work} />
         </div>
       ))}
     </div>
