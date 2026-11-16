@@ -42,7 +42,7 @@ const HeaderSidebarNav: React.FC<HeaderSidebarNavProps> = ({
         <div className="header-sidebar-nav__menu-wrapper">
           <button
             type="button"
-            className="header-sidebar-nav__close-menu-button"
+            className="btn-ui header-sidebar-nav__close-menu-button"
             id="js-header-sidebar-nav__close-menu-button"
             aria-label="Close menu"
           >

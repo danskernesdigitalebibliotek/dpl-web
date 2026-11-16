@@ -71,13 +71,9 @@ $_menu_animation_delay: 0.2s;
 }
 
 .header-sidebar-nav__close-menu-button {
-  border: 0;
-  background: transparent;
-  color: inherit;
   height: min-content;
   padding: $s-xs;
   line-height: 1;
-  cursor: pointer;
 }
 
 .header-sidebar-nav__menu-wrapper {
