@@ -246,8 +246,8 @@ export const PhysicalReservationButton = ({
   const existing = findReservationByRecordId(reservations, recordId)
   const existingLoan = loans?.find(loan => loan.recordId === recordId)
 
-  // Only reachable through a pinned pid in a shared link, since the picker
-  // offers nothing unobtainable. Lent-out editions keep the normal button.
+  // Unobtainable editions reach this only via a pinned pid; lent-out ones
+  // keep the normal button.
   const { isEditionHidden } = useEditionAvailability(workId)
   const isUnobtainable = isEditionHidden(selectedManifestation)
 

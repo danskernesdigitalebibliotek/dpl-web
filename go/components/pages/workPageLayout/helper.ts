@@ -338,10 +338,7 @@ export const getEditionsForMaterialType = (
     )
 }
 
-// Get the manifestation for a pinned edition. The pid is only honoured when it
-// belongs to the material type currently selected — a pid from a shared link
-// can be stale or point at another type, and then the caller falls back to the
-// default (newest) pick.
+// Honours the pid only if it belongs to the given material type.
 export const getPinnedEditionManifestation = (
   manifestations: ManifestationWorkPageFragment[],
   materialTypeCode: string,
