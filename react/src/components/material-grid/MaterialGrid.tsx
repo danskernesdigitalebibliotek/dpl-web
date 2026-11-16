@@ -19,6 +19,9 @@ export type MaterialGridProps = {
   description?: string;
   buttonText?: string;
   initialMaximumDisplay?: number;
+  // When false, all materials are shown from the start and there is no
+  // "Show all" button.
+  useShowAllButton?: boolean;
 };
 
 const defaultIncrement: number = 4;
@@ -33,7 +36,8 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
   title,
   description,
   buttonText,
-  initialMaximumDisplay = defaultIncrement
+  initialMaximumDisplay = defaultIncrement,
+  useShowAllButton = true
 }) => {
   const firstNewItemRef = React.useRef<HTMLLIElement>(null);
   const { track } = useEventStatistics();
@@ -46,7 +50,7 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
   const [
     currentAmountOfDisplayedMaterials,
     setCurrentMaterialsDisplayedMaterials
-  ] = useState(initialMaximumDisplay);
+  ] = useState(useShowAllButton ? initialMaximumDisplay : maxAmount);
 
   // Focus on the first new item when the user clicks the "Show more" button
   useEffect(() => {
@@ -97,7 +101,13 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
             return (
               <MaterialListItem
                 key={wid}
-                ref={index === initialMaximumDisplay ? firstNewItemRef : null}
+                // Without the button every item renders on mount, so a ref
+                // here would move focus to it on page load.
+                ref={
+                  useShowAllButton && index === initialMaximumDisplay
+                    ? firstNewItemRef
+                    : null
+                }
               >
                 <RecommendedMaterial
                   partOfGrid
@@ -108,17 +118,20 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
             );
           })}
       </ul>
-      {moreMaterialsThanInitialMaximum && !showAllMaterials && buttonText && (
-        <button
-          className="material-grid__show-more btn-primary btn-outline btn-medium"
-          data-show-more
-          aria-expanded={showAllMaterials ? "true" : "false"}
-          type="button"
-          onClick={() => handleShowAllMaterials()}
-        >
-          {buttonText}
-        </button>
-      )}
+      {useShowAllButton &&
+        moreMaterialsThanInitialMaximum &&
+        !showAllMaterials &&
+        buttonText && (
+          <button
+            className="material-grid__show-more btn-primary btn-outline btn-medium"
+            data-show-more
+            aria-expanded={showAllMaterials ? "true" : "false"}
+            type="button"
+            onClick={() => handleShowAllMaterials()}
+          >
+            {buttonText}
+          </button>
+        )}
     </div>
   );
 };
