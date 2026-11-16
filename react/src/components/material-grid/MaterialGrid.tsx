@@ -125,7 +125,7 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
           <button
             className="material-grid__show-more btn-primary btn-outline btn-medium"
             data-show-more
-            aria-expanded={showAllMaterials ? "true" : "false"}
+            aria-expanded="false"
             type="button"
             onClick={() => handleShowAllMaterials()}
           >
