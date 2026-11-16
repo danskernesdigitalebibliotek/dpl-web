@@ -130,7 +130,7 @@
     "orval": "^8.46.0",
     "playwright": "^1.65.0",
     "postcss": "^8.5.32",
-    "prettier": "^3.9.10",
+    "prettier": "^3.10.1",
     "prettier-plugin-classnames": "^0.10.5",
     "prettier-plugin-merge": "^0.10.2",
     "prettier-plugin-tailwindcss": "^0.8.1",
