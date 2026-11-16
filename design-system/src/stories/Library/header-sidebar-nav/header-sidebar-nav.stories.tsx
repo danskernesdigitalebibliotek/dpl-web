@@ -20,20 +20,28 @@ export default {
       description: "The links of the menu",
       control: { type: "object" },
     },
-    menuOpen: {
-      description:
-        "The state of the menu. Closed by default, so visual tests don't capture the menu mid-way through its slide-in.",
-      control: { type: "select", options: ["open", "closed"] },
-    },
   },
   args: {
     menuLinks: menuItems,
-    menuOpen: "closed",
   },
 } as Meta<typeof HeaderSidebarNav>;
 
+// The id is what header-sidebar-nav-js.js opens the menu from, like the
+// burger button in the header.
 const Template: StoryFn<typeof HeaderSidebarNav> = (
   args: HeaderSidebarNavProps,
-) => <HeaderSidebarNav {...args} />;
+) => (
+  <>
+    <button
+      type="button"
+      id="header-sidebar-nav__toggle"
+      aria-controls="sidebarNav"
+      aria-expanded="false"
+    >
+      Open menu
+    </button>
+    <HeaderSidebarNav {...args} />
+  </>
+);
 
 export const Default = Template.bind({});

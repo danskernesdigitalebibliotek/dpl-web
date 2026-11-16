@@ -1,45 +1,19 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { ReactComponent as CloseSidebarIcon } from "../Icons/icon-close-large/icon-close-large.svg";
 import { MenuItemsProps } from "../header-menu-list/HeaderMenuListData";
 import MenuItemList from "../header-menu-list/HeaderMenuList";
 
 export type HeaderSidebarNavProps = {
   menuLinks: MenuItemsProps[];
-  menuOpen?: "open" | "closed";
 };
 
-const HeaderSidebarNav: React.FC<HeaderSidebarNavProps> = ({
-  menuLinks,
-  menuOpen = "closed",
-}) => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
+const HeaderSidebarNav: React.FC<HeaderSidebarNavProps> = ({ menuLinks }) => {
   useEffect(() => {
     require("./header-sidebar-nav-js");
   }, []);
 
-  // Storybook only: lets the menuOpen control open the dialog as a modal. On
-  // the site, header-sidebar-nav-js.js opens it from the burger button.
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) {
-      return;
-    }
-    if (menuOpen === "open" && !dialog.open) {
-      dialog.showModal();
-    }
-    if (menuOpen === "closed" && dialog.open) {
-      dialog.close();
-    }
-  }, [menuOpen]);
-
   return (
-    <dialog
-      ref={dialogRef}
-      className="header-sidebar-nav"
-      id="sidebarNav"
-      aria-label="Menu"
-    >
+    <dialog className="header-sidebar-nav" id="sidebarNav" aria-label="Menu">
       <div className="header-sidebar-nav__background-wrapper">
         <div className="header-sidebar-nav__menu-wrapper">
           <button

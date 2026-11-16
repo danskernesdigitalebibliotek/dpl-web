@@ -1,4 +1,4 @@
-window.addEventListener("load", () => {
+function initSidebarNav() {
   const sidebarNavToggle = document.getElementById(
     "header-sidebar-nav__toggle",
   );
@@ -73,4 +73,11 @@ window.addEventListener("load", () => {
       closeSidebarNav();
     }
   });
-});
+}
+
+// Storybook requires this file after the page has loaded.
+if (document.readyState === "complete") {
+  initSidebarNav();
+} else {
+  window.addEventListener("load", initSidebarNav);
+}
