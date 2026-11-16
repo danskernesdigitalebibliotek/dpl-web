@@ -24,6 +24,7 @@ import { cyKeys } from "@/cypress/support/constants"
 import { useBlacklistedAvailabilityBranches } from "@/hooks/useBlacklistedAvailabilityBranches"
 import { useWorkRecordIds } from "@/hooks/useEditionAvailability"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { isEditionObtainable } from "@/lib/helpers/helper.availability"
 import { findManifestationByPid } from "@/lib/helpers/helper.manifestation"
 import { findReservationByRecordId } from "@/lib/helpers/helper.reservation"
 import { pidToFaust } from "@/lib/helpers/ids"
@@ -117,7 +118,12 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
     )
   }
 
-  const submitDisabled = isSubmitting || !recordId
+  // The modal can open straight from a url pid, so the dead end is caught
+  // here too.
+  const isUnobtainable =
+    !!recordId && !!availability && !isEditionObtainable(availability, recordId)
+
+  const submitDisabled = isSubmitting || !recordId || isUnobtainable
 
   // The dialog must have a name from the start — while the material query
   // loads and the visible title is empty, aria-label carries the bare action.
@@ -152,14 +158,18 @@ const ReservationModal = ({ open, onClose, wid, pid }: ReservationModalProps) =>
           </Button>
         ) : (
           <div className="flex w-full flex-col items-center gap-3">
-            {/* Both numbers are for the chosen edition, not the whole work:
-                the reader reserves one edition, so the queue they join is that
-                edition's.*/}
-            {editionAvailability && (
-              <HelpText>
-                Biblioteket har {editionAvailability.totalCopies} stk. af denne bog.{" "}
-                {getQueueText(editionAvailability)}
-              </HelpText>
+            {isUnobtainable ? (
+              <HelpText>Denne udgave findes desværre ikke på dit bibliotek</HelpText>
+            ) : (
+              /* Both numbers are for the chosen edition, not the whole work:
+                 the reader reserves one edition, so the queue they join is
+                 that edition's. */
+              editionAvailability && (
+                <HelpText>
+                  Biblioteket har {editionAvailability.totalCopies} stk. af denne bog.{" "}
+                  {getQueueText(editionAvailability)}
+                </HelpText>
+              )
             )}
             <Button
               theme="primary"
