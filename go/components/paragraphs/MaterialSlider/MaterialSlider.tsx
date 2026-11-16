@@ -3,29 +3,20 @@
 import { useWindowSize } from "@uidotdev/usehooks"
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react"
-import Link from "next/link"
 import React, { useEffect, useState } from "react"
 
-import {
-  filterManifestationsByEdition,
-  filterManifestationsByMaterialType,
-  filterMaterialTypes,
-  getEbookManifestationOrFallbackManifestation,
-  sortManifestationsBySortPriority,
-} from "@/components/pages/workPageLayout/helper"
 import { WheelControls, defaultSliderOptions } from "@/components/paragraphs/MaterialSlider/helper"
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
-import WorkCard, { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
-import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
+import { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
+import WorkTeaser from "@/components/shared/workTeaser/WorkTeaser"
+import { getWorkTeaserProps } from "@/components/shared/workTeaser/helper"
 import { cyKeys } from "@/cypress/support/constants"
 import {
   ParagraphGoMaterialSliderAutomatic,
   ParagraphGoMaterialSliderManual,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { displayCreators } from "@/lib/helpers/helper.creators"
-import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 type MaterialSliderProps = {
   works?: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
@@ -95,56 +86,14 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
           <div className="my-paragraph-spacing">
             <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
               {works &&
-                works.map(work => {
-                  const manifestations = sortManifestationsBySortPriority(
-                    filterManifestationsByEdition(
-                      filterManifestationsByMaterialType(
-                        filterMaterialTypes(work.manifestations.all)
-                      )
-                    )
-                  )
-
-                  const manifestation = getEbookManifestationOrFallbackManifestation(
-                    work.manifestations.bestRepresentation,
-                    manifestations
-                  )
-
-                  const title = work.titles.full[0]
-                  const url = manifestation
-                    ? resolveUrl({
-                        routeParams: { work: "work", wid: work.workId },
-                        queryParams: {
-                          type: manifestation.materialTypes[0].materialTypeSpecific.code,
-                          u_navigatedby_go_mat: 1,
-                        },
-                      })
-                    : ""
-
-                  return (
-                    <Link
-                      prefetch={false}
-                      key={work.workId}
-                      aria-label={`Tilgå værket ${title} af ${displayCreators(work.creators, 1)}`}
-                      className="keen-slider__slide focus-visible outline-accent-foreground
-                        focus:outline-offset-2"
-                      href={url || ""}>
-                      <WorkCardWithCaption title={title} creators={work.creators || []}>
-                        {manifestation ? (
-                          <WorkCard
-                            className="dark:bg-background-overlay !dark:bg-background"
-                            workId={work.workId}
-                            title={title}
-                            bestRepresentation={manifestation}
-                            manifestations={manifestations}
-                            isWithTilt={true}
-                          />
-                        ) : (
-                          <WorkCardEmpty />
-                        )}
-                      </WorkCardWithCaption>
-                    </Link>
-                  )
-                })}
+                works.map(work => (
+                  <WorkTeaser
+                    key={work.workId}
+                    {...getWorkTeaserProps(work, { u_navigatedby_go_mat: 1 })}
+                    className="keen-slider__slide outline-accent-foreground focus:outline-offset-2"
+                    cardClassName="dark:bg-background-overlay"
+                  />
+                ))}
             </div>
           </div>
         </div>
