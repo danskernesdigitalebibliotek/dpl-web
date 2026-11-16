@@ -18,6 +18,8 @@ const HeaderSidebarNav: React.FC<HeaderSidebarNavProps> = ({
     require("./header-sidebar-nav-js");
   }, []);
 
+  // Storybook only: lets the menuOpen control open the dialog as a modal. On
+  // the site, header-sidebar-nav-js.js opens it from the burger button.
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) {
