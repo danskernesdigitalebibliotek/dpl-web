@@ -58,6 +58,11 @@ window.addEventListener("load", () => {
     sidebarNavToggle?.focus();
   });
 
+  // A menu link leaves the page while the menu is still sliding out. Close it
+  // at once, so the page doesn't come back from the back/forward cache with
+  // the menu open and the rest of the page inert.
+  window.addEventListener("pagehide", () => sidebarNav.close());
+
   sidebarNav.addEventListener("click", (event) => {
     if (
       event.target === backgroundWrapper ||
