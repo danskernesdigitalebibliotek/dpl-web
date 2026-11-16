@@ -24,15 +24,10 @@ export default {
       description: "The state of the menu",
       control: { type: "select", options: ["open", "closed"] },
     },
-    isStorybookContext: {
-      name: "Are we in storybook?",
-      control: { type: "boolean" },
-    },
   },
   args: {
     menuLinks: menuItems,
     menuOpen: "open",
-    isStorybookContext: true,
   },
 } as Meta<typeof HeaderSidebarNav>;
 

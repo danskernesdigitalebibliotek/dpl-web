@@ -66,21 +66,24 @@
     {{ opening_hours_sidebar_large }}
   {% endif %}
 </header>
-<div class="header-sidebar-nav" data-open="closed">
+<dialog
+  class="header-sidebar-nav"
+  id="sidebarNav"
+  aria-label="{{ 'Menu'|t({}, {context: 'Header'}) }}"
+>
     <div class="header-sidebar-nav__background-wrapper">
       <div class="header-sidebar-nav__menu-wrapper">
-        <div
+        <button
+          type="button"
           class="header-sidebar-nav__close-menu-button"
           id="js-header-sidebar-nav__close-menu-button"
-          tabIndex="0"
-          role="button"
-          aria-label="Close menu"
+          aria-label="{{ 'Close menu'|t({}, {context: 'Header'}) }}"
         >
            {{ source(directory ~ '/themes/custom/novel/assets/dpl-design-system/icons/collection/CloseLarge.svg') }}
-        </div>
+        </button>
         <nav aria-label="Sidebar site navigation">
            {{ drupal_menu('main') }}
         </nav>
       </div>
     </div>
-  </div>
+</dialog>
