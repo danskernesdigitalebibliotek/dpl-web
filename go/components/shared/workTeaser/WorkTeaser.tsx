@@ -8,7 +8,7 @@ import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphq
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 
-import { getWorkTeaserProps } from "./helper"
+import { getWorkTeaserValues } from "./helper"
 
 export type TWorkTeaserProps = {
   work: WorkTeaserSearchPageFragment
@@ -28,10 +28,7 @@ const WorkTeaser = ({
   cardClassName,
   isWithTilt = true,
 }: TWorkTeaserProps) => {
-  const { title, creators, url, manifestation, manifestations } = getWorkTeaserProps(
-    work,
-    queryParams
-  )
+  const { title, creators, url, cover, manifestations } = getWorkTeaserValues(work, queryParams)
 
   return (
     <Link
@@ -40,11 +37,11 @@ const WorkTeaser = ({
       className={cn("focus-visible", className)}
       href={url}>
       <div className={cn("block space-y-3 lg:space-y-5", captionClassName)}>
-        {manifestation ? (
+        {cover && manifestations.length ? (
           <WorkCardContainer
             className={cardClassName}
             title={title}
-            covers={manifestation.cover}
+            covers={cover}
             manifestations={manifestations}
             isWithTilt={isWithTilt}
           />
