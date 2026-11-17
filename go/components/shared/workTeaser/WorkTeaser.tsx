@@ -23,7 +23,7 @@ export type TWorkTeaserProps = {
   isWithTilt?: boolean
 }
 
-// A work card with title and creators below, linking to the work page.
+// A work card with title and creators below, linking to `url`.
 const WorkTeaser = ({
   title,
   creators,

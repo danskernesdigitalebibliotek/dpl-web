@@ -11,13 +11,13 @@ export type TWorkCardMaterialType = {
 // types when Publizon says so for any of their manifestations.
 export const getWorkCardMaterialTypes = (
   manifestations: ManifestationSearchPageTeaserFragment[],
-  isCostFree: (index: number) => boolean = () => false
+  isCostFree: (index: number) => boolean
 ): TWorkCardMaterialType[] => {
   const materialTypes = new Map<MaterialTypeIconNamesType, boolean>()
 
   manifestations.forEach((manifestation, index) => {
-    const materialType = manifestation.materialTypes[0].materialTypeSpecific.code
-    const iconName = getIconNameFromMaterialType(materialType) || "book"
+    const materialType = manifestation.materialTypes.at(0)?.materialTypeSpecific.code
+    const iconName = (materialType && getIconNameFromMaterialType(materialType)) || "book"
     const costFree = isCostFree(index) || materialType === "PODCAST"
     materialTypes.set(iconName, Boolean(materialTypes.get(iconName)) || costFree)
   })
