@@ -42,8 +42,8 @@ const dialogContentVariants = cva(
         default: `max-h-[95dvh] w-[calc(100%-var(--grid-edge)*2)] max-w-[750px] rounded-xl
         lg:min-h-[60dvh]`,
         // Full screen on mobile, almost full screen from lg.
-        wide: `h-dvh w-full lg:h-[95dvh] lg:w-[calc(100%-var(--grid-edge)*2)] lg:max-w-[1440px]
-        lg:rounded-xl`,
+        wide: `h-dvh w-full lg:h-[85dvh] lg:max-h-[860px] lg:w-[calc(100%-var(--grid-edge)*2)]
+        lg:max-w-[1200px] lg:rounded-xl`,
       },
     },
     defaultVariants: { size: "default" },
