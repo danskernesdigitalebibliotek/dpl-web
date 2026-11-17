@@ -12,11 +12,11 @@ import {
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 
-// Picks the manifestation a reader lands on by default: the newest cost-free
-// ("BLÅ") one the kommune can supply, otherwise simply the newest. Biblio's
-// loan decision is patron-scoped, so a reader without a borrowing session
-// finds no blue one and lands on the newest.
-export const useDefaultObtainableEdition = (
+// The manifestation a reader lands on, picked from the ones the kommune can
+// supply: the newest cost-free ("BLÅ") one, otherwise simply the newest.
+// Biblio's loan decision is patron-scoped, so a reader without a borrowing
+// session finds no blue one and lands on the newest.
+export const usePreferredManifestation = (
   obtainableManifestations: ManifestationWorkPageFragment[]
 ): { defaultManifestation: ManifestationWorkPageFragment | undefined; isLoading: boolean } => {
   const materialIds = obtainableManifestations
