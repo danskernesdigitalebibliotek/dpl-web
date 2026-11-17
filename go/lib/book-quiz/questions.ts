@@ -1,20 +1,20 @@
 import {
-  OTHER,
   ANIMALS,
-  NONFICTION,
-  FANTASY,
-  GAMING,
-  HORROR,
-  HISTORY,
   CLIMATE,
+  FANTASY,
+  FRIENDS,
+  FUNNY,
+  GAMING,
+  HISTORY,
+  HORROR,
+  NONFICTION,
   NOVELS,
+  OTHER,
   ROMANCE,
   SCIFI,
-  FUNNY,
-  THRILLER,
   SPORT,
   type TBookQuizGroup,
-  FRIENDS,
+  THRILLER,
 } from "./groups"
 
 // The quiz questions in the order they are asked. A question's id is also its
@@ -54,7 +54,12 @@ export const QUESTIONS: TBookQuizQuestion[] = [
       { id: "genre-thriller", label: "Ud på en vild mission", emoji: "💣", group: THRILLER },
       { id: "genre-fantasy", label: "Ride på en enhjørning", emoji: "🦄", group: FANTASY },
       { id: "genre-friends", label: "På tur med vennerne", emoji: "👨‍👩‍👧‍👦", group: FRIENDS },
-      { id: "genre-nonfiction", label: "På opdagelse i laboratoriet", emoji: "🧪", group: NONFICTION },
+      {
+        id: "genre-nonfiction",
+        label: "På opdagelse i laboratoriet",
+        emoji: "🧪",
+        group: NONFICTION,
+      },
       {
         id: "genre-scifi",
         label: "På rejse til en fremmed planet",
