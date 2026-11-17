@@ -8,8 +8,8 @@ import {
   getEditionsForMaterialType,
   getPinnedEditionManifestation,
 } from "@/components/pages/workPageLayout/helper"
-import { useDefaultObtainableEdition } from "@/hooks/useDefaultObtainableEdition"
 import { useEditionAvailability } from "@/hooks/useEditionAvailability"
+import { usePreferredManifestation } from "@/hooks/usePreferredManifestation"
 import {
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
@@ -68,7 +68,7 @@ export const useSelectedEdition = ({
   )
 
   const { defaultManifestation: defaultObtainableEdition, isLoading: isLoadingDefaultEdition } =
-    useDefaultObtainableEdition(obtainableEditions)
+    usePreferredManifestation(obtainableEditions)
 
   // Remembers the material type whose pick is done. Its lookups share query
   // keys with every other request for the same ISBN, so one started elsewhere
