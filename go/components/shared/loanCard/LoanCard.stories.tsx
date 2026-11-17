@@ -80,6 +80,9 @@ const seedClient = (fixtures: Fixture[]) => {
     })),
   })
   fixtures.forEach(f => {
+    // The isbn is the material id here: these manifestations carry no
+    // PUBLIZON identifier, so the card falls back to the ISBN to look up its
+    // decision.
     client.setQueryData(digitalLoanDecisionQueryKey(f.isbn), {
       status: "loanable",
       ...(f.costFree ? { loanProvider: "selection" } : {}),
