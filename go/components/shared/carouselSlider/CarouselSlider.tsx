@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import Timer from "@/components/shared/timer/Timer"
-import WorkCardStackedWithCaption from "@/components/shared/workCard/WorkCardStackedWithCaption"
+import WorkTeaserStacked from "@/components/shared/workTeaser/WorkTeaserStacked"
 import { cyKeys } from "@/cypress/support/constants"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
@@ -33,6 +33,8 @@ const CarouselSlider = ({ works, className }: CarouselSliderProps) => {
     resetTimerRef.current?.()
   }
 
+  const currentWork = works?.[currentItemNumber - 1]
+
   useEffect(() => {
     if (!!works) {
       setMaterialOrder(works.map(work => work.workId as WorkId))
@@ -58,11 +60,7 @@ const CarouselSlider = ({ works, className }: CarouselSliderProps) => {
 
         {/* Work card — rendered once, responsive */}
         <div className="col-span-4 lg:relative lg:w-full">
-          <WorkCardStackedWithCaption
-            currentItemNumber={currentItemNumber}
-            works={works || []}
-            materialOrder={materialOrder}
-          />
+          {currentWork && <WorkTeaserStacked work={currentWork} />}
         </div>
 
         {/* Mobile: next button */}
