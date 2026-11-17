@@ -32,6 +32,7 @@
   - [Codegen](#codegen)
   - [Codegen types](#codegen-types)
   - [Custom types](#custom-types)
+  - [Components and logic](#components-and-logic)
   - [xState](#xstate)
   - [Config handling](#config-handling)
   - [Storybook](#storybook)
@@ -183,6 +184,25 @@ Custom types are manually defined TypeScript types that are used throughout the 
 When creating a custom type, please write a `T` before the name of the type to refer to the variable as a type. This helps to avoid confusion between types and other functionalities.
 
 To add a custom type, create a new file in the `lib/types` directory and define your types using TypeScript's `type` or `interface` keywords.
+
+### Components and logic
+
+Keep components as dumb as possible: plain props in, markup out. Shaping data
+(picking a manifestation, building a url, ranking results) goes in a
+`helper.ts` next to the component, and the caller passes the result down as
+props. A dumb component is easy to write stories for and to test, because it
+only needs props, not data fetching or providers.
+
+When a component needs data or state, put the hooks in a container next to it
+(e.g. `FooContainer` around `Foo`) that renders the dumb component.
+
+Prefer pure functions for logic whenever possible. They are easy to read and
+can be unit tested without React. Use a hook only when the logic needs React,
+i.e. state, effects, context or data fetching.
+
+Avoid deep hook nesting, where a hook calls a hook that calls a hook. It hides
+where data comes from and when it re-renders. Keep hooks flat and move the
+logic inside them into pure functions.
 
 ### xState
 
