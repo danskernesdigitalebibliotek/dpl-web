@@ -320,6 +320,25 @@ describe("Material page - a material only Biblio provides", () => {
     cy.get("@biblioCreateLoan.all").should("have.length", 0);
   });
 
+  it("Offers to reserve it when the adapter says it is wishable", () => {
+    // Biblio answers "wishable" where Publizon offered the queue, and the
+    // wish is placed through the same reservation request.
+    givenBiblioCanLoan(CanLoanResponseType.wishable);
+    givenBiblioCreatesReservation(CanLoanResponseType.wishable);
+
+    const material = new MaterialPage(materialStory.withBiblioAdapter, "e-bog");
+
+    openLoanModal(material);
+    material.onlineLoanModal().elements.approveButton().click();
+
+    cy.wait("@biblioCreateReservation")
+      .its("request.body")
+      .should("deep.equal", { material_id: EBOOK_ISBN });
+    cy.get(onlineLoanModalSelector)
+      .should("contain", "reserved for you")
+      .and("not.contain", "Something went wrong.");
+  });
+
   it("Does not tell the user they are queued when the adapter declines", () => {
     // The adapter answers 201 with a decision rather than an HTTP error, so
     // the status is the only thing separating a queue place from a spent

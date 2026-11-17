@@ -221,12 +221,12 @@ export const givenUserHasNoBiblioReservations = () =>
   givenUserHasBiblioReservations([]);
 
 /** Given: creating a reservation in Biblio succeeds. */
-export const givenBiblioCreatesReservation = () => {
+export const givenBiblioCreatesReservation = (
+  status: CanLoanResponseType = CanLoanResponseType.reservable
+) => {
   cy.intercept("POST", "**/v1/reservations", {
     statusCode: 201,
-    body: biblioCreateLoanFactory.build({
-      status: CanLoanResponseType.reservable
-    })
+    body: biblioCreateLoanFactory.build({ status })
   }).as("biblioCreateReservation");
 };
 
