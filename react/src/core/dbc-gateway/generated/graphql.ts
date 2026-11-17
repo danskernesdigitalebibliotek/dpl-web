@@ -3253,6 +3253,7 @@ export type GetSmallWorkQuery = {
       __typename?: "WorkTitles";
       full: Array<string>;
       original?: Array<string> | null;
+      titlePlusLanguage?: string | null;
     };
     creators: Array<
       | { __typename: "Corporation"; display: string }
@@ -3266,6 +3267,17 @@ export type GetSmallWorkQuery = {
       numberInSeries?: string | null;
       readThisFirst?: boolean | null;
       readThisWhenever?: boolean | null;
+    }>;
+    materialTypes: Array<{
+      __typename?: "MaterialType";
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
+      };
+      materialTypeSpecific: {
+        __typename?: "SpecificMaterialType";
+        display: string;
+      };
     }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
@@ -3989,17 +4001,6 @@ export type GetMaterialQuery = {
         };
       }>;
     }>;
-    materialTypes: Array<{
-      __typename?: "MaterialType";
-      materialTypeGeneral: {
-        __typename?: "GeneralMaterialType";
-        code: GeneralMaterialTypeCodeEnum;
-      };
-      materialTypeSpecific: {
-        __typename?: "SpecificMaterialType";
-        display: string;
-      };
-    }>;
     mainLanguages: Array<{
       __typename?: "Language";
       display: string;
@@ -4055,11 +4056,23 @@ export type GetMaterialQuery = {
       __typename?: "WorkTitles";
       full: Array<string>;
       original?: Array<string> | null;
+      titlePlusLanguage?: string | null;
     };
     creators: Array<
       | { __typename: "Corporation"; display: string }
       | { __typename: "Person"; display: string }
     >;
+    materialTypes: Array<{
+      __typename?: "MaterialType";
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
+      };
+      materialTypeSpecific: {
+        __typename?: "SpecificMaterialType";
+        display: string;
+      };
+    }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
       __typename?: "Manifestations";
@@ -4645,17 +4658,6 @@ export type GetMaterialGloballyQuery = {
         };
       }>;
     }>;
-    materialTypes: Array<{
-      __typename?: "MaterialType";
-      materialTypeGeneral: {
-        __typename?: "GeneralMaterialType";
-        code: GeneralMaterialTypeCodeEnum;
-      };
-      materialTypeSpecific: {
-        __typename?: "SpecificMaterialType";
-        display: string;
-      };
-    }>;
     mainLanguages: Array<{
       __typename?: "Language";
       display: string;
@@ -4711,11 +4713,23 @@ export type GetMaterialGloballyQuery = {
       __typename?: "WorkTitles";
       full: Array<string>;
       original?: Array<string> | null;
+      titlePlusLanguage?: string | null;
     };
     creators: Array<
       | { __typename: "Corporation"; display: string }
       | { __typename: "Person"; display: string }
     >;
+    materialTypes: Array<{
+      __typename?: "MaterialType";
+      materialTypeGeneral: {
+        __typename?: "GeneralMaterialType";
+        code: GeneralMaterialTypeCodeEnum;
+      };
+      materialTypeSpecific: {
+        __typename?: "SpecificMaterialType";
+        display: string;
+      };
+    }>;
     workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
     manifestations: {
       __typename?: "Manifestations";
@@ -5388,6 +5402,7 @@ export type RecommendFromFaustQuery = {
           __typename?: "WorkTitles";
           full: Array<string>;
           original?: Array<string> | null;
+          titlePlusLanguage?: string | null;
         };
         creators: Array<
           | { __typename: "Corporation"; display: string }
@@ -5401,6 +5416,17 @@ export type RecommendFromFaustQuery = {
           numberInSeries?: string | null;
           readThisFirst?: boolean | null;
           readThisWhenever?: boolean | null;
+        }>;
+        materialTypes: Array<{
+          __typename?: "MaterialType";
+          materialTypeGeneral: {
+            __typename?: "GeneralMaterialType";
+            code: GeneralMaterialTypeCodeEnum;
+          };
+          materialTypeSpecific: {
+            __typename?: "SpecificMaterialType";
+            display: string;
+          };
         }>;
         workYear?: {
           __typename?: "PublicationYear";
@@ -6019,6 +6045,7 @@ export type SearchWithPaginationQuery = {
         __typename?: "WorkTitles";
         full: Array<string>;
         original?: Array<string> | null;
+        titlePlusLanguage?: string | null;
       };
       creators: Array<
         | { __typename: "Corporation"; display: string }
@@ -6032,6 +6059,17 @@ export type SearchWithPaginationQuery = {
         numberInSeries?: string | null;
         readThisFirst?: boolean | null;
         readThisWhenever?: boolean | null;
+      }>;
+      materialTypes: Array<{
+        __typename?: "MaterialType";
+        materialTypeGeneral: {
+          __typename?: "GeneralMaterialType";
+          code: GeneralMaterialTypeCodeEnum;
+        };
+        materialTypeSpecific: {
+          __typename?: "SpecificMaterialType";
+          display: string;
+        };
       }>;
       workYear?: {
         __typename?: "PublicationYear";
@@ -6665,6 +6703,7 @@ export type ComplexSearchWithPaginationQuery = {
         __typename?: "WorkTitles";
         full: Array<string>;
         original?: Array<string> | null;
+        titlePlusLanguage?: string | null;
       };
       creators: Array<
         | { __typename: "Corporation"; display: string }
@@ -6678,6 +6717,17 @@ export type ComplexSearchWithPaginationQuery = {
         numberInSeries?: string | null;
         readThisFirst?: boolean | null;
         readThisWhenever?: boolean | null;
+      }>;
+      materialTypes: Array<{
+        __typename?: "MaterialType";
+        materialTypeGeneral: {
+          __typename?: "GeneralMaterialType";
+          code: GeneralMaterialTypeCodeEnum;
+        };
+        materialTypeSpecific: {
+          __typename?: "SpecificMaterialType";
+          display: string;
+        };
       }>;
       workYear?: {
         __typename?: "PublicationYear";
@@ -7866,6 +7916,7 @@ export type GetSeriesQuery = {
           __typename?: "WorkTitles";
           full: Array<string>;
           original?: Array<string> | null;
+          titlePlusLanguage?: string | null;
         };
         creators: Array<
           | { __typename: "Corporation"; display: string }
@@ -7879,6 +7930,17 @@ export type GetSeriesQuery = {
           numberInSeries?: string | null;
           readThisFirst?: boolean | null;
           readThisWhenever?: boolean | null;
+        }>;
+        materialTypes: Array<{
+          __typename?: "MaterialType";
+          materialTypeGeneral: {
+            __typename?: "GeneralMaterialType";
+            code: GeneralMaterialTypeCodeEnum;
+          };
+          materialTypeSpecific: {
+            __typename?: "SpecificMaterialType";
+            display: string;
+          };
         }>;
         workYear?: {
           __typename?: "PublicationYear";
@@ -8880,6 +8942,7 @@ export type WorkSmallFragment = {
     __typename?: "WorkTitles";
     full: Array<string>;
     original?: Array<string> | null;
+    titlePlusLanguage?: string | null;
   };
   creators: Array<
     | { __typename: "Corporation"; display: string }
@@ -8893,6 +8956,17 @@ export type WorkSmallFragment = {
     numberInSeries?: string | null;
     readThisFirst?: boolean | null;
     readThisWhenever?: boolean | null;
+  }>;
+  materialTypes: Array<{
+    __typename?: "MaterialType";
+    materialTypeGeneral: {
+      __typename?: "GeneralMaterialType";
+      code: GeneralMaterialTypeCodeEnum;
+    };
+    materialTypeSpecific: {
+      __typename?: "SpecificMaterialType";
+      display: string;
+    };
   }>;
   workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
   manifestations: {
@@ -9472,17 +9546,6 @@ export type WorkMediumFragment = {
       };
     }>;
   }>;
-  materialTypes: Array<{
-    __typename?: "MaterialType";
-    materialTypeGeneral: {
-      __typename?: "GeneralMaterialType";
-      code: GeneralMaterialTypeCodeEnum;
-    };
-    materialTypeSpecific: {
-      __typename?: "SpecificMaterialType";
-      display: string;
-    };
-  }>;
   mainLanguages: Array<{
     __typename?: "Language";
     display: string;
@@ -9538,11 +9601,23 @@ export type WorkMediumFragment = {
     __typename?: "WorkTitles";
     full: Array<string>;
     original?: Array<string> | null;
+    titlePlusLanguage?: string | null;
   };
   creators: Array<
     | { __typename: "Corporation"; display: string }
     | { __typename: "Person"; display: string }
   >;
+  materialTypes: Array<{
+    __typename?: "MaterialType";
+    materialTypeGeneral: {
+      __typename?: "GeneralMaterialType";
+      code: GeneralMaterialTypeCodeEnum;
+    };
+    materialTypeSpecific: {
+      __typename?: "SpecificMaterialType";
+      display: string;
+    };
+  }>;
   workYear?: { __typename?: "PublicationYear"; year?: number | null } | null;
   manifestations: {
     __typename?: "Manifestations";
@@ -10670,6 +10745,7 @@ export const WorkSmallFragmentDoc = new TypedDocumentString(
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -10678,6 +10754,14 @@ export const WorkSmallFragmentDoc = new TypedDocumentString(
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
@@ -10878,14 +10962,6 @@ export const WorkMediumFragmentDoc = new TypedDocumentString(
           main
         }
       }
-    }
-  }
-  materialTypes {
-    materialTypeGeneral {
-      code
-    }
-    materialTypeSpecific {
-      display
     }
   }
   mainLanguages {
@@ -11096,6 +11172,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -11104,6 +11181,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
@@ -11510,6 +11595,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -11518,6 +11604,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
@@ -11885,6 +11979,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -11893,6 +11988,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
@@ -11913,14 +12016,6 @@ fragment WorkMedium on Work {
           main
         }
       }
-    }
-  }
-  materialTypes {
-    materialTypeGeneral {
-      code
-    }
-    materialTypeSpecific {
-      display
     }
   }
   mainLanguages {
@@ -12165,6 +12260,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -12173,6 +12269,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
@@ -12193,14 +12297,6 @@ fragment WorkMedium on Work {
           main
         }
       }
-    }
-  }
-  materialTypes {
-    materialTypeGeneral {
-      code
-    }
-    materialTypeSpecific {
-      display
     }
   }
   mainLanguages {
@@ -12615,6 +12711,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -12623,6 +12720,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
@@ -12885,6 +12990,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -12893,6 +12999,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
@@ -13193,6 +13307,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -13201,6 +13316,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
@@ -13492,6 +13615,7 @@ fragment WorkSmall on Work {
   titles {
     full
     original
+    titlePlusLanguage
   }
   abstract
   creators {
@@ -13500,6 +13624,14 @@ fragment WorkSmall on Work {
   }
   series {
     ...SeriesSimple
+  }
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+    materialTypeSpecific {
+      display
+    }
   }
   workYear {
     year
