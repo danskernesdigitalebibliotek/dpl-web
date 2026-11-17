@@ -25,3 +25,7 @@ export const getAllCreators = (
 ) => {
   return [...new Set(creators.map(creator => creator.display))]
 }
+
+export const hasCreators = (creators: WorkFullWorkPageFragment["creators"]): boolean => {
+  return creators.length > 0
+}
