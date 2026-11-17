@@ -19,8 +19,7 @@ type TWorkCardContainerProps = Omit<TWorkCardProps, "materialTypes" | "isBlueTit
 
 // Feeds the work card with the loan decisions that say which material types
 // are cost-free, asked for once the card is in view. A work with any
-// cost-free material type is a "BLÅ" title. The decision is patron-scoped,
-// so a reader without a borrowing session sees no BLÅ badge.
+// cost-free material type is a "BLÅ" title.
 const WorkCardContainer = ({ manifestations, ...props }: TWorkCardContainerProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true })
