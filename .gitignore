@@ -35,5 +35,8 @@ node_modules
 .idea/
 .history
 
+# Personal Claude Code settings (machine-specific paths, local choices)
+.claude/settings.local.json
+
 # Package manager debug output
 npm-debug.log*

@@ -2,7 +2,10 @@
 
 import React from "react"
 
-import { isPodcastMaterialType } from "@/components/pages/workPageLayout/helper"
+import {
+  isPhysicalMaterialType,
+  isPodcastMaterialType,
+} from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
@@ -21,8 +24,12 @@ export const useIsBlueTitle = (
   enabled = true
 ): boolean => {
   const isbn = manifestation?.identifiers.find(identifier => identifier.type === "ISBN")?.value
-  // The generated hook only fetches for a non-empty identifier.
-  const { data } = useGetV1ProductsIdentifierAdapter(enabled ? isbn || "" : "")
+  const isDigital =
+    !!manifestation &&
+    !isPhysicalMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
+  const { data } = useGetV1ProductsIdentifierAdapter(isbn || "", {
+    query: { enabled: enabled && isDigital && !!isbn },
+  })
   if (!enabled || !manifestation) return false
   return Boolean(
     data?.product?.costFree ||
@@ -33,14 +40,13 @@ export const useIsBlueTitle = (
 // "BLÅ" badge for cost-free titles. Always takes up its space so layouts
 // stay stable; fades in when the title turns out to be blue.
 const BlueTitleBadge = ({
-  manifestation,
+  isBlue,
   className,
 }: {
-  manifestation: BlueTitleManifestation
+  // Decided by the caller, which has the answer from `useIsBlueTitle`.
+  isBlue: boolean
   className?: string
 }) => {
-  const isBlue = useIsBlueTitle(manifestation)
-
   return (
     <div aria-hidden={!isBlue} className={className}>
       <Badge

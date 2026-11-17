@@ -81,3 +81,7 @@ Deps: `zod`. Peers: `@tanstack/react-query`, `react`.
 
 - Adopt pnpm workspaces to share peer deps and drop the `file:` link
   (see PR #992).
+
+## Related
+
+- [ADR-012: Edition availability filtering](./adr-012-edition-availability.md)
