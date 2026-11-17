@@ -10,6 +10,7 @@ import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkTeaser from "@/components/shared/workTeaser/WorkTeaser"
+import { getWorkTeaserProps } from "@/components/shared/workTeaser/helper"
 import { cyKeys } from "@/cypress/support/constants"
 import {
   ParagraphGoMaterialSliderAutomatic,
@@ -85,15 +86,24 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
           <div className="my-paragraph-spacing">
             <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
               {works &&
-                works.map(work => (
-                  <WorkTeaser
-                    key={work.workId}
-                    work={work}
-                    queryParams={{ u_navigatedby_go_mat: 1 }}
-                    className="keen-slider__slide outline-accent-foreground focus:outline-offset-2"
-                    cardClassName="dark:bg-background-overlay"
-                  />
-                ))}
+                works.map(work => {
+                  const { title, creators, url, cover, manifestations } = getWorkTeaserProps(work, {
+                    u_navigatedby_go_mat: 1,
+                  })
+                  return (
+                    <WorkTeaser
+                      key={work.workId}
+                      title={title}
+                      creators={creators}
+                      url={url}
+                      cover={cover}
+                      manifestations={manifestations}
+                      className="keen-slider__slide outline-accent-foreground
+                        focus:outline-offset-2"
+                      cardClassName="dark:bg-background-overlay"
+                    />
+                  )
+                })}
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 // Picks the manifestation to show and the work page url, the same way
 // everywhere a work teaser is listed.
-export const getWorkTeaserValues = (
+export const getWorkTeaserProps = (
   work: WorkTeaserSearchPageFragment,
   queryParams: Record<string, number | string> = {}
 ) => {

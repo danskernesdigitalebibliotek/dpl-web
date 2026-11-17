@@ -3,9 +3,12 @@ import React from "react"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 import WorkTeaser from "./WorkTeaser"
+import { getWorkTeaserProps } from "./helper"
 
 // A work teaser with two tilted cards behind it.
 const WorkTeaserStacked = ({ work }: { work: WorkTeaserSearchPageFragment }) => {
+  const { title, creators, url, cover, manifestations } = getWorkTeaserProps(work)
+
   return (
     <div className="relative">
       <div
@@ -18,7 +21,11 @@ const WorkTeaserStacked = ({ work }: { work: WorkTeaserSearchPageFragment }) => 
       />
       <WorkTeaser
         key={work.workId}
-        work={work}
+        title={title}
+        creators={creators}
+        url={url}
+        cover={cover}
+        manifestations={manifestations}
         className="block h-full w-full"
         captionClassName="pointer-events-auto relative h-auto overflow-visible text-center
           opacity-100 lg:text-left"

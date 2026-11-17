@@ -4,15 +4,19 @@ import React from "react"
 import { WorkCardEmpty } from "@/components/shared/workCard/WorkCard"
 import WorkCardContainer from "@/components/shared/workCard/WorkCardContainer"
 import { cyKeys } from "@/cypress/support/constants"
-import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  ManifestationSearchPageTeaserFragment,
+  WorkTeaserSearchPageFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 
-import { getWorkTeaserValues } from "./helper"
-
 export type TWorkTeaserProps = {
-  work: WorkTeaserSearchPageFragment
-  queryParams?: Record<string, number | string>
+  title: string
+  creators: WorkTeaserSearchPageFragment["creators"]
+  url: string
+  cover?: ManifestationSearchPageTeaserFragment["cover"]
+  manifestations: ManifestationSearchPageTeaserFragment[]
   className?: string
   captionClassName?: string
   cardClassName?: string
@@ -21,15 +25,16 @@ export type TWorkTeaserProps = {
 
 // A work card with title and creators below, linking to the work page.
 const WorkTeaser = ({
-  work,
-  queryParams,
+  title,
+  creators,
+  url,
+  cover,
+  manifestations,
   className,
   captionClassName,
   cardClassName,
   isWithTilt = true,
 }: TWorkTeaserProps) => {
-  const { title, creators, url, cover, manifestations } = getWorkTeaserValues(work, queryParams)
-
   return (
     <Link
       prefetch={false}
