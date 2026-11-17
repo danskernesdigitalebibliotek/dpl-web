@@ -17,6 +17,26 @@ failed build. If a build fails, report it and let the user decide.
 
 ## Workflow
 
+0. Check the status line choice:
+   `"$(git rev-parse --show-toplevel)/.claude/skills/dpl-lagoon-deploy-watch/scripts/settings.sh" get`.
+   If it prints `unset`, ask with **AskUserQuestion**: "Do you want to use
+   your Claude status line for showing the deployment progress?" (Yes/No),
+   then run the same script with `set true` or `set false` and pass on the
+   line it prints. If it prints `missing` (`useStatusLine` is true but no
+   `statusLine` entry exists, e.g. because it was written by hand), ask with
+   **AskUserQuestion**: "Your settings have `useStatusLine: true`, but the
+   status line isn't set up. Add the `statusLine` entry to
+   `.claude/settings.local.json`?" (Yes/No), then run `set true` or
+   `set false` and pass on the line it prints. If it prints `stale`
+   (`useStatusLine` is false but `.claude/settings.local.json` still has the
+   `statusLine` entry running `statusline.sh`), ask with **AskUserQuestion**:
+   "You have set `useStatusLine` to false, but the deploy-watch `statusLine`
+   entry is still in `.claude/settings.local.json`. Should it be removed?"
+   (Yes: remove it / No: keep it and use the status line), then run
+   `set false` or `set true` and pass on the line it prints. On
+   `true`/`false`, don't ask.
+   Then go on to step 1 either way: the chat notifications don't depend on
+   the choice.
 1. Start it with the **Monitor** tool, so each line arrives as a notification
    while the user works on other things:
    - command: `"$(git rev-parse --show-toplevel)/.claude/skills/dpl-lagoon-deploy-watch/scripts/watch.sh"` (add
@@ -61,7 +81,9 @@ failed build. If a build fails, report it and let the user decide.
   deploy, docs-only push), it falls back to the newest deployment after 3
   minutes and says so. Renaming that workflow or job means updating
   `workflow`/`deploy_job` in `watch.sh`.
-- The status line is opt-in per developer: add a `statusLine` entry
-  (`"type": "command"`) to your own `~/.claude/settings.json` pointing at
-  `scripts/statusline.sh` in your checkout (absolute path). Without it you
-  still get the chat notifications.
+- The status line is opt-in per developer. The answer to step 0 is stored as
+  `dplLagoonDeployWatch.useStatusLine` in the checkout's
+  `.claude/settings.local.json`; `set true` also adds a `statusLine` entry
+  there pointing at `scripts/statusline.sh`, unless a statusLine already
+  exists (it never replaces someone's own). `set false` removes only that
+  entry. To change your mind, run `settings.sh set true|false`.

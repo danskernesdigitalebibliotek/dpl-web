@@ -1,0 +1,67 @@
+import Link from "next/link"
+import React from "react"
+
+import { WorkCardEmpty } from "@/components/shared/workCard/WorkCard"
+import WorkCardContainer from "@/components/shared/workCard/WorkCardContainer"
+import { cyKeys } from "@/cypress/support/constants"
+import {
+  ManifestationSearchPageTeaserFragment,
+  WorkTeaserSearchPageFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
+import { displayCreators } from "@/lib/helpers/helper.creators"
+
+export type TWorkTeaserProps = {
+  title: string
+  creators: WorkTeaserSearchPageFragment["creators"]
+  url: string
+  cover?: ManifestationSearchPageTeaserFragment["cover"]
+  manifestations: ManifestationSearchPageTeaserFragment[]
+  className?: string
+  captionClassName?: string
+  cardClassName?: string
+  isWithTilt?: boolean
+}
+
+// A work card with title and creators below, linking to `url`.
+const WorkTeaser = ({
+  title,
+  creators,
+  url,
+  cover,
+  manifestations,
+  className,
+  captionClassName,
+  cardClassName,
+  isWithTilt = true,
+}: TWorkTeaserProps) => {
+  return (
+    <Link
+      prefetch={false}
+      aria-label={`Tilgå værket ${title} af ${displayCreators(creators, 1)}`}
+      className={cn("focus-visible", className)}
+      href={url}>
+      <div className={cn("block space-y-3 lg:space-y-5", captionClassName)}>
+        {cover && manifestations.length ? (
+          <WorkCardContainer
+            className={cardClassName}
+            title={title}
+            covers={cover}
+            manifestations={manifestations}
+            isWithTilt={isWithTilt}
+          />
+        ) : (
+          <WorkCardEmpty className={cardClassName} />
+        )}
+        <div className="space-y-2">
+          <p className="text-typo-subtitle-lg break-words" data-cy={cyKeys["work-card-title"]}>
+            {title}
+          </p>
+          <p className="text-typo-body-md opacity-70">{displayCreators(creators, 2)}</p>
+        </div>
+      </div>
+    </Link>
+  )
+}
+
+export default WorkTeaser

@@ -11,7 +11,9 @@ const buttonVariants = cva(
   justify-center hover:cursor-pointer whitespace-nowrap focus-visible disabled:pointer-events-none
   disabled:opacity-50 hover:translate-x-[1px] hover:translate-y-[1px] transition
   hover:shadow-button-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none pointer-events-auto
-  aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50`,
+  aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50
+  aria-disabled:hover:translate-none aria-disabled:active:translate-none
+  aria-disabled:hover:cursor-not-allowed aria-disabled:hover:shadow-button`,
   {
     variants: {
       variant: {
@@ -92,6 +94,10 @@ interface ButtonBaseProps
   isLoading?: boolean
   // Name of the icon rendered before the label (variant "icon-text").
   icon?: string
+  // Unavailable, but still reachable by keyboard: the button keeps its place
+  // in the tab order and announces itself as unavailable, so the reason it
+  // carries can be read.
+  ariaDisabled?: boolean
 }
 
 // `ariaDisabled` and `asChild` are mutually exclusive. Making a button inert

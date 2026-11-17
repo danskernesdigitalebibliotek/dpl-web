@@ -52,18 +52,20 @@ export const isMaterialLoanable = (status: LoanDecisionStatus): boolean => statu
 /**
  * Whether the user can join the queue for the material.
  *
- * A wishable material is deliberately excluded: wishing is not reserving, and
- * there is no Publizon equivalent to render it with.
+ * A wish is a queue entry like a reservation, placed through the same request:
+ * it only differs in waiting for a copy to appear rather than for one the
+ * library already holds.
  */
-export const isMaterialReservable = (status: LoanDecisionStatus): boolean => status === "reservable"
+export const isMaterialReservable = (status: LoanDecisionStatus): boolean =>
+  status === "reservable" || status === "wishable"
 
 /**
  * Whether the adapter acted on a loan or reservation request.
  *
  * `POST /v1/loans` and `POST /v1/reservations` answer 200/201 with a decision
  * rather than an HTTP error when they refuse, so the status is the only thing
- * separating "you are queued" from "your quota is spent". Only the two
- * statuses that mean the request could be fulfilled count as granted.
+ * separating "you are queued" from "your quota is spent". Only the statuses
+ * that mean the request could be fulfilled count as granted.
  */
 export const isRequestGranted = (status: LoanDecisionStatus): boolean =>
-  status === "loanable" || status === "reservable"
+  isMaterialLoanable(status) || isMaterialReservable(status)

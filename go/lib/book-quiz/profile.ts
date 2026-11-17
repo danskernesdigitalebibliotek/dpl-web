@@ -34,7 +34,9 @@ const findOption = (
 export const getBookQuizProfile = (answers: TBookQuizAnswers): TBookQuizProfile => ({
   genre: findOption("genre", answers.genre)?.group,
   mood: findOption("mood", answers.mood)?.group,
-  subjects: (answers.subjects ?? []).flatMap(optionId => findOption("subjects", optionId)?.group ?? []),
+  subjects: (answers.subjects ?? []).flatMap(
+    optionId => findOption("subjects", optionId)?.group ?? []
+  ),
   ageRange: findOption("age", answers.age)?.ageRange,
   easyToRead: Boolean(findOption("level", answers.level)?.easyToRead),
 })
