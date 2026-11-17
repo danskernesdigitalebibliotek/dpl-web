@@ -114,6 +114,15 @@ export type GetV1UserCardnumberFriendlyAdapterQueryResult = NonNullable<
 >
 export type GetV1UserCardnumberFriendlyAdapterQueryError = ErrorType<ApiResult>
 
+/**
+ * Sample **request**:
+ *
+ *     GET /friendly
+ *     {
+ *         "name": "Some name"
+ *     }
+ * @summary Gets the user's friendly card number.
+ */
 export function useGetV1UserCardnumberFriendlyAdapter<
   TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendlyAdapter>>,
   TError = ErrorType<ApiResult>,
@@ -134,6 +143,15 @@ export function useGetV1UserCardnumberFriendlyAdapter<
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * Sample **request**:
+ *
+ *     GET /friendly
+ *     {
+ *         "name": "Some name"
+ *     }
+ * @summary Gets the user's friendly card number.
+ */
 export function useGetV1UserCardnumberFriendlyAdapter<
   TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendlyAdapter>>,
   TError = ErrorType<ApiResult>,
@@ -154,6 +172,15 @@ export function useGetV1UserCardnumberFriendlyAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * Sample **request**:
+ *
+ *     GET /friendly
+ *     {
+ *         "name": "Some name"
+ *     }
+ * @summary Gets the user's friendly card number.
+ */
 export function useGetV1UserCardnumberFriendlyAdapter<
   TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendlyAdapter>>,
   TError = ErrorType<ApiResult>,
@@ -167,9 +194,14 @@ export function useGetV1UserCardnumberFriendlyAdapter<
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
+ * Sample **request**:
+ *
+ *     GET /friendly
+ *     {
+ *         "name": "Some name"
+ *     }
  * @summary Gets the user's friendly card number.
  */
-
 export function useGetV1UserCardnumberFriendlyAdapter<
   TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendlyAdapter>>,
   TError = ErrorType<ApiResult>,
@@ -240,6 +272,7 @@ export type GetV1UserChecklistAdapterQueryResult = NonNullable<
 >
 export type GetV1UserChecklistAdapterQueryError = ErrorType<unknown>
 
+/** @summary List all checklist items of the user. */
 export function useGetV1UserChecklistAdapter<
   TData = Awaited<ReturnType<typeof getV1UserChecklistAdapter>>,
   TError = ErrorType<unknown>,
@@ -260,6 +293,7 @@ export function useGetV1UserChecklistAdapter<
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List all checklist items of the user. */
 export function useGetV1UserChecklistAdapter<
   TData = Awaited<ReturnType<typeof getV1UserChecklistAdapter>>,
   TError = ErrorType<unknown>,
@@ -280,6 +314,7 @@ export function useGetV1UserChecklistAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List all checklist items of the user. */
 export function useGetV1UserChecklistAdapter<
   TData = Awaited<ReturnType<typeof getV1UserChecklistAdapter>>,
   TError = ErrorType<unknown>,
@@ -292,10 +327,7 @@ export function useGetV1UserChecklistAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List all checklist items of the user.
- */
-
+/** @summary List all checklist items of the user. */
 export function useGetV1UserChecklistAdapter<
   TData = Awaited<ReturnType<typeof getV1UserChecklistAdapter>>,
   TError = ErrorType<unknown>,
@@ -380,9 +412,7 @@ export type PostV1UserChecklistIdentifierAdapterMutationResult = NonNullable<
 export type PostV1UserChecklistIdentifierAdapterMutationError = ErrorType<unknown>
 export type PostV1UserChecklistIdentifierAdapterMutationVariables = { identifier: string }
 
-/**
- * @summary Add a book to the user's checklist.
- */
+/** @summary Add a book to the user's checklist. */
 export const usePostV1UserChecklistIdentifierAdapter = <
   TError = ErrorType<unknown>,
   TContext = unknown,
@@ -469,9 +499,7 @@ export type DeleteV1UserChecklistIdentifierAdapterMutationResult = NonNullable<
 export type DeleteV1UserChecklistIdentifierAdapterMutationError = ErrorType<unknown>
 export type DeleteV1UserChecklistIdentifierAdapterMutationVariables = { identifier: string }
 
-/**
- * @summary Delete a book from the user's checklist.
- */
+/** @summary Delete a book from the user's checklist. */
 export const useDeleteV1UserChecklistIdentifierAdapter = <
   TError = ErrorType<unknown>,
   TContext = unknown,
@@ -593,7 +621,6 @@ export function useGetV1LibraryProfileAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
 export function useGetV1LibraryProfileAdapter<
   TData = Awaited<ReturnType<typeof getV1LibraryProfileAdapter>>,
   TError = ErrorType<unknown>,
@@ -677,6 +704,7 @@ export type GetV1UserLoansAdapterQueryResult = NonNullable<
 >
 export type GetV1UserLoansAdapterQueryError = ErrorType<unknown>
 
+/** @summary Lists all active loans of the user. */
 export function useGetV1UserLoansAdapter<
   TData = Awaited<ReturnType<typeof getV1UserLoansAdapter>>,
   TError = ErrorType<unknown>,
@@ -698,6 +726,7 @@ export function useGetV1UserLoansAdapter<
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Lists all active loans of the user. */
 export function useGetV1UserLoansAdapter<
   TData = Awaited<ReturnType<typeof getV1UserLoansAdapter>>,
   TError = ErrorType<unknown>,
@@ -719,6 +748,7 @@ export function useGetV1UserLoansAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Lists all active loans of the user. */
 export function useGetV1UserLoansAdapter<
   TData = Awaited<ReturnType<typeof getV1UserLoansAdapter>>,
   TError = ErrorType<unknown>,
@@ -732,10 +762,7 @@ export function useGetV1UserLoansAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Lists all active loans of the user.
- */
-
+/** @summary Lists all active loans of the user. */
 export function useGetV1UserLoansAdapter<
   TData = Awaited<ReturnType<typeof getV1UserLoansAdapter>>,
   TError = ErrorType<unknown>,
@@ -816,6 +843,7 @@ export type GetV1UserLoansIdentifierAdapterQueryResult = NonNullable<
 >
 export type GetV1UserLoansIdentifierAdapterQueryError = ErrorType<unknown>
 
+/** @summary Gets details of a specific loan. */
 export function useGetV1UserLoansIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1UserLoansIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -837,6 +865,7 @@ export function useGetV1UserLoansIdentifierAdapter<
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Gets details of a specific loan. */
 export function useGetV1UserLoansIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1UserLoansIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -858,6 +887,7 @@ export function useGetV1UserLoansIdentifierAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Gets details of a specific loan. */
 export function useGetV1UserLoansIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1UserLoansIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -871,10 +901,7 @@ export function useGetV1UserLoansIdentifierAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Gets details of a specific loan.
- */
-
+/** @summary Gets details of a specific loan. */
 export function useGetV1UserLoansIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1UserLoansIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -979,9 +1006,7 @@ export type PostV1UserLoansIdentifierAdapterMutationVariables = {
   params?: PostV1UserLoansIdentifierAdapterParams
 }
 
-/**
- * @summary Creates a new loan.
- */
+/** @summary Creates a new loan. */
 export const usePostV1UserLoansIdentifierAdapter = <
   TError = ErrorType<unknown>,
   TContext = unknown,
@@ -1063,6 +1088,7 @@ export type GetV1LoanstatusIdentifierAdapterQueryResult = NonNullable<
 >
 export type GetV1LoanstatusIdentifierAdapterQueryError = ErrorType<unknown>
 
+/** @summary Get loan status of a specific product. */
 export function useGetV1LoanstatusIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -1084,6 +1110,7 @@ export function useGetV1LoanstatusIdentifierAdapter<
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get loan status of a specific product. */
 export function useGetV1LoanstatusIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -1105,6 +1132,7 @@ export function useGetV1LoanstatusIdentifierAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get loan status of a specific product. */
 export function useGetV1LoanstatusIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -1118,10 +1146,7 @@ export function useGetV1LoanstatusIdentifierAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get loan status of a specific product.
- */
-
+/** @summary Get loan status of a specific product. */
 export function useGetV1LoanstatusIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -1224,9 +1249,7 @@ export type PostV1LoanstatusAdapterMutationBody = BodyType<string[]> | undefined
 export type PostV1LoanstatusAdapterMutationError = ErrorType<unknown>
 export type PostV1LoanstatusAdapterMutationVariables = { data?: BodyType<string[]> }
 
-/**
- * @summary Get loan status of all products.
- */
+/** @summary Get loan status of all products. */
 export const usePostV1LoanstatusAdapter = <TError = ErrorType<unknown>, TContext = unknown>(
   options?: {
     mutation?: UseMutationOptions<
@@ -1305,6 +1328,7 @@ export type GetV1ProductsIdentifierAdapterQueryResult = NonNullable<
 >
 export type GetV1ProductsIdentifierAdapterQueryError = ErrorType<unknown>
 
+/** @summary Get a specific product. */
 export function useGetV1ProductsIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1ProductsIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -1326,6 +1350,7 @@ export function useGetV1ProductsIdentifierAdapter<
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get a specific product. */
 export function useGetV1ProductsIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1ProductsIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -1347,6 +1372,7 @@ export function useGetV1ProductsIdentifierAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get a specific product. */
 export function useGetV1ProductsIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1ProductsIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -1360,10 +1386,7 @@ export function useGetV1ProductsIdentifierAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get a specific product.
- */
-
+/** @summary Get a specific product. */
 export function useGetV1ProductsIdentifierAdapter<
   TData = Awaited<ReturnType<typeof getV1ProductsIdentifierAdapter>>,
   TError = ErrorType<unknown>,
@@ -1432,6 +1455,7 @@ export type GetV1ProductsAdapterQueryResult = NonNullable<
 >
 export type GetV1ProductsAdapterQueryError = ErrorType<unknown>
 
+/** @summary List all products. */
 export function useGetV1ProductsAdapter<
   TData = Awaited<ReturnType<typeof getV1ProductsAdapter>>,
   TError = ErrorType<unknown>,
@@ -1452,6 +1476,7 @@ export function useGetV1ProductsAdapter<
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List all products. */
 export function useGetV1ProductsAdapter<
   TData = Awaited<ReturnType<typeof getV1ProductsAdapter>>,
   TError = ErrorType<unknown>,
@@ -1472,6 +1497,7 @@ export function useGetV1ProductsAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List all products. */
 export function useGetV1ProductsAdapter<
   TData = Awaited<ReturnType<typeof getV1ProductsAdapter>>,
   TError = ErrorType<unknown>,
@@ -1484,10 +1510,7 @@ export function useGetV1ProductsAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List all products.
- */
-
+/** @summary List all products. */
 export function useGetV1ProductsAdapter<
   TData = Awaited<ReturnType<typeof getV1ProductsAdapter>>,
   TError = ErrorType<unknown>,
@@ -1558,6 +1581,7 @@ export type GetV1UserReservationsAdapterQueryResult = NonNullable<
 >
 export type GetV1UserReservationsAdapterQueryError = ErrorType<unknown>
 
+/** @summary Lists all reservations of the user. */
 export function useGetV1UserReservationsAdapter<
   TData = Awaited<ReturnType<typeof getV1UserReservationsAdapter>>,
   TError = ErrorType<unknown>,
@@ -1578,6 +1602,7 @@ export function useGetV1UserReservationsAdapter<
   },
   queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Lists all reservations of the user. */
 export function useGetV1UserReservationsAdapter<
   TData = Awaited<ReturnType<typeof getV1UserReservationsAdapter>>,
   TError = ErrorType<unknown>,
@@ -1598,6 +1623,7 @@ export function useGetV1UserReservationsAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Lists all reservations of the user. */
 export function useGetV1UserReservationsAdapter<
   TData = Awaited<ReturnType<typeof getV1UserReservationsAdapter>>,
   TError = ErrorType<unknown>,
@@ -1610,10 +1636,7 @@ export function useGetV1UserReservationsAdapter<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Lists all reservations of the user.
- */
-
+/** @summary Lists all reservations of the user. */
 export function useGetV1UserReservationsAdapter<
   TData = Awaited<ReturnType<typeof getV1UserReservationsAdapter>>,
   TError = ErrorType<unknown>,
@@ -1721,9 +1744,7 @@ export type PostV1UserReservationsIdentifierAdapterMutationVariables = {
   data?: BodyType<ReservationInput>
 }
 
-/**
- * @summary Creates a new reservation.
- */
+/** @summary Creates a new reservation. */
 export const usePostV1UserReservationsIdentifierAdapter = <
   TError = ErrorType<unknown>,
   TContext = unknown,
@@ -1836,9 +1857,7 @@ export type PatchV1UserReservationsIdentifierAdapterMutationVariables = {
   data?: BodyType<ReservationInput>
 }
 
-/**
- * @summary Updates the phone number and email address of a specific reservation.
- */
+/** @summary Updates the phone number and email address of a specific reservation. */
 export const usePatchV1UserReservationsIdentifierAdapter = <
   TError = ErrorType<unknown>,
   TContext = unknown,
@@ -1928,9 +1947,7 @@ export type DeleteV1UserReservationsIdentifierAdapterMutationResult = NonNullabl
 export type DeleteV1UserReservationsIdentifierAdapterMutationError = ErrorType<unknown>
 export type DeleteV1UserReservationsIdentifierAdapterMutationVariables = { identifier: string }
 
-/**
- * @summary Cancels a reservation.
- */
+/** @summary Cancels a reservation. */
 export const useDeleteV1UserReservationsIdentifierAdapter = <
   TError = ErrorType<unknown>,
   TContext = unknown,
