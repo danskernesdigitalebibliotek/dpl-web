@@ -5,6 +5,7 @@ import type { TLadderPart, TLadderStep } from "@/lib/book-quiz/ladder"
 import type { TBookQuizProfile } from "@/lib/book-quiz/profile"
 
 import BookQuizSection from "./BookQuizSection"
+import OpenBookQuizButton from "./OpenBookQuizButton"
 
 type TBookQuizResultLayoutProps = {
   profile: TBookQuizProfile
@@ -30,6 +31,7 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
       <div className="content-container space-y-grid-gap-2">
         <h1 className="text-typo-heading-3 lg:text-typo-heading-2">Vi mangler dine svar</h1>
         <p className="text-typo-body-lg">Tag quizzen for at få forslag til bøger.</p>
+        <OpenBookQuizButton>Tag quizzen</OpenBookQuizButton>
       </div>
     )
   }
@@ -59,6 +61,7 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
             </ul>
           </div>
         )}
+        <OpenBookQuizButton>Tag quizzen igen</OpenBookQuizButton>
       </div>
       {steps.map(step => (
         <BookQuizSection

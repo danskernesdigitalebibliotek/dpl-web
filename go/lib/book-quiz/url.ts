@@ -1,4 +1,4 @@
-import { createLoader, parseAsArrayOf, parseAsStringLiteral } from "nuqs/server"
+import { createLoader, createSerializer, parseAsArrayOf, parseAsStringLiteral } from "nuqs/server"
 
 import { getOptionIds } from "./questions"
 
@@ -14,3 +14,4 @@ const bookQuizParsers = {
 }
 
 export const loadBookQuizAnswers = createLoader(bookQuizParsers)
+export const serializeBookQuizAnswers = createSerializer(bookQuizParsers)

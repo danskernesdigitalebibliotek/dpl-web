@@ -29,7 +29,11 @@ export type TLadderStep = {
 
 // Books fetched per step, so there are enough left after rank.ts drops works
 // with too wide an age span.
-export const FETCH_PER_STEP = 10
+const FETCH_PER_STEP = 10
+
+// Query variables for one step. Shared by the result page sections and the
+// quiz modal, which fills the cache before navigating, so the keys match.
+export const getStepQueryVariables = (cql: string) => ({ cql, limit: FETCH_PER_STEP })
 
 const EASY_TO_READ_CQL = 'phrase.generalaudience="let at læse"'
 

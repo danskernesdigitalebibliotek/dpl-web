@@ -4,7 +4,7 @@ import React from "react"
 
 import SearchResults from "@/components/pages/searchPageLayout/SearchResults"
 import { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
-import { FETCH_PER_STEP } from "@/lib/book-quiz/ladder"
+import { getStepQueryVariables } from "@/lib/book-quiz/ladder"
 import type { TBookQuizRange } from "@/lib/book-quiz/questions"
 import { BOOKS_PER_STEP, rankStepWorks } from "@/lib/book-quiz/rank"
 import { useComplexSearchForBookQuizQuery } from "@/lib/graphql/generated/fbi/graphql"
@@ -18,10 +18,9 @@ type TBookQuizSectionProps = {
 }
 
 const BookQuizSection = ({ title, cql, ageRange }: TBookQuizSectionProps) => {
-  const { data, isLoading } = useComplexSearchForBookQuizQuery(
-    { cql: cql ?? "", limit: FETCH_PER_STEP },
-    { enabled: cql !== null }
-  )
+  const { data, isLoading } = useComplexSearchForBookQuizQuery(getStepQueryVariables(cql ?? ""), {
+    enabled: cql !== null,
+  })
   const works = rankStepWorks(data?.complexSearch.works ?? [], ageRange)
 
   return (
