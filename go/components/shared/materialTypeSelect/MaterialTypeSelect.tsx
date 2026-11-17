@@ -18,6 +18,9 @@ export type MaterialTypeSelectProps = {
   onOptionSelect: (option: MaterialTypeSelectOption) => void
 }
 
+// `selected` follows the manifestation the route resolves to, so it only moves
+// once the new material type has loaded. The pill animates on the optimistic
+// value instead, and settles on `selected` when it catches up.
 const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeSelectProps) => {
   const [optimisticSelected, setOptimisticSelected] = useOptimistic(selected)
   const [, startTransition] = useTransition()

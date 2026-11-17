@@ -22,8 +22,8 @@ importers:
         specifier: ^19
         version: 19.3.0(@types/react@19.3.0)
       '@wedobooks/sdk':
-        specifier: 0.8.0
-        version: 0.8.0(@babel/core@7.29.7(supports-color@5.5.0))(@types/react@19.3.0)(react-dom@18.3.1(react@18.3.1))(react-is@19.2.8)(react@18.3.1)(supports-color@5.5.0)(typescript@5.9.3)
+        specifier: 0.8.1
+        version: 0.8.1(@babel/core@7.29.7(supports-color@5.5.0))(@types/react@19.3.0)(react-dom@18.3.1(react@18.3.1))(react-is@19.2.8)(react@18.3.1)(supports-color@5.5.0)(typescript@5.9.3)
       esbuild:
         specifier: ^0.28.2
         version: 0.28.2
@@ -771,8 +771,8 @@ packages:
   '@types/react@19.3.0':
     resolution: {integrity: sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg==}
 
-  '@wedobooks/sdk@0.8.0':
-    resolution: {integrity: sha512-CX0Y1L8Q2eXrVYwVlGljQ/eCPxy0pWOh81AM4ej6dH/vJ0YQHv0HsCqBgtaaW1lLG3/5Dm299SQmggNuB5pmmQ==}
+  '@wedobooks/sdk@0.8.1':
+    resolution: {integrity: sha512-d3yGUfnNwBG9xMBxGyBCDhDm46Wt72uYB8bqlg0d4haBi7aOG6U57kKV8WO4DlKk9QlHQV5kSmg6H4PbxqVhOQ==}
     peerDependencies:
       react: '>=18.3.1 <20'
       react-dom: '>=18.3.1 <20'
@@ -2096,7 +2096,7 @@ snapshots:
     dependencies:
       csstype: 3.2.3
 
-  '@wedobooks/sdk@0.8.0(@babel/core@7.29.7(supports-color@5.5.0))(@types/react@19.3.0)(react-dom@18.3.1(react@18.3.1))(react-is@19.2.8)(react@18.3.1)(supports-color@5.5.0)(typescript@5.9.3)':
+  '@wedobooks/sdk@0.8.1(@babel/core@7.29.7(supports-color@5.5.0))(@types/react@19.3.0)(react-dom@18.3.1(react@18.3.1))(react-is@19.2.8)(react@18.3.1)(supports-color@5.5.0)(typescript@5.9.3)':
     dependencies:
       '@colibrio/colibrio-reader-framework': 4.7.0
       '@emotion/cache': 11.14.0
