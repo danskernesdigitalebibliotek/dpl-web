@@ -20,6 +20,8 @@ const buttonVariants = cva(
         default: "",
         icon: "",
         "icon-text": "",
+        // A choice among several, e.g. an answer in a quiz. Long labels wrap.
+        option: "bg-background",
       },
       size: {
         default: "h-[40px]",
@@ -77,6 +79,11 @@ const buttonVariants = cva(
         variant: "icon-text",
         size: "lg",
         class: "gap-3 px-10 text-typo-button-lg",
+      },
+      {
+        variant: "option",
+        class:
+          "h-auto min-h-[44px] gap-3 whitespace-normal px-8 py-2 text-center text-typo-button-sm",
       },
     ],
     defaultVariants: {
