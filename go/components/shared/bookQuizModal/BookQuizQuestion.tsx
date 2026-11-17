@@ -1,6 +1,7 @@
 import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
+import { cyKeys } from "@/cypress/support/constants"
 import type { TBookQuizQuestion } from "@/lib/book-quiz/questions"
 
 type TBookQuizQuestionProps = {
@@ -19,11 +20,13 @@ const BookQuizQuestion = ({ question, selectedIds, onSelect }: TBookQuizQuestion
         return (
           <li key={option.id}>
             <Button
+              variant="option"
               theme={isSelected ? "primary" : "secondary"}
               aria-pressed={isSelected}
+              data-cy={cyKeys["book-quiz-option"]}
               onClick={() => onSelect(option.id)}>
               {option.emoji && (
-                <span aria-hidden="true" className="mr-2">
+                <span aria-hidden="true" className="text-[28px] leading-none">
                   {option.emoji}
                 </span>
               )}

@@ -5,9 +5,24 @@
 
 export type TBookQuizClause = { cqlIndex: string; cqlValues: string[] }
 
+export type TBookQuizColor =
+  | "green"
+  | "pink"
+  | "yellow"
+  | "blue"
+  | "purple"
+  | "orange"
+  | "teal"
+  | "red"
+  | "spooky"
+  | "sand"
+  | "lime"
+
 export type TBookQuizGroup = {
   // Short name for section titles, e.g. "Fantasy" in "Sjove fantasybøger".
   label: string
+  // The quiz takes this colour when an answer with the group is chosen.
+  color?: TBookQuizColor
   match: TBookQuizClause[]
 }
 
@@ -24,28 +39,33 @@ const subject = (cqlValues: string[]): TBookQuizClause => ({
 
 export const THRILLER: TBookQuizGroup = {
   label: "Spænding",
+  color: "red",
   match: [genre(["spænding", "krimi"]), subject(["action", "mysterier"])],
 }
 
 export const FANTASY: TBookQuizGroup = {
   label: "Fantasy",
+  color: "purple",
   match: [genre(["fantasy"])],
 }
 
 export const FRIENDS: TBookQuizGroup = {
   label: "Venner",
+  color: "yellow",
   // No genre exists for friendship, only subjects.
   match: [subject(["venner", "veninder", "venskab", "venskaber", "skole"])],
 }
 
 export const NONFICTION: TBookQuizGroup = {
   label: "Fakta",
+  color: "teal",
   // Non-fiction is not a genre in FBI but its own index.
   match: [{ cqlIndex: "term.fictionnonfiction", cqlValues: ["nonfiction"] }],
 }
 
 export const SCIFI: TBookQuizGroup = {
   label: "Science fiction",
+  color: "blue",
   match: [
     genre(["science fiction"]),
     subject([
@@ -71,6 +91,7 @@ export const SCIFI: TBookQuizGroup = {
 
 export const HISTORY: TBookQuizGroup = {
   label: "Historie",
+  color: "sand",
   match: [
     genre(["historiske romaner"]),
     subject([
@@ -97,6 +118,7 @@ export const HISTORY: TBookQuizGroup = {
 // "Jeg aner det ikke" falls back to novels.
 export const NOVELS: TBookQuizGroup = {
   label: "Romaner",
+  color: "green",
   match: [genre(["romaner"])],
 }
 
@@ -104,11 +126,13 @@ export const NOVELS: TBookQuizGroup = {
 
 export const FUNNY: TBookQuizGroup = {
   label: "Sjov",
+  color: "orange",
   match: [genre(["sjove bøger"]), subject(["sjov"])],
 }
 
 export const HORROR: TBookQuizGroup = {
   label: "Gys",
+  color: "spooky",
   match: [
     subject([
       "gys",
@@ -129,6 +153,7 @@ export const HORROR: TBookQuizGroup = {
 
 export const ROMANCE: TBookQuizGroup = {
   label: "Romantik",
+  color: "pink",
   match: [
     subject(["kærlighed", "forelskelse", "kærester", "seksualitet", "romantisk", "romantik"]),
   ],
@@ -138,6 +163,7 @@ export const ROMANCE: TBookQuizGroup = {
 
 export const ANIMALS: TBookQuizGroup = {
   label: "Dyr",
+  color: "green",
   match: [
     subject([
       "dyr",
@@ -160,11 +186,13 @@ export const ANIMALS: TBookQuizGroup = {
 
 export const GAMING: TBookQuizGroup = {
   label: "Gaming",
+  color: "blue",
   match: [subject(["gaming", "computerspil", "fortnite", "roblox", "minecraft"])],
 }
 
 export const SPORT: TBookQuizGroup = {
   label: "Sport",
+  color: "lime",
   match: [
     subject([
       "sport",
@@ -182,6 +210,7 @@ export const SPORT: TBookQuizGroup = {
 
 export const CLIMATE: TBookQuizGroup = {
   label: "Klima",
+  color: "teal",
   match: [
     subject([
       "klima",
