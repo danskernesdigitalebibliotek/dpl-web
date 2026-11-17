@@ -148,6 +148,13 @@ export type GetBranchesQueryResult = NonNullable<
 >;
 export type GetBranchesQueryError = ErrorType<void>;
 
+/**
+ *
+ *  Returns array of branches.
+ *  <p>Can be used for giving the patron the option of choosing a preferred branch or where to pick up
+ *  reservations.</p>
+ * @summary Get branches for an agency.
+ */
 export function useGetBranches<
   TData = Awaited<ReturnType<typeof getBranches>>,
   TError = ErrorType<void>
@@ -171,6 +178,13 @@ export function useGetBranches<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns array of branches.
+ *  <p>Can be used for giving the patron the option of choosing a preferred branch or where to pick up
+ *  reservations.</p>
+ * @summary Get branches for an agency.
+ */
 export function useGetBranches<
   TData = Awaited<ReturnType<typeof getBranches>>,
   TError = ErrorType<void>
@@ -194,6 +208,13 @@ export function useGetBranches<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns array of branches.
+ *  <p>Can be used for giving the patron the option of choosing a preferred branch or where to pick up
+ *  reservations.</p>
+ * @summary Get branches for an agency.
+ */
 export function useGetBranches<
   TData = Awaited<ReturnType<typeof getBranches>>,
   TError = ErrorType<void>
@@ -210,9 +231,12 @@ export function useGetBranches<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
+ *
+ *  Returns array of branches.
+ *  <p>Can be used for giving the patron the option of choosing a preferred branch or where to pick up
+ *  reservations.</p>
  * @summary Get branches for an agency.
  */
-
 export function useGetBranches<
   TData = Awaited<ReturnType<typeof getBranches>>,
   TError = ErrorType<void>
@@ -322,9 +346,7 @@ export type DeleteReservationsMutationVariables = {
   params: DeleteReservationsParams;
 };
 
-/**
- * @summary Delete existing reservations.
- */
+/** @summary Delete existing reservations. */
 export const useDeleteReservations = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -423,6 +445,32 @@ export type GetReservationsQueryResult = NonNullable<
 >;
 export type GetReservationsQueryError = ErrorType<void>;
 
+/**
+ *
+ *  Returns an array of reservation details.
+ *  <p>When the patron picks up the reserved materials,
+ *  the reservation will no longer be returned.
+ *  Expired or deleted reservations will not be returned.</p>
+ *
+ *  The response contains reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'
+ *  .</p>
+ *  The response contains loanType, which can be any of these values:
+ *  <ul>
+ *      <li>- loan</li>
+ *      <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'loan'
+ *  .</p>
+ * @summary Get all unfulfilled reservations made by the patron (DEPRECATED).
+ */
 export function useGetReservations<
   TData = Awaited<ReturnType<typeof getReservations>>,
   TError = ErrorType<void>
@@ -449,6 +497,32 @@ export function useGetReservations<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns an array of reservation details.
+ *  <p>When the patron picks up the reserved materials,
+ *  the reservation will no longer be returned.
+ *  Expired or deleted reservations will not be returned.</p>
+ *
+ *  The response contains reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'
+ *  .</p>
+ *  The response contains loanType, which can be any of these values:
+ *  <ul>
+ *      <li>- loan</li>
+ *      <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'loan'
+ *  .</p>
+ * @summary Get all unfulfilled reservations made by the patron (DEPRECATED).
+ */
 export function useGetReservations<
   TData = Awaited<ReturnType<typeof getReservations>>,
   TError = ErrorType<void>
@@ -475,6 +549,32 @@ export function useGetReservations<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns an array of reservation details.
+ *  <p>When the patron picks up the reserved materials,
+ *  the reservation will no longer be returned.
+ *  Expired or deleted reservations will not be returned.</p>
+ *
+ *  The response contains reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'
+ *  .</p>
+ *  The response contains loanType, which can be any of these values:
+ *  <ul>
+ *      <li>- loan</li>
+ *      <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'loan'
+ *  .</p>
+ * @summary Get all unfulfilled reservations made by the patron (DEPRECATED).
+ */
 export function useGetReservations<
   TData = Awaited<ReturnType<typeof getReservations>>,
   TError = ErrorType<void>
@@ -494,9 +594,31 @@ export function useGetReservations<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
+ *
+ *  Returns an array of reservation details.
+ *  <p>When the patron picks up the reserved materials,
+ *  the reservation will no longer be returned.
+ *  Expired or deleted reservations will not be returned.</p>
+ *
+ *  The response contains reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'
+ *  .</p>
+ *  The response contains loanType, which can be any of these values:
+ *  <ul>
+ *      <li>- loan</li>
+ *      <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'loan'
+ *  .</p>
  * @summary Get all unfulfilled reservations made by the patron (DEPRECATED).
  */
-
 export function useGetReservations<
   TData = Awaited<ReturnType<typeof getReservations>>,
   TError = ErrorType<void>
@@ -644,6 +766,30 @@ export type AddReservationsDeprecatedMutationVariables = {
 };
 
 /**
+ *
+ *  Returns an array of reservation details for the created reservations.
+ *  <p></p>
+ *  The response contains reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'.</p>
+ *  The response contains loanType, which can be any of these values:
+ *  <ul>
+ *      <li>- loan</li>
+ *      <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'
+ *  .</p>
+ *  <p>
+ *      When making a reservation of a periodical, the values to put in the PeriodicalReservation structure can be obtained
+ *      from the periodical information retrieved with the Catalog service.
+ *  </p>
+ *  <p><b>This method has been deprecated use /external/v1/{agencyid}/patrons/{patronid}/reservations/v2 instead</b></p>
  * @summary Create new reservations for the patron (DEPRECATED).
  */
 export const useAddReservationsDeprecated = <
@@ -785,6 +931,25 @@ export type UpdateReservationsMutationVariables = {
 };
 
 /**
+ *
+ *  Returns an array of the updated reservation details.
+ *  <p></p>
+ *  The response contains reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'.</p>
+ *  The response contains loanType, which can be any of these values:
+ *  <ul>
+ *      <li>- loan</li>
+ *      <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'
+ *  .</p>
  * @summary Update existing reservations.
  */
 export const useUpdateReservations = <
@@ -891,6 +1056,34 @@ export type GetReservationsV2QueryResult = NonNullable<
 >;
 export type GetReservationsV2QueryError = ErrorType<void>;
 
+/**
+ *
+ *  Returns an array of reservation details.
+ *  <p>When the patron picks up the reserved materials,
+ *  the reservation will no longer be returned.
+ *  Expired or deleted reservations will not be returned.</p>
+ *
+ *  The response contains reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'
+ *  .</p>
+ *  The response contains reservationType, which can be any of these values:
+ *  <ul>
+ *      <li>- NORMAL</li>
+ *      <li>- PARALLEL</li>
+ *      <li>- SERIAL</li>
+ *      <li>- INTER_LIBRARY</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, iit should be treated as 'normal'</p>
+ *  <p>The response contains a transactionId, which links together parallel reservations.</p>
+ * @summary Get all unfulfilled reservations made by the patron.
+ */
 export function useGetReservationsV2<
   TData = Awaited<ReturnType<typeof getReservationsV2>>,
   TError = ErrorType<void>
@@ -917,6 +1110,34 @@ export function useGetReservationsV2<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns an array of reservation details.
+ *  <p>When the patron picks up the reserved materials,
+ *  the reservation will no longer be returned.
+ *  Expired or deleted reservations will not be returned.</p>
+ *
+ *  The response contains reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'
+ *  .</p>
+ *  The response contains reservationType, which can be any of these values:
+ *  <ul>
+ *      <li>- NORMAL</li>
+ *      <li>- PARALLEL</li>
+ *      <li>- SERIAL</li>
+ *      <li>- INTER_LIBRARY</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, iit should be treated as 'normal'</p>
+ *  <p>The response contains a transactionId, which links together parallel reservations.</p>
+ * @summary Get all unfulfilled reservations made by the patron.
+ */
 export function useGetReservationsV2<
   TData = Awaited<ReturnType<typeof getReservationsV2>>,
   TError = ErrorType<void>
@@ -943,6 +1164,34 @@ export function useGetReservationsV2<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns an array of reservation details.
+ *  <p>When the patron picks up the reserved materials,
+ *  the reservation will no longer be returned.
+ *  Expired or deleted reservations will not be returned.</p>
+ *
+ *  The response contains reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'
+ *  .</p>
+ *  The response contains reservationType, which can be any of these values:
+ *  <ul>
+ *      <li>- NORMAL</li>
+ *      <li>- PARALLEL</li>
+ *      <li>- SERIAL</li>
+ *      <li>- INTER_LIBRARY</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, iit should be treated as 'normal'</p>
+ *  <p>The response contains a transactionId, which links together parallel reservations.</p>
+ * @summary Get all unfulfilled reservations made by the patron.
+ */
 export function useGetReservationsV2<
   TData = Awaited<ReturnType<typeof getReservationsV2>>,
   TError = ErrorType<void>
@@ -962,9 +1211,33 @@ export function useGetReservationsV2<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
+ *
+ *  Returns an array of reservation details.
+ *  <p>When the patron picks up the reserved materials,
+ *  the reservation will no longer be returned.
+ *  Expired or deleted reservations will not be returned.</p>
+ *
+ *  The response contains reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'
+ *  .</p>
+ *  The response contains reservationType, which can be any of these values:
+ *  <ul>
+ *      <li>- NORMAL</li>
+ *      <li>- PARALLEL</li>
+ *      <li>- SERIAL</li>
+ *      <li>- INTER_LIBRARY</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, iit should be treated as 'normal'</p>
+ *  <p>The response contains a transactionId, which links together parallel reservations.</p>
  * @summary Get all unfulfilled reservations made by the patron.
  */
-
 export function useGetReservationsV2<
   TData = Awaited<ReturnType<typeof getReservationsV2>>,
   TError = ErrorType<void>
@@ -1143,6 +1416,62 @@ export type AddReservationsV2MutationVariables = {
 };
 
 /**
+ *
+ *  <p>Given a CreateReservationBatch, it creates a list of reservations and returns a ReservationResponse.</p>
+ *  <p>The CreateReservationBatch.type indicates the reservation type of the request. If left out the request will be considered of type
+ *  normal. The type can be any of the following values:</p>
+ *  <ul>
+ *      <li>- normal</li>
+ *      <li>- parallel</li>
+ *  </ul>
+ *  <p>The values are subject to change.</p>
+ *
+ *  <p>ReservationResponse.success indicates if the reservations were created sucessfully. If any of the reservations have failed then all
+ *  reservations will be failed and ReservationResponse.success will be false. If all reservations are successfully created ReservationResponse.success will be true.
+ *
+ *  <p></p>
+ *
+ *  <p>ReservationResponse.reservationResults contains details about each reservation.
+ *  A ReservationResult.result has the status of a reservation and can be any of the following values:</p>
+ *  <ul>
+ *      <li>- success</li>
+ *      <li>- patron_is_blocked</li>
+ *      <li>- patron_not_found</li>
+ *      <li>- already_reserved</li>
+ *      <li>- already_loaned</li>
+ *      <li>- material_not_loanable</li>
+ *      <li>- material_not_reservable</li>
+ *      <li>- material_lost</li>
+ *      <li>- material_Discarded</li>
+ *      <li>- loaning_profile_not_found</li>
+ *      <li>- material_not_found</li>
+ *      <li>- material_part_of_collection</li>
+ *      <li>- not_reservable</li>
+ *      <li>- no_reservable_materials</li>
+ *      <li>- interlibrary_material_not_reservable</li>
+ *      <li>- previously_loaned_by_homebound_patron</li>
+ *      <li>- exceeds_max_reservations</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as an error.</p>
+ *
+ *  <p></p>
+ *
+ *  The reservation detail in the response contains a reservation state, which can be any of these values:
+ *  <ul>
+ *      <li>- reserved</li>
+ *      <li>- readyForPickup</li>
+ *      <li>- interLibraryReservation</li>
+ *      <li>- inTransit</li>
+ *      <li>- other</li>
+ *  </ul>
+ *  <p>The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other'.</p>
+ *
+ *  <p></p>
+ *
+ *  <p>
+ *      When making a reservation of a periodical, the values to put in the PeriodicalReservation structure can be obtained
+ *      from the periodical information retrieved with the Catalog service.
+ *  </p>
  * @summary Create new reservations for the patron.
  */
 export const useAddReservationsV2 = <
@@ -1250,6 +1579,11 @@ export type GetAvailabilityV3QueryResult = NonNullable<
 >;
 export type GetAvailabilityV3QueryError = ErrorType<void>;
 
+/**
+ *
+ *  Returns an array of availability for each bibliographical record.
+ * @summary Get availability of bibliographical records.
+ */
 export function useGetAvailabilityV3<
   TData = Awaited<ReturnType<typeof getAvailabilityV3>>,
   TError = ErrorType<void>
@@ -1277,6 +1611,11 @@ export function useGetAvailabilityV3<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns an array of availability for each bibliographical record.
+ * @summary Get availability of bibliographical records.
+ */
 export function useGetAvailabilityV3<
   TData = Awaited<ReturnType<typeof getAvailabilityV3>>,
   TError = ErrorType<void>
@@ -1304,6 +1643,11 @@ export function useGetAvailabilityV3<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns an array of availability for each bibliographical record.
+ * @summary Get availability of bibliographical records.
+ */
 export function useGetAvailabilityV3<
   TData = Awaited<ReturnType<typeof getAvailabilityV3>>,
   TError = ErrorType<void>
@@ -1324,9 +1668,10 @@ export function useGetAvailabilityV3<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
+ *
+ *  Returns an array of availability for each bibliographical record.
  * @summary Get availability of bibliographical records.
  */
-
 export function useGetAvailabilityV3<
   TData = Awaited<ReturnType<typeof getAvailabilityV3>>,
   TError = ErrorType<void>
@@ -1445,6 +1790,12 @@ export type GetHoldingsLogisticsV1QueryResult = NonNullable<
 >;
 export type GetHoldingsLogisticsV1QueryError = ErrorType<void>;
 
+/**
+ *
+ *  Returns an array of holdings for each bibliographical record.
+ *  The holdings lists the materials on each placement, and whether they are available on-shelf or lent out.
+ * @summary Get placement holdings for bibliographical records.
+ */
 export function useGetHoldingsLogisticsV1<
   TData = Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
   TError = ErrorType<void>
@@ -1472,6 +1823,12 @@ export function useGetHoldingsLogisticsV1<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns an array of holdings for each bibliographical record.
+ *  The holdings lists the materials on each placement, and whether they are available on-shelf or lent out.
+ * @summary Get placement holdings for bibliographical records.
+ */
 export function useGetHoldingsLogisticsV1<
   TData = Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
   TError = ErrorType<void>
@@ -1499,6 +1856,12 @@ export function useGetHoldingsLogisticsV1<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns an array of holdings for each bibliographical record.
+ *  The holdings lists the materials on each placement, and whether they are available on-shelf or lent out.
+ * @summary Get placement holdings for bibliographical records.
+ */
 export function useGetHoldingsLogisticsV1<
   TData = Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
   TError = ErrorType<void>
@@ -1519,9 +1882,11 @@ export function useGetHoldingsLogisticsV1<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
+ *
+ *  Returns an array of holdings for each bibliographical record.
+ *  The holdings lists the materials on each placement, and whether they are available on-shelf or lent out.
  * @summary Get placement holdings for bibliographical records.
  */
-
 export function useGetHoldingsLogisticsV1<
   TData = Awaited<ReturnType<typeof getHoldingsLogisticsV1>>,
   TError = ErrorType<void>
@@ -1633,6 +1998,23 @@ export type GetFeesV2QueryResult = NonNullable<
 >;
 export type GetFeesV2QueryError = ErrorType<void>;
 
+/**
+ *
+ *  Returns array of fees.
+ *  <p>If the fee covers loaned materials, information about the materials is returned.
+ *  Each fee in the response includes a 'type', which is used to distinguish between different types of
+ *  fees.</p>
+ *  <p>If the material exists no more, which is the case for fees that are related to closed interlibraryloans,
+ *  then the fee is still returned, but without material information</p>
+ *  The list of available types currently is
+ *  <ul>
+ *  <li>fee</li>
+ *  <li>compensation</li>
+ *  </ul>
+ *  <p>While the type can be used by client systems to look up a suitable display message for the end user, it is
+ *  important that unrecognized types are treated as 'other'.</p>
+ * @summary List of fees in FBS for the patron with all available information about the fee.
+ */
 export function useGetFeesV2<
   TData = Awaited<ReturnType<typeof getFeesV2>>,
   TError = ErrorType<void>
@@ -1656,6 +2038,23 @@ export function useGetFeesV2<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns array of fees.
+ *  <p>If the fee covers loaned materials, information about the materials is returned.
+ *  Each fee in the response includes a 'type', which is used to distinguish between different types of
+ *  fees.</p>
+ *  <p>If the material exists no more, which is the case for fees that are related to closed interlibraryloans,
+ *  then the fee is still returned, but without material information</p>
+ *  The list of available types currently is
+ *  <ul>
+ *  <li>fee</li>
+ *  <li>compensation</li>
+ *  </ul>
+ *  <p>While the type can be used by client systems to look up a suitable display message for the end user, it is
+ *  important that unrecognized types are treated as 'other'.</p>
+ * @summary List of fees in FBS for the patron with all available information about the fee.
+ */
 export function useGetFeesV2<
   TData = Awaited<ReturnType<typeof getFeesV2>>,
   TError = ErrorType<void>
@@ -1679,6 +2078,23 @@ export function useGetFeesV2<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns array of fees.
+ *  <p>If the fee covers loaned materials, information about the materials is returned.
+ *  Each fee in the response includes a 'type', which is used to distinguish between different types of
+ *  fees.</p>
+ *  <p>If the material exists no more, which is the case for fees that are related to closed interlibraryloans,
+ *  then the fee is still returned, but without material information</p>
+ *  The list of available types currently is
+ *  <ul>
+ *  <li>fee</li>
+ *  <li>compensation</li>
+ *  </ul>
+ *  <p>While the type can be used by client systems to look up a suitable display message for the end user, it is
+ *  important that unrecognized types are treated as 'other'.</p>
+ * @summary List of fees in FBS for the patron with all available information about the fee.
+ */
 export function useGetFeesV2<
   TData = Awaited<ReturnType<typeof getFeesV2>>,
   TError = ErrorType<void>
@@ -1695,9 +2111,22 @@ export function useGetFeesV2<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
+ *
+ *  Returns array of fees.
+ *  <p>If the fee covers loaned materials, information about the materials is returned.
+ *  Each fee in the response includes a 'type', which is used to distinguish between different types of
+ *  fees.</p>
+ *  <p>If the material exists no more, which is the case for fees that are related to closed interlibraryloans,
+ *  then the fee is still returned, but without material information</p>
+ *  The list of available types currently is
+ *  <ul>
+ *  <li>fee</li>
+ *  <li>compensation</li>
+ *  </ul>
+ *  <p>While the type can be used by client systems to look up a suitable display message for the end user, it is
+ *  important that unrecognized types are treated as 'other'.</p>
  * @summary List of fees in FBS for the patron with all available information about the fee.
  */
-
 export function useGetFeesV2<
   TData = Awaited<ReturnType<typeof getFeesV2>>,
   TError = ErrorType<void>
@@ -1841,6 +2270,31 @@ export type CreateV9MutationVariables = {
 };
 
 /**
+ *
+ *  When a patron doesn't have a patron account in the library system, but logs in using a trusted authentication
+ *  source (e.g NemId), the patron account can be created using this service. Name and address will be automatically
+ *  fetched from configured person registry, and cannot be supplied by the client. If the configured person registry is not authorized to
+ *  provide information about the patron, then response message 404 will be sent back
+ *  <p>Multiple email addresses and phone numbers can be stored for a patron.</p>
+ *  <p>If multiple email addresses are supplied having receiveNotification as true, then only one of them will be randomly stored
+ *  as preferred and the rest will be stored as not preferred.</p>
+ *  <p>If multiple phone numbers are supplied having receiveNotification as true, then only one of them will be randomly stored
+ *  as preferred and the rest will be stored as not preferred.</p>
+ *  <p>
+ *  This version includes a possibility of including a BlockStatus in the request.
+ *  The reason of the blockstatus must be one of the following one-letter choices
+ *  <ul>
+ *  <li>- 'O': library card stolen</li></li>
+ *  <li>- 'F': extended exclusion</li>
+ *  <li>- 'U': exclusion</li>
+ *  <li>- 'S': blocked by self service automaton</li>
+ *  <li>- 'W': self created at website</li>
+ *  <li>- 'E': maximum amount of allowed debt exceeded</li>
+ *  <li>- 'D': deceased</li>
+ *  </ul>
+ *
+ *  <p>If the request includes a blockstatus for the patron, and the blockedSince date is not given or in the wrong format, or the blockedReason is not one of the one-letter choices shown above, then response message 400 will be sent back.
+ *  </p>
  * @summary Create a new patron who is a person.
  */
 export const useCreateV9 = <TError = ErrorType<void>, TContext = unknown>(
@@ -1968,6 +2422,16 @@ export type CreateWithGuardianMutationVariables = {
 };
 
 /**
+ *
+ *
+ *  Returns the id of the patron if the request succeeds.
+ *  Name and address will be automatically fetched from the CPR-Registry.
+ *  <p>If the CPR-Registry is not authorized to provide information about the patron, then response message 404 will be sent back.</p>
+ *  <p>If the supplied cpr number of the patron equals that of the guardian, then response message 400 will be sent back.</p>
+ *  <p>If the email of the guardian is invalid, then response message 400 will be sent back.</p>
+ *  <p>If an email or phone number for the patron is supplied and it is invalid, then response message 400 will be sent back.</p>
+ *  <p>In case of a successful creation of the patron, a confirmation email is sent to the guardian.
+ *  In case of failure an email is sent to guardian stating the creation failed.</p>
  * @summary Creates a person patron with a guardian (eg A financial responsible).
  */
 export const useCreateWithGuardian = <
@@ -2099,6 +2563,16 @@ export type UpdateGuardianMutationVariables = {
 };
 
 /**
+ *
+ *  If the person doesn't have a guardian, a new one is created with the information provided.
+ *
+ *  Returns the id of the patron if the request succeeds.
+ *  Name and address will be automatically fetched from the CPR-Registry.
+ *  <p>If the CPR-Registry is not authorized to provide information about the patron and guardian, then response message 404 will be sent back.</p>
+ *  <p>If the supplied cpr number of the patron equals that of the guardian, then response message 400 will be sent back.</p>
+ *  <p>If the email of the guardian is invalid, then response message 400 will be sent back.</p>
+ *  <p>In case of a successful update of the guardian, a confirmation email is sent to the guardian.
+ *  In case of failure an email is sent to guardian stating the update failed.</p>
  * @summary Updates a person patron's guardian (eg A financial responsible).
  */
 export const useUpdateGuardian = <TError = ErrorType<void>, TContext = unknown>(
@@ -2241,6 +2715,35 @@ export type RenewLoansV2MutationError = ErrorType<void>;
 export type RenewLoansV2MutationVariables = { data: BodyType<number[]> };
 
 /**
+ *
+ *  Returns an array of the updated loans.
+ *  <p>
+ *  If the materials could not be renewed, the return date will be unchanged.
+ *  </p>
+ *  <p>
+ *  The response field renewalStatus will contain a list of one or more of these values:
+ *  <ul>
+ *  <li>- renewed</li>
+ *  <li>- deniedReserved</li>
+ *  <li>- deniedMaxRenewalsReached</li>
+ *  <li>- deniedLoanerIsBlocked</li>
+ *  <li>- deniedMaterialIsNotLoanable</li>
+ *  <li>- deniedMaterialIsNotFound</li>
+ *  <li>- deniedLoanerNotFound</li>
+ *  <li>- deniedLoaningProfileNotFound</li>
+ *  <li>- deniedOtherReason</li>
+ *  </ul>
+ *  <p>
+ *  If any other value is encountered then it must be treated as 'deniedOtherReason'.
+ *  </p>
+ *  The response contains the field loanDetails.loanType, which can be any of these values:
+ *  <ul>
+ *  <li>- loan</li>
+ *  <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>
+ *  The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other' .
+ *  </p>
  * @summary Renew loans.
  */
 export const useRenewLoansV2 = <TError = ErrorType<void>, TContext = unknown>(
@@ -2342,6 +2845,39 @@ export type GetLoansV2QueryResult = NonNullable<
 >;
 export type GetLoansV2QueryError = ErrorType<void>;
 
+/**
+ *
+ *  Returns an array of loans.
+ *  <p>
+ *  </p>
+ *  If a loan is not renewable then the field renewalStatus will contain a list of one or more of these values:
+ *  <ul>
+ *  <li>- deniedReserved</li>
+ *  <li>- deniedMaxRenewalsReached</li>
+ *  <li>- deniedLoanerIsBlocked</li>
+ *  <li>- deniedMaterialIsNotLoanable</li>
+ *  <li>- deniedMaterialIsNotFound</li>
+ *  <li>- deniedLoanerNotFound</li>
+ *  <li>- deniedLoaningProfileNotFound</li>
+ *  <li>- deniedOtherReason</li>
+ *  </ul>
+ *  <p>
+ *  If any other value is encountered then it must be treated as 'deniedOtherReason'.
+ *  </p>
+ *  The response contains the field loanDetails.loanType, which can be any of these values:
+ *  <ul>
+ *  <li>- loan</li>
+ *  <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>
+ *  The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other' .
+ *  </p>
+ *  <p>
+ *  NOTE: Cicero can decide to skip evaluation of the returned loans to minimize response time for loaners with
+ *  many loans. In that case isRenewable will have the value true, as if it were a successful validation.
+ *  </p>
+ * @summary Get list of current loans by the patron.
+ */
 export function useGetLoansV2<
   TData = Awaited<ReturnType<typeof getLoansV2>>,
   TError = ErrorType<void>
@@ -2364,6 +2900,39 @@ export function useGetLoansV2<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns an array of loans.
+ *  <p>
+ *  </p>
+ *  If a loan is not renewable then the field renewalStatus will contain a list of one or more of these values:
+ *  <ul>
+ *  <li>- deniedReserved</li>
+ *  <li>- deniedMaxRenewalsReached</li>
+ *  <li>- deniedLoanerIsBlocked</li>
+ *  <li>- deniedMaterialIsNotLoanable</li>
+ *  <li>- deniedMaterialIsNotFound</li>
+ *  <li>- deniedLoanerNotFound</li>
+ *  <li>- deniedLoaningProfileNotFound</li>
+ *  <li>- deniedOtherReason</li>
+ *  </ul>
+ *  <p>
+ *  If any other value is encountered then it must be treated as 'deniedOtherReason'.
+ *  </p>
+ *  The response contains the field loanDetails.loanType, which can be any of these values:
+ *  <ul>
+ *  <li>- loan</li>
+ *  <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>
+ *  The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other' .
+ *  </p>
+ *  <p>
+ *  NOTE: Cicero can decide to skip evaluation of the returned loans to minimize response time for loaners with
+ *  many loans. In that case isRenewable will have the value true, as if it were a successful validation.
+ *  </p>
+ * @summary Get list of current loans by the patron.
+ */
 export function useGetLoansV2<
   TData = Awaited<ReturnType<typeof getLoansV2>>,
   TError = ErrorType<void>
@@ -2386,6 +2955,39 @@ export function useGetLoansV2<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  Returns an array of loans.
+ *  <p>
+ *  </p>
+ *  If a loan is not renewable then the field renewalStatus will contain a list of one or more of these values:
+ *  <ul>
+ *  <li>- deniedReserved</li>
+ *  <li>- deniedMaxRenewalsReached</li>
+ *  <li>- deniedLoanerIsBlocked</li>
+ *  <li>- deniedMaterialIsNotLoanable</li>
+ *  <li>- deniedMaterialIsNotFound</li>
+ *  <li>- deniedLoanerNotFound</li>
+ *  <li>- deniedLoaningProfileNotFound</li>
+ *  <li>- deniedOtherReason</li>
+ *  </ul>
+ *  <p>
+ *  If any other value is encountered then it must be treated as 'deniedOtherReason'.
+ *  </p>
+ *  The response contains the field loanDetails.loanType, which can be any of these values:
+ *  <ul>
+ *  <li>- loan</li>
+ *  <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>
+ *  The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other' .
+ *  </p>
+ *  <p>
+ *  NOTE: Cicero can decide to skip evaluation of the returned loans to minimize response time for loaners with
+ *  many loans. In that case isRenewable will have the value true, as if it were a successful validation.
+ *  </p>
+ * @summary Get list of current loans by the patron.
+ */
 export function useGetLoansV2<
   TData = Awaited<ReturnType<typeof getLoansV2>>,
   TError = ErrorType<void>
@@ -2401,9 +3003,38 @@ export function useGetLoansV2<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
+ *
+ *  Returns an array of loans.
+ *  <p>
+ *  </p>
+ *  If a loan is not renewable then the field renewalStatus will contain a list of one or more of these values:
+ *  <ul>
+ *  <li>- deniedReserved</li>
+ *  <li>- deniedMaxRenewalsReached</li>
+ *  <li>- deniedLoanerIsBlocked</li>
+ *  <li>- deniedMaterialIsNotLoanable</li>
+ *  <li>- deniedMaterialIsNotFound</li>
+ *  <li>- deniedLoanerNotFound</li>
+ *  <li>- deniedLoaningProfileNotFound</li>
+ *  <li>- deniedOtherReason</li>
+ *  </ul>
+ *  <p>
+ *  If any other value is encountered then it must be treated as 'deniedOtherReason'.
+ *  </p>
+ *  The response contains the field loanDetails.loanType, which can be any of these values:
+ *  <ul>
+ *  <li>- loan</li>
+ *  <li>- interLibraryLoan</li>
+ *  </ul>
+ *  <p>
+ *  The values are subject to change. If an unrecognized value is encountered, it should be treated as 'other' .
+ *  </p>
+ *  <p>
+ *  NOTE: Cicero can decide to skip evaluation of the returned loans to minimize response time for loaners with
+ *  many loans. In that case isRenewable will have the value true, as if it were a successful validation.
+ *  </p>
  * @summary Get list of current loans by the patron.
  */
-
 export function useGetLoansV2<
   TData = Awaited<ReturnType<typeof getLoansV2>>,
   TError = ErrorType<void>
@@ -2498,6 +3129,21 @@ export type GetPatronInformationByPatronIdV4QueryResult = NonNullable<
 >;
 export type GetPatronInformationByPatronIdV4QueryError = ErrorType<void>;
 
+/**
+ *
+ *  <p></p>
+ *  If a patron is blocked the reason is available as a code:
+ *  <ul>
+ *      <li>- 'O': library card stolen</li>
+ *      <li>- 'U': exclusion</li>
+ *      <li>- 'F': extended exclusion</li>
+ *      <li>- 'S': blocked by self service automaton</li>
+ *      <li>- 'W': self created at website</li>
+ *  </ul>
+ *  <p>The codes are informational, and can be used for looking up end user messages by the client system. However,
+ *  the list is subject to change at any time, so any unexpected values should be interpreted as 'other reason'.</p>
+ * @summary Returns the patron details
+ */
 export function useGetPatronInformationByPatronIdV4<
   TData = Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
   TError = ErrorType<void>
@@ -2524,6 +3170,21 @@ export function useGetPatronInformationByPatronIdV4<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  <p></p>
+ *  If a patron is blocked the reason is available as a code:
+ *  <ul>
+ *      <li>- 'O': library card stolen</li>
+ *      <li>- 'U': exclusion</li>
+ *      <li>- 'F': extended exclusion</li>
+ *      <li>- 'S': blocked by self service automaton</li>
+ *      <li>- 'W': self created at website</li>
+ *  </ul>
+ *  <p>The codes are informational, and can be used for looking up end user messages by the client system. However,
+ *  the list is subject to change at any time, so any unexpected values should be interpreted as 'other reason'.</p>
+ * @summary Returns the patron details
+ */
 export function useGetPatronInformationByPatronIdV4<
   TData = Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
   TError = ErrorType<void>
@@ -2550,6 +3211,21 @@ export function useGetPatronInformationByPatronIdV4<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ *
+ *  <p></p>
+ *  If a patron is blocked the reason is available as a code:
+ *  <ul>
+ *      <li>- 'O': library card stolen</li>
+ *      <li>- 'U': exclusion</li>
+ *      <li>- 'F': extended exclusion</li>
+ *      <li>- 'S': blocked by self service automaton</li>
+ *      <li>- 'W': self created at website</li>
+ *  </ul>
+ *  <p>The codes are informational, and can be used for looking up end user messages by the client system. However,
+ *  the list is subject to change at any time, so any unexpected values should be interpreted as 'other reason'.</p>
+ * @summary Returns the patron details
+ */
 export function useGetPatronInformationByPatronIdV4<
   TData = Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
   TError = ErrorType<void>
@@ -2569,9 +3245,20 @@ export function useGetPatronInformationByPatronIdV4<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
+ *
+ *  <p></p>
+ *  If a patron is blocked the reason is available as a code:
+ *  <ul>
+ *      <li>- 'O': library card stolen</li>
+ *      <li>- 'U': exclusion</li>
+ *      <li>- 'F': extended exclusion</li>
+ *      <li>- 'S': blocked by self service automaton</li>
+ *      <li>- 'W': self created at website</li>
+ *  </ul>
+ *  <p>The codes are informational, and can be used for looking up end user messages by the client system. However,
+ *  the list is subject to change at any time, so any unexpected values should be interpreted as 'other reason'.</p>
  * @summary Returns the patron details
  */
-
 export function useGetPatronInformationByPatronIdV4<
   TData = Awaited<ReturnType<typeof getPatronInformationByPatronIdV4>>,
   TError = ErrorType<void>
@@ -2708,6 +3395,21 @@ export type UpdateV4MutationVariables = {
 };
 
 /**
+ *
+ *  The name and address cannot be supplied by the client. If the CPR-Registry is not authorized to provide
+ *  information about the patron, then the name and address will not be updated.
+ *  <p>It is possible to either update just the pincode, update just some patron settings, or update both.</p>
+ *  <p></p>
+ *  If a patron is blocked the reason is available as a code:
+ *  <ul>
+ *      <li>- 'O': library card stolen</li>
+ *      <li>- 'U': exclusion</li>
+ *      <li>- 'F': extended exclusion</li>
+ *      <li>- 'S': blocked by self service automaton</li>
+ *      <li>- 'W': self created at website</li>
+ *  </ul>
+ *  <p>The codes are informational, and can be used for looking up end user messages by the client system. However,
+ *  the list is subject to change at any time, so any unexpected values should be interpreted as 'other reason'.</p>
  * @summary Update information about the patron.
  */
 export const useUpdateV4 = <TError = ErrorType<void>, TContext = unknown>(
@@ -2843,6 +3545,26 @@ export type UpdateV8MutationVariables = {
 };
 
 /**
+ *
+ *  The name and address cannot be supplied by the client. If the configured person registry is not authorized to provide
+ *  information about the patron, then the name and address will not be updated.
+ *  <p>It is possible to either update just the pincode, update just some patron settings, or update both.</p>
+ *  <p>Multiple email addresses and phone numbers can be stored for a patron.</p>
+ *  <p>If multiple email addresses are supplied having receiveNotification as true, then only one of them will be randomly stored
+ *  as preferred and the rest will be stored as not preferred.</p>
+ *  <p>If multiple phone numbers are supplied having receiveNotification as true, then only one of them will be randomly stored
+ *  as preferred and the rest will be stored as not preferred.</p>
+ *  <p></p>
+ *  If a patron is blocked the reason is available as a code:
+ *  <ul>
+ *      <li>- 'O': library card stolen</li>
+ *      <li>- 'U': exclusion</li>
+ *      <li>- 'F': extended exclusion</li>
+ *      <li>- 'S': blocked by self service automaton</li>
+ *      <li>- 'W': self created at website</li>
+ *  </ul>
+ *  <p>The codes are informational, and can be used for looking up end user messages by the client system. However,
+ *  the list is subject to change at any time, so any unexpected values should be interpreted as 'other reason'.</p>
  * @summary Update information about the patron.
  */
 export const useUpdateV8 = <TError = ErrorType<void>, TContext = unknown>(
