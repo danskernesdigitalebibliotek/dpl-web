@@ -31,6 +31,20 @@ const findOption = (
 ): TBookQuizOption | undefined =>
   optionId ? getQuestion(questionId).options.find(option => option.id === optionId) : undefined
 
+const hasGroup = (option?: TBookQuizOption): option is TBookQuizOption => Boolean(option?.group)
+
+// The chosen options that search on a group, per question. Used to show the
+// answers behind each result section.
+export const getGroupAnswers = (
+  answers: TBookQuizAnswers
+): Record<"genre" | "mood" | "subjects", TBookQuizOption[]> => ({
+  genre: [findOption("genre", answers.genre)].filter(hasGroup),
+  mood: [findOption("mood", answers.mood)].filter(hasGroup),
+  subjects: (answers.subjects ?? [])
+    .map(optionId => findOption("subjects", optionId))
+    .filter(hasGroup),
+})
+
 export const getBookQuizProfile = (answers: TBookQuizAnswers): TBookQuizProfile => ({
   genre: findOption("genre", answers.genre)?.group,
   mood: findOption("mood", answers.mood)?.group,

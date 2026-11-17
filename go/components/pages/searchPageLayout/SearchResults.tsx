@@ -32,8 +32,8 @@ const SearchResults = ({ works }: SearchResultProps) => {
   )
 }
 
-export const SearchResultsSkeleton = () => {
-  const skeletonItems = Array.from({ length: 6 })
+export const SearchResultsSkeleton = ({ count = 6 }: { count?: number }) => {
+  const skeletonItems = Array.from({ length: count })
 
   return (
     <div className="grid-go gap-y-[calc(var(--grid-gap-x)*2)]">
