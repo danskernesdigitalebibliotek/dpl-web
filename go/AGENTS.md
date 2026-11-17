@@ -93,6 +93,9 @@ If you are doing anything with authentication, make sure to see ADR-005, ADR-012
 - **XState is scoped to the search feature only** (ADR-002). For
   lightweight global UI state, use the `@xstate/store` stores under
   `store/`.
+- **Hand-written types get a `T` prefix** (`TWorkCardProps`), so they
+  stand apart from generated types. Older code without it is not the
+  rule. See "Custom types" in [`../docs/go/README.md`](../docs/go/README.md).
 
 <!-- BEGIN:nextjs-agent-rules -->
 
