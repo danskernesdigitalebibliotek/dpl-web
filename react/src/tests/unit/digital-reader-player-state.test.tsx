@@ -129,28 +129,26 @@ describe("useDigitalReaderPlayerState", () => {
       });
     });
 
-    it("Offers the queue when the adapter says the material is reservable", () => {
-      givenAdapterSays({ status: "reservable" });
-
-      expect(render()).toMatchObject({
-        canBeLoaned: false,
-        canBeReserved: true
-      });
-    });
-
-    it.each(["wishable", "unavailable"] as const)(
-      "Offers nothing for a %s material",
+    it.each(["reservable", "wishable"] as const)(
+      "Offers the queue when the adapter says the material is %s",
       (status) => {
-        // Wishing is not reserving, and there is no Publizon equivalent to
-        // render it with.
         givenAdapterSays({ status });
 
         expect(render()).toMatchObject({
           canBeLoaned: false,
-          canBeReserved: false
+          canBeReserved: true
         });
       }
     );
+
+    it("Offers nothing for an unavailable material", () => {
+      givenAdapterSays({ status: "unavailable" });
+
+      expect(render()).toMatchObject({
+        canBeLoaned: false,
+        canBeReserved: false
+      });
+    });
 
     it.each([
       "monthly_limit_exceeded",
