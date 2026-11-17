@@ -128,6 +128,30 @@
     --success-green-400: hsla(141, 84%, 40%, 1);
     --success-green-500: hsla(141, 84%, 25%, 1);
 
+    /* Book quiz: a light background and a stronger watermark per colour. */
+    --quiz-green-bg: hsla(113, 100%, 94%, 1);
+    --quiz-green-shape: hsla(113, 100%, 87%, 1);
+    --quiz-pink-bg: hsla(340, 100%, 96%, 1);
+    --quiz-pink-shape: hsla(340, 100%, 88%, 1);
+    --quiz-yellow-bg: hsla(48, 100%, 93%, 1);
+    --quiz-yellow-shape: hsla(48, 100%, 80%, 1);
+    --quiz-blue-bg: hsla(200, 86%, 95%, 1);
+    --quiz-blue-shape: hsla(200, 86%, 86%, 1);
+    --quiz-purple-bg: hsla(265, 90%, 96%, 1);
+    --quiz-purple-shape: hsla(265, 90%, 88%, 1);
+    --quiz-orange-bg: hsla(25, 100%, 95%, 1);
+    --quiz-orange-shape: hsla(25, 100%, 85%, 1);
+    --quiz-teal-bg: hsla(170, 70%, 94%, 1);
+    --quiz-teal-shape: hsla(170, 70%, 80%, 1);
+    --quiz-red-bg: hsla(0, 90%, 95%, 1);
+    --quiz-red-shape: hsla(0, 85%, 85%, 1);
+    --quiz-spooky-bg: hsla(260, 12%, 86%, 1);
+    --quiz-spooky-shape: hsla(262, 18%, 66%, 1);
+    --quiz-sand-bg: hsla(38, 55%, 92%, 1);
+    --quiz-sand-shape: hsla(36, 50%, 78%, 1);
+    --quiz-lime-bg: hsla(80, 85%, 92%, 1);
+    --quiz-lime-shape: hsla(78, 75%, 75%, 1);
+
     --warning-orange-100: hsla(29, 100%, 90%, 1);
     --warning-orange-200: hsla(30, 100%, 70%, 1);
     --warning-orange-300: hsla(30, 100%, 50%, 1);
