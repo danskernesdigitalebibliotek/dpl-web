@@ -44,7 +44,7 @@ const LoanCard = ({
     identifier => identifier.type === "ISBN"
   )?.value
   const materialId = getPublizonIdentifierFromManifestation(manifestation)
-  const { data: loanDecision, isSuccess: hasLoanDecision } = useDigitalLoanDecision(
+  const { data: loanDecision, isPending: isDecisionPending } = useDigitalLoanDecision(
     materialId ?? null
   )
 
@@ -56,9 +56,10 @@ const LoanCard = ({
     isCostFreeLoan(loanDecision?.loanProvider) || isPodcastMaterialType(materialTypeCode)
 
   useEffect(() => {
-    // A podcast is cost-free without asking, so it need not wait for the
-    // decision the others do.
-    if (!hasLoanDecision && !isPodcastMaterialType(materialTypeCode)) {
+    // Waits for the decision to settle, not to succeed: a material Biblio
+    // has no answer for counts as not cost-free rather than dropping out of
+    // every list. A podcast is cost-free without asking.
+    if (isDecisionPending && !isPodcastMaterialType(materialTypeCode)) {
       return
     }
     // TODO: Maybe we could move this logic to the parent component (?)
@@ -86,7 +87,7 @@ const LoanCard = ({
     }
     // We only want to run this useEffect if the manifestation changes or when the products are loaded
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [manifestation, isCostFree, hasLoanDecision])
+  }, [manifestation, isCostFree, isDecisionPending])
 
   if (isLoadingLoans) {
     return (

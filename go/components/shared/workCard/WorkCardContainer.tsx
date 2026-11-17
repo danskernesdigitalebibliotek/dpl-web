@@ -27,8 +27,8 @@ const WorkCardContainer = ({ manifestations, ...props }: TWorkCardContainerProps
 
   const materialIds = manifestations.map(manifestation =>
     manifestation.accessTypes[0]?.code === "ONLINE"
-      ? (getPublizonIdentifierFromManifestation(manifestation) ?? null)
-      : null
+      ? getPublizonIdentifierFromManifestation(manifestation)
+      : undefined
   )
 
   const { decisions } = useDigitalLoanDecisions(
