@@ -3,6 +3,7 @@ import { createStore } from "@xstate/store"
 import type { BookQuizModalProps } from "@/components/shared/bookQuizModal/BookQuizModal"
 import type { CompensationModalProps } from "@/components/shared/compensationModal/CompensationModal"
 import type { DigitalLoansModalProps } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
+import type { EditionsSelectModalProps } from "@/components/shared/editionsSelectModal/EditionsSelectModal"
 import type { FeesModalProps } from "@/components/shared/feesModal/FeesModal"
 import type { LoanDetailsModalProps } from "@/components/shared/loanDetailsModal/LoanDetailsModal"
 import type { PhysicalLoansModalProps } from "@/components/shared/physicalLoansModal/PhysicalLoansModal"
@@ -22,6 +23,7 @@ export type TModalRegistry = {
   PlayerPreviewModal: PlayerPreviewModalProps
   CompensationModal: CompensationModalProps
   DigitalLoansModal: DigitalLoansModalProps
+  EditionsSelectModal: EditionsSelectModalProps
   FeesModal: FeesModalProps
   LoanDetailsModal: LoanDetailsModalProps
   PhysicalLoansModal: PhysicalLoansModalProps
@@ -35,6 +37,10 @@ type TContext = {
   open: boolean
   modalType: TModalStoreType | null
   props: TModalRegistry[TModalStoreType] | null
+  // Counts openings. Modals capture their props on mount, and the host keeps
+  // them mounted through the exit animation, so the host keys on this to give
+  // each opening a fresh component.
+  openId: number
 }
 
 const modalStore = createStore({
@@ -43,6 +49,7 @@ const modalStore = createStore({
     open: false,
     modalType: null,
     props: null,
+    openId: 0,
   } as TContext,
   // Transitions
   on: {
@@ -54,6 +61,7 @@ const modalStore = createStore({
       open: true,
       modalType: event.modalType,
       props: event.props,
+      openId: context.openId + 1,
     }),
     // Keeps modalType/props so the host can play the exit animation before
     // clearing the content.
