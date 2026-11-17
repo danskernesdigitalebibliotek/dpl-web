@@ -32,17 +32,13 @@ const manifestation = {
 } as unknown as ManifestationSearchPageTeaserFragment
 
 const renderCard = () => {
-  const setEbookLoans = vi.fn()
-  render(
-    <LoanCard
-      manifestation={manifestation}
-      title="Vildheks"
-      setAudioLoans={vi.fn()}
-      setEbookLoans={setEbookLoans}
-      setBlueLoans={vi.fn()}
-    />
-  )
-  return setEbookLoans
+  const groups = {
+    setAudioLoans: vi.fn(),
+    setEbookLoans: vi.fn(),
+    setBlueLoans: vi.fn(),
+  }
+  render(<LoanCard manifestation={manifestation} title="Vildheks" {...groups} />)
+  return groups
 }
 
 afterEach(() => {
@@ -58,7 +54,22 @@ describe("LoanCard reports its loan", () => {
       fetchStatus: "idle",
     })
 
-    expect(renderCard()).toHaveBeenCalled()
+    const { setEbookLoans, setBlueLoans, setAudioLoans } = renderCard()
+    expect(setEbookLoans).toHaveBeenCalled()
+    expect(setBlueLoans).not.toHaveBeenCalled()
+    expect(setAudioLoans).not.toHaveBeenCalled()
+  })
+
+  it("reports a cost-free e-book as blue, and only as blue", () => {
+    decisionResult.mockReturnValue({
+      data: { status: "loanable", loanProvider: "selection" },
+      isPending: false,
+      fetchStatus: "idle",
+    })
+
+    const { setBlueLoans, setEbookLoans } = renderCard()
+    expect(setBlueLoans).toHaveBeenCalled()
+    expect(setEbookLoans).not.toHaveBeenCalled()
   })
 
   it("reports an e-book when the decision is disabled and will never arrive", () => {
@@ -70,7 +81,9 @@ describe("LoanCard reports its loan", () => {
       fetchStatus: "idle",
     })
 
-    expect(renderCard()).toHaveBeenCalled()
+    const { setEbookLoans, setBlueLoans } = renderCard()
+    expect(setEbookLoans).toHaveBeenCalled()
+    expect(setBlueLoans).not.toHaveBeenCalled()
   })
 
   it("waits while the decision is actually in flight", () => {
@@ -80,6 +93,9 @@ describe("LoanCard reports its loan", () => {
       fetchStatus: "fetching",
     })
 
-    expect(renderCard()).not.toHaveBeenCalled()
+    const { setEbookLoans, setBlueLoans, setAudioLoans } = renderCard()
+    expect(setEbookLoans).not.toHaveBeenCalled()
+    expect(setBlueLoans).not.toHaveBeenCalled()
+    expect(setAudioLoans).not.toHaveBeenCalled()
   })
 })
