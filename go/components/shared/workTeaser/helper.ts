@@ -8,14 +8,12 @@ import {
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
-import type { TWorkTeaserProps } from "./WorkTeaser"
-
 // Picks the manifestation to show and the work page url, the same way
 // everywhere a work teaser is listed.
-export const getWorkTeaserProps = (
+export const getWorkTeaserValues = (
   work: WorkTeaserSearchPageFragment,
   queryParams: Record<string, number | string> = {}
-): TWorkTeaserProps => {
+) => {
   const manifestations = sortManifestationsBySortPriority(
     filterManifestationsByEdition(
       filterManifestationsByMaterialType(filterMaterialTypes(work.manifestations.all))
@@ -38,7 +36,7 @@ export const getWorkTeaserProps = (
           },
         })
       : "",
-    manifestation,
+    cover: manifestation?.cover,
     manifestations,
   }
 }
