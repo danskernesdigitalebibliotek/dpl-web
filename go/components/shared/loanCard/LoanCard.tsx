@@ -44,9 +44,11 @@ const LoanCard = ({
     identifier => identifier.type === "ISBN"
   )?.value
   const materialId = getPublizonIdentifierFromManifestation(manifestation)
-  const { data: loanDecision, isPending: isDecisionPending } = useDigitalLoanDecision(
-    materialId ?? null
-  )
+  const {
+    data: loanDecision,
+    isPending: isDecisionPending,
+    fetchStatus: decisionFetchStatus,
+  } = useDigitalLoanDecision(materialId ?? null)
 
   const loan = dataLoans?.loans?.find(loan => loan.libraryBook?.identifier === manifestationIsbn)
 
@@ -55,11 +57,15 @@ const LoanCard = ({
   const isCostFree =
     isCostFreeLoan(loanDecision?.loanProvider) || isPodcastMaterialType(materialTypeCode)
 
+  // A decision that is pending with nothing in flight is one that will never
+  // arrive: no patron session, or a material with no id to ask about.
+  const isAwaitingDecision = isDecisionPending && decisionFetchStatus !== "idle"
+
   useEffect(() => {
-    // Waits for the decision to settle, not to succeed: a material Biblio
-    // has no answer for counts as not cost-free rather than dropping out of
-    // every list. A podcast is cost-free without asking.
-    if (isDecisionPending && !isPodcastMaterialType(materialTypeCode)) {
+    // Waits for the decision to settle, not to succeed: a material Biblio has
+    // no answer for counts as not cost-free rather than dropping out of every
+    // list. A podcast is cost-free without asking.
+    if (isAwaitingDecision && !isPodcastMaterialType(materialTypeCode)) {
       return
     }
     // TODO: Maybe we could move this logic to the parent component (?)
@@ -87,7 +93,7 @@ const LoanCard = ({
     }
     // We only want to run this useEffect if the manifestation changes or when the products are loaded
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [manifestation, isCostFree, isDecisionPending])
+  }, [manifestation, isCostFree, isAwaitingDecision])
 
   if (isLoadingLoans) {
     return (
