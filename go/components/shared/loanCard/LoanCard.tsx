@@ -1,5 +1,9 @@
 "use client"
 
+import {
+  isCostFreeLoan,
+  useDigitalLoanDecision,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useEffect } from "react"
 
 import {
@@ -14,7 +18,7 @@ import DigitalExpiryStatusLabel from "@/components/shared/loanCard/DigitalExpiry
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
+import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 export type LoanCardProps = {
@@ -39,17 +43,22 @@ const LoanCard = ({
   const manifestationIsbn = manifestation.identifiers.find(
     identifier => identifier.type === "ISBN"
   )?.value
-  const { data: dataProducts } = useGetV1ProductsIdentifierAdapter(manifestationIsbn || "")
+  const materialId = getPublizonIdentifierFromManifestation(manifestation)
+  const { data: loanDecision, isSuccess: hasLoanDecision } = useDigitalLoanDecision(
+    materialId ?? null
+  )
 
   const loan = dataLoans?.loans?.find(loan => loan.libraryBook?.identifier === manifestationIsbn)
 
   const materialTypeCode = manifestation.materialTypes[0]?.materialTypeSpecific.code
 
-  const isCostFree = dataProducts?.product?.costFree || isPodcastMaterialType(materialTypeCode)
+  const isCostFree =
+    isCostFreeLoan(loanDecision?.loanProvider) || isPodcastMaterialType(materialTypeCode)
 
   useEffect(() => {
-    // If products are not loaded yet, we don't want to set the loans
-    if (!dataProducts?.product) {
+    // A podcast is cost-free without asking, so it need not wait for the
+    // decision the others do.
+    if (!hasLoanDecision && !isPodcastMaterialType(materialTypeCode)) {
       return
     }
     // TODO: Maybe we could move this logic to the parent component (?)
@@ -77,7 +86,7 @@ const LoanCard = ({
     }
     // We only want to run this useEffect if the manifestation changes or when the products are loaded
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [manifestation, isCostFree, dataProducts])
+  }, [manifestation, isCostFree, hasLoanDecision])
 
   if (isLoadingLoans) {
     return (
@@ -109,7 +118,7 @@ const LoanCard = ({
           <DigitalExpiryStatusLabel dueDate={loan?.loanExpireDateUtc} />
         </div>
         {/* Always rendered so the card height is stable — the badge fades in
-            when the product data marks the title as cost-free. */}
+            when the loan decision marks the title as cost-free. */}
         <div className="flex w-full justify-center" aria-hidden={!isCostFree}>
           <Badge
             variant={"blue-title"}
