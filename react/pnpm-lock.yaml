@@ -119,7 +119,7 @@ importers:
         version: 5.1.1(postcss@8.5.32)
       '@cypress/code-coverage':
         specifier: ^4.0.3
-        version: 4.0.3(@babel/core@8.1.2)(@babel/preset-env@8.0.7(@babel/core@8.1.2))(babel-loader@10.1.1(@babel/core@8.1.2)(webpack@5.112.2))(cypress@15.18.0)(supports-color@8.1.1)(webpack@5.112.2)
+        version: 4.0.3(@babel/core@8.1.2)(@babel/preset-env@8.0.7(@babel/core@8.1.2))(babel-loader@10.1.1(@babel/core@8.1.2)(webpack@5.112.2))(cypress@15.21.2)(supports-color@8.1.1)(webpack@5.112.2)
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.4
@@ -226,11 +226,11 @@ importers:
         specifier: ^9.9.0
         version: 9.9.0(postcss@8.5.32)
       cypress:
-        specifier: 15.18.0
-        version: 15.18.0
+        specifier: 15.21.2
+        version: 15.21.2
       cypress-terminal-report:
         specifier: ^7.4.0
-        version: 7.4.0(cypress@15.18.0)
+        version: 7.4.0(cypress@15.21.2)
       dotenv:
         specifier: ^16.5.0
         version: 16.6.1
@@ -3429,8 +3429,8 @@ packages:
     resolution: {integrity: sha512-7yeyCEurROLQJFv5Xj4lEGTy0borxepjFv1g22oAdqFu//SrAlDl1O1Nxx15SH1RoliUml6p8dwJW9jvZughhg==}
     engines: {node: '>=8'}
 
-  arch@2.2.0:
-    resolution: {integrity: sha512-Of/R0wqp83cgHozfIYLbBMnej79U/SVGOOyuB3VVFv1NRM/PSFMK12x9KVtiYzJqmnU5WR2qp0Z5rHb7sWGnFQ==}
+  arch@3.0.0:
+    resolution: {integrity: sha512-AmIAC+Wtm2AU8lGfTtHsw0Y9Qtftx2YXEEtiBP10xFUtMOA+sHHx6OAddyL52mUKh1vsXQ6/w1mVDptZCyUt4Q==}
 
   archy@1.0.0:
     resolution: {integrity: sha512-Xg+9RwCg/0p32teKdGMPTPnVXKD0w3DfHnFTficozsAgsvq2XenPJq/MYpzzQ/v8zrOyJn6Ds39VA4JIDwFfqw==}
@@ -3748,6 +3748,10 @@ packages:
     resolution: {integrity: sha512-TQMmc3w+5AxjpL8iIiwebF73dRDF4fBIieAqGn9RGCWaEVwQ6Fb2cGe31Yns0RRIzii5goJ1Y7xbMwo1TxMplw==}
     engines: {node: '>= 20.19.0'}
 
+  chrome-remote-interface@0.33.3:
+    resolution: {integrity: sha512-zNnn0prUL86Teru6UCAZ1yU1XeXljHl3gj7OrfPcarEfU62OUU4IujDPdTDW3dAWwRqN3ZMG/Chhkh2gPL/wiw==}
+    hasBin: true
+
   chrome-trace-event@1.0.4:
     resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
     engines: {node: '>=6.0'}
@@ -3839,6 +3843,9 @@ packages:
   commander@15.0.0:
     resolution: {integrity: sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==}
     engines: {node: '>=22.12.0'}
+
+  commander@2.11.0:
+    resolution: {integrity: sha512-b0553uYA5YAEGgyYIGYROzKQ7X5RAqedkfjiZxwi0kL1g3bOaBNNZfYkzt/CL0umgD5wc9Jec2FbB98CjkMRvQ==}
 
   commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
@@ -4010,8 +4017,8 @@ packages:
     peerDependencies:
       cypress: '>=10.0.0'
 
-  cypress@15.18.0:
-    resolution: {integrity: sha512-aLfOYSLlVt1b6QSoVUjbCY27taZlYAT8ST47xQbwd9pvQrY/g5gXi12yItZTB+kxkkj+ZcvUYmRLUC95SlCJsw==}
+  cypress@15.21.2:
+    resolution: {integrity: sha512-LcO9+YBGT0zlLd9+mD6/O30S1GcvJqBFTOCQ+uTd3nwFi+fTvogSskE3W/BWgDd/iHFkJzuIun5fcDl1aVLKRQ==}
     engines: {node: ^20.1.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
 
@@ -7218,9 +7225,6 @@ packages:
     resolution: {integrity: sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==}
     engines: {node: '>=6'}
 
-  tslib@1.14.1:
-    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
@@ -7647,6 +7651,18 @@ packages:
   write-file-atomic@8.0.0:
     resolution: {integrity: sha512-dYwyZredl67GyLLIHJnRM3h2PcOmN5SkcgC7eM5DPDEOEl6dLFqVrMg3F1Ea32usj4VSVZtd2H4MtKTNOf6nPg==}
     engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
+
+  ws@7.5.14:
+    resolution: {integrity: sha512-u9Oi2nQ8SZnTUAf6spLLKF5TyqoG3Nbbrd4ai6Sjo4P24bycDewhQqtNMIg4bFpnpH/TD4qk4IuAVhT0HIIqug==}
+    engines: {node: '>=8.3.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
 
   ws@8.21.3:
     resolution: {integrity: sha512-201TZ/kPWxoPr/OKWjquZR1SWKXcvxdH+e1xrx89b3YbmzLMFCLfnaG1HFIgWzJOEWZ7MvpK++odZufgYR50Rw==}
@@ -8598,14 +8614,14 @@ snapshots:
     dependencies:
       postcss-selector-parser: 7.2.1
 
-  '@cypress/code-coverage@4.0.3(@babel/core@8.1.2)(@babel/preset-env@8.0.7(@babel/core@8.1.2))(babel-loader@10.1.1(@babel/core@8.1.2)(webpack@5.112.2))(cypress@15.18.0)(supports-color@8.1.1)(webpack@5.112.2)':
+  '@cypress/code-coverage@4.0.3(@babel/core@8.1.2)(@babel/preset-env@8.0.7(@babel/core@8.1.2))(babel-loader@10.1.1(@babel/core@8.1.2)(webpack@5.112.2))(cypress@15.21.2)(supports-color@8.1.1)(webpack@5.112.2)':
     dependencies:
       '@babel/core': 8.1.2
       '@babel/preset-env': 8.0.7(@babel/core@8.1.2)
       '@cypress/webpack-preprocessor': 6.0.4(@babel/core@8.1.2)(@babel/preset-env@8.0.7(@babel/core@8.1.2))(babel-loader@10.1.1(@babel/core@8.1.2)(webpack@5.112.2))(supports-color@8.1.1)(webpack@5.112.2)
       babel-loader: 10.1.1(@babel/core@8.1.2)(webpack@5.112.2)
       chalk: 4.1.2
-      cypress: 15.18.0
+      cypress: 15.21.2
       dayjs: 1.11.20
       debug: 4.4.3(supports-color@8.1.1)
       execa: 4.1.0
@@ -11043,7 +11059,7 @@ snapshots:
     dependencies:
       default-require-extensions: 3.0.1
 
-  arch@2.2.0: {}
+  arch@3.0.0: {}
 
   archy@1.0.0: {}
 
@@ -11414,6 +11430,14 @@ snapshots:
     dependencies:
       readdirp: 5.1.1
 
+  chrome-remote-interface@0.33.3:
+    dependencies:
+      commander: 2.11.0
+      ws: 7.5.14
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   chrome-trace-event@1.0.4: {}
 
   ci-info@4.4.0: {}
@@ -11498,6 +11522,8 @@ snapshots:
   commander@14.0.3: {}
 
   commander@15.0.0: {}
+
+  commander@2.11.0: {}
 
   commander@2.20.3: {}
 
@@ -11677,26 +11703,27 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  cypress-terminal-report@7.4.0(cypress@15.18.0):
+  cypress-terminal-report@7.4.0(cypress@15.21.2):
     dependencies:
       chalk: 4.1.2
       compare-versions: 6.1.1
-      cypress: 15.18.0
+      cypress: 15.21.2
       superstruct: 0.14.2
 
-  cypress@15.18.0:
+  cypress@15.21.2:
     dependencies:
       '@cypress/request': 4.0.1
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
       '@types/sinonjs__fake-timers': 8.1.1
       '@types/sizzle': 2.3.10
       '@types/tmp': 0.2.6
-      arch: 2.2.0
+      arch: 3.0.0
       blob-util: 2.0.2
       bluebird: 3.7.2
       buffer: 5.7.1
       cachedir: 2.4.0
       chalk: 4.1.2
+      chrome-remote-interface: 0.33.3
       ci-info: 4.4.0
       cli-table3: 0.6.1
       commander: 6.2.1
@@ -11722,9 +11749,11 @@ snapshots:
       systeminformation: 5.31.11
       tmp: 0.2.7
       tree-kill: 1.2.2
-      tslib: 1.14.1
       untildify: 4.0.0
       yauzl: 3.4.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   damerau-levenshtein@1.0.8: {}
 
@@ -15303,8 +15332,6 @@ snapshots:
       minimist: 1.2.8
       strip-bom: 3.0.0
 
-  tslib@1.14.1: {}
-
   tslib@2.8.1: {}
 
   tslib@2.9.1: {}
@@ -15720,6 +15747,8 @@ snapshots:
   write-file-atomic@8.0.0:
     dependencies:
       signal-exit: 4.1.0
+
+  ws@7.5.14: {}
 
   ws@8.21.3: {}
 
