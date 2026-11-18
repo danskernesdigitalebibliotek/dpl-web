@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  type DigitalLoan,
   isCostFreeLoan,
   useDigitalLoanDecision,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
@@ -18,6 +19,7 @@ import DigitalExpiryStatusLabel from "@/components/shared/loanCard/DigitalExpiry
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
+import { findBiblioLoan } from "@/lib/helpers/helper.patron"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
@@ -25,6 +27,9 @@ export type LoanCardProps = {
   manifestation: ManifestationSearchPageTeaserFragment
   title: string
   className?: string
+  // Loans made through the Biblio adapter, shown alongside the Publizon ones
+  // while the two providers coexist.
+  biblioLoans?: DigitalLoan[]
   setAudioLoans: React.Dispatch<React.SetStateAction<string[]>>
   setEbookLoans: React.Dispatch<React.SetStateAction<string[]>>
   setBlueLoans: React.Dispatch<React.SetStateAction<string[]>>
@@ -34,6 +39,7 @@ const LoanCard = ({
   manifestation,
   title,
   className,
+  biblioLoans,
   setAudioLoans,
   setEbookLoans,
   setBlueLoans,
@@ -50,7 +56,11 @@ const LoanCard = ({
     fetchStatus: decisionFetchStatus,
   } = useDigitalLoanDecision(materialId ?? null)
 
+  // The card shows whichever provider holds the loan, so the due date is
+  // there for a Biblio loan too.
   const loan = dataLoans?.loans?.find(loan => loan.libraryBook?.identifier === manifestationIsbn)
+  const biblioLoan = findBiblioLoan(biblioLoans, materialId)
+  const dueDate = loan?.loanExpireDateUtc ?? biblioLoan?.endDate
 
   const materialTypeCode = manifestation.materialTypes[0]?.materialTypeSpecific.code
 
@@ -122,7 +132,7 @@ const LoanCard = ({
         />
         {/* pt clears the material-type icon straddling the cover's bottom edge. */}
         <div className="flex w-full justify-center pt-5">
-          <DigitalExpiryStatusLabel dueDate={loan?.loanExpireDateUtc} />
+          <DigitalExpiryStatusLabel dueDate={dueDate} />
         </div>
         {/* Always rendered so the card height is stable — the badge fades in
             when the loan decision marks the title as cost-free. */}
