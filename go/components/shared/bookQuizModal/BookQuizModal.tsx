@@ -21,7 +21,9 @@ import { cn } from "@/lib/helpers/helper.cn"
 
 import BookQuizIntro from "./BookQuizIntro"
 import BookQuizQuestion from "./BookQuizQuestion"
+import BookQuizWatermark from "./BookQuizWatermark"
 import StepDots from "./StepDots"
+import { QUIZ_COLOR_CLASSES } from "./colors"
 import {
   getBookQuizResultUrl,
   getColorAfterSelect,
@@ -30,21 +32,6 @@ import {
   prefetchBookQuizResults,
   selectOption,
 } from "./helper"
-
-// Literal classes per colour, so Tailwind finds them.
-const COLOR_CLASSES: Record<TBookQuizColor, { background: string; shape: string }> = {
-  green: { background: "bg-quiz-green-bg", shape: "bg-quiz-green-shape" },
-  pink: { background: "bg-quiz-pink-bg", shape: "bg-quiz-pink-shape" },
-  yellow: { background: "bg-quiz-yellow-bg", shape: "bg-quiz-yellow-shape" },
-  blue: { background: "bg-quiz-blue-bg", shape: "bg-quiz-blue-shape" },
-  purple: { background: "bg-quiz-purple-bg", shape: "bg-quiz-purple-shape" },
-  orange: { background: "bg-quiz-orange-bg", shape: "bg-quiz-orange-shape" },
-  teal: { background: "bg-quiz-teal-bg", shape: "bg-quiz-teal-shape" },
-  red: { background: "bg-quiz-red-bg", shape: "bg-quiz-red-shape" },
-  spooky: { background: "bg-quiz-spooky-bg", shape: "bg-quiz-spooky-shape" },
-  sand: { background: "bg-quiz-sand-bg", shape: "bg-quiz-sand-shape" },
-  lime: { background: "bg-quiz-lime-bg", shape: "bg-quiz-lime-shape" },
-}
 
 // The quiz takes no props. `open`/`onClose` come from the DynamicModal host.
 export type BookQuizModalProps = object
@@ -85,25 +72,16 @@ const BookQuizModal = ({
         size="wide"
         aria-describedby={undefined}
         className={cn(
-          COLOR_CLASSES[color].background,
+          QUIZ_COLOR_CLASSES[color].background,
           `dark:bg-background-overlay-solid grid-rows-[auto_1fr_auto] transition-colors
           duration-500`
         )}
         data-cy={cyKeys["book-quiz-modal"]}>
-        {/* Large watermark behind the content, running off the bottom right corner
-            so its edges stay clear of the centred content. */}
-        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-          {/* The SVG is used as a mask, so the colour comes from the background.
-              Not Icon: SVGR drops the viewBox, so Icon can't scale it. */}
-          <div
-            className={cn(
-              COLOR_CLASSES[color].shape,
-              `absolute -right-[18%] -bottom-[35%] aspect-[196/198] w-[140%] -rotate-12
-              mask-[url(/icons/abstract-shape.svg)] mask-contain mask-no-repeat transition-colors
-              duration-500 lg:-right-[6%] lg:w-[88%] dark:opacity-15`
-            )}
-          />
-        </div>
+        {/* Runs off the bottom right corner, clear of the centred content. */}
+        <BookQuizWatermark
+          color={color}
+          className="-right-[18%] -bottom-[35%] w-[140%] lg:-right-[6%] lg:w-[88%]"
+        />
         {/* The close and back buttons live inside DialogTitle, so they are made
             white from here, to stand out on the coloured background. */}
         <DialogHeader className="p-grid-edge [&_button]:bg-background lg:px-10 lg:pt-10 lg:pb-6">
