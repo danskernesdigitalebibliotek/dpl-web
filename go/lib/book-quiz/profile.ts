@@ -1,4 +1,4 @@
-import type { TBookQuizGroup } from "./groups"
+import type { TBookQuizColor, TBookQuizGroup } from "./groups"
 import {
   type TBookQuizOption,
   type TBookQuizQuestionId,
@@ -44,6 +44,14 @@ export const getGroupAnswers = (
     .map(optionId => findOption("subjects", optionId))
     .filter(hasGroup),
 })
+
+// The colour of the result page: genre first, then mood, then the first
+// subject with a colour, as in the quiz.
+export const getBookQuizColor = (profile: TBookQuizProfile): TBookQuizColor =>
+  profile.genre?.color ??
+  profile.mood?.color ??
+  profile.subjects.find(group => group.color)?.color ??
+  "green"
 
 export const getBookQuizProfile = (answers: TBookQuizAnswers): TBookQuizProfile => ({
   genre: findOption("genre", answers.genre)?.group,

@@ -1,13 +1,16 @@
 import React from "react"
 
-import { Badge } from "@/components/shared/badge/Badge"
+import BookQuizBurst from "@/components/shared/bookQuizModal/BookQuizBurst"
+import BookQuizWatermark from "@/components/shared/bookQuizModal/BookQuizWatermark"
+import { QUIZ_COLOR_CLASSES } from "@/components/shared/bookQuizModal/colors"
 import type { TLadderPart, TLadderStep } from "@/lib/book-quiz/ladder"
-import type { TBookQuizProfile } from "@/lib/book-quiz/profile"
+import { type TBookQuizProfile, getBookQuizColor } from "@/lib/book-quiz/profile"
 import type { TBookQuizOption } from "@/lib/book-quiz/questions"
+import { cn } from "@/lib/helpers/helper.cn"
 
 import BookQuizSection from "./BookQuizSection"
 import OpenBookQuizButton from "./OpenBookQuizButton"
-import { getStepAnswers } from "./helper"
+import { getHeroEmojis, getStepAnswers } from "./helper"
 
 type TBookQuizResultLayoutProps = {
   profile: TBookQuizProfile
@@ -29,31 +32,43 @@ const BookQuizResultLayout = ({ profile, steps, groupAnswers }: TBookQuizResultL
   }
 
   const bookType = [profile.genre?.label, profile.mood?.label].filter(Boolean).join(" & ")
-  const likes = [
-    ...profile.subjects.map(group => group.label),
-    ...(profile.easyToRead ? ["Lette bøger"] : []),
-  ]
+  const color = getBookQuizColor(profile)
 
   return (
     <div className="content-container space-y-grid-gap-3">
-      <div className="bg-content-4 dark:bg-background p-grid-edge space-y-grid-gap-2 rounded-xl">
-        <p className="text-typo-subtitle-lg">Din bogtype</p>
-        <h1 className="text-typo-heading-3 lg:text-typo-heading-1">
-          {bookType || "Dine bogforslag"}
-        </h1>
-        {likes.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-typo-subtitle-sm">Vi tror, du kan lide</p>
-            <ul className="flex flex-wrap gap-2">
-              {likes.map(like => (
-                <li key={like}>
-                  <Badge variant="outline">{like}</Badge>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <OpenBookQuizButton>Tag quizzen igen</OpenBookQuizButton>
+      {/* The quiz's colour and watermark, with the girl from the quiz rising from
+          the bottom edge and the user's answers bursting out of the flask. */}
+      <div
+        className={cn(
+          QUIZ_COLOR_CLASSES[color].background,
+          `dark:bg-background-overlay-solid px-grid-edge pt-grid-edge relative isolate grid
+          items-center gap-6 overflow-hidden rounded-xl lg:grid-cols-2 lg:px-10 lg:pt-0`
+        )}>
+        <BookQuizWatermark
+          color={color}
+          className="-right-[10%] -bottom-[60%] w-[90%] lg:w-[60%]"
+        />
+        <div className="space-y-grid-gap-2 lg:py-10">
+          <p className="text-typo-subtitle-lg">Du kan godt lide</p>
+          <h1 className="text-typo-heading-3 lg:text-typo-heading-1">
+            {bookType || "Dine bogforslag"}
+          </h1>
+          <p className="text-typo-body-lg">
+            Vi har fundet bøger, der passer til dig. Du finder dem herunder.{" "}
+            <span aria-hidden="true">👇</span>
+          </p>
+          <OpenBookQuizButton theme="secondary" className="bg-background">
+            Tag quizzen igen
+          </OpenBookQuizButton>
+        </div>
+        <div className="flex justify-center self-end pt-[110px] lg:pt-[130px]">
+          {/* Keyed by the searches, so the burst plays again when the quiz is
+              retaken from this page, where only the query changes. */}
+          <BookQuizBurst
+            key={steps.map(step => step.cql).join("|")}
+            emojis={getHeroEmojis(groupAnswers)}
+          />
+        </div>
       </div>
       {steps.map(step => (
         <BookQuizSection
