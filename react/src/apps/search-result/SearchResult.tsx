@@ -30,7 +30,7 @@ import useGetSearchBranches from "../../core/utils/branches";
 import SearchResultInvalidSearch from "./search-result-not-valid-search";
 import { useUrls } from "../../core/utils/url";
 import { useConfig } from "../../core/utils/config";
-import SearchResultList, { ResultItem } from "./SearchResultList";
+import SearchResultList from "./SearchResultList";
 import SearchResultFacets from "./SearchResultFacets";
 import IconFilter from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-filter.svg";
 import useDialog from "../../components/dialog/useDialog";
@@ -152,6 +152,10 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [facets]);
+
+  const campaignsData = campaignMutation.data?.data
+    ? [campaignMutation.data.data]
+    : [];
 
   // Each loaded page is fetched separately. When the search has just changed
   // only the first page is fetched, as the pager is about to be reset.
@@ -318,14 +322,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
               </div>
             </div>
             <SearchResultList
-              resultItems={
-                [
-                  ...(campaignMutation.data?.data
-                    ? [campaignMutation.data.data]
-                    : []),
-                  ...resultItems
-                ] as ResultItem[]
-              }
+              resultItems={[...campaignsData, ...resultItems]}
               isLoading={isLoading}
               page={page}
               pageSize={pageSize}

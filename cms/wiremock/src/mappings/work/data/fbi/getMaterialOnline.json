@@ -271,6 +271,9 @@
       },
       "materialTypes": [
         {
+          "materialTypeGeneral": {
+            "code": "NEWSPAPER_JOURNALS"
+          },
           "materialTypeSpecific": {
             "display": "avis (online)"
           }
