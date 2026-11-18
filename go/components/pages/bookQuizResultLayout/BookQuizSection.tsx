@@ -57,9 +57,9 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
       </h2>
       <hr />
       {isLoading ? (
-        <SearchResultsSkeleton count={BOOKS_PER_STEP} />
+        <SearchResultsSkeleton count={BOOKS_PER_STEP} columns={BOOKS_PER_STEP} />
       ) : works.length > 0 ? (
-        <SearchResults works={works} />
+        <SearchResults works={works} columns={BOOKS_PER_STEP} />
       ) : (
         <p className="text-typo-subtitle-lg opacity-35">Kombinationen gav ingen bøger</p>
       )}

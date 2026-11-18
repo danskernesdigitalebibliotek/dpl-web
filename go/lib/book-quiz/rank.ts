@@ -1,7 +1,7 @@
 import type { TBookQuizRange } from "./questions"
 
 // Books shown per section.
-export const BOOKS_PER_STEP = 3
+export const BOOKS_PER_STEP = 4
 // How many years a work's age span may reach outside the chosen range.
 export const MAX_AGE_SPILL = 2
 

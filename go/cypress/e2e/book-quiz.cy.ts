@@ -49,7 +49,7 @@ describe("Book Quiz Tests", () => {
     cy.dataCy("book-quiz-modal").should("not.exist")
     cy.get("h1").should("contain.text", "Fantasy & Sjov")
     // Steps that need the skipped subjects show the empty message, the rest
-    // show at most 3 books each
+    // show at most 4 books each
     cy.dataCy("book-quiz-section").should("have.length.above", 1)
     cy.dataCy("work-card").should("have.length.at.least", 3)
   })
