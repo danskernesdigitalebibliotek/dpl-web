@@ -79,7 +79,7 @@
     "keen-slider": "6.8.6",
     "knip": "^6.45.1",
     "markdownlint-cli2": "^0.24.1",
-    "playwright": "^1.65.0",
+    "playwright": "^1.65.1",
     "postcss": "^8.5.33",
     "prettier": "^3.10.1",
     "react": "^18.3.1",
