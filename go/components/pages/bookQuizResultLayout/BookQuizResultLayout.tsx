@@ -48,16 +48,18 @@ const BookQuizResultLayout = ({ profile, steps, groupAnswers }: TBookQuizResultL
           color={color}
           className="-right-[10%] -bottom-[60%] w-[90%] lg:w-[60%]"
         />
-        <div className="space-y-grid-gap-2 lg:py-10">
-          <p className="text-typo-subtitle-lg">Du kan godt lide</p>
-          <h1 className="text-typo-heading-3 lg:text-typo-heading-1">
+        {/* Grouped by distance: the lead-in sits close to the heading it
+            belongs to, the text a little further away, the button furthest. */}
+        <div className="lg:py-10">
+          <p className="text-typo-subtitle-md lg:text-typo-subtitle-lg">Du kan godt lide</p>
+          <h1 className="text-typo-heading-3 lg:text-typo-heading-1 mt-1 lg:mt-2">
             {bookType || "Dine bogforslag"}
           </h1>
-          <p className="text-typo-body-lg">
+          <p className="text-typo-body-lg mt-4 max-w-[440px] lg:mt-6">
             Vi har fundet bøger, der passer til dig. Du finder dem herunder.{" "}
             <span aria-hidden="true">👇</span>
           </p>
-          <OpenBookQuizButton theme="secondary" className="bg-background">
+          <OpenBookQuizButton theme="secondary" className="bg-background mt-8 lg:mt-10">
             Tag quizzen igen
           </OpenBookQuizButton>
         </div>
