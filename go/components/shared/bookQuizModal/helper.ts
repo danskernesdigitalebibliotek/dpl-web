@@ -52,6 +52,12 @@ export const getColorAfterSelect = (
   return question.options.find(option => option.id === optionId)?.group?.color ?? color
 }
 
+// All chosen options in question order, for the loader.
+export const getChosenOptions = (answers: TBookQuizAnswers) =>
+  QUESTIONS.flatMap(question =>
+    question.options.filter(option => getSelectedIds(answers, question.id).includes(option.id))
+  )
+
 export const getBookQuizResultUrl = (answers: TBookQuizAnswers) =>
   serializeBookQuizAnswers(`/${goConfig("routes.book-quiz")}`, answers)
 

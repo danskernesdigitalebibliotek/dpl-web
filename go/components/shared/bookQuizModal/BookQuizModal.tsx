@@ -21,18 +21,23 @@ import { QUESTIONS, type TBookQuizQuestionId } from "@/lib/book-quiz/questions"
 import { cn } from "@/lib/helpers/helper.cn"
 
 import BookQuizIntro from "./BookQuizIntro"
+import BookQuizLoading from "./BookQuizLoading"
 import BookQuizQuestion from "./BookQuizQuestion"
 import BookQuizWatermark from "./BookQuizWatermark"
 import StepDots from "./StepDots"
 import { QUIZ_COLOR_CLASSES } from "./colors"
 import {
   getBookQuizResultUrl,
+  getChosenOptions,
   getColorAfterSelect,
   getSelectedIds,
   getStepEmojis,
   prefetchBookQuizResults,
   selectOption,
 } from "./helper"
+
+// How long the loader shows at least, in ms.
+const MIN_LOADING_TIME = 4500
 
 // The quiz takes no props. `open`/`onClose` come from the DynamicModal host.
 export type BookQuizModalProps = object
@@ -61,7 +66,11 @@ const BookQuizModal = ({
     if (nextQuestion) return flow.goTo(nextQuestion.id)
 
     flow.goTo("loading")
-    await prefetchBookQuizResults(queryClient, nextAnswers)
+    // Keeps the loader up long enough to be seen, even when the books come fast.
+    await Promise.all([
+      prefetchBookQuizResults(queryClient, nextAnswers),
+      new Promise(resolve => setTimeout(resolve, MIN_LOADING_TIME)),
+    ])
     router.push(getBookQuizResultUrl(nextAnswers))
     // The host closes modals on route changes, but not when the quiz is
     // retaken from the result page, where only the query changes.
@@ -116,12 +125,7 @@ const BookQuizModal = ({
                   }}
                 />
               ) : (
-                <div role="status" className="flex flex-col items-center gap-4 text-center">
-                  <p aria-hidden="true" className="text-typo-heading-2">
-                    💣 🦄 🧪 🪐 🕰️
-                  </p>
-                  <p className="text-typo-heading-3">Vi har næsten noget</p>
-                </div>
+                <BookQuizLoading options={getChosenOptions(answers)} />
               )
             )}
           </div>
