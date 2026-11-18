@@ -19,7 +19,8 @@ import DigitalExpiryStatusLabel from "@/components/shared/loanCard/DigitalExpiry
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { findBiblioLoan } from "@/lib/helpers/helper.patron"
+import { getBiblioDueDate } from "@/lib/helpers/helper.due-status"
+import { biblioLoanForManifestation } from "@/lib/helpers/helper.patron"
 import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
@@ -29,6 +30,8 @@ export type LoanCardProps = {
   className?: string
   // Loans made through the Biblio adapter, shown alongside the Publizon ones
   // while the two providers coexist.
+  // TODO(publizon-sunset): remove when the Publizon API is phased out — the
+  // prop becomes the only loan source and useGetV1UserLoans goes.
   biblioLoans?: DigitalLoan[]
   setAudioLoans: React.Dispatch<React.SetStateAction<string[]>>
   setEbookLoans: React.Dispatch<React.SetStateAction<string[]>>
@@ -56,11 +59,9 @@ const LoanCard = ({
     fetchStatus: decisionFetchStatus,
   } = useDigitalLoanDecision(materialId ?? null)
 
-  // The card shows whichever provider holds the loan, so the due date is
-  // there for a Biblio loan too.
   const loan = dataLoans?.loans?.find(loan => loan.libraryBook?.identifier === manifestationIsbn)
-  const biblioLoan = findBiblioLoan(biblioLoans, materialId)
-  const dueDate = loan?.loanExpireDateUtc ?? biblioLoan?.endDate
+  const biblioLoan = biblioLoanForManifestation(manifestation, biblioLoans)
+  const dueDate = loan?.loanExpireDateUtc ?? (biblioLoan && getBiblioDueDate(biblioLoan.endDate))
 
   const materialTypeCode = manifestation.materialTypes[0]?.materialTypeSpecific.code
 
