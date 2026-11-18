@@ -7,6 +7,7 @@ import MaterialListItem from "../card-item-list/MaterialListItem";
 import RecommendedMaterial from "../../apps/recommended-material/RecommendedMaterial";
 import { useEventStatistics } from "../../core/statistics/useStatistics";
 import { statistics } from "../../core/statistics/statistics";
+import { useText } from "../../core/utils/text";
 
 export type MaterialGridItemProps = {
   wid: WorkId;
@@ -17,10 +18,9 @@ export type MaterialGridProps = {
   materials: MaterialGridItemProps[];
   title?: string;
   description?: string;
-  buttonText?: string;
   initialMaximumDisplay?: number;
-  // When false, all materials are shown from the start and there is no
-  // "Show all" button.
+  // Show a button that reveals the materials beyond initialMaximumDisplay.
+  // Without it, only the first initialMaximumDisplay materials are shown.
   useShowAllButton?: boolean;
 };
 
@@ -35,31 +35,20 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
   materials,
   title,
   description,
-  buttonText,
   initialMaximumDisplay = defaultIncrement,
-  useShowAllButton = true
+  useShowAllButton = false
 }) => {
+  const t = useText();
   const firstNewItemRef = React.useRef<HTMLLIElement>(null);
   const { track } = useEventStatistics();
+  const [expanded, setExpanded] = useState(false);
 
-  const moreMaterialsThanInitialMaximum =
-    materials.length > initialMaximumDisplay;
-
-  const amountToDisplay = Math.min(maxAmount, materials.length);
-
-  const [
-    currentAmountOfDisplayedMaterials,
-    setCurrentMaterialsDisplayedMaterials
-  ] = useState(useShowAllButton ? initialMaximumDisplay : maxAmount);
-
-  // Focus on the first new item when the user clicks the "Show more" button
+  // Focus on the first new item when the user clicks the "Show all" button
   useEffect(() => {
-    if (firstNewItemRef.current) {
-      firstNewItemRef.current.focus();
+    if (expanded) {
+      firstNewItemRef.current?.focus();
     }
-  }, [currentAmountOfDisplayedMaterials]);
-
-  const [showAllMaterials, setShowAllMaterials] = useState(false);
+  }, [expanded]);
 
   function handleShowAllMaterials() {
     // Tracked under the same Mapp event (47) as material clicks so DDF can see
@@ -70,8 +59,7 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
       name: statistics.materialGridClick.name,
       trackedData: "Klik på Materiale grids vis mere"
     });
-    setCurrentMaterialsDisplayedMaterials(amountToDisplay);
-    setShowAllMaterials(!showAllMaterials);
+    setExpanded(true);
   }
 
   if (!materials.length) {
@@ -95,19 +83,13 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
       )}
       <ul className="material-grid__items">
         {materials
-          .slice(0, currentAmountOfDisplayedMaterials)
+          .slice(0, expanded ? maxAmount : initialMaximumDisplay)
           .map((material, index) => {
             const { wid, materialType } = material;
             return (
               <MaterialListItem
                 key={wid}
-                // Without the button every item renders on mount, so a ref
-                // here would move focus to it on page load.
-                ref={
-                  useShowAllButton && index === initialMaximumDisplay
-                    ? firstNewItemRef
-                    : null
-                }
+                ref={index === initialMaximumDisplay ? firstNewItemRef : null}
               >
                 <RecommendedMaterial
                   partOfGrid
@@ -119,16 +101,15 @@ const MaterialGrid: React.FC<MaterialGridProps> = ({
           })}
       </ul>
       {useShowAllButton &&
-        moreMaterialsThanInitialMaximum &&
-        !showAllMaterials &&
-        buttonText && (
+        !expanded &&
+        materials.length > initialMaximumDisplay && (
           <button
             className="material-grid__show-more btn-primary btn-outline btn-medium"
             data-show-more
             type="button"
             onClick={() => handleShowAllMaterials()}
           >
-            {buttonText}
+            {t("buttonText")}
           </button>
         )}
     </div>

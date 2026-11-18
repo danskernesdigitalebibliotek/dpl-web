@@ -10,7 +10,6 @@ import {
   useGetPhysicalHoldingsFilters,
   hasActivePhysicalHoldingsFilter
 } from "../../../core/utils/useGetPhysicalHoldingsFilters";
-import { useText } from "../../../core/utils/text";
 import { WorkId } from "../../../core/utils/types/ids";
 import { ManifestationMaterialType } from "../../../core/utils/types/material-type";
 import { commaSeparatedStringToArray } from "../../advanced-search/helpers";
@@ -49,8 +48,6 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
   materialType,
   useShowAllButton
 }) => {
-  const t = useText();
-  const buttonText = t("buttonText");
   const cleanBranches = useGetSearchBranches();
   const physicalHoldingsFilters = useGetPhysicalHoldingsFilters();
 
@@ -105,8 +102,8 @@ const MaterialGridAutomatic: React.FC<MaterialGridAutomaticProps> = ({
       title={title}
       materials={materials}
       description={description}
-      buttonText={buttonText}
       useShowAllButton={useShowAllButton}
+      initialMaximumDisplay={useShowAllButton ? undefined : materials.length}
     />
   );
 };
