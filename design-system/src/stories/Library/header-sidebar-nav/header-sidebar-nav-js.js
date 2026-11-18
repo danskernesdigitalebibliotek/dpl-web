@@ -55,7 +55,9 @@ function initSidebarNav() {
   sidebarNav.addEventListener("close", () => {
     sidebarNav.removeAttribute("data-closing");
     sidebarNavToggle?.setAttribute("aria-expanded", "false");
-    sidebarNavToggle?.focus();
+    // Safari doesn't focus a clicked button, so the dialog's own focus restore
+    // misses the toggle. preventScroll keeps the jump to an in-page menu link.
+    sidebarNavToggle?.focus({ preventScroll: true });
   });
 
   // A menu link leaves the page while the menu is still sliding out. Close it
