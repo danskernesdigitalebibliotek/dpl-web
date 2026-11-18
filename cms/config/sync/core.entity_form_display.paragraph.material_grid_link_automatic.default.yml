@@ -32,7 +32,7 @@ content:
     third_party_settings: {  }
   field_material_grid_link:
     type: string_textarea
-    weight: 3
+    weight: 4
     region: content
     settings:
       rows: 1
@@ -48,7 +48,7 @@ content:
     third_party_settings: {  }
   field_use_show_all_button:
     type: options_buttons
-    weight: 4
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }

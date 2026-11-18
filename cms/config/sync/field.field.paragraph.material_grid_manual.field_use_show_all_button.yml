@@ -9,8 +9,8 @@ id: paragraph.material_grid_manual.field_use_show_all_button
 field_name: field_use_show_all_button
 entity_type: paragraph
 bundle: material_grid_manual
-label: 'Use show all button'
-description: 'If disabled, all materials in the grid are shown from the start.'
+label: Expansion
+description: ''
 required: true
 translatable: false
 default_value:
@@ -18,6 +18,6 @@ default_value:
     value: 1
 default_value_callback: ''
 settings:
-  on_label: 'Yes'
-  off_label: 'No'
+  on_label: 'Use show all button'
+  off_label: 'Show all at once'
 field_type: boolean
