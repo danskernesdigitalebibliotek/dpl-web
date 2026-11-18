@@ -1,5 +1,5 @@
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
-// Label for the trigger button that opens the modal.
+// The publication year of the edition the page shows.
 export const getEditionLabel = (selectedManifestation: ManifestationWorkPageFragment): string =>
   selectedManifestation.edition?.publicationYear?.year?.toString() ?? "Valgt udgave"
