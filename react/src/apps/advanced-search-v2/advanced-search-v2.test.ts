@@ -925,6 +925,36 @@ describe("Advanced Search V2", () => {
         });
     });
 
+    // Browsers may restore the results from the back/forward cache, where the
+    // page is shown as it was left without rendering it again.
+    it("does not scroll to the work again when the search is edited after returning from the cache", () => {
+      // Open a work from the first page, but stay on the results, as Cypress
+      // cannot go back to a page in the back/forward cache.
+      cy.get('[data-item-id="work-of:test-25"]')
+        .find("[data-cy='card-list-item-title'] a")
+        .then(($link) => {
+          $link.on("click", (event) => event.preventDefault());
+        })
+        .click();
+      // Return to the results as the back/forward cache does.
+      cy.window().then((win) => {
+        win.dispatchEvent(
+          new win.PageTransitionEvent("pageshow", { persisted: true })
+        );
+      });
+      // Edit and search again, which shows the work on the first page again.
+      page.components.Summary((summary) => {
+        summary.clickEdit();
+      });
+      page.components.Form((form) => {
+        form.clickSearch();
+      });
+      cy.get("[data-item-id]").should("have.length", 50);
+      // The new results are not scrolled to the work opened earlier.
+      cy.get('[data-item-id="work-of:test-25"]').should("not.have.focus");
+      cy.url().should("not.include", "item=");
+    });
+
     it("starts over on the first page when the search is edited", () => {
       // Edit the search. The page is removed from the URL right away.
       page.components.Summary((summary) => {

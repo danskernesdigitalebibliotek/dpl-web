@@ -2,6 +2,13 @@ import { RefObject, useCallback, useEffect, useRef } from "react";
 
 const itemParam = "item";
 
+// Removes the item from the URL, and lets the browser handle a later return.
+const forgetItem = (url: URL) => {
+  url.searchParams.delete(itemParam);
+  window.history.replaceState(window.history.state, "", url);
+  window.history.scrollRestoration = "auto";
+};
+
 type UseRestoreScrollToItemProps = {
   // The list containing the items, each marked with a data-item-id attribute.
   listRef: RefObject<HTMLElement | null>;
@@ -38,10 +45,8 @@ const useRestoreScrollToListItem = ({
       return;
     }
     // Only restore once, so a reload or a copied link does not jump to the
-    // item, and let the browser handle a later reload.
-    url.searchParams.delete(itemParam);
-    window.history.replaceState(window.history.state, "", url);
-    window.history.scrollRestoration = "auto";
+    // item.
+    forgetItem(url);
 
     const item = listRef.current?.querySelector(
       `[data-item-id="${CSS.escape(itemId)}"]`
@@ -51,6 +56,23 @@ const useRestoreScrollToListItem = ({
       item.focus({ preventScroll: true });
     }
   }, [enabled, isReady, listRef]);
+
+  // A page restored from the back/forward cache is shown as it was left, with
+  // its scroll position, and is not rendered again. Forget the item, or a
+  // later list, e.g. after editing the search, would scroll to it.
+  useEffect(() => {
+    if (!enabled) {
+      return undefined;
+    }
+    const onPageShow = (event: PageTransitionEvent) => {
+      const url = new URL(window.location.href);
+      if (event.persisted && url.searchParams.has(itemParam)) {
+        forgetItem(url);
+      }
+    };
+    window.addEventListener("pageshow", onPageShow);
+    return () => window.removeEventListener("pageshow", onPageShow);
+  }, [enabled]);
 
   return useCallback(
     (itemId: string) => {
