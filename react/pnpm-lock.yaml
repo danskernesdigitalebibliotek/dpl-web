@@ -51,8 +51,8 @@ importers:
         specifier: ^4.6.13
         version: 4.6.13
       focus-trap-react:
-        specifier: ^12.0.3
-        version: 12.0.3(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^12.0.4
+        version: 12.0.4(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       graphql:
         specifier: ^16.15.0
         version: 16.15.0
@@ -4637,16 +4637,16 @@ packages:
     resolution: {integrity: sha512-kWyh8ADvHBFz6ua5xYOPnUroZTT/bwWfrCeL0Wj1dzG4/YOmOcfJ99W8dOVyyynJN35rZ9aCOtHChqQovV7yog==}
     engines: {node: '>=6'}
 
-  focus-trap-react@12.0.3:
-    resolution: {integrity: sha512-4eXtzhRTtFrxle9Tkl0Wkj8SFJnWz3i3yb5e53Mdn4E8XZQ/Lzqom9U4uUAJ8wd7yDmyGVP96dxwQZXLXd4sbg==}
+  focus-trap-react@12.0.4:
+    resolution: {integrity: sha512-R5hmH2F9TmRgczBU9wdSmx66uaJcH1OaksSoELQefrfKiOJPAzdnUr8766xxOu56tso6XkSED5Czqtv7Ehuy7Q==}
     peerDependencies:
       '@types/react': ^18.0.0 || ^19.0.0
       '@types/react-dom': ^18.0.0 || ^19.0.0
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
 
-  focus-trap@8.2.2:
-    resolution: {integrity: sha512-qV0g8hRYBqgACcFOH3f9wXc4zPKhr/0z9RI2a6ZijZ72EeBi4g8oBy8zAWuUR1TsMpOzwpUMFvjdasrC41Joug==}
+  focus-trap@8.2.5:
+    resolution: {integrity: sha512-VrqfyRXaHZ0EkhXlfyalszmhnSN9yjdYXwlwLSRoJrDJ0/eswY5J5Avj/Hcd/PrOHCMnsMhwx7+7+s1kmv9Asg==}
 
   for-each@0.3.5:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
@@ -7061,6 +7061,9 @@ packages:
 
   tabbable@6.5.0:
     resolution: {integrity: sha512-wieBHXygIm7OyQOu5hQlkk62/WyCFYGlWg7L6/ZCUZwx0o398Zkn4pVmMyfYhfMG8kGrj/Krt8eIk6UKC6VzwA==}
+
+  tabbable@6.5.2:
+    resolution: {integrity: sha512-XgdnB1nGU6KU4VgMnZPaZCx7M1hBrLyEiZYau2G2gq9UT0d7d4FUBlNX7vvPlm/B1vk1PjrzJBx9Lbv4fsqS9g==}
 
   tagged-tag@1.0.0:
     resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
@@ -12546,18 +12549,18 @@ snapshots:
 
   flru@1.0.2: {}
 
-  focus-trap-react@12.0.3(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
+  focus-trap-react@12.0.4(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
-      focus-trap: 8.2.2
+      focus-trap: 8.2.5
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
-      tabbable: 6.5.0
+      tabbable: 6.5.2
 
-  focus-trap@8.2.2:
+  focus-trap@8.2.5:
     dependencies:
-      tabbable: 6.5.0
+      tabbable: 6.5.2
 
   for-each@0.3.5:
     dependencies:
@@ -15213,6 +15216,8 @@ snapshots:
   systeminformation@5.31.11: {}
 
   tabbable@6.5.0: {}
+
+  tabbable@6.5.2: {}
 
   tagged-tag@1.0.0: {}
 
