@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import React, { ButtonHTMLAttributes, forwardRef } from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
@@ -33,7 +34,6 @@ const BadgeButton = forwardRef<HTMLButtonElement, BadgeButtonProps>(
           `focus-visible bg-background-overlay text-typo-caption flex h-[28px] w-auto flex-row
           justify-center gap-2 self-start rounded-full px-4 py-2 whitespace-nowrap
           hover:cursor-pointer`,
-          withAnimation ? "hover:animate-wiggle" : "",
           variant === "transparent" ? "bg-transparent" : "",
           isActive ? "bg-foreground text-background" : "",
           classNames
@@ -41,7 +41,14 @@ const BadgeButton = forwardRef<HTMLButtonElement, BadgeButtonProps>(
         aria-label={ariaLabel}
         aria-pressed={isActive}
         {...restProps}>
-        <span className={cn("flex flex-row items-center gap-2")}>{children}</span>
+        {/* The contents grow on hover and shrink on tap; the pill itself holds
+            its size, so neighbouring badges do not shift. */}
+        <motion.span
+          className="flex flex-row items-center gap-2"
+          whileHover={withAnimation ? { scale: 1.06 } : undefined}
+          whileTap={withAnimation ? { scale: 0.92 } : undefined}>
+          {children}
+        </motion.span>
       </button>
     )
   }
