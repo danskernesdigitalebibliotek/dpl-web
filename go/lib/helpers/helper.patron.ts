@@ -182,16 +182,24 @@ export const digitalLoanForWork = (
   return loanData.loans?.find(loan => loan.libraryBook?.identifier === isbn)
 }
 
-// The Biblio loan behind a paired work. Matched on any identifier rather
-// than ISBN only: the adapter's material id is the identifier the loan was
-// made with, which is not always typed ISBN in the catalogue.
+// The Biblio loan on a manifestation. Matched on any identifier rather than
+// ISBN only: the adapter's material id is the identifier the loan was made
+// with, which is not always typed ISBN in the catalogue.
+export const biblioLoanForManifestation = (
+  manifestation: Pick<ManifestationSearchPageTeaserFragment, "identifiers">,
+  biblioLoans: DigitalLoan[] | undefined
+): DigitalLoan | undefined =>
+  biblioLoans?.find(loan =>
+    manifestation.identifiers.some(identifier => identifier.value === loan.materialId)
+  )
+
+// The Biblio loan behind a paired work. Paired works carry exactly the
+// loaned manifestation.
 export const biblioLoanForWork = (
   work: WorkTeaserSearchPageFragment,
   biblioLoans: DigitalLoan[] | undefined
 ): DigitalLoan | undefined =>
-  biblioLoans?.find(loan =>
-    work.manifestations.all[0].identifiers.some(identifier => identifier.value === loan.materialId)
-  )
+  biblioLoanForManifestation(work.manifestations.all[0], biblioLoans)
 
 // Pair each loan ISBN with its work, narrowed to the loaned manifestation —
 // one work per loan, in loan order.
