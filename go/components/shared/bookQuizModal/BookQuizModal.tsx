@@ -1,6 +1,7 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
+import { MotionConfig, motion } from "framer-motion"
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
 
@@ -53,6 +54,7 @@ const BookQuizModal = ({
   const question = QUESTIONS[questionIndex]
   const nextQuestion = QUESTIONS[questionIndex + 1]
   const selectedIds = question ? getSelectedIds(answers, question.id) : []
+  const isFinalReady = Boolean(question) && !nextQuestion && selectedIds.length > 0
 
   const goNext = async (nextAnswers: TBookQuizAnswers) => {
     setAnswers(nextAnswers)
@@ -125,15 +127,34 @@ const BookQuizModal = ({
           </div>
           {question && (
             <div className="mt-10 flex flex-col items-center gap-4">
-              <Button
-                theme="primary"
-                size="lg"
-                className="min-w-[200px]"
-                data-cy={cyKeys["book-quiz-next-button"]}
-                onClick={() => goNext(answers)}
-                disabled={selectedIds.length === 0}>
-                {nextQuestion ? "Næste" : "Se dine bøger"}
-              </Button>
+              {/* The last step stands out: sparkles and a gentle pulse
+                  once an answer is chosen. Reduced motion turns the pulse off. */}
+              <MotionConfig reducedMotion="user">
+                <motion.div
+                  animate={isFinalReady ? { scale: [1, 1.06, 1] } : { scale: 1 }}
+                  transition={
+                    isFinalReady ? { duration: 1.2, repeat: Infinity, repeatDelay: 1 } : undefined
+                  }>
+                  <Button
+                    theme="primary"
+                    size="lg"
+                    className={cn("min-w-[200px]", !nextQuestion && "gap-3")}
+                    data-cy={cyKeys["book-quiz-next-button"]}
+                    onClick={() => goNext(answers)}
+                    disabled={selectedIds.length === 0}>
+                    {nextQuestion ? (
+                      "Næste"
+                    ) : (
+                      <>
+                        Find mine bøger
+                        <span aria-hidden="true" className="text-[24px] leading-none">
+                          ✨
+                        </span>
+                      </>
+                    )}
+                  </Button>
+                </motion.div>
+              </MotionConfig>
               <button
                 type="button"
                 className="text-typo-button-sm hover:underline"
