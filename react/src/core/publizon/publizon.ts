@@ -124,6 +124,15 @@ export type GetV1UserCardnumberFriendlyQueryResult = NonNullable<
 >;
 export type GetV1UserCardnumberFriendlyQueryError = ErrorType<ApiResult>;
 
+/**
+ * Sample **request**:
+ *
+ *     GET /friendly
+ *     {
+ *         "name": "Some name"
+ *     }
+ * @summary Gets the user's friendly card number.
+ */
 export function useGetV1UserCardnumberFriendly<
   TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
   TError = ErrorType<ApiResult>
@@ -150,6 +159,15 @@ export function useGetV1UserCardnumberFriendly<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ * Sample **request**:
+ *
+ *     GET /friendly
+ *     {
+ *         "name": "Some name"
+ *     }
+ * @summary Gets the user's friendly card number.
+ */
 export function useGetV1UserCardnumberFriendly<
   TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
   TError = ErrorType<ApiResult>
@@ -176,6 +194,15 @@ export function useGetV1UserCardnumberFriendly<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/**
+ * Sample **request**:
+ *
+ *     GET /friendly
+ *     {
+ *         "name": "Some name"
+ *     }
+ * @summary Gets the user's friendly card number.
+ */
 export function useGetV1UserCardnumberFriendly<
   TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
   TError = ErrorType<ApiResult>
@@ -195,9 +222,14 @@ export function useGetV1UserCardnumberFriendly<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
+ * Sample **request**:
+ *
+ *     GET /friendly
+ *     {
+ *         "name": "Some name"
+ *     }
  * @summary Gets the user's friendly card number.
  */
-
 export function useGetV1UserCardnumberFriendly<
   TData = Awaited<ReturnType<typeof getV1UserCardnumberFriendly>>,
   TError = ErrorType<ApiResult>
@@ -279,6 +311,7 @@ export type GetV1UserChecklistQueryResult = NonNullable<
 >;
 export type GetV1UserChecklistQueryError = ErrorType<unknown>;
 
+/** @summary List all checklist items of the user. */
 export function useGetV1UserChecklist<
   TData = Awaited<ReturnType<typeof getV1UserChecklist>>,
   TError = ErrorType<unknown>
@@ -305,6 +338,7 @@ export function useGetV1UserChecklist<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary List all checklist items of the user. */
 export function useGetV1UserChecklist<
   TData = Awaited<ReturnType<typeof getV1UserChecklist>>,
   TError = ErrorType<unknown>
@@ -331,6 +365,7 @@ export function useGetV1UserChecklist<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary List all checklist items of the user. */
 export function useGetV1UserChecklist<
   TData = Awaited<ReturnType<typeof getV1UserChecklist>>,
   TError = ErrorType<unknown>
@@ -349,10 +384,7 @@ export function useGetV1UserChecklist<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary List all checklist items of the user.
- */
-
+/** @summary List all checklist items of the user. */
 export function useGetV1UserChecklist<
   TData = Awaited<ReturnType<typeof getV1UserChecklist>>,
   TError = ErrorType<unknown>
@@ -448,9 +480,7 @@ export type PostV1UserChecklistIdentifierMutationVariables = {
   identifier: string;
 };
 
-/**
- * @summary Add a book to the user's checklist.
- */
+/** @summary Add a book to the user's checklist. */
 export const usePostV1UserChecklistIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
@@ -544,9 +574,7 @@ export type DeleteV1UserChecklistIdentifierMutationVariables = {
   identifier: string;
 };
 
-/**
- * @summary Delete a book from the user's checklist.
- */
+/** @summary Delete a book from the user's checklist. */
 export const useDeleteV1UserChecklistIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
@@ -693,7 +721,6 @@ export function useGetV1LibraryProfile<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-
 export function useGetV1LibraryProfile<
   TData = Awaited<ReturnType<typeof getV1LibraryProfile>>,
   TError = ErrorType<unknown>
@@ -787,6 +814,7 @@ export type GetV1UserLoansQueryResult = NonNullable<
 >;
 export type GetV1UserLoansQueryError = ErrorType<unknown>;
 
+/** @summary Lists all active loans of the user. */
 export function useGetV1UserLoans<
   TData = Awaited<ReturnType<typeof getV1UserLoans>>,
   TError = ErrorType<unknown>
@@ -810,6 +838,7 @@ export function useGetV1UserLoans<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Lists all active loans of the user. */
 export function useGetV1UserLoans<
   TData = Awaited<ReturnType<typeof getV1UserLoans>>,
   TError = ErrorType<unknown>
@@ -833,6 +862,7 @@ export function useGetV1UserLoans<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Lists all active loans of the user. */
 export function useGetV1UserLoans<
   TData = Awaited<ReturnType<typeof getV1UserLoans>>,
   TError = ErrorType<unknown>
@@ -848,10 +878,7 @@ export function useGetV1UserLoans<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary Lists all active loans of the user.
- */
-
+/** @summary Lists all active loans of the user. */
 export function useGetV1UserLoans<
   TData = Awaited<ReturnType<typeof getV1UserLoans>>,
   TError = ErrorType<unknown>
@@ -941,6 +968,7 @@ export type GetV1UserLoansIdentifierQueryResult = NonNullable<
 >;
 export type GetV1UserLoansIdentifierQueryError = ErrorType<unknown>;
 
+/** @summary Gets details of a specific loan. */
 export function useGetV1UserLoansIdentifier<
   TData = Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
   TError = ErrorType<unknown>
@@ -968,6 +996,7 @@ export function useGetV1UserLoansIdentifier<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Gets details of a specific loan. */
 export function useGetV1UserLoansIdentifier<
   TData = Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
   TError = ErrorType<unknown>
@@ -995,6 +1024,7 @@ export function useGetV1UserLoansIdentifier<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Gets details of a specific loan. */
 export function useGetV1UserLoansIdentifier<
   TData = Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
   TError = ErrorType<unknown>
@@ -1014,10 +1044,7 @@ export function useGetV1UserLoansIdentifier<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary Gets details of a specific loan.
- */
-
+/** @summary Gets details of a specific loan. */
 export function useGetV1UserLoansIdentifier<
   TData = Awaited<ReturnType<typeof getV1UserLoansIdentifier>>,
   TError = ErrorType<unknown>
@@ -1137,9 +1164,7 @@ export type PostV1UserLoansIdentifierMutationVariables = {
   params?: PostV1UserLoansIdentifierParams;
 };
 
-/**
- * @summary Creates a new loan.
- */
+/** @summary Creates a new loan. */
 export const usePostV1UserLoansIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
@@ -1233,6 +1258,7 @@ export type GetV1LoanstatusIdentifierQueryResult = NonNullable<
 >;
 export type GetV1LoanstatusIdentifierQueryError = ErrorType<unknown>;
 
+/** @summary Get loan status of a specific product. */
 export function useGetV1LoanstatusIdentifier<
   TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
   TError = ErrorType<unknown>
@@ -1260,6 +1286,7 @@ export function useGetV1LoanstatusIdentifier<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Get loan status of a specific product. */
 export function useGetV1LoanstatusIdentifier<
   TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
   TError = ErrorType<unknown>
@@ -1287,6 +1314,7 @@ export function useGetV1LoanstatusIdentifier<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Get loan status of a specific product. */
 export function useGetV1LoanstatusIdentifier<
   TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
   TError = ErrorType<unknown>
@@ -1306,10 +1334,7 @@ export function useGetV1LoanstatusIdentifier<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary Get loan status of a specific product.
- */
-
+/** @summary Get loan status of a specific product. */
 export function useGetV1LoanstatusIdentifier<
   TData = Awaited<ReturnType<typeof getV1LoanstatusIdentifier>>,
   TError = ErrorType<unknown>
@@ -1433,9 +1458,7 @@ export type PostV1LoanstatusMutationBody = BodyType<string[]> | undefined;
 export type PostV1LoanstatusMutationError = ErrorType<unknown>;
 export type PostV1LoanstatusMutationVariables = { data?: BodyType<string[]> };
 
-/**
- * @summary Get loan status of all products.
- */
+/** @summary Get loan status of all products. */
 export const usePostV1Loanstatus = <
   TError = ErrorType<unknown>,
   TContext = unknown
@@ -1523,6 +1546,7 @@ export type GetV1ProductsIdentifierQueryResult = NonNullable<
 >;
 export type GetV1ProductsIdentifierQueryError = ErrorType<unknown>;
 
+/** @summary Get a specific product. */
 export function useGetV1ProductsIdentifier<
   TData = Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
   TError = ErrorType<unknown>
@@ -1550,6 +1574,7 @@ export function useGetV1ProductsIdentifier<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Get a specific product. */
 export function useGetV1ProductsIdentifier<
   TData = Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
   TError = ErrorType<unknown>
@@ -1577,6 +1602,7 @@ export function useGetV1ProductsIdentifier<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Get a specific product. */
 export function useGetV1ProductsIdentifier<
   TData = Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
   TError = ErrorType<unknown>
@@ -1596,10 +1622,7 @@ export function useGetV1ProductsIdentifier<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary Get a specific product.
- */
-
+/** @summary Get a specific product. */
 export function useGetV1ProductsIdentifier<
   TData = Awaited<ReturnType<typeof getV1ProductsIdentifier>>,
   TError = ErrorType<unknown>
@@ -1681,6 +1704,7 @@ export type GetV1ProductsQueryResult = NonNullable<
 >;
 export type GetV1ProductsQueryError = ErrorType<unknown>;
 
+/** @summary List all products. */
 export function useGetV1Products<
   TData = Awaited<ReturnType<typeof getV1Products>>,
   TError = ErrorType<unknown>
@@ -1703,6 +1727,7 @@ export function useGetV1Products<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary List all products. */
 export function useGetV1Products<
   TData = Awaited<ReturnType<typeof getV1Products>>,
   TError = ErrorType<unknown>
@@ -1725,6 +1750,7 @@ export function useGetV1Products<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary List all products. */
 export function useGetV1Products<
   TData = Awaited<ReturnType<typeof getV1Products>>,
   TError = ErrorType<unknown>
@@ -1739,10 +1765,7 @@ export function useGetV1Products<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary List all products.
- */
-
+/** @summary List all products. */
 export function useGetV1Products<
   TData = Awaited<ReturnType<typeof getV1Products>>,
   TError = ErrorType<unknown>
@@ -1820,6 +1843,7 @@ export type GetV1UserReservationsQueryResult = NonNullable<
 >;
 export type GetV1UserReservationsQueryError = ErrorType<unknown>;
 
+/** @summary Lists all reservations of the user. */
 export function useGetV1UserReservations<
   TData = Awaited<ReturnType<typeof getV1UserReservations>>,
   TError = ErrorType<unknown>
@@ -1846,6 +1870,7 @@ export function useGetV1UserReservations<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Lists all reservations of the user. */
 export function useGetV1UserReservations<
   TData = Awaited<ReturnType<typeof getV1UserReservations>>,
   TError = ErrorType<unknown>
@@ -1872,6 +1897,7 @@ export function useGetV1UserReservations<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Lists all reservations of the user. */
 export function useGetV1UserReservations<
   TData = Awaited<ReturnType<typeof getV1UserReservations>>,
   TError = ErrorType<unknown>
@@ -1890,10 +1916,7 @@ export function useGetV1UserReservations<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary Lists all reservations of the user.
- */
-
+/** @summary Lists all reservations of the user. */
 export function useGetV1UserReservations<
   TData = Awaited<ReturnType<typeof getV1UserReservations>>,
   TError = ErrorType<unknown>
@@ -2021,9 +2044,7 @@ export type PostV1UserReservationsIdentifierMutationVariables = {
   data?: BodyType<ReservationInput>;
 };
 
-/**
- * @summary Creates a new reservation.
- */
+/** @summary Creates a new reservation. */
 export const usePostV1UserReservationsIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
@@ -2149,9 +2170,7 @@ export type PatchV1UserReservationsIdentifierMutationVariables = {
   data?: BodyType<ReservationInput>;
 };
 
-/**
- * @summary Updates the phone number and email address of a specific reservation.
- */
+/** @summary Updates the phone number and email address of a specific reservation. */
 export const usePatchV1UserReservationsIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown
@@ -2251,9 +2270,7 @@ export type DeleteV1UserReservationsIdentifierMutationVariables = {
   identifier: string;
 };
 
-/**
- * @summary Cancels a reservation.
- */
+/** @summary Cancels a reservation. */
 export const useDeleteV1UserReservationsIdentifier = <
   TError = ErrorType<unknown>,
   TContext = unknown

@@ -981,11 +981,17 @@
       },
       "materialTypes": [
         {
+          "materialTypeGeneral": {
+            "code": "BOOKS"
+          },
           "materialTypeSpecific": {
             "display": "bog"
           }
         },
         {
+          "materialTypeGeneral": {
+            "code": "AUDIO_BOOKS"
+          },
           "materialTypeSpecific": {
             "display": "lydbog (cd)"
           }
