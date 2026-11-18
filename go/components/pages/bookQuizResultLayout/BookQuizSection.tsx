@@ -29,7 +29,7 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
   const works = rankStepWorks(data?.complexSearch.works ?? [], ageRange)
 
   return (
-    <section className="space-y-grid-gap-2" data-cy={cyKeys["book-quiz-section"]}>
+    <section className="space-y-6 lg:space-y-8" data-cy={cyKeys["book-quiz-section"]}>
       {/* The answers look like the quiz's answer buttons, but are not clickable. */}
       <h2 className="text-typo-heading-4 flex flex-wrap items-center gap-3">
         <span>Fordi du valgte</span>
@@ -55,7 +55,6 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
           </React.Fragment>
         ))}
       </h2>
-      <hr />
       {isLoading ? (
         <SearchResultsSkeleton count={BOOKS_PER_STEP} columns={BOOKS_PER_STEP} />
       ) : works.length > 0 ? (

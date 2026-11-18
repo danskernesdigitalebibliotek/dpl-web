@@ -70,14 +70,19 @@ const BookQuizResultLayout = ({ profile, steps, groupAnswers }: TBookQuizResultL
           />
         </div>
       </div>
-      {steps.map(step => (
-        <BookQuizSection
-          key={step.id}
-          answers={getStepAnswers(step.parts, groupAnswers)}
-          cql={step.cql}
-          ageRange={profile.ageRange}
-        />
-      ))}
+      {/* A line between the sections, with the same space on both sides. */}
+      <div className="space-y-grid-gap-2">
+        {steps.map((step, index) => (
+          <React.Fragment key={step.id}>
+            {index > 0 && <hr />}
+            <BookQuizSection
+              answers={getStepAnswers(step.parts, groupAnswers)}
+              cql={step.cql}
+              ageRange={profile.ageRange}
+            />
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   )
 }
