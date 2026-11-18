@@ -10555,9 +10555,6 @@ msgstr ""
 msgid "Entity Reference Revisions list"
 msgstr "Entity Reference Revisions list"
 
-msgid "Entity Reference inline fields"
-msgstr "Entity Reference inline-felter"
-
 msgid "Entity Revision"
 msgstr "Entity Revision"
 
