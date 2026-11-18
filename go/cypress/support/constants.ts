@@ -82,6 +82,7 @@ export const cyKeys = {
   "book-quiz-skip-button": "book-quiz-skip-button",
   "book-quiz-next-button": "book-quiz-next-button",
   "book-quiz-section": "book-quiz-section",
+  "book-quiz-shuffle-button": "book-quiz-shuffle-button",
 } as const
 
 export type CyKey = keyof typeof cyKeys

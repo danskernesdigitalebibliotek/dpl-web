@@ -28,8 +28,8 @@ export type TLadderStep = {
 }
 
 // Books fetched per step, so there are enough left after rank.ts drops works
-// with too wide an age span.
-const FETCH_PER_STEP = 10
+// with too wide an age span, and to shuffle between on the result page.
+const FETCH_PER_STEP = 20
 
 // Query variables for one step. Shared by the result page sections and the
 // quiz modal, which fills the cache before navigating, so the keys match.
