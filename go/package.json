@@ -129,7 +129,7 @@
     "next-test-api-route-handler": "^5.0.7",
     "orval": "^8.47.0",
     "playwright": "^1.65.0",
-    "postcss": "^8.5.32",
+    "postcss": "^8.5.33",
     "prettier": "^3.10.1",
     "prettier-plugin-classnames": "^0.10.5",
     "prettier-plugin-merge": "^0.10.2",
