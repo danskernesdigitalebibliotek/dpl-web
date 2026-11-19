@@ -8,11 +8,11 @@ import {
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 import {
-  getEditionQueueCountText,
-  isEditionObtainable,
-  isEditionOnLoan,
+  getManifestationQueueText,
+  isManifestationLentOut,
+  isManifestationUnobtainable,
 } from "@/lib/helpers/helper.availability"
-import { getFaustIdsFromManifestations, pidToFaust } from "@/lib/helpers/ids"
+import { getFaustIdsFromManifestations } from "@/lib/helpers/ids"
 
 import { useBlacklistedAvailabilityBranches } from "./useBlacklistedAvailabilityBranches"
 
@@ -52,50 +52,16 @@ export const useEditionAvailability = (wid: string) => {
   // nothing about any record, where a successful answer merely left one out.
   const isResolved = !isLoadingAvailability && !isError && recordIds.length > 0
 
-  // Null for anything the availability data cannot speak for: digital
-  // editions, and anything asked before the answer is in. Both questions
-  // below then answer "no", which keeps the edition visible and selectable.
-  const getRecord = (manifestation: ManifestationWorkPageFragment): string | null => {
-    if (!isResolved) return null
-    if (!isPhysicalMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)) {
-      return null
-    }
-
-    return pidToFaust(manifestation.pid)
-  }
-
-  // Nothing to borrow and nothing to reserve.
-  const isEditionUnobtainable = (manifestation: ManifestationWorkPageFragment): boolean => {
-    const faust = getRecord(manifestation)
-    if (!faust) return false
-
-    return !isEditionObtainable(availability, faust)
-  }
-
-  // Held but every copy is out. Still reservable.
-  const isEditionLentOut = (manifestation: ManifestationWorkPageFragment): boolean => {
-    const faust = getRecord(manifestation)
-    if (!faust) return false
-
-    return isEditionOnLoan(availability, faust)
-  }
-
-  // Undefined when availability isn't resolved yet or the edition is digital
-  // — callers fall back to no queue copy in that case.
-  const getEditionQueueText = (
-    manifestation: ManifestationWorkPageFragment
-  ): string | undefined => {
-    const faust = getRecord(manifestation)
-    if (!faust) return undefined
-
-    return getEditionQueueCountText(availability, faust)
-  }
-
   return {
+    availability,
+    isResolved,
     isLoadingAvailability,
     isAvailabilityUnknown: isError,
-    isEditionUnobtainable,
-    isEditionLentOut,
-    getEditionQueueText,
+    isEditionUnobtainable: (manifestation: ManifestationWorkPageFragment) =>
+      isManifestationUnobtainable(manifestation, availability, isResolved),
+    isEditionLentOut: (manifestation: ManifestationWorkPageFragment) =>
+      isManifestationLentOut(manifestation, availability, isResolved),
+    getEditionQueueText: (manifestation: ManifestationWorkPageFragment) =>
+      getManifestationQueueText(manifestation, availability, isResolved),
   }
 }

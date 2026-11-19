@@ -1,7 +1,14 @@
 import { MaterialAvailability } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { describe, expect, it } from "vitest"
 
-import { isEditionObtainable, isEditionOnLoan } from "./helper.availability"
+import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+
+import {
+  getShownEditions,
+  isEditionObtainable,
+  isEditionOnLoan,
+  isManifestationUnobtainable,
+} from "./helper.availability"
 
 const availability: MaterialAvailability = {
   totalCopies: 4,
@@ -88,5 +95,53 @@ describe("isEditionOnLoan", () => {
 
   it("is false when availability has not loaded", () => {
     expect(isEditionOnLoan(undefined, "onLoan")).toBe(false)
+  })
+})
+
+// The pid's faust must match a record id in the fixture above.
+const manifestation = (faust: string, code = "BOOK") =>
+  ({
+    pid: `870970-basis:${faust}`,
+    materialTypes: [{ materialTypeSpecific: { code, display: code } }],
+  }) as unknown as ManifestationWorkPageFragment
+
+describe("isManifestationUnobtainable", () => {
+  it("is true for a record the kommune cannot supply", () => {
+    expect(isManifestationUnobtainable(manifestation("notOwned"), availability, true)).toBe(true)
+  })
+
+  it("is false for one it can", () => {
+    expect(isManifestationUnobtainable(manifestation("onShelf"), availability, true)).toBe(false)
+  })
+
+  it("is false for a lent-out one, which is still reservable", () => {
+    expect(isManifestationUnobtainable(manifestation("onLoan"), availability, true)).toBe(false)
+  })
+
+  it("is false for a digital edition, which has no record", () => {
+    expect(
+      isManifestationUnobtainable(manifestation("notOwned", "EBOOK"), availability, true)
+    ).toBe(false)
+  })
+
+  it("is false before the availability has resolved", () => {
+    expect(isManifestationUnobtainable(manifestation("notOwned"), availability, false)).toBe(false)
+  })
+})
+
+describe("getShownEditions", () => {
+  it("leaves out what the kommune cannot supply and keeps the order", () => {
+    const editions = [manifestation("onShelf"), manifestation("notOwned"), manifestation("onLoan")]
+
+    expect(getShownEditions(editions, availability, true).map(m => m.pid)).toEqual([
+      "870970-basis:onShelf",
+      "870970-basis:onLoan",
+    ])
+  })
+
+  it("shows every edition before the availability has resolved", () => {
+    const editions = [manifestation("onShelf"), manifestation("notOwned")]
+
+    expect(getShownEditions(editions, availability, false)).toHaveLength(2)
   })
 })
