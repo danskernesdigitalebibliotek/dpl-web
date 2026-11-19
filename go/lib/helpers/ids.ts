@@ -23,7 +23,7 @@ export const getIsbnsFromManifestation = (
 // Identifier sent to Publizon. Prefer the PUBLIZON identifier (the loanable
 // edition); fall back to the ISBN.
 export const getPublizonIdentifierFromManifestation = (
-  manifestation: ManifestationWorkPageFragment | undefined
+  manifestation: Pick<ManifestationWorkPageFragment, "identifiers"> | undefined
 ) => {
   if (!manifestation) return undefined
 
