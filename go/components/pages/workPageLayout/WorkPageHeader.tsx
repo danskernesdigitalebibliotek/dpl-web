@@ -11,7 +11,6 @@ import {
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
-import { getEditionLabel } from "@/components/shared/editionsSelectModal/editionChoice"
 import MaterialTypeSelect, {
   MaterialTypeSelectOption,
 } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
@@ -37,6 +36,10 @@ type WorkPageHeaderProps = {
   selectedManifestation: ManifestationWorkPageFragment
   manifestations: ManifestationWorkPageFragment[]
 }
+
+// Label for the button that opens the picker.
+const getEditionLabel = (selectedManifestation: ManifestationWorkPageFragment): string =>
+  selectedManifestation.edition?.publicationYear?.year?.toString() ?? "Valgt udgave"
 
 const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()

@@ -6,7 +6,6 @@ import { useEffect, useMemo, useState } from "react"
 import {
   getEbookManifestationOrFallbackManifestation,
   getEditionsForMaterialType,
-  getPinnedEditionManifestation,
 } from "@/components/pages/workPageLayout/helper"
 import { useDefaultObtainableEdition } from "@/hooks/useDefaultObtainableEdition"
 import { useEditionAvailability } from "@/hooks/useEditionAvailability"
@@ -15,6 +14,19 @@ import {
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
+
+// Honours the pid only if it belongs to the given material type.
+const getPinnedEditionManifestation = (
+  manifestations: ManifestationWorkPageFragment[],
+  materialTypeCode: string,
+  pid: string | null
+): ManifestationWorkPageFragment | undefined => {
+  if (!pid) return undefined
+
+  return getEditionsForMaterialType(manifestations, materialTypeCode).find(
+    manifestation => manifestation.pid === pid
+  )
+}
 
 type UseSelectedEditionArgs = {
   workId: string
