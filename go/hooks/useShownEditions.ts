@@ -32,7 +32,7 @@ export const useShownEditions = (wid: string, materialTypeCode: string) => {
   const {
     isLoadingAvailability,
     isAvailabilityUnknown,
-    isEditionHidden,
+    isEditionUnobtainable,
     isEditionLentOut,
     getEditionQueueText,
   } = useEditionAvailability(wid)
@@ -46,9 +46,9 @@ export const useShownEditions = (wid: string, materialTypeCode: string) => {
   )
 
   // Ordering is untouched, so what remains keeps its position. A new array
-  // each render — `isEditionHidden` closes over the availability data and is
+  // each render — `isEditionUnobtainable` closes over the availability data and is
   // rebuilt with it — so this does not belong in a dependency list.
-  const shownEditions = editions.filter(manifestation => !isEditionHidden(manifestation))
+  const shownEditions = editions.filter(manifestation => !isEditionUnobtainable(manifestation))
 
   return {
     editions,

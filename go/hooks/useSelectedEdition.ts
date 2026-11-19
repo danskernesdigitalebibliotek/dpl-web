@@ -49,7 +49,7 @@ export const useSelectedEdition = ({
   const searchParams = useSearchParams()
   const [selectedManifestation, setSelectedManifestation] =
     useState<ManifestationWorkPageFragment>()
-  const { isEditionHidden, isLoadingAvailability, isAvailabilityUnknown } =
+  const { isEditionUnobtainable, isLoadingAvailability, isAvailabilityUnknown } =
     useEditionAvailability(workId)
 
   const searchParamsMaterialType = searchParams.get("type")
@@ -59,9 +59,9 @@ export const useSelectedEdition = ({
   const obtainableEditions = useMemo(
     () =>
       getEditionsForMaterialType(allManifestations ?? [], searchParamsMaterialType ?? "").filter(
-        manifestation => !isEditionHidden(manifestation)
+        manifestation => !isEditionUnobtainable(manifestation)
       ),
-    // isEditionHidden is rebuilt every render, so the flags behind it stand
+    // isEditionUnobtainable is rebuilt every render, so the flags behind it stand
     // in for it — see the effect below for the same reasoning.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [allManifestations, searchParamsMaterialType, isLoadingAvailability, isAvailabilityUnknown]
@@ -126,7 +126,7 @@ export const useSelectedEdition = ({
     if (nextManifestation) {
       setSelectedManifestation(nextManifestation)
     }
-    // isEditionHidden is rebuilt every render, so the settle-once flags behind
+    // isEditionUnobtainable is rebuilt every render, so the settle-once flags behind
     // it stand in for it and a background refetch leaves the edition alone.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
