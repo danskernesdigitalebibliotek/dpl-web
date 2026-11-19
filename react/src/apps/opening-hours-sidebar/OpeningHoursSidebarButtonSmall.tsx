@@ -21,7 +21,7 @@ const ButtonSmall: FC<ButtonSmallProps> = ({ openDialog }) => {
         width="24"
         height="24"
         src={iconWatch}
-        alt="clock icon"
+        alt=""
       />
       <span className="header__button-text">{t("openingHoursText")}</span>
     </button>
