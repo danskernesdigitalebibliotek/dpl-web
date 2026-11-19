@@ -65,7 +65,7 @@ export const useEditionAvailability = (wid: string) => {
   }
 
   // Nothing to borrow and nothing to reserve.
-  const isEditionHidden = (manifestation: ManifestationWorkPageFragment): boolean => {
+  const isEditionUnobtainable = (manifestation: ManifestationWorkPageFragment): boolean => {
     const faust = getRecord(manifestation)
     if (!faust) return false
 
@@ -94,7 +94,7 @@ export const useEditionAvailability = (wid: string) => {
   return {
     isLoadingAvailability,
     isAvailabilityUnknown: isError,
-    isEditionHidden,
+    isEditionUnobtainable,
     isEditionLentOut,
     getEditionQueueText,
   }

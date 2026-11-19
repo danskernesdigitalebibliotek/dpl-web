@@ -337,16 +337,3 @@ export const getEditionsForMaterialType = (
         (a.edition?.publicationYear?.year ?? -Infinity)
     )
 }
-
-// Honours the pid only if it belongs to the given material type.
-export const getPinnedEditionManifestation = (
-  manifestations: ManifestationWorkPageFragment[],
-  materialTypeCode: string,
-  pid: string | null
-): ManifestationWorkPageFragment | undefined => {
-  if (!pid) return undefined
-
-  return getEditionsForMaterialType(manifestations, materialTypeCode).find(
-    manifestation => manifestation.pid === pid
-  )
-}
