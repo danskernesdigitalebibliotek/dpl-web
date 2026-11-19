@@ -4,9 +4,11 @@ import { describe, expect, it } from "vitest"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 import {
+  getManifestationQueueText,
   getShownEditions,
   isEditionObtainable,
   isEditionOnLoan,
+  isManifestationLentOut,
   isManifestationUnobtainable,
 } from "./helper.availability"
 
@@ -143,5 +145,41 @@ describe("getShownEditions", () => {
     const editions = [manifestation("onShelf"), manifestation("notOwned")]
 
     expect(getShownEditions(editions, availability, false)).toHaveLength(2)
+  })
+})
+
+describe("isManifestationLentOut", () => {
+  it("is true when the kommune holds it but no copy is on the shelf", () => {
+    expect(isManifestationLentOut(manifestation("onLoan"), availability, true)).toBe(true)
+  })
+
+  it("is false when a copy is on the shelf", () => {
+    expect(isManifestationLentOut(manifestation("onShelf"), availability, true)).toBe(false)
+  })
+
+  it("is false for a digital edition, which has no record", () => {
+    expect(isManifestationLentOut(manifestation("onLoan", "EBOOK"), availability, true)).toBe(false)
+  })
+
+  it("is false before the availability has resolved", () => {
+    expect(isManifestationLentOut(manifestation("onLoan"), availability, false)).toBe(false)
+  })
+})
+
+describe("getManifestationQueueText", () => {
+  it("names the queue for a lent-out edition", () => {
+    expect(getManifestationQueueText(manifestation("onLoan"), availability, true)).toBe(
+      "Der er 3 lånere i kø."
+    )
+  })
+
+  it("is undefined for a digital edition, which has no record", () => {
+    expect(
+      getManifestationQueueText(manifestation("onLoan", "EBOOK"), availability, true)
+    ).toBeUndefined()
+  })
+
+  it("is undefined before the availability has resolved", () => {
+    expect(getManifestationQueueText(manifestation("onLoan"), availability, false)).toBeUndefined()
   })
 })
