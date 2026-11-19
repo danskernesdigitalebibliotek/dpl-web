@@ -30,6 +30,7 @@ import {
   getBookQuizResultUrl,
   getChosenOptions,
   getColorAfterSelect,
+  getFurthestStep,
   getSelectedIds,
   getStepEmojis,
   prefetchBookQuizResults,
@@ -75,6 +76,13 @@ const BookQuizModal = ({
     // The host closes modals on route changes, but not when the quiz is
     // retaken from the result page, where only the query changes.
     onClose()
+  }
+
+  // Back along the path taken, or forward through each question in between,
+  // so the back button still retraces the questions one by one.
+  const goToStep = (index: number) => {
+    if (index < questionIndex) return flow.backTo(QUESTIONS[index].id)
+    QUESTIONS.slice(questionIndex + 1, index + 1).forEach(step => flow.goTo(step.id))
   }
 
   return (
@@ -172,7 +180,12 @@ const BookQuizModal = ({
         {/* Same padding as the actions bar in ResponsiveDialog. */}
         {question && (
           <div className="bg-background px-grid-edge flex justify-center py-4 lg:px-10 lg:py-6">
-            <StepDots emojis={getStepEmojis(answers)} current={questionIndex} />
+            <StepDots
+              emojis={getStepEmojis(answers)}
+              current={questionIndex}
+              furthest={getFurthestStep(answers)}
+              onSelect={goToStep}
+            />
           </div>
         )}
       </DialogContent>

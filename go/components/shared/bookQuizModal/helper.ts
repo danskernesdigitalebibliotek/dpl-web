@@ -40,6 +40,15 @@ export const getStepEmojis = (answers: TBookQuizAnswers) =>
     return question.options.find(option => option.id === selectedId)?.emoji
   })
 
+// The furthest question the progress bar may jump to: the first one that is
+// neither answered nor skipped, as every question before it has been passed.
+export const getFurthestStep = (answers: TBookQuizAnswers) => {
+  const index = QUESTIONS.findIndex(
+    question => answers[question.id] !== null && getSelectedIds(answers, question.id).length === 0
+  )
+  return index === -1 ? QUESTIONS.length - 1 : index
+}
+
 // The colour of the chosen option's group. Options without a group, and
 // unselecting, keep the current colour.
 export const getColorAfterSelect = (
