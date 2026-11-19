@@ -176,9 +176,7 @@ export type CampaignMatchPOSTMutationVariables = {
   params: CampaignMatchPOSTParams;
 };
 
-/**
- * @summary Get campaign matching search result facets
- */
+/** @summary Get campaign matching search result facets */
 export const useCampaignMatchPOST = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -315,9 +313,7 @@ export type DplOpeningHoursCreatePOSTMutationVariables = {
   params: DplOpeningHoursCreatePOSTParams;
 };
 
-/**
- * @summary Create individual opening hours
- */
+/** @summary Create individual opening hours */
 export const useDplOpeningHoursCreatePOST = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -422,6 +418,7 @@ export type DplOpeningHoursListGETQueryResult = NonNullable<
 >;
 export type DplOpeningHoursListGETQueryError = ErrorType<void>;
 
+/** @summary List all opening hours */
 export function useDplOpeningHoursListGET<
   TData = Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
   TError = ErrorType<void>
@@ -449,6 +446,7 @@ export function useDplOpeningHoursListGET<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary List all opening hours */
 export function useDplOpeningHoursListGET<
   TData = Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
   TError = ErrorType<void>
@@ -476,6 +474,7 @@ export function useDplOpeningHoursListGET<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary List all opening hours */
 export function useDplOpeningHoursListGET<
   TData = Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
   TError = ErrorType<void>
@@ -495,10 +494,7 @@ export function useDplOpeningHoursListGET<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary List all opening hours
- */
-
+/** @summary List all opening hours */
 export function useDplOpeningHoursListGET<
   TData = Awaited<ReturnType<typeof dplOpeningHoursListGET>>,
   TError = ErrorType<void>
@@ -612,9 +608,7 @@ export type DplOpeningHoursDeleteDELETEMutationVariables = {
   params: DplOpeningHoursDeleteDELETEParams;
 };
 
-/**
- * @summary Delete individual opening hours
- */
+/** @summary Delete individual opening hours */
 export const useDplOpeningHoursDeleteDELETE = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -757,9 +751,7 @@ export type DplOpeningHoursUpdatePATCHMutationVariables = {
   params: DplOpeningHoursUpdatePATCHParams;
 };
 
-/**
- * @summary Update individual opening hours
- */
+/** @summary Update individual opening hours */
 export const useDplOpeningHoursUpdatePATCH = <
   TError = ErrorType<void>,
   TContext = unknown
@@ -864,6 +856,7 @@ export type DplOpeningHoursLegacyListGETQueryResult = NonNullable<
 >;
 export type DplOpeningHoursLegacyListGETQueryError = ErrorType<void>;
 
+/** @summary List all opening hours for legacy API */
 export function useDplOpeningHoursLegacyListGET<
   TData = Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
   TError = ErrorType<void>
@@ -891,6 +884,7 @@ export function useDplOpeningHoursLegacyListGET<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary List all opening hours for legacy API */
 export function useDplOpeningHoursLegacyListGET<
   TData = Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
   TError = ErrorType<void>
@@ -918,6 +912,7 @@ export function useDplOpeningHoursLegacyListGET<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary List all opening hours for legacy API */
 export function useDplOpeningHoursLegacyListGET<
   TData = Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
   TError = ErrorType<void>
@@ -937,10 +932,7 @@ export function useDplOpeningHoursLegacyListGET<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary List all opening hours for legacy API
- */
-
+/** @summary List all opening hours for legacy API */
 export function useDplOpeningHoursLegacyListGET<
   TData = Awaited<ReturnType<typeof dplOpeningHoursLegacyListGET>>,
   TError = ErrorType<void>
@@ -1081,9 +1073,7 @@ export type EventPATCHMutationVariables = {
   params: EventPATCHParams;
 };
 
-/**
- * @summary Update single events
- */
+/** @summary Update single events */
 export const useEventPATCH = <TError = ErrorType<void>, TContext = unknown>(
   options?: {
     mutation?: UseMutationOptions<
@@ -1169,6 +1159,7 @@ export type EventsGETQueryResult = NonNullable<
 >;
 export type EventsGETQueryError = ErrorType<void>;
 
+/** @summary Retrieve all events */
 export function useEventsGET<
   TData = Awaited<ReturnType<typeof eventsGET>>,
   TError = ErrorType<void>
@@ -1192,6 +1183,7 @@ export function useEventsGET<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Retrieve all events */
 export function useEventsGET<
   TData = Awaited<ReturnType<typeof eventsGET>>,
   TError = ErrorType<void>
@@ -1215,6 +1207,7 @@ export function useEventsGET<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Retrieve all events */
 export function useEventsGET<
   TData = Awaited<ReturnType<typeof eventsGET>>,
   TError = ErrorType<void>
@@ -1230,10 +1223,7 @@ export function useEventsGET<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary Retrieve all events
- */
-
+/** @summary Retrieve all events */
 export function useEventsGET<
   TData = Awaited<ReturnType<typeof eventsGET>>,
   TError = ErrorType<void>
@@ -1334,6 +1324,7 @@ export type HappeningEventsGETQueryResult = NonNullable<
 >;
 export type HappeningEventsGETQueryError = ErrorType<void>;
 
+/** @summary Retrieve happening events */
 export function useHappeningEventsGET<
   TData = Awaited<ReturnType<typeof happeningEventsGET>>,
   TError = ErrorType<void>
@@ -1361,6 +1352,7 @@ export function useHappeningEventsGET<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Retrieve happening events */
 export function useHappeningEventsGET<
   TData = Awaited<ReturnType<typeof happeningEventsGET>>,
   TError = ErrorType<void>
@@ -1388,6 +1380,7 @@ export function useHappeningEventsGET<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Retrieve happening events */
 export function useHappeningEventsGET<
   TData = Awaited<ReturnType<typeof happeningEventsGET>>,
   TError = ErrorType<void>
@@ -1407,10 +1400,7 @@ export function useHappeningEventsGET<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary Retrieve happening events
- */
-
+/** @summary Retrieve happening events */
 export function useHappeningEventsGET<
   TData = Awaited<ReturnType<typeof happeningEventsGET>>,
   TError = ErrorType<void>
@@ -1505,6 +1495,7 @@ export type ProxyUrlGETQueryResult = NonNullable<
 >;
 export type ProxyUrlGETQueryError = ErrorType<void>;
 
+/** @summary Generate proxy url */
 export function useProxyUrlGET<
   TData = Awaited<ReturnType<typeof proxyUrlGET>>,
   TError = ErrorType<void>
@@ -1528,6 +1519,7 @@ export function useProxyUrlGET<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Generate proxy url */
 export function useProxyUrlGET<
   TData = Awaited<ReturnType<typeof proxyUrlGET>>,
   TError = ErrorType<void>
@@ -1551,6 +1543,7 @@ export function useProxyUrlGET<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** @summary Generate proxy url */
 export function useProxyUrlGET<
   TData = Awaited<ReturnType<typeof proxyUrlGET>>,
   TError = ErrorType<void>
@@ -1566,10 +1559,7 @@ export function useProxyUrlGET<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-/**
- * @summary Generate proxy url
- */
-
+/** @summary Generate proxy url */
 export function useProxyUrlGET<
   TData = Awaited<ReturnType<typeof proxyUrlGET>>,
   TError = ErrorType<void>
