@@ -43,9 +43,9 @@
               {% else %}
                 {{ opening_hours_sidebar_small }}
               {% endif %}
-                <a href="{{ url('dpl_favorites_list.list') }}" class="header__button header__button--left-border">
-                    <img class="header__button-icon" width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-heart.svg" alt="{% trans 'List of bookmarks' with {'context': 'Header'} %}"/>
-                    <span class="header__button-text">{{ 'Liked'|t({}, {context: 'Global'}) }}</span>
+                <a href="{{ url('dpl_favorites_list.list') }}" class="header__button header__button--left-border" aria-label="{% trans 'Liked' with {'context': 'Global'} %}">
+                    <img class="header__button-icon" width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-heart.svg" alt=""/>
+                    <span class="header__button-text">{% trans 'Liked' with {'context': 'Global'} %}</span>
                 </a>
             </div>
         </nav>
