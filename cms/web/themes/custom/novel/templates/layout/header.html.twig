@@ -31,7 +31,8 @@
             <div class="header__button-responsive-switch">
               {% if opening_hours_url %}
                 <a href="{{ opening_hours_url }}"
-                   class="header__button header__button--left-border">
+                   class="header__button header__button--left-border"
+                   aria-label="{{ 'Opening hours'|t }}">
                   <img class="header__button-icon" loading="lazy" width="24"
                        height="24"
                        src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-watch-static.svg"
