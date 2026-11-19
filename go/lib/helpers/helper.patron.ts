@@ -198,8 +198,7 @@ export const biblioLoanForManifestation = (
 export const biblioLoanForWork = (
   work: WorkTeaserSearchPageFragment,
   biblioLoans: DigitalLoan[] | undefined
-): DigitalLoan | undefined =>
-  biblioLoanForManifestation(work.manifestations.all[0], biblioLoans)
+): DigitalLoan | undefined => biblioLoanForManifestation(work.manifestations.all[0], biblioLoans)
 
 // Pair each loan ISBN with its work, narrowed to the loaned manifestation —
 // one work per loan, in loan order.

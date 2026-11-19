@@ -1,8 +1,7 @@
+import type { DigitalLoan } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { cleanup, render } from "@testing-library/react"
 import React from "react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
-
-import type { DigitalLoan } from "@danskernesdigitalebibliotek/dpl-service-layer"
 
 import LoanCard from "@/components/shared/loanCard/LoanCard"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
