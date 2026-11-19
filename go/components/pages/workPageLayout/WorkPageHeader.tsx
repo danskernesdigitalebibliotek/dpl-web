@@ -133,8 +133,9 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const announceChoice = (text: string) =>
     setChoiceAnnouncement(current => ({ text, nonce: current.nonce + 1 }))
 
-  // Records the debt; useRestoreFocusAfterDialog moves the focus once the
-  // dialog unmounts.
+  // The picker opens through the modal store rather than a DialogTrigger, so
+  // Radix has no element to hand the focus back to. This records the debt and
+  // useRestoreFocusAfterDialog pays it once the dialog unmounts.
   const restoreEditionFocus = () => {
     shouldRestoreEditionFocus.current = true
   }
