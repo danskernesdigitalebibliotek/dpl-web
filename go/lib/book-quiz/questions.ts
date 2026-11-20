@@ -82,7 +82,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
       { id: "mood-funny", label: "Et godt grin", emoji: "😂", group: FUNNY },
       { id: "mood-horror", label: "Gys", emoji: "🧟", group: HORROR },
       { id: "mood-romance", label: "Romantik", emoji: "💘", group: ROMANCE },
-      { id: "mood-any", label: "Det er forskelligt", emoji: "🍬🍭" },
+      { id: "mood-any", label: "Det er forskelligt", emoji: "🍭" },
     ],
   },
   {
