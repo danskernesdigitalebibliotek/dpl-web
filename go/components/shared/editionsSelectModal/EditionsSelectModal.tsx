@@ -117,9 +117,11 @@ const EditionsSelectModal = ({
         <legend className="sr-only">Vælg udgave</legend>
         {/* The item widths carry the column count: a percentage of the row,
             less the share of the fixed gap each item gives up — one gap split
-            over two columns, two over three. */}
+            over two columns, two over three. A phone shows one card per row,
+            which needs no subtraction, and a tighter gap between them. */}
         <div
-          className="flex flex-wrap gap-x-6 gap-y-7 [&>*]:w-full
+          data-equal-row-container
+          className="flex flex-wrap gap-x-4 gap-y-4 sm:gap-x-6 sm:gap-y-7 [&>*]:w-full
             sm:[&>*]:w-[calc(50%-(var(--spacing)*3))] md:[&>*]:w-[calc(33.333%-(var(--spacing)*4))]
             lg:[&>*]:w-[calc(50%-(var(--spacing)*3))]">
           {isLoadingEditions

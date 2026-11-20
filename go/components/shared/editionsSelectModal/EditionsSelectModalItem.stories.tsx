@@ -103,7 +103,7 @@ const Grid = () => {
   const [checked, setChecked] = useState("pid-1")
   return (
     <div className="bg-background max-w-3xl p-8">
-      <div className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
+      <div data-equal-row-container className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
         {editions.map(edition => (
           <EditionsSelectModalItem
             key={edition.pid}
@@ -158,7 +158,7 @@ export const Unavailable: Story = {
 export const Rows: Story = {
   render: () => (
     <div className="bg-background max-w-3xl p-8">
-      <div className="flex flex-wrap gap-x-[2%] gap-y-7 [&>*]:w-[32%]">
+      <div data-equal-row-container className="flex flex-wrap gap-x-[2%] gap-y-7 [&>*]:w-[32%]">
         <EditionsSelectModalItem
           manifestation={editions[1]}
           name="story-rows"
@@ -198,9 +198,10 @@ export const Rows: Story = {
 // where it actually applies rather than in a synthetic probe.
 export const ModalGrid: Story = {
   render: () => (
-    <div className="bg-background p-8">
+    <div className="bg-background px-grid-edge py-6 lg:px-10">
       <div
-        className="flex flex-wrap gap-x-6 gap-y-7 [&>*]:w-full
+        data-equal-row-container
+        className="flex flex-wrap gap-x-4 gap-y-4 sm:gap-x-6 sm:gap-y-7 [&>*]:w-full
           sm:[&>*]:w-[calc(50%-(var(--spacing)*3))] md:[&>*]:w-[calc(33.333%-(var(--spacing)*4))]
           lg:[&>*]:w-[calc(50%-(var(--spacing)*3))]">
         {[...editions, ...editions].map((edition, i) => (
@@ -230,7 +231,9 @@ export const UnevenRows: Story = {
     const short = buildEdition({ pid: "short", cover: buildCover(660, 720), publisher: ["Kort"] })
     return (
       <div className="bg-background p-8">
-        <div className="flex flex-wrap gap-x-6 gap-y-7 [&>*]:w-[calc(33.333%-(var(--spacing)*4))]">
+        <div
+          data-equal-row-container
+          className="flex flex-wrap gap-x-6 gap-y-7 [&>*]:w-[calc(33.333%-(var(--spacing)*4))]">
           <EditionsSelectModalItem
             manifestation={tall}
             name="story-uneven"
@@ -261,7 +264,7 @@ export const UnevenRows: Story = {
 export const Skeleton: Story = {
   render: () => (
     <div className="bg-background max-w-3xl p-8">
-      <div className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
+      <div data-equal-row-container className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
         <EditionsSelectModalItem.Skeleton />
         <EditionsSelectModalItem.Skeleton />
         <EditionsSelectModalItem.Skeleton />

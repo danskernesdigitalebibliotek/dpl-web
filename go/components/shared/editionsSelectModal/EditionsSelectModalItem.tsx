@@ -11,6 +11,7 @@ import BlueTitleBadge, { useIsBlueTitle } from "@/components/shared/badge/BlueTi
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
+import { useEqualRowHeight } from "@/hooks/useEqualRowHeights"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 type EditionsSelectModalItemProps = {
@@ -56,6 +57,10 @@ const EditionsSelectModalItem = ({
 
   const isBlueTitle = useIsBlueTitle(manifestation)
 
+  // The detail block takes the height of the tallest one on its row, so the
+  // covers above them start at the same point across the row.
+  const { ref: detailsRef, groupAttribute } = useEqualRowHeight("edition-details")
+
   const accessibleName = [
     title,
     isBlueTitle ? "Blå titel, gratis at låne" : undefined,
@@ -67,6 +72,7 @@ const EditionsSelectModalItem = ({
 
   return (
     <label
+      data-equal-row-item
       className="has-focus-visible:ring-foreground bg-background-overlay
         has-checked:border-foreground rounded-base relative flex cursor-pointer flex-col border-2
         border-transparent p-4 transition-[border-color] has-focus-visible:ring-2
@@ -92,17 +98,19 @@ const EditionsSelectModalItem = ({
       <div aria-hidden="true" className="absolute top-2 mb-3">
         <BlueTitleBadge isBlue={isBlueTitle} />
       </div>
-      {/* The cover box takes its height from its own width, so it scales with
-          the column instead of a fixed size. Covers sit on its bottom edge and
-          are capped by it, which keeps them on one line across the grid
-          whatever their proportions. The bottom inset leaves the material-type
-          icon straddling the cover's bottom edge room inside the box. */}
-      <div className="relative mt-6 flex aspect-5/7 w-full items-end justify-center px-[6%]">
+      {/* The card is a flex item stretched to its row's height, and this box
+          takes the slack, so every cover box in a row ends up as tall as the
+          row's tallest cover. The cover keeps its own proportions and centres
+          itself in that box. Below md a card spans the full width, so the
+          cover is capped there to stop it becoming one giant image; from md
+          the columns keep it in check on their own. The mb leaves room for
+          the material-type icon straddling its bottom edge. */}
+      <div className="mt-8 mb-6 flex w-full grow items-center justify-center px-[6%]">
         <ManifestationCover
           cover={manifestation.cover}
           iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
           alt=""
-          className="absolute inset-x-[6%] bottom-[8%] max-h-[92%]"
+          className="max-h-[280px] w-full md:max-h-full"
           costFree={isBlueTitle}
           iconClassName={
             isBlueTitle
@@ -111,16 +119,24 @@ const EditionsSelectModalItem = ({
           }
         />
       </div>
-      {/* Pushed to the card's bottom, so the titles line up across the row
-          whatever height the cover above them took. */}
-      <div aria-hidden="true" className="min-w-0 items-start space-y-4">
+      {/* Pushed to the card's bottom, and grown to the row's tallest detail
+          block, so the titles line up across the row. */}
+      <div
+        aria-hidden="true"
+        ref={detailsRef}
+        {...groupAttribute}
+        className="mt-auto min-w-0 space-y-4">
         <p className="text-typo-subtitle-lg mt-2 font-semibold break-words">{title}</p>
-        {/* Term and value share a row, the value pushed to the right edge. */}
+        {/* Two columns of text do not fit a half-width card on a phone — a
+            value like "144 sider" breaks mid-word — so the value sits under
+            its term there and moves up beside it once there is room. */}
         <dl className="space-y-2">
           {details.map(detail => (
-            <div key={detail.term} className="flex items-baseline justify-between gap-4">
+            <div
+              key={detail.term}
+              className="sm:flex sm:items-baseline sm:justify-between sm:gap-4">
               <dt className="text-typo-body-md opacity-70">{detail.term}</dt>
-              <dd className="text-typo-body-md min-w-0 text-right font-semibold break-words">
+              <dd className="text-typo-body-md min-w-0 font-semibold break-words sm:text-right">
                 {detail.value}
               </dd>
             </div>
@@ -137,13 +153,15 @@ const Skeleton = () => (
   <div
     className="bg-background-overlay rounded-base flex flex-col gap-2 border-2 border-transparent
       p-4">
-    <div className="relative aspect-5/7 w-full px-[6%] pb-5">
+    {/* No cover to measure yet, so the box falls back to the same 2/3 that
+        getCoverAspectRatio uses when a cover carries no dimensions. */}
+    <div className="relative mt-6 mb-5 aspect-2/3 w-full px-[6%]">
       <CoverPictureSkeleton />
     </div>
     {/* One bar per line the real card renders — a title plus the three detail
         rows — at the same heights, so the grid does not jump when the editions
         arrive. */}
-    <div className="mt-auto space-y-4 pt-20">
+    <div className="mt-auto space-y-4">
       <div className="bg-background-skeleton h-8 w-2/3 animate-pulse rounded-sm" />
       <div className="space-y-2">
         <div className="bg-background-skeleton h-6 w-full animate-pulse rounded-sm" />
