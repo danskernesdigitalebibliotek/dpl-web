@@ -342,11 +342,6 @@ updates:
         versions: [">=9"]
       - dependency-name: "@storybook/addon-queryparams"
         versions: [">=9.0.0"]
-      # The current React Cypress stack is not compatible with Cypress 14.4+ or code-coverage 4.
-      - dependency-name: "cypress"
-        versions: [">=14.4.0"]
-      - dependency-name: "@cypress/code-coverage"
-        versions: [">=4.0.0"]
       - dependency-name: "dotenv"
         update-types: ["version-update:semver-major"]
       # The current React lint stack still depends on plugins that are not ESLint 10 compatible.
