@@ -1,0 +1,12 @@
+query retrieverArticle($id: String!) {
+  retriever(id: $id) {
+    error
+    article {
+      headline
+      subHeadline
+      publishingDate
+      sourceName
+      fullTextHtml
+    }
+  }
+}

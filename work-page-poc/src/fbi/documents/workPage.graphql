@@ -1,0 +1,84 @@
+query workPage($workId: String!) {
+  work(id: $workId) {
+    workId
+    titles {
+      main
+      full
+    }
+    creators {
+      display
+    }
+    abstract
+    subjects {
+      all {
+        display
+      }
+    }
+    manifestations {
+      bestRepresentation {
+        pid
+      }
+      all {
+        pid
+        source
+        titles {
+          full
+        }
+        creators {
+          display
+        }
+        materialTypes {
+          materialTypeGeneral {
+            code
+          }
+          materialTypeSpecific {
+            code
+            display
+          }
+        }
+        edition {
+          summary
+          publicationYear {
+            year
+          }
+        }
+        cover {
+          detail_207
+          detail_500
+        }
+        languages {
+          main {
+            display
+          }
+        }
+        physicalDescription {
+          summaryFull
+        }
+        hostPublication {
+          title
+          summary
+          year {
+            year
+          }
+        }
+        access {
+          __typename
+          ... on AccessUrl {
+            url
+            origin
+            status
+          }
+          ... on DigitalArticleService {
+            issn
+          }
+          ... on RetrieverService {
+            id
+          }
+          ... on InterLibraryLoan {
+            loanIsPossible
+          }
+        }
+      }
+    }
+  }
+}
