@@ -1158,7 +1158,7 @@ msgstr ""
 
 msgctxt "Metatag URL"
 msgid "<none>"
-msgstr "- ingen -"
+msgstr ""
 
 msgid ""
 "<p class=\"fieldgroup-help\">Fields can be dragged into groups with "
