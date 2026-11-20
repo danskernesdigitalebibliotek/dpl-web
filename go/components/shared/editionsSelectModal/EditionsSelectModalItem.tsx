@@ -36,8 +36,10 @@ const EditionsSelectModalItem = ({
 }: EditionsSelectModalItemProps) => {
   const year = manifestation.edition?.publicationYear?.year
   // The same title the work page's heading shows: the main title, without the
-  // subtitles `full` carries.
-  const title = manifestation.titles?.main[0]
+  // subtitles `full` carries. `main` comes back empty for some records, and
+  // the card's whole layout hangs off the title, so it falls back to `full`
+  // rather than leaving an empty heading line.
+  const title = manifestation.titles?.main[0] ?? manifestation.titles?.full[0]
   const publisher = manifestation.publisher?.join(", ")
   const isAudio = isAudioMaterialType(getManifestationMaterialType(manifestation).code)
   // Audio has no page count, so its running time comes from the free-text
@@ -155,7 +157,7 @@ const Skeleton = () => (
       p-4">
     {/* No cover to measure yet, so the box falls back to the same 2/3 that
         getCoverAspectRatio uses when a cover carries no dimensions. */}
-    <div className="relative mt-6 mb-5 aspect-2/3 w-full px-[6%]">
+    <div className="relative mt-8 mb-6 aspect-2/3 w-full px-[6%]">
       <CoverPictureSkeleton />
     </div>
     {/* One bar per line the real card renders — a title plus the three detail
