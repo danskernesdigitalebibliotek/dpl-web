@@ -41,27 +41,29 @@ const BookQuizResultLayout = ({ profile, steps, groupAnswers }: TBookQuizResultL
       <div
         className={cn(
           QUIZ_COLOR_CLASSES[color],
-          `dark:bg-background-overlay-solid px-grid-edge pt-grid-edge relative isolate grid
-          items-center gap-6 overflow-hidden rounded-xl bg-(--quiz-bg) lg:grid-cols-2 lg:px-10
-          lg:pt-0`
+          `dark:bg-background-overlay-solid relative isolate grid items-center overflow-hidden
+          rounded-xl bg-(--quiz-bg) px-6 pt-8 lg:grid-cols-2 lg:gap-6 lg:px-10 lg:pt-0`
         )}>
-        <BookQuizWatermark className="-right-[10%] -bottom-[60%] w-[90%] lg:w-[60%]" />
+        {/* Behind the girl: below the text on small screens, to the right from lg. */}
+        <BookQuizWatermark
+          className="-right-[25%] -bottom-[22%] w-[125%] lg:-right-[10%] lg:-bottom-[60%]
+            lg:w-[60%]"
+        />
         {/* Grouped by distance: the lead-in sits close to the heading it
-            belongs to, the text a little further away, the button furthest. */}
-        <div className="lg:py-10">
+            belongs to, the text a little further away, the button furthest.
+            Centred above the girl on small screens, beside her from lg. */}
+        <div className="text-center lg:py-10 lg:text-left">
           <p className="text-typo-subtitle-md lg:text-typo-subtitle-lg">Du kan godt lide</p>
-          <h1 className="text-typo-heading-3 lg:text-typo-heading-1 mt-1 lg:mt-2">
-            {bookType || "Dine bogforslag"}
-          </h1>
-          <p className="text-typo-body-lg mt-4 max-w-[440px] lg:mt-6">
+          <h1 className="text-typo-heading-1 mt-1 lg:mt-2">{bookType || "Dine bogforslag"}</h1>
+          <p className="text-typo-body-lg mx-auto mt-4 max-w-[440px] text-balance lg:mx-0 lg:mt-6">
             Vi har fundet bøger, der passer til dig. Du finder dem herunder.{" "}
             <span aria-hidden="true">👇</span>
           </p>
-          <OpenBookQuizButton theme="secondary" className="bg-background mt-8 lg:mt-10">
+          <OpenBookQuizButton theme="secondary" className="bg-background mt-6 lg:mt-10">
             Tag quizzen igen
           </OpenBookQuizButton>
         </div>
-        <div className="flex justify-center self-end pt-[110px] lg:pt-[130px]">
+        <div className="flex justify-center self-end pt-[104px] lg:pt-[130px]">
           {/* Keyed by the searches, so the burst plays again when the quiz is
               retaken from this page, where only the query changes. */}
           <BookQuizBurst
