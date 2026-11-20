@@ -1,6 +1,7 @@
+"use client"
 import { motion } from "framer-motion"
-import { useRouter } from "next/navigation"
-import React from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import React, { useOptimistic, useRef, useState, useTransition } from "react"
 
 import {
   getManifestationLanguageCode,
@@ -9,19 +10,24 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
+import { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
+import { getEditionLabel } from "@/components/shared/editionsSelectModal/editionChoice"
 import MaterialTypeSelect, {
   MaterialTypeSelectOption,
 } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
+import { useRestoreFocusAfterDialog } from "@/hooks/useRestoreFocusAfterDialog"
 import useSession from "@/hooks/useSession"
+import { useShownEditions } from "@/hooks/useShownEditions"
 import {
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
+import { hasCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
-import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
-import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
+import { openModal } from "@/store/modal.store"
 
+import WorkPageButtons from "./WorkPageButtons"
 import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"
 import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
 
@@ -33,9 +39,7 @@ type WorkPageHeaderProps = {
 
 const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
-  const selectedManifestationIsbns = selectedManifestation
-    ? getIsbnsFromManifestation(selectedManifestation)
-    : []
+  const searchParams = useSearchParams()
   const languageCode = getManifestationLanguageCode(selectedManifestation)
 
   const sortedManifestations = sortManifestationsBySortPriority(manifestations)
@@ -47,20 +51,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
 
   const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(materialTypes)
 
-  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(
-    selectedManifestationIsbns?.[0],
-    {
-      // Publizon / useGetV1ProductsIdentifier is responsible for online
-      // materials. It requires an ISBN to do lookups.
-      // If the manifestation is physical, we skip the request
-      query: {
-        enabled:
-          selectedManifestationIsbns.length > 0 &&
-          selectedManifestation.accessTypes[0].code === "ONLINE",
-      },
-    }
-  )
-
   const covers = selectedManifestation.cover
 
   const onOptionSelect = (optionSelected: MaterialTypeSelectOption) => {
@@ -68,7 +58,10 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
       routeParams: { work: "work", wid: work.workId },
       queryParams: { type: optionSelected.code },
     })
-    router.push(url, { scroll: false })
+    startTransition(() => {
+      setPickedMaterialTypeCode(optionSelected.code)
+      router.push(url, { scroll: false })
+    })
   }
 
   const materialTypeOptions = workMaterialTypesWithDisplayName
@@ -76,14 +69,79 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const selectedManifestationMaterialTypeCode =
     selectedManifestation?.materialTypes[0].materialTypeSpecific.code
 
+  // The tapped type, correct immediately. The url and the selected
+  // manifestation both lag until the transition below commits.
+  const [pickedMaterialTypeCode, setPickedMaterialTypeCode] = useOptimistic(
+    selectedManifestationMaterialTypeCode
+  )
+  const [, startTransition] = useTransition()
+
   const manifestationKey = selectedManifestation?.pid
 
-  const isSelectedManifestationPodcast = selectedManifestationMaterialTypeCode === "PODCAST"
-
-  const isSelectedManifestationCostFree = !!publizonData?.product?.costFree
+  const isSelectedManifestationBlue = useIsBlueTitle(selectedManifestation)
 
   const { session } = useSession()
   const isLoggedIn = session?.isLoggedIn || false
+
+  const urlMaterialTypeCode = searchParams.get("type")
+  // An unknown url type never resolves, so it is not a switch in progress.
+  const isUrlMaterialTypeKnown = materialTypeOptions.some(
+    option => option.code === urlMaterialTypeCode
+  )
+  const isSwitchingMaterialType =
+    (isUrlMaterialTypeKnown && urlMaterialTypeCode !== selectedManifestationMaterialTypeCode) ||
+    pickedMaterialTypeCode !== selectedManifestationMaterialTypeCode
+
+  const editionChoiceLabel = getEditionLabel(selectedManifestation)
+
+  // Same set the picker lists, so it also decides whether the button shows.
+  const { shownEditions, isLoadingAvailability } = useShownEditions(
+    work.workId,
+    pickedMaterialTypeCode
+  )
+  const hasEditionsToChooseFrom = shownEditions.length > 1
+  const isEditionPickerLoading = isSwitchingMaterialType || isLoadingAvailability
+
+  const editionButtonRef = useRef<HTMLButtonElement>(null)
+  const shouldRestoreEditionFocus = useRef(false)
+  // The nonce makes every choice a new value even when the sentence repeats,
+  // which is what the live region below needs to announce it again.
+  const [choiceAnnouncement, setChoiceAnnouncement] = useState({ text: "", nonce: 0 })
+  const announceChoice = (text: string) =>
+    setChoiceAnnouncement(current => ({ text, nonce: current.nonce + 1 }))
+
+  // Records the debt; useRestoreFocusAfterDialog moves the focus once the
+  // dialog unmounts.
+  const restoreEditionFocus = () => {
+    shouldRestoreEditionFocus.current = true
+  }
+
+  useRestoreFocusAfterDialog(shouldRestoreEditionFocus, editionButtonRef)
+
+  // The picker opens on the manifestation actually shown, whether it got
+  // there by an explicit url pin or the page's own default pick; on confirm,
+  // the picked pid becomes the url's edition param.
+  const openEditionsSelect = () =>
+    openModal("EditionsSelectModal", {
+      wid: work.workId,
+      materialTypeCode: pickedMaterialTypeCode,
+      choicePid: selectedManifestation.pid,
+      // The modal hands back the type it listed, so the pid and the type
+      // always belong together.
+      onChoiceConfirm: (pid: string, materialTypeCode: string) => {
+        const url = resolveUrl({
+          routeParams: { work: "work", wid: work.workId },
+          queryParams: { type: materialTypeCode, edition: pid },
+        })
+        router.push(url, { scroll: false })
+        // Named from the picked manifestation, which the page has not
+        // selected yet.
+        const picked = manifestations.find(manifestation => manifestation.pid === pid)
+        const pickedYear = picked?.edition?.publicationYear?.year
+        announceChoice(pickedYear ? `Udgave valgt: ${pickedYear}` : "Udgave valgt")
+      },
+      onClosed: restoreEditionFocus,
+    })
 
   return (
     <>
@@ -121,14 +179,14 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
             <div className="flex w-full justify-center pt-6">
               <MaterialTypeSelect
                 options={materialTypeOptions}
-                selected={selectedManifestationMaterialTypeCode}
+                selected={pickedMaterialTypeCode}
                 onOptionSelect={onOptionSelect}
               />
             </div>
           )}
         </div>
         <div className="col-span-4 flex flex-col items-start justify-end pt-4 lg:pt-0">
-          {isSelectedManifestationCostFree || isSelectedManifestationPodcast ? (
+          {isSelectedManifestationBlue ? (
             <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
               BLÅ
             </Badge>
@@ -136,9 +194,44 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           <h1 lang={languageCode} className="text-typo-heading-3 break-words hyphens-auto lg:mt-0">
             {selectedManifestation?.titles?.full || ""}
           </h1>
-          <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
+          {/* A work without named creators falls back to the edition's
+              contributors — an anthology, say, credited to its editor. */}
+          <WorkAuthors
+            creators={
+              hasCreators(work.creators) ? work.creators : selectedManifestation.contributors
+            }
+          />
         </div>
         <div className="col-span-4 mt-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
+          {/* The edition picker closes on confirm, so the choice it made is
+              announced here instead. Keyed by the nonce, so a repeated
+              sentence still replaces the node and counts as a change. */}
+          <p key={choiceAnnouncement.nonce} role="status" className="sr-only">
+            {choiceAnnouncement.text}
+          </p>
+          {/* Shown only once the type resolves to more than one obtainable
+              edition, and never mid-switch. */}
+          {!isEditionPickerLoading && hasEditionsToChooseFrom && (
+            <div className="mb-3 w-full">
+              <WorkPageButtons>
+                <button
+                  type="button"
+                  ref={editionButtonRef}
+                  onClick={openEditionsSelect}
+                  aria-label={`Udgave: ${editionChoiceLabel}. Skift udgave`}
+                  className="border-foreground/10 focus-visible text-typo-body-sm
+                    hover:bg-background-overlay flex w-full items-center justify-between gap-3
+                    rounded-full border px-5 py-3 text-left transition-colors lg:max-w-80
+                    lg:min-w-72">
+                  <span className="min-w-0 truncate">
+                    {"Udgave: "}
+                    <span className="font-semibold">{editionChoiceLabel}</span>
+                  </span>
+                  <span className="animate-text-underline shrink-0">Skift</span>
+                </button>
+              </WorkPageButtons>
+            </div>
+          )}
           {isLoggedIn ? (
             <WorkPageButtonsLoggedIn
               workId={work.workId}

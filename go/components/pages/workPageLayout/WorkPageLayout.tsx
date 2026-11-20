@@ -1,35 +1,32 @@
 "use client"
 
-import { notFound, useRouter, useSearchParams } from "next/navigation"
-import React, { useEffect, useMemo, useState, useSyncExternalStore } from "react"
+import { notFound } from "next/navigation"
+import React, { useMemo, useSyncExternalStore } from "react"
 
 import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
-import WorkPageLoading from "@/components/pages/workPageLayout/WorkPageLoading"
+import WorkPageLoading, {
+  WorkPageHeaderSkeleton,
+} from "@/components/pages/workPageLayout/WorkPageLoading"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
+import { useSelectedEdition } from "@/hooks/useSelectedEdition"
 import {
   ManifestationWorkPageFragment,
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
-import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 import {
   filterManifestationsByEdition,
   filterManifestationsByMaterialType,
   filterMaterialTypes,
-  getEbookManifestationOrFallbackManifestation,
 } from "./helper"
 
 const subscribeNoop = () => () => {}
 
 function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerData: boolean }) {
-  const router = useRouter()
   const { data, isLoading } = useGetMaterialQuery({
     wid: workId,
   })
-  const [selectedManifestation, setSelectedManifestation] =
-    useState<ManifestationWorkPageFragment>()
-  const searchParams = useSearchParams()
   const isHydrated = useSyncExternalStore(
     subscribeNoop,
     () => true,
@@ -45,8 +42,7 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
   }
 
   const work = data?.work
-  const bestRepresentation = work?.manifestations?.bestRepresentation
-  const allManifestations = work?.manifestations?.all
+  const allManifestations = work?.manifestations?.all as ManifestationWorkPageFragment[] | undefined
 
   const manifestations = useMemo(() => {
     if (!allManifestations) return []
@@ -56,35 +52,12 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     )
   }, [allManifestations]) as ManifestationWorkPageFragment[]
 
-  useEffect(() => {
-    // Get the material type from the search params
-    const searchParamsMaterialType = searchParams.get("type")
-
-    if (!searchParamsMaterialType && bestRepresentation) {
-      // If no material type is specified is url params, redirect to the ebook manifestation if available or a fallback manifestation
-      const manifestation = getEbookManifestationOrFallbackManifestation(
-        bestRepresentation,
-        manifestations
-      )
-      if (manifestation) {
-        const url = resolveUrl({
-          routeParams: { work: "work", wid: work.workId },
-          queryParams: { type: manifestation.materialTypes[0].materialTypeSpecific.code },
-        })
-        router.replace(url, { scroll: false })
-      }
-    }
-
-    // Filter out manifestations that don't match the search params material type
-    const selectedManifestation = manifestations.find(manifestation => {
-      return !!manifestation?.materialTypes.find(
-        materialType => materialType.materialTypeSpecific.code === searchParamsMaterialType
-      )
-    }) as ManifestationWorkPageFragment
-
-    setSelectedManifestation(selectedManifestation)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, manifestations])
+  const { selectedManifestation, isWaitingForDefaultEdition } = useSelectedEdition({
+    workId,
+    work,
+    manifestations,
+    allManifestations,
+  })
 
   if ((isLoading && !data) || isAwaitingHydration) {
     return <WorkPageLoading />
@@ -98,15 +71,28 @@ function WorkPageLayout({ workId, hasServerData }: { workId: string; hasServerDa
     <div
       className="content-container mb-grid-gap-2 lg:mb-grid-gap-half flex flex-col flex-row
         flex-wrap gap-y-10">
-      {work && selectedManifestation && (
+      {work && (
         <>
-          <WorkPageHeader
-            manifestations={manifestations}
+          {/* The skeleton holds the header's place until the edition is
+              decided, so the reader never sees one edition swapped for
+              another. The info boxes stay, their edition fields showing "-"
+              meanwhile. */}
+          {isWaitingForDefaultEdition || !selectedManifestation ? (
+            <WorkPageHeaderSkeleton />
+          ) : (
+            <WorkPageHeader
+              manifestations={manifestations}
+              work={work}
+              selectedManifestation={selectedManifestation}
+            />
+          )}
+          <InfoBox
             work={work}
-            selectedManifestation={selectedManifestation}
+            selectedManifestation={isWaitingForDefaultEdition ? undefined : selectedManifestation}
           />
-          <InfoBox work={work} selectedManifestation={selectedManifestation} />
-          <InfoBoxDetails selectedManifestation={selectedManifestation} />
+          <InfoBoxDetails
+            selectedManifestation={isWaitingForDefaultEdition ? undefined : selectedManifestation}
+          />
         </>
       )}
     </div>
