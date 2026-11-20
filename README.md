@@ -13,7 +13,7 @@ Monorepo for the Danish Public Libraries (DPL) web platform, containing four int
 
 **📖 [See full documentation](./docs/)**
 
-For detailed information about the projects, setup instructions, and development guidelines, see the [docs](./docs/) directory.
+For detailed information about the projects, setup instructions, and development guidelines, see the [docs](./docs/) directory..
 
 ## Quick Start
 
