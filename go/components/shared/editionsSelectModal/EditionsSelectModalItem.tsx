@@ -62,6 +62,11 @@ const EditionsSelectModalItem = ({
   // The detail block takes the height of the tallest one on its row, so the
   // covers above them start at the same point across the row.
   const { ref: detailsRef, groupAttribute } = useEqualRowHeight("edition-details")
+  // The list is equalised separately: a publisher name that wraps to two lines
+  // makes one card's list taller, which would otherwise push that card's
+  // status label below its neighbours'.
+  const { ref: listRef, groupAttribute: listGroupAttribute } =
+    useEqualRowHeight<HTMLDListElement>("edition-detail-list")
 
   const accessibleName = [
     title,
@@ -132,7 +137,7 @@ const EditionsSelectModalItem = ({
         {/* Two columns of text do not fit a half-width card on a phone — a
             value like "144 sider" breaks mid-word — so the value sits under
             its term there and moves up beside it once there is room. */}
-        <dl className="space-y-2">
+        <dl ref={listRef} {...listGroupAttribute} className="space-y-2">
           {details.map(detail => (
             <div
               key={detail.term}

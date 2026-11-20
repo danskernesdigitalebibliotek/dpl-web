@@ -35,8 +35,8 @@ const scheduleMeasure = (group: string, measure: () => void) => {
  * layout, after fonts settle, and whenever the container resizes — a different
  * width means different rows.
  */
-export const useEqualRowHeight = (group: string) => {
-  const ref = useRef<HTMLDivElement | null>(null)
+export const useEqualRowHeight = <T extends HTMLElement = HTMLDivElement>(group: string) => {
+  const ref = useRef<T | null>(null)
 
   const measure = useCallback(() => {
     const element = ref.current
