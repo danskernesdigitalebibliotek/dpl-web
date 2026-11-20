@@ -66,7 +66,9 @@ const EditionsSelectModal = ({
       const queueText = getEditionQueueText(manifestation) ?? ""
       return {
         label: (
-          <StatusLabel variant="warning" subline={queueText}>
+          // Full width: on a card the pill reads as a band across the item
+          // rather than a tag floating at its left edge.
+          <StatusLabel variant="warning" subline={queueText} className="w-full">
             Udlånt lige nu
           </StatusLabel>
         ),
@@ -75,7 +77,11 @@ const EditionsSelectModal = ({
     }
     if (isDigitalEditionOnLoan(manifestation)) {
       return {
-        label: <StatusLabel variant="warning">Udlånt til dig</StatusLabel>,
+        label: (
+          <StatusLabel variant="warning" className="w-full">
+            Udlånt til dig
+          </StatusLabel>
+        ),
         text: "Udlånt til dig",
       }
     }
@@ -109,8 +115,13 @@ const EditionsSelectModal = ({
     <ResponsiveDialog title="Vælg udgave" open={open} onClose={handleClose}>
       <fieldset className="m-0 border-0 p-0">
         <legend className="sr-only">Vælg udgave</legend>
+        {/* The item widths carry the column count: a percentage of the row,
+            less the share of the fixed gap each item gives up — one gap split
+            over two columns, two over three. */}
         <div
-          className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3">
+          className="flex flex-wrap gap-x-6 gap-y-7 [&>*]:w-full
+            sm:[&>*]:w-[calc(50%-(var(--spacing)*3))] md:[&>*]:w-[calc(33.333%-(var(--spacing)*4))]
+            lg:[&>*]:w-[calc(50%-(var(--spacing)*3))]">
           {isLoadingEditions
             ? editions.map(manifestation => (
                 <EditionsSelectModalItem.Skeleton key={manifestation.pid} />
