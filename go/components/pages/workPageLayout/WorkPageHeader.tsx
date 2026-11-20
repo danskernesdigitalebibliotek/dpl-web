@@ -12,7 +12,6 @@ import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
-import { getEditionLabel } from "@/components/shared/editionsSelectModal/editionChoice"
 import MaterialTypeSelect, {
   MaterialTypeSelectOption,
 } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
@@ -36,6 +35,10 @@ type WorkPageHeaderProps = {
   selectedManifestation: ManifestationWorkPageFragment
   manifestations: ManifestationWorkPageFragment[]
 }
+
+// Label for the button that opens the picker.
+const getEditionLabel = (selectedManifestation: ManifestationWorkPageFragment): string =>
+  selectedManifestation.edition?.publicationYear?.year?.toString() ?? "Valgt udgave"
 
 const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
@@ -110,8 +113,9 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   const announceChoice = (text: string) =>
     setChoiceAnnouncement(current => ({ text, nonce: current.nonce + 1 }))
 
-  // Records the debt; useRestoreFocusAfterDialog moves the focus once the
-  // dialog unmounts.
+  // The picker opens through the modal store rather than a DialogTrigger, so
+  // Radix has no element to hand the focus back to. This records the debt and
+  // useRestoreFocusAfterDialog pays it once the dialog unmounts.
   const restoreEditionFocus = () => {
     shouldRestoreEditionFocus.current = true
   }
