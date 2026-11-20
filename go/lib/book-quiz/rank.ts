@@ -1,7 +1,7 @@
 import type { TBookQuizRange } from "./questions"
 
 // Books shown per section.
-export const BOOKS_PER_STEP = 3
+export const BOOKS_PER_STEP = 4
 // How many years a work's age span may reach outside the chosen range.
 export const MAX_AGE_SPILL = 2
 
@@ -36,21 +36,26 @@ export const getAgeSpill = (work: TRankableWork, range: TBookQuizRange): number 
   return Math.max(0, range[0] - span[0]) + Math.max(0, span[1] - range[1])
 }
 
-// Top books for one ladder step: works reaching more than MAX_AGE_SPILL years
-// outside the range are dropped, then the smallest spill wins, then FBI's own
-// order. Works without age data go last. Without a chosen age FBI's order is
-// kept. Steps are ranked independently, so the same book can appear in several
-// sections.
-export const rankStepWorks = <TWork extends TRankableWork>(
+// All books that fit one ladder step, best first: works reaching more than
+// MAX_AGE_SPILL years outside the range are dropped, then the smallest spill
+// wins, then FBI's own order. Works without age data go last. Without a chosen
+// age FBI's order is kept. Steps are ranked independently, so the same book can
+// appear in several sections.
+export const getStepWorkPool = <TWork extends TRankableWork>(
   works: TWork[],
   ageRange: TBookQuizRange | undefined
 ): TWork[] => {
-  if (!ageRange) return works.slice(0, BOOKS_PER_STEP)
+  if (!ageRange) return works
 
   return works
     .map((work, index) => ({ work, index, spill: getAgeSpill(work, ageRange) }))
     .filter(entry => entry.spill === null || entry.spill <= MAX_AGE_SPILL)
     .sort((a, b) => (a.spill ?? Infinity) - (b.spill ?? Infinity) || a.index - b.index)
-    .slice(0, BOOKS_PER_STEP)
     .map(entry => entry.work)
 }
+
+// Top books for one ladder step.
+export const rankStepWorks = <TWork extends TRankableWork>(
+  works: TWork[],
+  ageRange: TBookQuizRange | undefined
+): TWork[] => getStepWorkPool(works, ageRange).slice(0, BOOKS_PER_STEP)

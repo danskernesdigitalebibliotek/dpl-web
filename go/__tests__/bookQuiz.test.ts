@@ -102,11 +102,12 @@ describe("rank", () => {
         work("near", [9, 11]),
         work("exact-1", [9, 10]),
         work("exact-2", [9, 10]),
+        work("exact-3", [9, 10]),
       ],
       [9, 10]
     )
     expect(ranked).toHaveLength(BOOKS_PER_STEP)
-    expect(ranked.map(entry => entry.workId)).toEqual(["exact-1", "exact-2", "near"])
+    expect(ranked.map(entry => entry.workId)).toEqual(["exact-1", "exact-2", "exact-3", "near"])
   })
 
   it("keeps FBI order when no age is chosen", () => {

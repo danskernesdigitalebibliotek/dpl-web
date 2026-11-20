@@ -2,6 +2,7 @@
 
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Cross2Icon } from "@radix-ui/react-icons"
+import { type VariantProps, cva } from "class-variance-authority"
 import { AnimatePresence, motion } from "framer-motion"
 import * as React from "react"
 
@@ -31,10 +32,29 @@ const DialogOverlay = React.forwardRef<
 ))
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
+const dialogContentVariants = cva(
+  `z-dialog bg-background data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+  data-[state=closed]:zoom-out-30 data-[state=open]:animate-dialog-open fixed top-[50%] left-[50%]
+  m-auto grid translate-x-[-50%] translate-y-[-50%] overflow-y-scroll shadow-lg`,
+  {
+    variants: {
+      size: {
+        default: `max-h-[95dvh] w-[calc(100%-var(--grid-edge)*2)] max-w-[750px] rounded-xl
+        lg:min-h-[60dvh]`,
+        // Full screen on mobile, almost full screen from lg.
+        wide: `h-dvh w-full lg:h-[85dvh] lg:max-h-[860px] lg:w-[calc(100%-var(--grid-edge)*2)]
+        lg:max-w-[1200px] lg:rounded-xl`,
+      },
+    },
+    defaultVariants: { size: "default" },
+  }
+)
+
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, onPointerDownOutside, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> &
+    VariantProps<typeof dialogContentVariants>
+>(({ className, size, children, onPointerDownOutside, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
@@ -43,14 +63,7 @@ const DialogContent = React.forwardRef<
         preventDismissOnToastInteraction(event)
         onPointerDownOutside?.(event)
       }}
-      className={cn(
-        `z-dialog bg-background data-[state=closed]:animate-out data-[state=closed]:fade-out-0
-        data-[state=closed]:zoom-out-30 data-[state=open]:animate-dialog-open fixed top-[50%]
-        left-[50%] m-auto grid max-h-[95dvh] w-[calc(100%-var(--grid-edge)*2)] max-w-[750px]
-        translate-x-[-50%] translate-y-[-50%] overflow-y-scroll rounded-xl shadow-lg
-        lg:min-h-[60dvh]`,
-        className
-      )}
+      className={cn(dialogContentVariants({ size }), className)}
       {...props}>
       {children}
     </DialogPrimitive.Content>

@@ -1,0 +1,20 @@
+# Works for one ladder step of the book quiz. Same teaser as the search page, plus the
+# audience ages used to rank and drop works with too wide an age span. Ages are
+# read from all manifestations, as they are often only set on the physical one.
+query complexSearchForBookQuiz($cql: String!, $limit: PaginationLimitScalar!) {
+  complexSearch(cql: $cql) {
+    works(offset: 0, limit: $limit) {
+      ...WorkTeaserSearchPage
+      manifestations {
+        all {
+          audience {
+            ages {
+              begin
+              end
+            }
+          }
+        }
+      }
+    }
+  }
+}

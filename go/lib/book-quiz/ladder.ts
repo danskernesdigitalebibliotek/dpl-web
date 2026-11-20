@@ -27,6 +27,14 @@ export type TLadderStep = {
   cql: string | null
 }
 
+// Books fetched per step, so there are enough left after rank.ts drops works
+// with too wide an age span, and to shuffle between on the result page.
+const FETCH_PER_STEP = 20
+
+// Query variables for one step. Shared by the result page sections and the
+// quiz modal, which fills the cache before navigating, so the keys match.
+export const getStepQueryVariables = (cql: string) => ({ cql, limit: FETCH_PER_STEP })
+
 const EASY_TO_READ_CQL = 'phrase.generalaudience="let at læse"'
 
 const clauseCql = (clauses: TBookQuizClause[]): string | null => {

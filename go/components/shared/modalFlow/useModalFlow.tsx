@@ -39,6 +39,15 @@ export const useModalFlow = <V extends string>({ initial }: UseModalFlowOptions<
     return target
   }
 
+  // Go back to an earlier view on the path taken, e.g. from a progress bar.
+  const backTo = (target: V) => {
+    const index = history.lastIndexOf(target)
+    if (index < 0) return
+    setDirection(-1)
+    restoreScroll(target)
+    setHistory(previous => previous.slice(0, index + 1))
+  }
+
   const canGoBack = history.length > 1
 
   // Start over at a view, e.g. when the modal reopens.
@@ -64,5 +73,5 @@ export const useModalFlow = <V extends string>({ initial }: UseModalFlowOptions<
     </>
   )
 
-  return { view, direction, canGoBack, goTo, back, reset, animatedTitle, renderBody }
+  return { view, direction, canGoBack, goTo, back, backTo, reset, animatedTitle, renderBody }
 }
