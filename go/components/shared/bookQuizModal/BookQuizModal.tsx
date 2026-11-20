@@ -91,18 +91,17 @@ const BookQuizModal = ({
         size="wide"
         aria-describedby={undefined}
         className={cn(
-          QUIZ_COLOR_CLASSES[color].background,
+          QUIZ_COLOR_CLASSES[color],
           // The quiz is made to fit: the spacing shrinks with the height of the
           // screen. It only scrolls when that is not enough, e.g. when zoomed in.
-          `dark:bg-background-overlay-solid grid-rows-[auto_1fr_auto] overflow-y-auto
-          transition-colors duration-500`
+          // The colours are transitioned here, on the variables, so the background
+          // and the watermark change at the same time.
+          `dark:bg-background-overlay-solid grid-rows-[auto_1fr_auto] overflow-y-auto bg-(--quiz-bg)
+          transition-[--quiz-bg,--quiz-shape] duration-500`
         )}
         data-cy={cyKeys["book-quiz-modal"]}>
         {/* Runs off the bottom right corner, clear of the centred content. */}
-        <BookQuizWatermark
-          color={color}
-          className="-right-[18%] -bottom-[35%] w-[140%] lg:-right-[6%] lg:w-[88%]"
-        />
+        <BookQuizWatermark className="-right-[18%] -bottom-[35%] w-[140%] lg:-right-[6%] lg:w-[88%]" />
         {/* The close and back buttons live inside DialogTitle, so they are made
             white from here, to stand out on the coloured background. */}
         <DialogHeader

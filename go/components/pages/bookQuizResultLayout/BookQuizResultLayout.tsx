@@ -40,14 +40,12 @@ const BookQuizResultLayout = ({ profile, steps, groupAnswers }: TBookQuizResultL
           the bottom edge and the user's answers bursting out of the flask. */}
       <div
         className={cn(
-          QUIZ_COLOR_CLASSES[color].background,
+          QUIZ_COLOR_CLASSES[color],
           `dark:bg-background-overlay-solid px-grid-edge pt-grid-edge relative isolate grid
-          items-center gap-6 overflow-hidden rounded-xl lg:grid-cols-2 lg:px-10 lg:pt-0`
+          items-center gap-6 overflow-hidden rounded-xl bg-(--quiz-bg) lg:grid-cols-2 lg:px-10
+          lg:pt-0`
         )}>
-        <BookQuizWatermark
-          color={color}
-          className="-right-[10%] -bottom-[60%] w-[90%] lg:w-[60%]"
-        />
+        <BookQuizWatermark className="-right-[10%] -bottom-[60%] w-[90%] lg:w-[60%]" />
         {/* Grouped by distance: the lead-in sits close to the heading it
             belongs to, the text a little further away, the button furthest. */}
         <div className="lg:py-10">
