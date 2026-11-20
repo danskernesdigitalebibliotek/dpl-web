@@ -506,8 +506,8 @@
                 }
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Use 'audienceGeneral' instead expires: 01/03-2027"
           },
           {
             "name": "let",
@@ -720,11 +720,51 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "BookmarkFilterInput",
+        "description": "Returns all bookmarks associated with a work.",
+        "isOneOf": false,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "workId",
+            "description": "The ID of the work to filter by.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": "String",
+                "kind": "SCALAR",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "BookmarkItem",
         "description": null,
         "isOneOf": null,
         "fields": [
+          {
+            "name": "agency",
+            "description": "Branch information for the agency stored with the bookmark, if available.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PatronAgency",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "application",
             "description": "The application the bookmark belongs to",
@@ -804,6 +844,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "origin",
+            "description": "Origin name and comparisons with the current API context.\nExisting application and agency fields remain available independently.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": "BookmarkOrigin",
+                "kind": "OBJECT",
+                "ofType": null
+              }
+            },
+            "isDeprecated": true,
+            "deprecationReason": "@draft"
           },
           {
             "name": "selection",
@@ -996,6 +1052,54 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "BookmarkOrigin",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "displayName",
+            "description": "Library name for multi-agency clients; otherwise the application display name.\nNull when unavailable.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isCurrentApplication",
+            "description": "Matches the current application, regardless of agency. Null if unknown.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isCurrentOrigin",
+            "description": "Matches the current application and client agency mode (single or multiple).\nMulti-agency clients must also match the current agency. Null if unknown.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1382,6 +1486,18 @@
         "isOneOf": null,
         "fields": [
           {
+            "name": "agency",
+            "description": "Stored agency for a confirmed addition or existing bookmark.\nNull for dry runs, errors and deletions.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PatronAgency",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": "The unique identifier for the bookmark that was attempted to be added or deleted.",
             "args": [],
@@ -1626,20 +1742,20 @@
           {
             "name": "NT",
             "description": "New title",
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Use MaterialSelectionPublicationStatusEnum.NEW_TITLE expires: 01/03-2027"
           },
           {
             "name": "NU",
             "description": "New edition",
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Use MaterialSelectionPublicationStatusEnum.NEW_EDITION expires: 01/03-2027"
           },
           {
             "name": "OP",
             "description": "New print run",
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Use MaterialSelectionPublicationStatusEnum.NEW_PRINT expires: 01/03-2027"
           }
         ],
         "possibleTypes": null
@@ -2129,6 +2245,12 @@
           },
           {
             "name": "PRIMARYTARGET",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PUBLICATIONSTATUS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -4789,7 +4911,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
+            "deprecationReason": "Field is discontinued and will be removed expires: 01/03-2027"
           },
           {
             "name": "edition",
@@ -4935,6 +5057,12 @@
           },
           {
             "name": "NATIONAL_BIBLIOGRAPHY_ENTRY",
+            "description": null,
+            "isDeprecated": true,
+            "deprecationReason": "Use NATIONAL_BIBLIOGRAPHY_MAIN_ENTRY instead expires: 01/03-2027"
+          },
+          {
+            "name": "NATIONAL_BIBLIOGRAPHY_MAIN_ENTRY",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -7074,7 +7202,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Use 'Manifestation.materialSelection.cataloguedPublicationStatus' instead expires: 05/12-2026"
+            "deprecationReason": "Use 'Manifestation.materialSelection.cataloguedPublicationStatus' instead expires: 01/03-2027"
           },
           {
             "name": "classifications",
@@ -7289,8 +7417,8 @@
                 }
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Use 'genreForm' instead expires: 01/03-2027"
           },
           {
             "name": "genreForm",
@@ -7489,6 +7617,30 @@
             "deprecationReason": null
           },
           {
+            "name": "periodicalTitleHistory",
+            "description": "Notes on relations to this manifestation - e.g. previous/later names or related journals",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "PeriodicalTitleHistory",
+                    "kind": "OBJECT",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "periodicalType",
             "description": "Code for type of periodical",
             "args": [],
@@ -7614,7 +7766,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
+            "deprecationReason": "Use 'periodicalTitleHistory' and 'notes' instead expires: 05/12-2026"
           },
           {
             "name": "relations",
@@ -8102,7 +8254,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
+            "deprecationReason": "Field is discontinued and will be removed expires: 01/03-2027"
           },
           {
             "name": "titlePlusLanguage",
@@ -8134,7 +8286,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
+            "deprecationReason": "Field is discontinued and will be removed expires: 01/03-2027"
           },
           {
             "name": "tvSeries",
@@ -9958,8 +10110,8 @@
               "name": "PatronMutation",
               "ofType": null
             },
-            "isDeprecated": true,
-            "deprecationReason": "@draft"
+            "isDeprecated": false,
+            "deprecationReason": null
           },
           {
             "name": "submitOrder",
@@ -10122,7 +10274,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
+            "deprecationReason": "Field is discontinued and will be removed expires: 01/03-2027"
           },
           {
             "name": "type",
@@ -10171,6 +10323,18 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
+          {
+            "name": "CAST_AND_SCENES",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CONNECTION_TO_OTHER_PERIODICALS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "CONNECTION_TO_OTHER_WORKS",
             "description": null,
@@ -10232,6 +10396,12 @@
             "deprecationReason": null
           },
           {
+            "name": "NUMBERING_AND_DATING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "OCCASION_FOR_PUBLICATION",
             "description": null,
             "isDeprecated": false,
@@ -10245,6 +10415,12 @@
           },
           {
             "name": "ORIGINAL_VERSION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PUBLISHED_OTHER_MATERIALTYPE",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -10528,6 +10704,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "filter",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "BookmarkFilterInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "limit",
                 "description": null,
                 "type": {
@@ -10650,8 +10838,8 @@
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "@draft"
           },
           {
             "name": "email",
@@ -10678,8 +10866,8 @@
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "@draft"
           },
           {
             "name": "historicalLoans",
@@ -10719,8 +10907,8 @@
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "@draft"
           },
           {
             "name": "loggedInAgencyId",
@@ -12213,8 +12401,8 @@
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "@draft"
           },
           {
             "name": "deleteBookmarks",
@@ -12319,8 +12507,8 @@
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "@draft"
           },
           {
             "name": "setHistoricalLoanConsent",
@@ -12364,8 +12552,8 @@
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "@draft"
           }
         ],
         "inputFields": null,
@@ -12423,6 +12611,94 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PeriodicalTitleHistory",
+        "description": "Notes about relations to this manifestation - like previous names or related journals, or publications in different form",
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "heading",
+            "description": "Notes describing the relation of the related periodical/journal/publication",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": "String",
+                "kind": "SCALAR",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issn",
+            "description": "ISSN of the related periodical/journal/publication",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "title",
+            "description": "Titles of the related periodical/journal",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "String",
+                    "kind": "SCALAR",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "urls",
+            "description": "URLs of the related publication and possible link text",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "String",
+                    "kind": "SCALAR",
+                    "ofType": null
+                  }
+                }
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -13438,8 +13714,8 @@
               "name": "Patron",
               "ofType": null
             },
-            "isDeprecated": true,
-            "deprecationReason": "@draft"
+            "isDeprecated": false,
+            "deprecationReason": null
           },
           {
             "name": "recommend",
@@ -13662,6 +13938,22 @@
                   "ofType": null
                 },
                 "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "includeOnlineMaterials",
+                "description": "Include online/electronic materials. Defaults to true.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "name": "Boolean",
+                    "kind": "SCALAR",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": "true",
                 "isDeprecated": false,
                 "deprecationReason": null
               },
@@ -14731,6 +15023,30 @@
           {
             "name": "isAdaptationOf",
             "description": "This movie is based on this or these books",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "Manifestation",
+                    "kind": "OBJECT",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isAdaptationOfDk",
+            "description": "This movie is based on this or these books in Danish",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -17261,7 +17577,7 @@
         "fields": [
           {
             "name": "code",
-            "description": "code for materialType",
+            "description": "Code for the specific material type.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -18695,7 +19011,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
+            "deprecationReason": "Field is discontinued and will be removed expires: 01/03-2027"
           },
           {
             "name": "disc",
@@ -19435,6 +19751,30 @@
                 }
               }
             },
+            "isDeprecated": true,
+            "deprecationReason": "Use 'genreForm' instead expires: 01/03-2027"
+          },
+          {
+            "name": "genreForm",
+            "description": "The genre, (literary) form, type etc. of this work, with optional language",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "name": null,
+                "kind": "LIST",
+                "ofType": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "GenreForm",
+                    "kind": "OBJECT",
+                    "ofType": null
+                  }
+                }
+              }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -19808,7 +20148,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
+            "deprecationReason": "Field is discontinued and will be removed expires: 01/03-2027"
           },
           {
             "name": "titlePlusLanguage",
@@ -19840,7 +20180,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Field is discontinued and will be removed expires: 05/12-2026"
+            "deprecationReason": "Field is discontinued and will be removed expires: 01/03-2027"
           },
           {
             "name": "tvSeries",
