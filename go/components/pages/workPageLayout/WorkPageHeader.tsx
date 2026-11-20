@@ -200,7 +200,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           <h1
             lang={languageCode}
             className="text-typo-heading-3 w-full text-balance break-words hyphens-auto lg:mt-0">
-            {selectedManifestation?.titles?.full || ""}
+            {selectedManifestation?.titles?.main[0] || ""}
           </h1>
           {/* A work without named creators falls back to the edition's
               contributors — an anthology, say, credited to its editor. */}
