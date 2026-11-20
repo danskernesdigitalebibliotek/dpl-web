@@ -7,7 +7,6 @@ import SearchResults, {
   SearchResultsSkeleton,
 } from "@/components/pages/searchPageLayout/SearchResults"
 import { Button, buttonVariants } from "@/components/shared/button/Button"
-import Icon from "@/components/shared/icon/Icon"
 import { cyKeys } from "@/cypress/support/constants"
 import { getStepQueryVariables } from "@/lib/book-quiz/ladder"
 import type { TBookQuizOption, TBookQuizRange } from "@/lib/book-quiz/questions"
@@ -39,47 +38,50 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
       ? shuffled.works
       : rankStepWorks(data?.complexSearch.works ?? [], ageRange)
   const canShuffle = pool.length > BOOKS_PER_STEP
+  const shuffle = () => setShuffled({ cql, works: shuffleWorks(pool, works, BOOKS_PER_STEP) })
 
   return (
     <section className="space-y-6 lg:space-y-8" data-cy={cyKeys["book-quiz-section"]}>
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        {/* The answers look like the quiz's answer buttons, but are not clickable. */}
-        <h2 className="text-typo-heading-4 flex flex-wrap items-center gap-3">
-          <span>Fordi du valgte</span>
-          {answers.map((options, index) => (
-            <React.Fragment key={index}>
-              {index > 0 && <span>+</span>}
-              {options.length > 0 ? (
-                options.map(option => (
+      {/* The answers look like the quiz's answer buttons, but are not clickable.
+          On small screens they wrap below the title as smaller pills. */}
+      <h2 className="text-typo-heading-4 flex flex-wrap items-center gap-2 lg:gap-3">
+        <span className="w-full lg:w-auto">Fordi du valgte</span>
+        {answers.map((options, index) => {
+          const [first, ...rest] =
+            options.length > 0
+              ? options.map(option => (
                   <span
                     key={option.id}
-                    className={cn(buttonVariants({ variant: "option" }), "pointer-events-none")}>
+                    className={cn(
+                      buttonVariants({ variant: "option" }),
+                      "pointer-events-none min-h-10 gap-2 px-4 lg:min-h-[44px] lg:gap-3 lg:px-8"
+                    )}>
                     {option.emoji && (
-                      <span aria-hidden="true" className="text-[28px] leading-none">
+                      <span aria-hidden="true" className="text-[22px] leading-none lg:text-[28px]">
                         {option.emoji}
                       </span>
                     )}
                     {option.label}
                   </span>
                 ))
-              ) : (
-                <span className="opacity-35">…</span>
-              )}
+              : [
+                  <span key="none" className="opacity-35">
+                    …
+                  </span>,
+                ]
+          return (
+            <React.Fragment key={index}>
+              {/* The plus stays with the answer after it, so a line never
+                    ends with a plus. */}
+              <span className="flex max-w-full items-center gap-2 lg:gap-3">
+                {index > 0 && <span>+</span>}
+                {first}
+              </span>
+              {rest}
             </React.Fragment>
-          ))}
-        </h2>
-        {canShuffle && (
-          <Button
-            variant="icon"
-            theme="secondary"
-            ariaLabel="Bland bøgerne"
-            className="bg-background"
-            data-cy={cyKeys["book-quiz-shuffle-button"]}
-            onClick={() => setShuffled({ cql, works: shuffleWorks(pool, works, BOOKS_PER_STEP) })}>
-            <Icon className="h-[24px] w-[24px]" name="shuffle" />
-          </Button>
-        )}
-      </div>
+          )
+        })}
+      </h2>
       {isLoading ? (
         <SearchResultsSkeleton count={BOOKS_PER_STEP} columns={BOOKS_PER_STEP} />
       ) : works.length > 0 ? (
@@ -95,6 +97,20 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
         </AnimatePresence>
       ) : (
         <p className="text-typo-subtitle-lg opacity-35">Kombinationen gav ingen bøger</p>
+      )}
+      {/* After the books: first the suggestions, then the offer to see others. */}
+      {canShuffle && (
+        <div className="flex justify-center">
+          <Button
+            variant="icon-text"
+            theme="secondary"
+            icon="shuffle"
+            className="bg-background"
+            data-cy={cyKeys["book-quiz-shuffle-button"]}
+            onClick={shuffle}>
+            Bland bøgerne
+          </Button>
+        </div>
       )}
     </section>
   )
