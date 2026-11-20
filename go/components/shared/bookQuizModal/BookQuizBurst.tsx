@@ -4,6 +4,8 @@ import { motion, useReducedMotion } from "framer-motion"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
 
+import { cn } from "@/lib/helpers/helper.cn"
+
 // Where the flask is in the photo, in % of its size.
 const FLASK = { left: 50, top: 72 }
 // Where each emoji lands, as offsets from the flask in % of the photo's size,
@@ -24,11 +26,13 @@ const POSITIONS = [
 type TBookQuizBurstProps = {
   // Up to one per position, the rest are left out.
   emojis: string[]
+  // The width of the photo. The burst scales with it.
+  imageClassName?: string
 }
 
 // The girl with the flask, with emojis bursting out of it. With reduced motion
 // the emojis are just shown in place.
-const BookQuizBurst = ({ emojis }: TBookQuizBurstProps) => {
+const BookQuizBurst = ({ emojis, imageClassName = "w-48 lg:w-64" }: TBookQuizBurstProps) => {
   const isReducedMotion = useReducedMotion()
   // The emojis are first rendered in the flask, and the burst is started
   // after mount.
@@ -43,7 +47,7 @@ const BookQuizBurst = ({ emojis }: TBookQuizBurstProps) => {
         width={384}
         height={384}
         priority
-        className="h-auto w-48 lg:w-64"
+        className={cn("h-auto", imageClassName)}
       />
       {emojis.slice(0, POSITIONS.length).map((emoji, index) => {
         const { x, y } = POSITIONS[index]

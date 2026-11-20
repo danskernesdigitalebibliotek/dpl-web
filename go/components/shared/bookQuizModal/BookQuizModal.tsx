@@ -92,8 +92,10 @@ const BookQuizModal = ({
         aria-describedby={undefined}
         className={cn(
           QUIZ_COLOR_CLASSES[color].background,
-          `dark:bg-background-overlay-solid grid-rows-[auto_1fr_auto] transition-colors
-          duration-500`
+          // The quiz is made to fit: the spacing shrinks with the height of the
+          // screen. It only scrolls when that is not enough, e.g. when zoomed in.
+          `dark:bg-background-overlay-solid grid-rows-[auto_1fr_auto] overflow-y-auto
+          transition-colors duration-500`
         )}
         data-cy={cyKeys["book-quiz-modal"]}>
         {/* Runs off the bottom right corner, clear of the centred content. */}
@@ -103,17 +105,22 @@ const BookQuizModal = ({
         />
         {/* The close and back buttons live inside DialogTitle, so they are made
             white from here, to stand out on the coloured background. */}
-        <DialogHeader className="p-grid-edge [&_button]:bg-background lg:px-10 lg:pt-10 lg:pb-6">
+        <DialogHeader
+          className="px-grid-edge pt-grid-edge [&_button]:bg-background pb-3 lg:px-10
+            lg:pt-[clamp(16px,4dvh,40px)] lg:pb-[clamp(8px,2.4dvh,24px)]">
           {/* Hidden: each view has its own heading. The title keeps its space, so
               the close button stays in the corner, and still names the dialog
-              through aria-labelledby. */}
+              through aria-labelledby. It is at least as high as the buttons, so
+              they are as far from the top as from the sides. */}
           <DialogTitle
-            className="invisible px-10"
+            className="invisible min-h-10 px-10"
             onBack={question && flow.canGoBack ? () => flow.back() : undefined}>
             Læsefavoritter
           </DialogTitle>
         </DialogHeader>
-        <DialogBody className="p-grid-edge mx-auto flex w-full max-w-[960px] flex-col">
+        <DialogBody
+          className="px-grid-edge mx-auto flex w-full max-w-[960px] flex-col pt-2
+            pb-[clamp(8px,6dvh_-_24px,48px)]">
           {/* The question fills the space, so the buttons sit at the bottom. */}
           <div className="flex flex-1 flex-col justify-center">
             {flow.renderBody(
@@ -138,7 +145,9 @@ const BookQuizModal = ({
             )}
           </div>
           {question && (
-            <div className="mt-10 flex flex-col items-center gap-4">
+            <div
+              className="mt-[clamp(12px,5dvh,40px)] flex flex-col items-center
+                gap-[clamp(6px,2dvh,16px)]">
               {/* The last step stands out: sparkles and a gentle pulse
                   once an answer is chosen. Reduced motion turns the pulse off. */}
               <MotionConfig reducedMotion="user">
@@ -179,7 +188,9 @@ const BookQuizModal = ({
         </DialogBody>
         {/* Same padding as the actions bar in ResponsiveDialog. */}
         {question && (
-          <div className="bg-background px-grid-edge flex justify-center py-4 lg:px-10 lg:py-6">
+          <div
+            className="bg-background px-grid-edge flex justify-center py-[clamp(8px,2dvh,16px)]
+              lg:px-10 lg:py-[clamp(8px,3dvh,24px)]">
             <StepDots
               emojis={getStepEmojis(answers)}
               current={questionIndex}
