@@ -313,45 +313,6 @@ export const AudiobookRow: Story = {
   },
 }
 
-// Two editions whose titles differ in length: one wraps to two lines, the
-// other does not. The titles must start on the same line, not end on it.
-export const MixedTitleLengths: Story = {
-  render: () => {
-    const long = buildEdition({
-      pid: "t-long",
-      cover: buildCover(500, 700),
-      titles: {
-        full: ["Den lille prins og alle hans mange rejser"],
-        main: ["Den lille prins og alle hans mange rejser"],
-        identifyingAddition: null,
-      },
-    } as Partial<ManifestationWorkPageFragment>)
-    const short = buildEdition({
-      pid: "t-short",
-      cover: buildCover(500, 700),
-      titles: { full: ["Den lille prins"], main: ["Den lille prins"], identifyingAddition: null },
-    } as Partial<ManifestationWorkPageFragment>)
-
-    return (
-      <div className="bg-background px-grid-edge py-6 lg:px-10">
-        <div
-          data-equal-row-container
-          className="flex flex-wrap gap-x-6 gap-y-7 [&>*]:w-[calc(33.333%-(var(--spacing)*4))]">
-          {[long, short, short].map((edition, i) => (
-            <EditionsSelectModalItem
-              key={i}
-              manifestation={edition}
-              name="story-titles"
-              checked={false}
-              onSelect={() => {}}
-            />
-          ))}
-        </div>
-      </div>
-    )
-  },
-}
-
 export const Skeleton: Story = {
   render: () => (
     <div className="bg-background max-w-3xl p-8">
