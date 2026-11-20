@@ -6,6 +6,7 @@ dependencies:
     - field.field.paragraph.material_grid_manual.field_material_grid_description
     - field.field.paragraph.material_grid_manual.field_material_grid_title
     - field.field.paragraph.material_grid_manual.field_material_grid_work_ids
+    - field.field.paragraph.material_grid_manual.field_use_show_all_button
     - field.field.paragraph.material_grid_manual.field_work_id
     - paragraphs.paragraphs_type.material_grid_manual
   module:
@@ -34,6 +35,12 @@ content:
   field_material_grid_work_ids:
     type: dpl_fbi_work_id_search_for_material
     weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_use_show_all_button:
+    type: options_buttons
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }

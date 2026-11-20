@@ -8,6 +8,8 @@ dependencies:
     - field.field.paragraph.material_grid_automatic.field_material_amount
     - field.field.paragraph.material_grid_automatic.field_material_grid_description
     - field.field.paragraph.material_grid_automatic.field_material_grid_title
+    - field.field.paragraph.material_grid_automatic.field_priority_material_type
+    - field.field.paragraph.material_grid_automatic.field_use_show_all_button
     - paragraphs.paragraphs_type.material_grid_automatic
   module:
     - dpl_fbi
@@ -21,7 +23,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   field_material_amount:
     type: number_integer
@@ -46,6 +48,16 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_use_show_all_button:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 3
     region: content
 hidden:
   field_amount_of_materials: true

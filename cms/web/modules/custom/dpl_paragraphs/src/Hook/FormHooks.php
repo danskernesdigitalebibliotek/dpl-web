@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_paragraphs\Hook;
 
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -133,6 +134,27 @@ class FormHooks {
         ];
       }
     }
+  }
+
+  /**
+   * List the material grid show all button option first.
+   *
+   * Boolean fields list "off" before "on". The button is the default, so it
+   * should come first.
+   *
+   * @param array<mixed> $options
+   *   The options for the field.
+   * @param array<mixed> $context
+   *   Context with the field definition, entity and widget.
+   */
+  #[Hook('options_list_alter')]
+  public function orderShowAllButtonOptions(array &$options, array $context): void {
+    $field_definition = $context['fieldDefinition'] ?? NULL;
+    if (!$field_definition instanceof FieldDefinitionInterface || $field_definition->getName() !== 'field_use_show_all_button') {
+      return;
+    }
+
+    $options = array_reverse($options, TRUE);
   }
 
 }

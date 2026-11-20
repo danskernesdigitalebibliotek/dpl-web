@@ -35,6 +35,7 @@ export interface MaterialGridAutomaticEntryProps
   materialUrl: string;
   firstaccessiondateitem?: string;
   materialType?: string;
+  useShowAllButton?: string;
 }
 
 const MaterialGridAutomaticEntry: React.FC<MaterialGridAutomaticEntryProps> = ({
@@ -49,7 +50,8 @@ const MaterialGridAutomaticEntry: React.FC<MaterialGridAutomaticEntryProps> = ({
   description,
   requestedAmount,
   firstaccessiondateitem,
-  materialType
+  materialType,
+  useShowAllButton
 }) => (
   <GuardedApp app="material-grid-automatic">
     <MaterialGridAutomatic
@@ -65,6 +67,7 @@ const MaterialGridAutomaticEntry: React.FC<MaterialGridAutomaticEntryProps> = ({
       requestedAmount={requestedAmount}
       firstaccessiondateitem={firstaccessiondateitem}
       materialType={materialType as ManifestationMaterialType}
+      useShowAllButton={useShowAllButton !== "false"}
     />
   </GuardedApp>
 );

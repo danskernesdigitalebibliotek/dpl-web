@@ -1,0 +1,23 @@
+uuid: 2f2a5dfc-ba74-4e66-a36d-d19471d914df
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_use_show_all_button
+    - paragraphs.paragraphs_type.material_grid_manual
+id: paragraph.material_grid_manual.field_use_show_all_button
+field_name: field_use_show_all_button
+entity_type: paragraph
+bundle: material_grid_manual
+label: Expansion
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'Use show all button'
+  off_label: 'Show all at once'
+field_type: boolean

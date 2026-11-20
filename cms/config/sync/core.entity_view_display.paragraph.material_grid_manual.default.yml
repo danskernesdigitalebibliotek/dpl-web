@@ -6,6 +6,7 @@ dependencies:
     - field.field.paragraph.material_grid_manual.field_material_grid_description
     - field.field.paragraph.material_grid_manual.field_material_grid_title
     - field.field.paragraph.material_grid_manual.field_material_grid_work_ids
+    - field.field.paragraph.material_grid_manual.field_use_show_all_button
     - field.field.paragraph.material_grid_manual.field_work_id
     - paragraphs.paragraphs_type.material_grid_manual
 id: paragraph.material_grid_manual.default
@@ -35,6 +36,16 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_use_show_all_button:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 3
     region: content
 hidden:
   field_work_id: true
