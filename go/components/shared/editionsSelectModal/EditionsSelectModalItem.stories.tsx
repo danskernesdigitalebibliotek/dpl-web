@@ -261,6 +261,58 @@ export const UnevenRows: Story = {
   },
 }
 
+// An audiobook row as the data actually arrives: one edition with a running
+// time, one with none, one with no publisher. Rows that drop out leave the
+// lists with different numbers of rows, which is what pulls a row apart.
+export const AudiobookRow: Story = {
+  render: () => {
+    const audio = (pid: string, overrides: Partial<ManifestationWorkPageFragment> = {}) =>
+      buildEdition({
+        pid,
+        cover: buildCover(500, 500),
+        materialTypes: [
+          {
+            materialTypeGeneral: { code: "AUDIO_BOOKS", display: "lydbøger" },
+            materialTypeSpecific: { code: "AUDIO_BOOK", display: "lydbog" },
+          },
+        ],
+        ...overrides,
+      } as Partial<ManifestationWorkPageFragment>)
+
+    const editions = [
+      audio("a1", {
+        physicalDescription: { summaryFull: "2 t., 14 min.", numberOfPages: null },
+      }),
+      audio("a2", {
+        // No running time: the "Varighed" row drops out entirely.
+        physicalDescription: { summaryFull: null, numberOfPages: null },
+      }),
+      audio("a3", {
+        publisher: [],
+        physicalDescription: { summaryFull: "5 t., 3 min.", numberOfPages: null },
+      }),
+    ]
+
+    return (
+      <div className="bg-background px-grid-edge py-6 lg:px-10">
+        <div
+          data-equal-row-container
+          className="flex flex-wrap gap-x-6 gap-y-7 [&>*]:w-[calc(33.333%-(var(--spacing)*4))]">
+          {editions.map(edition => (
+            <EditionsSelectModalItem
+              key={edition.pid}
+              manifestation={edition}
+              name="story-audio"
+              checked={false}
+              onSelect={() => {}}
+            />
+          ))}
+        </div>
+      </div>
+    )
+  },
+}
+
 export const Skeleton: Story = {
   render: () => (
     <div className="bg-background max-w-3xl p-8">

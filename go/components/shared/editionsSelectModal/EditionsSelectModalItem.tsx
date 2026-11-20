@@ -51,11 +51,14 @@ const EditionsSelectModalItem = ({
     ? manifestation.physicalDescription?.summaryFull
     : pages && `${pages} sider`
 
+  // Every edition keeps all three rows, even where a value is missing: the
+  // cards sit side by side, so dropping a row would slide the ones below it
+  // up and leave a neighbour's "Forlag" level with this card's "Varighed".
   const details = [
     { term: "Udgave", value: year ? `${year}` : undefined },
-    { term: "Forlag", value: publisher },
-    { term: isAudio ? "Varighed" : "Sideantal", value: extent },
-  ].filter(detail => Boolean(detail.value))
+    { term: "Forlag", value: publisher || undefined },
+    { term: isAudio ? "Varighed" : "Sideantal", value: extent || undefined },
+  ]
 
   const isBlueTitle = useIsBlueTitle(manifestation)
 
@@ -71,7 +74,11 @@ const EditionsSelectModalItem = ({
   const accessibleName = [
     title,
     isBlueTitle ? "Blå titel, gratis at låne" : undefined,
-    ...details.map(detail => `${detail.term}: ${detail.value}`),
+    // A row with no value is a placeholder holding the layout together, so it
+    // is skipped here rather than read out as an empty field.
+    ...details
+      .filter(detail => Boolean(detail.value))
+      .map(detail => `${detail.term}: ${detail.value}`),
     unavailableText,
   ]
     .filter(Boolean)
@@ -144,7 +151,7 @@ const EditionsSelectModalItem = ({
               className="sm:flex sm:items-baseline sm:justify-between sm:gap-4">
               <dt className="text-typo-body-md opacity-70">{detail.term}</dt>
               <dd className="text-typo-body-md min-w-0 font-semibold break-words sm:text-right">
-                {detail.value}
+                {detail.value ?? "–"}
               </dd>
             </div>
           ))}
