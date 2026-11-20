@@ -85,6 +85,7 @@ const workMock = {
         titles: {
           identifyingAddition: null,
           full: ["Den vingede hest Skar"],
+          main: ["Den vingede hest Skar"],
         },
         languages: {
           main: [
@@ -175,6 +176,7 @@ const workMock = {
         titles: {
           identifyingAddition: null,
           full: ["Den vingede hest Skar"],
+          main: ["Den vingede hest Skar"],
         },
         languages: {
           main: [
@@ -268,6 +270,7 @@ const workMock = {
       titles: {
         identifyingAddition: null,
         full: ["Den vingede hest Skar"],
+        main: ["Den vingede hest Skar"],
       },
       languages: {
         main: [

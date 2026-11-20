@@ -33,7 +33,7 @@ const manifestation: ManifestationWorkPageFragment = {
       },
     ],
   }),
-  titles: { full: ["Vildheks"], identifyingAddition: null },
+  titles: { full: ["Vildheks"], main: ["Vildheks"], identifyingAddition: null },
   series: [],
   subjects: { all: [] },
 }

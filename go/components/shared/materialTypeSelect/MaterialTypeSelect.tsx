@@ -6,6 +6,11 @@ import { cyKeys } from "@/cypress/support/constants"
 import { cn } from "@/lib/helpers/helper.cn"
 
 import Icon from "../icon/Icon"
+import PillButton from "../pillButton/PillButton"
+
+// The pill itself is motionless; the movement belongs to this select, which
+// wraps it to animate the press and the slide between options.
+const MotionPillButton = motion.create(PillButton)
 
 export type MaterialTypeSelectOption = {
   code: string
@@ -27,7 +32,7 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
         const iconName = getIconNameFromMaterialType(option.code)
 
         return (
-          <motion.button
+          <MotionPillButton
             key={option.code}
             data-cy={cyKeys[`slide-select-option`]}
             aria-label={
@@ -38,9 +43,7 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
             onClick={() => onOptionSelect(option)}
             whileTap={{ scale: 0.92 }}
             whileHover={{ scale: 1.06 }}
-            className={cn(
-              `focus-visible text-typo-label-sm relative flex flex-row items-center gap-2
-              rounded-full px-4 py-2 whitespace-nowrap hover:cursor-pointer`,
+            classNames={cn(
               isSelected ? "text-background" : "bg-background-overlay text-foreground"
             )}>
             {isSelected && (
@@ -64,7 +67,7 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
               )}
               <span>{option.display}</span>
             </motion.span>
-          </motion.button>
+          </MotionPillButton>
         )
       })}
     </div>
