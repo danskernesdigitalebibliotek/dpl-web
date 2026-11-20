@@ -6,6 +6,23 @@ import { useCallback, useEffect, useRef } from "react"
 // the tolerance absorbs sub-pixel layout without merging two real rows.
 const ROW_TOLERANCE_PX = 2
 
+// Each card asks for a measurement, but one pass already measures and sets
+// every card in the group. Pending requests per group are collapsed into a
+// single frame so N cards cost one pass rather than N.
+const pendingFrames = new Map<string, number>()
+
+const scheduleMeasure = (group: string, measure: () => void) => {
+  const pending = pendingFrames.get(group)
+  if (pending !== undefined) cancelAnimationFrame(pending)
+  pendingFrames.set(
+    group,
+    requestAnimationFrame(() => {
+      pendingFrames.delete(group)
+      measure()
+    })
+  )
+}
+
 /**
  * Makes the marked element in each card as tall as its tallest counterpart on
  * the same row of a wrapped flex or grid container.
@@ -75,22 +92,30 @@ export const useEqualRowHeight = (group: string) => {
     // Every card runs this effect, so the work is deferred to one frame: the
     // last card to mount measures a layout where all of them are present, and
     // the earlier passes are harmless no-ops against the same final state.
-    const frame = requestAnimationFrame(measure)
+    scheduleMeasure(group, measure)
 
     // Rows are decided by the container width, so a resize can move a card onto
-    // another row and change the height it should take.
-    const observer = new ResizeObserver(() => measure())
+    // another row and change the height it should take. One resize notifies
+    // every card's observer, so this is collapsed into a single pass too.
+    const observer = new ResizeObserver(() => scheduleMeasure(group, measure))
     const container = ref.current?.closest("[data-equal-row-container]") ?? document.body
     observer.observe(container)
 
-    // A font swap changes text height after the first measurement.
-    document.fonts?.ready.then(measure).catch(() => {})
+    // A font swap changes text height after the first measurement. The promise
+    // cannot be cancelled, so the flag stops a late resolve from measuring a
+    // card that has since unmounted.
+    let cancelled = false
+    document.fonts?.ready
+      .then(() => {
+        if (!cancelled) measure()
+      })
+      .catch(() => {})
 
     return () => {
-      cancelAnimationFrame(frame)
+      cancelled = true
       observer.disconnect()
     }
-  })
+  }, [group, measure])
 
   return { ref, groupAttribute: { "data-equal-row": group } }
 }
