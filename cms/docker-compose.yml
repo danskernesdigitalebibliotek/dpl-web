@@ -62,7 +62,7 @@ services:
       lagoon.type: none
       # OrbStack resolves the site's HTTPS URL straight to this proxy (which
       # terminates TLS and forwards to varnish). No /etc/hosts entry needed.
-      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
+      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.dpl-web.${DEV_TLD:-local}
     volumes:
       - '../:/app'
       - '${HOME}/.local/share/mkcert:/rootCA:ro'
@@ -71,7 +71,7 @@ services:
       NGINX_DOCUMENT_ROOT: /app/cms/web
       NGINX_PROXY_PASS: http://varnish:8080
       VIRTUAL_PROTO: https
-      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
+      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.dpl-web.${DEV_TLD:-local}
     working_dir: /app
 
   varnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
@@ -138,7 +138,7 @@ services:
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Route that should be used locally.
-      VIRTUAL_HOST: nginx.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-local}
+      VIRTUAL_HOST: nginx.${COMPOSE_PROJECT_NAME}.dpl-web.${DEV_TLD:-local}
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/cms/web/sites/default/files/ # location where the persistent storage should be mounted
