@@ -140,7 +140,7 @@ const EditionsSelectModalItem = ({
         ref={detailsRef}
         {...groupAttribute}
         className="mt-auto min-w-0 space-y-4">
-        <p className="text-typo-subtitle-lg mt-2 font-semibold break-words">{title}</p>
+        <p className="text-typo-subtitle-lg mt-2 break-words">{title}</p>
         {/* Two columns of text do not fit a half-width card on a phone — a
             value like "144 sider" breaks mid-word — so the value sits under
             its term there and moves up beside it once there is room. */}
@@ -149,8 +149,8 @@ const EditionsSelectModalItem = ({
             <div
               key={detail.term}
               className="sm:flex sm:items-baseline sm:justify-between sm:gap-4">
-              <dt className="text-typo-body-md opacity-70">{detail.term}</dt>
-              <dd className="text-typo-body-md min-w-0 font-semibold break-words sm:text-right">
+              <dt className="text-typo-body-md text-foreground-muted/90">{detail.term}</dt>
+              <dd className="text-typo-body-md min-w-0 break-words sm:text-right">
                 {detail.value ?? "–"}
               </dd>
             </div>
