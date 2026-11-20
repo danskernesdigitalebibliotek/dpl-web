@@ -1,5 +1,6 @@
 "use client"
 
+import { AnimatePresence } from "framer-motion"
 import React, { useState } from "react"
 
 import SearchResults, {
@@ -82,7 +83,16 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
       {isLoading ? (
         <SearchResultsSkeleton count={BOOKS_PER_STEP} columns={BOOKS_PER_STEP} />
       ) : works.length > 0 ? (
-        <SearchResults works={works} columns={BOOKS_PER_STEP} />
+        // Keyed by the books, so a shuffle lets the old ones leave before the new
+        // ones come in.
+        <AnimatePresence mode="wait">
+          <SearchResults
+            key={works.map(work => work.workId).join("|")}
+            works={works}
+            columns={BOOKS_PER_STEP}
+            animated
+          />
+        </AnimatePresence>
       ) : (
         <p className="text-typo-subtitle-lg opacity-35">Kombinationen gav ingen bøger</p>
       )}
