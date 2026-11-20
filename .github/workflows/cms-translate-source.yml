@@ -9,6 +9,10 @@ on:
       - 'cms/**'
       - '.github/workflows/cms-*.yml'
 
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   SendToPoeditor:
     name: CMS / Send translatable strings to POEditor
