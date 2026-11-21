@@ -49,6 +49,18 @@ Lagoon derives the `NEXT_PUBLIC_*` env vars at *container start*, not build
 time (see `lagoon/start.sh`). Build artifacts are environment-independent —
 don't bake URLs into the build.
 
+## Components and logic
+
+- **Dumb components first**: plain props in, markup out. Data shaping goes in
+  a `helper.ts` next to the component, hooks in a container that renders it.
+  Dumb components are easy to cover with stories and tests.
+- **Pure functions over hooks**: use a hook only when the logic needs React
+  (state, effects, context, fetching).
+- **Avoid deep hook nesting**: keep hooks flat and move their logic into pure
+  functions.
+
+See "Components and logic" in [`../docs/go/README.md`](../docs/go/README.md).
+
 ## Caching is three independent layers
 
 If you are working with caching, make sure to see ADR-008 and ADR-009.
