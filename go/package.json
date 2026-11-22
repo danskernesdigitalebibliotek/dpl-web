@@ -99,7 +99,7 @@
     "@storybook/addon-links": "^10.6.7",
     "@storybook/nextjs": "^10.6.7",
     "@storybook/test": "^8.6.15",
-    "@storybook/test-runner": "^0.26.0",
+    "@storybook/test-runner": "^0.26.1",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4.3.5",
     "@tanstack/react-query-devtools": "^5.107.1",

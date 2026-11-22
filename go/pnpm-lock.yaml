@@ -166,8 +166,8 @@ importers:
         specifier: ^8.6.15
         version: 8.6.15(storybook@10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1))
       '@storybook/test-runner':
-        specifier: ^0.26.0
-        version: 0.26.0(@swc/helpers@0.5.23)(@types/node@24.19.2)(debug@4.4.3(supports-color@8.1.1))(storybook@10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1))(supports-color@8.1.1)(ts-node@10.9.2(@swc/core@1.15.43(@swc/helpers@0.5.23))(@types/node@24.19.2)(typescript@5.9.3))
+        specifier: ^0.26.1
+        version: 0.26.1(@swc/helpers@0.5.23)(@types/node@24.19.2)(debug@4.4.3(supports-color@8.1.1))(storybook@10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1))(supports-color@8.1.1)(ts-node@10.9.2(@swc/core@1.15.43(@swc/helpers@0.5.23))(@types/node@24.19.2)(typescript@5.9.3))
       '@svgr/webpack':
         specifier: ^8.1.0
         version: 8.1.0(supports-color@8.1.1)(typescript@5.9.3)
@@ -3698,12 +3698,12 @@ packages:
       typescript:
         optional: true
 
-  '@storybook/test-runner@0.26.0':
-    resolution: {integrity: sha512-q/B3Mf5QQuYAQ99AKcxTnNzPBso2OctLy13mEA23kYM8vW+Sz3WysdZIiQvNQ0bQFI9MDRkcLQVGIBcnnkaZXA==}
+  '@storybook/test-runner@0.26.1':
+    resolution: {integrity: sha512-S1606NlO45+6k9Tnc2MV6pz7/s64nF5HpJL66EptPCpUPIvuykggjYIziIcNALOpnESCJZybgD4lxOABnBxwvQ==}
     engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
-      storybook: ^0.0.0-0 || ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0 || ^10.4.0-0 || ^10.5.0-0 || ^10.6.0-0 || ^11.0.0-0 || >=11
+      storybook: ^0.0.0-0 || ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0 || ^10.4.0-0 || ^10.5.0-0 || ^10.6.0-0
 
   '@storybook/test@8.6.15':
     resolution: {integrity: sha512-EwquDRUDVvWcZds3T2abmB5wSN/Vattal4YtZ6fpBlIUqONV4o/cOBX39cFfQSUCBrIXIjQ6RmapQCHK/PvBYw==}
@@ -8419,11 +8419,6 @@ packages:
   pkg-dir@7.0.0:
     resolution: {integrity: sha512-Ie9z/WINcxxLp27BKOCHGde4ITq9UklYKDzVo1nhk5sqGEXU3FpkwP5GM2voTGJkGd9B3Otl+Q4uwSOeSUtOBA==}
     engines: {node: '>=14.16'}
-
-  playwright-core@1.63.0:
-    resolution: {integrity: sha512-rYCsBF/M5HjUch52bbtVONEFjv6Xu8sm8h72dNlR5bzIE1fvC/bxgspzkjSfU+MweEMmPM8KJebG6nnyxo5mCg==}
-    engines: {node: '>=20'}
-    hasBin: true
 
   playwright-core@1.65.0:
     resolution: {integrity: sha512-vNSKgH6YqtN7cdT/L334zo0a+YwkrpicyrHJlWWPIm/Q+Nn2SWInil01oT0mbu96U4GgoRtCYQD9CzJQgju+lA==}
@@ -14132,7 +14127,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/test-runner@0.26.0(@swc/helpers@0.5.23)(@types/node@24.19.2)(debug@4.4.3(supports-color@8.1.1))(storybook@10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1))(supports-color@8.1.1)(ts-node@10.9.2(@swc/core@1.15.43(@swc/helpers@0.5.23))(@types/node@24.19.2)(typescript@5.9.3))':
+  '@storybook/test-runner@0.26.1(@swc/helpers@0.5.23)(@types/node@24.19.2)(debug@4.4.3(supports-color@8.1.1))(storybook@10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1))(supports-color@8.1.1)(ts-node@10.9.2(@swc/core@1.15.43(@swc/helpers@0.5.23))(@types/node@24.19.2)(typescript@5.9.3))':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       '@babel/generator': 7.29.8
@@ -14152,7 +14147,7 @@ snapshots:
       jest-watch-typeahead: 3.0.1(jest@30.4.2(@types/node@24.19.2)(supports-color@8.1.1)(ts-node@10.9.2(@swc/core@1.15.43(@swc/helpers@0.5.23))(@types/node@24.19.2)(typescript@5.9.3)))
       nyc: 15.1.0(supports-color@8.1.1)
       playwright: 1.65.0
-      playwright-core: 1.63.0
+      playwright-core: 1.65.0
       rimraf: 3.0.2
       storybook: 10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1)
       uuid: 8.3.2
@@ -19740,8 +19735,6 @@ snapshots:
   pkg-dir@7.0.0:
     dependencies:
       find-up: 6.3.0
-
-  playwright-core@1.63.0: {}
 
   playwright-core@1.65.0: {}
 
