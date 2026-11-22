@@ -45,8 +45,8 @@ importers:
         specifier: ^2.12.3
         version: 2.12.3(cypress@15.21.2)(typescript@6.0.3)
       cypress-terminal-report:
-        specifier: ^7.4.0
-        version: 7.4.0(cypress@15.21.2)
+        specifier: ^7.5.0
+        version: 7.5.0(cypress@15.21.2)
       dayjs:
         specifier: ^1.11.23
         version: 1.11.23
@@ -1370,8 +1370,8 @@ packages:
     peerDependencies:
       cypress: '>=15.10.0'
 
-  cypress-terminal-report@7.4.0:
-    resolution: {integrity: sha512-5A2eHWvukGSotW2+BtPsmXLEyDoOZAALXDGGSPdCtYubrtNQW47hDS5NkLGrwzKrVuSKsTBppuJRiG+G+5RyUQ==}
+  cypress-terminal-report@7.5.0:
+    resolution: {integrity: sha512-EXwzZztWgbW8iucwF4OBaxTsRXDRrG/78DRvVE3TdLyh1OGVJw/sALDgjCC2jTsTGzPlOdm1FVvOlWNep1+qKQ==}
     engines: {node: '>= 12'}
     peerDependencies:
       cypress: '>=10.0.0'
@@ -1946,6 +1946,9 @@ packages:
 
   flatted@3.4.2:
     resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==}
+
+  flatted@3.4.4:
+    resolution: {integrity: sha512-5+ybhBZANEJxaH3X5evAFatUxLfEHSr7n6kYJ+1Qd0mUqr4eu9gIf6GDbWHf8RJijHrjjO8G+la14SlL2SeS1Q==}
 
   for-each@0.3.5:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
@@ -5332,11 +5335,12 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  cypress-terminal-report@7.4.0(cypress@15.21.2):
+  cypress-terminal-report@7.5.0(cypress@15.21.2):
     dependencies:
       chalk: 4.1.2
       compare-versions: 6.1.1
       cypress: 15.21.2
+      flatted: 3.4.4
       superstruct: 0.14.2
 
   cypress@15.21.2:
@@ -6122,6 +6126,8 @@ snapshots:
       keyv: 4.5.4
 
   flatted@3.4.2: {}
+
+  flatted@3.4.4: {}
 
   for-each@0.3.5:
     dependencies:
