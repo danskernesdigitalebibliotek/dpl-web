@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@argos-ci/cli": "^6.11.0",
-    "@argos-ci/storybook": "^6.4.4",
+    "@argos-ci/storybook": "^6.5.0",
     "@babel/preset-env": "7.29.14",
     "@chanzuckerberg/axe-storybook-testing": "^9.0.0",
     "@eslint/js": "^10",
