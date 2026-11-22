@@ -229,8 +229,8 @@ importers:
         specifier: 15.21.2
         version: 15.21.2
       cypress-terminal-report:
-        specifier: ^7.4.0
-        version: 7.4.0(cypress@15.21.2)
+        specifier: ^7.5.0
+        version: 7.5.0(cypress@15.21.2)
       dotenv:
         specifier: ^16.5.0
         version: 16.6.1
@@ -4015,8 +4015,8 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
-  cypress-terminal-report@7.4.0:
-    resolution: {integrity: sha512-5A2eHWvukGSotW2+BtPsmXLEyDoOZAALXDGGSPdCtYubrtNQW47hDS5NkLGrwzKrVuSKsTBppuJRiG+G+5RyUQ==}
+  cypress-terminal-report@7.5.0:
+    resolution: {integrity: sha512-EXwzZztWgbW8iucwF4OBaxTsRXDRrG/78DRvVE3TdLyh1OGVJw/sALDgjCC2jTsTGzPlOdm1FVvOlWNep1+qKQ==}
     engines: {node: '>= 12'}
     peerDependencies:
       cypress: '>=10.0.0'
@@ -11711,11 +11711,12 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  cypress-terminal-report@7.4.0(cypress@15.21.2):
+  cypress-terminal-report@7.5.0(cypress@15.21.2):
     dependencies:
       chalk: 4.1.2
       compare-versions: 6.1.1
       cypress: 15.21.2
+      flatted: 3.4.4
       superstruct: 0.14.2
 
   cypress@15.21.2:
