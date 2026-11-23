@@ -5,72 +5,16 @@ import React, { useState } from "react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
 import EditionsSelectModalItem from "@/components/shared/editionsSelectModal/EditionsSelectModalItem"
+import {
+  buildCover,
+  buildEdition,
+  buildEditions,
+  storyServiceLayerConfig,
+} from "@/components/shared/editionsSelectModal/stories.fixtures"
 import StatusLabel from "@/components/shared/statusLabel/StatusLabel"
-import { coverFactory } from "@/cypress/factories/fbi/factory-parts/cover"
-import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
-import { placeholderImageUrl } from "@/cypress/factories/placeholder-image"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
-// Covers in varying proportions, against the card's one fixed box ratio.
-const buildCover = (width: number, height: number) => {
-  const url = placeholderImageUrl(width, height)
-  return coverFactory.build({
-    thumbnail: url,
-    xSmall: { url, width, height },
-    small: { url, width, height },
-    medium: { url, width, height },
-    large: { url, width, height },
-  })
-}
-
-const buildEdition = (
-  overrides: Partial<ManifestationWorkPageFragment> = {}
-): ManifestationWorkPageFragment =>
-  ({
-    ...eBookManifestationFactory.build(),
-    titles: {
-      full: ["Tro på det, Theo. Bind 1"],
-      main: ["Tro på det, Theo"],
-      identifyingAddition: null,
-    },
-    publisher: ["Gutkind"],
-    physicalDescription: { summaryFull: "144 sider, ill. i farver", numberOfPages: 144 },
-    edition: {
-      publicationYear: { display: "2023", year: 2023 },
-      edition: "1. udgave",
-      summary: "1. udgave, 2023",
-    },
-    ...overrides,
-  }) as ManifestationWorkPageFragment
-
-const editions = [
-  buildEdition({ pid: "pid-1", cover: buildCover(420, 720) }),
-  buildEdition({
-    pid: "pid-2",
-    cover: buildCover(660, 720),
-    publisher: ["Gyldendalske Boghandel"],
-    edition: {
-      publicationYear: { display: "2019", year: 2019 },
-      edition: "2. udgave",
-      summary: "2. udgave, 2019",
-    },
-  }),
-  buildEdition({
-    pid: "pid-3",
-    cover: buildCover(500, 720),
-    edition: {
-      publicationYear: { display: "2008", year: 2008 },
-      edition: "3. udgave",
-      summary: "3. udgave, 2008",
-    },
-  }),
-]
-
-// The card reads blue-title state through the service layer.
-const storyServiceLayerConfig = {
-  getBaseUrl: () => "https://biblio.example",
-  getAuthHeader: () => "Bearer story-token",
-}
+const editions = buildEditions()
 
 const withProviders = (Story: React.ComponentType): React.ReactElement => (
   <QueryClientProvider client={new QueryClient()}>
