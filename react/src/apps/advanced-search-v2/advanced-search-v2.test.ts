@@ -500,6 +500,30 @@ describe("Advanced Search V2", () => {
       });
     });
 
+    it("switching on 'On shelf' hides and clears the access type", () => {
+      page.components.Filters((filters) => {
+        filters.verifyAccessTypeOptionsAreVisible();
+        filters.selectRadioOption("Online");
+        filters.verifyRadioOptionIsSelected("Online");
+      });
+
+      page.verifyUrlContains("accessType=online");
+
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+        filters.verifyAccessTypeOptionsAreHidden();
+      });
+
+      page.verifyUrlContains("onShelf=true");
+      page.verifyUrlDoesNotContain("accessType");
+
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+        filters.verifyAccessTypeOptionsAreVisible();
+        filters.verifyRadioOptionIsNotSelected("Online");
+      });
+    });
+
     it("toggles 'Only extra titles' filter on and off", () => {
       page.components.Filters((filters) => {
         filters.verifyOnlyExtraTitlesIsNotChecked();
