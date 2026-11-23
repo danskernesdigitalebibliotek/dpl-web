@@ -2,6 +2,9 @@
 // genre, mood and subject answer points at one group (see questions.ts), and a
 // group matches a work when any of its clauses match (OR). The terms come from the
 // curated term list, all on the phrase index so multi-word values work.
+//
+// Terms that are commented out were not relevant in the client test. They are
+// kept so they can be switched back on for testing.
 
 export type TBookQuizClause = { cqlIndex: string; cqlValues: string[] }
 
@@ -174,10 +177,10 @@ export const ANIMALS: TBookQuizGroup = {
       "hunde",
       "katte",
       "kryb",
-      "forhistoriske dyr",
+      // "forhistoriske dyr",
       "kæledyr",
       "husdyr",
-      "dinosaurer",
+      // "dinosaurer",
       "fugle",
       "dyreliv",
     ]),
@@ -223,8 +226,13 @@ export const CLIMATE: TBookQuizGroup = {
   ],
 }
 
-// "Ingen af delene" falls back to these.
+// "Ingen af delene" has no terms left, so it does not search on subjects.
 export const OTHER: TBookQuizGroup = {
   label: "Ingen af delene",
-  match: [subject(["krea og kultur", "mit liv"])],
+  match: [
+    subject([
+      // "krea og kultur",
+      // "mit liv",
+    ]),
+  ],
 }
