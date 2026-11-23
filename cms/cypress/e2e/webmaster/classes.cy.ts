@@ -3,10 +3,7 @@ import { NodeAddArticlePage } from '../../pages/node-add-article';
 
 describe('Webmaster custom content CSS classes', () => {
   beforeEach(() => {
-    LoginPage.ensureLogin(
-      Cypress.env('DRUPAL_USERNAME'),
-      Cypress.env('DRUPAL_PASSWORD'),
-    );
+    LoginPage.ensureEditorLogin();
   });
 
   it('Allows setting CSS classes on nodes and paragraphs', () => {

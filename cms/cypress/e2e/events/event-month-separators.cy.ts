@@ -4,11 +4,7 @@ import { EventAddPage } from '../../pages/event-add';
 import { LoginPage } from '../../pages/login-page';
 import { EventSeriesListPage } from '../../pages/event-series-list';
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
+const login = () => LoginPage.ensureEditorLogin();
 
 // Two events in different months, so the events overview must render a month
 // separator for each. Titles are unique so the AJAX search can filter down to

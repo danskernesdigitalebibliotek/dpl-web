@@ -10,11 +10,7 @@ import { LoginPage } from '../../pages/login-page';
 import { EventSeriesListPage } from '../../pages/event-series-list';
 import { NodePage } from '../../pages/node';
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
+const login = () => LoginPage.ensureEditorLogin();
 
 type Image = { url: string };
 

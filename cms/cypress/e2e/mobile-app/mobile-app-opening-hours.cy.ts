@@ -5,11 +5,7 @@ import { BranchAddPage } from '../../pages/branch-add';
 import { LoginPage } from '../../pages/login-page';
 import { NodePage } from '../../pages/node';
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
+const login = () => LoginPage.ensureEditorLogin();
 
 type OpeningHours = {
   id: number;

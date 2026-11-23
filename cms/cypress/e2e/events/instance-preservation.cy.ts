@@ -7,11 +7,7 @@ import { EventInstancesPage } from '../../pages/event-instances';
 import { EventSeriesListPage } from '../../pages/event-series-list';
 import { EventSeriesPage } from '../../pages/event-series';
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
+const login = () => LoginPage.ensureEditorLogin();
 
 // When an editor changes the recurrence of an event series, the occurrences the
 // change does not touch have to come out the other side as the same event
