@@ -85,7 +85,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@argos-ci/cli": "^6.11.0",
+    "@argos-ci/cli": "^6.14.0",
     "@argos-ci/storybook": "^6.5.0",
     "@graphql-codegen/cli": "^8.0.0",
     "@graphql-codegen/named-operations-object": "^5.0.0",
