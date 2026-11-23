@@ -5,6 +5,8 @@ on:
   pull_request:
     paths:
       - 'cms/**'
+      # The CMS embeds the React apps, built from source in these jobs.
+      - 'react/**'
       - '.github/workflows/cms-*.yml'
 
 env:
