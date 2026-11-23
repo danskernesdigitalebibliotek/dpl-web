@@ -20,24 +20,48 @@ export default {
       description: "The links of the menu",
       control: { type: "object" },
     },
-    menuOpen: {
-      description: "The state of the menu",
-      control: { type: "select", options: ["open", "closed"] },
-    },
-    isStorybookContext: {
-      name: "Are we in storybook?",
-      control: { type: "boolean" },
-    },
   },
   args: {
     menuLinks: menuItems,
-    menuOpen: "open",
-    isStorybookContext: true,
   },
 } as Meta<typeof HeaderSidebarNav>;
 
+// The id is what header-sidebar-nav-js.js opens the menu from, like the
+// burger button in the header.
 const Template: StoryFn<typeof HeaderSidebarNav> = (
   args: HeaderSidebarNavProps,
-) => <HeaderSidebarNav {...args} />;
+) => (
+  <>
+    <button
+      type="button"
+      id="header-sidebar-nav__toggle"
+      aria-controls="sidebarNav"
+      aria-expanded="false"
+    >
+      Open menu
+    </button>
+    <HeaderSidebarNav {...args} />
+  </>
+);
 
 export const Default = Template.bind({});
+
+// Lets Argos and axe cover the open menu. Opens it the way the toggle does:
+// header-sidebar-nav-js.js binds once per page, and Storybook switches stories
+// without a reload, so clicking the toggle here may do nothing.
+export const Open = Template.bind({});
+Open.play = async ({ canvasElement }) => {
+  const dialog = canvasElement.querySelector("dialog");
+  const toggle = canvasElement.querySelector("#header-sidebar-nav__toggle");
+  if (!dialog || !toggle) {
+    throw new Error("The story is missing the sidebar menu or its toggle.");
+  }
+  dialog.showModal();
+  toggle.setAttribute("aria-expanded", "true");
+  // axe doesn't wait for the slide-in to finish.
+  await Promise.allSettled(
+    dialog
+      .getAnimations({ subtree: true })
+      .map((animation) => animation.finished),
+  );
+};
