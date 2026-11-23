@@ -43,7 +43,7 @@ never marked unavailable by this mechanism.
 A reader with a shared link pinning an edition the kommune cannot supply
 still sees that edition selected, because the pin wins over the default
 pick. The reserve button is then `aria-disabled` under a help text reading
-"Vælg en anden udgave, denne findes ikke på dit bibliotek", rather than
+"Denne udgave findes desværre ikke på dit bibliotek", rather than
 the choice being swapped silently — a dead end is shown, but it is
 explained and it is the reader's own link that caused it.
 

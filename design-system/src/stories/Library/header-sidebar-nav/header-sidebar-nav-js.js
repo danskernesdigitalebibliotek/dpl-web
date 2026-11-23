@@ -1,103 +1,85 @@
-window.addEventListener("load", () => {
+function initSidebarNav() {
   const sidebarNavToggle = document.getElementById(
     "header-sidebar-nav__toggle",
   );
-  const backgroundWrapper = document.querySelector(
+  const sidebarNav = document.querySelector(".header-sidebar-nav");
+
+  if (!sidebarNav) {
+    return;
+  }
+
+  const backgroundWrapper = sidebarNav.querySelector(
     ".header-sidebar-nav__background-wrapper",
   );
-  const menu = document.querySelector(".header-sidebar-nav");
 
-  const closeButton = document.getElementById(
-    "js-header-sidebar-nav__close-menu-button",
-  );
-
-  const lastMenuItem = document.querySelector(
-    ".header-sidebar-nav  .header__menu-navigation li:last-child a",
-  );
-  const menuWrapper = document.querySelector(
-    ".header-sidebar-nav__menu-wrapper",
-  );
-
-  function toggleSidebarNav() {
-    const isOpen = menu.getAttribute("data-open") === "open";
-
-    if (menu) {
-      menu.setAttribute("data-open", isOpen ? "closed" : "open");
+  // Safari and Firefox hide a closed dialog at once, so slide the menu out
+  // before calling close(). getAnimations() only lists the dialog's own
+  // transition and is empty when nothing animates. The timeout covers
+  // animations that never finish, e.g. in a background tab.
+  function closeSidebarNav() {
+    if (!sidebarNav.open || sidebarNav.hasAttribute("data-closing")) {
+      return;
     }
-
-    if (sidebarNavToggle) {
-      sidebarNavToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
-    }
-
-    if (!isOpen && closeButton) {
-      // When menu opens - move focus to the close button
-      closeButton.focus();
-    } else if (isOpen && sidebarNavToggle) {
-      // When menu closes - move focus to the menu toggle button
-      sidebarNavToggle.focus();
-    }
-  }
-
-  if (sidebarNavToggle) {
-    sidebarNavToggle.addEventListener("click", toggleSidebarNav);
-
-    // Allow menu to be opened with Enter or Space key
-    sidebarNavToggle.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        toggleSidebarNav();
-        event.preventDefault();
+    sidebarNav.setAttribute("data-closing", "");
+    Promise.race([
+      Promise.allSettled(
+        sidebarNav.getAnimations().map((animation) => animation.finished),
+      ),
+      new Promise((resolve) => {
+        setTimeout(resolve, 500);
+      }),
+    ]).then(() => {
+      // Skip if the menu was already closed meanwhile, e.g. by a second Escape.
+      if (sidebarNav.hasAttribute("data-closing")) {
+        sidebarNav.close();
       }
     });
   }
 
-  if (lastMenuItem) {
-    // When tabbing out of the last menu item, move focus to the close button
-    lastMenuItem.addEventListener("keydown", (event) => {
-      if (event.key === "Tab" && !event.shiftKey) {
-        event.preventDefault(); // Prevent tabbing to an element outside the menu
-        closeButton.focus();
-      }
-    });
-  }
-  if (closeButton) {
-    closeButton.addEventListener("click", toggleSidebarNav);
-    // When tabbing backwards out of the close button, move focus to the last menu item
-    closeButton.addEventListener("keydown", (event) => {
-      if (event.key === "Tab" && event.shiftKey) {
-        event.preventDefault(); // Prevent tabbing to an element outside the menu
-        lastMenuItem.focus();
-      }
-      // Allow close button to be activated with Enter or Space key
-      if (event.key === "Enter" || event.key === " ") {
-        toggleSidebarNav();
-        event.preventDefault();
-      }
-    });
-  }
+  // showModal() makes the rest of the page inert, so screen readers and
+  // keyboard users can't reach content behind the open menu.
+  sidebarNavToggle?.addEventListener("click", () => {
+    sidebarNav.showModal();
+    sidebarNavToggle.setAttribute("aria-expanded", "true");
+  });
 
-  // Close the menu if open when the escape key is pressed
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && menu.getAttribute("data-open") === "open") {
-      toggleSidebarNav();
+  // Escape. Browsers may refuse to let us cancel it (e.g. a second Escape
+  // without user activation); then the dialog closes at once.
+  sidebarNav.addEventListener("cancel", (event) => {
+    if (event.cancelable) {
+      event.preventDefault();
+      closeSidebarNav();
     }
   });
 
-  // Close the menu if a link is clicked
-  if (menuWrapper) {
-    menuWrapper.addEventListener("click", (event) => {
-      // Check if the click is inside a link within a navigation item
-      if (event.target.closest(".header__menu-navigation-item a")) {
-        toggleSidebarNav();
-      }
-    });
-  }
+  sidebarNav.addEventListener("close", () => {
+    sidebarNav.removeAttribute("data-closing");
+    sidebarNavToggle?.setAttribute("aria-expanded", "false");
+    // Safari doesn't focus a clicked button, so the dialog's own focus restore
+    // misses the toggle. preventScroll keeps the jump to an in-page menu link.
+    sidebarNavToggle?.focus({ preventScroll: true });
+  });
 
-  if (backgroundWrapper) {
-    backgroundWrapper.addEventListener("click", (event) => {
-      // Close the menu if the background wrapper is clicked
-      if (event.target === backgroundWrapper) {
-        toggleSidebarNav();
-      }
-    });
-  }
-});
+  // A menu link leaves the page while the menu is still sliding out. Close it
+  // at once, so the page doesn't come back from the back/forward cache with
+  // the menu open and the rest of the page inert.
+  window.addEventListener("pagehide", () => sidebarNav.close());
+
+  sidebarNav.addEventListener("click", (event) => {
+    if (
+      event.target === backgroundWrapper ||
+      event.target.closest(
+        "#js-header-sidebar-nav__close-menu-button, .header__menu-navigation-item a",
+      )
+    ) {
+      closeSidebarNav();
+    }
+  });
+}
+
+// Storybook requires this file after the page has loaded.
+if (document.readyState === "complete") {
+  initSidebarNav();
+} else {
+  window.addEventListener("load", initSidebarNav);
+}
