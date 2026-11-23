@@ -11,8 +11,6 @@ import {
 import { EventSeriesListPage } from '../../pages/event-series-list';
 import { EventSeriesPage } from '../../pages/event-series';
 
-const login = () => LoginPage.ensureEditorLogin();
-
 const events = {
   singleEvent: {
     title: 'Single event',
@@ -48,7 +46,7 @@ const branch = 'Det virtuelle bibliotek';
 // Starts adding an event, with the fields every event form needs before it
 // will save.
 const startEvent = (event: { title: string; subtitle: string }) => {
-  login();
+  LoginPage.ensureEditorLogin();
   const eventAdd = new EventAddPage();
   eventAdd.visit([]);
   eventAdd.fillTitle(event.title);
@@ -99,7 +97,7 @@ describe('Events', () => {
   });
 
   it('prefills end date/time based on start date/time', () => {
-    login();
+    LoginPage.ensureEditorLogin();
     const eventAdd = new EventAddPage();
     eventAdd.visit([]);
     eventAdd.fillStartDate(events.singleEvent.start);
@@ -140,7 +138,7 @@ describe('Events', () => {
       return false;
     });
 
-    login();
+    LoginPage.ensureEditorLogin();
     const eventAdd = new EventAddPage();
     eventAdd.visit([]);
     eventAdd.addParagraph('Text body');
@@ -191,7 +189,7 @@ describe('Events', () => {
   });
 
   it('Location field flow works', () => {
-    login();
+    LoginPage.ensureEditorLogin();
     const eventAdd = new EventAddPage();
     eventAdd.visit([]);
     const location = eventAdd.location();
@@ -333,14 +331,14 @@ describe('Events', () => {
     });
 
     after(() => {
-      login();
+      LoginPage.ensureEditorLogin();
       new EventSeriesListPage().deleteAllTitled(seriesTitle);
     });
   });
 
   before(() => {
     // Delete all preexisting instances of each event.
-    login();
+    LoginPage.ensureEditorLogin();
     new EventSeriesListPage().deleteAllTitled(events.singleEvent.title);
   });
 });
