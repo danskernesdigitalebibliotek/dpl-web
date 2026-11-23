@@ -35,7 +35,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 2
+    weight: 3
     region: content
   field_use_show_all_button:
     type: boolean
@@ -45,7 +45,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 3
+    weight: 2
     region: content
 hidden:
   field_work_id: true
