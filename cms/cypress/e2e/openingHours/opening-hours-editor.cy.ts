@@ -33,6 +33,10 @@ type PartialOpeningHourFormType = Omit<OpeningHourFormType, 'timeDuration'> & {
 
 const reverseDateString = (date: string) => date.split('-').reverse().join('-');
 
+// Set by createTestBranchAndVisitOpeningHoursAdmin() in beforeEach.
+let adminUrl: string | undefined;
+let pageUrl: string | undefined;
+
 const createTestBranchAndVisitOpeningHoursAdmin = () => {
   cy.drupalLogin('/node/add/branch');
   cy.get('#edit-title-0-value').type(branchTitle);
@@ -49,14 +53,12 @@ const createTestBranchAndVisitOpeningHoursAdmin = () => {
   cy.get('a[href*="/edit/opening-hours"]').click();
   // Save the URL for the admin page and the page itself for later use
   cy.url().then((url) => {
-    Cypress.env('adminUrl', url);
-    const pageUrl = url.replace('/edit/opening-hours', '');
-    Cypress.env('pageUrl', pageUrl);
+    adminUrl = url;
+    pageUrl = url.replace('/edit/opening-hours', '');
   });
 };
 
 const visitOpeningHoursPage = (initialDate?: string) => {
-  const pageUrl = Cypress.env('pageUrl');
   if (pageUrl) {
     const url = initialDate ? `${pageUrl}?initialDate=${initialDate}` : pageUrl;
     cy.visit(url);
@@ -64,7 +66,6 @@ const visitOpeningHoursPage = (initialDate?: string) => {
 };
 
 const visitOpeningHoursAdmin = (initialDate?: string) => {
-  const adminUrl = Cypress.env('adminUrl');
   if (adminUrl) {
     const url = initialDate
       ? `${adminUrl}?initialDate=${initialDate}`
