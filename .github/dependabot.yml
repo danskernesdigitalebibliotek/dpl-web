@@ -258,8 +258,6 @@ updates:
       # The Go lint stack still depends on packages that only support ESLint 8/9.
       - dependency-name: "eslint"
         versions: [">=10.0.0"]
-      - dependency-name: "cypress"
-        update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
       # orval v8 requires breaking config/fetcher changes — upgrade tracked separately.
