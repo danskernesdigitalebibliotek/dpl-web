@@ -248,8 +248,7 @@ export const PhysicalReservationButton = ({
 
   // Unobtainable editions reach this only via a pinned pid; lent-out ones
   // keep the normal button.
-  const { isEditionHidden } = useEditionAvailability(workId)
-  const isUnobtainable = isEditionHidden(selectedManifestation)
+  const { isEditionUnobtainable } = useEditionAvailability(workId)
 
   if (existingLoan) {
     return (
@@ -279,11 +278,11 @@ export const PhysicalReservationButton = ({
     )
   }
 
-  if (isUnobtainable) {
+  if (isEditionUnobtainable(selectedManifestation)) {
     return (
       <>
         <div className="w-full lg:max-w-80 lg:min-w-72">
-          <HelpText>Vælg en anden udgave, denne findes ikke på dit bibliotek</HelpText>
+          <HelpText>Denne udgave findes desværre ikke på dit bibliotek</HelpText>
         </div>
         <WorkPageButton
           ariaLabel={`Reserver ${label}`}

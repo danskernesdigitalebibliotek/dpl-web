@@ -10,6 +10,7 @@ import {
   ManifestationWorkPageFragment,
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
+import { getShownManifestations } from "@/lib/helpers/helper.availability"
 
 import { useEditionAvailability } from "./useEditionAvailability"
 
@@ -30,9 +31,10 @@ export const useShownEditions = (wid: string, materialTypeCode: string) => {
   )
 
   const {
+    availability,
+    isResolved,
     isLoadingAvailability,
     isAvailabilityUnknown,
-    isEditionHidden,
     isEditionLentOut,
     getEditionQueueText,
   } = useEditionAvailability(wid)
@@ -45,10 +47,8 @@ export const useShownEditions = (wid: string, materialTypeCode: string) => {
     isPhysicalMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
   )
 
-  // Ordering is untouched, so what remains keeps its position. A new array
-  // each render — `isEditionHidden` closes over the availability data and is
-  // rebuilt with it — so this does not belong in a dependency list.
-  const shownEditions = editions.filter(manifestation => !isEditionHidden(manifestation))
+  // Ordering is untouched, so what remains keeps its position.
+  const shownEditions = getShownManifestations(editions, availability, isResolved)
 
   return {
     editions,
