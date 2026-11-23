@@ -197,10 +197,12 @@ const SearchResultFacets = ({ facets }: { facets: FacetResult[] }) => {
           </li>
         </ul>
 
-        {/* Advanced search-style radio groups */}
+        {/* Advanced search-style radio groups. Each is disabled until its
+            facet has loaded, as a selection needs the facet name. */}
         <div className="search-radio-button-group-wrapper">
           <SearchRadioButtonGroup
             name="access-type"
+            disabled={!accessTypeFacetName}
             options={ACCESS_TYPE_OPTIONS}
             selectedValue={
               accessTypeFacetName
@@ -216,6 +218,7 @@ const SearchResultFacets = ({ facets }: { facets: FacetResult[] }) => {
 
           <SearchRadioButtonGroup
             name="fiction-type"
+            disabled={!fictionTypeFacetName}
             options={FICTION_TYPE_OPTIONS}
             selectedValue={
               fictionTypeFacetName
@@ -231,6 +234,7 @@ const SearchResultFacets = ({ facets }: { facets: FacetResult[] }) => {
 
           <SearchRadioButtonGroup
             name="age-group"
+            disabled={!ageGroupFacetName}
             options={AGE_GROUP_OPTIONS}
             selectedValue={
               ageGroupFacetName
