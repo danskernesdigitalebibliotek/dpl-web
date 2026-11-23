@@ -149,7 +149,7 @@ importers:
         version: 1.0.2(nyc@18.0.0(supports-color@8.1.1))
       '@namics/stylelint-bem':
         specifier: ^11.2.0
-        version: 11.2.0(stylelint@18.0.0)
+        version: 11.2.0(stylelint@18.1.0)
       '@storybook/addon-essentials':
         specifier: ^8.6.19
         version: 8.6.19(@types/react@19.3.0)(storybook@8.6.19(prettier@3.10.1)(supports-color@8.1.1))
@@ -316,14 +316,14 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(webpack@5.112.2)
       stylelint:
-        specifier: ^18.0.0
-        version: 18.0.0
+        specifier: ^18.1.0
+        version: 18.1.0
       stylelint-config-recommended-scss:
         specifier: ^14.1.0
-        version: 14.1.0(postcss@8.5.33)(stylelint@18.0.0)
+        version: 14.1.0(postcss@8.5.33)(stylelint@18.1.0)
       stylelint-prettier:
         specifier: ^5.1.0
-        version: 5.1.0(prettier@3.10.1)(stylelint@18.0.0)
+        version: 5.1.0(prettier@3.10.1)(stylelint@18.1.0)
       svg-url-loader:
         specifier: ^8.1.0
         version: 8.1.0(webpack@5.112.2)
@@ -3822,8 +3822,8 @@ packages:
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
 
-  colord@2.10.0:
-    resolution: {integrity: sha512-AidJptpBJmjTclAp9BkLwJi0T93fo5epJnbaZslpg6QVzpHjAiveF55mE9AcUJiGMqRHgMDY8soMsQtuNYMHfw==}
+  colord@2.14.0:
+    resolution: {integrity: sha512-eSdMel9EBvdFxnchObp7gljRoqYQLr+zXhaxjkym7syVphw1FIhfQwgsA5Bv3jArflZPJEa1rmQtGpa7NRc7Rw==}
 
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
@@ -7001,8 +7001,8 @@ packages:
     peerDependencies:
       stylelint: ^16.8.2
 
-  stylelint@18.0.0:
-    resolution: {integrity: sha512-kI10GsHXQvsH/AcklVZdQgwDuxtHi+A+h1Ujzd7h9LDf3e5jQiLQkWFlPtpynX3E6oVWHG1wo9v6dL0Mr+nnSA==}
+  stylelint@18.1.0:
+    resolution: {integrity: sha512-QbF/IY7KY6lZRhYU/vmPU1KYxc71wgkXdgeptqzTh3lbnZps6WHaskfPjpL6Fh4JaCzwkKKitVcMrpfQTSwwPA==}
     engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
     hasBin: true
 
@@ -9711,11 +9711,11 @@ snapshots:
       '@types/react': 19.3.0
       react: 19.3.1
 
-  '@namics/stylelint-bem@11.2.0(stylelint@18.0.0)':
+  '@namics/stylelint-bem@11.2.0(stylelint@18.1.0)':
     dependencies:
       css-selector-parser: 3.3.0
       postcss-resolve-nested-selector: 0.1.7
-      stylelint: 18.0.0
+      stylelint: 18.1.0
 
   '@napi-rs/wasm-runtime@1.2.5(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)':
     dependencies:
@@ -11509,7 +11509,7 @@ snapshots:
 
   color-name@1.1.4: {}
 
-  colord@2.10.0: {}
+  colord@2.14.0: {}
 
   colorette@2.0.20: {}
 
@@ -15109,26 +15109,26 @@ snapshots:
     dependencies:
       webpack: 5.112.2(clean-css@5.3.3)(cssnano@9.9.0(postcss@8.5.33))(csso@5.0.5)(esbuild@0.25.12)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.33)(svgo@4.1.0)(webpack-cli@7.3.1)
 
-  stylelint-config-recommended-scss@14.1.0(postcss@8.5.33)(stylelint@18.0.0):
+  stylelint-config-recommended-scss@14.1.0(postcss@8.5.33)(stylelint@18.1.0):
     dependencies:
       postcss-scss: 4.0.9(postcss@8.5.33)
-      stylelint: 18.0.0
-      stylelint-config-recommended: 14.0.1(stylelint@18.0.0)
-      stylelint-scss: 6.14.0(stylelint@18.0.0)
+      stylelint: 18.1.0
+      stylelint-config-recommended: 14.0.1(stylelint@18.1.0)
+      stylelint-scss: 6.14.0(stylelint@18.1.0)
     optionalDependencies:
       postcss: 8.5.33
 
-  stylelint-config-recommended@14.0.1(stylelint@18.0.0):
+  stylelint-config-recommended@14.0.1(stylelint@18.1.0):
     dependencies:
-      stylelint: 18.0.0
+      stylelint: 18.1.0
 
-  stylelint-prettier@5.1.0(prettier@3.10.1)(stylelint@18.0.0):
+  stylelint-prettier@5.1.0(prettier@3.10.1)(stylelint@18.1.0):
     dependencies:
       prettier: 3.10.1
       prettier-linter-helpers: 1.0.1
-      stylelint: 18.0.0
+      stylelint: 18.1.0
 
-  stylelint-scss@6.14.0(stylelint@18.0.0):
+  stylelint-scss@6.14.0(stylelint@18.1.0):
     dependencies:
       css-tree: 3.2.1
       is-plain-object: 5.0.0
@@ -15138,9 +15138,9 @@ snapshots:
       postcss-resolve-nested-selector: 0.1.6
       postcss-selector-parser: 7.1.6
       postcss-value-parser: 4.2.0
-      stylelint: 18.0.0
+      stylelint: 18.1.0
 
-  stylelint@18.0.0:
+  stylelint@18.1.0:
     dependencies:
       '@csstools/css-calc': 3.4.3(@csstools/css-parser-algorithms@4.0.2(@csstools/css-tokenizer@4.0.2))(@csstools/css-tokenizer@4.0.2)
       '@csstools/css-parser-algorithms': 4.0.2(@csstools/css-tokenizer@4.0.2)
@@ -15149,7 +15149,7 @@ snapshots:
       '@csstools/media-query-list-parser': 5.0.2(@csstools/css-parser-algorithms@4.0.2(@csstools/css-tokenizer@4.0.2))(@csstools/css-tokenizer@4.0.2)
       '@csstools/selector-resolve-nested': 4.0.2(postcss-selector-parser@7.2.1)
       '@csstools/selector-specificity': 6.0.1(postcss-selector-parser@7.2.1)
-      colord: 2.10.0
+      colord: 2.14.0
       cosmiconfig: 10.0.1
       css-tree: 3.2.1
       ignore: 7.0.14
