@@ -194,6 +194,8 @@ export class SearchResultFacetsComponent extends ComponentObject {
       .find(".search-radio-button-group")
       .contains(".search-radio-button-group__label", labelText)
       .parent()
+      // The radios are disabled until the facets have loaded.
+      .should("not.have.attr", "aria-disabled", "true")
       .click();
   }
 
