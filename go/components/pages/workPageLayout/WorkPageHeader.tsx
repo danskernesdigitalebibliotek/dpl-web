@@ -222,7 +222,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
                 whileTap={{ scale: 0.92 }}
                 whileHover={{ scale: 1.06 }}
                 classNames="bg-background-overlay text-foreground-muted">
-                <Icon name="switch" className="h-4 w-4 shrink-0" />
+                <Icon name="switch" className="h-[14px] w-[14px] shrink-0" />
                 <span>Skift</span>
               </MotionPillButton>
             )}
