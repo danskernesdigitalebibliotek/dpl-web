@@ -6,6 +6,8 @@ type Manifestation = NonNullable<
   NonNullable<NonNullable<GetMaterialQuery["work"]>["manifestations"]>["all"]
 >[number]
 
+const SWITCH_BUTTON = "button[aria-label='Skift udgave']"
+
 const EBOOK_PID = "870970-basis:52380235"
 const SECOND_EBOOK_PID = "870970-basis:52380236"
 const SECOND_EBOOK_IDENTIFIER = "9788711668017"
@@ -70,13 +72,23 @@ describe("Editions select", () => {
   })
 
   it("Should show the switch button when the type has more than one edition", () => {
-    cy.get("button[aria-label='Skift udgave']").should("be.visible")
+    cy.get(SWITCH_BUTTON).should("be.visible")
+  })
+
+  it("Should describe the switch button with the current edition", () => {
+    // The button is named for the action alone; the edition reaches a screen
+    // reader through the line it points at.
+    cy.get(SWITCH_BUTTON)
+      .invoke("attr", "aria-describedby")
+      .then(id => {
+        cy.get(`#${id}`).should("have.text", "Udgave: 2016")
+      })
   })
 
   it("Should hide the switch button for a type with a single edition", () => {
     // The button is shown for the ebook, so its later absence is a change
     // rather than a state the page was already in.
-    cy.get("button[aria-label='Skift udgave']").should("be.visible")
+    cy.get(SWITCH_BUTTON).should("be.visible")
 
     // Bog has one edition in the factory. Matched on its exact label — "Bog"
     // is a substring of both "E-bog" and "Lydbog".
@@ -91,11 +103,11 @@ describe("Editions select", () => {
     // and flips on tap.
     cy.contains("dd", "706 sider").should("be.visible")
 
-    cy.get("button[aria-label='Skift udgave']").should("not.exist")
+    cy.get(SWITCH_BUTTON).should("not.exist")
   })
 
   it("Should open the picker listing both editions", () => {
-    cy.get("button[aria-label='Skift udgave']").click()
+    cy.get(SWITCH_BUTTON).click()
 
     cy.get("[role='dialog']").should("be.visible")
     // The grid renders skeletons until both availability providers answer, so
@@ -105,7 +117,7 @@ describe("Editions select", () => {
   })
 
   it("Should name each edition for a screen reader", () => {
-    cy.get("button[aria-label='Skift udgave']").click()
+    cy.get(SWITCH_BUTTON).click()
 
     cy.get("input[type='radio']")
       .eq(1)
@@ -115,7 +127,7 @@ describe("Editions select", () => {
   })
 
   it("Should put the picked edition in the url on confirm", () => {
-    cy.get("button[aria-label='Skift udgave']").click()
+    cy.get(SWITCH_BUTTON).click()
 
     cy.get("input[type='radio']").eq(1).check({ force: true })
     cy.contains("button", "Vælg udgave").click()
@@ -125,7 +137,7 @@ describe("Editions select", () => {
   })
 
   it("Should announce the choice and restore focus to the switch button", () => {
-    cy.get("button[aria-label='Skift udgave']").click()
+    cy.get(SWITCH_BUTTON).click()
 
     cy.get("input[type='radio']").eq(1).check({ force: true })
     cy.contains("button", "Vælg udgave").click()

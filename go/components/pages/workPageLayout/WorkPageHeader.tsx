@@ -35,6 +35,11 @@ import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
 // Animates the press and hover.
 const MotionPillButton = motion.create(PillButton)
 
+// Ties the switch button to the line naming the current edition, so the button
+// keeps the stable name "Skift udgave" and the edition is read as its
+// description.
+const EDITION_LINE_ID = "work-page-edition"
+
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment
   selectedManifestation: ManifestationWorkPageFragment
@@ -105,6 +110,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   )
   const hasEditionsToChooseFrom = shownEditions.length > 1
   const isEditionPickerLoading = isSwitchingMaterialType || isLoadingAvailability
+  const showEditionSwitch = !isEditionPickerLoading && hasEditionsToChooseFrom
 
   const editionButtonRef = useRef<HTMLButtonElement>(null)
   const shouldRestoreEditionFocus = useRef(false)
@@ -210,14 +216,17 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
             }
           />
           <div className="mt-grid-gap-2 flex flex-wrap items-center gap-x-4 gap-y-3 lg:mt-8">
-            <p className="text-typo-body-md text-foreground-muted flex items-center gap-2">
+            <p
+              id={EDITION_LINE_ID}
+              className="text-typo-body-md text-foreground-muted flex items-center gap-2">
               <Icon name="editions" className="h-[0.9375rem] w-[0.9375rem] shrink-0" />
               {`Udgave: ${editionChoiceLabel}`}
             </p>
-            {!isEditionPickerLoading && hasEditionsToChooseFrom && (
+            {showEditionSwitch && (
               <MotionPillButton
                 ref={editionButtonRef}
                 aria-label="Skift udgave"
+                aria-describedby={EDITION_LINE_ID}
                 onClick={openEditionsSelect}
                 whileTap={{ scale: 0.92 }}
                 whileHover={{ scale: 1.06 }}

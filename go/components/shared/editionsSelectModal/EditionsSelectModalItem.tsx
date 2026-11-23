@@ -22,6 +22,8 @@ type EditionsSelectModalItemProps = {
   // Shown under the caption when the edition cannot be borrowed right now.
   // Physical and digital editions word it differently, so the caller supplies it.
   unavailableLabel?: React.ReactNode
+  // The block holding the label is aria-hidden, so this is the status's only
+  // way into the accessible name. Supplied together with the label.
   unavailableText?: string
 }
 

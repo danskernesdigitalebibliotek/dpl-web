@@ -64,7 +64,7 @@ const runFrame = () => {
 
 describe("useEqualRowHeight", () => {
   let geometry: Map<Element, Geometry>
-  let resizeCallbacks: (() => void)[]
+  let observations: { target: Element; fire: () => void }[]
 
   beforeEach(async () => {
     // The hook keeps pending frames in a module-level map keyed by group. A
@@ -82,16 +82,20 @@ describe("useEqualRowHeight", () => {
     vi.stubGlobal("cancelAnimationFrame", (handle: number) =>
       clearTimeout(handle as unknown as NodeJS.Timeout)
     )
-    // The hook re-measures on container resize. The stub keeps each callback
-    // so a test can trigger that pass.
-    resizeCallbacks = []
+    // The hook re-measures on resize. The stub pairs each callback with what it
+    // was asked to watch, so a test can fire the observation it is about rather
+    // than every registered one.
+    observations = []
     vi.stubGlobal(
       "ResizeObserver",
       class {
+        callback: () => void
         constructor(callback: () => void) {
-          resizeCallbacks.push(callback)
+          this.callback = callback
         }
-        observe() {}
+        observe(target: Element) {
+          observations.push({ target, fire: this.callback })
+        }
         disconnect() {}
       }
     )
@@ -103,6 +107,13 @@ describe("useEqualRowHeight", () => {
     vi.unstubAllGlobals()
     vi.restoreAllMocks()
   })
+
+  // Fires the observation watching `target`, so a test can resize exactly the
+  // element it is about.
+  const resize = (target: Element | null) =>
+    observations.filter(observation => observation.target === target).forEach(({ fire }) => fire())
+
+  const resizeAll = () => observations.forEach(({ fire }) => fire())
 
   const layout = (container: HTMLElement, cards: Geometry[]) => {
     const items = [...container.querySelectorAll<HTMLElement>("[data-equal-row-item]")]
@@ -197,7 +208,7 @@ describe("useEqualRowHeight", () => {
       { top: 0, height: 100 },
       { top: 0, height: 110 },
     ])
-    resizeCallbacks.forEach(callback => callback())
+    resizeAll()
     runFrame()
 
     expect(blocks.map(block => block.style.minHeight)).toEqual(["110px", "110px"])
@@ -313,5 +324,38 @@ describe("useEqualRowHeight", () => {
     runFrame()
 
     expect(blocks.every(block => block.style.minHeight === "")).toBe(true)
+  })
+
+  // Text growing taller leaves the container width untouched, so a resize of
+  // the content — and only the content — has to re-equalise the rows.
+  it("re-measures when the block's own content resizes", () => {
+    const { container } = render(
+      <div data-equal-row-container>
+        <Card group="i">
+          <p data-testid="title-a">A</p>
+        </Card>
+        <Card group="i">
+          <p data-testid="title-b">B</p>
+        </Card>
+      </div>
+    )
+    const blocks = layout(container, [
+      { top: 0, height: 100 },
+      { top: 0, height: 140 },
+    ])
+
+    runFrame()
+    expect(blocks[0].style.minHeight).toBe("140px")
+
+    // The text grows. The container keeps its width, so the only observation
+    // that can report this is the one watching the content.
+    layout(container, [
+      { top: 0, height: 100 },
+      { top: 0, height: 180 },
+    ])
+    resize(container.querySelector("[data-testid='title-b']"))
+    runFrame()
+
+    expect(blocks.map(block => block.style.minHeight)).toEqual(["180px", "180px"])
   })
 })

@@ -88,6 +88,14 @@ export const useEqualRowHeight = <T extends HTMLElement = HTMLDivElement>(group:
     const container = ref.current?.closest("[data-equal-row-container]") ?? document.body
     observer.observe(container)
 
+    // Text growing taller — a larger browser text size — leaves the container
+    // width untouched, so the element's own content is watched as well. A pass
+    // writes minHeight on the element itself, and the clear it does first comes
+    // back here as one extra resize; that pass settles on the same heights, so
+    // the chain stops there.
+    const content = [...(ref.current?.children ?? [])]
+    content.forEach(child => observer.observe(child))
+
     // A font swap changes text height. The promise cannot be cancelled, so the
     // flag stops a late resolve on an unmounted card.
     let cancelled = false
