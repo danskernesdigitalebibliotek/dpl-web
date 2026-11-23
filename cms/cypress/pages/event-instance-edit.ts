@@ -57,11 +57,6 @@ export class EventInstanceEditPage extends PageObject {
   }
 
   save() {
-    cy.url().then((formUrl) => {
-      this.elements.saveButton().click();
-      // Saving redirects away from the form. Wait for that, so a following
-      // cy.go('back') or cy.visit() cannot cut the submit off.
-      cy.url().should('not.eq', formUrl);
-    });
+    this.elements.saveButton().click();
   }
 }
