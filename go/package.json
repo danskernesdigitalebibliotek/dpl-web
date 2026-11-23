@@ -62,7 +62,7 @@
     "clsx": "^2.1.1",
     "cookies-next": "^6.1.1",
     "date-fns": "^4.4.0",
-    "framer-motion": "14.13.0",
+    "framer-motion": "14.14.0",
     "graphql": "^16.15.0",
     "iron-session": "github:danskernesdigitalebibliotek/iron-session#chunking-no-build",
     "js-md5": "^0.11.0",
