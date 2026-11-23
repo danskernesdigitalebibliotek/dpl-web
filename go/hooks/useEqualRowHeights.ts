@@ -2,13 +2,10 @@
 
 import { useCallback, useEffect, useRef } from "react"
 
-// Items that wrapped onto the same line share a top within a pixel or two, so
-// the tolerance absorbs sub-pixel layout without merging two real rows.
+// Items on the same line share a top within a pixel or two.
 const ROW_TOLERANCE_PX = 2
 
-// Each card asks for a measurement, but one pass already measures and sets
-// every card in the group. Pending requests per group are collapsed into a
-// single frame so N cards cost one pass rather than N.
+// One pending measure per group, so N cards cost one pass.
 const pendingFrames = new Map<string, number>()
 
 const scheduleMeasure = (group: string, measure: () => void) => {
@@ -27,13 +24,8 @@ const scheduleMeasure = (group: string, measure: () => void) => {
  * Makes the marked element in each card as tall as its tallest counterpart on
  * the same row of a wrapped flex or grid container.
  *
- * CSS cannot do this on its own: the cards are siblings, so no selector reaches
- * from one card's block to another's, and flex only equalises whole items.
- *
- * Every participating element carries the same `[data-equal-row]` value, which
- * is how a card finds the others it shares a row with. Measuring runs after
- * layout, after fonts settle, and whenever the container resizes — a different
- * width means different rows.
+ * Participating elements share one `[data-equal-row]` value. Measuring runs
+ * after layout, after fonts settle, and on container resize.
  */
 export const useEqualRowHeight = <T extends HTMLElement = HTMLDivElement>(group: string) => {
   const ref = useRef<T | null>(null)
@@ -47,15 +39,13 @@ export const useEqualRowHeight = <T extends HTMLElement = HTMLDivElement>(group:
     )
     if (peers.length === 0) return
 
-    // The natural height is what rows are built from, so any height a previous
-    // pass applied is cleared before reading.
+    // Clear a previous pass's height to read the natural one.
     peers.forEach(peer => {
       peer.style.minHeight = ""
     })
 
-    // Rows are grouped by the CARD's top, not the block's: the blocks are
-    // pushed to their own card's bottom, so two blocks on one row start at
-    // different heights and their own tops would split the row in two.
+    // Grouped by the card's top: the blocks sit at their own card's bottom, so
+    // their tops differ within a row.
     const measured = peers.map(peer => {
       const row = peer.closest("[data-equal-row-item]") ?? peer
       return {
@@ -89,21 +79,17 @@ export const useEqualRowHeight = <T extends HTMLElement = HTMLDivElement>(group:
   }, [group])
 
   useEffect(() => {
-    // Every card runs this effect, so the work is deferred to one frame: the
-    // last card to mount measures a layout where all of them are present, and
-    // the earlier passes are harmless no-ops against the same final state.
+    // Deferred to one frame, so the last card to mount measures a layout
+    // holding all of them.
     scheduleMeasure(group, measure)
 
-    // Rows are decided by the container width, so a resize can move a card onto
-    // another row and change the height it should take. One resize notifies
-    // every card's observer, so this is collapsed into a single pass too.
+    // The container width decides the rows, so a resize re-measures.
     const observer = new ResizeObserver(() => scheduleMeasure(group, measure))
     const container = ref.current?.closest("[data-equal-row-container]") ?? document.body
     observer.observe(container)
 
-    // A font swap changes text height after the first measurement. The promise
-    // cannot be cancelled, so the flag stops a late resolve from measuring a
-    // card that has since unmounted.
+    // A font swap changes text height. The promise cannot be cancelled, so the
+    // flag stops a late resolve on an unmounted card.
     let cancelled = false
     document.fonts?.ready
       .then(() => {

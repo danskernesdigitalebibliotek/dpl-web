@@ -32,7 +32,7 @@ import { openModal } from "@/store/modal.store"
 import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"
 import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
 
-// The pill is motionless on its own; the press and hover belong here.
+// Animates the press and hover.
 const MotionPillButton = motion.create(PillButton)
 
 type WorkPageHeaderProps = {
@@ -195,13 +195,10 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
               BLÅ
             </Badge>
           ) : null}
-          {/* text-balance evens out the lines rather than leaving a short
-              last one. */}
+          {/* text-balance evens out the lines. */}
           <h1
             lang={languageCode}
             className="text-typo-heading-3 w-full text-balance break-words hyphens-auto lg:mt-0">
-            {/* `main` is empty for some records, and a work page with no
-                heading is worse than one carrying the subtitles too. */}
             {selectedManifestation?.titles?.main[0] ?? selectedManifestation?.titles?.full[0] ?? ""}
           </h1>
           {/* A work without named creators falls back to the edition's
@@ -211,15 +208,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
               hasCreators(work.creators) ? work.creators : selectedManifestation.contributors
             }
           />
-          {/* The edition reads as plain text; the pill beside it opens the
-              picker, and shows only once the type resolves to more than one
-              obtainable edition, and never mid-switch.
-
-              The gap up to the author matches the one from title to author,
-              so title, author and edition read as one block of metadata
-              rather than the edition pairing off with the author. The row's
-              own gap-x is wider than the icon's gap-2, keeping each label
-              with its icon when the pill wraps below. */}
           <div className="mt-grid-gap-2 flex flex-wrap items-center gap-x-4 gap-y-3 lg:mt-8">
             <p className="text-typo-body-md text-foreground-muted flex items-center gap-2">
               <Icon name="editions" className="h-[0.9375rem] w-[0.9375rem] shrink-0" />
@@ -239,9 +227,6 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
             )}
           </div>
         </div>
-        {/* On mobile the actions sit further from the metadata than the
-            metadata lines sit from each other, so the two read as separate
-            groups rather than one list. */}
         <div
           className="mt-grid-gap-2 col-span-4 flex flex-col items-end justify-end lg:order-3
             lg:mt-0">

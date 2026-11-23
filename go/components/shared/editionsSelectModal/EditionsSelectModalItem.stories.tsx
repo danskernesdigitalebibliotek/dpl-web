@@ -11,8 +11,7 @@ import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts
 import { placeholderImageUrl } from "@/cypress/factories/placeholder-image"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
-// Real covers come in varying proportions. The card's box is one fixed ratio,
-// so these are what prove the grid still lines up.
+// Covers in varying proportions, against the card's one fixed box ratio.
 const buildCover = (width: number, height: number) => {
   const url = placeholderImageUrl(width, height)
   return coverFactory.build({
@@ -67,8 +66,7 @@ const editions = [
   }),
 ]
 
-// The card reads blue-title state through the service layer, so its hooks
-// need the provider.
+// The card reads blue-title state through the service layer.
 const storyServiceLayerConfig = {
   getBaseUrl: () => "https://biblio.example",
   getAuthHeader: () => "Bearer story-token",
@@ -97,8 +95,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// The grid the modal itself renders, so the cards are seen as a row rather
-// than in isolation — which is where misaligned covers would show up.
+// The grid the modal itself renders, showing the cards as a row.
 const Grid = () => {
   const [checked, setChecked] = useState("pid-1")
   return (
@@ -152,9 +149,8 @@ export const Unavailable: Story = {
   ),
 }
 
-// Six cards over two rows, the first row carrying a long publisher and a
-// status label: proves each row sizes to its own tallest card rather than to
-// the tallest card in the grid.
+// Six cards over two rows, the first carrying a long publisher and a status
+// label: each row sizes to its own tallest card.
 export const Rows: Story = {
   render: () => (
     <div className="bg-background max-w-3xl p-8">
@@ -194,8 +190,7 @@ export const Rows: Story = {
   ),
 }
 
-// The modal's own wrapper classes, so the breakpoint behaviour can be seen
-// where it actually applies rather than in a synthetic probe.
+// The modal's own wrapper classes, for the breakpoint behaviour.
 export const ModalGrid: Story = {
   render: () => (
     <div className="bg-background px-grid-edge py-6 lg:px-10">
@@ -218,9 +213,8 @@ export const ModalGrid: Story = {
   ),
 }
 
-// Row 1 has one very tall card (a long publisher plus a status label) and two
-// short ones; row 2 is uniformly short. If rows size independently, row 2 stays
-// short and the short cards in row 1 do NOT inherit row 2's height.
+// Row 1 holds one very tall card (a long publisher plus a status label) and two
+// short ones; row 2 is uniformly short and stays short.
 export const UnevenRows: Story = {
   render: () => {
     const tall = buildEdition({
@@ -261,9 +255,8 @@ export const UnevenRows: Story = {
   },
 }
 
-// An audiobook row as the data actually arrives: one edition with a running
-// time, one with none, one with no publisher. Rows that drop out leave the
-// lists with different numbers of rows, which is what pulls a row apart.
+// An audiobook row as the data arrives: one edition with a running time, one
+// with none, one with no publisher.
 export const AudiobookRow: Story = {
   render: () => {
     const audio = (pid: string, overrides: Partial<ManifestationWorkPageFragment> = {}) =>
@@ -284,7 +277,7 @@ export const AudiobookRow: Story = {
         physicalDescription: { summaryFull: "2 t., 14 min.", numberOfPages: null },
       }),
       audio("a2", {
-        // No running time: the "Varighed" row drops out entirely.
+        // No running time: the "Varighed" row holds a placeholder.
         physicalDescription: { summaryFull: null, numberOfPages: null },
       }),
       audio("a3", {

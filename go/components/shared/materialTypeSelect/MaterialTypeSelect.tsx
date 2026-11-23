@@ -8,8 +8,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 import Icon from "../icon/Icon"
 import PillButton from "../pillButton/PillButton"
 
-// The pill itself is motionless; the movement belongs to this select, which
-// wraps it to animate the press and the slide between options.
+// Animates the press and the slide between options.
 const MotionPillButton = motion.create(PillButton)
 
 export type MaterialTypeSelectOption = {

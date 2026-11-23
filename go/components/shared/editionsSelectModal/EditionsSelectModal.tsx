@@ -66,8 +66,6 @@ const EditionsSelectModal = ({
       const queueText = getEditionQueueText(manifestation) ?? ""
       return {
         label: (
-          // Full width: on a card the pill reads as a band across the item
-          // rather than a tag floating at its left edge.
           <StatusLabel variant="warning" subline={queueText} className="w-full">
             Udlånt lige nu
           </StatusLabel>
@@ -115,10 +113,8 @@ const EditionsSelectModal = ({
     <ResponsiveDialog title="Vælg udgave" open={open} onClose={handleClose}>
       <fieldset className="m-0 border-0 p-0">
         <legend className="sr-only">Vælg udgave</legend>
-        {/* The item widths carry the column count: a percentage of the row,
-            less the share of the fixed gap each item gives up — one gap split
-            over two columns, two over three. A phone shows one card per row,
-            which needs no subtraction, and a tighter gap between them. */}
+        {/* The item widths carry the column count: a share of the row less the
+            share of the fixed gap, one gap over two columns, two over three. */}
         <div
           data-equal-row-container
           className="flex flex-wrap gap-x-4 gap-y-4 sm:gap-x-6 sm:gap-y-7 [&>*]:w-full

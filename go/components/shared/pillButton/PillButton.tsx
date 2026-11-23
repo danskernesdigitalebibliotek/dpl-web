@@ -7,9 +7,8 @@ export type PillButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   classNames?: string
 }
 
-// The pill shape on its own: no state, no animation. A caller that wants the
-// pill to move wraps this in motion(), and one that wants a selected look
-// passes the colours through classNames.
+// The pill shape on its own: no state, no animation. Callers wrap it in
+// motion() to move it and pass selected colours through classNames.
 const PillButton = forwardRef<HTMLButtonElement, PillButtonProps>(
   ({ children, classNames, type = "button", ...restProps }, ref) => {
     return (

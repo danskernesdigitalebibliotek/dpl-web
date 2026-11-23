@@ -41,8 +41,6 @@ const BadgeButton = forwardRef<HTMLButtonElement, BadgeButtonProps>(
         aria-label={ariaLabel}
         aria-pressed={isActive}
         {...restProps}>
-        {/* The contents grow on hover and shrink on tap; the pill itself holds
-            its size, so neighbouring badges do not shift. */}
         <motion.span
           className="flex flex-row items-center gap-2"
           whileHover={withAnimation ? { scale: 1.06 } : undefined}

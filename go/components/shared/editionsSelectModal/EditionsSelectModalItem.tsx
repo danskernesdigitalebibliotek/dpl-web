@@ -20,8 +20,7 @@ type EditionsSelectModalItemProps = {
   checked: boolean
   onSelect: () => void
   // Shown under the caption when the edition cannot be borrowed right now.
-  // Physical and digital editions word this differently, so the caller
-  // supplies the status.
+  // Physical and digital editions word it differently, so the caller supplies it.
   unavailableLabel?: React.ReactNode
   unavailableText?: string
 }
@@ -35,25 +34,21 @@ const EditionsSelectModalItem = ({
   unavailableText,
 }: EditionsSelectModalItemProps) => {
   const year = manifestation.edition?.publicationYear?.year
-  // The same title the work page's heading shows: the main title, without the
-  // subtitles `full` carries. `main` comes back empty for some records, and
-  // the card's whole layout hangs off the title, so it falls back to `full`
-  // rather than leaving an empty heading line.
+  // The main title the work page's heading shows, without the subtitles `full`
+  // carries. `main` is empty for some records, hence the fallback.
   const title = manifestation.titles?.main[0] ?? manifestation.titles?.full[0]
   const publisher = manifestation.publisher?.join(", ")
   const isAudio = isAudioMaterialType(getManifestationMaterialType(manifestation).code)
   // Audio has no page count, so its running time comes from the free-text
-  // summary ("20 t., 44 min."). Print takes the plain page number instead —
-  // the same summary would carry illustration notes along with it
-  // ("335 sider, ill. i farver").
+  // summary ("20 t., 44 min."). Print takes the plain page number, as the
+  // summary also carries illustration notes ("335 sider, ill. i farver").
   const pages = manifestation.physicalDescription?.numberOfPages
   const extent = isAudio
     ? manifestation.physicalDescription?.summaryFull
     : pages && `${pages} sider`
 
-  // Every edition keeps all three rows, even where a value is missing: the
-  // cards sit side by side, so dropping a row would slide the ones below it
-  // up and leave a neighbour's "Forlag" level with this card's "Varighed".
+  // All three rows on every edition, missing value or not, so the terms stay
+  // level across the cards on a row.
   const details = [
     { term: "Udgave", value: year ? `${year}` : undefined },
     { term: "Forlag", value: publisher || undefined },
@@ -62,20 +57,17 @@ const EditionsSelectModalItem = ({
 
   const isBlueTitle = useIsBlueTitle(manifestation)
 
-  // The detail block takes the height of the tallest one on its row, so the
-  // covers above them start at the same point across the row.
+  // Equalised per row, so the covers above start at the same point.
   const { ref: detailsRef, groupAttribute } = useEqualRowHeight("edition-details")
-  // The list is equalised separately: a publisher name that wraps to two lines
-  // makes one card's list taller, which would otherwise push that card's
-  // status label below its neighbours'.
+  // Equalised separately, so a wrapped publisher name keeps the status labels
+  // level.
   const { ref: listRef, groupAttribute: listGroupAttribute } =
     useEqualRowHeight<HTMLDListElement>("edition-detail-list")
 
   const accessibleName = [
     title,
     isBlueTitle ? "Blå titel, gratis at låne" : undefined,
-    // A row with no value is a placeholder holding the layout together, so it
-    // is skipped here rather than read out as an empty field.
+    // Valueless rows are layout placeholders, so they are left unread.
     ...details
       .filter(detail => Boolean(detail.value))
       .map(detail => `${detail.term}: ${detail.value}`),
@@ -107,18 +99,14 @@ const EditionsSelectModalItem = ({
           <Icon name="check" className="h-4 w-4" />
         </span>
       )}
-      {/* The badge sets its own aria-hidden; this wrapper's wins over it, which
-          is what the card wants — accessibleName already says "Blå titel". */}
+      {/* Hidden here as well: accessibleName already says "Blå titel". */}
       <div aria-hidden="true" className="absolute top-2 mb-3">
         <BlueTitleBadge isBlue={isBlueTitle} />
       </div>
-      {/* The card is a flex item stretched to its row's height, and this box
-          takes the slack, so every cover box in a row ends up as tall as the
-          row's tallest cover. The cover keeps its own proportions and centres
-          itself in that box. Below md a card spans the full width, so the
-          cover is capped there to stop it becoming one giant image; from md
-          the columns keep it in check on their own. The mb leaves room for
-          the material-type icon straddling its bottom edge. */}
+      {/* Takes the card's slack height, so the cover boxes on a row match; the
+          cover keeps its proportions and centres in the box. Capped below md,
+          where a card spans the full width. The mb leaves room for the
+          material-type icon straddling the bottom edge. */}
       <div className="mt-8 mb-6 flex w-full grow items-center justify-center px-[6%]">
         <ManifestationCover
           cover={manifestation.cover}
@@ -133,17 +121,16 @@ const EditionsSelectModalItem = ({
           }
         />
       </div>
-      {/* Pushed to the card's bottom, and grown to the row's tallest detail
-          block, so the titles line up across the row. */}
+      {/* Pushed to the card's bottom and grown to the row's tallest block, so
+          the titles line up. */}
       <div
         aria-hidden="true"
         ref={detailsRef}
         {...groupAttribute}
         className="mt-auto min-w-0 space-y-4">
         <p className="text-typo-subtitle-lg mt-2 break-words">{title}</p>
-        {/* Two columns of text do not fit a half-width card on a phone — a
-            value like "144 sider" breaks mid-word — so the value sits under
-            its term there and moves up beside it once there is room. */}
+        {/* The value sits under its term on a phone, where two columns break
+            mid-word in a half-width card, and beside it from sm. */}
         <dl ref={listRef} {...listGroupAttribute} className="space-y-2">
           {details.map(detail => (
             <div
@@ -167,14 +154,12 @@ const Skeleton = () => (
   <div
     className="bg-background-overlay rounded-base flex flex-col gap-2 border-2 border-transparent
       p-4">
-    {/* No cover to measure yet, so the box falls back to the same 2/3 that
-        getCoverAspectRatio uses when a cover carries no dimensions. */}
+    {/* The same 2/3 getCoverAspectRatio falls back to for an unmeasured cover. */}
     <div className="relative mt-8 mb-6 aspect-2/3 w-full px-[6%]">
       <CoverPictureSkeleton />
     </div>
-    {/* One bar per line the real card renders — a title plus the three detail
-        rows — at the same heights, so the grid does not jump when the editions
-        arrive. */}
+    {/* One bar per line of the real card — a title plus three detail rows — at
+        the same heights. */}
     <div className="mt-auto space-y-4">
       <div className="bg-background-skeleton h-8 w-2/3 animate-pulse rounded-sm" />
       <div className="space-y-2">
