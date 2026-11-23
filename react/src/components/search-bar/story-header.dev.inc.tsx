@@ -127,18 +127,17 @@ const StoryHeader: React.FC<StoryHeaderProps> = ({ search, userProfile }) => {
           </div>
         </div>
       </header>
-      <div className="header-sidebar-nav" data-open="closed">
+      <dialog className="header-sidebar-nav" id="sidebarNav" aria-label="Menu">
         <div className="header-sidebar-nav__background-wrapper">
           <div className="header-sidebar-nav__menu-wrapper">
-            <div
+            <button
+              type="button"
               className="header-sidebar-nav__close-menu-button"
               id="js-header-sidebar-nav__close-menu-button"
-              tabIndex={0}
-              role="button"
               aria-label="Close menu"
             >
-              <img src={crossIcon} alt="Close menu" />
-            </div>
+              <img src={crossIcon} alt="" />
+            </button>
             <nav aria-label="Sidebar site navigation">
               <ul className="header__menu-navigation">
                 <li className="header__menu-navigation-item">
@@ -185,7 +184,7 @@ const StoryHeader: React.FC<StoryHeaderProps> = ({ search, userProfile }) => {
             </nav>
           </div>
         </div>
-      </div>
+      </dialog>
     </div>
   );
 };

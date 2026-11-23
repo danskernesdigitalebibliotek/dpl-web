@@ -1158,7 +1158,7 @@ msgstr ""
 
 msgctxt "Metatag URL"
 msgid "<none>"
-msgstr "- ingen -"
+msgstr ""
 
 msgid ""
 "<p class=\"fieldgroup-help\">Fields can be dragged into groups with "
@@ -6390,6 +6390,9 @@ msgstr "Luk pop-up til at skifte interesseperiode"
 msgctxt "Global"
 msgid "Close material details modal"
 msgstr "Luk pop-up med detaljevisning af materiale"
+
+msgid "Close menu"
+msgstr ""
 
 msgctxt "Global"
 msgid "Close modal aria-label sms"
