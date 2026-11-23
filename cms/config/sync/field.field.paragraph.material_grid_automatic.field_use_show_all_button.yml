@@ -1,0 +1,23 @@
+uuid: 25f99fc1-2ccb-4d30-bffd-9950a2decb62
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_use_show_all_button
+    - paragraphs.paragraphs_type.material_grid_automatic
+id: paragraph.material_grid_automatic.field_use_show_all_button
+field_name: field_use_show_all_button
+entity_type: paragraph
+bundle: material_grid_automatic
+label: Expansion
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'Use show all button'
+  off_label: 'Show all at once'
+field_type: boolean
