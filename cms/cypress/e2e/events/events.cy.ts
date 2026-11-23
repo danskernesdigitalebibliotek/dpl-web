@@ -287,6 +287,7 @@ describe('Events', () => {
 
       cy.log('Reveal the custom-address widget and enter an address.');
       revealCustomAddress(location);
+      location.fillLocation('Some location');
       location.fillFreetextAddress(customAddress);
       instanceEdit.save();
 
