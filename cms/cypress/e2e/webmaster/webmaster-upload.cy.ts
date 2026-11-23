@@ -26,7 +26,7 @@ describe('Webmaster', () => {
         });
 
         // Remove the module files, so we're starting all fresh.
-        cy.exec('rm -rf web/modules/local/test_module');
+        cy.task('removeTestModule');
       }
     });
 
