@@ -48,7 +48,7 @@ export const getEditionQueueCountText = (
 
 // The record FBS can answer for, or null when it cannot: a digital edition
 // has none, and an unresolved answer speaks for nothing.
-export const getEditionRecordId = (
+export const getManifestationRecordId = (
   manifestation: ManifestationWorkPageFragment,
   isResolved: boolean
 ): string | null => {
