@@ -128,7 +128,7 @@ importers:
         version: 6.11.0(@types/node@24.19.2)(supports-color@8.1.1)
       '@argos-ci/storybook':
         specifier: ^6.5.0
-        version: 6.5.0(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5))(playwright@1.65.0)(storybook@10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1))(supports-color@8.1.1)(vitest@5.0.5)
+        version: 6.5.0(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5))(playwright@1.65.1)(storybook@10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1))(supports-color@8.1.1)(vitest@5.0.5)
       '@graphql-codegen/cli':
         specifier: ^8.0.0
         version: 8.0.0(@parcel/watcher@2.6.0)(@types/node@24.19.2)(graphql@16.15.0)(typescript@5.9.3)
@@ -203,7 +203,7 @@ importers:
         version: 5.2.0(supports-color@8.1.1)(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))
       axe-playwright:
         specifier: ^2.2.2
-        version: 2.2.2(playwright@1.65.0)
+        version: 2.2.2(playwright@1.65.1)
       cypress:
         specifier: ^14.5.4
         version: 14.5.4
@@ -253,8 +253,8 @@ importers:
         specifier: ^8.47.0
         version: 8.47.0(@tanstack/react-query@5.108.1(@types/react@19.3.0)(react@19.3.1))(prettier@3.10.1)(typedoc-plugin-markdown@4.12.0(typedoc@0.28.19(typescript@5.9.3)))(typedoc@0.28.19(typescript@5.9.3))(zod@4.6.7)
       playwright:
-        specifier: ^1.65.0
-        version: 1.65.0
+        specifier: ^1.65.1
+        version: 1.65.1
       postcss:
         specifier: ^8.5.33
         version: 8.5.33
@@ -8437,8 +8437,13 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  playwright@1.65.0:
-    resolution: {integrity: sha512-F3AMWcR44qMBt4kq+6Kb6mX7bjGXshktKFOPULd7reED6ZJWevjbNRqysP7q+AATE9kdPEZBibex1BYsvpVoeA==}
+  playwright-core@1.65.1:
+    resolution: {integrity: sha512-hqPpz7blSMPxWVdoeE1yiBSzXsKiVOd2k+kjCvmUywD2GPO2Dd9HfcWnq9NN0GHbNZDFgZ9JfBFr+X5/BLo0qw==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  playwright@1.65.1:
+    resolution: {integrity: sha512-vJ1FuoOrNwOKHUIVEvSt3jT1L+wjjDpwhwIstKtfvTh8XIG4FG4bIFuvNdMxi81LGfAhUgUZleVFaOLY4RIUUw==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -10495,12 +10500,12 @@ snapshots:
       - '@types/node'
       - supports-color
 
-  '@argos-ci/storybook@6.5.0(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5))(playwright@1.65.0)(storybook@10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1))(supports-color@8.1.1)(vitest@5.0.5)':
+  '@argos-ci/storybook@6.5.0(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5))(playwright@1.65.1)(storybook@10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1))(supports-color@8.1.1)(vitest@5.0.5)':
     dependencies:
       '@argos-ci/core': 6.9.1(@types/node@24.19.2)(supports-color@8.1.1)
       '@argos-ci/playwright': 7.10.0(@types/node@24.19.2)(supports-color@8.1.1)
       '@argos-ci/util': 4.4.0
-      '@argos-ci/vitest': 0.11.0(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5))(playwright@1.65.0)(supports-color@8.1.1)(vitest@5.0.5)
+      '@argos-ci/vitest': 0.11.0(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5))(playwright@1.65.1)(supports-color@8.1.1)(vitest@5.0.5)
       storybook: 10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1)
     transitivePeerDependencies:
       - '@types/node'
@@ -10514,15 +10519,15 @@ snapshots:
 
   '@argos-ci/util@4.4.0': {}
 
-  '@argos-ci/vitest@0.11.0(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5))(playwright@1.65.0)(supports-color@8.1.1)(vitest@5.0.5)':
+  '@argos-ci/vitest@0.11.0(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5))(playwright@1.65.1)(supports-color@8.1.1)(vitest@5.0.5)':
     dependencies:
       '@argos-ci/browser': 6.6.1
       '@argos-ci/core': 6.9.1(@types/node@24.19.2)(supports-color@8.1.1)
       '@argos-ci/playwright': 7.10.0(@types/node@24.19.2)(supports-color@8.1.1)
       '@argos-ci/util': 4.4.0
       '@vitest/browser': 5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
-      '@vitest/browser-playwright': 5.0.5(playwright@1.65.0)(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
-      playwright: 1.65.0
+      '@vitest/browser-playwright': 5.0.5(playwright@1.65.1)(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
+      playwright: 1.65.1
       vitest: 5.0.5(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/ui@5.0.5)(jsdom@30.0.1(@noble/hashes@1.8.0))(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))
     transitivePeerDependencies:
       - '@types/node'
@@ -14183,7 +14188,7 @@ snapshots:
       jest-serializer-html: 7.1.0
       jest-watch-typeahead: 3.0.1(jest@30.4.2(@types/node@24.19.2)(supports-color@8.1.1)(ts-node@10.9.2(@swc/core@1.15.43(@swc/helpers@0.5.23))(@types/node@24.19.2)(typescript@5.9.3)))
       nyc: 15.1.0(supports-color@8.1.1)
-      playwright: 1.65.0
+      playwright: 1.65.1
       playwright-core: 1.65.0
       rimraf: 3.0.2
       storybook: 10.6.7(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1)
@@ -14942,11 +14947,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/browser-playwright@5.0.5(playwright@1.65.0)(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)':
+  '@vitest/browser-playwright@5.0.5(playwright@1.65.1)(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)':
     dependencies:
       '@vitest/browser': 5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
       '@vitest/mocker': 5.0.5(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))
-      playwright: 1.65.0
+      playwright: 1.65.1
       tinyrainbow: 3.2.0
       vitest: 5.0.5(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/ui@5.0.5)(jsdom@30.0.1(@noble/hashes@1.8.0))(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))
     transitivePeerDependencies:
@@ -15495,14 +15500,14 @@ snapshots:
       axe-core: 4.12.1
       mustache: 4.2.0
 
-  axe-playwright@2.2.2(playwright@1.65.0):
+  axe-playwright@2.2.2(playwright@1.65.1):
     dependencies:
       '@types/junit-report-builder': 3.0.2
       axe-core: 4.12.1
       axe-html-reporter: 2.2.11(axe-core@4.12.1)
       junit-report-builder: 5.1.2
       picocolors: 1.1.1
-      playwright: 1.65.0
+      playwright: 1.65.1
 
   axios-ntlm@1.4.6(debug@4.4.3(supports-color@8.1.1))(supports-color@11.0.0):
     dependencies:
@@ -19775,9 +19780,11 @@ snapshots:
 
   playwright-core@1.65.0: {}
 
-  playwright@1.65.0:
+  playwright-core@1.65.1: {}
+
+  playwright@1.65.1:
     dependencies:
-      playwright-core: 1.65.0
+      playwright-core: 1.65.1
 
   pngjs@7.0.0: {}
 
@@ -21458,7 +21465,7 @@ snapshots:
       why-is-node-running: 3.2.1
     optionalDependencies:
       '@types/node': 24.19.2
-      '@vitest/browser-playwright': 5.0.5(playwright@1.65.0)(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
+      '@vitest/browser-playwright': 5.0.5(playwright@1.65.1)(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
       '@vitest/ui': 5.0.5(vitest@5.0.5)
       jsdom: 30.0.1(@noble/hashes@1.8.0)
     transitivePeerDependencies:
