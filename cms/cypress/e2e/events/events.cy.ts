@@ -11,11 +11,7 @@ import {
 import { EventSeriesListPage } from '../../pages/event-series-list';
 import { EventSeriesPage } from '../../pages/event-series';
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
+const login = () => LoginPage.ensureEditorLogin();
 
 const events = {
   singleEvent: {

@@ -39,9 +39,9 @@ export class LoginPage extends PageObject {
    * Logs in as the editor the tests run as.
    */
   static ensureEditorLogin() {
-    LoginPage.ensureLogin(
-      Cypress.env('DRUPAL_USERNAME'),
-      Cypress.env('DRUPAL_PASSWORD'),
+    cy.env(['DRUPAL_USERNAME', 'DRUPAL_PASSWORD']).then(
+      ({ DRUPAL_USERNAME, DRUPAL_PASSWORD }) =>
+        LoginPage.ensureLogin(DRUPAL_USERNAME, DRUPAL_PASSWORD),
     );
   }
 

@@ -17,10 +17,7 @@ const checkThatUrlIsProxied = () => {
 
 describe('Proxy URL replacement', () => {
   before(() => {
-    LoginPage.ensureLogin(
-      Cypress.env('DRUPAL_USERNAME'),
-      Cypress.env('DRUPAL_PASSWORD'),
-    );
+    LoginPage.ensureEditorLogin();
 
     // Setup google as a "proxy" so we have something to test for.
     const adminPage = new AdminUrlProxy();
@@ -46,10 +43,7 @@ describe('Proxy URL replacement', () => {
   });
 
   it('Returns the proxied URL for authenticated users', () => {
-    LoginPage.ensureLogin(
-      Cypress.env('DRUPAL_USERNAME'),
-      Cypress.env('DRUPAL_PASSWORD'),
-    );
+    LoginPage.ensureEditorLogin();
 
     const workPage = new WorkPage();
     workPage.visit(['work-of:150060-pressdisp:9GVA']);

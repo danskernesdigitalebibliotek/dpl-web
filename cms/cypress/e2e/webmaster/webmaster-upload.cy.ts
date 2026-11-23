@@ -7,10 +7,7 @@ import { TestModulePage } from '../../pages/test-module-page';
 describe('Webmaster', () => {
   beforeEach(() => {
     // Obviously we need to be logged in to upload a module.
-    LoginPage.ensureLogin(
-      Cypress.env('DRUPAL_USERNAME'),
-      Cypress.env('DRUPAL_PASSWORD'),
-    );
+    LoginPage.ensureEditorLogin();
 
     // Intuitively it makes most sense to clean up after a test after
     // it is run, but after hooks might not be called if the test
