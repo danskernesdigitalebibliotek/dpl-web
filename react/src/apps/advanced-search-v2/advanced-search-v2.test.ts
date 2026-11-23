@@ -3,6 +3,7 @@ import { givenComplexSuggestResponse } from "../../../cypress/intercepts/fbi/com
 import { givenComplexSearchWithPaginationResponse } from "../../../cypress/intercepts/fbi/complexSearchWithPagination";
 import { givenComplexFacetSearchResponse } from "../../../cypress/intercepts/fbi/complexFacetSearch";
 import { ComplexSearchFacetsEnum } from "../../core/dbc-gateway/generated/graphql";
+import { hasOperationName } from "../../../cypress/utils/graphql-test-utils";
 
 const currentYear = new Date().getFullYear();
 const lastYear = currentYear - 1;
@@ -521,6 +522,44 @@ describe("Advanced Search V2", () => {
         filters.toggleOnShelf();
         filters.verifyAccessTypeOptionsAreVisible();
         filters.verifyRadioOptionIsNotSelected("Online");
+      });
+    });
+
+    it("ignores an access type in the URL while 'On shelf' is on", () => {
+      const searchedCql: string[] = [];
+      cy.intercept(
+        { method: "POST", url: "**/graphql*", middleware: true },
+        (request) => {
+          if (
+            hasOperationName(request, "complexSearchWithPagination") ||
+            hasOperationName(request, "complexFacetSearch")
+          ) {
+            searchedCql.push(request.body.variables.cql);
+          }
+        }
+      );
+
+      page.visit([], {
+        qs: {
+          filters: JSON.stringify([
+            { term: "term.default", query: "harry potter" }
+          ]),
+          onShelf: "true",
+          accessType: "online",
+          view: "results"
+        }
+      });
+      page.verifyResultsAreVisible();
+
+      page.components.Filters((filters) => {
+        filters.verifyAccessTypeOptionsAreHidden();
+      });
+
+      cy.wrap(searchedCql).should((cqlQueries) => {
+        expect(cqlQueries).not.to.have.length(0);
+        cqlQueries.forEach((cql) => {
+          expect(cql).not.to.include("accesstype");
+        });
       });
     });
 

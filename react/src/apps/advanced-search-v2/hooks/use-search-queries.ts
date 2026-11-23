@@ -73,6 +73,10 @@ export const useSearchQueries = (): UseSearchQueriesReturn => {
   const [fictionType] = useQueryState("fictionType", parseAsString);
   const [ageGroup] = useQueryState("ageGroup", parseAsString);
 
+  // The access type options are hidden while on shelf is on, so ignore an
+  // access type that arrives together with it, e.g. from a shared link.
+  const effectiveAccessType = onShelf ? null : accessType;
+
   // Build CQL query from all inputs
   const cql = useMemo(
     () =>
@@ -81,7 +85,7 @@ export const useSearchQueries = (): UseSearchQueriesReturn => {
         preSearchFacets,
         facets,
         onlyExtraTitles,
-        accessType,
+        effectiveAccessType,
         fictionType,
         ageGroup
       ),
@@ -90,7 +94,7 @@ export const useSearchQueries = (): UseSearchQueriesReturn => {
       preSearchFacets,
       facets,
       onlyExtraTitles,
-      accessType,
+      effectiveAccessType,
       fictionType,
       ageGroup
     ]
