@@ -55,7 +55,7 @@ const ModalMaterialListItem = ({
         </div>
         <div className="space-y-4">
           <div className="space-y-2">
-            {isBlue && <BlueTitleBadge manifestation={manifestation} />}
+            {isBlue && <BlueTitleBadge isBlue />}
             <p className="text-typo-heading-5">{title}</p>
             {creators && (
               <p className="text-typo-subtitle-sm text-foreground-muted">Af {creators}</p>

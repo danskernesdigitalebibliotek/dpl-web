@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
 import useSearchResultTracking from "./useSearchResultTracking";
-import { useDeepCompareEffect } from "react-use";
-import { useQueryState, parseAsJson, parseAsBoolean } from "nuqs";
-import { keepPreviousData } from "@tanstack/react-query";
+import { usePrevious } from "react-use";
+import { isEqual } from "lodash";
+import {
+  useQueryState,
+  parseAsJson,
+  parseAsBoolean,
+  parseAsInteger
+} from "nuqs";
+import { keepPreviousData, useQueries } from "@tanstack/react-query";
 import SearchResultHeader from "../../components/search-bar/search-result-header/SearchResultHeader";
 import usePager from "../../components/result-pager/use-pager";
 import {
+  SearchWithPaginationDocument,
   SearchWithPaginationQuery,
-  useSearchWithPaginationQuery,
+  SearchWithPaginationQueryVariables,
   useSearchFacetQuery,
   HoldingsStatusEnum,
   SearchFiltersInput
 } from "../../core/dbc-gateway/generated/graphql";
+import { fetcher } from "../../core/dbc-gateway/graphql-fetcher";
 import { Work } from "../../core/utils/types/entities";
 import {
   constructSearchUrlWithFacets,
@@ -23,7 +31,7 @@ import useGetSearchBranches from "../../core/utils/branches";
 import SearchResultInvalidSearch from "./search-result-not-valid-search";
 import { useUrls } from "../../core/utils/url";
 import { useConfig } from "../../core/utils/config";
-import SearchResultList, { ResultItem } from "./SearchResultList";
+import SearchResultList from "./SearchResultList";
 import SearchResultFacets from "./SearchResultFacets";
 import IconFilter from "@danskernesdigitalebibliotek/dpl-design-system/build/icons/basic/icon-filter.svg";
 import useDialog from "../../components/dialog/useDialog";
@@ -46,7 +54,6 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
   const u = useUrls();
   const zeroHitsSearchUrl = u("zeroHitsSearchUrl");
   const t = useText();
-  const [resultItems, setResultItems] = useState<Work[] | null>(null);
   const [hitcount, setHitCount] = useState<number>(0);
   const minimalQueryLength = 1;
   const config = useConfig();
@@ -92,21 +99,34 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
     ...(onShelf ? { status: [HoldingsStatusEnum.Onshelf] } : {})
   };
 
-  const { PagerComponent, page, resetPage } = usePager({
+  // The number of loaded pages is kept in the URL so the loaded results
+  // survive navigating to a work and back.
+  const pageState = useQueryState(
+    "page",
+    parseAsInteger.withDefault(0).withOptions({ history: "replace" })
+  );
+  const { PagerComponent, page, pages, resetPage } = usePager({
     hitcount,
-    pageSize
+    pageSize,
+    pageState
   });
 
-  // If q or filters change (eg. in Storybook context or via facets)
-  // then make sure that we reset the entire result set and pager.
-  useDeepCompareEffect(() => {
-    setResultItems([]);
-    resetPage();
+  // If q or filters change (eg. in Storybook context or via facets) then
+  // reset the pager. Not on the initial render, as that would discard a page
+  // restored from the URL.
+  const searchKey = { q, pageSize, searchFilters };
+  const previousSearchKey = usePrevious(searchKey);
+  const hasSearchChanged =
+    previousSearchKey !== undefined && !isEqual(previousSearchKey, searchKey);
+  useEffect(() => {
+    if (hasSearchChanged) {
+      resetPage();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q, pageSize, searchFilters]);
+  }, [hasSearchChanged]);
 
   // Fetch facets for campaign matching
-  const { data: facetData } = useSearchFacetQuery(
+  const { data: facetData, isPending: isFacetPending } = useSearchFacetQuery(
     {
       q: { all: q },
       facets: allFacetFields,
@@ -122,6 +142,11 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
   const facets = facetData?.search.facets || [];
 
   const campaignMutation = useCampaignMatchPOST();
+  // The campaign is matched once the facets have loaded, if there are any.
+  const isCampaignLoading =
+    isFacetPending ||
+    (facets.length > 0 &&
+      (campaignMutation.isIdle || campaignMutation.isPending));
 
   useEffect(() => {
     if (facets.length === 0) return;
@@ -145,18 +170,40 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [facets]);
 
-  const { data, isLoading } = useSearchWithPaginationQuery(
-    {
-      q: { all: q },
-      offset: page * pageSize,
-      limit: pageSize,
-      filters: searchFilters,
-      includeOnlineMaterials
-    },
-    {
-      enabled: q.length >= minimalQueryLength
-    }
-  );
+  const campaignsData = campaignMutation.data?.data
+    ? [campaignMutation.data.data]
+    : [];
+
+  // Each loaded page is fetched separately. When the search has just changed
+  // only the first page is fetched, as the pager is about to be reset.
+  const pageQueries = useQueries({
+    queries: (hasSearchChanged ? [0] : pages).map((p) => {
+      const variables: SearchWithPaginationQueryVariables = {
+        q: { all: q },
+        offset: p * pageSize,
+        limit: pageSize,
+        filters: searchFilters,
+        includeOnlineMaterials
+      };
+      return {
+        // Same key as useSearchWithPaginationQuery so the cache is shared.
+        queryKey: ["searchWithPagination", variables],
+        queryFn: fetcher<
+          SearchWithPaginationQuery,
+          SearchWithPaginationQueryVariables
+        >(SearchWithPaginationDocument, variables),
+        enabled: q.length >= minimalQueryLength
+      };
+    })
+  });
+  const data = pageQueries[0]?.data;
+  const isLoading = pageQueries.some((query) => query.isLoading);
+
+  // Pages are shown in order, up to the first page which has not loaded yet.
+  const loadedPages = pageQueries.findIndex((query) => !query.data);
+  const resultItems = pageQueries
+    .slice(0, loadedPages === -1 ? undefined : loadedPages)
+    .flatMap((query) => (query.data?.search.works ?? []) as Work[]);
 
   // A search without results sends the user to the dedicated zero-hits page.
   useEffect(() => {
@@ -179,32 +226,12 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
     );
   }, [data, zeroHitsSearchUrl, q, facetsFromUrl]);
 
+  // Keep the previous hitcount while a changed search is loading.
   useEffect(() => {
-    if (!data) {
-      return;
+    if (data) {
+      setHitCount(data.search.hitcount);
     }
-    const {
-      search: { works: resultWorks, hitcount: resultCount }
-    } = data as {
-      search: {
-        works: Work[];
-        hitcount: SearchWithPaginationQuery["search"]["hitcount"];
-      };
-    };
-    setHitCount(resultCount);
-    // if page has change then append the new result to the existing result
-    if (page > 0) {
-      setResultItems((prev) => {
-        if (prev === null) {
-          return [...resultWorks];
-        }
-        return [...prev, ...resultWorks];
-      });
-      return;
-    }
-
-    setResultItems(resultWorks);
-  }, [data, page]);
+  }, [data]);
 
   useSearchResultTracking({ q, hitcount });
 
@@ -318,32 +345,23 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
                 </Dialog>
               </div>
             </div>
-            {resultItems && (
-              <>
-                <SearchResultList
-                  resultItems={
-                    [
-                      ...(campaignMutation.data?.data
-                        ? [campaignMutation.data.data]
-                        : []),
-                      ...resultItems
-                    ] as ResultItem[]
-                  }
-                  isLoading={isLoading}
-                  page={page}
-                  pageSize={pageSize}
-                  infoBoxProps={{
-                    title: infoBoxTitle,
-                    html: infoBoxHtml,
-                    buttonLabel: infoBoxButtonLabel,
-                    buttonUrl: infoBoxButtonUrl
-                      ? new URL(infoBoxButtonUrl, getCurrentLocation())
-                      : undefined
-                  }}
-                />
-                <PagerComponent isLoading={isLoading} />
-              </>
-            )}
+            <SearchResultList
+              resultItems={[...campaignsData, ...resultItems]}
+              isLoading={isLoading}
+              page={page}
+              pageSize={pageSize}
+              restoreScrollToClickedItem
+              isCampaignLoading={isCampaignLoading}
+              infoBoxProps={{
+                title: infoBoxTitle,
+                html: infoBoxHtml,
+                buttonLabel: infoBoxButtonLabel,
+                buttonUrl: infoBoxButtonUrl
+                  ? new URL(infoBoxButtonUrl, getCurrentLocation())
+                  : undefined
+              }}
+            />
+            <PagerComponent isLoading={isLoading} />
           </section>
         </div>
       </div>

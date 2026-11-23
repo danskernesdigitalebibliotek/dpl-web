@@ -115,6 +115,7 @@ export type GetListQueryResult = NonNullable<
 >;
 export type GetListQueryError = ErrorType<void>;
 
+/** Get list with collections. */
 export function useGetList<
   TData = Awaited<ReturnType<typeof getList>>,
   TError = ErrorType<void>
@@ -139,6 +140,7 @@ export function useGetList<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** Get list with collections. */
 export function useGetList<
   TData = Awaited<ReturnType<typeof getList>>,
   TError = ErrorType<void>
@@ -163,6 +165,7 @@ export function useGetList<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
+/** Get list with collections. */
 export function useGetList<
   TData = Awaited<ReturnType<typeof getList>>,
   TError = ErrorType<void>
@@ -179,7 +182,7 @@ export function useGetList<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-
+/** Get list with collections. */
 export function useGetList<
   TData = Awaited<ReturnType<typeof getList>>,
   TError = ErrorType<void>
@@ -271,6 +274,7 @@ export type HasItemMutationResult = NonNullable<
 export type HasItemMutationError = ErrorType<void>;
 export type HasItemMutationVariables = { listId: string; itemId: string };
 
+/** Check existence of a collection on a list. To check multiple collections in one request, see the collection_ids query parameter on /list/{listId}. */
 export const useHasItem = <TError = ErrorType<void>, TContext = unknown>(
   options?: {
     mutation?: UseMutationOptions<
@@ -356,6 +360,7 @@ export type AddItemMutationResult = NonNullable<
 export type AddItemMutationError = ErrorType<void>;
 export type AddItemMutationVariables = { listId: string; itemId: string };
 
+/** Add collection to the the list. */
 export const useAddItem = <TError = ErrorType<void>, TContext = unknown>(
   options?: {
     mutation?: UseMutationOptions<
@@ -441,6 +446,7 @@ export type RemoveItemMutationResult = NonNullable<
 export type RemoveItemMutationError = ErrorType<void>;
 export type RemoveItemMutationVariables = { listId: string; itemId: string };
 
+/** Delete collection from list. */
 export const useRemoveItem = <TError = ErrorType<void>, TContext = unknown>(
   options?: {
     mutation?: UseMutationOptions<
