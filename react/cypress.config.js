@@ -24,6 +24,12 @@ export default defineConfig({
     // with { testIsolation: false } on their describe block.
     testIsolation: true,
     setupNodeEvents(on, config) {
+      // CYPRESS_* variables only reach config.env, and the support file needs
+      // FAIL_FAST synchronously at load time, so hand it to Cypress.expose().
+      if (config.env.FAIL_FAST !== undefined) {
+        config.expose.FAIL_FAST = config.env.FAIL_FAST;
+      }
+
       const terminalReportOptions = {
         printLogsToConsole: "onFail",
         printLogsToFile: "always",
