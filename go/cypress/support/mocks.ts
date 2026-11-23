@@ -16,22 +16,25 @@ import UniloginUserinfo from "../factories/unilogin/userinfo"
 // on every page and which otherwise lives for 15 minutes. Each test then
 // renders against a config built from its own mocks.
 export const revalidateConfigCache = () => {
-  const secret = Cypress.env("DRUPAL_REVALIDATE_SECRET")
-  if (!secret) {
-    throw new Error(
-      "DRUPAL_REVALIDATE_SECRET is missing, so the config cache cannot be revalidated."
-    )
-  }
+  cy.env(["DRUPAL_REVALIDATE_SECRET"], { log: false }).then(
+    ({ DRUPAL_REVALIDATE_SECRET: secret }) => {
+      if (!secret) {
+        throw new Error(
+          "DRUPAL_REVALIDATE_SECRET is missing, so the config cache cannot be revalidated."
+        )
+      }
 
-  // A non-2xx response means the cache still holds the old config, so the
-  // request is left to fail the test.
-  cy.request({
-    url: "/cache/revalidate",
-    qs: {
-      tags: "dpl-cms-config",
-      secret,
-    },
-  })
+      // A non-2xx response means the cache still holds the old config, so the
+      // request is left to fail the test.
+      cy.request({
+        url: "/cache/revalidate",
+        qs: {
+          tags: "dpl-cms-config",
+          secret,
+        },
+      })
+    }
+  )
 }
 
 export const mockConfig = (options?: {
@@ -45,7 +48,7 @@ export const mockConfig = (options?: {
   cy.mockServerGraphQLQuery({
     operationName: "getDplCmsPublicConfiguration",
     data: GetDplCmsPublicConfiguration.transient({
-      appUrl: Cypress.env("DPL_GO_BASE_URL"),
+      appUrl: Cypress.config("baseUrl") ?? undefined,
       ...(options?.biblio ? { biblio: options.biblio } : {}),
     }).build(),
   })

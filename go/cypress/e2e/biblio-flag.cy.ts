@@ -3,7 +3,7 @@ import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatfo
 import { biblioEnabledConfig } from "../factories/dpl-cms/getDplCmsPublicConfiguration"
 import getMaterial from "../factories/fbi/getMaterial"
 import UniloginUserinfo from "../factories/unilogin/userinfo"
-import { mockConfig, mockFrontpage } from "../support/mocks"
+import { mockConfig, mockFrontpage, revalidateConfigCache } from "../support/mocks"
 
 const WORK_URL = "/work/work-of%3A870970-basis%3A136817027"
 
@@ -57,15 +57,6 @@ const mockBiblioLoanCreated = () => {
   }).as("createBiblioLoan")
 }
 
-// The server caches goConfiguration ("use cache", tagged dpl-cms-config), so
-// a spec that changes the mocked configuration must drop the cached entry
-// before visiting — otherwise the previous spec's config wins for 15 minutes.
-const revalidateCmsConfig = () => {
-  cy.request(
-    `/cache/revalidate?tags=dpl-cms-config&secret=${Cypress.env("DRUPAL_REVALIDATE_SECRET")}`
-  )
-}
-
 const setSessionType = (type: "unilogin" | "adgangsplatformen") => {
   cy.createGoSession({ type })
   cy.setCookie("go-session:type", type)
@@ -107,7 +98,7 @@ describe("Work page with the Biblio adapter switched on", () => {
     cy.resetServerMocks()
     mockConfig({ biblio: biblioEnabledConfig })
     mockFrontpage()
-    revalidateCmsConfig()
+    revalidateConfigCache()
 
     // Dev throws the readable message, CI throws the minified one — suppress both.
     cy.expectError("useMediaQuery is a client-only hook")
@@ -204,7 +195,7 @@ describe("Work page with the Biblio adapter switched on", () => {
 describe("Work page with the Biblio adapter switched off", () => {
   beforeEach(() => {
     mockFrontpage()
-    revalidateCmsConfig()
+    revalidateConfigCache()
 
     cy.expectError("useMediaQuery is a client-only hook")
     cy.expectError("Minified React error #419")
