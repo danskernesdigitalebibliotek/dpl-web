@@ -152,6 +152,28 @@ describe("Search Result", () => {
       page.verifyUrlDoesNotContain("accessTypes");
     });
 
+    it("ignores an access type in the URL while 'On shelf' is on", () => {
+      const recorded = recordSearchVariables();
+      page.visit([], {
+        qs: {
+          onShelf: "true",
+          facets: JSON.stringify([
+            { facetName: "accessTypes", selectedValues: ["Digital"] }
+          ])
+        }
+      });
+
+      page.components.Filters((filters) => {
+        filters.verifyAccessTypeOptionsAreHidden();
+      });
+
+      verifyLatestSearchVariables(recorded, (variables) => {
+        expect(variables.includeOnlineMaterials).to.equal(false);
+        expect(variables.filters.status).to.deep.equal(["ONSHELF"]);
+        expect(variables.filters.accessTypes).to.equal(undefined);
+      });
+    });
+
     it("toggles 'Can always be loaned' filter on and off", () => {
       page.components.Filters((filters) => {
         filters.verifyCanAlwaysBeLoanedIsNotChecked();
