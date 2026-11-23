@@ -11155,6 +11155,18 @@ msgid "Expand only when a scheduled date exists or when a date is required"
 msgstr ""
 "Udvider kun, når der findes en planlagt dato eller når en dato er nødvendig"
 
+msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:label"
+msgid "Expansion"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:label"
+msgid "Expansion"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:label"
+msgid "Expansion"
+msgstr ""
+
 msgid "Expected an array but got null or other type for group: @group_name"
 msgstr ""
 
@@ -22246,6 +22258,18 @@ msgctxt "Paragraphs Editor Enhancements"
 msgid "Show all @title_plural"
 msgstr "Vis alle @title_plural"
 
+msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:settings:off_label"
+msgid "Show all at once"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:settings:off_label"
+msgid "Show all at once"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:settings:off_label"
+msgid "Show all at once"
+msgstr ""
+
 msgctxt "views.view.event_instance_list:display:default:display_options:filters:date__value:group_info:group_items:1:title"
 msgid "Show all events"
 msgstr ""
@@ -28716,6 +28740,18 @@ msgid "Use replacement tokens from the first row"
 msgstr "Brug erstatnings-tokens fra den første række"
 
 msgid "Use scrollable container"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:settings:on_label"
+msgid "Use show all button"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:settings:on_label"
+msgid "Use show all button"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:settings:on_label"
+msgid "Use show all button"
 msgstr ""
 
 msgid "Use sidebar: No"
