@@ -17,7 +17,7 @@
     "@typescript-eslint/eslint-plugin": "^8.73.0",
     "@typescript-eslint/parser": "^8.73.0",
     "chrome-launcher": "1.2.3",
-    "cypress": "^15.21.2",
+    "cypress": "16.3.0",
     "cypress-if": "^1.17.1",
     "cypress-plugin-api": "^2.12.3",
     "cypress-terminal-report": "^7.5.0",
