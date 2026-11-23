@@ -6391,6 +6391,7 @@ msgctxt "Global"
 msgid "Close material details modal"
 msgstr "Luk pop-up med detaljevisning af materiale"
 
+msgctxt "Header"
 msgid "Close menu"
 msgstr ""
 
@@ -14736,9 +14737,6 @@ msgstr ""
 msgid "Lightweight cron settings"
 msgstr "Letvægtscron indstillinger"
 
-msgid "Liked"
-msgstr "Husk"
-
 msgctxt "Global"
 msgid "Liked"
 msgstr "Husk"
@@ -15014,9 +15012,6 @@ msgstr "Liste af @type værdier"
 
 msgid "List of available formats"
 msgstr "Liste over tilgængelige formater"
-
-msgid "List of bookmarks"
-msgstr "Bogmærkeliste"
 
 msgctxt "taxonomy.vocabulary.webform_email_categories:description"
 msgid ""
@@ -15979,6 +15974,10 @@ msgstr "Medlemssekretær - Tilladt"
 msgid "Membership secretary - needs to view and edit membership information"
 msgstr "Medlemssekretær - skal kunne se og redigere medlemsinformation"
 
+msgid "Menu"
+msgstr "Menu"
+
+msgctxt "Header"
 msgid "Menu"
 msgstr "Menu"
 
@@ -19068,6 +19067,10 @@ msgstr ""
 
 msgid "Primary attribute (Required)"
 msgstr "Primær attribut (Påkrævet)"
+
+msgctxt "Header"
+msgid "Primary site navigation"
+msgstr ""
 
 msgctxt "block.block.claro_primary_local_tasks:settings:label"
 msgid "Primary tabs"
@@ -22469,6 +22472,10 @@ msgstr ""
 msgctxt "Library Agency Configuration"
 msgid "Side til 0-hits søgninger"
 msgstr "Side til 0-hits søgninger"
+
+msgctxt "Header"
+msgid "Sidebar site navigation"
+msgstr ""
 
 msgctxt "Patron menu"
 msgid "Sign up"
