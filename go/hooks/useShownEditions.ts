@@ -10,7 +10,7 @@ import {
   ManifestationWorkPageFragment,
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
-import { getShownEditions } from "@/lib/helpers/helper.availability"
+import { getShownManifestations } from "@/lib/helpers/helper.availability"
 
 import { useEditionAvailability } from "./useEditionAvailability"
 
@@ -48,7 +48,7 @@ export const useShownEditions = (wid: string, materialTypeCode: string) => {
   )
 
   // Ordering is untouched, so what remains keeps its position.
-  const shownEditions = getShownEditions(editions, availability, isResolved)
+  const shownEditions = getShownManifestations(editions, availability, isResolved)
 
   return {
     editions,

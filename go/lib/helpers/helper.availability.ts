@@ -67,7 +67,7 @@ export const isManifestationUnobtainable = (
   availability: MaterialAvailability | undefined,
   isResolved: boolean
 ): boolean => {
-  const recordId = getEditionRecordId(manifestation, isResolved)
+  const recordId = getManifestationRecordId(manifestation, isResolved)
   if (!recordId) return false
 
   return !isEditionObtainable(availability, recordId)
@@ -79,7 +79,7 @@ export const isManifestationLentOut = (
   availability: MaterialAvailability | undefined,
   isResolved: boolean
 ): boolean => {
-  const recordId = getEditionRecordId(manifestation, isResolved)
+  const recordId = getManifestationRecordId(manifestation, isResolved)
   if (!recordId) return false
 
   return isEditionOnLoan(availability, recordId)
@@ -92,19 +92,19 @@ export const getManifestationQueueText = (
   availability: MaterialAvailability | undefined,
   isResolved: boolean
 ): string | undefined => {
-  const recordId = getEditionRecordId(manifestation, isResolved)
+  const recordId = getManifestationRecordId(manifestation, isResolved)
   if (!recordId) return undefined
 
   return getEditionQueueCountText(availability, recordId)
 }
 
-// The editions of a type the reader can choose between: the kommune's
+// The manifestations of a type the reader can choose between: the kommune's
 // unobtainable ones are left out, lent-out ones stay.
-export const getShownEditions = (
-  editions: ManifestationWorkPageFragment[],
+export const getShownManifestations = (
+  manifestations: ManifestationWorkPageFragment[],
   availability: MaterialAvailability | undefined,
   isResolved: boolean
 ): ManifestationWorkPageFragment[] =>
-  editions.filter(
+  manifestations.filter(
     manifestation => !isManifestationUnobtainable(manifestation, availability, isResolved)
   )

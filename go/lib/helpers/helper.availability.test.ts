@@ -5,7 +5,7 @@ import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graph
 
 import {
   getManifestationQueueText,
-  getShownEditions,
+  getShownManifestations,
   isEditionObtainable,
   isEditionOnLoan,
   isManifestationLentOut,
@@ -131,20 +131,24 @@ describe("isManifestationUnobtainable", () => {
   })
 })
 
-describe("getShownEditions", () => {
+describe("getShownManifestations", () => {
   it("leaves out what the kommune cannot supply and keeps the order", () => {
-    const editions = [manifestation("onShelf"), manifestation("notOwned"), manifestation("onLoan")]
+    const manifestations = [
+      manifestation("onShelf"),
+      manifestation("notOwned"),
+      manifestation("onLoan"),
+    ]
 
-    expect(getShownEditions(editions, availability, true).map(m => m.pid)).toEqual([
+    expect(getShownManifestations(manifestations, availability, true).map(m => m.pid)).toEqual([
       "870970-basis:onShelf",
       "870970-basis:onLoan",
     ])
   })
 
-  it("shows every edition before the availability has resolved", () => {
-    const editions = [manifestation("onShelf"), manifestation("notOwned")]
+  it("shows every manifestation before the availability has resolved", () => {
+    const manifestations = [manifestation("onShelf"), manifestation("notOwned")]
 
-    expect(getShownEditions(editions, availability, false)).toHaveLength(2)
+    expect(getShownManifestations(manifestations, availability, false)).toHaveLength(2)
   })
 })
 
