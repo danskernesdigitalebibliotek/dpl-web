@@ -130,7 +130,7 @@ const EditionsSelectModalItem = ({
           </div>
         ))}
       </dl>
-      <div aria-hidden="true" className="mt-4 min-w-0 md:mt-0">
+      <div aria-hidden="true" className="mt-4 min-w-0 lg:mt-0">
         {unavailableLabel}
       </div>
     </label>
