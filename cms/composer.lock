@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c767dae2284630ada59fa7a19826b96",
+    "content-hash": "ce7ef216a8c4cc6a57101decf32cf709",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -3576,6 +3576,51 @@
             "time": "2026-11-18T14:44:34+00:00"
         },
         {
+            "name": "drupal/core-vendor-hardening",
+            "version": "11.4.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/drupal/core-vendor-hardening.git",
+                "reference": "1df275fca6b89c94cc32a432023c6a4456cc4f47"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/drupal/core-vendor-hardening/zipball/1df275fca6b89c94cc32a432023c6a4456cc4f47",
+                "reference": "1df275fca6b89c94cc32a432023c6a4456cc4f47",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2",
+                "php": ">=7.3.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Drupal\\Composer\\Plugin\\VendorHardening\\VendorHardeningPlugin",
+                "branch-alias": {
+                    "dev-main": "11.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Drupal\\Composer\\Plugin\\VendorHardening\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Hardens the vendor directory for when it's in the docroot.",
+            "homepage": "https://www.drupal.org/project/drupal",
+            "keywords": [
+                "drupal"
+            ],
+            "support": {
+                "source": "https://github.com/drupal/core-vendor-hardening/tree/11.4.13"
+            },
+            "time": "2026-01-07T19:00:53+00:00",
+            "published-time": "2026-11-18T17:00:07+00:00"
+        },
+        {
             "name": "drupal/crop",
             "version": "2.6.0",
             "source": {
@@ -5304,7 +5349,8 @@
             "homepage": "https://www.drupal.org/project/graphql_compose",
             "support": {
                 "source": "https://git.drupalcode.org/project/graphql_compose"
-            }
+            },
+            "published-time": "2025-11-20T23:33:55+00:00"
         },
         {
             "name": "drupal/gsearch",
@@ -8101,7 +8147,8 @@
             "homepage": "https://www.drupal.org/project/schemata",
             "support": {
                 "source": "https://git.drupalcode.org/project/schemata"
-            }
+            },
+            "published-time": "2024-09-12T18:04:26+00:00"
         },
         {
             "name": "drupal/search_api",
@@ -12730,7 +12777,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-19T10:31:11+00:00"
+            "time": "2026-11-19T10:31:11+00:00",
+            "published-time": "2026-11-19T10:31:27+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -23640,5 +23688,5 @@
         "ext-dom": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
