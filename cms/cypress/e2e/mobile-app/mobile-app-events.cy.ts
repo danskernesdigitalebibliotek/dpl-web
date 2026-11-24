@@ -10,12 +10,6 @@ import { LoginPage } from '../../pages/login-page';
 import { EventSeriesListPage } from '../../pages/event-series-list';
 import { NodePage } from '../../pages/node';
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
-
 type Image = { url: string };
 
 type HappeningEvent = {
@@ -125,7 +119,7 @@ const getEventsTitled = (title: string) =>
 // Only one branch node may represent a branch in the library system, so other
 // branches are created without one.
 const createBranch = (title: string, agencyBranch: string | null = isilId) => {
-  login();
+  LoginPage.ensureEditorLogin();
   const branchAdd = new BranchAddPage();
   branchAdd.visit([]);
   branchAdd.fillTitle(title);
@@ -149,7 +143,7 @@ const startEvent = (
   { title, subtitle }: Pick<EventInput, 'title' | 'subtitle'>,
   branch: string,
 ) => {
-  login();
+  LoginPage.ensureEditorLogin();
   const eventAdd = new EventAddPage();
   eventAdd.visit([]);
   eventAdd.fillTitle(title);
@@ -168,12 +162,12 @@ const createEvent = (event: EventInput, branch: string) => {
 };
 
 const setBranchPublished = (branchId: string, published: boolean) => {
-  login();
+  LoginPage.ensureEditorLogin();
   new NodePage().setPublished(branchId, published);
 };
 
 const deleteEventsIfExist = () => {
-  login();
+  LoginPage.ensureEditorLogin();
   const eventSeriesList = new EventSeriesListPage();
   eventSeriesList.deleteAllTitled(titlePrefix);
 };
@@ -364,7 +358,7 @@ describe('Mobile app API: events', () => {
       expect(events[0].state).to.equal('Active');
     });
 
-    login();
+    LoginPage.ensureEditorLogin();
     const eventSeriesList = new EventSeriesListPage();
     eventSeriesList.visitSearch(event.title);
     const eventEdit = eventSeriesList.edit(event.title);

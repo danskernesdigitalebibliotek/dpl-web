@@ -61,29 +61,31 @@ Cypress.Commands.add('logRequests', () => {
 });
 
 Cypress.Commands.add('drupalLogin', (url?: string) => {
-  const username = Cypress.env('DRUPAL_USERNAME');
-  const password = Cypress.env('DRUPAL_PASSWORD');
-  cy.session({ username, password }, () => {
-    cy.visit('/user/login');
+  cy.env(['DRUPAL_USERNAME', 'DRUPAL_PASSWORD']).then(
+    ({ DRUPAL_USERNAME: username, DRUPAL_PASSWORD: password }) => {
+      cy.session({ username, password }, () => {
+        cy.visit('/user/login');
 
-    cy.get('[name="name"]').type(username);
-    cy.get('[name="pass"]').type(password);
-    cy.get('.button-login').click();
+        cy.get('[name="name"]').type(username);
+        cy.get('[name="pass"]').type(password);
+        cy.get('.button-login').click();
 
-    cy.visit('/user/edit');
+        cy.visit('/user/edit');
 
-    // Making sure the required author field is filled out.
-    cy.get('[name="field_author_name[0][value]"]').clear();
-    cy.get('[name="field_author_name[0][value]"]').type(username);
+        // Making sure the required author field is filled out.
+        cy.get('[name="field_author_name[0][value]"]').clear();
+        cy.get('[name="field_author_name[0][value]"]').type(username);
 
-    // Making sure the interface language is set to english, to simplify our
-    // tests using "contains".
-    cy.get('[data-drupal-selector="edit-preferred-langcode"]').select('en');
-    cy.get('[data-drupal-selector="edit-preferred-admin-langcode"]').select(
-      'en',
-    );
-    cy.get('[data-drupal-selector="edit-submit"]').click();
-  });
+        // Making sure the interface language is set to english, to simplify our
+        // tests using "contains".
+        cy.get('[data-drupal-selector="edit-preferred-langcode"]').select('en');
+        cy.get('[data-drupal-selector="edit-preferred-admin-langcode"]').select(
+          'en',
+        );
+        cy.get('[data-drupal-selector="edit-submit"]').click();
+      });
+    },
+  );
 
   if (url) {
     cy.visit(url);
@@ -373,15 +375,15 @@ Cypress.Commands.add('openParagraphsModal', () => {
 // Yields the whole response body, so specs can assert on all of it.
 Cypress.Commands.add('queryMobileAppGraphql', (query, variables = {}) => {
   return cy
-    .request({
-      method: 'POST',
-      url: '/graphql',
-      auth: {
-        username: 'mobile_graphql',
-        password: Cypress.env('MOBILE_GRAPHQL_CONSUMER_USER_PASSWORD'),
-      },
-      body: { query, variables },
-    })
+    .env(['MOBILE_GRAPHQL_CONSUMER_USER_PASSWORD'])
+    .then(({ MOBILE_GRAPHQL_CONSUMER_USER_PASSWORD: password }) =>
+      cy.request({
+        method: 'POST',
+        url: '/graphql',
+        auth: { username: 'mobile_graphql', password },
+        body: { query, variables },
+      }),
+    )
     .then((response) => {
       expect(response.status).to.equal(200);
       expect(response.body.errors).to.equal(undefined);

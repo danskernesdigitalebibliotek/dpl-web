@@ -502,6 +502,68 @@ describe("Advanced Search V2", () => {
       });
     });
 
+    it("switching on 'On shelf' hides and clears the access type", () => {
+      page.components.Filters((filters) => {
+        filters.verifyAccessTypeOptionsAreVisible();
+        filters.selectRadioOption("Online");
+        filters.verifyRadioOptionIsSelected("Online");
+      });
+
+      page.verifyUrlContains("accessType=online");
+
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+        filters.verifyAccessTypeOptionsAreHidden();
+      });
+
+      page.verifyUrlContains("onShelf=true");
+      page.verifyUrlDoesNotContain("accessType");
+
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+        filters.verifyAccessTypeOptionsAreVisible();
+        filters.verifyRadioOptionIsNotSelected("Online");
+      });
+    });
+
+    it("ignores an access type in the URL while 'On shelf' is on", () => {
+      const searchedCql: string[] = [];
+      cy.intercept(
+        { method: "POST", url: "**/graphql*", middleware: true },
+        (request) => {
+          if (
+            hasOperationName(request, "complexSearchWithPagination") ||
+            hasOperationName(request, "complexFacetSearch")
+          ) {
+            searchedCql.push(request.body.variables.cql);
+          }
+        }
+      );
+
+      page.visit([], {
+        qs: {
+          filters: JSON.stringify([
+            { term: "term.default", query: "harry potter" }
+          ]),
+          onShelf: "true",
+          accessType: "online",
+          view: "results"
+        }
+      });
+      page.verifyResultsAreVisible();
+
+      page.components.Filters((filters) => {
+        filters.verifyAccessTypeOptionsAreHidden();
+      });
+
+      cy.wrap(searchedCql).should((cqlQueries) => {
+        expect(cqlQueries).not.to.have.length(0);
+        cqlQueries.forEach((cql) => {
+          expect(cql).not.to.include("accesstype");
+        });
+      });
+    });
+
     it("toggles 'Only extra titles' filter on and off", () => {
       page.components.Filters((filters) => {
         filters.verifyOnlyExtraTitlesIsNotChecked();

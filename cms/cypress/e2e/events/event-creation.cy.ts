@@ -3,10 +3,7 @@ import { LoginPage } from '../../pages/login-page';
 
 describe('Event creation using page object', () => {
   beforeEach(() => {
-    LoginPage.ensureLogin(
-      Cypress.env('DRUPAL_USERNAME'),
-      Cypress.env('DRUPAL_PASSWORD'),
-    );
+    LoginPage.ensureEditorLogin();
   });
 
   it('can create an event', () => {

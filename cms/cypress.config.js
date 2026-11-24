@@ -1,3 +1,5 @@
+const fs = require('node:fs');
+const path = require('node:path');
 const { defineConfig } = require('cypress');
 const { WireMockRestClient } = require('wiremock-rest-client');
 
@@ -13,7 +15,7 @@ module.exports = defineConfig({
       runMode: 3,
       openMode: 0,
     },
-    setupNodeEvents(on) {
+    setupNodeEvents(on, config) {
       require('cypress-terminal-report/src/installLogsPrinter')(on);
 
       // wiremock-rest-client is a Node.js library that cannot be bundled
@@ -42,6 +44,15 @@ module.exports = defineConfig({
         },
         getAllRequests() {
           return wiremock().requests.getAllRequests();
+        },
+        // Specs cannot reach the file system, so the webmaster spec removes
+        // the module it uploaded through this task.
+        removeTestModule() {
+          fs.rmSync(
+            path.join(config.projectRoot, 'web/modules/local/test_module'),
+            { recursive: true, force: true },
+          );
+          return null;
         },
       });
     },
