@@ -62,6 +62,15 @@ if (getenv('MARIADB_DATABASE_OVERRIDE')) {
   ];
 }
 
+// Show a user-friendly Danish error page instead of the core "The website
+// encountered an unexpected error" when Drupal fails hard, e.g. when the
+// database is unavailable. The handlers are registered here rather than by
+// the module, as the container may not be available when the error occurs.
+// @see https://www.drupal.org/project/error_page
+set_error_handler(['Drupal\error_page\ErrorPageErrorHandler', 'handleError']);
+set_exception_handler(['Drupal\error_page\ErrorPageErrorHandler', 'handleException']);
+$settings['error_page']['template_dir'] = $app_root . '/../error_page';
+
 // Exclude certain modules from configuration export.
 $settings['config_exclude_modules'] = [
   // Development modules that is only enabled in development environment.

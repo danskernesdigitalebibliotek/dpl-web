@@ -78,6 +78,7 @@
         "drupal/entity_clone_template": "^2.0",
         "drupal/entity_reference_revisions": "^1.11.0",
         "drupal/enum_field": "^1.0",
+        "drupal/error_page": "^2.1@beta",
         "drupal/evac": "^1.0",
         "drupal/externalauth": "^2.0.13",
         "drupal/facets": "^3.0",
