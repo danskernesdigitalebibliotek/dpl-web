@@ -1,37 +1,59 @@
-Dependabot håndtering
+# Dependabot triage
 
+Dependabot is configured for all projects in
+[`.github/dependabot.yml`](../.github/dependabot.yml). Minor and patch updates
+are merged automatically once every check is green. Everything else goes
+through a weekly triage on Mondays.
 
-Runbook for mandags dependabot triage
-Skriv ned i DDF > Depandabot Triage Log løbende med de forskellige ting der er gjort (med fokus på hvad der har været anderledes ifht den sædvanlige procedure)
-Kig på dependabot PR liste ved at at filtrere på “dependencies” eller filtrer på Dependabot brugeren
-Major opgraderinger
-Hvis den er grøn så vurder om der er “safe at merge” eks.: hvis det er en dev dependency
-Minor opgraderinger
-Tjek for flakyness (det kan højst sansynligt være fordi et CI run er gået galt). Kør evt “@dependabot rebase” for at køre dem igen.
-Codegen ramte opdateringer (Orval/Graphql Codegen)
-Det kan være nødvendigt at køre branchen op lokalt og køre codegen med den nye version - og pushe det.
-Security and quality Kør Claude prompt: “/security-triage Run this on the dpl-web project. Only look at: https://github.com/danskernesdigitalebibliotek/dpl-web/security/dependabot. Don’t manipulate or search for any Jira tickets.”
-Kig på github alerts og se om vi kan opdatere/dismiss transitive dependencies (https://github.com/danskernesdigitalebibliotek/dpl-web/security/dependabot)
-Kig på dependabot.yml efter ignores for hvert projekt og se om vi kan fjerne ignorerede pakker 
-Løsninger
-Nu og her
+## Log
 
-ER I SPRINT -  Task: Lav triage skill ud fra Reloads generelle skill. Køre triage skill på DDF projekt til at lave rapport
-Følge prioriteret rækkefølge fra rapport
+Write what you do in the Zulip topic **DDF > Depandabot Triage Log** as you go.
+Focus on what differed from the usual procedure.
 
+## Pull requests
 
-DONE - Task: Vi skal have løst problemet med opdateringer som er gået under radaren for Dependabot på Go. Tomas tager den.
-Fremtid: hvordan kan vi undgå at vi havner her igen?
-Jævnlig mandags triage
-En triagelog som der skrives i
-Gennemgå ignores som en del af triagearbejdet ved at kigge på hvor lang tid at deps har ligget der (git blame)
+List the open Dependabot pull requests by filtering on the `dependencies`
+label or on the Dependabot author.
 
-Regler:
-Så få ignores som muligt
-En dep på ignores må ikke ligge for lang tid
+### Major updates
 
+When the checks are green, judge whether the update is safe to merge, for
+example because it is a development dependency.
 
- 
-—
-Action points
-Vi skal have en opgave på hvordan vi opdaterer transitive dependencies (og derefter lave et mandagsprogram) - Tomas laver opgave
+### Minor and patch updates
+
+These should have been merged automatically. When one is still open, the cause
+is most likely a flaky CI run. Re-run the failed jobs, or comment
+`@dependabot rebase` to start over.
+
+### Code generation (Orval, GraphQL Codegen)
+
+A new version of a code generator can change the generated code, so the
+"up to date" check fails. Check out the branch locally, run the code
+generation with the new version and push the result.
+
+## Security alerts
+
+Run the security triage in Claude Code:
+
+```text
+/security-triage Run this on the dpl-web project. Only look at:
+https://github.com/danskernesdigitalebibliotek/dpl-web/security/dependabot.
+Don't manipulate or search for any Jira tickets.
+```
+
+Follow the prioritised order in the report. Then go through the
+[Dependabot alerts](https://github.com/danskernesdigitalebibliotek/dpl-web/security/dependabot)
+and see whether transitive dependencies can be updated, or the alert
+dismissed.
+
+## Ignored dependencies
+
+Go through the `ignore` entries for each project in
+[`.github/dependabot.yml`](../.github/dependabot.yml) and see whether any can
+be removed. Use `git blame` to see how long an entry has been there.
+
+The rules:
+
+- Keep as few ignores as possible.
+- An ignored dependency must not stay ignored for long.
