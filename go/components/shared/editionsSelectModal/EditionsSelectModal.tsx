@@ -113,13 +113,12 @@ const EditionsSelectModal = ({
     <ResponsiveDialog title="Vælg udgave" open={open} onClose={handleClose}>
       <fieldset className="m-0 border-0 p-0">
         <legend className="sr-only">Vælg udgave</legend>
-        {/* The item widths carry the column count: a share of the row less the
-            share of the fixed gap, one gap over two columns, two over three. */}
+        {/* Four implicit rows per card — cover, title, details, status — which
+            the cards subscribe to with grid-rows-subgrid, so each band lines
+            up across a row without measuring. */}
         <div
-          data-equal-row-container
-          className="flex flex-wrap gap-x-4 gap-y-4 sm:gap-x-6 sm:gap-y-7 [&>*]:w-full
-            sm:[&>*]:w-[calc(50%-(var(--spacing)*3))] md:[&>*]:w-[calc(33.333%-(var(--spacing)*4))]
-            lg:[&>*]:w-[calc(50%-(var(--spacing)*3))]">
+          className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-7
+            md:grid-cols-3 lg:grid-cols-2">
           {isLoadingEditions
             ? editions.map(manifestation => (
                 <EditionsSelectModalItem.Skeleton key={manifestation.pid} />

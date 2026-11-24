@@ -11,7 +11,6 @@ import BlueTitleBadge, { useIsBlueTitle } from "@/components/shared/badge/BlueTi
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import Icon from "@/components/shared/icon/Icon"
 import ManifestationCover from "@/components/shared/manifestationCover/ManifestationCover"
-import { useEqualRowHeight } from "@/hooks/useEqualRowHeights"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 type EditionsSelectModalItemProps = {
@@ -59,13 +58,6 @@ const EditionsSelectModalItem = ({
 
   const isBlueTitle = useIsBlueTitle(manifestation)
 
-  // Equalised per row, so the covers above start at the same point.
-  const { ref: detailsRef, groupAttribute } = useEqualRowHeight("edition-details")
-  // Equalised separately, so a wrapped publisher name keeps the status labels
-  // level.
-  const { ref: listRef, groupAttribute: listGroupAttribute } =
-    useEqualRowHeight<HTMLDListElement>("edition-detail-list")
-
   const accessibleName = [
     title,
     isBlueTitle ? "Blå titel, gratis at låne" : undefined,
@@ -80,15 +72,14 @@ const EditionsSelectModalItem = ({
 
   return (
     <label
-      data-equal-row-item
       className="has-focus-visible:ring-foreground bg-background-overlay
-        has-checked:border-foreground rounded-base relative flex cursor-pointer flex-col border-2
-        border-transparent p-4 transition-[border-color] has-focus-visible:ring-2
-        has-focus-visible:ring-offset-2">
+        has-checked:border-foreground rounded-base relative row-span-4 grid cursor-pointer
+        grid-rows-subgrid gap-y-0 border-2 border-transparent p-4 transition-[border-color]
+        has-focus-visible:ring-2 has-focus-visible:ring-offset-2">
       <input
         type="radio"
         name={name}
-        className="sr-only"
+        className="sr-only absolute"
         checked={checked}
         onChange={onSelect}
         aria-label={accessibleName}
@@ -102,19 +93,18 @@ const EditionsSelectModalItem = ({
         </span>
       )}
       {/* Hidden here as well: accessibleName already says "Blå titel". */}
-      <div aria-hidden="true" className="absolute top-2 mb-3">
+      <div aria-hidden="true" className="absolute top-2 left-3 mb-3">
         <BlueTitleBadge isBlue={isBlueTitle} />
       </div>
-      {/* Takes the card's slack height, so the cover boxes on a row match; the
-          cover keeps its proportions and centres in the box. Capped below md,
-          where a card spans the full width. The mb leaves room for the
-          material-type icon straddling the bottom edge. */}
-      <div className="mt-8 mb-6 flex w-full grow items-center justify-center px-[6%]">
+      {/* The cover spans the column and takes its height from that width,
+          capped so a tall edition cannot stretch the row. The mb leaves room
+          for the material-type icon straddling the bottom edge. */}
+      <div className="mt-8 mb-6 flex w-full items-center justify-center px-[6%]">
         <ManifestationCover
           cover={manifestation.cover}
           iconName={getManifestationMaterialTypeIcon(manifestation) || "book"}
           alt=""
-          className="max-h-[280px] w-full md:max-h-full"
+          className="xs:max-h-[280px] max-h-[240px] w-full md:max-h-[400px]"
           costFree={isBlueTitle}
           iconClassName={
             isBlueTitle
@@ -123,28 +113,24 @@ const EditionsSelectModalItem = ({
           }
         />
       </div>
-      {/* Pushed to the card's bottom and grown to the row's tallest block, so
-          the titles line up. */}
-      <div
-        aria-hidden="true"
-        ref={detailsRef}
-        {...groupAttribute}
-        className="mt-auto min-w-0 space-y-4">
-        <p className="text-typo-subtitle-lg mt-2 break-words">{title}</p>
-        {/* The value sits under its term on a phone, where two columns break
-            mid-word in a half-width card, and beside it from sm. */}
-        <dl ref={listRef} {...listGroupAttribute} className="space-y-2">
-          {details.map(detail => (
-            <div
-              key={detail.term}
-              className="sm:flex sm:items-baseline sm:justify-between sm:gap-4">
-              <dt className="text-typo-body-md text-foreground-muted/90">{detail.term}</dt>
-              <dd className="text-typo-body-md min-w-0 break-words sm:text-right">
-                {detail.value ?? "–"}
-              </dd>
-            </div>
-          ))}
-        </dl>
+      {/* Title, details and status each take a row of the shared subgrid, so
+          they line up across the row whatever the neighbours hold. */}
+      <p aria-hidden="true" className="text-typo-subtitle-lg mt-4 min-w-0 break-words">
+        {title}
+      </p>
+      {/* The value sits beside its term, right-aligned, with a wider gap from
+          xs where the card has the room for it. */}
+      <dl aria-hidden="true" className="mt-4 min-w-0 space-y-2">
+        {details.map(detail => (
+          <div key={detail.term} className="xs:gap-4 flex items-baseline justify-between gap-2">
+            <dt className="text-typo-body-md text-foreground-muted/90">{detail.term}</dt>
+            <dd className="text-typo-body-md min-w-0 text-right text-balance break-words">
+              {detail.value ?? "–"}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <div aria-hidden="true" className="mt-4 min-w-0 md:mt-0">
         {unavailableLabel}
       </div>
     </label>
@@ -154,22 +140,21 @@ const EditionsSelectModalItem = ({
 // Mirrors the item's geometry so the grid does not shift while loading.
 const Skeleton = () => (
   <div
-    className="bg-background-overlay rounded-base flex flex-col gap-2 border-2 border-transparent
-      p-4">
+    className="bg-background-overlay rounded-base row-span-4 grid grid-rows-subgrid gap-y-0 border-2
+      border-transparent p-4">
     {/* The same 2/3 getCoverAspectRatio falls back to for an unmeasured cover. */}
-    <div className="relative mt-8 mb-6 aspect-2/3 w-full px-[6%]">
+    <div className="relative mt-8 mb-6 aspect-2/3 max-h-[280px] w-full px-[6%] md:max-h-[400px]">
       <CoverPictureSkeleton />
     </div>
     {/* One bar per line of the real card — a title plus three detail rows — at
-        the same heights. */}
-    <div className="mt-auto space-y-4">
-      <div className="bg-background-skeleton h-8 w-2/3 animate-pulse rounded-sm" />
-      <div className="space-y-2">
-        <div className="bg-background-skeleton h-6 w-full animate-pulse rounded-sm" />
-        <div className="bg-background-skeleton h-6 w-full animate-pulse rounded-sm" />
-        <div className="bg-background-skeleton h-6 w-full animate-pulse rounded-sm" />
-      </div>
+        the same heights, on the same rows. */}
+    <div className="bg-background-skeleton mt-2 h-8 w-2/3 animate-pulse rounded-sm" />
+    <div className="mt-4 space-y-2">
+      <div className="bg-background-skeleton h-6 w-full animate-pulse rounded-sm" />
+      <div className="bg-background-skeleton h-6 w-full animate-pulse rounded-sm" />
+      <div className="bg-background-skeleton h-6 w-full animate-pulse rounded-sm" />
     </div>
+    <div className="mt-4" />
   </div>
 )
 

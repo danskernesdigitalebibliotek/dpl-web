@@ -44,7 +44,7 @@ const Grid = () => {
   const [checked, setChecked] = useState("pid-1")
   return (
     <div className="bg-background max-w-3xl p-8">
-      <div data-equal-row-container className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
+      <div className="grid auto-rows-auto grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
         {editions.map(edition => (
           <EditionsSelectModalItem
             key={edition.pid}
@@ -98,7 +98,7 @@ export const Unavailable: Story = {
 export const Rows: Story = {
   render: () => (
     <div className="bg-background max-w-3xl p-8">
-      <div data-equal-row-container className="flex flex-wrap gap-x-[2%] gap-y-7 [&>*]:w-[32%]">
+      <div className="grid auto-rows-auto grid-cols-3 gap-x-[2%] gap-y-7">
         <EditionsSelectModalItem
           manifestation={editions[1]}
           name="story-rows"
@@ -139,10 +139,8 @@ export const ModalGrid: Story = {
   render: () => (
     <div className="bg-background px-grid-edge py-6 lg:px-10">
       <div
-        data-equal-row-container
-        className="flex flex-wrap gap-x-4 gap-y-4 sm:gap-x-6 sm:gap-y-7 [&>*]:w-full
-          sm:[&>*]:w-[calc(50%-(var(--spacing)*3))] md:[&>*]:w-[calc(33.333%-(var(--spacing)*4))]
-          lg:[&>*]:w-[calc(50%-(var(--spacing)*3))]">
+        className="grid auto-rows-auto grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 sm:gap-x-6
+          sm:gap-y-7 md:grid-cols-3 lg:grid-cols-2">
         {[...editions, ...editions].map((edition, i) => (
           <EditionsSelectModalItem
             key={i}
@@ -169,9 +167,7 @@ export const UnevenRows: Story = {
     const short = buildEdition({ pid: "short", cover: buildCover(660, 720), publisher: ["Kort"] })
     return (
       <div className="bg-background p-8">
-        <div
-          data-equal-row-container
-          className="flex flex-wrap gap-x-6 gap-y-7 [&>*]:w-[calc(33.333%-(var(--spacing)*4))]">
+        <div className="grid auto-rows-auto grid-cols-3 gap-x-6 gap-y-7">
           <EditionsSelectModalItem
             manifestation={tall}
             name="story-uneven"
@@ -232,9 +228,7 @@ export const AudiobookRow: Story = {
 
     return (
       <div className="bg-background px-grid-edge py-6 lg:px-10">
-        <div
-          data-equal-row-container
-          className="flex flex-wrap gap-x-6 gap-y-7 [&>*]:w-[calc(33.333%-(var(--spacing)*4))]">
+        <div className="grid auto-rows-auto grid-cols-3 gap-x-6 gap-y-7">
           {editions.map(edition => (
             <EditionsSelectModalItem
               key={edition.pid}
@@ -253,7 +247,7 @@ export const AudiobookRow: Story = {
 export const Skeleton: Story = {
   render: () => (
     <div className="bg-background max-w-3xl p-8">
-      <div data-equal-row-container className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
+      <div className="grid auto-rows-auto grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
         <EditionsSelectModalItem.Skeleton />
         <EditionsSelectModalItem.Skeleton />
         <EditionsSelectModalItem.Skeleton />
