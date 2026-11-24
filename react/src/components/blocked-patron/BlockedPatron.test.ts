@@ -29,8 +29,12 @@ describe("Patron page", { testIsolation: false }, () => {
       patron: {
         blockStatus: null
       }
-    });
+    }).as("patron");
     cy.visit("/iframe.html?path=/story/apps-loan-list--primary");
+    // Wait for the page to get its patron. Otherwise the page is still loading
+    // when the next test starts, picks up that test's blocked patron and
+    // persists the modal as already shown.
+    cy.wait("@patron");
     cy.get(".modal").should("not.exist");
   });
 
@@ -67,8 +71,9 @@ describe("Patron page", { testIsolation: false }, () => {
           }
         ]
       }
-    });
+    }).as("patron");
     cy.visit("/iframe.html?path=/story/apps-loan-list--primary");
+    cy.wait("@patron");
     cy.getBySel("modal").should("not.exist");
   });
 
