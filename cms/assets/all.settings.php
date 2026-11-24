@@ -66,9 +66,14 @@ if (getenv('MARIADB_DATABASE_OVERRIDE')) {
 // encountered an unexpected error" when Drupal fails hard, e.g. when the
 // database is unavailable. The handlers are registered here rather than by
 // the module, as the container may not be available when the error occurs.
+// Only for web requests: CLI tools such as drush and core scripts keep core's
+// handlers, as the module's handlers break scripts that do not fully bootstrap
+// Drupal (they call base_path(), which is not loaded there).
 // @see https://www.drupal.org/project/error_page
-set_error_handler(['Drupal\error_page\ErrorPageErrorHandler', 'handleError']);
-set_exception_handler(['Drupal\error_page\ErrorPageErrorHandler', 'handleException']);
+if (PHP_SAPI !== 'cli') {
+  set_error_handler(['Drupal\error_page\ErrorPageErrorHandler', 'handleError']);
+  set_exception_handler(['Drupal\error_page\ErrorPageErrorHandler', 'handleException']);
+}
 $settings['error_page']['template_dir'] = $app_root . '/../error_page';
 
 // Exclude certain modules from configuration export.
