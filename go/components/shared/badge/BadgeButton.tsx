@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import React, { ButtonHTMLAttributes, forwardRef } from "react"
 
+import { pillHover, pillTap } from "@/components/shared/pillButton/PillButton"
 import { cn } from "@/lib/helpers/helper.cn"
 
 // The handlers framer-motion redefines; React's versions would clash with it.
@@ -39,8 +40,8 @@ const BadgeButton = forwardRef<HTMLButtonElement, BadgeButtonProps>(
       <motion.button
         ref={ref}
         onClick={onClick}
-        whileHover={withAnimation ? { scale: 1.06 } : undefined}
-        whileTap={withAnimation ? { scale: 0.92 } : undefined}
+        whileHover={withAnimation ? pillHover : undefined}
+        whileTap={withAnimation ? pillTap : undefined}
         className={cn(
           `focus-visible bg-background-overlay text-typo-caption flex h-[28px] w-auto flex-row
           justify-center gap-2 self-start rounded-full px-4 py-2 whitespace-nowrap
