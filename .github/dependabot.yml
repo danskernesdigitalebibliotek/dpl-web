@@ -132,13 +132,13 @@ updates:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
       - dependency-name: "react"
-        versions: [">=18"]
+        versions: [">=19"]
       - dependency-name: "@types/react"
-        versions: [">=18"]
+        versions: [">=19"]
       - dependency-name: "react-dom"
-        versions: [">=18"]
+        versions: [">=19"]
       - dependency-name: "@types/react-dom"
-        versions: [">=18"]
+        versions: [">=19"]
       - dependency-name: "stylelint-config-recommended-scss"
         versions: [">=16"]
       - dependency-name: "storybook"
