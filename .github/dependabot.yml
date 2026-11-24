@@ -330,9 +330,6 @@ updates:
       # eslint-plugin-cypress v6 uses a flat-config shape that the current ESLint setup rejects.
       - dependency-name: "eslint-plugin-cypress"
         versions: [">=6.0.0"]
-      # DDFNEXT-1501 - conflicts with current setup.
-      - dependency-name: "downshift"
-        versions: [">=9.0.9"]
       - dependency-name: "eslint-plugin-react-hooks"
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
@@ -355,9 +352,6 @@ updates:
         versions: [">=6.0.0"]
       - dependency-name: "@graphql-codegen/typescript-operations"
         versions: [">=6.0.0"]
-      # DDFNEXT-1615
-      - dependency-name: "@testing-library/dom"
-        versions: [">=10.4.2"]
 
   # Shared workspace packages - npm dependencies.
   # `directories` (plural) is the only form that supports globbing, so this
@@ -399,10 +393,6 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
-      # The consuming projects' lint stacks are not ESLint 10 compatible yet,
-      # so keep this package on the same major as react/ and go/.
-      - dependency-name: "eslint"
-        versions: [">=10.0.0"]
       # Orval majors change the config and the generated clients, so upgrade
       # by hand and keep this package on the same major as react/ and go/.
       - dependency-name: "orval"
