@@ -351,7 +351,7 @@
                 "3615813 and escaping: two fixes to the @Translation annotation extractor": "patches/potx-translation-annotations.patch"
             },
             "drupal/purge": {
-                "3462078: Disabling late runtime processor when using CLI": "patches/vendor/purge-14c09e0ec4f1f46df0f19876ad6b3e8c93921e00.patch"
+                "3462078: Disabling late runtime processor when using CLI": "patches/purge-3462078-lateruntime-cli-disable.patch"
             },
             "drupal/recurring_events": {
                 "3178696: Make compatible with Scheduler": "patches/vendor/recurring_events-35045cb17c7bbd1184553f83771939047175bc24.patch",

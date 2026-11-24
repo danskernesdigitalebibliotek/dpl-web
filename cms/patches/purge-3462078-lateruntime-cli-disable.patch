@@ -1,23 +1,11 @@
-From 14c09e0ec4f1f46df0f19876ad6b3e8c93921e00 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
-Date: Wed, 17 Jul 2024 15:43:00 +0200
-Subject: [PATCH] Add support for disabling late runtime processor when using
- cron
+Add a "Disable for CLI commands" setting to the late runtime processor.
 
-Add a configuration form to the processor which allows you to disable
-processing the purge queue during cron.
-
-Update the late runtime processor to respect the configuration
-accordingly.
----
- .../EventSubscriber/LateRuntimeProcessor.php  | 17 ++++++
- .../src/Form/ConfigurationForm.php            | 52 +++++++++++++++++++
- .../Purge/Processor/LateRuntimeProcessor.php  |  2 +-
- 3 files changed, 70 insertions(+), 1 deletion(-)
- create mode 100644 modules/purge_processor_lateruntime/src/Form/ConfigurationForm.php
+Based on purge MR !46 (https://www.drupal.org/project/purge/issues/3462078,
+commit 14c09e0ec4f1f46df0f19876ad6b3e8c93921e00), rebased onto purge 8.x-3.8
+where plugin annotations became PHP attributes.
 
 diff --git a/modules/purge_processor_lateruntime/src/EventSubscriber/LateRuntimeProcessor.php b/modules/purge_processor_lateruntime/src/EventSubscriber/LateRuntimeProcessor.php
-index 5137a8e..246f745 100644
+index 46ce73d..b69d386 100644
 --- a/modules/purge_processor_lateruntime/src/EventSubscriber/LateRuntimeProcessor.php
 +++ b/modules/purge_processor_lateruntime/src/EventSubscriber/LateRuntimeProcessor.php
 @@ -43,6 +43,13 @@ class LateRuntimeProcessor implements EventSubscriberInterface {
@@ -46,7 +34,7 @@ index 5137a8e..246f745 100644
        }
      }
      return $this->processor !== FALSE;
-@@ -98,6 +110,11 @@ class LateRuntimeProcessor implements EventSubscriberInterface {
+@@ -104,6 +116,11 @@ class LateRuntimeProcessor implements EventSubscriberInterface {
        return;
      }
  
@@ -117,18 +105,15 @@ index 0000000..6b558c0
 +
 +}
 diff --git a/modules/purge_processor_lateruntime/src/Plugin/Purge/Processor/LateRuntimeProcessor.php b/modules/purge_processor_lateruntime/src/Plugin/Purge/Processor/LateRuntimeProcessor.php
-index 565ed67..6f7c89c 100644
+index d926e18..c17400f 100644
 --- a/modules/purge_processor_lateruntime/src/Plugin/Purge/Processor/LateRuntimeProcessor.php
 +++ b/modules/purge_processor_lateruntime/src/Plugin/Purge/Processor/LateRuntimeProcessor.php
-@@ -13,7 +13,7 @@ use Drupal\purge\Plugin\Purge\Processor\ProcessorInterface;
-  *   label = @Translation("Late runtime processor"),
-  *   description = @Translation("Process the queue on every request, this is only recommended on high latency configurations."),
-  *   enable_by_default = true,
-- *   configform = "",
-+ *   configform = "\Drupal\purge_processor_lateruntime\Form\ConfigurationForm",
-  * )
-  */
+@@ -15,7 +15,7 @@ use Drupal\purge\Plugin\Purge\Processor\ProcessorInterface;
+   label: new TranslatableMarkup('Late runtime processor'),
+   description: new TranslatableMarkup('Process the queue on every request, this is only recommended on high latency configurations.'),
+   enable_by_default: TRUE,
+-  configform: '',
++  configform: '\Drupal\purge_processor_lateruntime\Form\ConfigurationForm',
+ )]
  class LateRuntimeProcessor extends ProcessorBase implements ProcessorInterface {
--- 
-GitLab
-
+ 
