@@ -32,7 +32,9 @@ const ManifestationCover = ({
   costFree,
 }: ManifestationCoverProps) => (
   <div className={cn("relative", className)} style={{ aspectRatio: getCoverAspectRatio(cover) }}>
-    <CoverPicture alt={alt} covers={cover} className="select-none" />
+    {/* Spans the box edge to edge. A percentage height would resolve against
+        the ratio's height before a caller's max-height clamps it in Safari. */}
+    <CoverPicture alt={alt} covers={cover} className="absolute inset-0 select-none" />
     <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
       <MaterialTypeIconWrapper
         iconName={iconName}
