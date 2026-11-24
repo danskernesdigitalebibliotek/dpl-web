@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-11-24 09:45+0100\n"
-"PO-Revision-Date: 2026-11-24 09:45+0100\n"
+"POT-Creation-Date: 2026-11-24 10:15+0100\n"
+"PO-Revision-Date: 2026-11-24 10:15+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8389,37 +8389,37 @@ msgstr ""
 
 msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:label"
 msgid "Expansion"
-msgstr ""
+msgstr "Indstilling af \"Vis alle\""
 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:label"
 msgid "Expansion"
-msgstr ""
+msgstr "Indstilling af \"Vis alle\""
 
 msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:label"
 msgid "Expansion"
-msgstr ""
+msgstr "Indstilling af \"Vis alle\""
 
 msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:settings:off_label"
 msgid "Show all at once"
-msgstr ""
+msgstr "Vis materialerne udfoldet fra start"
 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:settings:off_label"
 msgid "Show all at once"
-msgstr ""
+msgstr "Vis materialerne udfoldet fra start"
 
 msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:settings:off_label"
 msgid "Show all at once"
-msgstr ""
+msgstr "Vis materialerne udfoldet fra start"
 
 msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:settings:on_label"
 msgid "Use show all button"
-msgstr ""
+msgstr "Brug \"Vis alle\"-knappen"
 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:settings:on_label"
 msgid "Use show all button"
-msgstr ""
+msgstr "Brug \"Vis alle\"-knappen"
 
 msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:settings:on_label"
 msgid "Use show all button"
-msgstr ""
+msgstr "Brug \"Vis alle\"-knappen"
 

@@ -35946,47 +35946,47 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:label"
 msgid "Expansion"
-msgstr ""
+msgstr "Indstilling af \"Vis alle\""
 
 #: 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:label"
 msgid "Expansion"
-msgstr ""
+msgstr "Indstilling af \"Vis alle\""
 
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:label"
 msgid "Expansion"
-msgstr ""
+msgstr "Indstilling af \"Vis alle\""
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:settings:off_label"
 msgid "Show all at once"
-msgstr ""
+msgstr "Vis materialerne udfoldet fra start"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:settings:off_label"
 msgid "Show all at once"
-msgstr ""
+msgstr "Vis materialerne udfoldet fra start"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:settings:off_label"
 msgid "Show all at once"
-msgstr ""
+msgstr "Vis materialerne udfoldet fra start"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:settings:on_label"
 msgid "Use show all button"
-msgstr ""
+msgstr "Brug \"Vis alle\"-knappen"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:settings:on_label"
 msgid "Use show all button"
-msgstr ""
+msgstr "Brug \"Vis alle\"-knappen"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:settings:on_label"
 msgid "Use show all button"
-msgstr ""
+msgstr "Brug \"Vis alle\"-knappen"
 
 #: 
 msgctxt "Header"
