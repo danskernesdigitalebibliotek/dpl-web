@@ -56,3 +56,24 @@ export const convertFacetsToFilters = (facets: FacetState[]) => {
 
   return filters;
 };
+
+/**
+ * Returns the selected value of a radio button facet
+ *
+ * @param facets The state of the facets
+ * @param facetName The name of the radio button facet to get the value for
+ *
+ * @returns The selected value of the radio button facet
+ */
+export const getSelectedRadioFacetValue = (
+  facets: FacetState[],
+  facetName: string | undefined
+): string | null => {
+  if (!facetName) {
+    return null;
+  }
+
+  const selectedFacet = facets.find((facet) => facet.facetName === facetName);
+
+  return selectedFacet?.selectedValues.at(0) ?? null;
+};

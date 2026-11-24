@@ -38,6 +38,7 @@ class ComplexSearchFacetsEnum
     public const PEGI = 'PEGI';
     public const PLAYERS = 'PLAYERS';
     public const PRIMARYTARGET = 'PRIMARYTARGET';
+    public const PUBLICATIONSTATUS = 'PUBLICATIONSTATUS';
     public const PUBLICATIONYEAR = 'PUBLICATIONYEAR';
     public const SERIES = 'SERIES';
     public const SETTING = 'SETTING';
