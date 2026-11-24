@@ -141,7 +141,7 @@ const BookQuizLoading = ({ options }: TBookQuizLoadingProps) => {
               rx="118"
               ry="222"
               transform="rotate(30 916 380)"
-              className="fill-quiz-purple-shape"
+              className="fill-content-purple-200"
             />
           </svg>
         </motion.div>

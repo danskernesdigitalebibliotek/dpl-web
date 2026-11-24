@@ -8,18 +8,8 @@
 
 export type TBookQuizClause = { cqlIndex: string; cqlValues: string[] }
 
-export type TBookQuizColor =
-  | "green"
-  | "pink"
-  | "yellow"
-  | "blue"
-  | "purple"
-  | "orange"
-  | "teal"
-  | "red"
-  | "spooky"
-  | "sand"
-  | "lime"
+// The content colours, see QUIZ_COLOR_CLASSES.
+export type TBookQuizColor = "green" | "pink" | "blue" | "purple" | "orange"
 
 export type TBookQuizGroup = {
   // Short name for section titles, e.g. "Fantasy" in "Sjove fantasybøger".
@@ -42,7 +32,7 @@ const subject = (cqlValues: string[]): TBookQuizClause => ({
 
 export const THRILLER: TBookQuizGroup = {
   label: "Spænding",
-  color: "red",
+  color: "pink",
   match: [genre(["spænding", "krimi"]), subject(["action", "mysterier"])],
 }
 
@@ -54,14 +44,14 @@ export const FANTASY: TBookQuizGroup = {
 
 export const FRIENDS: TBookQuizGroup = {
   label: "Venner",
-  color: "yellow",
+  color: "orange",
   // No genre exists for friendship, only subjects.
   match: [subject(["venner", "veninder", "venskab", "venskaber", "skole"])],
 }
 
 export const NONFICTION: TBookQuizGroup = {
   label: "Fakta",
-  color: "teal",
+  color: "blue",
   // Non-fiction is not a genre in FBI but its own index.
   match: [{ cqlIndex: "term.fictionnonfiction", cqlValues: ["nonfiction"] }],
 }
@@ -94,7 +84,7 @@ export const SCIFI: TBookQuizGroup = {
 
 export const HISTORY: TBookQuizGroup = {
   label: "Historie",
-  color: "sand",
+  color: "orange",
   match: [
     genre(["historiske romaner"]),
     subject([
@@ -135,7 +125,7 @@ export const FUNNY: TBookQuizGroup = {
 
 export const HORROR: TBookQuizGroup = {
   label: "Gys",
-  color: "spooky",
+  color: "purple",
   match: [
     subject([
       "gys",
@@ -195,7 +185,7 @@ export const GAMING: TBookQuizGroup = {
 
 export const SPORT: TBookQuizGroup = {
   label: "Sport",
-  color: "lime",
+  color: "green",
   match: [
     subject([
       "sport",
@@ -213,7 +203,7 @@ export const SPORT: TBookQuizGroup = {
 
 export const CLIMATE: TBookQuizGroup = {
   label: "Klima",
-  color: "teal",
+  color: "blue",
   match: [
     subject([
       "klima",
