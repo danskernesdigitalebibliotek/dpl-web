@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-11-10 11:06+0100\n"
-"PO-Revision-Date: 2026-11-10 11:06+0100\n"
+"POT-Creation-Date: 2026-11-24 09:45+0100\n"
+"PO-Revision-Date: 2026-11-24 09:45+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1776,9 +1776,6 @@ msgid ""
 msgstr ""
 "Indsæt antal dage før afleveringsdatoen for et lån, hvor label med "
 "teksten \"Udløber snart\" skal vises på lånet."
-
-msgid "List of bookmarks"
-msgstr "Bogmærkeliste"
 
 msgid "Active"
 msgstr "Aktiv"
@@ -5729,9 +5726,6 @@ msgstr "Entity Reference Revisions list"
 
 msgid "Returns results as a PHP array of labels and rendered rows."
 msgstr "Returnerer resultater som en PHP-array af labels og renderede rækker."
-
-msgid "Entity Reference inline fields"
-msgstr "Entity Reference inline-felter"
 
 msgid "Displays the fields with an optional template."
 msgstr "Viser felterne med en valgfri skabelon."
@@ -14969,21 +14963,6 @@ msgstr "Automatisk indlæs efterfølgende sider, når brugeren scroller."
 msgid "Initially load all pages up to the requested page"
 msgstr "Indlæser alle sider op til den anmodede side"
 
-msgid ""
-"When initially loading a page beyond the first, this option will load "
-"all pages up to the requested page instead of just the requested page. "
-"So, if you have the pager set to 10 items per page, and you load the "
-"page with ?page=2 in the url, you will get page 0, 1 and 2 loaded for "
-"a total of 30 items. <em>Note that this could cause some long page "
-"load times when loading many pages.</em>"
-msgstr ""
-"When initially loading a page beyond the first, this option will load "
-"all pages up to the requested page instead of just the requested page. "
-"So, if you have the pager set to 10 items per page, and you load the "
-"page with ?page=2 in the url, you will get page 0, 1 and 2 loaded for "
-"a total of 30 items. <em>Note that this could cause some long page "
-"load times when loading many pages.</em>"
-
 msgid "Infinite Scroll"
 msgstr "Infinite scroll"
 
@@ -15534,9 +15513,6 @@ msgstr "Håndterer brugerdefineret webform konfiguration"
 
 msgid "Status message icon"
 msgstr "Statusmeddelelsesikon"
-
-msgid "Liked"
-msgstr "Husk"
 
 msgctxt "Create patron"
 msgid ""
@@ -17992,7 +17968,7 @@ msgstr "Bibliotekernes vurdering"
 
 msgctxt "Patron page"
 msgid "Card number"
-msgstr "Support-ID til eReolen"
+msgstr "Support-ID"
 
 msgid "All day"
 msgstr "Hele dagen"
@@ -23145,22 +23121,13 @@ msgstr ""
 msgid "[current-page:title] | [site:name]"
 msgstr ""
 
-msgid "[current-page:url]"
-msgstr ""
-
 msgid "[node:summary]"
 msgstr ""
 
 msgid "[node:title] | [site:name]"
 msgstr ""
 
-msgid "[node:url]"
-msgstr ""
-
 msgid "[site:name]"
-msgstr ""
-
-msgid "[site:url]"
 msgstr ""
 
 msgid "[term:description]"
@@ -23169,13 +23136,7 @@ msgstr ""
 msgid "[term:name] | [site:name]"
 msgstr ""
 
-msgid "[term:url]"
-msgstr ""
-
 msgid "[user:display-name] | [site:name]"
-msgstr ""
-
-msgid "[user:url]"
 msgstr ""
 
 msgid "default state for the tab"
@@ -23715,7 +23676,7 @@ msgstr ""
 
 msgctxt "dpl_service_message"
 msgid "Critical"
-msgstr ""
+msgstr "Kritisk"
 
 msgid "DPL service message"
 msgstr ""
@@ -24124,9 +24085,6 @@ msgid "Dependent locality (e.g. Neighborhood)"
 msgstr ""
 
 msgid "The dependent locality (i.e. neighborhood)"
-msgstr ""
-
-msgid "<none>"
 msgstr ""
 
 msgid ""
@@ -24567,4 +24525,76 @@ msgstr "TwentyThree indstillinger"
 msgctxt "Global"
 msgid "Part of the series"
 msgstr "En del af serien"
+
+msgid ""
+"When initially loading a page beyond the first, this option will load "
+"all pages up to the requested page instead of just the requested page. "
+"So, if you have the pager set to 10 items per page, and you load the "
+"page with ?page=2 in the url, you will get page 0, 1 and 2 loaded for "
+"a total of 30 items. <strong>Important:</strong> Loading a high page "
+"number loads and renders all items up to that page in a single "
+"request, which can lead to long page load times and high server load "
+"on views with many results. On such views, limit the maximum number of "
+"loaded pages with the <em>Number of pages</em> setting."
+msgstr ""
+
+msgctxt "Metatag URL"
+msgid "<none>"
+msgstr "- ingen -"
+
+msgid "The <a href=\"@module\">Token Browser module</a> is installed."
+msgstr ""
+
+msgid ""
+"The <a href=\"@module\">Token Browser module</a> is recommended for "
+"all Drupal 11.3+ sites to make the token interface usable."
+msgstr ""
+
+msgid "The <a href=\"@module\">Token Or module</a> is installed."
+msgstr ""
+
+msgid "Token Browser"
+msgstr ""
+
+msgid "Token Browser is installed"
+msgstr ""
+
+msgid "Token Or is installed"
+msgstr ""
+
+msgctxt "Metatag URL"
+msgid "[current-page:url]"
+msgstr ""
+
+msgctxt "Metatag URL"
+msgid "[node:url]"
+msgstr ""
+
+msgctxt "Metatag URL"
+msgid "[site:url]"
+msgstr ""
+
+msgctxt "Metatag URL"
+msgid "[term:url]"
+msgstr ""
+
+msgctxt "Metatag URL"
+msgid "[user:url]"
+msgstr ""
+
+msgctxt "Header"
+msgid "Close menu"
+msgstr ""
+
+msgctxt "Header"
+msgid "Menu"
+msgstr "Menu"
+
+msgctxt "Header"
+msgid "Primary site navigation"
+msgstr "Primær navigation"
+
+msgctxt "Header"
+msgid "Sidebar site navigation"
+msgstr ""
 

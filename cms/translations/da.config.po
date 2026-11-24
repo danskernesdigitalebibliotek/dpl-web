@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-11-10 11:06+0100\n"
-"PO-Revision-Date: 2026-11-10 11:06+0100\n"
+"POT-Creation-Date: 2026-11-24 09:45+0100\n"
+"PO-Revision-Date: 2026-11-24 09:45+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8385,5 +8385,41 @@ msgstr ""
 
 msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
 msgid "{{ message }}"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:label"
+msgid "Expansion"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:label"
+msgid "Expansion"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:label"
+msgid "Expansion"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:settings:off_label"
+msgid "Show all at once"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:settings:off_label"
+msgid "Show all at once"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:settings:off_label"
+msgid "Show all at once"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:settings:on_label"
+msgid "Use show all button"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:settings:on_label"
+msgid "Use show all button"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:settings:on_label"
+msgid "Use show all button"
 msgstr ""
 
