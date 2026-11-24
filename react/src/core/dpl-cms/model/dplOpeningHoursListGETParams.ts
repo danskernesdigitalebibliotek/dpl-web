@@ -8,20 +8,12 @@
 import type { DplOpeningHoursListGET_Format } from "./dplOpeningHoursListGETFormat";
 
 export type DplOpeningHoursListGETParams = {
-  /**
-   * Request format
-   */
+  /** Request format */
   _format?: DplOpeningHoursListGET_Format;
-  /**
-   * The id of the branch for which to retrieve opening hours.
-   */
+  /** The id of the branch for which to retrieve opening hours. */
   branch_id?: number;
-  /**
-   * Retrieve opening hours which occur after and including the provided date. In ISO 8601 format.
-   */
+  /** Retrieve opening hours which occur after and including the provided date. In ISO 8601 format. */
   from_date?: string;
-  /**
-   * Retrieve opening hours which occur before and including the provided date. In ISO 8601 format.
-   */
+  /** Retrieve opening hours which occur before and including the provided date. In ISO 8601 format. */
   to_date?: string;
 };

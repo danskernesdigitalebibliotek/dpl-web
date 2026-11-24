@@ -276,3 +276,50 @@ function dpl_paragraphs_deploy_migrate_material_amount(): string {
 
   return "Migrated amount-field for $updated_count paragraphs.";
 }
+
+/**
+ * Set "Use show all button" to yes on existing material grids.
+ *
+ * The field is required, but its default only applies to new paragraphs.
+ * Without a value, editors would have to pick yes or no before they could
+ * save a page with an existing grid.
+ *
+ * @param array<mixed> $sandbox
+ *   The batch sandbox.
+ */
+function dpl_paragraphs_deploy_set_material_grid_show_all_button(array &$sandbox): string {
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  $query = fn () => $storage->getQuery()
+    ->condition('type', [
+      'material_grid_automatic',
+      'material_grid_link_automatic',
+      'material_grid_manual',
+    ], 'IN')
+    ->notExists('field_use_show_all_button')
+    ->accessCheck(FALSE);
+
+  if (!isset($sandbox['total'])) {
+    $sandbox['total'] = (int) $query()->count()->execute();
+    $sandbox['updated'] = 0;
+  }
+
+  // Updated paragraphs no longer match, so always take the first batch.
+  $pids = $query()->sort('id')->range(0, 50)->execute();
+
+  /** @var \Drupal\paragraphs\Entity\Paragraph[] $paragraphs */
+  $paragraphs = $storage->loadMultiple($pids);
+  foreach ($paragraphs as $paragraph) {
+    $paragraph->set('field_use_show_all_button', TRUE);
+    // Update the current revision in place, so pages don't get a new
+    // revision.
+    $paragraph->setNewRevision(FALSE);
+    $paragraph->save();
+    $sandbox['updated']++;
+  }
+
+  $sandbox['#finished'] = empty($pids) || $sandbox['total'] === 0
+    ? 1
+    : min(1, $sandbox['updated'] / $sandbox['total']);
+
+  return "Set use show all button on {$sandbox['updated']} / {$sandbox['total']} material grid paragraphs.";
+}

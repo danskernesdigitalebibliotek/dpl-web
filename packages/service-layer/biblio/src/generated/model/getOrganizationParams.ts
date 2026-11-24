@@ -70,12 +70,8 @@
  */
 
 export type GetOrganizationParams = {
-  /**
-   * WDB internal id. 20 characters. `id` on the organization model.
-   */
+  /** WDB internal id. 20 characters. `id` on the organization model. */
   organization_id?: string
-  /**
-   * External id if the WDB internal id is not available. For example a national municipality or institution id. For end users, the adapter uses the resolved municipality when this parameter is omitted. An explicit value overrides it.
-   */
+  /** External id if the WDB internal id is not available. For example a national municipality or institution id. For end users, the adapter uses the resolved municipality when this parameter is omitted. An explicit value overrides it. */
   third_party_id?: string
 }

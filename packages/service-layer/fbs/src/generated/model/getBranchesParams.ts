@@ -6,8 +6,6 @@
  */
 
 export type GetBranchesParams = {
-  /**
-   * Identifies the branchIds which are excluded from the result
-   */
+  /** Identifies the branchIds which are excluded from the result */
   exclude?: string[]
 }

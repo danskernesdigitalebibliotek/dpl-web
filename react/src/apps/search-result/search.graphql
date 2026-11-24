@@ -3,8 +3,13 @@ query searchWithPagination(
   $offset: Int!
   $limit: PaginationLimitScalar!
   $filters: SearchFiltersInput
+  $includeOnlineMaterials: Boolean! = true
 ) {
-  search(q: $q, filters: $filters) {
+  search(
+    q: $q
+    filters: $filters
+    includeOnlineMaterials: $includeOnlineMaterials
+  ) {
     hitcount
     works(offset: $offset, limit: $limit) {
       ...WorkSmall

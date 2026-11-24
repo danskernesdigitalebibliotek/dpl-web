@@ -6,11 +6,25 @@ import { mockFrontpage } from "../support/mocks"
 
 const WORK_URL = "/work/work-of%3A870970-basis%3A136817027"
 
+// Faust from the BOOK manifestation's pid in the getMaterial fixture
+// ("870970-basis:52398517").
+const RECORD_ID = "52398517"
+
+// FBS holdings for the work's physical record.
+const mockFbsHoldings = () => {
+  cy.mockServerRest({
+    method: "GET",
+    path: "/external/agencyid/catalog/holdingsLogistics/v1",
+    data: [{ recordId: RECORD_ID, reservations: 0, holdings: [{ materials: [{}, {}, {}] }] }],
+  })
+}
+
 const visitWork = (type: "BOOK" | "EBOOK" | "AUDIO_BOOK_ONLINE") => {
   cy.interceptGraphql({
     operationName: "getMaterial",
     data: getMaterial.build(),
   })
+  mockFbsHoldings()
   cy.visit(`${WORK_URL}?type=${type}`)
 }
 

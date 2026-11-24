@@ -19,6 +19,9 @@ function desktopLinksContainerCheckSize() {
   } else {
     document.documentElement.classList.remove("has-burger-menu");
     document.documentElement.classList.add("has-desktop-menu");
+    // The burger is hidden now, so an open sidebar menu would leave the page
+    // inert with no way to close it.
+    document.querySelector(".header-sidebar-nav")?.close();
   }
 }
 

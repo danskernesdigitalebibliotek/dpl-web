@@ -61,7 +61,7 @@
         "drupal/config_ignore": "^3",
         "drupal/config_ignore_auto": "^3",
         "drupal/config_perms": "^2.3",
-        "drupal/config_translation_po": "^1.0",
+        "drupal/config_translation_po": "^2.0",
         "drupal/consumers": "^1.19",
         "drupal/content_lock": "^3.0",
         "drupal/cookieinformation": "^2.1",
@@ -140,7 +140,7 @@
         "drupal/telephone_formatter": "^1.2",
         "drupal/theme_permission": "^2.0",
         "drupal/twig_tweak": "^3.2.1",
-        "drupal/upgrade_status": "^4.0",
+        "drupal/upgrade_status": "^5.0",
         "drupal/uuid_url": "^1.3",
         "drupal/varnish_purge": "^2.2",
         "drupal/verf": "^2.0",
@@ -157,7 +157,7 @@
         "promphp/prometheus_client_php": "^2.15",
         "spatie/color": "^2.0",
         "spawnia/sailor": "^1.1.0",
-        "symfony/property-access": "^7.3",
+        "symfony/property-access": "^8.1",
         "symfony/property-info": "^8.1",
         "thecodingmachine/safe": "^2.5.0",
         "webmozart/assert": "^2.1",
@@ -305,9 +305,6 @@
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
                 "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch"
             },
-            "drupal/config_ignore_auto": {
-                "3596535: Do not add duplicate entries for collection (translation) config": "patches/3596535-config_ignore_auto-collection-duplicates.patch"
-            },
             "drupal/config_translation_po": {
                 "3426797: Problem: Untranslated string used as source": "patches/vendor/config_translation_po-5.patch"
             },
@@ -324,7 +321,7 @@
                 "2708731: Allow redirect to edit form after cloning": "patches/2708731-entity_clone-2.2.0-beta1-reroll.patch"
             },
             "drupal/entity_reference_revisions": {
-                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "patches/3039442-entity_reference_revisions-1.14-reroll.patch"
+                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "patches/3039442-entity_reference_revisions-1.15-reroll.patch"
             },
             "drupal/facets": {
                 "DDFSAL-279: Fix infinite scroll with facet filters": "patches/facets-infinite-scroll-fix-custom.patch"
@@ -370,6 +367,9 @@
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "patches/vendor/theme-permission-edit-install-uninstall-3105637-7.patch"
+            },
+            "webonyx/graphql-php": {
+                "Backport GHSA-r7cg-qjjm-xhqq, GHSA-fc86-6rv6-2jpm and GHSA-68jq-c3rv-pcrr fixes from 15.x": "patches/graphql-php-14-security-backport.patch"
             }
         },
         "drupal-core-vendor-hardening": {

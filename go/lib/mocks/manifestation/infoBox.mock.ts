@@ -43,6 +43,7 @@ const manifestationMock = {
   titles: {
     identifyingAddition: null,
     full: ["Den vingede hest Skar"],
+    main: ["Den vingede hest Skar"],
   },
   languages: {
     main: [
@@ -84,9 +85,11 @@ const manifestationMock = {
   contributors: [
     {
       display: "Trine Bech",
+      roles: [],
     },
     {
       display: "Steve Sims",
+      roles: [],
     },
   ],
   contributorsFromDescription: [],

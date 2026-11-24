@@ -42,6 +42,13 @@ describe("Fee list", () => {
       statusCode: 200,
       body: digitalLoansData
     }).as("digital_loans");
+
+    // The fee list fetches physical loans for its warning bar. Unstubbed, the
+    // request fails and, once its retries run out, takes down the whole app.
+    cy.intercept("GET", "**/external/agencyid/patrons/patronid/loans/v2", {
+      statusCode: 200,
+      body: physicalLoansDataNoOverdue
+    }).as("physical_loans");
   });
 
   it("Fee list basics (physical loans)", () => {

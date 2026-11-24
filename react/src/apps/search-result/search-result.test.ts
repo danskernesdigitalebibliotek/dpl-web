@@ -4,6 +4,61 @@ import {
   givenSearchWithPaginationEmptyResponse
 } from "../../../cypress/intercepts/fbi/searchWithPagination";
 import { givenSearchFacetResponse } from "../../../cypress/intercepts/fbi/searchFacet";
+import { hasOperationName } from "../../../cypress/utils/graphql-test-utils";
+
+type SearchOperation = "searchWithPagination" | "searchFacet";
+type SearchVariables = {
+  includeOnlineMaterials: boolean;
+  filters: { status?: string[]; accessTypes?: string[] };
+};
+type RecordedSearchVariables = Record<SearchOperation, SearchVariables[]>;
+
+const searchOperations: SearchOperation[] = [
+  "searchWithPagination",
+  "searchFacet"
+];
+
+/**
+ * Records the variables of every search request per operation. The aliases of
+ * cy.interceptGraphql match all GraphQL requests, so they can't tell the two
+ * search queries apart.
+ */
+const recordSearchVariables = () => {
+  const recorded: RecordedSearchVariables = {
+    searchWithPagination: [],
+    searchFacet: []
+  };
+  cy.intercept(
+    { method: "POST", url: "**/graphql*", middleware: true },
+    (request) => {
+      searchOperations
+        .filter((operationName) => hasOperationName(request, operationName))
+        .forEach((operationName) => {
+          recorded[operationName].push(request.body.variables);
+        });
+    }
+  );
+  return recorded;
+};
+
+/**
+ * Retries until the latest request of both search queries passes the
+ * assertions, since new requests arrive after the action that caused them.
+ */
+const verifyLatestSearchVariables = (
+  recorded: RecordedSearchVariables,
+  assertions: (variables: SearchVariables) => void
+) => {
+  cy.wrap(recorded).should(() => {
+    searchOperations.forEach((operationName) => {
+      const latestVariables = recorded[operationName].at(-1);
+      expect(latestVariables, `${operationName} request`).not.to.equal(
+        undefined
+      );
+      assertions(latestVariables as SearchVariables);
+    });
+  });
+};
 
 describe("Search Result", () => {
   let page: SearchResultPage;
@@ -59,6 +114,63 @@ describe("Search Result", () => {
       page.components.Filters((filters) => {
         filters.toggleOnShelf();
         filters.verifyOnShelfIsNotChecked();
+      });
+    });
+
+    it("switching on 'On shelf' excludes online materials and clears the access type", () => {
+      const recorded = recordSearchVariables();
+      page.visit([]);
+
+      verifyLatestSearchVariables(recorded, (variables) => {
+        // Leaving the variable out is fine too, as the query defaults it to true.
+        expect(variables.includeOnlineMaterials).not.to.equal(false);
+        expect(variables.filters.status).to.equal(undefined);
+      });
+
+      page.components.Filters((filters) => {
+        filters.verifyAccessTypeOptionsAreVisible();
+        filters.selectRadioOption("Online");
+        filters.verifyRadioOptionIsSelected("Online");
+      });
+
+      verifyLatestSearchVariables(recorded, (variables) => {
+        expect(variables.filters.accessTypes).to.deep.equal(["Digital"]);
+      });
+
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+        filters.verifyAccessTypeOptionsAreHidden();
+      });
+
+      verifyLatestSearchVariables(recorded, (variables) => {
+        expect(variables.includeOnlineMaterials).to.equal(false);
+        expect(variables.filters.status).to.deep.equal(["ONSHELF"]);
+        expect(variables.filters.accessTypes).to.equal(undefined);
+      });
+
+      page.verifyUrlContains("onShelf=true");
+      page.verifyUrlDoesNotContain("accessTypes");
+    });
+
+    it("ignores an access type in the URL while 'On shelf' is on", () => {
+      const recorded = recordSearchVariables();
+      page.visit([], {
+        qs: {
+          onShelf: "true",
+          facets: JSON.stringify([
+            { facetName: "accessTypes", selectedValues: ["Digital"] }
+          ])
+        }
+      });
+
+      page.components.Filters((filters) => {
+        filters.verifyAccessTypeOptionsAreHidden();
+      });
+
+      verifyLatestSearchVariables(recorded, (variables) => {
+        expect(variables.includeOnlineMaterials).to.equal(false);
+        expect(variables.filters.status).to.deep.equal(["ONSHELF"]);
+        expect(variables.filters.accessTypes).to.equal(undefined);
       });
     });
 
@@ -322,6 +434,16 @@ describe("Search Result", () => {
       page.verifyUrlContains("onShelf=true");
     });
 
+    it("hides the access type options inside dialog when 'On shelf' is switched on", () => {
+      page.openFilterDialog();
+
+      page.components.DialogFilters((filters) => {
+        filters.verifyAccessTypeOptionsAreVisible();
+        filters.toggleOnShelf();
+        filters.verifyAccessTypeOptionsAreHidden();
+      });
+    });
+
     it("toggles 'Can always be loaned' filter inside dialog", () => {
       page.openFilterDialog();
 
@@ -471,6 +593,192 @@ describe("Search Result", () => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1000);
       page.verifyUrlContains("id=apps-search-result--on-zero-hits-page");
+    });
+  });
+
+  // Gives every page its own works, so the pages can be told apart.
+  const givenPagedSearchResults = () => {
+    cy.fixture("search-result/facet-browser/searchWithPagination.json").then(
+      (fixture) => {
+        cy.intercept({ method: "POST", url: "**/graphql*" }, (req) => {
+          if (!hasOperationName(req, "searchWithPagination")) {
+            return;
+          }
+          const { offset } = req.body.variables;
+          req.reply({
+            data: {
+              search: {
+                ...fixture.data.search,
+                works: fixture.data.search.works.map(
+                  (work: { workId: string }, i: number) => ({
+                    ...work,
+                    workId: `work-of:test-${offset + i}`
+                  })
+                )
+              }
+            }
+          });
+        });
+      }
+    );
+  };
+
+  describe("Show more", () => {
+    beforeEach(() => {
+      givenPagedSearchResults();
+    });
+
+    // Keyboard and screen reader users continue from the first new result
+    // instead of starting over at the top of the list.
+    it("focuses the first new result", () => {
+      // Open the search result and wait for the first page.
+      page.visit([]);
+      cy.get(".card-list-item").should("have.length", 50);
+      // Load the second page.
+      cy.contains("button", "show more").click();
+
+      // The first result of the second page has focus.
+      cy.get(".card-list-item").eq(50).closest("li").should("have.focus");
+    });
+
+    // The campaign is shown before the works and must not shift which result
+    // counts as the first new one.
+    it("focuses the first new result when a campaign is shown", () => {
+      // Show a campaign above the results.
+      cy.intercept("POST", "**/dpl_campaign/match*", {
+        statusCode: 200,
+        body: {
+          data: {
+            id: "1",
+            title: "Campaign title",
+            url: "https://example.com/campaign",
+            open_in_new_tab: false
+          }
+        }
+      });
+      // Open the search result and wait for the campaign and the first page.
+      page.visit([]);
+      cy.getBySel("campaign-body").should("exist");
+      cy.get(".card-list-item").should("have.length", 50);
+      // Load the second page.
+      cy.contains("button", "show more").click();
+
+      // The first result of the second page has focus, not the one before it.
+      cy.get(".card-list-item").eq(50).closest("li").should("have.focus");
+    });
+
+    // Opening a search on a later page, e.g. from a shared link or by going
+    // back, must not jump to the first result of the last page.
+    it("does not move focus or scroll when opened on a later page", () => {
+      // Open the search result with the second page in the URL, like when
+      // reloading the page or following a shared link after showing more.
+      page.visitStory("default", { qs: { page: 1 } });
+      // Both pages are loaded and shown (2 pages with 50 items equals 100).
+      cy.get(".card-list-item").should("have.length", 100);
+
+      // Focusing the first new result is only for "show more". Here the user
+      // did not ask for more results, so focus stays on the page itself and
+      // the page is not scrolled down to the second page.
+      cy.document().its("activeElement.tagName").should("eq", "BODY");
+      cy.window().its("scrollY").should("eq", 0);
+    });
+  });
+
+  describe("Returning to the search result", () => {
+    beforeEach(() => {
+      givenPagedSearchResults();
+      page.visit([]);
+    });
+
+    it("keeps the loaded pages and scrolls back to the clicked work", () => {
+      // Load the second page. The page is kept in the URL.
+      cy.get("[data-item-id]").should("have.length", 50);
+      cy.contains("button", "show more").click();
+      cy.get("[data-item-id]").should("have.length", 100);
+      cy.url().should("include", "page=1");
+
+      // Open a work from the second page and go back with the browser.
+      cy.get('[data-item-id="work-of:test-75"]')
+        .find("[data-cy='card-list-item-title'] a")
+        .click();
+      cy.url().should("include", "/work/");
+      cy.go("back");
+
+      // Both pages are shown again (2 pages with 50 items equals 100), so the
+      // work is still in the list.
+      cy.get("[data-item-id]").should("have.length", 100);
+      // The work that was opened has focus and is scrolled into view, so the
+      // user continues where they left off.
+      cy.get('[data-item-id="work-of:test-75"]')
+        .should("have.focus")
+        .and(($item) => {
+          const { top, bottom } = $item[0].getBoundingClientRect();
+          expect(top).to.be.greaterThan(0);
+          expect(bottom).to.be.lessThan(Cypress.config("viewportHeight"));
+        });
+      // The work is only kept in the URL until it has been scrolled to.
+      cy.url().should("not.include", "item=");
+    });
+
+    // The campaign is fetched after the works and added above them, so it
+    // must not push the clicked work away after scrolling back to it.
+    it("scrolls back to the clicked work when a campaign is shown", () => {
+      // Show a campaign above the results, arriving after the works.
+      cy.intercept("POST", "**/dpl_campaign/match*", {
+        statusCode: 200,
+        delay: 1000,
+        body: {
+          data: {
+            id: "1",
+            title: "Campaign title",
+            url: "https://example.com/campaign",
+            open_in_new_tab: false
+          }
+        }
+      });
+
+      // Load the second page, open a work from it and go back.
+      cy.get("[data-item-id]").should("have.length", 50);
+      cy.contains("button", "show more").click();
+      cy.get("[data-item-id]").should("have.length", 100);
+      cy.get('[data-item-id="work-of:test-75"]')
+        .find("[data-cy='card-list-item-title'] a")
+        .click();
+      cy.url().should("include", "/work/");
+      // Turn off scroll anchoring, which would otherwise hide the problem in
+      // Chrome and Firefox, as not all browsers support it.
+      cy.on("window:before:load", (win) => {
+        win.addEventListener("DOMContentLoaded", () => {
+          const style = win.document.createElement("style");
+          style.textContent = "* { overflow-anchor: none; }";
+          win.document.head.append(style);
+        });
+      });
+      cy.go("back");
+
+      // Once the campaign is shown, the work is still focused and in the
+      // middle of the screen, where it was scrolled to.
+      cy.getBySel("campaign-body").should("exist");
+      cy.get('[data-item-id="work-of:test-75"]')
+        .should("have.focus")
+        .and(($item) => {
+          const { top, bottom } = $item[0].getBoundingClientRect();
+          const { innerHeight } = $item[0].ownerDocument.defaultView ?? {};
+          expect((top + bottom) / 2).to.be.closeTo((innerHeight ?? 0) / 2, 20);
+        });
+    });
+
+    it("starts over on the first page when the filters change", () => {
+      // Load the second page.
+      cy.contains("button", "show more").click();
+      cy.url().should("include", "page=1");
+      // Change a filter, which gives a new search.
+      page.components.Filters((filters) => {
+        filters.toggleOnShelf();
+      });
+      // The page is removed from the URL and only the first page is shown.
+      cy.url().should("not.include", "page=");
+      cy.get("[data-item-id]").should("have.length", 50);
     });
   });
 

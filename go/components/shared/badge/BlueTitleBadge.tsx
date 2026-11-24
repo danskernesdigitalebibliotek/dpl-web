@@ -1,12 +1,19 @@
 "use client"
 
+import {
+  isCostFreeLoan,
+  useDigitalLoanDecision,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 import React from "react"
 
-import { isPodcastMaterialType } from "@/components/pages/workPageLayout/helper"
+import {
+  isPhysicalMaterialType,
+  isPodcastMaterialType,
+} from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
+import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 
 // Both the search teaser and work page manifestation fragments carry these.
 type BlueTitleManifestation = Pick<
@@ -15,17 +22,23 @@ type BlueTitleManifestation = Pick<
 >
 
 // Whether a manifestation is a cost-free ("BLÅ") title: podcasts always are,
-// the rest is looked up in Publizon. False while loading or when disabled.
+// the rest is whatever Biblio's loan decision says. That decision is
+// patron-scoped, so a reader without a borrowing session is answered false
+// and the badge stays hidden until they sign in.
 export const useIsBlueTitle = (
   manifestation: BlueTitleManifestation | undefined,
   enabled = true
 ): boolean => {
-  const isbn = manifestation?.identifiers.find(identifier => identifier.type === "ISBN")?.value
-  // The generated hook only fetches for a non-empty identifier.
-  const { data } = useGetV1ProductsIdentifierAdapter(enabled ? isbn || "" : "")
+  const materialId = getPublizonIdentifierFromManifestation(manifestation)
+  const isDigital =
+    !!manifestation &&
+    !isPhysicalMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
+  const { data: loanDecision } = useDigitalLoanDecision(
+    enabled && isDigital ? (materialId ?? null) : null
+  )
   if (!enabled || !manifestation) return false
   return Boolean(
-    data?.product?.costFree ||
+    isCostFreeLoan(loanDecision?.loanProvider) ||
     isPodcastMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)
   )
 }
@@ -33,14 +46,13 @@ export const useIsBlueTitle = (
 // "BLÅ" badge for cost-free titles. Always takes up its space so layouts
 // stay stable; fades in when the title turns out to be blue.
 const BlueTitleBadge = ({
-  manifestation,
+  isBlue,
   className,
 }: {
-  manifestation: BlueTitleManifestation
+  // Decided by the caller, which has the answer from `useIsBlueTitle`.
+  isBlue: boolean
   className?: string
 }) => {
-  const isBlue = useIsBlueTitle(manifestation)
-
   return (
     <div aria-hidden={!isBlue} className={className}>
       <Badge

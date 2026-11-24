@@ -8,6 +8,7 @@ dependencies:
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_description
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_link
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_title
+    - field.field.paragraph.material_grid_link_automatic.field_use_show_all_button
     - paragraphs.paragraphs_type.material_grid_link_automatic
 id: paragraph.material_grid_link_automatic.default
 targetEntityType: paragraph
@@ -31,7 +32,7 @@ content:
     third_party_settings: {  }
   field_material_grid_link:
     type: string_textarea
-    weight: 3
+    weight: 4
     region: content
     settings:
       rows: 1
@@ -44,6 +45,12 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  field_use_show_all_button:
+    type: options_buttons
+    weight: 3
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true

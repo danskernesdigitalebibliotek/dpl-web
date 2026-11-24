@@ -91,9 +91,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
             {
               display: "MinaLima (firma)",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -148,6 +150,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -204,9 +207,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Jim Kay",
+              roles: [],
             },
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -261,6 +266,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -315,9 +321,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
             {
               display: "Jesper Christensen (f. 1948)",
+              roles: [],
             },
           ],
           contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
@@ -373,9 +381,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         contributors: [
           {
             display: "Hanna Lützen",
+            roles: [],
           },
           {
             display: "MinaLima (firma)",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],
@@ -481,9 +491,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
             {
               display: "MinaLima (firma)",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -538,6 +550,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -592,9 +605,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
             {
               display: "Jesper Christensen (f. 1948)",
+              roles: [],
             },
           ],
           contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
@@ -655,6 +670,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: ["på dansk ved Hanna Lützen"],
@@ -709,6 +725,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -765,9 +782,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Jim Kay",
+              roles: [],
             },
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -822,9 +841,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
             {
               display: "Jesper Christensen (f. 1948)",
+              roles: [],
             },
           ],
           contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
@@ -879,6 +900,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -934,9 +956,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         contributors: [
           {
             display: "Hanna Lützen",
+            roles: [],
           },
           {
             display: "MinaLima (firma)",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],
@@ -1024,9 +1048,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
             {
               display: "Jim Kay",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -1087,6 +1113,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: ["på dansk ved Hanna Lützen"],
@@ -1141,6 +1168,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -1195,6 +1223,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -1249,6 +1278,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -1306,9 +1336,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         contributors: [
           {
             display: "Hanna Lützen",
+            roles: [],
           },
           {
             display: "Jim Kay",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],
@@ -1408,6 +1440,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Birgitte Brix",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -1464,9 +1497,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Maria Stokholm",
+              roles: [],
             },
             {
               display: "Birgitte Brix",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -1524,6 +1559,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         contributors: [
           {
             display: "Birgitte Brix",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],
@@ -1619,9 +1655,11 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
             {
               display: "Jesper Christensen (f. 1948)",
+              roles: [],
             },
           ],
           contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
@@ -1676,6 +1714,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -1730,6 +1769,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -1784,6 +1824,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: [],
@@ -1840,6 +1881,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributors: [
             {
               display: "Hanna Lützen",
+              roles: [],
             },
           ],
           contributorsFromDescription: ["på dansk ved Hanna Lützen"],
@@ -1895,6 +1937,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         contributors: [
           {
             display: "Hanna Lützen",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],

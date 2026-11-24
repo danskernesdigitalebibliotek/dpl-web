@@ -85,6 +85,7 @@ const workMock = {
         titles: {
           identifyingAddition: null,
           full: ["Den vingede hest Skar"],
+          main: ["Den vingede hest Skar"],
         },
         languages: {
           main: [
@@ -124,9 +125,11 @@ const workMock = {
         contributors: [
           {
             display: "Michael Brostrup",
+            roles: [],
           },
           {
             display: "Trine Bech",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],
@@ -173,6 +176,7 @@ const workMock = {
         titles: {
           identifyingAddition: null,
           full: ["Den vingede hest Skar"],
+          main: ["Den vingede hest Skar"],
         },
         languages: {
           main: [
@@ -214,9 +218,11 @@ const workMock = {
         contributors: [
           {
             display: "Trine Bech",
+            roles: [],
           },
           {
             display: "Steve Sims",
+            roles: [],
           },
         ],
         contributorsFromDescription: [],
@@ -264,6 +270,7 @@ const workMock = {
       titles: {
         identifyingAddition: null,
         full: ["Den vingede hest Skar"],
+        main: ["Den vingede hest Skar"],
       },
       languages: {
         main: [
@@ -303,9 +310,11 @@ const workMock = {
       contributors: [
         {
           display: "Michael Brostrup",
+          roles: [],
         },
         {
           display: "Trine Bech",
+          roles: [],
         },
       ],
       contributorsFromDescription: [],

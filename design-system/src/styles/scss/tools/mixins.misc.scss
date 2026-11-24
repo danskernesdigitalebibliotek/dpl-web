@@ -19,6 +19,15 @@
 }
 
 /**
+ * Strip the browser's default button styling.
+ */
+@mixin button-reset {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+/**
  * Add styling, that only shows svg arrow when hovering.
  *
  * @todo - this needs to be cleaned up, as it currently targets all SVGs.

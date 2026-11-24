@@ -68,6 +68,7 @@ fragment ManifestationTitles on Manifestation {
   titles {
     identifyingAddition
     full
+    main
   }
 }
 
@@ -100,6 +101,7 @@ fragment ManifestationDescription on Manifestation {
 fragment ManifestationDetails on Manifestation {
   physicalDescription {
     summaryFull
+    numberOfPages
   }
   dateFirstEdition {
     display
@@ -116,6 +118,11 @@ fragment ManifestationDetails on Manifestation {
   publisher
   contributors {
     display
+    roles {
+      function {
+        singular
+      }
+    }
   }
   contributorsFromDescription
 }

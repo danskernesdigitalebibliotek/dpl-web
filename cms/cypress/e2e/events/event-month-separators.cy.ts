@@ -4,12 +4,6 @@ import { EventAddPage } from '../../pages/event-add';
 import { LoginPage } from '../../pages/login-page';
 import { EventSeriesListPage } from '../../pages/event-series-list';
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
-
 // Two events in different months, so the events overview must render a month
 // separator for each. Titles are unique so the AJAX search can filter down to
 // a single, predictable result.
@@ -64,7 +58,7 @@ const anyMonthLabel = monthNameRegex(
 const separatorOptions = { selector: '.content-list__month-separator' };
 
 const createSingleEvent = (event: (typeof separatorEvents)['first']) => {
-  login();
+  LoginPage.ensureEditorLogin();
   const eventAdd = new EventAddPage();
   eventAdd.visit([]);
   eventAdd.fillTitle(event.title);
@@ -77,7 +71,7 @@ const createSingleEvent = (event: (typeof separatorEvents)['first']) => {
 };
 
 const deleteEventSeries = (title: string) => {
-  login();
+  LoginPage.ensureEditorLogin();
   new EventSeriesListPage().deleteAllTitled(title);
 };
 

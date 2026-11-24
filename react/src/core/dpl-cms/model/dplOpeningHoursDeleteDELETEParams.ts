@@ -8,12 +8,8 @@
 import type { DplOpeningHoursDeleteDELETE_Format } from "./dplOpeningHoursDeleteDELETEFormat";
 
 export type DplOpeningHoursDeleteDELETEParams = {
-  /**
-   * Request format
-   */
+  /** Request format */
   _format?: DplOpeningHoursDeleteDELETE_Format;
-  /**
-   * The id of the repetition to delete. <br/>If this is provided then all opening hours from the provided instance to the final instance in the provided repetition will be deleted.
-   */
+  /** The id of the repetition to delete. <br/>If this is provided then all opening hours from the provided instance to the final instance in the provided repetition will be deleted. */
   repetition_id?: number;
 };

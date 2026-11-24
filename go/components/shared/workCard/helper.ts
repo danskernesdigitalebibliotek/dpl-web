@@ -1,0 +1,26 @@
+import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
+import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { MaterialTypeIconNamesType } from "@/lib/types/icons"
+
+export type TWorkCardMaterialType = {
+  iconName: MaterialTypeIconNamesType
+  isCostFree: boolean
+}
+
+// One entry per material type icon. Podcasts are always cost-free, other
+// types when any of their manifestations is.
+export const getWorkCardMaterialTypes = (
+  manifestations: ManifestationSearchPageTeaserFragment[],
+  isCostFree: (index: number) => boolean
+): TWorkCardMaterialType[] => {
+  const materialTypes = new Map<MaterialTypeIconNamesType, boolean>()
+
+  manifestations.forEach((manifestation, index) => {
+    const materialType = manifestation.materialTypes.at(0)?.materialTypeSpecific.code
+    const iconName = (materialType && getIconNameFromMaterialType(materialType)) || "book"
+    const costFree = isCostFree(index) || materialType === "PODCAST"
+    materialTypes.set(iconName, Boolean(materialTypes.get(iconName)) || costFree)
+  })
+
+  return Array.from(materialTypes, ([iconName, isCostFree]) => ({ iconName, isCostFree }))
+}

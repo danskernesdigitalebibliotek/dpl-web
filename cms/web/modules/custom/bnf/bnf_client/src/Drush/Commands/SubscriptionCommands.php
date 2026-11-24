@@ -6,6 +6,7 @@ namespace Drupal\bnf_client\Drush\Commands;
 
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\bnf_client\SubscriptionHelper;
+use Drupal\bnf_client\SubscriptionNodeHelper;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drush\Attributes\Argument;
 use Drush\Attributes\Command;
@@ -29,6 +30,7 @@ class SubscriptionCommands extends DrushCommands {
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
     protected SubscriptionHelper $helper,
+    protected SubscriptionNodeHelper $nodeHelper,
   ) {
     parent::__construct();
   }
@@ -85,6 +87,25 @@ class SubscriptionCommands extends DrushCommands {
     $entities = $this->entityTypeManager->getStorage('bnf_subscription')->loadMultiple();
 
     $this->entityTypeManager->getStorage('bnf_subscription')->delete($entities);
+  }
+
+  /**
+   * Delete or make local nodes that no longer exist on BNF.
+   *
+   * @param string[] $uuids
+   *   UUIDs of the nodes to fix.
+   */
+  #[Command(name: 'bnf:subscription:fix-orphans')]
+  #[Help(description: 'Delete imported nodes, and make claimed nodes local, for content deleted on BNF')]
+  #[Argument(name: 'uuids', description: 'UUIDs of the nodes to fix')]
+  #[Usage(
+    name: 'drush bnf:subscription:fix-orphans 8f647000-cb67-40d0-b942-3f7fbf899c88 4b426ec8-482d-401c-af0e-7f15dc9bfa5c',
+    description: 'Fix the two nodes with the given UUIDs.'
+  )]
+  public function fixOrphans(array $uuids): void {
+    foreach ($this->nodeHelper->fixOrphans($uuids) as $uuid => $result) {
+      $this->io()->writeln("{$uuid}: {$result}");
+    }
   }
 
   /**

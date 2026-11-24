@@ -76,12 +76,8 @@ export type GetLoansForAuthenticatedUserParams = {
    * @maximum 1000
    */
   limit?: number
-  /**
-   * Pagination cursor for fetching the next page. Pass the `cursor` value returned in the previous response's `pagination` object; omit it to fetch the first page. The final page returns no cursor.
-   */
+  /** Pagination cursor for fetching the next page. Pass the `cursor` value returned in the previous response's `pagination` object; omit it to fetch the first page. The final page returns no cursor. */
   cursor?: string
-  /**
-   * Defaults to `true`. Set to `false` to retrieve inactive or ended loans.
-   */
+  /** Defaults to `true`. Set to `false` to retrieve inactive or ended loans. */
   active?: boolean
 }

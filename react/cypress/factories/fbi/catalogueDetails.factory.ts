@@ -1,8 +1,5 @@
 import { Factory } from "fishery";
-import {
-  type CatalogueDetailsByIsbnQuery,
-  IdentifierTypeEnum
-} from "@danskernesdigitalebibliotek/dpl-service-layer/fbi/contract";
+import { type CatalogueDetailsByIsbnQuery } from "@danskernesdigitalebibliotek/dpl-service-layer/fbi/contract";
 
 /**
  * Responses for `catalogueDetailsByIsbn` — the search the service layer runs
@@ -29,7 +26,7 @@ const workFactory = Factory.define<CatalogueWork, CatalogueMaterial>(
       titles: { full: [title] },
       creators: authors.map((display) => ({ display })),
       manifestations: {
-        all: [{ identifiers: [{ type: IdentifierTypeEnum.Isbn, value: isbn }] }]
+        all: [{ identifiers: [{ type: "ISBN", value: isbn }] }]
       }
     };
   }
@@ -42,7 +39,8 @@ export const buildCatalogueDetailsResponse = (
     complexSearch: {
       works: materials.map((material) =>
         workFactory.build({}, { transient: material })
-      )
+      ),
+      errorMessage: null
     }
   }
 });

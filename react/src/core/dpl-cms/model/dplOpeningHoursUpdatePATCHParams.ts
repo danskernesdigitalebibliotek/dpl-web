@@ -8,8 +8,6 @@
 import type { DplOpeningHoursUpdatePATCH_Format } from "./dplOpeningHoursUpdatePATCHFormat";
 
 export type DplOpeningHoursUpdatePATCHParams = {
-  /**
-   * Request format
-   */
+  /** Request format */
   _format?: DplOpeningHoursUpdatePATCH_Format;
 };

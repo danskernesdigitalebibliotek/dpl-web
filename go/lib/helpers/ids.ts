@@ -7,7 +7,9 @@ import {
   WorkFullWorkPageFragment,
 } from "../graphql/generated/fbi/graphql"
 
-export const getIsbnsFromManifestation = (manifestation: ManifestationWorkPageFragment) => {
+export const getIsbnsFromManifestation = (
+  manifestation: ManifestationWorkPageFragment | undefined
+) => {
   if (!manifestation) return []
 
   return manifestation.identifiers.reduce((acc, identifier) => {
@@ -21,7 +23,7 @@ export const getIsbnsFromManifestation = (manifestation: ManifestationWorkPageFr
 // Identifier sent to Publizon. Prefer the PUBLIZON identifier (the loanable
 // edition); fall back to the ISBN.
 export const getPublizonIdentifierFromManifestation = (
-  manifestation: ManifestationWorkPageFragment | undefined
+  manifestation: Pick<ManifestationWorkPageFragment, "identifiers"> | undefined
 ) => {
   if (!manifestation) return undefined
 

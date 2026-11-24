@@ -1,11 +1,15 @@
 import { motion } from "framer-motion"
-import React, { useOptimistic, useTransition } from "react"
+import React from "react"
 
 import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
 import { cyKeys } from "@/cypress/support/constants"
 import { cn } from "@/lib/helpers/helper.cn"
 
 import Icon from "../icon/Icon"
+import PillButton from "../pillButton/PillButton"
+
+// Animates the press and the slide between options.
+const MotionPillButton = motion.create(PillButton)
 
 export type MaterialTypeSelectOption = {
   code: string
@@ -18,18 +22,16 @@ export type MaterialTypeSelectProps = {
   onOptionSelect: (option: MaterialTypeSelectOption) => void
 }
 
+// The caller decides what is selected; the pill follows it.
 const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeSelectProps) => {
-  const [optimisticSelected, setOptimisticSelected] = useOptimistic(selected)
-  const [, startTransition] = useTransition()
-
   return (
     <div className="flex flex-row flex-wrap items-center justify-center gap-2">
       {options.map(option => {
-        const isSelected = option.code === optimisticSelected
+        const isSelected = option.code === selected
         const iconName = getIconNameFromMaterialType(option.code)
 
         return (
-          <motion.button
+          <MotionPillButton
             key={option.code}
             data-cy={cyKeys[`slide-select-option`]}
             aria-label={
@@ -37,17 +39,10 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
                 ? `Nu viser materialet som ${option.display}`
                 : `Skift til visning af ${option.display}`
             }
-            onClick={() => {
-              startTransition(() => {
-                onOptionSelect(option)
-                setOptimisticSelected(option.code)
-              })
-            }}
+            onClick={() => onOptionSelect(option)}
             whileTap={{ scale: 0.92 }}
             whileHover={{ scale: 1.06 }}
-            className={cn(
-              `focus-visible text-typo-label-sm relative flex flex-row items-center gap-2
-              rounded-full px-4 py-2 whitespace-nowrap hover:cursor-pointer`,
+            classNames={cn(
               isSelected ? "text-background" : "bg-background-overlay text-foreground"
             )}>
             {isSelected && (
@@ -71,7 +66,7 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
               )}
               <span>{option.display}</span>
             </motion.span>
-          </motion.button>
+          </MotionPillButton>
         )
       })}
     </div>
