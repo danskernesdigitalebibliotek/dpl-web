@@ -15,4 +15,7 @@ export const getPublizonSupportId = (queryClient: QueryClient) =>
 // Biblio's support ID — the same id the adult site shows. A failure only
 // hides the line, never the page.
 export const getBiblioSupportId = (userToken: string) =>
-  getDigitalSupportId(getServiceLayerConfig(userToken)).catch(() => null)
+  getDigitalSupportId(getServiceLayerConfig(userToken)).catch(error => {
+    console.error("Failed to fetch the Biblio support ID", error)
+    return null
+  })
