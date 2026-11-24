@@ -68,6 +68,7 @@
         "drupal/core": "~11.4.0",
         "drupal/core-composer-scaffold": "~11.4.0",
         "drupal/core-recommended": "~11.4.0",
+        "drupal/core-vendor-hardening": "~11.4.0",
         "drupal/date_range_formatter": "^4",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
@@ -192,6 +193,7 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/console-extend-plugin": true,
             "drupal/core-composer-scaffold": true,
+            "drupal/core-vendor-hardening": true,
             "mnsami/composer-custom-directory-installer": true,
             "oomphinc/composer-installers-extender": true,
             "php-http/discovery": true,
@@ -369,6 +371,11 @@
             "webonyx/graphql-php": {
                 "Backport GHSA-r7cg-qjjm-xhqq, GHSA-fc86-6rv6-2jpm and GHSA-68jq-c3rv-pcrr fixes from 15.x": "patches/graphql-php-14-security-backport.patch"
             }
+        },
+        "drupal-core-vendor-hardening": {
+            "drupal/core": [
+                "install.php"
+            ]
         }
     }
 }
