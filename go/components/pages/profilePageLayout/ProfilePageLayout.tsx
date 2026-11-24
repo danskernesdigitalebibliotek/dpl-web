@@ -1,4 +1,4 @@
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query"
+import { HydrationBoundary, type QueryClient, dehydrate } from "@tanstack/react-query"
 import { cookies } from "next/headers"
 import React, { Suspense } from "react"
 
@@ -23,8 +23,10 @@ import { getBiblioSupportId, getPublizonSupportId } from "./helper"
 // The user loans are prefetched here and hydrated into the query cache. Both
 // publizon adapters share the "/v1/user/loans" query key, so the loan
 // consumers read the result instead of fetching client-side.
-const prefetchUserLoans = async (sessionType: "unilogin" | "adgangsplatformen") => {
-  const queryClient = getQueryClient()
+const prefetchUserLoans = async (
+  queryClient: QueryClient,
+  sessionType: "unilogin" | "adgangsplatformen"
+) => {
   const cookieStore = await cookies()
   const base =
     sessionType === "unilogin"
@@ -62,7 +64,7 @@ const ProfilePageLayout = async () => {
   const biblioUserToken = viaBiblioAdapter ? getDigitalLoanUserToken(session) : undefined
 
   const queryClient = getQueryClient()
-  if (digitalLoanSessionType) await prefetchUserLoans(digitalLoanSessionType)
+  if (digitalLoanSessionType) await prefetchUserLoans(queryClient, digitalLoanSessionType)
 
   // With the Biblio adapter on, Biblio's support ID replaces Publizon's.
   const supportId = biblioUserToken
