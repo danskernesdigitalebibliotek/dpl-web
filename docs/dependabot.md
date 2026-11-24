@@ -8,7 +8,8 @@ through a weekly triage on Mondays.
 ## Log
 
 Write what you do in the Zulip topic **DDF > Depandabot Triage Log** as you go.
-Focus on what differed from the usual procedure.
+Focus on what differed from the usual procedure. Write pull requests and Jira
+keys as full links: Zulip turns a bare `#1234` into a Zendesk link.
 
 ## Pull requests
 
@@ -25,6 +26,23 @@ example because it is a development dependency.
 These should have been merged automatically. When one is still open, the cause
 is most likely a flaky CI run. Re-run the failed jobs, or comment
 `@dependabot rebase` to start over.
+
+The `Auto-merge Dependabot` check runs once per push and gives up as soon as
+another check fails. After re-running the failed jobs, re-run the
+`Auto-merge Dependabot` run as well, or the pull request stays open with green
+checks.
+
+Before calling a failure flaky, compare it with the same job on other pull
+requests. Failures that have nothing to do with the update:
+
+- GitHub answers `HTTP/2 504` while Composer downloads packages in
+  `dev:reset`.
+- `Go / Argos` fails in `pnpm recursive install` with `ENOENT` in the Cypress
+  cache.
+- `CMS / Check Drupal Config` fails with `Could not acquire processing lock`.
+
+When one Dependabot pull request is merged, Dependabot rebases the others, and
+their checks run again.
 
 ### Code generation (Orval, GraphQL Codegen)
 
@@ -46,6 +64,35 @@ Follow the prioritised order in the report. Then go through the
 [Dependabot alerts](https://github.com/danskernesdigitalebibliotek/dpl-web/security/dependabot)
 and see whether transitive dependencies can be updated, or the alert
 dismissed.
+
+Judge an alert by where the package ends up and who can reach it, not by its
+severity. A package that only runs in CI or development tools is a low risk,
+whatever its severity.
+
+When the fix is only released in a version that a parent package does not
+allow:
+
+- In the npm projects, force the fixed version with `overrides:` in
+  `pnpm-workspace.yaml`. Remove the override again once the parent package
+  pulls in the fixed version by itself.
+- In the CMS, backport the upstream fix as a Composer patch in `cms/patches/`.
+
+Create a Jira ticket for the real upgrade.
+
+When the fix reaches production, it also needs a hotfix for the release lines
+the sites run. Editor sites and webmaster sites can be on different releases;
+see `sites.yaml` in dpl-platform and the
+[hotfix process](https://danskernesdigitalebibliotek.github.io/dpl-docs/General/hotfix-releases/).
+
+The repository is public. Commits and pull requests name the package, the
+version and the advisory, but not how our setup is reachable, measurements or
+payloads.
+
+An alert closes by itself when the version changes. When it is fixed without a
+version change, or the vulnerable code is not used, dismiss it with a reason
+and a comment that points at the patch or the Jira ticket. Dismissed alerts are
+listed under `is:closed`, filtered by `resolution:fix-started` or
+`resolution:not-used`.
 
 ## Ignored dependencies
 
