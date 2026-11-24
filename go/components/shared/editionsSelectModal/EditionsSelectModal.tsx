@@ -66,7 +66,7 @@ const EditionsSelectModal = ({
       const queueText = getEditionQueueText(manifestation) ?? ""
       return {
         label: (
-          <StatusLabel variant="warning" subline={queueText}>
+          <StatusLabel variant="warning" subline={queueText} className="w-full">
             Udlånt lige nu
           </StatusLabel>
         ),
@@ -75,7 +75,11 @@ const EditionsSelectModal = ({
     }
     if (isDigitalEditionOnLoan(manifestation)) {
       return {
-        label: <StatusLabel variant="warning">Udlånt til dig</StatusLabel>,
+        label: (
+          <StatusLabel variant="warning" className="w-full">
+            Udlånt til dig
+          </StatusLabel>
+        ),
         text: "Udlånt til dig",
       }
     }
@@ -109,8 +113,12 @@ const EditionsSelectModal = ({
     <ResponsiveDialog title="Vælg udgave" open={open} onClose={handleClose}>
       <fieldset className="m-0 border-0 p-0">
         <legend className="sr-only">Vælg udgave</legend>
+        {/* Four implicit rows per card — cover, title, details, status — which
+            the cards subscribe to with grid-rows-subgrid, so each band lines
+            up across a row without measuring. */}
         <div
-          className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3">
+          className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-7
+            md:grid-cols-3 lg:grid-cols-2">
           {isLoadingEditions
             ? editions.map(manifestation => (
                 <EditionsSelectModalItem.Skeleton key={manifestation.pid} />

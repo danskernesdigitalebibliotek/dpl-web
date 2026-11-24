@@ -12,9 +12,11 @@ import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { useIsBlueTitle } from "@/components/shared/badge/BlueTitleBadge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
+import Icon from "@/components/shared/icon/Icon"
 import MaterialTypeSelect, {
   MaterialTypeSelectOption,
 } from "@/components/shared/materialTypeSelect/MaterialTypeSelect"
+import PillButton from "@/components/shared/pillButton/PillButton"
 import { useRestoreFocusAfterDialog } from "@/hooks/useRestoreFocusAfterDialog"
 import useSession from "@/hooks/useSession"
 import { useShownEditions } from "@/hooks/useShownEditions"
@@ -26,9 +28,16 @@ import { hasCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { openModal } from "@/store/modal.store"
 
-import WorkPageButtons from "./WorkPageButtons"
 import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"
 import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
+
+// Animates the press and hover.
+const MotionPillButton = motion.create(PillButton)
+
+// Ties the switch button to the line naming the current edition, so the button
+// keeps the stable name "Skift udgave" and the edition is read as its
+// description.
+const EDITION_LINE_ID = "work-page-edition"
 
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment
@@ -104,6 +113,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
   )
   const hasEditionsToChooseFrom = shownEditions.length > 1
   const isEditionPickerLoading = isSwitchingMaterialType || isLoadingAvailability
+  const showEditionSwitch = !isEditionPickerLoading && hasEditionsToChooseFrom
 
   const editionButtonRef = useRef<HTMLButtonElement>(null)
   const shouldRestoreEditionFocus = useRef(false)
@@ -195,8 +205,10 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
               BLÅ
             </Badge>
           ) : null}
-          <h1 lang={languageCode} className="text-typo-heading-3 break-words hyphens-auto lg:mt-0">
-            {selectedManifestation?.titles?.full || ""}
+          <h1
+            lang={languageCode}
+            className="text-typo-heading-3 w-full break-words hyphens-auto lg:mt-0">
+            {selectedManifestation?.titles?.main[0] ?? selectedManifestation?.titles?.full[0] ?? ""}
           </h1>
           {/* A work without named creators falls back to the edition's
               contributors — an anthology, say, credited to its editor. */}
@@ -205,37 +217,37 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
               hasCreators(work.creators) ? work.creators : selectedManifestation.contributors
             }
           />
+          <div className="mt-grid-gap-2 flex flex-wrap items-center gap-x-4 gap-y-3 lg:mt-8">
+            <p
+              id={EDITION_LINE_ID}
+              className="text-typo-body-md text-foreground-muted flex items-center gap-2">
+              <Icon name="editions" className="h-[0.9375rem] w-[0.9375rem] shrink-0" />
+              {`Udgave: ${editionChoiceLabel}`}
+            </p>
+            {showEditionSwitch && (
+              <MotionPillButton
+                ref={editionButtonRef}
+                aria-label="Skift udgave"
+                aria-describedby={EDITION_LINE_ID}
+                onClick={openEditionsSelect}
+                whileTap={{ scale: 0.92 }}
+                whileHover={{ scale: 1.06 }}
+                classNames="bg-background-overlay text-foreground-muted">
+                <Icon name="switch" className="h-[14px] w-[14px] shrink-0" />
+                <span>Skift</span>
+              </MotionPillButton>
+            )}
+          </div>
         </div>
-        <div className="col-span-4 mt-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
+        <div
+          className="mt-grid-gap-2 col-span-4 flex flex-col items-end justify-end lg:order-3
+            lg:mt-0">
           {/* The edition picker closes on confirm, so the choice it made is
               announced here instead. Keyed by the nonce, so a repeated
               sentence still replaces the node and counts as a change. */}
           <p key={choiceAnnouncement.nonce} role="status" className="sr-only">
             {choiceAnnouncement.text}
           </p>
-          {/* Shown only once the type resolves to more than one obtainable
-              edition, and never mid-switch. */}
-          {!isEditionPickerLoading && hasEditionsToChooseFrom && (
-            <div className="mb-3 w-full">
-              <WorkPageButtons>
-                <button
-                  type="button"
-                  ref={editionButtonRef}
-                  onClick={openEditionsSelect}
-                  aria-label={`Udgave: ${editionChoiceLabel}. Skift udgave`}
-                  className="border-foreground/10 focus-visible text-typo-body-sm
-                    hover:bg-background-overlay flex w-full items-center justify-between gap-3
-                    rounded-full border px-5 py-3 text-left transition-colors lg:max-w-80
-                    lg:min-w-72">
-                  <span className="min-w-0 truncate">
-                    {"Udgave: "}
-                    <span className="font-semibold">{editionChoiceLabel}</span>
-                  </span>
-                  <span className="animate-text-underline shrink-0">Skift</span>
-                </button>
-              </WorkPageButtons>
-            </div>
-          )}
           {isLoggedIn ? (
             <WorkPageButtonsLoggedIn
               workId={work.workId}

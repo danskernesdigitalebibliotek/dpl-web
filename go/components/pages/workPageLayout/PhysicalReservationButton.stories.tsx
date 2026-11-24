@@ -33,7 +33,7 @@ const manifestation: ManifestationWorkPageFragment = {
       },
     ],
   }),
-  titles: { full: ["Vildheks"], identifyingAddition: null },
+  titles: { full: ["Vildheks"], main: ["Vildheks"], identifyingAddition: null },
   series: [],
   subjects: { all: [] },
 }
@@ -79,7 +79,7 @@ const seed = (availability: MaterialAvailability) => (client: QueryClient) => {
 }
 
 const meta = {
-  title: "Pages/WorkPage/PhysicalReservationButton",
+  title: "components/PhysicalReservationButton",
   component: PhysicalReservationButton,
   // Mirrors WorkPageButtons, which is the only place the work page renders
   // this and which owns the spacing between the help text and the button.
