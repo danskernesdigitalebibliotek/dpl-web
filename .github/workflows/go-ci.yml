@@ -244,10 +244,6 @@ jobs:
       # swc refuses its default cache in /github/home, whose parent the
       # runner user can write; /tmp has the sticky bit.
       SWC_NATIVE_BINDING_CACHE: /tmp/swc
-      # The screenshots are taken with Playwright, so the Cypress binary is
-      # never used here, and its postinstall often fails to unzip it into
-      # /github/home/.cache inside this container.
-      CYPRESS_INSTALL_BINARY: '0'
     defaults:
       run:
         working-directory: go
@@ -308,6 +304,10 @@ jobs:
         uses: cardinalby/export-env-action@v2
         with:
           envFile: 'go/.env.test'
+      # common-setup-js skips the binary, and the action below is told not to
+      # install it.
+      - name: Install the Cypress binary
+        run: pnpm exec cypress install
       - name: Build the Nextjs app and run Cypress tests
         uses: cypress-io/github-action@v7
         env:

@@ -53,6 +53,11 @@ runs:
         CI: 1
         NODE_AUTH_TOKEN: ${{ inputs.token }}
         PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        # cms/ and react/ lock the same Cypress version, and their postinstalls
+        # run concurrently and unzip into the same cache directory, deleting
+        # each other's files. Jobs that run Cypress on the runner install the
+        # binary themselves afterwards with `pnpm exec cypress install`.
+        CYPRESS_INSTALL_BINARY: '0'
     # The WeDoBooks wrapper is the only workspace package that ships a build
     # instead of sources - the SDK has to be pre-bundled for webpack to accept
     # it. Nothing that imports it can typecheck or build until its dist exists.
