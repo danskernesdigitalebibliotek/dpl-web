@@ -76,10 +76,12 @@ const EditionsSelectModalItem = ({
         has-checked:border-foreground rounded-base relative row-span-4 grid cursor-pointer
         grid-rows-subgrid gap-y-0 border-2 border-transparent p-4 transition-[border-color]
         has-focus-visible:ring-2 has-focus-visible:ring-offset-2">
+      {/* Covers the whole card, so focusing it scrolls to the card the reader
+          clicked rather than to its top corner, which may be out of view. */}
       <input
         type="radio"
         name={name}
-        className="sr-only absolute"
+        className="absolute inset-0 cursor-pointer appearance-none opacity-0"
         checked={checked}
         onChange={onSelect}
         aria-label={accessibleName}

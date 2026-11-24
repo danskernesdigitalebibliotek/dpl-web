@@ -110,7 +110,12 @@ const EditionsSelectModal = ({
   }
 
   return (
-    <ResponsiveDialog title="Vælg udgave" open={open} onClose={handleClose}>
+    <ResponsiveDialog
+      title="Vælg udgave"
+      open={open}
+      onClose={handleClose}
+      // The browser's own scroll to a focused card glides instead of jumping.
+      bodyClassName="scroll-smooth">
       <fieldset className="m-0 border-0 p-0">
         <legend className="sr-only">Vælg udgave</legend>
         {/* Four implicit rows per card — cover, title, details, status — which
