@@ -272,3 +272,14 @@ if (getenv('LAGOON')) {
     ];
   }
 }
+
+// TEMPORARY - DO NOT MERGE. Break the database connection for web requests on
+// the PR environment for DDF-849, to show the error page from a real failure.
+// CLI is left alone so drush deploy still works during the Lagoon build.
+if (
+  getenv('LAGOON_PROJECT') === 'dpl-web'
+  && getenv('LAGOON_ENVIRONMENT') === 'pr-2539'
+  && PHP_SAPI !== 'cli'
+) {
+  $databases['default']['default']['host'] = 'does-not-exist.invalid';
+}
