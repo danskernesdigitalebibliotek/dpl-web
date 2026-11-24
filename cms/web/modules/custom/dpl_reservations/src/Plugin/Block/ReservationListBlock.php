@@ -96,7 +96,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'expiration-warning-days-before-config' => $general_settings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
 
       // Texts.
-      // @todo Move to dpl_reservations_dpl_react_apps_data()?
+      // @todo Move to ReactAppsHooks::addReservationsData()?
       // Tried to add it there, but it only seem to accept strings as values.
       'materials-in-stock-info-text' => [
         'type' => 'plural',
