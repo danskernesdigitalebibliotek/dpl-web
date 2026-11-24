@@ -53,10 +53,16 @@ runs:
         CI: 1
         NODE_AUTH_TOKEN: ${{ inputs.token }}
         PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
-        # cms/ and react/ lock the same Cypress version, and their postinstalls
-        # run concurrently and unzip into the same cache directory, deleting
-        # each other's files. Jobs that run Cypress on the runner install the
-        # binary themselves afterwards with `pnpm exec cypress install`.
+        # Each workspace project has its own lockfile, so pnpm installs them
+        # as separate, concurrent installs. cms/ and react/ lock the same
+        # Cypress version, and both postinstalls unzip into the same
+        # ~/.cache/Cypress/<version>. The installer clears that directory
+        # first, so one deletes the other's files and the install fails with
+        # ENOENT. Most jobs never run Cypress anyway; the ones that do install
+        # the binary themselves with `pnpm exec cypress install`.
+        # Any other package whose build script downloads into a cache shared
+        # across projects can race the same way once two projects lock the
+        # same version of it.
         CYPRESS_INSTALL_BINARY: '0'
     # The WeDoBooks wrapper is the only workspace package that ships a build
     # instead of sources - the SDK has to be pre-bundled for webpack to accept
