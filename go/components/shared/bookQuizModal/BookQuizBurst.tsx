@@ -6,9 +6,9 @@ import React, { useEffect, useState } from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
 
-// Where the flask is in the photo, in % of its size.
-const FLASK = { left: 50, top: 72 }
-// Where each emoji lands, as offsets from the flask in % of the photo's size,
+// Where the emojis burst from, in % of the photo's size.
+const ORIGIN = { left: 50, top: 72 }
+// Where each emoji lands, as offsets from the origin in % of the photo's size,
 // so the burst keeps its shape when the photo is smaller on small screens.
 const POSITIONS = [
   { x: -51, y: -59 },
@@ -30,11 +30,11 @@ type TBookQuizBurstProps = {
   imageClassName?: string
 }
 
-// The girl with the flask, with emojis bursting out of it. With reduced motion
-// the emojis are just shown in place.
+// The girl from the quiz, with emojis bursting out around her. With reduced
+// motion the emojis are just shown in place.
 const BookQuizBurst = ({ emojis, imageClassName = "w-48 lg:w-64" }: TBookQuizBurstProps) => {
   const isReducedMotion = useReducedMotion()
-  // The emojis are first rendered in the flask, and the burst is started
+  // The emojis are first rendered at the origin, and the burst is started
   // after mount.
   const [hasBurst, setHasBurst] = useState(false)
   useEffect(() => setHasBurst(true), [])
@@ -44,8 +44,8 @@ const BookQuizBurst = ({ emojis, imageClassName = "w-48 lg:w-64" }: TBookQuizBur
       <Image
         src="/images/book-quiz-intro.png"
         alt=""
-        width={384}
-        height={384}
+        width={512}
+        height={512}
         priority
         className={cn("h-auto", imageClassName)}
       />
@@ -55,7 +55,7 @@ const BookQuizBurst = ({ emojis, imageClassName = "w-48 lg:w-64" }: TBookQuizBur
           <motion.span
             key={index}
             aria-hidden="true"
-            // Starts hidden in the flask without animating there. Otherwise
+            // Starts hidden at the origin without animating there. Otherwise
             // the emojis are first shown below the photo, where they sit in
             // the layout, and fly out from there.
             initial={false}
@@ -64,12 +64,12 @@ const BookQuizBurst = ({ emojis, imageClassName = "w-48 lg:w-64" }: TBookQuizBur
             animate={
               hasBurst
                 ? {
-                    left: `${FLASK.left + x}%`,
-                    top: `${FLASK.top + y}%`,
+                    left: `${ORIGIN.left + x}%`,
+                    top: `${ORIGIN.top + y}%`,
                     scale: 1,
                     opacity: 1,
                   }
-                : { left: `${FLASK.left}%`, top: `${FLASK.top}%`, scale: 0, opacity: 0 }
+                : { left: `${ORIGIN.left}%`, top: `${ORIGIN.top}%`, scale: 0, opacity: 0 }
             }
             transition={
               isReducedMotion

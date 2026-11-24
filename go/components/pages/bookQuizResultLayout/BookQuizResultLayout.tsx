@@ -37,7 +37,7 @@ const BookQuizResultLayout = ({ profile, steps, groupAnswers }: TBookQuizResultL
   return (
     <div className="content-container space-y-grid-gap-3">
       {/* The quiz's colour and watermark, with the girl from the quiz rising from
-          the bottom edge and the user's answers bursting out of the flask. */}
+          the bottom edge and the user's answers bursting out around her. */}
       <div
         className={cn(
           QUIZ_COLOR_CLASSES[color],
