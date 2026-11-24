@@ -5,12 +5,6 @@ import { BranchAddPage } from '../../pages/branch-add';
 import { LoginPage } from '../../pages/login-page';
 import { NodePage } from '../../pages/node';
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
-
 type OpeningHours = {
   id: number;
   category: { title: string; color: string };
@@ -70,7 +64,7 @@ const editOpeningHours = (
   method: 'POST' | 'PATCH',
   body: OpeningHoursRequest,
 ) => {
-  login();
+  LoginPage.ensureEditorLogin();
   return cy
     .request({
       method,
@@ -85,7 +79,7 @@ const editOpeningHours = (
 };
 
 const deleteOpeningHours = (id: number, repetitionId?: number) => {
-  login();
+  LoginPage.ensureEditorLogin();
   cy.request({
     method: 'DELETE',
     url: `/api/v1/opening_hours/${id}`,
@@ -99,7 +93,7 @@ const deleteOpeningHours = (id: number, repetitionId?: number) => {
 };
 
 const createBranch = (title: string) => {
-  login();
+  LoginPage.ensureEditorLogin();
   const branchAdd = new BranchAddPage();
   branchAdd.visit([]);
   branchAdd.fillTitle(title);

@@ -6391,6 +6391,7 @@ msgctxt "Global"
 msgid "Close material details modal"
 msgstr "Luk pop-up med detaljevisning af materiale"
 
+msgctxt "Header"
 msgid "Close menu"
 msgstr ""
 
@@ -11155,6 +11156,18 @@ msgid "Expand only when a scheduled date exists or when a date is required"
 msgstr ""
 "Udvider kun, når der findes en planlagt dato eller når en dato er nødvendig"
 
+msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:label"
+msgid "Expansion"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:label"
+msgid "Expansion"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:label"
+msgid "Expansion"
+msgstr ""
+
 msgid "Expected an array but got null or other type for group: @group_name"
 msgstr ""
 
@@ -14724,9 +14737,6 @@ msgstr ""
 msgid "Lightweight cron settings"
 msgstr "Letvægtscron indstillinger"
 
-msgid "Liked"
-msgstr "Husk"
-
 msgctxt "Global"
 msgid "Liked"
 msgstr "Husk"
@@ -15002,9 +15012,6 @@ msgstr "Liste af @type værdier"
 
 msgid "List of available formats"
 msgstr "Liste over tilgængelige formater"
-
-msgid "List of bookmarks"
-msgstr "Bogmærkeliste"
 
 msgctxt "taxonomy.vocabulary.webform_email_categories:description"
 msgid ""
@@ -15967,6 +15974,10 @@ msgstr "Medlemssekretær - Tilladt"
 msgid "Membership secretary - needs to view and edit membership information"
 msgstr "Medlemssekretær - skal kunne se og redigere medlemsinformation"
 
+msgid "Menu"
+msgstr "Menu"
+
+msgctxt "Header"
 msgid "Menu"
 msgstr "Menu"
 
@@ -19056,6 +19067,10 @@ msgstr ""
 
 msgid "Primary attribute (Required)"
 msgstr "Primær attribut (Påkrævet)"
+
+msgctxt "Header"
+msgid "Primary site navigation"
+msgstr ""
 
 msgctxt "block.block.claro_primary_local_tasks:settings:label"
 msgid "Primary tabs"
@@ -22246,6 +22261,18 @@ msgctxt "Paragraphs Editor Enhancements"
 msgid "Show all @title_plural"
 msgstr "Vis alle @title_plural"
 
+msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:settings:off_label"
+msgid "Show all at once"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:settings:off_label"
+msgid "Show all at once"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:settings:off_label"
+msgid "Show all at once"
+msgstr ""
+
 msgctxt "views.view.event_instance_list:display:default:display_options:filters:date__value:group_info:group_items:1:title"
 msgid "Show all events"
 msgstr ""
@@ -22445,6 +22472,10 @@ msgstr ""
 msgctxt "Library Agency Configuration"
 msgid "Side til 0-hits søgninger"
 msgstr "Side til 0-hits søgninger"
+
+msgctxt "Header"
+msgid "Sidebar site navigation"
+msgstr ""
 
 msgctxt "Patron menu"
 msgid "Sign up"
@@ -28716,6 +28747,18 @@ msgid "Use replacement tokens from the first row"
 msgstr "Brug erstatnings-tokens fra den første række"
 
 msgid "Use scrollable container"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_automatic.field_use_show_all_button:settings:on_label"
+msgid "Use show all button"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_link_automatic.field_use_show_all_button:settings:on_label"
+msgid "Use show all button"
+msgstr ""
+
+msgctxt "field.field.paragraph.material_grid_manual.field_use_show_all_button:settings:on_label"
+msgid "Use show all button"
 msgstr ""
 
 msgid "Use sidebar: No"

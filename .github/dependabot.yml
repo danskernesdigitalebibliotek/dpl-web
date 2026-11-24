@@ -108,8 +108,6 @@ updates:
       # Bump the package manually when upgrading to a new Node version.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "cypress"
-        update-types: ["version-update:semver-major"]
     schedule:
       interval: weekly
       day: sunday

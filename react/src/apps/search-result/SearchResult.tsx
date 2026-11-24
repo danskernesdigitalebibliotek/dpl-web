@@ -16,7 +16,8 @@ import {
   SearchWithPaginationQuery,
   SearchWithPaginationQueryVariables,
   useSearchFacetQuery,
-  HoldingsStatusEnum
+  HoldingsStatusEnum,
+  SearchFiltersInput
 } from "../../core/dbc-gateway/generated/graphql";
 import { fetcher } from "../../core/dbc-gateway/graphql-fetcher";
 import { Work } from "../../core/utils/types/entities";
@@ -41,6 +42,8 @@ import { isWildcardQuery } from "../advanced-search-v2/lib/query-builder";
 import { allFacetFields, createFilters } from "./helper";
 import { useCampaignMatchPOST } from "../../core/dpl-cms/dpl-cms";
 import { CampaignMatchPOSTBody } from "../../core/dpl-cms/model/campaignMatchPOSTBody";
+
+const ACCESS_TYPES_FACET_NAME: keyof SearchFiltersInput = "accessTypes";
 
 interface SearchResultProps {
   q: string;
@@ -72,8 +75,21 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
   // "On shelf" toggle state stored in URL (shared with advanced search)
   const [onShelf] = useQueryState("onShelf", parseAsBoolean.withDefault(false));
 
+  // When the "Find on shelf" filter is applied, we don't want to include interlibrary
+  // loans. That is filtered out by setting the `includeOnlineMaterials` flag on the
+  // input given to the search queries.
+  const includeOnlineMaterials = !onShelf;
+
+  // The access type options are hidden while on shelf is on, so ignore an
+  // access type that arrives together with it, e.g. from a shared link.
+  const appliedFacets = onShelf
+    ? facetsFromUrl.filter(
+        (facet) => facet.facetName !== ACCESS_TYPES_FACET_NAME
+      )
+    : facetsFromUrl;
+
   // Convert nuqs facets to filters format
-  const facetFilters = convertFacetsToFilters(facetsFromUrl);
+  const facetFilters = convertFacetsToFilters(appliedFacets);
 
   // Base filters (facets + branches)
   const baseFilters = createFilters(facetFilters, cleanBranches);
@@ -115,7 +131,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       q: { all: q },
       facets: allFacetFields,
       facetLimit: 50,
-      filters: searchFilters
+      filters: searchFilters,
+      includeOnlineMaterials
     },
     {
       placeholderData: keepPreviousData
@@ -165,7 +182,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
         q: { all: q },
         offset: p * pageSize,
         limit: pageSize,
-        filters: searchFilters
+        filters: searchFilters,
+        includeOnlineMaterials
       };
       return {
         // Same key as useSearchWithPaginationQuery so the cache is shared.
@@ -276,7 +294,10 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
       />
       <div className="search__results">
         <div className="search__grid">
-          <SearchResultFacets facets={facets} />
+          <SearchResultFacets
+            facets={facets}
+            showAccessOptions={includeOnlineMaterials}
+          />
 
           <section>
             <div className="search__results-top-bar">
@@ -304,7 +325,10 @@ const SearchResult: React.FC<SearchResultProps> = ({ q, pageSize }) => {
                           placeholders: { "@hitcount": hitcount }
                         })}
                       </h2>
-                      <SearchResultFacets facets={facets} />
+                      <SearchResultFacets
+                        facets={facets}
+                        showAccessOptions={includeOnlineMaterials}
+                      />
                     </div>
                     <div className="search-facets__dialog__actions">
                       <Button

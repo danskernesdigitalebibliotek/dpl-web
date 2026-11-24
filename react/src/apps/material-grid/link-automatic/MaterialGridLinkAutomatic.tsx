@@ -7,7 +7,6 @@ import {
 } from "../../../core/dbc-gateway/generated/graphql";
 import useGetSearchBranches from "../../../core/utils/branches";
 import { getQueryParams } from "../../../core/utils/helpers/url";
-import { useText } from "../../../core/utils/text";
 import { WorkId } from "../../../core/utils/types/ids";
 import { commaSeparatedStringToArray } from "../../advanced-search/helpers";
 import {
@@ -20,16 +19,16 @@ export type MaterialGridLinkAutomaticProps = {
   title?: string;
   description?: string;
   requestedAmount: number;
+  useShowAllButton?: boolean;
 };
 
 const MaterialGridLinkAutomatic: React.FC<MaterialGridLinkAutomaticProps> = ({
   link,
   title,
   description,
-  requestedAmount
+  requestedAmount,
+  useShowAllButton
 }) => {
-  const t = useText();
-  const buttonText = t("buttonText");
   const cleanBranches = useGetSearchBranches();
   const { advancedSearchCql, location, sublocation, onshelf, sort } =
     getQueryParams(link);
@@ -75,7 +74,8 @@ const MaterialGridLinkAutomatic: React.FC<MaterialGridLinkAutomaticProps> = ({
         title={title}
         materials={materials}
         description={description}
-        buttonText={buttonText}
+        useShowAllButton={useShowAllButton}
+        initialMaximumDisplay={useShowAllButton ? undefined : materials.length}
       />
     </>
   );

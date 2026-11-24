@@ -924,3 +924,21 @@ function dpl_update_deploy_twentythree_settings_permissions(): string {
 
   return 'Granted TwentyThree settings permissions to administrators.';
 }
+
+/**
+ * Remove the eReolen subscription.
+ */
+function dpl_update_deploy_delete_ereolen_subscription(): string {
+  if (\Drupal::getContainer()->has(SubscriptionHelper::class)) {
+    $subscription = DrupalTyped::service(SubscriptionHelper::class)->getBySubscriptionUuid("6f204837-ed6f-4683-b8c9-4200005ac1ae");
+    if ($subscription) {
+      DrupalTyped::service(SubscriptionHelper::class)->deleteWithContent($subscription);
+      return 'Removed the eReolen subscription';
+    }
+    else {
+      return 'eReolen subscription not found';
+    }
+  }
+
+  return 'No SubscriptionHelper';
+}

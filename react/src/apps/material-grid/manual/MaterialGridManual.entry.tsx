@@ -20,12 +20,14 @@ export interface MaterialGridManualEntryProps
   title?: string;
   description?: string;
   materialUrl: string;
+  useShowAllButton?: string;
 }
 
 const MaterialGridManualEntry: React.FC<MaterialGridManualEntryProps> = ({
   materials,
   title,
-  description
+  description,
+  useShowAllButton
 }) => {
   const parsedMaterialsString: MaterialGridItemProps[] = JSON.parse(materials);
   const parsedMaterials = parsedMaterialsString.map((work) => ({
@@ -39,6 +41,7 @@ const MaterialGridManualEntry: React.FC<MaterialGridManualEntryProps> = ({
         materials={parsedMaterials}
         title={title}
         description={description}
+        useShowAllButton={useShowAllButton !== "false"}
       />
     </GuardedApp>
   );
