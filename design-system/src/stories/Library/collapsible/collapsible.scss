@@ -12,6 +12,14 @@
   grid-template-rows: 0fr;
 }
 
+// Visibility flips discretely: it stays visible for the whole transition, so
+// closing hides the content once the rows have collapsed, opening shows it at
+// once.
 .collapsible__content {
   min-height: 0;
+  transition: visibility 0.3s;
+}
+
+.collapsible--closed .collapsible__content {
+  visibility: hidden;
 }
