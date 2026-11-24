@@ -10,11 +10,10 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\dpl_related_content\RelatedContentListStyle;
-use Drupal\dpl_related_content\Services\RelatedContent;
+use Drupal\dpl_related_content\Services\RelatedContentFactory;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
-use Symfony\Component\DependencyInjection\Attribute\AutowireServiceClosure;
 
 /**
  * Theme hooks for dpl_related_content module.
@@ -29,9 +28,7 @@ class ThemeHooks {
   public function __construct(
     protected RouteMatchInterface $routeMatch,
     LoggerChannelFactoryInterface $loggerFactory,
-    // The service is not shared, so each call gives a fresh instance.
-    #[AutowireServiceClosure('dpl_related_content.related_content')]
-    protected \Closure $relatedContentFactory,
+    protected RelatedContentFactory $relatedContentFactory,
   ) {
     $this->logger = $loggerFactory->get('dpl_related_content');
   }
@@ -107,7 +104,7 @@ class ThemeHooks {
       return;
     }
     try {
-      $service = $this->newRelatedContent();
+      $service = $this->relatedContentFactory->create();
       $service->setListStyle(RelatedContentListStyle::Slider);
       $service->broadSearch = FALSE;
 
@@ -196,7 +193,7 @@ class ThemeHooks {
     }
 
     try {
-      $service = $this->newRelatedContent();
+      $service = $this->relatedContentFactory->create();
       $service->setListStyle($list_style);
 
       $service->excludedUuid = $paragraph->getParentEntity()?->uuid();
@@ -284,15 +281,6 @@ class ThemeHooks {
     }
 
     return $variables;
-  }
-
-  /**
-   * Get a new RelatedContent instance.
-   */
-  protected function newRelatedContent(): RelatedContent {
-    /** @var \Drupal\dpl_related_content\Services\RelatedContent $service */
-    $service = ($this->relatedContentFactory)();
-    return $service;
   }
 
 }
