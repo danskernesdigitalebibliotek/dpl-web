@@ -20,17 +20,19 @@ export interface MaterialGridLinkAutomaticEntryProps
   description?: string;
   requestedAmount: number;
   materialUrl: string;
+  useShowAllButton?: string;
 }
 
 const MaterialGridLinkAutomaticEntry: React.FC<
   MaterialGridLinkAutomaticEntryProps
-> = ({ link, title, description, requestedAmount }) => (
+> = ({ link, title, description, requestedAmount, useShowAllButton }) => (
   <GuardedApp app="material-grid-automatic">
     <MaterialGridLinkAutomatic
       link={new URL(link)}
       title={title}
       description={description}
       requestedAmount={requestedAmount}
+      useShowAllButton={useShowAllButton !== "false"}
     />
   </GuardedApp>
 );
