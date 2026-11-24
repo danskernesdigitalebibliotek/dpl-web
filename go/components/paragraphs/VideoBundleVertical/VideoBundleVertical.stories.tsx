@@ -1,3 +1,4 @@
+import { ServiceLayerProvider } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
@@ -7,9 +8,17 @@ import VideoBundleVertical from "@/components/paragraphs/VideoBundleVertical/Vid
 
 import { worksMock } from "../VideoBundle/VideoBundle.mockData"
 
+// The work cards inside read cost-free through the service layer.
+const storyServiceLayerConfig = {
+  getBaseUrl: () => "https://biblio.example",
+  getAuthHeader: () => "Bearer story-token",
+}
+
 const withQueryClient = (Story: React.ComponentType): React.ReactElement => (
   <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
-    <Story />
+    <ServiceLayerProvider config={storyServiceLayerConfig}>
+      <Story />
+    </ServiceLayerProvider>
   </QueryClientProvider>
 )
 

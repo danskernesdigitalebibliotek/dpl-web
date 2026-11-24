@@ -8,7 +8,7 @@ export type TWorkCardMaterialType = {
 }
 
 // One entry per material type icon. Podcasts are always cost-free, other
-// types when Publizon says so for any of their manifestations.
+// types when any of their manifestations is.
 export const getWorkCardMaterialTypes = (
   manifestations: ManifestationSearchPageTeaserFragment[],
   isCostFree: (index: number) => boolean

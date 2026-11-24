@@ -39,7 +39,7 @@ const AllStates = (args: React.ComponentProps<typeof BadgeButton>) => (
     <ShowcaseItem title="transparent" description="No background until active">
       <BadgeButton {...args} variant="transparent" />
     </ShowcaseItem>
-    <ShowcaseItem title="with animation" description="Wiggles on hover">
+    <ShowcaseItem title="with animation" description="Contents scale on hover and tap">
       <BadgeButton {...args} withAnimation />
     </ShowcaseItem>
   </div>
