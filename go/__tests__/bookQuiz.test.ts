@@ -93,21 +93,22 @@ describe("getLadderSteps", () => {
     expect(getLadderSteps({ mood: "mood-any", level: "level-advanced" })).toEqual([])
   })
 
-  it("ANDs the answers and applies age and easy-to-read to every step", () => {
-    const steps = getLadderSteps({
-      genre: "genre-fantasy",
-      mood: "mood-funny",
-      age: "age-9-10",
-      level: "level-easy",
-    })
+  it("ANDs the answers and applies the age to every step", () => {
+    const steps = getLadderSteps({ genre: "genre-fantasy", mood: "mood-funny", age: "age-9-10" })
     // The ages may reach two years outside the chosen 9-10.
     expect(steps.find(step => step.id === "genre-fantasy+mood-funny")?.cql).toBe(
       '(phrase.genreandform="fantasy") AND ' +
         '(phrase.genreandform="sjove bøger" OR phrase.subject="sjov") AND ' +
-        '(ages within "9 10" NOT ages>=13 NOT ages<=6) AND ' +
-        'phrase.generalaudience="let at læse"'
+        '(ages within "9 10" NOT ages>=13 NOT ages<=6)'
     )
     expect(steps.find(step => step.id === "mood-funny")?.cql).toContain('ages within "9 10"')
+  })
+
+  it("searches on easy-to-read instead of the age when both are chosen", () => {
+    const steps = getLadderSteps({ genre: "genre-fantasy", age: "age-9-10", level: "level-easy" })
+    expect(steps.map(step => step.cql)).toEqual([
+      '(phrase.genreandform="fantasy") AND phrase.generalaudience="let at læse"',
+    ])
   })
 })
 

@@ -56,11 +56,13 @@ const getCombinations = <T>(items: T[], size: number): T[][] =>
 // answers they hold. Skipped questions and answers without a group ("Det er
 // forskelligt", "Ingen af delene") are not part of the ladder.
 //
-// Age and "easy to read" apply to every step.
+// Age or "easy to read" applies to every step. With "easy to read" the age is
+// not searched on, as the two together leave too few books. The books are
+// still sorted by the age, see rank.ts.
 export const getLadderSteps = (answers: TBookQuizAnswers): TLadderStep[] => {
   const { ageRange, easyToRead } = getBookQuizProfile(answers)
   const always = filterFalsyValuesFromArray([
-    ageRange ? ageCql(ageRange) : null,
+    ageRange && !easyToRead ? ageCql(ageRange) : null,
     easyToRead ? EASY_TO_READ_CQL : null,
   ])
   const groupAnswers = getGroupAnswers(answers)
