@@ -17,8 +17,8 @@ export type TLadderStep = {
   cql: string
 }
 
-// Books fetched per step, so there are enough left after rank.ts drops works
-// with too wide an age span, and to shuffle between on the result page.
+// Books fetched per step, so there are enough to shuffle between on the result
+// page.
 const FETCH_PER_STEP = 20
 
 // Query variables for one step. Shared by the result page sections and the
@@ -32,7 +32,15 @@ const clauseCql = (clauses: TBookQuizClause[]) =>
     .flatMap(clause => clause.cqlValues.map(value => `${clause.cqlIndex}="${value}"`))
     .join(" OR ")})`
 
-const ageCql = ([low, high]: TBookQuizRange) => `ages within "${low} ${high}"`
+// How many years an edition's age span may reach outside the chosen ages.
+const AGE_TOLERANCE = 2
+
+// Matches when one edition of the work is for the chosen ages and reaches at
+// most AGE_TOLERANCE years outside them. `within` alone only asks for overlap,
+// so most of the books for 9-10 would be for 10-14. FBI matches per edition, and
+// the ages index holds every year of an edition's span.
+const ageCql = ([low, high]: TBookQuizRange) =>
+  `(ages within "${low} ${high}" NOT ages>=${high + AGE_TOLERANCE + 1} NOT ages<=${low - AGE_TOLERANCE - 1})`
 
 // Every way to pick `size` of the items, in the order of the items.
 const getCombinations = <T>(items: T[], size: number): T[][] =>

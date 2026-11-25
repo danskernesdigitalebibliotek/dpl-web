@@ -7,14 +7,18 @@ import {
   BOOKS_PER_STEP,
   type TRankableWork,
   getAgeSpill,
-  getWorkAgeSpan,
+  getStepWorkPool,
+  getWorkAgeSpans,
   rankStepWorks,
 } from "@/lib/book-quiz/rank"
 
-const work = (workId: string, ages: [number, number] | null): TRankableWork => ({
+// One edition per age span. Null is an edition without age data.
+const work = (workId: string, ...editions: ([number, number] | null)[]): TRankableWork => ({
   workId,
   manifestations: {
-    all: [{ audience: ages ? { ages: [{ begin: ages[0], end: ages[1] }] } : null }],
+    all: editions.map(ages => ({
+      audience: ages ? { ages: [{ begin: ages[0], end: ages[1] }] } : null,
+    })),
   },
 })
 
@@ -96,28 +100,34 @@ describe("getLadderSteps", () => {
       age: "age-9-10",
       level: "level-easy",
     })
+    // The ages may reach two years outside the chosen 9-10.
     expect(steps.find(step => step.id === "genre-fantasy+mood-funny")?.cql).toBe(
       '(phrase.genreandform="fantasy") AND ' +
         '(phrase.genreandform="sjove bøger" OR phrase.subject="sjov") AND ' +
-        'ages within "9 10" AND phrase.generalaudience="let at læse"'
+        '(ages within "9 10" NOT ages>=13 NOT ages<=6) AND ' +
+        'phrase.generalaudience="let at læse"'
     )
     expect(steps.find(step => step.id === "mood-funny")?.cql).toContain('ages within "9 10"')
   })
 })
 
 describe("rank", () => {
-  it("reads the age span from any manifestation", () => {
-    expect(getWorkAgeSpan(work("a", [9, 12]))).toEqual([9, 12])
-    expect(getWorkAgeSpan(work("a", null))).toBeNull()
+  it("reads the age spans of every edition", () => {
+    expect(getWorkAgeSpans(work("a", null, [9, 12], [10, 14]))).toEqual([
+      [9, 12],
+      [10, 14],
+    ])
+    expect(getWorkAgeSpans(work("a", null))).toEqual([])
   })
 
-  it("counts the years outside the chosen range", () => {
+  it("counts the years the best fitting edition is outside the chosen range", () => {
     expect(getAgeSpill(work("a", [9, 10]), [9, 10])).toBe(0)
     expect(getAgeSpill(work("a", [8, 14]), [9, 10])).toBe(5)
+    expect(getAgeSpill(work("a", [8, 14], [9, 11]), [9, 10])).toBe(1)
     expect(getAgeSpill(work("a", null), [9, 10])).toBeNull()
   })
 
-  it("drops too wide spans, sorts by spill, keeps FBI order on ties and caps the list", () => {
+  it("sorts by spill, keeps FBI order on ties and caps the list", () => {
     const ranked = rankStepWorks(
       [
         work("wide", [6, 14]),
@@ -131,6 +141,11 @@ describe("rank", () => {
     )
     expect(ranked).toHaveLength(BOOKS_PER_STEP)
     expect(ranked.map(entry => entry.workId)).toEqual(["exact-1", "exact-2", "exact-3", "near"])
+  })
+
+  it("keeps works with a wide age span, after the better fitting ones", () => {
+    const pool = getStepWorkPool([work("wide", [6, 14]), work("exact", [9, 10])], [9, 10])
+    expect(pool.map(entry => entry.workId)).toEqual(["exact", "wide"])
   })
 
   it("keeps FBI order when no age is chosen", () => {
