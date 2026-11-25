@@ -25,7 +25,7 @@ export async function audit(repoRoot: string): Promise<Finding[]> {
     }
 
     for (const pattern of block.directories) {
-      const dirs = await expand(repoRoot, pattern)
+      const dirs = await expand(repoRoot, pattern, block.ecosystem)
       if (dirs.length === 0) unchecked(`${pattern} matches no directory`)
 
       for (const dir of dirs) {
@@ -43,9 +43,26 @@ export async function audit(repoRoot: string): Promise<Finding[]> {
   return findings
 }
 
-/** Dependabot directories are repo-root-relative, and `directories` may hold globs. */
-async function expand(repoRoot: string, pattern: string): Promise<string[]> {
+const MANIFESTS: Record<string, string> = { npm: "package.json", composer: "composer.json" }
+
+/**
+ * Dependabot directories are repo-root-relative, and `directories` may hold
+ * globs. Like Dependabot, a glob only yields directories that hold a manifest:
+ * a stray file or leftover folder must not make the block look incomplete.
+ */
+async function expand(repoRoot: string, pattern: string, ecosystem: string): Promise<string[]> {
   const relative = pattern.replace(/^\/+/, "") || "."
-  if (!relative.includes("*")) return existsSync(path.join(repoRoot, relative)) ? [relative] : []
-  return Array.fromAsync(glob(relative, { cwd: repoRoot }))
+  if (!/[*?[{]/.test(relative)) {
+    return existsSync(path.join(repoRoot, relative)) ? [relative] : []
+  }
+
+  const manifest = MANIFESTS[ecosystem]
+  const dirs: string[] = []
+  for await (const entry of glob(relative, { cwd: repoRoot, withFileTypes: true })) {
+    const dir = path.relative(repoRoot, path.join(entry.parentPath, entry.name))
+    if (entry.isDirectory() && (!manifest || existsSync(path.join(repoRoot, dir, manifest)))) {
+      dirs.push(dir)
+    }
+  }
+  return dirs.sort()
 }

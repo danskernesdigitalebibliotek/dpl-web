@@ -11,8 +11,9 @@ test("reads every block's lockfiles and points each finding at its line", async 
   const findings = (await audit(repoRoot)).map(f => `${f.line} ${f.kind}: ${f.message}`)
 
   assert.deepEqual(findings, [
-    // A glob that matched a directory without a lockfile: the block is
-    // incomplete, so "gone" (line 6) is not called dead.
+    // /no-lock* also matches a file and a folder without package.json, which
+    // are skipped like Dependabot does. The package without a lockfile makes
+    // the block incomplete, so "gone" (line 6) is not called dead.
     "3 unchecked: no-lockfile was not checked: cannot read pnpm-lock.yaml",
     // pnpm: peer suffix dropped, devDependencies read, "held" still holds.
     "11 stale: alpha in pnpm is locked at 1.0.0, inside the ignored range >=1",
