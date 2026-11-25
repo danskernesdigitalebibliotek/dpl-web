@@ -48,7 +48,7 @@ Do the upgrade later as a pull request of its own, with no unrelated changes.
 
 ### Failing checks
 
-First rule out a flaky run (see below). Then read the log of the failing job
+First rule out a [flaky run](#flaky-checks). Then read the log of the failing job
 to find out what the new version breaks:
 
 - **A breaking change we can adapt to.** Read the changelog or migration
@@ -64,6 +64,27 @@ to find out what the new version breaks:
 - **One package fails a grouped pull request.** Hold back that package only,
   so the rest of the group can be merged on the next run.
 
+### Flaky checks
+
+Before calling a failure flaky, compare it with the same job on other pull
+requests and on `develop`.
+
+Some failures are flaky in our CI in general and hit any pull request, not
+only Dependabot's. They have nothing to do with the update, so re-run the
+failed jobs:
+
+- GitHub answers `HTTP/2 504` while Composer downloads packages in
+  `dev:reset`.
+- `Go / Argos` fails in `pnpm recursive install` with `ENOENT` in the Cypress
+  cache.
+- `CMS / Check Drupal Config` fails with `Could not acquire processing lock`.
+
+One failure only hits Dependabot pull requests, and re-running does not help:
+their workflow runs can read Dependabot secrets, but not Actions secrets. A
+step that needs a secret registered only as an Actions secret, such as
+installing the WeDoBooks SDK, fails. Register the secret as a Dependabot
+secret as well.
+
 ### Minor and patch updates
 
 These should have been merged automatically. When one is still open, the cause
@@ -74,15 +95,6 @@ The `Auto-merge Dependabot` check runs once per push and gives up as soon as
 another check fails. After re-running the failed jobs, re-run the
 `Auto-merge Dependabot` run as well, or the pull request stays open with green
 checks.
-
-Before calling a failure flaky, compare it with the same job on other pull
-requests. Failures that have nothing to do with the update:
-
-- GitHub answers `HTTP/2 504` while Composer downloads packages in
-  `dev:reset`.
-- `Go / Argos` fails in `pnpm recursive install` with `ENOENT` in the Cypress
-  cache.
-- `CMS / Check Drupal Config` fails with `Could not acquire processing lock`.
 
 When one Dependabot pull request is merged, Dependabot rebases the others, and
 their checks run again.
