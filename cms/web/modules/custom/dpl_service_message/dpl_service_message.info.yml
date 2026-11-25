@@ -2,7 +2,7 @@ name: DPL service message
 description: Short, time-limited notices about outages, closures and degraded services.
 package: DPL
 type: module
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^11.2
 dependencies:
   - drupal:link
   - drupal:node
