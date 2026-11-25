@@ -178,8 +178,9 @@ The rules:
 
 ## Overrides and patches
 
-Overrides and patches are workarounds until an upstream release catches up.
-Go through them and remove those that are no longer needed:
+Overrides, and patches that backport an upstream fix, are workarounds until an
+upstream release catches up. Go through them and remove those that are no
+longer needed:
 
 - `overrides:` in [`pnpm-workspace.yaml`](../../pnpm-workspace.yaml): remove an
   override once the parent package pulls in the fixed version by itself. To
@@ -189,7 +190,9 @@ Go through them and remove those that are no longer needed:
   forced version.
 - `minimumReleaseAgeExclude:` in the same file: remove a package once the
   release it was excluded for is older than `minimumReleaseAge`.
-- `extra.patches` in [`cms/composer.json`](../../cms/composer.json): remove a
-  patch, and its file in `cms/patches/`, once the fix is in a release we use.
-  An update where the patch no longer applies fails the Composer install,
-  which is often the first sign.
+- `extra.patches` in [`cms/composer.json`](../../cms/composer.json): a patch
+  whose description names an upstream issue or advisory can go, along with its
+  file in `cms/patches/`, once the fix is in a release we use. Patches without
+  one are our own changes and stay. When an update makes the Composer install
+  fail because a patch no longer applies, check whether the fix has landed
+  upstream or the patch needs a reroll.
