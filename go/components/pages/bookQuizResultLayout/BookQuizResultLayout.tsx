@@ -3,25 +3,23 @@ import React from "react"
 import BookQuizBurst from "@/components/shared/bookQuizModal/BookQuizBurst"
 import BookQuizWatermark from "@/components/shared/bookQuizModal/BookQuizWatermark"
 import { QUIZ_COLOR_CLASSES } from "@/components/shared/bookQuizModal/colors"
-import type { TLadderPart, TLadderStep } from "@/lib/book-quiz/ladder"
+import type { TLadderStep } from "@/lib/book-quiz/ladder"
 import { type TBookQuizProfile, getBookQuizColor } from "@/lib/book-quiz/profile"
-import type { TBookQuizOption } from "@/lib/book-quiz/questions"
 import { cn } from "@/lib/helpers/helper.cn"
 
 import BookQuizSection from "./BookQuizSection"
 import OpenBookQuizButton from "./OpenBookQuizButton"
-import { getHeroEmojis, getStepAnswers } from "./helper"
+import { getHeroEmojis } from "./helper"
 
 type TBookQuizResultLayoutProps = {
   profile: TBookQuizProfile
   steps: TLadderStep[]
-  groupAnswers: Record<TLadderPart, TBookQuizOption[]>
 }
 
-const BookQuizResultLayout = ({ profile, steps, groupAnswers }: TBookQuizResultLayoutProps) => {
+const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) => {
   // Without genre, mood or subjects there is nothing to search for, e.g. when
   // the page is opened from an old or broken link.
-  if (steps.every(step => step.cql === null)) {
+  if (steps.length === 0) {
     return (
       <div className="content-container space-y-grid-gap-2">
         <h1 className="text-typo-heading-3 lg:text-typo-heading-2">Vi mangler dine svar</h1>
@@ -68,7 +66,8 @@ const BookQuizResultLayout = ({ profile, steps, groupAnswers }: TBookQuizResultL
               retaken from this page, where only the query changes. */}
           <BookQuizBurst
             key={steps.map(step => step.cql).join("|")}
-            emojis={getHeroEmojis(groupAnswers)}
+            // The first step holds all the answers.
+            emojis={getHeroEmojis(steps[0]?.answers ?? [])}
           />
         </div>
       </div>
@@ -77,11 +76,7 @@ const BookQuizResultLayout = ({ profile, steps, groupAnswers }: TBookQuizResultL
         {steps.map((step, index) => (
           <React.Fragment key={step.id}>
             {index > 0 && <hr />}
-            <BookQuizSection
-              answers={getStepAnswers(step.parts, groupAnswers)}
-              cql={step.cql}
-              ageRange={profile.ageRange}
-            />
+            <BookQuizSection answers={step.answers} cql={step.cql} ageRange={profile.ageRange} />
           </React.Fragment>
         ))}
       </div>

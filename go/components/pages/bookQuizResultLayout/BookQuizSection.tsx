@@ -17,22 +17,18 @@ import { cn } from "@/lib/helpers/helper.cn"
 import { shuffleWorks } from "./helper"
 
 type TBookQuizSectionProps = {
-  // The answers behind the step, one list per part. Shown as the title.
-  answers: TBookQuizOption[][]
-  // Null when the answers lack a part this step needs. The section is still
-  // shown, with the empty message.
-  cql: string | null
+  // The answers behind the step. Shown as the title.
+  answers: TBookQuizOption[]
+  cql: string
   ageRange?: TBookQuizRange
 }
 
 const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
-  const { data, isLoading } = useComplexSearchForBookQuizQuery(getStepQueryVariables(cql ?? ""), {
-    enabled: cql !== null,
-  })
+  const { data, isLoading } = useComplexSearchForBookQuizQuery(getStepQueryVariables(cql))
   const pool = getStepWorkPool(data?.complexSearch.works ?? [], ageRange)
   // The shuffled books belong to the search they were picked from, so a retaken
   // quiz on the same page shows its own top books again.
-  const [shuffled, setShuffled] = useState<{ cql: string | null; works: typeof pool }>()
+  const [shuffled, setShuffled] = useState<{ cql: string; works: typeof pool }>()
   const works =
     shuffled?.cql === cql
       ? shuffled.works
@@ -46,41 +42,25 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
           On small screens they wrap below the title as smaller pills. */}
       <h2 className="text-typo-heading-4 flex flex-wrap items-center gap-2 lg:gap-3">
         <span className="w-full lg:w-auto">Fordi du valgte</span>
-        {answers.map((options, index) => {
-          const [first, ...rest] =
-            options.length > 0
-              ? options.map(option => (
-                  <span
-                    key={option.id}
-                    className={cn(
-                      buttonVariants({ variant: "option" }),
-                      "pointer-events-none min-h-10 gap-2 px-4 lg:min-h-[44px] lg:gap-3 lg:px-8"
-                    )}>
-                    {option.emoji && (
-                      <span aria-hidden="true" className="text-[22px] leading-none lg:text-[28px]">
-                        {option.emoji}
-                      </span>
-                    )}
-                    {option.label}
-                  </span>
-                ))
-              : [
-                  <span key="none" className="opacity-35">
-                    …
-                  </span>,
-                ]
-          return (
-            <React.Fragment key={index}>
-              {/* The plus stays with the answer after it, so a line never
-                    ends with a plus. */}
-              <span className="flex max-w-full items-center gap-2 lg:gap-3">
-                {index > 0 && <span>+</span>}
-                {first}
-              </span>
-              {rest}
-            </React.Fragment>
-          )
-        })}
+        {answers.map((option, index) => (
+          // The plus stays with the answer after it, so a line never ends with
+          // a plus.
+          <span key={option.id} className="flex max-w-full items-center gap-2 lg:gap-3">
+            {index > 0 && <span>+</span>}
+            <span
+              className={cn(
+                buttonVariants({ variant: "option" }),
+                "pointer-events-none min-h-10 gap-2 px-4 lg:min-h-[44px] lg:gap-3 lg:px-8"
+              )}>
+              {option.emoji && (
+                <span aria-hidden="true" className="text-[22px] leading-none lg:text-[28px]">
+                  {option.emoji}
+                </span>
+              )}
+              {option.label}
+            </span>
+          </span>
+        ))}
       </h2>
       {isLoading ? (
         <SearchResultsSkeleton count={BOOKS_PER_STEP} columns={BOOKS_PER_STEP} />

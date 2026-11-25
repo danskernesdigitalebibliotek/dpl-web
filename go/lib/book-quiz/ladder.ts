@@ -1,30 +1,20 @@
 import { filterFalsyValuesFromArray } from "@/lib/helpers/helper.arrays"
 
 import type { TBookQuizClause } from "./groups"
-import type { TBookQuizProfile } from "./profile"
+import {
+  type TBookQuizAnswers,
+  type TBookQuizGroupOption,
+  getBookQuizProfile,
+  getGroupAnswers,
+} from "./profile"
 import type { TBookQuizRange } from "./questions"
 
-export type TLadderPart = "genre" | "mood" | "subjects"
-
-// The search ladder, from most to least specific. Each step is one section on
-// the result page, so trimming the ladder after user tests only touches this
-// list.
-export const LADDER: TLadderPart[][] = [
-  ["genre", "mood", "subjects"],
-  ["genre", "mood"],
-  ["genre", "subjects"],
-  ["genre"],
-  ["mood", "subjects"],
-  ["mood"],
-  ["subjects"],
-]
-
+// One search, and one section on the result page.
 export type TLadderStep = {
   id: string
-  parts: TLadderPart[]
-  // Null when a part is missing from the profile. The step is still shown,
-  // but with the "no books" message instead of a search.
-  cql: string | null
+  // The answers the step searches on. A work has to match all of them.
+  answers: TBookQuizGroupOption[]
+  cql: string
 }
 
 // Books fetched per step, so there are enough left after rank.ts drops works
@@ -37,36 +27,42 @@ export const getStepQueryVariables = (cql: string) => ({ cql, limit: FETCH_PER_S
 
 const EASY_TO_READ_CQL = 'phrase.generalaudience="let at læse"'
 
-const clauseCql = (clauses: TBookQuizClause[]): string | null => {
-  const terms = clauses.flatMap(clause =>
-    clause.cqlValues.map(value => `${clause.cqlIndex}="${value}"`)
-  )
-  return terms.length > 0 ? `(${terms.join(" OR ")})` : null
-}
+const clauseCql = (clauses: TBookQuizClause[]) =>
+  `(${clauses
+    .flatMap(clause => clause.cqlValues.map(value => `${clause.cqlIndex}="${value}"`))
+    .join(" OR ")})`
 
 const ageCql = ([low, high]: TBookQuizRange) => `ages within "${low} ${high}"`
 
-// Age and "easy to read" apply to every step. Only genre, mood and subjects are
-// loosened down the ladder.
-export const getLadderSteps = (profile: TBookQuizProfile): TLadderStep[] => {
-  const partCql: Record<TLadderPart, string | null> = {
-    genre: clauseCql(profile.genre?.match ?? []),
-    mood: clauseCql(profile.mood?.match ?? []),
-    // Several subjects widen the search: a work matches any of their terms.
-    subjects: clauseCql(profile.subjects.flatMap(group => group.match)),
-  }
-  const always = filterFalsyValuesFromArray([
-    profile.ageRange ? ageCql(profile.ageRange) : null,
-    profile.easyToRead ? EASY_TO_READ_CQL : null,
-  ])
+// Every way to pick `size` of the items, in the order of the items.
+const getCombinations = <T>(items: T[], size: number): T[][] =>
+  size === 0
+    ? [[]]
+    : items.flatMap((item, index) =>
+        getCombinations(items.slice(index + 1), size - 1).map(rest => [item, ...rest])
+      )
 
-  return LADDER.map(parts => {
-    const cqls = parts.map(part => partCql[part])
-    const complete = cqls.every(Boolean)
-    return {
-      id: parts.join("+"),
-      parts,
-      cql: complete ? [...cqls, ...always].join(" AND ") : null,
-    }
-  })
+// The search ladder, from most to least specific: first all the answers
+// together, then every combination with one answer less, down to one answer at
+// a time. All answers weigh the same, so the steps are only sorted by how many
+// answers they hold. Skipped questions and answers without a group ("Det er
+// forskelligt", "Ingen af delene") are not part of the ladder.
+//
+// Age and "easy to read" apply to every step.
+export const getLadderSteps = (answers: TBookQuizAnswers): TLadderStep[] => {
+  const { ageRange, easyToRead } = getBookQuizProfile(answers)
+  const always = filterFalsyValuesFromArray([
+    ageRange ? ageCql(ageRange) : null,
+    easyToRead ? EASY_TO_READ_CQL : null,
+  ])
+  const groupAnswers = getGroupAnswers(answers)
+  const sizes = groupAnswers.map((_, index) => groupAnswers.length - index)
+
+  return sizes.flatMap(size =>
+    getCombinations(groupAnswers, size).map(stepAnswers => ({
+      id: stepAnswers.map(option => option.id).join("+"),
+      answers: stepAnswers,
+      cql: [...stepAnswers.map(option => clauseCql(option.group.match)), ...always].join(" AND "),
+    }))
+  )
 }

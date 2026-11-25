@@ -3,7 +3,7 @@ import type { SearchParams } from "nuqs/server"
 
 import BookQuizResultLayout from "@/components/pages/bookQuizResultLayout/BookQuizResultLayout"
 import { getLadderSteps } from "@/lib/book-quiz/ladder"
-import { getBookQuizProfile, getGroupAnswers } from "@/lib/book-quiz/profile"
+import { getBookQuizProfile } from "@/lib/book-quiz/profile"
 import { loadBookQuizAnswers } from "@/lib/book-quiz/url"
 import { setPageMetadata } from "@/lib/helpers/helper.metadata"
 
@@ -15,14 +15,9 @@ type TBookQuizPageProps = { searchParams: Promise<SearchParams> }
 // the modal has already put them in the query cache, so they show at once.
 const BookQuizPage = async ({ searchParams }: TBookQuizPageProps) => {
   const answers = await loadBookQuizAnswers(searchParams)
-  const profile = getBookQuizProfile(answers)
 
   return (
-    <BookQuizResultLayout
-      profile={profile}
-      steps={getLadderSteps(profile)}
-      groupAnswers={getGroupAnswers(answers)}
-    />
+    <BookQuizResultLayout profile={getBookQuizProfile(answers)} steps={getLadderSteps(answers)} />
   )
 }
 

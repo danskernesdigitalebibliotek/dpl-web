@@ -48,9 +48,9 @@ describe("Book Quiz Tests", () => {
     cy.location("search").should("contain", "genre=genre-fantasy").and("contain", "mood=mood-funny")
     cy.dataCy("book-quiz-modal").should("not.exist")
     cy.get("h1").should("contain.text", "Fantasy & Sjov")
-    // Steps that need the skipped subjects show the empty message, the rest
-    // show at most 4 books each
-    cy.dataCy("book-quiz-section").should("have.length.above", 1)
+    // One section per combination of the two answers, with at most 4 books
+    // each
+    cy.dataCy("book-quiz-section").should("have.length", 3)
     cy.dataCy("work-card").should("have.length.at.least", 3)
   })
 })

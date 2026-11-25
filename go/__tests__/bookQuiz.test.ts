@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import { ANIMALS, FANTASY, FUNNY, SPORT } from "@/lib/book-quiz/groups"
-import { LADDER, getLadderSteps } from "@/lib/book-quiz/ladder"
+import { getLadderSteps } from "@/lib/book-quiz/ladder"
 import { getBookQuizProfile } from "@/lib/book-quiz/profile"
 import {
   BOOKS_PER_STEP,
@@ -38,47 +38,70 @@ describe("getBookQuizProfile", () => {
     const profile = getBookQuizProfile({ mood: "mood-any", level: "level-advanced" })
     expect(profile.mood).toBeUndefined()
     expect(profile.easyToRead).toBe(false)
-    expect(getLadderSteps(profile).every(step => step.cql === null)).toBe(true)
   })
 })
 
 describe("getLadderSteps", () => {
-  it("always returns every step in ladder order", () => {
-    const steps = getLadderSteps(getBookQuizProfile({ genre: "genre-fantasy" }))
-    expect(steps.map(step => step.id)).toEqual(LADDER.map(parts => parts.join("+")))
+  it("returns every combination of the answers, with most answers first", () => {
+    const steps = getLadderSteps({
+      genre: "genre-fantasy",
+      mood: "mood-funny",
+      subjects: ["subject-animals"],
+    })
+    expect(steps.map(step => step.id)).toEqual([
+      "genre-fantasy+mood-funny+subject-animals",
+      "genre-fantasy+mood-funny",
+      "genre-fantasy+subject-animals",
+      "mood-funny+subject-animals",
+      "genre-fantasy",
+      "mood-funny",
+      "subject-animals",
+    ])
   })
 
-  it("only searches steps where every part is answered", () => {
-    const steps = getLadderSteps(
-      getBookQuizProfile({ genre: "genre-fantasy", subjects: ["subject-animals"] })
+  it("counts every subject as its own answer", () => {
+    const steps = getLadderSteps({
+      genre: "genre-fantasy",
+      subjects: ["subject-animals", "subject-gaming"],
+    })
+    expect(steps.map(step => step.id)).toEqual([
+      "genre-fantasy+subject-animals+subject-gaming",
+      "genre-fantasy+subject-animals",
+      "genre-fantasy+subject-gaming",
+      "subject-animals+subject-gaming",
+      "genre-fantasy",
+      "subject-animals",
+      "subject-gaming",
+    ])
+    expect(steps[3].cql).toMatch(
+      /^\(phrase\.subject="dyr" OR .*\) AND \(phrase\.subject="gaming" OR .*\)$/
     )
-    const searched = steps.filter(step => step.cql !== null).map(step => step.id)
-    expect(searched).toEqual(["genre+subjects", "genre", "subjects"])
+    expect(steps[3].answers.map(option => option.label)).toEqual(["Dyr", "Gaming"])
   })
 
-  it("ANDs the parts and applies age and easy-to-read to every step", () => {
-    const steps = getLadderSteps(
-      getBookQuizProfile({
-        genre: "genre-fantasy",
-        mood: "mood-funny",
-        age: "age-9-10",
-        level: "level-easy",
-      })
-    )
-    expect(steps.find(step => step.id === "genre+mood")?.cql).toBe(
+  it("leaves out skipped questions and answers without a group", () => {
+    const steps = getLadderSteps({
+      genre: "genre-fantasy",
+      mood: "mood-any",
+      subjects: ["subject-other"],
+    })
+    expect(steps.map(step => step.id)).toEqual(["genre-fantasy"])
+    expect(getLadderSteps({ mood: "mood-any", level: "level-advanced" })).toEqual([])
+  })
+
+  it("ANDs the answers and applies age and easy-to-read to every step", () => {
+    const steps = getLadderSteps({
+      genre: "genre-fantasy",
+      mood: "mood-funny",
+      age: "age-9-10",
+      level: "level-easy",
+    })
+    expect(steps.find(step => step.id === "genre-fantasy+mood-funny")?.cql).toBe(
       '(phrase.genreandform="fantasy") AND ' +
         '(phrase.genreandform="sjove bøger" OR phrase.subject="sjov") AND ' +
         'ages within "9 10" AND phrase.generalaudience="let at læse"'
     )
-    expect(steps.find(step => step.id === "mood")?.cql).toContain('ages within "9 10"')
-  })
-
-  it("ORs the terms of several subjects", () => {
-    const steps = getLadderSteps(
-      getBookQuizProfile({ subjects: ["subject-animals", "subject-gaming"] })
-    )
-    const cql = steps.find(step => step.id === "subjects")?.cql
-    expect(cql).toMatch(/^\(phrase\.subject="dyr" OR .* OR phrase\.subject="gaming" OR .*\)$/)
+    expect(steps.find(step => step.id === "mood-funny")?.cql).toContain('ages within "9 10"')
   })
 })
 

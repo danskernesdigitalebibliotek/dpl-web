@@ -2,7 +2,7 @@ import type { QueryClient } from "@tanstack/react-query"
 
 import type { TBookQuizColor } from "@/lib/book-quiz/groups"
 import { getLadderSteps, getStepQueryVariables } from "@/lib/book-quiz/ladder"
-import { type TBookQuizAnswers, getBookQuizProfile } from "@/lib/book-quiz/profile"
+import type { TBookQuizAnswers } from "@/lib/book-quiz/profile"
 import {
   QUESTIONS,
   type TBookQuizQuestion,
@@ -74,8 +74,7 @@ export const getBookQuizResultUrl = (answers: TBookQuizAnswers) =>
 // them at once. A failed step is not cached and is fetched again by the page.
 export const prefetchBookQuizResults = (queryClient: QueryClient, answers: TBookQuizAnswers) =>
   Promise.all(
-    getLadderSteps(getBookQuizProfile(answers)).flatMap(({ cql }) => {
-      if (!cql) return []
+    getLadderSteps(answers).map(({ cql }) => {
       const variables = getStepQueryVariables(cql)
       return queryClient.prefetchQuery({
         queryKey: useComplexSearchForBookQuizQuery.getKey(variables),

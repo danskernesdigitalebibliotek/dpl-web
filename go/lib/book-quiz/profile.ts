@@ -31,19 +31,20 @@ const findOption = (
 ): TBookQuizOption | undefined =>
   optionId ? getQuestion(questionId).options.find(option => option.id === optionId) : undefined
 
-const hasGroup = (option?: TBookQuizOption): option is TBookQuizOption => Boolean(option?.group)
+export type TBookQuizGroupOption = TBookQuizOption & { group: TBookQuizGroup }
 
-// The chosen options that search on a group, per question. Used to show the
-// answers behind each result section.
-export const getGroupAnswers = (
-  answers: TBookQuizAnswers
-): Record<"genre" | "mood" | "subjects", TBookQuizOption[]> => ({
-  genre: [findOption("genre", answers.genre)].filter(hasGroup),
-  mood: [findOption("mood", answers.mood)].filter(hasGroup),
-  subjects: (answers.subjects ?? [])
-    .map(optionId => findOption("subjects", optionId))
-    .filter(hasGroup),
-})
+const hasGroup = (option?: TBookQuizOption): option is TBookQuizGroupOption =>
+  Boolean(option?.group)
+
+// The chosen options that search on a group, in question order. Every one of
+// them counts as its own answer, also the subjects, where several can be
+// chosen.
+export const getGroupAnswers = (answers: TBookQuizAnswers): TBookQuizGroupOption[] =>
+  [
+    findOption("genre", answers.genre),
+    findOption("mood", answers.mood),
+    ...(answers.subjects ?? []).map(optionId => findOption("subjects", optionId)),
+  ].filter(hasGroup)
 
 // The colour of the result page: genre first, then mood, then the first
 // subject with a colour, as in the quiz.
