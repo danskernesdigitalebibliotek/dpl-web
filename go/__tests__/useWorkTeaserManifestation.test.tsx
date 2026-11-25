@@ -9,7 +9,7 @@ const loanDecisions = vi.hoisted(() => ({
   current: { decisions: {} as Record<string, LoanDecision>, isLoading: false },
 }))
 const sessionResolved = vi.hoisted(() => ({ current: true }))
-const borrowingSession = vi.hoisted(() => ({ current: true }))
+const borrowingSession = vi.hoisted(() => ({ current: true as boolean | undefined }))
 
 vi.mock("@danskernesdigitalebibliotek/dpl-service-layer", async importOriginal => ({
   ...(await importOriginal<object>()),
@@ -92,6 +92,12 @@ describe("useWorkTeaserManifestation", () => {
     const { result } = setup(false)
     expect(result.current.isWaiting).toBe(false)
     expect(result.current.manifestation?.pid).toBe("newest")
+  })
+
+  it("treats a config without the digital flag as a borrowing session", () => {
+    borrowingSession.current = undefined
+    const { result } = setup(false)
+    expect(result.current.isWaiting).toBe(true)
   })
 
   it("does not wait again once the pick is made", () => {

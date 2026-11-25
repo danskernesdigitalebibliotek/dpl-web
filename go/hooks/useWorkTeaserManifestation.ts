@@ -33,7 +33,10 @@ export const useWorkTeaserManifestation = ({
   isEnabled,
 }: UseWorkTeaserManifestationArgs) => {
   const isSessionResolved = useIsServiceLayerSessionResolved()
-  const { canUseDigitalLoans } = useServiceLayerConfig()
+  // Mirrors the service layer's own gate, which falls back to the patron
+  // flag for consumers that do not set the digital one.
+  const config = useServiceLayerConfig()
+  const canUseDigitalLoans = config.canUseDigitalLoans ?? config.isPatronAuthenticated ?? true
   const { decisions, isLoading } = useDigitalLoanDecisions(
     isEnabled ? getLoanDecisionMaterialIds(manifestations) : []
   )
@@ -47,7 +50,7 @@ export const useWorkTeaserManifestation = ({
   // one nothing is asked, so the pick is the newest. Remembered from then on,
   // so a background refetch, or a request for the same material started
   // elsewhere, does not reopen it.
-  const isDeciding = !isSessionResolved || (!!canUseDigitalLoans && (!isEnabled || isLoading))
+  const isDeciding = !isSessionResolved || (canUseDigitalLoans && (!isEnabled || isLoading))
   const [hasDecided, setHasDecided] = useState(false)
   useEffect(() => {
     if (!isDeciding) setHasDecided(true)
