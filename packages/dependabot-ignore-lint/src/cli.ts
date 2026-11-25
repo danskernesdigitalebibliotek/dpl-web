@@ -18,7 +18,7 @@ for (const { kind, line, message } of findings) {
 const failing = findings.filter(f => f.kind !== "unchecked").length
 console.log(
   failing
-    ? `\n${failing} ignore rule(s) in ${CONFIG} no longer hold anything back. Delete them, or split a wildcard rule.`
+    ? `\n${failing} problem(s) with the ignore rules in ${CONFIG}.`
     : `No stale ignore rules in ${CONFIG}.`
 )
 // Not process.exit: that can cut off output still queued for a pipe.

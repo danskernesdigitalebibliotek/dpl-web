@@ -17,22 +17,34 @@ export async function audit(repoRoot: string): Promise<Finding[]> {
   for (const block of await loadConfig(path.join(repoRoot, CONFIG))) {
     if (block.ignore.length === 0) continue
 
+    if (!(block.ecosystem in MANIFESTS)) {
+      findings.push({
+        kind: "unchecked",
+        line: block.line,
+        message: `no lockfile reader for ${block.ecosystem}, so this block is not checked`,
+      })
+      continue
+    }
+
+    // A directory the block names but that cannot be read fails the check: a
+    // warning would let a renamed directory or a new lockfile format turn every
+    // rule in the block unchecked while CI stays green.
     const installed = new Map<string, Installed>()
     let complete = true
-    const unchecked = (message: string) => {
+    const unreadable = (message: string) => {
       complete = false
-      findings.push({ kind: "unchecked", line: block.line, message })
+      findings.push({ kind: "unreadable", line: block.line, message })
     }
 
     for (const pattern of block.directories) {
       const dirs = await expand(repoRoot, pattern, block.ecosystem)
-      if (dirs.length === 0) unchecked(`${pattern} matches no directory`)
+      if (dirs.length === 0) unreadable(`${pattern} matches no directory`)
 
       for (const dir of dirs) {
         try {
           installed.set(dir, await readInstalled(path.join(repoRoot, dir), block.ecosystem))
         } catch (error) {
-          unchecked(`${dir} was not checked: ${error instanceof Error ? error.message : error}`)
+          unreadable(`cannot read ${dir}: ${error instanceof Error ? error.message : error}`)
         }
       }
     }

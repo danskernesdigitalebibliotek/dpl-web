@@ -80,6 +80,6 @@ async function readText(dir: string, file: string): Promise<string> {
   try {
     return await readFile(path.join(dir, file), "utf8")
   } catch {
-    throw new Error(`cannot read ${file}`)
+    throw new Error(`no ${file}`)
   }
 }

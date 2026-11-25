@@ -16,11 +16,12 @@ left behind after an upgrade to 15.x blocks every later 15.x patch and minor
 update, and Dependabot does not say so. This tool does, on the pull request
 that made the rule obsolete.
 
-| kind        | meaning                                                                  | fails |
-| ----------- | ------------------------------------------------------------------------ | ----- |
-| `stale`     | the version in the lockfile is inside the rule's `versions` range        | yes   |
-| `dead`      | `dependency-name` matches no direct dependency in any of its directories | yes   |
-| `unchecked` | a directory, range or version could not be read                          | no    |
+| kind         | meaning                                                                  | fails |
+| ------------ | ------------------------------------------------------------------------ | ----- |
+| `stale`      | the version in the lockfile is inside the rule's `versions` range        | yes   |
+| `dead`       | `dependency-name` matches no direct dependency in any of its directories | yes   |
+| `unreadable` | a directory the block names is missing, or its lockfile cannot be read   | yes   |
+| `unchecked`  | an ecosystem, range or version this tool cannot judge                    | no    |
 
 Delete a stale or dead rule. A stale wildcard rule (`@storybook/*`) usually
 still holds its other matches back, so split it into one rule per package

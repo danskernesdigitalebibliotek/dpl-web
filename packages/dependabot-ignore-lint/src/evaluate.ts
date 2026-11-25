@@ -7,9 +7,10 @@ export interface Finding {
   /**
    * stale: the locked version is inside the ignored range, so the rule only
    * hides updates within it. dead: the rule matches nothing it could apply to.
-   * Both fail. unchecked: the rule or a directory could not be judged.
+   * unreadable: a directory of the block could not be read. These fail.
+   * unchecked: a rule or block this tool cannot judge; only a warning.
    */
-  kind: "stale" | "dead" | "unchecked"
+  kind: "stale" | "dead" | "unreadable" | "unchecked"
   line: number
   message: string
 }
