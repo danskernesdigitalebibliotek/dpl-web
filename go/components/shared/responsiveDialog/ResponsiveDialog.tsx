@@ -23,7 +23,6 @@ import {
 import Icon from "@/components/shared/icon/Icon"
 import { modalViewVariants } from "@/components/shared/modalViewTransition/ModalViewTransition"
 import { cyKeys } from "@/cypress/support/constants"
-import { cn } from "@/lib/helpers/helper.cn"
 
 // Marker subcomponent. ResponsiveDialog finds children whose type is Actions and
 // renders their children into a sticky footer slot; everything else flows into
@@ -54,8 +53,6 @@ type ResponsiveDialogProps = {
   // Direction of the current view navigation (1 forward, -1 back); the
   // actions footer enters and exits with the same fade-and-slide.
   viewDirection?: number
-  // Added to the scrolling body, in the dialog and the drawer alike.
-  bodyClassName?: string
 }
 
 function ResponsiveDialog({
@@ -67,7 +64,6 @@ function ResponsiveDialog({
   onClose,
   onBack,
   viewDirection = 1,
-  bodyClassName,
 }: ResponsiveDialogProps) {
   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
@@ -113,11 +109,7 @@ function ResponsiveDialog({
               {description && <DialogDescription>{description}</DialogDescription>}
             </DialogHeader>
           </div>
-          <div
-            className={cn(
-              "px-grid-edge min-h-0 flex-1 overflow-y-auto py-6 lg:px-10 lg:py-10",
-              bodyClassName
-            )}>
+          <div className="px-grid-edge min-h-0 flex-1 overflow-y-auto py-6 lg:px-10 lg:py-10">
             <DialogBody>{bodyChildren}</DialogBody>
           </div>
           <AnimatePresence initial={false} custom={viewDirection}>
@@ -180,9 +172,7 @@ function ResponsiveDialog({
         <div className="px-grid-edge shrink-0">
           <hr />
         </div>
-        <div className={cn("px-grid-edge min-h-0 flex-1 overflow-y-auto py-6", bodyClassName)}>
-          {bodyChildren}
-        </div>
+        <div className="px-grid-edge min-h-0 flex-1 overflow-y-auto py-6">{bodyChildren}</div>
         <AnimatePresence initial={false} custom={viewDirection}>
           {actions && (
             <motion.div
