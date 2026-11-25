@@ -5,8 +5,8 @@ import type { Installed } from "./lockfiles.ts"
 
 export interface Finding {
   /**
-   * stale: the locked version is inside the ignored range, so the rule only
-   * hides updates within it. dead: the rule matches nothing it could apply to.
+   * stale: for some package it covers, the rule ignores either every update
+   * or none at all. dead: the rule matches nothing it could apply to.
    * unreadable: a directory of the block could not be read. These fail.
    * unchecked: a rule or block this tool cannot judge; only a warning.
    */
@@ -60,23 +60,39 @@ export function evaluate(
       continue
     }
 
+    const obsolete: string[] = []
+    const holding: string[] = []
     for (const { dir, name, version } of matches) {
       const locked = semver.clean(version, { loose: true })
+      const id = `${name} ${locked ?? version} in ${dir}`
       if (!locked) {
         findings.push({
           kind: "unchecked",
           line: rule.line,
-          message: `${name} in ${dir} is locked at ${version}, which is not a comparable version`,
+          message: `${id} is not a comparable version`,
         })
-      } else if (semver.satisfies(locked, range)) {
-        const rulePart = name === pattern ? "" : ` (rule ${pattern})`
-        findings.push({
-          kind: "stale",
-          line: rule.line,
-          message: `${name} in ${dir} is locked at ${locked}, inside the ignored range ${range}${rulePart}`,
-        })
+      } else if (semver.satisfies(locked, range) && semver.subset(`>${locked}`, range)) {
+        obsolete.push(`${id} is inside ${range}, so every update of it is ignored`)
+      } else if (!semver.intersects(range, `>${locked}`)) {
+        obsolete.push(`${id} is already past ${range}`)
+      } else {
+        // Still holds back later versions: all of them, as intended, or some,
+        // like a bounded range skipping a broken release line.
+        holding.push(id)
       }
     }
+
+    if (obsolete.length === 0) continue
+    findings.push({
+      kind: "stale",
+      line: rule.line,
+      message:
+        (pattern.includes("*") ? `${pattern}: ` : "") +
+        obsolete.join("; ") +
+        (holding.length === 0
+          ? ". Delete the rule, or raise its lower bound above the locked version."
+          : `, but it still holds back ${holding.join(", ")}. Split it so it no longer covers the former.`),
+    })
   }
 
   return findings

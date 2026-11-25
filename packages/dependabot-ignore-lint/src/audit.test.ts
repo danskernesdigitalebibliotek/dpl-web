@@ -16,11 +16,13 @@ test("reads every block's lockfiles and points each finding at its line", async 
     // and makes the block incomplete, so "gone" (line 6) is not called dead.
     "3 unreadable: cannot read no-lockfile: no pnpm-lock.yaml",
     // pnpm: peer suffix dropped, devDependencies read, "held" still holds.
-    "11 stale: alpha in pnpm is locked at 1.0.0, inside the ignored range >=1",
+    "11 stale: alpha 1.0.0 in pnpm is inside >=1, so every update of it is ignored. " +
+      "Delete the rule, or raise its lower bound above the locked version.",
     // A rule for a package that is gone is dead, update-types or not.
     "15 dead: gone matches no direct dependency in pnpm",
     // Composer: "v" prefix cleaned, transitive packages not counted.
-    "20 stale: acme/gamma in composer is locked at 1.2.0, inside the ignored range >=1.0.0",
+    "20 stale: acme/gamma 1.2.0 in composer is inside >=1.0.0, so every update of it " +
+      "is ignored. Delete the rule, or raise its lower bound above the locked version.",
     "22 dead: acme/transitive matches no direct dependency in composer",
     "24 unreadable: /missing matches no directory",
     "29 unchecked: no lockfile reader for github-actions, so this block is not checked",

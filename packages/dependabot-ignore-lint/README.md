@@ -12,20 +12,30 @@ stay behind. A rule like
   versions: [">=15"]
 ```
 
-left behind after an upgrade to 15.x blocks every later 15.x patch and minor
-update, and Dependabot does not say so. This tool does, on the pull request
-that made the rule obsolete.
+left behind after an upgrade to 15.x ignores every later version, security
+fixes included, and Dependabot does not say so. This tool does, on the pull
+request that made the rule obsolete.
 
 | kind         | meaning                                                                  | fails |
 | ------------ | ------------------------------------------------------------------------ | ----- |
-| `stale`      | the version in the lockfile is inside the rule's `versions` range        | yes   |
+| `stale`      | for a package it covers, the rule ignores every update, or none          | yes   |
 | `dead`       | `dependency-name` matches no direct dependency in any of its directories | yes   |
 | `unreadable` | a directory the block names is missing, or its lockfile cannot be read   | yes   |
 | `unchecked`  | an ecosystem, range or version this tool cannot judge                    | no    |
 
-Delete a stale or dead rule. A stale wildcard rule (`@storybook/*`) usually
-still holds its other matches back, so split it into one rule per package
-instead. Rules scoped only by `update-types` cannot go stale, but can be dead.
+A rule is stale when the locked version is inside its range and so is
+everything above it (`>=15` with 15.2 locked), or when nothing in its range
+is above the locked version (`<5` with 6.2 locked). A rule that still ignores
+some later versions but not all, such as `6.1.x` with 6.1.0 locked, may well
+be deliberate and is left alone, as is one pinning exactly the locked version
+(`>1.1.0` with 1.1.0 locked). Rules scoped only by `update-types` cannot go
+stale, but can be dead.
+
+Delete a stale or dead rule, or raise the lower bound of a stale one past the
+locked version (`>=18` became `>=19` when design-system was on 18). When the
+rule still holds back other packages a wildcard matches, or the same package
+in another directory of the block, the finding says so: split the rule, or
+the block, so it no longer covers what made it stale.
 
 Only the lockfile in each directory is read: `pnpm-lock.yaml` for `npm`, and
 `composer.lock` (filtered to what `composer.json` requires) for `composer`.

@@ -38,14 +38,47 @@ describe("evaluate", () => {
     assert.deepEqual(kinds([{ name: "a", versions: [] }], { x: { a: "2.0.0" } }), [])
   })
 
-  test("reports each stale match of a wildcard, since the rule still holds the rest back", () => {
-    const findings = run([{ name: "@s/*", versions: [">=10"] }], {
+  test("reports a rule whose range lies wholly below the locked version", () => {
+    assert.deepEqual(kinds([{ name: "a", versions: ["<5", "4.x"] }], { x: { a: "6.2.0" } }), [
+      "stale",
+    ])
+  })
+
+  test("leaves alone a bounded range that only skips some later versions", () => {
+    assert.deepEqual(kinds([{ name: "a", versions: ["6.1.x"] }], { x: { a: "6.1.0" } }), [])
+    assert.deepEqual(kinds([{ name: "a", versions: [">=16 <16.3"] }], { x: { a: "16.2.1" } }), [])
+  })
+
+  test("leaves alone a rule pinning exactly the locked version", () => {
+    assert.deepEqual(kinds([{ name: "a", versions: [">1.1.0"] }], { x: { a: "1.1.0" } }), [])
+  })
+
+  test("asks to delete or raise a rule that holds nothing back anywhere", () => {
+    const [finding] = run([{ name: "a", versions: [">=18"] }], { x: { a: "18.3.1" } })
+    assert.equal(
+      finding?.message,
+      "a 18.3.1 in x is inside >=18, so every update of it is ignored. " +
+        "Delete the rule, or raise its lower bound above the locked version."
+    )
+  })
+
+  test("asks to split a wildcard that still holds other packages back", () => {
+    const [finding] = run([{ name: "@s/*", versions: [">=10"] }], {
       x: { "@s/one": "10.0.2", "@s/two": "9.1.0" },
     })
-    assert.deepEqual(
-      findings.map(f => f.message),
-      ["@s/one in x is locked at 10.0.2, inside the ignored range >=10 (rule @s/*)"]
+    assert.equal(
+      finding?.message,
+      "@s/*: @s/one 10.0.2 in x is inside >=10, so every update of it is ignored, " +
+        "but it still holds back @s/two 9.1.0 in x. Split it so it no longer covers the former."
     )
+  })
+
+  test("asks to split a block where the rule still holds another directory back", () => {
+    const [finding] = run([{ name: "a", versions: [">=6"] }], {
+      one: { a: "6.0.0" },
+      two: { a: "5.9.3" },
+    })
+    assert.match(finding?.message ?? "", /still holds back a 5\.9\.3 in two\. Split it/)
   })
 
   test("calls a rule dead only when no directory of the block matches it", () => {
