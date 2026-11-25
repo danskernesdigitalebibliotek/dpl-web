@@ -22,7 +22,8 @@ type TBookQuizResultLayoutProps = {
 const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) => {
   // Without genre, mood or subjects there is nothing to search for, e.g. when
   // the page is opened from an old or broken link. The hero is still shown,
-  // and asks the user to take the quiz.
+  // and asks the user to take the quiz. With results the hero only points at
+  // the books, and the way back into the quiz comes after them.
   const hasResults = steps.length > 0
   const texts = getHeroTexts(hasResults)
   // The first step holds all the answers.
@@ -73,13 +74,19 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
                 </React.Fragment>
               ))}
           </h1>
-          <p className="text-typo-body-lg mx-auto mt-4 max-w-[440px] text-balance lg:mx-0 lg:mt-6">
+          {/* Set like the lead-in, so the two frame the heading and read as one
+              message with it. */}
+          <p
+            className="text-typo-subtitle-md lg:text-typo-subtitle-lg mx-auto mt-3 max-w-[520px]
+              text-balance lg:mx-0 lg:mt-4">
             {texts.text}
             {hasResults && <span aria-hidden="true"> 👇</span>}
           </p>
-          <OpenBookQuizButton theme="secondary" className="bg-background mt-6 lg:mt-10">
-            Tag quizzen igen
-          </OpenBookQuizButton>
+          {!hasResults && (
+            <OpenBookQuizButton theme="secondary" className="bg-background mt-6 lg:mt-10">
+              Tag quizzen igen
+            </OpenBookQuizButton>
+          )}
         </div>
         {/* Room above for the burst, and below so the book does not sit on the
             edge. */}
@@ -104,6 +111,29 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
               ageRange={profile.ageRange}
             />
           ))}
+        </div>
+      )}
+      {/* After the books: the offer to take the quiz again, in the colours of
+          the hero. Side by side from lg. */}
+      {hasResults && (
+        <div
+          className={cn(
+            QUIZ_COLOR_CLASSES[color],
+            `dark:bg-background-overlay-solid relative isolate flex flex-col items-center gap-6
+            overflow-hidden rounded-xl bg-(--quiz-bg) px-6 py-8 text-center lg:flex-row
+            lg:justify-between lg:px-10 lg:py-10 lg:text-left`
+          )}>
+          <BookQuizWatermark
+            className="-right-[20%] -bottom-[90%] w-[70%] lg:-right-[4%] lg:-bottom-[150%]
+              lg:w-[34%]"
+          />
+          <div>
+            <h2 className="text-typo-heading-3">Fandt du ikke noget?</h2>
+            <p className="text-typo-body-lg mt-2">Tag quizzen igen og få nye forslag.</p>
+          </div>
+          <OpenBookQuizButton theme="secondary" className="bg-background shrink-0">
+            Tag quizzen igen
+          </OpenBookQuizButton>
         </div>
       )}
     </div>
