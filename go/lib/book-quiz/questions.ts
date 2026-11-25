@@ -20,8 +20,10 @@ import type { TBookQuizGroup } from "./groups"
 //
 // An option maps to at most one thing: a group (genre, mood or subject,
 // depending on the question), an age range or a reading level. Options without
-// a mapping ("Jeg aner det ikke", "Det er forskelligt", "Ingen af delene", "Alle
-// aldre", "Ved ikke", "Jeg er en kæmpe læsehest") add no filter.
+// a mapping add no filter. Most of them are the "no answer" of their question
+// ("Jeg aner det ikke", "Det er forskelligt", "Ingen af delene", "Alle aldre",
+// "Ved ikke"), marked with isNone. "Jeg er en kæmpe læsehest" is an answer, but
+// FBI has nothing to filter it on.
 
 export type TBookQuizRange = [number, number]
 
@@ -33,6 +35,10 @@ export type TBookQuizOption = {
   ageRange?: TBookQuizRange
   // Only "easy" has a filter. FBI has no marker for hard books.
   easyToRead?: boolean
+  // The "no answer" of the question. Where several options can be chosen it
+  // stands alone: choosing it clears the other choices, and choosing another
+  // option clears it.
+  isNone?: boolean
 }
 
 export type TBookQuizQuestionId = "genre" | "mood" | "subjects" | "age" | "level"
@@ -70,7 +76,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
         emoji: "🕰️",
         group: HISTORY,
       },
-      { id: "genre-any", label: "Jeg aner det ikke", emoji: "🙃" },
+      { id: "genre-any", label: "Jeg aner det ikke", emoji: "🙃", isNone: true },
     ],
   },
   {
@@ -80,7 +86,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
       { id: "mood-funny", label: "Et godt grin", emoji: "😂", group: FUNNY },
       { id: "mood-horror", label: "Gys", emoji: "🧟", group: HORROR },
       { id: "mood-romance", label: "Romantik", emoji: "💘", group: ROMANCE },
-      { id: "mood-any", label: "Det er forskelligt", emoji: "🍭" },
+      { id: "mood-any", label: "Det er forskelligt", emoji: "🍭", isNone: true },
     ],
   },
   {
@@ -92,7 +98,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
       { id: "subject-gaming", label: "Gaming", emoji: "🎮", group: GAMING },
       { id: "subject-sport", label: "Sport", emoji: "⚽", group: SPORT },
       { id: "subject-climate", label: "Klima", emoji: "🌿", group: CLIMATE },
-      { id: "subject-other", label: "Ingen af delene", emoji: "🤔" },
+      { id: "subject-other", label: "Ingen af delene", emoji: "🤔", isNone: true },
     ],
   },
   {
@@ -103,7 +109,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
       { id: "age-9-10", label: "9-10 år", ageRange: [9, 10] },
       { id: "age-11-12", label: "11-12 år", ageRange: [11, 12] },
       { id: "age-teen", label: "Teenagere", ageRange: [13, 18] },
-      { id: "age-any", label: "Alle aldre" },
+      { id: "age-any", label: "Alle aldre", isNone: true },
     ],
   },
   {
@@ -117,7 +123,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
         emoji: "📘",
         easyToRead: true,
       },
-      { id: "level-any", label: "Ved ikke", emoji: "❓" },
+      { id: "level-any", label: "Ved ikke", emoji: "❓", isNone: true },
     ],
   },
 ]

@@ -23,7 +23,9 @@ import {
 export const getSelectedIds = (answers: TBookQuizAnswers, id: TBookQuizQuestionId): string[] =>
   [answers[id] ?? []].flat()
 
-// Multi questions toggle the option, the others replace the answer.
+// Multi questions toggle the option, the others replace the answer. In a multi
+// question the "no answer" option stands alone: it takes the place of the other
+// choices, and they take its place.
 export const selectOption = (
   answers: TBookQuizAnswers,
   question: TBookQuizQuestion,
@@ -32,12 +34,13 @@ export const selectOption = (
   if (!question.multi) return { ...answers, [question.id]: optionId }
 
   const selected = getSelectedIds(answers, question.id)
-  return {
-    ...answers,
-    [question.id]: selected.includes(optionId)
-      ? selected.filter(id => id !== optionId)
-      : [...selected, optionId],
+  if (selected.includes(optionId)) {
+    return { ...answers, [question.id]: selected.filter(id => id !== optionId) }
   }
+
+  const isNone = (id: string) => Boolean(question.options.find(option => option.id === id)?.isNone)
+  const kept = isNone(optionId) ? [] : selected.filter(id => !isNone(id))
+  return { ...answers, [question.id]: [...kept, optionId] }
 }
 
 // The emoji of each question's answer for the progress circles. Multi

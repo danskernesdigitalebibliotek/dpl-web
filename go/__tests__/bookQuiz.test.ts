@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest"
 
+import { selectOption } from "@/components/shared/bookQuizModal/helper"
 import { ANIMALS, FANTASY, FUNNY, SPORT } from "@/lib/book-quiz/groups"
 import { MAX_SECTIONS, getLadderSteps, getShownSteps } from "@/lib/book-quiz/ladder"
 import { getBookQuizProfile } from "@/lib/book-quiz/profile"
+import { getQuestion } from "@/lib/book-quiz/questions"
 import {
   BOOKS_PER_STEP,
   type TRankableWork,
@@ -46,6 +48,31 @@ describe("getBookQuizProfile", () => {
     expect(profile.mood).toBeUndefined()
     expect(profile.ageRange).toBeUndefined()
     expect(profile.easyToRead).toBe(false)
+  })
+})
+
+describe("selectOption", () => {
+  const subjects = getQuestion("subjects")
+
+  it("replaces the answer in a question with one choice", () => {
+    const answers = selectOption({ genre: "genre-fantasy" }, getQuestion("genre"), "genre-scifi")
+    expect(answers.genre).toBe("genre-scifi")
+  })
+
+  it("adds an option in a multi question and takes it away again", () => {
+    const one = selectOption({ subjects: ["subject-animals"] }, subjects, "subject-gaming")
+    expect(one.subjects).toEqual(["subject-animals", "subject-gaming"])
+    expect(selectOption(one, subjects, "subject-animals").subjects).toEqual(["subject-gaming"])
+  })
+
+  it("lets the no-answer option stand alone", () => {
+    const none = selectOption(
+      { subjects: ["subject-animals", "subject-gaming"] },
+      subjects,
+      "subject-other"
+    )
+    expect(none.subjects).toEqual(["subject-other"])
+    expect(selectOption(none, subjects, "subject-sport").subjects).toEqual(["subject-sport"])
   })
 })
 
