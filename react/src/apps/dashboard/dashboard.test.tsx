@@ -6,6 +6,7 @@ import {
 } from "../../../cypress/intercepts/fbs/fbs";
 import { givenUserHasLoanedEbook } from "../../../cypress/intercepts/publizon/publizon";
 import { interceptPublizonCalls } from "../../../cypress/intercepts/publizon/interceptPublizonCalls";
+import { DashboardPage } from "../../../cypress/page-objects/dashboard/DashboardPage";
 
 const recommendedWorks = [
   {
@@ -1471,15 +1472,12 @@ describe("Dashboard", () => {
   it("shows recommendations based on one of the patron's materials", () => {
     cy.wait("@recommend");
 
-    cy.getBySel("material-slider-caption").should(
-      "have.text",
+    const slider = new DashboardPage().recommendationSlider(
       "Because you borrowed"
     );
-    cy.getBySel("material-slider-title").should(
-      "have.text",
-      "Ronja Røverdatter"
-    );
-    cy.getBySel("recommended-description")
+    slider.elements.title().should("have.text", "Ronja Røverdatter");
+    slider.elements
+      .works()
       .should("have.length", 2)
       .first()
       .should("have.text", "Alle vi børn i Snullerby");
