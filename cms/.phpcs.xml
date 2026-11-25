@@ -43,7 +43,7 @@
     <exclude name="Drupal.Commenting.Deprecated.DeprecatedMissingSeeTag"/>
   </rule>
 
-  <!-- Custom rules to ensure new hook implementations are OO-based -->
+  <!-- Custom rules to ensure hook implementations are OO-based -->
   <rule ref="./phpcs/Dpl" />
 
   <!-- Ignore existing procedual hooks until they're migrated. -->
