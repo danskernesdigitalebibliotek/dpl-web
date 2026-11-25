@@ -196,11 +196,13 @@ const BookQuizModal = ({
                 </div>
               )}
             </DialogBody>
-            {/* Same padding as the actions bar in ResponsiveDialog. */}
+            {/* A white bar along the bottom for the progress, with the same
+                padding as the actions bar in ResponsiveDialog. Its top corners
+                are rounded, to go with the round dots in it. */}
             {question && (
               <div
-                className="bg-background px-grid-edge flex justify-center py-[clamp(8px,2dvh,16px)]
-                  lg:px-10 lg:py-[clamp(8px,3dvh,24px)]">
+                className="bg-background px-grid-edge flex justify-center rounded-t-lg
+                  py-[clamp(8px,2dvh,16px)] lg:rounded-t-xl lg:px-10 lg:py-[clamp(8px,3dvh,24px)]">
                 <StepDots
                   emojis={getStepEmojis(answers)}
                   current={questionIndex}
