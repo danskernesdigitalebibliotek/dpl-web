@@ -587,9 +587,7 @@ wdb-player-bar .container {
   max-width: none;
 }
 
-/* The edition picker's dialog body scrolls smoothly, so the browser's own
-   scroll to a focused card glides. Scoped to the dialog, so the page behind it
-   keeps its scroll. */
+/* Smooth scrolling for the dialog body when it holds the edition picker. */
 [role="dialog"] :has([data-editions-select]) {
   scroll-behavior: smooth;
 }
