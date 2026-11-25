@@ -47,7 +47,7 @@ describe("Book Quiz Tests", () => {
 
     cy.location("search").should("contain", "genre=genre-fantasy").and("contain", "mood=mood-funny")
     cy.dataCy("book-quiz-modal").should("not.exist")
-    cy.get("h1").should("contain.text", "Fantasy & Sjov")
+    cy.get("h1").should("contain.text", "Fantasy").and("contain.text", "Sjov")
     // One section per combination of the two answers, with at most 4 books
     // each
     cy.dataCy("book-quiz-section").should("have.length", 3)

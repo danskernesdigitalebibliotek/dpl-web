@@ -24,7 +24,9 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
   // the page is opened from an old or broken link. The hero is still shown,
   // and asks the user to take the quiz.
   const hasResults = steps.length > 0
-  const texts = getHeroTexts(profile, hasResults)
+  const texts = getHeroTexts(hasResults)
+  // The first step holds all the answers.
+  const answers = steps[0]?.answers ?? []
   const color = getBookQuizColor(profile)
 
   return (
@@ -51,7 +53,26 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
               {texts.leadIn}
             </p>
           )}
-          <h1 className="text-typo-heading-1">{texts.title}</h1>
+          {/* With answers, the heading is what they stand for: the emoji of each
+              answer and the name of its group, e.g. "💣 Spænding, 😂 Sjov & 🐰
+              Dyr". An emoji sits close to its name and stays on the same line.
+              It is a little smaller than the letters, as emojis look bigger. */}
+          <h1 className="text-typo-heading-1">
+            {texts.title ??
+              answers.map((option, index) => (
+                <React.Fragment key={option.id}>
+                  {index > 0 && (index === answers.length - 1 ? " & " : ", ")}
+                  <span className="whitespace-nowrap">
+                    <span
+                      aria-hidden="true"
+                      className="mr-[0.25em] inline-block align-[0.06em] text-[0.8em]">
+                      {option.emoji}
+                    </span>
+                    {option.group.label}
+                  </span>
+                </React.Fragment>
+              ))}
+          </h1>
           <p className="text-typo-body-lg mx-auto mt-4 max-w-[440px] text-balance lg:mx-0 lg:mt-6">
             {texts.text}
             {hasResults && <span aria-hidden="true"> 👇</span>}
@@ -67,8 +88,7 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
               retaken from this page, where only the query changes. */}
           <BookQuizBurst
             key={steps.map(step => step.cql).join("|")}
-            // The first step holds all the answers.
-            emojis={getHeroEmojis(steps[0]?.answers ?? [])}
+            emojis={getHeroEmojis(answers)}
           />
         </div>
       </div>
