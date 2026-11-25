@@ -62,6 +62,20 @@ if (getenv('MARIADB_DATABASE_OVERRIDE')) {
   ];
 }
 
+// Show a user-friendly Danish error page instead of the core "The website
+// encountered an unexpected error" when Drupal fails hard, e.g. when the
+// database is unavailable. The handlers are registered here rather than by
+// the module, as the container may not be available when the error occurs.
+// Only for web requests: CLI tools such as drush and core scripts keep core's
+// handlers, as the module's handlers break scripts that do not fully bootstrap
+// Drupal (they call base_path(), which is not loaded there).
+// @see https://www.drupal.org/project/error_page
+if (PHP_SAPI !== 'cli') {
+  set_error_handler(['Drupal\error_page\ErrorPageErrorHandler', 'handleError']);
+  set_exception_handler(['Drupal\error_page\ErrorPageErrorHandler', 'handleException']);
+}
+$settings['error_page']['template_dir'] = $app_root . '/../error_page';
+
 // Exclude certain modules from configuration export.
 $settings['config_exclude_modules'] = [
   // Development modules that is only enabled in development environment.
@@ -262,4 +276,15 @@ if (getenv('LAGOON')) {
       ],
     ];
   }
+}
+
+// TEMPORARY - DO NOT MERGE. Break the database connection for web requests on
+// the PR environment for DDF-849, to show the error page from a real failure.
+// CLI is left alone so drush deploy still works during the Lagoon build.
+if (
+  getenv('LAGOON_PROJECT') === 'dpl-web'
+  && getenv('LAGOON_ENVIRONMENT') === 'pr-2539'
+  && PHP_SAPI !== 'cli'
+) {
+  $databases['default']['default']['host'] = 'does-not-exist.invalid';
 }

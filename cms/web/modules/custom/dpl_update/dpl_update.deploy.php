@@ -929,6 +929,13 @@ function dpl_update_deploy_twentythree_settings_permissions(): string {
  * Remove the eReolen subscription.
  */
 function dpl_update_deploy_delete_ereolen_subscription(): string {
+  // bnf_client may have just been enabled by dpl_update_deploy_bnf() in this
+  // same run, in which case the service can exist before its storage does.
+  // Without storage there are no subscriptions to remove.
+  if (!\Drupal::database()->schema()->tableExists('bnf_subscription')) {
+    return 'No subscription storage';
+  }
+
   if (\Drupal::getContainer()->has(SubscriptionHelper::class)) {
     $subscription = DrupalTyped::service(SubscriptionHelper::class)->getBySubscriptionUuid("6f204837-ed6f-4683-b8c9-4200005ac1ae");
     if ($subscription) {

@@ -1407,3 +1407,10 @@ function dpl_update_update_10087(): string {
 function dpl_update_update_10088(): string {
   return _dpl_update_uninstall_modules(['autowire_plugin_trait']);
 }
+
+/**
+ * Install error_page for a user-friendly page when the site fails hard.
+ */
+function dpl_update_update_10089(): string {
+  return _dpl_update_install_modules(['error_page']);
+}
