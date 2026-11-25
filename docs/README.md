@@ -91,7 +91,7 @@ GitHub Actions workflows are located in `.github/workflows/` and prefixed by pro
 
 ### Dependencies
 
-Dependabot configuration is unified at `.github/dependabot.yml` and manages all projects. See **[Dependabot triage](./dependabot.md)** for the weekly triage.
+Dependabot configuration is unified at `.github/dependabot.yml` and manages all projects. See **[Dependabot triage](./guides/dependabot-triage.md)** for the weekly triage.
 
 ---
 

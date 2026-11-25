@@ -31,6 +31,9 @@ docs first.
   `architecture/` as the next-numbered ADR.
 - Cross-project topics (working in the CMS + React + design-system loop)
   live at the docs root — see [`development.md`](./development.md).
+- Runbooks — step-by-step procedures for recurring work or troubleshooting —
+  go in `guides/` in the subproject folder, or in [`guides/`](./guides/) at
+  the docs root when they span several subprojects.
 
 ## Document the present, not the journey
 

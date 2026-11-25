@@ -1,7 +1,7 @@
 # Dependabot triage
 
 Dependabot is configured for all projects in
-[`.github/dependabot.yml`](../.github/dependabot.yml). Minor and patch updates
+[`.github/dependabot.yml`](../../.github/dependabot.yml). Minor and patch updates
 are merged automatically once every check is green. Everything else goes
 through a weekly triage on Mondays.
 
@@ -36,7 +36,7 @@ Merge the update when the risk is low. Otherwise hold it back.
 ### Holding an update back
 
 1. Add an `ignore` entry for the new version to the project in
-   [`.github/dependabot.yml`](../.github/dependabot.yml), with a comment that
+   [`.github/dependabot.yml`](../../.github/dependabot.yml), with a comment that
    says why. For a major version, ignore only that major version, so minor
    and patch updates keep coming.
 2. Create a Jira ticket for the upgrade. Describe the role the library plays
@@ -168,7 +168,7 @@ packages and Drupal modules alike.
 ## Ignored dependencies
 
 Go through the `ignore` entries for each project in
-[`.github/dependabot.yml`](../.github/dependabot.yml) and see whether any can
+[`.github/dependabot.yml`](../../.github/dependabot.yml) and see whether any can
 be removed. Use `git blame` to see how long an entry has been there.
 
 The rules:
@@ -181,13 +181,13 @@ The rules:
 Overrides and patches are workarounds until an upstream release catches up.
 Go through them and remove those that are no longer needed:
 
-- `overrides:` in [`pnpm-workspace.yaml`](../pnpm-workspace.yaml): remove an
+- `overrides:` in [`pnpm-workspace.yaml`](../../pnpm-workspace.yaml): remove an
   override once the parent package pulls in the fixed version by itself.
   Check with `pnpm why <package>` in the affected projects that the version
   still resolves to a fixed one without the override.
 - `minimumReleaseAgeExclude:` in the same file: remove a package once the
   release it was excluded for is older than `minimumReleaseAge`.
-- `extra.patches` in [`cms/composer.json`](../cms/composer.json): remove a
+- `extra.patches` in [`cms/composer.json`](../../cms/composer.json): remove a
   patch, and its file in `cms/patches/`, once the fix is in a release we use.
   An update where the patch no longer applies fails the Composer install,
   which is often the first sign.
