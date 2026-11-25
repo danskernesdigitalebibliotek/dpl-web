@@ -3617,8 +3617,7 @@
             "support": {
                 "source": "https://github.com/drupal/core-vendor-hardening/tree/11.4.13"
             },
-            "time": "2026-01-07T19:00:53+00:00",
-            "published-time": "2026-11-18T17:00:07+00:00"
+            "time": "2026-01-07T19:00:53+00:00"
         },
         {
             "name": "drupal/crop",
@@ -5349,8 +5348,7 @@
             "homepage": "https://www.drupal.org/project/graphql_compose",
             "support": {
                 "source": "https://git.drupalcode.org/project/graphql_compose"
-            },
-            "published-time": "2025-11-20T23:33:55+00:00"
+            }
         },
         {
             "name": "drupal/gsearch",
@@ -8147,8 +8145,7 @@
             "homepage": "https://www.drupal.org/project/schemata",
             "support": {
                 "source": "https://git.drupalcode.org/project/schemata"
-            },
-            "published-time": "2024-09-12T18:04:26+00:00"
+            }
         },
         {
             "name": "drupal/search_api",
@@ -11909,11 +11906,11 @@
         },
         {
             "name": "npm-asset/select2",
-            "version": "4.1.0",
+            "version": "4.1.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/select2/-/select2-4.1.0.tgz",
-                "shasum": "8b037e02a3c025beda07fed7f9ecc7d298036e1a"
+                "url": "https://registry.npmjs.org/select2/-/select2-4.1.1.tgz",
+                "shasum": "bd66bbab8a057b17ea117196a073aa333acf315e"
             },
             "type": "npm-asset",
             "license": [
@@ -12777,8 +12774,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-19T10:31:11+00:00",
-            "published-time": "2026-11-19T10:31:27+00:00"
+            "time": "2026-11-19T10:31:11+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -23688,5 +23684,5 @@
         "ext-dom": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.11.0"
+    "plugin-api-version": "2.9.0"
 }
