@@ -37,8 +37,8 @@ Merge the update when the risk is low. Otherwise hold it back.
 
 1. Add an `ignore` entry for the new version to the project in
    [`.github/dependabot.yml`](../../.github/dependabot.yml), with a comment that
-   says why. For a major version, ignore only that major version, so minor
-   and patch updates keep coming.
+   says why. For a new major version `N`, use `versions: [">=N"]`, so minor
+   and patch updates within the current major version keep coming.
 2. Create a Jira ticket for the upgrade. Describe the role the library plays
    in the project and why the update was held back, in Danish, and link the
    Dependabot pull request and the `ignore` entry that must be removed again.
