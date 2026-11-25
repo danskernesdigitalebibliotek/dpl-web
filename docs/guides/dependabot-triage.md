@@ -81,11 +81,11 @@ failed jobs:
   cache.
 - `CMS / Check Drupal Config` fails with `Could not acquire processing lock`.
 
-One failure only hits Dependabot pull requests, and re-running does not help:
-their workflow runs can read Dependabot secrets, but not Actions secrets. A
-step that needs a secret registered only as an Actions secret, such as
-installing the WeDoBooks SDK, fails. Register the secret as a Dependabot
-secret as well.
+Workflow runs on Dependabot pull requests can read Dependabot secrets, but
+not Actions secrets. A new secret registered only as an Actions secret is
+empty there, so a step that needs it fails on Dependabot pull requests only,
+and re-running does not help. Register it as a Dependabot secret as well, as
+is done for the WeDoBooks and Argos tokens.
 
 ### Minor and patch updates
 
