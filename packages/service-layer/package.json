@@ -40,7 +40,7 @@
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^24",
     "@types/react": "^19",
-    "eslint": "^10.4.0",
+    "eslint": "^10.15.0",
     "globals": "^17.14.0",
     "graphql": "^17.1.0",
     "knip": "^6.47.0",
