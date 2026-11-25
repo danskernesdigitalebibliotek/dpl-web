@@ -120,8 +120,7 @@ When the fix is only released in a version that a parent package does not
 allow:
 
 - In the npm projects, force the fixed version with `overrides:` in
-  `pnpm-workspace.yaml`. Remove the override again once the parent package
-  pulls in the fixed version by itself.
+  `pnpm-workspace.yaml`.
 - In the CMS, backport the upstream fix as a Composer patch in `cms/patches/`.
 
 Create a Jira ticket for the real upgrade.
@@ -151,3 +150,19 @@ The rules:
 
 - Keep as few ignores as possible.
 - An ignored dependency must not stay ignored for long.
+
+## Overrides and patches
+
+Overrides and patches are workarounds until an upstream release catches up.
+Go through them and remove those that are no longer needed:
+
+- `overrides:` in [`pnpm-workspace.yaml`](../pnpm-workspace.yaml): remove an
+  override once the parent package pulls in the fixed version by itself.
+  Check with `pnpm why <package>` in the affected projects that the version
+  still resolves to a fixed one without the override.
+- `minimumReleaseAgeExclude:` in the same file: remove a package once the
+  release it was excluded for is older than `minimumReleaseAge`.
+- `extra.patches` in [`cms/composer.json`](../cms/composer.json): remove a
+  patch, and its file in `cms/patches/`, once the fix is in a release we use.
+  An update where the patch no longer applies fails the Composer install,
+  which is often the first sign.
