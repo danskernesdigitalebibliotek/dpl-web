@@ -2,14 +2,17 @@ import React from "react"
 
 import BookQuizBurst from "@/components/shared/bookQuizModal/BookQuizBurst"
 import BookQuizWatermark from "@/components/shared/bookQuizModal/BookQuizWatermark"
-import { QUIZ_COLOR_CLASSES } from "@/components/shared/bookQuizModal/colors"
+import {
+  QUIZ_COLOR_CLASSES,
+  QUIZ_EMPTY_COLOR_CLASSES,
+} from "@/components/shared/bookQuizModal/colors"
 import type { TLadderStep } from "@/lib/book-quiz/ladder"
 import { type TBookQuizProfile, getBookQuizColor } from "@/lib/book-quiz/profile"
 import { cn } from "@/lib/helpers/helper.cn"
 
 import BookQuizSection from "./BookQuizSection"
 import OpenBookQuizButton from "./OpenBookQuizButton"
-import { getHeroEmojis } from "./helper"
+import { getHeroEmojis, getHeroTexts } from "./helper"
 
 type TBookQuizResultLayoutProps = {
   profile: TBookQuizProfile
@@ -18,18 +21,10 @@ type TBookQuizResultLayoutProps = {
 
 const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) => {
   // Without genre, mood or subjects there is nothing to search for, e.g. when
-  // the page is opened from an old or broken link.
-  if (steps.length === 0) {
-    return (
-      <div className="content-container space-y-grid-gap-2">
-        <h1 className="text-typo-heading-3 lg:text-typo-heading-2">Vi mangler dine svar</h1>
-        <p className="text-typo-body-lg">Tag quizzen for at få forslag til bøger.</p>
-        <OpenBookQuizButton>Tag quizzen</OpenBookQuizButton>
-      </div>
-    )
-  }
-
-  const bookType = [profile.genre?.label, profile.mood?.label].filter(Boolean).join(" & ")
+  // the page is opened from an old or broken link. The hero is still shown,
+  // and asks the user to take the quiz.
+  const hasResults = steps.length > 0
+  const texts = getHeroTexts(profile, hasResults)
   const color = getBookQuizColor(profile)
 
   return (
@@ -38,7 +33,7 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
           the bottom edge and the user's answers bursting out around her. */}
       <div
         className={cn(
-          QUIZ_COLOR_CLASSES[color],
+          hasResults ? QUIZ_COLOR_CLASSES[color] : QUIZ_EMPTY_COLOR_CLASSES,
           `dark:bg-background-overlay-solid relative isolate grid items-center overflow-hidden
           rounded-xl bg-(--quiz-bg) px-6 pt-8 lg:grid-cols-2 lg:gap-6 lg:px-10 lg:pt-0`
         )}>
@@ -51,11 +46,15 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
             belongs to, the text a little further away, the button furthest.
             Centred above the girl on small screens, beside her from lg. */}
         <div className="text-center lg:py-10 lg:text-left">
-          <p className="text-typo-subtitle-md lg:text-typo-subtitle-lg">Du kan godt lide</p>
-          <h1 className="text-typo-heading-1 mt-1 lg:mt-2">{bookType || "Dine bogforslag"}</h1>
+          {texts.leadIn && (
+            <p className="text-typo-subtitle-md lg:text-typo-subtitle-lg mb-1 lg:mb-2">
+              {texts.leadIn}
+            </p>
+          )}
+          <h1 className="text-typo-heading-1">{texts.title}</h1>
           <p className="text-typo-body-lg mx-auto mt-4 max-w-[440px] text-balance lg:mx-0 lg:mt-6">
-            Vi har fundet bøger, der passer til dig. Du finder dem herunder.{" "}
-            <span aria-hidden="true">👇</span>
+            {texts.text}
+            {hasResults && <span aria-hidden="true"> 👇</span>}
           </p>
           <OpenBookQuizButton theme="secondary" className="bg-background mt-6 lg:mt-10">
             Tag quizzen igen
@@ -73,16 +72,18 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
       </div>
       {/* A line between the sections, with the same space on both sides. Drawn
           with CSS, as a section without books is not rendered. */}
-      <div className="divide-foreground/10 divide-y">
-        {steps.map(step => (
-          <BookQuizSection
-            key={step.id}
-            answers={step.answers}
-            cql={step.cql}
-            ageRange={profile.ageRange}
-          />
-        ))}
-      </div>
+      {hasResults && (
+        <div className="divide-foreground/10 divide-y">
+          {steps.map(step => (
+            <BookQuizSection
+              key={step.id}
+              answers={step.answers}
+              cql={step.cql}
+              ageRange={profile.ageRange}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

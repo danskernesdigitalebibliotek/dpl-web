@@ -16,3 +16,8 @@ export const QUIZ_COLOR_CLASSES: Record<TBookQuizColor, string> = {
   purple: "[--quiz-bg:var(--content-purple-100)] [--quiz-shape:var(--content-purple-200)]",
   orange: "[--quiz-bg:var(--content-orange-100)] [--quiz-shape:var(--content-orange-200)]",
 }
+
+// The result page without results: the strong shade as background and the dark
+// shade as watermark, so it stands apart from the colours of the answers.
+export const QUIZ_EMPTY_COLOR_CLASSES =
+  "[--quiz-bg:var(--content-purple-200)] [--quiz-shape:var(--content-purple-300)]"

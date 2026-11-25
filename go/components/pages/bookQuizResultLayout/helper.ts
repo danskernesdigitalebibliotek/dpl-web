@@ -1,4 +1,24 @@
+import type { TBookQuizProfile } from "@/lib/book-quiz/profile"
 import type { TBookQuizOption } from "@/lib/book-quiz/questions"
+
+type THeroTexts = { leadIn?: string; title: string; text: string }
+
+// The texts in the hero. Without results the hero asks the user to take the
+// quiz instead.
+export const getHeroTexts = (profile: TBookQuizProfile, hasResults: boolean): THeroTexts => {
+  if (!hasResults) {
+    return {
+      title: "Vi mangler dine svar",
+      text: "Tag quizzen for at få forslag til bøger.",
+    }
+  }
+  const bookType = [profile.genre?.label, profile.mood?.label].filter(Boolean).join(" & ")
+  return {
+    leadIn: "Du kan godt lide",
+    title: bookType || "Dine bogforslag",
+    text: "Vi har fundet bøger, der passer til dig. Du finder dem herunder.",
+  }
+}
 
 // Extras so the burst in the hero is never sparse.
 const HERO_EXTRA_EMOJIS = ["📚", "✨", "⭐"]
