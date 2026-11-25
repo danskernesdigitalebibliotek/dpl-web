@@ -8,7 +8,6 @@ import MaterialSlider, {
   MaterialSliderCaption,
   MaterialSliderTitle
 } from "../../components/material-slider/MaterialSlider";
-import { constructMaterialUrl } from "../../core/utils/helpers/url";
 import invalidSwitchCase from "../../core/utils/helpers/invalid-switch-case";
 import {
   NonEmptyArray,
@@ -143,8 +142,6 @@ const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
   result
 }) => {
   const t = useText();
-  const u = useUrls();
-  const materialUrl = u("materialUrl");
   const addToListRequest = useAddFavorite({ app: "dashboard" });
 
   return (
@@ -162,7 +159,7 @@ const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
           id: work.workId,
           title: work.title,
           subtitle: work.author,
-          url: constructMaterialUrl(materialUrl, work.workId),
+          url: work.url,
           coverSrc: work.coverSrc
         }))}
         onFavorite={addToListRequest}
