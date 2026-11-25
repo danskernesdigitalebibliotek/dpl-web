@@ -46,6 +46,24 @@ Merge the update when the risk is low. Otherwise hold it back.
 
 Do the upgrade later as a pull request of its own, with no unrelated changes.
 
+### Failing checks
+
+First rule out a flaky run (see below). Then read the log of the failing job
+to find out what the new version breaks:
+
+- **A breaking change we can adapt to.** Read the changelog or migration
+  guide. When the change is small, check out the branch, fix our code and push
+  it to the Dependabot branch. Dependabot stops rebasing a pull request once
+  someone else has pushed to it, so get it merged before it falls behind.
+- **Not compatible with the rest of the setup**, typically a major version
+  that a plugin or another dependency does not support yet. Hold the update
+  back until the rest of the ecosystem has caught up.
+- **A bug in the new version.** Check whether a fixed release is on its way.
+  If it is, ignore only the broken version (`versions: ["x.y.z"]`), so the fix
+  arrives as a new pull request.
+- **One package fails a grouped pull request.** Hold back that package only,
+  so the rest of the group can be merged on the next run.
+
 ### Minor and patch updates
 
 These should have been merged automatically. When one is still open, the cause
