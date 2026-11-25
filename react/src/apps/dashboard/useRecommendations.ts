@@ -1,11 +1,10 @@
 import { useGetDashboardRecommendationsQuery } from "../../core/dbc-gateway/generated/graphql";
-import { constructMaterialUrl } from "../../core/utils/helpers/url";
-import { WorkId } from "../../core/utils/types/ids";
 import { useUrls } from "../../core/utils/url";
 import { recommendationQueryOptions } from "./recommendationQueryOptions";
 import { RecommendationSeed } from "./recommendationSeed";
 import { RecommendationResult, RecommendedWork } from "./recommendations.types";
 import useRecommendationSource from "./useRecommendationSource";
+import { toRecommendedWork } from "./toRecommendedWork";
 
 export type UseRecommendationsResult =
   | { status: "loading" }
@@ -34,17 +33,9 @@ const useRecommendations = (
     );
 
   const recommendations: RecommendedWork[] | null =
-    data?.recommend.result.map(({ work }) => {
-      const workId = work.workId as WorkId;
-      return {
-        workId,
-        title: work.titles.full.join(", "),
-        author: work.creators.map((creator) => creator.display).join(", "),
-        coverSrc:
-          work.manifestations.bestRepresentation.cover.large?.url ?? null,
-        url: constructMaterialUrl(materialUrl, workId)
-      };
-    }) ?? null;
+    data?.recommend.result.map(({ work }) =>
+      toRecommendedWork(work, materialUrl)
+    ) ?? null;
 
   if (isLoadingSource || isLoadingRecommendations) {
     return { status: "loading" };
