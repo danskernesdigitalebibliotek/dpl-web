@@ -4,7 +4,7 @@ import { useInView } from "framer-motion"
 import Link from "next/link"
 import React, { useRef } from "react"
 
-import WorkCard, { WorkCardEmpty } from "@/components/shared/workCard/WorkCard"
+import WorkCard, { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import { cyKeys } from "@/cypress/support/constants"
 import { useWorkTeaserManifestation } from "@/hooks/useWorkTeaserManifestation"
 import {
@@ -41,41 +41,53 @@ const WorkTeaser = ({
   isWithTilt = true,
 }: TWorkTeaserProps) => {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true })
-  const { manifestation, materialTypes, isBlueTitle } = useWorkTeaserManifestation({
+  // Starts the lookup a little before the teaser scrolls into view.
+  const isInView = useInView(ref, { once: true, margin: "400px" })
+  const { manifestation, materialTypes, isBlueTitle, isWaiting } = useWorkTeaserManifestation({
     manifestations,
     linkedManifestations,
     isEnabled: isInView,
   })
 
-  const title = manifestation?.titles.main[0] ?? manifestation?.titles.full[0] ?? workTitle
+  const title = isWaiting
+    ? workTitle
+    : (manifestation?.titles.main[0] ?? manifestation?.titles.full[0] ?? workTitle)
   const cover = manifestation?.cover
 
+  // The link and its wrapper stay while waiting: the slider holds on to the
+  // slide element, and the wrapper carries the in-view ref.
   return (
     <Link
       prefetch={false}
       aria-label={`Tilgå værket ${title} af ${displayCreators(creators, 1)}`}
+      aria-busy={isWaiting}
       className={cn("focus-visible", className)}
       href={url}>
       <div ref={ref} className={cn("block space-y-3 lg:space-y-5", captionClassName)}>
-        {cover && manifestations.length ? (
-          <WorkCard
-            className={cardClassName}
-            title={title}
-            covers={cover}
-            materialTypes={materialTypes}
-            isBlueTitle={isBlueTitle}
-            isWithTilt={isWithTilt}
-          />
+        {isWaiting ? (
+          <WorkCardSkeleton />
         ) : (
-          <WorkCardEmpty className={cardClassName} />
+          <>
+            {cover && manifestations.length ? (
+              <WorkCard
+                className={cardClassName}
+                title={title}
+                covers={cover}
+                materialTypes={materialTypes}
+                isBlueTitle={isBlueTitle}
+                isWithTilt={isWithTilt}
+              />
+            ) : (
+              <WorkCardEmpty className={cardClassName} />
+            )}
+            <div className="space-y-2">
+              <p className="text-typo-subtitle-lg break-words" data-cy={cyKeys["work-card-title"]}>
+                {title}
+              </p>
+              <p className="text-typo-body-md opacity-70">{displayCreators(creators, 2)}</p>
+            </div>
+          </>
         )}
-        <div className="space-y-2">
-          <p className="text-typo-subtitle-lg break-words" data-cy={cyKeys["work-card-title"]}>
-            {title}
-          </p>
-          <p className="text-typo-body-md opacity-70">{displayCreators(creators, 2)}</p>
-        </div>
       </div>
     </Link>
   )
