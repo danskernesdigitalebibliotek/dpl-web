@@ -1247,6 +1247,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"<strong>Note:</strong> \"Warn\" and \"Disabled\" do not protect against "
+"forged id_tokens."
+msgstr ""
+
+msgid ""
 "<strong>Note:</strong> In 'Entity Reference' displays, all fields will be "
 "displayed inline unless an explicit selection of inline fields is made here."
 msgstr ""
@@ -1315,6 +1320,9 @@ msgstr "@count i køen"
 msgctxt "Global"
 msgid "@count reservations were deleted"
 msgstr "@count reserveringer blev slettet"
+
+msgid "@description @note"
+msgstr ""
 
 msgid "@entity using @field_name"
 msgstr "@entity som bruger @field_name"
@@ -3596,8 +3604,14 @@ msgctxt "media_twentythree"
 msgid "Allowed host names"
 msgstr "Tilladte værtsnavne"
 
+msgid "Allowed id_token signing algorithms"
+msgstr ""
+
 msgid "Allowed if bnf_server is enabled."
 msgstr "Tilladt hvis bnf_server er aktiveret."
+
+msgid "Allowed signing algorithms"
+msgstr ""
 
 msgid ""
 "Allows assigning meta tags to be used on custom routes, equivalent to custom "
@@ -7164,6 +7178,9 @@ msgstr ""
 msgid "Could not authenticate with @provider."
 msgstr "Kunne ikke godkende med @provider."
 
+msgid "Could not connect user @uid to @client: @message"
+msgstr ""
+
 msgctxt "translation handling"
 msgid "Could not create PO file: @destination due to error \"%error\""
 msgstr "Kunne ikke danne en PO fil: @destination pga fejlen \"%error\""
@@ -7257,6 +7274,9 @@ msgstr ""
 
 msgctxt "dpl_go"
 msgid "Could not reach Go to clear its cache. See the logs for details."
+msgstr ""
+
+msgid "Could not register an account for @email with @client: @message"
 msgstr ""
 
 msgid "Could not render related content list. Exception: @exception"
@@ -9016,6 +9036,12 @@ msgstr "Deaktiveret"
 msgid "Disabled / denylist / allowlist mode per entity type"
 msgstr ""
 
+msgid "Disabled: do not verify (insecure)"
+msgstr ""
+
+msgid "Discarding malformed JWKS fetched from %uri: %error"
+msgstr ""
+
 msgid "Disconnect OpenID connected accounts"
 msgstr ""
 
@@ -10249,9 +10275,6 @@ msgstr ""
 msgid "End of the word trimming"
 msgstr ""
 
-msgid "End session"
-msgstr "Afslut session"
-
 msgctxt "DPL Opening Hours Editor"
 msgid "End time"
 msgstr "Sluttidspunkt"
@@ -11177,6 +11200,9 @@ msgstr "Expected charset"
 msgid "Expected collation"
 msgstr "Forventet kollation"
 
+msgid "Expected issuer (iss claim)"
+msgstr ""
+
 msgid "Experimental"
 msgstr "Eksperimentel"
 
@@ -11350,6 +11376,9 @@ msgstr ""
 msgid ""
 "Failed to delete the old openid_connect_authmap entry for UID @uid / client "
 "@client: @message"
+msgstr ""
+
+msgid "Failed to fetch JWKS from %uri: %error"
 msgstr ""
 
 msgctxt "translation handling"
@@ -13144,6 +13173,28 @@ msgstr ""
 msgid "ID of entity crop belongs to."
 msgstr "ID for enhed, hvis beskæring tilhører."
 
+msgid "ID token issuer differs from the issuer URL"
+msgstr ""
+
+msgid "ID token validation"
+msgstr ""
+
+msgid ""
+"ID token verification is enabled for at least one client, but the firebase/"
+"php-jwt library is not installed, so tokens cannot be verified: logins are "
+"denied for clients with the \"strict\" policy and proceed unverified "
+"otherwise. Install the library with Composer."
+msgstr ""
+
+msgid "ID token verification is not enforced"
+msgstr ""
+
+msgid "ID token verification is not fully configured"
+msgstr ""
+
+msgid "ID token verification policy"
+msgstr ""
+
 msgid "IP address"
 msgstr "IP-adresse"
 
@@ -14229,6 +14280,9 @@ msgctxt "Address label"
 msgid "Island"
 msgstr "Ø"
 
+msgid "Issuer"
+msgstr ""
+
 msgid "Issuer URL"
 msgstr "Issuer-URL"
 
@@ -14358,6 +14412,15 @@ msgstr ""
 
 msgctxt "views.view.webform_submissions:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
+msgstr ""
+
+msgid "JWKS URI"
+msgstr ""
+
+msgid "JWKS endpoint %uri returned no keys."
+msgstr ""
+
+msgid "JWKS endpoint URL"
 msgstr ""
 
 msgid "January"
@@ -15328,7 +15391,25 @@ msgctxt "Global"
 msgid "Login"
 msgstr "Login"
 
+msgid "Login denied for @client: id_token validation failed: @message"
+msgstr ""
+
+msgid ""
+"Login denied for @client: strict id_token verification is enabled but "
+"issuer, jwks_uri or client_id is not configured."
+msgstr ""
+
+msgid ""
+"Login denied for @client: strict id_token verification is enabled but the "
+"token response carried no raw id_token."
+msgstr ""
+
 msgid "Login denied for @email via pre-authorize hook."
+msgstr ""
+
+msgid ""
+"Login denied for @provider: the userinfo \"sub\" does not match the id_token "
+"\"sub\"."
 msgstr ""
 
 msgid "Login to BNF"
@@ -18962,6 +19043,11 @@ msgstr "Postnummer"
 msgid "Postal/ZIP code"
 msgstr "Postnummer"
 
+msgid ""
+"Potential open relay detected. External destination @destination is not "
+"local to this site."
+msgstr ""
+
 msgid "Pragma"
 msgstr "Pragma"
 
@@ -21951,6 +22037,9 @@ msgctxt "Open order"
 msgid "Service requester is missing"
 msgstr ""
 
+msgid "Serving stale JWKS for %uri after a failed refresh."
+msgstr ""
+
 msgid "Set @theme as default theme"
 msgstr "Sæt @theme som standardtema"
 
@@ -22480,6 +22569,14 @@ msgstr ""
 msgctxt "Patron menu"
 msgid "Sign up"
 msgstr "Opret bruger"
+
+msgid "Signing algorithm"
+msgstr ""
+
+msgid ""
+"Signing algorithms accepted from this provider. \"none\" and HMAC (HS*) are "
+"intentionally not offered."
+msgstr ""
 
 msgid ""
 "Similar to Drupal's cron key this acts as a security token to prevent "
@@ -23219,6 +23316,15 @@ msgstr "Streng oprindelse"
 msgid "Strict Origin When Cross-Origin"
 msgstr "Strict Origin When Cross-Origin"
 
+msgid "Strict id_token verification requires a JWKS URI."
+msgstr ""
+
+msgid "Strict id_token verification requires an issuer."
+msgstr ""
+
+msgid "Strict: deny login if the id_token cannot be verified (recommended)"
+msgstr ""
+
 msgid ""
 "String value, should be the numeric representation of your iPad app's ID in "
 "the App Store."
@@ -23807,6 +23913,9 @@ msgstr ""
 msgid "The \"jquery_ui_accordion\" module has been installed."
 msgstr "\"jquery_ui_accordion\" modulet er installeret."
 
+msgid "The %field must be an https:// URL."
+msgstr ""
+
 msgid "The %label Paragraphs category was not saved."
 msgstr "%label paragrapher kategorien var ikke gemt."
 
@@ -24183,6 +24292,10 @@ msgstr "URLen på menuens redigeringsside."
 msgid "The URL of the one-time login page for the user account."
 msgstr "URLen på brugerkontoens engangs-login-side."
 
+msgid ""
+"The URL of the provider's JSON Web Key Set. Required for strict verification."
+msgstr ""
+
 msgid "The URL of the taxonomy term's edit page."
 msgstr "URLen på taksonomitermens redigeringsside."
 
@@ -24386,6 +24499,11 @@ msgstr "Bogen er desværre ikke tilgængelig for udlån"
 msgid "The book page associated with the node."
 msgstr "Bogsiden knyttet til indholdselementet."
 
+msgid ""
+"The cached JWKS for %uri was fetched %age seconds ago, which exceeds its "
+"stale limit. It is no longer used."
+msgstr ""
+
 msgctxt "Work Page"
 msgid ""
 "The card is temporarily blocked due to too many failed login attempts. Try "
@@ -24419,6 +24537,11 @@ msgid ""
 msgstr ""
 "Klientkonfigurationen mangler. Du kan bestille den digitale kopi ved at "
 "kontakte biblioteket."
+
+msgid ""
+"The client used for the login is unknown. Drupal session was expired, but "
+"the session at the identity provider remains."
+msgstr ""
 
 msgid "The color value in #HEX format."
 msgstr "The color value in #HEX format."
@@ -24821,6 +24944,11 @@ msgstr "Arrangementsserien associeret med en deltager"
 msgid "The eventseries type."
 msgstr "Typen af arrangementsserie."
 
+msgid ""
+"The exact \"iss\" value the id_token must declare, e.g. https://"
+"accounts.example.com. Required for strict verification."
+msgstr ""
+
 msgid "The explanation of the most recent changes made to the node."
 msgstr "Forklaringen på den seneste ændring af indholdselementet."
 
@@ -24877,6 +25005,14 @@ msgstr ""
 msgid "The file size of the image."
 msgstr "Billedets filstørrelse."
 
+msgid "The firebase/php-jwt library is not installed"
+msgstr ""
+
+msgid ""
+"The firebase/php-jwt library is required to verify id_tokens but is not "
+"installed; @action for @client."
+msgstr ""
+
 msgid "The first element of the array."
 msgstr "Det første element i arrayet."
 
@@ -24889,6 +25025,23 @@ msgid ""
 msgstr ""
 "Følgende %count tabeller har ikke korrekt database kollation og/eller "
 "tegnsæt:"
+
+msgid ""
+"The following clients have ID token verification enabled, but no issuer, "
+"JWKS URI or client ID configured, so their id_tokens cannot be verified: "
+"@clients. Logins are denied for clients with the \"strict\" policy and "
+"proceed unverified with the \"warn\" policy."
+msgstr ""
+
+msgid ""
+"The following clients use the \"warn\" or \"disabled\" ID token verification "
+"policy: @clients. They accept logins with an id_token that was not verified. "
+"If the token response can be tampered with, for example over plain HTTP, a "
+"forged id_token can log in as any user of the client. It is <strong>highly "
+"recommended</strong> to set the policy to \"strict\" once the issuer and "
+"JWKS URI are configured. Use \"warn\" or \"disabled\" only with trusted "
+"providers."
+msgstr ""
 
 msgid "The following file extensions are supported: %extensions."
 msgstr "Følgende filendelser understøttes: %extensions."
@@ -25085,6 +25238,12 @@ msgstr ""
 
 msgid "The issuer URL @url appears to be invalid."
 msgstr "Issuer-URL @url ser ud til at være ugyldig."
+
+msgid ""
+"The issuer of the following clients differs from their issuer URL: @clients. "
+"OpenID Connect Discovery requires the two to be identical. Check the issuer "
+"of each client."
+msgstr ""
 
 msgid "The items per page to show on event instance listing"
 msgstr ""
@@ -25717,6 +25876,11 @@ msgctxt "Library Agency Configuration"
 msgid "The profile to use when searching for materials."
 msgstr "Profil som anvendes til søgning efter materialer"
 
+msgid ""
+"The provider metadata declares the issuer %issuer, which differs from the "
+"issuer URL %url, so it is not used. Enter the issuer."
+msgstr ""
+
 msgid "The provider slug %slug can not be used in a URL."
 msgstr ""
 
@@ -26273,9 +26437,6 @@ msgstr "Brugermodal til at logge ind eller oprette bruger"
 
 msgid "The user roles associated with the user account."
 msgstr "Brugerrollerne forbundet til brugerkontoen."
-
-msgid "The user's time zone."
-msgstr "Brugerens tidszone."
 
 msgid "The username %name has not been activated or is blocked."
 msgstr "Brugernavnet %name er blokeret eller ikke aktiveret."
@@ -28295,6 +28456,11 @@ msgctxt "Work Page"
 msgid "Unknown error."
 msgstr "Ukendt fejl."
 
+msgid ""
+"Unknown id_token verification policy \"@policy\" for @plugin; falling back "
+"to \"warn\"."
+msgstr ""
+
 msgctxt "Global"
 msgid "Unknown user"
 msgstr "Ukendt bruger"
@@ -29135,6 +29301,9 @@ msgstr "Varnish zero-configuration purger"
 msgid "Verbose"
 msgstr "Udførlig rapport"
 
+msgid "Verification policy"
+msgstr ""
+
 msgid "Verifies ownership of a site for search engines and other services."
 msgstr ""
 "Verificerer ejerskabet af en hjemmeside for søgemaskiner og andre tjenester."
@@ -29144,6 +29313,11 @@ msgstr "Verificerer, at kun fuldt konfigurerede Varnish-purgere indlæses."
 
 msgid "Verify SSL certificate"
 msgstr "Verificér SSL certifikat"
+
+msgid ""
+"Verify the id_token signature and standard claims before its identity is "
+"trusted."
+msgstr ""
 
 msgid "Version file in libraries/dpl-react is missing!"
 msgstr ""
@@ -29381,6 +29555,9 @@ msgstr "Venteliste notifikation"
 
 msgid "Waitlisted Users"
 msgstr "Brugere på venteliste"
+
+msgid "Warn: log a warning but allow login (for staged rollout)"
+msgstr ""
 
 msgctxt "Material search"
 msgid "Warning"
@@ -29797,6 +29974,12 @@ msgstr "Windows app URL skema"
 
 msgid "Windows app name"
 msgstr "Windows app navn"
+
+msgid ""
+"With \"Auto discover endpoints\" enabled, leave empty to fill it "
+"automatically from the provider metadata (clear it and save again to re-"
+"discover)."
+msgstr ""
 
 msgctxt "views.view.redirect:display:default:display_options:fields:redirect_bulk_form:action_title"
 msgid "With selection"
@@ -31209,6 +31392,11 @@ msgstr "iPhone apps brugerdefinerede URL-skema"
 
 msgid "iTunes App details"
 msgstr "iTunes app detaljer"
+
+msgid ""
+"id_token validation failed for @client (login allowed, policy is \"warn\"): "
+"@message"
+msgstr ""
 
 msgctxt "advanced search"
 msgid "identifier"
