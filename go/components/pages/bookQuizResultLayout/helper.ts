@@ -12,10 +12,14 @@ export const getHeroTexts = (profile: TBookQuizProfile, hasResults: boolean): TH
       text: "Tag quizzen for at få forslag til bøger.",
     }
   }
-  const bookType = [profile.genre?.label, profile.mood?.label].filter(Boolean).join(" & ")
+  // The groups of all the answers, e.g. "Fantasy, Sjov & Dyr". With results
+  // there is always at least one.
+  const labels = [profile.genre, profile.mood, ...profile.subjects].flatMap(
+    group => group?.label ?? []
+  )
   return {
     leadIn: "Du kan godt lide",
-    title: bookType || "Dine bogforslag",
+    title: [labels.slice(0, -1).join(", "), ...labels.slice(-1)].filter(Boolean).join(" & "),
     text: "Vi har fundet bøger, der passer til dig. Du finder dem herunder.",
   }
 }
