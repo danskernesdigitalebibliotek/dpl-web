@@ -271,6 +271,8 @@ tasks:
       - go/pnpm-lock.yaml
       - react/package.json
       - react/pnpm-lock.yaml
+      - packages/dependabot-ignore-lint/package.json
+      - packages/dependabot-ignore-lint/pnpm-lock.yaml
       - packages/service-layer/package.json
       - packages/service-layer/pnpm-lock.yaml
       - packages/wedobooks/package.json

@@ -1,0 +1,13 @@
+lockfileVersion: '9.0'
+
+importers:
+
+  .:
+    dependencies:
+      alpha:
+        specifier: ^1.0.0
+        version: 1.0.0(peer@2.0.0)
+    devDependencies:
+      held:
+        specifier: ^2.0.0
+        version: 2.0.0
