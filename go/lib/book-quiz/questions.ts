@@ -46,6 +46,12 @@ export type TBookQuizQuestionId = "genre" | "mood" | "subjects" | "age" | "level
 export type TBookQuizQuestion = {
   id: TBookQuizQuestionId
   title: string
+  // Several options can be chosen. Without it a new choice replaces the old
+  // one. Any question can be either: nothing else in the quiz depends on which.
+  //
+  // Mind the number of searches when turning it on for genre, mood or
+  // subjects: the result page searches on every combination of those answers,
+  // so each answer more doubles the number of combinations.
   multi?: boolean
   options: TBookQuizOption[]
 }

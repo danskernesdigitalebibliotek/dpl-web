@@ -15,14 +15,14 @@ import BookQuizSection from "./BookQuizSection"
 
 type TBookQuizSectionsProps = {
   steps: TLadderStep[]
-  ageRange?: TBookQuizRange
+  ageRanges: TBookQuizRange[]
 }
 
 // Searches for the books and shows one section per step, but no more than the
 // page has room for. The shown steps are worked out again each time a search
 // comes back, as a search with too few books lets the next step in. Coming from
 // the quiz, the modal has already put the books in the query cache.
-const BookQuizSections = ({ steps, ageRange }: TBookQuizSectionsProps) => {
+const BookQuizSections = ({ steps, ageRanges }: TBookQuizSectionsProps) => {
   const queryClient = useQueryClient()
   const shownSteps = getShownBookQuizSteps(queryClient, steps)
   const results = useQueries({
@@ -38,7 +38,7 @@ const BookQuizSections = ({ steps, ageRange }: TBookQuizSectionsProps) => {
           key={step.id}
           answers={step.answers}
           cql={step.cql}
-          works={getStepWorkPool(results[index]?.data?.complexSearch.works ?? [], ageRange)}
+          works={getStepWorkPool(results[index]?.data?.complexSearch.works ?? [], ageRanges)}
           isLoading={results[index]?.isLoading ?? true}
         />
       ))}

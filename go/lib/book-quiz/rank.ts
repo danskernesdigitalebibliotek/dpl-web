@@ -23,12 +23,12 @@ export const getWorkAgeSpans = (work: TRankableWork): TBookQuizRange[] =>
     })
   )
 
-// Years the best fitting edition reaches outside the chosen range. 0 means
-// fully inside. The search matches per edition too, see ageCql in ladder.ts.
-// Null when the work has no age data.
-export const getAgeSpill = (work: TRankableWork, range: TBookQuizRange): number | null => {
-  const spills = getWorkAgeSpans(work).map(
-    ([begin, end]) => Math.max(0, range[0] - begin) + Math.max(0, end - range[1])
+// Years the best fitting edition reaches outside the chosen range it fits
+// best. 0 means fully inside. The search matches per edition and per range
+// too, see ageCql in ladder.ts. Null when the work has no age data.
+export const getAgeSpill = (work: TRankableWork, ranges: TBookQuizRange[]): number | null => {
+  const spills = getWorkAgeSpans(work).flatMap(([begin, end]) =>
+    ranges.map(([low, high]) => Math.max(0, low - begin) + Math.max(0, end - high))
   )
   return spills.length > 0 ? Math.min(...spills) : null
 }
@@ -40,12 +40,12 @@ export const getAgeSpill = (work: TRankableWork, range: TBookQuizRange): number 
 // independently, so the same book can appear in several sections.
 export const getStepWorkPool = <TWork extends TRankableWork>(
   works: TWork[],
-  ageRange: TBookQuizRange | undefined
+  ageRanges: TBookQuizRange[]
 ): TWork[] => {
-  if (!ageRange) return works
+  if (ageRanges.length === 0) return works
 
   return works
-    .map((work, index) => ({ work, index, spill: getAgeSpill(work, ageRange) }))
+    .map((work, index) => ({ work, index, spill: getAgeSpill(work, ageRanges) }))
     .sort((a, b) => (a.spill ?? Infinity) - (b.spill ?? Infinity) || a.index - b.index)
     .map(entry => entry.work)
 }

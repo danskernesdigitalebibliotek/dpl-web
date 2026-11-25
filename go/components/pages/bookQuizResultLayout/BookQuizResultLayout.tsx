@@ -99,7 +99,7 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
           />
         </div>
       </div>
-      {hasResults && <BookQuizSections steps={steps} ageRange={profile.ageRange} />}
+      {hasResults && <BookQuizSections steps={steps} ageRanges={profile.ageRanges} />}
       {/* After the books: the offer to take the quiz again, in the colours of
           the hero. Side by side from lg. */}
       {hasResults && (

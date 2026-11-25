@@ -21,7 +21,7 @@ import {
 } from "@/lib/graphql/generated/fbi/graphql"
 
 export const getSelectedIds = (answers: TBookQuizAnswers, id: TBookQuizQuestionId): string[] =>
-  [answers[id] ?? []].flat()
+  answers[id] ?? []
 
 // Multi questions toggle the option, the others replace the answer. In a multi
 // question the "no answer" option stands alone: it takes the place of the other
@@ -31,7 +31,7 @@ export const selectOption = (
   question: TBookQuizQuestion,
   optionId: string
 ): TBookQuizAnswers => {
-  if (!question.multi) return { ...answers, [question.id]: optionId }
+  if (!question.multi) return { ...answers, [question.id]: [optionId] }
 
   const selected = getSelectedIds(answers, question.id)
   if (selected.includes(optionId)) {
@@ -43,8 +43,8 @@ export const selectOption = (
   return { ...answers, [question.id]: [...kept, optionId] }
 }
 
-// The emoji of each question's answer for the progress circles. Multi
-// questions show their first choice.
+// The emoji of each question's answer for the progress circles: that of the
+// first choice.
 export const getStepEmojis = (answers: TBookQuizAnswers) =>
   QUESTIONS.map(question => {
     const [selectedId] = getSelectedIds(answers, question.id)

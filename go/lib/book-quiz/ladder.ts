@@ -43,6 +43,10 @@ const AGE_TOLERANCE = 2
 const ageCql = ([low, high]: TBookQuizRange) =>
   `(ages within "${low} ${high}" NOT ages>=${high + AGE_TOLERANCE + 1} NOT ages<=${low - AGE_TOLERANCE - 1})`
 
+// A book has to be for one of the chosen ages.
+const agesCql = (ranges: TBookQuizRange[]) =>
+  ranges.length > 1 ? `(${ranges.map(ageCql).join(" OR ")})` : ageCql(ranges[0])
+
 // Every way to pick `size` of the items, in the order of the items.
 const getCombinations = <T>(items: T[], size: number): T[][] =>
   size === 0
@@ -61,9 +65,9 @@ const getCombinations = <T>(items: T[], size: number): T[][] =>
 // not searched on, as the two together leave too few books. The books are
 // still sorted by the age, see rank.ts.
 export const getLadderSteps = (answers: TBookQuizAnswers): TLadderStep[] => {
-  const { ageRange, easyToRead } = getBookQuizProfile(answers)
+  const { ageRanges, easyToRead } = getBookQuizProfile(answers)
   const always = filterFalsyValuesFromArray([
-    ageRange && !easyToRead ? ageCql(ageRange) : null,
+    ageRanges.length > 0 && !easyToRead ? agesCql(ageRanges) : null,
     easyToRead ? EASY_TO_READ_CQL : null,
   ])
   const groupAnswers = getGroupAnswers(answers)
