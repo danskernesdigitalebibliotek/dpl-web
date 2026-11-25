@@ -31,6 +31,12 @@ be deliberate and is left alone, as is one pinning exactly the locked version
 (`>1.1.0` with 1.1.0 locked). Rules scoped only by `update-types` cannot go
 stale, but can be dead.
 
+Only direct dependencies count, as Dependabot only opens version updates for
+those. It does apply `versions` rules to security updates of transitive
+dependencies too, so a dead rule for a package that is still pulled in
+indirectly can, in principle, still limit which security fix is offered. In
+practice the version range of the package pulling it in sets that limit.
+
 Delete a stale or dead rule, or raise the lower bound of a stale one past the
 locked version (`>=18` became `>=19` when design-system was on 18). When the
 rule still holds back other packages a wildcard matches, or the same package
