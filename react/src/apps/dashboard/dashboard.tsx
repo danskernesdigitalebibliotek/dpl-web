@@ -26,10 +26,7 @@ import {
   orderRecommendationSeeds,
   workIdsToRecommendationSeeds
 } from "./recommendationSeed";
-import {
-  RecommendationOrigin,
-  RecommendationResult
-} from "./recommendations.types";
+import { RecommendationOrigin, RecommendedWork } from "./recommendations.types";
 import useRecommendations from "./useRecommendations";
 
 interface DashboardProps {
@@ -120,6 +117,7 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
 const RecommendationsAttempt: FC<{
   seeds: NonEmptyArray<RecommendationSeed>;
 }> = ({ seeds }) => {
+  const t = useText();
   const [seed, ...remainingSeeds] = seeds;
 
   const recommendationResult = useRecommendations(seed);
@@ -127,8 +125,16 @@ const RecommendationsAttempt: FC<{
   switch (recommendationResult.status) {
     case "loading":
       return null;
-    case "found":
-      return <RecommendationsSlider result={recommendationResult.result} />;
+    case "found": {
+      const { source, recommendations } = recommendationResult.result;
+      return (
+        <RecommendationsSlider
+          caption={getCaptionByOrigin(t, source.origin)}
+          title={source.title}
+          recommendations={recommendations}
+        />
+      );
+    }
     case "miss":
       return isNonEmpty(remainingSeeds) ? (
         <RecommendationsAttempt seeds={remainingSeeds} />
@@ -138,10 +144,14 @@ const RecommendationsAttempt: FC<{
   }
 };
 
-const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
-  result
-}) => {
-  const t = useText();
+/**
+ * A slider of recommended works under a caption and a title.
+ */
+const RecommendationsSlider: FC<{
+  caption: string;
+  title: string;
+  recommendations: RecommendedWork[];
+}> = ({ caption, title, recommendations }) => {
   const addToListRequest = useAddFavorite({ app: "dashboard" });
 
   return (
@@ -149,13 +159,11 @@ const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
       <MaterialSlider
         heading={
           <>
-            <MaterialSliderCaption>
-              {getCaptionByOrigin(t, result.source.origin)}
-            </MaterialSliderCaption>
-            <MaterialSliderTitle>{result.source.title}</MaterialSliderTitle>
+            <MaterialSliderCaption>{caption}</MaterialSliderCaption>
+            <MaterialSliderTitle>{title}</MaterialSliderTitle>
           </>
         }
-        items={result.recommendations.map((work) => ({
+        items={recommendations.map((work) => ({
           id: work.workId,
           title: work.title,
           subtitle: work.author,
@@ -180,7 +188,7 @@ const getCaptionByOrigin = (
     case "favorite":
       return t("dashboardRecommendationsFavoriteCaptionText");
     default:
-      invalidSwitchCase(origin);
+      return invalidSwitchCase<string>(origin);
   }
 };
 
