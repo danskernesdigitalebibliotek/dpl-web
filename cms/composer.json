@@ -353,7 +353,6 @@
                 "3615813 and escaping: two fixes to the @Translation annotation extractor": "patches/potx-translation-annotations.patch"
             },
             "drupal/purge": {
-                "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch",
                 "3462078: Disabling late runtime processor when using CLI": "patches/vendor/purge-14c09e0ec4f1f46df0f19876ad6b3e8c93921e00.patch"
             },
             "drupal/recurring_events": {
