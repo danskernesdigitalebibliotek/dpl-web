@@ -8,21 +8,20 @@ import {
   HISTORY,
   HORROR,
   NONFICTION,
-  NOVELS,
   ROMANCE,
   SCIFI,
   SPORT,
-  type TBookQuizGroup,
   THRILLER,
 } from "./groups"
+import type { TBookQuizGroup } from "./groups"
 
 // The quiz questions in the order they are asked. A question's id is also its
 // key in the result page URL, and an option's id is its value there.
 //
 // An option maps to at most one thing: a group (genre, mood or subject,
 // depending on the question), an age range or a reading level. Options without
-// a mapping ("Det er forskelligt", "Ingen af delene", "Alle aldre", "Ved ikke",
-// "Jeg er en kæmpe læsehest") add no filter.
+// a mapping ("Jeg aner det ikke", "Det er forskelligt", "Ingen af delene", "Alle
+// aldre", "Ved ikke", "Jeg er en kæmpe læsehest") add no filter.
 
 export type TBookQuizRange = [number, number]
 
@@ -71,7 +70,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
         emoji: "🕰️",
         group: HISTORY,
       },
-      { id: "genre-novels", label: "Jeg aner det ikke", emoji: "🙃", group: NOVELS },
+      { id: "genre-any", label: "Jeg aner det ikke", emoji: "🙃" },
     ],
   },
   {

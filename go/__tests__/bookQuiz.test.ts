@@ -95,7 +95,7 @@ describe("getLadderSteps", () => {
       subjects: ["subject-other"],
     })
     expect(steps.map(step => step.id)).toEqual(["genre-fantasy"])
-    expect(getLadderSteps({ mood: "mood-any", level: "level-advanced" })).toEqual([])
+    expect(getLadderSteps({ genre: "genre-any", mood: "mood-any", age: "age-9-10" })).toEqual([])
   })
 
   it("ANDs the answers and applies the age to every step", () => {

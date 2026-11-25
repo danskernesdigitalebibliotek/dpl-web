@@ -108,13 +108,6 @@ export const HISTORY: TBookQuizGroup = {
   ],
 }
 
-// "Jeg aner det ikke" falls back to novels.
-export const NOVELS: TBookQuizGroup = {
-  label: "Romaner",
-  color: "green",
-  match: [genre(["romaner"])],
-}
-
 // --- Mood. Gys and romantik have no genre, only subjects. ---
 
 export const FUNNY: TBookQuizGroup = {
