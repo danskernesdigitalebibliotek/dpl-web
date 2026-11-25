@@ -29,8 +29,8 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
 
   return (
     <div className="content-container space-y-grid-gap-3">
-      {/* The quiz's colour and watermark, with the girl from the quiz rising from
-          the bottom edge and the user's answers bursting out around her. */}
+      {/* The quiz's colour and watermark, with the girl from the quiz and the
+          user's answers bursting out of her book. */}
       <div
         className={cn(
           hasResults ? QUIZ_COLOR_CLASSES[color] : QUIZ_EMPTY_COLOR_CLASSES,
@@ -60,7 +60,9 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
             Tag quizzen igen
           </OpenBookQuizButton>
         </div>
-        <div className="flex justify-center self-end pt-[104px] lg:pt-[130px]">
+        {/* Room above for the burst, and below so the book does not sit on the
+            edge. */}
+        <div className="flex justify-center self-end pt-[104px] pb-8 lg:pt-[130px] lg:pb-10">
           {/* Keyed by the searches, so the burst plays again when the quiz is
               retaken from this page, where only the query changes. */}
           <BookQuizBurst

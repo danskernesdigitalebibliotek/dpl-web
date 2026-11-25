@@ -6,8 +6,8 @@ import React, { useEffect, useState } from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
 
-// Where the emojis burst from, in % of the photo's size.
-const ORIGIN = { left: 50, top: 72 }
+// Where the emojis burst from: the light in the book, in % of the photo's size.
+const ORIGIN = { left: 53, top: 76 }
 // Where each emoji lands, as offsets from the origin in % of the photo's size,
 // so the burst keeps its shape when the photo is smaller on small screens.
 const POSITIONS = [
@@ -30,8 +30,9 @@ type TBookQuizBurstProps = {
   imageClassName?: string
 }
 
-// The girl from the quiz, with emojis bursting out around her. With reduced
-// motion the emojis are just shown in place.
+// The girl from the quiz, with emojis bursting out of her book. With reduced
+// motion the emojis are just shown in place. Shared by the quiz intro and the
+// hero on the result page.
 const BookQuizBurst = ({ emojis, imageClassName = "w-48 lg:w-64" }: TBookQuizBurstProps) => {
   const isReducedMotion = useReducedMotion()
   // The emojis are first rendered at the origin, and the burst is started
@@ -42,7 +43,7 @@ const BookQuizBurst = ({ emojis, imageClassName = "w-48 lg:w-64" }: TBookQuizBur
   return (
     <div className="relative">
       <Image
-        src="/images/book-quiz-intro.png"
+        src="/images/book-quiz-girl.png"
         alt=""
         width={512}
         height={512}
