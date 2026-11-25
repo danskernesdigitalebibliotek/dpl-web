@@ -20,6 +20,9 @@ type TStepDotsProps = {
 // Every step keeps its place and its element in all states: the dots only
 // change by scaling, so the row never shifts and every change is animated. The
 // line fills from the left as its step is reached, and the emoji pops in.
+//
+// What is not reached yet is drawn in the theme's own greys, one for light and
+// one for dark mode, and not in a toned-down text colour.
 const StepDots = ({ emojis, current, furthest, onSelect }: TStepDotsProps) => (
   <ol
     className="flex items-center justify-center"
@@ -35,7 +38,8 @@ const StepDots = ({ emojis, current, furthest, onSelect }: TStepDotsProps) => (
             // dots at their edge and is covered by the big ones.
             <span
               aria-hidden="true"
-              className="bg-foreground/20 -mx-3 h-1 w-12 overflow-hidden lg:w-16">
+              className="bg-border dark:bg-background-overlay-solid -mx-3 h-1 w-12 overflow-hidden
+                lg:w-16">
               <span
                 className={cn(
                   `bg-foreground block h-full origin-left transition-transform duration-300 ease-out
@@ -59,7 +63,7 @@ const StepDots = ({ emojis, current, furthest, onSelect }: TStepDotsProps) => (
                 motion-reduce:transition-none`,
                 isReached
                   ? "border-foreground bg-background group-enabled:group-hover:scale-110"
-                  : "bg-foreground/25 scale-[0.33] border-transparent",
+                  : "bg-border dark:bg-background-overlay-solid scale-[0.33] border-transparent",
                 isCurrent && "scale-125 border-2"
               )}>
               <AnimatePresence initial={false}>

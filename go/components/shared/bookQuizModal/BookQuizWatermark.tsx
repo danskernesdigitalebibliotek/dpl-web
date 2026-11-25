@@ -17,7 +17,7 @@ const BookQuizWatermark = ({ className }: TBookQuizWatermarkProps) => (
     <div
       className={cn(
         `absolute aspect-[196/198] -rotate-12 bg-(--quiz-shape)
-        mask-[url(/icons/abstract-shape.svg)] mask-contain mask-no-repeat dark:opacity-15`,
+        mask-[url(/icons/abstract-shape.svg)] mask-contain mask-no-repeat`,
         className
       )}
     />
