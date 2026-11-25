@@ -111,13 +111,17 @@ export function matchesName(pattern: string, name: string): boolean {
 }
 
 /**
- * The entries of `versions` are OR-ed and written in the ecosystem's syntax.
- * Comparisons, carets and wildcards mean the same to Composer and node-semver;
- * tilde, comma, stability flags and dev branches do not, so a Composer range
- * using them is left unchecked rather than misread.
+ * The entries of `versions` are OR-ed and written in the ecosystem's syntax,
+ * which Dependabot reads with Ruby's Gem::Requirement underneath. Syntax that
+ * node-semver reads differently is left unchecked rather than misread:
+ * - Composer's tilde, comma, stability flags and dev branches.
+ * - Ruby's `~>`, which Dependabot passes through for npm too.
+ * - `>` and `<=` on a partial version: node-semver reads `>1.0` as `>=1.1.0`,
+ *   Dependabot as anything above 1.0.0.
  */
 export function toRange(versions: string[], ecosystem: string): string | null {
   if (ecosystem === "composer" && versions.some(v => /[~,@]|dev/.test(v))) return null
+  if (versions.some(v => /~>|(>(?!=)|<=)\s*v?\d+(\.\d+)?(?![.\d])/.test(v))) return null
   const range = versions.join(" || ")
   return semver.validRange(range) ? range : null
 }

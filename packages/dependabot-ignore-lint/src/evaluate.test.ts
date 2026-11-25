@@ -139,4 +139,14 @@ describe("toRange", () => {
     assert.equal(toRange(["^1.0@dev"], "composer"), null)
     assert.equal(toRange([">=1.13.0"], "composer"), ">=1.13.0")
   })
+
+  test("refuses syntax Dependabot reads differently in any ecosystem", () => {
+    assert.equal(toRange(["~> 9.0"], "npm"), null)
+    assert.equal(toRange([">1.0"], "npm"), null)
+    assert.equal(toRange(["<=2"], "npm"), null)
+    assert.equal(
+      toRange([">1.1.0", ">=10", "<5", "<=2.0.0"], "npm"),
+      ">1.1.0 || >=10 || <5 || <=2.0.0"
+    )
+  })
 })
