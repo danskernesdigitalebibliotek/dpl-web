@@ -2,7 +2,7 @@ name: Webmaster
 type: module
 description: 'Webmaster library support functionality'
 package: 'DPL - Webmaster'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^11.2
 
 dependencies:
   - drupal:update

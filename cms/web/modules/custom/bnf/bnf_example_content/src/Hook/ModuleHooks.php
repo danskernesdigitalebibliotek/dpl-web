@@ -7,6 +7,7 @@ namespace Drupal\bnf_example_content\Hook;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Module install hooks.
@@ -14,6 +15,7 @@ use Psr\Log\LoggerInterface;
 class ModuleHooks {
 
   public function __construct(
+    #[Autowire(service: 'logger.channel.bnf_example_content')]
     protected LoggerInterface $logger,
     protected ConfigFactoryInterface $configFactory,
   ) {}
