@@ -45,6 +45,8 @@ Merge the update when the risk is low. Otherwise hold it back.
 3. Close the Dependabot pull request.
 
 Do the upgrade later as a pull request of its own, with no unrelated changes.
+When the update is blocked by another package, see
+[Working with upstream](#working-with-upstream).
 
 ### Failing checks
 
@@ -123,6 +125,8 @@ allow:
   `pnpm-workspace.yaml`.
 - In the CMS, backport the upstream fix as a Composer patch in `cms/patches/`.
 
+See also [Working with upstream](#working-with-upstream).
+
 Create a Jira ticket for the real upgrade.
 
 When the fix reaches production, it also needs a hotfix for the release lines
@@ -139,6 +143,26 @@ version change, or the vulnerable code is not used, dismiss it with a reason
 and a comment that points at the patch or the Jira ticket. Dismissed alerts are
 listed under `is:closed`, filtered by `resolution:fix-started` or
 `resolution:not-used`.
+
+## Working with upstream
+
+When an update is blocked by another package, for example a plugin that does
+not support a new major version, or a parent package that does not allow the
+fixed version of a dependency, the fix belongs upstream. This applies to npm
+packages and Drupal modules alike.
+
+- Look for an existing issue or pull request in the package's issue tracker,
+  on GitHub or in the drupal.org issue queue.
+- If there is none, consider opening an issue, or a pull request with the
+  update. It helps the maintainer, and the maintainer may push back with
+  information we did not have.
+- An upstream pull request or merge request can give us a patch to apply in
+  the meantime. Composer patches in the CMS work well for this. In the npm
+  projects, prefer an override:
+  [pnpm does not recommend patching](https://pnpm.io/cli/patch).
+- Link the upstream issue in the Jira ticket and in the comment on the
+  `ignore` entry or override, so the next triage can see whether it is
+  resolved.
 
 ## Ignored dependencies
 
