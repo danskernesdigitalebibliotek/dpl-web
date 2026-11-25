@@ -182,9 +182,11 @@ Overrides and patches are workarounds until an upstream release catches up.
 Go through them and remove those that are no longer needed:
 
 - `overrides:` in [`pnpm-workspace.yaml`](../../pnpm-workspace.yaml): remove an
-  override once the parent package pulls in the fixed version by itself.
-  Check with `pnpm why <package>` in the affected projects that the version
-  still resolves to a fixed one without the override.
+  override once the parent package pulls in the fixed version by itself. To
+  check, remove the override, run `pnpm install` in each project with a
+  lockfile, and see with `pnpm why <package>` that it still resolves to a
+  fixed version. While the override is in place, `pnpm why` only shows the
+  forced version.
 - `minimumReleaseAgeExclude:` in the same file: remove a package once the
   release it was excluded for is older than `minimumReleaseAge`.
 - `extra.patches` in [`cms/composer.json`](../../cms/composer.json): remove a
