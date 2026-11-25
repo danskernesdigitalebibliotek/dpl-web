@@ -8,10 +8,9 @@ import SearchResults, {
 } from "@/components/pages/searchPageLayout/SearchResults"
 import { Button, buttonVariants } from "@/components/shared/button/Button"
 import { cyKeys } from "@/cypress/support/constants"
-import { getStepQueryVariables } from "@/lib/book-quiz/ladder"
-import type { TBookQuizOption, TBookQuizRange } from "@/lib/book-quiz/questions"
-import { BOOKS_PER_STEP, getStepWorkPool } from "@/lib/book-quiz/rank"
-import { useComplexSearchForBookQuizQuery } from "@/lib/graphql/generated/fbi/graphql"
+import type { TBookQuizOption } from "@/lib/book-quiz/questions"
+import { BOOKS_PER_STEP } from "@/lib/book-quiz/rank"
+import type { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 
 import { getBatches } from "./helper"
@@ -20,24 +19,24 @@ type TBookQuizSectionProps = {
   // The answers behind the step. Shown as the title.
   answers: TBookQuizOption[]
   cql: string
-  ageRange?: TBookQuizRange
+  // All the books found for the step, best first.
+  works: WorkTeaserSearchPageFragment[]
+  isLoading: boolean
 }
 
-const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
-  const { data, isLoading } = useComplexSearchForBookQuizQuery(getStepQueryVariables(cql))
-  const pool = getStepWorkPool(data?.complexSearch.works ?? [], ageRange)
+const BookQuizSection = ({ answers, cql, works, isLoading }: TBookQuizSectionProps) => {
   // The books are shown one batch at a time, in the same row. "Show more" swaps
   // in the next batch, and starts over after the last one. The batch belongs to
   // the search, so a retaken quiz on the same page starts with the first books
   // again.
-  const batches = getBatches(pool, BOOKS_PER_STEP)
+  const batches = getBatches(works, BOOKS_PER_STEP)
   const [shown, setShown] = useState<{ cql: string; batch: number }>()
   const batch = shown?.cql === cql ? shown.batch : 0
   const canShowMore = batches.length > 1
   const showMore = () => setShown({ cql, batch: (batch + 1) % batches.length })
 
   // A search without books gives no section.
-  if (!isLoading && pool.length === 0) return null
+  if (!isLoading && works.length === 0) return null
 
   return (
     <section

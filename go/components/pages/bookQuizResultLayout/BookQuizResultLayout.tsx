@@ -10,7 +10,7 @@ import type { TLadderStep } from "@/lib/book-quiz/ladder"
 import { type TBookQuizProfile, getBookQuizColor } from "@/lib/book-quiz/profile"
 import { cn } from "@/lib/helpers/helper.cn"
 
-import BookQuizSection from "./BookQuizSection"
+import BookQuizSections from "./BookQuizSections"
 import OpenBookQuizButton from "./OpenBookQuizButton"
 import { getHeroEmojis, getHeroTexts } from "./helper"
 
@@ -99,20 +99,7 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
           />
         </div>
       </div>
-      {/* A line between the sections, with the same space on both sides. Drawn
-          with CSS, as a section without books is not rendered. */}
-      {hasResults && (
-        <div className="divide-foreground/10 divide-y">
-          {steps.map(step => (
-            <BookQuizSection
-              key={step.id}
-              answers={step.answers}
-              cql={step.cql}
-              ageRange={profile.ageRange}
-            />
-          ))}
-        </div>
-      )}
+      {hasResults && <BookQuizSections steps={steps} ageRange={profile.ageRange} />}
       {/* After the books: the offer to take the quiz again, in the colours of
           the hero. Side by side from lg. */}
       {hasResults && (

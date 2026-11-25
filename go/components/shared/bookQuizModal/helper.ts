@@ -1,7 +1,12 @@
 import type { QueryClient } from "@tanstack/react-query"
 
 import type { TBookQuizColor } from "@/lib/book-quiz/groups"
-import { getLadderSteps, getStepQueryVariables } from "@/lib/book-quiz/ladder"
+import {
+  type TLadderStep,
+  getLadderSteps,
+  getShownSteps,
+  getStepQueryVariables,
+} from "@/lib/book-quiz/ladder"
 import type { TBookQuizAnswers } from "@/lib/book-quiz/profile"
 import {
   QUESTIONS,
@@ -10,7 +15,10 @@ import {
 } from "@/lib/book-quiz/questions"
 import { serializeBookQuizAnswers } from "@/lib/book-quiz/url"
 import goConfig from "@/lib/config/goConfig"
-import { useComplexSearchForBookQuizQuery } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  type ComplexSearchForBookQuizQuery,
+  useComplexSearchForBookQuizQuery,
+} from "@/lib/graphql/generated/fbi/graphql"
 
 export const getSelectedIds = (answers: TBookQuizAnswers, id: TBookQuizQuestionId): string[] =>
   [answers[id] ?? []].flat()
@@ -70,15 +78,40 @@ export const getChosenOptions = (answers: TBookQuizAnswers) =>
 export const getBookQuizResultUrl = (answers: TBookQuizAnswers) =>
   serializeBookQuizAnswers(`/${goConfig("routes.book-quiz")}`, answers)
 
-// Puts the books for every step in the query cache, so the result page shows
-// them at once. A failed step is not cached and is fetched again by the page.
-export const prefetchBookQuizResults = (queryClient: QueryClient, answers: TBookQuizAnswers) =>
-  Promise.all(
-    getLadderSteps(answers).map(({ cql }) => {
-      const variables = getStepQueryVariables(cql)
-      return queryClient.prefetchQuery({
-        queryKey: useComplexSearchForBookQuizQuery.getKey(variables),
-        queryFn: useComplexSearchForBookQuizQuery.fetcher(variables),
-      })
-    })
-  )
+// The search behind a step, for the query cache. Shared by the result page and
+// the quiz modal, which fills the cache before navigating, so the keys match.
+export const getStepQueryOptions = (cql: string) => {
+  const variables = getStepQueryVariables(cql)
+  return {
+    queryKey: useComplexSearchForBookQuizQuery.getKey(variables),
+    queryFn: useComplexSearchForBookQuizQuery.fetcher(variables),
+  }
+}
+
+// The steps shown on the result page, going by the searches in the query cache
+// so far, see getShownSteps.
+export const getShownBookQuizSteps = (queryClient: QueryClient, steps: TLadderStep[]) =>
+  getShownSteps(steps, ({ cql }) => {
+    const { queryKey } = getStepQueryOptions(cql)
+    return queryClient.getQueryData<ComplexSearchForBookQuizQuery>(queryKey)?.complexSearch.works
+      .length
+  })
+
+// Puts the books for the shown steps in the query cache, so the result page
+// shows them at once. Searches in rounds: each round fetches the shown steps
+// that are not in the cache yet, and those with too few books let more steps in
+// for the next round. A failed step stays in the cache as failed, and is
+// fetched again by the page.
+export const prefetchBookQuizResults = async (
+  queryClient: QueryClient,
+  answers: TBookQuizAnswers
+) => {
+  const steps = getLadderSteps(answers)
+  for (;;) {
+    const missing = getShownBookQuizSteps(queryClient, steps).filter(
+      ({ cql }) => !queryClient.getQueryState(getStepQueryOptions(cql).queryKey)
+    )
+    if (missing.length === 0) return
+    await Promise.all(missing.map(({ cql }) => queryClient.prefetchQuery(getStepQueryOptions(cql))))
+  }
+}

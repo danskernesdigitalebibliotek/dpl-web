@@ -8,6 +8,7 @@ import {
   getGroupAnswers,
 } from "./profile"
 import type { TBookQuizRange } from "./questions"
+import { BOOKS_PER_STEP } from "./rank"
 
 // One search, and one section on the result page.
 export type TLadderStep = {
@@ -75,4 +76,35 @@ export const getLadderSteps = (answers: TBookQuizAnswers): TLadderStep[] => {
       cql: [...stepAnswers.map(option => clauseCql(option.group.match)), ...always].join(" AND "),
     }))
   )
+}
+
+// Sections shown on the result page at most.
+export const MAX_SECTIONS = 7
+
+// The steps to search on and show. `getBookCount` tells how many books a
+// step's search gave, or nothing when it has not been searched on yet.
+//
+// A step needs enough books to fill a row to get a section, so the page is not
+// made of sections with a single book. The first MAX_SECTIONS such steps are
+// shown, and steps not searched on yet count along until they are. A step that
+// comes back with too few books lets the next step in, so only as many steps
+// are searched on as it takes to fill the page.
+//
+// Steps with fewer books only get the places that are left when all steps
+// have been searched on, so the books still show when there is little to find.
+export const getShownSteps = (
+  steps: TLadderStep[],
+  getBookCount: (step: TLadderStep) => number | undefined
+): TLadderStep[] => {
+  const counts = new Map(steps.map(step => [step, getBookCount(step)]))
+  const isCandidate = (count?: number) => count === undefined || count >= BOOKS_PER_STEP
+  const isSparse = (count?: number) => count !== undefined && count > 0 && count < BOOKS_PER_STEP
+
+  const candidates = steps.filter(step => isCandidate(counts.get(step))).slice(0, MAX_SECTIONS)
+  const sparse = steps
+    .filter(step => isSparse(counts.get(step)))
+    .slice(0, MAX_SECTIONS - candidates.length)
+  const shown = new Set([...candidates, ...sparse])
+
+  return steps.filter(step => shown.has(step))
 }

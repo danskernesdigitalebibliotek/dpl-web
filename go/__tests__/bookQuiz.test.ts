@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest"
 
 import { ANIMALS, FANTASY, FUNNY, SPORT } from "@/lib/book-quiz/groups"
-import { getLadderSteps } from "@/lib/book-quiz/ladder"
+import { MAX_SECTIONS, getLadderSteps, getShownSteps } from "@/lib/book-quiz/ladder"
 import { getBookQuizProfile } from "@/lib/book-quiz/profile"
 import {
+  BOOKS_PER_STEP,
   type TRankableWork,
   getAgeSpill,
   getStepWorkPool,
@@ -112,6 +113,52 @@ describe("getLadderSteps", () => {
     expect(steps.map(step => step.cql)).toEqual([
       '(phrase.genreandform="fantasy") AND phrase.generalaudience="let at læse"',
     ])
+  })
+})
+
+describe("getShownSteps", () => {
+  // Five answers give 31 steps.
+  const steps = getLadderSteps({
+    genre: "genre-fantasy",
+    mood: "mood-funny",
+    subjects: ["subject-animals", "subject-gaming", "subject-sport"],
+  })
+  const ids = (shown: typeof steps) => shown.map(step => step.id)
+
+  it("shows the first steps, up to the most the page has room for, before any search", () => {
+    expect(getShownSteps(steps, () => undefined)).toEqual(steps.slice(0, MAX_SECTIONS))
+  })
+
+  it("lets the next step in for each step with too few books", () => {
+    // The first step found nothing and the fourth less than a row.
+    const counts = new Map([
+      [steps[0].id, 0],
+      [steps[3].id, BOOKS_PER_STEP - 1],
+    ])
+    const shown = getShownSteps(steps, step => counts.get(step.id))
+    expect(ids(shown)).toEqual([1, 2, 4, 5, 6, 7, 8].map(index => steps[index].id))
+  })
+
+  it("stops at the first steps with enough books", () => {
+    // Only steps with one or two answers have enough books.
+    const shown = getShownSteps(steps, step => (step.answers.length <= 2 ? 20 : 1))
+    expect(shown).toHaveLength(MAX_SECTIONS)
+    expect(shown.every(step => step.answers.length === 2)).toBe(true)
+  })
+
+  it("fills up with the steps with few books when there are not enough others", () => {
+    const [fantasyFunny, fantasy, funny] = getLadderSteps({
+      genre: "genre-fantasy",
+      mood: "mood-funny",
+    })
+    const counts = new Map([
+      [fantasyFunny.id, 2],
+      [fantasy.id, 20],
+      [funny.id, 0],
+    ])
+    const shown = getShownSteps([fantasyFunny, fantasy, funny], step => counts.get(step.id))
+    // In ladder order, without the step that found nothing.
+    expect(ids(shown)).toEqual([fantasyFunny.id, fantasy.id])
   })
 })
 
