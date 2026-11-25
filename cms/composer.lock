@@ -11983,11 +11983,11 @@
         },
         {
             "name": "npm-asset/select2",
-            "version": "4.1.0",
+            "version": "4.1.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/select2/-/select2-4.1.0.tgz",
-                "shasum": "8b037e02a3c025beda07fed7f9ecc7d298036e1a"
+                "url": "https://registry.npmjs.org/select2/-/select2-4.1.1.tgz",
+                "shasum": "bd66bbab8a057b17ea117196a073aa333acf315e"
             },
             "type": "npm-asset",
             "license": [
