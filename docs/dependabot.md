@@ -5,6 +5,10 @@ Dependabot is configured for all projects in
 are merged automatically once every check is green. Everything else goes
 through a weekly triage on Mondays.
 
+This is the dpl-web part of the general
+[vendor updates](https://danskernesdigitalebibliotek.github.io/dpl-docs/General/vendor-updates/)
+process for DPL projects.
+
 ## Log
 
 Write what you do in the Zulip topic **DDF > Depandabot Triage Log** as you go.
@@ -18,8 +22,29 @@ label or on the Dependabot author.
 
 ### Major updates
 
-When the checks are green, judge whether the update is safe to merge, for
-example because it is a development dependency.
+Never merge an update with failing checks. When the checks are green, judge
+the risk of the update:
+
+- **Impact**: an update to a core framework of a project is riskier than one
+  to a library behind a single feature.
+- **Usage**: a dependency that only runs in development or CI is less risky
+  than one that ends up in production.
+- **Test coverage**: an update to code that our tests cover is less risky.
+
+Merge the update when the risk is low. Otherwise hold it back.
+
+### Holding an update back
+
+1. Add an `ignore` entry for the new version to the project in
+   [`.github/dependabot.yml`](../.github/dependabot.yml), with a comment that
+   says why. For a major version, ignore only that major version, so minor
+   and patch updates keep coming.
+2. Create a Jira ticket for the upgrade. Describe the role the library plays
+   in the project and why the update was held back, in Danish, and link the
+   Dependabot pull request and the `ignore` entry that must be removed again.
+3. Close the Dependabot pull request.
+
+Do the upgrade later as a pull request of its own, with no unrelated changes.
 
 ### Minor and patch updates
 
