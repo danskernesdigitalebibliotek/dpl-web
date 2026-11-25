@@ -1,7 +1,7 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { MotionConfig, motion } from "framer-motion"
+import { AnimatePresence, MotionConfig, motion } from "framer-motion"
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
 
@@ -22,7 +22,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 
 import BookQuizIntro from "./BookQuizIntro"
 import BookQuizLoading from "./BookQuizLoading"
-import BookQuizQuestion from "./BookQuizQuestion"
+import BookQuizQuestions from "./BookQuizQuestions"
 import BookQuizWatermark from "./BookQuizWatermark"
 import StepDots from "./StepDots"
 import { QUIZ_COLOR_CLASSES } from "./colors"
@@ -61,6 +61,7 @@ const BookQuizModal = ({
   const nextQuestion = QUESTIONS[questionIndex + 1]
   const selectedIds = question ? getSelectedIds(answers, question.id) : []
   const isFinalReady = Boolean(question) && !nextQuestion && selectedIds.length > 0
+  const phase = flow.view === "intro" ? "intro" : question ? "questions" : "loading"
 
   const goNext = async (nextAnswers: TBookQuizAnswers) => {
     setAnswers(nextAnswers)
@@ -96,7 +97,7 @@ const BookQuizModal = ({
           // screen. It only scrolls when that is not enough, e.g. when zoomed in.
           // The colours are transitioned here, on the variables, so the background
           // and the watermark change at the same time.
-          `dark:bg-background-overlay-solid grid-rows-[auto_1fr_auto] overflow-y-auto bg-(--quiz-bg)
+          `dark:bg-background-overlay-solid grid-rows-[auto_1fr] overflow-y-auto bg-(--quiz-bg)
           transition-[--quiz-bg,--quiz-shape] duration-500`
         )}
         data-cy={cyKeys["book-quiz-modal"]}>
@@ -117,87 +118,99 @@ const BookQuizModal = ({
             Læsefavoritter
           </DialogTitle>
         </DialogHeader>
-        <DialogBody
-          className="px-grid-edge mx-auto flex w-full max-w-[960px] flex-col pt-2
-            pb-[clamp(8px,6dvh_-_24px,48px)]">
-          {/* The question fills the space, so the buttons sit at the bottom. */}
-          <div className="flex flex-1 flex-col justify-center">
-            {flow.renderBody(
-              flow.view === "intro" ? (
-                <BookQuizIntro
-                  questionCount={QUESTIONS.length}
-                  onStart={() => flow.goTo(QUESTIONS[0].id)}
+        {/* One panel per phase: the intro, the questions and the loader. The old
+            panel fades out before the new one fades in, so everything in a phase
+            comes and goes together, and nothing moves while it does. */}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={phase}
+            className="flex flex-col"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.25, ease: "easeOut" } }}
+            exit={{ opacity: 0, transition: { duration: 0.15, ease: "easeIn" } }}>
+            <DialogBody
+              className="px-grid-edge mx-auto flex w-full max-w-[960px] flex-1 flex-col pt-2
+                pb-[clamp(8px,6dvh_-_24px,48px)]">
+              {/* The view fills the space, so the buttons sit at the bottom. */}
+              <div className="flex flex-1 flex-col justify-center">
+                {phase === "intro" ? (
+                  <BookQuizIntro
+                    questionCount={QUESTIONS.length}
+                    onStart={() => flow.goTo(QUESTIONS[0].id)}
+                  />
+                ) : phase === "questions" ? (
+                  <BookQuizQuestions
+                    current={questionIndex}
+                    answers={answers}
+                    onSelect={(selected, optionId) => {
+                      const nextAnswers = selectOption(answers, selected, optionId)
+                      setAnswers(nextAnswers)
+                      setColor(getColorAfterSelect(color, nextAnswers, selected, optionId))
+                    }}
+                  />
+                ) : (
+                  <BookQuizLoading options={getChosenOptions(answers)} />
+                )}
+              </div>
+              {question && (
+                <div
+                  className="mt-[clamp(12px,5dvh,40px)] flex flex-col items-center
+                    gap-[clamp(6px,2dvh,16px)]">
+                  {/* The last step stands out: sparkles and a gentle pulse
+                      once an answer is chosen. Reduced motion turns the pulse off. */}
+                  <MotionConfig reducedMotion="user">
+                    <motion.div
+                      animate={isFinalReady ? { scale: [1, 1.06, 1] } : { scale: 1 }}
+                      transition={
+                        isFinalReady
+                          ? { duration: 1.2, repeat: Infinity, repeatDelay: 1 }
+                          : undefined
+                      }>
+                      <Button
+                        theme="primary"
+                        size="lg"
+                        className={cn("min-w-[200px]", !nextQuestion && "gap-3")}
+                        data-cy={cyKeys["book-quiz-next-button"]}
+                        onClick={() => goNext(answers)}
+                        disabled={selectedIds.length === 0}>
+                        {nextQuestion ? (
+                          "Næste"
+                        ) : (
+                          <>
+                            Find mine bøger
+                            <span aria-hidden="true" className="text-[24px] leading-none">
+                              ✨
+                            </span>
+                          </>
+                        )}
+                      </Button>
+                    </motion.div>
+                  </MotionConfig>
+                  <button
+                    type="button"
+                    className="text-typo-button-sm hover:underline"
+                    data-cy={cyKeys["book-quiz-skip-button"]}
+                    onClick={() => goNext({ ...answers, [question.id]: null })}>
+                    Spring over
+                  </button>
+                </div>
+              )}
+            </DialogBody>
+            {/* Same padding as the actions bar in ResponsiveDialog. */}
+            {question && (
+              <div
+                className="bg-background px-grid-edge flex justify-center py-[clamp(8px,2dvh,16px)]
+                  lg:px-10 lg:py-[clamp(8px,3dvh,24px)]">
+                <StepDots
+                  emojis={getStepEmojis(answers)}
+                  current={questionIndex}
+                  furthest={getFurthestStep(answers)}
+                  onSelect={goToStep}
                 />
-              ) : question ? (
-                <BookQuizQuestion
-                  question={question}
-                  selectedIds={selectedIds}
-                  onSelect={optionId => {
-                    const nextAnswers = selectOption(answers, question, optionId)
-                    setAnswers(nextAnswers)
-                    setColor(getColorAfterSelect(color, nextAnswers, question, optionId))
-                  }}
-                />
-              ) : (
-                <BookQuizLoading options={getChosenOptions(answers)} />
-              )
+              </div>
             )}
-          </div>
-          {question && (
-            <div
-              className="mt-[clamp(12px,5dvh,40px)] flex flex-col items-center
-                gap-[clamp(6px,2dvh,16px)]">
-              {/* The last step stands out: sparkles and a gentle pulse
-                  once an answer is chosen. Reduced motion turns the pulse off. */}
-              <MotionConfig reducedMotion="user">
-                <motion.div
-                  animate={isFinalReady ? { scale: [1, 1.06, 1] } : { scale: 1 }}
-                  transition={
-                    isFinalReady ? { duration: 1.2, repeat: Infinity, repeatDelay: 1 } : undefined
-                  }>
-                  <Button
-                    theme="primary"
-                    size="lg"
-                    className={cn("min-w-[200px]", !nextQuestion && "gap-3")}
-                    data-cy={cyKeys["book-quiz-next-button"]}
-                    onClick={() => goNext(answers)}
-                    disabled={selectedIds.length === 0}>
-                    {nextQuestion ? (
-                      "Næste"
-                    ) : (
-                      <>
-                        Find mine bøger
-                        <span aria-hidden="true" className="text-[24px] leading-none">
-                          ✨
-                        </span>
-                      </>
-                    )}
-                  </Button>
-                </motion.div>
-              </MotionConfig>
-              <button
-                type="button"
-                className="text-typo-button-sm hover:underline"
-                data-cy={cyKeys["book-quiz-skip-button"]}
-                onClick={() => goNext({ ...answers, [question.id]: null })}>
-                Spring over
-              </button>
-            </div>
-          )}
-        </DialogBody>
-        {/* Same padding as the actions bar in ResponsiveDialog. */}
-        {question && (
-          <div
-            className="bg-background px-grid-edge flex justify-center py-[clamp(8px,2dvh,16px)]
-              lg:px-10 lg:py-[clamp(8px,3dvh,24px)]">
-            <StepDots
-              emojis={getStepEmojis(answers)}
-              current={questionIndex}
-              furthest={getFurthestStep(answers)}
-              onSelect={goToStep}
-            />
-          </div>
-        )}
+          </motion.div>
+        </AnimatePresence>
       </DialogContent>
     </Dialog>
   )
