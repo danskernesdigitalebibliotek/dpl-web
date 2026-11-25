@@ -20766,10 +20766,6 @@ msgctxt "views.view.webform_submissions:display:default:display_options:exposed_
 msgid "Reset"
 msgstr ""
 
-msgctxt "DPL admin"
-msgid "Reset password"
-msgstr "Nulstil adgangskode"
-
 msgid "Reset role mappings if no groups are passed."
 msgstr ""
 
