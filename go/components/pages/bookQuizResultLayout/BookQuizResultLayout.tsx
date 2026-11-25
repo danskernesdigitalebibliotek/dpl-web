@@ -71,13 +71,16 @@ const BookQuizResultLayout = ({ profile, steps }: TBookQuizResultLayoutProps) =>
           />
         </div>
       </div>
-      {/* A line between the sections, with the same space on both sides. */}
-      <div className="space-y-grid-gap-2">
-        {steps.map((step, index) => (
-          <React.Fragment key={step.id}>
-            {index > 0 && <hr />}
-            <BookQuizSection answers={step.answers} cql={step.cql} ageRange={profile.ageRange} />
-          </React.Fragment>
+      {/* A line between the sections, with the same space on both sides. Drawn
+          with CSS, as a section without books is not rendered. */}
+      <div className="divide-foreground/10 divide-y">
+        {steps.map(step => (
+          <BookQuizSection
+            key={step.id}
+            answers={step.answers}
+            cql={step.cql}
+            ageRange={profile.ageRange}
+          />
         ))}
       </div>
     </div>

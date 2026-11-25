@@ -36,8 +36,13 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
   const canShuffle = pool.length > BOOKS_PER_STEP
   const shuffle = () => setShuffled({ cql, works: shuffleWorks(pool, works, BOOKS_PER_STEP) })
 
+  // A search without books gives no section.
+  if (!isLoading && works.length === 0) return null
+
   return (
-    <section className="space-y-6 lg:space-y-8" data-cy={cyKeys["book-quiz-section"]}>
+    <section
+      className="py-grid-gap-2 space-y-6 first:pt-0 last:pb-0 lg:space-y-8"
+      data-cy={cyKeys["book-quiz-section"]}>
       {/* The answers look like the quiz's answer buttons, but are not clickable.
           On small screens they wrap below the title as smaller pills. */}
       <h2 className="text-typo-heading-4 flex flex-wrap items-center gap-2 lg:gap-3">
@@ -64,7 +69,7 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
       </h2>
       {isLoading ? (
         <SearchResultsSkeleton count={BOOKS_PER_STEP} columns={BOOKS_PER_STEP} />
-      ) : works.length > 0 ? (
+      ) : (
         // Keyed by the books, so a shuffle lets the old ones leave before the new
         // ones come in.
         <AnimatePresence mode="wait">
@@ -75,8 +80,6 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
             animated
           />
         </AnimatePresence>
-      ) : (
-        <p className="text-typo-subtitle-lg opacity-35">Kombinationen gav ingen bøger</p>
       )}
       {/* After the books: first the suggestions, then the offer to see others. */}
       {canShuffle && (
