@@ -1,1 +1,1 @@
-{"packages": [{"name": "acme/gamma", "version": "v1.2.0"}, {"name": "acme/transitive", "version": "1.0.0"}]}
+{"packages": [{"name": "fixture/gamma", "version": "v1.2.0"}, {"name": "fixture/transitive", "version": "1.0.0"}]}

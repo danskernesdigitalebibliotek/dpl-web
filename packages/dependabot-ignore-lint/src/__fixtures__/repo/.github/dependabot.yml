@@ -3,28 +3,28 @@ updates:
   - package-ecosystem: npm
     directories: ["/pnpm", "/no-lock*"]
     ignore:
-      - dependency-name: "gone"
+      - dependency-name: "@fixture/gone"
         versions: [">=1"]
   - package-ecosystem: npm
     directory: "/pnpm"
     ignore:
-      - dependency-name: "alpha"
+      - dependency-name: "@fixture/alpha"
         versions: [">=1"]
-      - dependency-name: "held"
+      - dependency-name: "@fixture/held"
         versions: [">=3"]
-      - dependency-name: "gone"
+      - dependency-name: "@fixture/gone"
         update-types: ["version-update:semver-major"]
   - package-ecosystem: composer
     directory: "/composer"
     ignore:
-      - dependency-name: "acme/gamma"
+      - dependency-name: "fixture/gamma"
         versions: [">=1.0.0"]
-      - dependency-name: "acme/transitive"
+      - dependency-name: "fixture/transitive"
         versions: [">=1.0.0"]
   - package-ecosystem: npm
     directory: "/missing"
     ignore:
-      - dependency-name: "alpha"
+      - dependency-name: "@fixture/alpha"
         versions: [">=1"]
   - package-ecosystem: github-actions
     directory: "/"

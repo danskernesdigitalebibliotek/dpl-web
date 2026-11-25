@@ -13,17 +13,17 @@ test("reads every block's lockfiles and points each finding at its line", async 
   assert.deepEqual(findings, [
     // /no-lock* also matches a file and a folder without package.json, which
     // are skipped like Dependabot does. The package without a lockfile fails,
-    // and makes the block incomplete, so "gone" (line 6) is not called dead.
+    // and makes the block incomplete, so "@fixture/gone" (line 6) is not called dead.
     "3 unreadable: cannot read no-lockfile: no pnpm-lock.yaml",
     // pnpm: peer suffix dropped, devDependencies read, "held" still holds.
-    "11 stale: alpha 1.0.0 in pnpm is inside >=1, so every update of it is ignored. " +
+    "11 stale: @fixture/alpha 1.0.0 in pnpm is inside >=1, so every update of it is ignored. " +
       "Delete the rule, or raise its lower bound above the locked version.",
     // A rule for a package that is gone is dead, update-types or not.
-    "15 dead: gone matches no direct dependency in pnpm",
+    "15 dead: @fixture/gone matches no direct dependency in pnpm",
     // Composer: "v" prefix cleaned, transitive packages not counted.
-    "20 stale: acme/gamma 1.2.0 in composer is inside >=1.0.0, so every update of it " +
+    "20 stale: fixture/gamma 1.2.0 in composer is inside >=1.0.0, so every update of it " +
       "is ignored. Delete the rule, or raise its lower bound above the locked version.",
-    "22 dead: acme/transitive matches no direct dependency in composer",
+    "22 dead: fixture/transitive matches no direct dependency in composer",
     "24 unreadable: /missing matches no directory",
     "29 unchecked: no lockfile reader for github-actions, so this block is not checked",
   ])
