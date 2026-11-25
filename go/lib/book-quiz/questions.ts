@@ -9,7 +9,6 @@ import {
   HORROR,
   NONFICTION,
   NOVELS,
-  OTHER,
   ROMANCE,
   SCIFI,
   SPORT,
@@ -22,8 +21,8 @@ import {
 //
 // An option maps to at most one thing: a group (genre, mood or subject,
 // depending on the question), an age range or a reading level. Options without
-// a mapping ("Det er forskelligt", "Ved ikke", "Jeg er en kæmpe læsehest") add
-// no filter.
+// a mapping ("Det er forskelligt", "Ingen af delene", "Ved ikke", "Jeg er en
+// kæmpe læsehest") add no filter.
 
 export type TBookQuizRange = [number, number]
 
@@ -94,7 +93,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
       { id: "subject-gaming", label: "Gaming", emoji: "🎮", group: GAMING },
       { id: "subject-sport", label: "Sport", emoji: "⚽", group: SPORT },
       { id: "subject-climate", label: "Klima", emoji: "🌿", group: CLIMATE },
-      { id: "subject-other", label: "Ingen af delene", emoji: "🤔", group: OTHER },
+      { id: "subject-other", label: "Ingen af delene", emoji: "🤔" },
     ],
   },
   {

@@ -215,14 +215,3 @@ export const CLIMATE: TBookQuizGroup = {
     ]),
   ],
 }
-
-// "Ingen af delene" has no terms left, so it does not search on subjects.
-export const OTHER: TBookQuizGroup = {
-  label: "Ingen af delene",
-  match: [
-    subject([
-      // "krea og kultur",
-      // "mit liv",
-    ]),
-  ],
-}
