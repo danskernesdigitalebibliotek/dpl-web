@@ -39,8 +39,13 @@ describe("getBookQuizProfile", () => {
   })
 
   it("leaves out answers without a mapping", () => {
-    const profile = getBookQuizProfile({ mood: "mood-any", level: "level-advanced" })
+    const profile = getBookQuizProfile({
+      mood: "mood-any",
+      age: "age-any",
+      level: "level-advanced",
+    })
     expect(profile.mood).toBeUndefined()
+    expect(profile.ageRange).toBeUndefined()
     expect(profile.easyToRead).toBe(false)
   })
 })

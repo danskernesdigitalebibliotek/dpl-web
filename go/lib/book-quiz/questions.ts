@@ -21,8 +21,8 @@ import {
 //
 // An option maps to at most one thing: a group (genre, mood or subject,
 // depending on the question), an age range or a reading level. Options without
-// a mapping ("Det er forskelligt", "Ingen af delene", "Ved ikke", "Jeg er en
-// kæmpe læsehest") add no filter.
+// a mapping ("Det er forskelligt", "Ingen af delene", "Alle aldre", "Ved ikke",
+// "Jeg er en kæmpe læsehest") add no filter.
 
 export type TBookQuizRange = [number, number]
 
@@ -104,6 +104,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
       { id: "age-9-10", label: "9-10 år", ageRange: [9, 10] },
       { id: "age-11-12", label: "11-12 år", ageRange: [11, 12] },
       { id: "age-teen", label: "Teenagere", ageRange: [13, 18] },
+      { id: "age-any", label: "Alle aldre" },
     ],
   },
   {
