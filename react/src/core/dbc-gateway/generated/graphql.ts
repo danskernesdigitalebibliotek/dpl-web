@@ -3329,6 +3329,26 @@ export type GetDashboardRecommendationsQuery = {
   };
 };
 
+export type DashboardRecommendationWorkFragment = {
+  __typename?: "Work";
+  workId: string;
+  titles: { __typename?: "WorkTitles"; full: Array<string> };
+  creators: Array<
+    | { __typename?: "Corporation"; display: string }
+    | { __typename?: "Person"; display: string }
+  >;
+  manifestations: {
+    __typename?: "Manifestations";
+    bestRepresentation: {
+      __typename?: "Manifestation";
+      cover: {
+        __typename?: "Cover";
+        large?: { __typename?: "CoverDetails"; url?: string | null } | null;
+      };
+    };
+  };
+};
+
 export type GetSmallWorkQueryVariables = Exact<{
   id: Scalars["String"]["input"];
 }>;
@@ -10298,6 +10318,29 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
+export const DashboardRecommendationWorkFragmentDoc = new TypedDocumentString(
+  `
+    fragment DashboardRecommendationWork on Work {
+  workId
+  titles {
+    full
+  }
+  creators {
+    display
+  }
+  manifestations {
+    bestRepresentation {
+      cover {
+        large {
+          url
+        }
+      }
+    }
+  }
+}
+    `,
+  { fragmentName: "DashboardRecommendationWork" }
+);
 export const WithLanguagesFragmentDoc = new TypedDocumentString(
   `
     fragment WithLanguages on Manifestation {
@@ -11461,27 +11504,29 @@ export const GetDashboardRecommendationsDocument = new TypedDocumentString(`
   recommend(id: $id, limit: $limit) {
     result {
       work {
-        workId
-        titles {
-          full
-        }
-        creators {
-          display
-        }
-        manifestations {
-          bestRepresentation {
-            cover {
-              large {
-                url
-              }
-            }
-          }
-        }
+        ...DashboardRecommendationWork
       }
     }
   }
 }
-    `);
+    fragment DashboardRecommendationWork on Work {
+  workId
+  titles {
+    full
+  }
+  creators {
+    display
+  }
+  manifestations {
+    bestRepresentation {
+      cover {
+        large {
+          url
+        }
+      }
+    }
+  }
+}`);
 
 export const useGetDashboardRecommendationsQuery = <
   TData = GetDashboardRecommendationsQuery,
@@ -14036,6 +14081,7 @@ export const operationNames = {
     placeCopy: "placeCopy" as const
   },
   Fragment: {
+    DashboardRecommendationWork: "DashboardRecommendationWork" as const,
     ManifestationBasicDetails: "ManifestationBasicDetails" as const,
     ManifestationsSimple: "ManifestationsSimple" as const,
     ManifestationsAccess: "ManifestationsAccess" as const,
