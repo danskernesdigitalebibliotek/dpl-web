@@ -1,14 +1,11 @@
 "use client"
 
-import {
-  isCostFreeLoan,
-  useDigitalLoanDecisions,
-} from "@danskernesdigitalebibliotek/dpl-service-layer"
+import { useDigitalLoanDecisions } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useInView } from "framer-motion"
 import React, { useRef } from "react"
 
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
+import { getLoanDecisionMaterialIds, isManifestationCostFree } from "@/lib/helpers/helper.costFree"
 
 import WorkCard, { TWorkCardProps } from "./WorkCard"
 import { getWorkCardMaterialTypes } from "./helper"
@@ -24,20 +21,13 @@ const WorkCardContainer = ({ manifestations, ...props }: TWorkCardContainerProps
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true })
 
-  const materialIds = manifestations.map(manifestation =>
-    manifestation.accessTypes[0]?.code === "ONLINE"
-      ? getPublizonIdentifierFromManifestation(manifestation)
-      : undefined
-  )
-
   const { decisions } = useDigitalLoanDecisions(
-    isInView ? materialIds.filter((id): id is string => !!id) : []
+    isInView ? getLoanDecisionMaterialIds(manifestations) : []
   )
 
-  const materialTypes = getWorkCardMaterialTypes(manifestations, index => {
-    const materialId = materialIds[index]
-    return !!materialId && isCostFreeLoan(decisions[materialId]?.loanProvider)
-  })
+  const materialTypes = getWorkCardMaterialTypes(manifestations, manifestation =>
+    isManifestationCostFree(manifestation, decisions)
+  )
 
   return (
     <WorkCard
