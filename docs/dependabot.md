@@ -107,22 +107,14 @@ generation with the new version and push the result.
 
 ## Security alerts
 
-Run the security triage in Claude Code:
-
-```text
-/security-triage Run this on the dpl-web project. Only look at:
-https://github.com/danskernesdigitalebibliotek/dpl-web/security/dependabot.
-Don't manipulate or search for any Jira tickets.
-```
-
-Follow the prioritised order in the report. Then go through the
-[Dependabot alerts](https://github.com/danskernesdigitalebibliotek/dpl-web/security/dependabot)
-and see whether transitive dependencies can be updated, or the alert
-dismissed.
+Go through the open
+[Dependabot alerts](https://github.com/danskernesdigitalebibliotek/dpl-web/security/dependabot).
+For each alert, see whether the vulnerable package can be updated, including
+when it is a transitive dependency, or whether the alert can be dismissed.
 
 Judge an alert by where the package ends up and who can reach it, not by its
-severity. A package that only runs in CI or development tools is a low risk,
-whatever its severity.
+severity, and handle the alerts in that order. A package that only runs in CI
+or development tools is a low risk, whatever its severity.
 
 When the fix is only released in a version that a parent package does not
 allow:
