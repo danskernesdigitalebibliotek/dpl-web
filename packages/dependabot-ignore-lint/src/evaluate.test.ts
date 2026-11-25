@@ -30,6 +30,10 @@ describe("evaluate", () => {
     assert.deepEqual(kinds([{ name: "a", versions: [">=3"] }], { x: { a: "2.0.0" } }), [])
   })
 
+  test("treats a prerelease as below its release, as Dependabot does", () => {
+    assert.deepEqual(kinds([{ name: "a", versions: [">=10"] }], { x: { a: "10.0.0-beta.1" } }), [])
+  })
+
   test("never compares an update-types rule", () => {
     assert.deepEqual(kinds([{ name: "a", versions: [] }], { x: { a: "2.0.0" } }), [])
   })

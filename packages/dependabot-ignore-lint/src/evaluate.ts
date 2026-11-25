@@ -68,7 +68,7 @@ export function evaluate(
           line: rule.line,
           message: `${name} in ${dir} is locked at ${version}, which is not a comparable version`,
         })
-      } else if (semver.satisfies(locked, range, { includePrerelease: true })) {
+      } else if (semver.satisfies(locked, range)) {
         const rulePart = name === pattern ? "" : ` (rule ${pattern})`
         findings.push({
           kind: "stale",
