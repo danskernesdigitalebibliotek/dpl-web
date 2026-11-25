@@ -69,27 +69,6 @@ class FormHooks {
   }
 
   /**
-   * Add attributes and title to password reset form.
-   *
-   * @phpstan-ignore missingType.iterableValue ($form is to complex for
-   * typehint)
-   */
-  #[Hook('form_user_pass_reset_alter')]
-  public function stylePasswordResetForm(array &$form, FormStateInterface $form_state, string $form_id): void {
-    $form['#attributes']['class'][] = 'rich-text';
-    $form['#attributes']['class'][] = 'dpl-form';
-    $form['title'] = [
-      '#type' => 'markup',
-      '#prefix' => '<h1>',
-      '#suffix' => '</h1>',
-      '#markup' => $this->t('Reset password', [], ['context' => 'DPL admin']),
-      '#weight' => '-999',
-    ];
-
-    $form['actions']['submit']['#attributes']['class'] = ['btn-primary', 'btn-filled btn-small', 'dpl-button'];
-  }
-
-  /**
    * Add cancel button to recurring_event custom confirm form.
    *
    * When saving a series, and changing the dates, the recurring_events module
