@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises"
-import { LineCounter, isMap, isSeq, parseDocument } from "yaml"
+import { LineCounter, isMap, isSeq, parseDocument, visit } from "yaml"
 import type { Node } from "yaml"
 
 export interface IgnoreRule {
@@ -25,6 +25,14 @@ export async function loadConfig(file: string): Promise<UpdateBlock[]> {
   const lineCounter = new LineCounter()
   const doc = parseDocument(await readFile(file, "utf8"), { lineCounter })
   if (doc.errors.length) throw doc.errors[0]
+
+  // Reading the node tree below would skip aliased rules and `<<:` merges
+  // without a word, so refuse them rather than check less than is there.
+  visit(doc, {
+    Alias() {
+      throw new Error(`${file}: YAML aliases are not supported, write the rules out in full`)
+    },
+  })
 
   const updates = doc.get("updates")
   if (!isSeq(updates)) throw new Error(`${file}: 'updates' must be a list`)
