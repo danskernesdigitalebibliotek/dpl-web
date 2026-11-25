@@ -106,7 +106,7 @@
     "orval": "^8.48.0",
     "postcss": "^8.5.33",
     "postcss-cli": "^12.0.0",
-    "postcss-loader": "^8.2.1",
+    "postcss-loader": "^8.2.2",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.10.1",
     "replace-in-file": "^9.0.0",
