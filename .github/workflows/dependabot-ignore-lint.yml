@@ -20,8 +20,8 @@ on:
       - ".github/workflows/dependabot-ignore-lint.yml"
       - "packages/dependabot-ignore-lint/**"
       - "**/pnpm-lock.yaml"
-      - "cms/composer.json"
-      - "cms/composer.lock"
+      - "**/composer.json"
+      - "**/composer.lock"
   push:
     branches:
       - main
@@ -31,8 +31,8 @@ on:
       - ".github/workflows/dependabot-ignore-lint.yml"
       - "packages/dependabot-ignore-lint/**"
       - "**/pnpm-lock.yaml"
-      - "cms/composer.json"
-      - "cms/composer.lock"
+      - "**/composer.json"
+      - "**/composer.lock"
 
 concurrency:
   group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
