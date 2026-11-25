@@ -1,21 +1,22 @@
 import {
-  filterManifestationsByEdition,
   filterManifestationsByMaterialType,
   filterMaterialTypes,
   getEbookManifestationOrFallbackManifestation,
   sortManifestationsBySortPriority,
+  sortManifestationsNewestFirst,
 } from "@/components/pages/workPageLayout/helper"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 // Picks the manifestation to show and the work page url, the same way
-// everywhere a work teaser is listed.
+// everywhere a work teaser is listed. Every manifestation of an allowed type
+// is passed on, ordered by type priority and then newest first.
 export const getWorkTeaserProps = (
   work: WorkTeaserSearchPageFragment,
   queryParams: Record<string, number | string> = {}
 ) => {
   const manifestations = sortManifestationsBySortPriority(
-    filterManifestationsByEdition(
+    sortManifestationsNewestFirst(
       filterManifestationsByMaterialType(filterMaterialTypes(work.manifestations.all))
     )
   )
