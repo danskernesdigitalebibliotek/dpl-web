@@ -1,9 +1,12 @@
-import Link from "next/link"
-import React from "react"
+"use client"
 
-import { WorkCardEmpty } from "@/components/shared/workCard/WorkCard"
-import WorkCardContainer from "@/components/shared/workCard/WorkCardContainer"
+import { useInView } from "framer-motion"
+import Link from "next/link"
+import React, { useRef } from "react"
+
+import WorkCard, { WorkCardEmpty } from "@/components/shared/workCard/WorkCard"
 import { cyKeys } from "@/cypress/support/constants"
+import { useWorkTeaserManifestation } from "@/hooks/useWorkTeaserManifestation"
 import {
   ManifestationSearchPageTeaserFragment,
   WorkTeaserSearchPageFragment,
@@ -15,39 +18,53 @@ export type TWorkTeaserProps = {
   title: string
   creators: WorkTeaserSearchPageFragment["creators"]
   url: string
-  cover?: ManifestationSearchPageTeaserFragment["cover"]
   manifestations: ManifestationSearchPageTeaserFragment[]
+  linkedManifestations: ManifestationSearchPageTeaserFragment[]
   className?: string
   captionClassName?: string
   cardClassName?: string
   isWithTilt?: boolean
 }
 
-// A work card with title and creators below, linking to `url`.
+// A work card with title and creators below, linking to `url`. Cover and
+// title are the manifestation the work page lands on; `title` is the work's
+// own, used when no manifestation is linked.
 const WorkTeaser = ({
-  title,
+  title: workTitle,
   creators,
   url,
-  cover,
   manifestations,
+  linkedManifestations,
   className,
   captionClassName,
   cardClassName,
   isWithTilt = true,
 }: TWorkTeaserProps) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true })
+  const { manifestation, materialTypes, isBlueTitle } = useWorkTeaserManifestation({
+    manifestations,
+    linkedManifestations,
+    isEnabled: isInView,
+  })
+
+  const title = manifestation?.titles.main[0] ?? manifestation?.titles.full[0] ?? workTitle
+  const cover = manifestation?.cover
+
   return (
     <Link
       prefetch={false}
       aria-label={`Tilgå værket ${title} af ${displayCreators(creators, 1)}`}
       className={cn("focus-visible", className)}
       href={url}>
-      <div className={cn("block space-y-3 lg:space-y-5", captionClassName)}>
+      <div ref={ref} className={cn("block space-y-3 lg:space-y-5", captionClassName)}>
         {cover && manifestations.length ? (
-          <WorkCardContainer
+          <WorkCard
             className={cardClassName}
             title={title}
             covers={cover}
-            manifestations={manifestations}
+            materialTypes={materialTypes}
+            isBlueTitle={isBlueTitle}
             isWithTilt={isWithTilt}
           />
         ) : (

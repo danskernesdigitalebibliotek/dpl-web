@@ -330,20 +330,21 @@ export const sortManifestationsNewestFirst = <
   )
 
 //Find the editions for the selected type and sort them by publication year, newest first
-export const getEditionsForMaterialType = (
-  manifestations: ManifestationWorkPageFragment[],
+export const getEditionsForMaterialType = <
+  TManifestation extends ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment,
+>(
+  manifestations: TManifestation[],
   materialTypeCode: string
-): ManifestationWorkPageFragment[] => {
+): TManifestation[] => {
   const selectedLabel = translateMaterialTypesStringForRender(materialTypeCode)
 
   return sortManifestationsNewestFirst(
-    (filterMaterialTypes(manifestations) as ManifestationWorkPageFragment[]).filter(
-      manifestation =>
-        manifestation.materialTypes.some(
-          materialType =>
-            translateMaterialTypesStringForRender(materialType.materialTypeSpecific.code) ===
-            selectedLabel
-        )
+    (filterMaterialTypes(manifestations) as TManifestation[]).filter(manifestation =>
+      manifestation.materialTypes.some(
+        materialType =>
+          translateMaterialTypesStringForRender(materialType.materialTypeSpecific.code) ===
+          selectedLabel
+      )
     )
   )
 }

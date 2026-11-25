@@ -87,17 +87,18 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
             <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
               {works &&
                 works.map(work => {
-                  const { title, creators, url, cover, manifestations } = getWorkTeaserProps(work, {
-                    u_navigatedby_go_mat: 1,
-                  })
+                  const { title, creators, url, manifestations, linkedManifestations } =
+                    getWorkTeaserProps(work, {
+                      u_navigatedby_go_mat: 1,
+                    })
                   return (
                     <WorkTeaser
                       key={work.workId}
                       title={title}
                       creators={creators}
                       url={url}
-                      cover={cover}
                       manifestations={manifestations}
+                      linkedManifestations={linkedManifestations}
                       className="keen-slider__slide outline-accent-foreground
                         focus:outline-offset-2"
                       cardClassName="dark:bg-background-overlay"

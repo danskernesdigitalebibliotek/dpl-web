@@ -42,6 +42,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          titles: {
+            full: ["Harry Potter og De Vises Sten"],
+            main: ["Harry Potter og De Vises Sten"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -101,6 +105,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og De Vises Sten"],
+            main: ["Harry Potter og De Vises Sten"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -156,6 +164,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og De Vises Sten"],
+            main: ["Harry Potter og De Vises Sten"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -217,6 +229,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og De Vises Sten"],
+            main: ["Harry Potter og De Vises Sten"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -272,6 +288,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og De Vises Sten"],
+            main: ["Harry Potter og De Vises Sten"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -332,6 +352,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        titles: {
+          full: ["Harry Potter og De Vises Sten"],
+          main: ["Harry Potter og De Vises Sten"],
+        },
         accessTypes: [
           {
             code: "PHYSICAL",
@@ -442,6 +466,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          titles: {
+            full: ["Harry Potter og Hemmelighedernes Kammer"],
+            main: ["Harry Potter og Hemmelighedernes Kammer"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -501,6 +529,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og Hemmelighedernes Kammer"],
+            main: ["Harry Potter og Hemmelighedernes Kammer"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -556,6 +588,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og Hemmelighedernes Kammer"],
+            main: ["Harry Potter og Hemmelighedernes Kammer"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -615,6 +651,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
         },
         {
+          titles: {
+            full: ["Harry Potter og Hemmelighedernes Kammer"],
+            main: ["Harry Potter og Hemmelighedernes Kammer"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -676,6 +716,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: ["på dansk ved Hanna Lützen"],
         },
         {
+          titles: {
+            full: ["Harry Potter og Hemmelighedernes Kammer"],
+            main: ["Harry Potter og Hemmelighedernes Kammer"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -731,6 +775,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og Hemmelighedernes Kammer"],
+            main: ["Harry Potter og Hemmelighedernes Kammer"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -792,6 +840,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og Hemmelighedernes Kammer"],
+            main: ["Harry Potter og Hemmelighedernes Kammer"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -851,6 +903,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
         },
         {
+          titles: {
+            full: ["Harry Potter og Hemmelighedernes Kammer"],
+            main: ["Harry Potter og Hemmelighedernes Kammer"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -907,6 +963,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        titles: {
+          full: ["Harry Potter og Hemmelighedernes Kammer"],
+          main: ["Harry Potter og Hemmelighedernes Kammer"],
+        },
         accessTypes: [
           {
             code: "PHYSICAL",
@@ -997,6 +1057,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          titles: {
+            full: ["Harry Potter og Flammernes Pokal"],
+            main: ["Harry Potter og Flammernes Pokal"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1058,6 +1122,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og Flammernes Pokal"],
+            main: ["Harry Potter og Flammernes Pokal"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1119,6 +1187,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: ["på dansk ved Hanna Lützen"],
         },
         {
+          titles: {
+            full: ["Harry Potter og Flammernes Pokal"],
+            main: ["Harry Potter og Flammernes Pokal"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1174,6 +1246,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og Flammernes Pokal"],
+            main: ["Harry Potter og Flammernes Pokal"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1229,6 +1305,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og Flammernes Pokal"],
+            main: ["Harry Potter og Flammernes Pokal"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1285,6 +1365,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        titles: {
+          full: ["Harry Potter og Flammernes Pokal"],
+          main: ["Harry Potter og Flammernes Pokal"],
+        },
         accessTypes: [
           {
             code: "PHYSICAL",
@@ -1389,6 +1473,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          titles: {
+            full: ["Atlas : historien om Pa Salt"],
+            main: ["Atlas : historien om Pa Salt"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1446,6 +1534,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Atlas : historien om Pa Salt"],
+            main: ["Atlas : historien om Pa Salt"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1508,6 +1600,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        titles: { full: ["Atlas : historien om Pa Salt"], main: ["Atlas : historien om Pa Salt"] },
         accessTypes: [
           {
             code: "PHYSICAL",
@@ -1606,6 +1699,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          titles: {
+            full: ["Harry Potter og Dødsregalierne"],
+            main: ["Harry Potter og Dødsregalierne"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1665,6 +1762,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: ["oversat fra engelsk af Hanna Lützen"],
         },
         {
+          titles: {
+            full: ["Harry Potter og Dødsregalierne"],
+            main: ["Harry Potter og Dødsregalierne"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1720,6 +1821,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og Dødsregalierne"],
+            main: ["Harry Potter og Dødsregalierne"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1775,6 +1880,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og Dødsregalierne"],
+            main: ["Harry Potter og Dødsregalierne"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1830,6 +1939,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Harry Potter og Dødsregalierne"],
+            main: ["Harry Potter og Dødsregalierne"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1888,6 +2001,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        titles: {
+          full: ["Harry Potter og Dødsregalierne"],
+          main: ["Harry Potter og Dødsregalierne"],
+        },
         accessTypes: [
           {
             code: "PHYSICAL",

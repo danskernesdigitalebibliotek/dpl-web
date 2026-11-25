@@ -53,16 +53,30 @@ describe("getWorkTeaserProps", () => {
     ])
   })
 
-  test("shows the newest e-book's cover and links to the e-book type", () => {
-    const { cover, url } = getWorkTeaserProps(
+  test("links to the e-book type and lists its manifestations newest first", () => {
+    const { linkedManifestations, url } = getWorkTeaserProps(
       work([
         manifestation("book-2023", "BOOK", 2023),
         manifestation("ebook-2015", "EBOOK", 2015),
+        manifestation("electronic-2018", "BOOK_ELECTRONIC", 2018),
         manifestation("ebook-2022", "EBOOK", 2022),
       ])
     )
 
-    expect(cover).toEqual({ large: { url: "cover-ebook-2022" } })
     expect(url).toContain("type=EBOOK")
+    expect(linkedManifestations.map(({ pid }) => pid)).toEqual([
+      "ebook-2022",
+      "electronic-2018",
+      "ebook-2015",
+    ])
+  })
+
+  test("lists no linked manifestations when no type can be linked", () => {
+    const { linkedManifestations, url } = getWorkTeaserProps(
+      work([manifestation("dvd", "MOVIE", 2020)])
+    )
+
+    expect(url).toBe("")
+    expect(linkedManifestations).toEqual([])
   })
 })

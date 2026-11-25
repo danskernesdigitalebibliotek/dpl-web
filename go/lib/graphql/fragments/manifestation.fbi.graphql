@@ -148,6 +148,7 @@ fragment ManifestationSearchPageTeaser on Manifestation {
   ...ManifestationIdentifiers
   ...ManifestationCover
   ...ManifestationDetails
+  ...ManifestationTitles
 }
 
 fragment ManifestationWorkPage on Manifestation {
