@@ -68,18 +68,8 @@ to find out what the new version breaks:
 
 ### Flaky checks
 
-Before calling a failure flaky, compare it with the same job on other pull
-requests and on `develop`.
-
-Some failures are flaky in our CI in general and hit any pull request, not
-only Dependabot's. They have nothing to do with the update, so re-run the
-failed jobs:
-
-- GitHub answers `HTTP/2 504` while Composer downloads packages in
-  `dev:reset`.
-- `Go / Argos` fails in `pnpm recursive install` with `ENOENT` in the Cypress
-  cache.
-- `CMS / Check Drupal Config` fails with `Could not acquire processing lock`.
+Dependabot pull requests hit the same flaky failures as any other pull
+request. See [Flaky CI checks](./flaky-ci.md) for how to recognise them.
 
 Workflow runs on Dependabot pull requests can read Dependabot secrets, but
 not Actions secrets. A new secret registered only as an Actions secret is
