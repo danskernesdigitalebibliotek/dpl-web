@@ -10,11 +10,11 @@ import { Button, buttonVariants } from "@/components/shared/button/Button"
 import { cyKeys } from "@/cypress/support/constants"
 import { getStepQueryVariables } from "@/lib/book-quiz/ladder"
 import type { TBookQuizOption, TBookQuizRange } from "@/lib/book-quiz/questions"
-import { BOOKS_PER_STEP, getStepWorkPool, rankStepWorks } from "@/lib/book-quiz/rank"
+import { BOOKS_PER_STEP, getStepWorkPool } from "@/lib/book-quiz/rank"
 import { useComplexSearchForBookQuizQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 
-import { shuffleWorks } from "./helper"
+import { getBatches } from "./helper"
 
 type TBookQuizSectionProps = {
   // The answers behind the step. Shown as the title.
@@ -26,18 +26,18 @@ type TBookQuizSectionProps = {
 const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
   const { data, isLoading } = useComplexSearchForBookQuizQuery(getStepQueryVariables(cql))
   const pool = getStepWorkPool(data?.complexSearch.works ?? [], ageRange)
-  // The shuffled books belong to the search they were picked from, so a retaken
-  // quiz on the same page shows its own top books again.
-  const [shuffled, setShuffled] = useState<{ cql: string; works: typeof pool }>()
-  const works =
-    shuffled?.cql === cql
-      ? shuffled.works
-      : rankStepWorks(data?.complexSearch.works ?? [], ageRange)
-  const canShuffle = pool.length > BOOKS_PER_STEP
-  const shuffle = () => setShuffled({ cql, works: shuffleWorks(pool, works, BOOKS_PER_STEP) })
+  // The books are shown one batch at a time, in the same row. "Show more" swaps
+  // in the next batch, and starts over after the last one. The batch belongs to
+  // the search, so a retaken quiz on the same page starts with the first books
+  // again.
+  const batches = getBatches(pool, BOOKS_PER_STEP)
+  const [shown, setShown] = useState<{ cql: string; batch: number }>()
+  const batch = shown?.cql === cql ? shown.batch : 0
+  const canShowMore = batches.length > 1
+  const showMore = () => setShown({ cql, batch: (batch + 1) % batches.length })
 
   // A search without books gives no section.
-  if (!isLoading && works.length === 0) return null
+  if (!isLoading && pool.length === 0) return null
 
   return (
     <section
@@ -70,28 +70,27 @@ const BookQuizSection = ({ answers, cql, ageRange }: TBookQuizSectionProps) => {
       {isLoading ? (
         <SearchResultsSkeleton count={BOOKS_PER_STEP} columns={BOOKS_PER_STEP} />
       ) : (
-        // Keyed by the books, so a shuffle lets the old ones leave before the new
-        // ones come in.
+        // Keyed by the batch, so the books leave before the next ones come in.
         <AnimatePresence mode="wait">
           <SearchResults
-            key={works.map(work => work.workId).join("|")}
-            works={works}
+            key={`${cql}-${batch}`}
+            works={batches[batch] ?? []}
             columns={BOOKS_PER_STEP}
             animated
           />
         </AnimatePresence>
       )}
       {/* After the books: first the suggestions, then the offer to see others. */}
-      {canShuffle && (
+      {canShowMore && (
         <div className="flex justify-center">
           <Button
             variant="icon-text"
             theme="secondary"
             icon="shuffle"
             className="bg-background"
-            data-cy={cyKeys["book-quiz-shuffle-button"]}
-            onClick={shuffle}>
-            Bland bøgerne
+            data-cy={cyKeys["book-quiz-more-button"]}
+            onClick={showMore}>
+            Vis flere bøger
           </Button>
         </div>
       )}

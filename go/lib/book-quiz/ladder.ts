@@ -17,8 +17,8 @@ export type TLadderStep = {
   cql: string
 }
 
-// Books fetched per step, so there are enough to shuffle between on the result
-// page.
+// Books fetched per step, so the result page has more to show than the first
+// few.
 const FETCH_PER_STEP = 20
 
 // Query variables for one step. Shared by the result page sections and the

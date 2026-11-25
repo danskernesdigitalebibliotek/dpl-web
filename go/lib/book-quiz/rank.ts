@@ -1,6 +1,6 @@
 import type { TBookQuizRange } from "./questions"
 
-// Books shown per section.
+// Books shown per section at a time.
 export const BOOKS_PER_STEP = 4
 
 // The smallest shape rank needs, so it works with any query that includes
@@ -49,9 +49,3 @@ export const getStepWorkPool = <TWork extends TRankableWork>(
     .sort((a, b) => (a.spill ?? Infinity) - (b.spill ?? Infinity) || a.index - b.index)
     .map(entry => entry.work)
 }
-
-// Top books for one ladder step.
-export const rankStepWorks = <TWork extends TRankableWork>(
-  works: TWork[],
-  ageRange: TBookQuizRange | undefined
-): TWork[] => getStepWorkPool(works, ageRange).slice(0, BOOKS_PER_STEP)

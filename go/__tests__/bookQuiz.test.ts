@@ -4,12 +4,10 @@ import { ANIMALS, FANTASY, FUNNY, SPORT } from "@/lib/book-quiz/groups"
 import { getLadderSteps } from "@/lib/book-quiz/ladder"
 import { getBookQuizProfile } from "@/lib/book-quiz/profile"
 import {
-  BOOKS_PER_STEP,
   type TRankableWork,
   getAgeSpill,
   getStepWorkPool,
   getWorkAgeSpans,
-  rankStepWorks,
 } from "@/lib/book-quiz/rank"
 
 // One edition per age span. Null is an edition without age data.
@@ -133,34 +131,29 @@ describe("rank", () => {
     expect(getAgeSpill(work("a", null), [9, 10])).toBeNull()
   })
 
-  it("sorts by spill, keeps FBI order on ties and caps the list", () => {
-    const ranked = rankStepWorks(
+  it("sorts by spill, keeps FBI order on ties and drops no works", () => {
+    const pool = getStepWorkPool(
       [
         work("wide", [6, 14]),
         work("unknown", null),
         work("near", [9, 11]),
         work("exact-1", [9, 10]),
         work("exact-2", [9, 10]),
-        work("exact-3", [9, 10]),
       ],
       [9, 10]
     )
-    expect(ranked).toHaveLength(BOOKS_PER_STEP)
-    expect(ranked.map(entry => entry.workId)).toEqual(["exact-1", "exact-2", "exact-3", "near"])
-  })
-
-  it("keeps works with a wide age span, after the better fitting ones", () => {
-    const pool = getStepWorkPool([work("wide", [6, 14]), work("exact", [9, 10])], [9, 10])
-    expect(pool.map(entry => entry.workId)).toEqual(["exact", "wide"])
+    // Works without age data go last.
+    expect(pool.map(entry => entry.workId)).toEqual([
+      "exact-1",
+      "exact-2",
+      "near",
+      "wide",
+      "unknown",
+    ])
   })
 
   it("keeps FBI order when no age is chosen", () => {
-    const ranked = rankStepWorks([work("unknown", null), work("wide", [3, 18])], undefined)
-    expect(ranked.map(entry => entry.workId)).toEqual(["unknown", "wide"])
-  })
-
-  it("puts works without age data last instead of dropping them", () => {
-    const ranked = rankStepWorks([work("unknown", null), work("exact", [9, 10])], [9, 10])
-    expect(ranked.map(entry => entry.workId)).toEqual(["exact", "unknown"])
+    const pool = getStepWorkPool([work("unknown", null), work("wide", [3, 18])], undefined)
+    expect(pool.map(entry => entry.workId)).toEqual(["unknown", "wide"])
   })
 })
