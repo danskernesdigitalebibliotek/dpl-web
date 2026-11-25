@@ -15,6 +15,11 @@ use Drupal\recurring_events\Entity\EventInstance;
 
 /**
  * Load related nodes and events, based on filters.
+ *
+ * @todo Refactor to take the settings as an options object passed to
+ *   getContent() and getContentFromEntity(), instead of public properties set
+ *   on the instance. Then it can be a regular shared service, and
+ *   RelatedContentFactory can be removed.
  */
 class RelatedContent {
 

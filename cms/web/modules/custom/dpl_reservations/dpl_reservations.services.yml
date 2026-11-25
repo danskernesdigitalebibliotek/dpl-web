@@ -2,3 +2,4 @@ services:
   dpl_reservations.settings:
     class: Drupal\dpl_reservations\DplReservationsSettings
     arguments: ['@config.manager']
+  Drupal\dpl_reservations\DplReservationsSettings: '@dpl_reservations.settings'

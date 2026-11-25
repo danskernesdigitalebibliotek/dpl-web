@@ -24,8 +24,6 @@ parameters:
     - '#_alter\(\) has parameter \$form with no value type specified in iterable type array\.#'
     # Drupal *_theme() implementation returns array which we cannot provide more detailed typing of.
     - '#Function .*_theme\(\) return type has no value type specified in iterable type array\.#'
-    # Drupal *_theme() uses arrays which we cannot provide more detailed typing of.
-    - '#Function .*_theme\(\) has parameter .* with no value type specified in iterable type array\.#'
     # Drupal preprocess functions uses variables array which we cannot provide more detailed typing of.
     - '#Function .*_preprocess_.*\(\) has parameter \$variables with no value type specified in iterable type array\.#'
     # Drupal theme suggestions uses arrays which we cannot provide more detailed typing of.
@@ -43,13 +41,8 @@ parameters:
     - '#Drupal\\.*\\Plugin\\.*::create\(\) .* no value type specified in iterable type array\.#'
     # Ignore Plugin definitions parameter.
     - '#Drupal\\.*\\Plugin\\.*::getPluginDefinition\(\) return type has no value type specified in iterable type array\.#'
-    # Allow no doc block details in HOOK_dpl_react_apps_data() functions
-    - '#Function .*_dpl_react_apps_data\(\) has parameter \$variables with no value type specified in iterable type array\.#'
-    - '#Function .*_dpl_react_apps_data\(\) has parameter \$data with no value type specified in iterable type array\.#'
     # Allow no doc block details in hook_dpl_protected_nodes_get_protected_nodes() functions
     - '#Function .*_dpl_protected_nodes_get_protected_nodes\(\) return type has no value type specified in iterable type array\.#'
-    # Drupal hook_theme_registry_alter() has parameter $theme_registry which we cannot provide more detailed typing of.
-    - '#Function .*_theme_registry_alter\(\) has parameter \$theme_registry with no value type specified in iterable type array\.#'
     # Since methods are defined in interface there is no need to document signatures.
     - '#Method Drupal\\dpl_mail\\Config\\AzureMailerConfigOverrides::.* no value type specified in iterable type array\.#'
     -
