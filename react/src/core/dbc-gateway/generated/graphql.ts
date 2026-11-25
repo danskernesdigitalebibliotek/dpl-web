@@ -3262,6 +3262,213 @@ export type ComplexSuggestQuery = {
   };
 };
 
+export type GetDashboardBlueRecommendationsQueryVariables = Exact<{
+  firstId: Scalars["String"]["input"];
+  secondId: Scalars["String"]["input"];
+  thirdId: Scalars["String"]["input"];
+  limit: Scalars["Int"]["input"];
+}>;
+
+export type GetDashboardBlueRecommendationsQuery = {
+  __typename?: "Query";
+  first: {
+    __typename?: "RecommendationResponse";
+    result: Array<{
+      __typename?: "Recommendation";
+      work: {
+        __typename?: "Work";
+        workId: string;
+        manifestations: {
+          __typename?: "Manifestations";
+          all: Array<{
+            __typename?: "Manifestation";
+            materialTypes: Array<{
+              __typename?: "MaterialType";
+              materialTypeGeneral: {
+                __typename?: "GeneralMaterialType";
+                code: GeneralMaterialTypeCodeEnum;
+              };
+              materialTypeSpecific: {
+                __typename?: "SpecificMaterialType";
+                display: string;
+              };
+            }>;
+            access: Array<
+              | { __typename: "AccessUrl" }
+              | { __typename: "DigitalArticleService" }
+              | { __typename: "Ereol"; canAlwaysBeLoaned: boolean }
+              | { __typename: "InfomediaService" }
+              | { __typename: "InterLibraryLoan" }
+              | { __typename: "Publizon" }
+              | { __typename: "RetrieverService" }
+            >;
+          }>;
+          bestRepresentation: {
+            __typename?: "Manifestation";
+            cover: {
+              __typename?: "Cover";
+              large?: {
+                __typename?: "CoverDetails";
+                url?: string | null;
+              } | null;
+            };
+          };
+        };
+        titles: { __typename?: "WorkTitles"; full: Array<string> };
+        creators: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Person"; display: string }
+        >;
+      };
+    }>;
+  };
+  second: {
+    __typename?: "RecommendationResponse";
+    result: Array<{
+      __typename?: "Recommendation";
+      work: {
+        __typename?: "Work";
+        workId: string;
+        manifestations: {
+          __typename?: "Manifestations";
+          all: Array<{
+            __typename?: "Manifestation";
+            materialTypes: Array<{
+              __typename?: "MaterialType";
+              materialTypeGeneral: {
+                __typename?: "GeneralMaterialType";
+                code: GeneralMaterialTypeCodeEnum;
+              };
+              materialTypeSpecific: {
+                __typename?: "SpecificMaterialType";
+                display: string;
+              };
+            }>;
+            access: Array<
+              | { __typename: "AccessUrl" }
+              | { __typename: "DigitalArticleService" }
+              | { __typename: "Ereol"; canAlwaysBeLoaned: boolean }
+              | { __typename: "InfomediaService" }
+              | { __typename: "InterLibraryLoan" }
+              | { __typename: "Publizon" }
+              | { __typename: "RetrieverService" }
+            >;
+          }>;
+          bestRepresentation: {
+            __typename?: "Manifestation";
+            cover: {
+              __typename?: "Cover";
+              large?: {
+                __typename?: "CoverDetails";
+                url?: string | null;
+              } | null;
+            };
+          };
+        };
+        titles: { __typename?: "WorkTitles"; full: Array<string> };
+        creators: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Person"; display: string }
+        >;
+      };
+    }>;
+  };
+  third: {
+    __typename?: "RecommendationResponse";
+    result: Array<{
+      __typename?: "Recommendation";
+      work: {
+        __typename?: "Work";
+        workId: string;
+        manifestations: {
+          __typename?: "Manifestations";
+          all: Array<{
+            __typename?: "Manifestation";
+            materialTypes: Array<{
+              __typename?: "MaterialType";
+              materialTypeGeneral: {
+                __typename?: "GeneralMaterialType";
+                code: GeneralMaterialTypeCodeEnum;
+              };
+              materialTypeSpecific: {
+                __typename?: "SpecificMaterialType";
+                display: string;
+              };
+            }>;
+            access: Array<
+              | { __typename: "AccessUrl" }
+              | { __typename: "DigitalArticleService" }
+              | { __typename: "Ereol"; canAlwaysBeLoaned: boolean }
+              | { __typename: "InfomediaService" }
+              | { __typename: "InterLibraryLoan" }
+              | { __typename: "Publizon" }
+              | { __typename: "RetrieverService" }
+            >;
+          }>;
+          bestRepresentation: {
+            __typename?: "Manifestation";
+            cover: {
+              __typename?: "Cover";
+              large?: {
+                __typename?: "CoverDetails";
+                url?: string | null;
+              } | null;
+            };
+          };
+        };
+        titles: { __typename?: "WorkTitles"; full: Array<string> };
+        creators: Array<
+          | { __typename?: "Corporation"; display: string }
+          | { __typename?: "Person"; display: string }
+        >;
+      };
+    }>;
+  };
+};
+
+export type DashboardBlueRecommendationWorkFragment = {
+  __typename?: "Work";
+  workId: string;
+  manifestations: {
+    __typename?: "Manifestations";
+    all: Array<{
+      __typename?: "Manifestation";
+      materialTypes: Array<{
+        __typename?: "MaterialType";
+        materialTypeGeneral: {
+          __typename?: "GeneralMaterialType";
+          code: GeneralMaterialTypeCodeEnum;
+        };
+        materialTypeSpecific: {
+          __typename?: "SpecificMaterialType";
+          display: string;
+        };
+      }>;
+      access: Array<
+        | { __typename: "AccessUrl" }
+        | { __typename: "DigitalArticleService" }
+        | { __typename: "Ereol"; canAlwaysBeLoaned: boolean }
+        | { __typename: "InfomediaService" }
+        | { __typename: "InterLibraryLoan" }
+        | { __typename: "Publizon" }
+        | { __typename: "RetrieverService" }
+      >;
+    }>;
+    bestRepresentation: {
+      __typename?: "Manifestation";
+      cover: {
+        __typename?: "Cover";
+        large?: { __typename?: "CoverDetails"; url?: string | null } | null;
+      };
+    };
+  };
+  titles: { __typename?: "WorkTitles"; full: Array<string> };
+  creators: Array<
+    | { __typename?: "Corporation"; display: string }
+    | { __typename?: "Person"; display: string }
+  >;
+};
+
 export type GetDashboardRecommendationSourceQueryVariables = Exact<{
   faust?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
@@ -10341,6 +10548,50 @@ export const DashboardRecommendationWorkFragmentDoc = new TypedDocumentString(
     `,
   { fragmentName: "DashboardRecommendationWork" }
 );
+export const DashboardBlueRecommendationWorkFragmentDoc =
+  new TypedDocumentString(
+    `
+    fragment DashboardBlueRecommendationWork on Work {
+  ...DashboardRecommendationWork
+  manifestations {
+    all {
+      materialTypes {
+        materialTypeGeneral {
+          code
+        }
+        materialTypeSpecific {
+          display
+        }
+      }
+      access {
+        __typename
+        ... on Ereol {
+          canAlwaysBeLoaned
+        }
+      }
+    }
+  }
+}
+    fragment DashboardRecommendationWork on Work {
+  workId
+  titles {
+    full
+  }
+  creators {
+    display
+  }
+  manifestations {
+    bestRepresentation {
+      cover {
+        large {
+          url
+        }
+      }
+    }
+  }
+}`,
+    { fragmentName: "DashboardBlueRecommendationWork" }
+  );
 export const WithLanguagesFragmentDoc = new TypedDocumentString(
   `
     fragment WithLanguages on Manifestation {
@@ -11414,6 +11665,96 @@ export const useComplexSuggestQuery = <
       ComplexSuggestDocument,
       variables
     ),
+    ...options
+  });
+};
+
+export const GetDashboardBlueRecommendationsDocument = new TypedDocumentString(`
+    query getDashboardBlueRecommendations($firstId: String!, $secondId: String!, $thirdId: String!, $limit: Int!) {
+  first: recommend(id: $firstId, limit: $limit) {
+    result {
+      work {
+        ...DashboardBlueRecommendationWork
+      }
+    }
+  }
+  second: recommend(id: $secondId, limit: $limit) {
+    result {
+      work {
+        ...DashboardBlueRecommendationWork
+      }
+    }
+  }
+  third: recommend(id: $thirdId, limit: $limit) {
+    result {
+      work {
+        ...DashboardBlueRecommendationWork
+      }
+    }
+  }
+}
+    fragment DashboardBlueRecommendationWork on Work {
+  ...DashboardRecommendationWork
+  manifestations {
+    all {
+      materialTypes {
+        materialTypeGeneral {
+          code
+        }
+        materialTypeSpecific {
+          display
+        }
+      }
+      access {
+        __typename
+        ... on Ereol {
+          canAlwaysBeLoaned
+        }
+      }
+    }
+  }
+}
+fragment DashboardRecommendationWork on Work {
+  workId
+  titles {
+    full
+  }
+  creators {
+    display
+  }
+  manifestations {
+    bestRepresentation {
+      cover {
+        large {
+          url
+        }
+      }
+    }
+  }
+}`);
+
+export const useGetDashboardBlueRecommendationsQuery = <
+  TData = GetDashboardBlueRecommendationsQuery,
+  TError = unknown
+>(
+  variables: GetDashboardBlueRecommendationsQueryVariables,
+  options?: Omit<
+    UseQueryOptions<GetDashboardBlueRecommendationsQuery, TError, TData>,
+    "queryKey"
+  > & {
+    queryKey?: UseQueryOptions<
+      GetDashboardBlueRecommendationsQuery,
+      TError,
+      TData
+    >["queryKey"];
+  }
+) => {
+  return useQuery<GetDashboardBlueRecommendationsQuery, TError, TData>({
+    queryKey: ["getDashboardBlueRecommendations", variables],
+    queryFn: fetcher<
+      GetDashboardBlueRecommendationsQuery,
+      GetDashboardBlueRecommendationsQueryVariables
+    >(GetDashboardBlueRecommendationsDocument, variables),
     ...options
   });
 };
@@ -14049,6 +14390,7 @@ export const operationNames = {
   Query: {
     complexFacetSearch: "complexFacetSearch" as const,
     complexSuggest: "complexSuggest" as const,
+    getDashboardBlueRecommendations: "getDashboardBlueRecommendations" as const,
     getDashboardRecommendationSource:
       "getDashboardRecommendationSource" as const,
     getDashboardRecommendationSourceByIsbn:
@@ -14081,6 +14423,7 @@ export const operationNames = {
     placeCopy: "placeCopy" as const
   },
   Fragment: {
+    DashboardBlueRecommendationWork: "DashboardBlueRecommendationWork" as const,
     DashboardRecommendationWork: "DashboardRecommendationWork" as const,
     ManifestationBasicDetails: "ManifestationBasicDetails" as const,
     ManifestationsSimple: "ManifestationsSimple" as const,
