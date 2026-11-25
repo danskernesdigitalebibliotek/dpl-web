@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_media\Entity;
 
+use Drupal\Core\Entity\Attribute\Bundle;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\file\Entity\File;
 use Drupal\media\Entity\Media;
@@ -11,6 +12,10 @@ use Drupal\media\Entity\Media;
 /**
  * Bundle class for image media.
  */
+#[Bundle(
+  entityType: 'media',
+  bundle: 'image',
+)]
 class ImageMedia extends Media {
 
   /**

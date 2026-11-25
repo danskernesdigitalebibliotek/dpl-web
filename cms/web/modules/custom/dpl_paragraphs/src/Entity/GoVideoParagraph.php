@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_paragraphs\Entity;
 
+use Drupal\Core\Entity\Attribute\Bundle;
 use Drupal\dpl_media\Entity\VideotoolMedia;
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Bundle class for go_video paragraphs.
  */
+#[Bundle(
+  entityType: 'paragraph',
+  bundle: 'go_video',
+)]
 class GoVideoParagraph extends Paragraph {
 
   /**
