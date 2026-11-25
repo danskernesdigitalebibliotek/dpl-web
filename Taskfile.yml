@@ -103,6 +103,13 @@ tasks:
     cmds:
       - find .github/scripts -type f -name '*.sh' -print -exec docker run --rm --volume "{{.TASKFILE_DIR}}:/mnt:ro" koalaman/shellcheck:stable --format=gcc {} +
 
+  ci:dependabot-ignore-lint:
+    desc: "Fail if an ignore rule in .github/dependabot.yml no longer holds anything back"
+    deps:
+      - init:pnpm
+    cmds:
+      - task dev:cli -- corepack pnpm --dir packages/dependabot-ignore-lint run lint:ignores
+
   knip:
     desc: "Run knip dead-code analysis for the projects that have it set up (go and design-system)."
     cmds:
