@@ -147,10 +147,10 @@ packages and Drupal modules alike.
   update. It helps the maintainer, and the maintainer may push back with
   information we did not have.
 - An upstream pull request or merge request can give us a patch to apply in
-  the meantime. Composer patches in the CMS work well for this. In the npm
-  projects, use an override to change which version of a dependency a package
-  gets: [pnpm advises against](https://pnpm.io/cli/patch) patching a
-  package's `package.json` to do that.
+  the meantime: a Composer patch in the CMS, and
+  [`pnpm patch`](https://pnpm.io/cli/patch) in the npm projects. To change
+  which version of a dependency a package gets, use an override instead: pnpm
+  advises against patching a package's `package.json` to do that.
 - Link the upstream issue in the Jira ticket and in the comment on the
   `ignore` entry or override, so the next triage can see whether it is
   resolved.
