@@ -9,6 +9,30 @@ This is the dpl-web part of the general
 [vendor updates](https://danskernesdigitalebibliotek.github.io/dpl-docs/General/vendor-updates/)
 process for DPL projects.
 
+## Every Monday
+
+1. Log what you do in the Zulip topic **DDF > Depandabot Triage Log** as you
+   go. See [Log](#log).
+2. Go through the
+   [open Dependabot pull requests](https://github.com/danskernesdigitalebibliotek/dpl-web/pulls?q=is%3Apr+state%3Aopen+label%3Adependencies).
+3. Minor and patch updates that are still open: re-run flaky jobs, then the
+   `Auto-merge Dependabot` run. See
+   [Minor and patch updates](#minor-and-patch-updates).
+4. Major updates: merge the green, low-risk ones and hold the rest back. See
+   [Major updates](#major-updates) and [Failing checks](#failing-checks).
+5. Code generator updates: regenerate the code and push it. See
+   [Code generation](#code-generation-orval-graphql-codegen).
+6. Go through the open
+   [Dependabot alerts](https://github.com/danskernesdigitalebibliotek/dpl-web/security/dependabot):
+   update, work around or dismiss each one. See
+   [Security alerts](#security-alerts).
+7. Remove `ignore` entries that are no longer needed. See
+   [Ignored dependencies](#ignored-dependencies).
+8. Remove overrides and patches that are no longer needed. See
+   [Overrides and patches](#overrides-and-patches).
+
+The sections below explain each step.
+
 ## Log
 
 Write what you do in the Zulip topic **DDF > Depandabot Triage Log** as you go.
