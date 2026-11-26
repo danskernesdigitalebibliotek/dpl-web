@@ -65,13 +65,14 @@ are settled; add new ones as they come up.
       shows. Keep it, or use the prototype's coloured title block?
 - [ ] **Site chrome.** The desktop boards show the library's full header; the
       PoC shows none.
-- [ ] **Several links of the same kind.** The PoC keeps the first working
-      `AccessUrl` and skips the rest. Kolding 2018
-      (`/work/work-of:870971-tsart:73451485`) has two, tidsskrift.dk and
-      doi.org, which lead to the same article; only tidsskrift.dk becomes "Se
-      online". Options: a button per link, named by its origin ("Se online på
-      tidsskrift.dk"), or one "Se online" with the other links listed in the
-      details.
+- [ ] **Several links of the same kind.** Kolding 2018
+      (`/work/work-of:870971-tsart:73451485?manifestationId=150094-artikel:103512`)
+      has two working `AccessUrl`s, tidsskrift.dk and doi.org, leading to the
+      same article. The prototype has no such case. The PoC now makes each
+      site its own option in the picker ("Se online på tidsskrift.dk", "Se
+      online på doi.org"), so the edition gets "Skift bestillingsmulighed".
+      Is that right, or should it be one "Se online" with the other links in
+      the details?
 
 ### For the developers and DDF
 

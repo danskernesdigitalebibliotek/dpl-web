@@ -40,6 +40,7 @@ export const useArticlePage = (
   const action = resolveArticleAction({
     manifestation,
     selectedWay: options.selectedWay,
+    selectedWayLabel: options.selectedWayLabel,
     hasUserToken: Boolean(settings.userToken),
     isBlocked: Boolean(patron?.isLocked),
     hasClickedWithoutLogin,

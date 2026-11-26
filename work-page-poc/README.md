@@ -73,8 +73,9 @@ GO still deploy alongside it, so a push takes as long as for any PR.
   earlier "Materialeside – Udgavevælger". Material type chips, one button for
   the chosen edition and access way, and a picker for both behind a "Skift …"
   link that names what can be switched. The newest edition with a working way
-  is the default; a way other than the edition's best is kept in
-  `?accessWay=`. Retriever is hidden from patrons outside the municipality.
+  is the default; a way chosen in the picker is kept in `?accessWay=`
+  (`read-article`, `digital-copy`, `printed-issue`, or `online:<site>`, since
+  several working links each become an option named by their site). Retriever is hidden from patrons outside the municipality.
   "Find det trykte nummer" leads to the periodical's work page when a CQL
   search on the host publication's ISSN finds exactly one periodical, else to
   a title search. "Bestil digital kopi" is simulated. With the `opac` FBI url:

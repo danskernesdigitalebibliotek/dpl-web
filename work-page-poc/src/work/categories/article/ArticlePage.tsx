@@ -4,7 +4,7 @@ import { Link, useSearchParams } from "react-router"
 
 import { useConnectionSettings } from "../../../connection/useConnectionSettings"
 import type { CategoryPageProps } from "../types"
-import { getPublicationYear } from "./accessWays"
+import { getAccessWayKey, getPublicationYear } from "./accessWays"
 import { Accordion } from "./Accordion"
 import { ArticleCallToAction } from "./ArticleCallToAction"
 import {
@@ -49,7 +49,7 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
 
   const showManifestation = (choice: OptionChoice) => {
     setHasClickedWithoutLogin(false)
-    setSearchParams(choice.wayKind ? { manifestationId: choice.pid, accessWay: choice.wayKind } : { manifestationId: choice.pid })
+    setSearchParams(choice.wayKey ? { manifestationId: choice.pid, accessWay: choice.wayKey } : { manifestationId: choice.pid })
   }
 
   const openWay = (kind: "read-article" | "digital-copy") => {
@@ -67,7 +67,7 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
 
   const choose = (choice: OptionChoice) => {
     showManifestation(choice)
-    setOpenDialog(isPickerFromOrder && choice.wayKind === "digital-copy" ? "order" : null)
+    setOpenDialog(isPickerFromOrder && choice.wayKey === "digital-copy" ? "order" : null)
   }
 
   return (
@@ -104,7 +104,7 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
                     type="radio"
                     name="article-material-type"
                     checked={materialType.isSelected}
-                    onChange={() => showManifestation({ pid: materialType.defaultManifestation.pid, wayKind: undefined })}
+                    onChange={() => showManifestation({ pid: materialType.defaultManifestation.pid, wayKey: undefined })}
                     className="absolute m-0 size-px opacity-0"
                   />
                   {materialType.label}
@@ -201,7 +201,7 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
           pickerTitle={options.pickerTitle}
           applyLabel={options.applyLabel}
           editions={options.editions}
-          selected={{ pid: manifestation.pid, wayKind: options.selectedWay?.kind }}
+          selected={{ pid: manifestation.pid, wayKey: options.selectedWay && getAccessWayKey(options.selectedWay) }}
         />
       )}
       {retrieverWay?.kind === "read-article" && (

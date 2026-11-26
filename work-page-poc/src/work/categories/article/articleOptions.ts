@@ -1,6 +1,14 @@
 import type { Manifestation } from "../../../fbi/types"
 import type { TraceRow } from "../../trace"
-import { type AccessWay, accessWayLabels, evaluateAccess, getPublicationYear, rankEditions } from "./accessWays"
+import {
+  type AccessWay,
+  accessRules,
+  evaluateAccess,
+  getAccessWayKey,
+  getAccessWayLabel,
+  getPublicationYear,
+  rankEditions,
+} from "./accessWays"
 import { getMaterialType, getMaterialTypeLabel } from "./articleText"
 
 /** An edition and the ways to it the patron can take. */
@@ -122,9 +130,20 @@ export const resolveArticleOptions = ({
       ]
     : []
 
-  const requested = ways.find((way) => way.kind === requestedWay)
+  const requested = ways.find((way) => getAccessWayKey(way) === requestedWay)
   const selectedWay = requested ?? ways[0]
-  const selectedWayLabel = selectedWay ? accessWayLabels[selectedWay.kind] : undefined
+  const selectedWayLabel = selectedWay ? getAccessWayLabel(selectedWay, ways) : undefined
+  const onlineWays = ways.filter((way) => way.kind === "online")
+  const linkRows: TraceRow[] =
+    onlineWays.length > 1
+      ? [
+          {
+            rule: accessRules.severalLinks,
+            input: onlineWays.map((way) => way.host).join(", "),
+            outcome: onlineWays.map((way) => getAccessWayLabel(way, ways)).join(" · "),
+          },
+        ]
+      : []
   const wayRow: TraceRow = {
     rule: optionRules.selectedWay,
     input: requestedWay ? `accessWay = ${requestedWay}` : "accessWay mangler",
@@ -146,11 +165,12 @@ export const resolveArticleOptions = ({
     materialTypes,
     editions,
     selectedWay,
+    selectedWayLabel,
     switchText,
     pickerTitle,
     applyLabel: switchMode === "edition" ? "Vælg udgave" : "Vælg",
     typeRows,
-    accessRows: [...access.rows, ...residencyRows],
+    accessRows: [...access.rows, ...linkRows, ...residencyRows],
     choiceRows: [wayRow, switchRow],
   }
 }

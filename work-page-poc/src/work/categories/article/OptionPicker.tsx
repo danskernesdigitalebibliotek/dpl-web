@@ -1,11 +1,12 @@
 import { type MouseEvent, useState } from "react"
 
 import { Sheet } from "../../../ui/Sheet"
-import { type AccessWay, accessWayLabels } from "./accessWays"
+import { getAccessWayKey, getAccessWayLabel } from "./accessWays"
 import type { EditionWithWays } from "./articleOptions"
 import { getAccessWayText, getEditionDetailRows, getMaterialTypeLabel, getYearLabel } from "./articleText"
 
-export type OptionChoice = { pid: string; wayKind: AccessWay["kind"] | undefined }
+/** An edition and one of its ways, by `getAccessWayKey`. */
+export type OptionChoice = { pid: string; wayKey: string | undefined }
 
 type OptionPickerProps = {
   open: boolean
@@ -49,7 +50,8 @@ export const OptionPicker = ({
   const pickEdition = (edition: EditionWithWays) => (event: MouseEvent) => {
     const isOnControl = event.target instanceof Element && event.target.closest("label, button")
     if (isOnControl || pending.pid === edition.manifestation.pid) return
-    setPending({ pid: edition.manifestation.pid, wayKind: edition.ways[0]?.kind })
+    const [bestWay] = edition.ways
+    setPending({ pid: edition.manifestation.pid, wayKey: bestWay && getAccessWayKey(bestWay) })
   }
 
   const editionCount = editions.length === 1 ? "1 udgave" : `${editions.length} udgaver`
@@ -107,10 +109,11 @@ export const OptionPicker = ({
                   </legend>
                   <div className="flex flex-col gap-1">
                     {ways.map((way) => {
-                      const isChecked = isPendingEdition && pending.wayKind === way.kind
+                      const wayKey = getAccessWayKey(way)
+                      const isChecked = isPendingEdition && pending.wayKey === wayKey
                       return (
                         <label
-                          key={way.kind}
+                          key={wayKey}
                           className={`box-border flex cursor-pointer items-start gap-3 rounded-lg px-3 py-2.5 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-black ${
                             isChecked ? "bg-[#f0efea]" : ""
                           }`}
@@ -119,13 +122,13 @@ export const OptionPicker = ({
                             type="radio"
                             name="article-option"
                             checked={isChecked}
-                            onChange={() => setPending({ pid: manifestation.pid, wayKind: way.kind })}
+                            onChange={() => setPending({ pid: manifestation.pid, wayKey })}
                             className="absolute m-0 size-px opacity-0"
                           />
                           <span aria-hidden="true" className={radioDotClasses(isChecked)} />
                           <span className="flex min-w-0 grow flex-col">
                             <span className="text-[15px] leading-[22px] font-semibold">
-                              {accessWayLabels[way.kind]}
+                              {getAccessWayLabel(way, ways)}
                               <span className="sr-only">, udgaven fra {year}</span>
                             </span>
                             <span className="text-[13px] leading-[18px] text-[#6b6b6b]">{getAccessWayText(way)}</span>
@@ -143,12 +146,12 @@ export const OptionPicker = ({
                     type="radio"
                     name="article-option"
                     checked={isPendingEdition}
-                    onChange={() => setPending({ pid: manifestation.pid, wayKind: onlyWay?.kind })}
-                    aria-label={`${host ?? title}, ${onlyWay ? accessWayLabels[onlyWay.kind] : "kan ikke tilgås her"}`}
+                    onChange={() => setPending({ pid: manifestation.pid, wayKey: onlyWay && getAccessWayKey(onlyWay) })}
+                    aria-label={`${host ?? title}, ${onlyWay ? getAccessWayLabel(onlyWay, ways) : "kan ikke tilgås her"}`}
                     className="absolute m-0 size-px opacity-0"
                   />
                   <span className="text-[15px] leading-[22px] font-semibold">
-                    {onlyWay ? accessWayLabels[onlyWay.kind] : "Kan ikke tilgås her"}
+                    {onlyWay ? getAccessWayLabel(onlyWay, ways) : "Kan ikke tilgås her"}
                   </span>
                   <span className="text-[13px] leading-[18px] text-[#6b6b6b]">
                     {onlyWay ? getAccessWayText(onlyWay) : "Kontakt biblioteket for at få fat i den."}

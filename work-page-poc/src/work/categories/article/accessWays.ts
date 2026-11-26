@@ -7,7 +7,7 @@ import type { TraceRow } from "../../trace"
  */
 export type AccessWay =
   | { kind: "read-article"; retrieverId: string }
-  | { kind: "online"; url: string }
+  | { kind: "online"; url: string; host: string }
   | { kind: "digital-copy" }
   | { kind: "printed-issue"; hostTitle: string; issn: string | undefined }
 
@@ -30,8 +30,26 @@ export const accessRules = {
   digitalCopy: "DigitalArticleService giver Bestil digital kopi",
   printedIssue: "InterLibraryLoan giver Find det trykte nummer, når der er en hostPublication",
   otherAccess: "Andre adgangstyper bruges ikke for artikler",
-  oneOfEachKind: "Hver adgangsvej bruges kun én gang",
+  oneOfEachKind: "Hver adgangsvej bruges kun én gang; online-links kun én gang pr. websted",
+  severalLinks: "Flere virkende online-links giver hver sin mulighed, navngivet efter webstedet",
   defaultEdition: "Standardudgaven er den nyeste med en virkende adgangsvej; har ingen en adgangsvej, den nyeste",
+}
+
+const getHost = (access: { url: string; origin: string }) => {
+  try {
+    return new URL(access.url).hostname.replace(/^www\./, "")
+  } catch {
+    return access.origin
+  }
+}
+
+/** Tells ways apart, also two online links: "online:doi.org". Used in ?accessWay=. */
+export const getAccessWayKey = (way: AccessWay) => (way.kind === "online" ? `online:${way.host}` : way.kind)
+
+/** The way's name among its edition's ways: online links are named by their site when there are several. */
+export const getAccessWayLabel = (way: AccessWay, editionWays: AccessWay[]) => {
+  const onlineCount = editionWays.filter((candidate) => candidate.kind === "online").length
+  return way.kind === "online" && onlineCount > 1 ? `Se online på ${way.host}` : accessWayLabels[way.kind]
 }
 
 type AccessEvaluation = { way?: AccessWay; rule: string; outcome: string }
@@ -46,7 +64,11 @@ const evaluateAccessEntry = (access: Access, manifestation: Manifestation): Acce
       }
     case "AccessUrl":
       return access.status === "OK"
-        ? { way: { kind: "online", url: access.url }, rule: accessRules.online, outcome: "Adgangsvej: Se online" }
+        ? {
+            way: { kind: "online", url: access.url, host: getHost(access) },
+            rule: accessRules.online,
+            outcome: `Adgangsvej: Se online (${getHost(access)})`,
+          }
         : { rule: accessRules.online, outcome: "Sprunget over: linket virker ikke" }
     case "DigitalArticleService":
       return { way: { kind: "digital-copy" }, rule: accessRules.digitalCopy, outcome: "Adgangsvej: Bestil digital kopi" }
@@ -71,7 +93,7 @@ const describeAccessEntry = (access: Access, index: number) => {
   const path = `access[${index}] ${access.__typename}`
   switch (access.__typename) {
     case "AccessUrl":
-      return `${path}.status = ${access.status} (${access.origin})`
+      return `${path}.status = ${access.status} (${access.origin}, ${access.url})`
     case "RetrieverService":
       return `${path}.id = ${access.id}`
     case "DigitalArticleService":
@@ -84,8 +106,9 @@ const describeAccessEntry = (access: Access, index: number) => {
 }
 
 /**
- * The working ways to the article, best first and one of each kind, with a
- * trace row for every FBI access entry saying what became of it.
+ * The working ways to the article, best first and one of each kind (online
+ * links one per site), with a trace row for every FBI access entry saying
+ * what became of it.
  */
 export const evaluateAccess = (manifestation: Manifestation): { ways: AccessWay[]; rows: TraceRow[] } => {
   const ways: AccessWay[] = []
@@ -93,7 +116,7 @@ export const evaluateAccess = (manifestation: Manifestation): { ways: AccessWay[
     const input = describeAccessEntry(access, index)
     const { way, rule, outcome } = evaluateAccessEntry(access, manifestation)
     if (!way) return { rule, input, outcome }
-    if (ways.some((existing) => existing.kind === way.kind)) {
+    if (ways.some((existing) => getAccessWayKey(existing) === getAccessWayKey(way))) {
       return { rule: accessRules.oneOfEachKind, input, outcome: "Sprunget over: findes allerede" }
     }
     ways.push(way)

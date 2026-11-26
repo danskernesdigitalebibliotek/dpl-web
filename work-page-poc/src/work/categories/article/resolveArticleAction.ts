@@ -1,6 +1,6 @@
 import type { Manifestation } from "../../../fbi/types"
 import type { TraceRow } from "../../trace"
-import { type AccessWay, accessWayLabels, hasOnlyDeadLinks } from "./accessWays"
+import { type AccessWay, hasOnlyDeadLinks } from "./accessWays"
 import { getAccessWayText } from "./articleText"
 
 export const actionRules = {
@@ -19,6 +19,8 @@ type PeriodicalLink = { to: string; rows: TraceRow[] }
 type ArticleActionInput = {
   manifestation: Manifestation
   selectedWay: AccessWay | undefined
+  /** The way's name among its edition's ways, e.g. "Se online på doi.org". */
+  selectedWayLabel: string | undefined
   hasUserToken: boolean
   isBlocked: boolean
   hasClickedWithoutLogin: boolean
@@ -35,6 +37,7 @@ const needsPatron = (way: AccessWay) => way.kind === "read-article" || way.kind 
 export const resolveArticleAction = ({
   manifestation,
   selectedWay,
+  selectedWayLabel,
   hasUserToken,
   isBlocked,
   hasClickedWithoutLogin,
@@ -44,13 +47,13 @@ export const resolveArticleAction = ({
   const isDisabled = isPatronWay && isBlocked
   const action: ArticleAction | undefined = selectedWay && {
     way: selectedWay,
-    label: isDisabled ? "Spærret" : accessWayLabels[selectedWay.kind],
+    label: isDisabled ? "Spærret" : (selectedWayLabel ?? ""),
     isDisabled,
   }
 
   const buttonRow: TraceRow = {
     rule: actionRules.oneButton,
-    input: selectedWay ? `Valgt adgangsvej: ${accessWayLabels[selectedWay.kind]}` : "Ingen adgangsvej",
+    input: selectedWayLabel ? `Valgt adgangsvej: ${selectedWayLabel}` : "Ingen adgangsvej",
     outcome: action ? `Knap: ${action.label}` : "Kontakt biblioteket",
   }
   const patronRows: TraceRow[] = isPatronWay
