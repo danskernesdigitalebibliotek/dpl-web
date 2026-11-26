@@ -1,0 +1,58 @@
+---
+name: Dependabot / Ignore lint
+
+# Fails when an ignore rule in .github/dependabot.yml no longer holds anything
+# back (see packages/dependabot-ignore-lint). It runs on every change that can
+# make a rule obsolete - the rules themselves, or a lockfile that moves or
+# drops a package - so the pull request that does it is the one that has to
+# remove the rule.
+#
+# It also runs on pushes to develop and main. Two pull requests can each pass
+# and still leave a stale rule once both are merged, and from then on every
+# pull request touching a lockfile fails here, Dependabot's included, which
+# stops auto-merge. A failure on develop or main is reported to Zulip by
+# check-failing-actions-workflow-run.yml, so that state does not go unnoticed.
+
+on:
+  pull_request:
+    paths:
+      - ".github/dependabot.yml"
+      - ".github/workflows/dependabot-ignore-lint.yml"
+      - "packages/dependabot-ignore-lint/**"
+      - "**/pnpm-lock.yaml"
+      - "**/composer.json"
+      - "**/composer.lock"
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - ".github/dependabot.yml"
+      - ".github/workflows/dependabot-ignore-lint.yml"
+      - "packages/dependabot-ignore-lint/**"
+      - "**/pnpm-lock.yaml"
+      - "**/composer.json"
+      - "**/composer.lock"
+
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  IgnoreLint:
+    name: Dependabot / Ignore lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: packages/dependabot-ignore-lint
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/common-setup-js
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          wedobooks-token: ${{ secrets.WEDOBOOKS_NPM_TOKEN }}
+      - run: pnpm run typecheck
+      - run: pnpm test
+      - run: pnpm run lint:ignores

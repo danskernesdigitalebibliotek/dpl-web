@@ -143,8 +143,22 @@ updates:
         versions: [">=16"]
       - dependency-name: "storybook"
         versions: [">=10"]
-      - dependency-name: "@storybook/*"
+      - dependency-name: "@storybook/addon-a11y"
         versions: [">=10"]
+      - dependency-name: "@storybook/addon-docs"
+        versions: [">=10"]
+      - dependency-name: "@storybook/addon-links"
+        versions: [">=10"]
+      - dependency-name: "@storybook/preset-create-react-app"
+        versions: [">=10"]
+      - dependency-name: "@storybook/react"
+        versions: [">=10"]
+      - dependency-name: "@storybook/react-webpack5"
+        versions: [">=10"]
+      # Versioned on its own: 10.x is for Storybook 9, 11 and later need
+      # Storybook 10.
+      - dependency-name: "@storybook/addon-designs"
+        versions: [">=11"]
       # 0.24 and later require Storybook 10.
       - dependency-name: "@storybook/test-runner"
         versions: [">=0.24"]

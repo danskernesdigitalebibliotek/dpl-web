@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["es2024", "esnext.array"],
+    "types": ["node"],
+    "strict": true,
+    "noEmit": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es2022",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts"]
+}
