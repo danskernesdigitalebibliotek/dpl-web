@@ -79,22 +79,13 @@ export const useSelectedEdition = ({
     [allManifestations, searchParamsMaterialType, searchParams]
   )
 
-  const { defaultManifestation: defaultObtainableEdition, isLoading: isLoadingDefaultEdition } =
-    usePreferredManifestation(obtainableEditions)
-
-  // Remembers the material type whose pick is done. Its lookups share query
-  // keys with every other request for the same ISBN, so one started elsewhere
-  // must not read as this pick still being decided.
-  const [settledMaterialType, setSettledMaterialType] = useState<string | null>(null)
-  useEffect(() => {
-    if (!isLoadingDefaultEdition) setSettledMaterialType(searchParamsMaterialType)
-  }, [isLoadingDefaultEdition, searchParamsMaterialType])
-  const isPickIdle = !isLoadingDefaultEdition
-  const isPickAlreadyMade = settledMaterialType === searchParamsMaterialType
-  const hasSettled = isPickIdle || isPickAlreadyMade
+  // Remembers per material type that the pick is made, so a lookup for the
+  // same ISBN started elsewhere does not reopen it.
+  const { manifestation: defaultObtainableEdition, isWaiting: isWaitingForPick } =
+    usePreferredManifestation(obtainableEditions, { key: searchParamsMaterialType })
 
   // A pinned edition is the answer, so there is nothing left to wait for.
-  const isWaitingForDefaultEdition = !hasSettled && !pinnedManifestation
+  const isWaitingForDefaultEdition = isWaitingForPick && !pinnedManifestation
 
   useEffect(() => {
     if (!searchParamsMaterialType && bestRepresentation && work) {
@@ -136,7 +127,7 @@ export const useSelectedEdition = ({
     pinnedManifestation,
     isLoadingAvailability,
     isAvailabilityUnknown,
-    isLoadingDefaultEdition,
+    isWaitingForPick,
   ])
 
   return { selectedManifestation, isWaitingForDefaultEdition }

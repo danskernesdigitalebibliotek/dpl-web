@@ -9,7 +9,10 @@ import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 
 // The fields the cost-free ("BLÅ") check reads. Both the work page and the
 // search teaser fragments carry them.
-type TCostFreeManifestation = Pick<ManifestationWorkPageFragment, "identifiers" | "materialTypes">
+export type TCostFreeManifestation = Pick<
+  ManifestationWorkPageFragment,
+  "identifiers" | "materialTypes"
+>
 
 const getMaterialTypeCode = (manifestation: TCostFreeManifestation) =>
   manifestation.materialTypes[0]?.materialTypeSpecific.code

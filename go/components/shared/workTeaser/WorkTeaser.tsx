@@ -6,13 +6,15 @@ import React, { useRef } from "react"
 
 import { getManifestationTitle } from "@/components/pages/workPageLayout/helper"
 import WorkCard, { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
+import { getWorkCardMaterialTypes } from "@/components/shared/workCard/helper"
 import { cyKeys } from "@/cypress/support/constants"
-import { useWorkTeaserManifestation } from "@/hooks/useWorkTeaserManifestation"
+import { usePreferredManifestation } from "@/hooks/usePreferredManifestation"
 import {
   ManifestationSearchPageTeaserFragment,
   WorkTeaserSearchPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
+import { isManifestationCostFree } from "@/lib/helpers/helper.costFree"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 
 export type TWorkTeaserProps = {
@@ -28,8 +30,9 @@ export type TWorkTeaserProps = {
 }
 
 // A work card with title and creators below, linking to `url`. Cover and
-// title are the manifestation the work page lands on; `workTitle` is the
-// work's own, used when no manifestation is linked.
+// title are the manifestation the work page lands on, except that the teaser
+// does not know which physical editions the kommune can supply. `workTitle`
+// is the work's own, used when no manifestation is linked.
 const WorkTeaser = ({
   workTitle,
   creators,
@@ -44,11 +47,16 @@ const WorkTeaser = ({
   const ref = useRef<HTMLDivElement>(null)
   // Starts the lookup a little before the teaser scrolls into view.
   const isInView = useInView(ref, { once: true, margin: "400px" })
-  const { manifestation, materialTypes, isBlueTitle, isWaiting } = useWorkTeaserManifestation({
-    manifestations,
-    linkedManifestations,
+  // The same pick as the work page. Every manifestation is asked about in the
+  // same lookup, so the icons are settled before the teaser shows.
+  const { manifestation, decisions, isWaiting } = usePreferredManifestation(linkedManifestations, {
     isEnabled: isInView,
+    alsoAskAbout: manifestations,
   })
+  const materialTypes = getWorkCardMaterialTypes(manifestations, manifestation =>
+    isManifestationCostFree(manifestation, decisions)
+  )
+  const isBlueTitle = materialTypes.some(materialType => materialType.isCostFree)
 
   const title = (!isWaiting && getManifestationTitle(manifestation)) || workTitle
   const cover = manifestation?.cover
