@@ -8,8 +8,10 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 @import "./design-system/theme.css";
 
+/* The page colour of the library sites, behind every page down to the bottom. */
 body {
   margin: 0;
+  background-color: var(--color-surface-page);
 }
 
 img,
