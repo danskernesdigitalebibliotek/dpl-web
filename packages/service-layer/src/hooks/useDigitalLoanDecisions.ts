@@ -12,16 +12,18 @@ import { canUseDigitalLoans } from "./internal"
  * Fires one request per id and combines the results. Patron-scoped: every
  * query stays disabled without a borrowing session (a patron or a Unilogin
  * user — see canUseDigitalLoans), whatever materialIds holds. An empty
- * material id stays off the wire, same as useDigitalLoanDecision.
+ * material id stays off the wire, same as useDigitalLoanDecision. A material
+ * id given more than once is asked about once.
  */
 export const useDigitalLoanDecisions = (
   materialIds: string[]
 ): { decisions: Record<string, LoanDecision>; isLoading: boolean; isError: boolean } => {
   const config = useServiceLayerConfig()
   const canQuery = canUseDigitalLoans(config)
+  const uniqueMaterialIds = [...new Set(materialIds)]
 
   const results = useQueries({
-    queries: materialIds.map(materialId => ({
+    queries: uniqueMaterialIds.map(materialId => ({
       ...digitalLoanDecisionQuery(config, materialId),
       enabled: canQuery && Boolean(materialId),
     })),
@@ -30,7 +32,7 @@ export const useDigitalLoanDecisions = (
   const decisions: Record<string, LoanDecision> = {}
   results.forEach((result, index) => {
     if (result.data) {
-      decisions[materialIds[index]] = result.data
+      decisions[uniqueMaterialIds[index]] = result.data
     }
   })
 
