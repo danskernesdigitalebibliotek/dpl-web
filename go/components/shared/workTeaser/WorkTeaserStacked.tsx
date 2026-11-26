@@ -7,7 +7,8 @@ import { getWorkTeaserProps } from "./helper"
 
 // A work teaser with two tilted cards behind it.
 const WorkTeaserStacked = ({ work }: { work: WorkTeaserSearchPageFragment }) => {
-  const { title, creators, url, manifestations, linkedManifestations } = getWorkTeaserProps(work)
+  const { workTitle, creators, url, manifestations, linkedManifestations } =
+    getWorkTeaserProps(work)
 
   return (
     <div className="relative">
@@ -21,7 +22,7 @@ const WorkTeaserStacked = ({ work }: { work: WorkTeaserSearchPageFragment }) => 
       />
       <WorkTeaser
         key={work.workId}
-        title={title}
+        workTitle={workTitle}
         creators={creators}
         url={url}
         manifestations={manifestations}

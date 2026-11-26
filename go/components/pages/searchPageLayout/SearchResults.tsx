@@ -15,12 +15,12 @@ const SearchResults = ({ works }: SearchResultProps) => {
   return (
     <div className="grid-go gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)]">
       {works.map(work => {
-        const { title, creators, url, manifestations, linkedManifestations } =
+        const { workTitle, creators, url, manifestations, linkedManifestations } =
           getWorkTeaserProps(work)
         return (
           <div key={work.workId} className="col-span-3 lg:col-span-4">
             <WorkTeaser
-              title={title}
+              workTitle={workTitle}
               creators={creators}
               url={url}
               manifestations={manifestations}

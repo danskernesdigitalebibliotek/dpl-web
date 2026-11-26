@@ -1,4 +1,4 @@
-import { isCostFreeLoan, LoanDecision } from "@danskernesdigitalebibliotek/dpl-service-layer"
+import { LoanDecision, isCostFreeLoan } from "@danskernesdigitalebibliotek/dpl-service-layer"
 
 import {
   isDigitalMaterialType,
@@ -31,7 +31,7 @@ export const isManifestationCostFree = (
   manifestation: TCostFreeManifestation,
   decisions: Record<string, LoanDecision>
 ): boolean => {
-  if (isPodcastMaterialType(getMaterialTypeCode(manifestation) ?? "")) return true
+  if (isPodcastMaterialType(getMaterialTypeCode(manifestation))) return true
 
   const materialId = getLoanDecisionMaterialId(manifestation)
   if (!materialId) return false

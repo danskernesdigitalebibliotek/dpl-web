@@ -184,8 +184,8 @@ export const isEbookMaterialType = (code: string): boolean => ebookMaterialTypeC
 
 export const isAudioMaterialType = (code: string): boolean => audioMaterialTypeCodes.includes(code)
 
-export const isPodcastMaterialType = (code: string): boolean =>
-  podcastMaterialTypeCodes.includes(code)
+export const isPodcastMaterialType = (code: string | undefined): boolean =>
+  !!code && podcastMaterialTypeCodes.includes(code)
 
 // Everything the digital providers answer for: the counterpart to
 // isPhysicalMaterialType, which FBS answers for.
@@ -233,6 +233,12 @@ export const getDigitalReadUrl = (workId: string, loanId: string) =>
 // read-link goes through here so the callers cannot drift apart on it.
 export const getReadUrlForLoan = (workId: string, loan: { orderId?: string; loanId?: string }) =>
   loan.loanId ? getDigitalReadUrl(workId, loan.loanId) : getEbookReadUrl(workId, loan.orderId ?? "")
+
+// The title shown for a manifestation, the same on the work page and in work
+// teasers.
+export const getManifestationTitle = (
+  manifestation: Pick<ManifestationWorkPageFragment, "titles"> | undefined
+): string | undefined => manifestation?.titles?.main[0] ?? manifestation?.titles?.full[0]
 
 export type ManifestationLabelForm = "indefinite" | "definite"
 

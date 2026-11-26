@@ -30,7 +30,7 @@ export const getWorkTeaserProps = (
   const materialTypeCode = manifestation?.materialTypes[0].materialTypeSpecific.code
 
   return {
-    title: work.titles.full[0],
+    workTitle: work.titles.full[0],
     creators: work.creators,
     url: materialTypeCode
       ? resolveUrl({

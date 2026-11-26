@@ -4,6 +4,7 @@ import { useInView } from "framer-motion"
 import Link from "next/link"
 import React, { useRef } from "react"
 
+import { getManifestationTitle } from "@/components/pages/workPageLayout/helper"
 import WorkCard, { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import { cyKeys } from "@/cypress/support/constants"
 import { useWorkTeaserManifestation } from "@/hooks/useWorkTeaserManifestation"
@@ -15,7 +16,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 
 export type TWorkTeaserProps = {
-  title: string
+  workTitle: string
   creators: WorkTeaserSearchPageFragment["creators"]
   url: string
   manifestations: ManifestationSearchPageTeaserFragment[]
@@ -27,10 +28,10 @@ export type TWorkTeaserProps = {
 }
 
 // A work card with title and creators below, linking to `url`. Cover and
-// title are the manifestation the work page lands on; `title` is the work's
-// own, used when no manifestation is linked.
+// title are the manifestation the work page lands on; `workTitle` is the
+// work's own, used when no manifestation is linked.
 const WorkTeaser = ({
-  title: workTitle,
+  workTitle,
   creators,
   url,
   manifestations,
@@ -49,9 +50,7 @@ const WorkTeaser = ({
     isEnabled: isInView,
   })
 
-  const title = isWaiting
-    ? workTitle
-    : (manifestation?.titles.main[0] ?? manifestation?.titles.full[0] ?? workTitle)
+  const title = (!isWaiting && getManifestationTitle(manifestation)) || workTitle
   const cover = manifestation?.cover
 
   // The link and its wrapper stay while waiting: the slider holds on to the
