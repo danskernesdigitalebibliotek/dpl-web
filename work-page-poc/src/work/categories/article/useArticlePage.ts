@@ -25,17 +25,14 @@ export const useArticlePage = (
     requestedWay: searchParams.get("accessWay"),
     isResident: patron?.isResident,
   })
-  const printedIssue = options.selectedWay?.kind === "printed-issue" ? options.selectedWay : undefined
-  const periodicalSearch = usePeriodicalByIssn(printedIssue?.issn && getPeriodicalCql(printedIssue.issn))
-  const periodicalLink =
-    printedIssue &&
-    resolvePeriodicalLink({
-      hostTitle: printedIssue.hostTitle,
-      issn: printedIssue.issn,
-      search: periodicalSearch.data?.complexSearch,
-      isSearching: periodicalSearch.isFetching,
-      profile: getFbiProfile(settings),
-    })
+  const issn = manifestation.hostPublication?.issn
+  const periodicalSearch = usePeriodicalByIssn(issn ? getPeriodicalCql(issn) : undefined)
+  const periodical = resolvePeriodicalLink({
+    manifestation,
+    search: periodicalSearch.data?.complexSearch,
+    isSearching: periodicalSearch.isFetching,
+    profile: getFbiProfile(settings),
+  })
 
   const action = resolveArticleAction({
     manifestation,
@@ -44,7 +41,6 @@ export const useArticlePage = (
     hasUserToken: Boolean(settings.userToken),
     isBlocked: Boolean(patron?.isLocked),
     hasClickedWithoutLogin,
-    periodicalLink,
   })
-  return { options, action }
+  return { options, action, periodical }
 }

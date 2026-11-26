@@ -25,15 +25,17 @@ export const articleCategory: ManifestationCategory = {
   rules: [
     { title: "Adgangsveje", rules: Object.values(accessRules) },
     { title: "Typer, udgaver og bestillingsmuligheder", rules: Object.values(optionRules) },
-    { title: "Knap og tekster", rules: [...Object.values(actionRules), ...Object.values(periodicalRules)] },
+    { title: "Knap og tekster", rules: Object.values(actionRules) },
+    { title: "Tidsskrift", rules: Object.values(periodicalRules) },
   ],
   usePageTrace: ({ manifestation, categoryManifestations }) => {
-    const { options, action } = useArticlePage(manifestation, categoryManifestations)
+    const { options, action, periodical } = useArticlePage(manifestation, categoryManifestations)
     return [
       { title: "Materialetyper", rows: options.typeRows },
       { title: "Adgangsveje", intro: "Hver indgang i manifestationens access, og hvad den blev til.", rows: options.accessRows },
       { title: "Valgt adgangsvej og Skift", rows: options.choiceRows },
       { title: "Knap", rows: action.actionRows },
+      { title: "Tidsskrift", rows: periodical.rows },
       {
         title: "Tekster under knappen",
         intro: "Login-beskeden vises først, når man klikker uden brugertoken.",

@@ -33,7 +33,8 @@ export const getAccessWayText = (way: AccessWay) => {
   }
 }
 
-export type DetailRow = { label: string; value: string }
+/** A label/value row; `to` makes the value a link within the PoC. */
+export type DetailRow = { label: string; value: string; to?: string }
 
 const toRows = (rows: (DetailRow | false)[]) => rows.filter((row): row is DetailRow => row !== false)
 
@@ -54,12 +55,14 @@ export const getEditionDetailRows = (manifestation: Manifestation): DetailRow[] 
   ])
 
 /** The page's "Detaljer", leaving out what FBI doesn't have. */
-export const getDetailRows = (manifestation: Manifestation, work: Work): DetailRow[] =>
+export const getDetailRows = (manifestation: Manifestation, work: Work, publishedInTo?: string): DetailRow[] =>
   toRows([
     { label: "Type", value: getMaterialTypeLabel(manifestation) },
     { label: "Titel", value: getManifestationTitle(manifestation, work) },
     !!getCreators(manifestation, work) && { label: "Forfatter", value: getCreators(manifestation, work) },
-    ...getEditionDetailRows(manifestation),
+    ...getEditionDetailRows(manifestation).map((row) =>
+      row.label === "Udgivet i" && publishedInTo ? { ...row, to: publishedInTo } : row
+    ),
   ])
 
 /** A line for the "Udgaver" overview, e.g. "Artikel · Slagmark, Nr. 12 (1988) · Kilde: Tidsskriftsartikler". */

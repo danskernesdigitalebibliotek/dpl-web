@@ -36,7 +36,7 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
   const [openDialog, setOpenDialog] = useState<OpenDialog>(null)
   const [isPickerFromOrder, setIsPickerFromOrder] = useState(false)
   const [hasClickedWithoutLogin, setHasClickedWithoutLogin] = useState(false)
-  const { options, action } = useArticlePage(manifestation, categoryManifestations, hasClickedWithoutLogin)
+  const { options, action, periodical } = useArticlePage(manifestation, categoryManifestations, hasClickedWithoutLogin)
 
   const title = work.titles.main.join(" ")
   const creators = getCreators(manifestation, work)
@@ -134,7 +134,7 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
 
             <ArticleCallToAction
               action={action.action}
-              printedIssueTo={action.printedIssueTo}
+              printedIssueTo={periodical.printedIssueTo}
               texts={action.texts}
               onOpen={openWay}
             />
@@ -181,10 +181,18 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
           </Accordion>
           <Accordion title="Detaljer" subtitle={`${getMaterialTypeLabel(manifestation)} · ${getYearLabel(manifestation)}`}>
             <dl className="m-0 px-4 pb-5">
-              {getDetailRows(manifestation, work).map((row) => (
+              {getDetailRows(manifestation, work, periodical.publishedInTo).map((row) => (
                 <div key={row.label} className="flex gap-4 border-b border-outline py-[11px]">
                   <dt className="w-[120px] shrink-0 text-body-s text-text-inactive">{row.label}</dt>
-                  <dd className="m-0 text-body-s">{row.value}</dd>
+                  <dd className="m-0 text-body-s">
+                    {row.to ? (
+                      <Link to={row.to} className="text-text-heading underline underline-offset-4">
+                        {row.value}
+                      </Link>
+                    ) : (
+                      row.value
+                    )}
+                  </dd>
                 </div>
               ))}
             </dl>
