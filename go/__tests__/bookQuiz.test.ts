@@ -1,101 +1,255 @@
 import { describe, expect, it } from "vitest"
 
+import { selectOption } from "@/components/shared/bookQuizModal/helper"
 import { ANIMALS, FANTASY, FUNNY, SPORT } from "@/lib/book-quiz/groups"
-import { LADDER, getLadderSteps } from "@/lib/book-quiz/ladder"
+import { MAX_SECTIONS, getLadderSteps, getShownSteps } from "@/lib/book-quiz/ladder"
 import { getBookQuizProfile } from "@/lib/book-quiz/profile"
+import { getQuestion } from "@/lib/book-quiz/questions"
 import {
   BOOKS_PER_STEP,
   type TRankableWork,
   getAgeSpill,
-  getWorkAgeSpan,
-  rankStepWorks,
+  getStepWorkPool,
+  getWorkAgeSpans,
 } from "@/lib/book-quiz/rank"
 
-const work = (workId: string, ages: [number, number] | null): TRankableWork => ({
+// One edition per age span. Null is an edition without age data.
+const work = (workId: string, ...editions: ([number, number] | null)[]): TRankableWork => ({
   workId,
   manifestations: {
-    all: [{ audience: ages ? { ages: [{ begin: ages[0], end: ages[1] }] } : null }],
+    all: editions.map(ages => ({
+      audience: ages ? { ages: [{ begin: ages[0], end: ages[1] }] } : null,
+    })),
   },
 })
 
 describe("getBookQuizProfile", () => {
   it("maps answer ids to groups, age range and reading level", () => {
     const profile = getBookQuizProfile({
-      genre: "genre-fantasy",
-      mood: "mood-funny",
+      genre: ["genre-fantasy"],
+      mood: ["mood-funny"],
       subjects: ["subject-animals", "subject-sport"],
-      age: "age-9-10",
-      level: "level-easy",
+      age: ["age-9-10"],
+      level: ["level-easy"],
     })
-    expect(profile.genre).toBe(FANTASY)
-    expect(profile.mood).toBe(FUNNY)
-    expect(profile.subjects).toEqual([ANIMALS, SPORT])
-    expect(profile.ageRange).toEqual([9, 10])
+    expect(profile.groups).toEqual([FANTASY, FUNNY, ANIMALS, SPORT])
+    expect(profile.ageRanges).toEqual([[9, 10]])
     expect(profile.easyToRead).toBe(true)
   })
 
-  it("leaves out answers without a mapping", () => {
-    const profile = getBookQuizProfile({ mood: "mood-any", level: "level-advanced" })
-    expect(profile.mood).toBeUndefined()
+  it("takes several choices in any question, and treats filters as alternatives", () => {
+    const profile = getBookQuizProfile({
+      genre: ["genre-fantasy", "genre-thriller"],
+      age: ["age-6-8", "age-11-12"],
+      level: ["level-easy", "level-advanced"],
+    })
+    expect(profile.groups.map(group => group.label)).toEqual(["Fantasy", "Spænding"])
+    expect(profile.ageRanges).toEqual([
+      [6, 8],
+      [11, 12],
+    ])
+    // "Jeg er en kæmpe læsehest" filters on nothing, so it fits every book.
     expect(profile.easyToRead).toBe(false)
-    expect(getLadderSteps(profile).every(step => step.cql === null)).toBe(true)
+  })
+
+  it("leaves out answers without a mapping", () => {
+    const profile = getBookQuizProfile({
+      mood: ["mood-any"],
+      age: ["age-any"],
+      level: ["level-advanced"],
+    })
+    expect(profile.groups).toEqual([])
+    expect(profile.ageRanges).toEqual([])
+    expect(profile.easyToRead).toBe(false)
+  })
+})
+
+describe("selectOption", () => {
+  const subjects = getQuestion("subjects")
+
+  it("replaces the answer in a question with one choice", () => {
+    const answers = selectOption({ genre: ["genre-fantasy"] }, getQuestion("genre"), "genre-scifi")
+    expect(answers.genre).toEqual(["genre-scifi"])
+  })
+
+  it("follows the question's own setting for one or several choices", () => {
+    const genre = { ...getQuestion("genre"), multi: true }
+    const answers = selectOption({ genre: ["genre-fantasy"] }, genre, "genre-scifi")
+    expect(answers.genre).toEqual(["genre-fantasy", "genre-scifi"])
+    expect(getLadderSteps(answers).map(step => step.id)).toEqual([
+      "genre-fantasy+genre-scifi",
+      "genre-fantasy",
+      "genre-scifi",
+    ])
+  })
+
+  it("adds an option in a multi question and takes it away again", () => {
+    const one = selectOption({ subjects: ["subject-animals"] }, subjects, "subject-gaming")
+    expect(one.subjects).toEqual(["subject-animals", "subject-gaming"])
+    expect(selectOption(one, subjects, "subject-animals").subjects).toEqual(["subject-gaming"])
+  })
+
+  it("lets the no-answer option stand alone", () => {
+    const none = selectOption(
+      { subjects: ["subject-animals", "subject-gaming"] },
+      subjects,
+      "subject-other"
+    )
+    expect(none.subjects).toEqual(["subject-other"])
+    expect(selectOption(none, subjects, "subject-sport").subjects).toEqual(["subject-sport"])
   })
 })
 
 describe("getLadderSteps", () => {
-  it("always returns every step in ladder order", () => {
-    const steps = getLadderSteps(getBookQuizProfile({ genre: "genre-fantasy" }))
-    expect(steps.map(step => step.id)).toEqual(LADDER.map(parts => parts.join("+")))
+  it("returns every combination of the answers, with most answers first", () => {
+    const steps = getLadderSteps({
+      genre: ["genre-fantasy"],
+      mood: ["mood-funny"],
+      subjects: ["subject-animals"],
+    })
+    expect(steps.map(step => step.id)).toEqual([
+      "genre-fantasy+mood-funny+subject-animals",
+      "genre-fantasy+mood-funny",
+      "genre-fantasy+subject-animals",
+      "mood-funny+subject-animals",
+      "genre-fantasy",
+      "mood-funny",
+      "subject-animals",
+    ])
   })
 
-  it("only searches steps where every part is answered", () => {
-    const steps = getLadderSteps(
-      getBookQuizProfile({ genre: "genre-fantasy", subjects: ["subject-animals"] })
+  it("counts every subject as its own answer", () => {
+    const steps = getLadderSteps({
+      genre: ["genre-fantasy"],
+      subjects: ["subject-animals", "subject-gaming"],
+    })
+    expect(steps.map(step => step.id)).toEqual([
+      "genre-fantasy+subject-animals+subject-gaming",
+      "genre-fantasy+subject-animals",
+      "genre-fantasy+subject-gaming",
+      "subject-animals+subject-gaming",
+      "genre-fantasy",
+      "subject-animals",
+      "subject-gaming",
+    ])
+    expect(steps[3].cql).toMatch(
+      /^\(phrase\.subject="dyr" OR .*\) AND \(phrase\.subject="gaming" OR .*\)$/
     )
-    const searched = steps.filter(step => step.cql !== null).map(step => step.id)
-    expect(searched).toEqual(["genre+subjects", "genre", "subjects"])
+    expect(steps[3].answers.map(option => option.label)).toEqual(["Dyr", "Gaming"])
   })
 
-  it("ANDs the parts and applies age and easy-to-read to every step", () => {
-    const steps = getLadderSteps(
-      getBookQuizProfile({
-        genre: "genre-fantasy",
-        mood: "mood-funny",
-        age: "age-9-10",
-        level: "level-easy",
-      })
+  it("leaves out skipped questions and answers without a group", () => {
+    const steps = getLadderSteps({
+      genre: ["genre-fantasy"],
+      mood: ["mood-any"],
+      subjects: ["subject-other"],
+    })
+    expect(steps.map(step => step.id)).toEqual(["genre-fantasy"])
+    expect(getLadderSteps({ genre: ["genre-any"], mood: ["mood-any"], age: ["age-9-10"] })).toEqual(
+      []
     )
-    expect(steps.find(step => step.id === "genre+mood")?.cql).toBe(
+  })
+
+  it("ANDs the answers and applies the age to every step", () => {
+    const steps = getLadderSteps({
+      genre: ["genre-fantasy"],
+      mood: ["mood-funny"],
+      age: ["age-9-10"],
+    })
+    // The ages may reach two years outside the chosen 9-10.
+    expect(steps.find(step => step.id === "genre-fantasy+mood-funny")?.cql).toBe(
       '(phrase.genreandform="fantasy") AND ' +
         '(phrase.genreandform="sjove bøger" OR phrase.subject="sjov") AND ' +
-        'ages within "9 10" AND phrase.generalaudience="let at læse"'
+        '(ages within "9 10" NOT ages>=13 NOT ages<=6)'
     )
-    expect(steps.find(step => step.id === "mood")?.cql).toContain('ages within "9 10"')
+    expect(steps.find(step => step.id === "mood-funny")?.cql).toContain('ages within "9 10"')
   })
 
-  it("ORs the terms of several subjects", () => {
-    const steps = getLadderSteps(
-      getBookQuizProfile({ subjects: ["subject-animals", "subject-gaming"] })
+  it("searches on either of two chosen ages", () => {
+    const [step] = getLadderSteps({ genre: ["genre-fantasy"], age: ["age-6-8", "age-11-12"] })
+    expect(step.cql).toBe(
+      '(phrase.genreandform="fantasy") AND ' +
+        '((ages within "6 8" NOT ages>=11 NOT ages<=3) OR ' +
+        '(ages within "11 12" NOT ages>=15 NOT ages<=8))'
     )
-    const cql = steps.find(step => step.id === "subjects")?.cql
-    expect(cql).toMatch(/^\(phrase\.subject="dyr" OR .* OR phrase\.subject="gaming" OR .*\)$/)
+  })
+
+  it("searches on easy-to-read instead of the age when both are chosen", () => {
+    const steps = getLadderSteps({
+      genre: ["genre-fantasy"],
+      age: ["age-9-10"],
+      level: ["level-easy"],
+    })
+    expect(steps.map(step => step.cql)).toEqual([
+      '(phrase.genreandform="fantasy") AND phrase.generalaudience="let at læse"',
+    ])
+  })
+})
+
+describe("getShownSteps", () => {
+  // Five answers give 31 steps.
+  const steps = getLadderSteps({
+    genre: ["genre-fantasy"],
+    mood: ["mood-funny"],
+    subjects: ["subject-animals", "subject-gaming", "subject-sport"],
+  })
+  const ids = (shown: typeof steps) => shown.map(step => step.id)
+
+  it("shows the first steps, up to the most the page has room for, before any search", () => {
+    expect(getShownSteps(steps, () => undefined)).toEqual(steps.slice(0, MAX_SECTIONS))
+  })
+
+  it("lets the next step in for each step with too few books", () => {
+    // The first step found nothing and the fourth less than a row.
+    const counts = new Map([
+      [steps[0].id, 0],
+      [steps[3].id, BOOKS_PER_STEP - 1],
+    ])
+    const shown = getShownSteps(steps, step => counts.get(step.id))
+    expect(ids(shown)).toEqual([1, 2, 4, 5, 6, 7, 8].map(index => steps[index].id))
+  })
+
+  it("stops at the first steps with enough books", () => {
+    // Only steps with one or two answers have enough books.
+    const shown = getShownSteps(steps, step => (step.answers.length <= 2 ? 20 : 1))
+    expect(shown).toHaveLength(MAX_SECTIONS)
+    expect(shown.every(step => step.answers.length === 2)).toBe(true)
+  })
+
+  it("fills up with the steps with few books when there are not enough others", () => {
+    const [fantasyFunny, fantasy, funny] = getLadderSteps({
+      genre: ["genre-fantasy"],
+      mood: ["mood-funny"],
+    })
+    const counts = new Map([
+      [fantasyFunny.id, 2],
+      [fantasy.id, 20],
+      [funny.id, 0],
+    ])
+    const shown = getShownSteps([fantasyFunny, fantasy, funny], step => counts.get(step.id))
+    // In ladder order, without the step that found nothing.
+    expect(ids(shown)).toEqual([fantasyFunny.id, fantasy.id])
   })
 })
 
 describe("rank", () => {
-  it("reads the age span from any manifestation", () => {
-    expect(getWorkAgeSpan(work("a", [9, 12]))).toEqual([9, 12])
-    expect(getWorkAgeSpan(work("a", null))).toBeNull()
+  it("reads the age spans of every edition", () => {
+    expect(getWorkAgeSpans(work("a", null, [9, 12], [10, 14]))).toEqual([
+      [9, 12],
+      [10, 14],
+    ])
+    expect(getWorkAgeSpans(work("a", null))).toEqual([])
   })
 
-  it("counts the years outside the chosen range", () => {
-    expect(getAgeSpill(work("a", [9, 10]), [9, 10])).toBe(0)
-    expect(getAgeSpill(work("a", [8, 14]), [9, 10])).toBe(5)
-    expect(getAgeSpill(work("a", null), [9, 10])).toBeNull()
+  it("counts the years the best fitting edition is outside the chosen range", () => {
+    expect(getAgeSpill(work("a", [9, 10]), [[9, 10]])).toBe(0)
+    expect(getAgeSpill(work("a", [8, 14]), [[9, 10]])).toBe(5)
+    expect(getAgeSpill(work("a", [8, 14], [9, 11]), [[9, 10]])).toBe(1)
+    expect(getAgeSpill(work("a", null), [[9, 10]])).toBeNull()
   })
 
-  it("drops too wide spans, sorts by spill, keeps FBI order on ties and caps the list", () => {
-    const ranked = rankStepWorks(
+  it("sorts by spill, keeps FBI order on ties and drops no works", () => {
+    const pool = getStepWorkPool(
       [
         work("wide", [6, 14]),
         work("unknown", null),
@@ -103,19 +257,20 @@ describe("rank", () => {
         work("exact-1", [9, 10]),
         work("exact-2", [9, 10]),
       ],
-      [9, 10]
+      [[9, 10]]
     )
-    expect(ranked).toHaveLength(BOOKS_PER_STEP)
-    expect(ranked.map(entry => entry.workId)).toEqual(["exact-1", "exact-2", "near"])
+    // Works without age data go last.
+    expect(pool.map(entry => entry.workId)).toEqual([
+      "exact-1",
+      "exact-2",
+      "near",
+      "wide",
+      "unknown",
+    ])
   })
 
   it("keeps FBI order when no age is chosen", () => {
-    const ranked = rankStepWorks([work("unknown", null), work("wide", [3, 18])], undefined)
-    expect(ranked.map(entry => entry.workId)).toEqual(["unknown", "wide"])
-  })
-
-  it("puts works without age data last instead of dropping them", () => {
-    const ranked = rankStepWorks([work("unknown", null), work("exact", [9, 10])], [9, 10])
-    expect(ranked.map(entry => entry.workId)).toEqual(["exact", "unknown"])
+    const pool = getStepWorkPool([work("unknown", null), work("wide", [3, 18])], [])
+    expect(pool.map(entry => entry.workId)).toEqual(["unknown", "wide"])
   })
 })

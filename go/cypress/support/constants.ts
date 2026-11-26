@@ -75,6 +75,14 @@ export const cyKeys = {
   "delete-reservation-modal": "delete-reservation-modal",
   "delete-reservation-receipt": "delete-reservation-receipt",
   "approve-delete-reservation-button": "approve-delete-reservation-button",
+  "open-book-quiz-button": "open-book-quiz-button",
+  "book-quiz-modal": "book-quiz-modal",
+  "book-quiz-start-button": "book-quiz-start-button",
+  "book-quiz-option": "book-quiz-option",
+  "book-quiz-skip-button": "book-quiz-skip-button",
+  "book-quiz-next-button": "book-quiz-next-button",
+  "book-quiz-section": "book-quiz-section",
+  "book-quiz-more-button": "book-quiz-more-button",
 } as const
 
 export type CyKey = keyof typeof cyKeys

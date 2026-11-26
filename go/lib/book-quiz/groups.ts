@@ -2,12 +2,20 @@
 // genre, mood and subject answer points at one group (see questions.ts), and a
 // group matches a work when any of its clauses match (OR). The terms come from the
 // curated term list, all on the phrase index so multi-word values work.
+//
+// Terms that are commented out were not relevant in the client test. They are
+// kept so they can be switched back on for testing.
 
 export type TBookQuizClause = { cqlIndex: string; cqlValues: string[] }
+
+// The content colours, see QUIZ_COLOR_CLASSES.
+export type TBookQuizColor = "green" | "pink" | "blue" | "purple" | "orange"
 
 export type TBookQuizGroup = {
   // Short name for section titles, e.g. "Fantasy" in "Sjove fantasybøger".
   label: string
+  // The quiz takes this colour when an answer with the group is chosen.
+  color?: TBookQuizColor
   match: TBookQuizClause[]
 }
 
@@ -24,28 +32,33 @@ const subject = (cqlValues: string[]): TBookQuizClause => ({
 
 export const THRILLER: TBookQuizGroup = {
   label: "Spænding",
+  color: "pink",
   match: [genre(["spænding", "krimi"]), subject(["action", "mysterier"])],
 }
 
 export const FANTASY: TBookQuizGroup = {
   label: "Fantasy",
+  color: "purple",
   match: [genre(["fantasy"])],
 }
 
 export const FRIENDS: TBookQuizGroup = {
   label: "Venner",
+  color: "orange",
   // No genre exists for friendship, only subjects.
   match: [subject(["venner", "veninder", "venskab", "venskaber", "skole"])],
 }
 
 export const NONFICTION: TBookQuizGroup = {
   label: "Fakta",
+  color: "blue",
   // Non-fiction is not a genre in FBI but its own index.
   match: [{ cqlIndex: "term.fictionnonfiction", cqlValues: ["nonfiction"] }],
 }
 
 export const SCIFI: TBookQuizGroup = {
   label: "Science fiction",
+  color: "blue",
   match: [
     genre(["science fiction"]),
     subject([
@@ -71,6 +84,7 @@ export const SCIFI: TBookQuizGroup = {
 
 export const HISTORY: TBookQuizGroup = {
   label: "Historie",
+  color: "orange",
   match: [
     genre(["historiske romaner"]),
     subject([
@@ -94,21 +108,17 @@ export const HISTORY: TBookQuizGroup = {
   ],
 }
 
-// "Jeg aner det ikke" falls back to novels.
-export const NOVELS: TBookQuizGroup = {
-  label: "Romaner",
-  match: [genre(["romaner"])],
-}
-
 // --- Mood. Gys and romantik have no genre, only subjects. ---
 
 export const FUNNY: TBookQuizGroup = {
   label: "Sjov",
+  color: "orange",
   match: [genre(["sjove bøger"]), subject(["sjov"])],
 }
 
 export const HORROR: TBookQuizGroup = {
   label: "Gys",
+  color: "purple",
   match: [
     subject([
       "gys",
@@ -129,6 +139,7 @@ export const HORROR: TBookQuizGroup = {
 
 export const ROMANCE: TBookQuizGroup = {
   label: "Romantik",
+  color: "pink",
   match: [
     subject(["kærlighed", "forelskelse", "kærester", "seksualitet", "romantisk", "romantik"]),
   ],
@@ -138,6 +149,7 @@ export const ROMANCE: TBookQuizGroup = {
 
 export const ANIMALS: TBookQuizGroup = {
   label: "Dyr",
+  color: "green",
   match: [
     subject([
       "dyr",
@@ -148,10 +160,10 @@ export const ANIMALS: TBookQuizGroup = {
       "hunde",
       "katte",
       "kryb",
-      "forhistoriske dyr",
+      // "forhistoriske dyr",
       "kæledyr",
       "husdyr",
-      "dinosaurer",
+      // "dinosaurer",
       "fugle",
       "dyreliv",
     ]),
@@ -160,11 +172,13 @@ export const ANIMALS: TBookQuizGroup = {
 
 export const GAMING: TBookQuizGroup = {
   label: "Gaming",
+  color: "blue",
   match: [subject(["gaming", "computerspil", "fortnite", "roblox", "minecraft"])],
 }
 
 export const SPORT: TBookQuizGroup = {
   label: "Sport",
+  color: "green",
   match: [
     subject([
       "sport",
@@ -182,6 +196,7 @@ export const SPORT: TBookQuizGroup = {
 
 export const CLIMATE: TBookQuizGroup = {
   label: "Klima",
+  color: "blue",
   match: [
     subject([
       "klima",
@@ -192,10 +207,4 @@ export const CLIMATE: TBookQuizGroup = {
       "natur og miljø",
     ]),
   ],
-}
-
-// "Ingen af delene" falls back to these.
-export const OTHER: TBookQuizGroup = {
-  label: "Ingen af delene",
-  match: [subject(["krea og kultur", "mit liv"])],
 }

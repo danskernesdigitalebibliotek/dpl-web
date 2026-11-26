@@ -8,22 +8,22 @@ import {
   HISTORY,
   HORROR,
   NONFICTION,
-  NOVELS,
-  OTHER,
   ROMANCE,
   SCIFI,
   SPORT,
-  type TBookQuizGroup,
   THRILLER,
 } from "./groups"
+import type { TBookQuizGroup } from "./groups"
 
 // The quiz questions in the order they are asked. A question's id is also its
 // key in the result page URL, and an option's id is its value there.
 //
 // An option maps to at most one thing: a group (genre, mood or subject,
 // depending on the question), an age range or a reading level. Options without
-// a mapping ("Det er forskelligt", "Ved ikke", "Jeg er en kæmpe læsehest") add
-// no filter.
+// a mapping add no filter. Most of them are the "no answer" of their question
+// ("Jeg aner det ikke", "Det er forskelligt", "Ingen af delene", "Alle aldre",
+// "Ved ikke"), marked with isNone. "Jeg er en kæmpe læsehest" is an answer, but
+// FBI has nothing to filter it on.
 
 export type TBookQuizRange = [number, number]
 
@@ -35,6 +35,10 @@ export type TBookQuizOption = {
   ageRange?: TBookQuizRange
   // Only "easy" has a filter. FBI has no marker for hard books.
   easyToRead?: boolean
+  // The "no answer" of the question. Where several options can be chosen it
+  // stands alone: choosing it clears the other choices, and choosing another
+  // option clears it.
+  isNone?: boolean
 }
 
 export type TBookQuizQuestionId = "genre" | "mood" | "subjects" | "age" | "level"
@@ -42,6 +46,12 @@ export type TBookQuizQuestionId = "genre" | "mood" | "subjects" | "age" | "level
 export type TBookQuizQuestion = {
   id: TBookQuizQuestionId
   title: string
+  // Several options can be chosen. Without it a new choice replaces the old
+  // one. Any question can be either: nothing else in the quiz depends on which.
+  //
+  // Mind the number of searches when turning it on for genre, mood or
+  // subjects: the result page searches on every combination of those answers,
+  // so each answer more doubles the number of combinations.
   multi?: boolean
   options: TBookQuizOption[]
 }
@@ -72,7 +82,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
         emoji: "🕰️",
         group: HISTORY,
       },
-      { id: "genre-novels", label: "Jeg aner det ikke", emoji: "🙃", group: NOVELS },
+      { id: "genre-any", label: "Jeg aner det ikke", emoji: "🙃", isNone: true },
     ],
   },
   {
@@ -82,7 +92,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
       { id: "mood-funny", label: "Et godt grin", emoji: "😂", group: FUNNY },
       { id: "mood-horror", label: "Gys", emoji: "🧟", group: HORROR },
       { id: "mood-romance", label: "Romantik", emoji: "💘", group: ROMANCE },
-      { id: "mood-any", label: "Det er forskelligt", emoji: "🍬🍭" },
+      { id: "mood-any", label: "Det er forskelligt", emoji: "🍭", isNone: true },
     ],
   },
   {
@@ -94,7 +104,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
       { id: "subject-gaming", label: "Gaming", emoji: "🎮", group: GAMING },
       { id: "subject-sport", label: "Sport", emoji: "⚽", group: SPORT },
       { id: "subject-climate", label: "Klima", emoji: "🌿", group: CLIMATE },
-      { id: "subject-other", label: "Ingen af delene", emoji: "🤔", group: OTHER },
+      { id: "subject-other", label: "Ingen af delene", emoji: "🤔", isNone: true },
     ],
   },
   {
@@ -105,6 +115,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
       { id: "age-9-10", label: "9-10 år", ageRange: [9, 10] },
       { id: "age-11-12", label: "11-12 år", ageRange: [11, 12] },
       { id: "age-teen", label: "Teenagere", ageRange: [13, 18] },
+      { id: "age-any", label: "Alle aldre", isNone: true },
     ],
   },
   {
@@ -118,7 +129,7 @@ export const QUESTIONS: TBookQuizQuestion[] = [
         emoji: "📘",
         easyToRead: true,
       },
-      { id: "level-any", label: "Ved ikke", emoji: "❓" },
+      { id: "level-any", label: "Ved ikke", emoji: "❓", isNone: true },
     ],
   },
 ]
@@ -128,3 +139,6 @@ export const getQuestion = (id: TBookQuizQuestionId): TBookQuizQuestion => {
   if (!question) throw new Error(`Unknown book quiz question: ${id}`)
   return question
 }
+
+export const getOptionIds = (id: TBookQuizQuestionId): string[] =>
+  getQuestion(id).options.map(option => option.id)

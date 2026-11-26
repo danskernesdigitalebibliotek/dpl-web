@@ -7,6 +7,20 @@
 
 @custom-variant dark (&:where(.dark-mode, .dark-mode *));
 
+/* Book quiz: the colours of a quiz surface, see QUIZ_COLOR_CLASSES. Registered
+   as colours, so they can be transitioned. */
+@property --quiz-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --quiz-shape {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
 @layer utilities {
   :root {
     /* GRID */

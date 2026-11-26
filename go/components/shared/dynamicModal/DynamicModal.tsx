@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useQueryStates } from "nuqs"
 import React, { useEffect, useRef, useState } from "react"
 
+import BookQuizModal from "@/components/shared/bookQuizModal/BookQuizModal"
 import CompensationModal from "@/components/shared/compensationModal/CompensationModal"
 import DigitalLoansModal from "@/components/shared/digitalLoansModal/DigitalLoansModal"
 import EditionsSelectModal from "@/components/shared/editionsSelectModal/EditionsSelectModal"
@@ -35,6 +36,7 @@ const ModalComponents: {
     TModalRegistry[K] & { open: boolean; onClose: () => void }
   >
 } = {
+  BookQuizModal,
   PlayerModal,
   PlayerPreviewModal,
   CompensationModal,

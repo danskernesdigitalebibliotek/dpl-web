@@ -1,0 +1,120 @@
+import type { QueryClient } from "@tanstack/react-query"
+
+import type { TBookQuizColor } from "@/lib/book-quiz/groups"
+import {
+  type TLadderStep,
+  getLadderSteps,
+  getShownSteps,
+  getStepQueryVariables,
+} from "@/lib/book-quiz/ladder"
+import type { TBookQuizAnswers } from "@/lib/book-quiz/profile"
+import {
+  QUESTIONS,
+  type TBookQuizQuestion,
+  type TBookQuizQuestionId,
+} from "@/lib/book-quiz/questions"
+import { serializeBookQuizAnswers } from "@/lib/book-quiz/url"
+import goConfig from "@/lib/config/goConfig"
+import {
+  type ComplexSearchForBookQuizQuery,
+  useComplexSearchForBookQuizQuery,
+} from "@/lib/graphql/generated/fbi/graphql"
+
+export const getSelectedIds = (answers: TBookQuizAnswers, id: TBookQuizQuestionId): string[] =>
+  answers[id] ?? []
+
+// Multi questions toggle the option, the others replace the answer. In a multi
+// question the "no answer" option stands alone: it takes the place of the other
+// choices, and they take its place.
+export const selectOption = (
+  answers: TBookQuizAnswers,
+  question: TBookQuizQuestion,
+  optionId: string
+): TBookQuizAnswers => {
+  if (!question.multi) return { ...answers, [question.id]: [optionId] }
+
+  const selected = getSelectedIds(answers, question.id)
+  if (selected.includes(optionId)) {
+    return { ...answers, [question.id]: selected.filter(id => id !== optionId) }
+  }
+
+  const isNone = (id: string) => Boolean(question.options.find(option => option.id === id)?.isNone)
+  const kept = isNone(optionId) ? [] : selected.filter(id => !isNone(id))
+  return { ...answers, [question.id]: [...kept, optionId] }
+}
+
+// The emoji of each question's answer for the progress circles: that of the
+// first choice.
+export const getStepEmojis = (answers: TBookQuizAnswers) =>
+  QUESTIONS.map(question => {
+    const [selectedId] = getSelectedIds(answers, question.id)
+    return question.options.find(option => option.id === selectedId)?.emoji
+  })
+
+// The furthest question the progress bar may jump to: the first one that is
+// neither answered nor skipped, as every question before it has been passed.
+export const getFurthestStep = (answers: TBookQuizAnswers) => {
+  const index = QUESTIONS.findIndex(
+    question => answers[question.id] !== null && getSelectedIds(answers, question.id).length === 0
+  )
+  return index === -1 ? QUESTIONS.length - 1 : index
+}
+
+// The colour of the chosen option's group. Options without a group, and
+// unselecting, keep the current colour.
+export const getColorAfterSelect = (
+  color: TBookQuizColor,
+  answers: TBookQuizAnswers,
+  question: TBookQuizQuestion,
+  optionId: string
+): TBookQuizColor => {
+  if (!getSelectedIds(answers, question.id).includes(optionId)) return color
+  return question.options.find(option => option.id === optionId)?.group?.color ?? color
+}
+
+// All chosen options in question order, for the loader.
+export const getChosenOptions = (answers: TBookQuizAnswers) =>
+  QUESTIONS.flatMap(question =>
+    question.options.filter(option => getSelectedIds(answers, question.id).includes(option.id))
+  )
+
+export const getBookQuizResultUrl = (answers: TBookQuizAnswers) =>
+  serializeBookQuizAnswers(`/${goConfig("routes.book-quiz")}`, answers)
+
+// The search behind a step, for the query cache. Shared by the result page and
+// the quiz modal, which fills the cache before navigating, so the keys match.
+export const getStepQueryOptions = (cql: string) => {
+  const variables = getStepQueryVariables(cql)
+  return {
+    queryKey: useComplexSearchForBookQuizQuery.getKey(variables),
+    queryFn: useComplexSearchForBookQuizQuery.fetcher(variables),
+  }
+}
+
+// The steps shown on the result page, going by the searches in the query cache
+// so far, see getShownSteps.
+export const getShownBookQuizSteps = (queryClient: QueryClient, steps: TLadderStep[]) =>
+  getShownSteps(steps, ({ cql }) => {
+    const { queryKey } = getStepQueryOptions(cql)
+    return queryClient.getQueryData<ComplexSearchForBookQuizQuery>(queryKey)?.complexSearch.works
+      .length
+  })
+
+// Puts the books for the shown steps in the query cache, so the result page
+// shows them at once. Searches in rounds: each round fetches the shown steps
+// that are not in the cache yet, and those with too few books let more steps in
+// for the next round. A failed step stays in the cache as failed, and is
+// fetched again by the page.
+export const prefetchBookQuizResults = async (
+  queryClient: QueryClient,
+  answers: TBookQuizAnswers
+) => {
+  const steps = getLadderSteps(answers)
+  for (;;) {
+    const missing = getShownBookQuizSteps(queryClient, steps).filter(
+      ({ cql }) => !queryClient.getQueryState(getStepQueryOptions(cql).queryKey)
+    )
+    if (missing.length === 0) return
+    await Promise.all(missing.map(({ cql }) => queryClient.prefetchQuery(getStepQueryOptions(cql))))
+  }
+}

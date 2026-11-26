@@ -2,6 +2,7 @@ const routes = {
   "routes.frontpage": "go-frontpage",
   "routes.user-profile": "user/profile",
   "routes.search": "search",
+  "routes.book-quiz": "bog-quiz",
   "routes.pubhub": "pubhub",
   "routes.login-failed-ap": "error/login-failed-ap",
   "routes.login-failed-unilogin": "error/login-failed-unilogin",

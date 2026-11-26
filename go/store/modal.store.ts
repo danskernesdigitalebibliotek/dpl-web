@@ -1,5 +1,6 @@
 import { createStore } from "@xstate/store"
 
+import type { BookQuizModalProps } from "@/components/shared/bookQuizModal/BookQuizModal"
 import type { CompensationModalProps } from "@/components/shared/compensationModal/CompensationModal"
 import type { DigitalLoansModalProps } from "@/components/shared/digitalLoansModal/DigitalLoansModal"
 import type { EditionsSelectModalProps } from "@/components/shared/editionsSelectModal/EditionsSelectModal"
@@ -17,6 +18,7 @@ import type { TModalUrlParams } from "@/lib/helpers/modal-url"
 // in-page modals, `{wid, pid}` for the login-flow modals that must also be
 // openable from the URL inbox after a redirect (they fetch internally).
 export type TModalRegistry = {
+  BookQuizModal: BookQuizModalProps
   PlayerModal: PlayerModalProps
   PlayerPreviewModal: PlayerPreviewModalProps
   CompensationModal: CompensationModalProps
