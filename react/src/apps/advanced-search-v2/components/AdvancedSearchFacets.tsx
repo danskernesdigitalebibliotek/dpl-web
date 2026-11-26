@@ -7,6 +7,7 @@ import {
 } from "nuqs";
 import SearchToggle from "../../../components/search-toggle/SearchToggle";
 import SearchRadioButtonGroup from "../../../components/search-radio-button-group/SearchRadioButtonGroup";
+import { Collapsible } from "../../../components/collapsible/Collapsible";
 import { useText } from "../../../core/utils/text";
 import SearchFacetGroup from "../../search-result/SearchFacetGroup";
 import {
@@ -66,6 +67,15 @@ const AdvancedSearchFacets: React.FC<AdvancedSearchFacetsProps> = ({ cql }) => {
     parseAsString
   );
   const [ageGroup, setAgeGroup] = useQueryState("ageGroup", parseAsString);
+
+  const handleOnShelfToggle = (checked: boolean) => {
+    setOnShelf(checked, { history: "push" });
+    // On shelf excludes online materials, so an access type choice no longer
+    // applies. nuqs batches both URL updates into a single history entry.
+    if (checked && accessType) {
+      setAccessType(null, { history: "push" });
+    }
+  };
 
   // Facets are fetched in a separate query from search results.
   // The FBI API supports this and it allows facet counts to update
@@ -161,7 +171,7 @@ const AdvancedSearchFacets: React.FC<AdvancedSearchFacetsProps> = ({ cql }) => {
               label={t("searchOnShelfText")}
               description={t("searchOnShelfDescriptionText")}
               checked={onShelf}
-              onChange={(checked) => setOnShelf(checked, { history: "push" })}
+              onChange={handleOnShelfToggle}
             />
           </li>
           <li>
@@ -179,12 +189,14 @@ const AdvancedSearchFacets: React.FC<AdvancedSearchFacetsProps> = ({ cql }) => {
 
         {/* Radio button filters */}
         <div className="search-radio-button-group-wrapper">
-          <SearchRadioButtonGroup
-            name="access-type"
-            options={ACCESS_TYPE_OPTIONS}
-            selectedValue={accessType}
-            onChange={(value) => setAccessType(value, { history: "push" })}
-          />
+          <Collapsible isOpen={!onShelf}>
+            <SearchRadioButtonGroup
+              name="access-type"
+              options={ACCESS_TYPE_OPTIONS}
+              selectedValue={accessType}
+              onChange={(value) => setAccessType(value, { history: "push" })}
+            />
+          </Collapsible>
 
           <SearchRadioButtonGroup
             name="fiction-type"

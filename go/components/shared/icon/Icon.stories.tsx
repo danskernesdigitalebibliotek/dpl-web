@@ -25,6 +25,7 @@ const iconNames = [
   "e-comic",
   "e-picturebook",
   "ebook",
+  "editions",
   "envelope",
   "headphones",
   "lock",
@@ -40,6 +41,7 @@ const iconNames = [
   "question-mark",
   "search",
   "sun",
+  "switch",
   "video",
 ]
 

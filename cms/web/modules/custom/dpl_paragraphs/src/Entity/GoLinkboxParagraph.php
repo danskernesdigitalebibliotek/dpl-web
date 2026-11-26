@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_paragraphs\Entity;
 
+use Drupal\Core\Entity\Attribute\Bundle;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\dpl_media\Entity\ImageMedia;
 use Drupal\file\Entity\File;
@@ -13,6 +14,10 @@ use Drupal\paragraphs\Entity\Paragraph;
 /**
  * Bundle class for go_linkbox paragraphs.
  */
+#[Bundle(
+  entityType: 'paragraph',
+  bundle: 'go_linkbox',
+)]
 class GoLinkboxParagraph extends Paragraph {
 
   /**

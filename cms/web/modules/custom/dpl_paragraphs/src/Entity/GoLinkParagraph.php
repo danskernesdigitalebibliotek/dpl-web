@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_paragraphs\Entity;
 
+use Drupal\Core\Entity\Attribute\Bundle;
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Bundle class for go_link paragraphs.
  */
+#[Bundle(
+  entityType: 'paragraph',
+  bundle: 'go_link',
+)]
 class GoLinkParagraph extends Paragraph {
 
   /**

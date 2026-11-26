@@ -1,4 +1,4 @@
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query"
+import { HydrationBoundary, type QueryClient, dehydrate } from "@tanstack/react-query"
 import { cookies } from "next/headers"
 import React, { Suspense } from "react"
 
@@ -10,19 +10,23 @@ import ProfileNotifications, {
   ProfileNotificationsSkeleton,
 } from "@/components/shared/profileNotifications/ProfileNotifications"
 import UserLoans from "@/components/shared/userLoans/UserLoans"
+import { getDplCmsPublicConfig } from "@/lib/config/dpl-cms/dplCmsConfig"
 import { getBaseURL } from "@/lib/config/getBaseURL"
 import goConfig from "@/lib/config/goConfig"
 import getQueryClient from "@/lib/getQueryClient"
-import type { LoanListResult } from "@/lib/rest/publizon/adapter/generated/model"
+import { isBiblioAdapterActive } from "@/lib/helpers/helper.biblio"
 import { getGetV1UserLoansAdapterQueryKey } from "@/lib/rest/publizon/adapter/generated/publizon"
-import { getSession } from "@/lib/session/session"
+import { getDigitalLoanUserToken, getSession } from "@/lib/session/session"
 
-// The support ID (friendlyCardNumber) only exists in the user loans response,
-// so it is prefetched here and hydrated into the query cache. Both publizon
-// adapters share the "/v1/user/loans" query key, so SupportId (and the other
-// loan consumers) read the result instead of fetching client-side.
-const prefetchUserLoans = async (sessionType: "unilogin" | "adgangsplatformen") => {
-  const queryClient = getQueryClient()
+import { getBiblioSupportId, getPublizonSupportId } from "./helper"
+
+// The user loans are prefetched here and hydrated into the query cache. Both
+// publizon adapters share the "/v1/user/loans" query key, so the loan
+// consumers read the result instead of fetching client-side.
+const prefetchUserLoans = async (
+  queryClient: QueryClient,
+  sessionType: "unilogin" | "adgangsplatformen"
+) => {
   const cookieStore = await cookies()
   const base =
     sessionType === "unilogin"
@@ -43,7 +47,6 @@ const prefetchUserLoans = async (sessionType: "unilogin" | "adgangsplatformen") 
       return response.json()
     },
   })
-  return queryClient
 }
 
 const ProfilePageLayout = async () => {
@@ -52,14 +55,21 @@ const ProfilePageLayout = async () => {
   const session = await getSession()
   const name = session.user?.name || session.user?.username || null
 
-  const queryClient =
+  const digitalLoanSessionType =
     session.isLoggedIn && (session.type === "unilogin" || session.type === "adgangsplatformen")
-      ? await prefetchUserLoans(session.type)
-      : getQueryClient()
+      ? session.type
+      : null
+  const { biblio } = await getDplCmsPublicConfig()
+  const viaBiblioAdapter = !!digitalLoanSessionType && isBiblioAdapterActive(biblio)
+  const biblioUserToken = viaBiblioAdapter ? getDigitalLoanUserToken(session) : undefined
 
-  const supportId =
-    queryClient.getQueryData<LoanListResult>(getGetV1UserLoansAdapterQueryKey())?.userData
-      ?.friendlyCardNumber ?? null
+  const queryClient = getQueryClient()
+  if (digitalLoanSessionType) await prefetchUserLoans(queryClient, digitalLoanSessionType)
+
+  // With the Biblio adapter on, Biblio's support ID replaces Publizon's.
+  const supportId = biblioUserToken
+    ? await getBiblioSupportId(biblioUserToken)
+    : getPublizonSupportId(queryClient)
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_paragraphs\Entity;
 
+use Drupal\Core\Entity\Attribute\Bundle;
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Bundle class for material_grid_automatic paragraphs.
  */
+#[Bundle(
+  entityType: 'paragraph',
+  bundle: 'material_grid_automatic',
+)]
 class MaterialGridAutomaticParagraph extends Paragraph {
 
   /**

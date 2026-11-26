@@ -68,6 +68,7 @@ fragment ManifestationTitles on Manifestation {
   titles {
     identifyingAddition
     full
+    main
   }
 }
 

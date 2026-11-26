@@ -1,5 +1,3 @@
 services:
-  dpl_related_content.related_content:
-    class: Drupal\dpl_related_content\Services\RelatedContent
-    arguments: ['@entity_type.manager', '@database', '@string_translation']
-    shared: false
+  Drupal\dpl_related_content\Services\RelatedContentFactory:
+    autowire: true

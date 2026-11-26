@@ -141,6 +141,7 @@ const LoanSlider = ({ works, loanData, biblioLoans }: LoanSliderProps) => {
                   manifestation={loanManifestation}
                   title={work.titles.full[0]}
                   className={cn(index % 2 === 0 ? "rotate-5" : "mt-10 -rotate-5")}
+                  biblioLoans={biblioLoans}
                   setAudioLoans={setAudioLoans}
                   setEbookLoans={setEbookLoans}
                   setBlueLoans={setBlueLoans}

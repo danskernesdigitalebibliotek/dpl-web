@@ -1,14 +1,14 @@
 "use client"
 
-import { useQueries } from "@tanstack/react-query"
+import {
+  isCostFreeLoan,
+  useDigitalLoanDecisions,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useInView } from "framer-motion"
 import React, { useRef } from "react"
 
 import { ManifestationSearchPageTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
-import {
-  getGetV1ProductsIdentifierAdapterQueryKey,
-  getV1ProductsIdentifierAdapter,
-} from "@/lib/rest/publizon/adapter/generated/publizon"
+import { getPublizonIdentifierFromManifestation } from "@/lib/helpers/ids"
 
 import WorkCard, { TWorkCardProps } from "./WorkCard"
 import { getWorkCardMaterialTypes } from "./helper"
@@ -17,27 +17,26 @@ type TWorkCardContainerProps = Omit<TWorkCardProps, "materialTypes" | "isBlueTit
   manifestations: ManifestationSearchPageTeaserFragment[]
 }
 
-// Feeds the work card with Publizon data, looked up once the card is in view,
-// to know which material types are cost-free. A work with any cost-free
-// material type is a "BLÅ" title.
+// Feeds the work card with the loan decisions that say which material types
+// are cost-free, asked for once the card is in view. A work with any
+// cost-free material type is a "BLÅ" title.
 const WorkCardContainer = ({ manifestations, ...props }: TWorkCardContainerProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true })
 
-  const materialTypes = useQueries({
-    queries: manifestations.map(item => {
-      const isbn = item.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
+  const materialIds = manifestations.map(manifestation =>
+    manifestation.accessTypes[0]?.code === "ONLINE"
+      ? getPublizonIdentifierFromManifestation(manifestation)
+      : undefined
+  )
 
-      return {
-        queryKey: getGetV1ProductsIdentifierAdapterQueryKey(isbn),
-        queryFn: () => getV1ProductsIdentifierAdapter(isbn),
-        enabled: isInView && item.accessTypes[0].code === "ONLINE",
-      }
-    }),
-    combine: results =>
-      getWorkCardMaterialTypes(manifestations, index =>
-        Boolean(results[index].data?.product?.costFree)
-      ),
+  const { decisions } = useDigitalLoanDecisions(
+    isInView ? materialIds.filter((id): id is string => !!id) : []
+  )
+
+  const materialTypes = getWorkCardMaterialTypes(manifestations, index => {
+    const materialId = materialIds[index]
+    return !!materialId && isCostFreeLoan(decisions[materialId]?.loanProvider)
   })
 
   return (

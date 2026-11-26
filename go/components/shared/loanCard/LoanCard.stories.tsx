@@ -1,3 +1,7 @@
+import {
+  ServiceLayerProvider,
+  digitalLoanDecisionQueryKey,
+} from "@danskernesdigitalebibliotek/dpl-service-layer"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
@@ -7,10 +11,7 @@ import { ShowcaseItem } from "@/.storybook/showcase"
 import LoanCard from "@/components/shared/loanCard/LoanCard"
 import { eBookManifestationFactory } from "@/cypress/factories/fbi/factory-parts/manifestations"
 import { GeneralMaterialTypeCodeEnum } from "@/lib/graphql/generated/fbi/graphql"
-import {
-  getGetV1ProductsIdentifierAdapterQueryKey,
-  getGetV1UserLoansAdapterQueryKey,
-} from "@/lib/rest/publizon/adapter/generated/publizon"
+import { getGetV1UserLoansAdapterQueryKey } from "@/lib/rest/publizon/adapter/generated/publizon"
 
 // Expiry dates are computed relative to "now" so the rendered day counts stay
 // stable over time (e.g. in visual regression tests).
@@ -79,18 +80,31 @@ const seedClient = (fixtures: Fixture[]) => {
     })),
   })
   fixtures.forEach(f => {
-    client.setQueryData(getGetV1ProductsIdentifierAdapterQueryKey(f.isbn), {
-      product: { costFree: f.costFree },
+    // The isbn is the material id here: these manifestations carry no
+    // PUBLIZON identifier, so the card falls back to the ISBN to look up its
+    // decision.
+    client.setQueryData(digitalLoanDecisionQueryKey(f.isbn), {
+      status: "loanable",
+      ...(f.costFree ? { loanProvider: "selection" } : {}),
     })
   })
   return client
+}
+
+// The card reads cost-free through the service layer, so its hooks need the
+// provider as well as a seeded cache.
+const storyServiceLayerConfig = {
+  getBaseUrl: () => "https://biblio.example",
+  getAuthHeader: () => "Bearer story-token",
 }
 
 const withQueryClient =
   (client: QueryClient) =>
   (Story: React.ComponentType): React.ReactElement => (
     <QueryClientProvider client={client}>
-      <Story />
+      <ServiceLayerProvider config={storyServiceLayerConfig}>
+        <Story />
+      </ServiceLayerProvider>
     </QueryClientProvider>
   )
 

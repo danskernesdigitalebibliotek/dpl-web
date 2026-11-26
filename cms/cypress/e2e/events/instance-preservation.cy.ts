@@ -7,12 +7,6 @@ import { EventInstancesPage } from '../../pages/event-instances';
 import { EventSeriesListPage } from '../../pages/event-series-list';
 import { EventSeriesPage } from '../../pages/event-series';
 
-const login = () =>
-  LoginPage.ensureLogin(
-    Cypress.env('DRUPAL_USERNAME'),
-    Cypress.env('DRUPAL_PASSWORD'),
-  );
-
 // When an editor changes the recurrence of an event series, the occurrences the
 // change does not touch have to come out the other side as the same event
 // instances. Their IDs are public API - they are the event URLs, and the IDs
@@ -49,7 +43,7 @@ const readInstanceIds = (seriesId: string) => {
 };
 
 const deleteSeriesIfExists = (title: string) => {
-  login();
+  LoginPage.ensureEditorLogin();
   new EventSeriesListPage().deleteAllTitled(title);
 };
 
@@ -59,7 +53,7 @@ describe('Event instance preservation', () => {
     // we're testing.
     Cypress.on('uncaught:exception', () => false);
 
-    login();
+    LoginPage.ensureEditorLogin();
     const eventAdd = new EventAddPage();
     eventAdd.visit([]);
     eventAdd.fillTitle(seriesTitle);

@@ -2,3 +2,4 @@ services:
   dpl_patron_menu.settings:
     class: Drupal\dpl_patron_menu\DplMenuSettings
     arguments: ['@config.manager']
+  Drupal\dpl_patron_menu\DplMenuSettings: '@dpl_patron_menu.settings'

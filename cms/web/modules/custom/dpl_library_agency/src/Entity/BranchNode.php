@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_library_agency\Entity;
 
+use Drupal\Core\Entity\Attribute\Bundle;
 use Drupal\dk_address\DkAddressItemInterface;
 use Drupal\node\Entity\Node;
 
@@ -17,6 +18,10 @@ use Drupal\node\Entity\Node;
  * is identified by its ISIL and may or may not have a node attached. This one
  * is the node, which may or may not have an ISIL.
  */
+#[Bundle(
+  entityType: 'node',
+  bundle: 'branch',
+)]
 class BranchNode extends Node {
 
   /**

@@ -119,6 +119,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
             titles: {
               identifyingAddition: null,
               full: ["Ravnenes hvisken. Bog 1"],
+              main: ["Ravnenes hvisken"],
             },
             languages: {
               main: [
@@ -283,6 +284,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
             titles: {
               identifyingAddition: null,
               full: ["Ravnenes hvisken. Bog 1"],
+              main: ["Ravnenes hvisken"],
             },
             languages: {
               main: [
@@ -422,6 +424,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
             titles: {
               identifyingAddition: null,
               full: ["Ravnenes hvisken. Bog 1"],
+              main: ["Ravnenes hvisken"],
             },
             languages: {
               main: [
@@ -542,6 +545,7 @@ export default Factory.define<GetMaterialQuery, Params>(() => {
           titles: {
             identifyingAddition: null,
             full: ["Ravnenes hvisken. Bog 1"],
+            main: ["Ravnenes hvisken"],
           },
           languages: {
             main: [

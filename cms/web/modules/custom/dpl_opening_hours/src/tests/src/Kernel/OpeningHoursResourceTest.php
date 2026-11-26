@@ -49,6 +49,11 @@ class OpeningHoursResourceTest extends KernelTestBase {
   private const UNPUBLISHED_BRANCH_ID = 3;
 
   /**
+   * A fixed date, so results do not depend on when the tests run.
+   */
+  private const TEST_DATE = '2030-02-04 12:00';
+
+  /**
    * {@inheritDoc}
    */
   public function setUp(): void {
@@ -119,13 +124,13 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that an opening hours instance can be created.
    */
   public function testCreation(): void {
-    $now = new DateTime();
-    $responseData = $this->createOpeningHours($now, "09:00", "17:00", "Open", 1);
+    $date = new DateTime(self::TEST_DATE);
+    $responseData = $this->createOpeningHours($date, "09:00", "17:00", "Open", 1);
     $this->assertCount(1, $responseData);
     $responseOpeningHours = reset($responseData);
     $this->assertNotEmpty($responseOpeningHours);
     $this->assertNotEmpty($responseOpeningHours->getId());
-    $this->assertDateEquals($now, $responseOpeningHours->getDate());
+    $this->assertDateEquals($date, $responseOpeningHours->getDate());
     $this->assertEquals("09:00", $responseOpeningHours->getStartTime());
     $this->assertEquals("17:00", $responseOpeningHours->getEndTime());
     $this->assertEquals(1, $responseOpeningHours->getBranchId());
@@ -138,15 +143,15 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that opening hours can be listed.
    */
   public function testList(): void {
-    $now = new DateTime();
-    $this->createOpeningHours($now, "09:00", "17:00", "Open", 1);
+    $date = new DateTime(self::TEST_DATE);
+    $this->createOpeningHours($date, "09:00", "17:00", "Open", 1);
 
     $openingHoursList = $this->listOpeningHours();
     $this->assertCount(1, $openingHoursList);
 
     $openingHours = reset($openingHoursList);
     $this->assertNotFalse($openingHours);
-    $this->assertDateEquals($now, $openingHours->getDate());
+    $this->assertDateEquals($date, $openingHours->getDate());
     $this->assertEquals("09:00", $openingHours->getStartTime());
     $this->assertEquals("17:00", $openingHours->getEndTime());
     $this->assertEquals("Open", $openingHours->getCategory()?->getTitle());
@@ -158,11 +163,11 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that opening hours filters work.
    */
   public function testListFilters(): void {
-    $now = new DateTime("now");
-    $tomorrow = (clone $now)->modify("+1 day");
-    $yesterday = (clone $now)->modify("-1 day");
+    $date = new DateTime(self::TEST_DATE);
+    $tomorrow = (clone $date)->modify("+1 day");
+    $yesterday = (clone $date)->modify("-1 day");
     $this->createOpeningHours($yesterday, branchId: 1);
-    $this->createOpeningHours($now, branchId: 1);
+    $this->createOpeningHours($date, branchId: 1);
     $this->createOpeningHours($tomorrow, branchId: 1);
     $this->createOpeningHours($tomorrow, branchId: 2);
 
@@ -171,10 +176,10 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $openingHoursByOtherBranch = $this->listOpeningHours(branchId: 2);
     $this->assertCount(1, $openingHoursByOtherBranch);
 
-    $openingHoursByDate = $this->listOpeningHours(fromDate: $now, toDate: $tomorrow);
+    $openingHoursByDate = $this->listOpeningHours(fromDate: $date, toDate: $tomorrow);
     $this->assertCount(3, $openingHoursByDate);
 
-    $openingHoursByBranchAndDate = $this->listOpeningHours(branchId: 1, fromDate: $now, toDate: $tomorrow);
+    $openingHoursByBranchAndDate = $this->listOpeningHours(branchId: 1, fromDate: $date, toDate: $tomorrow);
     $this->assertCount(2, $openingHoursByBranchAndDate);
   }
 
@@ -234,15 +239,15 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * The legacy app endpoint leaves out unpublished branches as well.
    */
   public function testLegacyListLeavesOutUnpublishedBranches(): void {
-    $now = new DateTime('now');
-    $this->createOpeningHours($now, branchId: 1);
-    $this->createOpeningHours($now, branchId: self::UNPUBLISHED_BRANCH_ID);
+    $date = new DateTime(self::TEST_DATE);
+    $this->createOpeningHours($date, branchId: 1);
+    $this->createOpeningHours($date, branchId: self::UNPUBLISHED_BRANCH_ID);
 
     $legacyResource = LegacyOpeningHoursResource::create($this->container, [], '', '');
     $response = $legacyResource->get(new Request([
       'nid' => '1,' . self::UNPUBLISHED_BRANCH_ID,
-      'from_date' => $now->format('Y-m-d'),
-      'to_date' => $now->format('Y-m-d'),
+      'from_date' => $date->format('Y-m-d'),
+      'to_date' => $date->format('Y-m-d'),
     ]));
 
     $content = $response->getContent();
@@ -278,7 +283,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that opening hours with a weekly repetition is created properly.
    */
   public function testCreateWeeklyRepetition(): void {
-    $startDate = new DateTime('now');
+    $startDate = new DateTime(self::TEST_DATE);
     $endDate = (clone $startDate)->modify('+2 weeks');
     $expectedDates = [
       $startDate,
@@ -318,17 +323,22 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $this->assertDateEquals($repetition->getWeeklyData()?->getEndDate(), $endDate, "Created opening hours with weekly repetition must have the provided end date");
 
     // Check that all other repetitions match the first one to ensure that all
-    // opening hours have the correct value.
+    // opening hours have the correct value. Compare them serialized:
+    // deserialized dates carry the wall-clock time of deserialization, which
+    // may differ between objects.
+    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
+    $serializer = $this->container->get('dpl_rest_base.serializer');
     foreach ($repetitions as $otherRepetition) {
-      $this->assertEquals($repetition, $otherRepetition, "All created opening hours with repetition should have the same repetition");
+      $this->assertEquals(
+        $serializer->serialize($repetition, 'application/json'),
+        $serializer->serialize($otherRepetition, 'application/json'),
+        "All created opening hours with repetition should have the same repetition"
+      );
     }
 
     // Check that the same opening hours are returned when listed as when
-    // created. Compare them serialized: deserialized dates carry the
-    // wall-clock time of deserialization, which may differ between calls.
+    // created.
     $allOpeningHours = $this->listOpeningHours();
-    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
-    $serializer = $this->container->get('dpl_rest_base.serializer');
     $this->assertEquals(
       $serializer->serialize($createdOpeningHours, 'application/json'),
       $serializer->serialize($allOpeningHours, 'application/json'),
@@ -377,7 +387,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $id = $createdOpeningHours->getId();
     $this->assertNotNull($id);
 
-    $tomorrow = new DateTime("tomorrow");
+    $tomorrow = (new DateTime(self::TEST_DATE))->modify("+1 day");
     $updatedOpeningHours = $this->updateOpeningHours(
       $createdOpeningHours,
       date: $tomorrow,
@@ -400,7 +410,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test all an opening hours with an existing repetition are updated.
    */
   public function testUpdateWithRepetition(): void {
-    $startDate = new DateTime('now');
+    $startDate = new DateTime(self::TEST_DATE);
     $endDate = (clone $startDate)->modify('+2 weeks');
 
     $createdOpeningHours = $this->createOpeningHours(
@@ -436,7 +446,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that opening hours with weekly repetition can be created properly.
    */
   public function testUpdateInstanceInWeeklyRepetition(): void {
-    $startDate = new DateTime('now');
+    $startDate = new DateTime(self::TEST_DATE);
     $endDate = (clone $startDate)->modify("+2 weeks");
 
     $createdOpeningHours = $this->createOpeningHours(
@@ -475,7 +485,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that updating a repetition with a repetition yields a new repetition.
    */
   public function testUpdateNewWeeklyRepetition(): void {
-    $startDate = new DateTime('now');
+    $startDate = new DateTime(self::TEST_DATE);
     $endDate = (clone $startDate)->modify("+2 weeks");
 
     $createdOpeningHours = $this->createOpeningHours(
@@ -534,7 +544,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that opening hours with weekly repetition can be deleted.
    */
   public function testDeleteInstanceInWeeklyRepetition(): void {
-    $startDate = new DateTime('now');
+    $startDate = new DateTime(self::TEST_DATE);
     $endDate = (clone $startDate)->modify('+2 weeks');
 
     $createdOpeningHours = $this->createOpeningHours(
@@ -559,14 +569,20 @@ class OpeningHoursResourceTest extends KernelTestBase {
 
     $this->assertEquals(OpeningHoursRepetitionType::Weekly->value, $firstOpeningHours->getRepetition()?->getType());
     $this->assertDateEquals($endDate, $firstOpeningHours->getRepetition()?->getWeeklyData()?->getEndDate());
-    $this->assertEquals($firstOpeningHours->getRepetition(), $lastOpeningHours->getRepetition());
+    // Compare serialized, as deserialized dates carry the wall-clock time.
+    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
+    $serializer = $this->container->get('dpl_rest_base.serializer');
+    $this->assertEquals(
+      $serializer->serialize($firstOpeningHours->getRepetition(), 'application/json'),
+      $serializer->serialize($lastOpeningHours->getRepetition(), 'application/json'),
+    );
   }
 
   /**
    * Test future instances of opening hours with repetition can be deleted.
    */
   public function testDeleteWeeklyRepetition(): void {
-    $startDate = new DateTime('now');
+    $startDate = new DateTime(self::TEST_DATE);
     $endDate = (clone $startDate)->modify("+2weeks");
 
     $createdOpeningHours = $this->createOpeningHours(
@@ -614,7 +630,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    *   The created opening hours.
    */
   protected function createOpeningHours(
-    \DateTime $date = new DateTime("now"),
+    \DateTime $date = new DateTime(self::TEST_DATE),
     string $startTime = "09:00",
     string $endTime = "17:00",
     string $categoryTitle = "Open",
