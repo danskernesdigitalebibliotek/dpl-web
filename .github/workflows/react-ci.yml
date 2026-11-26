@@ -228,6 +228,12 @@ jobs:
         with:
           chrome-version: stable
 
+      # common-setup-js skips the binary, and the action below is told not to
+      # install it.
+      - name: Install the Cypress binary
+        run: pnpm exec cypress install
+        working-directory: react
+
       - name: Cypress run
         uses: cypress-io/github-action@v7
         with:

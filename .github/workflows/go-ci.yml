@@ -304,6 +304,10 @@ jobs:
         uses: cardinalby/export-env-action@v2
         with:
           envFile: 'go/.env.test'
+      # common-setup-js skips the binary, and the action below is told not to
+      # install it.
+      - name: Install the Cypress binary
+        run: pnpm exec cypress install
       - name: Build the Nextjs app and run Cypress tests
         uses: cypress-io/github-action@v7
         env:
