@@ -19,6 +19,3 @@ services:
     class: Drupal\dpl_campaign\EventSubscriber\ApiRouteSubscriber
     tags:
       - { name: event_subscriber }
-  Drupal\dpl_campaign\Hook\DplCampaignHooks:
-    class: Drupal\dpl_campaign\Hook\DplCampaignHooks
-    autowire: true

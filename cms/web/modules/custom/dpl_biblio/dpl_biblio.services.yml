@@ -3,6 +3,3 @@ services:
     autowire: true
 
   Drupal\dpl_biblio\DplBiblioSettings: {}
-
-  # Hook services can be removed in D11.
-  Drupal\dpl_biblio\Hook\ReactAppsHooks: {}

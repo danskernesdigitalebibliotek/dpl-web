@@ -39,8 +39,8 @@ class FormHooks {
    * @todo After upgrading to D11, eliminate this and use `hook_FORM_ID_alter`
    * attributes on the other methods.
    *
-   * This uses `OrderAfter` to mimic the existing `module_implements_alter`,
-   * but the user form is the only one needing it.
+   * Runs after password_policy, so the user form can reposition the password
+   * policy status element it adds.
    *
    * @phpstan-ignore missingType.iterableValue ($form is to complex for
    *  typehint)
@@ -66,26 +66,6 @@ class FormHooks {
     if (in_array($form_id, ['user_register_form', 'user_form'])) {
       $this->alterUserForm($form, $form_state);
     }
-  }
-
-  /**
-   * Add attributes and title to password reset form.
-   *
-   * @phpstan-ignore missingType.iterableValue ($form is to complex for
-   * typehint)
-   */
-  public function formUserPassResetAlter(array &$form, FormStateInterface $form_state, string $form_id): void {
-    $form['#attributes']['class'][] = 'rich-text';
-    $form['#attributes']['class'][] = 'dpl-form';
-    $form['title'] = [
-      '#type' => 'markup',
-      '#prefix' => '<h1>',
-      '#suffix' => '</h1>',
-      '#markup' => $this->t('Reset password', [], ['context' => 'DPL admin']),
-      '#weight' => '-999',
-    ];
-
-    $form['actions']['submit']['#attributes']['class'] = ['btn-primary', 'btn-filled btn-small', 'dpl-button'];
   }
 
   /**
