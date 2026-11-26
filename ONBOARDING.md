@@ -81,6 +81,15 @@ cd design-system && task dev:start  # Docker
 
 Open <https://design-system.local>. Uses no `.env`.
 
+### Go — Storybook
+
+```bash
+cd go && pnpm run storybook
+```
+
+Open <http://localhost:6006>. Same port as the React Storybook, so run one at a
+time — or pass `-p 6007` to this one.
+
 ### Go — Next.js
 
 Needs a CMS to talk to (local, or a remote instance via `DPL_CMS_BASE_URL`).

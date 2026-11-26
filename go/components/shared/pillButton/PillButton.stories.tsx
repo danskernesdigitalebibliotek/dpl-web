@@ -33,10 +33,10 @@ const AllStates = (args: React.ComponentProps<typeof PillButton>) => (
     <ShowcaseItem title="selected" description="Inverted, as a chosen option">
       <PillButton {...args} classNames="bg-foreground text-background" />
     </ShowcaseItem>
-    <ShowcaseItem title="with icon">
-      <PillButton {...args} classNames="bg-background-overlay text-foreground">
-        <Icon name="ebook" className="h-5 w-5 shrink-0" />
-        <span>{args.children}</span>
+    <ShowcaseItem title="with icon" description="The work page's edition switch">
+      <PillButton {...args} classNames="bg-background-overlay text-foreground-muted">
+        <Icon name="switch" className="h-[14px] w-[14px] shrink-0" />
+        <span>Skift</span>
       </PillButton>
     </ShowcaseItem>
     <ShowcaseItem title="transparent" description="No background until the caller gives one">

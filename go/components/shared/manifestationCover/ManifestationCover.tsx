@@ -31,9 +31,17 @@ const ManifestationCover = ({
   iconClassName = "bg-background h-10 w-10",
   costFree,
 }: ManifestationCoverProps) => (
-  <div className={cn("relative", className)} style={{ aspectRatio: getCoverAspectRatio(cover) }}>
-    <CoverPicture alt={alt} covers={cover} className="select-none" />
-    <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
+  // The cover and the icon share the box's one grid cell. The cover is
+  // stretched to fill it; the icon sits centred on its bottom edge.
+  <div
+    className={cn("grid grid-cols-1 grid-rows-1", className)}
+    style={{ aspectRatio: getCoverAspectRatio(cover) }}>
+    <CoverPicture
+      alt={alt}
+      covers={cover}
+      className="col-start-1 row-start-1 h-auto w-auto select-none"
+    />
+    <div className="z-10 col-start-1 row-start-1 translate-y-1/2 self-end justify-self-center">
       <MaterialTypeIconWrapper
         iconName={iconName}
         costFree={costFree}

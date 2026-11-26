@@ -31,9 +31,6 @@ import { openModal } from "@/store/modal.store"
 import WorkPageButtonsLoggedIn from "./WorkPageButtonsLoggedIn"
 import WorkPageButtonsLoggedOut from "./WorkPageButtonsLoggedOut"
 
-// Animates the press and hover.
-const MotionPillButton = motion.create(PillButton)
-
 // Ties the switch button to the line naming the current edition, so the button
 // keeps the stable name "Skift udgave" and the edition is read as its
 // description.
@@ -225,17 +222,15 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
               {`Udgave: ${editionChoiceLabel}`}
             </p>
             {showEditionSwitch && (
-              <MotionPillButton
+              <PillButton
                 ref={editionButtonRef}
                 aria-label="Skift udgave"
                 aria-describedby={EDITION_LINE_ID}
                 onClick={openEditionsSelect}
-                whileTap={{ scale: 0.92 }}
-                whileHover={{ scale: 1.06 }}
                 classNames="bg-background-overlay text-foreground-muted">
                 <Icon name="switch" className="h-[14px] w-[14px] shrink-0" />
                 <span>Skift</span>
-              </MotionPillButton>
+              </PillButton>
             )}
           </div>
         </div>

@@ -111,7 +111,8 @@ const EditionsSelectModal = ({
 
   return (
     <ResponsiveDialog title="Vælg udgave" open={open} onClose={handleClose}>
-      <fieldset className="m-0 border-0 p-0">
+      {/* globals.css makes the dialog body around this scroll smoothly. */}
+      <fieldset data-editions-select className="m-0 border-0 p-0">
         <legend className="sr-only">Vælg udgave</legend>
         {/* Four implicit rows per card — cover, title, details, status — which
             the cards subscribe to with grid-rows-subgrid, so each band lines

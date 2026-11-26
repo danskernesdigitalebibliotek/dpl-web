@@ -39,224 +39,126 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// The grid the modal itself renders, showing the cards as a row.
-const Grid = () => {
-  const [checked, setChecked] = useState("pid-1")
-  return (
-    <div className="bg-background max-w-3xl p-8">
-      <div className="grid auto-rows-auto grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
-        {editions.map(edition => (
-          <EditionsSelectModalItem
-            key={edition.pid}
-            manifestation={edition}
-            name="story-edition"
-            checked={checked === edition.pid}
-            onSelect={() => setChecked(edition.pid)}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
+// A card on its own, at the width the modal's narrowest column gives it.
+const Frame = ({ children }: { children: React.ReactNode }) => (
+  <div className="bg-background w-72 p-8">{children}</div>
+)
 
 export const Default: Story = {
-  render: () => <Grid />,
+  render: () => {
+    const [checked, setChecked] = useState("pid-1")
+    return (
+      <Frame>
+        <EditionsSelectModalItem
+          manifestation={editions[0]}
+          name="story-edition"
+          checked={checked === "pid-1"}
+          onSelect={() => setChecked("pid-1")}
+        />
+      </Frame>
+    )
+  },
 }
 
-// A single card, for looking at the detail rows on their own.
-export const Single: Story = {
+// A long publisher name wraps, which is what decides the card's height.
+export const LongPublisher: Story = {
   render: () => (
-    <div className="bg-background w-60 p-8">
+    <Frame>
       <EditionsSelectModalItem
-        manifestation={editions[0]}
-        name="story-single"
-        checked
+        manifestation={buildEdition({
+          pid: "long",
+          cover: buildCover(420, 720),
+          publisher: ["Et meget langt forlagsnavn der fylder flere linjer i kortet"],
+        })}
+        name="story-long"
+        checked={false}
         onSelect={() => {}}
       />
-    </div>
+    </Frame>
   ),
 }
 
 // An edition that cannot be borrowed right now still renders its status.
 export const Unavailable: Story = {
   render: () => (
-    <div className="bg-background w-60 p-8">
+    <Frame>
       <EditionsSelectModalItem
         manifestation={editions[0]}
         name="story-unavailable"
         checked={false}
         onSelect={() => {}}
-        unavailableLabel={<StatusLabel variant="warning">Udlånt lige nu</StatusLabel>}
+        unavailableLabel={
+          <StatusLabel variant="warning" subline="Du er nr. 3 i køen" className="w-full">
+            Udlånt lige nu
+          </StatusLabel>
+        }
         unavailableText="Udlånt lige nu"
       />
-    </div>
+    </Frame>
   ),
 }
 
-// Six cards over two rows, the first carrying a long publisher and a status
-// label: each row sizes to its own tallest card.
-export const Rows: Story = {
+// Audio swaps the page count for a running time, and a square cover.
+export const Audiobook: Story = {
   render: () => (
-    <div className="bg-background max-w-3xl p-8">
-      <div className="grid auto-rows-auto grid-cols-3 gap-x-[2%] gap-y-7">
-        <EditionsSelectModalItem
-          manifestation={editions[1]}
-          name="story-rows"
-          checked={false}
-          onSelect={() => {}}
-          unavailableLabel={
-            <StatusLabel variant="warning" subline="Du er nr. 3 i køen" className="w-full">
-              Udlånt lige nu
-            </StatusLabel>
-          }
-          unavailableText="Udlånt lige nu"
-        />
-        {editions.slice(0, 2).map((edition, i) => (
-          <EditionsSelectModalItem
-            key={`top-${i}`}
-            manifestation={edition}
-            name="story-rows"
-            checked={false}
-            onSelect={() => {}}
-          />
-        ))}
-        {editions.map((edition, i) => (
-          <EditionsSelectModalItem
-            key={`bottom-${i}`}
-            manifestation={edition}
-            name="story-rows"
-            checked={false}
-            onSelect={() => {}}
-          />
-        ))}
-      </div>
-    </div>
+    <Frame>
+      <EditionsSelectModalItem
+        manifestation={buildEdition({
+          pid: "audio",
+          cover: buildCover(500, 500),
+          materialTypes: [
+            {
+              materialTypeGeneral: { code: "AUDIO_BOOKS", display: "lydbøger" },
+              materialTypeSpecific: { code: "AUDIO_BOOK", display: "lydbog" },
+            },
+          ],
+          physicalDescription: { summaryFull: "2 t., 14 min.", numberOfPages: null },
+        } as Partial<ManifestationWorkPageFragment>)}
+        name="story-audio"
+        checked={false}
+        onSelect={() => {}}
+      />
+    </Frame>
   ),
 }
 
-// The modal's own wrapper classes, for the breakpoint behaviour.
-export const ModalGrid: Story = {
+// Every detail row keeps its place when the record has no value for it.
+export const MissingDetails: Story = {
   render: () => (
-    <div className="bg-background px-grid-edge py-6 lg:px-10">
-      <div
-        className="grid auto-rows-auto grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 sm:gap-x-6
-          sm:gap-y-7 md:grid-cols-3 lg:grid-cols-2">
-        {[...editions, ...editions].map((edition, i) => (
-          <EditionsSelectModalItem
-            key={i}
-            manifestation={edition}
-            name="story-modalgrid"
-            checked={false}
-            onSelect={() => {}}
-          />
-        ))}
-      </div>
-    </div>
+    <Frame>
+      <EditionsSelectModalItem
+        manifestation={buildEdition({
+          pid: "sparse",
+          cover: buildCover(420, 720),
+          publisher: [],
+          physicalDescription: { summaryFull: null, numberOfPages: null },
+        } as Partial<ManifestationWorkPageFragment>)}
+        name="story-sparse"
+        checked={false}
+        onSelect={() => {}}
+      />
+    </Frame>
   ),
-}
-
-// Row 1 holds one very tall card (a long publisher plus a status label) and two
-// short ones; row 2 is uniformly short and stays short.
-export const UnevenRows: Story = {
-  render: () => {
-    const tall = buildEdition({
-      pid: "tall",
-      cover: buildCover(420, 720),
-      publisher: ["Et meget langt forlagsnavn der fylder flere linjer i kortet"],
-    })
-    const short = buildEdition({ pid: "short", cover: buildCover(660, 720), publisher: ["Kort"] })
-    return (
-      <div className="bg-background p-8">
-        <div className="grid auto-rows-auto grid-cols-3 gap-x-6 gap-y-7">
-          <EditionsSelectModalItem
-            manifestation={tall}
-            name="story-uneven"
-            checked={false}
-            onSelect={() => {}}
-            unavailableLabel={
-              <StatusLabel variant="warning" subline="Du er nr. 3 i køen" className="w-full">
-                Udlånt lige nu
-              </StatusLabel>
-            }
-            unavailableText="Udlånt lige nu"
-          />
-          {["a", "b", "c", "d", "e"].map(key => (
-            <EditionsSelectModalItem
-              key={key}
-              manifestation={short}
-              name="story-uneven"
-              checked={false}
-              onSelect={() => {}}
-            />
-          ))}
-        </div>
-      </div>
-    )
-  },
-}
-
-// An audiobook row as the data arrives: one edition with a running time, one
-// with none, one with no publisher.
-export const AudiobookRow: Story = {
-  render: () => {
-    const audio = (pid: string, overrides: Partial<ManifestationWorkPageFragment> = {}) =>
-      buildEdition({
-        pid,
-        cover: buildCover(500, 500),
-        materialTypes: [
-          {
-            materialTypeGeneral: { code: "AUDIO_BOOKS", display: "lydbøger" },
-            materialTypeSpecific: { code: "AUDIO_BOOK", display: "lydbog" },
-          },
-        ],
-        ...overrides,
-      } as Partial<ManifestationWorkPageFragment>)
-
-    const editions = [
-      audio("a1", {
-        physicalDescription: { summaryFull: "2 t., 14 min.", numberOfPages: null },
-      }),
-      audio("a2", {
-        // No running time: the "Varighed" row holds a placeholder.
-        physicalDescription: { summaryFull: null, numberOfPages: null },
-      }),
-      audio("a3", {
-        publisher: [],
-        physicalDescription: { summaryFull: "5 t., 3 min.", numberOfPages: null },
-      }),
-    ]
-
-    return (
-      <div className="bg-background px-grid-edge py-6 lg:px-10">
-        <div className="grid auto-rows-auto grid-cols-3 gap-x-6 gap-y-7">
-          {editions.map(edition => (
-            <EditionsSelectModalItem
-              key={edition.pid}
-              manifestation={edition}
-              name="story-audio"
-              checked={false}
-              onSelect={() => {}}
-            />
-          ))}
-        </div>
-      </div>
-    )
-  },
 }
 
 export const Skeleton: Story = {
   render: () => (
-    <div className="bg-background max-w-3xl p-8">
-      <div className="grid auto-rows-auto grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
-        <EditionsSelectModalItem.Skeleton />
-        <EditionsSelectModalItem.Skeleton />
-        <EditionsSelectModalItem.Skeleton />
-      </div>
-    </div>
+    <Frame>
+      <EditionsSelectModalItem.Skeleton />
+    </Frame>
   ),
 }
 
 export const DefaultDarkMode: Story = {
   decorators: [darkModeDecorator],
-  render: () => <Grid />,
+  render: () => (
+    <Frame>
+      <EditionsSelectModalItem
+        manifestation={editions[0]}
+        name="story-dark"
+        checked
+        onSelect={() => {}}
+      />
+    </Frame>
+  ),
 }

@@ -8,9 +8,6 @@ import { cn } from "@/lib/helpers/helper.cn"
 import Icon from "../icon/Icon"
 import PillButton from "../pillButton/PillButton"
 
-// Animates the press and the slide between options.
-const MotionPillButton = motion.create(PillButton)
-
 export type MaterialTypeSelectOption = {
   code: string
   display: string
@@ -31,7 +28,7 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
         const iconName = getIconNameFromMaterialType(option.code)
 
         return (
-          <MotionPillButton
+          <PillButton
             key={option.code}
             data-cy={cyKeys[`slide-select-option`]}
             aria-label={
@@ -40,8 +37,6 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
                 : `Skift til visning af ${option.display}`
             }
             onClick={() => onOptionSelect(option)}
-            whileTap={{ scale: 0.92 }}
-            whileHover={{ scale: 1.06 }}
             classNames={cn(
               isSelected ? "text-background" : "bg-background-overlay text-foreground"
             )}>
@@ -66,7 +61,7 @@ const MaterialTypeSelect = ({ options, selected, onOptionSelect }: MaterialTypeS
               )}
               <span>{option.display}</span>
             </motion.span>
-          </MotionPillButton>
+          </PillButton>
         )
       })}
     </div>
