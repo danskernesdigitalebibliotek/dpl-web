@@ -37,6 +37,14 @@ are settled; add new ones as they come up.
 - [ ] A work mixing articles with other material types: the category in charge
       comes from FBI's best representation.
 
+- [ ] The header's article search: that `phrase.generalmaterialtype="artikler"`
+      is the right value (it follows the confirmed "aviser og tidsskrifter"),
+      and that `suggest` with `workType: ARTICLE` gives useful suggestions,
+      on each profile.
+- [ ] "Find det trykte nummer" without a found periodical falls back to the
+      search page, which now only searches articles: it finds articles in
+      the periodical rather than the periodical.
+
 ### Layout and accessibility
 
 - [ ] The mobile layout at 375px; it was only checked at 500px.
@@ -44,6 +52,8 @@ are settled; add new ones as they come up.
       cards, the "Se detaljer" toggles, Escape and focus return, and the
       order dialog → picker → order round trip.
 - [ ] The material type chips by keyboard.
+- [ ] The header's suggestions by keyboard and screen reader: arrow keys,
+      Enter, Escape, and how the two groups are announced.
 
 ## Open questions
 

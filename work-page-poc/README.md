@@ -11,9 +11,12 @@ Open questions and untested scenarios are tracked in
 
 ## What it is
 
-- A static Vite + React app. Pages: a plain FBI search (`/`) and the work page
-  (`/work/:workId`, with `?manifestationId=` choosing the manifestation shown;
-  without it, FBI's best representation).
+- A static Vite + React app. A header searches articles only, with
+  suggestions as on the library sites (react/'s search-header): FBI's
+  `suggest` with `workType: ARTICLE`, and on Enter a results page (`/?q=`)
+  from `complexSearch` with `phrase.generalmaterialtype="artikler"`. The work
+  page is `/work/:workId`, with `?manifestationId=` choosing the manifestation
+  shown; without it, the category's default.
 - Catalogue data comes from the PoC's own FBI operations in
   `src/fbi/documents/`, generated into typed documents by `task codegen`.
 - Library data (availability, and later reservations and loans) comes from

@@ -40,20 +40,21 @@ export type RetrieverErrorEnum =
   | 'SERVICE_NOT_LICENSED'
   | 'SERVICE_UNAVAILABLE';
 
-/** The supported fields to query */
-export type SearchQueryInput = {
-  /**
-   * Search for title, creator, subject or a combination.
-   * This is typically used where a single search box is desired.
-   */
-  all?: string | null | undefined;
-  /** Search for creator */
-  creator?: string | null | undefined;
-  /** Search for specific subject */
-  subject?: string | null | undefined;
-  /** Search for specific title */
-  title?: string | null | undefined;
-};
+export type SuggestionTypeEnum =
+  | 'COMPOSIT'
+  | 'CREATOR'
+  | 'SUBJECT'
+  | 'TITLE';
+
+export type ArticleSuggestQueryVariables = Exact<{
+  q: string;
+}>;
+
+
+export type ArticleSuggestQuery = { suggest: { result: Array<{ type: SuggestionTypeEnum, term: string, work: { workId: string, titles: { main: Array<string> }, creators: Array<
+          | { display: string }
+          | { display: string }
+        >, manifestations: { bestRepresentation: { hostPublication: { title: string } | null } } } | null }> } };
 
 export type PeriodicalByIssnQueryVariables = Exact<{
   cql: string;
@@ -69,17 +70,17 @@ export type RetrieverArticleQueryVariables = Exact<{
 
 export type RetrieverArticleQuery = { retriever: { error: RetrieverErrorEnum | null, article: { headline: string | null, subHeadline: string | null, publishingDate: string | null, sourceName: string | null, fullTextHtml: string | null } | null } };
 
-export type SearchWorksQueryVariables = Exact<{
-  q: SearchQueryInput;
+export type SearchArticlesQueryVariables = Exact<{
+  cql: string;
   offset: number;
   limit: unknown;
 }>;
 
 
-export type SearchWorksQuery = { search: { hitcount: number, works: Array<{ workId: string, titles: { full: Array<string> }, creators: Array<
+export type SearchArticlesQuery = { complexSearch: { hitcount: number, errorMessage: string | null, works: Array<{ workId: string, titles: { full: Array<string> }, creators: Array<
         | { display: string }
         | { display: string }
-      >, materialTypes: Array<{ materialTypeSpecific: { display: string } }> }> } };
+      >, materialTypes: Array<{ materialTypeSpecific: { display: string } }>, manifestations: { bestRepresentation: { hostPublication: { summary: string } | null } } }> } };
 
 export type WorkPageQueryVariables = Exact<{
   workId: string;
@@ -130,6 +131,32 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const ArticleSuggestDocument = new TypedDocumentString(`
+    query articleSuggest($q: String!) {
+  suggest(q: $q, workType: ARTICLE, limit: 10) {
+    result {
+      type
+      term
+      work {
+        workId
+        titles {
+          main
+        }
+        creators {
+          display
+        }
+        manifestations {
+          bestRepresentation {
+            hostPublication {
+              title
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ArticleSuggestQuery, ArticleSuggestQueryVariables>;
 export const PeriodicalByIssnDocument = new TypedDocumentString(`
     query periodicalByIssn($cql: String!) {
   complexSearch(cql: $cql) {
@@ -155,10 +182,11 @@ export const RetrieverArticleDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<RetrieverArticleQuery, RetrieverArticleQueryVariables>;
-export const SearchWorksDocument = new TypedDocumentString(`
-    query searchWorks($q: SearchQueryInput!, $offset: Int!, $limit: PaginationLimitScalar!) {
-  search(q: $q) {
+export const SearchArticlesDocument = new TypedDocumentString(`
+    query searchArticles($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!) {
+  complexSearch(cql: $cql) {
     hitcount
+    errorMessage
     works(offset: $offset, limit: $limit) {
       workId
       titles {
@@ -172,10 +200,17 @@ export const SearchWorksDocument = new TypedDocumentString(`
           display
         }
       }
+      manifestations {
+        bestRepresentation {
+          hostPublication {
+            summary
+          }
+        }
+      }
     }
   }
 }
-    `) as unknown as TypedDocumentString<SearchWorksQuery, SearchWorksQueryVariables>;
+    `) as unknown as TypedDocumentString<SearchArticlesQuery, SearchArticlesQueryVariables>;
 export const WorkPageDocument = new TypedDocumentString(`
     query workPage($workId: String!) {
   work(id: $workId) {
