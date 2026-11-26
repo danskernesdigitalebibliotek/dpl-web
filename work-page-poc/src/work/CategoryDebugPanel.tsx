@@ -1,3 +1,5 @@
+import { getFbiProfile } from "../connection/connectionSettings"
+import { useConnectionSettings } from "../connection/useConnectionSettings"
 import { DebugPanel } from "../debug/DebugPanel"
 import { explainCategory } from "./categories/registry"
 import type { CategoryPageProps, ManifestationCategory } from "./categories/types"
@@ -15,9 +17,12 @@ type CategoryDebugPanelProps = {
  */
 export const CategoryDebugPanel = ({ category, pageProps, selectionTrace }: CategoryDebugPanelProps) => {
   const pageTrace = category.usePageTrace(pageProps)
+  const { settings } = useConnectionSettings()
   return (
     <DebugPanel
       categoryName={category.name}
+      fbiProfile={getFbiProfile(settings)}
+      fbiUrl={settings.fbiUrl}
       sections={[explainCategory(pageProps.manifestation), selectionTrace, ...pageTrace]}
       rules={category.rules}
       rawData={pageProps.manifestation}

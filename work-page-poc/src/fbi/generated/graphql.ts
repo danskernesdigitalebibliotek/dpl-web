@@ -55,6 +55,13 @@ export type SearchQueryInput = {
   title?: string | null | undefined;
 };
 
+export type PeriodicalByIssnQueryVariables = Exact<{
+  cql: string;
+}>;
+
+
+export type PeriodicalByIssnQuery = { complexSearch: { hitcount: number, errorMessage: string | null, works: Array<{ workId: string }> } };
+
 export type RetrieverArticleQueryVariables = Exact<{
   id: string;
 }>;
@@ -94,7 +101,7 @@ export type WorkPageQuery = { work: { workId: string, abstract: Array<string> | 
       > }, manifestations: { bestRepresentation: { pid: string }, all: Array<{ pid: string, source: Array<string>, publisher: Array<string>, titles: { full: Array<string> }, creators: Array<
           | { display: string }
           | { display: string }
-        >, materialTypes: Array<{ materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum }, materialTypeSpecific: { code: string, display: string } }>, edition: { summary: string, publicationYear: { year: number | null } | null } | null, cover: { detail_207: string | null, detail_500: string | null }, languages: { main: Array<{ display: string }> | null } | null, physicalDescription: { summaryFull: string | null } | null, hostPublication: { title: string, summary: string, year: { year: number | null } | null } | null, access: Array<
+        >, materialTypes: Array<{ materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum }, materialTypeSpecific: { code: string, display: string } }>, edition: { summary: string, publicationYear: { year: number | null } | null } | null, cover: { detail_207: string | null, detail_500: string | null }, languages: { main: Array<{ display: string }> | null } | null, physicalDescription: { summaryFull: string | null } | null, hostPublication: { title: string, issn: string | null, summary: string, year: { year: number | null } | null } | null, access: Array<
           | { __typename: 'AccessUrl', url: string, origin: string, status: LinkStatusEnum }
           | { __typename: 'DigitalArticleService', issn: string }
           | { __typename: 'Ereol' }
@@ -123,6 +130,17 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const PeriodicalByIssnDocument = new TypedDocumentString(`
+    query periodicalByIssn($cql: String!) {
+  complexSearch(cql: $cql) {
+    hitcount
+    errorMessage
+    works(offset: 0, limit: 2) {
+      workId
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<PeriodicalByIssnQuery, PeriodicalByIssnQueryVariables>;
 export const RetrieverArticleDocument = new TypedDocumentString(`
     query retrieverArticle($id: String!) {
   retriever(id: $id) {
@@ -221,6 +239,7 @@ export const WorkPageDocument = new TypedDocumentString(`
         }
         hostPublication {
           title
+          issn
           summary
           year {
             year

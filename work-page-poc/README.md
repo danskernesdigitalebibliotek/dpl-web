@@ -75,7 +75,9 @@ GO still deploy alongside it, so a push takes as long as for any PR.
   link that names what can be switched. The newest edition with a working way
   is the default; a way other than the edition's best is kept in
   `?accessWay=`. Retriever is hidden from patrons outside the municipality.
-  "Bestil digital kopi" is simulated. With the `opac` FBI url:
+  "Find det trykte nummer" leads to the periodical's work page when a CQL
+  search on the host publication's ISSN finds exactly one periodical, else to
+  a title search. "Bestil digital kopi" is simulated. With the `opac` FBI url:
   - Two types, one edition each (chips, no switch): `/work/work-of:870971-tsart:73451485` (Kolding)
   - Two editions ("Skift udgave"): `/work/work-of:159007-lokalbibl:90222007` (Varde)
   - Two ways ("Skift bestillingsmulighed"): `/work/work-of:870971-tsart:136293443`
@@ -89,8 +91,10 @@ GO still deploy alongside it, so a push takes as long as for any PR.
 The "?" button opens a drawer that explains why the page looks as it does: the
 category, the chosen manifestation, and for articles every FBI access entry
 and what became of it, plus the category's general rules and the raw FBI data.
-It renders the trace of the same functions the page renders from, and every
-category must provide one, so it stays in step as categories are added.
+It names the FBI profile in use, since the customer tests with several and
+each decides what data exists. It renders the trace of the same functions the
+page renders from, and every category must provide one, so it stays in step as
+categories are added.
 
 ## Gotchas
 

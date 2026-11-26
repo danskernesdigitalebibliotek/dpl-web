@@ -19,8 +19,11 @@ are settled; add new ones as they come up.
 
 ### Data and environments
 
-- [ ] The article examples on the `next` profile with the customer's token.
-      With our test token they only resolve on `opac`.
+- [ ] The article examples on each profile the customer tests with (they
+      will use several). With our test token they only resolve on `opac`.
+- [ ] "Find det trykte nummer" finding the periodical on profiles other than
+      `next`: the ISSN search may give zero or several works elsewhere, which
+      falls back to the title search.
 - [ ] The article concept on the Lagoon environment (PR #2324).
 - [ ] An article or review with no access at all, which shows "Kontakt
       biblioteket" (several Harry Potter reviews have no access).
@@ -72,7 +75,6 @@ are settled; add new ones as they come up.
 
 ### For the developers and DDF
 
-- [ ] **Which FBI profile and agency** will the customer test with?
 - [ ] **Varde's data differs from the artifact.** FBI already groups both posts
       in one work, and both only offer interlibrary loan; neither has Digital
       Article Service, which the artifact assumes for the Bibliotekskatalog post.
@@ -81,9 +83,10 @@ are settled; add new ones as they come up.
 - [ ] **What gives "Find det trykte nummer", and where does it lead?** The PoC
       shows it for FBI's `InterLibraryLoan` access, but that entry means the
       manifestation can be borrowed through interlibrary loan, not that the
-      printed issue can be found. Options:
-      - Link to the periodical's work page when a lookup finds it, falling back
-        to search.
+      printed issue can be found, and the PoC doesn't check its
+      `loanIsPossible`. Where it leads is now the periodical's work page when
+      the ISSN search finds exactly one (see below), else a title search.
+      Other options:
       - Offer an interlibrary loan order for the article itself (simulated).
       - Keep the search placeholder until DDFNEXT-797 is decided.
       - Do as today: react/ ignores `InterLibraryLoan` for articles, so an
@@ -92,12 +95,9 @@ are settled; add new ones as they come up.
         linking to the library's `materialUnavailableUrl`, typically
         Bibliotek.dk, where interlibrary loans can be ordered). In the PoC
         that would be the artifact's "Kontakt biblioteket" fallback.
-- [ ] **Host publications can't be found reliably in FBI.** `hostPublication`
-      has title, ISSN, issue and year, but no work id or pid. `term.issn=…`
-      finds the articles in the periodical (840 for Slagmark, 0108-8084), not
-      the periodical itself. A title search found Varde's yearbook
-      (`work-of:150096-slaegt:961722`) but not Slagmark. Is there a reliable
-      way from an article to its periodical, and to the specific issue?
+- [ ] **From an article to the specific issue.** The periodical can be found
+      (see below), but issues are holdings in FBS, not FBI records. Getting to
+      "Nr. 12 (1988)" belongs with DDFNEXT-797.
 - [ ] **"Tidsskrift online"**, the ticket's last access way, has no source in
       FBI that we have found.
 - [ ] **Residency and digital copies.** Retriever only serves residents. Does
@@ -123,6 +123,13 @@ are settled; add new ones as they come up.
   (`resident` on its patron), exposed as `usePatron().isResident`.
 
 ### Answered by real data
+
+- The customer will test with several FBI profiles, so the debug panel names
+  the profile in use.
+- A periodical can be found from an article's `hostPublication.issn`:
+  `term.issn="0108-8084" AND phrase.generalmaterialtype="aviser og
+  tidsskrifter"` gives exactly one work, the periodical Slagmark, on `next`.
+  Without the material type, `term.issn` also finds the articles in it (840).
 
 - Dead online links can be recognised: `AccessUrl.status` is `OK`, `BROKEN`,
   `GONE` or `INVALID` (Helsingør's link is `GONE`).

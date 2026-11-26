@@ -9,7 +9,7 @@ export type AccessWay =
   | { kind: "read-article"; retrieverId: string }
   | { kind: "online"; url: string }
   | { kind: "digital-copy" }
-  | { kind: "printed-issue"; hostTitle: string }
+  | { kind: "printed-issue"; hostTitle: string; issn: string | undefined }
 
 type Access = Manifestation["access"][number]
 
@@ -53,7 +53,11 @@ const evaluateAccessEntry = (access: Access, manifestation: Manifestation): Acce
     case "InterLibraryLoan":
       return manifestation.hostPublication
         ? {
-            way: { kind: "printed-issue", hostTitle: manifestation.hostPublication.title },
+            way: {
+              kind: "printed-issue",
+              hostTitle: manifestation.hostPublication.title,
+              issn: manifestation.hostPublication.issn ?? undefined,
+            },
             rule: accessRules.printedIssue,
             outcome: "Adgangsvej: Find det trykte nummer",
           }

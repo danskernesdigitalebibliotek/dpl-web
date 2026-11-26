@@ -132,7 +132,12 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
               )}
             </p>
 
-            <ArticleCallToAction action={action.action} texts={action.texts} onOpen={openWay} />
+            <ArticleCallToAction
+              action={action.action}
+              printedIssueTo={action.printedIssueTo}
+              texts={action.texts}
+              onOpen={openWay}
+            />
           </div>
         </section>
 

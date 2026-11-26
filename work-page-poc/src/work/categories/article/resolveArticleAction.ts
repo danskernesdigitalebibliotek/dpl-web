@@ -14,12 +14,16 @@ export const actionRules = {
 
 export type ArticleAction = { way: AccessWay; label: string; isDisabled: boolean }
 
+type PeriodicalLink = { to: string; rows: TraceRow[] }
+
 type ArticleActionInput = {
   manifestation: Manifestation
   selectedWay: AccessWay | undefined
   hasUserToken: boolean
   isBlocked: boolean
   hasClickedWithoutLogin: boolean
+  /** Where "Find det trykte nummer" leads, when that is the selected way. */
+  periodicalLink: PeriodicalLink | undefined
 }
 
 const needsPatron = (way: AccessWay) => way.kind === "read-article" || way.kind === "digital-copy"
@@ -34,6 +38,7 @@ export const resolveArticleAction = ({
   hasUserToken,
   isBlocked,
   hasClickedWithoutLogin,
+  periodicalLink,
 }: ArticleActionInput) => {
   const isPatronWay = Boolean(selectedWay && needsPatron(selectedWay))
   const isDisabled = isPatronWay && isBlocked
@@ -88,5 +93,11 @@ export const resolveArticleAction = ({
     })
   )
 
-  return { action, texts, actionRows: [buttonRow, ...patronRows], textRows }
+  return {
+    action,
+    printedIssueTo: periodicalLink?.to,
+    texts,
+    actionRows: [buttonRow, ...patronRows, ...(periodicalLink?.rows ?? [])],
+    textRows,
+  }
 }

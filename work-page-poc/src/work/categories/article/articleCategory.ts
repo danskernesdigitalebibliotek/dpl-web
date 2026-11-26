@@ -1,6 +1,7 @@
 import type { ManifestationCategory } from "../types"
 import { accessRules, rankEditions } from "./accessWays"
 import { optionRules } from "./articleOptions"
+import { periodicalRules } from "./periodicalLink"
 import { ArticlePage } from "./ArticlePage"
 import { actionRules } from "./resolveArticleAction"
 import { useArticlePage } from "./useArticlePage"
@@ -24,7 +25,7 @@ export const articleCategory: ManifestationCategory = {
   rules: [
     { title: "Adgangsveje", rules: Object.values(accessRules) },
     { title: "Typer, udgaver og bestillingsmuligheder", rules: Object.values(optionRules) },
-    { title: "Knap og tekster", rules: Object.values(actionRules) },
+    { title: "Knap og tekster", rules: [...Object.values(actionRules), ...Object.values(periodicalRules)] },
   ],
   usePageTrace: ({ manifestation, categoryManifestations }) => {
     const { options, action } = useArticlePage(manifestation, categoryManifestations)

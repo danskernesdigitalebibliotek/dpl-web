@@ -60,6 +60,7 @@ query workPage($workId: String!) {
         }
         hostPublication {
           title
+          issn
           summary
           year {
             year

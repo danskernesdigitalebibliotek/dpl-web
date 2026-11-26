@@ -57,3 +57,12 @@ export const subscribeToConnectionSettings = (listener: () => void) => {
 /** The token requests are sent with: the patron's when given, as in react/. */
 export const getActiveToken = (settings: ConnectionSettings) =>
   settings.userToken || settings.libraryToken
+
+/** The FBI search profile: the url's first path segment, e.g. "next" in https://fbi-api.dbc.dk/next/graphql. */
+export const getFbiProfile = (settings: ConnectionSettings) => {
+  try {
+    return new URL(settings.fbiUrl).pathname.split("/").filter(Boolean)[0] ?? "ukendt"
+  } catch {
+    return "ukendt"
+  }
+}

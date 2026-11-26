@@ -14,6 +14,9 @@ const readIsOpen = () => {
 
 type DebugPanelProps = {
   categoryName: string
+  /** The FBI search profile and url, since what FBI returns depends on the profile. */
+  fbiProfile: string
+  fbiUrl: string
   sections: TraceSection[]
   rules: RuleGroup[]
   rawData: unknown
@@ -24,7 +27,7 @@ type DebugPanelProps = {
  * in a drawer that leaves the page usable, so it follows along as editions
  * change.
  */
-export const DebugPanel = ({ categoryName, sections, rules, rawData }: DebugPanelProps) => {
+export const DebugPanel = ({ categoryName, fbiProfile, fbiUrl, sections, rules, rawData }: DebugPanelProps) => {
   const [isOpen, setIsOpen] = useState(readIsOpen)
 
   const toggle = (nextIsOpen: boolean) => {
@@ -62,6 +65,9 @@ export const DebugPanel = ({ categoryName, sections, rules, rawData }: DebugPane
                 Hvorfor ser siden sådan ud?
               </h2>
               <p className="m-0 mt-1 text-text-body">Kategori: {categoryName}</p>
+              <p className="m-0 text-text-body">
+                FBI-profil: <strong>{fbiProfile}</strong> ({fbiUrl})
+              </p>
             </div>
             <button
               type="button"

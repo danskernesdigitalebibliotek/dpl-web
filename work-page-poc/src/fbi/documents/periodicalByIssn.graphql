@@ -1,0 +1,9 @@
+query periodicalByIssn($cql: String!) {
+  complexSearch(cql: $cql) {
+    hitcount
+    errorMessage
+    works(offset: 0, limit: 2) {
+      workId
+    }
+  }
+}
