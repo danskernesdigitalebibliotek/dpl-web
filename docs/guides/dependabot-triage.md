@@ -13,7 +13,7 @@ process for DPL projects.
 
 Write what you do in the Zulip topic **DDF > Depandabot Triage Log** as you go.
 Focus on what differed from the usual procedure. Write pull requests and Jira
-keys as full links: Zulip turns a bare `#1234` into a Zendesk link.
+keys as full links.
 
 ## Pull requests
 
