@@ -16,7 +16,6 @@ class SubscriptionHelper {
 
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
-    protected BnfScheduler $scheduler,
   ) {}
 
   /**

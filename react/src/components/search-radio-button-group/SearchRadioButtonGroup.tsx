@@ -11,12 +11,14 @@ interface SearchRadioButtonGroupProps {
   options: RadioOption[];
   selectedValue: string | null;
   onChange: (value: string | null) => void;
+  disabled?: boolean;
 }
 
 const SearchRadioButtonGroup = ({
   options,
   selectedValue,
-  onChange
+  onChange,
+  disabled = false
 }: SearchRadioButtonGroupProps) => {
   const handleRadioClick = (optionValue: string) => {
     // Toggle: if clicking the already-selected value, deselect it
@@ -30,6 +32,7 @@ const SearchRadioButtonGroup = ({
   return (
     <RadioGroup
       value={selectedValue ?? undefined}
+      disabled={disabled}
       className="search-radio-button-group"
     >
       {options.map((option) => (

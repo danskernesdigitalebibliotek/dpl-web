@@ -14,6 +14,7 @@ const ButtonSmall: FC<ButtonSmallProps> = ({ openDialog }) => {
       type="button"
       className="header__button header__button--left-border"
       onClick={openDialog}
+      aria-label={t("openingHoursText")}
     >
       <img
         className="header__button-icon"
@@ -21,7 +22,7 @@ const ButtonSmall: FC<ButtonSmallProps> = ({ openDialog }) => {
         width="24"
         height="24"
         src={iconWatch}
-        alt="clock icon"
+        alt=""
       />
       <span className="header__button-text">{t("openingHoursText")}</span>
     </button>

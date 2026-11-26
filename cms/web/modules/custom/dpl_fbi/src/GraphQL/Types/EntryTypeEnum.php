@@ -8,6 +8,7 @@ class EntryTypeEnum
     public const MAIN_ENTRY = 'MAIN_ENTRY';
     public const NATIONAL_BIBLIOGRAPHY_ADDITIONAL_ENTRY = 'NATIONAL_BIBLIOGRAPHY_ADDITIONAL_ENTRY';
     public const NATIONAL_BIBLIOGRAPHY_ENTRY = 'NATIONAL_BIBLIOGRAPHY_ENTRY';
+    public const NATIONAL_BIBLIOGRAPHY_MAIN_ENTRY = 'NATIONAL_BIBLIOGRAPHY_MAIN_ENTRY';
 
     public static function endpoint(): string
     {

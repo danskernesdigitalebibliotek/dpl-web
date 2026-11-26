@@ -6,7 +6,7 @@
             {{ logo }}
     </div>
     <div class="header__menu">
-        <nav class="header__menu-first" aria-label="Primary site navigation">
+        <nav class="header__menu-first" aria-label="{% trans 'Primary site navigation' with {'context': 'Header'} %}">
             <div>
                 <div class="header__menu-navigation-mobile">
                   <button
@@ -18,7 +18,7 @@
                     <div class="pagefold-parent--small
                     header__menu-navigation-pagefold">
                         <div class="pagefold-triangle--small"></div>
-                        <img width="20" height="14" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-menu.svg" alt="List of bookmarks"/>
+                        <img width="20" height="14" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-menu.svg" alt="{% trans 'Menu' with {'context': 'Header'} %}"/>
                     </div>
                   </button>
                   <div class="header__menu-navigation-logo">
@@ -31,20 +31,21 @@
             <div class="header__button-responsive-switch">
               {% if opening_hours_url %}
                 <a href="{{ opening_hours_url }}"
-                   class="header__button header__button--left-border">
+                   class="header__button header__button--left-border"
+                   aria-label="{{ 'Opening hours'|t }}">
                   <img class="header__button-icon" loading="lazy" width="24"
                        height="24"
                        src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-watch-static.svg"
-                       alt="clock icon"/>
+                       alt=""/>
                   <span
                     class="header__button-text">{{ 'Opening hours'|t }}</span>
                 </a>
               {% else %}
                 {{ opening_hours_sidebar_small }}
               {% endif %}
-                <a href="{{ url('dpl_favorites_list.list') }}" class="header__button header__button--left-border">
-                    <img class="header__button-icon" width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-heart.svg" alt="{{ 'List of bookmarks'|t({}, {context: 'Header'}) }}"/>
-                    <span class="header__button-text">{{ 'Liked'|t({}, {context: 'Global'}) }}</span>
+                <a href="{{ url('dpl_favorites_list.list') }}" class="header__button header__button--left-border" aria-label="{% trans 'Liked' with {'context': 'Global'} %}">
+                    <img class="header__button-icon" width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-heart.svg" alt=""/>
+                    <span class="header__button-text">{% trans 'Liked' with {'context': 'Global'} %}</span>
                 </a>
             </div>
         </nav>
@@ -66,21 +67,24 @@
     {{ opening_hours_sidebar_large }}
   {% endif %}
 </header>
-<div class="header-sidebar-nav" data-open="closed">
+<dialog
+  class="header-sidebar-nav"
+  id="sidebarNav"
+  aria-label="{% trans 'Menu' with {'context': 'Header'} %}"
+>
     <div class="header-sidebar-nav__background-wrapper">
       <div class="header-sidebar-nav__menu-wrapper">
-        <div
+        <button
+          type="button"
           class="header-sidebar-nav__close-menu-button"
           id="js-header-sidebar-nav__close-menu-button"
-          tabIndex="0"
-          role="button"
-          aria-label="Close menu"
+          aria-label="{% trans 'Close menu' with {'context': 'Header'} %}"
         >
            {{ source(directory ~ '/themes/custom/novel/assets/dpl-design-system/icons/collection/CloseLarge.svg') }}
-        </div>
-        <nav aria-label="Sidebar site navigation">
+        </button>
+        <nav aria-label="{% trans 'Sidebar site navigation' with {'context': 'Header'} %}">
            {{ drupal_menu('main') }}
         </nav>
       </div>
     </div>
-  </div>
+</dialog>

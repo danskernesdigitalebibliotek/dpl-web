@@ -1,5 +1,9 @@
 import { MaterialAvailability } from "@danskernesdigitalebibliotek/dpl-service-layer"
 
+import { isPhysicalMaterialType } from "@/components/pages/workPageLayout/helper"
+import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { pidToFaust } from "@/lib/helpers/ids"
+
 // The kommune holds copies, or FBS says the record is reservable anyway.
 // A record FBS did not answer for counts as not obtainable.
 // See docs/go/material-availability.md
@@ -41,3 +45,66 @@ export const getEditionQueueCountText = (
   const borrowers = record.reservationCount === 1 ? "låner" : "lånere"
   return `Der er ${record.reservationCount} ${borrowers} i kø.`
 }
+
+// The record FBS can answer for, or null when it cannot: a digital edition
+// has none, and an unresolved answer speaks for nothing.
+export const getManifestationRecordId = (
+  manifestation: ManifestationWorkPageFragment,
+  isResolved: boolean
+): string | null => {
+  if (!isResolved) return null
+  if (!isPhysicalMaterialType(manifestation.materialTypes[0]?.materialTypeSpecific.code)) {
+    return null
+  }
+
+  return pidToFaust(manifestation.pid)
+}
+
+// Nothing to borrow and nothing to reserve. False for anything the
+// availability cannot speak for, which keeps the edition visible.
+export const isManifestationUnobtainable = (
+  manifestation: ManifestationWorkPageFragment,
+  availability: MaterialAvailability | undefined,
+  isResolved: boolean
+): boolean => {
+  const recordId = getManifestationRecordId(manifestation, isResolved)
+  if (!recordId) return false
+
+  return !isEditionObtainable(availability, recordId)
+}
+
+// Held but every copy is out. Still reservable.
+export const isManifestationLentOut = (
+  manifestation: ManifestationWorkPageFragment,
+  availability: MaterialAvailability | undefined,
+  isResolved: boolean
+): boolean => {
+  const recordId = getManifestationRecordId(manifestation, isResolved)
+  if (!recordId) return false
+
+  return isEditionOnLoan(availability, recordId)
+}
+
+// Undefined for an edition the availability cannot speak for — callers fall
+// back to no queue copy.
+export const getManifestationQueueText = (
+  manifestation: ManifestationWorkPageFragment,
+  availability: MaterialAvailability | undefined,
+  isResolved: boolean
+): string | undefined => {
+  const recordId = getManifestationRecordId(manifestation, isResolved)
+  if (!recordId) return undefined
+
+  return getEditionQueueCountText(availability, recordId)
+}
+
+// The manifestations of a type the reader can choose between: the kommune's
+// unobtainable ones are left out, lent-out ones stay.
+export const getShownManifestations = (
+  manifestations: ManifestationWorkPageFragment[],
+  availability: MaterialAvailability | undefined,
+  isResolved: boolean
+): ManifestationWorkPageFragment[] =>
+  manifestations.filter(
+    manifestation => !isManifestationUnobtainable(manifestation, availability, isResolved)
+  )

@@ -54,7 +54,6 @@
         "drupal/administerusersbyrole": "^3.4",
         "drupal/antibot": "^2.0",
         "drupal/asset_injector": "^2.21",
-        "drupal/autowire_plugin_trait": "^1.0",
         "drupal/azure_mailer": "^2.0",
         "drupal/color_field": "^3.0",
         "drupal/config_filter": "^2.7",
@@ -68,6 +67,7 @@
         "drupal/core": "~11.4.0",
         "drupal/core-composer-scaffold": "~11.4.0",
         "drupal/core-recommended": "~11.4.0",
+        "drupal/core-vendor-hardening": "~11.4.0",
         "drupal/date_range_formatter": "^4",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
@@ -139,7 +139,7 @@
         "drupal/telephone_formatter": "^1.2",
         "drupal/theme_permission": "^2.0",
         "drupal/twig_tweak": "^3.2.1",
-        "drupal/upgrade_status": "^4.0",
+        "drupal/upgrade_status": "^5.0",
         "drupal/uuid_url": "^1.3",
         "drupal/varnish_purge": "^2.2",
         "drupal/verf": "^2.0",
@@ -192,6 +192,7 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/console-extend-plugin": true,
             "drupal/core-composer-scaffold": true,
+            "drupal/core-vendor-hardening": true,
             "mnsami/composer-custom-directory-installer": true,
             "oomphinc/composer-installers-extender": true,
             "php-http/discovery": true,
@@ -365,7 +366,15 @@
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "patches/vendor/theme-permission-edit-install-uninstall-3105637-7.patch"
+            },
+            "webonyx/graphql-php": {
+                "Backport GHSA-r7cg-qjjm-xhqq, GHSA-fc86-6rv6-2jpm and GHSA-68jq-c3rv-pcrr fixes from 15.x": "patches/graphql-php-14-security-backport.patch"
             }
+        },
+        "drupal-core-vendor-hardening": {
+            "drupal/core": [
+                "install.php"
+            ]
         }
     }
 }

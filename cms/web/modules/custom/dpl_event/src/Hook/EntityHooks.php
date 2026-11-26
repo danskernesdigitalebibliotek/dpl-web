@@ -59,19 +59,6 @@ class EntityHooks {
   }
 
   /**
-   * Use our own class for event instances.
-   *
-   * @param mixed[] $bundles
-   *   Bundle info for altering.
-   */
-  #[Hook('entity_bundle_info_alter')]
-  public function setEventInstanceClass(array &$bundles): void {
-    if (isset($bundles['eventinstance']['default'])) {
-      $bundles['eventinstance']['default']['class'] = EventInstance::class;
-    }
-  }
-
-  /**
    * Clear location fields that are hidden in the form.
    *
    * Clear data from fields that are hidden in the form by Drupal #states, so we

@@ -2,7 +2,7 @@ name: 'DPL Go'
 type: module
 description: 'Module used for handling go specific functionality.'
 package: DPL
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^11.2
 dependencies:
   - graphql:graphql
   - graphql_compose_preview:graphql_compose_preview

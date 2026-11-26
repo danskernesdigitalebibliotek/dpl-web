@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_event\Entity;
 
+use Drupal\Core\Entity\Attribute\Bundle;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\dpl_event\EventPeriod;
 use Drupal\dpl_event\EventState;
@@ -16,6 +17,10 @@ use Safe\DateTime;
 /**
  * Bundle class for recurring_events EventInstance.
  */
+#[Bundle(
+  entityType: 'eventinstance',
+  bundle: 'default',
+)]
 class EventInstance extends RecurringEventInstance {
 
   /**

@@ -1,4 +1,5 @@
 import getAdgangsplatformenUserToken from "../factories/dpl-cms/getAdgangsplatformenUserToken"
+import { viewports } from "../support/constants"
 import {
   mockAPProfilePage,
   mockConfig,
@@ -10,7 +11,7 @@ import {
 // On desktop the login UI renders as a side-anchored Sheet; on mobile it
 // renders as a bottom Drawer. Desktop has a close button, the mobile drawer
 // is dismissed by clicking the overlay.
-const isMobile = Cypress.env("viewport") === "mobile"
+const isMobile = Cypress.config("viewportWidth") === viewports.mobile.width
 const loginContainerKey = isMobile ? "global-drawer" : "global-sheet"
 const closeLoginContainer = () => {
   if (isMobile) {
