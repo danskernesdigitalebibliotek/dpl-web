@@ -4,7 +4,7 @@ import { darkModeDecorator } from "@/.storybook/decorators"
 import VideoEmbed from "@/components/shared/videoEmbed/VideoEmbed"
 
 // The videotool player used by the video paragraphs: an optional thumbnail
-// covers the frame until the iframe has loaded.
+// sits behind the frame while the player loads.
 const meta = {
   title: "components/VideoEmbed",
   component: VideoEmbed,

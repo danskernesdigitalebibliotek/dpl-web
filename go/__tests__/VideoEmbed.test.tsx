@@ -1,5 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
-import { renderToString } from "react-dom/server"
+import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 
 import VideoEmbed from "@/components/shared/videoEmbed/VideoEmbed"
@@ -21,28 +20,6 @@ describe("VideoEmbed", () => {
     title: "Sample video",
     aspect: "16/9",
   } as const
-
-  it("fades the iframe in once it loads (opacity-0 → opacity-100)", () => {
-    render(<VideoEmbed {...defaults} thumbnailUrl="https://example.com/poster.jpg" />)
-
-    const iframe = screen.getByTitle(defaults.title)
-    expect(iframe.className).toContain("transition-opacity")
-    expect(iframe.className).toContain("opacity-0")
-    expect(iframe.className).not.toContain("opacity-100")
-
-    fireEvent.load(iframe)
-
-    expect(iframe.className).toContain("opacity-100")
-    expect(iframe.className).not.toContain("opacity-0")
-  })
-
-  it("omits the iframe from the server HTML so it cannot load before hydration", () => {
-    const thumbnailUrl = "https://example.com/poster.jpg"
-    const html = renderToString(<VideoEmbed {...defaults} thumbnailUrl={thumbnailUrl} />)
-
-    expect(html).not.toContain("<iframe")
-    expect(html).toContain(thumbnailUrl)
-  })
 
   const queryPoster = () => document.querySelector("img[aria-hidden='true']")
 
