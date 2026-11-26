@@ -19,13 +19,13 @@ export const getCreators = (manifestation: Manifestation, work: Work) =>
 
 export const getYearLabel = (manifestation: Manifestation) => String(getPublicationYear(manifestation) ?? "ukendt år")
 
-/** The prototype's placeholder for what happens when the patron takes the way. */
+/** What happens when the patron takes the way: the prototype's placeholders, with the site for online links. */
 export const getAccessWayText = (way: AccessWay) => {
   switch (way.kind) {
     case "read-article":
       return "Læs her med bibliotekets adgang."
     case "online":
-      return "Læs med det samme på en ekstern side."
+      return `Læs med det samme på ${way.host}.`
     case "digital-copy":
       return "Modtag som PDF på e-mail."
     case "printed-issue":
