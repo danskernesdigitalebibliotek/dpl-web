@@ -22,6 +22,11 @@ label or on the Dependabot author.
 
 ### Major updates
 
+We want to take major versions. Staying on an old major version makes the
+upgrade bigger the longer we wait, and leaves us without fixes once the old
+version is no longer maintained. A major version can also break things,
+though, so take it with caution.
+
 Never merge an update with failing checks. When the checks are green, judge
 the risk of the update:
 
