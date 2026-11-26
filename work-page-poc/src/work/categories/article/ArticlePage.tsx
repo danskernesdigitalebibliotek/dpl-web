@@ -134,7 +134,6 @@ export const ArticlePage = ({ work, manifestation, categoryManifestations }: Cat
 
             <ArticleCallToAction
               action={action.action}
-              printedIssueTo={periodical.printedIssueTo}
               texts={action.texts}
               onOpen={openWay}
             />

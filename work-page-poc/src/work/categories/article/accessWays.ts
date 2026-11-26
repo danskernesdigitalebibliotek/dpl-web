@@ -3,23 +3,22 @@ import type { TraceRow } from "../../trace"
 
 /**
  * One way to get to an article. Ranked as the ticket orders them: read it in
- * Retriever, see it online, order a digital copy, find the printed issue.
+ * Retriever, see it online, order a digital copy. Interlibrary loan, the
+ * ticket's "find the printed issue", is left out.
  */
 export type AccessWay =
   | { kind: "read-article"; retrieverId: string }
   | { kind: "online"; url: string; host: string }
   | { kind: "digital-copy" }
-  | { kind: "printed-issue"; hostTitle: string }
 
 type Access = Manifestation["access"][number]
 
-export const accessWayRank: AccessWay["kind"][] = ["read-article", "online", "digital-copy", "printed-issue"]
+export const accessWayRank: AccessWay["kind"][] = ["read-article", "online", "digital-copy"]
 
 export const accessWayLabels: Record<AccessWay["kind"], string> = {
   "read-article": "Læs artikel",
   online: "Se online",
   "digital-copy": "Bestil digital kopi",
-  "printed-issue": "Find det trykte nummer",
 }
 
 /** The access rules in words, shared by the trace rows and the debug panel's rule list. */
@@ -28,7 +27,7 @@ export const accessRules = {
   retriever: "RetrieverService giver Læs artikel",
   online: "AccessUrl giver Se online, men kun når FBI's linktjek siger OK",
   digitalCopy: "DigitalArticleService giver Bestil digital kopi",
-  printedIssue: "InterLibraryLoan giver Find det trykte nummer, når der er en hostPublication",
+  interLibraryLoan: "InterLibraryLoan giver ingen mulighed; tidsskriftet nås fra Udgivet i under Detaljer",
   otherAccess: "Andre adgangstyper bruges ikke for artikler",
   oneOfEachKind: "Hver adgangsvej bruges kun én gang; online-links kun én gang pr. websted",
   severalLinks: "Flere virkende online-links giver hver sin mulighed, navngivet efter webstedet",
@@ -54,7 +53,7 @@ export const getAccessWayLabel = (way: AccessWay, editionWays: AccessWay[]) => {
 
 type AccessEvaluation = { way?: AccessWay; rule: string; outcome: string }
 
-const evaluateAccessEntry = (access: Access, manifestation: Manifestation): AccessEvaluation => {
+const evaluateAccessEntry = (access: Access): AccessEvaluation => {
   switch (access.__typename) {
     case "RetrieverService":
       return {
@@ -73,13 +72,7 @@ const evaluateAccessEntry = (access: Access, manifestation: Manifestation): Acce
     case "DigitalArticleService":
       return { way: { kind: "digital-copy" }, rule: accessRules.digitalCopy, outcome: "Adgangsvej: Bestil digital kopi" }
     case "InterLibraryLoan":
-      return manifestation.hostPublication
-        ? {
-            way: { kind: "printed-issue", hostTitle: manifestation.hostPublication.title },
-            rule: accessRules.printedIssue,
-            outcome: "Adgangsvej: Find det trykte nummer",
-          }
-        : { rule: accessRules.printedIssue, outcome: "Sprunget over: ingen hostPublication" }
+      return { rule: accessRules.interLibraryLoan, outcome: "Ignoreret" }
     default:
       return { rule: accessRules.otherAccess, outcome: "Ignoreret" }
   }
@@ -110,7 +103,7 @@ export const evaluateAccess = (manifestation: Manifestation): { ways: AccessWay[
   const ways: AccessWay[] = []
   const rows = manifestation.access.map((access, index): TraceRow => {
     const input = describeAccessEntry(access, index)
-    const { way, rule, outcome } = evaluateAccessEntry(access, manifestation)
+    const { way, rule, outcome } = evaluateAccessEntry(access)
     if (!way) return { rule, input, outcome }
     if (ways.some((existing) => getAccessWayKey(existing) === getAccessWayKey(way))) {
       return { rule: accessRules.oneOfEachKind, input, outcome: "Sprunget over: findes allerede" }

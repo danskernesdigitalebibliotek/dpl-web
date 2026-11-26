@@ -3,13 +3,12 @@ import type { ArticleAction } from "./resolveArticleAction"
 
 type ArticleCallToActionProps = {
   action: ArticleAction | undefined
-  printedIssueTo: string | undefined
   texts: string[]
   onOpen: (kind: "read-article" | "digital-copy") => void
 }
 
 /** The page's one button, with what happens when it's pressed under it. */
-export const ArticleCallToAction = ({ action, printedIssueTo, texts, onOpen }: ArticleCallToActionProps) => {
+export const ArticleCallToAction = ({ action, texts, onOpen }: ArticleCallToActionProps) => {
   const renderButton = () => {
     if (!action) {
       // A placeholder, as in the earlier artifact: the PoC has no library to contact.
@@ -31,12 +30,6 @@ export const ArticleCallToAction = ({ action, printedIssueTo, texts, onOpen }: A
       case "online":
         return (
           <ActionButton variant="primary" href={way.url}>
-            {label}
-          </ActionButton>
-        )
-      case "printed-issue":
-        return (
-          <ActionButton variant="primary" to={printedIssueTo ?? `/?q=${encodeURIComponent(way.hostTitle)}`}>
             {label}
           </ActionButton>
         )

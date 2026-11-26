@@ -77,12 +77,11 @@ GO still deploy alongside it, so a push takes as long as for any PR.
   the chosen edition and access way, and a picker for both behind a "Skift …"
   link that names what can be switched. The newest edition with a working way
   is the default; a way chosen in the picker is kept in `?accessWay=`
-  (`read-article`, `digital-copy`, `printed-issue`, or `online:<site>`, since
+  (`read-article`, `digital-copy`, or `online:<site>`, since
   several working links each become an option named by their site). Retriever is hidden from patrons outside the municipality.
-  When a CQL search on the host publication's ISSN finds exactly one
-  periodical, "Udgivet i" in the details links to its work page and "Find det
-  trykte nummer" leads there; otherwise the latter falls back to a title
-  search. "Bestil digital kopi" is simulated. With the `opac` FBI url:
+  Interlibrary loan ("Find det trykte nummer") is not offered; instead, when
+  a CQL search on the host publication's ISSN finds exactly one periodical,
+  "Udgivet i" in the details links to its work page. "Bestil digital kopi" is simulated. With the `opac` FBI url:
   - Two types, one edition each (chips, no switch): `/work/work-of:870971-tsart:73451485` (Kolding)
   - Two editions ("Skift udgave"): `/work/work-of:159007-lokalbibl:90222007` (Varde)
   - Two ways ("Skift bestillingsmulighed"): `/work/work-of:870971-tsart:136293443`

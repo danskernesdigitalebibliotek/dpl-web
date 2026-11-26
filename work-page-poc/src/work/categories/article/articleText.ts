@@ -28,8 +28,6 @@ export const getAccessWayText = (way: AccessWay) => {
       return `Læs med det samme på ${way.host}.`
     case "digital-copy":
       return "Modtag som PDF på e-mail."
-    case "printed-issue":
-      return "På hylden på biblioteket."
   }
 }
 

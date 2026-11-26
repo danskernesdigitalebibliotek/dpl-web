@@ -6,7 +6,6 @@ export const periodicalRules = {
   lookup:
     "Tidsskriftet findes med en CQL-søgning på hostPublication.issn blandt aviser og tidsskrifter; kun præcis ét værk tæller",
   publishedIn: "Udgivet i linker til tidsskriftets værk, når det findes",
-  printedIssue: "Find det trykte nummer fører til tidsskriftets værk, når det findes; ellers til en søgning på tidsskriftets titel",
 }
 
 export const getPeriodicalCql = (issn: string) =>
@@ -30,17 +29,13 @@ const describeLookup = (issn: string | undefined, { search, isSearching, profile
   return { periodicalWorkId: undefined, input, outcome: `${search?.hitcount ?? 0} værker → ikke fundet` }
 }
 
-/**
- * The article's periodical, when the ISSN search finds it, and the links that
- * follow: "Udgivet i" and "Find det trykte nummer".
- */
+/** The article's periodical, when the ISSN search finds it, for the "Udgivet i" link. */
 export const resolvePeriodicalLink = (input: PeriodicalLinkInput) => {
   const host = input.manifestation.hostPublication
-  if (!host) return { publishedInTo: undefined, printedIssueTo: undefined, rows: [] }
+  if (!host) return { publishedInTo: undefined, rows: [] }
 
   const { periodicalWorkId, input: lookupInput, outcome } = describeLookup(host.issn ?? undefined, input)
   const publishedInTo = periodicalWorkId && `/work/${periodicalWorkId}`
-  const printedIssueTo = publishedInTo ?? `/?q=${encodeURIComponent(host.title)}`
   const rows: TraceRow[] = [
     { rule: periodicalRules.lookup, input: lookupInput, outcome },
     {
@@ -48,11 +43,6 @@ export const resolvePeriodicalLink = (input: PeriodicalLinkInput) => {
       input: `hostPublication.summary = ${host.summary}`,
       outcome: publishedInTo ? `Link → ${publishedInTo}` : "Intet link",
     },
-    {
-      rule: periodicalRules.printedIssue,
-      input: `hostPublication.title = ${host.title}`,
-      outcome: publishedInTo ? `→ ${publishedInTo}` : "→ søgning på titel",
-    },
   ]
-  return { publishedInTo, printedIssueTo, rows }
+  return { publishedInTo, rows }
 }

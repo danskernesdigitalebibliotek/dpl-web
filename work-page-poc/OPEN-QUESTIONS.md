@@ -21,9 +21,9 @@ are settled; add new ones as they come up.
 
 - [ ] The article examples on each profile the customer tests with (they
       will use several). With our test token they only resolve on `opac`.
-- [ ] "Find det trykte nummer" finding the periodical on profiles other than
-      `next`: the ISSN search may give zero or several works elsewhere, which
-      falls back to the title search.
+- [ ] The "Udgivet i" link finding the periodical on profiles other than
+      `next`: the ISSN search may give zero or several works elsewhere, and
+      then there is no link.
 - [ ] The article concept on the Lagoon environment (PR #2324).
 - [ ] An article or review with no access at all, which shows "Kontakt
       biblioteket" (several Harry Potter reviews have no access).
@@ -41,9 +41,6 @@ are settled; add new ones as they come up.
       is the right value (it follows the confirmed "aviser og tidsskrifter"),
       and that `suggest` with `workType: ARTICLE` gives useful suggestions,
       on each profile.
-- [ ] "Find det trykte nummer" without a found periodical falls back to the
-      search page, which now only searches articles: it finds articles in
-      the periodical rather than the periodical.
 
 ### Layout and accessibility
 
@@ -89,23 +86,12 @@ are settled; add new ones as they come up.
 - [ ] **Varde's data differs from the artifact.** FBI already groups both posts
       in one work, and both only offer interlibrary loan; neither has Digital
       Article Service, which the artifact assumes for the Bibliotekskatalog post.
-- [ ] **Ordering via the host publication** (DDFNEXT-797, on hold). Until then
-      "Find det trykte nummer" searches the PoC for the periodical's title.
-- [ ] **What gives "Find det trykte nummer", and where does it lead?** The PoC
-      shows it for FBI's `InterLibraryLoan` access, but that entry means the
-      manifestation can be borrowed through interlibrary loan, not that the
-      printed issue can be found, and the PoC doesn't check its
-      `loanIsPossible`. Where it leads is now the periodical's work page when
-      the ISSN search finds exactly one (see below), else a title search.
-      Other options:
-      - Offer an interlibrary loan order for the article itself (simulated).
-      - Keep the search placeholder until DDFNEXT-797 is decided.
-      - Do as today: react/ ignores `InterLibraryLoan` for articles, so an
-        article with only that (like Varde) gets no buttons and shows
-        `MaterialUnavailableNotice` ("not available through the website",
-        linking to the library's `materialUnavailableUrl`, typically
-        Bibliotek.dk, where interlibrary loans can be ordered). In the PoC
-        that would be the artifact's "Kontakt biblioteket" fallback.
+- [ ] **Ordering via the host publication** (DDFNEXT-797, on hold). The PoC
+      leaves interlibrary loan out of the options, as react/ does for articles
+      today; the periodical is reached from "Udgivet i" when the ISSN search
+      finds it. An article with only `InterLibraryLoan` (like Varde) gets no
+      button and shows "Kontakt biblioteket". Should the prototype offer the
+      printed issue some other way?
 - [ ] **From an article to the specific issue.** The periodical can be found
       (see below), but issues are holdings in FBS, not FBI records. Getting to
       "Nr. 12 (1988)" belongs with DDFNEXT-797.
