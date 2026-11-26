@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { sampleSize } from "lodash";
 import DashboardFees from "./dashboard-fees/dashboard-fees";
 import DashboardNotificationList from "./dashboard-notification-list/dashboard-notification-list";
 import { useText, UseTextFunction } from "../../core/utils/text";
@@ -8,7 +9,6 @@ import MaterialSlider, {
   MaterialSliderCaption,
   MaterialSliderTitle
 } from "../../components/material-slider/MaterialSlider";
-import { constructMaterialUrl } from "../../core/utils/helpers/url";
 import invalidSwitchCase from "../../core/utils/helpers/invalid-switch-case";
 import {
   NonEmptyArray,
@@ -27,11 +27,19 @@ import {
   orderRecommendationSeeds,
   workIdsToRecommendationSeeds
 } from "./recommendationSeed";
-import {
-  RecommendationOrigin,
-  RecommendationResult
-} from "./recommendations.types";
+import { RecommendationOrigin, RecommendedWork } from "./recommendations.types";
 import useRecommendations from "./useRecommendations";
+import useBlueRecommendations, {
+  BlueRecommendationSeeds,
+  DigitalFormat
+} from "./useBlueRecommendations";
+import {
+  getDigitalLoanQuota,
+  useDigitalLoanQuotas,
+  useDigitalLoans
+} from "@danskernesdigitalebibliotek/dpl-service-layer";
+import useBiblioAdapter from "../../core/utils/useBiblioAdapter";
+import { isPatron } from "../../core/utils/helpers/user";
 
 interface DashboardProps {
   pageSize: number;
@@ -43,6 +51,9 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
 
   const loans = useLoans();
   const reservations = useReservations();
+
+  const exceededQuotas = useExceededQuotas();
+
   const { data: favoritesList, isLoading: isLoadingFavorites } =
     useGetList("default");
 
@@ -79,8 +90,45 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
           favorites={(favoritesList?.collections ?? []) as WorkId[]}
         />
       )}
+      {exceededQuotas.length > 0 && (
+        <BlueRecommendedMaterials
+          showEbookRecommendations={exceededQuotas.includes("ebook")}
+          showAudiobookRecommendations={exceededQuotas.includes("audiobook")}
+        />
+      )}
     </>
   );
+};
+
+/**
+ * Gets a list of digital formats for which loan quotas have been exceeded
+ */
+const useExceededQuotas = (): DigitalFormat[] => {
+  const viaBiblioAdapter = useBiblioAdapter();
+  const enabled = viaBiblioAdapter && isPatron();
+
+  const { data: quotas } = useDigitalLoanQuotas({ enabled });
+
+  const hasExceededQuota = (format: DigitalFormat) => {
+    const { current, limit } = getDigitalLoanQuota({
+      quotas,
+      format,
+      period: "concurrent"
+    });
+    return limit !== undefined && current >= limit;
+  };
+
+  const exceededQuotas: DigitalFormat[] = [];
+
+  if (hasExceededQuota("ebook")) {
+    exceededQuotas.push("ebook");
+  }
+
+  if (hasExceededQuota("audiobook")) {
+    exceededQuotas.push("audiobook");
+  }
+
+  return exceededQuotas;
 };
 
 // How many seeds to try before giving up on the section.
@@ -121,6 +169,7 @@ const RecommendedMaterials: FC<RecommendedMaterialsProps> = ({
 const RecommendationsAttempt: FC<{
   seeds: NonEmptyArray<RecommendationSeed>;
 }> = ({ seeds }) => {
+  const t = useText();
   const [seed, ...remainingSeeds] = seeds;
 
   const recommendationResult = useRecommendations(seed);
@@ -128,8 +177,16 @@ const RecommendationsAttempt: FC<{
   switch (recommendationResult.status) {
     case "loading":
       return null;
-    case "found":
-      return <RecommendationsSlider result={recommendationResult.result} />;
+    case "found": {
+      const { source, recommendations } = recommendationResult.result;
+      return (
+        <RecommendationsSlider
+          caption={getCaptionByOrigin(t, source.origin)}
+          title={source.title}
+          recommendations={recommendations}
+        />
+      );
+    }
     case "miss":
       return isNonEmpty(remainingSeeds) ? (
         <RecommendationsAttempt seeds={remainingSeeds} />
@@ -139,12 +196,15 @@ const RecommendationsAttempt: FC<{
   }
 };
 
-const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
-  result
-}) => {
-  const t = useText();
-  const u = useUrls();
-  const materialUrl = u("materialUrl");
+/**
+ * A slider of recommended works under a caption and a title. Shared by the
+ * regular and the blue recommendations.
+ */
+const RecommendationsSlider: FC<{
+  caption: string;
+  title: string;
+  recommendations: RecommendedWork[];
+}> = ({ caption, title, recommendations }) => {
   const addToListRequest = useAddFavorite({ app: "dashboard" });
 
   return (
@@ -152,23 +212,124 @@ const RecommendationsSlider: FC<{ result: RecommendationResult }> = ({
       <MaterialSlider
         heading={
           <>
-            <MaterialSliderCaption>
-              {getCaptionByOrigin(t, result.source.origin)}
-            </MaterialSliderCaption>
-            <MaterialSliderTitle>{result.source.title}</MaterialSliderTitle>
+            <MaterialSliderCaption>{caption}</MaterialSliderCaption>
+            <MaterialSliderTitle>{title}</MaterialSliderTitle>
           </>
         }
-        items={result.recommendations.map((work) => ({
+        items={recommendations.map((work) => ({
           id: work.workId,
           title: work.title,
           subtitle: work.author,
-          url: constructMaterialUrl(materialUrl, work.workId),
+          url: work.url,
           coverSrc: work.coverSrc
         }))}
         onFavorite={addToListRequest}
       />
     </section>
   );
+};
+
+/**
+ * Sliders of blue titles, one per format, based on the patron's digital loans
+ * only. A patron may borrow physical and digital materials for different
+ * reasons, e.g. non-fiction books for themselves and audiobooks for their
+ * children.
+ */
+const BlueRecommendedMaterials = (props: {
+  showEbookRecommendations: boolean;
+  showAudiobookRecommendations: boolean;
+}) => {
+  const { showEbookRecommendations, showAudiobookRecommendations } = props;
+
+  const { data: loansData } = useDigitalLoans();
+
+  if (!loansData) {
+    return null;
+  }
+
+  const isbnsByFormat = (format: DigitalFormat) =>
+    loansData.loans
+      .filter(({ materialType }) => materialType === format)
+      .map(({ materialId }) => materialId);
+
+  return (
+    <>
+      {showEbookRecommendations && (
+        <BlueRecommendationsForFormat
+          format="ebook"
+          isbns={isbnsByFormat("ebook")}
+        />
+      )}
+      {showAudiobookRecommendations && (
+        <BlueRecommendationsForFormat
+          format="audiobook"
+          isbns={isbnsByFormat("audiobook")}
+        />
+      )}
+    </>
+  );
+};
+
+/**
+ * Picks three of the patron's loans in a format at random to base the blue
+ * recommendations on. With fewer than three there is nothing to show.
+ */
+const BlueRecommendationsForFormat: FC<{
+  format: DigitalFormat;
+  isbns: string[];
+}> = ({ format, isbns }) => {
+  // Kept in state so rerenders do not pick other seeds.
+  const [seeds] = useState(() => {
+    const [first, second, third] = sampleSize(isbns, 3).map(
+      (isbn): RecommendationSeed => ({ type: "isbn", isbn, origin: "loan" })
+    );
+    return first && second && third
+      ? ([first, second, third] satisfies BlueRecommendationSeeds)
+      : null;
+  });
+
+  return seeds ? <BlueRecommendations seeds={seeds} format={format} /> : null;
+};
+
+const BlueRecommendations: FC<{
+  seeds: BlueRecommendationSeeds;
+  format: DigitalFormat;
+}> = ({ seeds, format }) => {
+  const t = useText();
+  const recommendations = useBlueRecommendations(seeds, format);
+  const { caption, title } = getBlueRecommendationsHeading(t, format);
+
+  if (recommendations.length === 0) {
+    return null;
+  }
+
+  return (
+    <RecommendationsSlider
+      caption={caption}
+      title={title}
+      recommendations={recommendations}
+    />
+  );
+};
+
+const getBlueRecommendationsHeading = (
+  t: UseTextFunction,
+  format: DigitalFormat
+) => {
+  switch (format) {
+    case "ebook":
+      return {
+        caption: t("dashboardBlueRecommendationsEbookCaptionText"),
+        title: t("dashboardBlueRecommendationsEbookTitleText")
+      };
+    case "audiobook":
+      return {
+        caption: t("dashboardBlueRecommendationsAudiobookCaptionText"),
+        title: t("dashboardBlueRecommendationsAudiobookTitleText")
+      };
+    default:
+      return invalidSwitchCase<{ caption: string; title: string }>(format);
+  }
 };
 
 const getCaptionByOrigin = (
@@ -183,7 +344,7 @@ const getCaptionByOrigin = (
     case "favorite":
       return t("dashboardRecommendationsFavoriteCaptionText");
     default:
-      invalidSwitchCase(origin);
+      return invalidSwitchCase<string>(origin);
   }
 };
 

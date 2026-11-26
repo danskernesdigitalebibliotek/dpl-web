@@ -1,0 +1,53 @@
+# Recommendations for three seed works in one request, with what is needed to
+# keep only the works that can always be loaned (blue titles) in a given
+# format. `recommend` cannot filter, so that happens in the client.
+query getDashboardBlueRecommendations(
+  $firstId: String!
+  $secondId: String!
+  $thirdId: String!
+  $limit: Int!
+) {
+  first: recommend(id: $firstId, limit: $limit) {
+    result {
+      work {
+        ...DashboardBlueRecommendationWork
+      }
+    }
+  }
+  second: recommend(id: $secondId, limit: $limit) {
+    result {
+      work {
+        ...DashboardBlueRecommendationWork
+      }
+    }
+  }
+  third: recommend(id: $thirdId, limit: $limit) {
+    result {
+      work {
+        ...DashboardBlueRecommendationWork
+      }
+    }
+  }
+}
+
+fragment DashboardBlueRecommendationWork on Work {
+  ...DashboardRecommendationWork
+  manifestations {
+    all {
+      materialTypes {
+        materialTypeGeneral {
+          code
+        }
+        materialTypeSpecific {
+          display
+        }
+      }
+      access {
+        __typename
+        ... on Ereol {
+          canAlwaysBeLoaned
+        }
+      }
+    }
+  }
+}

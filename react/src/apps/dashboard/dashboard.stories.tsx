@@ -173,6 +173,18 @@ const meta: Meta<typeof DashBoard> = {
     },
     dashboardRecommendationsFavoriteCaptionText: {
       control: { type: "text" }
+    },
+    dashboardBlueRecommendationsEbookCaptionText: {
+      control: { type: "text" }
+    },
+    dashboardBlueRecommendationsEbookTitleText: {
+      control: { type: "text" }
+    },
+    dashboardBlueRecommendationsAudiobookCaptionText: {
+      control: { type: "text" }
+    },
+    dashboardBlueRecommendationsAudiobookTitleText: {
+      control: { type: "text" }
     }
   }
 };
@@ -235,6 +247,13 @@ export const Primary: Story = {
     dashboardRecommendationsReservationCaptionText: "Because you reserved",
     dashboardRecommendationsFavoriteCaptionText:
       "Because your favorites list contains",
+    dashboardBlueRecommendationsEbookCaptionText:
+      "Because you have used up your e-book quota",
+    dashboardBlueRecommendationsEbookTitleText: "E-books you can always borrow",
+    dashboardBlueRecommendationsAudiobookCaptionText:
+      "Because you have used up your audiobook quota",
+    dashboardBlueRecommendationsAudiobookTitleText:
+      "Audiobooks you can always borrow",
     materialDetailsOverdueText: "Overdue"
   }
 };

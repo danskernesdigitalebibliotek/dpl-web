@@ -21,6 +21,7 @@ export type RecommendedWork = {
   title: string;
   author: string;
   coverSrc: string | null;
+  url: URL;
 };
 
 /** Recommendations together with the source they were based on. */

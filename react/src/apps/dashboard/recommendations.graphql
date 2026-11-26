@@ -25,21 +25,26 @@ query getDashboardRecommendations($id: String!, $limit: Int!) {
   recommend(id: $id, limit: $limit) {
     result {
       work {
-        workId
-        titles {
-          full
-        }
-        creators {
-          display
-        }
-        manifestations {
-          bestRepresentation {
-            cover {
-              large {
-                url
-              }
-            }
-          }
+        ...DashboardRecommendationWork
+      }
+    }
+  }
+}
+
+# What a recommendation slider shows for a work.
+fragment DashboardRecommendationWork on Work {
+  workId
+  titles {
+    full
+  }
+  creators {
+    display
+  }
+  manifestations {
+    bestRepresentation {
+      cover {
+        large {
+          url
         }
       }
     }
