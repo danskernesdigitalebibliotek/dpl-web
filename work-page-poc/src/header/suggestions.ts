@@ -9,11 +9,12 @@ export type SuggestionOption =
 const maximumTextOptions = 7
 const maximumWorkOptions = 3
 
+// As the library sites label them.
 const typeLabels: Record<Suggestion["type"], string> = {
-  CREATOR: "forfatter",
-  SUBJECT: "emne",
-  TITLE: "artikel",
-  COMPOSIT: "artikel",
+  CREATOR: "Forfatter",
+  SUBJECT: "Emne",
+  TITLE: "Titel",
+  COMPOSIT: "Titel",
 }
 
 export const toSearchPath = (query: string) => `/?q=${encodeURIComponent(query)}`

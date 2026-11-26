@@ -8,6 +8,10 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 @import "./design-system/theme.css";
 
+body {
+  margin: 0;
+}
+
 img,
 svg {
   max-width: 100%;
