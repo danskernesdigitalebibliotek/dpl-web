@@ -68,14 +68,18 @@ GO still deploy alongside it, so a push takes as long as for any PR.
 ## Concepts
 
 - **Articles** (`src/work/categories/article/`), from the designer's
-  "Materialeside – Udgavevælger" artifact: its mobile article boards below
-  1024px and its "Flere formater · Udgavevælger · Desktop" board from there up. Access ways are ranked as the
-  ticket orders them and skip links FBI reports as broken. "Bestil digital
-  kopi" is simulated. With the `opac` FBI url, these show the artifact's cases:
-  - Helsingør, dead link: `/work/work-of:870971-tsart:85962698`
-  - Kolding, two editions: `/work/work-of:870971-tsart:73451485`
-  - Varde, two posts: `/work/work-of:159007-lokalbibl:90222007`
-  - Læs artikel and Se online: `/work/work-of:870971-tsart:136293443`
+  "Materialesiden – Format først (til DDF)" prototype
+  (<https://claude.ai/artifact/RKSf8s8brt8PiaEr2Kh25Y>), which replaced the
+  earlier "Materialeside – Udgavevælger". Material type chips, one button for
+  the chosen edition and access way, and a picker for both behind a "Skift …"
+  link that names what can be switched. The newest edition with a working way
+  is the default; a way other than the edition's best is kept in
+  `?accessWay=`. Retriever is hidden from patrons outside the municipality.
+  "Bestil digital kopi" is simulated. With the `opac` FBI url:
+  - Two types, one edition each (chips, no switch): `/work/work-of:870971-tsart:73451485` (Kolding)
+  - Two editions ("Skift udgave"): `/work/work-of:159007-lokalbibl:90222007` (Varde)
+  - Two ways ("Skift bestillingsmulighed"): `/work/work-of:870971-tsart:136293443`
+  - Dead link and digital copy: `/work/work-of:870971-tsart:85962698` (Helsingør)
 - Everything else falls back to the raw catch-rest page. A new concept is a
   new category in `src/work/categories/registry.ts`; [AGENTS.md](AGENTS.md)
   has the checklist.
