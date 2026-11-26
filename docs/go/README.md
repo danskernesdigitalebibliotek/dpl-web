@@ -180,7 +180,7 @@ Generated output lives in `lib/rest/` (REST), `lib/graphql/generated/` (GraphQL)
 
 Custom types are manually defined TypeScript types that are used throughout the application to ensure type safety and improve code readability.
 
-When creating a custom type, please write a `T` before the name of the type to refer to the variable as a type. This helps to avoid confusion between types and other functionalities.
+When creating a custom type, please write a `T` before the name of the type, e.g. `TWorkCardProps`. The prefix marks the types we define ourselves, so they are easy to tell apart from the generated ones (GraphQL codegen, orval) and from values.
 
 To add a custom type, create a new file in the `lib/types` directory and define your types using TypeScript's `type` or `interface` keywords.
 
