@@ -51,6 +51,9 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
 
   const loans = useLoans();
   const reservations = useReservations();
+
+  const exceededQuotas = useExceededQuotas();
+
   const { data: favoritesList, isLoading: isLoadingFavorites } =
     useGetList("default");
 
@@ -87,9 +90,45 @@ const DashBoard: FC<DashboardProps> = ({ pageSize }) => {
           favorites={(favoritesList?.collections ?? []) as WorkId[]}
         />
       )}
-      <BlueRecommendedMaterials />
+      {exceededQuotas.length > 0 && (
+        <BlueRecommendedMaterials
+          showEbookRecommendations={exceededQuotas.includes("ebook")}
+          showAudiobookRecommendations={exceededQuotas.includes("audiobook")}
+        />
+      )}
     </>
   );
+};
+
+/**
+ * Gets a list of digital formats for which loan quotas have been exceeded
+ */
+const useExceededQuotas = (): DigitalFormat[] => {
+  const viaBiblioAdapter = useBiblioAdapter();
+  const enabled = viaBiblioAdapter && isPatron();
+
+  const { data: quotas } = useDigitalLoanQuotas({ enabled });
+
+  const hasExceededQuota = (format: DigitalFormat) => {
+    const { current, limit } = getDigitalLoanQuota({
+      quotas,
+      format,
+      period: "concurrent"
+    });
+    return limit !== undefined && current >= limit;
+  };
+
+  const exceededQuotas: DigitalFormat[] = [];
+
+  if (hasExceededQuota("ebook")) {
+    exceededQuotas.push("ebook");
+  }
+
+  if (hasExceededQuota("audiobook")) {
+    exceededQuotas.push("audiobook");
+  }
+
+  return exceededQuotas;
 };
 
 // How many seeds to try before giving up on the section.
@@ -196,26 +235,17 @@ const RecommendationsSlider: FC<{
  * reasons, e.g. non-fiction books for themselves and audiobooks for their
  * children.
  */
-const BlueRecommendedMaterials: FC = () => {
-  const viaBiblioAdapter = useBiblioAdapter();
-  const enabled = viaBiblioAdapter && isPatron();
-  const { data: loansData } = useDigitalLoans({ enabled });
-  const { data: quotas } = useDigitalLoanQuotas({ enabled });
+const BlueRecommendedMaterials = (props: {
+  showEbookRecommendations: boolean;
+  showAudiobookRecommendations: boolean;
+}) => {
+  const { showEbookRecommendations, showAudiobookRecommendations } = props;
 
-  if (!loansData || !quotas) {
+  const { data: loansData } = useDigitalLoans();
+
+  if (!loansData) {
     return null;
   }
-
-  // Blue titles draw on no quota, so they are worth suggesting once the patron
-  // holds as many loans in a format as they may at once.
-  const hasExceededQuota = (format: DigitalFormat) => {
-    const { current, limit } = getDigitalLoanQuota({
-      quotas,
-      format,
-      period: "concurrent"
-    });
-    return limit !== undefined && current >= limit;
-  };
 
   const isbnsByFormat = (format: DigitalFormat) =>
     loansData.loans
@@ -224,13 +254,13 @@ const BlueRecommendedMaterials: FC = () => {
 
   return (
     <>
-      {hasExceededQuota("ebook") && (
+      {showEbookRecommendations && (
         <BlueRecommendationsForFormat
           format="ebook"
           isbns={isbnsByFormat("ebook")}
         />
       )}
-      {hasExceededQuota("audiobook") && (
+      {showAudiobookRecommendations && (
         <BlueRecommendationsForFormat
           format="audiobook"
           isbns={isbnsByFormat("audiobook")}
