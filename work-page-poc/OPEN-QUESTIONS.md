@@ -1,0 +1,134 @@
+# Open questions and untested scenarios
+
+A running list for the work-page PoC. Tick items off or delete them when they
+are settled; add new ones as they come up.
+
+## Untested scenarios
+
+### Needs a user token
+
+- [ ] "Læs artikel" opens the Retriever article in the dialog
+      (`/work/work-of:870971-tsart:136293443`).
+- [ ] A patron outside the municipality doesn't get "Læs artikel" at all
+      (`usePatron().isResident = false`).
+- [ ] A blocked patron gets a "Spærret" button and the blocked text.
+- [ ] The simulated order dialog shows the patron's email, "Godkend
+      bestilling" ends on the "kun vist i prototypen" receipt, and "Skift
+      udgave" goes to the picker and back
+      (`/work/work-of:870971-tsart:85962698`).
+
+### Data and environments
+
+- [ ] The article examples on each profile the customer tests with (they
+      will use several). With our test token they only resolve on `opac`.
+- [ ] The "Udgivet i" link finding the periodical on profiles other than
+      `next`: the ISSN search may give zero or several works elsewhere, and
+      then there is no link.
+- [ ] The article concept on the Lagoon environment (PR #2324).
+- [ ] An article or review with no access at all, which shows "Kontakt
+      biblioteket" (several Harry Potter reviews have no access).
+- [ ] The README's article examples show the switch modes it lists (chips
+      only, "Skift udgave", "Skift bestillingsmulighed"). Written from what we
+      knew of their data, not yet checked on the reworked page.
+- [ ] An edition with three or more working ways in the picker.
+- [ ] A non-resident patron whose newest edition only has Retriever: the
+      default ignores residency, so the page lands on "Kontakt biblioteket"
+      while an older edition might have a way.
+- [ ] A work mixing articles with other material types: the category in charge
+      comes from FBI's best representation.
+
+- [ ] The header's article search: that `phrase.generalmaterialtype="artikler"`
+      is the right value (it follows the confirmed "aviser og tidsskrifter"),
+      and that `suggest` with `workType: ARTICLE` gives useful suggestions,
+      on each profile.
+
+### Layout and accessibility
+
+- [ ] The mobile layout at 375px; it was only checked at 500px.
+- [ ] The picker by keyboard and screen reader: one radio group across the
+      cards, the "Se detaljer" toggles, Escape and focus return, and the
+      order dialog → picker → order round trip.
+- [ ] The material type chips by keyboard.
+- [ ] The header's suggestions by keyboard and screen reader: arrow keys,
+      Enter, Escape, and how the two groups are announced.
+
+## Open questions
+
+### For the designer
+
+- [ ] **Varde's near-identical cards.** Cards now show the host publication and
+      source, as the prototype's do. When two posts share the host
+      publication, only the source tells them apart. Is that enough?
+- [ ] **Undrawn states.** No boards exist for reading in Retriever, the
+      anonymous "log ind" state, a blocked patron, no access at all or a dead
+      link. The PoC improvises them.
+- [ ] **"Kontakt biblioteket".** Where should it lead? It is a placeholder, and
+      the prototype has no state without a way.
+- [ ] **Placeholder texts.** The texts under the button and in the order
+      dialog are the prototype's placeholders, to be agreed later.
+- [ ] **"Udgave: 1998, digitaliseret".** FBI has nothing that says an edition
+      is a digitised print; the PoC shows the year only.
+- [ ] **Covers.** FBI gives articles its red placeholder cover, which the PoC
+      shows. Keep it, or use the prototype's coloured title block?
+- [ ] **Site chrome.** The desktop boards show the library's full header; the
+      PoC shows none.
+- [ ] **Several links of the same kind.** Kolding 2018
+      (`/work/work-of:870971-tsart:73451485?manifestationId=150094-artikel:103512`)
+      has two working `AccessUrl`s, tidsskrift.dk and doi.org, leading to the
+      same article. The prototype has no such case. The PoC now makes each
+      site its own option in the picker ("Se online på tidsskrift.dk", "Se
+      online på doi.org"), so the edition gets "Skift bestillingsmulighed".
+      Is that right, or should it be one "Se online" with the other links in
+      the details?
+
+### For the developers and DDF
+
+- [ ] **Varde's data differs from the artifact.** FBI already groups both posts
+      in one work, and both only offer interlibrary loan; neither has Digital
+      Article Service, which the artifact assumes for the Bibliotekskatalog post.
+- [ ] **Ordering via the host publication** (DDFNEXT-797, on hold). The PoC
+      leaves interlibrary loan out of the options, as react/ does for articles
+      today; the periodical is reached from "Udgivet i" when the ISSN search
+      finds it. An article with only `InterLibraryLoan` (like Varde) gets no
+      button and shows "Kontakt biblioteket". Should the prototype offer the
+      printed issue some other way?
+- [ ] **From an article to the specific issue.** The periodical can be found
+      (see below), but issues are holdings in FBS, not FBI records. Getting to
+      "Nr. 12 (1988)" belongs with DDFNEXT-797.
+- [ ] **"Tidsskrift online"**, the ticket's last access way, has no source in
+      FBI that we have found.
+- [ ] **Residency and digital copies.** Retriever only serves residents. Does
+      the same rule apply to "Bestil digital kopi"?
+- [ ] **Manifestations with several specific types.** Some carry e.g. both
+      "artikel" and "artikel (online)". The PoC files them under their first
+      type for the chips and the picker. How common is it, and is the first
+      type the right one?
+- [ ] **Chips across categories.** The chips only list the article category's
+      types. A work that also has a book would need chips that switch to
+      another category's page, closer to "Format først".
+
+### Answered by the second prototype and Tomas
+
+- One button: the other ways are chosen in the picker, behind "Skift …".
+- Edition cards show the article title, host publication, type and source.
+- Desktop has its own boards ("Fiktiv artikel · Desktop").
+- The default edition is the newest with a working way (the prototype's own
+  code ranks the other way round when a type is chosen; Tomas settled it).
+- "Udgaver (n)" lists every manifestation of the work, across types: librarians
+  use it as an overview.
+- Retriever is hidden from non-residents. FBS knows residency up front
+  (`resident` on its patron), exposed as `usePatron().isResident`.
+
+### Answered by real data
+
+- The customer will test with several FBI profiles, so the debug panel names
+  the profile in use.
+- A periodical can be found from an article's `hostPublication.issn`:
+  `term.issn="0108-8084" AND phrase.generalmaterialtype="aviser og
+  tidsskrifter"` gives exactly one work, the periodical Slagmark, on `next`.
+  Without the material type, `term.issn` also finds the articles in it (840).
+
+- Dead online links can be recognised: `AccessUrl.status` is `OK`, `BROKEN`,
+  `GONE` or `INVALID` (Helsingør's link is `GONE`).
+- Articles and reviews share FBI's general material type `ARTICLES`.
+- Retriever requires a logged-in patron (`BORROWER_NOT_LOGGED_IN` otherwise).

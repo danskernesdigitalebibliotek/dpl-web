@@ -11,6 +11,7 @@ const FbsPatronResponseSchema = z.object({
       emailAddress: z.string().nullish(),
       phoneNumber: z.string().nullish(),
       receiveSms: z.boolean().nullish(),
+      resident: z.boolean().nullish(),
     })
     .optional(),
 })
@@ -21,6 +22,7 @@ export function parseAndMapPatron(raw: unknown): Patron | undefined {
   return {
     name: parsed.patron.name ?? undefined,
     isLocked: parsed.authenticateStatus === "LOANER_LOCKED_OUT",
+    isResident: parsed.patron.resident ?? undefined,
     pickupBranchId: parsed.patron.preferredPickupBranch,
     emailAddress: parsed.patron.emailAddress ?? undefined,
     phoneNumber: parsed.patron.phoneNumber ?? undefined,

@@ -106,6 +106,15 @@ services:
     labels:
       lagoon.type: node
 
+  # The work-page proof of concept (DDF-794): a static app, built and served
+  # by its own Dockerfile. Only on the never-merged PoC branch.
+  work-page-poc:
+    build:
+      context: .
+      dockerfile: work-page-poc/lagoon/Dockerfile
+    labels:
+      lagoon.type: nginx
+
 volumes:
   projectroot:
     driver: local

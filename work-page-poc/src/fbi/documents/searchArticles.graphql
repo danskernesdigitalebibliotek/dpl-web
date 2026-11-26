@@ -1,0 +1,27 @@
+query searchArticles($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!) {
+  complexSearch(cql: $cql) {
+    hitcount
+    errorMessage
+    works(offset: $offset, limit: $limit) {
+      workId
+      titles {
+        full
+      }
+      creators {
+        display
+      }
+      materialTypes {
+        materialTypeSpecific {
+          display
+        }
+      }
+      manifestations {
+        bestRepresentation {
+          hostPublication {
+            summary
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+# Only work-page-poc specifics. Dependencies and .env files are ignored
+# repo-wide by the root .gitignore.
+/dist

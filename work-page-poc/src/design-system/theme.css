@@ -1,0 +1,63 @@
+/*
+ * The DDF/FBCMS design system tokens the designer's artifacts are built on,
+ * as a Tailwind theme: each variable becomes both a CSS variable and
+ * utilities (`bg-surface-page`, `font-heading`, `text-h3`, …).
+ * Transcribed from the artifact's tokens; brand colours are København's, the
+ * theme the artifacts show.
+ */
+@theme {
+  --color-brand-100: #476e57;
+  --color-brand-120: #375443;
+  --color-brand-60: #8ea698;
+  --color-brand-20: #d5ddd9;
+
+  --color-surface-page: #f6f5f0;
+  --color-surface-alt: #eee9e5;
+  --color-surface-card: #ffffff;
+
+  --color-text-heading: #000000;
+  --color-text-body: #484848;
+  --color-text-muted: #7e7e7e;
+  --color-text-inactive: #707070;
+
+  --color-outline: #dbdbdb;
+  --color-outline-strong: #000000;
+
+  --color-signal-success: #068802;
+  --color-signal-alert: #d22d43;
+  --color-signal-aware: #f7bf42;
+  --color-link: #0e3ff2;
+
+  /* Not a token, but what the artifacts' primary buttons are filled with. */
+  --color-ink: #1a1a1a;
+
+  --font-heading: "Lora", ui-serif, Georgia, "Times New Roman", serif;
+  --font-body:
+    "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --text-h1: 52px;
+  --text-h1--line-height: 64px;
+  --text-h2: 42px;
+  --text-h2--line-height: 52px;
+  --text-h3: 32px;
+  --text-h3--line-height: 40px;
+  --text-h4: 24px;
+  --text-h4--line-height: 32px;
+  --text-h5: 20px;
+  --text-h5--line-height: 24px;
+  --text-body-l: 18px;
+  --text-body-l--line-height: 32px;
+  --text-body-m: 16px;
+  --text-body-m--line-height: 24px;
+  --text-body-s: 14px;
+  --text-body-s--line-height: 24px;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-button: 14px;
+  --text-button--line-height: 24px;
+  --text-button--letter-spacing: 0.02em;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+}

@@ -4,6 +4,7 @@ packages:
   - go
   - packages/*
   - react
+  - work-page-poc
 
 # Give each workspace package its own pnpm-lock.yaml instead of a single shared
 # lockfile at the repo root. This keeps the lockfiles in a single-document format

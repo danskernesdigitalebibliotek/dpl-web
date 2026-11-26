@@ -1,0 +1,26 @@
+version: "3"
+
+# The work-page proof of concept (DDF-794). A never-merged branch: see
+# README.md for what it is and how it is deployed.
+
+tasks:
+  dev:
+    desc: Start the PoC on Vite's dev server.
+    cmds:
+      - pnpm run dev
+
+  build:
+    desc: Typecheck and build the static PoC into dist/.
+    cmds:
+      - pnpm run build
+
+  codegen:
+    desc: Regenerate the typed FBI operations from /schemas/graphql/dbc-fbi.graphql.
+    cmds:
+      - pnpm run codegen
+
+  lagoon:build:
+    desc: Build the PoC's Lagoon image locally, from the repository root.
+    dir: ..
+    cmds:
+      - docker build -f work-page-poc/lagoon/Dockerfile -t dpl-work-page-poc .
