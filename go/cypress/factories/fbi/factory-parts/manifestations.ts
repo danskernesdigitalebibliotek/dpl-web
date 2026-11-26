@@ -37,6 +37,7 @@ export const eBookManifestationFactory = Factory.define<Manifestation>(() => ({
   contributors: manifestationContributorFactory.buildList(2),
   cover: coverFactory.build(),
   pid: "870970-basis:38772791",
+  titles: { full: ["Dette er titlen på en e-bog"], main: ["Dette er titlen på en e-bog"] },
   identifiers: [eBookManifestationIdentifierFactory.build()],
   materialTypes: [materialTypeEbookFactory.build()],
   edition: {
@@ -63,6 +64,7 @@ export const audioBookManifestationFactory = Factory.define<Manifestation>(() =>
   contributors: manifestationContributorFactory.buildList(1),
   cover: coverFactory.build(),
   pid: "870970-basis:38772791",
+  titles: { full: ["Dette er titlen på en lydbog"], main: ["Dette er titlen på en lydbog"] },
   identifiers: [audioBookManifestationIdentifierFactory.build()],
   materialTypes: [materialTypeAudioBookFactory.build()],
   edition: {

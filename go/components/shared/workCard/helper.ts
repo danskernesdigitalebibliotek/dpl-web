@@ -7,19 +7,18 @@ export type TWorkCardMaterialType = {
   isCostFree: boolean
 }
 
-// One entry per material type icon. Podcasts are always cost-free, other
-// types when any of their manifestations is.
+// One entry per material type icon, cost-free when any of its manifestations
+// is.
 export const getWorkCardMaterialTypes = (
   manifestations: ManifestationSearchPageTeaserFragment[],
-  isCostFree: (index: number) => boolean
+  isCostFree: (manifestation: ManifestationSearchPageTeaserFragment) => boolean
 ): TWorkCardMaterialType[] => {
   const materialTypes = new Map<MaterialTypeIconNamesType, boolean>()
 
-  manifestations.forEach((manifestation, index) => {
+  manifestations.forEach(manifestation => {
     const materialType = manifestation.materialTypes.at(0)?.materialTypeSpecific.code
     const iconName = (materialType && getIconNameFromMaterialType(materialType)) || "book"
-    const costFree = isCostFree(index) || materialType === "PODCAST"
-    materialTypes.set(iconName, Boolean(materialTypes.get(iconName)) || costFree)
+    materialTypes.set(iconName, Boolean(materialTypes.get(iconName)) || isCostFree(manifestation))
   })
 
   return Array.from(materialTypes, ([iconName, isCostFree]) => ({ iconName, isCostFree }))

@@ -2,6 +2,7 @@
 
 import {
   readerSignInTokenQuery,
+  useCanUseDigitalLoans,
   useServiceLayerConfig,
 } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import type { WedoBooksSdk } from "@danskernesdigitalebibliotek/dpl-wedobooks"
@@ -22,11 +23,9 @@ export const useReaderSdkSession = (): UseQueryResult<WedoBooksSdk> => {
   const config = useServiceLayerConfig()
   const queryClient = useQueryClient()
   // Signing in is scoped to a borrowing session — a patron or, since Unilogin
-  // runs through Adgangsplatformen (ADR-013), a Unilogin user. Falls back to
-  // the patron flag for consumers that do not set the digital one (the React
-  // apps). The token is read straight through the query client, which has no
-  // gate of its own.
-  const canUseDigitalLoans = config.canUseDigitalLoans ?? config.isPatronAuthenticated ?? true
+  // runs through Adgangsplatformen (ADR-013), a Unilogin user. The token is
+  // read straight through the query client, which has no gate of its own.
+  const canUseDigitalLoans = useCanUseDigitalLoans()
 
   return useQuery<WedoBooksSdk>({
     // Not keyed on the token: signing in again whenever it rotates would

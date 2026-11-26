@@ -24,7 +24,12 @@ export const AudioBookFactory = Factory.define<Work>(({ sequence }) => ({
   ],
   materialTypes: [materialTypeEbookFactory.build(), materialTypeAudioBookFactory.build()],
   manifestations: {
-    all: [eBookManifestationFactory.build(), audioBookManifestationFactory.build()],
+    // Both manifestations carry the work's title, so the card shows it
+    // whichever one it picks.
+    all: [
+      eBookManifestationFactory.build({ titles: audioBookManifestationFactory.build().titles }),
+      audioBookManifestationFactory.build(),
+    ],
     bestRepresentation: audioBookManifestationFactory.build(),
   },
 }))

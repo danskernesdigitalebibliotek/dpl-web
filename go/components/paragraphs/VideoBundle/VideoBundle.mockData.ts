@@ -40,6 +40,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          titles: {
+            full: ["Kvinde kend din historie : spejl dig i fortiden"],
+            main: ["Kvinde kend din historie : spejl dig i fortiden"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -97,6 +101,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Kvinde kend din historie : spejl dig i fortiden"],
+            main: ["Kvinde kend din historie : spejl dig i fortiden"],
+          },
           accessTypes: [
             {
               code: "ONLINE",
@@ -161,6 +169,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        titles: {
+          full: ["Kvinde kend din historie : spejl dig i fortiden"],
+          main: ["Kvinde kend din historie : spejl dig i fortiden"],
+        },
         accessTypes: [
           {
             code: "PHYSICAL",
@@ -247,6 +259,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          titles: {
+            full: ["Det sensitive hjerte : når alle døre står åbne"],
+            main: ["Det sensitive hjerte : når alle døre står åbne"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -300,6 +316,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        titles: {
+          full: ["Det sensitive hjerte : når alle døre står åbne"],
+          main: ["Det sensitive hjerte : når alle døre står åbne"],
+        },
         accessTypes: [
           {
             code: "PHYSICAL",
@@ -401,6 +421,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          titles: {
+            full: ["Generation 7/7 : beretninger fra 25 unge voksne med skilte forældre"],
+            main: ["Generation 7/7 : beretninger fra 25 unge voksne med skilte forældre"],
+          },
           accessTypes: [
             {
               code: "ONLINE",
@@ -459,6 +483,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Generation 7/7 : beretninger fra 25 unge voksne med skilte forældre"],
+            main: ["Generation 7/7 : beretninger fra 25 unge voksne med skilte forældre"],
+          },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -516,6 +544,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: {
+            full: ["Generation 7/7 : beretninger fra 25 unge voksne med skilte forældre"],
+            main: ["Generation 7/7 : beretninger fra 25 unge voksne med skilte forældre"],
+          },
           accessTypes: [
             {
               code: "ONLINE",
@@ -575,6 +607,10 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        titles: {
+          full: ["Generation 7/7 : beretninger fra 25 unge voksne med skilte forældre"],
+          main: ["Generation 7/7 : beretninger fra 25 unge voksne med skilte forældre"],
+        },
         accessTypes: [
           {
             code: "PHYSICAL",
@@ -681,6 +717,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          titles: { full: ["Lilys længsel"], main: ["Lilys længsel"] },
           accessTypes: [
             {
               code: "ONLINE",
@@ -754,6 +791,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: { full: ["Lilys længsel"], main: ["Lilys længsel"] },
           accessTypes: [
             {
               code: "ONLINE",
@@ -815,6 +853,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
           contributorsFromDescription: [],
         },
         {
+          titles: { full: ["Lilys længsel"], main: ["Lilys længsel"] },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -873,6 +912,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        titles: { full: ["Lilys længsel"], main: ["Lilys længsel"] },
         accessTypes: [
           {
             code: "PHYSICAL",
@@ -963,6 +1003,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
     manifestations: {
       all: [
         {
+          titles: { full: ["Biologi 9 : elevbog"], main: ["Biologi 9 : elevbog"] },
           accessTypes: [
             {
               code: "PHYSICAL",
@@ -1029,6 +1070,7 @@ export const worksMock: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"
         },
       ],
       bestRepresentation: {
+        titles: { full: ["Biologi 9 : elevbog"], main: ["Biologi 9 : elevbog"] },
         accessTypes: [
           {
             code: "PHYSICAL",

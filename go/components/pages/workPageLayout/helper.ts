@@ -184,8 +184,8 @@ export const isEbookMaterialType = (code: string): boolean => ebookMaterialTypeC
 
 export const isAudioMaterialType = (code: string): boolean => audioMaterialTypeCodes.includes(code)
 
-export const isPodcastMaterialType = (code: string): boolean =>
-  podcastMaterialTypeCodes.includes(code)
+export const isPodcastMaterialType = (code: string | undefined): boolean =>
+  !!code && podcastMaterialTypeCodes.includes(code)
 
 // Everything the digital providers answer for: the counterpart to
 // isPhysicalMaterialType, which FBS answers for.
@@ -233,6 +233,12 @@ export const getDigitalReadUrl = (workId: string, loanId: string) =>
 // read-link goes through here so the callers cannot drift apart on it.
 export const getReadUrlForLoan = (workId: string, loan: { orderId?: string; loanId?: string }) =>
   loan.loanId ? getDigitalReadUrl(workId, loan.loanId) : getEbookReadUrl(workId, loan.orderId ?? "")
+
+// The title shown for a manifestation, the same on the work page and in work
+// teasers.
+export const getManifestationTitle = (
+  manifestation: Pick<ManifestationWorkPageFragment, "titles"> | undefined
+): string | undefined => manifestation?.titles?.main[0] ?? manifestation?.titles?.full[0]
 
 export type ManifestationLabelForm = "indefinite" | "definite"
 
@@ -316,24 +322,35 @@ export const getManifestationMaterialTypeIcon = (
   return getIconNameFromMaterialType(materialType.code)
 }
 
+// Sorts a copy by publication year, newest first. Manifestations without a
+// year go last.
+export const sortManifestationsNewestFirst = <
+  TManifestation extends Pick<ManifestationWorkPageFragment, "edition">,
+>(
+  manifestations: TManifestation[]
+): TManifestation[] =>
+  [...manifestations].sort(
+    (a, b) =>
+      (b.edition?.publicationYear?.year ?? -Infinity) -
+      (a.edition?.publicationYear?.year ?? -Infinity)
+  )
+
 //Find the editions for the selected type and sort them by publication year, newest first
-export const getEditionsForMaterialType = (
-  manifestations: ManifestationWorkPageFragment[],
+export const getEditionsForMaterialType = <
+  TManifestation extends ManifestationWorkPageFragment | ManifestationSearchPageTeaserFragment,
+>(
+  manifestations: TManifestation[],
   materialTypeCode: string
-): ManifestationWorkPageFragment[] => {
+): TManifestation[] => {
   const selectedLabel = translateMaterialTypesStringForRender(materialTypeCode)
 
-  return (filterMaterialTypes(manifestations) as ManifestationWorkPageFragment[])
-    .filter(manifestation =>
+  return sortManifestationsNewestFirst(
+    (filterMaterialTypes(manifestations) as TManifestation[]).filter(manifestation =>
       manifestation.materialTypes.some(
         materialType =>
           translateMaterialTypesStringForRender(materialType.materialTypeSpecific.code) ===
           selectedLabel
       )
     )
-    .sort(
-      (a, b) =>
-        (b.edition?.publicationYear?.year ?? -Infinity) -
-        (a.edition?.publicationYear?.year ?? -Infinity)
-    )
+  )
 }

@@ -5,6 +5,7 @@ import React, { useOptimistic, useRef, useState, useTransition } from "react"
 
 import {
   getManifestationLanguageCode,
+  getManifestationTitle,
   slideSelectOptionsFromMaterialTypes,
   sortManifestationsBySortPriority,
 } from "@/components/pages/workPageLayout/helper"
@@ -208,7 +209,7 @@ const WorkPageHeader = ({ manifestations, work, selectedManifestation }: WorkPag
           <h1
             lang={languageCode}
             className="text-typo-heading-3 w-full break-words hyphens-auto lg:mt-0">
-            {selectedManifestation?.titles?.main[0] ?? selectedManifestation?.titles?.full[0] ?? ""}
+            {getManifestationTitle(selectedManifestation) ?? ""}
           </h1>
           {/* A work without named creators falls back to the edition's
               contributors — an anthology, say, credited to its editor. */}
