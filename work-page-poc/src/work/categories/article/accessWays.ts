@@ -31,7 +31,7 @@ export const accessRules = {
   printedIssue: "InterLibraryLoan giver Find det trykte nummer, når der er en hostPublication",
   otherAccess: "Andre adgangstyper bruges ikke for artikler",
   oneOfEachKind: "Hver adgangsvej bruges kun én gang",
-  defaultEdition: "Standardudgaven er den med den bedste virkende adgangsvej; ved lighed den nyeste",
+  defaultEdition: "Standardudgaven er den nyeste med en virkende adgangsvej; har ingen en adgangsvej, den nyeste",
 }
 
 type AccessEvaluation = { way?: AccessWay; rule: string; outcome: string }
@@ -107,30 +107,28 @@ export const hasOnlyDeadLinks = (manifestation: Manifestation) => {
   return links.length > 0 && links.every((link) => link.status !== "OK")
 }
 
-const accessScore = (manifestation: Manifestation) => {
-  const [bestWay] = getAccessWays(manifestation)
-  return bestWay ? accessWayRank.indexOf(bestWay.kind) : accessWayRank.length
-}
-
 export const getPublicationYear = (manifestation: Manifestation) =>
   manifestation.hostPublication?.year?.year ?? manifestation.edition?.publicationYear?.year ?? undefined
 
-/** The editions ranked by best working access way, then newest, with a trace row each. */
+const hasAccessWay = (manifestation: Manifestation) => getAccessWays(manifestation).length > 0
+
+/**
+ * The editions ranked newest first, those with a working access way ahead of
+ * those without, with a trace row each.
+ */
 export const rankEditions = (manifestations: Manifestation[]) => {
   const ranked = [...manifestations].sort(
     (first, second) =>
-      accessScore(first) - accessScore(second) || (getPublicationYear(second) ?? 0) - (getPublicationYear(first) ?? 0)
+      Number(hasAccessWay(second)) - Number(hasAccessWay(first)) ||
+      (getPublicationYear(second) ?? 0) - (getPublicationYear(first) ?? 0)
   )
   const rows = ranked.map((manifestation, index): TraceRow => {
     const [bestWay] = getAccessWays(manifestation)
     return {
       rule: accessRules.defaultEdition,
-      input: `${manifestation.pid}: bedste adgangsvej = ${bestWay ? accessWayLabels[bestWay.kind] : "ingen"}, år = ${getPublicationYear(manifestation) ?? "ukendt"}`,
+      input: `${manifestation.pid}: år = ${getPublicationYear(manifestation) ?? "ukendt"}, bedste adgangsvej = ${bestWay ? accessWayLabels[bestWay.kind] : "ingen"}`,
       outcome: index === 0 ? "Nr. 1 → standardudgave" : `Nr. ${index + 1}`,
     }
   })
   return { ranked, rows }
 }
-
-/** The manifestation with the best working access way; the newest of those. */
-export const pickFastestAccess = (manifestations: Manifestation[]) => rankEditions(manifestations).ranked[0]

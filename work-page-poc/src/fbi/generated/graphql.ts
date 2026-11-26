@@ -82,7 +82,7 @@ export type WorkPageQueryVariables = Exact<{
 export type WorkPageQuery = { work: { workId: string, abstract: Array<string> | null, titles: { main: Array<string>, full: Array<string> }, creators: Array<
       | { display: string }
       | { display: string }
-    >, subjects: { all: Array<
+    >, fictionNonfiction: { display: string } | null, subjects: { all: Array<
         | { display: string }
         | { display: string }
         | { display: string }
@@ -91,7 +91,7 @@ export type WorkPageQuery = { work: { workId: string, abstract: Array<string> | 
         | { display: string }
         | { display: string }
         | { display: string }
-      > }, manifestations: { bestRepresentation: { pid: string }, all: Array<{ pid: string, source: Array<string>, titles: { full: Array<string> }, creators: Array<
+      > }, manifestations: { bestRepresentation: { pid: string }, all: Array<{ pid: string, source: Array<string>, publisher: Array<string>, titles: { full: Array<string> }, creators: Array<
           | { display: string }
           | { display: string }
         >, materialTypes: Array<{ materialTypeGeneral: { code: GeneralMaterialTypeCodeEnum }, materialTypeSpecific: { code: string, display: string } }>, edition: { summary: string, publicationYear: { year: number | null } | null } | null, cover: { detail_207: string | null, detail_500: string | null }, languages: { main: Array<{ display: string }> | null } | null, physicalDescription: { summaryFull: string | null } | null, hostPublication: { title: string, summary: string, year: { year: number | null } | null } | null, access: Array<
@@ -170,6 +170,9 @@ export const WorkPageDocument = new TypedDocumentString(`
       display
     }
     abstract
+    fictionNonfiction {
+      display
+    }
     subjects {
       all {
         display
@@ -182,6 +185,7 @@ export const WorkPageDocument = new TypedDocumentString(`
       all {
         pid
         source
+        publisher
         titles {
           full
         }

@@ -1,8 +1,9 @@
 import type { ManifestationCategory } from "../types"
 import { accessRules, rankEditions } from "./accessWays"
+import { optionRules } from "./articleOptions"
 import { ArticlePage } from "./ArticlePage"
-import { actionRules } from "./resolveArticleActions"
-import { useArticleActions } from "./useArticleActions"
+import { actionRules } from "./resolveArticleAction"
+import { useArticlePage } from "./useArticlePage"
 
 /** Articles and reviews, printed and online: FBI files them all under ARTICLES. */
 export const articleCategory: ManifestationCategory = {
@@ -22,17 +23,20 @@ export const articleCategory: ManifestationCategory = {
   },
   rules: [
     { title: "Adgangsveje", rules: Object.values(accessRules) },
-    { title: "Knapper og statuslinjer", rules: Object.values(actionRules) },
+    { title: "Typer, udgaver og bestillingsmuligheder", rules: Object.values(optionRules) },
+    { title: "Knap og tekster", rules: Object.values(actionRules) },
   ],
   usePageTrace: ({ manifestation, categoryManifestations }) => {
-    const { accessRows, buttonRows, statusRows } = useArticleActions(manifestation, categoryManifestations)
+    const { options, action } = useArticlePage(manifestation, categoryManifestations)
     return [
-      { title: "Adgangsveje", intro: "Hver indgang i manifestationens access, og hvad den blev til.", rows: accessRows },
-      { title: "Knapper", rows: buttonRows },
+      { title: "Materialetyper", rows: options.typeRows },
+      { title: "Adgangsveje", intro: "Hver indgang i manifestationens access, og hvad den blev til.", rows: options.accessRows },
+      { title: "Valgt adgangsvej og Skift", rows: options.choiceRows },
+      { title: "Knap", rows: action.actionRows },
       {
-        title: "Statuslinjer",
+        title: "Tekster under knappen",
         intro: "Login-beskeden vises først, når man klikker uden brugertoken.",
-        rows: statusRows,
+        rows: action.textRows,
       },
     ]
   },

@@ -9,6 +9,9 @@ query workPage($workId: String!) {
       display
     }
     abstract
+    fictionNonfiction {
+      display
+    }
     subjects {
       all {
         display
@@ -21,6 +24,7 @@ query workPage($workId: String!) {
       all {
         pid
         source
+        publisher
         titles {
           full
         }

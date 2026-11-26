@@ -1,180 +1,222 @@
+import { usePatron } from "@danskernesdigitalebibliotek/dpl-service-layer"
 import { useState } from "react"
 import { Link, useSearchParams } from "react-router"
 
+import { useConnectionSettings } from "../../../connection/useConnectionSettings"
 import type { CategoryPageProps } from "../types"
-import { pickFastestAccess } from "./accessWays"
-import { AccessActions } from "./AccessActions"
-import { getArticleTypeLabel, getDetailRows, getEditionValue, getHostDetail } from "./articleText"
-import { DetailList } from "./DetailList"
-import { EditionPicker } from "./EditionPicker"
+import { getPublicationYear } from "./accessWays"
+import { Accordion } from "./Accordion"
+import { ArticleCallToAction } from "./ArticleCallToAction"
+import {
+  getCreators,
+  getDetailRows,
+  getEditionLine,
+  getManifestationTitle,
+  getMaterialTypeLabel,
+  getYearLabel,
+} from "./articleText"
+import { DigitalCopyDialog } from "./DigitalCopyDialog"
+import { type OptionChoice, OptionPicker } from "./OptionPicker"
+import { RetrieverDialog } from "./RetrieverDialog"
+import { useArticlePage } from "./useArticlePage"
+
+type OpenDialog = "picker" | "order" | "read-article" | null
+
+const metaLinkClasses = "text-[13px] leading-5 text-text-heading underline underline-offset-4"
 
 /**
- * The article concept from the designer's "Materialeside – Udgavevælger"
- * artifact: its mobile article boards below 1024px, and its "Flere formater ·
- * Udgavevælger · Desktop" board (current layout) from there up.
+ * The article concept from the designer's "Materialesiden – Format først (til
+ * DDF)" prototype: material type chips, one button for the chosen edition and
+ * way, and a picker for both.
  */
 export const ArticlePage = ({ work, manifestation, categoryManifestations }: CategoryPageProps) => {
   const [, setSearchParams] = useSearchParams()
-  const [isPickerOpen, setIsPickerOpen] = useState(false)
-  const [isDetailsOpen, setIsDetailsOpen] = useState(true)
+  const { settings } = useConnectionSettings()
+  const { data: patron } = usePatron()
+  const [openDialog, setOpenDialog] = useState<OpenDialog>(null)
+  const [isPickerFromOrder, setIsPickerFromOrder] = useState(false)
+  const [hasClickedWithoutLogin, setHasClickedWithoutLogin] = useState(false)
+  const { options, action } = useArticlePage(manifestation, categoryManifestations, hasClickedWithoutLogin)
 
   const title = work.titles.main.join(" ")
-  const creators = (manifestation.creators.length ? manifestation.creators : work.creators).map(
-    (creator) => creator.display
-  )
-  const typeLabel = getArticleTypeLabel(manifestation)
-  const host = manifestation.hostPublication
-  const hostDetail = getHostDetail(manifestation)
+  const creators = getCreators(manifestation, work)
   const subjects = [...new Set(work.subjects.all.map((subject) => subject.display))]
-  const hasOtherEditions = categoryManifestations.length > 1
-  const recommended = pickFastestAccess(categoryManifestations)
-  const isRecommended = recommended.pid === manifestation.pid
   const cover = manifestation.cover.detail_500 ?? manifestation.cover.detail_207
+  const allEditions = [...work.manifestations.all].sort(
+    (first, second) => (getPublicationYear(second) ?? 0) - (getPublicationYear(first) ?? 0)
+  )
+  const retrieverWay = options.selectedWay?.kind === "read-article" ? options.selectedWay : undefined
+
+  const showManifestation = (choice: OptionChoice) => {
+    setHasClickedWithoutLogin(false)
+    setSearchParams(choice.wayKind ? { manifestationId: choice.pid, accessWay: choice.wayKind } : { manifestationId: choice.pid })
+  }
+
+  const openWay = (kind: "read-article" | "digital-copy") => {
+    if (!settings.userToken) {
+      setHasClickedWithoutLogin(true)
+      return
+    }
+    setOpenDialog(kind === "read-article" ? "read-article" : "order")
+  }
+
+  const openPicker = (isFromOrder: boolean) => {
+    setIsPickerFromOrder(isFromOrder)
+    setOpenDialog("picker")
+  }
+
+  const choose = (choice: OptionChoice) => {
+    showManifestation(choice)
+    setOpenDialog(isPickerFromOrder && choice.wayKind === "digital-copy" ? "order" : null)
+  }
 
   return (
     <div className="bg-surface-page font-body text-text-heading">
-      <main className="mx-auto max-w-[1440px]">
-        <section
-          aria-labelledby="article-title"
-          className="grid grid-cols-1 gap-6 px-4 pt-8 pb-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start lg:gap-16 lg:pt-14 lg:pr-[clamp(48px,15vw,216px)] lg:pl-[clamp(48px,8.5vw,122px)]"
-        >
-          <div className="flex flex-col items-center gap-6 lg:order-last lg:items-end">
-            <div className="relative box-border flex aspect-[5/7] w-[203px] max-w-full items-end overflow-hidden rounded-[3px] bg-brand-120 p-[18px] shadow-[0_2px_24px_rgba(0,0,0,0.08)] lg:w-[360px]">
+      <main className="mx-auto max-w-[1440px] pb-16">
+        <section aria-labelledby="article-title" className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="flex justify-center px-4 pt-8 lg:order-last lg:items-start lg:px-12 lg:pt-[72px]">
+            <div className="relative box-border flex h-[284px] w-[203px] shrink-0 items-center justify-center overflow-hidden rounded p-6 text-center text-white shadow-[0_10px_40px_rgba(0,0,0,0.16)] lg:h-[433px] lg:w-[282px] bg-[#375a8f]">
               {cover ? (
                 <img src={cover} alt="" className="absolute inset-0 size-full max-w-none object-cover" />
               ) : (
-                <span aria-hidden="true" className="font-heading text-xl leading-[26px] text-white">
+                <span aria-hidden="true" className="text-[18px] leading-tight font-semibold lg:text-[28px]">
                   {title}
                 </span>
               )}
             </div>
           </div>
 
-          <div className="min-w-0">
-            <div className="flex w-[440px] max-w-full flex-col">
-              <h1 id="article-title" className="m-0 mt-4 font-heading text-[32px]/10 font-normal lg:mt-0 lg:text-h1">
-                {title}
-              </h1>
-              <p className="m-0 mt-3 text-body-m text-text-body lg:mt-5 lg:text-[20px] lg:leading-[30px] lg:text-text-heading">
-                {creators.length > 0 && `Af ${creators.join(", ")} · `}
-                <strong className="font-semibold text-text-heading">{typeLabel}</strong>
-              </p>
-              {host && (
-                <p className="m-0 mt-1 text-body-m text-text-body lg:text-[20px] lg:leading-[30px] lg:text-text-heading">
-                  I:{" "}
-                  <Link
-                    to={`/?q=${encodeURIComponent(host.title)}`}
-                    className="text-text-heading underline underline-offset-[3px]"
-                  >
-                    {host.title}
-                  </Link>
-                  {hostDetail && `, ${hostDetail}`}
-                </p>
-              )}
+          <div className="px-4 pt-6 pb-12 lg:px-20 lg:pt-[72px]">
+            <h1 id="article-title" className="m-0 font-heading text-[32px] leading-10 font-normal lg:text-[64px] lg:leading-[72px]">
+              {title}
+            </h1>
+            {creators && <p className="m-0 mt-2 text-body-m">Af {creators}</p>}
 
-              <div className={hasOtherEditions ? "mt-7" : "mt-8 lg:mt-7"}>
-                {hasOtherEditions && (
-                  <div className="mb-3 flex min-h-11 items-center gap-4">
-                    <span id="article-edition" className="min-w-0 grow text-body-m">
-                      <span className="text-text-body">Udgave:</span>{" "}
-                      <span className="font-semibold">
-                        {isRecommended && "Hurtigste adgang · "}
-                        {getEditionValue(manifestation)}
-                      </span>
-                    </span>
-                    <button
-                      type="button"
-                      aria-haspopup="dialog"
-                      aria-describedby="article-edition"
-                      onClick={() => setIsPickerOpen(true)}
-                      className="min-h-11 shrink-0 cursor-pointer border-0 bg-transparent px-1 font-body text-body-m text-text-heading underline underline-offset-[3px]"
-                    >
-                      Skift<span className="sr-only"> udgave</span>
-                    </button>
-                  </div>
-                )}
-                <AccessActions
-                  key={manifestation.pid}
-                  manifestation={manifestation}
-                  categoryManifestations={categoryManifestations}
-                  title={title}
-                />
-              </div>
+            <div role="radiogroup" aria-label="Materialetype" className="mt-8 flex flex-wrap gap-2">
+              {options.materialTypes.map((materialType) => (
+                <label
+                  key={materialType.label}
+                  className={`box-border inline-flex min-h-11 cursor-pointer items-center rounded-[10px] px-3.5 text-[15px] leading-5 font-medium hover:shadow-[inset_0_0_0_1px_#000] has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-black ${
+                    materialType.isSelected ? "bg-[#e4ece6] shadow-[inset_0_0_0_1.5px_#375443]" : "bg-white shadow-[inset_0_0_0_1px_#dbdbdb]"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="article-material-type"
+                    checked={materialType.isSelected}
+                    onChange={() => showManifestation({ pid: materialType.defaultManifestation.pid, wayKind: undefined })}
+                    className="absolute m-0 size-px opacity-0"
+                  />
+                  {materialType.label}
+                </label>
+              ))}
             </div>
+
+            <p aria-live="polite" className="m-0 mt-4 text-[15px] leading-6">
+              <span className="sr-only">Valgt udgave: </span>
+              Udgave: {getYearLabel(manifestation)}
+              {options.switchText && (
+                <>
+                  <span aria-hidden="true" className="mx-1.5 text-text-inactive">
+                    ·
+                  </span>
+                  <button
+                    type="button"
+                    aria-haspopup="dialog"
+                    onClick={() => openPicker(false)}
+                    className="inline cursor-pointer border-0 bg-transparent p-0 font-body text-[15px] leading-6 font-semibold whitespace-nowrap text-[#3b4a40] underline underline-offset-4"
+                  >
+                    {options.switchText}
+                  </button>
+                </>
+              )}
+            </p>
+
+            <ArticleCallToAction action={action.action} texts={action.texts} onOpen={openWay} />
           </div>
         </section>
 
-        {(!!work.abstract?.length || subjects.length > 0) && (
-          <section aria-labelledby="article-description" className="mx-4 lg:mx-[129px] lg:pt-16">
-            <h2 id="article-description" className="m-0 font-heading text-[28px] leading-8 font-normal lg:text-h2">
-              Beskrivelse
-            </h2>
-            {work.abstract?.map((paragraph) => (
-              <p
-                key={paragraph}
-                className="m-0 mt-5 max-w-[800px] text-body-l leading-7 text-text-body lg:mt-8 lg:text-[20px] lg:leading-8"
-              >
-                {paragraph}
-              </p>
-            ))}
-            {subjects.length > 0 && (
-              <div className="mt-8 flex flex-col gap-3">
-                <span className="text-body-s leading-5 text-text-inactive">Emneord</span>
-                <div className="flex flex-wrap gap-2">
-                  {subjects.map((subject) => (
-                    <Link
-                      key={subject}
-                      to={`/?q=${encodeURIComponent(subject)}`}
-                      className="box-border inline-flex h-9 items-center border border-solid border-outline-strong bg-surface-card px-[15px] text-body-s leading-5 text-text-heading no-underline"
-                    >
-                      {subject}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </section>
-        )}
-
-        <section className="mx-4 mt-12 mb-16 border border-solid border-outline bg-surface-card lg:mx-[129px] lg:mt-20">
-          <h3 className="m-0">
-            <button
-              type="button"
-              aria-expanded={isDetailsOpen}
-              onClick={() => setIsDetailsOpen((isOpen) => !isOpen)}
-              className={`box-border flex h-[72px] w-full cursor-pointer items-center gap-3 border-0 bg-transparent px-4 text-left font-body text-body-l font-normal text-text-heading lg:h-[88px] lg:pr-8 lg:pl-6 lg:text-[22px] ${
-                isDetailsOpen ? "shadow-[inset_0_-1px_0_var(--color-outline)]" : ""
-              }`}
-            >
-              <span
-                aria-hidden="true"
-                className="box-border size-9 shrink-0 rounded-full border border-solid border-text-body bg-[#e8e8e4] lg:size-10"
-              />
-              <span className="grow">Detaljer om materialet</span>
-              <span aria-hidden="true" className={isDetailsOpen ? "rotate-180" : undefined}>
-                ⌄
-              </span>
-            </button>
-          </h3>
-          {isDetailsOpen && <DetailList rows={getDetailRows(manifestation)} />}
+        <section aria-labelledby="article-description" className="px-4 lg:px-20 lg:pt-12">
+          <h2 id="article-description" className="m-0 font-heading text-[28px] leading-[34px] font-normal">
+            Beskrivelse
+          </h2>
+          {work.abstract?.map((paragraph) => (
+            <p key={paragraph} className="m-0 mt-5 mb-6 max-w-[760px] text-body-l leading-7">
+              {paragraph}
+            </p>
+          ))}
+          {subjects.length > 0 && (
+            <p className="m-0 mt-3.5 flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
+              <b className="text-[13px] leading-5">Emneord</b>
+              {subjects.map((subject) => (
+                <Link key={subject} to={`/?q=${encodeURIComponent(subject)}`} className={metaLinkClasses}>
+                  {subject}
+                </Link>
+              ))}
+            </p>
+          )}
+          {work.fictionNonfiction && (
+            <p className="m-0 mt-3.5 flex flex-wrap items-baseline gap-x-3">
+              <b className="text-[13px] leading-5">Skøn-/faglitteratur</b>
+              <span className="text-[13px] leading-5">{work.fictionNonfiction.display}</span>
+            </p>
+          )}
         </section>
+
+        <div className="mx-4 mt-10 lg:mx-20">
+          <Accordion title={`Udgaver (${allEditions.length})`}>
+            <ul className="m-0 flex list-none flex-col gap-2 px-4 pb-5">
+              {allEditions.map((edition) => (
+                <li key={edition.pid} className="border border-solid border-outline bg-white px-4 py-3.5">
+                  <p className="m-0 text-body-m font-semibold">{getManifestationTitle(edition, work)}</p>
+                  <p className="m-0 mt-0.5 text-body-s leading-5 text-text-body">{getEditionLine(edition)}</p>
+                </li>
+              ))}
+            </ul>
+          </Accordion>
+          <Accordion title="Detaljer" subtitle={`${getMaterialTypeLabel(manifestation)} · ${getYearLabel(manifestation)}`}>
+            <dl className="m-0 px-4 pb-5">
+              {getDetailRows(manifestation, work).map((row) => (
+                <div key={row.label} className="flex gap-4 border-b border-outline py-[11px]">
+                  <dt className="w-[120px] shrink-0 text-body-s text-text-inactive">{row.label}</dt>
+                  <dd className="m-0 text-body-s">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </Accordion>
+        </div>
       </main>
 
-      {isPickerOpen && (
-        <EditionPicker
+      {openDialog === "picker" && (
+        <OptionPicker
           open
-          onClose={() => setIsPickerOpen(false)}
-          onChoose={(chosen) => {
-            setIsPickerOpen(false)
-            setSearchParams({ manifestationId: chosen.pid })
-          }}
-          title={title}
-          typeLabel={typeLabel}
-          editions={categoryManifestations}
-          shown={manifestation}
-          recommended={recommended}
+          onClose={() => setOpenDialog(isPickerFromOrder ? "order" : null)}
+          onChoose={choose}
+          workTitle={title}
+          pickerTitle={options.pickerTitle}
+          applyLabel={options.applyLabel}
+          editions={options.editions}
+          selected={{ pid: manifestation.pid, wayKind: options.selectedWay?.kind }}
         />
       )}
+      {retrieverWay?.kind === "read-article" && (
+        <RetrieverDialog
+          retrieverId={retrieverWay.retrieverId}
+          title={title}
+          open={openDialog === "read-article"}
+          onClose={() => setOpenDialog(null)}
+        />
+      )}
+      <DigitalCopyDialog
+        open={openDialog === "order"}
+        onClose={() => setOpenDialog(null)}
+        onSwitchEdition={options.switchText ? () => openPicker(true) : undefined}
+        title={getManifestationTitle(manifestation, work)}
+        materialType={getMaterialTypeLabel(manifestation)}
+        creators={creators}
+        edition={manifestation.hostPublication?.summary ?? getYearLabel(manifestation)}
+        email={patron?.emailAddress}
+      />
     </div>
   )
 }
