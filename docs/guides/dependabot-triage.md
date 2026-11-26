@@ -126,10 +126,14 @@ See also [Working with upstream](#working-with-upstream).
 
 Create a Jira ticket for the real upgrade.
 
-When the fix reaches production, it also needs a hotfix for the release lines
-the sites run. Editor sites and webmaster sites can be on different releases;
-see `sites.yaml` in dpl-platform and the
-[hotfix process](https://danskernesdigitalebibliotek.github.io/dpl-docs/General/hotfix-releases/).
+A fix merged to `develop` only reaches the library sites with the next regular
+release. When a security fix for code that runs in production cannot wait for
+that, release it as a hotfix as well: a new release made from the release the
+sites run now, with only the fix added. Editor sites and webmaster sites can
+run different releases, so the fix may need a hotfix for each of them.
+`sites.yaml` in dpl-platform shows which release the sites run, and the
+[hotfix process](https://danskernesdigitalebibliotek.github.io/dpl-docs/General/hotfix-releases/)
+describes the steps.
 
 The repository is public. Commits and pull requests name the package, the
 version and the advisory, but not how our setup is reachable, measurements or
