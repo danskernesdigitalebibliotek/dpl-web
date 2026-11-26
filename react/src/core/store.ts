@@ -56,5 +56,3 @@ export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type TypedDispatch = ThunkDispatch<RootState, never, never>;
 export const useSelector: TypedUseSelectorHook<RootState> = rawUseSelector;
-
-export const resetPersistedData = async () => persistor.purge();
