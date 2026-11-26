@@ -41,6 +41,12 @@ describe("parseAndMapPatron", () => {
     })
   })
 
+  it("maps FBS's resident flag to isResident", () => {
+    expect(
+      parseAndMapPatron({ ...fullPatronBody, patron: { ...fullPatronBody.patron, resident: false } })
+    ).toMatchObject({ isResident: false })
+  })
+
   it("returns undefined when authenticateStatus is INVALID (no patron object)", () => {
     expect(parseAndMapPatron({ authenticateStatus: "INVALID" })).toBeUndefined()
   })

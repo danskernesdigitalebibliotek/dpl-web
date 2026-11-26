@@ -30,6 +30,9 @@ export type ServiceLayerConfig = {
 export type Patron = {
   name: string | undefined
   isLocked: boolean
+  // Whether the patron lives in the library's municipality. Licensed services
+  // such as Retriever only cover residents.
+  isResident?: boolean
   pickupBranchId: string
   emailAddress: string | undefined
   phoneNumber: string | undefined
