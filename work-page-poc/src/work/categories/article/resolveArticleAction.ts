@@ -1,10 +1,10 @@
 import type { Manifestation } from "../../../fbi/types"
 import type { TraceRow } from "../../trace"
-import { type AccessWay, hasOnlyDeadLinks } from "./accessWays"
+import { type AccessWay, accessWayLabels, hasOnlyDeadLinks } from "./accessWays"
 import { getAccessWayText } from "./articleText"
 
 export const actionRules = {
-  oneButton: "Siden har én knap: den valgte adgangsvej",
+  oneButton: "Siden har én knap: den valgte adgangsvej. Knappen siger kun Se online; teksten under den nævner webstedet",
   patronOnly: "Læs artikel og Bestil digital kopi kræver et brugertoken og er spærret for spærrede lånere",
   login: "Uden brugertoken beder et klik på Læs artikel eller Bestil digital kopi om login",
   deadLink: "Har manifestationen kun døde online-links, siges det",
@@ -47,7 +47,7 @@ export const resolveArticleAction = ({
   const isDisabled = isPatronWay && isBlocked
   const action: ArticleAction | undefined = selectedWay && {
     way: selectedWay,
-    label: isDisabled ? "Spærret" : (selectedWayLabel ?? ""),
+    label: isDisabled ? "Spærret" : accessWayLabels[selectedWay.kind],
     isDisabled,
   }
 
