@@ -13,6 +13,11 @@ env:
   # builds and implicit ones during up/run alike — skip the baked-in
   # composer and JS asset builds (see the build args in docker-compose.yml).
   SKIP_BAKED_IN_BUILDS: "true"
+  # The cypress service in docker-compose.ci.yml runs the Cypress baked into
+  # its image, not the one in package.json. Take the image tag from
+  # package.json, so a cypress bump there is what CI runs.
+  CYPRESS_IMAGE_VERSION:
+    sh: sed -nE 's/^ *"cypress":[[:space:]]*"([^"]+)".*/\1/p' package.json
 
 includes:
   translations: ./taskfiles/Taskfile.translations.yml

@@ -32,7 +32,7 @@ services:
       CYPRESS_INSTALL_BINARY: 0
 
   cypress:
-    image: cypress/included:16.3.0
+    image: "cypress/included:${CYPRESS_IMAGE_VERSION:?is set by the Taskfile from the cypress version in package.json}"
     links: *links
     volumes:
       - "../:/app"
