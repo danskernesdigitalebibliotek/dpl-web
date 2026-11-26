@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react"
+import { renderToString } from "react-dom/server"
 import { describe, expect, it, vi } from "vitest"
 
 import VideoEmbed from "@/components/shared/videoEmbed/VideoEmbed"
@@ -33,6 +34,14 @@ describe("VideoEmbed", () => {
 
     expect(iframe.className).toContain("opacity-100")
     expect(iframe.className).not.toContain("opacity-0")
+  })
+
+  it("omits the iframe from the server HTML so it cannot load before hydration", () => {
+    const thumbnailUrl = "https://example.com/poster.jpg"
+    const html = renderToString(<VideoEmbed {...defaults} thumbnailUrl={thumbnailUrl} />)
+
+    expect(html).not.toContain("<iframe")
+    expect(html).toContain(thumbnailUrl)
   })
 
   const queryPoster = () => document.querySelector("img[aria-hidden='true']")

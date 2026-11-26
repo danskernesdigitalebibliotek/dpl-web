@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useSyncExternalStore } from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
 
@@ -25,6 +25,13 @@ const aspectConfig = {
 
 const VideoEmbed = ({ videoUrl, thumbnailUrl, title, aspect }: VideoEmbedProps) => {
   const [iframeLoaded, setIframeLoaded] = useState(false)
+  // The iframe is left out of the server HTML. If it finished loading before
+  // hydration, React would miss the load event and never fade it in.
+  const isHydrated = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  )
   const label = title || "Video"
   const { className, sizes } = aspectConfig[aspect]
 
@@ -44,19 +51,21 @@ const VideoEmbed = ({ videoUrl, thumbnailUrl, title, aspect }: VideoEmbedProps) 
           aria-hidden="true"
         />
       )}
-      <iframe
-        title={label}
-        aria-label={label}
-        className={cn(
-          "absolute inset-0 h-full w-full transition-opacity duration-300",
-          iframeLoaded ? "opacity-100" : "opacity-0"
-        )}
-        src={videoUrl}
-        allowFullScreen
-        allow="autoplay; fullscreen"
-        loading="lazy"
-        onLoad={() => setIframeLoaded(true)}
-      />
+      {isHydrated && (
+        <iframe
+          title={label}
+          aria-label={label}
+          className={cn(
+            "absolute inset-0 h-full w-full transition-opacity duration-300",
+            iframeLoaded ? "opacity-100" : "opacity-0"
+          )}
+          src={videoUrl}
+          allowFullScreen
+          allow="autoplay; fullscreen"
+          loading="lazy"
+          onLoad={() => setIframeLoaded(true)}
+        />
+      )}
     </div>
   )
 }
