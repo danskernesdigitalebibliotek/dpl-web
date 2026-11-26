@@ -17,8 +17,10 @@ keys as full links.
 
 ## Pull requests
 
-List the open Dependabot pull requests by filtering on the `dependencies`
-label or on the Dependabot author.
+See the
+[open Dependabot pull requests](https://github.com/danskernesdigitalebibliotek/dpl-web/pulls?q=is%3Apr+state%3Aopen+label%3Adependencies).
+Alternatively, list them by filtering on the `dependencies` label or on the
+Dependabot author.
 
 ### Major updates
 
